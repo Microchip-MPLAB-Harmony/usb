@@ -1,0 +1,1 @@
+source "$HARMONY_VERSION_PATH/framework/usb/config/usb_pic32_mx_wk.hconfig"

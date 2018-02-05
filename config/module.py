@@ -1,10 +1,10 @@
 def loadModule():
 	print("Load Module: Harmony USB Middle ware")
-
+	
 	if (Peripheral.moduleExists("USBHS")):
 		print("create component: USB Middleware")
-		usbComponent = Module.CreateGeneratorComponent("usb", "USB", "/USB/", "config/usb.py")
-		usbComponent.addCapability("USB")
-		usbComponent.addDependency("USB_Dependency", "USB")
+		usbComponent = Module.CreateComponent("usb", "USB", "/USB/", "config/usb.py")
+		usbComponent.addCapability("LIB_USB")
+		#usbComponent.addDependency("USB_Dependency", "USBHS")
 	else:
 		print("No USB peripheral")
