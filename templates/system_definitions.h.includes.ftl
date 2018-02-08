@@ -1,22 +1,5 @@
 <#--
 /*******************************************************************************
-  USB  Host Initialization File
-
-  File Name:
-    usb_host_init.c
-
-  Summary:
-    This file contains source code necessary to initialize the system.
-
-  Description:
-    This file contains source code necessary to initialize the system.  It
-    implements the "SYS_Initialize" function, configuration bits, and allocates
-    any necessary global system resources, such as the systemObjects structure
-    that contains the object handles to all the MPLAB Harmony module objects in
-    the system.
- *******************************************************************************/
-
-/*******************************************************************************
 Copyright (c) 2013-2014 released Microchip Technology Inc.  All rights reserved.
 
 Microchip licenses to you the right to use, modify, copy and distribute
@@ -39,24 +22,11 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
  *******************************************************************************/
  -->
- 
-<#if CONFIG_DRV_USB_HOST_SUPPORT == true>
-<#if CONFIG_BSP_USE_USBSWITCH == true  >
- /* Enable the VBUS switch */
-    BSP_USBVBUSSwitchStateSet(BSP_USB_VBUS_SWITCH_STATE_ENABLE);     /* Enable the VBUS switch */
-</#if>	
-	
-    sysObj.usbHostObject0 = USB_HOST_Initialize (USB_HOST_INDEX_0 ,
-                                        ( SYS_MODULE_INIT *)& usbHostInitData );
-</#if>
 
-
-
-
-
-
-</#if>
-
+#include "usb/usb_chapter_9.h"
+#include "usb/usb_device.h"
+#include "usb/usb_chapter_9.h"
+#include "usb/usb_host.h"
 
 
 <#--
