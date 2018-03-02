@@ -50,7 +50,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include "usb/usb_host_msd.h"
 #include "usb/src/usb_host_msd_local.h"
 #include "usb/usb_host_client_driver.h"
-#include "system/debug/sys_debug.h"
+#include "usb/src/usb_external_dependencies.h"
 #include "usb/usb_host_scsi.h"
 //#include <p32xxxx.h>
 
@@ -1699,6 +1699,16 @@ USB_HOST_MSD_RESULT USB_HOST_MSD_Transfer
 
                     /* Map the result */
                     result = _USB_HOST_MSD_HostResultToMSDResultMap(hostResult); 
+                }
+                else if(msdInstanceInfo->msdState < USB_HOST_MSD_STATE_NOT_READY)
+                {
+                    /* This means the device is in an error state. We should not
+                     * accept the transfer request*/
+                    
+                    SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host MSD: MSD Instance %d is in error state. Cannot schedule BOT.", msdInstanceIndex);
+                    OSAL_MUTEX_Unlock(&(msdInstanceInfo->mutexMSDInstanceObject));
+                    _USB_HOST_MSD_ERROR_CALLBACK(msdInstanceIndex, USB_HOST_MSD_ERROR_CODE_FAILED_BOT_TRANSFER);
+                    result = USB_HOST_MSD_RESULT_FAILURE;
                 }
                 else
                 {

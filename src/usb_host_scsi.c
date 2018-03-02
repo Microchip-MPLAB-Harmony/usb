@@ -47,7 +47,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include "usb/scsi.h"
 #include "usb/src/usb_host_scsi_local.h"
 #include "system/fs/sys_fs_media_manager.h"
-#include "system/debug/sys_debug.h"
+#include "usb/src/usb_external_dependencies.h"
 
 /******************************************************
  * USB HOST MSD SCSI Instance object. One for each LUN
@@ -114,11 +114,13 @@ _USB_HOST_SCSI_ERROR_CALLBACK_DECLARE
     application.
 */    
 
-void _USB_HOST_SCSI_TimerCallback(uintptr_t context, uint32_t currtick)
+void _USB_HOST_SCSI_TimerCallback(uintptr_t context)
 {
     /* The handle is actually a pointer to the SCSI object */
     USB_HOST_SCSI_INSTANCE_OBJ * scsiObj = ((USB_HOST_SCSI_INSTANCE_OBJ *)(context));
     scsiObj->timerExpired = true;
+	SYS_TIME_TimerDestroy (scsiObj->commandDelayHandle);
+	scsiObj->commandDelayHandle = SYS_TIME_HANDLE_INVALID; 
 }
 
 // ******************************************************************************

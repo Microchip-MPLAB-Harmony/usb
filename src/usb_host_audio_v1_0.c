@@ -45,7 +45,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-#include "system_config.h"
+#include "configuration.h"
 #include "usb/usb_host_client_driver.h"
 #include "usb/usb_host.h"
 #include "usb/src/usb_host_local.h"

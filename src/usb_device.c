@@ -44,17 +44,15 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "system_config.h"
-#include "system/system_module.h"
+#include "usb/src/usb_external_dependencies.h"
 #include "usb/usb_common.h"
 #include "usb/usb_chapter_9.h"
 #include "usb/usb_device.h"
 #include "usb/src/usb_device_function_driver.h"
-//#include "system/debug/sys_debug.h"
-#define SYS_DEBUG_MESSAGE(a , b)
+
+
 #include "usb/src/usb_device_local.h"
-#include "usb/driver/drv_usb.h"
-#include <string.h>
+#include "driver/usb/drv_usb.h"
 
 /**********************************
  * Device layer instance objects.

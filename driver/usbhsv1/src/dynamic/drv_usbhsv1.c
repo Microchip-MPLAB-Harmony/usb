@@ -48,9 +48,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-#include "usb/driver/usbhsv1/src/drv_usbhsv1_local.h"
-//#include "arch/arm/devices_pic32c.h"
-#include "system_definitions.h"
+#include "driver/usb/usbhsv1/src/drv_usbhsv1_local.h"
+#include "definitions.h"
 #define SYS_DEBUG(a,b)
 #define SYS_DEBUG_MESSAGE(a,b)
 /************************************
@@ -151,53 +150,53 @@ SYS_MODULE_OBJ DRV_USBHSV1_Initialize
             if(drvObj->operationSpeed == DRV_USBHSV1_DEVICE_SPEEDCONF_NORMAL)
             {        
                 /* Configure for Normal mode - For LS, FS & HS */
-                usbID->USBHS_DEVCTRL.SPDCONF = USBHS_DEVCTRL_SPDCONF_NORMAL_Val;
+                usbID->USBHS_DEVCTRL |= USBHS_DEVCTRL_SPDCONF(USBHS_DEVCTRL_SPDCONF_NORMAL_Val);
             }
             else
             {
                 /* Configure for Low Power mode - For LS & FS */
-                usbID->USBHS_DEVCTRL.SPDCONF = USBHS_DEVCTRL_SPDCONF_LOW_POWER_Val;
+                usbID->USBHS_DEVCTRL |= USBHS_DEVCTRL_SPDCONF(USBHS_DEVCTRL_SPDCONF_LOW_POWER_Val);
             }
             /* Configure the device for Device mode configuration */
             /* Doing register access intentionally to clear UID bit. */
-            usbID->USBHS_CTRL.w = (USBHS_CTRL_VBUSHWC_Msk | USBHS_CTRL_UIMOD_Msk);
+            usbID->USBHS_CTRL = (USBHS_CTRL_VBUSHWC_Msk | USBHS_CTRL_UIMOD_Msk);
             
             /* Enable the USB hardware */
-            usbID->USBHS_CTRL.w |= USBHS_CTRL_USBE_Msk;
+            usbID->USBHS_CTRL |= USBHS_CTRL_USBE_Msk;
 
             
             if(drvObj->deviceSpeed == USB_SPEED_LOW)
             {
                 /* Configure for Low Speed operation */
-                usbID->USBHS_DEVCTRL.LS = 1;            
+                usbID->USBHS_DEVCTRL |= USBHS_DEVCTRL_LS_Msk;
             }
             else
             {
 				/* Configure for Full / High Speed operation */
-                usbID->USBHS_DEVCTRL.LS = 0;
+                usbID->USBHS_DEVCTRL &= ~USBHS_DEVCTRL_LS_Msk;
             }
 
             /* Unfreeze USB clock */
-            usbID->USBHS_CTRL.w &= ~USBHS_CTRL_FRZCLK_Msk;
+            usbID->USBHS_CTRL &= ~USBHS_CTRL_FRZCLK_Msk;
         
             /* Wait to unfreeze clock */
-            while(!(usbID->USBHS_SR.CLKUSABLE));
+            while(USBHS_SR_CLKUSABLE_Msk != (usbID->USBHS_SR & USBHS_SR_CLKUSABLE_Msk));
         
             /* Freeze USB clock */
-            usbID->USBHS_CTRL.w |= USBHS_CTRL_FRZCLK_Msk;
+            usbID->USBHS_CTRL |= USBHS_CTRL_FRZCLK_Msk;
         
         }
         else if(drvObj->operationMode == DRV_USBHSV1_OPMODE_HOST)
         {    
             /* Enable the USB hardware for Host Mode*/
             /* Set Host Mode */            
-            usbID->USBHS_CTRL.UIMOD = false; 
+            usbID->USBHS_CTRL &= ~USBHS_CTRL_UIMOD_HOST;
             /* Enable USB Hardware */            
-            usbID->USBHS_CTRL.USBE = true; 
+            usbID->USBHS_CTRL |= USBHS_CTRL_USBE_Msk;
             /* Unfreeze USB clock */
-            usbID->USBHS_CTRL.FRZCLK = false; 
+            usbID->USBHS_CTRL &= ~USBHS_CTRL_FRZCLK_Msk;
         }
-        _PMC_REGS->PMC_FSMR.w |= PMC_FSMR_USBAL_Msk;
+        PMC_REGS->PMC_FSMR |= PMC_FSMR_USBAL_Msk;
         
 
         /* Set the state to indicate that the delay will be started */
@@ -211,8 +210,8 @@ SYS_MODULE_OBJ DRV_USBHSV1_Initialize
 
 void USBHS_Handler(void)
 {
-    DRV_USBHSV1_Tasks_ISR(sysObj.usbDevObject0);
-}
+    DRV_USBHSV1_Tasks_ISR(sysObj.drvUSBHSV1Object);
+} 
 
 // *****************************************************************************
 /* Function:
@@ -250,7 +249,7 @@ void DRV_USBHSV1_Tasks(SYS_MODULE_OBJ object)
         {
             case DRV_USBHSV1_TASK_STATE_WAIT_FOR_CLOCK_USABLE:
                 
-                if(usbID->USBHS_SR.CLKUSABLE)
+                if(USBHS_SR_CLKUSABLE_Msk == (usbID->USBHS_SR & USBHS_SR_CLKUSABLE_Msk))
                 {
                     /* Clock unfreeze successful. 
                      * The operation mode can be initialized */
@@ -651,7 +650,7 @@ bool DRV_USBHSV1_HOST_Resume
     else
     {
         pusbdrvObj = (DRV_USBHSV1_OBJ *)handle;
-        pusbdrvObj->usbID->USBHS_HSTCTRL.SOFE = 1;
+        pusbdrvObj->usbID->USBHS_HSTCTRL |= USBHS_HSTCTRL_SOFE_Msk;
         retVal = true;
     }
 
@@ -693,7 +692,7 @@ bool DRV_USBHSV1_HOST_Suspend
         pusbdrvObj = (DRV_USBHSV1_OBJ *)handle;
 
         /* Suspend the bus */
-        pusbdrvObj->usbID->USBHS_HSTCTRL.SOFE = 0;
+        pusbdrvObj->usbID->USBHS_HSTCTRL |= USBHS_HSTCTRL_SOFE_Msk;
         retVal = true;
     }
 

@@ -49,7 +49,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-#include "system_config.h"
+#include "configuration.h"
 
 /**********************************************
  * Macro Mapping

@@ -3,117 +3,63 @@ usbDebugLogs = 1
  
 
 # USB Device Global definitions 
-listUsbDeviceClass =["CDC", "MSD", "HID", "VENDOR", "Audio V1", "Audio V2" ]
-listUsbDeviceEp0BufferSize = ["64", "32", "16", "8"]
+usbDeviceClasses =["CDC", "MSD", "HID", "Vendor", "Audio V1", "Audio V2" ]
+usbDeviceEp0BufferSizes = ["64", "32", "16", "8"]
 usbDeviceFunctionsNumberMax = 10
 usbDeviceFunctionsNumberDefaultValue = 2 
 usbDeviceFunctionsNumberValue = usbDeviceFunctionsNumberDefaultValue
 usbDeviceFunctionIndex = 20
-usbDeviceFunctionArray = []
-usbDeviceClassArray = []
-usbDeviceConfigValueArray = []
-usbDeviceStartInterfaceNumberArray = []
-usbDeviceNumberOfInterfacesArray = []
+
+# A List of USB Device Function Menu Symbols
+listUsbDeviceFunctionMenu = []
+
+# List for holding Function Driver Specific details. 
+listUsbDeviceFunctionType = []
+
+listUsbDeviceStartInterfaceNumber = []
+listUsbDeviceNumberOfInterfaces = []
 
 # USB Device CDC global definitions 
 usbDeviceCdcQueueSizeRead = []
 usbDeviceCdcQueueSizeWrite = []
 usbDeviceCdcQueueSizeSerialStateNotification = []
+usbDeviceCdcEPNumberInt = []
+usbDeviceCdcEPNumberBulkOut = []
+usbDeviceCdcEPNumberBulkIn = []
 
 # USB Device HID global definitions
 usbDeviceHidQueueSizeReportSend = []
 usbDeviceHidQueueSizeReportReceive = []
 usbDeviceHidDeviceType = []	
-	
+usbDeviceHidEPNumberIntOut = []
+usbDeviceHidEPNumberIntIn = []
+
+#USB Device Vendor 
+usbDeviceEndpointReadQueueSize = []
+usbDeviceEndpointWriteQueueSize = []
+
 def instantiateComponent(usbDeviceComponent):	
+	#Configuration descriptor size
+	usbDeviceConfigDscrptrSize = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", None)
+	usbDeviceConfigDscrptrSize.setVisible(False)
+	usbDeviceConfigDscrptrSize.setMin(0)
+	usbDeviceConfigDscrptrSize.setDefaultValue(9)
+	usbDeviceConfigDscrptrSize.setUseSingleDynamicValue(True)
 	
-	# USB Device EP0 Buffer Size  
-	usbDeviceEp0BufferSize = usbDeviceComponent.createComboSymbol("CONFIG_USB_DEVICE_EP0_BUFFER_SIZE", None, listUsbDeviceEp0BufferSize)
-	usbDeviceEp0BufferSize.setLabel("Endpoint 0 Buffer Size")
-	usbDeviceEp0BufferSize.setVisible(True)
-	usbDeviceEp0BufferSize.setDescription("Select Endpoint 0 Buffer Size")
-	usbDeviceEp0BufferSize.setDefaultValue("64")
+	#Number of interfaces
+	usbDeviceInterfacesNumber = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_INTERFACES_NUMBER", None)	
+	usbDeviceInterfacesNumber.setVisible(False)
+	usbDeviceInterfacesNumber.setMin(0)
+	usbDeviceInterfacesNumber.setDefaultValue(0)
+	usbDeviceInterfacesNumber.setUseSingleDynamicValue(True)
 	
-	# USB Device number of functions 
-	usbDeviceFunctionsNumber = usbDeviceComponent.createIntegerSymbol("USB_DEVICE_FUNCTIONS_NUMBER", None)
-	usbDeviceFunctionsNumber.setLabel("Number of Functions")
-	usbDeviceFunctionsNumber.setMax(usbDeviceFunctionsNumberMax)
-	usbDeviceFunctionsNumber.setMin(1)
-	usbDeviceFunctionsNumber.setDefaultValue(usbDeviceFunctionsNumberDefaultValue)
-	usbDeviceFunctionsNumber.setVisible(True)
-	usbDeviceFunctionsNumber.setDescription("Number of Function Drivers Registered to this instance")
-	
-	# USB Device Functions  
-	for i in range (0, usbDeviceFunctionsNumberMax):
-		# Adding Function driver config
-		usbDeviceFunctionArray.append(usbDeviceComponent.createMenuSymbol("USB_DEVICE_FUNCTION_" + str(i), None))
-		if (i < usbDeviceFunctionsNumberDefaultValue):
-			usbDeviceFunctionArray[i].setVisible(True)
-		else:
-			usbDeviceFunctionArray[i].setVisible(False)
-		usbDeviceFunctionArray[i].setLabel("Function " + str(i))
-		usbDeviceFunctionArray[i].setDependencies(blusbDeviceFunctionArray, ["USB_OPERATION_MODE", "USB_DEVICE_FUNCTIONS_NUMBER"])
-	
-		# Adding Device Class config, Parent: Function driver 
-		usbDeviceClassArray.append(usbDeviceComponent.createComboSymbol("USB_DEVICE_FUNCTION_" + str(i) + "_DEVICE_CLASS", usbDeviceFunctionArray[i], listUsbDeviceClass))
-		usbDeviceClassArray[i].setLabel("Device Class")
-		usbDeviceClassArray[i].setDefaultValue("CDC")
-		usbDeviceClassArray[i].setVisible(True)
-		
-		# Config name: Configuration number, Parent: Function driver 
-		usbDeviceConfigValueArray.append(usbDeviceComponent.createIntegerSymbol("USB_DEVICE_FUNCTION_" + str(i) + "_CONFIGURATION", usbDeviceFunctionArray[i]))
-		usbDeviceConfigValueArray[i].setLabel("Configuration Value")
-		usbDeviceConfigValueArray[i].setVisible(True)
-		usbDeviceConfigValueArray[i].setMin(1)
-		usbDeviceConfigValueArray[i].setMax(16)
-		usbDeviceConfigValueArray[i].setDefaultValue(1)
-		
-		#Adding Start Interface number, Parent: Function driver 
-		usbDeviceStartInterfaceNumberArray.append(usbDeviceComponent.createIntegerSymbol("USB_DEVICE_FUNCTION_" + str(i) + "_INTERFACE_NUMBER", usbDeviceFunctionArray[i]))
-		usbDeviceStartInterfaceNumberArray[i].setLabel("Start Interface Number")
-		usbDeviceStartInterfaceNumberArray[i].setVisible(True)
-		usbDeviceStartInterfaceNumberArray[i].setMin(0)
-		usbDeviceStartInterfaceNumberArray[i].setDefaultValue(1)
-			
-		#Adding Number of Interfaces, Parent: Function driver 
-		usbDeviceNumberOfInterfacesArray.append(usbDeviceComponent.createIntegerSymbol("USB_DEVICE_FUNCTION_" + str(i) + "_NUMBER_OF_INTERFACES", usbDeviceFunctionArray[i]))
-		usbDeviceNumberOfInterfacesArray[i].setLabel("Number of Interfaces")
-		usbDeviceNumberOfInterfacesArray[i].setVisible(False)
-		usbDeviceNumberOfInterfacesArray[i].setMin(1)
-		
-		#CDC Function driver Read Queue Size  
-		usbDeviceCdcQueueSizeRead.append(usbDeviceComponent.createIntegerSymbol("USB_DEVICE_FUNCTION_" + str(i) + "_CDC_READ_Q_SIZE", usbDeviceFunctionArray[i]))
-		usbDeviceCdcQueueSizeRead[i].setLabel("CDC Read Queue Size")
-		usbDeviceCdcQueueSizeRead[i].setVisible(True)
-		usbDeviceCdcQueueSizeRead[i].setMin(1)
-		usbDeviceCdcQueueSizeRead[i].setDependencies(blusbDeviceClassChanged, ["USB_DEVICE_FUNCTION_" + str(i) + "_DEVICE_CLASS"])
-		
-		#CDC Function driver Write Queue Size  
-		usbDeviceCdcQueueSizeWrite.append(usbDeviceComponent.createIntegerSymbol("USB_DEVICE_FUNCTION_" + str(i) + "_CDC_WRITE_Q_SIZE", usbDeviceFunctionArray[i]))
-		usbDeviceCdcQueueSizeWrite[i].setLabel("CDC Write Queue Size")
-		usbDeviceCdcQueueSizeWrite[i].setVisible(True)
-		usbDeviceCdcQueueSizeWrite[i].setMin(1)
-		usbDeviceCdcQueueSizeWrite[i].setDependencies(blusbDeviceClassChanged, ["USB_DEVICE_FUNCTION_" + str(i) + "_DEVICE_CLASS"])
-		
-		#CDC Function driver Serial state notification Queue Size  
-		usbDeviceCdcQueueSizeSerialStateNotification.append(usbDeviceComponent.createIntegerSymbol("USB_DEVICE_FUNCTION_" + str(i) + "_CDC_SERIAL_NOTIFIACATION_Q_SIZE", usbDeviceFunctionArray[i]))
-		usbDeviceCdcQueueSizeSerialStateNotification[i].setLabel("CDC Serial Notification Queue Size")
-		usbDeviceCdcQueueSizeSerialStateNotification[i].setVisible(True)
-		usbDeviceCdcQueueSizeSerialStateNotification[i].setMin(1)
-		usbDeviceCdcQueueSizeSerialStateNotification[i].setDependencies(blusbDeviceClassChanged, ["USB_DEVICE_FUNCTION_" + str(i) + "_DEVICE_CLASS"])
-
-	#Endpoint Read Queue Size 
-	usbDeviceEndpointReadQueueSize = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_ENDPOINT_QUEUE_SIZE_READ", None)
-	usbDeviceEndpointReadQueueSize.setLabel("Endpoint Read Queue Size")	
-	usbDeviceEndpointReadQueueSize.setVisible(False)	
-	usbDeviceEndpointReadQueueSize.setDependencies(blusbDeviceClassChanged, [ ",".join(map(str,usbDeviceClassArray))])
-
-
-	#Endpoint Write Queue Size
-	usbDeviceEndpointWriteQueueSize = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_ENDPOINT_QUEUE_SIZE_WRITE", None)
-	usbDeviceEndpointWriteQueueSize.setLabel("Endpoint Write Queue Size")	
-	usbDeviceEndpointWriteQueueSize.setVisible(False)	
-	usbDeviceEndpointWriteQueueSize.setDependencies(blusbDeviceClassChanged, [ ",".join(map(str,usbDeviceClassArray))])
+	# Number of function numbers registered to this Device Layer Instance 
+	usbDeviceFunctionNumber = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", None)
+	usbDeviceFunctionNumber.setLabel("Number of Functions")	
+	usbDeviceFunctionNumber.setVisible(True)
+	usbDeviceFunctionNumber.setMin(1)
+	usbDeviceFunctionNumber.setDefaultValue(0)
+	usbDeviceFunctionNumber.setUseSingleDynamicValue(True)
 	
 	# USB Device events enable 
 	usbDeviceEventsEnable = usbDeviceComponent.createMenuSymbol("USB_DEVICE_EVENTS", None)
@@ -161,28 +107,59 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceFeatureEnableAutioTimeRemoteWakeup.setLabel("Use Auto Timed Remote Wake up Functions")	
 	usbDeviceFeatureEnableAutioTimeRemoteWakeup.setVisible(True)	
 	
+	# USB Device EP0 Buffer Size  
+	usbDeviceEp0BufferSize = usbDeviceComponent.createComboSymbol("CONFIG_USB_DEVICE_EP0_BUFFER_SIZE", None, usbDeviceEp0BufferSizes)
+	usbDeviceEp0BufferSize.setLabel("Endpoint 0 Buffer Size")
+	usbDeviceEp0BufferSize.setVisible(True)
+	usbDeviceEp0BufferSize.setDescription("Select Endpoint 0 Buffer Size")
+	usbDeviceEp0BufferSize.setDefaultValue("64")
 	
-	# USB Device CDC Instances Number 
-	usbDeviceCDCInstancesNumber = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_CDC_INSTANCES_NUMBER", None)
-	usbDeviceCDCInstancesNumber.setVisible(False)
-	usbDeviceCDCInstancesNumber.setDefaultValue(0)
+	# USB Device Vendor ID 
+	usbDeviceVendorId = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_VENDOR_ID_IDX0", None)
+	usbDeviceVendorId.setLabel("Vendor ID")
+	usbDeviceVendorId.setVisible(True)
+	usbDeviceVendorId.setDefaultValue("0x04D8")
+	
+	# USB Device Product ID 
+	usbDeviceProductId = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_PRODUCT_ID_IDX0", None)
+	usbDeviceProductId.setLabel("Product ID")
+	usbDeviceProductId.setVisible(True)
+	usbDeviceProductId.setDefaultValue("0x0000")
+	
+	# USB Device Manufacturer String 
+	usbDeviceManufacturerString = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_MANUFACTURER_STRING", None)
+	usbDeviceManufacturerString.setLabel("Manufacturer String")
+	usbDeviceManufacturerString.setVisible(True)
+	usbDeviceManufacturerString.setDefaultValue("Microchip Technolgy Inc")
+	
+	# USB Device Product String 
+	usbDeviceProductString = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR", None)
+	usbDeviceProductString.setLabel("Product String")
+	usbDeviceProductString.setVisible(True)
+	usbDeviceProductString.setDefaultValue("Enter Product string here")
 	
 	configName = Variables.get("__CONFIGURATION_NAME")
 	
 	################################################
-	# system_definitions.h file for USB Device stack    
+	# system_definitions.h file for USB Device Layer    
 	################################################
 	usbDeviceSystemDefFile = usbDeviceComponent.createFileSymbol(None, None)
 	usbDeviceSystemDefFile.setType("STRING")
 	usbDeviceSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-	usbDeviceSystemDefFile.setSourcePath("templates/system_definitions.h.device_includes.ftl")
+	usbDeviceSystemDefFile.setSourcePath("templates/device/system_definitions.h.device_includes.ftl")
 	usbDeviceSystemDefFile.setMarkup(True)
 	
 	usbDeviceSystemDefObjFile = usbDeviceComponent.createFileSymbol(None, None)
 	usbDeviceSystemDefObjFile.setType("STRING")
 	usbDeviceSystemDefObjFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_OBJECTS")
-	usbDeviceSystemDefObjFile.setSourcePath("templates/system_definitions.h.device_objects.ftl")
+	usbDeviceSystemDefObjFile.setSourcePath("templates/device/system_definitions.h.device_objects.ftl")
 	usbDeviceSystemDefObjFile.setMarkup(True)
+	
+	usbDeviceSystemDefExtFile = usbDeviceComponent.createFileSymbol(None, None)
+	usbDeviceSystemDefExtFile.setType("STRING")
+	usbDeviceSystemDefExtFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_EXTERNS")
+	usbDeviceSystemDefExtFile.setSourcePath("templates/device/system_definitions.h.device_externs.ftl")
+	usbDeviceSystemDefExtFile.setMarkup(True)
 	
 	################################################
 	# system_config.h file for USB Device stack    
@@ -190,24 +167,35 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceSystemConfigFile = usbDeviceComponent.createFileSymbol(None, None)
 	usbDeviceSystemConfigFile.setType("STRING")
 	usbDeviceSystemConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION")
-	usbDeviceSystemConfigFile.setSourcePath("templates/system_config.h.device.ftl")
+	usbDeviceSystemConfigFile.setSourcePath("templates/device/system_config.h.device.ftl")
 	usbDeviceSystemConfigFile.setMarkup(True)
+	
+	# Function driver configurations are added to the following list
+	usbDeviceFunctionDriverConfigist = usbDeviceComponent.createListSymbol("LIST_SYSTEM_CONFIG_H_USB_DEVICE_FUNCTION_DRIVER", None)
 	
 	################################################
 	# system_init.c file for USB Device stack    
 	################################################
 	usbDeviceSystemInitDataFile = usbDeviceComponent.createFileSymbol(None, None)
-	usbDeviceSystemInitDataFile.setType("STRING")
-	usbDeviceSystemInitDataFile.setOutputName("core.LIST_SYSTEM_INIT_C_LIBRARY_INITIALIZATION_DATA")
-	usbDeviceSystemInitDataFile.setSourcePath("templates/system_init_c_device_data.ftl")
+	#usbDeviceSystemInitDataFile.setType("STRING")
+	#usbDeviceSystemInitDataFile.setOutputName("core.LIST_SYSTEM_INIT_C_LIBRARY_INITIALIZATION_DATA")
+	usbDeviceSystemInitDataFile.setType("SOURCE")
+	usbDeviceSystemInitDataFile.setOutputName("usb_device_init_data.c")
+	usbDeviceSystemInitDataFile.setDestPath("")
+	usbDeviceSystemInitDataFile.setProjectPath("config/" + configName + "/")
+	usbDeviceSystemInitDataFile.setSourcePath("templates/device/system_init_c_device_data.ftl")
 	usbDeviceSystemInitDataFile.setMarkup(True)
+	usbDeviceFunctionInitEntry = usbDeviceComponent.createListSymbol("LIST_USB_DEVICE_FUNCTION_INIT_ENTRY", None)
+	usbDeviceFunctionEntry = usbDeviceComponent.createListSymbol("LIST_USB_DEVICE_FUNCTION_ENTRY", None)
+	usbDeviceFunctionDscrptrHSEntry = usbDeviceComponent.createListSymbol("LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_HS_ENTRY", None)
+	usbDeviceFunctionDscrptrFSEntry = usbDeviceComponent.createListSymbol("LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_FS_ENTRY", None)
+	
 	
 	usbDeviceSystemInitCallsFile = usbDeviceComponent.createFileSymbol(None, None)
 	usbDeviceSystemInitCallsFile.setType("STRING")
 	usbDeviceSystemInitCallsFile.setOutputName("core.LIST_SYSTEM_INIT_C_INITIALIZE_MIDDLEWARE")
-	usbDeviceSystemInitCallsFile.setSourcePath("templates/system_init_c_device_calls.ftl")
+	usbDeviceSystemInitCallsFile.setSourcePath("templates/device/system_init_c_device_calls.ftl")
 	usbDeviceSystemInitCallsFile.setMarkup(True)
-	
 	
 	################################################
 	# system_tasks.c file for USB Device stack  
@@ -215,8 +203,9 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceSystemTasksFile = usbDeviceComponent.createFileSymbol(None, None)
 	usbDeviceSystemTasksFile.setType("STRING")
 	usbDeviceSystemTasksFile.setOutputName("core.LIST_SYSTEM_TASKS_C_CALL_LIB_TASKS")
-	usbDeviceSystemTasksFile.setSourcePath("templates/system_tasks_c_device.ftl")
+	usbDeviceSystemTasksFile.setSourcePath("templates/device/system_tasks_c_device.ftl")
 	usbDeviceSystemTasksFile.setMarkup(True)
+	
 	
 	################################################
 	# USB Device Layer Files 
@@ -240,7 +229,10 @@ def instantiateComponent(usbDeviceComponent):
 	addFileName('usb_device_function_driver.h', usbDeviceComponent, usbDeviceFunctionDriverHeaderFile, "src/", "/usb/src", True, None)
 
 	usbDeviceSourceFile = usbDeviceComponent.createFileSymbol(None, None)
-	addFileName('usb_device.c', usbDeviceComponent, usbDeviceSourceFile, "src/dynamic/", "/usb/src/dynamic", True, None)
+	addFileName('usb_device.c', usbDeviceComponent, usbDeviceSourceFile, "src/", "/usb/src", True, None)
+	
+	usbExternalDependenciesFile = usbDeviceComponent.createFileSymbol(None, None)
+	addFileName('usb_external_dependencies.h', usbDeviceComponent, usbExternalDependenciesFile, "src/", "/usb/src", True, None)
 		
 # all files go into src/
 def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callback):
@@ -273,45 +265,11 @@ def blUSBDeviceFeatureEnableMicrosoftOsDescriptor(usbSymbolSource, event):
 		usbSymbolSource.setVisible(True)
 	else:
 		usbSymbolSource.setVisible(False)
-				
-def blusbDeviceFunctionArray(usbSymbolSource, event):
-	global usbDeviceFunctionsNumberValue
-	global usbDeviceFunctionsNumberMax
-	blUsbLog(usbSymbolSource, event)
-	if (event["id"] == "USB_OPERATION_MODE"):
-		if (event["value"] == "Device"):
-			for i in range (0, usbDeviceFunctionsNumberMax):
-				if (i < usbDeviceFunctionsNumberValue):
-					blUsbPrint("Set Visible " + usbSymbolSource.getID().encode('ascii', 'ignore'))
-					usbDeviceFunctionArray[i].setVisible(True)
-				else:
-					blUsbPrint("Set Hide " + usbSymbolSource.getID().encode('ascii', 'ignore'))
-					usbDeviceFunctionArray[i].setVisible(False)
-		elif (event["value"] == "Host"):
-			usbSymbolSource.setVisible(False)
-	elif (event["id"] == "USB_DEVICE_FUNCTIONS_NUMBER"):
-		usbDeviceFunctionsNumberValue = event["value"]
-		for i in range (0, usbDeviceFunctionsNumberMax):
-			if (i < usbDeviceFunctionsNumberValue):
-				usbDeviceFunctionArray[i].setVisible(True)
-			else:
-				usbDeviceFunctionArray[i].setVisible(False)
-	
-def blusbDeviceClassChanged (usbSymbolSource, event):
-	global usbDeviceFunctionIndex
-	global usbComponent
-	blUsbLog(usbSymbolSource, event)
-	#print ("Entering blusbDeviceClassChanged")
-	functionIndex = int(event["id"][usbDeviceFunctionIndex])
-	print (functionIndex)
-	if (event["value"] == "CDC"):
-		#usbSymbolSource.setVisible(True)
-		usbDeviceCdcQueueSizeRead[functionIndex].setVisible(True)
-		usbDeviceCdcQueueSizeWrite[functionIndex].setVisible(True)
-		usbDeviceCdcQueueSizeSerialStateNotification[functionIndex].setVisible(True)
-	else: 
-		#usbSymbolSource.setVisible(False)
-		usbDeviceCdcQueueSizeRead[functionIndex].setVisible(False)
-		usbDeviceCdcQueueSizeWrite[functionIndex].setVisible(False)
-		usbDeviceCdcQueueSizeSerialStateNotification[functionIndex].setVisible(False)
-	
+						
+		
+# def onDependentComponentAdded(component, id, usart):
+	# if id == "usb_driver_dependency" :
+		# usbOperationMode = component.getSymbolByID("USB_OPERATION_MODE")
+		# if usbOperationMode.getValue == "Host":
+			# Log.writeDebugMessage("USB driver error")
+		

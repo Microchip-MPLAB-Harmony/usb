@@ -50,7 +50,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-#include "system_config.h"
+#include "usb/src/usb_dependencies_mapping.h"
 #include "system/tmr/sys_tmr.h"
 
 /****************************************

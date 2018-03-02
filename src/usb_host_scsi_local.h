@@ -48,9 +48,12 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-#include "system_config.h"
+#include "configuration.h"
 #include "usb/usb_host_scsi.h"
-#include "system/tmr/sys_tmr.h"
+#include "system/time/sys_time.h"
+
+#define SYS_DEBUG_PRINT(level, format, ...) 
+#define SYS_DEBUG_MESSAGE(a,b, ...)
 
 /* If the USB_HOST_SCSI_FILE_SYSTEM_REGISTER constant is defined and is set to
  * to false, then the any instance of the SCSI driver will not register with 
@@ -362,7 +365,7 @@ typedef struct
     size_t nCommandFailureTestUnitReadyAttempts;
 
     /* The command delay system timer object */
-    SYS_TMR_HANDLE commandDelayHandle;
+    SYS_TIME_HANDLE commandDelayHandle;
     
     /* Flag is set when the timer expires */
     bool timerExpired ;
@@ -624,21 +627,20 @@ void USB_HOST_SCSI_Tasks(USB_HOST_MSD_LUN_HANDLE lunHandle);
 /* Function:
     void * _USB_HOST_SCSI_TimerCallback
     (
-       uint32_t context,
-       uint32_t currtick
+       uint32_t context
     )
 
   Summary:
-    Function is called when the SYS_TMR_CallbackSingle expires.
+    Function is called when the SYS_TIME_CallbackRegisterMS expires.
 
   Description:
-    Function is called when the SYS_TMR_CallbackSingle expires.
+    Function is called when the SYS_TIME_CallbackRegisterMS expires.
 
   Remarks:
     This is a local function and should not be called directly by the
     application.
 */    
 
-void _USB_HOST_SCSI_TimerCallback(uintptr_t context, uint32_t currtick);
+void _USB_HOST_SCSI_TimerCallback(uintptr_t context);
 #endif
 

@@ -22,11 +22,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
  *******************************************************************************/
  -->
-
-#include "usb/usb_chapter_9.h"
-#include "usb/usb_device.h"
-
-
+extern const USB_HOST_INIT usbHostInitData; 
 <#--
 /*******************************************************************************
  End of File

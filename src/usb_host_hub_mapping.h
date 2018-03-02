@@ -42,7 +42,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #ifndef _USB_HOST_HUB_MAPPING_H
 #define _USB_HOST_HUB_MAPPING_H
 
-#include "system_config.h"
+#include "usb/src/usb_external_dependencies.h"
 
 #if (USB_HOST_HUB_SUPPORT == true)
     #include "usb/usb_host_hub_interface.h"

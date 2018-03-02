@@ -46,7 +46,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 #include "usb/usb_device_hid.h"
 #include "usb/usb_device.h"
-#include "system/common/sys_common.h"
+#include "usb/src/usb_external_dependencies.h"
 #include "usb/src/usb_device_hid_local.h"
 
 // *****************************************************************************

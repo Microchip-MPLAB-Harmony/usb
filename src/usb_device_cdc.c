@@ -46,8 +46,8 @@
 // *****************************************************************************
 #include "usb/usb_device_cdc.h"
 #include "usb/src/usb_device_cdc_local.h"
-//#include "system/debug/sys_debug.h"
-#define SYS_DEBUG(a,b)
+#include "usb/src/usb_external_dependencies.h"
+
 
 // *****************************************************************************
 // *****************************************************************************

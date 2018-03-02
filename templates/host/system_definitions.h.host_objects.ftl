@@ -22,10 +22,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
  *******************************************************************************/
  -->
-
-	SYS_MODULE_OBJ  usbDevObject0;
-
-
+	SYS_MODULE_OBJ  usbHostObject0;
 <#--
 /*******************************************************************************
  End of File

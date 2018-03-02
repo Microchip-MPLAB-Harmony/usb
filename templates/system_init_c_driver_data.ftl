@@ -42,6 +42,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /******************************************************
  * USB Driver Initialization
  ******************************************************/
+ 
+ <#if (USB_OPERATION_MODE == "Device")>
 static DRV_USB_VBUS_LEVEL DRV_USBHSV1_VBUS_Comparator(void)
 {
     DRV_USB_VBUS_LEVEL retVal = DRV_USB_VBUS_LEVEL_INVALID;
@@ -50,10 +52,11 @@ static DRV_USB_VBUS_LEVEL DRV_USBHSV1_VBUS_Comparator(void)
     {
         retVal = DRV_USB_VBUS_LEVEL_VALID;
     }*/ 
-
+	retVal = DRV_USB_VBUS_LEVEL_VALID;
     return (retVal);
 
 }
+</#if>
 
 const DRV_USBHSV1_INIT drvUSBInit =
 {
@@ -75,10 +78,18 @@ const DRV_USBHSV1_INIT drvUSBInit =
     .operationSpeed = ${USB_SPEED},
     
     /* Identifies peripheral (PLIB-level) ID */
-    .usbID = _USBHS_REGS,
-    
+    .usbID = USBHS_REGS,
+	
+<#if (USB_OPERATION_MODE == "Device")>    
     /* Function to check for VBus */
     .vbusComparator = DRV_USBHSV1_VBUS_Comparator
+<#elseif (USB_OPERATION_MODE == "Host")>
+	/* Function to check for VBus */
+    .vbusComparator = NULL,
+            
+    /* Root hub available current in milliamperes */
+    .rootHubAvailableCurrent = 500,
+</#if>
 };
 
 <#--

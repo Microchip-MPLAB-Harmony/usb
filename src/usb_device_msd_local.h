@@ -43,7 +43,7 @@
 #ifndef _USB_DEVICE_MSD_LOCAL_H_
 #define _USB_DEVICE_MSD_LOCAL_H_
 
-#include "system_config.h"
+#include "usb/src/usb_dependencies_mapping.h"
 #include "system/fs/sys_fs_media_manager.h"
 // *****************************************************************************
 // *****************************************************************************

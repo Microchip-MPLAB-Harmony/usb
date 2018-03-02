@@ -48,13 +48,13 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-#include "system_config.h"
+#include "usb/src/usb_external_dependencies.h"
 #include "usb/usb_common.h"
 #include "usb/usb_chapter_9.h"
 #include "usb/usb_host.h"
 #include "usb/usb_host_client_driver.h"
 #include "driver/usb/drv_usb.h"
-#include "system/tmr/sys_tmr.h"
+
 #include "osal/osal.h"
 
 // *****************************************************************************
@@ -86,14 +86,14 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /* Definition of USB_HOST_DEVICE_CLIENT_HANDLE is the same as that of the
  * USB_HOST_DEVICE_OBJ_HANDLE */
 
-/* Defintion of USB_HOST_CONTROL_PIPE_HANDLE is the same as that of the
+/* Definition of USB_HOST_CONTROL_PIPE_HANDLE is the same as that of the
  * USB_HOST_DEVICE_OBJ_HANDLE */
 
 /* The USB_HOST_PIPE_HANDLE is a pointer to the USB_HOST_PIPE_OBJ */
 
 /* The USB_HOST_TRANSFER_HANDLE is a pointer to the USB_HOST_TRANSFER_OBJ */
 
-/* The defintion of USB_HOST_DEVICE_INTERFACE_HANDLE 
+/* The definition of USB_HOST_DEVICE_INTERFACE_HANDLE 
  * Bits 31-16: Unique PNP identifier
  * Bits 15-8: Interface number
  * Bits 7-0 : Device Array Index */
@@ -236,7 +236,7 @@ typedef enum
     /* Device configuration state waiting for configuration header get */
     USB_HOST_DEVICE_CONFIG_STATE_WAIT_FOR_CONFIG_DESCRIPTOR_HEADER_GET,
 
-    /* Device configurtion state get full configuration descriptor */
+    /* Device configuration state get full configuration descriptor */
     USB_HOST_DEVICE_CONFIG_STATE_CONFIG_DESCRIPTOR_GET,
     
     /* Device configuration state waiting for configuration descriptor get */
@@ -289,7 +289,7 @@ typedef enum
     USB Host Pipe Object
 
   Description:
-    This data structre defines a Host Pipe Object.
+    This data structure defines a Host Pipe Object.
 
   Remarks:
     None.
@@ -318,7 +318,7 @@ typedef struct _USB_HOST_PIPE_OBJ_
     USB Host Control Transfer Object
 
   Description:
-    This data structre defines a Host Control Transfer Object. A Control
+    This data structure defines a Host Control Transfer Object. A Control
     transfer object tracks a client control transfer request. 
 
   Remarks:
@@ -394,7 +394,7 @@ typedef struct _USB_HOST_INTERFACE_DESC_INFO_
     USB Host Transfer Object
 
   Description:
-    This data structre defines a Host Transfer Object. A transfer object tracks
+    This data structure defines a Host Transfer Object. A transfer object tracks
     a client transfer request. 
 
   Remarks:
@@ -684,13 +684,13 @@ typedef struct
     USB_HOST_DEVICE_OBJ_HANDLE  * enumeratingDeviceInfo;
 
     /* System timer handle */
-    SYS_TMR_HANDLE  busOperationsTimerHandle;
+    SYS_TIME_HANDLE  busOperationsTimerHandle;
 
     /* Unique identifier that get incremented for every device attach */
     uint16_t pnpIdentifier ;
     
     /* Bus Interrupt Enable Disable State */
-    bool eventsStatusRestore;
+    bool eventsStatusRestore; 
 
     /* Flag is set when the timer expires */
     bool timerExpired;
@@ -763,7 +763,7 @@ typedef struct
 
   Description:
     This function will return true if no interface have been owned and search
-    has reach end of TPL. It will return false if atleast one interface is
+    has reach end of TPL. It will return false if at-least one interface is
     claimed or if all the interfaces are empty.
 
   Remarks:
@@ -904,7 +904,7 @@ int _USB_HOST_FindClassSubClassProtocolDriver
     This function will update the configuration state of the device.
 
   Description:
-    This function will check if the device configuation needs to be changed. If
+    This function will check if the device configuration needs to be changed. If
     so then it gets the configuration, parses the configuration, sets up the
     interface tables and then sets the configuration.
 
@@ -1159,11 +1159,11 @@ void  _USB_HOST_DeviceControlTransferCallback( USB_HOST_IRP * irp );
     void * _USB_HOST_FindEndOfDescriptor(void * descriptor) 
 
   Summary:
-    Function finds the end of descritor marker and returns the pointer to where
+    Function finds the end of descriptor marker and returns the pointer to where
     the marker has started.
 
   Description:
-    Function finds the end of descritor marker and returns the pointer to where
+    Function finds the end of descriptor marker and returns the pointer to where
     the marker has started.
 
   Remarks:
@@ -1177,20 +1177,19 @@ void * _USB_HOST_FindEndOfDescriptor(void * descriptor);
 /* Function:
     void * _USB_HOST_TimerCallback
     (
-       uint32_t context,
-       uint32_t currtick
+       uint32_t context
     )
 
   Summary:
-    Function is called when the SYS_TMR_CallbackSingle expires.
+    Function is called when the SYS_TIME_CallbackRegisterMS expires.
 
   Description:
-    Function is called when the SYS_TMR_CallbackSingle expires.
+    Function is called when the SYS_TIME_CallbackRegisterMS expires.
 
   Remarks:
     This is a local function and should not be called directly by the
     application.
 */    
 
-void _USB_HOST_TimerCallback(uintptr_t context, uint32_t currtick);
+void _USB_HOST_TimerCallback(uintptr_t context);
 #endif

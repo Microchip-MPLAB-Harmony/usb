@@ -53,11 +53,11 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include <stdbool.h>
 #include <stddef.h>
 
-#include "system_config.h"
+#include "configuration.h"
 //#include "system/debug/sys_debug.h"
 //#include "system/tmr/sys_tmr.h"
-#include "usb/driver/usbhsv1/drv_usbhsv1.h"
-#include "usb/driver/usbhsv1/src/drv_usbhsv1_variant_mapping.h"
+#include "driver/usb/usbhsv1/drv_usbhsv1.h"
+#include "driver/usb/usbhsv1/src/drv_usbhsv1_variant_mapping.h"
 #include "osal/osal.h"
 
 #define DRV_USBHS_HOST_IRP_PER_FRAME_NUMBER 	            5

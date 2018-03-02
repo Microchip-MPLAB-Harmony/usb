@@ -1,12 +1,21 @@
 # Global definitions  
-listUsbSpeed = ["DRV_USBHSV1_DEVICE_SPEEDCONF_NORMAL", "DRV_USBHSV1_DEVICE_SPEEDCONF_LOW_POWER"]
+listUsbSpeed = ["High Speed", "Full Speed"]
+#listUsbSpeed = ["DRV_USBHSV1_DEVICE_SPEEDCONF_NORMAL", "DRV_USBHSV1_DEVICE_SPEEDCONF_LOW_POWER"]
 listUsbOperationMode = ["Device", "Host", "Dual Role"]
 usbDebugLogs = 1 
 usbDriverPath = "driver/"
-usbDriverProjectPath = "/usb/driver/"
+usbDriverProjectPath = "/driver/usb/"
 
+def speedChanged(symbol, event):
+	Database.clearSymbolValue("core", "PMC_SCER_USBCLK")
+	Database.setSymbolValue("core", "PMC_SCER_USBCLK", True, 2)
+
+def dependencyStatus(symbol, event):
+    if (event["value"] == False):
+        symbol.setVisible(True)
+    else :
+        symbol.setVisible(False)
 def instantiateComponent(usbDriverComponent):	
-	#print(usbDriverComponent)
 	# USB Driver Speed selection 	
 	usbSpeed = usbDriverComponent.createComboSymbol("USB_SPEED", None, listUsbSpeed)
 	usbSpeed.setLabel("USB Speed Selection")
@@ -20,7 +29,82 @@ def instantiateComponent(usbDriverComponent):
 	usbOpMode.setVisible(True)
 	usbOpMode.setDescription("Select USB Operation Mode")
 	usbOpMode.setDefaultValue("Device")
+	usbOpMode.setUseSingleDynamicValue(True)
 	
+	# USB Driver Host mode Attach de-bounce duration 
+	usbDriverHostAttachDebounce = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION", usbOpMode)
+	usbDriverHostAttachDebounce.setLabel("Attach De-bounce Duration (mSec)")
+	usbDriverHostAttachDebounce.setVisible(False)
+	usbDriverHostAttachDebounce.setDescription("Set USB Host Attach De-bounce duration")
+	usbDriverHostAttachDebounce.setDefaultValue(500)
+	usbDriverHostAttachDebounce.setDependencies(blUSBDriverOperationModeChanged, ["USB_OPERATION_MODE"])
+	
+	# USB Driver Host mode Reset Duration
+	usbDriverHostResetDuration = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_RESET_DUARTION", usbOpMode)
+	usbDriverHostResetDuration.setLabel("Reset Duration (mSec)")
+	usbDriverHostResetDuration.setVisible(False)
+	usbDriverHostResetDuration.setDescription("Set USB Host Attach De-bounce duration")
+	usbDriverHostResetDuration.setDefaultValue(100)
+	usbDriverHostResetDuration.setDependencies(blUSBDriverOperationModeChanged, ["USB_OPERATION_MODE"])
+	
+	
+	############################################################################
+    #### Dependency ####
+    ############################################################################
+	NVICVector = "NVIC_USBHS_ENABLE"
+	NVICHandler = "NVIC_USBHS_HANDLER"
+	NVICHandlerLock = "NVIC_USBHS_HANDLER_LOCK"
+
+    # Initial settings for CLK and NVIC
+	Database.clearSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN")
+	Database.setSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN", True, 2)
+	Database.clearSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL")
+	Database.setSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL", True, 2)
+	Database.clearSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN")
+	Database.setSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN", True, 2)
+	Database.clearSymbolValue("core", "PMC_ID_USBHS")
+	Database.setSymbolValue("core", "PMC_ID_USBHS", True, 2)
+	Database.clearSymbolValue("core", "PMC_SCER_USBCLK")
+	Database.setSymbolValue("core", "PMC_SCER_USBCLK", True, 2)
+	Database.clearSymbolValue("core", NVICVector)
+	Database.setSymbolValue("core", NVICVector, True, 2)
+	Database.clearSymbolValue("core", NVICHandler)
+	Database.setSymbolValue("core", NVICHandler, "USBHS_InterruptHandler", 2)
+	Database.clearSymbolValue("core", NVICHandlerLock)
+	Database.setSymbolValue("core", NVICHandlerLock, True, 2)
+
+	
+    # NVIC Dynamic settings
+	# usbhsNVICControl = usbDriverComponent.createBooleanSymbol("NVIC_USBHS_ENABLE", None)
+	# usbhsNVICControl.setDependencies(NVICControl, ["INTERRUPT_MODE"])
+	# usbhsNVICControl.setVisible(False)
+
+    # Dependency Status
+	usbhsSymClkEnComment = usbDriverComponent.createCommentSymbol("USBHS_CLK_ENABLE_COMMENT", None)
+	usbhsSymClkEnComment.setVisible(False)
+	usbhsSymClkEnComment.setLabel("Warning!!! USBHS Peripheral Clock is Disabled in Clock Manager")
+	usbhsSymClkEnComment.setDependencies(dependencyStatus, ["core.PMC_ID_USBHS"])
+
+	usbhsSymIntEnComment = usbDriverComponent.createCommentSymbol("USBHS_NVIC_ENABLE_COMMENT", None)
+	usbhsSymIntEnComment.setVisible(False)
+	usbhsSymIntEnComment.setLabel("Warning!!! USBHS Interrupt is Disabled in Interrupt Manager")
+	usbhsSymIntEnComment.setDependencies(dependencyStatus, ["core." + NVICVector])
+	
+	# Enable dependent Harmony core components
+	Database.clearSymbolValue("Harmony", "ENABLE_DRV_COMMON")
+	Database.setSymbolValue("Harmony", "ENABLE_DRV_COMMON", True, 2)
+
+	Database.clearSymbolValue("Harmony", "ENABLE_SYS_INT")
+	Database.setSymbolValue("Harmony", "ENABLE_SYS_INT", True, 2)
+
+    # Database.clearSymbolValue("Harmony", "ENABLE_SYS_DMA")
+    # Database.setSymbolValue("Harmony", "ENABLE_SYS_DMA", True, 2)
+
+	Database.clearSymbolValue("Harmony", "ENABLE_OSAL")
+	Database.setSymbolValue("Harmony", "ENABLE_OSAL", True, 2)
+
+	Database.clearSymbolValue("Harmony", "ENABLE_APP_FILE")
+	Database.setSymbolValue("Harmony", "ENABLE_APP_FILE", True, 2)
 	
 	configName = Variables.get("__CONFIGURATION_NAME")
 	
@@ -118,7 +202,6 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1LocalHeaderFile.setType("HEADER")
 	drvUsbHsV1LocalHeaderFile.setOverwrite(True)
 	
-	
 	usbHostControllerDriverHeaderFile = usbDriverComponent.createFileSymbol(None, None)
 	addFileName('usb_host_client_driver.h', usbDriverComponent, usbHostControllerDriverHeaderFile, "", "/usb/", True, None)
 	
@@ -152,7 +235,7 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1DeviceSourceFile.setDependencies(blDrvUsbHsV1DeviceSourceFile, ["USB_OPERATION_MODE"])
 	
 	drvUsbHsV1HostSourceFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "usbhsv1/src/dynamic/drv_usbhsv1_device.c")
+	drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "usbhsv1/src/dynamic/drv_usbhsv1_host.c")
 	drvUsbHsV1HostSourceFile.setOutputName("drv_usbhsv1_host.c")
 	drvUsbHsV1HostSourceFile.setDestPath(usbDriverProjectPath + "usbhsv1/src")
 	drvUsbHsV1HostSourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbhsv1/src/")
@@ -188,3 +271,13 @@ def blDrvUsbHsV1HostSourceFile (usbSymbolSource, event):
 		usbSymbolSource.setEnabled(False)
 	elif (event["value"] == "Host"):
 		usbSymbolSource.setEnabled(True)
+		
+def blUSBDriverOperationModeChanged(usbSymbolSource, event):
+	if (event["value"] == "Device"):
+		usbSymbolSource.setVisible(False)
+	else:
+		usbSymbolSource.setVisible(True)
+		
+def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
+	print(ownerComponent, dependencyID, dependentComponent)
+	

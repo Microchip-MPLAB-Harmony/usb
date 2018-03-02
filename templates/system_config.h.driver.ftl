@@ -44,12 +44,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 -->
 /*** USB Driver Configuration ***/
 
-/* Enables Device Support */
-#define DRV_USBHSV1_DEVICE_SUPPORT    true
-
-/* Disable Host Support */
-#define DRV_USBHSV1_HOST_SUPPORT      false
-
 /* Maximum USB driver instances */
 #define DRV_USBHSV1_INSTANCES_NUMBER  1
 
@@ -57,8 +51,45 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define DRV_USBHSV1_INTERRUPT_MODE    true
 
 
+
+<#if (USB_OPERATION_MODE?has_content)
+	  && (USB_OPERATION_MODE == "Device")>
+
 /* Number of Endpoints used */
-#define DRV_USBHSV1_ENDPOINTS_NUMBER  7
+#define DRV_USBHSV1_ENDPOINTS_NUMBER  7 //TODO  Calculate this for Device 
+
+/* Enables Device Support */
+#define DRV_USBHSV1_DEVICE_SUPPORT    true
+	
+/* Disable Host Support */
+#define DRV_USBHSV1_HOST_SUPPORT      false
+<#elseif (USB_OPERATION_MODE?has_content)
+	  && (USB_OPERATION_MODE == "Host")>
+	  
+/* Number of Endpoints used */
+#define DRV_USBHSV1_ENDPOINTS_NUMBER  1  
+
+/* Disable Device Support */
+#define DRV_USBHSV1_DEVICE_SUPPORT    false
+	
+/* Enable Host Support */
+#define DRV_USBHSV1_HOST_SUPPORT      true
+
+/* Number of NAKs to wait before returning transfer failure */ 
+#define DRV_USBHSV1_HOST_NAK_LIMIT      2000 //TODO Verify with Sundar
+
+/* Maximum Number of pipes */
+#define DRV_USBHSV1_HOST_PIPES_NUMBER    10 //TODO Verify with Sundar 
+
+/* Attach Debounce duration in milli Seconds */ 
+#define DRV_USBHSV1_HOST_ATTACH_DEBOUNCE_DURATION ${USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION}
+
+/* Reset duration in milli Seconds */ 
+#define DRV_USBHSV1_HOST_RESET_DURATION ${USB_DRV_HOST_RESET_DUARTION}
+</#if>
+
+
+
 <#--
 /*******************************************************************************
  End of File

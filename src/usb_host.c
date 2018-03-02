@@ -49,15 +49,14 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include "system_config.h"
+
+#include "usb/src/usb_external_dependencies.h"
 #include "usb/usb_common.h"
 #include "usb/usb_chapter_9.h"
-#include "system/common/sys_module.h"
+
 #include "usb/usb_host.h"
 #include "usb/src/usb_host_local.h"
-#include "driver/tmr/drv_tmr.h"
-#include "system/tmr/sys_tmr.h"
-#include "system/debug/sys_debug.h"
+
 #include "usb/src/usb_host_hub_mapping.h"
 #include "osal/osal.h"
 
@@ -114,8 +113,7 @@ static USB_HOST_TRANSFER_OBJ gUSBHostTransferObj[ USB_HOST_TRANSFERS_NUMBER ];
 /* Function:
     void * _USB_HOST_TimerCallback
     (
-       uint32_t context,
-       uint32_t currtick
+       uint32_t context
     )
 
   Summary:
@@ -129,10 +127,12 @@ static USB_HOST_TRANSFER_OBJ gUSBHostTransferObj[ USB_HOST_TRANSFERS_NUMBER ];
     application.
 */    
 
-void _USB_HOST_TimerCallback(uintptr_t context, uint32_t currtick)
+void _USB_HOST_TimerCallback(uintptr_t context)
 {
     USB_HOST_BUS_OBJ * busObj = ((USB_HOST_BUS_OBJ *)(context));
     busObj->timerExpired = true;
+	SYS_TIME_TimerDestroy (busObj->busOperationsTimerHandle);
+	busObj->busOperationsTimerHandle = SYS_TIME_HANDLE_INVALID;
 }
 
 // *****************************************************************************
@@ -140,7 +140,7 @@ void _USB_HOST_TimerCallback(uintptr_t context, uint32_t currtick)
     void * _USB_HOST_FindEndOfDescriptor(void * descriptor) 
 
   Summary:
-    Function finds the end of descritor marker and returns the pointer to where
+    Function finds the end of descriptor marker and returns the pointer to where
     the marker has started.
 
   Description:
@@ -912,7 +912,8 @@ void _USB_HOST_UpdateConfigurationState
                     if (deviceObj->hubAddress == 0x00 )
                     {
                         /* Check if the device is a self powered or bus powered    */
-                        isSelfPowered =  ( (((USB_CONFIGURATION_DESCRIPTOR *) deviceObj->buffer)->bmAttributes) & USB_ATTRIBUTE_SELF_POWERED );
+                        configurationDescriptor = (USB_CONFIGURATION_DESCRIPTOR *)(deviceObj->buffer);
+                        isSelfPowered =  ( ( configurationDescriptor->bmAttributes ) & USB_ATTRIBUTE_SELF_POWERED );
 
                         if (isSelfPowered != USB_ATTRIBUTE_SELF_POWERED )
                         {
@@ -920,7 +921,7 @@ void _USB_HOST_UpdateConfigurationState
                              * if this configuration requires more current than what
                              * the root hub can provide. */
 
-                            if ( ( 2 * (((USB_CONFIGURATION_DESCRIPTOR * ) deviceObj->buffer)->bMaxPower )) > busObj->rootHubInfo.power )
+                            if ( 2 * ( configurationDescriptor->bMaxPower ) > busObj->rootHubInfo.power )
                             {
                                 /* This means the device needs more power than what
                                  * the root hub can provide. We cannot set this

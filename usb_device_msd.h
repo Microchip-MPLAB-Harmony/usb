@@ -52,7 +52,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 */
 #include <stdint.h>
 #include <stdbool.h>
-#include "system_config.h"
+#include "configuration.h"
 #include "system/common/sys_module.h"
 #include "system/fs/sys_fs_media_manager.h"
 #include "driver/driver_common.h"

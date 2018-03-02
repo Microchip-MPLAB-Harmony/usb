@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Module name="USB" id="B1073D56-43AB-4C5A-A90A-798D31D90D99" version="1.0.0">
+<Module name="USB" id="96AA1FD2-FACA-41D9-AE57-C8125196DAB1" version="1.0.0">
     <ConfigRoot path="config/module.py"/>
 </Module>

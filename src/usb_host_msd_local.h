@@ -50,10 +50,14 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // *****************************************************************************
 
 #include "usb/usb_host.h"
-#include "system_config.h"
+#include "configuration.h"
 #include "usb/src/usb_host_local.h"
 #include "usb/usb_host_msd.h"
 #include "usb/usb_msd.h"
+
+
+#define SYS_DEBUG_PRINT(level, format, ...) 
+#define SYS_DEBUG_MESSAGE(a,b, ...)
 
 #if defined(USB_HOST_MSD_ERROR_CALLBACK)
     /* Check if error callback has been configured */

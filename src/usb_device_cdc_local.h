@@ -51,7 +51,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "system_config.h"
+#include "configuration.h"
 #include "system/system_common.h"
 #include "system/system_module.h"
 #include "usb/usb_common.h"

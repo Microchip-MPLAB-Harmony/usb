@@ -42,7 +42,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #ifndef _USB_HOST_AUDIO_V1_MAPPING_H
 #define _USB_HOST_AUDIO_V1_MAPPING_H
 
-#include "system_config.h"
+#include "usb/src/usb_dependencies_mapping.h"
 #include "usb/src/usb_host_audio_local.h"
 
 #if defined (USB_HOST_AUDIO_V1_0_INSTANCES_NUMBER) && !defined (USB_HOST_AUDIO_V1_INSTANCES_NUMBER)

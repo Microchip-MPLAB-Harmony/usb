@@ -52,7 +52,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "system_config.h"
+#include "configuration.h"
 #include "usb/usb_common.h"
 #include "usb/usb_chapter_9.h"
 #include "usb/usb_device.h"
