@@ -1,4 +1,4 @@
-def instantiateComponent(usbHostComponent):	
+def instantiateComponent(usbHostComponent):
 	# USB Host Max Number of Devices   
 	usbHostDeviceNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_DEVICE_NUMNBER", None)
 	usbHostDeviceNumber.setLabel("Maximum Number of Devices")

@@ -6,7 +6,7 @@
     Microchip Technology Inc.
 
   File Name:
-    system_init_c_device_data_cdc_function_descrptr_hs.ftl
+    system_init_c_device_data_audio_function_descrptr_hs.ftl
 
   Summary:
     USB Device Freemarker Template File
@@ -42,11 +42,23 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 -->
-
+<#if CONFIG_USB_DEVICE_FUNCTION_AUDIO_VERSION == "Audio v2">
+<#if CONFIG_USB_DEVICE_FUNCTION_USE_IAD == true>
+	/* Descriptor for Function - Audio     */ 
+    /* Interface Association Descriptor: Audio Function*/
+    0x08,   // Size of this descriptor in bytes
+    0x0B,   // Interface association descriptor type
+    ${CONFIG_USB_DEVICE_FUNCTION_INTERFACE_NUMBER},   // The first associated interface
+    0x02,   // Number of contiguous associated interface
+    0x02,   // bInterfaceClass of the first interface
+    0x02,   // bInterfaceSubclass of the first interface
+    0x01,   // bInterfaceProtocol of the first interface
+    0x00,   // Interface string index
+</#if>
 	/* Interface Descriptor */
 
     0x09,                                           // Size of this descriptor in bytes
-    USB_DESCRIPTOR_INTERFACE,                       // Descriptor Type
+    USB_DESCRIPTOR_INTERFACE,                       // Descriptor Type is Interface descriptor
     ${CONFIG_USB_DEVICE_FUNCTION_INTERFACE_NUMBER},                                  // Interface Number
     0x00,                                           // Alternate Setting Number
     0x01,                                           // Number of endpoints in this interface
@@ -117,7 +129,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
     0x02,                       // Attributes type of EP (BULK)
     0x00, 0x02,                 // Max packet size of this EP
     0x00,                       // Interval (in ms)
-
+</#if>
 <#--
 /*******************************************************************************
  End of File

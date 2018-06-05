@@ -47,11 +47,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // Section: Include Files
 // *****************************************************************************
 // *****************************************************************************
-
+#include "usb/src/usb_external_dependencies.h"
 #include "driver/usb/usbhsv1/src/drv_usbhsv1_local.h"
-#include "definitions.h"
-#define SYS_DEBUG(a,b)
-#define SYS_DEBUG_MESSAGE(a,b)
+
 /************************************
  * Driver instance object
  ***********************************/

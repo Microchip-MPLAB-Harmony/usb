@@ -5,13 +5,13 @@
     Microchip Technology Inc.
 
   File Name:
-    usb_external_dependencies.h
+    drv_usb_external_dependencies.h
 
   Summary:
-    USB stack external dependencies file
+    USB Driver external dependencies file
 
   Description:
-    USB stack external dependencies file. 
+    USB Driver external dependencies file. 
 *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -39,19 +39,15 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _USB_EXTERNAL_DEPENDENCIES_H
-#define _USB_EXTERNAL_DEPENDENCIES_H
+#ifndef _DRV_USB_EXTERNAL_DEPENDENCIES_H
+#define _DRV_USB_EXTERNAL_DEPENDENCIES_H
 
 #include <string.h>
 #include "system/system_common.h"
 #include "configuration.h"
+#include "definitions.h"
 #include "system/system_module.h"
 
-#if defined (USB_HOST_DEVICES_NUMBER) &&  (USB_HOST_DEVICES_NUMBER > 0)
-#include "system/time/sys_time.h"
-#define SYS_TMR_HANDLE_INVALID SYS_TIME_HANDLE_INVALID
-#define SYS_TMR_CallbackSingle(delay,context,callback) SYS_TIME_CallbackRegisterMS(callback,context,delay, SYS_TIME_SINGLE)
-#endif 
 
 #define SYS_DEBUG_PRINT(level, format, ...) 
 #define SYS_DEBUG_MESSAGE(a,b, ...)

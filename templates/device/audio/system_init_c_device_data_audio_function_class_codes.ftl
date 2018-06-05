@@ -1,19 +1,22 @@
 <#--
 /*******************************************************************************
-  USB Driver Freemarker Template File
+  USB Device Freemarker Template File
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    system_init_c_driver_data.ftl
+    system_init_c_device_data_audio_function_class_codes.ftl
 
   Summary:
-    USB Driver Freemarker Template File
+    USB Device Freemarker Template File
 
   Description:
     This file contains configurations necessary to run the system.  It
-    implements USB driver initialize data. 
+    implements the "SYS_Initialize" function, configuration bits, and allocates
+    any necessary global system resources, such as the systemObjects structure
+    that contains the object handles to all the MPLAB Harmony module objects in
+    the system.
 *******************************************************************************/
 
 /*******************************************************************************
@@ -39,66 +42,11 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 -->
-/******************************************************
- * USB Driver Initialization
- ******************************************************/
- 
- <#if (USB_OPERATION_MODE == "Device")>
-static DRV_USB_VBUS_LEVEL DRV_USBHSV1_VBUS_Comparator(void)
-{
-    DRV_USB_VBUS_LEVEL retVal = DRV_USB_VBUS_LEVEL_INVALID;
-
-    if(true == USB_VBUS_INState_Get())
-    {
-        retVal = DRV_USB_VBUS_LEVEL_VALID;
-    }
-	retVal = DRV_USB_VBUS_LEVEL_VALID;
-    return (retVal);
-
-}
-</#if>
-
-const DRV_USBHSV1_INIT drvUSBInit =
-{
-    /* Interrupt Source for USB module */
-    .interruptSource = USBHS_IRQn,
-
-    /* System module initialization */
-    .moduleInit = {0},
-
-<#if (USB_OPERATION_MODE == "Device")>
-    /* USB Controller to operate as USB Device */
-    .operationMode = DRV_USBHSV1_OPMODE_DEVICE,
-<#elseif (USB_OPERATION_MODE == "Host")>
-	/* USB Controller to operate as USB Host */
-    .operationMode = DRV_USBHSV1_OPMODE_HOST,
-</#if>
-
-    /* To operate in USB Normal Mode */
-<#if (USB_SPEED == "High Speed")>
-    .operationSpeed = DRV_USBHSV1_DEVICE_SPEEDCONF_NORMAL,
-<#elseif (USB_SPEED == "Full Speed")>
-	.operationSpeed = DRV_USBHSV1_DEVICE_SPEEDCONF_LOW_POWER,
-</#if>    
-
-    /* Identifies peripheral (PLIB-level) ID */
-    .usbID = USBHS_REGS,
-	
-<#if (USB_OPERATION_MODE == "Device")>    
-    /* Function to check for VBus */
-    .vbusComparator = DRV_USBHSV1_VBUS_Comparator
-<#elseif (USB_OPERATION_MODE == "Host")>
-	/* Function to check for VBus */
-    .vbusComparator = NULL,
-            
-    /* Root hub available current in milliamperes */
-    .rootHubAvailableCurrent = 500,
-</#if>
-};
-
+	0x00,         // Class Code
+    0x00,         // Subclass code
+    0x00,         // Protocol code                      
 <#--
 /*******************************************************************************
  End of File
 */
 -->
-

@@ -14,11 +14,20 @@ def instantiateComponent(usbMsdComponentCommon):
 	usbDeviceMsdLunNumber.setDefaultValue(3)
 	usbDeviceMsdLunNumber.setVisible(False)
 	
+	usbDeviceMsdMaxSectorsToBufferCommon = usbMsdComponentCommon.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_MSD_MAX_SECTORS_COMMON", None)
+	usbDeviceMsdMaxSectorsToBufferCommon.setLabel("Combined Queue Depth")
+	usbDeviceMsdMaxSectorsToBufferCommon.setMin(1)
+	usbDeviceMsdMaxSectorsToBufferCommon.setMax(32767)
+	usbDeviceMsdMaxSectorsToBufferCommon.setDefaultValue(3)
+	usbDeviceMsdMaxSectorsToBufferCommon.setVisible(False)
+	
 	#########################################################
 	# system_config.h file for USB Device MSD function driver 
 	#########################################################
 	usbDeviceMsdCommonSystemConfigFile = usbMsdComponentCommon.createFileSymbol(None, None)
 	usbDeviceMsdCommonSystemConfigFile.setType("STRING")
 	usbDeviceMsdCommonSystemConfigFile.setOutputName("usb_device.LIST_SYSTEM_CONFIG_H_USB_DEVICE_FUNCTION_DRIVER")
-	usbDeviceMsdCommonSystemConfigFile.setSourcePath("templates/system_config.h.device_msd_common.ftl")
+	usbDeviceMsdCommonSystemConfigFile.setSourcePath("templates/device/msd/system_config.h.device_msd_common.ftl")
 	usbDeviceMsdCommonSystemConfigFile.setMarkup(True)
+	
+	

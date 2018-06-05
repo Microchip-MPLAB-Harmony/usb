@@ -20,5 +20,5 @@ def instantiateComponent(usbHidComponentCommon):
 	usbDeviceHidCommonSystemConfigFile = usbHidComponentCommon.createFileSymbol(None, None)
 	usbDeviceHidCommonSystemConfigFile.setType("STRING")
 	usbDeviceHidCommonSystemConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION")
-	usbDeviceHidCommonSystemConfigFile.setSourcePath("templates/device/system_config.h.device_hid_common.ftl")
+	usbDeviceHidCommonSystemConfigFile.setSourcePath("templates/device/hid/system_config.h.device_hid_common.ftl")
 	usbDeviceHidCommonSystemConfigFile.setMarkup(True)

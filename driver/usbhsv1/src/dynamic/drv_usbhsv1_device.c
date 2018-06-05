@@ -45,11 +45,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 //DOM-IGNORE-END
 
 
-#include "configuration.h"
 #include "driver/usb/usbhsv1/src/drv_usbhsv1_local.h"
 #include "driver/usb/usbhsv1/drv_usbhsv1.h"
 //#include "system/debug/sys_debug.h"
-#define SYS_DEBUG_MESSAGE(a, b)
 
 /* Array of endpoint objects. Two objects per endpoint */
 DRV_USBHSV1_DEVICE_ENDPOINT_OBJ gDrvUSBControlEndpoints[DRV_USBHSV1_INSTANCES_NUMBER] [2];

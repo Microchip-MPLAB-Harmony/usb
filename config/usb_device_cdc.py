@@ -7,10 +7,19 @@ cdcDescriptorSize = 58
 # countFunctionDrivers = 0; 
 
 def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
+	print(ownerComponent)
 	if (dependencyID == "usb_device_dependency"):
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", readValue + 1 , 2)
+		
+		# If we have CDC function driver plus any function driver (no matter what class), we enable IAD. 
+		if readValue > 0:
+			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_DESCRIPTOR_IAD_ENABLE")
+			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_DESCRIPTOR_IAD_ENABLE", True, 2)
+			iadEnableSymbol = ownerComponent.getSymbolByID("CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
+			iadEnableSymbol.clearValue()
+			iadEnableSymbol.setValue(True, 1)
 		
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
@@ -76,6 +85,12 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	numberOfInterfaces.setMax(16)
 	numberOfInterfaces.setDefaultValue(index+2)
 	
+	# Use IAD
+	useIad = usbDeviceCdcComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FUNCTION_USE_IAD", None)
+	useIad.setLabel("Use Interface Association Descriptor")
+	useIad.setVisible(True)
+	useIad.setDefaultValue(False)
+	useIad.setUseSingleDynamicValue(True)
 	
 	# CDC Function driver Read Queue Size 
 	queueSizeRead = usbDeviceCdcComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE", None)
@@ -163,7 +178,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	usbDeviceCdcSystemDefFile = usbDeviceCdcComponent.createFileSymbol(None, None)
 	usbDeviceCdcSystemDefFile.setType("STRING")
 	usbDeviceCdcSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-	usbDeviceCdcSystemDefFile.setSourcePath("templates/device/system_definitions.h.device_cdc_includes.ftl")
+	usbDeviceCdcSystemDefFile.setSourcePath("templates/device/cdc/system_definitions.h.device_cdc_includes.ftl")
 	usbDeviceCdcSystemDefFile.setMarkup(True)
 	
 	
@@ -173,7 +188,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	usbDeviceCdcFunInitFile = usbDeviceCdcComponent.createFileSymbol(None, None)
 	usbDeviceCdcFunInitFile.setType("STRING")
 	usbDeviceCdcFunInitFile.setOutputName("usb_device.LIST_USB_DEVICE_FUNCTION_INIT_ENTRY")
-	usbDeviceCdcFunInitFile.setSourcePath("templates/device/system_init_c_device_data_cdc_function_init.ftl")
+	usbDeviceCdcFunInitFile.setSourcePath("templates/device/cdc/system_init_c_device_data_cdc_function_init.ftl")
 	usbDeviceCdcFunInitFile.setMarkup(True)
 	
 	
@@ -183,7 +198,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	usbDeviceCdcFunRegTableFile = usbDeviceCdcComponent.createFileSymbol(None, None)
 	usbDeviceCdcFunRegTableFile.setType("STRING")
 	usbDeviceCdcFunRegTableFile.setOutputName("usb_device.LIST_USB_DEVICE_FUNCTION_ENTRY")
-	usbDeviceCdcFunRegTableFile.setSourcePath("templates/device/system_init_c_device_data_cdc_function.ftl")
+	usbDeviceCdcFunRegTableFile.setSourcePath("templates/device/cdc/system_init_c_device_data_cdc_function.ftl")
 	usbDeviceCdcFunRegTableFile.setMarkup(True)
 	
 	#############################################################
@@ -192,7 +207,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	usbDeviceCdcDescriptorHsFile = usbDeviceCdcComponent.createFileSymbol(None, None)
 	usbDeviceCdcDescriptorHsFile.setType("STRING")
 	usbDeviceCdcDescriptorHsFile.setOutputName("usb_device.LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_HS_ENTRY")
-	usbDeviceCdcDescriptorHsFile.setSourcePath("templates/device/system_init_c_device_data_cdc_function_descrptr_hs.ftl")
+	usbDeviceCdcDescriptorHsFile.setSourcePath("templates/device/cdc/system_init_c_device_data_cdc_function_descrptr_hs.ftl")
 	usbDeviceCdcDescriptorHsFile.setMarkup(True)
 	
 	#############################################################
@@ -201,8 +216,18 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	usbDeviceCdcDescriptorFsFile = usbDeviceCdcComponent.createFileSymbol(None, None)
 	usbDeviceCdcDescriptorFsFile.setType("STRING")
 	usbDeviceCdcDescriptorFsFile.setOutputName("usb_device.LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_FS_ENTRY")
-	usbDeviceCdcDescriptorFsFile.setSourcePath("templates/device/system_init_c_device_data_cdc_function_descrptr_fs.ftl")
+	usbDeviceCdcDescriptorFsFile.setSourcePath("templates/device/cdc/system_init_c_device_data_cdc_function_descrptr_fs.ftl")
 	usbDeviceCdcDescriptorFsFile.setMarkup(True)
+	
+	
+	#############################################################
+	# Class code Entry for CDC Function 
+	#############################################################
+	usbDeviceCdcDescriptorClassCodeFile = usbDeviceCdcComponent.createFileSymbol(None, None)
+	usbDeviceCdcDescriptorClassCodeFile.setType("STRING")
+	usbDeviceCdcDescriptorClassCodeFile.setOutputName("usb_device.LIST_USB_DEVICE_DESCRIPTOR_CLASS_CODE_ENTRY")
+	usbDeviceCdcDescriptorClassCodeFile.setSourcePath("templates/device/cdc/system_init_c_device_data_cdc_function_class_codes.ftl")
+	usbDeviceCdcDescriptorClassCodeFile.setMarkup(True)
 	
 	################################################
 	# USB CDC Function driver Files 

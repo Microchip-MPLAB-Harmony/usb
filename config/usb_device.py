@@ -5,6 +5,79 @@ usbDebugLogs = 1
 # USB Device Global definitions 
 usbDeviceClasses =["CDC", "MSD", "HID", "Vendor", "Audio V1", "Audio V2" ]
 usbDeviceEp0BufferSizes = ["64", "32", "16", "8"]
+usbDeviceDemoList = [
+"Enter Product ID", 
+"usb_speaker_demo",
+"usb_microphone_demo",
+"usb_headset_demo",
+"usb_headset_multiple_sampling_demo",
+"mac_audio_hi_res_demo",
+"cdc_com_port_dual_demo",
+"cdc_com_port_single_demo",
+"cdc_msd_basic_demo",
+"cdc_serial_emulator_demo",
+"cdc_serial_emulator_msd_demo",
+"hid_basic_demo",
+"hid_joystick_demo",
+"hid_keyboard_demo",
+"hid_mouse_demo",
+"hid_msd_demo",
+"msd_basic_demo",
+"msd_sdcard_demo",
+"msd_spiflash_demo",
+"msd_multiple_luns_demo",
+"vendor_demo",
+]
+
+usbDeviceDemoProductList = [
+"0x0000",
+"0x0064",
+"0x0065",
+"0x00FF",
+"0x00FF",
+"0xABCD",
+"0x0208",
+"0x000A",
+"0x0057",
+"0x000A",
+"0x0057",
+"0x003F",
+"0x005E",
+"0x0055",
+"0x0000",
+"0x0054",
+"0x0009",
+"0x0009",
+"0x0009",
+"0x0009",
+"0x0053",
+]
+
+usbDeviceProductStringList = [
+"Enter Product String Here",
+"Harmony USB Speaker Example",
+"Harmony USB Microphone Example",
+"Harmony USB Headset Example",
+"Harmony USB Headset Multiple Sampling Rate Example",
+"Harmony USB Speaker 2.0",
+"CDC Dual COM Port Demo",
+"Simple CDC Device Demo",
+"CDC + MSD Demo",
+"Simple CDC Device Demo",
+"CDC + MSD Demo", 
+"Simple HID Device Demo", 
+"HID Joystick Demo", 
+"HID Keyboard Demo",
+"HID Mouse Demo", 
+"HID + MSD Demo", 
+"Simple MSD Device Demo", 
+"Simple MSD Device Demo", 
+"MSD SPI Flash Device Demo", 
+"Multiple LUN MSD Demo", 
+"Simple WinUSB Device Demo" 
+]
+
+
 usbDeviceFunctionsNumberMax = 10
 usbDeviceFunctionsNumberDefaultValue = 2 
 usbDeviceFunctionsNumberValue = usbDeviceFunctionsNumberDefaultValue
@@ -37,6 +110,14 @@ usbDeviceHidEPNumberIntIn = []
 #USB Device Vendor 
 usbDeviceEndpointReadQueueSize = []
 usbDeviceEndpointWriteQueueSize = []
+
+
+def onDependencyConnected(info):
+    print("USB driver connected")
+    print(info["localComponent"].getID())
+    print(info["dependencyID"])
+    print(info["remoteComponent"].getID())
+    print(info["capabilityID"])
 
 def instantiateComponent(usbDeviceComponent):	
 	#Configuration descriptor size
@@ -120,23 +201,40 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceVendorId.setVisible(True)
 	usbDeviceVendorId.setDefaultValue("0x04D8")
 	
+	# USB Device Product ID Selection
+	usbDeviceProductId = usbDeviceComponent.createComboSymbol("CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0", None, usbDeviceDemoList)
+	usbDeviceProductId.setLabel("Product ID Selection")
+	usbDeviceProductId.setVisible(True)
+	usbDeviceProductId.setDefaultValue("Enter Product ID")
+	
 	# USB Device Product ID 
 	usbDeviceProductId = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_PRODUCT_ID_IDX0", None)
 	usbDeviceProductId.setLabel("Product ID")
 	usbDeviceProductId.setVisible(True)
 	usbDeviceProductId.setDefaultValue("0x0000")
+	usbDeviceProductId.setUseSingleDynamicValue(True)
+	usbDeviceProductId.setDependencies(blUSBDeviceProductIDSelection,["CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0"])
 	
 	# USB Device Manufacturer String 
 	usbDeviceManufacturerString = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_MANUFACTURER_STRING", None)
 	usbDeviceManufacturerString.setLabel("Manufacturer String")
 	usbDeviceManufacturerString.setVisible(True)
-	usbDeviceManufacturerString.setDefaultValue("Microchip Technolgy Inc")
+	usbDeviceManufacturerString.setDefaultValue("Microchip Technology Inc.")
 	
 	# USB Device Product String 
 	usbDeviceProductString = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR", None)
-	usbDeviceProductString.setLabel("Product String")
+	usbDeviceProductString.setLabel("Product String Selection")
 	usbDeviceProductString.setVisible(True)
 	usbDeviceProductString.setDefaultValue("Enter Product string here")
+	usbDeviceProductString.setUseSingleDynamicValue(True)
+	usbDeviceProductString.setDependencies(blUSBDeviceProductStringSelection,["CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0"])
+
+	# USB Device IAD Enable 
+	usbDeviceIadEnable = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_DESCRIPTOR_IAD_ENABLE", None)
+	usbDeviceIadEnable.setVisible(False)
+	usbDeviceIadEnable.setDefaultValue(False)
+	usbDeviceIadEnable.setUseSingleDynamicValue(True)
+	
 	
 	configName = Variables.get("__CONFIGURATION_NAME")
 	
@@ -189,6 +287,7 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceFunctionEntry = usbDeviceComponent.createListSymbol("LIST_USB_DEVICE_FUNCTION_ENTRY", None)
 	usbDeviceFunctionDscrptrHSEntry = usbDeviceComponent.createListSymbol("LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_HS_ENTRY", None)
 	usbDeviceFunctionDscrptrFSEntry = usbDeviceComponent.createListSymbol("LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_FS_ENTRY", None)
+	usbDeviceDescriptorClassCodeEntry = usbDeviceComponent.createListSymbol("LIST_USB_DEVICE_DESCRIPTOR_CLASS_CODE_ENTRY", None)
 	
 	
 	usbDeviceSystemInitCallsFile = usbDeviceComponent.createFileSymbol(None, None)
@@ -237,7 +336,6 @@ def instantiateComponent(usbDeviceComponent):
 # all files go into src/
 def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callback):
 	configName1 = Variables.get("__CONFIGURATION_NAME")
-	#filename = component.createFileSymbol(None, None)
 	symbol.setProjectPath("config/" + configName1 + destPath)
 	symbol.setSourcePath(srcPath + fileName)
 	symbol.setOutputName(fileName)
@@ -266,10 +364,12 @@ def blUSBDeviceFeatureEnableMicrosoftOsDescriptor(usbSymbolSource, event):
 	else:
 		usbSymbolSource.setVisible(False)
 						
-		
-# def onDependentComponentAdded(component, id, usart):
-	# if id == "usb_driver_dependency" :
-		# usbOperationMode = component.getSymbolByID("USB_OPERATION_MODE")
-		# if usbOperationMode.getValue == "Host":
-			# Log.writeDebugMessage("USB driver error")
+def blUSBDeviceProductIDSelection(usbSymbolSource, event):
+	index = usbDeviceDemoList.index(event["value"])
+	usbSymbolSource.setValue(usbDeviceDemoProductList[index],2)
+	
+def blUSBDeviceProductStringSelection(usbSymbolSource, event):
+	index = usbDeviceDemoList.index(event["value"])
+	usbSymbolSource.setValue(usbDeviceProductStringList[index],2)
+	
 		

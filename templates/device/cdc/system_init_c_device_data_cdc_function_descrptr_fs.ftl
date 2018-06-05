@@ -42,7 +42,19 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 -->
-
+<#if CONFIG_USB_DEVICE_FUNCTION_USE_IAD == true>
+	
+	/* Descriptor for Function - CDC     */ 
+    /* Interface Association Descriptor: CDC Function*/
+    0x08,   // Size of this descriptor in bytes
+    0x0B,   // Interface association descriptor type
+    ${CONFIG_USB_DEVICE_FUNCTION_INTERFACE_NUMBER},   // The first associated interface
+    0x02,   // Number of contiguous associated interface
+    0x02,   // bInterfaceClass of the first interface
+    0x02,   // bInterfaceSubclass of the first interface
+    0x01,   // bInterfaceProtocol of the first interface
+    0x00,   // Interface string index
+</#if>
 	/* Interface Descriptor */
 
     0x09,                                           // Size of this descriptor in bytes

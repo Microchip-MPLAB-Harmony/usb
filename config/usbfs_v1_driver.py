@@ -16,16 +16,6 @@ def dependencyStatus(symbol, event):
     else :
         symbol.setVisible(False)
 def instantiateComponent(usbDriverComponent):	
-
-	res = Database.activateComponents(["HarmonyCore"])
-	
-	# USB Driver Speed selection 	
-	usbSpeed = usbDriverComponent.createComboSymbol("USB_SPEED", None, listUsbSpeed)
-	usbSpeed.setLabel("USB Speed Selection")
-	usbSpeed.setVisible(True)
-	usbSpeed.setDescription("Select USB Operation Speed")
-	usbSpeed.setDefaultValue("DRV_USBHSV1_DEVICE_SPEEDCONF_NORMAL")
-	
 	# USB Driver Operation mode selection 
 	usbOpMode = usbDriverComponent.createComboSymbol("USB_OPERATION_MODE", None, listUsbOperationMode)
 	usbOpMode.setLabel("USB Mode Selection")
@@ -65,8 +55,8 @@ def instantiateComponent(usbDriverComponent):
 	Database.setSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL", True, 2)
 	Database.clearSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN")
 	Database.setSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN", True, 2)
-	Database.clearSymbolValue("core", "USBHS_CLOCK_ENABLE")
-	Database.setSymbolValue("core", "USBHS_CLOCK_ENABLE", True, 2)
+	Database.clearSymbolValue("core", "PMC_ID_USBHS")
+	Database.setSymbolValue("core", "PMC_ID_USBHS", True, 2)
 	Database.clearSymbolValue("core", "PMC_SCER_USBCLK")
 	Database.setSymbolValue("core", "PMC_SCER_USBCLK", True, 2)
 	Database.clearSymbolValue("core", NVICVector)
@@ -94,23 +84,20 @@ def instantiateComponent(usbDriverComponent):
 	usbhsSymIntEnComment.setDependencies(dependencyStatus, ["core." + NVICVector])
 	
 	# Enable dependent Harmony core components
-	Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
-	Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
-	
-	Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
-	Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
+	Database.clearSymbolValue("Harmony", "ENABLE_DRV_COMMON")
+	Database.setSymbolValue("Harmony", "ENABLE_DRV_COMMON", True, 2)
 
-	Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_INT")
-	Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_INT", True, 2)
+	Database.clearSymbolValue("Harmony", "ENABLE_SYS_INT")
+	Database.setSymbolValue("Harmony", "ENABLE_SYS_INT", True, 2)
 
     # Database.clearSymbolValue("Harmony", "ENABLE_SYS_DMA")
     # Database.setSymbolValue("Harmony", "ENABLE_SYS_DMA", True, 2)
 
-	Database.clearSymbolValue("HarmonyCore", "ENABLE_OSAL")
-	Database.setSymbolValue("HarmonyCore", "ENABLE_OSAL", True, 2)
+	Database.clearSymbolValue("Harmony", "ENABLE_OSAL")
+	Database.setSymbolValue("Harmony", "ENABLE_OSAL", True, 2)
 
-	Database.clearSymbolValue("HarmonyCore", "ENABLE_APP_FILE")
-	Database.setSymbolValue("HarmonyCore", "ENABLE_APP_FILE", True, 2)
+	Database.clearSymbolValue("Harmony", "ENABLE_APP_FILE")
+	Database.setSymbolValue("Harmony", "ENABLE_APP_FILE", True, 2)
 	
 	configName = Variables.get("__CONFIGURATION_NAME")
 	

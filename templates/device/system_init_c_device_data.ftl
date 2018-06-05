@@ -26,7 +26,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
   System Initialization File
 
   File Name:
-    system_init_c_device_data.ftl
+    usb_device_init_data.c
 
   Summary:
     This file contains source code necessary to initialize the system.
@@ -94,9 +94,17 @@ const USB_DEVICE_DESCRIPTOR deviceDescriptor =
     0x12,                           // Size of this descriptor in bytes
     USB_DESCRIPTOR_DEVICE,          // DEVICE descriptor type
     0x0200,                         // USB Spec Release Number in BCD format
+<#if CONFIG_USB_DEVICE_DESCRIPTOR_IAD_ENABLE == true>
+    0xEF,                           // Class Code
+    0x02,                           // Subclass code
+    0x01,                           // Protocol code
+<#elseif CONFIG_USB_DEVICE_FUNCTIONS_NUMBER == 1>
+	${LIST_USB_DEVICE_DESCRIPTOR_CLASS_CODE_ENTRY}
+<#else>
     0x00,                           // Class Code
     0x00,                           // Subclass code
     0x00,                           // Protocol code
+</#if>
     USB_DEVICE_EP0_BUFFER_SIZE,     // Max packet size for EP0, see system_config.h
     ${CONFIG_USB_DEVICE_VENDOR_ID_IDX0},                         // Vendor ID
     ${CONFIG_USB_DEVICE_PRODUCT_ID_IDX0},                         // Product ID				
@@ -117,9 +125,17 @@ const USB_DEVICE_QUALIFIER deviceQualifierDescriptor1 =
     0x0A,                               // Size of this descriptor in bytes
     USB_DESCRIPTOR_DEVICE_QUALIFIER,    // Device Qualifier Type
     0x0200,                             // USB Specification Release number
+<#if CONFIG_USB_DEVICE_DESCRIPTOR_IAD_ENABLE == true>
+	0xEF,                           // Class Code
+    0x02,                           // Subclass code
+    0x01,                           // Protocol code
+<#elseif CONFIG_USB_DEVICE_FUNCTIONS_NUMBER == 1>
+	${LIST_USB_DEVICE_DESCRIPTOR_CLASS_CODE_ENTRY}
+<#else>
     0x00,                           // Class Code
     0x00,                           // Subclass code
     0x00,                           // Protocol code
+</#if>
     USB_DEVICE_EP0_BUFFER_SIZE,         // Maximum packet size for endpoint 0
     0x01,                               // Number of possible configurations
     0x00                                // Reserved for future use.

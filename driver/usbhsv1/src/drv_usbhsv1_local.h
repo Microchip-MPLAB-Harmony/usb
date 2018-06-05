@@ -53,9 +53,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include <stdbool.h>
 #include <stddef.h>
 
-#include "configuration.h"
-//#include "system/debug/sys_debug.h"
-//#include "system/tmr/sys_tmr.h"
+#include "driver/usb/drv_usb_external_dependencies.h"
 #include "driver/usb/usbhsv1/drv_usbhsv1.h"
 #include "driver/usb/usbhsv1/src/drv_usbhsv1_variant_mapping.h"
 #include "osal/osal.h"

@@ -20,8 +20,9 @@ def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
 def destroyComponent(component):
 	# global countFunctionDrivers
 	functionsNumber = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-	Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-	Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", functionsNumber -  1 , 2)
+	if (functionsNumber != None):
+		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
+		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", functionsNumber -  1 , 2)
 	
 	
 def usbDeviceHidBufferQueueSize(usbSymbolSource, event):
@@ -140,7 +141,7 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	usbDeviceHidSystemDefFile = usbDeviceHidComponent.createFileSymbol(None, None)
 	usbDeviceHidSystemDefFile.setType("STRING")
 	usbDeviceHidSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-	usbDeviceHidSystemDefFile.setSourcePath("templates/device/system_definitions.h.device_hid_includes.ftl")
+	usbDeviceHidSystemDefFile.setSourcePath("templates/device/hid/system_definitions.h.device_hid_includes.ftl")
 	usbDeviceHidSystemDefFile.setMarkup(True)
 	
 	
@@ -150,7 +151,7 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	usbDeviceHidFunInitFile = usbDeviceHidComponent.createFileSymbol(None, None)
 	usbDeviceHidFunInitFile.setType("STRING")
 	usbDeviceHidFunInitFile.setOutputName("usb_device.LIST_USB_DEVICE_FUNCTION_INIT_ENTRY")
-	usbDeviceHidFunInitFile.setSourcePath("templates/device/system_init_c_device_data_hid_function_init.ftl")
+	usbDeviceHidFunInitFile.setSourcePath("templates/device/hid/system_init_c_device_data_hid_function_init.ftl")
 	usbDeviceHidFunInitFile.setMarkup(True)
 	
 	#############################################################
@@ -159,7 +160,7 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	usbDeviceHidFunRegTableFile = usbDeviceHidComponent.createFileSymbol(None, None)
 	usbDeviceHidFunRegTableFile.setType("STRING")
 	usbDeviceHidFunRegTableFile.setOutputName("usb_device.LIST_USB_DEVICE_FUNCTION_ENTRY")
-	usbDeviceHidFunRegTableFile.setSourcePath("templates/device/system_init_c_device_data_hid_function.ftl")
+	usbDeviceHidFunRegTableFile.setSourcePath("templates/device/hid/system_init_c_device_data_hid_function.ftl")
 	usbDeviceHidFunRegTableFile.setMarkup(True)
 	
 	#############################################################
@@ -168,7 +169,7 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	usbDeviceHidDescriptorHsFile = usbDeviceHidComponent.createFileSymbol(None, None)
 	usbDeviceHidDescriptorHsFile.setType("STRING")
 	usbDeviceHidDescriptorHsFile.setOutputName("usb_device.LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_HS_ENTRY")
-	usbDeviceHidDescriptorHsFile.setSourcePath("templates/device/system_init_c_device_data_hid_function_descrptr_hs.ftl")
+	usbDeviceHidDescriptorHsFile.setSourcePath("templates/device/hid/system_init_c_device_data_hid_function_descrptr_hs.ftl")
 	usbDeviceHidDescriptorHsFile.setMarkup(True)
 	
 	#############################################################
@@ -177,8 +178,17 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	usbDeviceHidDescriptorFsFile = usbDeviceHidComponent.createFileSymbol(None, None)
 	usbDeviceHidDescriptorFsFile.setType("STRING")
 	usbDeviceHidDescriptorFsFile.setOutputName("usb_device.LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_FS_ENTRY")
-	usbDeviceHidDescriptorFsFile.setSourcePath("templates/device/system_init_c_device_data_hid_function_descrptr_fs.ftl")
+	usbDeviceHidDescriptorFsFile.setSourcePath("templates/device/hid/system_init_c_device_data_hid_function_descrptr_fs.ftl")
 	usbDeviceHidDescriptorFsFile.setMarkup(True)
+	
+	#############################################################
+	# Class code Entry for HID Function 
+	#############################################################
+	usbDeviceHidDescriptorClassCodeFile = usbDeviceHidComponent.createFileSymbol(None, None)
+	usbDeviceHidDescriptorClassCodeFile.setType("STRING")
+	usbDeviceHidDescriptorClassCodeFile.setOutputName("usb_device.LIST_USB_DEVICE_DESCRIPTOR_CLASS_CODE_ENTRY")
+	usbDeviceHidDescriptorClassCodeFile.setSourcePath("templates/device/hid/system_init_c_device_data_hid_function_class_codes.ftl")
+	usbDeviceHidDescriptorClassCodeFile.setMarkup(True)
 	
 	################################################
 	# USB HID Function driver Files 

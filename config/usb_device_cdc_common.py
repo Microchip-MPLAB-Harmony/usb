@@ -22,5 +22,5 @@ def instantiateComponent(usbCdcComponentCommon):
 	usbDeviceCdcCommonSystemConfigFile = usbCdcComponentCommon.createFileSymbol(None, None)
 	usbDeviceCdcCommonSystemConfigFile.setType("STRING")
 	usbDeviceCdcCommonSystemConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION")
-	usbDeviceCdcCommonSystemConfigFile.setSourcePath("templates/device/system_config.h.device_cdc_common.ftl")
+	usbDeviceCdcCommonSystemConfigFile.setSourcePath("templates/device/cdc/system_config.h.device_cdc_common.ftl")
 	usbDeviceCdcCommonSystemConfigFile.setMarkup(True)
