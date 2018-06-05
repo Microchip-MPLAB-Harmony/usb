@@ -66,7 +66,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "driver/driver_common.h"
 #include "usb/usb_common.h"
 #include "usb/usb_chapter_9.h"
-#include "usb/driver/drv_usb.h"
+#include "driver/usb/drv_usb.h"
 
 // *****************************************************************************
 // *****************************************************************************

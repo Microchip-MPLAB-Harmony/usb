@@ -61,7 +61,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include "system/system_module.h"
 #include "system/int/sys_int.h"
 #include "driver/driver_common.h"
-#include "usb/driver/drv_usb.h"
+#include "driver/usb/drv_usb.h"
 #include "usb/usb_common.h"
 #include "usb/usb_hub.h"
 #include "usb/usb_chapter_9.h"
