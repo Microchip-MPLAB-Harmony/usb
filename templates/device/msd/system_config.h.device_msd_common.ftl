@@ -47,6 +47,12 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 #define USB_DEVICE_MSD_NUM_SECTOR_BUFFERS 1
 
+/* Number of Logical Units */
+#define USB_DEVICE_MSD_LUNS_NUMBER      1
+
+/* Size of disk image (in KB) in Program Flash Memory */
+#define DRV_NVM_BLOCK_MEMORY_SIZE       36
+
 <#--
 /*******************************************************************************
  End of File
