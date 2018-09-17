@@ -24,7 +24,7 @@ def instantiateComponent(usbDriverComponent):
 	usbSpeed.setLabel("USB Speed Selection")
 	usbSpeed.setVisible(True)
 	usbSpeed.setDescription("Select USB Operation Speed")
-	usbSpeed.setDefaultValue("DRV_USBHSV1_DEVICE_SPEEDCONF_NORMAL")
+	usbSpeed.setDefaultValue("High Speed")
 	
 	# USB Driver Operation mode selection 
 	usbOpMode = usbDriverComponent.createComboSymbol("USB_OPERATION_MODE", None, listUsbOperationMode)

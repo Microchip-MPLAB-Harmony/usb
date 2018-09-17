@@ -266,7 +266,7 @@ void APP_Tasks ( void )
             /* The application comes here when the demo
              * has failed. Provide LED indication .*/
 
-            if(SYS_FS_Unmount("/mnt/myDrive") != 0)
+            if(SYS_FS_Unmount("/mnt/myDrive1") != 0)
             {
                 /* The disk could not be un mounted. Try
                  * un mounting again untill success. */
@@ -277,6 +277,7 @@ void APP_Tasks ( void )
             {
                 /* UnMount was successful. Wait for device attach */
                 appData.state =  APP_STATE_WAIT_FOR_DEVICE_ATTACH;
+                appData.deviceIsConnected = false; 
 
             }
             break;
