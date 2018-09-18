@@ -48,10 +48,10 @@ static DRV_USB_VBUS_LEVEL DRV_USBHSV1_VBUS_Comparator(void)
 {
     DRV_USB_VBUS_LEVEL retVal = DRV_USB_VBUS_LEVEL_INVALID;
 
-    if(true == USB_VBUS_INState_Get())
+    /*if(true == USB_VBUS_INState_Get())
     {
         retVal = DRV_USB_VBUS_LEVEL_VALID;
-    }
+    }*/
 	retVal = DRV_USB_VBUS_LEVEL_VALID;
     return (retVal);
 

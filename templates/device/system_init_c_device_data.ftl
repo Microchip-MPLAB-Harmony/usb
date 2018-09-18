@@ -115,7 +115,7 @@ const USB_DEVICE_DESCRIPTOR deviceDescriptor =
     0x01                            // Number of possible configurations
 };
 
-
+<#if CONFIG_USB_DEVICE_SPEED == "High Speed">
 /*******************************************
  *  USB Device Qualifier Descriptor for this
  *  demo.
@@ -140,6 +140,7 @@ const USB_DEVICE_QUALIFIER deviceQualifierDescriptor1 =
     0x01,                               // Number of possible configurations
     0x00                                // Reserved for future use.
 };
+
 
 /*******************************************
  *  USB High Speed Configuration Descriptor
@@ -168,7 +169,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE highSpeedConfigDescSet[1] =
 {
     highSpeedConfigurationDescriptor
 };
-
+</#if>
 
 /*******************************************
  *  USB Full Speed Configuration Descriptor
@@ -335,13 +336,24 @@ const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =
     &deviceDescriptor,          /* Full speed descriptor */
     1,                          /* Total number of full speed configurations available */
     fullSpeedConfigDescSet,     /* Pointer to array of full speed configurations descriptors*/
+<#if CONFIG_USB_DEVICE_SPEED == "High Speed">
     &deviceDescriptor,          /* High speed device descriptor*/
     1,                          /* Total number of high speed configurations available */
     highSpeedConfigDescSet,     /* Pointer to array of high speed configurations descriptors. */
+<#else>
+	NULL, 
+	0,
+	NULL,
+</#if>
     3,                          // Total number of string descriptors available.
     stringDescriptors,          // Pointer to array of string descriptors.
+<#if CONFIG_USB_DEVICE_SPEED == "High Speed">
     &deviceQualifierDescriptor1,// Pointer to full speed dev qualifier.
     &deviceQualifierDescriptor1 // Pointer to high speed dev qualifier.
+<#else>
+	NULL, 
+	NULL
+</#if>
 };
 
 
@@ -362,8 +374,12 @@ const USB_DEVICE_INIT usbDevInitData =
     .usbMasterDescriptor = (USB_DEVICE_MASTER_DESCRIPTOR*)&usbMasterDescriptor,
 
     /* USB Device Speed */
-    .deviceSpeed =  USB_SPEED_HIGH,    
-    
+	<#if CONFIG_USB_DEVICE_SPEED == "High Speed">
+    .deviceSpeed =  USB_SPEED_HIGH,   
+	<#else>
+	.deviceSpeed =  USB_SPEED_FULL,
+    </#if>
+	
 	/* Index of the USB Driver to be used by this Device Layer Instance */
     .driverIndex = DRV_USBHSV1_INDEX_0,
 

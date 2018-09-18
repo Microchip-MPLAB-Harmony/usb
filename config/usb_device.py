@@ -1,6 +1,7 @@
 # Global definitions  
 usbDebugLogs = 1 
  
+listUsbSpeed = ["High Speed", "Full Speed"]
 
 # USB Device Global definitions 
 usbDeviceClasses =["CDC", "MSD", "HID", "Vendor", "Audio V1", "Audio V2" ]
@@ -120,6 +121,14 @@ def onDependencyConnected(info):
     print(info["capabilityID"])
 
 def instantiateComponent(usbDeviceComponent):	
+	
+	# USB Device Speed 
+	usbDeviceSpeed = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_SPEED", None)
+	usbDeviceSpeed.setVisible(False)
+	usbDeviceSpeed.setDefaultValue("High Speed")
+	usbDeviceSpeed.setUseSingleDynamicValue(True)
+	
+	
 	#Configuration descriptor size
 	usbDeviceConfigDscrptrSize = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", None)
 	usbDeviceConfigDscrptrSize.setVisible(False)

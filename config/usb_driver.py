@@ -15,6 +15,11 @@ def dependencyStatus(symbol, event):
         symbol.setVisible(True)
     else :
         symbol.setVisible(False)
+		
+def blUSBDriverSpeedChanged(symbol, event):
+	Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED")
+	Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED", event["value"], 2)
+
 def instantiateComponent(usbDriverComponent):	
 
 	res = Database.activateComponents(["HarmonyCore"])
@@ -25,6 +30,7 @@ def instantiateComponent(usbDriverComponent):
 	usbSpeed.setVisible(True)
 	usbSpeed.setDescription("Select USB Operation Speed")
 	usbSpeed.setDefaultValue("High Speed")
+	usbSpeed.setDependencies(blUSBDriverSpeedChanged, ["USB_SPEED"])
 	
 	# USB Driver Operation mode selection 
 	usbOpMode = usbDriverComponent.createComboSymbol("USB_OPERATION_MODE", None, listUsbOperationMode)
