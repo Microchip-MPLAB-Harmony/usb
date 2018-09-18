@@ -55,7 +55,7 @@ def instantiateComponent(usbHostHidComponent):
 	usbHostHidSystemDefFile = usbHostHidComponent.createFileSymbol(None, None)
 	usbHostHidSystemDefFile.setType("STRING")
 	usbHostHidSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-	usbHostHidSystemDefFile.setSourcePath("templates/host/system_definitions.h.host_cdc_includes.ftl")
+	usbHostHidSystemDefFile.setSourcePath("templates/host/system_definitions.h.host_hid_includes.ftl")
 	usbHostHidSystemDefFile.setMarkup(True)
 	
 	##############################################################
@@ -64,7 +64,7 @@ def instantiateComponent(usbHostHidComponent):
 	usbHostHidSystemConfigFile = usbHostHidComponent.createFileSymbol(None, None)
 	usbHostHidSystemConfigFile.setType("STRING")
 	usbHostHidSystemConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION")
-	usbHostHidSystemConfigFile.setSourcePath("templates/host/system_config.h.host_cdc.ftl")
+	usbHostHidSystemConfigFile.setSourcePath("templates/host/system_config.h.host_hid.ftl")
 	usbHostHidSystemConfigFile.setMarkup(True)
 	
 	
@@ -72,19 +72,16 @@ def instantiateComponent(usbHostHidComponent):
 	# USB Host HID Client driver Files 
 	################################################
 	usbHostHidHeaderFile = usbHostHidComponent.createFileSymbol(None, None)
-	addFileName('usb_host_cdc.h', usbHostHidComponent, usbHostHidHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_host_hid.h', usbHostHidComponent, usbHostHidHeaderFile, "", "/usb/", True, None)
 	
 	usbHidHeaderFile = usbHostHidComponent.createFileSymbol(None, None)
-	addFileName('usb_cdc.h', usbHostHidComponent, usbHidHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_hid.h', usbHostHidComponent, usbHidHeaderFile, "", "/usb/", True, None)
 	
 	usbHostHidSourceFile = usbHostHidComponent.createFileSymbol(None, None)
-	addFileName('usb_host_cdc.c', usbHostHidComponent, usbHostHidSourceFile, "src/dynamic/", "/usb/src/dynamic", True, None)
-	
-	usbHostHidAcmSourceFile = usbHostHidComponent.createFileSymbol(None, None)
-	addFileName('usb_host_cdc_acm.c', usbHostHidComponent, usbHostHidAcmSourceFile, "src/dynamic/", "/usb/src/dynamic", True, None)
+	addFileName('usb_host_hid.c', usbHostHidComponent, usbHostHidSourceFile, "src/dynamic/", "/usb/src/dynamic", True, None)
 	
 	usbHostHidLocalHeaderFile = usbHostHidComponent.createFileSymbol(None, None)
-	addFileName('usb_host_cdc_local.h', usbHostHidComponent, usbHostHidLocalHeaderFile, "src/", "/usb/src", True, None)
+	addFileName('usb_host_hid_local.h', usbHostHidComponent, usbHostHidLocalHeaderFile, "src/", "/usb/src", True, None)
 	
 	
 	# all files go into src/

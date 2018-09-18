@@ -10,7 +10,7 @@ def instantiateComponent(usbAudioComponentCommon):
 	
 	usbDeviceAudioQueuDepth = usbAudioComponentCommon.createIntegerSymbol("CONFIG_USB_DEVICE_AUDIO_QUEUE_DEPTH_COMBINED", None)
 	usbDeviceAudioQueuDepth.setLabel("Combined Queue Depth")
-	usbDeviceAudioQueuDepth.setMin(1)
+	usbDeviceAudioQueuDepth.setMin(0)
 	usbDeviceAudioQueuDepth.setMax(32767)
 	usbDeviceAudioQueuDepth.setDefaultValue(0)
 	usbDeviceAudioQueuDepth.setUseSingleDynamicValue(True)
@@ -18,17 +18,17 @@ def instantiateComponent(usbAudioComponentCommon):
 	
 	
 	usbDeviceAudioStrmInterfaceMax = usbAudioComponentCommon.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER_COMBINED", None)
-	usbDeviceAudioStrmInterfaceMax.setMin(1)
+	usbDeviceAudioStrmInterfaceMax.setMin(0)
 	usbDeviceAudioStrmInterfaceMax.setMax(32767)
-	usbDeviceAudioStrmInterfaceMax.setDefaultValue(0)
+	usbDeviceAudioStrmInterfaceMax.setDefaultValue(1)
 	usbDeviceAudioStrmInterfaceMax.setUseSingleDynamicValue(True)
 	usbDeviceAudioStrmInterfaceMax.setVisible(False)
 	
 	
 	usbDeviceAudioAltInterfaceMax = usbAudioComponentCommon.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_AUDIO_MAX_ALTERNATE_SETTING_COMBINED", None)
-	usbDeviceAudioAltInterfaceMax.setMin(1)
+	usbDeviceAudioAltInterfaceMax.setMin(0)
 	usbDeviceAudioAltInterfaceMax.setMax(32767)
-	usbDeviceAudioAltInterfaceMax.setDefaultValue(0)
+	usbDeviceAudioAltInterfaceMax.setDefaultValue(2)
 	usbDeviceAudioAltInterfaceMax.setUseSingleDynamicValue(True)
 	usbDeviceAudioAltInterfaceMax.setVisible(False)
 	

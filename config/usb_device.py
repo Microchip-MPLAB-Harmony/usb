@@ -141,6 +141,7 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceFunctionNumber.setMin(1)
 	usbDeviceFunctionNumber.setDefaultValue(0)
 	usbDeviceFunctionNumber.setUseSingleDynamicValue(True)
+	usbDeviceFunctionNumber.setReadOnly(True)
 	
 	# USB Device events enable 
 	usbDeviceEventsEnable = usbDeviceComponent.createMenuSymbol("USB_DEVICE_EVENTS", None)

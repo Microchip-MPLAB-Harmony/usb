@@ -102,7 +102,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	currentQSizeRead = queueSizeRead.getValue()
 
 	
-	#CDC Function driver Write Queue Size 
+	# CDC Function driver Write Queue Size 
 	queueSizeWrite = usbDeviceCdcComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE", None)
 	queueSizeWrite.setLabel("CDC Write Queue Size")
 	queueSizeWrite.setVisible(True)
@@ -112,7 +112,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	currentQSizeWrite = queueSizeWrite.getValue()
 	
 	
-	#CDC Function driver Serial state notification Queue Size  
+	# CDC Function driver Serial state notification Queue Size  
 	queueSizeSerialStateNotification = usbDeviceCdcComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_SERIAL_NOTIFIACATION_Q_SIZE", None)
 	queueSizeSerialStateNotification.setLabel("CDC Serial Notification Queue Size")
 	queueSizeSerialStateNotification.setVisible(True)
