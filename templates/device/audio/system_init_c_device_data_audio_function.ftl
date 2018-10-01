@@ -57,7 +57,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 		</#if>
         .funcDriverInit = (void*)&audioInit${CONFIG_USB_DEVICE_FUNCTION_INDEX}    /* Function driver init data */
     },
-
 <#--
 /*******************************************************************************
  End of File

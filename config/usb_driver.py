@@ -38,6 +38,7 @@ def instantiateComponent(usbDriverComponent):
 	usbOpMode.setVisible(True)
 	usbOpMode.setDescription("Select USB Operation Mode")
 	usbOpMode.setDefaultValue("Device")
+	usbOpMode.setReadOnly(True)
 	usbOpMode.setUseSingleDynamicValue(True)
 	
 	# USB Driver Host mode Attach de-bounce duration 

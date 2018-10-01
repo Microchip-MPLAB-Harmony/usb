@@ -1,3 +1,10 @@
+def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
+	print(ownerComponent)
+	if (dependencyID == "usb_host_dependency"):
+		readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+		Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+		Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue + 1 , 2)
+
 def instantiateComponent(usbHostHidComponent):
 
 	# USB Host HID Client driver Number of Instances

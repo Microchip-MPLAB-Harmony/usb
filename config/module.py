@@ -17,27 +17,27 @@ def loadModule():
 	usbDeviceComponent.addCapability("USB Device", "USB_DEVICE")
 	
 	print("create component: USB Device CDC")
-	usbDeviceCdcComponent = Module.CreateGeneratorComponent("usb_device_cdc", "CDC", "/Libraries/USB/Device Stack", "config/usb_device_cdc_common.py", "config/usb_device_cdc.py")
+	usbDeviceCdcComponent = Module.CreateGeneratorComponent("usb_device_cdc", "CDC Function Driver", "/Libraries/USB/Device Stack", "config/usb_device_cdc_common.py", "config/usb_device_cdc.py")
 	usbDeviceCdcComponent.addDependency("usb_device_dependency", "USB_DEVICE")
 	usbDeviceCdcComponent.addCapability("USB Device", "USB_DEVICE_CDC")
 	
 	print("create component: USB Device Vendor")
-	usbDeviceVendorComponent = Module.CreateGeneratorComponent("usb_device_vendor", "Vendor", "/Libraries/USB/Device Stack", "config/usb_device_vendor_common.py", "config/usb_device_vendor.py")
+	usbDeviceVendorComponent = Module.CreateGeneratorComponent("usb_device_vendor", "Vendor Function", "/Libraries/USB/Device Stack", "config/usb_device_vendor_common.py", "config/usb_device_vendor.py")
 	usbDeviceVendorComponent.addDependency("usb_device_dependency", "USB_DEVICE")
 	usbDeviceVendorComponent.addCapability("USB Device", "USB_DEVICE_VENDOR")
 	
 	print("create component: USB Device Audio")
-	usbDeviceAudioComponent = Module.CreateGeneratorComponent("usb_device_audio", "Audio", "/Libraries/USB/Device Stack", "config/usb_device_audio_common.py", "config/usb_device_audio.py")
+	usbDeviceAudioComponent = Module.CreateGeneratorComponent("usb_device_audio", "Audio Function Driver", "/Libraries/USB/Device Stack", "config/usb_device_audio_common.py", "config/usb_device_audio.py")
 	usbDeviceAudioComponent.addDependency("usb_device_dependency", "USB_DEVICE")
 	usbDeviceAudioComponent.addCapability("USB Device", "USB_DEVICE_AUDIO")
 	
 	print("create component: USB Device HID")
-	usbDeviceHidComponent = Module.CreateGeneratorComponent("usb_device_hid", "HID", "/Libraries/USB/Device Stack", "config/usb_device_hid_common.py", "config/usb_device_hid.py")
+	usbDeviceHidComponent = Module.CreateGeneratorComponent("usb_device_hid", "HID Function Driver", "/Libraries/USB/Device Stack", "config/usb_device_hid_common.py", "config/usb_device_hid.py")
 	usbDeviceHidComponent.addDependency("usb_device_dependency", "USB_DEVICE")
 	usbDeviceHidComponent.addCapability("USB Device", "USB_DEVICE_HID")
 	
 	print("create component: USB Device MSD")
-	usbDeviceMsdComponent = Module.CreateGeneratorComponent("usb_device_msd", "MSD", "/Libraries/USB/Device Stack", "config/usb_device_msd_common.py", "config/usb_device_msd.py")
+	usbDeviceMsdComponent = Module.CreateGeneratorComponent("usb_device_msd", "MSD Function Driver", "/Libraries/USB/Device Stack", "config/usb_device_msd_common.py", "config/usb_device_msd.py")
 	usbDeviceMsdComponent.addDependency("usb_device_dependency", "USB_DEVICE")
 	usbDeviceMsdComponent.addCapability("USB Device", "USB_DEVICE_MSD")
 	
@@ -74,7 +74,10 @@ def loadModule():
 	usbHostCdcComponent.addDependency("usb_host_dependency", "USB_HOST")
 	
 	print("create component: USB Host HID")
-	usbHostCdcComponent = Module.CreateComponent("usb_host_hid", "HID Client Driver", "/Libraries/USB/Host Stack", "config/usb_host_hid.py")
-	usbHostCdcComponent.addDependency("usb_host_dependency", "USB_HOST")
+	usbHostHidComponent = Module.CreateComponent("usb_host_hid", "HID Client Driver", "/Libraries/USB/Host Stack", "config/usb_host_hid.py")
+	usbHostHidComponent.addDependency("usb_host_dependency", "USB_HOST")
 
+	print("create component: USB Host Audio")
+	usbHostAudioComponent = Module.CreateComponent("usb_host_audio", "Audio Client Driver", "/Libraries/USB/Host Stack", "config/usb_host_audio.py")
+	usbHostAudioComponent.addDependency("usb_host_dependency", "USB_HOST")
 		

@@ -53,7 +53,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
         .driver = (void*)USB_DEVICE_CDC_FUNCTION_DRIVER,    /* USB CDC function data exposed to device layer */
         .funcDriverInit = (void*)&cdcInit0    /* Function driver init data */
     },
-
 <#--
 /*******************************************************************************
  End of File

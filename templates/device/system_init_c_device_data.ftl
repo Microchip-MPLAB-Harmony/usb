@@ -99,13 +99,13 @@ const USB_DEVICE_DESCRIPTOR deviceDescriptor =
     0x02,                           // Subclass code
     0x01,                           // Protocol code
 <#elseif CONFIG_USB_DEVICE_FUNCTIONS_NUMBER == 1>
-	${LIST_USB_DEVICE_DESCRIPTOR_CLASS_CODE_ENTRY}
+    ${LIST_USB_DEVICE_DESCRIPTOR_CLASS_CODE_ENTRY}
 <#else>
     0x00,                           // Class Code
     0x00,                           // Subclass code
     0x00,                           // Protocol code
 </#if>
-    USB_DEVICE_EP0_BUFFER_SIZE,     // Max packet size for EP0, see system_config.h
+    USB_DEVICE_EP0_BUFFER_SIZE,     // Max packet size for EP0, see configuration.h
     ${CONFIG_USB_DEVICE_VENDOR_ID_IDX0},                         // Vendor ID
     ${CONFIG_USB_DEVICE_PRODUCT_ID_IDX0},                         // Product ID				
     0x0100,                         // Device release number in BCD format

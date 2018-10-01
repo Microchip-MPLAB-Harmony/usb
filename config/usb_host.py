@@ -12,8 +12,10 @@ def instantiateComponent(usbHostComponent):
 	usbHostTplEntryNumber.setVisible(True)
 	usbHostTplEntryNumber.setLabel("Number of TPL Entries")
 	usbHostTplEntryNumber.setDescription("Number of TPL entries")
-	usbHostTplEntryNumber.setDefaultValue(1)
+	usbHostTplEntryNumber.setDefaultValue(0)
+	usbHostTplEntryNumber.setUseSingleDynamicValue(True)
 	usbHostTplEntryNumber.setDependencies(blUsbHostDeviceNumber, ["USB_OPERATION_MODE"])
+	usbHostTplEntryNumber.setReadOnly(True)
 
 	# USB Host Max Interfaces  
 	usbHostMaxInterfaceNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_MAX_INTERFACES", None)

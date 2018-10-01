@@ -1,7 +1,6 @@
 # USB Device MSD global definitions
 usbDeviceMsdMaxNumberofSectors = ["1", "2", "4", "8"]	
-
-
+		
 def instantiateComponent(usbDeviceMsdComponent, index):
 	# Config name: Configuration number
 	configValue = usbDeviceMsdComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_CONFIG_VALUE", None)
