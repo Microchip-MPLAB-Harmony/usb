@@ -6,7 +6,7 @@
     Microchip Technology Inc.
 
   File Name:
-    system_init_c_device_data_hid_function_init.ftl
+    system_init_c_device_data_msd_function_init.ftl
 
   Summary:
     USB Device Freemarker Template File

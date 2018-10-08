@@ -2,6 +2,8 @@ currentQSizeRead  = 1
 currentQSizeWrite = 1
 audioInterfacesNumber = 2
 audioDescriptorSize = 101
+usbConfigSizeUpdated = False
+usbNumberOfInterfacesUpdated = False
 
 	
 audioVersion =["Audio v1", "Audio v2"]
@@ -12,8 +14,39 @@ audioDeviceTypes = [
 "Audio v1.0 USB Headset Multiple Sampling rate",
 "Audio v2.0 USB Speaker" 
 ]
-# countFunctionDrivers = 0; 
 
+
+def updateConfigurationDescriptorSize(descriptorSizeOld):
+	global usbConfigSizeUpdated
+	if (usbConfigSizeUpdated == False):
+		print("I am at updateConfigurationDescriptorSize 1")
+		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
+		if (readValue != None):
+			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
+			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", readValue + audioDescriptorSize, 2)
+	else:
+		print("I am at updateConfigurationDescriptorSize 2")
+		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
+		if (readValue != None):
+			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
+			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", readValue + audioDescriptorSize - descriptorSizeOld, 2)
+	usbConfigSizeUpdated = True
+
+def updateNumberOfInterfaces(numberOfInterfacesOld, nInterfacesNew):
+	global usbNumberOfInterfacesUpdated
+	if (usbNumberOfInterfacesUpdated == False):
+		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
+		if (readValue != None):
+			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
+			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", readValue + audioInterfacesNumber, 2)
+	else:
+		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
+		if (readValue != None):
+			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
+			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", readValue + nInterfacesNew - numberOfInterfacesOld, 2)
+			print(audioInterfacesNumber,numberOfInterfacesOld )
+	usbNumberOfInterfacesUpdated = True 
+	
 def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
 	print("Debug: Connected to USB Device Layer")
 	print(ownerComponent)
@@ -21,30 +54,17 @@ def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 		print("Debug: CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", readValue)
 		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", readValue - 1 + 1 , 2)
+		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", readValue, 2)
 		
-		# # If we have Audio function driver plus any function driver (no matter what class), we enable IAD. 
-		# if readValue > 0:
-			# Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_DESCRIPTOR_IAD_ENABLE")
-			# Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_DESCRIPTOR_IAD_ENABLE", True, 2)
-			# iadEnableSymbol = ownerComponent.getSymbolByID("CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
-			# iadEnableSymbol.clearValue()
-			# iadEnableSymbol.setValue(True, 1)
-		
-		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
-		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
-		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", readValue + audioDescriptorSize , 2)
-		
-		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
-		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
-		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", readValue + audioInterfacesNumber , 2)
+		updateConfigurationDescriptorSize(0)
+		updateNumberOfInterfaces(0)
 
 		
 def destroyComponent(component):
 	# global countFunctionDrivers
 	functionsNumber = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 	Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-	Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", functionsNumber -  1 , 2)
+	Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", functionsNumber -  1, 2)
 	
 
 def usbDeviceAudioBufferQueueSize(usbSymbolSource, event):
@@ -97,18 +117,26 @@ def usbDeviceAudioSpecVersionUpdate(usbSymbolSource, event):
 		usbSymbolSource.setValue("Audio v1",2)		
 
 def usbDeviceAudioNumberOfInterfacesUpdate(usbSymbolSource, event):
+	nInterfaces = usbSymbolSource.getValue()
+	print(nInterfaces)
 	if (event["value"] == "Audio v2.0 USB Speaker"):	
 		usbSymbolSource.setValue(2,2)
+		nInterfacesNew = 2
 	elif (event["value"] == "Audio v1.0 USB Speaker"):	
 		usbSymbolSource.setValue(2,2)
+		nInterfacesNew = 2
 	elif (event["value"] == "Audio v1.0 USB Microphone"):	
 		usbSymbolSource.setValue(2,2)
+		nInterfacesNew = 2
 	elif (event["value"] == "Audio v1.0 USB Headset"):	
 		usbSymbolSource.setValue(3,2)
+		nInterfacesNew = 3
 	elif (event["value"] == "Audio v1.0 USB Headset Multiple Sampling rate"):	
 		usbSymbolSource.setValue(3,2)
+		nInterfacesNew = 3
 	else :
-		usbSymbolSource.setValue(2,2)	
+		usbSymbolSource.setValue(2,2)
+	updateNumberOfInterfaces(nInterfacesOld, nInterfacesNew)
 		
 def usbDeviceAudioNumberOfStreamingInterfacesUpdate(usbSymbolSource, event):
 	if (event["value"] == "Audio v2.0 USB Speaker"):	
@@ -122,8 +150,7 @@ def usbDeviceAudioNumberOfStreamingInterfacesUpdate(usbSymbolSource, event):
 	elif (event["value"] == "Audio v1.0 USB Headset Multiple Sampling rate"):	
 		usbSymbolSource.setValue(2,2)
 	else :
-		usbSymbolSource.setValue(2,2)
-		
+		usbSymbolSource.setValue(2,2)	
 		
 def usbDeviceAudioNumberOfAlternateSettingsUpdate(usbSymbolSource, event):
 	if (event["value"] == "Audio v2.0 USB Speaker"):	
@@ -138,20 +165,23 @@ def usbDeviceAudioNumberOfAlternateSettingsUpdate(usbSymbolSource, event):
 		usbSymbolSource.setValue(2,2)
 	else :
 		usbSymbolSource.setValue(2,2)
-
+	
 def usbDeviceAudioDeviceTypeUpdate(usbSymbolSource, event):
+	global audioDescriptorSize
+	descriptorSize = audioDescriptorSize
 	if (event["value"] == "Audio v2.0 USB Speaker"):	
 		audioDescriptorSize = 100
 	elif (event["value"] == "Audio v1.0 USB Speaker"):	
 		audioDescriptorSize = 101
 	elif (event["value"] == "Audio v1.0 USB Microphone"):	
-		audioDescriptorSize = 100
+		audioDescriptorSize = 102
 	elif (event["value"] == "Audio v1.0 USB Headset"):	
-		audioDescriptorSize = 100
+		audioDescriptorSize = 225
 	elif (event["value"] == "Audio v1.0 USB Headset Multiple Sampling rate"):	
 		audioDescriptorSize = 100
 	else :
 		audioDescriptorSize = 100
+	updateConfigurationDescriptorSize(audioDescriptorSize)	
 		
 def instantiateComponent(usbDeviceAudioComponent, index):
 	# Index of this function 
@@ -176,7 +206,6 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 	startInterfaceNumber.setVisible(True)
 	startInterfaceNumber.setMin(0)
 	startInterfaceNumber.setDefaultValue(index)
-
 	
 	# Audio Device Type 
 	audioDeviceType = usbDeviceAudioComponent.createComboSymbol("CONFIG_USB_DEVICE_FUNCTION_AUDIO_DEVICE_TYPE", None, audioDeviceTypes)
@@ -237,7 +266,6 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 	usbDeviceAudioBufPool.setDependencies(usbDeviceAudioBufferQueueSize, ["CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE", "CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE"])
 	usbDeviceAudioBufPool.setVisible(False)
 	
-	
 	# Audio Function driver Read Queue Size 
 	queueSizeRead = usbDeviceAudioComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE", None)
 	queueSizeRead.setLabel("Audio Read Queue Size")
@@ -247,7 +275,6 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 	queueSizeRead.setDefaultValue(1)
 	currentQSizeRead = queueSizeRead.getValue()
 
-	
 	# Audio Function driver Write Queue Size 
 	queueSizeWrite = usbDeviceAudioComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE", None)
 	queueSizeWrite.setLabel("Audio Write Queue Size")
@@ -256,7 +283,6 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 	queueSizeWrite.setMax(32767)
 	queueSizeWrite.setDefaultValue(1)	
 	currentQSizeWrite = queueSizeWrite.getValue()
-	
 	
 	# Audio Function driver Data OUT Endpoint Number   
 	epNumberBulkOut = usbDeviceAudioComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_OUT_ENDPOINT_NUMBER", None)
