@@ -42,11 +42,19 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 -->
-
+<#if HarmonyCore.SELECT_RTOS == "BareMetal">
 	/* USB Device layer tasks routine */ 
     USB_DEVICE_Tasks(sysObj.usbDevObject0);
-	
-	
+<#elseif HarmonyCore.SELECT_RTOS == "FreeRTOS">
+	<#lt>    /* Create OS Thread for USB_DEVICE_Tasks. */
+    <#lt>    xTaskCreate( _USB_DEVICE_Tasks,
+    <#lt>        "USB_DEVICE_TASKS",
+    <#lt>        ${USB_DEVICE_RTOS_STACK_SIZE},
+    <#lt>        (void*)NULL,
+    <#lt>        ${USB_DEVICE_RTOS_TASK_PRIORITY},
+    <#lt>        (TaskHandle_t*)NULL
+    <#lt>    );
+</#if>	
 <#--
 /*******************************************************************************
  End of File

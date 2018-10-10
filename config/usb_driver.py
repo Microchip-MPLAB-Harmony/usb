@@ -6,20 +6,34 @@ usbDebugLogs = 1
 usbDriverPath = "driver/"
 usbDriverProjectPath = "/driver/usb/"
 
+
 def speedChanged(symbol, event):
 	Database.clearSymbolValue("core", "PMC_SCER_USBCLK")
 	Database.setSymbolValue("core", "PMC_SCER_USBCLK", True, 2)
 
 def dependencyStatus(symbol, event):
-    if (event["value"] == False):
-        symbol.setVisible(True)
-    else :
-        symbol.setVisible(False)
+	if (event["value"] == False):
+		symbol.setVisible(True)
+	else :
+		symbol.setVisible(False)
 		
 def blUSBDriverSpeedChanged(symbol, event):
 	Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED")
 	Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED", event["value"], 2)
 
+def setVisible(symbol, event):
+	if (event["value"] == True):
+		symbol.setVisible(True)
+	else:
+		symbol.setVisible(False)
+		
+def showRTOSMenu(symbol, event):
+	show_rtos_menu = False
+
+	if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
+		show_rtos_menu = True
+	symbol.setVisible(show_rtos_menu)
+	
 def instantiateComponent(usbDriverComponent):	
 
 	res = Database.activateComponents(["HarmonyCore"])
@@ -57,6 +71,41 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverHostResetDuration.setDefaultValue(100)
 	usbDriverHostResetDuration.setDependencies(blUSBDriverOperationModeChanged, ["USB_OPERATION_MODE"])
 	
+	enable_rtos_settings = False
+
+	if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
+		enable_rtos_settings = True
+
+	# RTOS Settings 
+	usbDriverRTOSMenu = usbDriverComponent.createMenuSymbol(None, None)
+	usbDriverRTOSMenu.setLabel("RTOS settings")
+	usbDriverRTOSMenu.setDescription("RTOS settings")
+	usbDriverRTOSMenu.setVisible(enable_rtos_settings)
+	usbDriverRTOSMenu.setDependencies(showRTOSMenu, ["HarmonyCore.SELECT_RTOS"])
+
+	usbDriverRTOSTask = usbDriverComponent.createComboSymbol("USB_DRIVER_RTOS", usbDriverRTOSMenu, ["Standalone"])
+	usbDriverRTOSTask.setLabel("Run Library Tasks As")
+	usbDriverRTOSTask.setDefaultValue("Standalone")
+	usbDriverRTOSTask.setVisible(False)
+
+	usbDriverRTOSStackSize = usbDriverComponent.createIntegerSymbol("USB_DRIVER_RTOS_STACK_SIZE", usbDriverRTOSMenu)
+	usbDriverRTOSStackSize.setLabel("Stack Size")
+	usbDriverRTOSStackSize.setDefaultValue(1024)
+	usbDriverRTOSStackSize.setReadOnly(True)
+
+	usbDriverRTOSTaskPriority = usbDriverComponent.createIntegerSymbol("USB_DRIVER_RTOS_TASK_PRIORITY", usbDriverRTOSMenu)
+	usbDriverRTOSTaskPriority.setLabel("Task Priority")
+	usbDriverRTOSTaskPriority.setDefaultValue(1)
+
+	usbDriverRTOSTaskDelay = usbDriverComponent.createBooleanSymbol("USB_DRIVER_RTOS_USE_DELAY", usbDriverRTOSMenu)
+	usbDriverRTOSTaskDelay.setLabel("Use Task Delay?")
+	usbDriverRTOSTaskDelay.setDefaultValue(True)
+
+	usbDriverRTOSTaskDelayVal = usbDriverComponent.createIntegerSymbol("USB_DRIVER_RTOS_DELAY", usbDriverRTOSMenu)
+	usbDriverRTOSTaskDelayVal.setLabel("Task Delay")
+	usbDriverRTOSTaskDelayVal.setDefaultValue(10) 
+	usbDriverRTOSTaskDelayVal.setVisible((usbDriverRTOSTaskDelay.getValue() == True))
+	usbDriverRTOSTaskDelayVal.setDependencies(setVisible, ["USB_DRIVER_RTOS_USE_DELAY"])
 	
 	############################################################################
     #### Dependency ####
@@ -178,6 +227,13 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverSystemTasksFile.setOutputName("core.LIST_SYSTEM_TASKS_C_CALL_LIB_TASKS")
 	usbDriverSystemTasksFile.setSourcePath("templates/system_tasks_c_driver.ftl")
 	usbDriverSystemTasksFile.setMarkup(True)
+	
+	usbDriverSystemTasksFileRTOS = usbDriverComponent.createFileSymbol("USB_DRIVER_SYS_RTOS_TASK", None)
+	usbDriverSystemTasksFileRTOS.setType("STRING")
+	usbDriverSystemTasksFileRTOS.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS")
+	usbDriverSystemTasksFileRTOS.setSourcePath("templates/system_tasks_c_driver_rtos.ftl")
+	usbDriverSystemTasksFileRTOS.setMarkup(True)
+	usbDriverSystemTasksFileRTOS.setEnabled(enable_rtos_settings)
 	
 	################################################
 	# USB Driver Header files  

@@ -112,6 +112,19 @@ usbDeviceHidEPNumberIntIn = []
 usbDeviceEndpointReadQueueSize = []
 usbDeviceEndpointWriteQueueSize = []
 
+def setVisible(symbol, event):
+	if (event["value"] == True):
+		symbol.setVisible(True)
+	else:
+		symbol.setVisible(False)
+		
+def showRTOSMenu(symbol, event):
+	show_rtos_menu = False
+
+	if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
+		show_rtos_menu = True
+	symbol.setVisible(show_rtos_menu)
+
 
 def onDependencyConnected(info):
     print("USB driver connected")
@@ -121,6 +134,9 @@ def onDependencyConnected(info):
     print(info["capabilityID"])
 
 def instantiateComponent(usbDeviceComponent):	
+
+	res = Database.activateComponents(["HarmonyCore"])
+	res = Database.activateComponents(["drv_usbhs_v1"])
 	
 	# USB Device Speed 
 	usbDeviceSpeed = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_SPEED", None)
@@ -248,6 +264,42 @@ def instantiateComponent(usbDeviceComponent):
 	
 	configName = Variables.get("__CONFIGURATION_NAME")
 	
+	enable_rtos_settings = False
+
+	if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
+		enable_rtos_settings = True
+
+	# RTOS Settings 
+	usbDeviceRTOSMenu = usbDeviceComponent.createMenuSymbol(None, None)
+	usbDeviceRTOSMenu.setLabel("RTOS settings")
+	usbDeviceRTOSMenu.setDescription("RTOS settings")
+	usbDeviceRTOSMenu.setVisible(enable_rtos_settings)
+	usbDeviceRTOSMenu.setDependencies(showRTOSMenu, ["HarmonyCore.SELECT_RTOS"])
+
+	usbDeviceRTOSTask = usbDeviceComponent.createComboSymbol("USB_DEVICE_RTOS", usbDeviceRTOSMenu, ["Standalone"])
+	usbDeviceRTOSTask.setLabel("Run Library Tasks As")
+	usbDeviceRTOSTask.setDefaultValue("Standalone")
+	usbDeviceRTOSTask.setVisible(False)
+
+	usbDeviceRTOSStackSize = usbDeviceComponent.createIntegerSymbol("USB_DEVICE_RTOS_STACK_SIZE", usbDeviceRTOSMenu)
+	usbDeviceRTOSStackSize.setLabel("Stack Size")
+	usbDeviceRTOSStackSize.setDefaultValue(1024)
+	usbDeviceRTOSStackSize.setReadOnly(True)
+
+	usbDeviceRTOSTaskPriority = usbDeviceComponent.createIntegerSymbol("USB_DEVICE_RTOS_TASK_PRIORITY", usbDeviceRTOSMenu)
+	usbDeviceRTOSTaskPriority.setLabel("Task Priority")
+	usbDeviceRTOSTaskPriority.setDefaultValue(1)
+
+	usbDeviceRTOSTaskDelay = usbDeviceComponent.createBooleanSymbol("USB_DEVICE_RTOS_USE_DELAY", usbDeviceRTOSMenu)
+	usbDeviceRTOSTaskDelay.setLabel("Use Task Delay?")
+	usbDeviceRTOSTaskDelay.setDefaultValue(True)
+
+	usbDeviceRTOSTaskDelayVal = usbDeviceComponent.createIntegerSymbol("USB_DEVICE_RTOS_DELAY", usbDeviceRTOSMenu)
+	usbDeviceRTOSTaskDelayVal.setLabel("Task Delay")
+	usbDeviceRTOSTaskDelayVal.setDefaultValue(10) 
+	usbDeviceRTOSTaskDelayVal.setVisible((usbDeviceRTOSTaskDelay.getValue() == True))
+	usbDeviceRTOSTaskDelayVal.setDependencies(setVisible, ["USB_DEVICE_RTOS_USE_DELAY"])
+	
 	################################################
 	# system_definitions.h file for USB Device Layer    
 	################################################
@@ -314,6 +366,13 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceSystemTasksFile.setOutputName("core.LIST_SYSTEM_TASKS_C_CALL_LIB_TASKS")
 	usbDeviceSystemTasksFile.setSourcePath("templates/device/system_tasks_c_device.ftl")
 	usbDeviceSystemTasksFile.setMarkup(True)
+	
+	usbDeviceSystemTasksFileRTOS = usbDeviceComponent.createFileSymbol("USB_DEVICE_SYS_RTOS_TASK", None)
+	usbDeviceSystemTasksFileRTOS.setType("STRING")
+	usbDeviceSystemTasksFileRTOS.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS")
+	usbDeviceSystemTasksFileRTOS.setSourcePath("templates/device/system_tasks_c_device_rtos.ftl")
+	usbDeviceSystemTasksFileRTOS.setMarkup(True)
+	usbDeviceSystemTasksFileRTOS.setEnabled(enable_rtos_settings)
 	
 	
 	################################################

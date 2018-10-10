@@ -173,6 +173,9 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 	usbMsdHeaderFile = usbDeviceMsdComponent.createFileSymbol("USB_MSD_HEADER_FILE", None)
 	addFileName('usb_msd.h', usbMsdHeaderFile, "", "/usb/", True, None)
 	
+	usbMsdScsiHeaderFile = usbDeviceMsdComponent.createFileSymbol("USB_MSD_SCSCI_HEADER_FILE", None)
+	addFileName('scsi.h', usbMsdScsiHeaderFile, "", "/usb/", True, None)
+	
 	usbDeviceMsdSourceFile = usbDeviceMsdComponent.createFileSymbol("USB_DEVICE_MSD_SOURCE_FILE", None)
 	addFileName('usb_device_msd.c', usbDeviceMsdSourceFile, "src/", "/usb/src", True, None)
 	

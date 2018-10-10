@@ -87,9 +87,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /* Reset duration in milli Seconds */ 
 #define DRV_USBHSV1_HOST_RESET_DURATION ${USB_DRV_HOST_RESET_DUARTION}
 </#if>
-
-
-
 <#--
 /*******************************************************************************
  End of File

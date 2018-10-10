@@ -41,12 +41,20 @@ CONSEQUENTIAL DAMAGES, LOST  PROFITS  OR  LOST  DATA,  COST  OF  PROCUREMENT  OF
 SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
--->
-
-	/* USB Host layer tasks routine */ 
-    USB_HOST_Tasks(sysObj.usbHostObject0);
-	
-	
+-->	
+<#if HarmonyCore.SELECT_RTOS == "BareMetal">
+	/* USB Host Task Routine */ 
+     USB_HOST_Tasks(sysObj.usbHostObject0);
+<#elseif HarmonyCore.SELECT_RTOS == "FreeRTOS">
+	<#lt>    /* Create OS Thread for USB_HOST_Tasks. */
+    <#lt>    xTaskCreate( _USB_HOST_Tasks,
+    <#lt>        "USB_HOST_TASKS",
+    <#lt>        ${USB_HOST_RTOS_STACK_SIZE},
+    <#lt>        (void*)NULL,
+    <#lt>        ${USB_HOST_RTOS_TASK_PRIORITY},
+    <#lt>        (TaskHandle_t*)NULL
+    <#lt>    );
+</#if>	
 <#--
 /*******************************************************************************
  End of File

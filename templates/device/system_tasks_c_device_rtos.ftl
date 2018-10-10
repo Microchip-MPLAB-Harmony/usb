@@ -6,7 +6,7 @@
     Microchip Technology Inc.
 
   File Name:
-    system_tasks_c_driver.ftl
+    system_tasks_c_device_rtos.ftl
 
   Summary:
     USB Driver Freemarker Template File
@@ -42,22 +42,16 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 -->
-<#if HarmonyCore.SELECT_RTOS == "BareMetal">
-	/* USB HS Driver Task Routine */ 
-    DRV_USBHSV1_Tasks(sysObj.drvUSBHSV1Object);
-<#elseif HarmonyCore.SELECT_RTOS == "FreeRTOS">
-	<#lt>	/* Create OS Thread for USB Driver Tasks. */
-    <#lt>    xTaskCreate( _DRV_USBHSV1_Tasks,
-    <#lt>        "DRV_USBHSV1_TASKS",
-    <#lt>        ${USB_DRIVER_RTOS_STACK_SIZE},
-    <#lt>        (void*)NULL,
-    <#lt>        ${USB_DRIVER_RTOS_TASK_PRIORITY},
-    <#lt>        (TaskHandle_t*)NULL
-    <#lt>    );
+<#if HarmonyCore.SELECT_RTOS == "FreeRTOS">
+    <#lt>void _USB_DEVICE_Tasks(  void *pvParameters  )
+    <#lt>{
+    <#lt>    while(1)
+    <#lt>    {
+				 /* USB Device layer tasks routine */
+    <#lt>        USB_DEVICE_Tasks(sysObj.usbDevObject0);
+             <#if USB_DEVICE_RTOS_USE_DELAY >
+    <#lt>        vTaskDelay(${USB_DEVICE_RTOS_DELAY} / portTICK_PERIOD_MS);
+             </#if>
+    <#lt>    }
+    <#lt>}
 </#if>
-<#--
-/*******************************************************************************
- End of File
-*/
--->
-

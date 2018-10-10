@@ -1,3 +1,17 @@
+def setVisible(symbol, event):
+	if (event["value"] == True):
+		symbol.setVisible(True)
+	else:
+		symbol.setVisible(False)
+		
+def showRTOSMenu(symbol, event):
+	show_rtos_menu = False
+
+	if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
+		show_rtos_menu = True
+	symbol.setVisible(show_rtos_menu)
+
+
 def instantiateComponent(usbHostComponent):
 	# USB Host Max Number of Devices   
 	usbHostDeviceNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_DEVICE_NUMNBER", None)
@@ -32,6 +46,42 @@ def instantiateComponent(usbHostComponent):
 	usbHostTransfersNumber.setDescription("Maximum number of transfers that host layer should handle")
 	usbHostTransfersNumber.setDefaultValue(10)
 	usbHostTransfersNumber.setDependencies(blUsbHostMaxInterfaceNumber, ["USB_OPERATION_MODE"])	
+	
+	enable_rtos_settings = False
+
+	if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
+		enable_rtos_settings = True
+
+	# RTOS Settings 
+	usbHostRTOSMenu = usbHostComponent.createMenuSymbol(None, None)
+	usbHostRTOSMenu.setLabel("RTOS settings")
+	usbHostRTOSMenu.setDescription("RTOS settings")
+	usbHostRTOSMenu.setVisible(enable_rtos_settings)
+	usbHostRTOSMenu.setDependencies(showRTOSMenu, ["HarmonyCore.SELECT_RTOS"])
+
+	usbHostRTOSTask = usbHostComponent.createComboSymbol("USB_HOST_RTOS", usbHostRTOSMenu, ["Standalone"])
+	usbHostRTOSTask.setLabel("Run Library Tasks As")
+	usbHostRTOSTask.setDefaultValue("Standalone")
+	usbHostRTOSTask.setVisible(False)
+
+	usbHostRTOSStackSize = usbHostComponent.createIntegerSymbol("USB_HOST_RTOS_STACK_SIZE", usbHostRTOSMenu)
+	usbHostRTOSStackSize.setLabel("Stack Size")
+	usbHostRTOSStackSize.setDefaultValue(1024)
+	usbHostRTOSStackSize.setReadOnly(True)
+
+	usbHostRTOSTaskPriority = usbHostComponent.createIntegerSymbol("USB_HOST_RTOS_TASK_PRIORITY", usbHostRTOSMenu)
+	usbHostRTOSTaskPriority.setLabel("Task Priority")
+	usbHostRTOSTaskPriority.setDefaultValue(1)
+
+	usbHostRTOSTaskDelay = usbHostComponent.createBooleanSymbol("USB_HOST_RTOS_USE_DELAY", usbHostRTOSMenu)
+	usbHostRTOSTaskDelay.setLabel("Use Task Delay?")
+	usbHostRTOSTaskDelay.setDefaultValue(True)
+
+	usbHostRTOSTaskDelayVal = usbHostComponent.createIntegerSymbol("USB_HOST_RTOS_DELAY", usbHostRTOSMenu)
+	usbHostRTOSTaskDelayVal.setLabel("Task Delay")
+	usbHostRTOSTaskDelayVal.setDefaultValue(10) 
+	usbHostRTOSTaskDelayVal.setVisible((usbHostRTOSTaskDelay.getValue() == True))
+	usbHostRTOSTaskDelayVal.setDependencies(setVisible, ["USB_HOST_RTOS_USE_DELAY"])
 	
 	configName = Variables.get("__CONFIGURATION_NAME")
 	
@@ -98,6 +148,13 @@ def instantiateComponent(usbHostComponent):
 	usbHostSystemTasksFile.setOutputName("core.LIST_SYSTEM_TASKS_C_CALL_LIB_TASKS")
 	usbHostSystemTasksFile.setSourcePath("templates/host/system_tasks_c_host.ftl")
 	usbHostSystemTasksFile.setMarkup(True)
+	
+	usbHostSystemTasksFileRTOS = usbHostComponent.createFileSymbol("USB_HOST_SYS_RTOS_TASK", None)
+	usbHostSystemTasksFileRTOS.setType("STRING")
+	usbHostSystemTasksFileRTOS.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS")
+	usbHostSystemTasksFileRTOS.setSourcePath("templates/host/system_tasks_c_host_rtos.ftl")
+	usbHostSystemTasksFileRTOS.setMarkup(True)
+	usbHostSystemTasksFileRTOS.setEnabled(enable_rtos_settings)
 	
 	################################################
 	# USB Host Layer Files 
