@@ -222,7 +222,7 @@ void APP_USBDeviceEventHandler ( USB_DEVICE_EVENT event, void * eventData, uintp
         case USB_DEVICE_EVENT_RESET:
 
             /* Update LED to show reset state */
-            LED_Off();
+            LED1_Off();
 
             appData.isConfigured = false;
 
@@ -235,7 +235,7 @@ void APP_USBDeviceEventHandler ( USB_DEVICE_EVENT event, void * eventData, uintp
             if ( configuredEventData->configurationValue == 1)
             {
                 /* Update LED to show configured state */
-                LED_On(); 
+                LED1_On(); 
                 
                 /* Register the CDC Device application event handler here.
                  * Note how the appData object pointer is passed as the
@@ -259,7 +259,7 @@ void APP_USBDeviceEventHandler ( USB_DEVICE_EVENT event, void * eventData, uintp
 
             /* VBUS is not available any more. Detach the device. */
             USB_DEVICE_Detach(appData.deviceHandle);
-            LED_Off();
+            LED1_Off();
             break;
 
         case USB_DEVICE_EVENT_SUSPENDED:
