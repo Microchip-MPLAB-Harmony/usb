@@ -19,7 +19,7 @@
  *
  */
 
-/* file generated from device description version 2018-05-02T16:40:23Z */
+/* file generated from device description version 2018-09-19T14:04:45Z */
 #ifndef SAME_SAME70_TRNG_MODULE_H
 #define SAME_SAME70_TRNG_MODULE_H
 
