@@ -1,9 +1,9 @@
 /*******************************************************************************
   MPLAB Harmony Application Source File
-  
+
   Company:
     Microchip Technology Inc.
-  
+
   File Name:
     app.c
 
@@ -11,8 +11,8 @@
     This file contains the source code for the MPLAB Harmony application.
 
   Description:
-    This file contains the source code for the MPLAB Harmony application.  It 
-    implements the logic of the application's state machine and it may call 
+    This file contains the source code for the MPLAB Harmony application.  It
+    implements the logic of the application's state machine and it may call
     API routines of other MPLAB Harmony modules in the system, such as drivers,
     system services, and middleware.  However, it does not call any of the
     system interfaces (such as the "Initialize" and "Tasks" functions) of any of
@@ -21,40 +21,13 @@
     files.
  *******************************************************************************/
 
-// DOM-IGNORE-BEGIN
-/*******************************************************************************
-Copyright (c) 2013-2014 released Microchip Technology Inc.  All rights reserved.
-
-Microchip licenses to you the right to use, modify, copy and distribute
-Software only when embedded on a Microchip microcontroller or digital signal
-controller that is integrated into your product or third party product
-(pursuant to the sublicense terms in the accompanying license agreement).
-
-You should refer to the license agreement accompanying this Software for
-additional information regarding your rights and obligations.
-
-SOFTWARE AND DOCUMENTATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
-EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF
-MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
-IN NO EVENT SHALL MICROCHIP OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER
-CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION, BREACH OF WARRANTY, OR
-OTHER LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT DAMAGES OR EXPENSES
-INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
-CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
-SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
-(INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
- *******************************************************************************/
-// DOM-IGNORE-END
-
-
 // *****************************************************************************
 // *****************************************************************************
-// Section: Included Files 
+// Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
 
 #include "app.h"
-
 
 // *****************************************************************************
 // *****************************************************************************
@@ -73,7 +46,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
   Remarks:
     This structure should be initialized by the APP_Initialize function.
-    
+
     Application strings and buffers are be defined outside this structure.
 */
 
@@ -129,7 +102,7 @@ void APP_USBDeviceHIDEventHandler(USB_DEVICE_HID_INDEX hidInstance,
                USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_DATA_SENT to the application upon
                receiving this Zero Length packet from Host.
                USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_DATA_SENT event indicates this control transfer
-               event is complete */ 
+               event is complete */
 
             break;
 
@@ -193,16 +166,15 @@ void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, void * eventData, uintptr
             break;
         case USB_DEVICE_EVENT_RESET:
         case USB_DEVICE_EVENT_DECONFIGURED:
-        
+
             /* Device got deconfigured */
-            
+
             appData.isConfigured = false;
             appData.isMouseReportSendBusy = false;
             appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
             appData.emulateMouse = true;
-            BSP_LEDOn ( APP_USB_LED_1 );
-            BSP_LEDOn ( APP_USB_LED_2 );
-            BSP_LEDOff ( APP_USB_LED_3 );
+            LED1_Off();
+            LED2_Off();
 
             break;
 
@@ -213,10 +185,9 @@ void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, void * eventData, uintptr
             if(configurationValue->configurationValue == 1)
             {
                 appData.isConfigured = true;
-                
-                BSP_LEDOff ( APP_USB_LED_1 );
-                BSP_LEDOff ( APP_USB_LED_2 );
-                BSP_LEDOn ( APP_USB_LED_3 );
+
+                LED1_On();
+                LED2_Off();
 
                 /* Register the Application HID Event Handler. */
 
@@ -238,9 +209,9 @@ void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, void * eventData, uintptr
             break;
 
         case USB_DEVICE_EVENT_SUSPENDED:
-            BSP_LEDOff ( APP_USB_LED_1 );
-            BSP_LEDOn ( APP_USB_LED_2 );
-            BSP_LEDOn ( APP_USB_LED_3 );
+            LED1_Off();
+            LED2_On();
+            
             break;
 
         case USB_DEVICE_EVENT_RESUMED:
@@ -248,7 +219,7 @@ void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, void * eventData, uintptr
         default:
             break;
 
-    } 
+    }
 }
 
 
@@ -266,7 +237,7 @@ void APP_ProcessSwitchPress(void)
 {
     /* This function checks if the switch is pressed and then
      * debounces the switch press*/
-    if(BSP_SWITCH_STATE_PRESSED == (BSP_SwitchStateGet(APP_USB_SWITCH_1)))
+    if(SWITCH_STATE_PRESSED == (SWITCH_Get()))
     {
         if(appData.ignoreSwitchPress)
         {
@@ -322,7 +293,7 @@ void APP_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
     appData.state = APP_STATE_INIT;
-    
+
     appData.deviceHandle  = USB_DEVICE_HANDLE_INVALID;
     appData.isConfigured = false;
     appData.emulateMouse = true;
@@ -348,7 +319,7 @@ void APP_Tasks ( void )
     static bool     sent_dont_move = false;
 
     int8_t dir_table[] ={-4,-4,-4, 0, 4, 4, 4, 0};
-	
+
     /* Check the application's current state. */
     switch ( appData.state )
     {
@@ -377,7 +348,7 @@ void APP_Tasks ( void )
 
         case APP_STATE_WAIT_FOR_CONFIGURATION:
 
-            /* Check if the device is configured. The 
+            /* Check if the device is configured. The
              * isConfigured flag is updated in the
              * Device Event Handler */
 
@@ -416,7 +387,7 @@ void APP_Tasks ( void )
                 }
             }
             else
-            { 
+            {
                 appData.mouseButton[0] = MOUSE_BUTTON_STATE_RELEASED;
                 appData.mouseButton[1] = MOUSE_BUTTON_STATE_RELEASED;
                 appData.xCoordinate = 0;
@@ -479,7 +450,7 @@ void APP_Tasks ( void )
                         /* Copy the report sent to previous */
                         memcpy((void *)&mouseReportPrevious, (const void *)&mouseReport,
                                 (size_t)sizeof(mouseReport));
-                        
+
                         /* Send the mouse report. */
                         USB_DEVICE_HID_ReportSend(appData.hidInstance,
                             &appData.reportTransferHandle, (uint8_t*)&mouseReport,
@@ -505,7 +476,7 @@ void APP_Tasks ( void )
         }
     }
 }
- 
+
 
 /*******************************************************************************
  End of File
