@@ -31,9 +31,11 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include "string.h"
+#include "definitions.h"
 #include "configuration.h"
+#include "keyboard.h"
 
-// DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 
 extern "C" {
@@ -60,10 +62,26 @@ extern "C" {
 
 typedef enum
 {
-    /* Application's state machine's initial state. */
-    APP_STATE_INIT=0,
-    APP_STATE_SERVICE_TASKS,
-    /* TODO: Define states used by the application state machine. */
+	/* Application's state machine's initial state. */
+	APP_STATE_INIT=0,
+
+	/* Application waits for configuration in this state */
+    APP_STATE_WAIT_FOR_CONFIGURATION,
+
+    /* Application checks if an output report is available */
+    APP_STATE_CHECK_FOR_OUTPUT_REPORT,
+
+    /* Application updates the switch states */
+    APP_STATE_SWITCH_PROCESS,
+
+    /* Application checks if it is still configured*/
+    APP_STATE_CHECK_IF_CONFIGURED,
+
+    /* Application emulates keyboard */
+    APP_STATE_EMULATE_KEYBOARD,
+
+    /* Application error state */
+    APP_STATE_ERROR
 
 } APP_STATES;
 
@@ -86,7 +104,53 @@ typedef struct
     /* The application's current state */
     APP_STATES state;
 
-    /* TODO: Define any additional data used by the application. */
+    /* Handle to the device layer */
+    USB_DEVICE_HANDLE deviceHandle;
+
+    /* Application HID instance */
+    USB_DEVICE_HID_INDEX hidInstance;
+
+    /* Keyboard modifier keys*/
+    KEYBOARD_MODIFIER_KEYS keyboardModifierKeys;
+
+    /* Key code array*/
+    KEYBOARD_KEYCODE_ARRAY keyCodeArray;
+
+    /* Is device configured */
+    bool isConfigured;
+
+    /* Switch state*/
+    bool ignoreSwitchPress;
+
+    /* Tracks switch press*/
+    bool isSwitchPressed;
+
+    /* Track the send report status */
+    bool isReportSentComplete;
+
+    /* Track if a report was received */
+    bool isReportReceived;
+
+    /* USB HID current Idle */
+    uint8_t idleRate;
+
+    /* Flag determines SOF event occurrence */
+    bool sofEventHasOccurred;
+
+    /* Receive transfer handle */
+    USB_DEVICE_HID_TRANSFER_HANDLE receiveTransferHandle;
+
+    /* Send transfer handle */
+    USB_DEVICE_HID_TRANSFER_HANDLE sendTransferHandle;
+
+    /* Keycode to be sent */
+    USB_HID_KEYBOARD_KEYPAD key;
+
+    /* USB HID active Protocol */
+    USB_HID_PROTOCOL_CODE activeProtocol;
+
+    /* Switch debounce timer */
+    unsigned int switchDebounceTimer;
 
 } APP_DATA;
 
