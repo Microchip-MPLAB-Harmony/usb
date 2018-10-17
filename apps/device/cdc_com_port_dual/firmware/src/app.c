@@ -54,7 +54,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 #include "app.h"
-#include "queue.h"
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -76,109 +76,26 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     
     Application strings and buffers are be defined outside this structure.
 */
-QueueHandle_t USBDeviceTask_EventQueue_Handle;
 
 APP_DATA appData;
 
 /* Read Data Buffer */
-uint8_t APP_MAKE_BUFFER_DMA_READY com1ReadBuffer[APP_READ_BUFFER_SIZE] ;
+uint8_t com1ReadBuffer[APP_READ_BUFFER_SIZE] APP_MAKE_BUFFER_DMA_READY;
 
 /* Write Data Buffer. Size is same as read buffer size */
-uint8_t APP_MAKE_BUFFER_DMA_READY WriteBuffer[1] ;
+uint8_t com1WriteBuffer[APP_READ_BUFFER_SIZE] APP_MAKE_BUFFER_DMA_READY;
 
 /* Read Data Buffer */
-uint8_t APP_MAKE_BUFFER_DMA_READY com2ReadBuffer[APP_READ_BUFFER_SIZE];
+uint8_t com2ReadBuffer[APP_READ_BUFFER_SIZE] APP_MAKE_BUFFER_DMA_READY;
+
+uint8_t com2WriteBuffer[APP_READ_BUFFER_SIZE] APP_MAKE_BUFFER_DMA_READY;
 
 
-void USBDevice_Task(void* p_arg);
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Functions
 // *****************************************************************************
 // *****************************************************************************
-
-/*************************************************
- * Application Device Layer Event Handler
- *************************************************/
-
-void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, void * pData,
-                               uintptr_t context)
-{
-    uint8_t configurationValue;
-    uint32_t USB_Event = 0;
-    portBASE_TYPE xHigherPriorityTaskWoken1 = pdFALSE;
-
-    switch( event )
-    {
-        case USB_DEVICE_EVENT_POWER_REMOVED:
-            /* Attach the device */
-            USB_DEVICE_Detach (appData.deviceHandle);
-            break;
-        case USB_DEVICE_EVENT_RESET:
-        case USB_DEVICE_EVENT_DECONFIGURED:
-
-            /* Device was either de-configured or reset */
-
-            /* Update LED indication */
-//            BSP_LEDOn ( APP_USB_LED_1);
-//            BSP_LEDOn ( APP_USB_LED_2);
-//            BSP_LEDOff ( APP_USB_LED_3);
-            break;
-
-        case USB_DEVICE_EVENT_CONFIGURED:
-
-            /* pData will point to the configuration. Check the configuration */
-            configurationValue = ((USB_DEVICE_EVENT_DATA_CONFIGURED *)pData)->configurationValue;
-            if(configurationValue == 1)
-            {
-                /* Register the CDC Device application event handler here.
-                 * Note how the appData object pointer is passed as the
-                 * user data */
-                USB_DEVICE_CDC_EventHandlerSet(0,
-                        APP_USBDeviceCDCEventHandler, (uintptr_t)&appData);
-
-                USB_DEVICE_CDC_EventHandlerSet(1,
-                        APP_USBDeviceCDCEventHandler, (uintptr_t)&appData);
-
-                /* Update LED indication */
-//                BSP_LEDOff ( APP_USB_LED_1 );
-//                BSP_LEDOff ( APP_USB_LED_2 );
-//                BSP_LEDOn ( APP_USB_LED_3 );
-
-                /*let processing USB Task know USB if configured..*/
-                USB_Event = USBDEVICETASK_USBCONFIGURED_EVENT;
-
-                xQueueSendToBackFromISR(USBDeviceTask_EventQueue_Handle, &USB_Event, 
-                    &xHigherPriorityTaskWoken1);
-                portEND_SWITCHING_ISR( xHigherPriorityTaskWoken1 );
-            }
-
-            break;
-
-        case USB_DEVICE_EVENT_SUSPENDED:
-            /* Update LED indication */
-//            BSP_LEDOff ( APP_USB_LED_1 );
-//            BSP_LEDOn ( APP_USB_LED_2 );
-//            BSP_LEDOn ( APP_USB_LED_3 );
-            break;
-
-        case USB_DEVICE_EVENT_RESUMED:
-            break;
-        case USB_DEVICE_EVENT_POWER_DETECTED:
-            /*let processing USB Task know USB is powered..*/
-            USB_Event = USBDEVICETASK_USBPOWERED_EVENT;
-
-            xQueueSendToBackFromISR(USBDeviceTask_EventQueue_Handle, &USB_Event, 
-                &xHigherPriorityTaskWoken1);
-            portEND_SWITCHING_ISR( xHigherPriorityTaskWoken1 );
-            /* Attach the device */
-            //USB_DEVICE_Attach (appData.deviceHandle);
-            break;
-        case USB_DEVICE_EVENT_ERROR:
-        default:
-            break;
-    }
-}
 
 
 /************************************************
@@ -198,8 +115,6 @@ USB_DEVICE_CDC_EVENT_RESPONSE APP_USBDeviceCDCEventHandler
     appDataObject = (APP_DATA *)userData;
     USB_CDC_CONTROL_LINE_STATE * controlLineStateData;
     uint16_t * breakData;
-    uint32_t  USB_Event = 0;
-    portBASE_TYPE xHigherPriorityTaskWoken1 = pdFALSE;
 
     switch ( event )
     {
@@ -236,10 +151,8 @@ USB_DEVICE_CDC_EVENT_RESPONSE APP_USBDeviceCDCEventHandler
              * for now. */
 
             controlLineStateData = (USB_CDC_CONTROL_LINE_STATE *)pData;
-            appDataObject->appCOMPortObjects[index].controlLineStateData.dtr
-                    = controlLineStateData->dtr;
-            appDataObject->appCOMPortObjects[index].controlLineStateData.carrier
-                    = controlLineStateData->carrier;
+            appDataObject->appCOMPortObjects[index].controlLineStateData.dtr = controlLineStateData->dtr;
+            appDataObject->appCOMPortObjects[index].controlLineStateData.carrier = controlLineStateData->carrier;
 
             USB_DEVICE_ControlStatus(appDataObject->deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
 
@@ -252,18 +165,16 @@ USB_DEVICE_CDC_EVENT_RESPONSE APP_USBDeviceCDCEventHandler
 
             breakData = (uint16_t *)pData;
             appDataObject->appCOMPortObjects[index].breakData = *breakData;
+            USB_DEVICE_ControlStatus(appDataObject->deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
             break;
 
         case USB_DEVICE_CDC_EVENT_READ_COMPLETE:
-            if(index == 0)
-                USB_Event = USBDEVICETASK_READDONECOM1_EVENT;
-            else 
-                USB_Event = USBDEVICETASK_READDONECOM2_EVENT;
+
+            /* This means that the host has sent some data*/
+            appDataObject->appCOMPortObjects[index].isReadComplete = true;
+
             
             /*let processing USB Task know USB if configured..*/
-            xQueueSendToBackFromISR(USBDeviceTask_EventQueue_Handle, &USB_Event, 
-                &xHigherPriorityTaskWoken1);
-            portEND_SWITCHING_ISR( xHigherPriorityTaskWoken1 );
             break;
 
         case USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
@@ -282,15 +193,12 @@ USB_DEVICE_CDC_EVENT_RESPONSE APP_USBDeviceCDCEventHandler
             break;
 
         case USB_DEVICE_CDC_EVENT_WRITE_COMPLETE:
-            if(index == 0)
-                USB_Event = USBDEVICETASK_WRITEDONECOM1_EVENT;
-            else 
-                USB_Event = USBDEVICETASK_WRITEDONECOM2_EVENT;
-            
-            /*let processing USB Task know USB if configured..*/
-            xQueueSendToBackFromISR(USBDeviceTask_EventQueue_Handle, &USB_Event, 
-                &xHigherPriorityTaskWoken1);
-            portEND_SWITCHING_ISR( xHigherPriorityTaskWoken1 );
+
+            /* This means that the data write got completed. We can schedule
+             * the next read. */
+
+            appDataObject->appCOMPortObjects[index].isWriteComplete = true;
+
             break;
 
         default:
@@ -299,122 +207,88 @@ USB_DEVICE_CDC_EVENT_RESPONSE APP_USBDeviceCDCEventHandler
     return USB_DEVICE_CDC_EVENT_RESPONSE_NONE;
 }
 
+/*************************************************
+ * Application Device Layer Event Handler
+ *************************************************/
 
-// *****************************************************************************
-/* Function:
-    void USBDevice_Task(void)
-
-  Summary:
-    It is an RTOS task for Attaching and Configuring USB Device to Host.
-
-  Description:
-    This function is an RTOS task for attaching the USB Device to Host. Following
- are the actions done by this Task.
- 1) Open an instance of Harmony USB Device Framework by periodically calling
-    (in every 1 milli Second) USB_DEVICE_Open()function until Harmony USB Device
-     framework is successfully opened.
- 2) If the USB Device Framework is opened successfully pass an application event
-    Handler to the USB framework for receiving USB Device Events.
- 3) Attach to the USB Host by calling USB attach function.
- 4) Acquire a binary semaphore to wait until USB Host Configures the Device. The
-    semaphore is released when a USB_DEVICE_EVENT_CONFIGURED event is received at
-    the USB Device event handler.
- 5) Resume all CDC read/write tasks.
- 6) Suspend USB attach task.
-
-  Returns:
-     None
-*/
-void USBDevice_Task(void* p_arg)
+void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, void * pData, uintptr_t context)
 {
-    BaseType_t errStatus;
-    uint32_t USBDeviceTask_State = USBDEVICETASK_OPENUSB_STATE;
-    uint32_t USBDeviceTask_Event = 0;
-    USB_DEVICE_CDC_TRANSFER_HANDLE COM1Read_Handle, COM1Write_Handle, 
+    uint8_t configurationValue;
 
-    COM1Read_Handle = USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID;
-    COM1Write_Handle = USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID;
-
-
-    for(;;)
+    switch( event )
     {
-        switch(USBDeviceTask_State)
-        {
-            case USBDEVICETASK_OPENUSB_STATE:
-                appData.deviceHandle = USB_DEVICE_Open( USB_DEVICE_INDEX_0,
-                    DRV_IO_INTENT_READWRITE );
-                /*do we have access to usb, if not try again*/
-                if(appData.deviceHandle != USB_DEVICE_HANDLE_INVALID)
-                {
-                    //USBDeviceTask_State = USBDEVICETASK_PROCESSUSBEVENTS_STATE;
-                    USB_DEVICE_EventHandlerSet(appData.deviceHandle, APP_USBDeviceEventHandler, 0);
-                    USBDeviceTask_State = USBDEVICETASK_ATTACHUSB_STATE;
-                    break;
-                }
-                /*try again in 10msec*/
-                USBDeviceTask_State = USBDEVICETASK_OPENUSB_STATE;
-                vTaskDelay(10 / portTICK_PERIOD_MS);
-                break;
-            case USBDEVICETASK_ATTACHUSB_STATE: 
-                USB_DEVICE_Attach (appData.deviceHandle);
-                USBDeviceTask_State = USBDEVICETASK_PROCESSUSBEVENTS_STATE;
-                break;
-            case USBDEVICETASK_PROCESSUSBEVENTS_STATE:
-                /*once here, usb task becomes event driven, user input will 
-                  will generate events. */
-                USBDeviceTask_State = USBDEVICETASK_PROCESSUSBEVENTS_STATE;                
+        case USB_DEVICE_EVENT_RESET:
+        case USB_DEVICE_EVENT_DECONFIGURED:
 
-                /*wait for an event to occur and process, see event handler*/
-                errStatus = xQueueReceive(USBDeviceTask_EventQueue_Handle,
-                                &USBDeviceTask_Event,portMAX_DELAY);
+            appData.isConfigured = false;
 
-                /*make sure event was successfully received*/
-                if(errStatus == pdFALSE)
-                    break;
+            APP_LED0_On();
+            APP_LED1_Off();
+            
+            break;
+            
+        case USB_DEVICE_EVENT_CONFIGURED:
 
-                switch(USBDeviceTask_Event)
-                {
-                    case USBDEVICETASK_USBPOWERED_EVENT:
+            /*do we have access to usb, if not try again*/
+            configurationValue = ((USB_DEVICE_EVENT_DATA_CONFIGURED *)pData)->configurationValue;
+            if(configurationValue == 1)
+            {
+                //USBDeviceTask_State = USBDEVICETASK_PROCESSUSBEVENTS_STATE;
+                USB_DEVICE_CDC_EventHandlerSet(COM1, APP_USBDeviceCDCEventHandler, (uintptr_t)&appData);
+                USB_DEVICE_CDC_EventHandlerSet(COM2, APP_USBDeviceCDCEventHandler, (uintptr_t)&appData);
+
+                appData.isConfigured = true;
+
+                APP_LED0_On();
+                APP_LED1_Off();
+            }
+            
+            break;
+
+        case USB_DEVICE_EVENT_SUSPENDED:
+            
+            /* Update LED indication */
+            APP_LED0_Off();
+            APP_LED1_On();
+            
+            break;
+
+       case USB_DEVICE_EVENT_POWER_DETECTED:
+            
+            /* VBUS has been detected. We can attach the device */
                         USB_DEVICE_Attach (appData.deviceHandle);
                         break;
-                    case USBDEVICETASK_USBCONFIGURED_EVENT:
-                        /*USB ready, wait for user input on either com port*/
+            
+        case USB_DEVICE_EVENT_POWER_REMOVED:
+            
+            /* VBUS is not available. We can detach the device */
+            USB_DEVICE_Detach(appData.deviceHandle);
+            break;
 
-                        /* Schedule a CDC read on COM1 */
-                        USB_DEVICE_CDC_Read(0, &COM1Read_Handle,
-                            com1ReadBuffer,APP_READ_BUFFER_SIZE);
-
-                        break;                    
-                    case USBDEVICETASK_READDONECOM1_EVENT:
-                        /* Send the received data to COM2 */
-                        USB_DEVICE_CDC_Write(1, &COM2Write_Handle,
-                            &com1ReadBuffer, 1,
-                            USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE);
-                        break;
-                    case USBDEVICETASK_READDONECOM2_EVENT:
-                        /* Send the received data to COM1 */
-                        USB_DEVICE_CDC_Write(0, &COM1Write_Handle,
-                            &com2ReadBuffer, 1,
-                            USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE);
-                        break;
-                    case USBDEVICETASK_WRITEDONECOM1_EVENT:
-                        /* Schedule a CDC read on COM2 */
-                        USB_DEVICE_CDC_Read(1,&COM2Read_Handle,
-                            com2ReadBuffer,APP_READ_BUFFER_SIZE);
-                        break;
-                    case USBDEVICETASK_WRITEDONECOM2_EVENT:
-                        /* Schedule a CDC read on COM1 */
-                        USB_DEVICE_CDC_Read(0, &COM1Read_Handle,
-                            com1ReadBuffer,APP_READ_BUFFER_SIZE);
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            default:
-                break;
-        }
+        /* These events are not used in this demo */
+        case USB_DEVICE_EVENT_RESUMED:
+        case USB_DEVICE_EVENT_ERROR:
+        default:
+            break;
     }
+}
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Application Local Functions
+// *****************************************************************************
+// *****************************************************************************
+
+/************************************************
+ * Application State Reset Function
+ ************************************************/
+
+void APP_StateReset(void)
+{
+    appData.appCOMPortObjects[COM1].isReadComplete = false;
+    appData.appCOMPortObjects[COM1].isWriteComplete = false;
+    appData.appCOMPortObjects[COM2].isReadComplete = false;
+    appData.appCOMPortObjects[COM2].isWriteComplete = false;
 }
 
 // *****************************************************************************
@@ -433,23 +307,31 @@ void USBDevice_Task(void* p_arg)
 
 void APP_Initialize ( void )
 {
+    /* Initialize the application object */
 
-    USBDeviceTask_EventQueue_Handle = xQueueCreate(15, sizeof(uint32_t));
-
-    /*dont proceed if queue was not created...*/
-    if(USBDeviceTask_EventQueue_Handle == NULL)
-    {
-//        BSP_LEDOn ( APP_USB_LED_1 );
-//        BSP_LEDOn ( APP_USB_LED_2 );
-//        BSP_LEDOn ( APP_USB_LED_3 );        
-        while(1);
-    }
-	/* Initialize the application object */
     appData.deviceHandle = USB_DEVICE_HANDLE_INVALID;
-    appData.appCOMPortObjects[0].getLineCodingData.dwDTERate = 9600;
-    appData.appCOMPortObjects[0].getLineCodingData.bDataBits = 8;
-    appData.appCOMPortObjects[0].getLineCodingData.bParityType = 0;
-    appData.appCOMPortObjects[0].getLineCodingData.bCharFormat = 0;
+    appData.isConfigured = false;
+    appData.state = APP_STATE_INIT;
+
+    appData.appCOMPortObjects[COM1].getLineCodingData.dwDTERate = 9600;
+    appData.appCOMPortObjects[COM1].getLineCodingData.bDataBits = 8;
+    appData.appCOMPortObjects[COM1].getLineCodingData.bParityType = 0;
+    appData.appCOMPortObjects[COM1].getLineCodingData.bCharFormat = 0;
+
+    appData.appCOMPortObjects[COM2].getLineCodingData.dwDTERate = 9600;
+    appData.appCOMPortObjects[COM2].getLineCodingData.bDataBits = 8;
+    appData.appCOMPortObjects[COM2].getLineCodingData.bParityType = 0;
+    appData.appCOMPortObjects[COM2].getLineCodingData.bCharFormat = 0;
+
+    appData.appCOMPortObjects[COM1].readTransferHandle = USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID;
+    appData.appCOMPortObjects[COM1].writeTransferHandle = USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID;
+    appData.appCOMPortObjects[COM1].isReadComplete = true;
+    appData.appCOMPortObjects[COM1].isWriteComplete = false;
+
+    appData.appCOMPortObjects[COM2].readTransferHandle = USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID;
+    appData.appCOMPortObjects[COM2].writeTransferHandle = USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID;
+    appData.appCOMPortObjects[COM2].isReadComplete = true;
+    appData.appCOMPortObjects[COM2].isWriteComplete = false;
 }
 
 
@@ -460,30 +342,142 @@ void APP_Initialize ( void )
   Remarks:
     See prototype in app.h.
  */
+
 void APP_Tasks ( void )
 {
-    static bool blockAppTask = false;
-    BaseType_t errStatus;
-    if (blockAppTask == false)
-    {
-        errStatus = xTaskCreate((TaskFunction_t) USBDevice_Task,
-                "USB_AttachTask",
-                USBDEVICETASK_SIZE,
-                NULL,
-                USBDEVICETASK_PRIO,
-                NULL);
-        /*Don't proceed if Task was not created...*/
-        if(errStatus != pdTRUE)
-        {
-//            BSP_LEDOn ( APP_USB_LED_1 );
-//            BSP_LEDOn ( APP_USB_LED_2 );
-//            BSP_LEDOn ( APP_USB_LED_3 );
-            while(1);
-        }
+    /* Update the application state machine based
+     * on the current state */
 
-        /* The APP_Tasks() function need to exceute only once. Block it now */
-        blockAppTask = true;
-    }  
+    switch(appData.state)
+    {
+        case APP_STATE_INIT:
+
+            /* Open the device layer */
+            appData.deviceHandle = USB_DEVICE_Open( USB_DEVICE_INDEX_0, DRV_IO_INTENT_READWRITE );
+
+            if(appData.deviceHandle != USB_DEVICE_HANDLE_INVALID)
+            {
+                /* Register a callback with device layer to get event notification (for end point 0) */
+                USB_DEVICE_EventHandlerSet(appData.deviceHandle, APP_USBDeviceEventHandler, 0);
+
+                appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
+            }
+            else
+            {
+                /* The Device Layer is not ready to be opened. We should try
+                 * again later. */
+            }
+
+            break;
+
+        case APP_STATE_WAIT_FOR_CONFIGURATION:
+
+            /* Check if the device was configured */
+
+            if(appData.isConfigured)
+            {
+                /* If the device is configured then lets start
+                 * the application */
+
+                appData.state = APP_STATE_CHECK_IF_CONFIGURED;
+
+                /* Schedule a read on COM1 and COM2 */
+                appData.appCOMPortObjects[COM1].isReadComplete = false;
+                appData.appCOMPortObjects[COM2].isReadComplete = false;
+
+                USB_DEVICE_CDC_Read(COM1,
+                        &appData.appCOMPortObjects[COM1].readTransferHandle,
+                        com1ReadBuffer, APP_READ_BUFFER_SIZE);
+
+                USB_DEVICE_CDC_Read(COM2,
+                        &appData.appCOMPortObjects[COM2].readTransferHandle,
+                        com2ReadBuffer, APP_READ_BUFFER_SIZE);
+
+            }
+            break;
+
+        case APP_STATE_CHECK_IF_CONFIGURED:
+
+            if(appData.isConfigured)
+            {
+                /* This means this device is still configured */
+
+                appData.state = APP_STATE_CHECK_FOR_READ_COMPLETE;
+            }
+            else
+            {
+                APP_StateReset();
+                appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
+            }
+            break;
+
+        case APP_STATE_CHECK_FOR_READ_COMPLETE:
+
+            if(appData.appCOMPortObjects[COM1].isReadComplete == true)
+            {
+                /* This means we got data on COM1. Write this data to COM2.*/
+
+                appData.appCOMPortObjects[COM1].isReadComplete = false;
+                appData.appCOMPortObjects[COM2].isWriteComplete = false;
+
+                USB_DEVICE_CDC_Write(COM2,
+                        &appData.appCOMPortObjects[COM2].writeTransferHandle,
+                        com1ReadBuffer, 1,
+                        USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE);
+
+            }
+
+            if(appData.appCOMPortObjects[COM2].isReadComplete == true)
+            {
+                /* This means we got data on COM2. Write this data to COM1 */
+
+                appData.appCOMPortObjects[COM2].isReadComplete = false;
+                appData.appCOMPortObjects[COM1].isWriteComplete = false;
+
+                USB_DEVICE_CDC_Write(COM1,
+                        &appData.appCOMPortObjects[COM1].writeTransferHandle,
+                        com2ReadBuffer, 1,
+                        USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE);
+
+            }
+            appData.state = APP_STATE_CHECK_FOR_WRITE_COMPLETE;
+            break;
+
+        case APP_STATE_CHECK_FOR_WRITE_COMPLETE:
+
+            /* Check if the write is complete */
+
+            if(appData.appCOMPortObjects[COM2].isWriteComplete)
+            {
+                USB_DEVICE_CDC_Read(COM1,
+                        &appData.appCOMPortObjects[COM1].readTransferHandle,
+                        com1ReadBuffer, APP_READ_BUFFER_SIZE);
+
+                appData.appCOMPortObjects[COM1].isReadComplete = false;
+                appData.appCOMPortObjects[COM2].isWriteComplete = false;
+
+            }
+
+            if(appData.appCOMPortObjects[COM1].isWriteComplete)
+            {
+                USB_DEVICE_CDC_Read(COM2,
+                        &appData.appCOMPortObjects[COM2].readTransferHandle,
+                        com2ReadBuffer, APP_READ_BUFFER_SIZE);
+
+                appData.appCOMPortObjects[COM2].isReadComplete = false;
+                appData.appCOMPortObjects[COM1].isWriteComplete = false;
+
+            }
+
+            appData.state = APP_STATE_CHECK_IF_CONFIGURED;
+            break;
+
+        case APP_STATE_ERROR:
+            break;
+
+        default:
+            break;
+    }
 }
  
 

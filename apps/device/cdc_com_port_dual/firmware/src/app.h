@@ -71,14 +71,13 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-#define  USBDEVICETASK_PRIO                             4u
-
+#define COM1 USB_DEVICE_CDC_INDEX_0
 // *****************************************************************************
 // *****************************************************************************
 // Section: Free RTOS Task Stack Sizes
 // *****************************************************************************
 // *****************************************************************************
-#define  USBDEVICETASK_SIZE                             1024u
+#define COM2 USB_DEVICE_CDC_INDEX_1
 
 // *****************************************************************************
 // *****************************************************************************
@@ -86,17 +85,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-#define APP_READ_BUFFER_SIZE 512
-
-#ifdef __PIC32MZ__
-    #define APP_MAKE_BUFFER_DMA_READY  __attribute__((coherent)) __attribute__((aligned(16)))
-#else
-#define APP_MAKE_BUFFER_DMA_READY
-#endif
-
-#define APP_USB_LED_1 BSP_LED_1
-#define APP_USB_LED_2 BSP_LED_2
-#define APP_USB_LED_3 BSP_LED_3
 
 // *****************************************************************************
 /* Application States
@@ -108,16 +96,30 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     This defines the valid application states.  These states
     determine the behavior of the application at various times.
 */
-#define USBDEVICETASK_OPENUSB_STATE                1
-#define USBDEVICETASK_ATTACHUSB_STATE              2
-#define USBDEVICETASK_PROCESSUSBEVENTS_STATE       3
 
-#define USBDEVICETASK_USBPOWERED_EVENT             1
-#define USBDEVICETASK_USBCONFIGURED_EVENT          2
-#define USBDEVICETASK_READDONECOM1_EVENT           3
-#define USBDEVICETASK_READDONECOM2_EVENT           4
-#define USBDEVICETASK_WRITEDONECOM1_EVENT          5
-#define USBDEVICETASK_WRITEDONECOM2_EVENT          6
+typedef enum
+{
+    APP_STATE_INIT=0,
+
+    /* Application waits for device configuration*/
+    APP_STATE_WAIT_FOR_CONFIGURATION,
+
+    /* Application checks if the device is still configured*/
+    APP_STATE_CHECK_IF_CONFIGURED,
+
+   /* A character is received from host */
+    APP_STATE_CHECK_FOR_READ_COMPLETE,
+
+    /* Wait for the transmit to get completed */
+    APP_STATE_CHECK_FOR_WRITE_COMPLETE,
+
+    /* Wait for the write to complete */
+    APP_STATE_WAIT_FOR_WRITE_COMPLETE,
+
+    /* Application Error state*/
+    APP_STATE_ERROR
+
+} APP_STATES;
 
 /******************************************************
  * Application COM Port Object
@@ -140,6 +142,18 @@ typedef struct
     /* Break data */
     uint16_t breakData;
 
+    /* Read transfer handle */
+    USB_DEVICE_CDC_TRANSFER_HANDLE readTransferHandle;
+
+    /* Write transfer handle */
+    USB_DEVICE_CDC_TRANSFER_HANDLE writeTransferHandle;
+
+    /* True if a character was read */
+    bool isReadComplete;
+
+    /* True if a character was written*/
+    bool isWriteComplete;
+
 }APP_COM_PORT_OBJECT;
 
 // *****************************************************************************
@@ -160,7 +174,11 @@ typedef struct
     /* Device layer handle returned by device layer open function */
     USB_DEVICE_HANDLE deviceHandle;
 
-    /* This demo supports 2 COM ports */
+    /* Application's current state*/
+    APP_STATES state;
+
+    /* Device configured state */
+    bool isConfigured;
     APP_COM_PORT_OBJECT appCOMPortObjects[2];
 } APP_DATA;
 
@@ -172,12 +190,6 @@ typedef struct
 // *****************************************************************************
 /* These routines are called by drivers when certain events occur.
 */
-void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, void * pData,
-                                                            uintptr_t context);
-
-USB_DEVICE_CDC_EVENT_RESPONSE APP_USBDeviceCDCEventHandler (
-            USB_DEVICE_CDC_INDEX index , USB_DEVICE_CDC_EVENT event ,void* pData,
-                                                            uintptr_t userData);
 
 	
 // *****************************************************************************

@@ -123,6 +123,8 @@ extern "C" {
 /* EP0 size in bytes */
 #define USB_DEVICE_EP0_BUFFER_SIZE      64
 
+/* Enable SOF Events */ 
+#define USB_DEVICE_SOF_EVENT_ENABLE     
 
 
 
@@ -144,7 +146,36 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 
+/*** LED Macros for LED0 ***/
+#define APP_LED0_Off()                LED1_Off()
+#define APP_LED0_On()                 LED1_On()
+#define APP_LED0_Toggle()             LED1_Toggle()
+    
+/*** LED Macros for LED1 ***/
+#define APP_LED1_Off()                LED2_Off()
+#define APP_LED1_On()                 LED2_On()
+#define APP_LED1_Toggle()             LED2_Toggle()
+                                  
+/*** SWITCH Macros for SWITCH1 ***/
+    
+#define APP_SWITCH0_Get()             SWITCH_Get()
+#define APP_SWITCH0_STATE_PRESSED     SWITCH_STATE_PRESSED
+#define APP_SWITCH0_STATE_RELEASED    SWITCH_STATE_RELEASED
+    
+/*** SWITCH Macros for SWITCH2 ***/
+#define APP_SWITCH1_Get()             SWITCH_Get()
+#define APP_SWITCH1_STATE_PRESSED     SWITCH_STATE_PRESSED
+#define APP_SWITCH1_STATE_RELEASED    SWITCH_STATE_RELEASED
 
+
+/*** Application Instance 0 Configuration ***/
+
+#define APP_READ_BUFFER_SIZE 512
+
+/* Macro defines USB internal DMA Buffer criteria*/
+
+#define APP_MAKE_BUFFER_DMA_READY  __attribute__((aligned(16)))
+    
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }
