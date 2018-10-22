@@ -13,6 +13,10 @@ def showRTOSMenu(symbol, event):
 
 
 def instantiateComponent(usbHostComponent):
+
+	res = Database.activateComponents(["HarmonyCore"])
+	res = Database.activateComponents(["drv_usbhs_v1"])
+	
 	# USB Host Max Number of Devices   
 	usbHostDeviceNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_DEVICE_NUMNBER", None)
 	usbHostDeviceNumber.setLabel("Maximum Number of Devices")
@@ -132,6 +136,7 @@ def instantiateComponent(usbHostComponent):
 	usbHostSystemInitDataFile.setOverwrite(True)
 	usbHostSystemInitDataFile.setDestPath("")
 	usbHostSystemInitDataFile.setProjectPath("config/" + configName + "/")
+	usbHostClientInitEntry = usbHostComponent.createListSymbol("LIST_USB_HOST_CLIENT_INIT_DATA", None)
 	usbHostTplList = usbHostComponent.createListSymbol("LIST_USB_HOST_TPL_ENTRY", None)
 
 	usbHostSystemInitCallsFile = usbHostComponent.createFileSymbol(None, None)

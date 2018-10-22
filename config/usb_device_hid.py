@@ -3,7 +3,9 @@ currentQSizeWrite = 1
 hidInterfacesNumber = 1
 hidDescriptorSize = 32
 
-def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
+def onDependencyConnected(info):
+	print("USB Device Layer connected to HID" )
+	ownerComponent  = info["localComponent"].getID()
 	if (dependencyID == "usb_device_dependency"):
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
@@ -134,7 +136,23 @@ def instantiateComponent(usbDeviceHidComponent, index):
 		print("queueDepthCombined:", queueDepthCombined + currentQSizeRead + currentQSizeWrite)
 	else:
 		print("queueDepthCombined was not set")
-		
+	
+	readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
+	if readValue != None:
+		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
+		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", readValue + 1 , 2)
+	
+	readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
+	if readValue != None:
+		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
+		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", readValue + hidDescriptorSize , 2)
+	
+	readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
+	if readValue != None:
+		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
+		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", readValue + hidInterfacesNumber , 2)
+	
+	
 	##############################################################
 	# system_definitions.h file for USB Device HID Function driver   
 	##############################################################

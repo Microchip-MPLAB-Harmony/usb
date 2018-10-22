@@ -163,10 +163,19 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceFunctionNumber = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", None)
 	usbDeviceFunctionNumber.setLabel("Number of Functions")	
 	usbDeviceFunctionNumber.setVisible(True)
-	usbDeviceFunctionNumber.setMin(1)
+	usbDeviceFunctionNumber.setMin(0)
 	usbDeviceFunctionNumber.setDefaultValue(0)
 	usbDeviceFunctionNumber.setUseSingleDynamicValue(True)
 	usbDeviceFunctionNumber.setReadOnly(True)
+	
+	# USB Device Endpoint Number 
+	usbDeviceEndpointsNumber = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", None)
+	usbDeviceEndpointsNumber.setLabel("Number of Endpoints")	
+	usbDeviceEndpointsNumber.setVisible(False)
+	usbDeviceEndpointsNumber.setMin(0)
+	usbDeviceEndpointsNumber.setDefaultValue(0)
+	usbDeviceEndpointsNumber.setUseSingleDynamicValue(True)
+	usbDeviceEndpointsNumber.setReadOnly(True)
 	
 	# USB Device events enable 
 	usbDeviceEventsEnable = usbDeviceComponent.createMenuSymbol("USB_DEVICE_EVENTS", None)

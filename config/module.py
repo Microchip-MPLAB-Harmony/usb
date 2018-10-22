@@ -95,29 +95,29 @@ def loadModule():
 	usbDeviceMsdComponent.addDependency("usb_device_msd_meida_dependency_1", "DRV_MEDIA")
 	usbDeviceMsdComponent.addDependency("usb_device_msd_meida_dependency_2", "DRV_MEDIA")
 	usbDeviceMsdComponent.addDependency("usb_device_msd_meida_dependency_3", "DRV_MEDIA")
-	#usbDeviceMsdComponent.addDependency("usb_device_meida_dependency_4", "DRV_MEDIA")
 	usbDeviceMsdComponent.addCapability("USB Device", "USB_DEVICE_MSD")
 	
 	
 	print("create component: USB Host")
 	usbHostComponent = Module.CreateSharedComponent("usb_host", "Host Layer", "/Libraries/USB/Host Stack", "config/usb_host.py")
-	usbHostComponent.addDependency("usb_driver_dependency", "DRV_USB")
+	usbHostComponent.addDependency("usb_driver_dependency", "DRV_USB", True, True)
 	usbHostComponent.addDependency("usb_host_tmr_dependency", "SYS_TIME")
-	usbHostComponent.addCapability("usb_host", "USB_HOST")
+	usbHostComponent.addCapability("usb_host", "USB_HOST", True)
 	
 	print("create component: USB Host MSD")
 	usbHostMsdComponent = Module.CreateComponent("usb_host_msd", "MSD Client Driver", "/Libraries/USB/Host Stack","config/usb_host_msd.py")
-	usbHostMsdComponent.addDependency("usb_host_dependency", "USB_HOST")
+	usbHostMsdComponent.addDependency("usb_host_dependency", "USB_HOST", True, True)
+	usbHostMsdComponent.addCapability("USB Host MSD", "DRV_MEDIA")
 	
 	print("create component: USB Host CDC")
 	usbHostCdcComponent = Module.CreateComponent("usb_host_cdc", "CDC Client Driver", "/Libraries/USB/Host Stack", "config/usb_host_cdc.py")
-	usbHostCdcComponent.addDependency("usb_host_dependency", "USB_HOST")
+	usbHostCdcComponent.addDependency("usb_host_dependency", "USB_HOST", True, True)
 	
 	print("create component: USB Host HID")
 	usbHostHidComponent = Module.CreateComponent("usb_host_hid", "HID Client Driver", "/Libraries/USB/Host Stack", "config/usb_host_hid.py")
-	usbHostHidComponent.addDependency("usb_host_dependency", "USB_HOST")
+	usbHostHidComponent.addDependency("usb_host_dependency", "USB_HOST", True, True)
 
 	print("create component: USB Host Audio")
 	usbHostAudioComponent = Module.CreateComponent("usb_host_audio", "Audio Client Driver", "/Libraries/USB/Host Stack", "config/usb_host_audio.py")
-	usbHostAudioComponent.addDependency("usb_host_dependency", "USB_HOST")
+	usbHostAudioComponent.addDependency("usb_host_dependency", "USB_HOST", True, True)
 		

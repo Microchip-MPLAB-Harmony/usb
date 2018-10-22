@@ -203,8 +203,8 @@
           <Name dnOrder="1">tasks.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">BFBCC5F236F3D9DCF03443A2EA1F8434</GeneratedChecksum>
-          <UserChecksum dnOrder="5">BFBCC5F236F3D9DCF03443A2EA1F8434</UserChecksum>
+          <GeneratedChecksum dnOrder="4">22F3DDC6C7A880A122926A2A8EBDA5EA</GeneratedChecksum>
+          <UserChecksum dnOrder="5">22F3DDC6C7A880A122926A2A8EBDA5EA</UserChecksum>
         </File>
         <File dnOrder="25">
           <Type dnOrder="0">SOURCE</Type>
@@ -331,8 +331,8 @@
           <Name dnOrder="1">atsame70q21b.h</Name>
           <LogicalPath dnOrder="2">packs/ATSAME70Q21B_DFP/</LogicalPath>
           <PhysicalPath dnOrder="3">/../../packs/ATSAME70Q21B_DFP/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">70407B4A420D4C628E6536AC5A43B311</GeneratedChecksum>
-          <UserChecksum dnOrder="5">70407B4A420D4C628E6536AC5A43B311</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E10A6B3CFD37EC207EC63842459B3D66</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E10A6B3CFD37EC207EC63842459B3D66</UserChecksum>
         </File>
         <File dnOrder="41">
           <Type dnOrder="0">HEADER</Type>

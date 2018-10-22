@@ -140,8 +140,8 @@ const uint8_t highSpeedConfigurationDescriptor[]=
 
     0x09,                                               // Size of this descriptor in bytes
     USB_DESCRIPTOR_CONFIGURATION,                       // Descriptor Type
-    USB_DEVICE_16bitTo8bitArrange(9),      //(9 Bytes)Size of the Config descriptor
-    0,                                                   // Number of interfaces in this cfg
+    USB_DEVICE_16bitTo8bitArrange(67),      //(67 Bytes)Size of the Config descriptor
+    2,                                                   // Number of interfaces in this cfg
     0x01,                                               // Index value of this configuration
     0x00,                                               // Configuration string index
     USB_ATTRIBUTE_DEFAULT | USB_ATTRIBUTE_SELF_POWERED, // Attributes
@@ -244,8 +244,8 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
 
     0x09,                                               // Size of this descriptor in bytes
     USB_DESCRIPTOR_CONFIGURATION,                       // Descriptor Type
-    USB_DEVICE_16bitTo8bitArrange(9),    //(9 Bytes)Size of the Config descriptor
-    0,             // Number of interfaces in this cfg
+    USB_DEVICE_16bitTo8bitArrange(67),    //(67 Bytes)Size of the Config descriptor
+    2,             // Number of interfaces in this cfg
     0x01,                                               // Index value of this configuration
     0x00,                                               // Configuration string index
     USB_ATTRIBUTE_DEFAULT | USB_ATTRIBUTE_SELF_POWERED, // Attributes

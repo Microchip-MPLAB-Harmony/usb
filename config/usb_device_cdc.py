@@ -6,7 +6,8 @@ cdcDescriptorSize = 58
 
 # countFunctionDrivers = 0; 
 
-def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
+def onDependencyConnected(info):
+	ownerComponent  = info["localComponent"].getID()
 	print(ownerComponent)
 	if (dependencyID == "usb_device_dependency"):
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
@@ -36,6 +37,13 @@ def destroyComponent(component):
 	Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 	Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", functionsNumber -  1 , 2)
 	
+	endpointNumber = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+	Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+	Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", endpointNumber -  3 , 2)
+	
+	interfaceNumber = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
+	Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
+	Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", interfaceNumber - 2, 2)
 
 def usbDeviceCdcBufferQueueSize(usbSymbolSource, event):
 	global currentQSizeRead
@@ -55,6 +63,9 @@ def usbDeviceCdcBufferQueueSize(usbSymbolSource, event):
 	Database.setSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED", queueDepthCombined, 2)
 	
 def instantiateComponent(usbDeviceCdcComponent, index):
+
+	res = Database.activateComponents(["usb_device"])
+	
 	# Index of this function 
 	indexFunction = usbDeviceCdcComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INDEX", None)
 	indexFunction.setVisible(False)
@@ -69,13 +80,15 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	configValue.setMin(1)
 	configValue.setMax(16)
 	configValue.setDefaultValue(1)
+	configValue.setReadOnly(True)
 	
 	# Adding Start Interface number 
 	startInterfaceNumber = usbDeviceCdcComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INTERFACE_NUMBER", None)
 	startInterfaceNumber.setLabel("Start Interface Number")
 	startInterfaceNumber.setVisible(True)
 	startInterfaceNumber.setMin(0)
-	startInterfaceNumber.setDefaultValue(index)
+	startInterfaceNumber.setDefaultValue(0)
+	startInterfaceNumber.setReadOnly(True)
 	
 	# Adding Number of Interfaces
 	numberOfInterfaces = usbDeviceCdcComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_NUMBER_OF_INTERFACES", None)
@@ -83,7 +96,9 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	numberOfInterfaces.setVisible(True)
 	numberOfInterfaces.setMin(1)
 	numberOfInterfaces.setMax(16)
-	numberOfInterfaces.setDefaultValue(index+2)
+	numberOfInterfaces.setDefaultValue(2)
+	numberOfInterfaces.setReadOnly(True)
+	
 	
 	# Use IAD
 	useIad = usbDeviceCdcComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FUNCTION_USE_IAD", None)
@@ -171,7 +186,36 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	Database.clearSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED")
 	Database.setSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED", queueDepthCombined + currentQSizeRead + currentQSizeWrite + currentQSizeSerialStateNotification, 2)
 		
+	readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
+	if readValue != None: 
+		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
+		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", readValue + 1 , 2)
+	
+		# If we have CDC function driver plus any function driver (no matter what class), we enable IAD. 
+		if readValue > 0:
+			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_DESCRIPTOR_IAD_ENABLE")
+			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_DESCRIPTOR_IAD_ENABLE", True, 2)
+			useIad.setValue(True, 1)
 		
+	readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
+	if readValue != None:
+		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
+		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", readValue + cdcDescriptorSize , 2)
+	
+	readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
+	if readValue != None:
+		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
+		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", readValue + cdcInterfacesNumber , 2)
+		startInterfaceNumber.setValue(readValue, 1)
+		
+	readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+	if readValue != None:
+		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue + 3 , 2)
+		epNumberInterrupt.setValue(readValue + 1, 1)
+		epNumberBulkOut.setValue(readValue + 2, 1)
+		epNumberBulkIn.setValue(readValue + 3, 1)
+	
 	##############################################################
 	# system_definitions.h file for USB Device CDC Function driver   
 	##############################################################

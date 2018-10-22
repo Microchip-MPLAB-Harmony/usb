@@ -43,7 +43,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 *******************************************************************************/
 -->
 /* Number of HID Client driver instances in the application */
-#define USB_HOST_HID_INSTANCES_NUMBER        ${CONFIG_USB_HOST_CDC_NUMBER_OF_INSTANCES}
+#define USB_HOST_HID_INSTANCES_NUMBER        ${CONFIG_USB_HOST_HID_NUMBER_OF_INSTANCES}
 
 /* Maximum number of INTERRUPT IN endpoints supported per HID interface */
 #define USB_HOST_HID_INTERRUPT_IN_ENDPOINTS_NUMBER 1

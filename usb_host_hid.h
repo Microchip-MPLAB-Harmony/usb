@@ -54,7 +54,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include "usb/usb_host.h"
 #include "usb/usb_hid.h"
 #include "usb/usb_host_client_driver.h"
-#include "usb/src/usb_dependencies_mapping.h"
+
 
 
 // DOM-IGNORE-BEGIN
