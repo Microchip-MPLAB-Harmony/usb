@@ -43,6 +43,9 @@ def usbDeviceHidBufferQueueSize(usbSymbolSource, event):
 
 
 def instantiateComponent(usbDeviceHidComponent, index):
+
+	res = Database.activateComponents(["usb_device"])
+	
 	# Index of this function 
 	indexFunction = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INDEX", None)
 	indexFunction.setVisible(False)

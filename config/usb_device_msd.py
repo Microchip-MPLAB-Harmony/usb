@@ -34,6 +34,8 @@ def destroyComponent(component):
 	
 	
 def instantiateComponent(usbDeviceMsdComponent, index):
+	
+	res = Database.activateComponents(["usb_device"])
 
 	#Index of this function 
 	indexFunction = usbDeviceMsdComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INDEX", None)

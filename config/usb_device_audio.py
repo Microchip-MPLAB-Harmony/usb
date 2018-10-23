@@ -184,6 +184,9 @@ def usbDeviceAudioDeviceTypeUpdate(usbSymbolSource, event):
 	updateConfigurationDescriptorSize(audioDescriptorSize)	
 		
 def instantiateComponent(usbDeviceAudioComponent, index):
+
+	res = Database.activateComponents(["usb_device"])
+	
 	# Index of this function 
 	indexFunction = usbDeviceAudioComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INDEX", None)
 	indexFunction.setVisible(False)

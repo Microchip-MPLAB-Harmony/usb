@@ -20,6 +20,8 @@ def keyBoardEnable(symbol, event):
 
 def instantiateComponent(usbHostHidComponent):
 
+	res = Database.activateComponents(["usb_host"])
+
 	# USB Host HID Client driver Number of Instances
 	usbHostHidClientDriverInstancesNumber = usbHostHidComponent.createIntegerSymbol("CONFIG_USB_HOST_HID_NUMBER_OF_INSTANCES", None)
 	usbHostHidClientDriverInstancesNumber.setLabel("Number of HID Host Driver Instances")

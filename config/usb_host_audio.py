@@ -7,6 +7,8 @@ def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
 		
 def instantiateComponent(usbHostAudioComponent):
 
+	res = Database.activateComponents(["usb_host"])
+	
 	# USB Host Audio client driver instances 
 	usbHostAudioClientDriverInstance = usbHostAudioComponent.createIntegerSymbol("CONFIG_USB_HOST_AUDIO_NUMBER_OF_INSTANCES", None)
 	usbHostAudioClientDriverInstance.setLabel("Number of Audio Host Driver Instances")

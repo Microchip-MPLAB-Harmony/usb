@@ -89,6 +89,9 @@ def instantiateComponent(usbHostComponent):
 	
 	configName = Variables.get("__CONFIGURATION_NAME")
 	
+	Database.clearSymbolValue("drv_usbhs_v1", "USB_OPERATION_MODE")
+	Database.setSymbolValue("drv_usbhs_v1", "USB_OPERATION_MODE", "Host" , 2)
+		
 	################################################
 	# system_definitions.h file for USB Host Layer    
 	################################################

@@ -7,6 +7,8 @@ def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
 		
 def instantiateComponent(usbHostCdcComponent):
 
+	res = Database.activateComponents(["usb_host"])
+
 	# USB Host CDC client driver instances 
 	usbHostCdcClientDriverInstance = usbHostCdcComponent.createIntegerSymbol("CONFIG_USB_HOST_CDC_NUMBER_OF_INSTANCES", None)
 	usbHostCdcClientDriverInstance.setLabel("Number of CDC Host Driver Instances")

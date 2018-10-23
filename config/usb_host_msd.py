@@ -6,14 +6,20 @@ def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
 		Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue + 1 , 2)
 
 def instantiateComponent(usbHostMsdComponent):
-
+	res = Database.activateComponents(["usb_host"])
+	
 	# USB Host MSD client driver instances 
 	usbHostMsdClientDriverInstance = usbHostMsdComponent.createIntegerSymbol("CONFIG_USB_HOST_MSD_NUMBER_OF_INSTANCES", None)
 	usbHostMsdClientDriverInstance.setLabel("Number of MSD Client Driver Instances")
 	usbHostMsdClientDriverInstance.setDescription("Enter the number of MSD Class Driver instances required in the application.")
 	usbHostMsdClientDriverInstance.setDefaultValue(1)
 	usbHostMsdClientDriverInstance.setVisible(True)
-		
+	
+	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+	if readValue != None:
+		Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+		Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue + 1 , 2)
+	
 	##############################################################
 	# system_definitions.h file for USB Host MSD Client driver   
 	##############################################################
