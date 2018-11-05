@@ -1,0 +1,399 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>USB_DEVICE_AUDIO_EVENT Enumeration</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00471.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00207.html" target="topic">USB Device Libraries</a> &gt; <a href="00136.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00119.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00471.html" target="topic">USB_DEVICE_AUDIO_EVENT Enumeration</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00536.html" target="topic">Previous</a> | <a href="00119.html" target="topic">Up</a> | <a href="00524.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_AUDIO_EVENT Topic Title: USB_DEVICE_AUDIO_EVENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+USB_DEVICE_AUDIO_EVENT Enumeration</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+USB Device Audio Function Driver Events&nbsp;</p>
+<p class="Element10">
+These events are specific to a USB Device Audio Function Driver instance. An event may have some data associated with it. This is provided to the event handling function. Each event description contains details about this event data (pData) and other parameters passed along with the event, to the event handler.&nbsp;</p>
+<p class="Element10">
+Events associated with the Audio Function Driver Specific Control Transfers require application response. The application should respond to these events by using the <a href="00657.html" target="topic">USB_DEVICE_ControlReceive</a>, <a href="00658.html" target="topic">USB_DEVICE_ControlSend</a> and <a href="00659.html" target="topic">USB_DEVICE_ControlStatus</a> functions.&nbsp;</p>
+<p class="Element10">
+Calling the <a href="00659.html" target="topic">USB_DEVICE_ControlStatus</a> function with a USB_DEVICE_CONTROL_STATUS_ERROR will stall the control transfer request. The application would do this if the control transfer request is not supported. Calling the <a href="00659.html" target="topic">USB_DEVICE_ControlStatus</a> function with a USB_DEVICE_CONTROL_STATUS_OK will complete the status stage of the control transfer request. The application would do this if the control transfer request is supported.&nbsp;</p>
+<p class="Element10">
+The following code shows an example of a possible event handling scheme.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">
+<i><span style="color: #008000">// This code example shows all USB Audio Function Driver possible events and</span></i>
+<i><span style="color: #008000">// a possible scheme for handling these events. In this case event responses</span></i>
+<i><span style="color: #008000">// are not deferred.</span></i>
+
+<strong><span style="color: #000080">void</span></strong> APP_USBDeviceAudioEventHandler
+(
+    <a href="00518.html" target="topic">USB_DEVICE_AUDIO_INDEX</a> instanceIndex ,
+    USB_DEVICE_AUDIO_EVENT event ,
+    <strong><span style="color: #000080">void</span></strong> * pData,
+    uintptr_t context
+)
+{
+    <strong><span style="color: #000080">switch</span></strong> (event)
+    {
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_AUDIO_EVENT_READ_COMPLETE:
+
+            <i><span style="color: #008000">// This event indicates that a Audio Read Transfer request</span></i>
+            <i><span style="color: #008000">// has completed. pData should be interpreted as a </span></i>
+            <i><span style="color: #008000">// USB_DEVICE_AUDIO_EVENT_DATA_READ_COMPLETE pointer type.</span></i>
+            <i><span style="color: #008000">// This contains the transfer handle of the read transfer</span></i>
+            <i><span style="color: #008000">// that completed and amount of data that was read.</span></i>
+
+            <strong><span style="color: #000080">break</span></strong>;
+        
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_AUDIO_EVENT_WRITE_COMPLETE:
+
+            <i><span style="color: #008000">// This event indicates that a Audio Write Transfer request</span></i>
+            <i><span style="color: #008000">// has completed. pData should be interpreted as a </span></i>
+            <i><span style="color: #008000">// USB_DEVICE_AUDIO_EVENT_DATA_WRITE_COMPLETE pointer type.</span></i>
+            <i><span style="color: #008000">// This contains the transfer handle of the write transfer</span></i>
+            <i><span style="color: #008000">// that completed and amount of data that was written.</span></i>
+
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_AUDIO_EVENT_STATUS_SEND_COMPLETE:
+            <i><span style="color: #008000">// This event indicates that a Audio Status Write Transfer</span></i>
+            <i><span style="color: #008000">// request on the interrupt Endpoint has been completed. pData </span></i>
+            <i><span style="color: #008000">// should be interpreted as a </span></i>
+            <i><span style="color: #008000">// USB_DEVICE_AUDIO_EVENT_DATA_STATUS_SEND_COMPLETE pointer type.</span></i>
+            <i><span style="color: #008000">// This contains the transfer handle of the transfer.</span></i>
+
+            <strong><span style="color: #000080">break</span></strong>;
+
+
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_AUDIO_EVENT_INTERFACE_SETTING_CHANGED:
+
+            <i><span style="color: #008000">// This event occurs when the host sends Set Interface request</span></i>
+            <i><span style="color: #008000">// to the Audio USB Device. pData will be a pointer to a</span></i>
+            <i><span style="color: #008000">// USB_DEVICE_AUDIO_EVENT_DATA_INTERFACE_SETTING_CHANGED. This</span></i>
+            <i><span style="color: #008000">// contains the interface number whose setting was</span></i>
+            <i><span style="color: #008000">// changed and the index of the alternate setting.</span></i>
+            <i><span style="color: #008000">// The application should typically enable the audio function</span></i>
+            <i><span style="color: #008000">// if the interfaceAlternateSettting member of pData is greater</span></i>
+            <i><span style="color: #008000">// than 0.</span></i>
+
+            <strong><span style="color: #000080">break</span></strong>;
+        
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_AUDIO_EVENT_CONTROL_TRANSFER_UNKNOWN:
+         
+            <i><span style="color: #008000">// This event indicates that the Audio function driver has</span></i>
+            <i><span style="color: #008000">// received a control transfer which it cannot decode. pData</span></i>
+            <i><span style="color: #008000">// will be a pointer to USB_SETUP_PACKET type pointer. The</span></i>
+            <i><span style="color: #008000">// application should decode the packet and take the required</span></i>
+            <i><span style="color: #008000">// action using the USB_DEVICE_ControlStatus(),</span></i>
+            <i><span style="color: #008000">// USB_DEVICE_ControlSend() and USB_DEVICE_ControlReceive()</span></i>
+            <i><span style="color: #008000">// functions.</span></i>
+
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_AUDIO_EVENT_CONTROL_TRANSFER_DATA_SENT:
+            
+            <i><span style="color: #008000">// This event indicates the data send request associated with</span></i>
+            <i><span style="color: #008000">// the latest USB_DEVICE_ControlSend() function was</span></i>
+            <i><span style="color: #008000">// completed. pData will be NULL. </span></i>
+
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_AUDIO_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
+
+            <i><span style="color: #008000">// This event indicates the data receive request associated with</span></i>
+            <i><span style="color: #008000">// the latest USB_DEVICE_ControlReceive() function was</span></i>
+            <i><span style="color: #008000">// completed. pData will be NULL. The application can either</span></i>
+            <i><span style="color: #008000">// acknowledge the received data or reject it by calling the </span></i>
+            <i><span style="color: #008000">// USB_DEVICE_ControlStatus() function. </span></i>
+
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_AUDIO_EVENT_CONTROL_SET_CUR:
+            
+            <i><span style="color: #008000">// This event indicates that the host is trying to set the</span></i>
+            <i><span style="color: #008000">// current setting attribute of a control. The data type will be</span></i>
+            <i><span style="color: #008000">// USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_CUR type.  The</span></i>
+            <i><span style="color: #008000">// application should identify the entity type based on the</span></i>
+            <i><span style="color: #008000">// entity ID. This mapping is application specific. The</span></i>
+            <i><span style="color: #008000">// following example assumes entity type to be a Feature Unit. </span></i>
+
+            <strong><span style="color: #000080">if</span></strong>(APP_EntityIdentify(((<a href="00495.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_CUR</a> *)pData)-&gt;entityID) 
+                    == APP_AUDIO_ENTITY_FEATURE_UNIT)
+            {
+                <i><span style="color: #008000">// The entity type is a feature unit. Type cast pData as</span></i>
+                <i><span style="color: #008000">// a USB_AUDIO_FEATURE_UNIT_CONTROL_REQUEST type and find</span></i>
+                <i><span style="color: #008000">// identify the control selector. This example shows the </span></i>
+                <i><span style="color: #008000">// handling for VOLUME control </span></i>
+
+                <strong><span style="color: #000080">switch</span></strong>(((USB_AUDIO_FEATURE_UNIT_CONTROL_REQUEST *)pData)-&gt;controlSelector)
+                {
+                    <strong><span style="color: #000080">case</span></strong> USB_AUDIO_VOLUME_CONTROL:
+                        <i><span style="color: #008000">// This means the host is trying to set the volume.</span></i>
+                        <i><span style="color: #008000">// Use the USB_DEVICE_ControlReceive() function to</span></i>
+                        <i><span style="color: #008000">// receive the volume settings for each channel.</span></i>
+
+                        <a href="00657.html" target="topic">USB_DEVICE_ControlReceive</a>(usbDeviceHandle, volumeSetting,
+                                ((USB_AUDIO_FEATURE_UNIT_CONTROL_REQUEST *)pData)-&gt;wLength);
+                    <strong><span style="color: #000080">default</span></strong>:
+                        <i><span style="color: #008000">// Only volume control is supported in this example.</span></i>
+                        <i><span style="color: #008000">// So everything else is stalled.</span></i>
+                        <a href="00659.html" target="topic">USB_DEVICE_ControlStatus</a>(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_ERROR);
+                }
+            }
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_AUDIO_EVENT_CONTROL_GET_CUR:
+            
+            <i><span style="color: #008000">// This event indicates that the host is trying to get the</span></i>
+            <i><span style="color: #008000">// current setting attribute of a control. The data type will be</span></i>
+            <i><span style="color: #008000">// USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_CUR type.  The</span></i>
+            <i><span style="color: #008000">// application should identify the entity type based on the</span></i>
+            <i><span style="color: #008000">// entity ID. This mapping is application specific. The</span></i>
+            <i><span style="color: #008000">// following example assumes entity type to be a Feature Unit. </span></i>
+
+            <strong><span style="color: #000080">if</span></strong>(APP_EntityIdentify(((<a href="00495.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_CUR</a> *)pData)-&gt;entityID) 
+                    == APP_AUDIO_ENTITY_FEATURE_UNIT)
+            {
+                <i><span style="color: #008000">// The entity type is a feature unit. Type cast pData as</span></i>
+                <i><span style="color: #008000">// a USB_AUDIO_FEATURE_UNIT_CONTROL_REQUEST type and find</span></i>
+                <i><span style="color: #008000">// identify the control selector. This example shows the </span></i>
+                <i><span style="color: #008000">// handling for VOLUME control </span></i>
+
+                <strong><span style="color: #000080">switch</span></strong>(((USB_AUDIO_FEATURE_UNIT_CONTROL_REQUEST *)pData)-&gt;controlSelector)
+                {
+                    <strong><span style="color: #000080">case</span></strong> USB_AUDIO_VOLUME_CONTROL:
+                        <i><span style="color: #008000">// This means the host is trying to get the volume.</span></i>
+                        <i><span style="color: #008000">// Use the USB_DEVICE_ControlReceive() function to</span></i>
+                        <i><span style="color: #008000">// receive the volume settings for each channel.</span></i>
+
+                        <a href="00658.html" target="topic">USB_DEVICE_ControlSend</a>(usbDeviceHandle, volumeSetting,
+                                ((USB_AUDIO_FEATURE_UNIT_CONTROL_REQUEST *)pData)-&gt;wLength);
+                    <strong><span style="color: #000080">default</span></strong>:
+                        <i><span style="color: #008000">// Only volume control is supported in this example.</span></i>
+                        <i><span style="color: #008000">// So everything else is stalled.</span></i>
+                        <a href="00659.html" target="topic">USB_DEVICE_ControlStatus</a>(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_ERROR);
+                }
+            }
+            <strong><span style="color: #000080">break</span></strong>;
+        
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_AUDIO_EVENT_CONTROL_SET_MAX:
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_AUDIO_EVENT_CONTROL_SET_MIN:
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_AUDIO_EVENT_CONTROL_SET_RES:
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_AUDIO_EVENT_CONTROL_SET_MEM:
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_AUDIO_EVENT_CONTROL_GET_MAX:
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_AUDIO_EVENT_CONTROL_GET_MIN:
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_AUDIO_EVENT_CONTROL_GET_RES:
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_AUDIO_EVENT_CONTROL_GET_MEM:
+            <i><span style="color: #008000">// In this example these request are not supported and so are</span></i>
+            <i><span style="color: #008000">// stalled.</span></i>
+            <a href="00659.html" target="topic">USB_DEVICE_ControlStatus</a>(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_ERROR);
+            <strong><span style="color: #000080">break</span></strong>;
+        
+        <strong><span style="color: #000080">default</span></strong>:
+            <strong><span style="color: #000080">break</span></strong>;
+    }
+    
+    <strong><span style="color: #000080">return</span></strong>(<a href="00515.html" target="topic">USB_DEVICE_AUDIO_EVENT_RESPONSE_NONE</a>);
+}
+</pre></div></div>
+</div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
+  <strong><span style="color: #000000">USB_DEVICE_AUDIO_EVENT_WRITE_COMPLETE</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_AUDIO_EVENT_READ_COMPLETE</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_AUDIO_EVENT_STATUS_SEND_COMPLETE</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_AUDIO_EVENT_INTERFACE_SETTING_CHANGED</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_AUDIO_EVENT_CONTROL_TRANSFER_DATA_RECEIVED</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_AUDIO_EVENT_CONTROL_TRANSFER_DATA_SENT</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_AUDIO_EVENT_CONTROL_TRANSFER_UNKNOWN</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_AUDIO_EVENT_CONTROL_SET_CUR</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_AUDIO_EVENT_CONTROL_SET_MIN</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_AUDIO_EVENT_CONTROL_SET_MAX</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_AUDIO_EVENT_CONTROL_SET_RES</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_AUDIO_EVENT_ENTITY_SET_MEM</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_AUDIO_EVENT_CONTROL_GET_CUR</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_AUDIO_EVENT_CONTROL_GET_MIN</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_AUDIO_EVENT_CONTROL_GET_MAX</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_AUDIO_EVENT_CONTROL_GET_RES</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_AUDIO_EVENT_ENTITY_GET_MEM</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_AUDIO_EVENT_ENTITY_GET_STAT</span></strong>
+} USB_DEVICE_AUDIO_EVENT;</pre></div></div>
+<a name="4D656D62657273"></a><div class="Element14">
+Members</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element272">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element260" valign="top" width="35%">
+<div class="Element261">
+Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
+<div class="Element265">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_AUDIO_EVENT_WRITE_COMPLETE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when a write operation scheduled by calling the <a href="00586.html" target="topic">USB_DEVICE_AUDIO_Write</a>() function has completed. The pData member in the event handler will point to <a href="00508.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_WRITE_COMPLETE</a> type.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_AUDIO_EVENT_READ_COMPLETE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when a read operation scheduled by calling the <a href="00523.html" target="topic">USB_DEVICE_AUDIO_Read</a>() function has completed. The pData member in the event handler will point to <a href="00504.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_READ_COMPLETE</a> type.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_AUDIO_EVENT_STATUS_SEND_COMPLETE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when a status write opearttion is complete which was scheduled using the <a href="00535.html" target="topic">USB_DEVICE_AUDIO_StatusSend</a>() function. The pData parameter in the event handler will point to the <a href="00505.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_STATUS_SEND_COMPLETE</a> type.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_AUDIO_EVENT_INTERFACE_SETTING_CHANGED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the Host requests the Audio USB device to set an alternate setting on an interface present in this audio function. An Audio USB Device will typically feature a default interface setting and one or more alternate interface settings. The pData member in the event handler will point to <a href="00501.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_INTERFACE_SETTING_CHANGED</a> type. This contains the index of the interface whose setting must be changed and the index of the alternate setting. The application may enable or disable audio functions based on the interface setting.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_AUDIO_EVENT_CONTROL_TRANSFER_DATA_RECEIVED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the data stage of a control write transfer has completed. This would occur after the application would respond with a <a href="00657.html" target="topic">USB_DEVICE_ControlReceive</a> function, which may possibly have been called in response to a USB_DEVICE_AUDIO_EVENT_ENTITY_SETTINGS_RECEIVED event This event notifies the application that the data is received from Host and is available at the location passed by the <a href="00657.html" target="topic">USB_DEVICE_ControlReceive</a> function. If the received data is acceptable to the application, it should acknowledge the data by calling the <a href="00659.html" target="topic">USB_DEVICE_ControlStatus</a> function with a USB_DEVICE_CONTROL_STATUS_OK flag.The application can reject the received data by calling the <a href="00659.html" target="topic">USB_DEVICE_ControlStatus</a> function with the USB_DEVICE_CONTROL_STATUS_ERROR flag. The pData parameter will be NULL.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_AUDIO_EVENT_CONTROL_TRANSFER_DATA_SENT&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the data stage of a control read transfer has completed. This would occur when the application has called the <a href="00658.html" target="topic">USB_DEVICE_ControlSend</a> function to complete the data stage of a control transfer. The event indicates that the data has been transmitted to the host. The pData parameter will be NULL.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_AUDIO_EVENT_CONTROL_TRANSFER_UNKNOWN&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the Audio function driver receives a control transfer request that could not be decoded by Audio Function driver.The pData parameter will point to a USB_SETUP_PACKET type containing the SETUP packet. The application must analyze this SETUP packet and use the <a href="00658.html" target="topic">USB_DEVICE_ControlSend</a> or <a href="00657.html" target="topic">USB_DEVICE_ControlReceive</a> or the <a href="00659.html" target="topic">USB_DEVICE_ControlStatus</a> functions to advance the control transfer or complete it.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_AUDIO_EVENT_CONTROL_SET_CUR&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the Host sends an Audio Control specific Set Current Setting Attribute Control Transfer request to an Audio Device Control. The pData member in the event handler will point to <a href="00495.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_CUR</a> type. The application must use the entityID, interface, endpoint and the wValue field in the event data to determine the entity and control type and then respond to the control transfer with a <a href="00659.html" target="topic">USB_DEVICE_ControlStatus</a> and <a href="00657.html" target="topic">USB_DEVICE_ControlReceive</a> functions.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_AUDIO_EVENT_CONTROL_SET_MIN&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the Host sends an Audio Control specific Set Minimum Setting Attribute Control Transfer request to an Audio Device Control. The pData member in the event handler will point to <a href="00498.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MIN</a> type. The application must use the entityID, interface, endpoint and the wValue field in the event data to determine the entity and control type and then respond to the control transfer with a <a href="00659.html" target="topic">USB_DEVICE_ControlStatus</a> and <a href="00657.html" target="topic">USB_DEVICE_ControlReceive</a> functions.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_AUDIO_EVENT_CONTROL_SET_MAX&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the Host sends an Audio Control specific Set Maximum Setting Attribute Control Transfer request to an Audio Device Control. The pData member in the event handler will point to <a href="00496.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MAX</a> type. The application must use the entityID, interface, endpoint and the wValue field in the event data to determine the entity and control type and then respond to the control transfer with a <a href="00659.html" target="topic">USB_DEVICE_ControlStatus</a> and <a href="00657.html" target="topic">USB_DEVICE_ControlReceive</a> functions.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_AUDIO_EVENT_CONTROL_SET_RES&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the Host sends an Audio Control specific Set Resolution Attribute Control Transfer request to an Audio Device Control. The pData member in the event handler will point to <a href="00499.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_RES</a> type. The application must use the entityID, interface, endpoint and the wValue field in the event data to determine the entity and control type and then respond to the control transfer with a <a href="00659.html" target="topic">USB_DEVICE_ControlStatus</a> <a href="00658.html" target="topic">USB_DEVICE_ControlSend</a> and/or <a href="00657.html" target="topic">USB_DEVICE_ControlReceive</a> functions.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_AUDIO_EVENT_ENTITY_SET_MEM&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the Host sends an Audio Entity specific Set Memory Space Attribute Control Transfer request to an Audio Device Entity. The pData member in the event handler will point to <a href="00497.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MEM</a> type. The application must use the entityID, interface, endpoint and the wValue field in the event data to determine the entity and control type and then respond to the control transfer with a <a href="00659.html" target="topic">USB_DEVICE_ControlStatus</a> <a href="00658.html" target="topic">USB_DEVICE_ControlSend</a> and/or <a href="00657.html" target="topic">USB_DEVICE_ControlReceive</a> functions.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_AUDIO_EVENT_CONTROL_GET_CUR&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the Host sends an Audio Control specific Get Current Setting Attribute Control Transfer request to an Audio Device Control. The pData member in the event handler will point to <a href="00490.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_CUR</a> type. The application must use the entityID, interface, endpoint and the wValue field in the event data to determine the entity and control type and then respond to the control transfer with a <a href="00659.html" target="topic">USB_DEVICE_ControlStatus</a> and <a href="00658.html" target="topic">USB_DEVICE_ControlSend</a> functions.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_AUDIO_EVENT_CONTROL_GET_MIN&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the Host sends an Audio Control specific Get Minimum Setting Attribute Control Transfer request to an Audio Device Control. The pData member in the event handler will point to <a href="00493.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_MIN</a> type. The application must use the entityID, interface, endpoint and the wValue field in the event data to determine the entity and control type and then respond to the control transfer with a <a href="00659.html" target="topic">USB_DEVICE_ControlStatus</a> and <a href="00658.html" target="topic">USB_DEVICE_ControlSend</a> functions.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_AUDIO_EVENT_CONTROL_GET_MAX&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the Host sends an Audio Control specific Get Maximum Setting Attribute Control Transfer request to an Audio Device Control. The pData member in the event handler will point to <a href="00491.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_MAX</a> type. The application must use the entityID, interface, endpoint and the wValue field in the event data to determine the entity and control type and then respond to the control transfer with a <a href="00659.html" target="topic">USB_DEVICE_ControlStatus</a> and <a href="00658.html" target="topic">USB_DEVICE_ControlSend</a> functions.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_AUDIO_EVENT_CONTROL_GET_RES&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the Host sends an Audio Control specific Get Resolution Setting Attribute Control Transfer request to an Audio Device Control. The pData member in the event handler will point to <a href="00494.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_RES</a> type. The application must use the entityID, interface, endpoint and the wValue field in the event data to determine the entity and control type and then respond to the control transfer with a <a href="00659.html" target="topic">USB_DEVICE_ControlStatus</a> and <a href="00658.html" target="topic">USB_DEVICE_ControlSend</a> functions.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_AUDIO_EVENT_ENTITY_GET_MEM&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the Host sends an Audio Entity specific Get Memory Space Attribute Control Transfer request to an Audio Device Entity. The pData member in the event handler will point to <a href="00497.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MEM</a> type. The application must use the entityID, interface, endpoint and the wValue field in the event data to determine the entity and control type and then respond to the control transfer with a <a href="00659.html" target="topic">USB_DEVICE_ControlStatus</a> or <a href="00658.html" target="topic">USB_DEVICE_ControlSend</a> functions.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_AUDIO_EVENT_ENTITY_GET_STAT&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the Host sends a Audio Entity specific Get Status Control Transfer request to an Audio Device Entity. The pData member in the event handler will point to <a href="00500.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_ENTITY_GET_STAT</a> type. The application mus use the entityID, interface, endpoint and the wValue field in the event data to determine the entity and control type and then respond to the control transfer with a <a href="00658.html" target="topic">USB_DEVICE_ControlSend</a> and or <a href="00659.html" target="topic">USB_DEVICE_ControlStatus</a> functions.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The application can defer responses to events triggered by control transfers. In that, the application can respond to the control transfer event after exiting the event handler. This allows the application some time to obtain the response data rather than having to respond to the event immediately. Note that a USB host will typically wait for an event response for a finite time duration before timing out and canceling the event and associated transactions. Even when deferring response, the application must respond promptly if such time-out have to be avoided.</p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00207.html" target="topic">USB Device Libraries</a> &gt; <a href="00136.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00119.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00471.html" target="topic">USB_DEVICE_AUDIO_EVENT Enumeration</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00536.html" target="topic">Previous</a> | <a href="00119.html" target="topic">Up</a> | <a href="00524.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_AUDIO_EVENT Topic Title: USB_DEVICE_AUDIO_EVENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

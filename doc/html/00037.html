@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>Running the Demonstration</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00037.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00181.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00038.html" target="topic">Device Demonstrations</a> &gt; <a href="00034.html" target="topic">cdc_serial_emulator</a> &gt; <a href="00037.html" target="topic">Running the Demonstration</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00036.html" target="topic">Previous</a> | <a href="00034.html" target="topic">Up</a> | <a href="00043.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB cdc_serial_emulator_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+Running the Demonstration</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This application demonstrates the use of the CDC Device class in implementing a USB-to-Serial Converter. The application enumerates a COM port on the USB Host PC. Data received through the CDC USB interface is forwarded to a UART. Data received on the UART is forwarded to the CDC USB interface. This emulates a USB-to-Serial Convertor.</p>
+<ol class="Element630">
+<li value="1" class="Element600">Open<span style="color: #FFFFFF">_</span>the project in MPLAB X IDE and select the desired configuration.</li>
+<li value="2" class="Element600">Build the code and program the device.</li>
+<li value="3" class="Element600">Attach the device to the host. If the host is a personal computer and this is the first time you have plugged this device into the computer you may be prompted for a .inf file.</li>
+</ol><p class="Element10">
+<img src="found_new_hardware.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10">
+4. Select the &quot;Install from a list or specific location (Advanced)&quot; option. Specify the <span class="Element146">&lt;install-dir&gt;/usb/apps/device/cdc_serial_emulator/inf</span> directory.&nbsp;</p>
+<p class="Element10">
+<img src="cdc_serial_emulator figure_3.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10">
+The LEDs on the demonstration board will indicate the USB state of the device. Refer to the Configuring the Hardware section for the selected target hardware.&nbsp;</p>
+<p class="Element10">
+5. Open<span style="color: #FFFFFF">_</span>a terminal emulation program of your choice and select the enumerated USB COM port. Set the desired serial baud and other connection related parameters. This is terminal 1.&nbsp;</p>
+<p class="Element10">
+6. Connect the CDC USB port to the Host PC and ensure that a second COM port is available on the Host PC. Refer to the Configuring the Hardware section for details for the selected hardware. Open a serial terminal program and select the second COM port. The serial settings of this COM port should match the setting made in step 5. This is terminal 2. The setup should resemble the below figure. </p><p class="Element10" style="text-align: center;">
+<img src="cdc_serial_emulator_harmony3.png" border="0" alt="" title=""></p><p class="Element10">
+7. Text entered into the terminal 1 program will be echoed on terminal 2. Text entered in terminal 2 should be echoed in terminal 1.</p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00181.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00038.html" target="topic">Device Demonstrations</a> &gt; <a href="00034.html" target="topic">cdc_serial_emulator</a> &gt; <a href="00037.html" target="topic">Running the Demonstration</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00036.html" target="topic">Previous</a> | <a href="00034.html" target="topic">Up</a> | <a href="00043.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB cdc_serial_emulator_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>
