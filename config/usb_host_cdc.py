@@ -1,10 +1,22 @@
-def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
-	print(ownerComponent)
-	if (dependencyID == "usb_host_dependency"):
-		readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+def onAttachmentConnected(source, target):
+	ownerComponent = source["component"]
+	print("USB HOST CDC Client Driver: USB Host Layer Connected")
+	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+	if readValue != None:
 		Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
 		Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue + 1 , 2)
+	
+def onAttachmentDisconnected(source, target):
+	ownerComponent = source["component"]
+	print("USB HOST CDC Client Driver: USB Host Layer Disconnected")
+	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+	if readValue != None:
+		Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+		Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue - 1 , 2)
 		
+def destroyComponent(component):	
+	print("USB HOST CDC Client Driver: Destroyed")
+	
 def instantiateComponent(usbHostCdcComponent):
 
 	res = Database.activateComponents(["usb_host"])
@@ -16,7 +28,6 @@ def instantiateComponent(usbHostCdcComponent):
 	usbHostCdcClientDriverInstance.setDefaultValue(1)
 	usbHostCdcClientDriverInstance.setVisible(True)
 	
-	
 	#USB Host CDC Attach Listeners Number 
 	usbHostCdcClientDriverAttachListnerNumber = usbHostCdcComponent.createIntegerSymbol("CONFIG_USB_HOST_CDC_ATTACH_LISTENERS_NUMBER", None)
 	usbHostCdcClientDriverAttachListnerNumber.setLabel("Number of CDC Host Attach Listeners")
@@ -24,7 +35,11 @@ def instantiateComponent(usbHostCdcComponent):
 	usbHostCdcClientDriverAttachListnerNumber.setDefaultValue(1)
 	usbHostCdcClientDriverAttachListnerNumber.setVisible(True)
 
-		
+	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+	if readValue != None:
+		Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+		Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue + 1 , 2)
+	
 	##############################################################
 	# system_definitions.h file for USB Host CDC Client driver   
 	##############################################################

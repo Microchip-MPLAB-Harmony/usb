@@ -9,7 +9,7 @@
     system_init_c_device_data_msd_function_init.ftl
 
   Summary:
-    USB Device Freemarker Template File
+    USB Device Free-marker Template File
 
   Description:
     This file contains configurations necessary to run the system.  It
@@ -19,28 +19,30 @@
     the system.
 *******************************************************************************/
 
+// DOM-IGNORE-BEGIN
 /*******************************************************************************
-Copyright (c) 2014 released Microchip Technology Inc.  All rights reserved.
-
-Microchip licenses to you the right to use, modify, copy and distribute
-Software only when embedded on a Microchip microcontroller or digital signal
-controller that is integrated into your product or third party product
-(pursuant to the sublicense terms in the accompanying license agreement).
-
-You should refer to the license agreement accompanying this Software for
-additional information regarding your rights and obligations.
-
-SOFTWARE AND DOCUMENTATION ARE PROVIDED AS IS  WITHOUT  WARRANTY  OF  ANY  KIND,
-EITHER EXPRESS  OR  IMPLIED,  INCLUDING  WITHOUT  LIMITATION,  ANY  WARRANTY  OF
-MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A  PARTICULAR  PURPOSE.
-IN NO EVENT SHALL MICROCHIP OR  ITS  LICENSORS  BE  LIABLE  OR  OBLIGATED  UNDER
-CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION,  BREACH  OF  WARRANTY,  OR
-OTHER LEGAL  EQUITABLE  THEORY  ANY  DIRECT  OR  INDIRECT  DAMAGES  OR  EXPENSES
-INCLUDING BUT NOT LIMITED TO ANY  INCIDENTAL,  SPECIAL,  INDIRECT,  PUNITIVE  OR
-CONSEQUENTIAL DAMAGES, LOST  PROFITS  OR  LOST  DATA,  COST  OF  PROCUREMENT  OF
-SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
-(INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
-*******************************************************************************/
+* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+*
+* Subject to your compliance with these terms, you may use Microchip software
+* and any derivatives exclusively with Microchip products. It is your
+* responsibility to comply with third party license terms applicable to your
+* use of third party software (including open source software) that may
+* accompany Microchip software.
+*
+* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+* PARTICULAR PURPOSE.
+*
+* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+ *******************************************************************************/
+// DOM-IGNORE-END
 -->
 /***********************************************
  * Sector buffer needed by for the MSD LUN.
@@ -54,26 +56,18 @@ uint8_t sectorBuffer[512 * USB_DEVICE_MSD_NUM_SECTOR_BUFFERS] __attribute__((ali
 USB_MSD_CBW msdCBW${CONFIG_USB_DEVICE_FUNCTION_INDEX} __attribute__((aligned(16)));
 USB_MSD_CSW msdCSW${CONFIG_USB_DEVICE_FUNCTION_INDEX} __attribute__((aligned(16)));
 
-/***********************************************
- * Because the PIC32MZ flash row size if 2048
- * and the media sector size if 512 bytes, we
- * have to allocate a buffer of size 2048
- * to backup the row. A pointer to this row
- * is passed in the media initialization data
- * structure.
- ***********************************************/
-uint8_t flashRowBackupBuffer [DRV_NVM_ROW_SIZE];
-
 /*******************************************
  * MSD Function Driver initialization
  *******************************************/
 USB_DEVICE_MSD_MEDIA_INIT_DATA __attribute__((aligned(16))) msdMediaInit${CONFIG_USB_DEVICE_FUNCTION_INDEX}[1] =
 {
     {
-        DRV_NVM_INDEX_0,
+<#if (USB_DEVICE_FUNCTION_MSD_LUN_MEDIA_TYPE_0?has_content)>
+        ${USB_DEVICE_FUNCTION_MSD_LUN_MEDIA_TYPE_0?keep_before_last("_")}_INDEX_0,
+</#if>
         512,
         sectorBuffer,
-        flashRowBackupBuffer,
+        NULL,
         (void *)diskImage,
         {
             0x00,    // peripheral device is connected, direct access block device
@@ -82,9 +76,9 @@ USB_DEVICE_MSD_MEDIA_INIT_DATA __attribute__((aligned(16))) msdMediaInit${CONFIG
             0x02,    // response is in format specified by SPC-2
             0x1F,    // additional length
             0x00,    // sccs etc.
-            0x00,    // bque=1 and cmdque=0,indicates simple queueing 00 is obsolete,
+            0x00,    // bque=1 and cmdque=0,indicates simple queuing 00 is obsolete,
                      // but as in case of other device, we are just using 00
-            0x00,    // 00 obsolete, 0x80 for basic task queueing
+            0x00,    // 00 obsolete, 0x80 for basic task queuing
             {
                 'M','i','c','r','o','c','h','p'
             },
@@ -96,15 +90,17 @@ USB_DEVICE_MSD_MEDIA_INIT_DATA __attribute__((aligned(16))) msdMediaInit${CONFIG
             }
         },
         {
-            DRV_NVM_IsAttached,
-            DRV_NVM_Open,
-            DRV_NVM_Close,
-            DRV_NVM_GeometryGet,
-            DRV_NVM_Read,
-            DRV_NVM_EraseWrite,
-            DRV_NVM_IsWriteProtected,
-            DRV_NVM_EventHandlerSet,
+<#if (USB_DEVICE_FUNCTION_MSD_LUN_MEDIA_TYPE_0?has_content)>
+            ${USB_DEVICE_FUNCTION_MSD_LUN_MEDIA_TYPE_0?keep_before_last("_")}_IsAttached,
+            ${USB_DEVICE_FUNCTION_MSD_LUN_MEDIA_TYPE_0?keep_before_last("_")}_Open,
+            ${USB_DEVICE_FUNCTION_MSD_LUN_MEDIA_TYPE_0?keep_before_last("_")}_Close,
+            ${USB_DEVICE_FUNCTION_MSD_LUN_MEDIA_TYPE_0?keep_before_last("_")}_GeometryGet,
+            ${USB_DEVICE_FUNCTION_MSD_LUN_MEDIA_TYPE_0?keep_before_last("_")}_AsyncRead,
+            ${USB_DEVICE_FUNCTION_MSD_LUN_MEDIA_TYPE_0?keep_before_last("_")}_AsyncEraseWrite,
+            ${USB_DEVICE_FUNCTION_MSD_LUN_MEDIA_TYPE_0?keep_before_last("_")}_IsWriteProtected,
+            ${USB_DEVICE_FUNCTION_MSD_LUN_MEDIA_TYPE_0?keep_before_last("_")}_TransferHandlerSet,
             NULL
+</#if>
         }
     },
     

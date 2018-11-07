@@ -152,8 +152,8 @@ const uint8_t highSpeedConfigurationDescriptor[]=
 
     0x09,                                               // Size of this descriptor in bytes
     USB_DESCRIPTOR_CONFIGURATION,                       // Descriptor Type
-    USB_DEVICE_16bitTo8bitArrange(${CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE}),      //(${CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE} Bytes)Size of the Config descriptor
-    ${CONFIG_USB_DEVICE_INTERFACES_NUMBER},                                                   // Number of interfaces in this cfg
+    USB_DEVICE_16bitTo8bitArrange(${CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE}),              //(${CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE} Bytes)Size of the Config descriptor
+    ${CONFIG_USB_DEVICE_INTERFACES_NUMBER},                                        // Number of interfaces in this cfg
     0x01,                                               // Index value of this configuration
     0x00,                                               // Configuration string index
     USB_ATTRIBUTE_DEFAULT | USB_ATTRIBUTE_SELF_POWERED, // Attributes
@@ -181,8 +181,8 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
 
     0x09,                                               // Size of this descriptor in bytes
     USB_DESCRIPTOR_CONFIGURATION,                       // Descriptor Type
-    USB_DEVICE_16bitTo8bitArrange(${CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE}),    //(${CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE} Bytes)Size of the Config descriptor
-    ${CONFIG_USB_DEVICE_INTERFACES_NUMBER},             // Number of interfaces in this cfg
+    USB_DEVICE_16bitTo8bitArrange(${CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE}),                  //(${CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE} Bytes)Size of the Config descriptor
+    ${CONFIG_USB_DEVICE_INTERFACES_NUMBER},                                                  // Number of interfaces in this cfg
     0x01,                                               // Index value of this configuration
     0x00,                                               // Configuration string index
     USB_ATTRIBUTE_DEFAULT | USB_ATTRIBUTE_SELF_POWERED, // Attributes

@@ -51,7 +51,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
         .numberOfInterfaces = ${CONFIG_USB_DEVICE_FUNCTION_NUMBER_OF_INTERFACES},                            /* Number of interfaces */
         .funcDriverIndex = ${CONFIG_USB_DEVICE_FUNCTION_INDEX},                               /* Index of CDC Function Driver */
         .driver = (void*)USB_DEVICE_CDC_FUNCTION_DRIVER,    /* USB CDC function data exposed to device layer */
-        .funcDriverInit = (void*)&cdcInit0                  /* Function driver init data */
+        .funcDriverInit = (void*)&cdcInit${CONFIG_USB_DEVICE_FUNCTION_INDEX}                  /* Function driver init data */
     },
 <#--
 /*******************************************************************************

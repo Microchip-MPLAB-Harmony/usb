@@ -1,9 +1,9 @@
 /*******************************************************************************
   MPLAB Harmony Application Source File
-  
+
   Company:
     Microchip Technology Inc.
-  
+
   File Name:
     app.c
 
@@ -11,8 +11,8 @@
     This file contains the source code for the MPLAB Harmony application.
 
   Description:
-    This file contains the source code for the MPLAB Harmony application.  It 
-    implements the logic of the application's state machine and it may call 
+    This file contains the source code for the MPLAB Harmony application.  It
+    implements the logic of the application's state machine and it may call
     API routines of other MPLAB Harmony modules in the system, such as drivers,
     system services, and middleware.  However, it does not call any of the
     system interfaces (such as the "Initialize" and "Tasks" functions) of any of
@@ -21,40 +21,13 @@
     files.
  *******************************************************************************/
 
-// DOM-IGNORE-BEGIN
-/*******************************************************************************
-Copyright (c) 2013-2014 released Microchip Technology Inc.  All rights reserved.
-
-Microchip licenses to you the right to use, modify, copy and distribute
-Software only when embedded on a Microchip microcontroller or digital signal
-controller that is integrated into your product or third party product
-(pursuant to the sublicense terms in the accompanying license agreement).
-
-You should refer to the license agreement accompanying this Software for
-additional information regarding your rights and obligations.
-
-SOFTWARE AND DOCUMENTATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
-EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF
-MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
-IN NO EVENT SHALL MICROCHIP OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER
-CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION, BREACH OF WARRANTY, OR
-OTHER LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT DAMAGES OR EXPENSES
-INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
-CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
-SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
-(INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
- *******************************************************************************/
-// DOM-IGNORE-END
-
-
 // *****************************************************************************
 // *****************************************************************************
-// Section: Included Files 
+// Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
 
 #include "app.h"
-#include "definitions.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -73,12 +46,11 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
   Remarks:
     This structure should be initialized by the APP_Initialize function.
-    
+
     Application strings and buffers are be defined outside this structure.
 */
 
 APP_DATA appData;
-
 
 // *****************************************************************************
 // *****************************************************************************
@@ -86,79 +58,15 @@ APP_DATA appData;
 // *****************************************************************************
 // *****************************************************************************
 
-/******************************************************************************
-  Function:
-    void APP_USBDeviceEventHandler
-    (
-        USB_DEVICE_EVENTS event
-        void * pEventData,
-        uintptr_t context
-    );
-
-  Remarks:
-    Handles the Device Layers Events.
+/* TODO:  Add any necessary callback functions.
 */
-
-void APP_USBDeviceEventHandler( USB_DEVICE_EVENT event, void * pEventData, uintptr_t context )
-{
-    /* This is an example of how the context parameter
-       in the event handler can be used.*/
-
-    APP_DATA * appData = (APP_DATA*)context;
-
-    switch( event )
-    {
-        case USB_DEVICE_EVENT_RESET:
-        case USB_DEVICE_EVENT_DECONFIGURED:
-
-            /* Device was reset or deconfigured. Update LED status */
-//            BSP_LEDOn ( APP_USB_LED_1 );
-//            BSP_LEDOn ( APP_USB_LED_2 );
-//            BSP_LEDOn ( APP_USB_LED_3 );
-            break;
-
-        case USB_DEVICE_EVENT_CONFIGURED:
-
-            /* Device is configured. Update LED status */
-//            BSP_LEDOff ( APP_USB_LED_1 );
-//            BSP_LEDOff ( APP_USB_LED_2 );
-//            BSP_LEDOn  ( APP_USB_LED_3 );
-            break;
-
-        case USB_DEVICE_EVENT_SUSPENDED:
-
-            /* Update LED status */
-//            BSP_LEDOff ( APP_USB_LED_1 );
-//            BSP_LEDOn  ( APP_USB_LED_2 );
-//            BSP_LEDOn  ( APP_USB_LED_3 );
-            break;
-
-        case USB_DEVICE_EVENT_POWER_DETECTED:
-
-            /* VBUS is detected. Attach the device. */
-            USB_DEVICE_Attach(appData->usbDeviceHandle);
-            break;
-
-        case USB_DEVICE_EVENT_POWER_REMOVED:
-
-            /* VBUS is not detected. Detach the device */
-            USB_DEVICE_Detach(appData->usbDeviceHandle);
-            break;
-
-        /* These events are not used in this demo */
-        case USB_DEVICE_EVENT_RESUMED:
-        case USB_DEVICE_EVENT_ERROR:
-        case USB_DEVICE_EVENT_SOF:
-        default:
-            break;
-    }
-}
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Local Functions
 // *****************************************************************************
 // *****************************************************************************
+
 
 /* TODO:  Add any necessary local functions.
 */
@@ -182,9 +90,12 @@ void APP_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
     appData.state = APP_STATE_INIT;
-    
-    /* Set device layer handle as invalid */
-    appData.usbDeviceHandle = USB_DEVICE_HANDLE_INVALID;
+
+
+
+    /* TODO: Initialize your application's state machine and other
+     * parameters.
+     */
 }
 
 
@@ -198,43 +109,43 @@ void APP_Initialize ( void )
 
 void APP_Tasks ( void )
 {
+
     /* Check the application's current state. */
     switch ( appData.state )
     {
         /* Application's initial state. */
         case APP_STATE_INIT:
         {
-             appData.usbDeviceHandle = USB_DEVICE_Open(USB_DEVICE_INDEX_0, DRV_IO_INTENT_READWRITE);
+            bool appInitialized = true;
 
-            if(appData.usbDeviceHandle != USB_DEVICE_HANDLE_INVALID)
+
+            if (appInitialized)
             {
-                /* Set the Event Handler. We will start receiving events after
-                 * the handler is set */
-                USB_DEVICE_EventHandlerSet(appData.usbDeviceHandle, APP_USBDeviceEventHandler, (uintptr_t)&appData);
 
-                /* Move the application to the next state */
-                appData.state = APP_STATE_RUNNING;
+                appData.state = APP_STATE_SERVICE_TASKS;
             }
+            break;
+        }
+
+        case APP_STATE_SERVICE_TASKS:
+        {
 
             break;
         }
 
-        case APP_STATE_RUNNING:
+        /* TODO: implement your application state machine.*/
 
-            /* The MSD Device is maintained completely by the MSD function
-             * driver and does not require application intervention. So there
-             * is nothing related to MSD Device to do here. */
-            break;
 
         /* The default state should never be executed. */
         default:
+        {
+            /* TODO: Handle error in application's state machine. */
             break;
-        
+        }
     }
 }
- 
+
 
 /*******************************************************************************
  End of File
  */
-

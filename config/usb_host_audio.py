@@ -1,9 +1,24 @@
-def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
-	print(ownerComponent)
-	if (dependencyID == "usb_host_dependency"):
-		readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+def onAttachmentConnected(source, target):
+	ownerComponent = source["component"]
+	print("USB Host Layer Connected")
+	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+	if readValue != None:
 		Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
 		Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue + 1 , 2)
+	
+def onAttachmentDisconnected(source, target):
+	ownerComponent = source["component"]
+	print("USB Host Layer Disconnected")
+	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+	if readValue != None:
+		Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+		Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue - 1 , 2)
+		
+def destroyComponent(component):	
+	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+	if readValue != None:
+		Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+		Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue - 1 , 2)		
 		
 def instantiateComponent(usbHostAudioComponent):
 
@@ -15,7 +30,7 @@ def instantiateComponent(usbHostAudioComponent):
 	usbHostAudioClientDriverInstance.setDescription("Enter the number of Audio Class Driver instances required in the application.")
 	usbHostAudioClientDriverInstance.setDefaultValue(1)
 	usbHostAudioClientDriverInstance.setVisible(True)
-	
+
 	
 	#USB Host Audio Attach Listeners Number 
 	# usbHostAudioClientDriverAttachListnerNumber = usbHostAudioComponent.createIntegerSymbol("CONFIG_USB_HOST_AUDIO_ATTACH_LISTENERS_NUMBER", None)

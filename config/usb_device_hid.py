@@ -3,28 +3,89 @@ currentQSizeWrite = 1
 hidInterfacesNumber = 1
 hidDescriptorSize = 32
 
-def onDependencyConnected(info):
-	print("USB Device Layer connected to HID" )
-	ownerComponent  = info["localComponent"].getID()
+usbDeviceHidReportList = ["Mouse", "Keyboard", "Joystick", "Custom"]
+
+indexFunction = None
+configValue = None
+startInterfaceNumber = None
+numberOfInterfaces = None
+usbDeviceHidReportType = None
+queueSizeRead = None
+queueSizeWrite = None
+usbDeviceHidBufPool = None
+epNumberInterruptIn = None
+epNumberInterruptOut = None
+
+def onAttachmentConnected(source, target):
+	print ("HID Function Driver: Attached")
+	global hidInterfacesNumber
+	global hidDescriptorSize 
+	
+	global indexFunction
+	global configValue
+	global startInterfaceNumber
+	global numberOfInterfaces
+	global usbDeviceHidReportType
+	global queueSizeRead
+	global queueSizeWrite
+	global usbDeviceHidBufPool
+	global epNumberInterruptIn
+	global epNumberInterruptOut
+	
+	ownerComponent = source["component"]
+	dependencyID = source["id"]
 	if (dependencyID == "usb_device_dependency"):
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", readValue  , 2)
+		if readValue != None: 
+			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
+			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", readValue + 1  , 2)
 		
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
-		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
-		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", readValue + hidDescriptorSize , 2)
+		if readValue != None: 
+			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
+			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", readValue + hidDescriptorSize , 2)
 		
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
-		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
-		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", readValue + hidInterfacesNumber , 2)
+		if readValue != None: 
+			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
+			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", readValue + hidInterfacesNumber , 2)
+			startInterfaceNumber.setValue(readValue, 1)
 		
+		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+		if readValue != None:
+			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue + 2 , 2)
+			epNumberInterruptIn.setValue(readValue + 1, 1)
+			epNumberInterruptOut.setValue(readValue + 2, 1)
+
+def onAttachmentDisconnected(source, target):
+
+	print ("HID Function Driver: Detached")
+	ownerComponent = source["component"]
+	dependencyID = source["id"]
+	if (dependencyID == "usb_device_dependency"):
+		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
+		if readValue != None: 
+			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
+			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", readValue - 1  , 2)
+		
+		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
+		if readValue != None: 
+			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
+			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", readValue - hidDescriptorSize , 2)
+		
+		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
+		if readValue != None: 
+			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
+			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", readValue - hidInterfacesNumber , 2)
+		
+		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+		if readValue != None:
+			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue - 2 , 2)
+			
 def destroyComponent(component):
-	# global countFunctionDrivers
-	functionsNumber = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-	if (functionsNumber != None):
-		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", functionsNumber -  1 , 2)
+	print ("HID Function Driver: Destroyed")
 	
 	
 def usbDeviceHidBufferQueueSize(usbSymbolSource, event):
@@ -43,7 +104,17 @@ def usbDeviceHidBufferQueueSize(usbSymbolSource, event):
 
 
 def instantiateComponent(usbDeviceHidComponent, index):
-
+	global indexFunction
+	global configValue
+	global startInterfaceNumber
+	global numberOfInterfaces
+	global usbDeviceHidReportType
+	global queueSizeRead
+	global queueSizeWrite
+	global usbDeviceHidBufPool
+	global epNumberInterruptIn
+	global epNumberInterruptOut
+	
 	res = Database.activateComponents(["usb_device"])
 	
 	# Index of this function 
@@ -57,7 +128,7 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	# Config name: Configuration number
 	configValue = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_CONFIG_VALUE", None)
 	configValue.setLabel("Configuration Value")
-	configValue.setVisible(True)
+	configValue.setVisible(False)
 	configValue.setMin(1)
 	configValue.setMax(16)
 	configValue.setDefaultValue(1)
@@ -68,6 +139,7 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	startInterfaceNumber.setVisible(True)
 	startInterfaceNumber.setMin(0)
 	startInterfaceNumber.setDefaultValue(0)
+	startInterfaceNumber.setReadOnly(True)
 	
 	# Adding Number of Interfaces
 	numberOfInterfaces = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_NUMBER_OF_INTERFACES", None)
@@ -77,6 +149,11 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	numberOfInterfaces.setMax(16)
 	numberOfInterfaces.setDefaultValue(1)
 	
+	# USB HID Report Descriptor 
+	usbDeviceHidReportType = usbDeviceHidComponent.createComboSymbol("CONFIG_USB_DEVICE_HID_REPORT_DESCRIPTOR_TYPE", None, usbDeviceHidReportList)
+	usbDeviceHidReportType.setLabel("Select Report Type")
+	usbDeviceHidReportType.setVisible(True)
+	usbDeviceHidReportType.setDefaultValue("Mouse")
 	
 	# HID Function driver Report Receive Queue Size
 	queueSizeRead = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE", None)
@@ -104,20 +181,20 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	
 	
 	# HID Function driver Interrupt IN Endpoint Number  
-	epNumberInterrupt = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INT_IN_ENDPOINT_NUMBER", None)
-	epNumberInterrupt.setLabel("Interrupt IN Endpoint Number")
-	epNumberInterrupt.setVisible(True)
-	epNumberInterrupt.setMin(1)
-	epNumberInterrupt.setMax(10)
-	epNumberInterrupt.setDefaultValue(1)
+	epNumberInterruptIn = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INT_IN_ENDPOINT_NUMBER", None)
+	epNumberInterruptIn.setLabel("Interrupt IN Endpoint Number")
+	epNumberInterruptIn.setVisible(True)
+	epNumberInterruptIn.setMin(1)
+	epNumberInterruptIn.setMax(10)
+	epNumberInterruptIn.setDefaultValue(1)
 	
 	# HID Function driver Interrupt OUT Endpoint Number  
-	epNumberInterrupt = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INT_OUT_ENDPOINT_NUMBER", None)
-	epNumberInterrupt.setLabel("Interrupt OUT Endpoint Number")
-	epNumberInterrupt.setVisible(True)
-	epNumberInterrupt.setMin(1)
-	epNumberInterrupt.setMax(10)
-	epNumberInterrupt.setDefaultValue(2)
+	epNumberInterruptOut = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INT_OUT_ENDPOINT_NUMBER", None)
+	epNumberInterruptOut.setLabel("Interrupt OUT Endpoint Number")
+	epNumberInterruptOut.setVisible(True)
+	epNumberInterruptOut.setMin(1)
+	epNumberInterruptOut.setMax(10)
+	epNumberInterruptOut.setDefaultValue(2)
 	
 	############################################################################
 	#### Dependency ####
@@ -139,31 +216,6 @@ def instantiateComponent(usbDeviceHidComponent, index):
 		print("queueDepthCombined:", queueDepthCombined + currentQSizeRead + currentQSizeWrite)
 	else:
 		print("queueDepthCombined was not set")
-	
-	readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-	if readValue != None:
-		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", readValue + 1 , 2)
-	
-	readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
-	if readValue != None:
-		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
-		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", readValue + hidDescriptorSize , 2)
-	
-	readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
-	if readValue != None:
-		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
-		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", readValue + hidInterfacesNumber , 2)
-	
-	
-	##############################################################
-	# system_definitions.h file for USB Device HID Function driver   
-	##############################################################
-	usbDeviceHidSystemDefFile = usbDeviceHidComponent.createFileSymbol(None, None)
-	usbDeviceHidSystemDefFile.setType("STRING")
-	usbDeviceHidSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-	usbDeviceHidSystemDefFile.setSourcePath("templates/device/hid/system_definitions.h.device_hid_includes.ftl")
-	usbDeviceHidSystemDefFile.setMarkup(True)
 	
 	
 	#############################################################

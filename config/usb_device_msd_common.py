@@ -26,7 +26,7 @@ def instantiateComponent(usbMsdComponentCommon):
 	#########################################################
 	usbDeviceMsdCommonSystemConfigFile = usbMsdComponentCommon.createFileSymbol(None, None)
 	usbDeviceMsdCommonSystemConfigFile.setType("STRING")
-	usbDeviceMsdCommonSystemConfigFile.setOutputName("usb_device.LIST_SYSTEM_CONFIG_H_USB_DEVICE_FUNCTION_DRIVER")
+	usbDeviceMsdCommonSystemConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION")
 	usbDeviceMsdCommonSystemConfigFile.setSourcePath("templates/device/msd/system_config.h.device_msd_common.ftl")
 	usbDeviceMsdCommonSystemConfigFile.setMarkup(True)
 	

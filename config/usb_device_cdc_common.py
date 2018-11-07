@@ -24,3 +24,12 @@ def instantiateComponent(usbCdcComponentCommon):
 	usbDeviceCdcCommonSystemConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION")
 	usbDeviceCdcCommonSystemConfigFile.setSourcePath("templates/device/cdc/system_config.h.device_cdc_common.ftl")
 	usbDeviceCdcCommonSystemConfigFile.setMarkup(True)
+	
+	##############################################################
+	# system_definitions.h file for USB Device CDC Function driver   
+	##############################################################
+	usbDeviceCdcCommonSystemDefFile = usbCdcComponentCommon.createFileSymbol(None, None)
+	usbDeviceCdcCommonSystemDefFile.setType("STRING")
+	usbDeviceCdcCommonSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
+	usbDeviceCdcCommonSystemDefFile.setSourcePath("templates/device/cdc/system_definitions.h.device_cdc_includes.ftl")
+	usbDeviceCdcCommonSystemDefFile.setMarkup(True)

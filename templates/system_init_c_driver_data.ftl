@@ -43,17 +43,17 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  * USB Driver Initialization
  ******************************************************/
  
- <#if (USB_OPERATION_MODE == "Device")>
+<#if (USB_OPERATION_MODE == "Device") && (USB_DEVICE_VBUS_SENSE == true)>
 static DRV_USB_VBUS_LEVEL DRV_USBHSV1_VBUS_Comparator(void)
 {
     DRV_USB_VBUS_LEVEL retVal = DRV_USB_VBUS_LEVEL_INVALID;
-
-    /*if(true == USB_VBUS_INState_Get())
+	<#if USB_DEVICE_VBUS_SENSE_PIN_NAME?has_content >
+    if(true == ${USB_DEVICE_VBUS_SENSE_PIN_NAME}_Get())
     {
         retVal = DRV_USB_VBUS_LEVEL_VALID;
-    }*/
-	retVal = DRV_USB_VBUS_LEVEL_VALID;
-    return (retVal);
+    }
+	</#if>
+	return (retVal);
 
 }
 </#if>
@@ -84,7 +84,7 @@ const DRV_USBHSV1_INIT drvUSBInit =
     /* Identifies peripheral (PLIB-level) ID */
     .usbID = USBHS_REGS,
 	
-<#if (USB_OPERATION_MODE == "Device")>    
+<#if (USB_OPERATION_MODE == "Device") && (USB_DEVICE_VBUS_SENSE == true)>     
     /* Function to check for VBus */
     .vbusComparator = DRV_USBHSV1_VBUS_Comparator
 <#elseif (USB_OPERATION_MODE == "Host")>

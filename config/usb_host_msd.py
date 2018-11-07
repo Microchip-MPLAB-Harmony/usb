@@ -1,10 +1,33 @@
-def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
-	print(ownerComponent)
+def onAttachmentConnected(source, target):
+	dependencyID = source["id"]
+	ownerComponent = source["component"]
+	remoteComponent = target["component"]
+	remoteID = remoteComponent.getID()
+	connectID = source["id"]
+	targetID = target["id"]
+	if (dependencyID == "usb_host_dependency"):
+		print("USB Host Layer Connected")
+		readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+		if readValue != None:
+			Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+			Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue + 1 , 2)
+	
+def onAttachmentDisconnected(source, target):
+	dependencyID = source["id"]
+	ownerComponent = source["component"]
+	remoteComponent = target["component"]
+	remoteID = remoteComponent.getID()
+	connectID = source["id"]
+	targetID = target["id"]
 	if (dependencyID == "usb_host_dependency"):
 		readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
-		Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
-		Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue + 1 , 2)
-
+		if readValue != None:
+			Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+			Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue - 1 , 2)
+		
+def destroyComponent(component):	
+	print("USB HOST MSD Client Driver: Destroyed")
+		
 def instantiateComponent(usbHostMsdComponent):
 	res = Database.activateComponents(["usb_host"])
 	
@@ -14,11 +37,6 @@ def instantiateComponent(usbHostMsdComponent):
 	usbHostMsdClientDriverInstance.setDescription("Enter the number of MSD Class Driver instances required in the application.")
 	usbHostMsdClientDriverInstance.setDefaultValue(1)
 	usbHostMsdClientDriverInstance.setVisible(True)
-	
-	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
-	if readValue != None:
-		Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
-		Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue + 1 , 2)
 	
 	##############################################################
 	# system_definitions.h file for USB Host MSD Client driver   

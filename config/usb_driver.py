@@ -55,6 +55,21 @@ def instantiateComponent(usbDriverComponent):
 	usbOpMode.setReadOnly(True)
 	usbOpMode.setUseSingleDynamicValue(True)
 	
+	usbVbusSense = usbDriverComponent.createBooleanSymbol("USB_DEVICE_VBUS_SENSE", usbOpMode)
+	usbVbusSense.setLabel("Enable VBUS Sense")
+	usbVbusSense.setDescription("A Self Powered USB Device firmware must have some means to detect VBUS from Host. A GPIO pin can be configured as an Input and connected to VBUS (through a resistor), and can be used to detect when VBUS is high (host actively powering). This configuration instructs MHC to generate a VBUS SENSE function. The GPIO pin name must be configured as in the below ")
+	usbVbusSense.setVisible(True)
+	usbVbusSense.setDescription("Select USB Operation Mode")
+	usbVbusSense.setDefaultValue(True)
+	usbVbusSense.setUseSingleDynamicValue(True)
+	usbVbusSense.setDependencies(blUSBDriverOperationModeDevice, ["USB_OPERATION_MODE"])
+	
+	usbVbusSenseFunctionName = usbDriverComponent.createStringSymbol("USB_DEVICE_VBUS_SENSE_PIN_NAME", usbOpMode)
+	usbVbusSenseFunctionName.setLabel("VBUS SENSE Pin Name")
+	usbVbusSenseFunctionName.setDefaultValue("USB_VBUS_INState")
+	usbVbusSenseFunctionName.setVisible(True)
+	usbVbusSenseFunctionName.setDependencies(blUSBDriverOperationModeDevice, ["USB_OPERATION_MODE"])
+	
 	# USB Driver Host mode Attach de-bounce duration 
 	usbDriverHostAttachDebounce = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION", usbOpMode)
 	usbDriverHostAttachDebounce.setLabel("Attach De-bounce Duration (mSec)")
@@ -349,7 +364,13 @@ def blDrvUsbHsV1HostSourceFile (usbSymbolSource, event):
 		usbSymbolSource.setEnabled(False)
 	elif (event["value"] == "Host"):
 		usbSymbolSource.setEnabled(True)
-		
+
+def blUSBDriverOperationModeDevice(usbSymbolSource, event):
+	if (event["value"] == "Host"):
+		usbSymbolSource.setVisible(False)
+	else:
+		usbSymbolSource.setVisible(True)
+	
 def blUSBDriverOperationModeChanged(usbSymbolSource, event):
 	if (event["value"] == "Device"):
 		usbSymbolSource.setVisible(False)

@@ -12,6 +12,7 @@ def instantiateComponent(usbHidComponentCommon):
 	usbDeviceHidQueuDepth.setMin(1)
 	usbDeviceHidQueuDepth.setMax(32767)
 	usbDeviceHidQueuDepth.setDefaultValue(3)
+	usbDeviceHidQueuDepth.setUseSingleDynamicValue(True)
 	usbDeviceHidQueuDepth.setVisible(False)
 	
 	################################################
@@ -22,3 +23,12 @@ def instantiateComponent(usbHidComponentCommon):
 	usbDeviceHidCommonSystemConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION")
 	usbDeviceHidCommonSystemConfigFile.setSourcePath("templates/device/hid/system_config.h.device_hid_common.ftl")
 	usbDeviceHidCommonSystemConfigFile.setMarkup(True)
+	
+	##############################################################
+	# system_definitions.h file for USB Device HID Function driver   
+	##############################################################
+	usbDeviceHidSystemDefFile = usbHidComponentCommon.createFileSymbol(None, None)
+	usbDeviceHidSystemDefFile.setType("STRING")
+	usbDeviceHidSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
+	usbDeviceHidSystemDefFile.setSourcePath("templates/device/hid/system_definitions.h.device_hid_includes.ftl")
+	usbDeviceHidSystemDefFile.setMarkup(True)

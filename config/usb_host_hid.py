@@ -1,9 +1,24 @@
-def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
-	print(ownerComponent)
-	if (dependencyID == "usb_host_dependency"):
-		readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+def onAttachmentConnected(source, target):
+	ownerComponent = source["component"]
+	print("USB Host Layer Connected")
+	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+	if readValue != None:
 		Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
 		Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue + 1 , 2)
+	
+def onAttachmentDisconnected(source, target):
+	ownerComponent = source["component"]
+	print("USB Host Layer Disconnected")
+	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+	if readValue != None:
+		Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+		Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue - 1 , 2)
+		
+def destroyComponent(component):	
+	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+	if readValue != None:
+		Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
+		Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue - 1 , 2)
 		
 def mouseEnable(symbol, event):
 	if (event["value"] == True):
@@ -24,28 +39,28 @@ def instantiateComponent(usbHostHidComponent):
 
 	# USB Host HID Client driver Number of Instances
 	usbHostHidClientDriverInstancesNumber = usbHostHidComponent.createIntegerSymbol("CONFIG_USB_HOST_HID_NUMBER_OF_INSTANCES", None)
-	usbHostHidClientDriverInstancesNumber.setLabel("Number of HID Host Driver Instances")
+	usbHostHidClientDriverInstancesNumber.setLabel("Number of Instances")
 	usbHostHidClientDriverInstancesNumber.setDescription("Enter the number of HID Client Driver instances required in the application.")
 	usbHostHidClientDriverInstancesNumber.setVisible(True)
 	usbHostHidClientDriverInstancesNumber.setDefaultValue(1)
 	
 	# USB Host HID Client driver Interrupt In Endpoints Number 
 	usbHostHidClientDriverIntEPsNumber = usbHostHidComponent.createIntegerSymbol("CONFIG_USB_HOST_HID_INTERRUPT_IN_ENDPOINTS_NUMBER", None)
-	usbHostHidClientDriverIntEPsNumber.setLabel("Number of INTERRUPT IN endpoints supported per HID interface")
+	usbHostHidClientDriverIntEPsNumber.setLabel("Number of INTERRUPT IN endpoints per Interface")
 	usbHostHidClientDriverIntEPsNumber.setDescription("Enter the number of INTERRUPT IN endpoints supported per HID interface.")
 	usbHostHidClientDriverIntEPsNumber.setVisible(True)
 	usbHostHidClientDriverIntEPsNumber.setDefaultValue(1)
 	
 	# USB Host HID Client driver Total Usage Driver instances 
 	usbHostHidClientDriverTotalUsageInst = usbHostHidComponent.createIntegerSymbol("CONFIG_USB_HID_TOTAL_USAGE_DRIVER_INSTANCES", None)
-	usbHostHidClientDriverTotalUsageInst.setLabel("Number of total usage driver instances registered with HID client driver")
+	usbHostHidClientDriverTotalUsageInst.setLabel("Number of Usage Driver instances")
 	usbHostHidClientDriverTotalUsageInst.setDescription("Enter the number of total usage driver instances registered with HID client driver.")
 	usbHostHidClientDriverTotalUsageInst.setVisible(True)
 	usbHostHidClientDriverTotalUsageInst.setDefaultValue(1)
 	
 	# USB Host HID Client driver Global Push Pop Stack size
 	usbHostHidClientDriverPushPopStackSize = usbHostHidComponent.createIntegerSymbol("CONFIG_USB_HID_GLOBAL_PUSH_POP_STACK_SIZE", None)
-	usbHostHidClientDriverPushPopStackSize.setLabel("Number of PUSH items that can be saved in the Global item queue per field per HID interface")
+	usbHostHidClientDriverPushPopStackSize.setLabel("Number of PUSH items")
 	usbHostHidClientDriverPushPopStackSize.setDescription("Enter the number of PUSH items that can be saved in the Global item queue per field per HID interface.")
 	usbHostHidClientDriverPushPopStackSize.setVisible(True)
 	usbHostHidClientDriverPushPopStackSize.setDefaultValue(1)

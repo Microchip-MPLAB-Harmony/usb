@@ -15,6 +15,7 @@ def showRTOSMenu(symbol, event):
 def instantiateComponent(usbHostComponent):
 
 	res = Database.activateComponents(["HarmonyCore"])
+	res = Database.activateComponents(["sys_time"])
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
 		res = Database.activateComponents(["drv_usbhs_v1"])
 		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")

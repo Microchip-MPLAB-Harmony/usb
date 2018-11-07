@@ -43,8 +43,16 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 *******************************************************************************/
 -->
 <#-- Instance 0 -->
+
+/* Number of Endpoints used */
+<#if CONFIG_USB_DRIVER_INTERFACE == "DRV_USBHSV1_DEVICE_INTERFACE">
+#define DRV_USBHSV1_ENDPOINTS_NUMBER  ${CONFIG_USB_DEVICE_ENDPOINTS_NUMBER}
+<#elseif CONFIG_USB_DRIVER_INTERFACE == "DRV_USBFSV1_DEVICE_INTERFACE">
+#define DRV_USBFSV1_ENDPOINTS_NUMBER  ${CONFIG_USB_DEVICE_ENDPOINTS_NUMBER}
+</#if>
+
 /* The USB Device Layer will not initialize the USB Driver */
-#define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT
+#define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT 
 
 /* Maximum device layer instances */
 #define USB_DEVICE_INSTANCES_NUMBER     1 

@@ -12,62 +12,10 @@ def loadModule():
 		usbDriverComponent =  Module.CreateComponent("drv_usbfs_v1", "USB Full Speed Driver", "/Harmony/Drivers", "config/usbfs_v1_driver.py")
 		usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
 		
-	# Create USB Device Layer Component 
+	# Create USB Device Stack Component 
 	usbDeviceComponent = Module.CreateSharedComponent("usb_device", "USB Device Layer", "/Libraries/USB/Device Stack", "config/usb_device.py")
 	usbDeviceComponent.addDependency("usb_driver_dependency", "DRV_USB", True, True)
 	usbDeviceComponent.addCapability("USB Device", "USB_DEVICE", True)
-	
-	# Create USB Device Function Driver Components 
-	# usbDeviceFunctionComponents = [{"name":"usbDeviceCdcComponent", "label": "CDC", "type":"driver", "instance":"multi", "capability":["USB_DEVICE_CDC"], "dependency":["UART"], "condition":"True"},
-								   # {"name":"usbDeviceHidComponent", "label": "HID", "type":"driver", "instance":"multi", "capability":["USB_DEVICE_HID"], "dependency":["MEMORY"], "condition":"True"}
-								  # ]
-	
-	# # Load USB Device Function driver components from the above list  
-	# for usbDeviceFunctionComponent in usbDeviceFunctionComponents:
-
-    # #check if component should be created
-    # if eval(coreComponent['condition']):
-        # Name = coreComponent['name']
-        # Label = coreComponent['label']
-
-        # #create system component
-        # if coreComponent['type'] == "system":
-            # print("create component: " + Name.upper() + " System Service")
-            # Component = Module.CreateSharedComponent("sys_" + Name, Label, "/Harmony/System Services", "system/" + Name + "/config/sys_" + Name + ".py")
-
-            # if "capability" in coreComponent:
-                # for capability in coreComponent['capability']:
-                    # Component.addCapability(capability.lower(), capability)
-
-            # if "dependency" in coreComponent:
-                # for dep in coreComponent['dependency']:
-                    # if Name == "fs":
-                        # for media_idx in range(1, 4):
-                            # if (media_idx == 1):
-                                # Component.addDependency("sys_" + Name + "_" + dep + str(media_idx) + "_dependency", dep, False, True)
-                            # else:
-                                # Component.addDependency("sys_" + Name + "_" + dep + str(media_idx) + "_dependency", dep, False, False)
-                    # else:
-                        # Component.addDependency("sys_" + Name + "_" + dep + "_dependency", dep, False, True)
-
-            # Component.setDisplayType("System Service")
-        # #create driver component
-        # else:
-            # print("create component: " + Name.upper() + " Driver")
-
-            # if coreComponent['instance'] == "multi":
-                # Component = Module.CreateGeneratorComponent("drv_" + Name, Label, "/Harmony/Drivers/", "driver/" + Name + "/config/drv_" + Name + "_common.py", "driver/" + Name + "/config/drv_" + Name + ".py")
-            # elif coreComponent['instance'] == "single":
-                # Component = Module.CreateComponent("drv_" + Name, Label, "/Harmony/Drivers/", "driver/" + Name + "/config/drv_" + Name + ".py")
-
-            # if "capability" in coreComponent:
-                # for capability in coreComponent['capability']:
-                    # Component.addCapability(capability.lower(), capability)
-
-            # Component.setDisplayType("Driver")
-            # if "dependency" in coreComponent:
-                # for dep in coreComponent['dependency']:
-                    # Component.addDependency("drv_" + Name + "_" + dep + "_dependency", dep, False, True)
 					
 	print("create component: USB Device CDC")
 	usbDeviceCdcComponent = Module.CreateGeneratorComponent("usb_device_cdc", "CDC Function Driver", "/Libraries/USB/Device Stack", "config/usb_device_cdc_common.py", "config/usb_device_cdc.py")
@@ -92,16 +40,14 @@ def loadModule():
 	print("create component: USB Device MSD")
 	usbDeviceMsdComponent = Module.CreateGeneratorComponent("usb_device_msd", "MSD Function Driver", "/Libraries/USB/Device Stack", "config/usb_device_msd_common.py", "config/usb_device_msd.py")
 	usbDeviceMsdComponent.addDependency("usb_device_dependency", "USB_DEVICE", True, True)
-	usbDeviceMsdComponent.addDependency("usb_device_msd_meida_dependency_1", "DRV_MEDIA")
-	usbDeviceMsdComponent.addDependency("usb_device_msd_meida_dependency_2", "DRV_MEDIA")
-	usbDeviceMsdComponent.addDependency("usb_device_msd_meida_dependency_3", "DRV_MEDIA")
+	usbDeviceMsdComponent.addDependency("usb_device_msd_meida_dependency", "DRV_MEDIA", False, True)
 	usbDeviceMsdComponent.addCapability("USB Device", "USB_DEVICE_MSD")
 	
-	
+	# Create USB Host Stack Component 
 	print("create component: USB Host")
 	usbHostComponent = Module.CreateSharedComponent("usb_host", "Host Layer", "/Libraries/USB/Host Stack", "config/usb_host.py")
 	usbHostComponent.addDependency("usb_driver_dependency", "DRV_USB", True, True)
-	usbHostComponent.addDependency("usb_host_tmr_dependency", "SYS_TIME")
+	usbHostComponent.addDependency("usb_host_tmr_dependency", "SYS_TIME", True, True)
 	usbHostComponent.addCapability("usb_host", "USB_HOST", True)
 	
 	print("create component: USB Host MSD")

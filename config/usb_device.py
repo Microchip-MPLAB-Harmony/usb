@@ -194,7 +194,7 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceEndpointsNumber.setLabel("Number of Endpoints")	
 	usbDeviceEndpointsNumber.setVisible(False)
 	usbDeviceEndpointsNumber.setMin(0)
-	usbDeviceEndpointsNumber.setDefaultValue(0)
+	usbDeviceEndpointsNumber.setDefaultValue(1)
 	usbDeviceEndpointsNumber.setUseSingleDynamicValue(True)
 	usbDeviceEndpointsNumber.setReadOnly(True)
 	

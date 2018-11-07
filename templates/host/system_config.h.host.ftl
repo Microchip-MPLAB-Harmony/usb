@@ -52,7 +52,14 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // Section: USB Host Layer Configuration
 // *****************************************************************************
 // **************************************************************************
- 
+
+/* Number of Endpoints used */
+<#if CONFIG_USB_DRIVER_INTERFACE == "DRV_USBHSV1_HOST_INTERFACE">
+#define DRV_USBHSV1_ENDPOINTS_NUMBER  1
+<#elseif CONFIG_USB_DRIVER_INTERFACE == "DRV_USBFSV1_HOST_INTERFACE">
+#define DRV_USBFSV1_ENDPOINTS_NUMBER  1
+</#if>
+
 /* Total number of devices to be supported */
 #define USB_HOST_DEVICES_NUMBER         ${CONFIG_USB_HOST_DEVICE_NUMNBER}
 

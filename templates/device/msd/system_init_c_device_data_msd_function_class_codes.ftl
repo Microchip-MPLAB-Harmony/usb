@@ -42,9 +42,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 -->
-    0x00,         // Class Code
-    0x00,         // Subclass code
-    0x00,         // Protocol code
+    0x00,                                    // Class Code
+    0x00,                                    // Subclass code
+    0x00,                                    // Protocol code
 <#--
 /*******************************************************************************
  End of File

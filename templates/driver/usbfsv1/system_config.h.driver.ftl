@@ -51,12 +51,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define DRV_USBFSV1_INTERRUPT_MODE    true
 
 
-
 <#if (USB_OPERATION_MODE?has_content)
 	  && (USB_OPERATION_MODE == "Device")>
-
-/* Number of Endpoints used */
-#define DRV_USBFSV1_ENDPOINTS_NUMBER  7 //TODO  Calculate this for Device 
 
 /* Enables Device Support */
 #define DRV_USBFSV1_DEVICE_SUPPORT    true
@@ -65,9 +61,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define DRV_USBFSV1_HOST_SUPPORT      false
 <#elseif (USB_OPERATION_MODE?has_content)
 	  && (USB_OPERATION_MODE == "Host")>
-	  
-/* Number of Endpoints used */
-#define DRV_USBFSV1_ENDPOINTS_NUMBER  1  
 
 /* Disable Device Support */
 #define DRV_USBFSV1_DEVICE_SUPPORT    false
@@ -76,10 +69,10 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define DRV_USBFSV1_HOST_SUPPORT      true
 
 /* Number of NAKs to wait before returning transfer failure */ 
-#define DRV_USBFSV1_HOST_NAK_LIMIT      2000 //TODO Verify with Sundar
+#define DRV_USBFSV1_HOST_NAK_LIMIT      2000 
 
 /* Maximum Number of pipes */
-#define DRV_USBFSV1_HOST_PIPES_NUMBER    10 //TODO Verify with Sundar 
+#define DRV_USBFSV1_HOST_PIPES_NUMBER    10 
 
 /* Attach Debounce duration in milli Seconds */ 
 #define DRV_USBFSV1_HOST_ATTACH_DEBOUNCE_DURATION ${USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION}
