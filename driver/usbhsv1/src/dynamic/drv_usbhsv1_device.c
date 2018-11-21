@@ -2688,7 +2688,10 @@ void _DRV_USBHSV1_DEVICE_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
 
                 if(endpointObjNonZero->irpQueue == NULL)
                 {
-                    usbID->USBHS_DEVEPTIDR[endpointIndex] = USBHS_DEVEPTIDR_RXOUTEC_Msk;
+                    /* Clear the interrupt */
+                    usbID->USBHS_DEVEPTICR[endpointIndex] = USBHS_DEVEPTICR_RXOUTIC_Msk;
+                    
+                    usbID->USBHS_DEVEPTIDR[endpointIndex] = USBHS_DEVEPTIDR_FIFOCONC_Msk;
                 }
                 else
                 {
