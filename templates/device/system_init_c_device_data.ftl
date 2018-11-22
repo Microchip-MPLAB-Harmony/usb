@@ -381,10 +381,10 @@ const USB_DEVICE_INIT usbDevInitData =
     </#if>
 	
 	/* Index of the USB Driver to be used by this Device Layer Instance */
-    .driverIndex = DRV_USBHSV1_INDEX_0,
+    .driverIndex = ${CONFIG_USB_DRIVER_INDEX},
 
     /* Pointer to the USB Driver Functions. */
-    .usbDriverInterface = DRV_USBHSV1_DEVICE_INTERFACE,
+    .usbDriverInterface = ${CONFIG_USB_DRIVER_INTERFACE},
 };
 // </editor-fold>
 <#--

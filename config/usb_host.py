@@ -15,7 +15,33 @@ def showRTOSMenu(symbol, event):
 def instantiateComponent(usbHostComponent):
 
 	res = Database.activateComponents(["HarmonyCore"])
-	res = Database.activateComponents(["drv_usbhs_v1"])
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
+		res = Database.activateComponents(["drv_usbhs_v1"])
+		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
+		driverIndex = "DRV_USBHSV1_INDEX_0"
+		driverInterface = "DRV_USBHSV1_HOST_INTERFACE"
+		Database.clearSymbolValue("drv_usbhs_v1", "USB_OPERATION_MODE")
+		Database.setSymbolValue("drv_usbhs_v1", "USB_OPERATION_MODE", "Host" , 2)
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD20", "SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54"]):
+		res = Database.activateComponents(["drv_usbfs_v1"])
+		speed = Database.getSymbolValue("drv_usbfs_v1", "USB_SPEED")
+		driverIndex = "DRV_USBFSV1_INDEX_0"
+		driverInterface = "DRV_USBFSV1_HOST_INTERFACE"
+		Database.clearSymbolValue("drv_usbfs_v1", "USB_OPERATION_MODE")
+		Database.setSymbolValue("drv_usbfs_v1", "USB_OPERATION_MODE", "Host" , 2)
+	
+	
+	# USB Driver Index - This symbol actually should get set from a Driver dependency connected callback. 
+	# This is temporary work around to initialize using hard coded values. 
+	usbDeviceDriverIndex = usbHostComponent.createStringSymbol("CONFIG_USB_DRIVER_INDEX", None)
+	usbDeviceDriverIndex.setVisible(False)
+	usbDeviceDriverIndex.setDefaultValue(driverIndex)
+	
+	# USB Driver Interface -  This symbol actually should get set from a Driver dependency connected callback. 
+	# This is temporary work around to initialize using hard coded values. 
+	usbDeviceDriverInterface = usbHostComponent.createStringSymbol("CONFIG_USB_DRIVER_INTERFACE", None)
+	usbDeviceDriverInterface.setVisible(False)
+	usbDeviceDriverInterface.setDefaultValue(driverInterface)
 	
 	# USB Host Max Number of Devices   
 	usbHostDeviceNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_DEVICE_NUMNBER", None)
@@ -88,9 +114,6 @@ def instantiateComponent(usbHostComponent):
 	usbHostRTOSTaskDelayVal.setDependencies(setVisible, ["USB_HOST_RTOS_USE_DELAY"])
 	
 	configName = Variables.get("__CONFIGURATION_NAME")
-	
-	Database.clearSymbolValue("drv_usbhs_v1", "USB_OPERATION_MODE")
-	Database.setSymbolValue("drv_usbhs_v1", "USB_OPERATION_MODE", "Host" , 2)
 		
 	################################################
 	# system_definitions.h file for USB Host Layer    

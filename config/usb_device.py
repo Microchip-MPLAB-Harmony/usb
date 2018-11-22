@@ -136,13 +136,34 @@ def onDependencyConnected(info):
 def instantiateComponent(usbDeviceComponent):	
 
 	res = Database.activateComponents(["HarmonyCore"])
-	res = Database.activateComponents(["drv_usbhs_v1"])
-	
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
+		res = Database.activateComponents(["drv_usbhs_v1"])
+		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
+		driverIndex = "DRV_USBHSV1_INDEX_0"
+		driverInterface = "DRV_USBHSV1_DEVICE_INTERFACE"
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD20", "SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54"]):
+		res = Database.activateComponents(["drv_usbfs_v1"])
+		speed = Database.getSymbolValue("drv_usbfs_v1", "USB_SPEED")
+		driverIndex = "DRV_USBFSV1_INDEX_0"
+		driverInterface = "DRV_USBFSV1_DEVICE_INTERFACE"
+		
 	# USB Device Speed 
 	usbDeviceSpeed = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_SPEED", None)
 	usbDeviceSpeed.setVisible(False)
-	usbDeviceSpeed.setDefaultValue("High Speed")
+	usbDeviceSpeed.setDefaultValue(speed)
 	usbDeviceSpeed.setUseSingleDynamicValue(True)
+	
+	# USB Driver Index - This symbol actually should get set from a Driver dependency connected callback. 
+	# This is temporary work around to initialize using hard coded values. 
+	usbDeviceDriverIndex = usbDeviceComponent.createStringSymbol("CONFIG_USB_DRIVER_INDEX", None)
+	usbDeviceDriverIndex.setVisible(False)
+	usbDeviceDriverIndex.setDefaultValue(driverIndex)
+	
+	# USB Driver Interface -  This symbol actually should get set from a Driver dependency connected callback. 
+	# This is temporary work around to initialize using hard coded values. 
+	usbDeviceDriverInterface = usbDeviceComponent.createStringSymbol("CONFIG_USB_DRIVER_INTERFACE", None)
+	usbDeviceDriverInterface.setVisible(False)
+	usbDeviceDriverInterface.setDefaultValue(driverInterface)
 	
 	
 	#Configuration descriptor size
