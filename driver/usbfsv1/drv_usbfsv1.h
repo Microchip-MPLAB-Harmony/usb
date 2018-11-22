@@ -5,7 +5,7 @@
     Microchip Technology Inc.
     
   File Name:
-    drv_usbfs.h
+    drv_usbfsv1.h
 	
   Summary:
     PIC32MX USB Module Driver Interface File.
@@ -43,8 +43,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_USBFS_H
-#define _DRV_USBFS_H
+#ifndef _DRV_USBFSV1_H
+#define _DRV_USBFSV1_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -56,17 +56,17 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
     are also included
 */
 
+
 #include <stdint.h>
 #include <stdbool.h>
-#include "usb_common.h"
-#include "usb_chapter_9.h"
-#include "driver_common.h"
-// Sundar: #include "system/int/sys_int.h"
-#include "drv_usb.h"
-#include "sys_module.h"
-// Sundar: #include "peripheral/usb/plib_usb.h"
-#include "usb_hub.h"
-#include "same54p20a.h"
+#include "system/system_module.h"
+#include "system/int/sys_int.h"
+#include "driver/driver_common.h"
+#include "driver/usb/drv_usb.h"
+#include "usb/usb_common.h"
+#include "usb/usb_hub.h"
+#include "usb/usb_chapter_9.h"
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: USB Device Driver Constants
@@ -86,7 +86,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
     None.
 */
 
-#define DRV_USBFS_ENDPOINT_TABLE_ENTRY_SIZE  32 
+#define DRV_USBFSV1_ENDPOINT_TABLE_ENTRY_SIZE  32 
 
 // *****************************************************************************
 /* USB Driver Host Mode Interface Functions.
@@ -103,8 +103,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
     None.
 */
 
-/*DOM-IGNORE-BEGIN*/extern DRV_USB_HOST_INTERFACE gDrvUSBFSHostInterface;/*DOM-IGNORE-END */
-#define DRV_USBFS_HOST_INTERFACE /*DOM-IGNORE-BEGIN*/&gDrvUSBFSHostInterface/*DOM-IGNORE-END */
+/*DOM-IGNORE-BEGIN*/extern DRV_USB_HOST_INTERFACE gDrvUSBFSV1HostInterface;/*DOM-IGNORE-END */
+#define DRV_USBFSV1_HOST_INTERFACE /*DOM-IGNORE-BEGIN*/&gDrvUSBFSV1HostInterface/*DOM-IGNORE-END */
 
 // *****************************************************************************
 /* USB Driver Device Mode Interface Functions.
@@ -121,8 +121,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
     None.
 */
 
-/*DOM-IGNORE-BEGIN*/extern DRV_USB_DEVICE_INTERFACE gDrvUSBFSDeviceInterface;/*DOM-IGNORE-END */
-#define DRV_USBFS_DEVICE_INTERFACE /*DOM-IGNORE-BEGIN*/&gDrvUSBFSDeviceInterface/*DOM-IGNORE-END */
+/*DOM-IGNORE-BEGIN*/extern DRV_USB_DEVICE_INTERFACE gDrvUSBFSV1DeviceInterface;/*DOM-IGNORE-END */
+#define DRV_USBFSV1_DEVICE_INTERFACE /*DOM-IGNORE-BEGIN*/&gDrvUSBFSV1DeviceInterface/*DOM-IGNORE-END */
 
 // *****************************************************************************
 /* USB Driver Module Index 0 Definition.
@@ -132,18 +132,18 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
   Description:
     This constant defines the value of USB Driver Index 0.  The SYS_MODULE_INDEX
-    parameter of the DRV_USBFS_Initialize and DRV_USBFS_Open functions should be
+    parameter of the DRV_USBFSV1_Initialize and DRV_USBFSV1_Open functions should be
     set to this value to identify instance 0 of the driver. 
 
   Remarks:
     These constants should be used in place of hard-coded numeric literals
-    and should be passed into the DRV_USBFS_Initialize and DRV_USBFS_Open
+    and should be passed into the DRV_USBFSV1_Initialize and DRV_USBFSV1_Open
     functions to identify the driver instance in use. These are not
     indicative of the number of modules that are actually supported by the
     microcontroller.
 */
 
-#define DRV_USBFS_INDEX_0         0
+#define DRV_USBFSV1_INDEX_0         0
 
 // *****************************************************************************
 /* USB Driver Module Index 1 Definition.
@@ -153,18 +153,18 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
   Description:
     This constant defines the value of USB Driver Index 1.  The SYS_MODULE_INDEX
-    parameter of the DRV_USBFS_Initialize and DRV_USBFS_Open functions should be
+    parameter of the DRV_USBFSV1_Initialize and DRV_USBFSV1_Open functions should be
     set to this value to identify instance 1 of the driver. 
 
   Remarks:
     These constants should be used in place of hard-coded numeric literals
-    and should be passed into the DRV_USBFS_Initialize and DRV_USBFS_Open
+    and should be passed into the DRV_USBFSV1_Initialize and DRV_USBFSV1_Open
     functions to identify the driver instance in use. These are not
     indicative of the number of modules that are actually supported by the
     microcontroller.
 */
 
-#define DRV_USBFS_INDEX_1         1
+#define DRV_USBFSV1_INDEX_1         1
 
 // *****************************************************************************
 // *****************************************************************************
@@ -185,7 +185,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
     None.
 */
 
-typedef uintptr_t DRV_USBFS_HOST_PIPE_HANDLE;
+typedef uintptr_t DRV_USBFSV1_HOST_PIPE_HANDLE;
 
 // *****************************************************************************
 /* USB Driver Invalid Host Pipe Handle.
@@ -200,9 +200,9 @@ typedef uintptr_t DRV_USBFS_HOST_PIPE_HANDLE;
     None.
 */
 
-#define DRV_USBFS_HOST_PIPE_HANDLE_INVALID ((DRV_USBFS_HOST_PIPE_HANDLE)(-1))
+#define DRV_USBFSV1_HOST_PIPE_HANDLE_INVALID ((DRV_USBFSV1_HOST_PIPE_HANDLE)(-1))
 
-/*DOM-IGNORE-BEGIN*/#define DRV_USBFS_DEVICE_ENDPOINT_ALL 16/*DOM-IGNORE-END*/
+/*DOM-IGNORE-BEGIN*/#define DRV_USBFSV1_DEVICE_ENDPOINT_ALL 16/*DOM-IGNORE-END*/
 
 // *****************************************************************************
 
@@ -243,7 +243,7 @@ typedef enum
 	monitor the status of the VBUS. The application should provide this function
 	through the driver initialization data structure. The function should
 	return the current state of the external VBUS comparator. The function
-	should be non-blocking and will be called from the DRV_USBFS_Tasks 
+	should be non-blocking and will be called from the DRV_USBFSV1_Tasks 
 	function.
 
   Remarks:
@@ -269,31 +269,31 @@ typedef DRV_USB_VBUS_LEVEL(* DRV_USBFSV1_VBUS_COMPARATOR)(void);
 typedef enum
 {
     /* Bus error occurred and was reported */
-    DRV_USBFS_EVENT_ERROR = DRV_USB_EVENT_ERROR,
+    DRV_USBFSV1_EVENT_ERROR = DRV_USB_EVENT_ERROR,
 
     /* Host has issued a device reset */
-    DRV_USBFS_EVENT_RESET_DETECT = DRV_USB_EVENT_RESET_DETECT,
+    DRV_USBFSV1_EVENT_RESET_DETECT = DRV_USB_EVENT_RESET_DETECT,
 
     /* Resume detected while USB in suspend mode */
-    DRV_USBFS_EVENT_RESUME_DETECT = DRV_USB_EVENT_RESUME_DETECT,
+    DRV_USBFSV1_EVENT_RESUME_DETECT = DRV_USB_EVENT_RESUME_DETECT,
 
     /* Idle detected */
-    DRV_USBFS_EVENT_IDLE_DETECT = DRV_USB_EVENT_IDLE_DETECT,
+    DRV_USBFSV1_EVENT_IDLE_DETECT = DRV_USB_EVENT_IDLE_DETECT,
 
     /* Stall handshake has occurred */
-    DRV_USBFS_EVENT_STALL = DRV_USB_EVENT_STALL,
+    DRV_USBFSV1_EVENT_STALL = DRV_USB_EVENT_STALL,
 
     /* Either Device received SOF or SOF threshold was reached in the Host mode
        operation */
-    DRV_USBFS_EVENT_SOF_DETECT = DRV_USB_EVENT_SOF_DETECT,
+    DRV_USBFSV1_EVENT_SOF_DETECT = DRV_USB_EVENT_SOF_DETECT,
 
     /* Session valid */
-    DRV_USBFS_EVENT_DEVICE_SESSION_VALID = DRV_USB_EVENT_DEVICE_SESSION_VALID,
+    DRV_USBFSV1_EVENT_DEVICE_SESSION_VALID = DRV_USB_EVENT_DEVICE_SESSION_VALID,
 
     /* Session Invalid */
-    DRV_USBFS_EVENT_DEVICE_SESSION_INVALID = DRV_USB_EVENT_DEVICE_SESSION_INVALID,
+    DRV_USBFSV1_EVENT_DEVICE_SESSION_INVALID = DRV_USB_EVENT_DEVICE_SESSION_INVALID,
 
-} DRV_USBFS_EVENT;
+} DRV_USBFSV1_EVENT;
 
 // *****************************************************************************
 /* USB Operating Modes Enumeration.
@@ -311,18 +311,18 @@ typedef enum
 typedef enum
 {
     /* The driver should be able to switch between host and device mode */
-    DRV_USBFS_OPMODE_DUAL_ROLE  = DRV_USB_OPMODE_DUAL_ROLE,
+    DRV_USBFSV1_OPMODE_DUAL_ROLE  = DRV_USB_OPMODE_DUAL_ROLE,
 
     /* The driver should support device mode operation only */
-    DRV_USBFS_OPMODE_DEVICE  = DRV_USB_OPMODE_DEVICE,
+    DRV_USBFSV1_OPMODE_DEVICE  = DRV_USB_OPMODE_DEVICE,
 
     /* The driver should support host mode operation only */
-    DRV_USBFS_OPMODE_HOST  = DRV_USB_OPMODE_HOST,
+    DRV_USBFSV1_OPMODE_HOST  = DRV_USB_OPMODE_HOST,
 
     /* The driver should support the OTG protocol */
-    DRV_USBFS_OPMODE_OTG = DRV_USB_OPMODE_OTG
+    DRV_USBFSV1_OPMODE_OTG = DRV_USB_OPMODE_OTG
 
-} DRV_USBFS_OPMODES;
+} DRV_USBFSV1_OPMODES;
 
 // *****************************************************************************
 /* Type of the USB Driver Event Callback Function.
@@ -334,7 +334,7 @@ typedef enum
     Define the type of the USB Driver event callback function. The
     client should register an event callback function of this type when it
     intends to receive events from the USB Driver. The event callback
-    function is registered using the DRV_USBFS_ClientEventCallBackSet function. 
+    function is registered using the DRV_USBFSV1_ClientEventCallBackSet function. 
 
   Parameters:
     hClient    - Handle to the driver client that registered this callback function.
@@ -351,10 +351,10 @@ typedef enum
 
 */
 
-typedef void (*DRV_USBFS_EVENT_CALLBACK) 
+typedef void (*DRV_USBFSV1_EVENT_CALLBACK) 
 (
     uintptr_t hClient, 
-    DRV_USBFS_EVENT  eventType,
+    DRV_USBFSV1_EVENT  eventType,
     void * eventData   
 );
 
@@ -376,7 +376,7 @@ typedef void (*DRV_USBFS_EVENT_CALLBACK)
     None.
 */
 
-typedef bool (* DRV_USBFS_ROOT_HUB_PORT_OVER_CURRENT_DETECT)(uint8_t port);
+typedef bool (* DRV_USBFSV1_ROOT_HUB_PORT_OVER_CURRENT_DETECT)(uint8_t port);
 
 // *****************************************************************************
 /* USB Root hub Application Hooks (Port Power Enable/ Disable).
@@ -397,7 +397,7 @@ typedef bool (* DRV_USBFS_ROOT_HUB_PORT_OVER_CURRENT_DETECT)(uint8_t port);
     None.
 */
 
-typedef void (* DRV_USBFS_ROOT_HUB_PORT_POWER_ENABLE)
+typedef void (* DRV_USBFSV1_ROOT_HUB_PORT_POWER_ENABLE)
 (
     uint8_t port, 
     bool control
@@ -421,7 +421,7 @@ typedef void (* DRV_USBFS_ROOT_HUB_PORT_POWER_ENABLE)
     None.
 */
 
-typedef void(* DRV_USBFS_ROOT_HUB_PORT_INDICATION)
+typedef void(* DRV_USBFSV1_ROOT_HUB_PORT_INDICATION)
 (
     uint8_t port, 
     USB_HUB_PORT_INDICATOR_COLOR color, 
@@ -437,7 +437,7 @@ typedef void(* DRV_USBFS_ROOT_HUB_PORT_INDICATION)
   Description:
     This structure contains all the data necessary to initialize the USB Driver.
     A pointer to a structure of this type, containing the desired initialization
-    data, must be passed into the DRV_USBFS_Initialize function.
+    data, must be passed into the DRV_USBFSV1_Initialize function.
 
   Remarks:
     None.
@@ -451,7 +451,7 @@ typedef struct
     /* Identifies the USB peripheral to be used. This should be the USB PLIB
        module instance identifier. */
 // Sundar:     USB_MODULE_ID usbID; 
-	Usb * usbID;
+	usb_registers_t * usbID;
     
     /* This should be set to true if the USB module must stop operation in IDLE
        mode */
@@ -473,19 +473,19 @@ typedef struct
 
     /* Specify the operation mode of the USB module. This specifies if the USB
        module should operate as a Device, Host, or both (Dual Role operation). */
-    DRV_USBFS_OPMODES operationMode;  
+    DRV_USBFSV1_OPMODES operationMode;  
 
     /* A pointer to the endpoint descriptor table. This should be aligned at 512
        byte address boundary. The size of the table is equal to 
-       DRV_USBFS_ENDPOINT_TABLE_ENTRY_SIZE times the number of endpoints needed
+       DRV_USBFSV1_ENDPOINT_TABLE_ENTRY_SIZE times the number of endpoints needed
        in the application. */
     //void * endpointTable; 
 
     /* A pointer to the endpoint descriptor table. This should be aligned at 512
        byte address boundary. The size of the table is equal to 
-       DRV_USBFS_ENDPOINT_TABLE_ENTRY_SIZE times the number of endpoints needed
+       DRV_USBFSV1_ENDPOINT_TABLE_ENTRY_SIZE times the number of endpoints needed
        in the application. */
-    UsbDeviceDescriptor * endpointDescriptorTable; 
+    usb_descriptor_device_registers_t * endpointDescriptorTable; 
 
     /* Root hub available current in milliamperes. This specifies the amount of
        current that root hub can provide to the attached device. This should be
@@ -497,32 +497,32 @@ typedef struct
        enable function. This parameter should point to Root Hub port enable
        function. If this parameter is NULL, it implies that the Port is always
        enabled. */
-    DRV_USBFS_ROOT_HUB_PORT_POWER_ENABLE portPowerEnable;
+    DRV_USBFSV1_ROOT_HUB_PORT_POWER_ENABLE portPowerEnable;
 
     /* When operating in Host mode, the application can specify a Root Port
        Indication. This parameter should point to the Root Port Indication
        function. If this parameter is NULL, it implies that Root Port Indication
        is not supported. */
-    DRV_USBFS_ROOT_HUB_PORT_INDICATION portIndication;
+    DRV_USBFSV1_ROOT_HUB_PORT_INDICATION portIndication;
 
     /* When operating is Host mode, the application can specify a Root Port
        Overcurrent detection. This parameter should point to the Root Port
        Indication function. If this parameter is NULL, it implies that
        Overcurrent detection is not supported. */
-    DRV_USBFS_ROOT_HUB_PORT_OVER_CURRENT_DETECT portOverCurrentDetect;
+    DRV_USBFSV1_ROOT_HUB_PORT_OVER_CURRENT_DETECT portOverCurrentDetect;
 	
 	/* When operating in Device mode, the application can set this pointer to a VBUS 
 	   monitoring function. The driver will call this function periodically 
-	   from the DRV_USBFS_Tasks function. This function should return
+	   from the DRV_USBFSV1_Tasks function. This function should return
 	   the present voltage level of the VBUS line. The driver will generate
-	   a DRV_USBFS_EVENT_DEVICE_SESSION_VALID event when the VBUS voltage
+	   a DRV_USBFSV1_EVENT_DEVICE_SESSION_VALID event when the VBUS voltage
 	   is above A session valid and below VBUS valid. The driver will generate
-	   a DRV_USBFS_EVENT_DEVICE_SESSION_INVALID event when the VBUS
+	   a DRV_USBFSV1_EVENT_DEVICE_SESSION_INVALID event when the VBUS
 	   voltage drops below A Session Valid. If this function pointer is NULL, the 
 	   driver assumes that VBUS is above session valid. */
 	DRV_USBFSV1_VBUS_COMPARATOR vbusComparator;
 
-} DRV_USBFS_INIT;
+} DRV_USBFSV1_INIT;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -544,7 +544,7 @@ typedef struct
   Description:
     This function initializes the USB Driver, making it ready for clients to
     open. The driver initialization does not complete when this function
-    returns. The DRV_USBFS_Tasks function must called periodically to complete
+    returns. The DRV_USBFSV1_Tasks function must called periodically to complete
     the driver initialization. The DRV_USBHS_Open function will fail if the
     driver was not initialized or if initialization has not completed.
 	
@@ -553,16 +553,16 @@ typedef struct
 	
   Parameters:
     drvIndex - Ordinal number of driver instance to be initialized. This should
-    be set to DRV_USBFS_INDEX_0 if driver instance 0 needs to be initialized.
+    be set to DRV_USBFSV1_INDEX_0 if driver instance 0 needs to be initialized.
 
     init - Pointer to a data structure containing data necessary to
-    initialize the driver. This should be a DRV_USBFS_INIT structure reference
+    initialize the driver. This should be a DRV_USBFSV1_INIT structure reference
     typecast to SYS_MODULE_INIT reference. 
 				
   Returns:
     * SYS_MODULE_OBJ_INVALID - The driver initialization failed.
     * A valid System Module Object - The driver initialization was able to
-      start. It may have not completed and requires the DRV_USBFS_Tasks function
+      start. It may have not completed and requires the DRV_USBFSV1_Tasks function
       to be called periodically. This value will never be the same as
       SYS_MODULE_OBJ_INVALID. 
 	
@@ -576,12 +576,12 @@ typedef struct
      // should be at FULL speed. The size of the endpoint table is set for 2
      // endpoints.
     
-    DRV_USBFS_INIT moduleInit;
+    DRV_USBFSV1_INIT moduleInit;
 
-    uint8_t __attribute__((aligned(512))) endpointTable[DRV_USBFS_ENDPOINT_TABLE_ENTRY_SIZE * 2];
+    uint8_t __attribute__((aligned(512))) endpointTable[DRV_USBFSV1_ENDPOINT_TABLE_ENTRY_SIZE * 2];
     
     usbInitData.usbID               = USB_ID_1;
-    usbInitData.opMode              = DRV_USBFS_OPMODE_DEVICE;
+    usbInitData.opMode              = DRV_USBFSV1_OPMODE_DEVICE;
     usbInitData.stopInIdle          = false;
     usbInitData.suspendInSleep      = false;
     usbInitData.operationSpeed      = USB_SPEED_FULL;
@@ -592,17 +592,17 @@ typedef struct
     // This is how this data structure is passed to the initialize
     // function.
     
-    DRV_USBFS_Initialize(DRV_USBFS_INDEX_0, (SYS_MODULE_INIT *) &usbInitData);
+    DRV_USBFSV1_Initialize(DRV_USBFSV1_INDEX_0, (SYS_MODULE_INIT *) &usbInitData);
     
     </code>
 	
   Remarks:
     This routine must be called before any other USB driver routine is called.
     This routine should only be called once during system initialization unless
-    DRV_USBFS_Deinitialize is called to deinitialize the driver instance. 
+    DRV_USBFSV1_Deinitialize is called to deinitialize the driver instance. 
 */
 
-SYS_MODULE_OBJ DRV_USBFS_Initialize 
+SYS_MODULE_OBJ DRV_USBFSV1_Initialize 
 (
     const SYS_MODULE_INDEX drvIndex,
     const SYS_MODULE_INIT * const init
@@ -610,7 +610,7 @@ SYS_MODULE_OBJ DRV_USBFS_Initialize
 
 // *****************************************************************************
 /* Function:
-    SYS_STATUS DRV_USBFS_Status ( SYS_MODULE_OBJ object )
+    SYS_STATUS DRV_USBFSV1_Status ( SYS_MODULE_OBJ object )
 
   Summary:
     Provides the current status of the USB Driver module.
@@ -619,11 +619,11 @@ SYS_MODULE_OBJ DRV_USBFS_Initialize
     This function provides the current status of the USB Driver module.
 
   Precondition:
-    The DRV_USBFS_Initialize function must have been called before calling this
+    The DRV_USBFSV1_Initialize function must have been called before calling this
     function.
 
   Parameters:
-    object - Driver object handle, returned from the DRV_USBFS_Initialize function.
+    object - Driver object handle, returned from the DRV_USBFSV1_Initialize function.
 
   Returns:
     * SYS_STATUS_READY - Indicates that the driver is ready.
@@ -632,14 +632,14 @@ SYS_MODULE_OBJ DRV_USBFS_Initialize
 
   Example:
     <code>
-    SYS_MODULE_OBJ      object;     // Returned from DRV_USBFS_Initialize
+    SYS_MODULE_OBJ      object;     // Returned from DRV_USBFSV1_Initialize
     SYS_STATUS          status;
-    DRV_USBFS_INIT moduleInit;
+    DRV_USBFSV1_INIT moduleInit;
 
-    uint8_t __attribute__((aligned(512))) endpointTable[DRV_USBFS_ENDPOINT_TABLE_ENTRY_SIZE * 2];
+    uint8_t __attribute__((aligned(512))) endpointTable[DRV_USBFSV1_ENDPOINT_TABLE_ENTRY_SIZE * 2];
     
     usbInitData.usbID               = USB_ID_1;
-    usbInitData.opMode              = DRV_USBFS_OPMODE_DEVICE;
+    usbInitData.opMode              = DRV_USBFSV1_OPMODE_DEVICE;
     usbInitData.stopInIdle          = false;
     usbInitData.suspendInSleep      = false;
     usbInitData.operationSpeed      = USB_SPEED_FULL;
@@ -650,10 +650,10 @@ SYS_MODULE_OBJ DRV_USBFS_Initialize
     // This is how this data structure is passed to the initialize
     // function.
     
-    DRV_USBFS_Initialize(DRV_USBFS_INDEX_0, (SYS_MODULE_INIT *) &usbInitData);
+    DRV_USBFSV1_Initialize(DRV_USBFSV1_INDEX_0, (SYS_MODULE_INIT *) &usbInitData);
     
     // The status of the driver can be checked.
-    status = DRV_USBFS_Status(object);
+    status = DRV_USBFSV1_Status(object);
     if(SYS_STATUS_READY == status)
     {
         // Driver is ready to be opened.
@@ -665,11 +665,11 @@ SYS_MODULE_OBJ DRV_USBFS_Initialize
     None.
 */
 
-SYS_STATUS DRV_USBFS_Status ( SYS_MODULE_OBJ object );
+SYS_STATUS DRV_USBFSV1_Status ( SYS_MODULE_OBJ object );
 
 // *****************************************************************************
 /* Function:
-    void DRV_USBFS_Tasks( SYS_MODULE_OBJ object )
+    void DRV_USBFSV1_Tasks( SYS_MODULE_OBJ object )
 
   Summary:
     Maintains the driver's state machine when the driver is configured for 
@@ -680,23 +680,23 @@ SYS_STATUS DRV_USBFS_Status ( SYS_MODULE_OBJ object );
     from the SYS_Tasks function.
 
   Precondition:
-    The DRV_USBFS_Initialize function must have been called for the specified
+    The DRV_USBFSV1_Initialize function must have been called for the specified
     USB Driver instance.
 
   Parameters:
     object - Object handle for the specified driver instance (returned from
-    DRV_USBFS_Initialize function).
+    DRV_USBFSV1_Initialize function).
 
   Returns:
     None.
 
   Example:
     <code>
-    SYS_MODULE_OBJ      object;     // Returned from DRV_USBFS_Initialize
+    SYS_MODULE_OBJ      object;     // Returned from DRV_USBFSV1_Initialize
 
     while (true)
     {
-        DRV_USBFS_Tasks(object);
+        DRV_USBFSV1_Tasks(object);
 
         // Do other tasks
     }
@@ -708,11 +708,11 @@ SYS_STATUS DRV_USBFS_Status ( SYS_MODULE_OBJ object );
     block.  
 */
 
-void DRV_USBFS_Tasks(SYS_MODULE_OBJ object);
+void DRV_USBFSV1_Tasks(SYS_MODULE_OBJ object);
 
 // *****************************************************************************
 /* Function:
-    void DRV_USBFS_Tasks_ISR( SYS_MODULE_OBJ object )
+    void DRV_USBFSV1_Tasks_ISR( SYS_MODULE_OBJ object )
 
   Summary:
     Maintains the driver's Interrupt state machine and implements its ISR.
@@ -722,23 +722,23 @@ void DRV_USBFS_Tasks(SYS_MODULE_OBJ object);
     machine and implement its ISR for interrupt-driven implementations.
 
   Precondition:
-    The DRV_USBFS_Initialize function must have been called for the specified
+    The DRV_USBFSV1_Initialize function must have been called for the specified
     USB Driver instance.
 
   Parameters:
     object - Object handle for the specified driver instance (returned from
-    DRV_USBFS_Initialize).
+    DRV_USBFSV1_Initialize).
 
   Returns:
     None.
 
   Example:
     <code>
-    SYS_MODULE_OBJ object;     // Returned from DRV_USBFS_Initialize
+    SYS_MODULE_OBJ object;     // Returned from DRV_USBFSV1_Initialize
 
     while (true)
     {
-        DRV_USBFS_Tasks_ISR (object);
+        DRV_USBFSV1_Tasks_ISR (object);
 
         // Do other tasks
     }
@@ -750,7 +750,7 @@ void DRV_USBFS_Tasks(SYS_MODULE_OBJ object);
     driver system module object is passed to this routine.
 */
 
-void DRV_USBFS_Tasks_ISR( SYS_MODULE_OBJ object );
+void DRV_USBFSV1_Tasks_ISR( SYS_MODULE_OBJ object );
 
 // *****************************************************************************
 // *****************************************************************************
@@ -760,7 +760,7 @@ void DRV_USBFS_Tasks_ISR( SYS_MODULE_OBJ object );
 
 // ****************************************************************************
 /* Function:
-    DRV_HANDLE DRV_USBFS_Open
+    DRV_HANDLE DRV_USBFSV1_Open
     ( 
         const SYS_MODULE_INDEX drvIndex,
         const DRV_IO_INTENT intent
@@ -781,12 +781,12 @@ void DRV_USBFS_Tasks_ISR( SYS_MODULE_OBJ object );
     function call.
 	
   Precondition:
-    Function DRV_USBFS_Initialize must have been called before calling this
+    Function DRV_USBFSV1_Initialize must have been called before calling this
     function.
 	
   Parameters:
     drvIndex - Identifies the driver instance to be opened. As an example, this
-    value can be set to DRV_USBFS_INDEX_0 if instance 0 of the driver has to be
+    value can be set to DRV_USBFSV1_INDEX_0 if instance 0 of the driver has to be
     opened.
     
     intent - Should always be 
@@ -806,7 +806,7 @@ void DRV_USBFS_Tasks_ISR( SYS_MODULE_OBJ object );
     DRV_HANDLE handle;
 
     // This code assumes that the driver has been initialized.
-    handle = DRV_USBFS_Open(DRV_USBFS_INDEX_0, DRV_IO_INTENT_EXCLUSIVE| DRV_IO_INTENT_READWRITE| DRV_IO_INTENT_NON_BLOCKING);
+    handle = DRV_USBFSV1_Open(DRV_USBFSV1_INDEX_0, DRV_IO_INTENT_EXCLUSIVE| DRV_IO_INTENT_READWRITE| DRV_IO_INTENT_NON_BLOCKING);
 
     if(DRV_HANDLE_INVALID == handle)
     {
@@ -816,12 +816,12 @@ void DRV_USBFS_Tasks_ISR( SYS_MODULE_OBJ object );
     </code>
 	
   Remarks:
-    The handle returned is valid until the DRV_USBFS_Close function is called.
+    The handle returned is valid until the DRV_USBFSV1_Close function is called.
     The function will typically return DRV_HANDLE_INVALID if the driver was not
     initialized. In such a case the client should try to open the driver again.
 */
 
-DRV_HANDLE DRV_USBFS_Open
+DRV_HANDLE DRV_USBFSV1_Open
 (
     const SYS_MODULE_INDEX drvIndex,
     const DRV_IO_INTENT intent  
@@ -829,7 +829,7 @@ DRV_HANDLE DRV_USBFS_Open
 
 // *****************************************************************************
 /* Function:
-    void DRV_USBFS_Close( DRV_HANDLE handle )
+    void DRV_USBFSV1_Close( DRV_HANDLE handle )
 
   Summary:
     Closes an opened-instance of the  USB Driver.
@@ -839,39 +839,39 @@ DRV_HANDLE DRV_USBFS_Open
     handle.
 
   Precondition:
-    The DRV_USBFS_Initialize function must have been called for the specified
-    USB Driver instance. DRV_USBFS_Open function must have been called to obtain
+    The DRV_USBFSV1_Initialize function must have been called for the specified
+    USB Driver instance. DRV_USBFSV1_Open function must have been called to obtain
     a valid opened device handle.
 
   Parameters:
-    handle  - Client's driver handle (returned from DRV_USBFS_Open function).
+    handle  - Client's driver handle (returned from DRV_USBFSV1_Open function).
 
   Returns:
     None.
 
   Example:
     <code>
-    DRV_HANDLE handle;  // Returned from DRV_USBFS_Open
+    DRV_HANDLE handle;  // Returned from DRV_USBFSV1_Open
 
-    DRV_USBFS_Close(handle);
+    DRV_USBFSV1_Close(handle);
     </code>
 
   Remarks:
     After calling this function, the handle passed in handle parameter must not
     be  used with any of the other driver functions. A new handle must be
-    obtained by calling DRV_USBFS_Open function before the caller may use the
+    obtained by calling DRV_USBFSV1_Open function before the caller may use the
     driver again.
 */
 
-void DRV_USBFS_Close( DRV_HANDLE handle );
+void DRV_USBFSV1_Close( DRV_HANDLE handle );
 
 // *****************************************************************************
 /* Function:
-    void DRV_USBFS_ClientEventCallBackSet
+    void DRV_USBFSV1_ClientEventCallBackSet
     ( 
         DRV_HANDLE handle,
         uintptr_t hReferenceData,
-        DRV_USBFS_EVENT_CALLBACK myEventCallBack 
+        DRV_USBFSV1_EVENT_CALLBACK myEventCallBack 
     );
 
   Summary:
@@ -881,7 +881,7 @@ void DRV_USBFS_Close( DRV_HANDLE handle );
   Description:
     This function sets up the event callback function that is invoked by the USB
     controller driver to notify the client of USB bus events. The callback is
-    disabled by either not calling this function after the DRV_USBFS_Open
+    disabled by either not calling this function after the DRV_USBFSV1_Open
     function has been called or by setting the myEventCallBack argument as NULL.
     When the callback function is called, the hReferenceData argument is
     returned.
@@ -890,7 +890,7 @@ void DRV_USBFS_Close( DRV_HANDLE handle );
     None.
 	
   Parameters:
-    handle - Client's driver handle (returned from DRV_USBFS_Open function).
+    handle - Client's driver handle (returned from DRV_USBFSV1_Open function).
 
     hReferenceData - Object (could be a pointer) that is returned with the
     callback.  
@@ -911,7 +911,7 @@ void DRV_USBFS_Close( DRV_HANDLE handle );
      // firmware to identify, as an example, the Device Layer object associated
      // with this callback.
     
-    DRV_USBFS_ClientEventCallBackSet(myUSBDevice.usbDriverHandle, (uintptr_t)&myUSBDevice, USBDeviceLayerEventHandler);
+    DRV_USBFSV1_ClientEventCallBackSet(myUSBDevice.usbDriverHandle, (uintptr_t)&myUSBDevice, USBDeviceLayerEventHandler);
     
     </code>
 	
@@ -919,7 +919,7 @@ void DRV_USBFS_Close( DRV_HANDLE handle );
     Typical usage of the  USB Driver requires a client to register a callback.                                                                         
 */
 
-void DRV_USBFS_ClientEventCallBackSet
+void DRV_USBFSV1_ClientEventCallBackSet
 ( 
     DRV_HANDLE handle,
     uintptr_t  hReferenceData ,
@@ -934,7 +934,7 @@ void DRV_USBFS_ClientEventCallBackSet
 
 // *****************************************************************************
 /* Function:
-    void DRV_USBFS_DEVICE_AddressSet(DRV_HANDLE handle, uint8_t address);
+    void DRV_USBFSV1_DEVICE_AddressSet(DRV_HANDLE handle, uint8_t address);
 
   Summary:
     This function will set the USB module address that is obtained from the Host.
@@ -950,7 +950,7 @@ void DRV_USBFS_ClientEventCallBackSet
     None.
 
   Parameters:
-    handle - Client's driver handle (returned from DRV_USBFS_Open function).
+    handle - Client's driver handle (returned from DRV_USBFSV1_Open function).
     address - The address of this module on the USB bus.
 
   Returns:
@@ -962,18 +962,18 @@ void DRV_USBFS_ClientEventCallBackSet
     // which is typically the Device Layer. The address to set is obtained
     // from the Host during enumeration.
 
-    DRV_USBFS_DEVICE_AddressSet(deviceLayer, 4);
+    DRV_USBFSV1_DEVICE_AddressSet(deviceLayer, 4);
     </code>
 
   Remarks:
     None.
 */
 
-void DRV_USBFS_DEVICE_AddressSet(DRV_HANDLE handle, uint8_t address);
+void DRV_USBFSV1_DEVICE_AddressSet(DRV_HANDLE handle, uint8_t address);
 
 // *****************************************************************************
 /* Function:
-    USB_SPEED DRV_USBFS_DEVICE_CurrentSpeedGet(DRV_HANDLE handle);
+    USB_SPEED DRV_USBFSV1_DEVICE_CurrentSpeedGet(DRV_HANDLE handle);
 
   Summary:
     This function returns the USB speed at which the device is operating.
@@ -986,7 +986,7 @@ void DRV_USBFS_DEVICE_AddressSet(DRV_HANDLE handle, uint8_t address);
     reset signaling.
 
   Parameters:
-    handle - Client's driver handle (returned from DRV_USBFS_Open function).
+    handle - Client's driver handle (returned from DRV_USBFSV1_Open function).
 
   Returns:
     * USB_SPEED_ERROR - The device speed is not valid.
@@ -998,7 +998,7 @@ void DRV_USBFS_DEVICE_AddressSet(DRV_HANDLE handle, uint8_t address);
     
     USB_SPEED deviceSpeed;
     
-    deviceSpeed = DRV_USBFS_DEVICE_CurrentSpeedGet(deviceLayer);
+    deviceSpeed = DRV_USBFSV1_DEVICE_CurrentSpeedGet(deviceLayer);
     
     </code>
 
@@ -1006,11 +1006,11 @@ void DRV_USBFS_DEVICE_AddressSet(DRV_HANDLE handle, uint8_t address);
     None.
 */
 
-USB_SPEED DRV_USBFS_DEVICE_CurrentSpeedGet(DRV_HANDLE handle);
+USB_SPEED DRV_USBFSV1_DEVICE_CurrentSpeedGet(DRV_HANDLE handle);
 
 // *****************************************************************************
 /* Function:
-    uint16_t DRV_USBFS_DEVICE_SOFNumberGet(DRV_HANDLE handle);
+    uint16_t DRV_USBFSV1_DEVICE_SOFNumberGet(DRV_HANDLE handle);
 
   Summary:
     This function will return the USB SOF packet number.
@@ -1023,20 +1023,20 @@ USB_SPEED DRV_USBFS_DEVICE_CurrentSpeedGet(DRV_HANDLE handle);
     the bus. The SOF packet count will not increment if the bus is suspended.
 
   Parameters:
-    handle - Client's driver handle (returned from DRV_USBFS_Open function).
+    handle - Client's driver handle (returned from DRV_USBFSV1_Open function).
 
   Returns:
     The SOF packet number.
 
   Example:
     <code>
-    // This code shows how the DRV_USBFS_DEVICE_SOFNumberGet function is called
+    // This code shows how the DRV_USBFSV1_DEVICE_SOFNumberGet function is called
     // to read the current SOF number.
 
     DRV_HANDLE handle;
     uint16_t sofNumber;
 
-    sofNumber = DRV_USBFS_DEVICE_SOFNumberGet(handle);
+    sofNumber = DRV_USBFSV1_DEVICE_SOFNumberGet(handle);
 
     </code>
 
@@ -1044,11 +1044,11 @@ USB_SPEED DRV_USBFS_DEVICE_CurrentSpeedGet(DRV_HANDLE handle);
     None.
 */
 
-uint16_t DRV_USBFS_DEVICE_SOFNumberGet(DRV_HANDLE handle);
+uint16_t DRV_USBFSV1_DEVICE_SOFNumberGet(DRV_HANDLE handle);
 
 // *****************************************************************************
 /* Function:
-    void DRV_USBFS_DEVICE_Attach(DRV_HANDLE handle);
+    void DRV_USBFSV1_DEVICE_Attach(DRV_HANDLE handle);
 
   Summary:
     This function will enable the attach signaling resistors on the D+ and D-
@@ -1067,7 +1067,7 @@ uint16_t DRV_USBFS_DEVICE_SOFNumberGet(DRV_HANDLE handle);
     The Client handle should be valid.
 
   Parameters:
-    handle - Client's driver handle (returned from DRV_USBFS_Open function).
+    handle - Client's driver handle (returned from DRV_USBFSV1_Open function).
 
   Returns:
     None.
@@ -1076,24 +1076,24 @@ uint16_t DRV_USBFS_DEVICE_SOFNumberGet(DRV_HANDLE handle);
     <code>
 
     // Open the device driver and attach the device to the USB.
-    handle = DRV_USBFS_Open(DRV_USBFS_INDEX_0, DRV_IO_INTENT_EXCLUSIVE| DRV_IO_INTENT_READWRITE| DRV_IO_INTENT_NON_BLOCKING);
+    handle = DRV_USBFSV1_Open(DRV_USBFSV1_INDEX_0, DRV_IO_INTENT_EXCLUSIVE| DRV_IO_INTENT_READWRITE| DRV_IO_INTENT_NON_BLOCKING);
 
     // Register a callback
-    DRV_USBFS_ClientEventCallBackSet(handle, (uintptr_t)&myDeviceLayer, MyDeviceLayerEventCallback); 
+    DRV_USBFSV1_ClientEventCallBackSet(handle, (uintptr_t)&myDeviceLayer, MyDeviceLayerEventCallback); 
 
     // The device can be attached when VBUS Session Valid event occurs
-    void MyDeviceLayerEventCallback(uintptr_t handle, DRV_USBFS_EVENT event, void * hReferenceData)
+    void MyDeviceLayerEventCallback(uintptr_t handle, DRV_USBFSV1_EVENT event, void * hReferenceData)
     {
         switch(event)
         {
-            case DRV_USBFS_EVENT_DEVICE_SESSION_VALID:
+            case DRV_USBFSV1_EVENT_DEVICE_SESSION_VALID:
                 // A valid VBUS was detected.    
-                DRV_USBFS_DEVICE_Attach(handle);
+                DRV_USBFSV1_DEVICE_Attach(handle);
                 break;
 
-            case DRV_USBFS_EVENT_DEVICE_SESSION_INVALID:
+            case DRV_USBFSV1_EVENT_DEVICE_SESSION_INVALID:
                 // VBUS is not valid anymore. The device can be disconnected.
-                DRV_USBFS_DEVICE_Detach(handle);
+                DRV_USBFSV1_DEVICE_Detach(handle);
                 break;
 
             default:
@@ -1108,11 +1108,11 @@ uint16_t DRV_USBFS_DEVICE_SOFNumberGet(DRV_HANDLE handle);
     None.
 */
 
-void DRV_USBFS_DEVICE_Attach(DRV_HANDLE handle);
+void DRV_USBFSV1_DEVICE_Attach(DRV_HANDLE handle);
 
 // *****************************************************************************
 /* Function:
-    void DRV_USBFS_DEVICE_Detach(DRV_HANDLE handle);
+    void DRV_USBFSV1_DEVICE_Detach(DRV_HANDLE handle);
 
   Summary:
     This function will disable the attach signaling resistors on the D+ and D-
@@ -1130,7 +1130,7 @@ void DRV_USBFS_DEVICE_Attach(DRV_HANDLE handle);
     The Client handle should be valid.
 
   Parameters:
-    handle - Client's driver handle (returned from DRV_USBFS_Open function).
+    handle - Client's driver handle (returned from DRV_USBFSV1_Open function).
 
   Returns:
     None.
@@ -1139,24 +1139,24 @@ void DRV_USBFS_DEVICE_Attach(DRV_HANDLE handle);
     <code>
 
     // Open the device driver and attach the device to the USB.
-    handle = DRV_USBFS_Open(DRV_USBFS_INDEX_0, DRV_IO_INTENT_EXCLUSIVE| DRV_IO_INTENT_READWRITE| DRV_IO_INTENT_NON_BLOCKING);
+    handle = DRV_USBFSV1_Open(DRV_USBFSV1_INDEX_0, DRV_IO_INTENT_EXCLUSIVE| DRV_IO_INTENT_READWRITE| DRV_IO_INTENT_NON_BLOCKING);
 
     // Register a callback
-    DRV_USBFS_ClientEventCallBackSet(handle, (uintptr_t)&myDeviceLayer, MyDeviceLayerEventCallback); 
+    DRV_USBFSV1_ClientEventCallBackSet(handle, (uintptr_t)&myDeviceLayer, MyDeviceLayerEventCallback); 
 
     // The device can be detached when VBUS Session Invalid event occurs
-    void MyDeviceLayerEventCallback(uintptr_t handle, DRV_USBFS_EVENT event, void * hReferenceData)
+    void MyDeviceLayerEventCallback(uintptr_t handle, DRV_USBFSV1_EVENT event, void * hReferenceData)
     {
         switch(event)
         {
-            case DRV_USBFS_EVENT_DEVICE_SESSION_VALID:
+            case DRV_USBFSV1_EVENT_DEVICE_SESSION_VALID:
                 // A valid VBUS was detected.    
-                DRV_USBFS_DEVICE_Attach(handle);
+                DRV_USBFSV1_DEVICE_Attach(handle);
                 break;
 
-            case DRV_USBFS_EVENT_DEVICE_SESSION_INVALID:
+            case DRV_USBFSV1_EVENT_DEVICE_SESSION_INVALID:
                 // VBUS is not valid anymore. The device can be disconnected.
-                DRV_USBFS_DEVICE_Detach(handle);
+                DRV_USBFSV1_DEVICE_Detach(handle);
                 break;
 
             default:
@@ -1171,11 +1171,11 @@ void DRV_USBFS_DEVICE_Attach(DRV_HANDLE handle);
     None.
 */
 
-void DRV_USBFS_DEVICE_Detach(DRV_HANDLE handle);
+void DRV_USBFSV1_DEVICE_Detach(DRV_HANDLE handle);
 
 // ****************************************************************************
 /* Function:
-    USB_ERROR DRV_USBFS_DEVICE_EndpointEnable
+    USB_ERROR DRV_USBFSV1_DEVICE_EndpointEnable
     (
         DRV_HANDLE handle,
         USB_ENDPOINT endpointAndDirection,
@@ -1205,7 +1205,7 @@ void DRV_USBFS_DEVICE_Detach(DRV_HANDLE handle);
     The Client handle should be valid.
 	
   Parameters:
-    handle - Client's driver handle (returned from DRV_USBFS_Open function).
+    handle - Client's driver handle (returned from DRV_USBFSV1_Open function).
     
     endpointAndDirection - Specifies the endpoint and direction.
 
@@ -1221,7 +1221,7 @@ void DRV_USBFS_DEVICE_Detach(DRV_HANDLE handle);
     * USB_ERROR_NONE - The endpoint was successfully enabled.
     * USB_ERROR_DEVICE_ENDPOINT_INVALID - If the endpoint that is being accessed
       is not a valid endpoint defined for this driver instance.  The value of
-      DRV_USBFS_ENDPOINTS_NUMBER configuration constant should be adjusted.
+      DRV_USBFSV1_ENDPOINTS_NUMBER configuration constant should be adjusted.
     * USB_ERROR_PARAMETER_INVALID - The driver handle is invalid.
 	
   Example:
@@ -1235,7 +1235,7 @@ void DRV_USBFS_DEVICE_Detach(DRV_HANDLE handle);
     
     ep = USB_ENDPOINT_AND_DIRECTION(USB_DATA_DIRECTION_DEVICE_TO_HOST, 0);
     
-    DRV_USBFS_DEVICE_EndpointEnable(handle, ep, USB_TRANSFER_TYPE_CONTROL, 64);
+    DRV_USBFSV1_DEVICE_EndpointEnable(handle, ep, USB_TRANSFER_TYPE_CONTROL, 64);
     
     // This code shows an example of how to set up a endpoint
     // for BULK IN transfer. For an IN transfer, data moves from device
@@ -1246,22 +1246,22 @@ void DRV_USBFS_DEVICE_Detach(DRV_HANDLE handle);
     
     ep = USB_ENDPOINT_AND_DIRECTION(USB_DATA_DIRECTION_DEVICE_TO_HOST, 1);
     
-    DRV_USBFS_DEVICE_EndpointEnable(handle, ep, USB_TRANSFER_TYPE_BULK, 64);
+    DRV_USBFSV1_DEVICE_EndpointEnable(handle, ep, USB_TRANSFER_TYPE_BULK, 64);
     
     // If Endpoint 1 must also be set up for BULK OUT, the
-    // DRV_USBFS_DEVICE_EndpointEnable function must be called again, as shown
+    // DRV_USBFSV1_DEVICE_EndpointEnable function must be called again, as shown
     // here.
     
     ep = USB_ENDPOINT_AND_DIRECTION(USB_DATA_DIRECTION_HOST_TO_DEVICE, 1);
     
-    DRV_USBFS_DEVICE_EndpointEnable(handle, ep, USB_TRANSFER_TYPE_BULK, 64);
+    DRV_USBFSV1_DEVICE_EndpointEnable(handle, ep, USB_TRANSFER_TYPE_BULK, 64);
     </code>
 	
   Remarks:
     None.                                                                    
 */
 
-USB_ERROR DRV_USBFS_DEVICE_EndpointEnable
+USB_ERROR DRV_USBFSV1_DEVICE_EndpointEnable
 (
     DRV_HANDLE handle, 
     USB_ENDPOINT endpointAndDirection, 
@@ -1271,7 +1271,7 @@ USB_ERROR DRV_USBFS_DEVICE_EndpointEnable
 
 // ***************************************************************************
 /* Function:
-    USB_ERROR DRV_USBFS_DEVICE_EndpointDisable
+    USB_ERROR DRV_USBFSV1_DEVICE_EndpointDisable
     (
         DRV_HANDLE handle,
         USB_ENDPOINT endpointAndDirection
@@ -1291,14 +1291,14 @@ USB_ERROR DRV_USBFS_DEVICE_EndpointEnable
     The Client handle should be valid.
 
   Parameters:
-    handle - Client's driver handle (returned from DRV_USBFS_Open function).
+    handle - Client's driver handle (returned from DRV_USBFSV1_Open function).
     endpointAndDirection - Specifies the endpoint and direction.
 	
   Returns:
     * USB_ERROR_NONE - The endpoint was successfully enabled.
     * USB_ERROR_DEVICE_ENDPOINT_INVALID - The endpoint that is being accessed
       is not a valid endpoint (endpoint was not provisioned through the 
-      DRV_USBFS_ENDPOINTS_NUMBER configuration constant) defined for this driver 
+      DRV_USBFSV1_ENDPOINTS_NUMBER configuration constant) defined for this driver 
       instance.
 	
   Example:
@@ -1311,7 +1311,7 @@ USB_ERROR DRV_USBFS_DEVICE_EndpointEnable
     
     ep = USB_ENDPOINT_AND_DIRECTION(USB_DATA_DIRECTION_DEVICE_TO_HOST, 0);
     
-    DRV_USBFS_DEVICE_EndpointDisable(handle, ep );
+    DRV_USBFSV1_DEVICE_EndpointDisable(handle, ep );
     
     // This code shows an example of how to disable a BULK IN
     // endpoint
@@ -1320,7 +1320,7 @@ USB_ERROR DRV_USBFS_DEVICE_EndpointEnable
     
     ep = USB_ENDPOINT_AND_DIRECTION(USB_DATA_DIRECTION_DEVICE_TO_HOST, 1);
     
-    DRV_USBFS_DEVICE_EndpointDisable(handle, ep );
+    DRV_USBFSV1_DEVICE_EndpointDisable(handle, ep );
     
     </code>
 	
@@ -1328,7 +1328,7 @@ USB_ERROR DRV_USBFS_DEVICE_EndpointEnable
     None.                                                                    
 */
 
-USB_ERROR DRV_USBFS_DEVICE_EndpointDisable
+USB_ERROR DRV_USBFSV1_DEVICE_EndpointDisable
 (
     DRV_HANDLE handle, 
     USB_ENDPOINT endpointAndDirection
@@ -1336,7 +1336,7 @@ USB_ERROR DRV_USBFS_DEVICE_EndpointDisable
 
 // *****************************************************************************
 /* Function:
-    USB_ERROR DRV_USBFS_DEVICE_EndpointDisableAll(DRV_HANDLE handle) 
+    USB_ERROR DRV_USBFSV1_DEVICE_EndpointDisableAll(DRV_HANDLE handle) 
   
   Summary:
     This function disables all provisioned endpoints.
@@ -1348,7 +1348,7 @@ USB_ERROR DRV_USBFS_DEVICE_EndpointDisable
     The Client handle should be valid.
 
   Parameters:
-    handle - Client's driver handle (returned from DRV_USBFS_Open function).
+    handle - Client's driver handle (returned from DRV_USBFSV1_Open function).
 
   Returns:
     * USB_ERROR_NONE - The function exited successfully.
@@ -1358,7 +1358,7 @@ USB_ERROR DRV_USBFS_DEVICE_EndpointDisable
     <code>
     // This code shows an example of how to disable all endpoints. 
 
-    DRV_USBFS_DEVICE_EndpointDisableAll(handle);
+    DRV_USBFSV1_DEVICE_EndpointDisableAll(handle);
     
     </code>
 
@@ -1367,11 +1367,11 @@ USB_ERROR DRV_USBFS_DEVICE_EndpointDisable
     all endpoints upon detecting a bus reset.
 */
 
-USB_ERROR DRV_USBFS_DEVICE_EndpointDisableAll(DRV_HANDLE handle); 
+USB_ERROR DRV_USBFSV1_DEVICE_EndpointDisableAll(DRV_HANDLE handle); 
 
 // ****************************************************************************
 /* Function:
-    USB_ERROR DRV_USBFS_DEVICE_EndpointStall
+    USB_ERROR DRV_USBFSV1_DEVICE_EndpointStall
     (
         DRV_HANDLE handle,
         USB_ENDPOINT endpointAndDirection
@@ -1387,7 +1387,7 @@ USB_ERROR DRV_USBFS_DEVICE_EndpointDisableAll(DRV_HANDLE handle);
     The Client handle should be valid.
 	
   Parameters:
-    handle - Client's driver handle (returned from DRV_USBFS_Open function).
+    handle - Client's driver handle (returned from DRV_USBFSV1_Open function).
     endpointAndDirection -  Specifies the endpoint and direction.
 	
   Returns:
@@ -1407,7 +1407,7 @@ USB_ERROR DRV_USBFS_DEVICE_EndpointDisableAll(DRV_HANDLE handle);
     
     ep = USB_ENDPOINT_AND_DIRECTION(USB_DATA_DIRECTION_DEVICE_TO_HOST, 1);
     
-    DRV_USBFS_DEVICE_EndpointStall(handle, ep);
+    DRV_USBFSV1_DEVICE_EndpointStall(handle, ep);
     
     </code>
 	
@@ -1415,7 +1415,7 @@ USB_ERROR DRV_USBFS_DEVICE_EndpointDisableAll(DRV_HANDLE handle);
     None.                                                                    
 */
 
-USB_ERROR DRV_USBFS_DEVICE_EndpointStall
+USB_ERROR DRV_USBFSV1_DEVICE_EndpointStall
 (
     DRV_HANDLE handle, 
     USB_ENDPOINT endpointAndDirection
@@ -1423,7 +1423,7 @@ USB_ERROR DRV_USBFS_DEVICE_EndpointStall
 
 // ****************************************************************************
 /* Function:
-    USB_ERROR DRV_USBFS_DEVICE_EndpointStallClear
+    USB_ERROR DRV_USBFSV1_DEVICE_EndpointStallClear
     (
         DRV_HANDLE handle,
         USB_ENDPOINT endpointAndDirection
@@ -1439,7 +1439,7 @@ USB_ERROR DRV_USBFS_DEVICE_EndpointStall
     The Client handle should be valid.
 	
   Parameters:
-    handle - Client's driver handle (returned from DRV_USBFS_Open function).
+    handle - Client's driver handle (returned from DRV_USBFSV1_Open function).
     endpointAndDirection -  Specifies the endpoint and direction.
 	
   Returns:
@@ -1457,7 +1457,7 @@ USB_ERROR DRV_USBFS_DEVICE_EndpointStall
     
     ep = USB_ENDPOINT_AND_DIRECTION(USB_DATA_DIRECTION_DEVICE_TO_HOST, 1);
     
-    DRV_USBFS_DEVICE_EndpointStallClear(handle, ep);
+    DRV_USBFSV1_DEVICE_EndpointStallClear(handle, ep);
     
     </code>
 	
@@ -1465,7 +1465,7 @@ USB_ERROR DRV_USBFS_DEVICE_EndpointStall
     None.                                                                    
 */
 
-USB_ERROR DRV_USBFS_DEVICE_EndpointStallClear
+USB_ERROR DRV_USBFSV1_DEVICE_EndpointStallClear
 (
     DRV_HANDLE handle, 
     USB_ENDPOINT endpointAndDirection
@@ -1473,7 +1473,7 @@ USB_ERROR DRV_USBFS_DEVICE_EndpointStallClear
 
 // *****************************************************************************
 /* Function:
-    bool DRV_USBFS_DEVICE_EndpointIsEnabled
+    bool DRV_USBFSV1_DEVICE_EndpointIsEnabled
     (
         DRV_HANDLE handle,
         USB_ENDPOINT endpointAndDirection
@@ -1491,7 +1491,7 @@ USB_ERROR DRV_USBFS_DEVICE_EndpointStallClear
     The Client handle should be valid.
 	
   Parameters:
-    handle - Client's driver handle (returned from DRV_USBFS_Open function).
+    handle - Client's driver handle (returned from DRV_USBFSV1_Open function).
     endpointAndDirection - Specifies the endpoint and direction.
 	
   Returns:
@@ -1501,19 +1501,19 @@ USB_ERROR DRV_USBFS_DEVICE_EndpointStallClear
   Example:
     <code>
     // This code shows an example of how the
-    // DRV_USBFS_DEVICE_EndpointIsEnabled function can be used to obtain the
+    // DRV_USBFSV1_DEVICE_EndpointIsEnabled function can be used to obtain the
     // status of Endpoint 1 and IN direction.
     
     USB_ENDPOINT ep;
     
     ep = USB_ENDPOINT_AND_DIRECTION(USB_DATA_DIRECTION_DEVICE_TO_HOST, 1);
     
-    if(DRV_USBFS_ENDPOINT_STATE_DISABLED ==
-                DRV_USBFS_DEVICE_EndpointIsEnabled(handle, ep))
+    if(DRV_USBFSV1_ENDPOINT_STATE_DISABLED ==
+                DRV_USBFSV1_DEVICE_EndpointIsEnabled(handle, ep))
     {
         // Endpoint is disabled. Enable endpoint.
     
-        DRV_USBFS_DEVICE_EndpointEnable(handle, ep, USB_ENDPOINT_TYPE_BULK, 64);
+        DRV_USBFSV1_DEVICE_EndpointEnable(handle, ep, USB_ENDPOINT_TYPE_BULK, 64);
     
     }
     
@@ -1523,7 +1523,7 @@ USB_ERROR DRV_USBFS_DEVICE_EndpointStallClear
     None.                                                                     
 */
 
-bool DRV_USBFS_DEVICE_EndpointIsEnabled
+bool DRV_USBFSV1_DEVICE_EndpointIsEnabled
 (
     DRV_HANDLE client, 
     USB_ENDPOINT endpointAndDirection
@@ -1531,7 +1531,7 @@ bool DRV_USBFS_DEVICE_EndpointIsEnabled
 
 // *****************************************************************************
 /* Function:
-    bool DRV_USBFS_DEVICE_EndpointIsStalled
+    bool DRV_USBFSV1_DEVICE_EndpointIsStalled
     (
         DRV_HANDLE handle, 
         USB_ENDPOINT endpointAndDirection
@@ -1549,7 +1549,7 @@ bool DRV_USBFS_DEVICE_EndpointIsEnabled
     The Client handle should be valid.
 
   Parameters:
-    handle - Client's driver handle (returned from DRV_USBFS_Open function).
+    handle - Client's driver handle (returned from DRV_USBFSV1_Open function).
 
     endpointAndDirection - Specifies the endpoint and direction.
 
@@ -1560,18 +1560,18 @@ bool DRV_USBFS_DEVICE_EndpointIsEnabled
   Example:
     <code>
     // This code shows an example of how the
-    // DRV_USBFS_DEVICE_EndpointIsStalled function can be used to obtain the
+    // DRV_USBFSV1_DEVICE_EndpointIsStalled function can be used to obtain the
     // stall status of Endpoint 1 and IN direction.
 
     USB_ENDPOINT ep;
 
     ep = USB_ENDPOINT_AND_DIRECTION(USB_DATA_DIRECTION_DEVICE_TO_HOST, 1);
 
-    if(true == DRV_USBFS_DEVICE_EndpointIsStalled (handle, ep))
+    if(true == DRV_USBFSV1_DEVICE_EndpointIsStalled (handle, ep))
     {
         // Endpoint stall is enabled. Clear the stall.
 
-        DRV_USBFS_DEVICE_EndpointStallClear(handle, ep);
+        DRV_USBFSV1_DEVICE_EndpointStallClear(handle, ep);
         
     }
 
@@ -1581,7 +1581,7 @@ bool DRV_USBFS_DEVICE_EndpointIsEnabled
     None.
 */
 
-bool DRV_USBFS_DEVICE_EndpointIsStalled
+bool DRV_USBFSV1_DEVICE_EndpointIsStalled
 (
     DRV_HANDLE client, 
     USB_ENDPOINT endpoint
@@ -1589,7 +1589,7 @@ bool DRV_USBFS_DEVICE_EndpointIsStalled
 
 // ***********************************************************************************
 /* Function:
-    USB_ERROR DRV_USBFS_DEVICE_IRPSubmit
+    USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
     (
         DRV_HANDLE client,
         USB_ENDPOINT endpointAndDirection,
@@ -1655,7 +1655,7 @@ bool DRV_USBFS_DEVICE_EndpointIsStalled
     The Client handle should be valid.
 	
   Parameters:
-    handle - Client's driver handle (returned from DRV_USBFS_Open function).
+    handle - Client's driver handle (returned from DRV_USBFSV1_Open function).
     endpointAndDirection -  Specifies the endpoint and direction.
     irp - Pointer to the IRP to be added to the queue for processing.
 	
@@ -1687,7 +1687,7 @@ bool DRV_USBFS_DEVICE_EndpointIsStalled
     irp.callback = MyIRPCompletionCallback;
     irp.referenceData = (uintptr_t)&myDeviceLayerObj;
     
-    if (DRV_USBFS_DEVICE_IRPSubmit(handle, ep, &irp) != USB_ERROR_NONE)
+    if (DRV_USBFSV1_DEVICE_IRPSubmit(handle, ep, &irp) != USB_ERROR_NONE)
     {
         // This means there was an error.
     }
@@ -1712,7 +1712,7 @@ bool DRV_USBFS_DEVICE_EndpointIsStalled
     
     // Note that while  receiving data from the Host, the size should be an
     // exact multiple of the maximum packet size of the endpoint. In the
-    // following example, the DRV_USBFS_DEVICE_IRPSubmit function will return a
+    // following example, the DRV_USBFSV1_DEVICE_IRPSubmit function will return a
     // USB_DEVICE_IRP_SIZE_INVALID value.
     
     ep = USB_ENDPOINT_AND_DIRECTION(USB_DATA_DIRECTION_HOST_TO_DEVICE, 1);
@@ -1730,7 +1730,7 @@ bool DRV_USBFS_DEVICE_EndpointIsStalled
     with the client.                                                                           
 */
 
-USB_ERROR DRV_USBFS_DEVICE_IRPSubmit
+USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
 (
     DRV_HANDLE client, 
     USB_ENDPOINT endpointAndDirection, 
@@ -1739,7 +1739,71 @@ USB_ERROR DRV_USBFS_DEVICE_IRPSubmit
 
 // **************************************************************************
 /* Function:
-    USB_ERROR DRV_USBFS_DEVICE_IRPCancel
+    USB_ERROR DRV_USBFSV1_DEVICE_IRPCancelAll 
+    (
+        DRV_HANDLE client,
+        USB_ENDPOINT endpointAndDirection
+    );
+    
+  Summary:
+    This function cancels all IRPs that are queued and in progress at the
+    specified endpoint.
+	
+  Description:
+    This function cancels all IRPs that are queued and in progress at the
+    specified endpoint.
+	
+  Precondition:
+    The Client handle should be valid.
+	
+  Parameters:
+    handle - Client's driver handle (returned from DRV_USBFSV1_Open function).
+    endpointAndDirection - Specifies the endpoint and direction.
+	
+  Returns:
+    * USB_ERROR_NONE - The endpoint was successfully enabled.
+    * USB_ERROR_DEVICE_ENDPOINT_INVALID - If the endpoint that is being
+      accessed is out of the valid endpoint defined for this driver instance.
+    * USB_ERROR_PARAMETER_INVALID - The driver handle is not valid.
+    * USB_ERROR_OSAL_FUNCTION - An OSAL function called in this function did not
+      execute successfully.
+	
+  Example:
+    <code>
+    // This code shows an example of how to cancel all IRPs.
+    
+    void MyIRPCallback(USB_DEVICE_IRP * irp)
+    {
+        // Check if this is setup command
+    
+        if(irp->status == USB_DEVICE_IRP_STATUS_SETUP)
+        {
+            if(IsSetupCommandSupported(irp->data) == false)
+            {
+                // This means that this setup command is not
+                // supported. Stall the some related endpoint and cancel all
+                // queue IRPs.
+    
+                DRV_USBFSV1_DEVICE_EndpointStall(handle, ep);
+                DRV_USBFSV1_DEVICE_IRPCancelAll(handle, ep);
+            }
+         }
+     }
+    </code>
+	
+  Remarks:
+    None.                                                                  
+*/
+
+USB_ERROR DRV_USBFSV1_DEVICE_IRPCancelAll 
+(
+    DRV_HANDLE client, 
+    USB_ENDPOINT endpointAndDirection
+);
+
+// **************************************************************************
+/* Function:
+    USB_ERROR DRV_USBFSV1_DEVICE_IRPCancel
 	(
 		DRV_HANDLE client, 
 		USB_DEVICE_IRP * irp
@@ -1765,7 +1829,7 @@ USB_ERROR DRV_USBFS_DEVICE_IRPSubmit
     The Client handle should be valid.
 	
   Parameters:
-    handle - Client's driver handle (returned from DRV_USBFS_Open function).
+    handle - Client's driver handle (returned from DRV_USBFSV1_Open function).
     irp - Pointer to the IRP to cancel.
 	
   Returns:
@@ -1791,7 +1855,7 @@ USB_ERROR DRV_USBFS_DEVICE_IRPSubmit
     irp.callback = MyIRPCompletionCallback;
     irp.referenceData = (uintptr_t)&myDeviceLayerObj;
     
-    if (DRV_USBFS_DEVICE_IRPSubmit(handle, ep, &irp) != USB_ERROR_NONE)
+    if (DRV_USBFSV1_DEVICE_IRPSubmit(handle, ep, &irp) != USB_ERROR_NONE)
     {
         // This means there was an error.
     }
@@ -1801,7 +1865,7 @@ USB_ERROR DRV_USBFS_DEVICE_IRPSubmit
         if(irp.status != USB_DEVICE_IRP_STATUS_COMPLETED)
         {
             // Cancel the submitted IRP.
-            if (DRV_USBFS_DEVICE_IRPCancel(handle, &irp) != USB_ERROR_NONE)
+            if (DRV_USBFSV1_DEVICE_IRPCancel(handle, &irp) != USB_ERROR_NONE)
             {
                 // The IRP Cancel request submission was successful.
                 // IRP cancel status will be notified through the callback
@@ -1839,79 +1903,123 @@ USB_ERROR DRV_USBFS_DEVICE_IRPSubmit
     any effect. The first transaction of any ongoing IRP cannot be canceled.                                                                  
 */
 
-USB_ERROR DRV_USBFS_DEVICE_IRPCancel
+USB_ERROR DRV_USBFSV1_DEVICE_IRPCancel
 (
     DRV_HANDLE client, 
     USB_DEVICE_IRP * irp
 );
-
-// **************************************************************************
+// ****************************************************************************
 /* Function:
-    USB_ERROR DRV_USBFS_DEVICE_IRPCancelAll 
+    bool DRV_USBFSV1_HOST_EventsDisable
     (
-        DRV_HANDLE client,
-        USB_ENDPOINT endpointAndDirection
+        DRV_HANDLE handle
     );
     
   Summary:
-    This function cancels all IRPs that are queued and in progress at the
-    specified endpoint.
+    Disables Host mode events.
 	
   Description:
-    This function cancels all IRPs that are queued and in progress at the
-    specified endpoint.
+    This function disables the Host mode events. This function is called by the
+    Host Layer when it wants to execute code atomically. 
 	
   Precondition:
-    The Client handle should be valid.
+    The handle should be valid.
 	
   Parameters:
-    handle - Client's driver handle (returned from DRV_USBFS_Open function).
-    endpointAndDirection - Specifies the endpoint and direction.
+    handle - Client's driver handle (returned from DRV_USBFSV1_Open function).
 	
   Returns:
-    * USB_ERROR_NONE - The endpoint was successfully enabled.
-    * USB_ERROR_DEVICE_ENDPOINT_INVALID - If the endpoint that is being
-      accessed is out of the valid endpoint defined for this driver instance.
-    * USB_ERROR_PARAMETER_INVALID - The driver handle is not valid.
-    * USB_ERROR_OSAL_FUNCTION - An OSAL function called in this function did not
-      execute successfully.
+    * true - Driver event generation was enabled when this function was called.
+    * false - Driver event generation was not enabled when this function was
+      called. 
 	
   Example:
     <code>
-    // This code shows an example of how to cancel all IRPs.
-    
-    void MyIRPCallback(USB_DEVICE_IRP * irp)
-    {
-        // Check if this is setup command
-    
-        if(irp->status == USB_DEVICE_IRP_STATUS_SETUP)
-        {
-            if(IsSetupCommandSupported(irp->data) == false)
-            {
-                // This means that this setup command is not
-                // supported. Stall the some related endpoint and cancel all
-                // queue IRPs.
-    
-                DRV_USBFS_DEVICE_EndpointStall(handle, ep);
-                DRV_USBFS_DEVICE_IRPCancelAll(handle, ep);
-            }
-         }
-     }
+    // This code shows how the DRV_USBFSV1_HOST_EventsDisable and
+    // DRV_USBFSV1_HOST_EventsEnable function can be called to disable and enable
+    // events.
+
+    DRV_HANDLE driverHandle;
+    bool eventsWereEnabled;
+
+    // Disable the driver events.
+    eventsWereEnabled = DRV_USBFSV1_HOST_EventsDisable(driverHandle);
+
+    // Code in this region will not be interrupted by driver events.
+
+    // Enable the driver events.
+    DRV_USBFSV1_HOST_EventsEnable(driverHandle, eventsWereEnabled);
+
     </code>
 	
   Remarks:
-    None.                                                                  
+    None.
 */
 
-USB_ERROR DRV_USBFS_DEVICE_IRPCancelAll 
+bool DRV_USBFSV1_HOST_EventsDisable
 (
-    DRV_HANDLE client, 
-    USB_ENDPOINT endpointAndDirection
+    DRV_HANDLE handle
 );
 
 // ****************************************************************************
 /* Function:
-    void DRV_USBFS_DEVICE_RemoteWakeupStart(DRV_HANDLE handle);
+    void DRV_USBFSV1_HOST_EventsEnable
+    (
+        DRV_HANDLE handle
+        bool eventRestoreContext
+    );
+    
+  Summary:
+    Restores the events to the specified the original value.
+	
+  Description:
+    This function will restore the enable disable state of the events.  The
+    eventRestoreContext parameter should be equal to the value returned by the
+    DRV_USBFSV1_HOST_EventsDisable function.
+	
+  Precondition:
+    The handle should be valid.
+	
+  Parameters:
+    handle - Handle to the driver (returned from DRV_USBFSV1_Open function).
+    eventRestoreContext - Value returned by the DRV_USBFSV1_HOST_EventsDisable
+    function.
+	
+  Returns:
+    None.
+	
+  Example:
+    <code>
+    // This code shows how the DRV_USBFSV1_HOST_EventsDisable and
+    // DRV_USBFSV1_HOST_EventsEnable function can be called to disable and enable
+    // events.
+
+    DRV_HANDLE driverHandle;
+    bool eventsWereEnabled;
+
+    // Disable the driver events.
+    eventsWereEnabled = DRV_USBFSV1_HOST_EventsDisable(driverHandle);
+
+    // Code in this region will not be interrupted by driver events.
+
+    // Enable the driver events.
+    DRV_USBFSV1_HOST_EventsEnable(driverHandle, eventsWereEnabled);
+
+    </code>
+	
+  Remarks:
+    None.
+*/
+
+void DRV_USBFSV1_HOST_EventsEnable
+(
+    DRV_HANDLE handle, 
+    bool eventContext
+);
+
+// ****************************************************************************
+/* Function:
+    void DRV_USBFSV1_DEVICE_RemoteWakeupStart(DRV_HANDLE handle);
   
   Summary:
     This function causes the device to start Remote Wakeup Signalling on the
@@ -1927,7 +2035,7 @@ USB_ERROR DRV_USBFS_DEVICE_IRPCancelAll
     The handle should be valid.
 	
   Parameters:
-    handle - Handle to the driver (returned from DRV_USBFS_Open function).
+    handle - Handle to the driver (returned from DRV_USBFSV1_Open function).
 	
   Returns:
     None.
@@ -1941,7 +2049,7 @@ USB_ERROR DRV_USBFS_DEVICE_IRPCancelAll
 
     if(deviceIsSuspended && deviceRemoteWakeupEnabled)
     {   
-        DRV_USBFS_DEVICE_RemoteWakeupStart(handle);
+        DRV_USBFSV1_DEVICE_RemoteWakeupStart(handle);
     }
     </code>
 	
@@ -1949,11 +2057,11 @@ USB_ERROR DRV_USBFS_DEVICE_IRPCancelAll
     None.
 */
 
-void DRV_USBFS_DEVICE_RemoteWakeupStart(DRV_HANDLE handle);
+void DRV_USBFSV1_DEVICE_RemoteWakeupStart(DRV_HANDLE handle);
 
 // ****************************************************************************
 /* Function:
-    void DRV_USBFS_DEVICE_RemoteWakeupStop(DRV_HANDLE handle);
+    void DRV_USBFSV1_DEVICE_RemoteWakeupStop(DRV_HANDLE handle);
   
   Summary:
     This function causes the device to stop the Remote Wakeup Signalling on the
@@ -1961,15 +2069,15 @@ void DRV_USBFS_DEVICE_RemoteWakeupStart(DRV_HANDLE handle);
 	
   Description:
     This function causes the device to stop Remote Wakeup Signalling on the bus.
-    This function should be called after the DRV_USBFS_DEVICE_RemoteWakeupStart
+    This function should be called after the DRV_USBFSV1_DEVICE_RemoteWakeupStart
     function was called to start the Remote Wakeup signaling on the bus.
 	
   Precondition:
-    The handle should be valid. The DRV_USBFS_DEVICE_RemoteWakeupStart function was
+    The handle should be valid. The DRV_USBFSV1_DEVICE_RemoteWakeupStart function was
     called to start the Remote Wakeup signaling on the bus.
 	
   Parameters:
-    handle - Handle to the driver (returned from DRV_USBFS_Open function).
+    handle - Handle to the driver (returned from DRV_USBFSV1_Open function).
 	
   Returns:
     None.
@@ -1984,18 +2092,18 @@ void DRV_USBFS_DEVICE_RemoteWakeupStart(DRV_HANDLE handle);
 
     if(deviceIsSuspended && deviceRemoteWakeupEnabled)
     {   
-        DRV_USBFS_DEVICE_RemoteWakeupStart(handle);
+        DRV_USBFSV1_DEVICE_RemoteWakeupStart(handle);
         DelayMilliSeconds(10);
-        DRV_USBFS_DEVICE_RemoteWakeupStop(handle);
+        DRV_USBFSV1_DEVICE_RemoteWakeupStop(handle);
     }
     </code>
 	
   Remarks:
     This function should be 1 to 15 milliseconds after the
-    DRV_USBFS_DEVICE_RemoteWakeupStart function was called.
+    DRV_USBFSV1_DEVICE_RemoteWakeupStart function was called.
 */
 
-void DRV_USBFS_DEVICE_RemoteWakeupStop(DRV_HANDLE handle);
+void DRV_USBFSV1_DEVICE_RemoteWakeupStop(DRV_HANDLE handle);
 
 // *****************************************************************************
 // *****************************************************************************
@@ -2005,7 +2113,7 @@ void DRV_USBFS_DEVICE_RemoteWakeupStop(DRV_HANDLE handle);
 
 // ****************************************************************************
 /* Function:
-    void DRV_USBFS_HOST_IRPCancel(USB_HOST_IRP * inputIRP);
+    void DRV_USBFSV1_HOST_IRPCancel(USB_HOST_IRP * inputIRP);
     
   Summary:
     Cancels the specified IRP.
@@ -2042,12 +2150,12 @@ void DRV_USBFS_DEVICE_RemoteWakeupStop(DRV_HANDLE handle);
     irp.userData = &someApplicationObject;
     irp.callback = IRP_Callback;
 
-    DRV_USBFS_HOST_IRPSubmit(controlPipeHandle, &irp);
+    DRV_USBFSV1_HOST_IRPSubmit(controlPipeHandle, &irp);
 
     // Additional application logic may come here. This logic may decide to
     // cancel the submitted IRP.
     
-    DRV_USBFS_HOST_IRPCancel(&irp);
+    DRV_USBFSV1_HOST_IRPCancel(&irp);
 
     </code>
 	
@@ -2055,13 +2163,13 @@ void DRV_USBFS_DEVICE_RemoteWakeupStop(DRV_HANDLE handle);
     None.                                                                  
 */
 
-void DRV_USBFS_HOST_IRPCancel(USB_HOST_IRP * inputIRP);
+void DRV_USBFSV1_HOST_IRPCancel(USB_HOST_IRP * inputIRP);
 
 // ****************************************************************************
 /* Function:
-    void DRV_USBFS_HOST_PipeClose
+    void DRV_USBFSV1_HOST_PipeClose
     (
-        DRV_USBFS_HOST_PIPE_HANDLE pipeHandle
+        DRV_USBFSV1_HOST_PIPE_HANDLE pipeHandle
     );
     
   Summary:
@@ -2087,135 +2195,28 @@ void DRV_USBFS_HOST_IRPCancel(USB_HOST_IRP * inputIRP);
     // This code shows how an open Host pipe can be closed.
     
     DRV_HANDLE driverHandle;
-    DRV_USBFS_HOST_PIPE_HANDLE pipeHandle;
+    DRV_USBFSV1_HOST_PIPE_HANDLE pipeHandle;
 
     // Close the pipe.
-    DRV_USBFS_HOST_PipeClose(pipeHandle);
+    DRV_USBFSV1_HOST_PipeClose(pipeHandle);
     </code>
 	
   Remarks:
     None.                                                                  
 */
 
-void DRV_USBFS_HOST_PipeClose
+void DRV_USBFSV1_HOST_PipeClose
 (
-    DRV_USBFS_HOST_PIPE_HANDLE pipeHandle
+    DRV_USBFSV1_HOST_PIPE_HANDLE pipeHandle
 );
+
+
 
 // ****************************************************************************
 /* Function:
-    bool DRV_USBFS_HOST_EventsDisable
+    USB_ERROR DRV_USBFSV1_HOST_IRPSubmit
     (
-        DRV_HANDLE handle
-    );
-    
-  Summary:
-    Disables Host mode events.
-	
-  Description:
-    This function disables the Host mode events. This function is called by the
-    Host Layer when it wants to execute code atomically. 
-	
-  Precondition:
-    The handle should be valid.
-	
-  Parameters:
-    handle - Client's driver handle (returned from DRV_USBFS_Open function).
-	
-  Returns:
-    * true - Driver event generation was enabled when this function was called.
-    * false - Driver event generation was not enabled when this function was
-      called. 
-	
-  Example:
-    <code>
-    // This code shows how the DRV_USBFS_HOST_EventsDisable and
-    // DRV_USBFS_HOST_EventsEnable function can be called to disable and enable
-    // events.
-
-    DRV_HANDLE driverHandle;
-    bool eventsWereEnabled;
-
-    // Disable the driver events.
-    eventsWereEnabled = DRV_USBFS_HOST_EventsDisable(driverHandle);
-
-    // Code in this region will not be interrupted by driver events.
-
-    // Enable the driver events.
-    DRV_USBFS_HOST_EventsEnable(driverHandle, eventsWereEnabled);
-
-    </code>
-	
-  Remarks:
-    None.
-*/
-
-bool DRV_USBFS_HOST_EventsDisable
-(
-    DRV_HANDLE handle
-);
-
-// ****************************************************************************
-/* Function:
-    void DRV_USBFS_HOST_EventsEnable
-    (
-        DRV_HANDLE handle
-        bool eventRestoreContext
-    );
-    
-  Summary:
-    Restores the events to the specified the original value.
-	
-  Description:
-    This function will restore the enable disable state of the events.  The
-    eventRestoreContext parameter should be equal to the value returned by the
-    DRV_USBFS_HOST_EventsDisable function.
-	
-  Precondition:
-    The handle should be valid.
-	
-  Parameters:
-    handle - Handle to the driver (returned from DRV_USBFS_Open function).
-    eventRestoreContext - Value returned by the DRV_USBFS_HOST_EventsDisable
-    function.
-	
-  Returns:
-    None.
-	
-  Example:
-    <code>
-    // This code shows how the DRV_USBFS_HOST_EventsDisable and
-    // DRV_USBFS_HOST_EventsEnable function can be called to disable and enable
-    // events.
-
-    DRV_HANDLE driverHandle;
-    bool eventsWereEnabled;
-
-    // Disable the driver events.
-    eventsWereEnabled = DRV_USBFS_HOST_EventsDisable(driverHandle);
-
-    // Code in this region will not be interrupted by driver events.
-
-    // Enable the driver events.
-    DRV_USBFS_HOST_EventsEnable(driverHandle, eventsWereEnabled);
-
-    </code>
-	
-  Remarks:
-    None.
-*/
-
-void DRV_USBFS_HOST_EventsEnable
-(
-    DRV_HANDLE handle, 
-    bool eventContext
-);
-
-// ****************************************************************************
-/* Function:
-    USB_ERROR DRV_USBFS_HOST_IRPSubmit
-    (
-        DRV_USBFS_HOST_PIPE_HANDLE  hPipe,
+        DRV_USBFSV1_HOST_PIPE_HANDLE  hPipe,
         USB_HOST_IRP * pInputIRP
     );
     
@@ -2316,7 +2317,7 @@ void DRV_USBFS_HOST_EventsEnable
     irp.userData = &someApplicationObject;
     irp.callback = IRP_Callback;
 
-    result = DRV_USBFS_HOST_IRPSubmit(controlPipeHandle, &irp);
+    result = DRV_USBFSV1_HOST_IRPSubmit(controlPipeHandle, &irp);
 
     </code>
 	
@@ -2324,15 +2325,15 @@ void DRV_USBFS_HOST_EventsEnable
     An IRP can also be submitted in an IRP callback function.                                                                  
 */
 
-USB_ERROR DRV_USBFS_HOST_IRPSubmit
+USB_ERROR DRV_USBFSV1_HOST_IRPSubmit
 (
-    DRV_USBFS_HOST_PIPE_HANDLE  hPipe,
+    DRV_USBFSV1_HOST_PIPE_HANDLE  hPipe,
     USB_HOST_IRP * pinputIRP
 );
 
 // ****************************************************************************
 /* Function:
-    DRV_USBFS_HOST_PIPE_HANDLE DRV_USBFS_HOST_PipeSetup 
+    DRV_USBFSV1_HOST_PIPE_HANDLE DRV_USBFSV1_HOST_PipeSetup 
     (
         DRV_HANDLE client,
         uint8_t deviceAddress, 
@@ -2358,7 +2359,7 @@ USB_ERROR DRV_USBFS_HOST_IRPSubmit
     The driver handle should be valid.
 	
   Parameters:
-    client - Handle to the driver (returned from DRV_USBFS_Open function).
+    client - Handle to the driver (returned from DRV_USBFSV1_Open function).
     
     deviceAddress - USB Address of the device to connect to.
     
@@ -2389,7 +2390,7 @@ USB_ERROR DRV_USBFS_HOST_IRPSubmit
 	
   Example:
     <code>
-    // This code shows how the DRV_USBFS_HOST_PipeSetup function is called for
+    // This code shows how the DRV_USBFSV1_HOST_PipeSetup function is called for
     // create a communication pipe. In this example, Bulk pipe is created
     // between the Host and a device. The Device address is 2 and the target
     // endpoint on this device is 4 . The direction of the data transfer over
@@ -2399,11 +2400,11 @@ USB_ERROR DRV_USBFS_HOST_IRPSubmit
     // field is set to 0. The target device is operating at Full Speed.
 
     DRV_HANDLE driverHandle;
-    DRV_USBFS_HOST_PIPE_HANDLE pipeHandle;
+    DRV_USBFSV1_HOST_PIPE_HANDLE pipeHandle;
 
-    pipeHandle = DRV_USBFS_HOST_PipeSetup(driverHandle, 0x02, 0x14, 0x03, 0x01, USB_TRANSFER_TYPE_BULK, 0, 64, USB_SPEED_FULL); 
+    pipeHandle = DRV_USBFSV1_HOST_PipeSetup(driverHandle, 0x02, 0x14, 0x03, 0x01, USB_TRANSFER_TYPE_BULK, 0, 64, USB_SPEED_FULL); 
 
-    if(pipeHandle != DRV_USBFS_HOST_PIPE_HANDLE_INVALID)
+    if(pipeHandle != DRV_USBFSV1_HOST_PIPE_HANDLE_INVALID)
     {
         // The pipe was created successfully.
     }
@@ -2414,7 +2415,7 @@ USB_ERROR DRV_USBFS_HOST_IRPSubmit
     None.                                                                  
 */
 
-DRV_USBFS_HOST_PIPE_HANDLE DRV_USBFS_HOST_PipeSetup 
+DRV_USBFSV1_HOST_PIPE_HANDLE DRV_USBFSV1_HOST_PipeSetup 
 (
     DRV_HANDLE client,
     uint8_t deviceAddress, 
@@ -2435,21 +2436,21 @@ DRV_USBFS_HOST_PIPE_HANDLE DRV_USBFS_HOST_PipeSetup
 
 // ****************************************************************************
 /* Function:
-    void DRV_USBFS_ROOT_HUB_PortReset(DRV_HANDLE handle, uint8_t port );
+    void DRV_USBFSV1_ROOT_HUB_PortReset(DRV_HANDLE handle, uint8_t port );
     
   Summary:
     Resets the specified root hub port.
 	
   Description:
     This function resets the root hub port. The reset duration is defined by
-    DRV_USBFS_ROOT_HUB_RESET_DURATION. The status of the reset signaling can be
-    checked using the DRV_USBFS_ROOT_HUB_PortResetIsComplete function.
+    DRV_USBFSV1_ROOT_HUB_RESET_DURATION. The status of the reset signaling can be
+    checked using the DRV_USBFSV1_ROOT_HUB_PortResetIsComplete function.
 	
   Precondition:
     None.
 	
   Parameters:
-    handle - Handle to the driver (returned from DRV_USBFS_Open function).
+    handle - Handle to the driver (returned from DRV_USBFSV1_Open function).
 
     port - Port to reset.
 	
@@ -2459,7 +2460,7 @@ DRV_USBFS_HOST_PIPE_HANDLE DRV_USBFS_HOST_PipeSetup
   Example:
     <code>
     // This code shows how the DRV_USB_HOST_ROOT_HUB_PortReset and the
-    // DRV_USBFS_ROOT_HUB_PortResetIsComplete functions are called to complete a
+    // DRV_USBFSV1_ROOT_HUB_PortResetIsComplete functions are called to complete a
     // port reset sequence.
 
     DRV_HANDLE driverHandle;
@@ -2468,10 +2469,10 @@ DRV_USBFS_HOST_PIPE_HANDLE DRV_USBFS_HOST_PipeSetup
     DRV_USB_HOST_ROOT_HUB_PortReset(driverHandle, 0);
 
     // Check if the Reset operation has completed.
-    if(DRV_USBFS_ROOT_HUB_PortResetIsComplete(driverHandle, 0) == false)
+    if(DRV_USBFSV1_ROOT_HUB_PortResetIsComplete(driverHandle, 0) == false)
     {
         // This means that the Port Reset operation has not completed yet. The
-        // DRV_USBFS_ROOT_HUB_PortResetIsComplete function should be called
+        // DRV_USBFSV1_ROOT_HUB_PortResetIsComplete function should be called
         // again after some time to check the status.
     }
 
@@ -2481,11 +2482,11 @@ DRV_USBFS_HOST_PIPE_HANDLE DRV_USBFS_HOST_PipeSetup
     The root hub on the PIC32MZ USB controller contains only one port - port 0.                                                                  
 */
 
-USB_ERROR DRV_USBFS_HOST_ROOT_HUB_PortReset(DRV_HANDLE handle, uint8_t port );
+USB_ERROR DRV_USBFSV1_HOST_ROOT_HUB_PortReset(DRV_HANDLE handle, uint8_t port );
 
 // ****************************************************************************
 /* Function:
-    bool DRV_USBFS_ROOT_HUB_PortResetIsComplete
+    bool DRV_USBFSV1_ROOT_HUB_PortResetIsComplete
     (
         DRV_HANDLE handle,
         uint8_t port
@@ -2503,7 +2504,7 @@ USB_ERROR DRV_USBFS_HOST_ROOT_HUB_PortReset(DRV_HANDLE handle, uint8_t port );
     None.
 
   Parameters:
-    handle - Handle to the driver (returned from DRV_USBFS_Open function).
+    handle - Handle to the driver (returned from DRV_USBFSV1_Open function).
 
     port - Port to check
 
@@ -2514,7 +2515,7 @@ USB_ERROR DRV_USBFS_HOST_ROOT_HUB_PortReset(DRV_HANDLE handle, uint8_t port );
   Example:
     <code>
     // This code shows how the DRV_USB_HOST_ROOT_HUB_PortReset and the
-    // DRV_USBFS_ROOT_HUB_PortResetIsComplete functions are called to complete a
+    // DRV_USBFSV1_ROOT_HUB_PortResetIsComplete functions are called to complete a
     // port reset sequence.
 
     DRV_HANDLE driverHandle;
@@ -2523,10 +2524,10 @@ USB_ERROR DRV_USBFS_HOST_ROOT_HUB_PortReset(DRV_HANDLE handle, uint8_t port );
     DRV_USB_HOST_ROOT_HUB_PortReset(driverHandle, 0);
 
     // Check if the Reset operation has completed.
-    if(DRV_USBFS_ROOT_HUB_PortResetIsComplete(driverHandle, 0) == false)
+    if(DRV_USBFSV1_ROOT_HUB_PortResetIsComplete(driverHandle, 0) == false)
     {
         // This means that the Port Reset operation has not completed yet. The
-        // DRV_USBFS_ROOT_HUB_PortResetIsComplete function should be called
+        // DRV_USBFSV1_ROOT_HUB_PortResetIsComplete function should be called
         // again after some time to check the status.
     }
 
@@ -2536,11 +2537,11 @@ USB_ERROR DRV_USBFS_HOST_ROOT_HUB_PortReset(DRV_HANDLE handle, uint8_t port );
     The root hub on this particular hardware only contains one port - port 0.
 */
 
-bool DRV_USBFS_HOST_ROOT_HUB_PortResetIsComplete(DRV_HANDLE handle, uint8_t port );
+bool DRV_USBFSV1_HOST_ROOT_HUB_PortResetIsComplete(DRV_HANDLE handle, uint8_t port );
 
 // ****************************************************************************
 /* Function:
-    USB_ERROR DRV_USBFS_HOST_ROOT_HUB_PortResume
+    USB_ERROR DRV_USBFSV1_HOST_ROOT_HUB_PortResume
     (
         DRV_HANDLE handle, 
         uint8_t port
@@ -2551,14 +2552,14 @@ bool DRV_USBFS_HOST_ROOT_HUB_PortResetIsComplete(DRV_HANDLE handle, uint8_t port
 	
   Description:
     This function resumes the root hub. The resume duration is defined by
-    DRV_USBFS_ROOT_HUB_RESUME_DURATION. The status of the resume signaling can
-    be checked using the DRV_USBFS_ROOT_HUB_PortResumeIsComplete function.
+    DRV_USBFSV1_ROOT_HUB_RESUME_DURATION. The status of the resume signaling can
+    be checked using the DRV_USBFSV1_ROOT_HUB_PortResumeIsComplete function.
 	
   Precondition:
     None.
 	
   Parameters:
-    handle - Handle to the driver (returned from DRV_USBFS_Open function).
+    handle - Handle to the driver (returned from DRV_USBFSV1_Open function).
 
     port - Port to resume.
 	
@@ -2569,13 +2570,13 @@ bool DRV_USBFS_HOST_ROOT_HUB_PortResetIsComplete(DRV_HANDLE handle, uint8_t port
 	
   Example:
     <code>
-    // This code shows how the DRV_USBFS_HOST_ROOT_HUB_PortResume function is
+    // This code shows how the DRV_USBFSV1_HOST_ROOT_HUB_PortResume function is
     // called to resume the specified port.
 
     DRV_HANDLE driverHandle;
 
     // Resume Port 0.
-    DRV_USBFS_HOST_ROOT_HUB_PortResume(driverHandle, 0);
+    DRV_USBFSV1_HOST_ROOT_HUB_PortResume(driverHandle, 0);
 
     </code>
 	
@@ -2583,11 +2584,11 @@ bool DRV_USBFS_HOST_ROOT_HUB_PortResetIsComplete(DRV_HANDLE handle, uint8_t port
     The root hub on this particular hardware only contains one port - port 0.                                                                  
 */
 
-USB_ERROR DRV_USBFS_HOST_ROOT_HUB_PortResume(DRV_HANDLE handle, uint8_t port);
+USB_ERROR DRV_USBFSV1_HOST_ROOT_HUB_PortResume(DRV_HANDLE handle, uint8_t port);
 
 // ****************************************************************************
 /* Function:
-    USB_ERROR DRV_USBFS_ROOT_HUB_PortSuspend(DRV_HANDLE handle, uint8_t port);
+    USB_ERROR DRV_USBFSV1_ROOT_HUB_PortSuspend(DRV_HANDLE handle, uint8_t port);
     
   Summary:
     Suspends the specified root hub port.
@@ -2599,7 +2600,7 @@ USB_ERROR DRV_USBFS_HOST_ROOT_HUB_PortResume(DRV_HANDLE handle, uint8_t port);
     None.
 	
   Parameters:
-    handle - Handle to the driver (returned from DRV_USBFS_Open function).
+    handle - Handle to the driver (returned from DRV_USBFSV1_Open function).
 
     port - Port to suspend.
 	
@@ -2610,13 +2611,13 @@ USB_ERROR DRV_USBFS_HOST_ROOT_HUB_PortResume(DRV_HANDLE handle, uint8_t port);
 	
   Example:
     <code>
-    // This code shows how the DRV_USBFS_HOST_ROOT_HUB_PortSuspend function is
+    // This code shows how the DRV_USBFSV1_HOST_ROOT_HUB_PortSuspend function is
     // called to suspend the specified port.
 
     DRV_HANDLE driverHandle;
 
     // Suspend Port 0.
-    DRV_USBFS_HOST_ROOT_HUB_PortSuspend(driverHandle, 0);
+    DRV_USBFSV1_HOST_ROOT_HUB_PortSuspend(driverHandle, 0);
 
     </code>
 	
@@ -2624,11 +2625,11 @@ USB_ERROR DRV_USBFS_HOST_ROOT_HUB_PortResume(DRV_HANDLE handle, uint8_t port);
     The root hub on this particular hardware only contains one port - port 0.                                                                  
 */
 
-USB_ERROR DRV_USBFS_HOST_ROOT_HUB_PortSuspend(DRV_HANDLE handle, uint8_t port);
+USB_ERROR DRV_USBFSV1_HOST_ROOT_HUB_PortSuspend(DRV_HANDLE handle, uint8_t port);
 
 // ****************************************************************************
 /* Function:
-    USB_SPEED DRV_USBFS_HOST_ROOT_HUB_PortSpeedGet
+    USB_SPEED DRV_USBFSV1_HOST_ROOT_HUB_PortSpeedGet
     (
         DRV_HANDLE handle, 
         uint8_t port
@@ -2644,7 +2645,7 @@ USB_ERROR DRV_USBFS_HOST_ROOT_HUB_PortSuspend(DRV_HANDLE handle, uint8_t port);
     None.
 	
   Parameters:
-    handle - Handle to the driver (returned from DRV_USBFS_Open function).
+    handle - Handle to the driver (returned from DRV_USBFSV1_Open function).
 
     port - Port number of the port to be analyzed..
 	
@@ -2657,14 +2658,14 @@ USB_ERROR DRV_USBFS_HOST_ROOT_HUB_PortSuspend(DRV_HANDLE handle, uint8_t port);
 	
   Example:
     <code>
-    // This code shows how the DRV_USBFS_HOST_ROOT_HUB_PortSpeedGet function is
+    // This code shows how the DRV_USBFSV1_HOST_ROOT_HUB_PortSpeedGet function is
     // called to know the operating speed of the port. This also indicates the
     // operating speed of the device connected to this port.
 
     DRV_HANDLE driverHandle;
     USB_SPEED speed;
 
-    speed = DRV_USBFS_HOST_ROOT_HUB_PortSpeedGet(driverHandle, 0);
+    speed = DRV_USBFSV1_HOST_ROOT_HUB_PortSpeedGet(driverHandle, 0);
 
     </code>
 	
@@ -2672,11 +2673,11 @@ USB_ERROR DRV_USBFS_HOST_ROOT_HUB_PortSuspend(DRV_HANDLE handle, uint8_t port);
     The root hub on this particular hardware only contains one port - port 0.                                                                  
 */
 
-USB_SPEED DRV_USBFS_HOST_ROOT_HUB_PortSpeedGet(DRV_HANDLE handle, uint8_t port);
+USB_SPEED DRV_USBFSV1_HOST_ROOT_HUB_PortSpeedGet(DRV_HANDLE handle, uint8_t port);
 
 // ****************************************************************************
 /* Function:
-    USB_SPEED DRV_USBFS_HOST_ROOT_HUB_BusSpeedGet(DRV_HANDLE handle);
+    USB_SPEED DRV_USBFSV1_HOST_ROOT_HUB_BusSpeedGet(DRV_HANDLE handle);
     
   Summary:
     This function returns the operating speed of the bus to which this root hub
@@ -2690,7 +2691,7 @@ USB_SPEED DRV_USBFS_HOST_ROOT_HUB_PortSpeedGet(DRV_HANDLE handle, uint8_t port);
     None.
 	
   Parameters:
-    handle - Handle to the driver (returned from DRV_USBFS_Open function).
+    handle - Handle to the driver (returned from DRV_USBFSV1_Open function).
 
   Returns:
     * USB_SPEED_FULL - The Root hub is connected to a bus that is operating at
@@ -2698,25 +2699,25 @@ USB_SPEED DRV_USBFS_HOST_ROOT_HUB_PortSpeedGet(DRV_HANDLE handle, uint8_t port);
 	
   Example:
     <code>
-    // This code shows how the DRV_USBFS_HOST_ROOT_HUB_BusSpeedGet function is
+    // This code shows how the DRV_USBFSV1_HOST_ROOT_HUB_BusSpeedGet function is
     // called to know the operating speed of the bus to which this Root hub is
     // connected.
 
     DRV_HANDLE driverHandle;
     USB_SPEED speed;
 
-    speed = DRV_USBFS_HOST_ROOT_HUB_BusSpeedGet(driverHandle);
+    speed = DRV_USBFSV1_HOST_ROOT_HUB_BusSpeedGet(driverHandle);
     </code>
 	
   Remarks:
     None.
 */
 
-USB_SPEED DRV_USBFS_HOST_ROOT_HUB_BusSpeedGet(DRV_HANDLE handle);
+USB_SPEED DRV_USBFSV1_HOST_ROOT_HUB_BusSpeedGet(DRV_HANDLE handle);
 
 // ****************************************************************************
 /* Function:
-    uint32_t DRV_USBFS_HOST_ROOT_HUB_MaximumCurrentGet(DRV_HANDLE);
+    uint32_t DRV_USBFSV1_HOST_ROOT_HUB_MaximumCurrentGet(DRV_HANDLE);
     
   Summary:
     Returns the maximum amount of current that this root hub can provide on the
@@ -2730,32 +2731,32 @@ USB_SPEED DRV_USBFS_HOST_ROOT_HUB_BusSpeedGet(DRV_HANDLE handle);
     None.
 	
   Parameters:
-    handle - Handle to the driver (returned from DRV_USBFS_Open function).
+    handle - Handle to the driver (returned from DRV_USBFSV1_Open function).
 
   Returns:
     Returns the maximum current (in milliamperes) that the root hub can supply. 
 	
   Example:
     <code>
-    // This code shows how the DRV_USBFS_HOST_ROOT_HUB_MaximumCurrentGet
+    // This code shows how the DRV_USBFSV1_HOST_ROOT_HUB_MaximumCurrentGet
     // function is called to obtain the maximum VBUS current that the Root hub
     // can supply.
 
     DRV_HANDLE driverHandle;
     uint32_t currentMilliAmperes;
 
-    currentMilliAmperes = DRV_USBFS_HOST_ROOT_HUB_MaximumCurrentGet(driverHandle);
+    currentMilliAmperes = DRV_USBFSV1_HOST_ROOT_HUB_MaximumCurrentGet(driverHandle);
     </code>
 	
   Remarks:
     None.
 */
 
-uint32_t DRV_USBFS_HOST_ROOT_HUB_MaximumCurrentGet(DRV_HANDLE handle);
+uint32_t DRV_USBFSV1_HOST_ROOT_HUB_MaximumCurrentGet(DRV_HANDLE handle);
 
 // ****************************************************************************
 /* Function:
-    uint8_t DRV_USBFS_HOST_ROOT_HUB_PortNumbersGet(DRV_HANDLE handle);
+    uint8_t DRV_USBFSV1_HOST_ROOT_HUB_PortNumbersGet(DRV_HANDLE handle);
 
   Summary:
     Returns the number of ports this root hub contains.
@@ -2767,20 +2768,20 @@ uint32_t DRV_USBFS_HOST_ROOT_HUB_MaximumCurrentGet(DRV_HANDLE handle);
     None.
 
   Parameters:
-    handle - Handle to the driver (returned from DRV_USBFS_Open function).
+    handle - Handle to the driver (returned from DRV_USBFSV1_Open function).
 
   Returns:
     This function will always return 1.
 
   Example:
     <code>
-    // This code shows how DRV_USBFS_HOST_ROOT_HUB_PortNumbersGet function can
+    // This code shows how DRV_USBFSV1_HOST_ROOT_HUB_PortNumbersGet function can
     // be called to obtain the number of Root hub ports.
 
     DRV_HANDLE driverHandle;
     uint8_t nPorts;
 
-    nPorts = DRV_USBFS_HOST_ROOT_HUB_PortNumbersGet(driverHandle);
+    nPorts = DRV_USBFSV1_HOST_ROOT_HUB_PortNumbersGet(driverHandle);
 
     </code>
 
@@ -2788,11 +2789,11 @@ uint32_t DRV_USBFS_HOST_ROOT_HUB_MaximumCurrentGet(DRV_HANDLE handle);
     None.
 */
 
-uint8_t DRV_USBFS_HOST_ROOT_HUB_PortNumbersGet(DRV_HANDLE handle);
+uint8_t DRV_USBFSV1_HOST_ROOT_HUB_PortNumbersGet(DRV_HANDLE handle);
 
 // ****************************************************************************
 /* Function:
-    void DRV_USBFS_HOST_ROOT_HUB_OperationEnable
+    void DRV_USBFSV1_HOST_ROOT_HUB_OperationEnable
     (
         DRV_HANDLE handle, 
         bool enable
@@ -2812,7 +2813,7 @@ uint8_t DRV_USBFS_HOST_ROOT_HUB_PortNumbersGet(DRV_HANDLE handle);
     None.
 
   Parameters:
-    handle - Handle to the driver (returned from DRV_USBFS_Open function).
+    handle - Handle to the driver (returned from DRV_USBFSV1_Open function).
 
     enable - If this is set to true, root hub operation is enabled. If this is
     set to false, root hub operation is disabled.
@@ -2822,21 +2823,21 @@ uint8_t DRV_USBFS_HOST_ROOT_HUB_PortNumbersGet(DRV_HANDLE handle);
 
   Example:
     <code>
-    // This code shows how the DRV_USBFS_HOST_ROOT_HUB_OperationEnable and the
-    // DRV_USBFS_HOST_ROOT_HUB_OperationIsEnabled functions are called to enable
+    // This code shows how the DRV_USBFSV1_HOST_ROOT_HUB_OperationEnable and the
+    // DRV_USBFSV1_HOST_ROOT_HUB_OperationIsEnabled functions are called to enable
     // the Root hub operation.
 
     DRV_HANDLE driverHandle;
 
     // Enable Root hub operation.
-    DRV_USBFS_HOST_ROOT_HUB_OperationEnable(driverHandle);
+    DRV_USBFSV1_HOST_ROOT_HUB_OperationEnable(driverHandle);
 
     // Wait till the Root hub operation is enabled.  
-    if(DRV_USBFS_HOST_ROOT_HUB_OperationIsEnabled(driverHandle) == false)
+    if(DRV_USBFSV1_HOST_ROOT_HUB_OperationIsEnabled(driverHandle) == false)
     {
         // The operation has not completed. Call the
-        // DRV_USBFS_HOST_ROOT_HUB_OperationIsEnabled function again to check if
-        // the operation has completed. Note that the DRV_USBFS_Tasks function
+        // DRV_USBFSV1_HOST_ROOT_HUB_OperationIsEnabled function again to check if
+        // the operation has completed. Note that the DRV_USBFSV1_Tasks function
         // must be allowed to run at periodic intervals to allow the enable
         // operation to completed.
     }
@@ -2846,24 +2847,24 @@ uint8_t DRV_USBFS_HOST_ROOT_HUB_PortNumbersGet(DRV_HANDLE handle);
     None.
 */
 
-void DRV_USBFS_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enable);
+void DRV_USBFSV1_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enable);
 
 // ****************************************************************************
 /* Function:
-    bool DRV_USBFS_HOST_ROOT_HUB_OperationIsEnabled(DRV_HANDLE handle);
+    bool DRV_USBFSV1_HOST_ROOT_HUB_OperationIsEnabled(DRV_HANDLE handle);
 
   Summary:
     Returns the operation enabled status of the root hub.
 
   Description:
-    This function returns true if the DRV_USBFS_HOST_ROOT_HUB_OperationEnable
+    This function returns true if the DRV_USBFSV1_HOST_ROOT_HUB_OperationEnable
     function has completed enabling the Host.
 
   Precondition:
     None.
 
   Parameters:
-    handle - Handle to the driver (returned from DRV_USBFS_Open function).
+    handle - Handle to the driver (returned from DRV_USBFSV1_Open function).
 
   Returns:
     * true - Root hub operation is enabled.
@@ -2871,21 +2872,21 @@ void DRV_USBFS_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enable);
 
   Example:
     <code>
-    // This code shows how the DRV_USBFS_HOST_ROOT_HUB_OperationEnable and the
-    // DRV_USBFS_HOST_ROOT_HUB_OperationIsEnabled functions are called to enable
+    // This code shows how the DRV_USBFSV1_HOST_ROOT_HUB_OperationEnable and the
+    // DRV_USBFSV1_HOST_ROOT_HUB_OperationIsEnabled functions are called to enable
     // the Root hub operation.
 
     DRV_HANDLE driverHandle;
 
     // Enable Root hub operation.
-    DRV_USBFS_HOST_ROOT_HUB_OperationEnable(driverHandle);
+    DRV_USBFSV1_HOST_ROOT_HUB_OperationEnable(driverHandle);
 
     // Wait till the Root hub operation is enabled.  
-    if(DRV_USBFS_HOST_ROOT_HUB_OperationIsEnabled(driverHandle) == false)
+    if(DRV_USBFSV1_HOST_ROOT_HUB_OperationIsEnabled(driverHandle) == false)
     {
         // The operation has not completed. Call the
-        // DRV_USBFS_HOST_ROOT_HUB_OperationIsEnabled function again to check if
-        // the operation has completed. Note that the DRV_USBFS_Tasks function
+        // DRV_USBFSV1_HOST_ROOT_HUB_OperationIsEnabled function again to check if
+        // the operation has completed. Note that the DRV_USBFSV1_Tasks function
         // must be allowed to run at periodic intervals to allow the enable
         // operation to completed.
     }
@@ -2896,11 +2897,11 @@ void DRV_USBFS_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enable);
     None.
 */
 
-bool DRV_USBFS_HOST_ROOT_HUB_OperationIsEnabled(DRV_HANDLE handle);
+bool DRV_USBFSV1_HOST_ROOT_HUB_OperationIsEnabled(DRV_HANDLE handle);
 
 // ****************************************************************************
 /* Function:
-    void DRV_USBFS_HOST_ROOT_HUB_Initialize
+    void DRV_USBFSV1_HOST_ROOT_HUB_Initialize
     (
         DRV_HANDLE handle,
         USB_HOST_DEVICE_OBJ_HANDLE usbHostDeviceInfo,
@@ -2929,14 +2930,14 @@ bool DRV_USBFS_HOST_ROOT_HUB_OperationIsEnabled(DRV_HANDLE handle);
     <code>
 
     // This code shows how the USB Host Layer calls the
-    // DRV_USBFS_HOST_ROOT_HUB_Initialize function. The usbHostDeviceInfo
+    // DRV_USBFSV1_HOST_ROOT_HUB_Initialize function. The usbHostDeviceInfo
     // parameter is an arbitrary identifier assigned by the USB Host Layer. Its
     // interpretation is opaque to the Root hub Driver.
 
     DRV_HANDLE drvHandle;
     USB_HOST_DEVICE_OBJ_HANDLE usbHostDeviceInfo = 0x10003000;
 
-    DRV_USBFS_HOST_ROOT_HUB_Initialize(drvHandle, usbHostDeviceInfo);
+    DRV_USBFSV1_HOST_ROOT_HUB_Initialize(drvHandle, usbHostDeviceInfo);
 
     </code>
 
@@ -2944,7 +2945,7 @@ bool DRV_USBFS_HOST_ROOT_HUB_OperationIsEnabled(DRV_HANDLE handle);
     None.
 */
 
-void DRV_USBFS_HOST_ROOT_HUB_Initialize
+void DRV_USBFSV1_HOST_ROOT_HUB_Initialize
 (
     DRV_HANDLE handle,
     USB_HOST_DEVICE_OBJ_HANDLE usbHostDeviceInfo
@@ -2960,6 +2961,5 @@ void DRV_USBFS_HOST_ROOT_HUB_Initialize
     static implementations, depending on build mode.
 */
 
-#include "drv_usbfs_mapping.h"
 
 #endif
