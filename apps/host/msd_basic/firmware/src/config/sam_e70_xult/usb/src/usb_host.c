@@ -977,6 +977,7 @@ void _USB_HOST_UpdateConfigurationState
                     /* IRP was successful. Go to the next state */
                     SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host Layer: Bus %d Device %d Obtained Configuration Descriptor header", busIndex, deviceObj->deviceAddress);  
                     deviceObj->configurationState =  USB_HOST_DEVICE_CONFIG_STATE_CONFIG_DESCRIPTOR_GET;
+                    gConfigConfigDescGet  = 0 ;
                 }
                 else
                 {

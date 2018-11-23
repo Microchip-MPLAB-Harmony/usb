@@ -1299,6 +1299,9 @@ void _DRV_USBHSV1_HOST_ControlTransferProcess(DRV_USBHSV1_OBJ * hDriver)
                }
                else
                {
+                   
+                    Set_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (0)));
+                    Clr_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (0)));
                    /* We need to clear the Status Packet bit and
                     * the Rx packet ready bit */
                }
