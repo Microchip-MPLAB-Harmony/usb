@@ -22,26 +22,26 @@
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-Copyright (c) 2017 released Microchip Technology Inc.  All rights reserved.
-
-Microchip licenses to you the right to use, modify, copy and distribute
-Software only when embedded on a Microchip microcontroller or digital signal
-controller that is integrated into your product or third party product
-(pursuant to the sublicense terms in the accompanying license agreement).
-
-You should refer to the license agreement accompanying this Software for
-additional information regarding your rights and obligations.
-
-SOFTWARE AND DOCUMENTATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
-EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF
-MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
-IN NO EVENT SHALL MICROCHIP OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER
-CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION, BREACH OF WARRANTY, OR
-OTHER LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT DAMAGES OR EXPENSES
-INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
-CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
-SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
-(INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
+* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+*
+* Subject to your compliance with these terms, you may use Microchip software
+* and any derivatives exclusively with Microchip products. It is your
+* responsibility to comply with third party license terms applicable to your
+* use of third party software (including open source software) that may
+* accompany Microchip software.
+*
+* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+* PARTICULAR PURPOSE.
+*
+* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
 // DOM-IGNORE-END
 
@@ -135,18 +135,18 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
   Remarks:
     None.
-  
-  NOTE - put definition of OSAL_SEM_DECLARE macro inside each specific 
-         implementation file.  Not all implementation files are using same 
+
+  NOTE - put definition of OSAL_SEM_DECLARE macro inside each specific
+         implementation file.  Not all implementation files are using same
          definition.  The type for each individual RTOS is different, to handle
          this properly in the code, each implementation had to define its own
-         declaration.  Leave comment block here as the automated doc generator 
+         declaration.  Leave comment block here as the automated doc generator
          reads this file to output Harmony OSAL help contents..
  */
 
 
 // *****************************************************************************
-/* Function: 
+/* Function:
      OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type,
                                  uint8_t maxCount, uint8_t initialCount)
   Summary:
@@ -188,7 +188,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 //OSAL_RESULT OSAL_SEM_Create(OSAL_SEM_HANDLE_TYPE* semID, OSAL_SEM_TYPE type, uint8_t maxCount, uint8_t initialCount);
 
 // ****************************************************************************
-/* Function: 
+/* Function:
     OSAL_RESULT OSAL_SEM_Delete(OSAL_SEM_HANDLE_TYPE* semID)
 
   Summary:
@@ -267,7 +267,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 //OSAL_RESULT OSAL_SEM_Pend(OSAL_SEM_HANDLE_TYPE* semID, uint16_t waitMS);
 
 // *****************************************************************************
-/* Function: 
+/* Function:
      OSAL_RESULT OSAL_SEM_Post(OSAL_SEM_HANDLE_TYPE* semID)
 
   Summary:
@@ -350,7 +350,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 //OSAL_RESULT OSAL_SEM_PostISR(OSAL_SEM_HANDLE_TYPE* semID);
 
 // *****************************************************************************
-/* Function: 
+/* Function:
     uint8_t OSAL_SEM_GetCount(OSAL_SEM_HANDLE_TYPE* semID)
 
   Summary:
@@ -401,7 +401,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 // Critical Section group
 // *****************************************************************************
-/* Function: 
+/* Function:
     OSAL_CRITSECT_DATA_TYPE void OSAL_CRIT_Enter(OSAL_CRIT_TYPE severity)
 
   Summary:
@@ -410,7 +410,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
   Description:
      This function enters a critical section of code. It is assumed that the
      sequence of operations bounded by the enter and leave critical section
-     operations is treated as one atomic sequence that will not be disturbed.  
+     operations is treated as one atomic sequence that will not be disturbed.
      This function should be paired with OSAL_CRIT_Leave().
 
   Precondition:
@@ -422,11 +422,11 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
                     OSAL_CRIT_TYPE_HIGH, The RTOS should disable all possible
                     interrupts sources including the scheduler ensuring that the
-                    sequence of code operates without interruption.  The state of 
+                    sequence of code operates without interruption.  The state of
                     interrupts are returned to the user before they are disabled.
 
   Returns:
-    A data type of OSAL_CRITSECT_DATA_TYPE, this value represents the state of 
+    A data type of OSAL_CRITSECT_DATA_TYPE, this value represents the state of
     interrupts before entering the critical section.
 
   Example:
@@ -448,7 +448,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 //__inline__ OSAL_CRITSECT_DATA_TYPE __attribute__((nomips16)) __attribute__((nomicromips)) OSAL_CRIT_Enter(OSAL_CRIT_TYPE severity);
 
 // *****************************************************************************
-/* Function: 
+/* Function:
     void OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status)
 
   Summary:
@@ -465,14 +465,14 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     None.
 
   Parameters:
-    severity      - OSAL_CRIT_TYPE_LOW, The scheduler will be unlocked, if no 
+    severity      - OSAL_CRIT_TYPE_LOW, The scheduler will be unlocked, if no
                     other nested calls to OSAL_CRIT_ENTER have been made.
 
-                    OSAL_CRIT_TYPE_HIGH, Interrupts are returned to the state 
+                    OSAL_CRIT_TYPE_HIGH, Interrupts are returned to the state
                     passed into this function.  The state should of been saved
                     by an earlier call to OSAL_CRIT_Enter.
-   
-    status        - The value which will be used to set the state of global 
+
+    status        - The value which will be used to set the state of global
                     interrupts, if OSAL_CRIT_TYPE_HIGH is passed in.
   Returns:
     None.
@@ -506,8 +506,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     This function declares a data item of type OSAL_MUTEX_HANDLE_TYPE
 
   Remarks:
-    Place the definition of OSAL_MUTEX_Declare macro inside each specific 
-    implementation file.  Not all implementation files are using same 
+    Place the definition of OSAL_MUTEX_Declare macro inside each specific
+    implementation file.  Not all implementation files are using same
     definition.  The type for each individual RTOS is different, to handle
     this properly in the code, each implementation had to define its own
     declaration.
@@ -515,7 +515,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 
 // *****************************************************************************
-/* Function: 
+/* Function:
     OSAL_RESULT OSAL_MUTEX_Create(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 
   Summary:
@@ -555,7 +555,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 //OSAL_RESULT OSAL_MUTEX_Create(OSAL_MUTEX_HANDLE_TYPE* mutexID);
 
 // *****************************************************************************
-/* Function: 
+/* Function:
     OSAL_RESULT OSAL_MUTEX_Delete(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 
   Summary:
@@ -586,7 +586,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 //OSAL_RESULT OSAL_MUTEX_Delete(OSAL_MUTEX_HANDLE_TYPE* mutexID);
 
 // *****************************************************************************
-/* Function: 
+/* Function:
     OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS)
 
   Summary:
@@ -635,7 +635,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 //OSAL_RESULT OSAL_MUTEX_Lock(OSAL_MUTEX_HANDLE_TYPE* mutexID, uint16_t waitMS);
 
 // *****************************************************************************
-/* Function: 
+/* Function:
     OSAL_RESULT OSAL_MUTEX_Unlock(OSAL_MUTEX_HANDLE_TYPE* mutexID)
 
   Summary:
@@ -675,7 +675,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 //OSAL_RESULT OSAL_MUTEX_Unlock(OSAL_MUTEX_HANDLE_TYPE* mutexID);
 
 // *****************************************************************************
-/* Function: 
+/* Function:
     void* OSAL_Malloc(size_t size)
 
   Summary:
@@ -719,7 +719,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 //void* OSAL_Malloc(size_t size);
 
 // *****************************************************************************
-/* Function: 
+/* Function:
     void OSAL_Free(void* pData)
 
   Summary:
@@ -765,7 +765,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 //void OSAL_Free(void* pData);
 
 // *****************************************************************************
-/* Function: 
+/* Function:
     OSAL_RESULT OSAL_Initialize()
 
   Summary:
@@ -806,7 +806,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 //OSAL_RESULT OSAL_Initialize();
 
 // *****************************************************************************
-/* Function: 
+/* Function:
     const char* OSAL_Name()
 
   Summary:

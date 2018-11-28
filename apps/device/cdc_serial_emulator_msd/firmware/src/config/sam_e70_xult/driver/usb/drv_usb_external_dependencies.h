@@ -45,6 +45,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include <string.h>
 #include "system/system_common.h"
 #include "configuration.h"
+#include "definitions.h"
 #include "system/system_module.h"
 
 

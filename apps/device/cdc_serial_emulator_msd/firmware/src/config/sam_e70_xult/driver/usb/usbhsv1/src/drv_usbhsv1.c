@@ -49,7 +49,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // *****************************************************************************
 #include "usb/src/usb_external_dependencies.h"
 #include "driver/usb/usbhsv1/src/drv_usbhsv1_local.h"
-#include "definitions.h"
 
 /************************************
  * Driver instance object

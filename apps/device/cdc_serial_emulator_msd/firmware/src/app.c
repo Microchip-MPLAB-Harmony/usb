@@ -451,7 +451,7 @@ void APP_Initialize ( void )
 	USART1_WriteCallbackRegister(APP_WriteCallback, 0);
 	USART1_ReadCallbackRegister(APP_ReadCallback, 0);
 	
-	LED_Off();
+	LED1_Off();
 }
 
 
@@ -533,7 +533,7 @@ void APP_Tasks ( void )
 					
 					appData.isUSARTWriteComplete = false;
 					
-					LED_Toggle();
+					LED1_Toggle();
 					
                     /* This means we have sent all the data. We schedule the next
                      * CDC Read. */
@@ -562,7 +562,7 @@ void APP_Tasks ( void )
             /* Check if a character was received on the UART */
             if(appData.isUSARTReadComplete == true)
             {				
-                LED_Toggle();
+                LED1_Toggle();
                 
                 USB_DEVICE_CDC_Write(0, &appData.writeTransferHandle,
                         &appData.uartReceivedData, 1,
