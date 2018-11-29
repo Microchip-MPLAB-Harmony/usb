@@ -94,6 +94,14 @@ extern "C" {
 // Section: Middleware & Other Library Configuration
 // *****************************************************************************
 // *****************************************************************************
+/* Maximum instances of CDC function driver */
+#define USB_DEVICE_CDC_INSTANCES_NUMBER     1
+
+/* CDC Transfer Queue Size for both read and
+   write. Applicable to all instances of the
+   function driver */
+#define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED 3
+
 /*** USB Driver Configuration ***/
 
 /* Maximum USB driver instances */
@@ -106,7 +114,7 @@ extern "C" {
 
 
 /* Number of Endpoints used */
-#define DRV_USBHSV1_ENDPOINTS_NUMBER  7 //TODO  Calculate this for Device
+#define DRV_USBHSV1_ENDPOINTS_NUMBER  4 //TODO  Calculate this for Device
 
 /* Enables Device Support */
 #define DRV_USBHSV1_DEVICE_SUPPORT    true
@@ -129,14 +137,6 @@ extern "C" {
 
 
 
-
-/* Maximum instances of CDC function driver */
-#define USB_DEVICE_CDC_INSTANCES_NUMBER     1
-
-/* CDC Transfer Queue Size for both read and
-   write. Applicable to all instances of the
-   function driver */
-#define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED 4
 
 
 
@@ -176,13 +176,6 @@ extern "C" {
 
 #define APP_MAKE_BUFFER_DMA_READY  __attribute__((aligned(16)))
 
-/* Number of Endpoints used */
-
-#define APP_EP_BULK_IN  2
-
-/* Number of Endpoints used */
-
-#define APP_EP_BULK_OUT 1
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }

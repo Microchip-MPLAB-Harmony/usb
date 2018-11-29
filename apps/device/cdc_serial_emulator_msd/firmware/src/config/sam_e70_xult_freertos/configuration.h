@@ -20,26 +20,26 @@
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-Copyright (c) 2017-2018 released Microchip Technology Inc.  All rights reserved.
-
-Microchip licenses to you the right to use, modify, copy and distribute
-Software only when embedded on a Microchip microcontroller or digital signal
-controller that is integrated into your product or third party product
-(pursuant to the sublicense terms in the accompanying license agreement).
-
-You should refer to the license agreement accompanying this Software for
-additional information regarding your rights and obligations.
-
-SOFTWARE AND DOCUMENTATION ARE PROVIDED AS IS WITHOUT WARRANTY OF ANY KIND,
-EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF
-MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
-IN NO EVENT SHALL MICROCHIP OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER
-CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION, BREACH OF WARRANTY, OR
-OTHER LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT DAMAGES OR EXPENSES
-INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
-CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
-SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
-(INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
+* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+*
+* Subject to your compliance with these terms, you may use Microchip software
+* and any derivatives exclusively with Microchip products. It is your
+* responsibility to comply with third party license terms applicable to your
+* use of third party software (including open source software) that may
+* accompany Microchip software.
+*
+* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+* PARTICULAR PURPOSE.
+*
+* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 // DOM-IGNORE-END
 
@@ -117,6 +117,14 @@ extern "C" {
 // Section: Middleware & Other Library Configuration
 // *****************************************************************************
 // *****************************************************************************
+/* Maximum instances of CDC function driver */
+#define USB_DEVICE_CDC_INSTANCES_NUMBER     1
+
+/* CDC Transfer Queue Size for both read and
+   write. Applicable to all instances of the
+   function driver */
+#define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED 3
+
 /*** USB Driver Configuration ***/
 
 /* Maximum USB driver instances */
@@ -136,9 +144,6 @@ extern "C" {
 
 /* Disable Host Support */
 #define DRV_USBHSV1_HOST_SUPPORT      false
-
-
-
 
 /* The USB Device Layer will not initialize the USB Driver */
 #define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT
@@ -166,18 +171,6 @@ extern "C" {
 #define USB_DEVICE_MSD_NUM_SECTOR_BUFFERS 1
 
 
-/* Endpoint Transfer Queue Size combined for Read and write */
-//#define USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED    2
-
-/* Maximum instances of CDC function driver */
-#define USB_DEVICE_CDC_INSTANCES_NUMBER     1
-
-/* CDC Transfer Queue Size for both read and
-   write. Applicable to all instances of the
-   function driver */
-#define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED 3
-
-
 /*** USB Device Stack Configuration ***/
 
 #define USB_DEVICE_MSD_NUM_SECTOR_BUFFERS 1
@@ -189,6 +182,26 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 
+/*** LED Macros for LED0 ***/
+#define APP_LED0_Off()                LED1_Off()
+#define APP_LED0_On()                 LED1_On()
+#define APP_LED0_Toggle()             LED1_Toggle()
+    
+/*** LED Macros for LED1 ***/
+#define APP_LED1_Off()                LED2_Off()
+#define APP_LED1_On()                 LED2_On()
+#define APP_LED1_Toggle()             LED2_Toggle()
+                                  
+/*** SWITCH Macros for SWITCH1 ***/
+    
+#define APP_SWITCH0_Get()             SWITCH_Get()
+#define APP_SWITCH0_STATE_PRESSED     SWITCH_STATE_PRESSED
+#define APP_SWITCH0_STATE_RELEASED    SWITCH_STATE_RELEASED
+    
+/*** SWITCH Macros for SWITCH2 ***/
+#define APP_SWITCH1_Get()             SWITCH_Get()
+#define APP_SWITCH1_STATE_PRESSED     SWITCH_STATE_PRESSED
+#define APP_SWITCH1_STATE_RELEASED    SWITCH_STATE_RELEASED
 
 
 /*** Application Instance 0 Configuration ***/
@@ -199,29 +212,6 @@ extern "C" {
 
 #define APP_MAKE_BUFFER_DMA_READY  __attribute__((aligned(16)))
 
-/* Macros defines board specific led */
-
-#define APP_USB_LED_1    BSP_LED_1
-
-/* Macros defines board specific led */
-
-#define APP_USB_LED_2    BSP_LED_2
-
-/* Macros defines board specific led */
-
-#define APP_USB_LED_3    BSP_LED_3
-
-/* Macros defines board specific switch */
-
-#define APP_USB_SWITCH_1    BSP_SWITCH_0
-
-/* Number of Endpoints used */
-
-#define APP_EP_BULK_IN  2
-
-/* Number of Endpoints used */
-
-#define APP_EP_BULK_OUT 1
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }

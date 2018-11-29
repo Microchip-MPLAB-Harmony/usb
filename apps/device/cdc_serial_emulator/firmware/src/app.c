@@ -65,11 +65,6 @@ void APP_WriteCallback(uintptr_t context)
 	appData.isUSARTWriteComplete = true;
 }
 
-//    bool isUSARTReadComplete;
-
-    /* True if a character was written*/
-//    bool isUSARTWriteComplete;
-
 void APP_ReadCallback(uintptr_t context)
 {
 	appData.isUSARTReadComplete = true;

@@ -188,14 +188,18 @@ void SYS_Initialize ( void* data )
     CLK_Initialize();
 	PIO_Initialize();
 
+
+	BSP_Initialize();
     NVIC_Initialize();
 	RSWDT_REGS->RSWDT_MR|= RSWDT_MR_WDDIS_Msk;	// Disable RSWDT
+
 	WDT_REGS->WDT_MR|= WDT_MR_WDDIS_Msk; 		// Disable WDT
-//	BSP_Initialize();
+
 	USART1_Initialize();
 
 
     sysObj.drvMemory0 = DRV_MEMORY_Initialize((SYS_MODULE_INDEX)DRV_MEMORY_INDEX_0, (SYS_MODULE_INIT *)&drvMemory0InitData);
+
 
 
 
@@ -207,8 +211,8 @@ void SYS_Initialize ( void* data )
 
 	 /* Initialize the USB device layer */
     sysObj.usbDevObject0 = USB_DEVICE_Initialize (USB_DEVICE_INDEX_0 , ( SYS_MODULE_INIT* ) & usbDevInitData);
-
-
+	
+	
 
 
     APP_Initialize();

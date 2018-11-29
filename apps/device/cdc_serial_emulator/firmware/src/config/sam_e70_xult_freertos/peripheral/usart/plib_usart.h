@@ -1,14 +1,14 @@
 /*******************************************************************************
-  USART1 PLIB
+  USART PLIB
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    plib_usart1.h
+    plib_usart.h
 
   Summary:
-    USART1 PLIB Header File
+    USART PLIB Global Header File
 
   Description:
     None
@@ -38,10 +38,12 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 
-#ifndef PLIB_USART1_H
-#define PLIB_USART1_H
+#ifndef PLIB_USART_H
+#define PLIB_USART_H
 
-#include "plib_usart.h"
+#include <stddef.h>
+#include <stdbool.h>
+#include <stdint.h>
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -56,31 +58,56 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // Section: Interface
 // *****************************************************************************
 // *****************************************************************************
-#define USART1_FrequencyGet()    (uint32_t)(150000000UL)
 
-/****************************** USART1 API *********************************/
+typedef enum
+{
+    USART_ERROR_NONE = 0,
+    USART_ERROR_OVERRUN = 1,
+    USART_ERROR_PARITY = 2,
+    USART_ERROR_FRAMING = 4
 
-void USART1_Initialize( void );
+} USART_ERROR;
 
-USART_ERROR USART1_ErrorGet( void );
+typedef enum
+{
+    USART_DATA_5_BIT = 0,
+    USART_DATA_6_BIT = 1,
+    USART_DATA_7_BIT = 2,
+    USART_DATA_8_BIT = 3,
+    USART_DATA_9_BIT = 4
 
-bool USART1_SerialSetup( USART_SERIAL_SETUP *setup, uint32_t srcClkFreq );
+} USART_DATA;
 
-bool USART1_Write( void *buffer, const size_t size );
+typedef enum
+{
+    USART_PARITY_NONE = 0,
+    USART_PARITY_ODD = 1,
+    USART_PARITY_EVEN = 2,
+    USART_PARITY_MARK = 3,
+    USART_PARITY_SPACE = 4,
+    USART_PARITY_MULTIDROP = 5
 
-bool USART1_Read( void *buffer, const size_t size );
+} USART_PARITY;
 
-bool USART1_WriteIsBusy( void );
+typedef enum
+{
+    USART_STOP_1_BIT = 0,
+    USART_STOP_1_5_BIT = 1,
+    USART_STOP_2_BIT = 2
 
-bool USART1_ReadIsBusy( void );
+} USART_STOP;
 
-size_t USART1_WriteCountGet( void );
+typedef struct
+{
+    uint32_t baudRate;
+    USART_DATA dataWidth;
+    USART_PARITY parity;
+    USART_STOP stopBits;
 
-size_t USART1_ReadCountGet( void );
+} USART_SERIAL_SETUP;
 
-bool USART1_WriteCallbackRegister( USART_CALLBACK callback, uintptr_t context );
+typedef void (* USART_CALLBACK)( uintptr_t context );
 
-bool USART1_ReadCallbackRegister( USART_CALLBACK callback, uintptr_t context );
 
 // *****************************************************************************
 // *****************************************************************************
@@ -88,8 +115,23 @@ bool USART1_ReadCallbackRegister( USART_CALLBACK callback, uintptr_t context );
 // *****************************************************************************
 // *****************************************************************************
 
-void USART1_InterruptHandler( void );
+typedef struct
+{
+    uint8_t *               txBuffer;
+    size_t                  txSize;
+    size_t                  txProcessedSize;
+    USART_CALLBACK          txCallback;
+    uintptr_t               txContext;
+    bool                    txBusyStatus;
 
+    uint8_t *               rxBuffer;
+    size_t                  rxSize;
+    size_t                  rxProcessedSize;
+    USART_CALLBACK          rxCallback;
+    uintptr_t               rxContext;
+    bool                    rxBusyStatus;
+
+} USART_OBJECT ;
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -98,4 +140,4 @@ void USART1_InterruptHandler( void );
 
 #endif
 // DOM-IGNORE-END
-#endif // PLIB_USART1_H
+#endif // PLIB_USART_H

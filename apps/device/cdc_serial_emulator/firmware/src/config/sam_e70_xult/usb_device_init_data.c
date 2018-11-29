@@ -68,13 +68,13 @@ const USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[1] =
     
 	/* CDC Function 0 */
     { 
-        .configurationValue = 1,    /* Configuration value */ 
-        .interfaceNumber = 0,       /* First interfaceNumber of this function */ 
-        .speed = USB_SPEED_HIGH|USB_SPEED_FULL,    /* Function Speed */ 
-        .numberOfInterfaces = 2,    /* Number of interfaces */
-        .funcDriverIndex = 0,  /* Index of CDC Function Driver */
+        .configurationValue = 1,                            /* Configuration value */ 
+        .interfaceNumber = 0,                               /* First interfaceNumber of this function */ 
+        .speed = USB_SPEED_HIGH|USB_SPEED_FULL,             /* Function Speed */ 
+        .numberOfInterfaces = 2,                            /* Number of interfaces */
+        .funcDriverIndex = 0,                               /* Index of CDC Function Driver */
         .driver = (void*)USB_DEVICE_CDC_FUNCTION_DRIVER,    /* USB CDC function data exposed to device layer */
-        .funcDriverInit = (void*)&cdcInit0    /* Function driver init data */
+        .funcDriverInit = (void*)&cdcInit0                  /* Function driver init data */
     },
 
 
@@ -91,11 +91,9 @@ const USB_DEVICE_DESCRIPTOR deviceDescriptor =
     0x12,                           // Size of this descriptor in bytes
     USB_DESCRIPTOR_DEVICE,          // DEVICE descriptor type
     0x0200,                         // USB Spec Release Number in BCD format
-    
-	USB_CDC_CLASS_CODE,         // Class Code
-    USB_CDC_SUBCLASS_CODE,      // Subclass code
-    0x00,                       // Protocol code
-
+    	USB_CDC_CLASS_CODE,             // Class Code
+    USB_CDC_SUBCLASS_CODE,          // Subclass code
+    0x00,                           // Protocol code
 
 
     USB_DEVICE_EP0_BUFFER_SIZE,     // Max packet size for EP0, see configuration.h
@@ -117,11 +115,9 @@ const USB_DEVICE_QUALIFIER deviceQualifierDescriptor1 =
     0x0A,                               // Size of this descriptor in bytes
     USB_DESCRIPTOR_DEVICE_QUALIFIER,    // Device Qualifier Type
     0x0200,                             // USB Specification Release number
-	
-	USB_CDC_CLASS_CODE,         // Class Code
-    USB_CDC_SUBCLASS_CODE,      // Subclass code
-    0x00,                       // Protocol code
-
+		USB_CDC_CLASS_CODE,             // Class Code
+    USB_CDC_SUBCLASS_CODE,          // Subclass code
+    0x00,                           // Protocol code
 
 
     USB_DEVICE_EP0_BUFFER_SIZE,         // Maximum packet size for endpoint 0
@@ -255,7 +251,7 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
 
     0x09,                                           // Size of this descriptor in bytes
     USB_DESCRIPTOR_INTERFACE,                       // Descriptor Type is Interface descriptor
-    0,                                              // Interface Number
+    0,                                  // Interface Number
     0x00,                                           // Alternate Setting Number
     0x01,                                           // Number of endpoints in this interface
     USB_CDC_COMMUNICATIONS_INTERFACE_CLASS_CODE,    // Class code

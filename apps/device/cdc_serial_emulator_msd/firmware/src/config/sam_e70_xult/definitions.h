@@ -48,14 +48,18 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include "driver/usb/usbhsv1/drv_usbhsv1.h"
+#include "bsp/bsp.h"
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/nvic/plib_nvic.h"
-#include "bsp/bsp.h"
+#include "usb/usb_chapter_9.h"
+#include "usb/usb_device.h"
+#include "usb/usb_device_cdc.h"
+#include "usb/usb_cdc.h"
+#include "peripheral/usart/plib_usart1.h"
 #include "system/int/sys_int.h"
 #include "osal/osal.h"
-#include "driver/usb/usbhsv1/drv_usbhsv1.h"
-#include "peripheral/usart/plib_usart1.h"
 #include "driver/memory/drv_memory.h"
 #include "driver/memory/drv_memory_efc0.h"
 #include "peripheral/efc/plib_efc0.h"
@@ -64,10 +68,6 @@
 #include "system/fs/fat_fs/src/file_system/ff.h"
 #include "system/fs/fat_fs/src/file_system/ffconf.h"
 #include "system/fs/fat_fs/src/hardware_access/diskio.h"
-#include "usb/usb_chapter_9.h"
-#include "usb/usb_device.h"
-#include "usb/usb_device_cdc.h"
-#include "usb/usb_cdc.h"
 #include "usb/usb_device_msd.h"
 #include "app.h"
 

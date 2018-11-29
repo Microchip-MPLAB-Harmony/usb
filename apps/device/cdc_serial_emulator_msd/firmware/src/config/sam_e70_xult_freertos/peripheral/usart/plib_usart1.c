@@ -71,7 +71,7 @@ void static USART1_ISR_RX_Handler( void )
             usart1Obj.rxProcessedSize = 0;
 
             /* Disable Read, Overrun, Parity and Framing error interrupts */
-            USART1_REGS->US_IDR = (US_IDR_RXRDY_Msk | US_IDR_FRAME_Msk | US_IDR_PARE_Msk | US_IDR_OVRE_Msk);
+            USART1_REGS->US_IDR = (US_IDR_RXRDY_Msk | US_IDR_USART_LIN_FRAME_Msk | US_IDR_USART_LIN_PARE_Msk | US_IDR_OVRE_Msk);
         }
     }
     else
@@ -118,7 +118,7 @@ void static USART1_ISR_TX_Handler( void )
 void USART1_InterruptHandler( void )
 {
     /* Error status */
-    uint32_t errorStatus = (USART1_REGS->US_CSR & (US_CSR_OVRE_Msk | US_CSR_FRAME_Msk | US_CSR_PARE_Msk));
+    uint32_t errorStatus = (USART1_REGS->US_CSR & (US_CSR_OVRE_Msk | US_CSR_USART_LIN_FRAME_Msk | US_CSR_USART_LIN_PARE_Msk));
 
     if(errorStatus != 0)
     {
@@ -136,7 +136,7 @@ void USART1_InterruptHandler( void )
         usart1Obj.rxProcessedSize = 0;
 
         /* Disable Read, Overrun, Parity and Framing error interrupts */
-        USART1_REGS->US_IDR = (US_IDR_RXRDY_Msk | US_IDR_FRAME_Msk | US_IDR_PARE_Msk | US_IDR_OVRE_Msk);
+        USART1_REGS->US_IDR = (US_IDR_RXRDY_Msk | US_IDR_USART_LIN_FRAME_Msk | US_IDR_USART_LIN_PARE_Msk | US_IDR_OVRE_Msk);
     }
 
     /* Receiver status */
@@ -182,7 +182,7 @@ void USART1_Initialize( void )
     USART1_REGS->US_CR = (US_CR_TXEN_Msk | US_CR_RXEN_Msk);
 
     /* Configure USART1 mode */
-    USART1_REGS->US_MR = ((US_MR_USCLKS_MCK) | (0 << US_MR_MODE9_Pos) | US_MR_CHRL_8_BIT | US_MR_PAR_NO | US_MR_NBSTOP_1_BIT | (0 << US_MR_SYNC_Pos) | (0 << US_MR_OVER_Pos));
+    USART1_REGS->US_MR = ((US_MR_USCLKS_MCK) | (0 << US_MR_USART_MODE9_Pos) | US_MR_CHRL_8_BIT | US_MR_USART_PAR_NO | US_MR_USART_NBSTOP_1_BIT | (0 << US_MR_USART_SYNC_Pos) | (0 << US_MR_USART_OVER_Pos));
 
     /* Configure USART1 Baud Rate */
     USART1_REGS->US_BRGR = US_BRGR_CD(81);
@@ -212,11 +212,11 @@ USART_ERROR USART1_ErrorGet( void )
     {
         errors = USART_ERROR_OVERRUN;
     }
-    if(status & US_CSR_PARE_Msk)
+    if(status & US_CSR_USART_LIN_PARE_Msk)
     {
         errors |= USART_ERROR_PARITY;
     }
-    if(status & US_CSR_FRAME_Msk)
+    if(status & US_CSR_USART_LIN_FRAME_Msk)
     {
         errors |= USART_ERROR_FRAMING;
     }
@@ -261,7 +261,7 @@ bool USART1_SerialSetup( USART_SERIAL_SETUP *setup, uint32_t srcClkFreq )
     else
     {
         brgVal = (clk / (8 * baud));
-        overSampVal = (1 << US_MR_OVER_Pos) & US_MR_OVER_Msk;
+        overSampVal = (1 << US_MR_USART_OVER_Pos) & US_MR_USART_OVER_Msk;
     }
 
     /* Get Data width values */
@@ -277,7 +277,7 @@ bool USART1_SerialSetup( USART_SERIAL_SETUP *setup, uint32_t srcClkFreq )
         }
         case USART_DATA_9_BIT:
         {
-            mode9Val = (1 << US_MR_MODE9_Pos) & US_MR_MODE9_Msk;
+            mode9Val = (1 << US_MR_USART_MODE9_Pos) & US_MR_USART_MODE9_Msk;
             break;
         }
         default:
@@ -293,27 +293,27 @@ bool USART1_SerialSetup( USART_SERIAL_SETUP *setup, uint32_t srcClkFreq )
         case USART_PARITY_ODD:
         case USART_PARITY_MARK:
         {
-            parityVal = US_MR_PAR(setup->parity);
+            parityVal = US_MR_USART_PAR(setup->parity);
             break;
         }
         case USART_PARITY_NONE:
         {
-            parityVal = US_MR_PAR_NO;
+            parityVal = US_MR_USART_PAR_NO;
             break;
         }
         case USART_PARITY_EVEN:
         {
-            parityVal = US_MR_PAR_EVEN;
+            parityVal = US_MR_USART_PAR_EVEN;
             break;
         }
         case USART_PARITY_SPACE:
         {
-            parityVal = US_MR_PAR_SPACE;
+            parityVal = US_MR_USART_PAR_SPACE;
             break;
         }
         case USART_PARITY_MULTIDROP:
         {
-            parityVal = US_MR_PAR_MULTIDROP;
+            parityVal = US_MR_USART_PAR_MULTIDROP;
             break;
         }
         default:
@@ -330,7 +330,7 @@ bool USART1_SerialSetup( USART_SERIAL_SETUP *setup, uint32_t srcClkFreq )
         case USART_STOP_1_5_BIT:
         case USART_STOP_2_BIT:
         {
-            stopBitsVal = US_MR_NBSTOP(setup->stopBits);
+            stopBitsVal = US_MR_USART_NBSTOP(setup->stopBits);
             break;
         }
         default:
@@ -343,7 +343,7 @@ bool USART1_SerialSetup( USART_SERIAL_SETUP *setup, uint32_t srcClkFreq )
     if(status != false)
     {
         /* Configure USART1 mode */
-        USART1_REGS->US_MR = (mode9Val | charLengthVal | parityVal | stopBitsVal | (0 << US_MR_SYNC_Pos) | overSampVal);
+        USART1_REGS->US_MR = (mode9Val | charLengthVal | parityVal | stopBitsVal | (0 << US_MR_USART_SYNC_Pos) | overSampVal);
 
         /* Configure USART1 Baud Rate */
         USART1_REGS->US_BRGR = US_BRGR_CD(brgVal);
@@ -373,7 +373,7 @@ bool USART1_Read( void *buffer, const size_t size )
             status = true;
 
             /* Enable Read, Overrun, Parity and Framing error interrupts */
-            USART1_REGS->US_IER = (US_IER_RXRDY_Msk | US_IER_FRAME_Msk | US_IER_PARE_Msk | US_IER_OVRE_Msk);
+            USART1_REGS->US_IER = (US_IER_RXRDY_Msk | US_IER_USART_LIN_FRAME_Msk | US_IER_USART_LIN_PARE_Msk | US_IER_OVRE_Msk);
         }
     }
 

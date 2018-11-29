@@ -21,32 +21,6 @@
     files.
  *******************************************************************************/
 
-// DOM-IGNORE-BEGIN
-/*******************************************************************************
-Copyright (c) 2013-2014 released Microchip Technology Inc.  All rights reserved.
-
-Microchip licenses to you the right to use, modify, copy and distribute
-Software only when embedded on a Microchip microcontroller or digital signal
-controller that is integrated into your product or third party product
-(pursuant to the sublicense terms in the accompanying license agreement).
-
-You should refer to the license agreement accompanying this Software for
-additional information regarding your rights and obligations.
-
-SOFTWARE AND DOCUMENTATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
-EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF
-MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
-IN NO EVENT SHALL MICROCHIP OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER
-CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION, BREACH OF WARRANTY, OR
-OTHER LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT DAMAGES OR EXPENSES
-INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
-CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
-SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
-(INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
- *******************************************************************************/
-// DOM-IGNORE-END
-
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
@@ -54,7 +28,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 #include "app.h"
-
 
 // *****************************************************************************
 // *****************************************************************************
@@ -89,14 +62,9 @@ APP_DATA appData;
 
 void APP_WriteCallback(uintptr_t context)
 {
-	appData.isUSARTWriteComplete = true;	
+	appData.isUSARTWriteComplete = true;
 }
 
-    bool isUSARTReadComplete;
-
-    /* True if a character was written*/
-    bool isUSARTWriteComplete;
-	
 void APP_ReadCallback(uintptr_t context)
 {
 	appData.isUSARTReadComplete = true;
@@ -446,12 +414,13 @@ void APP_Initialize ( void )
     /* Initialize the Set Line coding flags */
     appData.isBaudrateDataReceived = false;
     appData.isSetLineCodingCommandInProgress = false;
-	
+
 	/* Register callback functions */
 	USART1_WriteCallbackRegister(APP_WriteCallback, 0);
 	USART1_ReadCallbackRegister(APP_ReadCallback, 0);
-	
-	LED1_Off();
+
+    APP_LED0_Off();
+    APP_LED1_Off();
 }
 
 
@@ -489,6 +458,9 @@ void APP_Tasks ( void )
 
                 /* Application waits for device configuration. */
                 appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
+                
+                APP_LED0_Off();
+                APP_LED1_Off();
             }
             else
             {
@@ -505,13 +477,16 @@ void APP_Tasks ( void )
             {
                 /* Schedule the first read from CDC function driver */
 
+                APP_LED0_Off();
+                APP_LED1_On();
+                
                 appData.state = APP_STATE_CHECK_CDC_READ;
                 appData.isCDCReadComplete = false;
-				
+
 				appData.isUSARTReadComplete = false;
-				
+
                 USART1_Read(&appData.uartReceivedData, 1);
-				
+
                 USB_DEVICE_CDC_Read (appData.cdcInstance, &(appData.readTransferHandle),
                         appData.readBuffer, APP_READ_BUFFER_SIZE);
             }
@@ -526,22 +501,23 @@ void APP_Tasks ( void )
 
             /* If CDC read is complete, send the received data to the UART. */
             if(appData.isCDCReadComplete == true)
-            {							
+            {
                 if(true == USART1_Write(&appData.readBuffer[0], appData.readLength))
-				{					
+				{
 					appData.isCDCReadComplete = false;
-					
+
 					appData.isUSARTWriteComplete = false;
-					
-					LED1_Toggle();
-					
+
+                    APP_LED0_Toggle();
+                    APP_LED1_Toggle();
+
                     /* This means we have sent all the data. We schedule the next
                      * CDC Read. */
                     USB_DEVICE_CDC_Read (appData.cdcInstance, &appData.readTransferHandle,
                         appData.readBuffer, APP_READ_BUFFER_SIZE);
 
                     appData.state = APP_STATE_CHECK_UART_RECEIVE;
-					
+
 				}
             }
             else
@@ -561,15 +537,16 @@ void APP_Tasks ( void )
 
             /* Check if a character was received on the UART */
             if(appData.isUSARTReadComplete == true)
-            {				
-                LED1_Toggle();
-                
+            {
+                APP_LED0_Toggle();
+                APP_LED1_Toggle();
+
                 USB_DEVICE_CDC_Write(0, &appData.writeTransferHandle,
                         &appData.uartReceivedData, 1,
                         USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE);
-								
+
 				appData.isUSARTReadComplete = false;
-				
+
                 USART1_Read(&appData.uartReceivedData, 1);
 
             }
