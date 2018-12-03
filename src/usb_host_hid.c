@@ -52,7 +52,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include "usb/src/usb_host_hid_local.h"
 #include "usb/src/usb_host_local.h"
 #include "usb/usb_host_client_driver.h"
-#include "system/debug/sys_debug.h"
+//#include "system/debug/sys_debug.h"
 
 
 
