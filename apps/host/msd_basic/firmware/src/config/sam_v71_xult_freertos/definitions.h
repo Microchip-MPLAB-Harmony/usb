@@ -48,27 +48,27 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "peripheral/clk/plib_clk.h"
-#include "peripheral/pio/plib_pio.h"
-#include "peripheral/nvic/plib_nvic.h"
-#include "bsp/bsp.h"
-#include "FreeRTOS.h"
-#include "task.h"
-#include "system/int/sys_int.h"
-#include "osal/osal.h"
 #include "driver/usb/usbhsv1/drv_usbhsv1.h"
-#include "system/fs/sys_fs.h"
-#include "system/fs/sys_fs_media_manager.h"
-#include "system/fs/fat_fs/src/file_system/ff.h"
-#include "system/fs/fat_fs/src/file_system/ffconf.h"
-#include "system/fs/fat_fs/src/hardware_access/diskio.h"
-#include "system/time/sys_time.h"
-#include "peripheral/tc/plib_tc0.h"
 #include "usb/usb_chapter_9.h"
 #include "usb/usb_host.h"
 #include "usb/usb_msd.h"
 #include "usb/usb_host_msd.h"
 #include "usb/usb_host_scsi.h"
+#include "system/fs/sys_fs.h"
+#include "system/fs/sys_fs_media_manager.h"
+#include "system/fs/fat_fs/src/file_system/ff.h"
+#include "system/fs/fat_fs/src/file_system/ffconf.h"
+#include "system/fs/fat_fs/src/hardware_access/diskio.h"
+#include "peripheral/clk/plib_clk.h"
+#include "peripheral/pio/plib_pio.h"
+#include "peripheral/nvic/plib_nvic.h"
+#include "peripheral/tc/plib_tc0.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "bsp/bsp.h"
+#include "system/int/sys_int.h"
+#include "osal/osal.h"
+#include "system/time/sys_time.h"
 #include "app.h"
 
 
@@ -193,9 +193,9 @@ typedef struct
 {
 	SYS_MODULE_OBJ  drvUSBHSV1Object;
 
-    SYS_MODULE_OBJ  sysTime;
 	SYS_MODULE_OBJ  usbHostObject0;
 
+    SYS_MODULE_OBJ  sysTime;
 
 } SYSTEM_OBJECTS;
 

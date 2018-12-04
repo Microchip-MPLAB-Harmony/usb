@@ -58,21 +58,22 @@
 // Section: RTOS "Tasks" Routine
 // *****************************************************************************
 // *****************************************************************************
-void _APP_Tasks(  void *pvParameters  )
-{
-    while(1)
-    {
-        APP_Tasks();
-        vTaskDelay(10 / portTICK_PERIOD_MS);
-    }
-}
-
 void _DRV_USBHSV1_Tasks(  void *pvParameters  )
 {
     while(1)
     {
 				 /* USB HS Driver Task Routine */
         DRV_USBHSV1_Tasks(sysObj.drvUSBHSV1Object);
+        vTaskDelay(10 / portTICK_PERIOD_MS);
+    }
+}
+
+void _USB_HOST_Tasks(  void *pvParameters  )
+{
+    while(1)
+    {
+				/* USB Host layer tasks routine */ 
+        USB_HOST_Tasks(sysObj.usbHostObject0);
         vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 }
@@ -88,12 +89,14 @@ void _SYS_FS_Tasks(  void *pvParameters  )
 }
 
 
-void _USB_HOST_Tasks(  void *pvParameters  )
+/* Handle for the APP_Tasks. */
+TaskHandle_t xAPP_Tasks;
+
+void _APP_Tasks(  void *pvParameters  )
 {
     while(1)
     {
-				/* USB Host layer tasks routine */ 
-        USB_HOST_Tasks(sysObj.usbHostObject0);
+        APP_Tasks();
         vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 }
@@ -159,7 +162,7 @@ void SYS_Tasks ( void )
                 1024,
                 NULL,
                 1,
-                NULL);
+                &xAPP_Tasks);
 
 
 

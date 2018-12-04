@@ -56,6 +56,7 @@
 */
 
 #include "user.h"
+#include "toolchain_specifics.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -108,11 +109,13 @@ extern "C" {
 
 /* TIME System Service Configuration Options */
 #define SYS_TIME_INDEX_0                     0
-#define SYS_TIME_MAX_TIMERS                  10
+#define SYS_TIME_MAX_TIMERS                  5
 #define SYS_TIME_HW_COUNTER_WIDTH            16
 #define SYS_TIME_HW_COUNTER_PERIOD           0xFFFF
 #define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
 #define SYS_TIME_CPU_CLOCK_FREQUENCY         300000000
+#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (900)
+
 
 
 // *****************************************************************************
@@ -184,12 +187,6 @@ extern "C" {
 /* Number of Host Layer Clients */
 #define USB_HOST_CLIENTS_NUMBER               1   
 
-/* Number of CDC Function driver instances in the application */
-#define USB_HOST_CDC_INSTANCES_NUMBER         1
-
-/* Number of CDC Attach Listeners */ 
-#define USB_HOST_CDC_ATTACH_LISTENERS_NUMBER        1
-
 /* Number of MSD Function driver instances in the application */
 #define USB_HOST_MSD_INSTANCES_NUMBER         1
 
@@ -197,6 +194,12 @@ extern "C" {
 #define USB_HOST_SCSI_INSTANCES_NUMBER        1
 #define USB_HOST_MSD_LUN_NUMBERS              1
 
+
+/* Number of CDC Function driver instances in the application */
+#define USB_HOST_CDC_INSTANCES_NUMBER         1
+
+/* Number of CDC Attach Listeners */ 
+#define USB_HOST_CDC_ATTACH_LISTENERS_NUMBER        1
 
 
 

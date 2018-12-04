@@ -56,6 +56,7 @@
 */
 
 #include "user.h"
+#include "toolchain_specifics.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -80,6 +81,15 @@ extern "C" {
 // Section: System Service Configuration
 // *****************************************************************************
 // *****************************************************************************
+/* TIME System Service Configuration Options */
+#define SYS_TIME_INDEX_0                     0
+#define SYS_TIME_MAX_TIMERS                  5
+#define SYS_TIME_HW_COUNTER_WIDTH            16
+#define SYS_TIME_HW_COUNTER_PERIOD           0xFFFF
+#define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
+#define SYS_TIME_CPU_CLOCK_FREQUENCY         300000000
+#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (900)
+
 
 /* File System Service Configuration */
 
@@ -109,13 +119,6 @@ extern "C" {
 #define SYS_FS_MEDIA_IDX0_DEVICE_NAME_VOLUME_IDX0			"/dev/sda1"
 								
 
-/* TIME System Service Configuration Options */
-#define SYS_TIME_INDEX_0                     0
-#define SYS_TIME_MAX_TIMERS                  10
-#define SYS_TIME_HW_COUNTER_WIDTH            16
-#define SYS_TIME_HW_COUNTER_PERIOD           0xFFFF
-#define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
-#define SYS_TIME_CPU_CLOCK_FREQUENCY         300000000
 
 
 // *****************************************************************************
@@ -130,6 +133,20 @@ extern "C" {
 // Section: Middleware & Other Library Configuration
 // *****************************************************************************
 // *****************************************************************************
+/* Number of MSD Function driver instances in the application */
+#define USB_HOST_MSD_INSTANCES_NUMBER         1
+
+/* Number of Logical Units */
+#define USB_HOST_SCSI_INSTANCES_NUMBER        1
+#define USB_HOST_MSD_LUN_NUMBERS              1
+
+
+/* Number of CDC Function driver instances in the application */
+#define USB_HOST_CDC_INSTANCES_NUMBER         1
+
+/* Number of CDC Attach Listeners */ 
+#define USB_HOST_CDC_ATTACH_LISTENERS_NUMBER        1
+
 /*** USB Driver Configuration ***/
 
 /* Maximum USB driver instances */
@@ -172,7 +189,7 @@ extern "C" {
 #define USB_HOST_DEVICES_NUMBER         1
 
 /* Target peripheral list entries */
-#define  USB_HOST_TPL_ENTRIES           1 
+#define  USB_HOST_TPL_ENTRIES           2 
 
 /* Maximum number of configurations supported per device */
 #define USB_HOST_DEVICE_INTERFACES_NUMBER     5    
@@ -186,20 +203,6 @@ extern "C" {
 
 /* Number of Host Layer Clients */
 #define USB_HOST_CLIENTS_NUMBER               1   
-
-/* Number of CDC Function driver instances in the application */
-#define USB_HOST_CDC_INSTANCES_NUMBER         1
-
-/* Number of CDC Attach Listeners */ 
-#define USB_HOST_CDC_ATTACH_LISTENERS_NUMBER        1
-
-/* Number of MSD Function driver instances in the application */
-#define USB_HOST_MSD_INSTANCES_NUMBER         1
-
-/* Number of Logical Units */
-#define USB_HOST_SCSI_INSTANCES_NUMBER        1
-#define USB_HOST_MSD_LUN_NUMBERS              1
-
 
 
 
