@@ -65,6 +65,15 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // Section: Type Definitions
 // *****************************************************************************
 // *****************************************************************************
+/*** Application Instance 0 Configuration ***/
+
+#define APP_READ_BUFFER_SIZE 512
+
+/* Macro defines USB internal DMA Buffer criteria*/
+
+#define APP_MAKE_BUFFER_DMA_READY  __attribute__((aligned(16)))
+    
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Free RTOS Task Priorities

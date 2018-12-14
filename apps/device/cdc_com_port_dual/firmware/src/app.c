@@ -222,14 +222,13 @@ void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, void * pData, uintptr_t c
 
             appData.isConfigured = false;
 
-            APP_LED0_On();
-            APP_LED1_Off();
+            LED_Off();
             
             break;
             
         case USB_DEVICE_EVENT_CONFIGURED:
 
-            /*do we have access to usb, if not try again*/
+            /*do we have access to USB, if not try again*/
             configurationValue = ((USB_DEVICE_EVENT_DATA_CONFIGURED *)pData)->configurationValue;
             if(configurationValue == 1)
             {
@@ -239,8 +238,7 @@ void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, void * pData, uintptr_t c
 
                 appData.isConfigured = true;
 
-                APP_LED0_On();
-                APP_LED1_Off();
+                LED_On();
             }
             
             break;
@@ -248,8 +246,7 @@ void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, void * pData, uintptr_t c
         case USB_DEVICE_EVENT_SUSPENDED:
             
             /* Update LED indication */
-            APP_LED0_Off();
-            APP_LED1_On();
+            LED_Off();
             
             break;
 

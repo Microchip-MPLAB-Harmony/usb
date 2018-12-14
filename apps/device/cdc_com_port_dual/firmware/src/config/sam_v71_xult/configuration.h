@@ -56,6 +56,7 @@
 */
 
 #include "user.h"
+#include "toolchain_specifics.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -72,7 +73,6 @@ extern "C" {
 // *****************************************************************************
 #define DCACHE_CLEAN_BY_ADDR(data, size)       SCB_CleanDCache_by_Addr((uint32_t *)data, size)
 #define DCACHE_INVALIDATE_BY_ADDR(data, size)  SCB_InvalidateDCache_by_Addr((uint32_t *)data, size)
-
 #define DATA_CACHE_ENABLED                     true
 
 // *****************************************************************************
@@ -94,6 +94,14 @@ extern "C" {
 // Section: Middleware & Other Library Configuration
 // *****************************************************************************
 // *****************************************************************************
+/* Maximum instances of CDC function driver */
+#define USB_DEVICE_CDC_INSTANCES_NUMBER     2
+
+/* CDC Transfer Queue Size for both read and
+   write. Applicable to all instances of the
+   function driver */
+#define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED 7
+
 /*** USB Driver Configuration ***/
 
 /* Maximum USB driver instances */
@@ -104,18 +112,18 @@ extern "C" {
 
 
 
-
-/* Number of Endpoints used */
-#define DRV_USBHSV1_ENDPOINTS_NUMBER  7 //TODO  Calculate this for Device 
-
 /* Enables Device Support */
 #define DRV_USBHSV1_DEVICE_SUPPORT    true
 	
 /* Disable Host Support */
 #define DRV_USBHSV1_HOST_SUPPORT      false
 
+
+/* Number of Endpoints used */
+#define DRV_USBHSV1_ENDPOINTS_NUMBER  7
+
 /* The USB Device Layer will not initialize the USB Driver */
-#define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT
+#define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT 
 
 /* Maximum device layer instances */
 #define USB_DEVICE_INSTANCES_NUMBER     1 
@@ -130,14 +138,6 @@ extern "C" {
 
 
 
-/* Maximum instances of CDC function driver */
-#define USB_DEVICE_CDC_INSTANCES_NUMBER     2
-
-/* CDC Transfer Queue Size for both read and
-   write. Applicable to all instances of the
-   function driver */
-#define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED 7
-
 
 
 // *****************************************************************************
@@ -146,37 +146,7 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 
-/*** LED Macros for LED0 ***/
-#define APP_LED0_Off()                LED0_Off()
-#define APP_LED0_On()                 LED0_On()
-#define APP_LED0_Toggle()             LED0_Toggle()
-    
-/*** LED Macros for LED1 ***/
-#define APP_LED1_Off()                LED1_Off()
-#define APP_LED1_On()                 LED1_On()
-#define APP_LED1_Toggle()             LED1_Toggle()
-                                  
-/*** SWITCH Macros for SWITCH1 ***/
-    
-#define APP_SWITCH0_Get()             SWITCH1_Get()
-#define APP_SWITCH0_STATE_PRESSED     SWITCH1_STATE_PRESSED
-#define APP_SWITCH0_STATE_RELEASED    SWITCH1_STATE_RELEASED
-    
-/*** SWITCH Macros for SWITCH2 ***/
-#define APP_SWITCH1_Get()             SWITCH2_Get()
-#define APP_SWITCH1_STATE_PRESSED     SWITCH2_STATE_PRESSED
-#define APP_SWITCH1_STATE_RELEASED    SWITCH2_STATE_RELEASED
 
-
-/*** Application Instance 0 Configuration ***/
-
-#define APP_READ_BUFFER_SIZE 512
-
-/* Macro defines USB internal DMA Buffer criteria*/
-
-#define APP_MAKE_BUFFER_DMA_READY  __attribute__((aligned(16)))
-    
-    
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }
