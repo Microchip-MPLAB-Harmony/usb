@@ -59,8 +59,8 @@
           <Name dnOrder="1">ff.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/system/fs/fat_fs/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/fs/fat_fs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">BEFB70C8F601D3FDFD8F06B108087DCC</GeneratedChecksum>
-          <UserChecksum dnOrder="5">BEFB70C8F601D3FDFD8F06B108087DCC</UserChecksum>
+          <GeneratedChecksum dnOrder="4">530F3D9EA6DADE98FD7784877A7EFC5A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">530F3D9EA6DADE98FD7784877A7EFC5A</UserChecksum>
         </File>
         <File dnOrder="7">
           <Type dnOrder="0">SOURCE</Type>
@@ -107,8 +107,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">6A4406E7383DB5C95FB2EC0E5B5ECE78</GeneratedChecksum>
-          <UserChecksum dnOrder="5">6A4406E7383DB5C95FB2EC0E5B5ECE78</UserChecksum>
+          <GeneratedChecksum dnOrder="4">5BF60DD2BCDD42FF129F7DC9F7005629</GeneratedChecksum>
+          <UserChecksum dnOrder="5">5BF60DD2BCDD42FF129F7DC9F7005629</UserChecksum>
         </File>
         <File dnOrder="13">
           <Type dnOrder="0">SOURCE</Type>
@@ -171,8 +171,8 @@
           <Name dnOrder="1">sys_time.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/system/time/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/time/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A0C2B4FF0F2D1C9C04F6C6F0FC63788E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A0C2B4FF0F2D1C9C04F6C6F0FC63788E</UserChecksum>
+          <GeneratedChecksum dnOrder="4">B38BEA175BDC473F5914523A8E1F06E8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">B38BEA175BDC473F5914523A8E1F06E8</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">SOURCE</Type>
@@ -219,8 +219,8 @@
           <Name dnOrder="1">usb_host_init_data.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B3D0083FE4122112277BD4A8EB688CBB</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B3D0083FE4122112277BD4A8EB688CBB</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F0A5EA4E73FE5BAEF029B59102E6A090</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F0A5EA4E73FE5BAEF029B59102E6A090</UserChecksum>
         </File>
         <File dnOrder="27">
           <Type dnOrder="0">SOURCE</Type>
@@ -355,8 +355,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">C9ABADA80322FF383C992ABFAA9CFEAF</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C9ABADA80322FF383C992ABFAA9CFEAF</UserChecksum>
+          <GeneratedChecksum dnOrder="4">527C39B9D967324578D2A5BF4C458CCA</GeneratedChecksum>
+          <UserChecksum dnOrder="5">527C39B9D967324578D2A5BF4C458CCA</UserChecksum>
         </File>
         <File dnOrder="44">
           <Type dnOrder="0">HEADER</Type>

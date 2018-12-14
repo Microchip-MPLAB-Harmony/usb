@@ -2,11 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/h3_new/usb/apps/host/msd_basic/firmware/src/app.c</file>
-            <file>file:/D:/h3_new/usb/apps/host/msd_basic/firmware/src/third_party/rtos/FreeRTOS/Source/tasks.c</file>
-            <file>file:/D:/h3_new/usb/apps/host/msd_basic/firmware/src/main.c</file>
-            <file>file:/D:/h3_new/usb/apps/host/msd_basic/firmware/src/config/sam_v71_xult_freertos/peripheral/tc/plib_tc0.c</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

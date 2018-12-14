@@ -83,8 +83,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">6A4406E7383DB5C95FB2EC0E5B5ECE78</GeneratedChecksum>
-          <UserChecksum dnOrder="5">6A4406E7383DB5C95FB2EC0E5B5ECE78</UserChecksum>
+          <GeneratedChecksum dnOrder="4">5BF60DD2BCDD42FF129F7DC9F7005629</GeneratedChecksum>
+          <UserChecksum dnOrder="5">5BF60DD2BCDD42FF129F7DC9F7005629</UserChecksum>
         </File>
         <File dnOrder="10">
           <Type dnOrder="0">SOURCE</Type>
@@ -131,8 +131,8 @@
           <Name dnOrder="1">sys_time.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/system/time/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/time/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A0C2B4FF0F2D1C9C04F6C6F0FC63788E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A0C2B4FF0F2D1C9C04F6C6F0FC63788E</UserChecksum>
+          <GeneratedChecksum dnOrder="4">B38BEA175BDC473F5914523A8E1F06E8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">B38BEA175BDC473F5914523A8E1F06E8</UserChecksum>
         </File>
         <File dnOrder="16">
           <Type dnOrder="0">SOURCE</Type>
@@ -179,8 +179,8 @@
           <Name dnOrder="1">usb_host_init_data.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">7EA8D2B2E3ACF500C4B4353B49ACA4AD</GeneratedChecksum>
-          <UserChecksum dnOrder="5">7EA8D2B2E3ACF500C4B4353B49ACA4AD</UserChecksum>
+          <GeneratedChecksum dnOrder="4">783E4FE080C7308F27B36E7D70F21716</GeneratedChecksum>
+          <UserChecksum dnOrder="5">783E4FE080C7308F27B36E7D70F21716</UserChecksum>
         </File>
         <File dnOrder="22">
           <Type dnOrder="0">SOURCE</Type>
@@ -299,8 +299,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">53608ECDD15989F766B47E0199D33A74</GeneratedChecksum>
-          <UserChecksum dnOrder="5">53608ECDD15989F766B47E0199D33A74</UserChecksum>
+          <GeneratedChecksum dnOrder="4">124FE927AE5FDDC6D4D90C0E69A59213</GeneratedChecksum>
+          <UserChecksum dnOrder="5">124FE927AE5FDDC6D4D90C0E69A59213</UserChecksum>
         </File>
         <File dnOrder="37">
           <Type dnOrder="0">HEADER</Type>

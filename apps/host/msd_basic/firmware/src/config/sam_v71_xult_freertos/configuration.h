@@ -73,7 +73,6 @@ extern "C" {
 // *****************************************************************************
 #define DCACHE_CLEAN_BY_ADDR(data, size)       SCB_CleanDCache_by_Addr((uint32_t *)data, size)
 #define DCACHE_INVALIDATE_BY_ADDR(data, size)  SCB_InvalidateDCache_by_Addr((uint32_t *)data, size)
-
 #define DATA_CACHE_ENABLED                     true
 
 // *****************************************************************************
@@ -143,10 +142,6 @@ extern "C" {
 
 
 
-	  
-/* Number of Endpoints used */
-#define DRV_USBHSV1_ENDPOINTS_NUMBER  1  
-
 /* Disable Device Support */
 #define DRV_USBHSV1_DEVICE_SUPPORT    false
 	
@@ -154,10 +149,10 @@ extern "C" {
 #define DRV_USBHSV1_HOST_SUPPORT      true
 
 /* Number of NAKs to wait before returning transfer failure */ 
-#define DRV_USBHSV1_HOST_NAK_LIMIT      2000 //TODO Verify with Sundar
+#define DRV_USBHSV1_HOST_NAK_LIMIT      2000 
 
 /* Maximum Number of pipes */
-#define DRV_USBHSV1_HOST_PIPES_NUMBER    10 //TODO Verify with Sundar 
+#define DRV_USBHSV1_HOST_PIPES_NUMBER    10  
 
 /* Attach Debounce duration in milli Seconds */ 
 #define DRV_USBHSV1_HOST_ATTACH_DEBOUNCE_DURATION 500
@@ -170,7 +165,10 @@ extern "C" {
 // Section: USB Host Layer Configuration
 // *****************************************************************************
 // **************************************************************************
- 
+
+/* Number of Endpoints used */
+#define DRV_USBHSV1_ENDPOINTS_NUMBER  1
+
 /* Total number of devices to be supported */
 #define USB_HOST_DEVICES_NUMBER         1
 

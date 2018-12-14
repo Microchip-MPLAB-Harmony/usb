@@ -81,7 +81,7 @@
       </logicalFolder>
       <logicalFolder name="f4" displayName="FreeRTOS" projectFiles="true">
         <logicalFolder name="f1" displayName="Source" projectFiles="true">
-          <logicalFolder name="f1" displayName="Include" projectFiles="true">
+          <logicalFolder name="f1" displayName="include" projectFiles="true">
             <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/croutine.h</itemPath>
             <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/event_groups.h</itemPath>
             <itemPath>../src/third_party/rtos/FreeRTOS/Source/Include/FreeRTOS.h</itemPath>
@@ -305,7 +305,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAMV71_DFP" vendor="Atmel" version="2.4.159"/>
+        <pack name="SAMV71_DFP" vendor="Atmel" version="2.4.162"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
       </packs>
       <compileType>

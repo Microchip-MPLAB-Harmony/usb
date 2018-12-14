@@ -35,11 +35,7 @@ def instantiateComponent(usbHostCdcComponent):
 	usbHostCdcClientDriverAttachListnerNumber.setDefaultValue(1)
 	usbHostCdcClientDriverAttachListnerNumber.setVisible(True)
 
-	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
-	if readValue != None:
-		Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
-		Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue + 1 , 2)
-	
+
 	##############################################################
 	# system_definitions.h file for USB Host CDC Client driver   
 	##############################################################
