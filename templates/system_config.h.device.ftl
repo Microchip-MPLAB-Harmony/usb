@@ -87,12 +87,12 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 <#if CONFIG_USB_DEVICE_CDC_INSTANCES_NUMBER?has_content && (CONFIG_USB_DEVICE_CDC_INSTANCES_NUMBER?number >= 1)>
 /* Maximum instances of CDC function driver */
-#define USB_DEVICE_CDC_INSTANCES_NUMBER     ${CONFIG_USB_DEVICE_CDC_INSTANCES_NUMBER}
+#define USB_DEVICE_CDC_INSTANCES_NUMBER                     ${CONFIG_USB_DEVICE_CDC_INSTANCES_NUMBER}
 
 /* CDC Transfer Queue Size for both read and
    write. Applicable to all instances of the
    function driver */
-#define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED ${usbDeviceCdcQueueSizeCombined}
+#define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED                 ${usbDeviceCdcQueueSizeCombined}
 
 </#if>
 

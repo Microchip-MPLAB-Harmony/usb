@@ -55,29 +55,29 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 /* Number of Endpoints used */
 <#if CONFIG_USB_DRIVER_INTERFACE == "DRV_USBHSV1_HOST_INTERFACE">
-#define DRV_USBHSV1_ENDPOINTS_NUMBER  1
+#define DRV_USBHSV1_ENDPOINTS_NUMBER                        1
 <#elseif CONFIG_USB_DRIVER_INTERFACE == "DRV_USBFSV1_HOST_INTERFACE">
-#define DRV_USBFSV1_ENDPOINTS_NUMBER  1
+#define DRV_USBFSV1_ENDPOINTS_NUMBER                        1
 </#if>
 
 /* Total number of devices to be supported */
-#define USB_HOST_DEVICES_NUMBER         ${CONFIG_USB_HOST_DEVICE_NUMNBER}
+#define USB_HOST_DEVICES_NUMBER                             ${CONFIG_USB_HOST_DEVICE_NUMNBER}
 
 /* Target peripheral list entries */
-#define  USB_HOST_TPL_ENTRIES           ${CONFIG_USB_HOST_TPL_ENTRY_NUMBER} 
+#define  USB_HOST_TPL_ENTRIES                               ${CONFIG_USB_HOST_TPL_ENTRY_NUMBER} 
 
 /* Maximum number of configurations supported per device */
-#define USB_HOST_DEVICE_INTERFACES_NUMBER     ${CONFIG_USB_HOST_MAX_INTERFACES}    
+#define USB_HOST_DEVICE_INTERFACES_NUMBER                   ${CONFIG_USB_HOST_MAX_INTERFACES}    
 
-#define USB_HOST_CONTROLLERS_NUMBER           1
+#define USB_HOST_CONTROLLERS_NUMBER                         1
 
-#define USB_HOST_TRANSFERS_NUMBER             10
+#define USB_HOST_TRANSFERS_NUMBER                           10
 
 /* Provides Host pipes number */
-#define USB_HOST_PIPES_NUMBER    10
+#define USB_HOST_PIPES_NUMBER                               10
 
 /* Number of Host Layer Clients */
-#define USB_HOST_CLIENTS_NUMBER               1   
+#define USB_HOST_CLIENTS_NUMBER                             1   
 <#--
 /*******************************************************************************
  End of File

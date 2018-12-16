@@ -45,40 +45,35 @@
 /*** USB Driver Configuration ***/
 
 /* Maximum USB driver instances */
-#define DRV_USBHSV1_INSTANCES_NUMBER  1
+#define DRV_USBHSV1_INSTANCES_NUMBER                        1
 
 /* Interrupt mode enabled */
-#define DRV_USBHSV1_INTERRUPT_MODE    true
+#define DRV_USBHSV1_INTERRUPT_MODE                          true
 
-
-<#if (USB_OPERATION_MODE?has_content)
-	  && (USB_OPERATION_MODE == "Device")>
-
+<#if (USB_OPERATION_MODE?has_content) && (USB_OPERATION_MODE == "Device")>
 /* Enables Device Support */
-#define DRV_USBHSV1_DEVICE_SUPPORT    true
+#define DRV_USBHSV1_DEVICE_SUPPORT                          true
 	
 /* Disable Host Support */
-#define DRV_USBHSV1_HOST_SUPPORT      false
-<#elseif (USB_OPERATION_MODE?has_content)
-	  && (USB_OPERATION_MODE == "Host")> 
-
+#define DRV_USBHSV1_HOST_SUPPORT                            false
+<#elseif (USB_OPERATION_MODE?has_content) && (USB_OPERATION_MODE == "Host")>
 /* Disable Device Support */
-#define DRV_USBHSV1_DEVICE_SUPPORT    false
+#define DRV_USBHSV1_DEVICE_SUPPORT                          false
 	
 /* Enable Host Support */
-#define DRV_USBHSV1_HOST_SUPPORT      true
+#define DRV_USBHSV1_HOST_SUPPORT                            true
 
 /* Number of NAKs to wait before returning transfer failure */ 
-#define DRV_USBHSV1_HOST_NAK_LIMIT      2000 
+#define DRV_USBHSV1_HOST_NAK_LIMIT                          2000 
 
 /* Maximum Number of pipes */
-#define DRV_USBHSV1_HOST_PIPES_NUMBER    10  
+#define DRV_USBHSV1_HOST_PIPES_NUMBER                       10  
 
 /* Attach Debounce duration in milli Seconds */ 
-#define DRV_USBHSV1_HOST_ATTACH_DEBOUNCE_DURATION ${USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION}
+#define DRV_USBHSV1_HOST_ATTACH_DEBOUNCE_DURATION           ${USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION}
 
 /* Reset duration in milli Seconds */ 
-#define DRV_USBHSV1_HOST_RESET_DURATION ${USB_DRV_HOST_RESET_DUARTION}
+#define DRV_USBHSV1_HOST_RESET_DURATION                     ${USB_DRV_HOST_RESET_DUARTION}
 </#if>
 <#--
 /*******************************************************************************

@@ -43,22 +43,21 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 *******************************************************************************/
 -->
 <#-- Instance 0 -->
-
 /* Number of Endpoints used */
 <#if CONFIG_USB_DRIVER_INTERFACE == "DRV_USBHSV1_DEVICE_INTERFACE">
-#define DRV_USBHSV1_ENDPOINTS_NUMBER  ${CONFIG_USB_DEVICE_ENDPOINTS_NUMBER}
+#define DRV_USBHSV1_ENDPOINTS_NUMBER                        ${CONFIG_USB_DEVICE_ENDPOINTS_NUMBER}
 <#elseif CONFIG_USB_DRIVER_INTERFACE == "DRV_USBFSV1_DEVICE_INTERFACE">
-#define DRV_USBFSV1_ENDPOINTS_NUMBER  ${CONFIG_USB_DEVICE_ENDPOINTS_NUMBER}
+#define DRV_USBFSV1_ENDPOINTS_NUMBER                        ${CONFIG_USB_DEVICE_ENDPOINTS_NUMBER}
 </#if>
 
 /* The USB Device Layer will not initialize the USB Driver */
 #define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT 
 
 /* Maximum device layer instances */
-#define USB_DEVICE_INSTANCES_NUMBER     1 
+#define USB_DEVICE_INSTANCES_NUMBER                         1 
 
 /* EP0 size in bytes */
-#define USB_DEVICE_EP0_BUFFER_SIZE      ${CONFIG_USB_DEVICE_EP0_BUFFER_SIZE}
+#define USB_DEVICE_EP0_BUFFER_SIZE                          ${CONFIG_USB_DEVICE_EP0_BUFFER_SIZE}
 
 <#if CONFIG_USB_DEVICE_EVENT_ENABLE_SOF == true>
 /* Enable SOF Events */ 
