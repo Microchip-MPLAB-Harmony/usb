@@ -19,8 +19,8 @@
           <Name dnOrder="1">bsp.c</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult/bsp/</LogicalPath>
           <PhysicalPath dnOrder="3">/bsp/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">439AB370E862363527C6DA4A15247117</GeneratedChecksum>
-          <UserChecksum dnOrder="5">439AB370E862363527C6DA4A15247117</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1A81761E8B71DEB8D8FBEA31DBFD4738</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1A81761E8B71DEB8D8FBEA31DBFD4738</UserChecksum>
         </File>
         <File dnOrder="2">
           <Type dnOrder="0">SOURCE</Type>
@@ -99,8 +99,8 @@
           <Name dnOrder="1">plib_pio.c</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult/peripheral/pio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/pio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">50AAF5BFEE84C3F60710F78B4497EF1D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">50AAF5BFEE84C3F60710F78B4497EF1D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">A364F3D745A12EE094B344878DB32598</GeneratedChecksum>
+          <UserChecksum dnOrder="5">A364F3D745A12EE094B344878DB32598</UserChecksum>
         </File>
         <File dnOrder="12">
           <Type dnOrder="0">SOURCE</Type>
@@ -235,8 +235,8 @@
           <Name dnOrder="1">bsp.h</Name>
           <LogicalPath dnOrder="2">config/sam_v71_xult/bsp/</LogicalPath>
           <PhysicalPath dnOrder="3">/bsp/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">594E79C04E466FBB5C71D9AFC8BA0E44</GeneratedChecksum>
-          <UserChecksum dnOrder="5">594E79C04E466FBB5C71D9AFC8BA0E44</UserChecksum>
+          <GeneratedChecksum dnOrder="4">520F8C0E03212FF0055A15D9CC78935D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">520F8C0E03212FF0055A15D9CC78935D</UserChecksum>
         </File>
         <File dnOrder="29">
           <Type dnOrder="0">HEADER</Type>

@@ -60,25 +60,10 @@
 // Section: BSP Macros
 // *****************************************************************************
 // *****************************************************************************
-/*** LED Macros for LED0 ***/
-#define LED0_Toggle() (PIOA_REGS->PIO_ODSR ^= (1<<23))
-#define LED0_On() (PIOA_REGS->PIO_CODR = (1<<23))
-#define LED0_Off() (PIOA_REGS->PIO_SODR = (1<<23))
-/*** LED Macros for LED1 ***/
-#define LED1_Toggle() (PIOC_REGS->PIO_ODSR ^= (1<<9))
-#define LED1_On() (PIOC_REGS->PIO_CODR = (1<<9))
-#define LED1_Off() (PIOC_REGS->PIO_SODR = (1<<9))
-/*** SWITCH Macros for SWITCH1 ***/
-#define SWITCH1_Get() ((PIOA_REGS->PIO_PDSR >> 9) & 0x1)
-#define SWITCH1_STATE_PRESSED 0
-#define SWITCH1_STATE_RELEASED 1
-/*** SWITCH Macros for SWITCH2 ***/
-#define SWITCH2_Get() ((PIOB_REGS->PIO_PDSR >> 12) & 0x1)
-#define SWITCH2_STATE_PRESSED 0
-#define SWITCH2_STATE_RELEASED 1
-/*** VBUS Macros for VBUS_HOST_EN ***/
-#define VBUS_HOST_EN_PowerEnable() (PIOC_REGS->PIO_CODR = (1<<16))
-#define VBUS_HOST_EN_PowerDisable() (PIOC_REGS->PIO_SODR = (1<<16))
+/*** LED Macros for LED ***/
+#define LED_Toggle() (PIOA_REGS->PIO_ODSR ^= (1<<23))
+#define LED_On() (PIOA_REGS->PIO_CODR = (1<<23))
+#define LED_Off() (PIOA_REGS->PIO_SODR = (1<<23))
 
 
 

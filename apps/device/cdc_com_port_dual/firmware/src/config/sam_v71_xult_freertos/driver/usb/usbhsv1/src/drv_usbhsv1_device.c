@@ -2342,8 +2342,8 @@ void _DRV_USBHSV1_DEVICE_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
     {
         /* This means this is EP0 interrupt. Read the endpoint 0 status
          * register. */
-        ep0Status = usbID->USBHS_DEVEPTISR[0] & USBHS_DEVEPTISR_Msk;
-        ep0MaskStatus = usbID->USBHS_DEVEPTIMR[0] & USBHS_DEVEPTIMR_Msk;
+        ep0Status = usbID->USBHS_DEVEPTISR[0] & USBHS_DEVEPTISR0_Msk;
+        ep0MaskStatus = usbID->USBHS_DEVEPTIMR[0] & USBHS_DEVEPTIMR0_Msk;
 
         /* Get the pointer to the endpoint 0 object */
         endpointObjReceive = hDriver->deviceEndpointObj[0];
@@ -2675,8 +2675,8 @@ void _DRV_USBHSV1_DEVICE_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
                 continue;
             }
 
-            epNonZeroStatus = usbID->USBHS_DEVEPTISR[endpointIndex] & 0x7FF7F3FFUL;
-            epNonZeroMaskStatus = usbID->USBHS_DEVEPTIMR[endpointIndex] & 0x000F70FFUL;
+            epNonZeroStatus = usbID->USBHS_DEVEPTISR[endpointIndex] & USBHS_DEVEPTISRn_Msk;
+            epNonZeroMaskStatus = usbID->USBHS_DEVEPTIMR[endpointIndex] & USBHS_DEVEPTIMRn_Msk;
 
             /* Get the pointer to the endpoint object */
             endpointObjNonZero = hDriver->deviceEndpointObj[endpointIndex];
@@ -2688,7 +2688,10 @@ void _DRV_USBHSV1_DEVICE_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
 
                 if(endpointObjNonZero->irpQueue == NULL)
                 {
-                    usbID->USBHS_DEVEPTIDR[endpointIndex] = USBHS_DEVEPTIDR_RXOUTEC_Msk;
+                    /* Clear the interrupt */
+                    usbID->USBHS_DEVEPTICR[endpointIndex] = USBHS_DEVEPTICR_RXOUTIC_Msk;
+                    
+                    usbID->USBHS_DEVEPTIDR[endpointIndex] = USBHS_DEVEPTIDR_FIFOCONC_Msk;
                 }
                 else
                 {

@@ -95,7 +95,7 @@ const USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[2] =
         .numberOfInterfaces = 2,                            /* Number of interfaces */
         .funcDriverIndex = 1,                               /* Index of CDC Function Driver */
         .driver = (void*)USB_DEVICE_CDC_FUNCTION_DRIVER,    /* USB CDC function data exposed to device layer */
-        .funcDriverInit = (void*)&cdcInit1                 /* Function driver init data */
+        .funcDriverInit = (void*)&cdcInit1                  /* Function driver init data */
     },
 
 
@@ -153,12 +153,15 @@ const uint8_t highSpeedConfigurationDescriptor[]=
 
     0x09,                                               // Size of this descriptor in bytes
     USB_DESCRIPTOR_CONFIGURATION,                       // Descriptor Type
-    USB_DEVICE_16bitTo8bitArrange(141),   				//(141 Bytes)Size of the Config descriptor
-    4,                                                   // Number of interfaces in this cfg
+    USB_DEVICE_16bitTo8bitArrange(141),              //(141 Bytes)Size of the Config descriptor
+    4,                                        // Number of interfaces in this cfg
     0x01,                                               // Index value of this configuration
     0x00,                                               // Configuration string index
     USB_ATTRIBUTE_DEFAULT | USB_ATTRIBUTE_SELF_POWERED, // Attributes
     50,
+	
+	/* Descriptor for Function - CDC     */ 
+    /* Interface Association Descriptor: CDC Function*/
     0x08,   // Size of this descriptor in bytes
     0x0B,   // Interface association descriptor type
     0,   // The first associated interface
@@ -350,12 +353,16 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
 
     0x09,                                               // Size of this descriptor in bytes
     USB_DESCRIPTOR_CONFIGURATION,                       // Descriptor Type
-    USB_DEVICE_16bitTo8bitArrange(141),					//(141 Bytes)Size of the Config descriptor
-    4,             // Number of interfaces in this cfg
+    USB_DEVICE_16bitTo8bitArrange(141),                  //(141 Bytes)Size of the Config descriptor
+    4,                                                  // Number of interfaces in this cfg
     0x01,                                               // Index value of this configuration
     0x00,                                               // Configuration string index
     USB_ATTRIBUTE_DEFAULT | USB_ATTRIBUTE_SELF_POWERED, // Attributes
     50,
+	
+	
+	/* Descriptor for Function - CDC     */ 
+    /* Interface Association Descriptor: CDC Function*/
     0x08,   // Size of this descriptor in bytes
     0x0B,   // Interface association descriptor type
     0,   // The first associated interface
@@ -590,7 +597,6 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
         USB_DESCRIPTOR_STRING,
 		{'C','D','C',' ','D','u','a','l',' ','C','O','M',' ','P','o','r','t',' ','D','e','m','o'}
     }; 
-
 /***************************************
  * Array of string descriptors
  ***************************************/
@@ -600,7 +606,6 @@ USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[3]=
     (const uint8_t *const)&sd001,
     (const uint8_t *const)&sd002
 };
-
 
 /*******************************************
  * USB Device Layer Master Descriptor Table 

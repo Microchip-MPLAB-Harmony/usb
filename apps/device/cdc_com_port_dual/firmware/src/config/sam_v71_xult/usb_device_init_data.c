@@ -597,7 +597,6 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
         USB_DESCRIPTOR_STRING,
 		{'C','D','C',' ','D','u','a','l',' ','C','O','M',' ','P','o','r','t',' ','D','e','m','o'}
     }; 
-
 /***************************************
  * Array of string descriptors
  ***************************************/
@@ -607,7 +606,6 @@ USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[3]=
     (const uint8_t *const)&sd001,
     (const uint8_t *const)&sd002
 };
-
 
 /*******************************************
  * USB Device Layer Master Descriptor Table 
