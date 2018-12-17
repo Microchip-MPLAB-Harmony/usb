@@ -64,11 +64,11 @@ def instantiateComponent(usbDriverComponent):
 	usbVbusSense.setUseSingleDynamicValue(True)
 	usbVbusSense.setDependencies(blUSBDriverOperationModeDevice, ["USB_OPERATION_MODE"])
 	
-	usbVbusSenseFunctionName = usbDriverComponent.createStringSymbol("USB_DEVICE_VBUS_SENSE_PIN_NAME", usbOpMode)
+	usbVbusSenseFunctionName = usbDriverComponent.createStringSymbol("USB_DEVICE_VBUS_SENSE_PIN_NAME", usbVbusSense)
 	usbVbusSenseFunctionName.setLabel("VBUS SENSE Pin Name")
-	usbVbusSenseFunctionName.setDefaultValue("USB_VBUS_INState")
+	usbVbusSenseFunctionName.setDefaultValue("USB_VBUS_SENSE")
 	usbVbusSenseFunctionName.setVisible(True)
-	usbVbusSenseFunctionName.setDependencies(blUSBDriverOperationModeDevice, ["USB_OPERATION_MODE"])
+	usbVbusSenseFunctionName.setDependencies(blUsbVbusPinName, ["USB_DEVICE_VBUS_SENSE"])
 	
 	# USB Driver Host mode Attach de-bounce duration 
 	usbDriverHostAttachDebounce = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION", usbOpMode)
@@ -379,4 +379,11 @@ def blUSBDriverOperationModeChanged(usbSymbolSource, event):
 		
 def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
 	print(ownerComponent, dependencyID, dependentComponent)
+	
+def blUsbVbusPinName(usbSymbolSource, event):
+	if (event["value"] == True):
+		usbSymbolSource.setVisible(True)
+	else:
+		usbSymbolSource.setVisible(False)
+	
 	

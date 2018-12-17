@@ -49,6 +49,21 @@ def instantiateComponent(usbDriverComponent):
 	usbOpMode.setDefaultValue("Device")
 	usbOpMode.setUseSingleDynamicValue(True)
 	
+	usbVbusSense = usbDriverComponent.createBooleanSymbol("USB_DEVICE_VBUS_SENSE", usbOpMode)
+	usbVbusSense.setLabel("Enable VBUS Sense")
+	usbVbusSense.setDescription("A Self Powered USB Device firmware must have some means to detect VBUS from Host. A GPIO pin can be configured as an Input and connected to VBUS (through a resistor), and can be used to detect when VBUS is high (host actively powering). This configuration instructs MHC to generate a VBUS SENSE function. The GPIO pin name must be configured as in the below ")
+	usbVbusSense.setVisible(True)
+	usbVbusSense.setDescription("Select USB Operation Mode")
+	usbVbusSense.setDefaultValue(True)
+	usbVbusSense.setUseSingleDynamicValue(True)
+	usbVbusSense.setDependencies(blUSBDriverOperationModeDevice, ["USB_OPERATION_MODE"])
+	
+	usbVbusSenseFunctionName = usbDriverComponent.createStringSymbol("USB_DEVICE_VBUS_SENSE_PIN_NAME", usbVbusSense)
+	usbVbusSenseFunctionName.setLabel("VBUS SENSE Pin Name")
+	usbVbusSenseFunctionName.setDefaultValue("USB_VBUS_SENSE")
+	usbVbusSenseFunctionName.setVisible(True)
+	usbVbusSenseFunctionName.setDependencies(blUsbVbusPinName, ["USB_DEVICE_VBUS_SENSE"])
+	
 	# USB Driver Host mode Attach de-bounce duration 
 	usbDriverHostAttachDebounce = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION", usbOpMode)
 	usbDriverHostAttachDebounce.setLabel("Attach De-bounce Duration (mSec)")
@@ -219,12 +234,12 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverSystemTasksFile = usbDriverComponent.createFileSymbol(None, None)
 	usbDriverSystemTasksFile.setType("STRING")
 	usbDriverSystemTasksFile.setOutputName("core.LIST_SYSTEM_TASKS_C_CALL_LIB_TASKS")
-	usbDriverSystemTasksFile.setSourcePath("templates/system_tasks_c_driver.ftl")
+	usbDriverSystemTasksFile.setSourcePath("templates/driver/usbfsv1/system_tasks_c_driver.ftl")
 	usbDriverSystemTasksFile.setMarkup(True)
 	usbDriverSystemTasksFileRTOS = usbDriverComponent.createFileSymbol("USB_DRIVER_SYS_RTOS_TASK", None)
 	usbDriverSystemTasksFileRTOS.setType("STRING")
 	usbDriverSystemTasksFileRTOS.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS")
-	usbDriverSystemTasksFileRTOS.setSourcePath("templates/system_tasks_c_driver_rtos.ftl")
+	usbDriverSystemTasksFileRTOS.setSourcePath("templates/driver/usbfsv1/system_tasks_c_driver_rtos.ftl")
 	usbDriverSystemTasksFileRTOS.setMarkup(True)
 	usbDriverSystemTasksFileRTOS.setEnabled(enable_rtos_settings)
 	
@@ -342,7 +357,13 @@ def blDrvUsbHsV1HostSourceFile (usbSymbolSource, event):
 		usbSymbolSource.setEnabled(False)
 	elif (event["value"] == "Host"):
 		usbSymbolSource.setEnabled(True)
-		
+
+def blUSBDriverOperationModeDevice(usbSymbolSource, event):
+	if (event["value"] == "Host"):
+		usbSymbolSource.setVisible(False)
+	else:
+		usbSymbolSource.setVisible(True)
+	
 def blUSBDriverOperationModeChanged(usbSymbolSource, event):
 	if (event["value"] == "Device"):
 		usbSymbolSource.setVisible(False)
@@ -351,4 +372,11 @@ def blUSBDriverOperationModeChanged(usbSymbolSource, event):
 		
 def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
 	print(ownerComponent, dependencyID, dependentComponent)
+	
+def blUsbVbusPinName(usbSymbolSource, event):
+	if (event["value"] == True):
+		usbSymbolSource.setVisible(True)
+	else:
+		usbSymbolSource.setVisible(False)
+	
 	
