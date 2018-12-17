@@ -49,6 +49,15 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 
+/*** Application Instance 0 Configuration ***/
+
+#define APP_READ_BUFFER_SIZE 512
+
+/* Macro defines USB internal DMA Buffer criteria*/
+
+#define APP_MAKE_BUFFER_DMA_READY  __attribute__((aligned(16)))
+    
+    
 // *****************************************************************************
 /* Application states
 

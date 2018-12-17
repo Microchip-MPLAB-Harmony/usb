@@ -419,8 +419,7 @@ void APP_Initialize ( void )
 	USART1_WriteCallbackRegister(APP_WriteCallback, 0);
 	USART1_ReadCallbackRegister(APP_ReadCallback, 0);
 
-    APP_LED0_Off();
-    APP_LED1_Off();
+    LED_Off();
 }
 
 
@@ -459,8 +458,7 @@ void APP_Tasks ( void )
                 /* Application waits for device configuration. */
                 appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
                 
-                APP_LED0_Off();
-                APP_LED1_Off();
+                LED_Off();
             }
             else
             {
@@ -477,8 +475,7 @@ void APP_Tasks ( void )
             {
                 /* Schedule the first read from CDC function driver */
 
-                APP_LED0_Off();
-                APP_LED1_On();
+                LED_Off();
                 
                 appData.state = APP_STATE_CHECK_CDC_READ;
                 appData.isCDCReadComplete = false;
@@ -508,8 +505,7 @@ void APP_Tasks ( void )
 
 					appData.isUSARTWriteComplete = false;
 
-                    APP_LED0_Toggle();
-                    APP_LED1_Toggle();
+                    LED_Toggle();
 
                     /* This means we have sent all the data. We schedule the next
                      * CDC Read. */
@@ -538,8 +534,7 @@ void APP_Tasks ( void )
             /* Check if a character was received on the UART */
             if(appData.isUSARTReadComplete == true)
             {
-                APP_LED0_Toggle();
-                APP_LED1_Toggle();
+                LED_Toggle();
 
                 USB_DEVICE_CDC_Write(0, &appData.writeTransferHandle,
                         &appData.uartReceivedData, 1,
