@@ -16,26 +16,26 @@
 *******************************************************************************/
 
 /*******************************************************************************
-Copyright (c) 2017 released Microchip Technology Inc.  All rights reserved.
-
-Microchip licenses to you the right to use, modify, copy and distribute
-Software only when embedded on a Microchip microcontroller or digital signal
-controller that is integrated into your product or third party product
-(pursuant to the sublicense terms in the accompanying license agreement).
-
-You should refer to the license agreement accompanying this Software for
-additional information regarding your rights and obligations.
-
-SOFTWARE AND DOCUMENTATION ARE PROVIDED AS IS  WITHOUT  WARRANTY  OF  ANY  KIND,
-EITHER EXPRESS  OR  IMPLIED,  INCLUDING  WITHOUT  LIMITATION,  ANY  WARRANTY  OF
-MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A  PARTICULAR  PURPOSE.
-IN NO EVENT SHALL MICROCHIP OR  ITS  LICENSORS  BE  LIABLE  OR  OBLIGATED  UNDER
-CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION,  BREACH  OF  WARRANTY,  OR
-OTHER LEGAL  EQUITABLE  THEORY  ANY  DIRECT  OR  INDIRECT  DAMAGES  OR  EXPENSES
-INCLUDING BUT NOT LIMITED TO ANY  INCIDENTAL,  SPECIAL,  INDIRECT,  PUNITIVE  OR
-CONSEQUENTIAL DAMAGES, LOST  PROFITS  OR  LOST  DATA,  COST  OF  PROCUREMENT  OF
-SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
-(INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
+* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+*
+* Subject to your compliance with these terms, you may use Microchip software
+* and any derivatives exclusively with Microchip products. It is your
+* responsibility to comply with third party license terms applicable to your
+* use of third party software (including open source software) that may
+* accompany Microchip software.
+*
+* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+* PARTICULAR PURPOSE.
+*
+* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
 #include "device.h"
@@ -61,17 +61,16 @@ void static USART1_ISR_RX_Handler( void )
         /* Check if the buffer is done */
         if(usart1Obj.rxProcessedSize >= usart1Obj.rxSize)
         {
+
+            usart1Obj.rxBusyStatus = false;
+
+            /* Disable Read, Overrun, Parity and Framing error interrupts */
+            USART1_REGS->US_IDR = (US_IDR_RXRDY_Msk | US_IDR_USART_LIN_FRAME_Msk | US_IDR_USART_LIN_PARE_Msk | US_IDR_OVRE_Msk);
+
             if(usart1Obj.rxCallback != NULL)
             {
                 usart1Obj.rxCallback(usart1Obj.rxContext);
             }
-
-            usart1Obj.rxBusyStatus = false;
-            usart1Obj.rxSize = 0;
-            usart1Obj.rxProcessedSize = 0;
-
-            /* Disable Read, Overrun, Parity and Framing error interrupts */
-            USART1_REGS->US_IDR = (US_IDR_RXRDY_Msk | US_IDR_USART_LIN_FRAME_Msk | US_IDR_USART_LIN_PARE_Msk | US_IDR_OVRE_Msk);
         }
     }
     else
@@ -96,8 +95,6 @@ void static USART1_ISR_TX_Handler( void )
         if(usart1Obj.txProcessedSize >= usart1Obj.txSize)
         {
             usart1Obj.txBusyStatus = false;
-            usart1Obj.txSize = 0;
-            usart1Obj.txProcessedSize = 0;
             USART1_REGS->US_IDR = US_IDR_TXEMPTY_Msk;
 
             if(usart1Obj.txCallback != NULL)
@@ -124,19 +121,17 @@ void USART1_InterruptHandler( void )
     {
         /* Client must call USARTx_ErrorGet() function to clear the errors */
 
+        /* Disable Read, Overrun, Parity and Framing error interrupts */
+        USART1_REGS->US_IDR = (US_IDR_RXRDY_Msk | US_IDR_USART_LIN_FRAME_Msk | US_IDR_USART_LIN_PARE_Msk | US_IDR_OVRE_Msk);
+
+        usart1Obj.rxBusyStatus = false;
+
         /* USART errors are normally associated with the receiver, hence calling
-         * receiver context */
+         * receiver callback */
         if( usart1Obj.rxCallback != NULL )
         {
             usart1Obj.rxCallback(usart1Obj.rxContext);
         }
-
-        usart1Obj.rxBusyStatus = false;
-        usart1Obj.rxSize = 0;
-        usart1Obj.rxProcessedSize = 0;
-
-        /* Disable Read, Overrun, Parity and Framing error interrupts */
-        USART1_REGS->US_IDR = (US_IDR_RXRDY_Msk | US_IDR_USART_LIN_FRAME_Msk | US_IDR_USART_LIN_PARE_Msk | US_IDR_OVRE_Msk);
     }
 
     /* Receiver status */
@@ -182,10 +177,10 @@ void USART1_Initialize( void )
     USART1_REGS->US_CR = (US_CR_TXEN_Msk | US_CR_RXEN_Msk);
 
     /* Configure USART1 mode */
-    USART1_REGS->US_MR = ((US_MR_USCLKS_MCK) | (0 << US_MR_USART_MODE9_Pos) | US_MR_CHRL_8_BIT | US_MR_USART_PAR_NO | US_MR_USART_NBSTOP_1_BIT | (0 << US_MR_USART_SYNC_Pos) | (0 << US_MR_USART_OVER_Pos));
+    USART1_REGS->US_MR = (US_MR_USCLKS_MCK | US_MR_CHRL_8_BIT | US_MR_USART_PAR_NO | US_MR_USART_NBSTOP_1_BIT | (0 << US_MR_USART_OVER_Pos));
 
     /* Configure USART1 Baud Rate */
-    USART1_REGS->US_BRGR = US_BRGR_CD(81);
+    USART1_REGS->US_BRGR = US_BRGR_CD(976);
 
     /* Initialize instance object */
     usart1Obj.rxBuffer = NULL;
@@ -207,19 +202,7 @@ USART_ERROR USART1_ErrorGet( void )
     USART_ERROR errors = USART_ERROR_NONE;
     uint32_t status = USART1_REGS->US_CSR;
 
-    /* Collect all errors */
-    if(status & US_CSR_OVRE_Msk)
-    {
-        errors = USART_ERROR_OVERRUN;
-    }
-    if(status & US_CSR_USART_LIN_PARE_Msk)
-    {
-        errors |= USART_ERROR_PARITY;
-    }
-    if(status & US_CSR_USART_LIN_FRAME_Msk)
-    {
-        errors |= USART_ERROR_FRAMING;
-    }
+    errors = (USART_ERROR)(status & (US_CSR_OVRE_Msk | US_CSR_USART_LIN_PARE_Msk | US_CSR_USART_LIN_FRAME_Msk));
 
     if(errors != USART_ERROR_NONE)
     {
@@ -232,15 +215,11 @@ USART_ERROR USART1_ErrorGet( void )
 
 bool USART1_SerialSetup( USART_SERIAL_SETUP *setup, uint32_t srcClkFreq )
 {
-    bool status = true;
-    uint32_t clk = srcClkFreq;
     uint32_t baud = setup->baudRate;
     uint32_t brgVal = 0;
     uint32_t overSampVal = 0;
-    uint32_t mode9Val = 0;
-    uint32_t charLengthVal = 0;
-    uint32_t parityVal = 0;
-    uint32_t stopBitsVal = 0;
+    uint32_t usartMode;
+    bool status = false;
 
     if((usart1Obj.rxBusyStatus == true) || (usart1Obj.txBusyStatus == true))
     {
@@ -248,105 +227,33 @@ bool USART1_SerialSetup( USART_SERIAL_SETUP *setup, uint32_t srcClkFreq )
         return false;
     }
 
-    if(clk == 0)
+    if (setup != NULL)
     {
-        clk = USART1_FrequencyGet();
-    }
+        baud = setup->baudRate;
+        if(srcClkFreq == 0)
+        {
+            srcClkFreq = USART1_FrequencyGet();
+        }
 
-    /* Calculate BRG value */
-    if (clk >= (16 * baud))
-    {
-        brgVal = (clk / (16 * baud));
-    }
-    else
-    {
-        brgVal = (clk / (8 * baud));
-        overSampVal = (1 << US_MR_USART_OVER_Pos) & US_MR_USART_OVER_Msk;
-    }
+        /* Calculate BRG value */
+        if (srcClkFreq >= (16 * baud))
+        {
+            brgVal = (srcClkFreq / (16 * baud));
+        }
+        else
+        {
+            brgVal = (srcClkFreq / (8 * baud));
+            overSampVal = US_MR_USART_OVER(1);
+        }
 
-    /* Get Data width values */
-    switch(setup->dataWidth)
-    {
-        case USART_DATA_5_BIT:
-        case USART_DATA_6_BIT:
-        case USART_DATA_7_BIT:
-        case USART_DATA_8_BIT:
-        {
-            charLengthVal = US_MR_CHRL(setup->dataWidth);
-            break;
-        }
-        case USART_DATA_9_BIT:
-        {
-            mode9Val = (1 << US_MR_USART_MODE9_Pos) & US_MR_USART_MODE9_Msk;
-            break;
-        }
-        default:
-        {
-            status = false;
-            break;
-        }
-    }
-
-    /* Get Parity values */
-    switch(setup->parity)
-    {
-        case USART_PARITY_ODD:
-        case USART_PARITY_MARK:
-        {
-            parityVal = US_MR_USART_PAR(setup->parity);
-            break;
-        }
-        case USART_PARITY_NONE:
-        {
-            parityVal = US_MR_USART_PAR_NO;
-            break;
-        }
-        case USART_PARITY_EVEN:
-        {
-            parityVal = US_MR_USART_PAR_EVEN;
-            break;
-        }
-        case USART_PARITY_SPACE:
-        {
-            parityVal = US_MR_USART_PAR_SPACE;
-            break;
-        }
-        case USART_PARITY_MULTIDROP:
-        {
-            parityVal = US_MR_USART_PAR_MULTIDROP;
-            break;
-        }
-        default:
-        {
-            status = false;
-            break;
-        }
-    }
-
-    /* Get Stop bit values */
-    switch(setup->stopBits)
-    {
-        case USART_STOP_1_BIT:
-        case USART_STOP_1_5_BIT:
-        case USART_STOP_2_BIT:
-        {
-            stopBitsVal = US_MR_USART_NBSTOP(setup->stopBits);
-            break;
-        }
-        default:
-        {
-            status = false;
-            break;
-        }
-    }
-
-    if(status != false)
-    {
         /* Configure USART1 mode */
-        USART1_REGS->US_MR = (mode9Val | charLengthVal | parityVal | stopBitsVal | (0 << US_MR_USART_SYNC_Pos) | overSampVal);
+        usartMode = USART1_REGS->US_MR;
+        usartMode &= ~(US_MR_CHRL_Msk | US_MR_USART_MODE9_Msk | US_MR_USART_PAR_Msk | US_MR_USART_NBSTOP_Msk | US_MR_USART_OVER_Msk);
+        USART1_REGS->US_MR = usartMode | (setup->dataWidth | setup->parity | setup->stopBits | overSampVal);
 
         /* Configure USART1 Baud Rate */
         USART1_REGS->US_BRGR = US_BRGR_CD(brgVal);
+        status = true;
     }
 
     return status;
@@ -410,20 +317,19 @@ bool USART1_Write( void *buffer, const size_t size )
     return status;
 }
 
-bool USART1_WriteCallbackRegister( USART_CALLBACK callback, uintptr_t context )
+
+void USART1_WriteCallbackRegister( USART_CALLBACK callback, uintptr_t context )
 {
     usart1Obj.txCallback = callback;
-    usart1Obj.txContext = context;
 
-    return true;
+    usart1Obj.txContext = context;
 }
 
-bool USART1_ReadCallbackRegister( USART_CALLBACK callback, uintptr_t context )
+void USART1_ReadCallbackRegister( USART_CALLBACK callback, uintptr_t context )
 {
     usart1Obj.rxCallback = callback;
-    usart1Obj.rxContext = context;
 
-    return true;
+    usart1Obj.rxContext = context;
 }
 
 bool USART1_WriteIsBusy( void )

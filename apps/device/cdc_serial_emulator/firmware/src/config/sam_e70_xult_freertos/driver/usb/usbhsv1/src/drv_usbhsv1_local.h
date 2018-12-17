@@ -74,6 +74,14 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define USBHS_DEVEPTIMR0_Msk                                (0x000F77FFUL)
 #define USBHS_DEVEPTISRn_Msk                                (0x7FF7F3FFUL)
 #define USBHS_DEVEPTIMRn_Msk                                (0x000F70FFUL)
+#define USBHS_HSTPIPICR_TXSTPIC_Msk                         USBHS_HSTPIPICR_CTRL_TXSTPIC_Msk
+#define USBHS_HSTPIPIER_TXSTPES_Msk                         USBHS_HSTPIPIER_CTRL_TXSTPES_Msk
+#define USBHS_HSTPIPIER_RXSTALLDES_Msk                      USBHS_HSTPIPIER_CTRL_RXSTALLDES_Msk
+#define USBHS_HSTPIPIDR_TXSTPEC_Msk                         USBHS_HSTPIPIDR_CTRL_TXSTPEC_Msk
+#define USBHS_HSTPIPISR_RXSTALLDI_Msk                       USBHS_HSTPIPISR_CTRL_RXSTALLDI_Msk
+#define USBHS_HSTPIPICR_RXSTALLDIC_Msk                      USBHS_HSTPIPICR_CTRL_RXSTALLDIC_Msk
+#define USBHS_HSTPIPISR_TXSTPI_Msk                          USBHS_HSTPIPISR_CTRL_TXSTPI_Msk
+
 
 #ifndef USBHSV1_RAM_ADDR
 #define USBHSV1_RAM_ADDR                                      0xA0100000u
