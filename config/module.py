@@ -40,7 +40,7 @@ def loadModule():
 	print("create component: USB Device MSD")
 	usbDeviceMsdComponent = Module.CreateGeneratorComponent("usb_device_msd", "MSD Function Driver", "/Libraries/USB/Device Stack", "config/usb_device_msd_common.py", "config/usb_device_msd.py")
 	usbDeviceMsdComponent.addDependency("usb_device_dependency", "USB_DEVICE", True, True)
-	usbDeviceMsdComponent.addDependency("usb_device_msd_meida_dependency", "DRV_MEDIA", False, True)
+	usbDeviceMsdComponent.addDependency("usb_device_msd_media_dependency", "DRV_MEDIA", False, True)
 	usbDeviceMsdComponent.addCapability("USB Device", "USB_DEVICE_MSD")
 	
 	# Create USB Host Stack Component 

@@ -316,17 +316,67 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
 		</#if>
     }; 
 </#if>
-
+<#if CONFIG_USB_DEVICE_USE_MSD == true>
+/******************************************************************************
+ * Serial number string descriptor.  Note: This should be unique for each unit
+ * built on the assembly line.  Plugging in two units simultaneously with the
+ * same serial number into a single machine can cause problems.  Additionally,
+ * not all hosts support all character values in the serial number string.  The
+ * MSD Bulk Only Transport (BOT) specs v1.0 restrict the serial number to
+ * consist only of ASCII characters "0" through "9" and capital letters "A"
+ * through "F".
+ ******************************************************************************/
+ <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
+const struct __attribute__ ((packed))
+    {
+        uint8_t stringIndex;    //Index of the string descriptor
+        uint16_t languageID ;   // Language ID of this string.
+        uint8_t bLength;        // Size of this descriptor in bytes
+        uint8_t bDscType;       // STRING descriptor type 
+        uint16_t string[12];    // String
+    }
+    sd003 =
+    {
+        3,       // Index of this string descriptor is 3. 
+        0x0409,  // Language ID of this string descriptor is 0x0409 (English)
+        sizeof(sd003)-sizeof(sd003.stringIndex)-sizeof(sd003.languageID),
+        USB_DESCRIPTOR_STRING,
+		{'1','2','3','4','5','6','7','8','9','9','9','9'}
+    };
+<#else>
+const struct
+{
+    uint8_t bLength;
+    uint8_t bDscType;
+    uint16_t string[12];
+}
+sd003 =
+{
+    sizeof(sd003),
+    USB_DESCRIPTOR_STRING,
+    {'1','2','3','4','5','6','7','8','9','9','9','9'}
+};
+</#if>
+</#if>
 /***************************************
  * Array of string descriptors
  ***************************************/
+ <#if CONFIG_USB_DEVICE_USE_MSD == true>
+ USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[4]=
+{
+    (const uint8_t *const)&sd000,
+    (const uint8_t *const)&sd001,
+    (const uint8_t *const)&sd002,
+	(const uint8_t *const)&sd003
+};
+ <#else>
 USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[3]=
 {
     (const uint8_t *const)&sd000,
     (const uint8_t *const)&sd001,
     (const uint8_t *const)&sd002
 };
-
+</#if>
 
 /*******************************************
  * USB Device Layer Master Descriptor Table 

@@ -112,6 +112,9 @@ usbDeviceHidEPNumberIntIn = []
 usbDeviceEndpointReadQueueSize = []
 usbDeviceEndpointWriteQueueSize = []
 
+usbDeviceMsdSupport = None
+usbDeviceMsdDiskImageFile = None
+
 def setVisible(symbol, event):
 	if (event["value"] == True):
 		symbol.setVisible(True)
@@ -126,15 +129,36 @@ def showRTOSMenu(symbol, event):
 	symbol.setVisible(show_rtos_menu)
 
 
-def onDependencyConnected(info):
-    print("USB driver connected")
-    print(info["localComponent"].getID())
-    print(info["dependencyID"])
-    print(info["remoteComponent"].getID())
-    print(info["capabilityID"])
+def onAttachmentConnected(source, target):
+	global usbDeviceMsdSupport
+	dependencyID = source["id"]
+	ownerComponent = source["component"]
+	remoteComponent = target["component"]
+	remoteID = remoteComponent.getID()
+	connectID = source["id"]
+	targetID = target["id"]
+	if (remoteID == "usb_device_msd"):
+		usbDeviceMsdSupport.setValue(True, 2)
+		
+
+	
+	
+def onAttachmentDisconnected(source, target):
+	global usbDeviceMsdSupport
+	dependencyID = source["id"]
+	ownerComponent = source["component"]
+	remoteComponent = target["component"]
+	remoteID = remoteComponent.getID()
+	connectID = source["id"]
+	targetID = target["id"]
+	if (remoteID == "usb_device_msd"):
+		usbDeviceMsdSupport.setValue(False, 2)
+	
+		
 
 def instantiateComponent(usbDeviceComponent):	
-
+	global usbDeviceMsdSupport
+	global usbDeviceMsdDiskImageFile
 	res = Database.activateComponents(["HarmonyCore"])
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
 		res = Database.activateComponents(["drv_usbhs_v1"])
@@ -291,6 +315,11 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceIadEnable.setDefaultValue(False)
 	usbDeviceIadEnable.setUseSingleDynamicValue(True)
 	
+	# USB Device MSD Support 
+	usbDeviceMsdSupport = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_USE_MSD", None)
+	usbDeviceMsdSupport.setVisible(False)
+	usbDeviceMsdSupport.setDefaultValue(False)
+	usbDeviceMsdSupport.setUseSingleDynamicValue(True)
 	
 	configName = Variables.get("__CONFIGURATION_NAME")
 	
@@ -431,7 +460,14 @@ def instantiateComponent(usbDeviceComponent):
 	
 	usbExternalDependenciesFile = usbDeviceComponent.createFileSymbol(None, None)
 	addFileName('usb_external_dependencies.h', usbDeviceComponent, usbExternalDependenciesFile, "src/", "/usb/src", True, None)
-		
+	
+	################################################
+	# USB Device Application files  
+	################################################
+	usbDeviceMsdDiskImageFile = usbDeviceComponent.createFileSymbol(None, None)
+	addFileName('diskImage.c', usbDeviceComponent, usbDeviceMsdDiskImageFile, "templates/", "", False, None)
+	
+	
 # all files go into src/
 def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callback):
 	configName1 = Variables.get("__CONFIGURATION_NAME")
@@ -464,11 +500,18 @@ def blUSBDeviceFeatureEnableMicrosoftOsDescriptor(usbSymbolSource, event):
 		usbSymbolSource.setVisible(False)
 						
 def blUSBDeviceProductIDSelection(usbSymbolSource, event):
+	global usbDeviceMsdDiskImageFile
 	index = usbDeviceDemoList.index(event["value"])
 	usbSymbolSource.setValue(usbDeviceDemoProductList[index],2)
+	if any(x in usbDeviceDemoList[index] for x in ["msd_basic_demo", "hid_msd_demo" , "cdc_msd_basic_demo" , "cdc_serial_emulator_msd_demo"]):
+		usbDeviceMsdDiskImageFile.setEnabled(True)
+		print ("Disk Image Enabled")
+	else:
+		usbDeviceMsdDiskImageFile.setEnabled(False)
 	
 def blUSBDeviceProductStringSelection(usbSymbolSource, event):
 	index = usbDeviceDemoList.index(event["value"])
 	usbSymbolSource.setValue(usbDeviceProductStringList[index],2)
+	
 	
 		

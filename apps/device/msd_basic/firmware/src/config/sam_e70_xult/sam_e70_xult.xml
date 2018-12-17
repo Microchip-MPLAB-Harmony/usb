@@ -3161,13 +3161,6 @@
             <User dnOrder="0" value="Full Speed"/>
           </Values>
         </Combo>
-        <Menu dnOrder="2" id="__MENUSYMBOL_0">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </Menu>
       </Symbols>
     </UniqueComponent>
     <UniqueComponent dnOrder="6" id="efc">
@@ -3181,7 +3174,7 @@
         </Boolean>
         <Integer dnOrder="1" id="MEMORY_MEDIA_SIZE">
           <Values dnOrder="0">
-            <User dnOrder="0" value="1024"/>
+            <User dnOrder="0" value="32768"/>
           </Values>
         </Integer>
       </Symbols>
@@ -3526,13 +3519,21 @@
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="usb_device_msd_0" priority="2" value="32"/>
+              <Value dnOrder="1" id="usb_device_msd_0" priority="2" value="32"/>
+              <Value dnOrder="2" id="usb_device_msd_0" priority="2" value="32"/>
+              <Value dnOrder="3" id="usb_device_msd_0" priority="2" value="32"/>
+              <Value dnOrder="4" id="usb_device_msd_0" priority="2" value="32"/>
             </Dynamic>
           </Values>
         </Integer>
         <Integer dnOrder="1" id="CONFIG_USB_DEVICE_ENDPOINTS_NUMBER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="usb_device_msd_0" priority="2" value="2"/>
+              <Value dnOrder="0" id="usb_device_msd_0" priority="2" value="3"/>
+              <Value dnOrder="1" id="usb_device_msd_0" priority="2" value="3"/>
+              <Value dnOrder="2" id="usb_device_msd_0" priority="2" value="3"/>
+              <Value dnOrder="3" id="usb_device_msd_0" priority="2" value="3"/>
+              <Value dnOrder="4" id="usb_device_msd_0" priority="2" value="2"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -3542,7 +3543,11 @@
               <Value dnOrder="0" id="usb_device_msd_0" priority="2" value="1"/>
               <Value dnOrder="1" id="usb_device_msd_0" priority="2" value="1"/>
               <Value dnOrder="2" id="usb_device_msd_0" priority="2" value="1"/>
-              <Value dnOrder="3" id="usb_device_msd_0" priority="2" value="2"/>
+              <Value dnOrder="3" id="usb_device_msd_0" priority="2" value="1"/>
+              <Value dnOrder="4" id="usb_device_msd_0" priority="2" value="1"/>
+              <Value dnOrder="5" id="usb_device_msd_0" priority="2" value="1"/>
+              <Value dnOrder="6" id="usb_device_msd_0" priority="2" value="1"/>
+              <Value dnOrder="7" id="usb_device_msd_0" priority="2" value="2"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -3550,6 +3555,10 @@
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="usb_device_msd_0" priority="2" value="1"/>
+              <Value dnOrder="1" id="usb_device_msd_0" priority="2" value="1"/>
+              <Value dnOrder="2" id="usb_device_msd_0" priority="2" value="1"/>
+              <Value dnOrder="3" id="usb_device_msd_0" priority="2" value="1"/>
+              <Value dnOrder="4" id="usb_device_msd_0" priority="2" value="1"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -3579,6 +3588,16 @@
             </Dynamic>
           </Values>
         </String>
+        <Boolean dnOrder="8" id="CONFIG_USB_DEVICE_USE_MSD">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="usb_device" priority="2" value="true"/>
+              <Value dnOrder="1" id="usb_device" priority="2" value="true"/>
+              <Value dnOrder="2" id="usb_device" priority="2" value="true"/>
+              <Value dnOrder="3" id="usb_device" priority="2" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
       </Symbols>
     </UniqueComponent>
     <GeneratorComponent dnOrder="11" id="usb_device_msd">
@@ -3621,7 +3640,7 @@
                   <Value dnOrder="0" id="usb_device_msd_0" priority="2" value="1"/>
                   <Value dnOrder="1" id="usb_device_msd_0" priority="2" value="1"/>
                   <Value dnOrder="2" id="usb_device_msd_0" priority="2" value="1"/>
-                  <Value dnOrder="3" id="usb_device_msd_0" priority="2" value="1"/>
+                  <Value dnOrder="3" id="usb_device_msd_0" priority="2" value="2"/>
                 </Dynamic>
               </Values>
             </Integer>
@@ -3634,7 +3653,7 @@
             </String>
           </Symbols>
           <Attachments dnOrder="1">
-            <DirectDependency dnOrder="0" id="usb_device_msd_meida_dependency">
+            <DirectDependency dnOrder="0" id="usb_device_msd_media_dependency">
               <Attributes dnOrder="0">
                 <String dnOrder="0" id="targetComponentID">
                   <Value dnOrder="0">drv_memory_0</Value>
@@ -3654,9 +3673,9 @@
     <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_E70_Xplained_Ultra" x="21" y="68"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="476" y="27"/>
-        <ElementPosition dnOrder="2" id="cmsis" x="340" y="20"/>
-        <ElementPosition dnOrder="3" id="core" x="240" y="20"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="417" y="33"/>
+        <ElementPosition dnOrder="2" id="cmsis" x="285" y="23"/>
+        <ElementPosition dnOrder="3" id="core" x="205" y="21"/>
         <ElementPosition dnOrder="4" id="dfp" x="20" y="20"/>
         <ElementPosition dnOrder="5" id="drv_memory" x="237" y="220"/>
         <ElementPosition dnOrder="6" id="drv_usbhs_v1" x="20" y="137"/>

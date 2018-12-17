@@ -282,17 +282,37 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
         USB_DESCRIPTOR_STRING,
 		{'S','i','m','p','l','e',' ','M','S','D',' ','D','e','v','i','c','e',' ','D','e','m','o'}
     }; 
-
+/******************************************************************************
+ * Serial number string descriptor.  Note: This should be unique for each unit
+ * built on the assembly line.  Plugging in two units simultaneously with the
+ * same serial number into a single machine can cause problems.  Additionally,
+ * not all hosts support all character values in the serial number string.  The
+ * MSD Bulk Only Transport (BOT) specs v1.0 restrict the serial number to
+ * consist only of ASCII characters "0" through "9" and capital letters "A"
+ * through "F".
+ ******************************************************************************/
+const struct
+{
+    uint8_t bLength;
+    uint8_t bDscType;
+    uint16_t string[12];
+}
+sd003 =
+{
+    sizeof(sd003),
+    USB_DESCRIPTOR_STRING,
+    {'1','2','3','4','5','6','7','8','9','9','9','9'}
+};
 /***************************************
  * Array of string descriptors
  ***************************************/
-USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[3]=
+ USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[4]=
 {
     (const uint8_t *const)&sd000,
     (const uint8_t *const)&sd001,
-    (const uint8_t *const)&sd002
+    (const uint8_t *const)&sd002,
+	(const uint8_t *const)&sd003
 };
-
 
 /*******************************************
  * USB Device Layer Master Descriptor Table 

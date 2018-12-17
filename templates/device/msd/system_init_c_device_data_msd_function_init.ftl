@@ -68,7 +68,7 @@ USB_DEVICE_MSD_MEDIA_INIT_DATA __attribute__((aligned(16))) msdMediaInit${CONFIG
         512,
         sectorBuffer,
         NULL,
-        (void *)diskImage,
+        NULL,
         {
             0x00,    // peripheral device is connected, direct access block device
             0x80,    // removable
