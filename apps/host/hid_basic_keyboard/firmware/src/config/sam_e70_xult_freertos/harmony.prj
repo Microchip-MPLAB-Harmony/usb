@@ -283,8 +283,8 @@
           <Name dnOrder="1">usb_host_hid.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult_freertos/usb/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">CFB2290E94F66BDE18865EB62E75B824</GeneratedChecksum>
-          <UserChecksum dnOrder="5">CFB2290E94F66BDE18865EB62E75B824</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BC721413CC4E7950041D3BD9E87638DC</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BC721413CC4E7950041D3BD9E87638DC</UserChecksum>
         </File>
         <File dnOrder="35">
           <Type dnOrder="0">SOURCE</Type>
