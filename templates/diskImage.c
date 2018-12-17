@@ -52,7 +52,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 const unsigned char 
     __attribute__((space(prog),aligned(DRV_MEMORY_DEVICE_PROGRAM_SIZE)))
     __attribute__((address(DRV_MEMORY_DEVICE_START_ADDRESS)))
-    diskImage[32768] = 
+    diskImage[DRV_MEMORY_DEVICE_MEDIA_SIZE] = 
 {
     /* Master Boot Record - LBA 0 */
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
