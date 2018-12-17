@@ -47,11 +47,11 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-
+#include <stdbool.h>
 #include "usb/usb_host_hid_keyboard.h"
 #include "usb/src/usb_host_hid_keyboard_local.h"
-#include "system/debug/sys_debug.h"
-#include "system/tmr/sys_tmr.h"
+#include "usb/src/usb_external_dependencies.h"
+#include "system/time/sys_time.h"
 #include "usb/usb_host_hid.h"
 
 
@@ -709,7 +709,7 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                             
                                             keyboardData[keyboardIndex].appData.nonModifierKeysData
                                                     [keyboardData[keyboardIndex].appData.nNonModifierKeysData].sysCount
-                                                    = SYS_TMR_SystemCountGet();
+                                                    = SYS_TIME_CounterGet();
                                             keyboardData[keyboardIndex].appData.nNonModifierKeysData++;
                                         }
                                     
@@ -746,7 +746,7 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                                     = USB_HID_KEY_RELEASED;
                                                 keyboardData[keyboardIndex].appData.nonModifierKeysData
                                                     [keyboardData[keyboardIndex].appData.nNonModifierKeysData].event
-                                                    = SYS_TMR_SystemCountGet();
+                                                    = SYS_TIME_CounterGet();
                                                 keyboardData[keyboardIndex].appData.nNonModifierKeysData++;
                                             }
                                             else

@@ -51,7 +51,6 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include "usb/usb_host_hid_keyboard.h"
 #include "usb/src/usb_host_hid_keyboard_local.h"
 #include "usb/src/usb_external_dependencies.h"
-//#include "system/debug/sys_debug.h"
 #include "system/time/sys_time.h"
 #include "usb/usb_host_hid.h"
 

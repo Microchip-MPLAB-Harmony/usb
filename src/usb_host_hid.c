@@ -47,7 +47,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-
+#include <stdbool.h>
+#include <stdlib.h>
 #include "usb/usb_host_hid.h"
 #include "usb/src/usb_host_hid_local.h"
 #include "usb/src/usb_host_local.h"

@@ -284,7 +284,7 @@ void _DRV_USBHSV1_HOST_IRPTransmitSetupPacket
     hstPipeCfg |= USBHS_HSTPIPCFG_PTOKEN(0);
     usbID->USBHS_HSTPIPCFG[0] = hstPipeCfg;
     /* Clear Setup Ready interrupt */
-	usbID->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_BLK_TXSTPIC_Msk;
+	usbID->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_TXSTPIC_Msk;
 	ptrEPData =   (volatile uint8_t *)&drv_usbhsv1_get_pipe_fifo_access(0);
 
    /* Load the endpoint FIFO with the user data */
@@ -302,7 +302,7 @@ void _DRV_USBHSV1_HOST_IRPTransmitSetupPacket
     }
    
     /* Enable setup ready interrupt */
-    usbID->USBHS_HSTPIPIER[0] = USBHS_HSTPIPIER_BLK_TXSTPES_Msk;
+    usbID->USBHS_HSTPIPIER[0] = USBHS_HSTPIPIER_TXSTPES_Msk;
     /* Clear FIFOCON and Unfreeze pipe */
     usbID->USBHS_HSTPIPIDR[0] = (USBHS_HSTPIPIDR_FIFOCONC_Msk | USBHS_HSTPIPIDR_PFREEZEC_Msk);
 
@@ -892,7 +892,7 @@ DRV_USBHSV1_HOST_PIPE_HANDLE DRV_USBHSV1_HOST_PipeSetup
 
         /* Always enable stall and error interrupts of control endpoint */
         /* Enable Stall Interrupt */
-        hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_BLK_RXSTALLDES_Msk;
+        hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_RXSTALLDES_Msk;
         /* Enable Pipe Error Interrupt */
         hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_PERRES_Msk;
         /* Enable Pipe Interrupt */
@@ -945,7 +945,7 @@ DRV_USBHSV1_HOST_PIPE_HANDLE DRV_USBHSV1_HOST_PipeSetup
                 Wr_bitfield((&hDriver->usbID->USBHS_HSTADDR1)[(pipeIter)>>2], 0x7F << (((pipeIter)&0x03)<<3), deviceAddress);
                 
                 /* Enable Stall Interrupt */
-                hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_BLK_RXSTALLDES_Msk;
+                hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_RXSTALLDES_Msk;
                 /* Enable Pipe Error Interrupt */
                 hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_PERRES_Msk;
                 /* Enable Pipe Interrupt */
@@ -1032,7 +1032,7 @@ void _DRV_USBHSV1_HOST_ControlTransferProcess(DRV_USBHSV1_OBJ * hDriver)
     }
 
 	/* Disable setup, IN and OUT interrupts of control endpoint */
-	usbMod->USBHS_HSTPIPIDR[0] = (USBHS_HSTPIPIDR_BLK_TXSTPEC_Msk | USBHS_HSTPIPIDR_RXINEC_Msk | USBHS_HSTPIPIDR_TXOUTEC_Msk);
+	usbMod->USBHS_HSTPIPIDR[0] = (USBHS_HSTPIPIDR_TXSTPEC_Msk | USBHS_HSTPIPIDR_RXINEC_Msk | USBHS_HSTPIPIDR_TXOUTEC_Msk);
 
     /* If here means, we have a valid IRP and pipe.  Check the status register.
      * The IRP could have been aborted. This would be known in the temp state.
@@ -1049,7 +1049,7 @@ void _DRV_USBHSV1_HOST_ControlTransferProcess(DRV_USBHSV1_OBJ * hDriver)
         Set_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (0)));
         Clr_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (0)));
     }
-    else if(USBHS_HSTPIPISR_BLK_RXSTALLDI_Msk == (USBHS_HSTPIPISR_BLK_RXSTALLDI_Msk & usbMod->USBHS_HSTPIPISR[0]))
+    else if(USBHS_HSTPIPISR_RXSTALLDI_Msk == (USBHS_HSTPIPISR_RXSTALLDI_Msk & usbMod->USBHS_HSTPIPISR[0]))
     {
         /* This means the packet was stalled. Set the error status and then
          * clear the stall bit */
@@ -1057,7 +1057,7 @@ void _DRV_USBHSV1_HOST_ControlTransferProcess(DRV_USBHSV1_OBJ * hDriver)
         endIRP = true;
         irp->status = USB_HOST_IRP_STATUS_ERROR_STALL;
         /* Clear Stall Interrupt */
-        usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_BLK_RXSTALLDIC_Msk;
+        usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_RXSTALLDIC_Msk;
 	    /* Reset DATA Toggle */
         usbMod->USBHS_HSTPIPIER[0] = USBHS_HSTPIPIER_RSTDTS_Msk;
         /* Reset Pipe*/
@@ -1085,13 +1085,13 @@ void _DRV_USBHSV1_HOST_ControlTransferProcess(DRV_USBHSV1_OBJ * hDriver)
         switch(irp->tempState)
         {
              case DRV_USBHSV1_HOST_IRP_STATE_SETUP_STAGE:
-				if (USBHS_HSTPIPISR_BLK_TXSTPI_Msk == (USBHS_HSTPIPISR_BLK_TXSTPI_Msk & usbMod->USBHS_HSTPIPISR[0]))
+				if (USBHS_HSTPIPISR_TXSTPI_Msk == (USBHS_HSTPIPISR_TXSTPI_Msk & usbMod->USBHS_HSTPIPISR[0]))
                 {
 					 /* SETUP packet sent */
                      /* Freeze Pipe */
 					 usbMod->USBHS_HSTPIPIER[0] = USBHS_HSTPIPIER_PFREEZES_Msk;
                      /* Clear Tx Setup Ready Interrupt */
-                     usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_BLK_TXSTPIC_Msk;
+                     usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_TXSTPIC_Msk;
 					 
 				}
 				else
@@ -1438,7 +1438,7 @@ void _DRV_USBHSV1_HOST_NonControlTransferProcess
         endIRP = true;
         irp->status = USB_HOST_IRP_STATUS_ABORTED;
     }
-    else if(USBHS_HSTPIPISR_BLK_RXSTALLDI_Msk == (USBHS_HSTPIPISR_BLK_RXSTALLDI_Msk & usbMod->USBHS_HSTPIPISR[hostPipe]))
+    else if(USBHS_HSTPIPISR_RXSTALLDI_Msk == (USBHS_HSTPIPISR_RXSTALLDI_Msk & usbMod->USBHS_HSTPIPISR[hostPipe]))
     {
         /* This means the packet was stalled. Set the error status and then
          * clear the stall bit */
@@ -1446,7 +1446,7 @@ void _DRV_USBHSV1_HOST_NonControlTransferProcess
         endIRP = true;
         irp->status = USB_HOST_IRP_STATUS_ERROR_STALL;
         /* Clear Stall Interrupt */
-        usbMod->USBHS_HSTPIPICR[hostPipe] = USBHS_HSTPIPICR_BLK_RXSTALLDIC_Msk;
+        usbMod->USBHS_HSTPIPICR[hostPipe] = USBHS_HSTPIPICR_RXSTALLDIC_Msk;
 	    /* Reset DATA Toggle */
         usbMod->USBHS_HSTPIPIER[hostPipe] = USBHS_HSTPIPIER_RSTDTS_Msk;
         /* Reset Pipe*/

@@ -62,6 +62,27 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define DRV_USBHSV1_HOST_MAXIMUM_ENDPOINTS_NUMBER           10
 #define DRV_USBHSV1_MAX_DMA_CHANNELS                        7
 
+#define USBHS_DEVEPTIER_STALLRQS_Msk                        USBHS_DEVEPTIER_CTRL_STALLRQS_Msk
+#define USBHS_DEVEPTIDR_STALLRQC_Msk                        USBHS_DEVEPTIDR_CTRL_STALLRQC_Msk
+#define USBHS_DEVEPTISR_STALLEDI_Msk                        USBHS_DEVEPTISR_CTRL_STALLEDI_Msk
+#define USBHS_DEVEPTIER_RXSTPES_Msk                         USBHS_DEVEPTIER_CTRL_RXSTPES_Msk
+#define USBHS_DEVEPTIDR_RXSTPEC_Msk                         USBHS_DEVEPTIDR_CTRL_RXSTPEC_Msk
+#define USBHS_DEVEPTICR_RXSTPIC_Msk                         USBHS_DEVEPTICR_CTRL_RXSTPIC_Msk
+#define USBHS_DEVEPTIMR_RXSTPE_Msk                          USBHS_DEVEPTIMR_CTRL_RXSTPE_Msk
+#define USBHS_DEVEPTISR_RXSTPI_Msk                          USBHS_DEVEPTISR_CTRL_RXSTPI_Msk
+#define USBHS_DEVEPTISR0_Msk                                (0x7FF7F7FFUL)
+#define USBHS_DEVEPTIMR0_Msk                                (0x000F77FFUL)
+#define USBHS_DEVEPTISRn_Msk                                (0x7FF7F3FFUL)
+#define USBHS_DEVEPTIMRn_Msk                                (0x000F70FFUL)
+#define USBHS_HSTPIPICR_TXSTPIC_Msk                         USBHS_HSTPIPICR_CTRL_TXSTPIC_Msk
+#define USBHS_HSTPIPIER_TXSTPES_Msk                         USBHS_HSTPIPIER_CTRL_TXSTPES_Msk
+#define USBHS_HSTPIPIER_RXSTALLDES_Msk                      USBHS_HSTPIPIER_CTRL_RXSTALLDES_Msk
+#define USBHS_HSTPIPIDR_TXSTPEC_Msk                         USBHS_HSTPIPIDR_CTRL_TXSTPEC_Msk
+#define USBHS_HSTPIPISR_RXSTALLDI_Msk                       USBHS_HSTPIPISR_CTRL_RXSTALLDI_Msk
+#define USBHS_HSTPIPICR_RXSTALLDIC_Msk                      USBHS_HSTPIPICR_CTRL_RXSTALLDIC_Msk
+#define USBHS_HSTPIPISR_TXSTPI_Msk                          USBHS_HSTPIPISR_CTRL_TXSTPI_Msk
+
+
 #ifndef USBHSV1_RAM_ADDR
 #define USBHSV1_RAM_ADDR                                      0xA0100000u
 #endif

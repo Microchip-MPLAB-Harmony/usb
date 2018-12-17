@@ -34,8 +34,11 @@ const USB_HOST_TPL_ENTRY USBTPList[1] =
 
 const USB_HOST_HCD hcdTable = 
 {
+	/* Index of the USB Driver used by the Host Layer */
     .drvIndex = DRV_USBHSV1_INDEX_0,
-    .hcdInterface = DRV_USBHSV1_HOST_INTERFACE
+
+    /* Pointer to the USB Driver Functions. */
+    .hcdInterface = DRV_USBHSV1_HOST_INTERFACE,
 };
 
 const USB_HOST_INIT usbHostInitData = 

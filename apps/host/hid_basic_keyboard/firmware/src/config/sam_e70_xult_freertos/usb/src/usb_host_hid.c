@@ -51,7 +51,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #include <stdlib.h>
 #include "usb/usb_host_hid.h"
 #include "usb/src/usb_host_hid_local.h"
-#include "usb/usb_host.h"
+#include "usb/src/usb_host_local.h"
 #include "usb/usb_host_client_driver.h"
 //#include "system/debug/sys_debug.h"
 
@@ -1943,7 +1943,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_ReportDescriptorGet
 
         /* Allocate the memory for Report Descriptor Buffer */
         hidInstanceInfo->reportDescBuffer = 
-            USB_HOST_MALLOC((size_t)(hidInstanceInfo->reportDescLength));
+                USB_HOST_MALLOC((size_t)(hidInstanceInfo->reportDescLength));
         if(NULL == hidInstanceInfo->reportDescBuffer)
         {
             /* Memory Allocation failed */

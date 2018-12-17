@@ -389,19 +389,7 @@ void APP_USART_Tasks(void)
            DRV_USART_WriteBufferAdd(appData.usartDriverHandle, 
                     appData.string , sizeof( appData.string ), &appData.WriteBufHandler );
             
-         
-            
-//            if(appData.WriteBufHandler !=  DRV_USART_BUFFER_HANDLE_INVALID)
-//            {
-//                /* This means all the data was written. Clear the flag
-//                 * so the application know we are done. Change the state
-//                 * to continue check if another string needs to be 
-//                 * sent. */
-//                
-//                appData.stringReady = false;
-//                appData.usartTaskState = APP_USART_STATE_CHECK_FOR_STRING_TO_SEND;
-//            }
-            appData.stringReady = false;
+             appData.stringReady = false;
             appData.usartTaskState = APP_USART_STATE_CHECK_FOR_STRING_TO_SEND;
         break;
             
@@ -482,18 +470,18 @@ void APP_Tasks ( void )
             break;
 
         case APP_STATE_READ_HID:
-            appData.stringReady = false;
+            
             if(appData.usartTaskState == APP_USART_STATE_CHECK_FOR_STRING_TO_SEND)
             {
-                /* We can send Data to USART but need to check*/
-                appData.stringSize = 64;
-                memset(&appData.string, 0, sizeof(appData.string));
-                
                 /* We need to display only the non modifier keys */
                 for(count = 0; count < 6; count++)
                 {
                     if(appData.data.nonModifierKeysData[count].event == USB_HID_KEY_PRESSED)
                     {
+                        appData.stringReady = false;
+                        /* We can send Data to USART but need to check*/
+                        appData.stringSize = 64;
+                        memset(&appData.string, 0, sizeof(appData.string));
                         for(counter = 0; counter < 6; counter++)
                         {
                             if((appData.lastData.data.nonModifierKeysData[counter].event == USB_HID_KEY_PRESSED)
