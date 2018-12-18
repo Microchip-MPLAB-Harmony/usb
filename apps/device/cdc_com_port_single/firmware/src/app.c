@@ -55,7 +55,12 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "app.h"
 
-
+#define APP_MAKE_BUFFER_DMA_READY
+#define APP_READ_BUFFER_SIZE 512
+#define BSP_LEDOn(a)
+#define BSP_LEDOff(a)
+#define APP_USB_SWITCH_DEBOUNCE_COUNT_FS 260
+#define APP_USB_SWITCH_DEBOUNCE_COUNT_HS 500
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -217,8 +222,7 @@ void APP_USBDeviceEventHandler ( USB_DEVICE_EVENT event, void * eventData, uintp
         case USB_DEVICE_EVENT_RESET:
 
             /* Update LED to show reset state */
-            APP_LED0_Off();
-            APP_LED1_Off();
+            LED_Off();
 
             appData.isConfigured = false;
 
@@ -226,13 +230,12 @@ void APP_USBDeviceEventHandler ( USB_DEVICE_EVENT event, void * eventData, uintp
 
         case USB_DEVICE_EVENT_CONFIGURED:
 
-            /* Check the configuration. We only support configuration 1 */
+            /* Check the configuratio. We only support configuration 1 */
             configuredEventData = (USB_DEVICE_EVENT_DATA_CONFIGURED*)eventData;
             if ( configuredEventData->configurationValue == 1)
             {
                 /* Update LED to show configured state */
-                APP_LED0_On();
-                APP_LED1_Off();
+                LED_On(); 
                 
                 /* Register the CDC Device application event handler here.
                  * Note how the appData object pointer is passed as the
@@ -256,17 +259,15 @@ void APP_USBDeviceEventHandler ( USB_DEVICE_EVENT event, void * eventData, uintp
 
             /* VBUS is not available any more. Detach the device. */
             USB_DEVICE_Detach(appData.deviceHandle);
-            
-            APP_LED0_Off();
-            APP_LED1_Off();
-            
+            LED_Off();
             break;
 
         case USB_DEVICE_EVENT_SUSPENDED:
 
             /* Switch LED to show suspended state */
-            APP_LED0_Off();
-            APP_LED1_On();
+            BSP_LEDOff ( APP_USB_LED_1 );
+            BSP_LEDOn ( APP_USB_LED_2 );
+            BSP_LEDOn ( APP_USB_LED_3 );
             break;
 
         case USB_DEVICE_EVENT_RESUMED:
@@ -286,7 +287,7 @@ void APP_ProcessSwitchPress()
 {
     /* This function checks if the switch is pressed and then
      * debounces the switch press*/
-    if(APP_SWITCH0_STATE_PRESSED == (APP_SWITCH0_Get()))
+    if(SWITCH_STATE_PRESSED == (SWITCH_Get()))
     {
         if(appData.ignoreSwitchPress)
         {
