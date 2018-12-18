@@ -4,15 +4,15 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <logicalFolder name="f3" displayName="arm" projectFiles="true">
+      <logicalFolder name="f2" displayName="arm" projectFiles="true">
         <itemPath>../src/arm/toolchain_specifics.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_e70_xult" projectFiles="true">
-          <logicalFolder name="f1" displayName="bsp" projectFiles="true">
+          <logicalFolder name="f3" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_e70_xult/bsp/bsp.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="driver" projectFiles="true">
+          <logicalFolder name="f1" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="usb" projectFiles="true">
               <logicalFolder name="f1" displayName="usbhsv1" projectFiles="true">
                 <logicalFolder name="f1" displayName="src" projectFiles="true">
@@ -47,7 +47,7 @@
             <itemPath>../src/config/sam_e70_xult/system/system_common.h</itemPath>
             <itemPath>../src/config/sam_e70_xult/system/system_module.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="usb" projectFiles="true">
+          <logicalFolder name="f2" displayName="usb" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/usb/src/usb_device_local.h</itemPath>
               <itemPath>../src/config/sam_e70_xult/usb/src/usb_device_mapping.h</itemPath>
@@ -107,7 +107,7 @@
         <itemPath>../src/config/sam_e70_xult/osal/osal_definitions.h</itemPath>
         <itemPath>../src/config/sam_e70_xult/osal/osal_freertos.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f2" displayName="packs" projectFiles="true">
+      <logicalFolder name="f3" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAME70Q21B_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
             <itemPath>../src/packs/ATSAME70Q21B_DFP/component/acc.h</itemPath>
@@ -186,10 +186,10 @@
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_e70_xult" projectFiles="true">
-          <logicalFolder name="f1" displayName="bsp" projectFiles="true">
+          <logicalFolder name="f2" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_e70_xult/bsp/bsp.c</itemPath>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="driver" projectFiles="true">
+          <logicalFolder name="f1" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="usb" projectFiles="true">
               <logicalFolder name="f1" displayName="usbhsv1" projectFiles="true">
                 <logicalFolder name="f1" displayName="src" projectFiles="true">

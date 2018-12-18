@@ -94,6 +94,14 @@ extern "C" {
 // Section: Middleware & Other Library Configuration
 // *****************************************************************************
 // *****************************************************************************
+/* Maximum instances of CDC function driver */
+#define USB_DEVICE_CDC_INSTANCES_NUMBER                     1
+
+/* CDC Transfer Queue Size for both read and
+   write. Applicable to all instances of the
+   function driver */
+#define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED                 4
+
 /*** USB Driver Configuration ***/
 
 /* Maximum USB driver instances */
@@ -107,14 +115,6 @@ extern "C" {
 	
 /* Disable Host Support */
 #define DRV_USBHSV1_HOST_SUPPORT                            false
-
-/* Maximum instances of CDC function driver */
-#define USB_DEVICE_CDC_INSTANCES_NUMBER                     1
-
-/* CDC Transfer Queue Size for both read and
-   write. Applicable to all instances of the
-   function driver */
-#define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED                 4
 
 /* Number of Endpoints used */
 #define DRV_USBHSV1_ENDPOINTS_NUMBER                        4

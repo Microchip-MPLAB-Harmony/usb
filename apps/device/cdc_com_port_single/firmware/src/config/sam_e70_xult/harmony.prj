@@ -379,8 +379,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">D1EAF17D570E151DEE4CD55D39844299</GeneratedChecksum>
-          <UserChecksum dnOrder="5">D1EAF17D570E151DEE4CD55D39844299</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4F49C26D7B232CEE1E5FFCF67AD0E6D7</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4F49C26D7B232CEE1E5FFCF67AD0E6D7</UserChecksum>
         </File>
         <File dnOrder="47">
           <Type dnOrder="0">HEADER</Type>
@@ -411,8 +411,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8D26770327677DD24DF6B0E4B47B6FCE</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8D26770327677DD24DF6B0E4B47B6FCE</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0C28A981C2A52F4B3B12B5F2106ED5AE</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0C28A981C2A52F4B3B12B5F2106ED5AE</UserChecksum>
         </File>
         <File dnOrder="51">
           <Type dnOrder="0">HEADER</Type>
@@ -1059,8 +1059,8 @@
           <Name dnOrder="1">user.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">4B3C3EF8A318908A22B78500515C3288</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4B3C3EF8A318908A22B78500515C3288</UserChecksum>
+          <GeneratedChecksum dnOrder="4"/>
+          <UserChecksum dnOrder="5"/>
         </File>
         <File dnOrder="132">
           <Type dnOrder="0">HEADER</Type>
