@@ -65,7 +65,6 @@
 #include "usb/usb_host_cdc.h"
 #include "usb/usb_cdc.h"
 #include "peripheral/tc/plib_tc0.h"
-#include "bsp/bsp.h"
 #include "system/int/sys_int.h"
 #include "osal/osal.h"
 #include "system/time/sys_time.h"
