@@ -211,8 +211,8 @@
           <Name dnOrder="1">usb_host_init_data.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">48456B95B871CA2648C48784D6F82FD9</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9DA0A7A08835D49A8BB0E7010B9B50AF</UserChecksum>
+          <GeneratedChecksum dnOrder="4">55389104167EF034BF511498E44E746F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">55389104167EF034BF511498E44E746F</UserChecksum>
         </File>
         <File dnOrder="26">
           <Type dnOrder="0">SOURCE</Type>
@@ -355,8 +355,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">6A3A33B974021BCF36E5BC10ADD5ED10</GeneratedChecksum>
-          <UserChecksum dnOrder="5">82B11377E355ED297CBB8E0125B7EF87</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F2A3910836F5078C4E8E5D768A2CC953</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F2A3910836F5078C4E8E5D768A2CC953</UserChecksum>
         </File>
         <File dnOrder="44">
           <Type dnOrder="0">HEADER</Type>

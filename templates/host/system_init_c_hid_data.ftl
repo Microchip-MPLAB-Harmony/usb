@@ -1,17 +1,24 @@
- /*******************************************************************************
-  USB Host Initialization File
+<#--
+/*******************************************************************************
+  USB Device Freemarker Template File
+
+  Company:
+    Microchip Technology Inc.
 
   File Name:
-    usb_host_intit_data.c
+    system_init_c_hid_data.ftl
 
   Summary:
-    This file contains source code necessary to initialize USB Host Stack.
+    USB Device Freemarker Template File
 
   Description:
-    This file contains source code necessary to initialize USB Host Stack.
- *******************************************************************************/
+    This file contains configurations necessary to run the system.  It
+    implements the "SYS_Initialize" function, configuration bits, and allocates
+    any necessary global system resources, such as the systemObjects structure
+    that contains the object handles to all the MPLAB Harmony module objects in
+    the system.
+*******************************************************************************/
 
-// DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -34,10 +41,8 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
-// DOM-IGNORE-END
-#include "configuration.h"
-#include "definitions.h" 
-
+-->
+<#if CONFIG_USB_HOST_USE_KEYBOARD == true>
 USB_HOST_HID_USAGE_DRIVER_INTERFACE usageDriverInterface =
 {
   .initialize = NULL,
@@ -54,6 +59,25 @@ USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY usageDriverTableEntry[1] =
         .interface = &usageDriverInterface
     }
 };
+</#if>
+<#if CONFIG_USB_HOST_USE_MOUSE == true>
+USB_HOST_HID_USAGE_DRIVER_INTERFACE usageDriverInterface =
+{
+  .initialize = NULL,
+  .deinitialize = NULL,
+  .usageDriverEventHandler = _USB_HOST_HID_MOUSE_EventHandler,
+  .usageDriverTask = _USB_HOST_HID_MOUSE_Task
+};
+
+USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY usageDriverTableEntry[1] =
+{
+    {
+        .usage = (USB_HID_USAGE_PAGE_GENERIC_DESKTOP_CONTROLS << 16) | USB_HID_USAGE_MOUSE,
+        .initializeData = NULL,
+        .interface = &usageDriverInterface
+    }
+};
+</#if>
 
 
 USB_HOST_HID_INIT hidInitData =
@@ -62,28 +86,8 @@ USB_HOST_HID_INIT hidInitData =
     .usageDriverTable = usageDriverTableEntry
 };
 
-
-
-const USB_HOST_TPL_ENTRY USBTPList[1] = 
-{
-	TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL(0x03, 0x01, 0x01, &hidInitData,  USB_HOST_HID_INTERFACE),
-
-
-};
-
-const USB_HOST_HCD hcdTable = 
-{
-	/* Index of the USB Driver used by the Host Layer */
-    .drvIndex = DRV_USBHSV1_INDEX_0,
-
-    /* Pointer to the USB Driver Functions. */
-    .hcdInterface = DRV_USBHSV1_HOST_INTERFACE,
-};
-
-const USB_HOST_INIT usbHostInitData = 
-{
-    .nTPLEntries = 1 ,
-    .tplList = (USB_HOST_TPL_ENTRY *)USBTPList,
-    .hostControllerDrivers = (USB_HOST_HCD *)&hcdTable    
-};
-// </editor-fold>
+<#--
+/*******************************************************************************
+ End of File
+*/
+-->

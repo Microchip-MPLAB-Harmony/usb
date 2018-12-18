@@ -24,6 +24,12 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
  -->
 #include "usb/usb_host_hid.h"
 #include "usb/usb_hid.h"
+<#if CONFIG_USB_HOST_USE_KEYBOARD == true>
+#include "usb/usb_host_hid_keyboard.h"
+</#if>
+<#if CONFIG_USB_HOST_USE_MOUSE == true>
+#include "usb/usb_host_hid_mouse.h"
+</#if>
 <#--
 /*******************************************************************************
  End of File

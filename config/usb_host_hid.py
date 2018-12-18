@@ -1,3 +1,26 @@
+usbHostHidClientDriverInstancesNumber = None 
+usbHostHidClientDriverIntEPsNumber = None 
+usbHostHidClientDriverTotalUsageInst = None 
+usbHostHidClientDriverPushPopStackSize = None 
+usbHostHidClientDriverMouse = None 
+usbHostHidClientDriverMouseButtonsNumber = None 
+usbHostHidClientDriverKeyboard = None
+usbHostHidSystemDefFile = None
+usbHostHidSystemConfigFile = None
+usbHostHidInitFile = None
+usbHostHidTplEntryFile = None
+usbHostHidHeaderFile  = None
+usbHidHeaderFile  = None
+usbHostHidSourceFile  = None
+usbHostHidLocalHeaderFile  = None
+usbHostHidKeyboardSourceFile  = None
+usbHostHidKeyboardHeaderFile  = None
+usbHostHidKeyboardLocalHeaderFile  = None
+usbHostHidMouseSourceFile  = None
+usbHostHidMouseHeaderFile  = None
+usbHostHidMouseLocalHeaderFile  = None
+
+
 def onAttachmentConnected(source, target):
 	ownerComponent = source["component"]
 	print("USB Host Layer Connected")
@@ -33,7 +56,35 @@ def keyBoardEnable(symbol, event):
 	else:
 		symbol.setEnabled(False)
 
+def setVisible (symbol, event):	
+	if (event["value"] == True):
+		symbol.setVisible(True)
+	else:
+		symbol.setVisible(False)
+		
 def instantiateComponent(usbHostHidComponent):
+	
+	global usbHostHidClientDriverInstancesNumber
+	global usbHostHidClientDriverIntEPsNumber 
+	global usbHostHidClientDriverTotalUsageInst 
+	global usbHostHidClientDriverPushPopStackSize  
+	global usbHostHidClientDriverMouse  
+	global usbHostHidClientDriverMouseButtonsNumber  
+	global usbHostHidClientDriverKeyboard 
+	global usbHostHidSystemDefFile 
+	global usbHostHidSystemConfigFile 
+	global usbHostHidInitFile 
+	global usbHostHidTplEntryFile 
+	global usbHostHidHeaderFile  
+	global usbHidHeaderFile  
+	global usbHostHidSourceFile 
+	global usbHostHidLocalHeaderFile  
+	global usbHostHidKeyboardSourceFile 
+	global usbHostHidKeyboardHeaderFile  
+	global usbHostHidKeyboardLocalHeaderFile  
+	global usbHostHidMouseSourceFile 
+	global usbHostHidMouseHeaderFile 
+	global usbHostHidMouseLocalHeaderFile  
 
 	res = Database.activateComponents(["usb_host"])
 
@@ -67,21 +118,22 @@ def instantiateComponent(usbHostHidComponent):
 	
 	# USB Host HID Client driver Mouse 
 	usbHostHidClientDriverMouse = usbHostHidComponent.createBooleanSymbol("CONFIG_USB_HOST_USE_MOUSE", None)
-	usbHostHidClientDriverMouse.setLabel("Use HID Host Mouse Driver")
+	usbHostHidClientDriverMouse.setLabel("Use Mouse Driver")
 	usbHostHidClientDriverMouse.setDescription("Selecting this will include HID Host Mouse Usage Driver into the project.")
 	usbHostHidClientDriverMouse.setVisible(True)
 	usbHostHidClientDriverMouse.setDefaultValue(False)
 	
 	# USB Host HID Client driver Mouse Buttons Number 
-	usbHostHidClientDriverMouseButtonsNumber = usbHostHidComponent.createIntegerSymbol("CONFIG_USB_HOST_HID_MOUSE_BUTTONS_NUMBER", None)
-	usbHostHidClientDriverMouseButtonsNumber.setLabel("Number of Mouse buttons whose value will be captured per HID Mouse device")
+	usbHostHidClientDriverMouseButtonsNumber = usbHostHidComponent.createIntegerSymbol("CONFIG_USB_HOST_HID_MOUSE_BUTTONS_NUMBER", usbHostHidClientDriverMouse)
+	usbHostHidClientDriverMouseButtonsNumber.setLabel("Number of Mouse buttons")
 	usbHostHidClientDriverMouseButtonsNumber.setDescription("Enter the Number of Mouse buttons whose value will be captured per HID Mouse device")
 	usbHostHidClientDriverMouseButtonsNumber.setVisible(False)
 	usbHostHidClientDriverMouseButtonsNumber.setDefaultValue(False)
+	usbHostHidClientDriverMouseButtonsNumber.setDependencies(setVisible, ["CONFIG_USB_HOST_USE_MOUSE"])
 	
 	# USB Host HID Client driver Keyboard 
 	usbHostHidClientDriverKeyboard = usbHostHidComponent.createBooleanSymbol("CONFIG_USB_HOST_USE_KEYBOARD", None)
-	usbHostHidClientDriverKeyboard.setLabel("Use HID Host Keyboard Driver")
+	usbHostHidClientDriverKeyboard.setLabel("Use Keyboard Driver")
 	usbHostHidClientDriverKeyboard.setDescription("Selecting this will include HID Host Keyboard Usage Driver into the project.")
 	usbHostHidClientDriverKeyboard.setVisible(True)
 	usbHostHidClientDriverKeyboard.setDefaultValue(False)
@@ -110,7 +162,7 @@ def instantiateComponent(usbHostHidComponent):
 	usbHostHidInitFile = usbHostHidComponent.createFileSymbol(None, None)
 	usbHostHidInitFile.setType("STRING")
 	usbHostHidInitFile.setOutputName("usb_host.LIST_USB_HOST_CLIENT_INIT_DATA")
-	usbHostHidInitFile.setSourcePath("templates/host/system_init_c_host_data_hid_function_init.ftl")
+	usbHostHidInitFile.setSourcePath("templates/host/system_init_c_hid_data.ftl")
 	usbHostHidInitFile.setMarkup(True)
 	
 	
