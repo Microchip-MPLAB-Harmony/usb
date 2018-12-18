@@ -97,18 +97,16 @@ extern "C" {
 /*** USB Driver Configuration ***/
 
 /* Maximum USB driver instances */
-#define DRV_USBHSV1_INSTANCES_NUMBER  1
+#define DRV_USBHSV1_INSTANCES_NUMBER                        1
 
 /* Interrupt mode enabled */
-#define DRV_USBHSV1_INTERRUPT_MODE    true
-
-
+#define DRV_USBHSV1_INTERRUPT_MODE                          true
 
 /* Enables Device Support */
-#define DRV_USBHSV1_DEVICE_SUPPORT    true
+#define DRV_USBHSV1_DEVICE_SUPPORT                          true
 	
 /* Disable Host Support */
-#define DRV_USBHSV1_HOST_SUPPORT      false
+#define DRV_USBHSV1_HOST_SUPPORT                            false
 
 /* Maximum instances of HID function driver */
 #define USB_DEVICE_HID_INSTANCES_NUMBER     1
@@ -116,20 +114,19 @@ extern "C" {
 /* HID Transfer Queue Size for both read and
    write. Applicable to all instances of the
    function driver */
-#define USB_DEVICE_HID_QUEUE_DEPTH_COMBINED 4
-
+#define USB_DEVICE_HID_QUEUE_DEPTH_COMBINED 5
 
 /* Number of Endpoints used */
-#define DRV_USBHSV1_ENDPOINTS_NUMBER  3
+#define DRV_USBHSV1_ENDPOINTS_NUMBER                        3
 
 /* The USB Device Layer will not initialize the USB Driver */
 #define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT 
 
 /* Maximum device layer instances */
-#define USB_DEVICE_INSTANCES_NUMBER     1 
+#define USB_DEVICE_INSTANCES_NUMBER                         1 
 
 /* EP0 size in bytes */
-#define USB_DEVICE_EP0_BUFFER_SIZE      64
+#define USB_DEVICE_EP0_BUFFER_SIZE                          64
 
 
 

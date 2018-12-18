@@ -54,31 +54,20 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
  ****************************************************/
 const uint8_t hid_rpt0[] =
 {
-	0x05, 0x01, /* Usage Page (Generic Desktop)        */
-    0x09, 0x02, /* Usage (Mouse)                       */
-    0xA1, 0x01, /* Collection (Application)            */
-    0x09, 0x01, /* Usage (Pointer)                     */
-    0xA1, 0x00, /* Collection (Physical)               */
-    0x05, 0x09, /* Usage Page (Buttons)                */
-    0x19, 0x01, /* Usage Minimum (01)                  */
-    0x29, 0x03, /* Usage Maximum (03)                  */
-    0x15, 0x00, /* Logical Minimum (0)                 */
-    0x25, 0x01, /* Logical Maximum (1)                 */
-    0x95, 0x03, /* Report Count (3)                    */
-    0x75, 0x01, /* Report Size (1)                     */
-    0x81, 0x02, /* Input (Data, Variable, Absolute)    */
-    0x95, 0x01, /* Report Count (1)                    */
-    0x75, 0x05, /* Report Size (5)                     */
-    0x81, 0x01, /* Input (Constant)    ;5 bit padding  */
-    0x05, 0x01, /* Usage Page (Generic Desktop)        */
-    0x09, 0x30, /* Usage (X)                           */
-    0x09, 0x31, /* Usage (Y)                           */
-    0x15, 0x81, /* Logical Minimum (-127)              */
-    0x25, 0x7F, /* Logical Maximum (127)               */
-    0x75, 0x08, /* Report Size (8)                     */
-    0x95, 0x02, /* Report Count (2)                    */
-    0x81, 0x06, /* Input (Data, Variable, Relative)    */
-    0xC0, 0xC0
+	0x06, 0x00, 0xFF,   // Usage Page = 0xFF00 (Vendor Defined Page 1)
+    0x09, 0x01,             // Usage (Vendor Usage 1)
+    0xA1, 0x01,             // Colsslection (Application)
+    0x19, 0x01,             // Usage Minimum
+    0x29, 0x40,             // Usage Maximum 	//64 input usages total (0x01 to 0x40)
+    0x15, 0x01,             // Logical Minimum (data bytes in the report may have minimum value = 0x00)
+    0x25, 0x40,      	    // Logical Maximum (data bytes in the report may have maximum value = 0x00FF = unsigned 255)
+    0x75, 0x08,             // Report Size: 8-bit field size
+    0x95, 0x40,             // Report Count: Make sixty-four 8-bit fields (the next time the parser hits an "Input", "Output", or "Feature" item)
+    0x81, 0x00,             // Input (Data, Array, Abs): Instantiates input packet fields based on the above report size, count, logical min/max, and usage.
+    0x19, 0x01,             // Usage Minimum
+    0x29, 0x40,             // Usage Maximum 	//64 output usages total (0x01 to 0x40)
+    0x91, 0x00,             // Output (Data, Array, Abs): Instantiates output packet fields.  Uses same report size and count as "Input" fields, since nothing new/different was specified to the parser since the "Input" item.
+    0xC0
 };
 
 /**************************************************
@@ -267,7 +256,6 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
         USB_DESCRIPTOR_STRING,
 		{'S','i','m','p','l','e',' ','H','I','D',' ','D','e','v','i','c','e',' ','D','e','m','o'}
     }; 
-
 /***************************************
  * Array of string descriptors
  ***************************************/
@@ -277,7 +265,6 @@ USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[3]=
     (const uint8_t *const)&sd001,
     (const uint8_t *const)&sd002
 };
-
 
 /*******************************************
  * USB Device Layer Master Descriptor Table 

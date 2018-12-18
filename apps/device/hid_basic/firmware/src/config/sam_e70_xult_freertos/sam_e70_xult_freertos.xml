@@ -3014,7 +3014,7 @@
             </Boolean>
           </Attributes>
           <Values dnOrder="1">
-            <User dnOrder="0" value="10"/>
+            <User dnOrder="0" value="5"/>
           </Values>
         </Integer>
         <Boolean dnOrder="11" id="GEN_APP_RTOS_TASK_0_USE_DELAY">
@@ -3143,6 +3143,8 @@
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="usb_device_hid_0" priority="2" value="41"/>
               <Value dnOrder="1" id="usb_device_hid_0" priority="2" value="41"/>
+              <Value dnOrder="2" id="usb_device_hid_0" priority="2" value="41"/>
+              <Value dnOrder="3" id="usb_device_hid_0" priority="2" value="41"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -3151,6 +3153,8 @@
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="usb_device_hid_0" priority="2" value="3"/>
               <Value dnOrder="1" id="usb_device_hid_0" priority="2" value="3"/>
+              <Value dnOrder="2" id="usb_device_hid_0" priority="2" value="3"/>
+              <Value dnOrder="3" id="usb_device_hid_0" priority="2" value="3"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -3159,6 +3163,8 @@
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="usb_device_hid_0" priority="2" value="1"/>
               <Value dnOrder="1" id="usb_device_hid_0" priority="2" value="1"/>
+              <Value dnOrder="2" id="usb_device_hid_0" priority="2" value="1"/>
+              <Value dnOrder="3" id="usb_device_hid_0" priority="2" value="1"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -3167,6 +3173,8 @@
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="usb_device_hid_0" priority="2" value="1"/>
               <Value dnOrder="1" id="usb_device_hid_0" priority="2" value="1"/>
+              <Value dnOrder="2" id="usb_device_hid_0" priority="2" value="1"/>
+              <Value dnOrder="3" id="usb_device_hid_0" priority="2" value="1"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -3212,6 +3220,8 @@
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="usb_device_hid_0" priority="1" value="5"/>
               <Value dnOrder="1" id="usb_device_hid_0" priority="1" value="5"/>
+              <Value dnOrder="2" id="usb_device_hid_0" priority="1" value="5"/>
+              <Value dnOrder="3" id="usb_device_hid_0" priority="1" value="5"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -3242,6 +3252,11 @@
                 <User dnOrder="1" value="2"/>
               </Values>
             </Integer>
+            <Combo dnOrder="3" id="CONFIG_USB_DEVICE_HID_REPORT_DESCRIPTOR_TYPE">
+              <Values dnOrder="0">
+                <User dnOrder="0" value="Custom"/>
+              </Values>
+            </Combo>
           </Symbols>
         </InstanceComponent>
       </Instances>
@@ -3251,15 +3266,15 @@
     <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
     <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="BSP_SAM_E70_Xplained_Ultra" x="610" y="119"/>
+        <ElementPosition dnOrder="0" id="BSP_SAM_E70_Xplained_Ultra" x="24" y="139"/>
         <ElementPosition dnOrder="1" id="FreeRTOS" x="480" y="20"/>
         <ElementPosition dnOrder="2" id="HarmonyCore" x="640" y="20"/>
         <ElementPosition dnOrder="3" id="cmsis" x="340" y="20"/>
         <ElementPosition dnOrder="4" id="core" x="240" y="20"/>
         <ElementPosition dnOrder="5" id="dfp" x="20" y="20"/>
-        <ElementPosition dnOrder="6" id="drv_usbhs_v1" x="30" y="60"/>
-        <ElementPosition dnOrder="7" id="usb_device" x="230" y="60"/>
-        <ElementPosition dnOrder="8" id="usb_device_hid" x="410" y="100"/>
+        <ElementPosition dnOrder="6" id="drv_usbhs_v1" x="18" y="55"/>
+        <ElementPosition dnOrder="7" id="usb_device" x="211" y="59"/>
+        <ElementPosition dnOrder="8" id="usb_device_hid" x="370" y="95"/>
       </ElementPositions>
     </ComponentGraph>
   </UserData>

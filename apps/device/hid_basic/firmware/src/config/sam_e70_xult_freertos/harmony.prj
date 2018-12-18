@@ -203,8 +203,8 @@
           <Name dnOrder="1">tasks.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">C96D19BA28EC2722A25F3A73EED18AAD</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C96D19BA28EC2722A25F3A73EED18AAD</UserChecksum>
+          <GeneratedChecksum dnOrder="4">02A5E077847A13FC93CBAFDFE7076936</GeneratedChecksum>
+          <UserChecksum dnOrder="5">02A5E077847A13FC93CBAFDFE7076936</UserChecksum>
         </File>
         <File dnOrder="25">
           <Type dnOrder="0">SOURCE</Type>
@@ -235,8 +235,8 @@
           <Name dnOrder="1">usb_device_init_data.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">23CF03F655EFA6D09C129531817E2ABA</GeneratedChecksum>
-          <UserChecksum dnOrder="5">23CF03F655EFA6D09C129531817E2ABA</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0DF473CCFD5AE80688015E205F265702</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0DF473CCFD5AE80688015E205F265702</UserChecksum>
         </File>
         <File dnOrder="29">
           <Type dnOrder="0">SOURCE</Type>
@@ -372,7 +372,7 @@
           <LogicalPath dnOrder="2">config/sam_e70_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">E5DCFA2672ECB457F6D38E164E352199</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F08E00040FA87B1D2374B05669A7E0D3</UserChecksum>
+          <UserChecksum dnOrder="5">E5DCFA2672ECB457F6D38E164E352199</UserChecksum>
         </File>
         <File dnOrder="46">
           <Type dnOrder="0">HEADER</Type>
