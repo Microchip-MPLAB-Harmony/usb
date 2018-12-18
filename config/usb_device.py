@@ -114,6 +114,7 @@ usbDeviceEndpointWriteQueueSize = []
 
 usbDeviceMsdSupport = None
 usbDeviceMsdDiskImageFile = None
+usbDeviceMsdDiskImageFileAdd = None 
 
 def setVisible(symbol, event):
 	if (event["value"] == True):
@@ -159,6 +160,7 @@ def onAttachmentDisconnected(source, target):
 def instantiateComponent(usbDeviceComponent):	
 	global usbDeviceMsdSupport
 	global usbDeviceMsdDiskImageFile
+	global usbDeviceMsdDiskImageFileAdd
 	res = Database.activateComponents(["HarmonyCore"])
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
 		res = Database.activateComponents(["drv_usbhs_v1"])
@@ -321,6 +323,14 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceMsdSupport.setDefaultValue(False)
 	usbDeviceMsdSupport.setUseSingleDynamicValue(True)
 	
+	
+	# USB Device MSD Disk Image file  
+	usbDeviceMsdDiskImageFileAdd = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_MSD_DISK_IMAGE", None)
+	usbDeviceMsdDiskImageFileAdd.setVisible(False)
+	usbDeviceMsdDiskImageFileAdd.setDefaultValue(False)
+	usbDeviceMsdDiskImageFileAdd.setUseSingleDynamicValue(True)
+	usbDeviceMsdDiskImageFileAdd.setDependencies(checkIfDiskImagefileNeeded,["CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0"])
+
 	configName = Variables.get("__CONFIGURATION_NAME")
 	
 	enable_rtos_settings = False
@@ -466,8 +476,14 @@ def instantiateComponent(usbDeviceComponent):
 	################################################
 	usbDeviceMsdDiskImageFile = usbDeviceComponent.createFileSymbol(None, None)
 	addFileName('diskImage.c', usbDeviceComponent, usbDeviceMsdDiskImageFile, "templates/", "", False, None)
-	
-	
+	#usbDeviceMsdDiskImageFile.setDependencies(checkIfDiskImagefileNeeded, ["CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0"])
+	if (usbDeviceMsdDiskImageFileAdd.getValue() == True):
+		print("Disk Image File Enabled")
+		usbDeviceMsdDiskImageFile.setEnabled(True)
+	else:	
+		print("Disk Image File Disabled")
+		usbDeviceMsdDiskImageFile.setEnabled(False)
+		
 # all files go into src/
 def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callback):
 	configName1 = Variables.get("__CONFIGURATION_NAME")
@@ -498,16 +514,22 @@ def blUSBDeviceFeatureEnableMicrosoftOsDescriptor(usbSymbolSource, event):
 		usbSymbolSource.setVisible(True)
 	else:
 		usbSymbolSource.setVisible(False)
-						
-def blUSBDeviceProductIDSelection(usbSymbolSource, event):
+		
+def checkIfDiskImagefileNeeded (usbSymbolSource, event):
 	global usbDeviceMsdDiskImageFile
 	index = usbDeviceDemoList.index(event["value"])
-	usbSymbolSource.setValue(usbDeviceDemoProductList[index],2)
 	if any(x in usbDeviceDemoList[index] for x in ["msd_basic_demo", "hid_msd_demo" , "cdc_msd_basic_demo" , "cdc_serial_emulator_msd_demo"]):
+		usbSymbolSource.setValue(True, 2)
 		usbDeviceMsdDiskImageFile.setEnabled(True)
 		print ("Disk Image Enabled")
 	else:
+		usbSymbolSource.setValue(False, 2)
 		usbDeviceMsdDiskImageFile.setEnabled(False)
+	
+def blUSBDeviceProductIDSelection(usbSymbolSource, event):
+	print("blUSBDeviceProductIDSelection is called")
+	index = usbDeviceDemoList.index(event["value"])
+	usbSymbolSource.setValue(usbDeviceDemoProductList[index],2)
 	
 def blUSBDeviceProductStringSelection(usbSymbolSource, event):
 	index = usbDeviceDemoList.index(event["value"])

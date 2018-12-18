@@ -111,7 +111,11 @@ const USB_DEVICE_DESCRIPTOR deviceDescriptor =
     0x0100,                         // Device release number in BCD format
     0x01,                           // Manufacturer string index
     0x02,                           // Product string index
-    0x00,                           // Device serial number string index
+<#if CONFIG_USB_DEVICE_USE_MSD == true>
+    0x03,                           // Device serial number string index
+<#else>
+	0x00,
+</#if>
     0x01                            // Number of possible configurations
 };
 
