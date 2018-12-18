@@ -22,10 +22,10 @@ def loadModule():
 	usbDeviceCdcComponent.addDependency("usb_device_dependency", "USB_DEVICE", True, True)
 	usbDeviceCdcComponent.addCapability("USB Device", "USB_DEVICE_CDC")
 	
-	print("create component: USB Device Vendor")
-	usbDeviceVendorComponent = Module.CreateGeneratorComponent("usb_device_vendor", "Vendor Function", "/Libraries/USB/Device Stack", "config/usb_device_vendor_common.py", "config/usb_device_vendor.py")
-	usbDeviceVendorComponent.addDependency("usb_device_dependency", "USB_DEVICE" , True, True)
-	usbDeviceVendorComponent.addCapability("USB Device", "USB_DEVICE_VENDOR")
+	# print("create component: USB Device Vendor")
+	# usbDeviceVendorComponent = Module.CreateGeneratorComponent("usb_device_vendor", "Vendor Function", "/Libraries/USB/Device Stack", "config/usb_device_vendor_common.py", "config/usb_device_vendor.py")
+	# usbDeviceVendorComponent.addDependency("usb_device_dependency", "USB_DEVICE" , True, True)
+	# usbDeviceVendorComponent.addCapability("USB Device", "USB_DEVICE_VENDOR")
 	
 	print("create component: USB Device Audio")
 	usbDeviceAudioComponent = Module.CreateGeneratorComponent("usb_device_audio", "Audio Function Driver", "/Libraries/USB/Device Stack", "config/usb_device_audio_common.py", "config/usb_device_audio.py")
