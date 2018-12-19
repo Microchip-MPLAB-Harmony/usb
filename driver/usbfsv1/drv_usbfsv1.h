@@ -1,5 +1,5 @@
 /******************************************************************************
-  PIC32MX USB Module Driver Interface Header File.
+  USB Module Driver Interface Header File.
 
   Company:
     Microchip Technology Inc.
@@ -8,11 +8,11 @@
     drv_usbfsv1.h
 	
   Summary:
-    PIC32MX USB Module Driver Interface File.
+    USB Module Driver Interface File.
 	
   Description:
-    The PIC32MX Full speed USB Module driver provides a simple interface to
-    manage the "USB" peripheral on PIC32MX microcontrollers. This file defines
+    The Full speed USB Module driver provides a simple interface to
+    manage the "USB" peripheral on microcontrollers. This file defines
     the interface definitions and prototypes for the USB driver. The driver
     interface meets the requirements of the MPLAB Harmony USB Host and Device
     Layer.                                                  
@@ -74,19 +74,20 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // *****************************************************************************
 
 // *****************************************************************************
-/* USB Driver Endpoint Table Entry Size in bytes.
+/* USB Driver Endpoint Descriptor Table Entry Size in bytes.
 
   Summary:
-    USB Driver Endpoint Table Entry Size in bytes.
+    USB Driver Endpoint Descriptor Table Entry Size in bytes.
 
   Description:
-    This constant defines the size (in bytes) of an entry in the endpoint table.
-
+    This constant defines the size (in bytes) of an entry in the endpoint 
+    descriptor table.
+    
   Remarks:
     None.
 */
 
-#define DRV_USBFSV1_ENDPOINT_TABLE_ENTRY_SIZE  32 
+#define DRV_USBFSV1_ENDPOINT_DESCRIPTOR_TABLE_ENTRY_SIZE   32
 
 // *****************************************************************************
 /* USB Driver Host Mode Interface Functions.
@@ -123,6 +124,36 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 /*DOM-IGNORE-BEGIN*/extern DRV_USB_DEVICE_INTERFACE gDrvUSBFSV1DeviceInterface;/*DOM-IGNORE-END */
 #define DRV_USBFSV1_DEVICE_INTERFACE /*DOM-IGNORE-BEGIN*/&gDrvUSBFSV1DeviceInterface/*DOM-IGNORE-END */
+
+// *****************************************************************************
+/* USB Driver Host Pipe Descriptor Register Structure
+
+  Summary:
+    USB Driver Host Pipe Descriptor Register Structure.
+
+  Description:
+    The structure for USB Host Pipe descriptor table is locally defined 
+    here. The Host Pipe table has to be word aligned (4-byte).
+
+  Remarks:
+    None.
+*/
+#define DRV_USBFSV1_PIPE_DESC_TABLE     usb_descriptor_host_registers_t
+
+// *****************************************************************************
+/* USB Driver Device Pipe Descriptor Register Structure
+
+  Summary:
+    USB Driver Device Endpoint Descriptor Register Structure.
+
+  Description:
+    The structure for USB Device endpoint descriptor table is locally defined 
+    here. The endpoint descriptor table has to be word aligned (4-byte).
+
+  Remarks:
+    None.
+*/
+#define DRV_USBFSV1_ENDPOINT_DESC_TABLE     COMPILER_WORD_ALIGNED usb_descriptor_device_registers_t
 
 // *****************************************************************************
 /* USB Driver Module Index 0 Definition.
@@ -450,7 +481,6 @@ typedef struct
     
     /* Identifies the USB peripheral to be used. This should be the USB PLIB
        module instance identifier. */
-// Sundar:     USB_MODULE_ID usbID; 
 	usb_registers_t * usbID;
     
     /* This should be set to true if the USB module must stop operation in IDLE
@@ -464,7 +494,6 @@ typedef struct
     /* Specify the interrupt source for the USB module. This should be the
        interrupt source identifier for the USB module instance specified in
        usbID. */
-// Sundar: 	
     uint8_t interruptSource;
 
     /* Specify the operational speed of the USB module. This should always be
@@ -474,18 +503,6 @@ typedef struct
     /* Specify the operation mode of the USB module. This specifies if the USB
        module should operate as a Device, Host, or both (Dual Role operation). */
     DRV_USBFSV1_OPMODES operationMode;  
-
-    /* A pointer to the endpoint descriptor table. This should be aligned at 512
-       byte address boundary. The size of the table is equal to 
-       DRV_USBFSV1_ENDPOINT_TABLE_ENTRY_SIZE times the number of endpoints needed
-       in the application. */
-    //void * endpointTable; 
-
-    /* A pointer to the endpoint descriptor table. This should be aligned at 512
-       byte address boundary. The size of the table is equal to 
-       DRV_USBFSV1_ENDPOINT_TABLE_ENTRY_SIZE times the number of endpoints needed
-       in the application. */
-    usb_descriptor_device_registers_t * endpointDescriptorTable; 
 
     /* Root hub available current in milliamperes. This specifies the amount of
        current that root hub can provide to the attached device. This should be
@@ -578,7 +595,7 @@ typedef struct
     
     DRV_USBFSV1_INIT moduleInit;
 
-    uint8_t __attribute__((aligned(512))) endpointTable[DRV_USBFSV1_ENDPOINT_TABLE_ENTRY_SIZE * 2];
+    uint8_t __attribute__((aligned(512))) endpointTable[DRV_USBFSV1_ENDPOINT_DESCRIPTOR_TABLE_ENTRY_SIZE * 2];
     
     usbInitData.usbID               = USB_ID_1;
     usbInitData.opMode              = DRV_USBFSV1_OPMODE_DEVICE;
@@ -636,7 +653,7 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
     SYS_STATUS          status;
     DRV_USBFSV1_INIT moduleInit;
 
-    uint8_t __attribute__((aligned(512))) endpointTable[DRV_USBFSV1_ENDPOINT_TABLE_ENTRY_SIZE * 2];
+    uint8_t __attribute__((aligned(512))) endpointTable[DRV_USBFSV1_ENDPOINT_DESCRIPTOR_TABLE_ENTRY_SIZE * 2];
     
     usbInitData.usbID               = USB_ID_1;
     usbInitData.opMode              = DRV_USBFSV1_OPMODE_DEVICE;
@@ -2479,7 +2496,7 @@ DRV_USBFSV1_HOST_PIPE_HANDLE DRV_USBFSV1_HOST_PipeSetup
     </code>
 	
   Remarks:
-    The root hub on the PIC32MZ USB controller contains only one port - port 0.                                                                  
+    The root hub on the USB controller contains only one port - port 0.                                                                  
 */
 
 USB_ERROR DRV_USBFSV1_HOST_ROOT_HUB_PortReset(DRV_HANDLE handle, uint8_t port );

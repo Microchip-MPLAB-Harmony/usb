@@ -59,48 +59,23 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "osal/osal.h"
 
 
+#define COMPILER_WORD_ALIGNED                               __attribute__((__aligned__(4)))
+
 #define _DRV_USBFSV1_HOST_IRP_PER_FRAME_NUMBER              5
 #define _DRV_USBFSV1_SW_EP_NUMBER                           _DRV_USBFSV1_HOST_IRP_PER_FRAME_NUMBER
-
-#define DRV_USBFSV1_MAX_CONTROL_BANDWIDTH_FULL_SPEED        20
-#define DRV_USBFSV1_MAX_CONTROL_BANDWIDTH_LOW_SPEED         30
-#define DRV_USBFSV1_MAX_BANDWIDTH_PER_FRAME                 70
-
-#define USB_TRANSFER_TYPE_LOCAL_CONTROL                     0
-#define USB_TRANSFER_TYPE_LOCAL_INTERRUPT                   1
-#define USB_TRANSFER_TYPE_LOCAL_BULK                        2
-#define USB_TRANSFER_TYPE_LOCAL_ISOC                        3
-
 #define DRV_USBFSV1_POST_DETACH_DELAY                       2000
 
-/**********************************************
- * Constants required for accessing the USB
- * module BDT table entries.
- **********************************************/
+/* Number of Endpoints used */
+#define DRV_USBFSV1_ENDPOINT_NUMBER_MASK                    0x0F
+#define DRV_USBFSV1_ENDPOINT_DIRECTION_MASK                 0x80
 
-#define USBFSV1_UOWN                0x80
-#define USBFSV1_DTS_ENABLE          0x08
-#define USBFSV1_DATA1_PID           0x40
-#define USBFSV1_PID_MASK
-#define USBFSV1_STALL_SET           0x04
+#define DRV_USBFSV1_AUTO_ZLP_ENABLE                         false
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Data Type Definitions
 // *****************************************************************************
 // *****************************************************************************
-
-/**********************************************
- * BDT entry union type
- *********************************************/
-
-typedef union
-{
-    uint8_t     byte[8];
-    uint16_t    shortWord[4];
-    uint32_t    word[2];
-}
-DRV_USBFSV1_BDT_ENTRY;
 
 /***************************************************
  * This is an intermediate flag that is set by
@@ -110,7 +85,7 @@ DRV_USBFSV1_BDT_ENTRY;
 
 /***************************************************
  * This object is used by the driver as IRP place
- * holder along with queueing feature.
+ * holder along with queuing feature.
  ***************************************************/
 typedef struct _USB_DEVICE_IRP_LOCAL 
 {
@@ -145,10 +120,10 @@ typedef struct _USB_DEVICE_IRP_LOCAL
 }
 USB_DEVICE_IRP_LOCAL;
 
-
 /************************************************
  * Endpoint state enumeration.
  ************************************************/
+
 typedef enum
 {
     DRV_USBFSV1_DEVICE_ENDPOINT_STATE_ENABLED = 0x1,
@@ -156,10 +131,8 @@ typedef enum
 }
 DRV_USBFSV1_DEVICE_ENDPOINT_STATE;
 
-
-
 /************************************************
- * Endpoint data strucutre. This data structure
+ * Endpoint data structure. This data structure
  * holds the IRP queue and other flags associated
  * with functioning of the endpoint.
  ************************************************/
@@ -175,17 +148,6 @@ typedef struct
 
     /* Endpoint type */
     USB_TRANSFER_TYPE endpointType;
-
-    /* Endpoint Buffer Pointer */
-    uint8_t * endpointBufferPtr;
-
-    /* Data Toggle */
-// Sundar: 	
-    bool nextDataToggle;
-
-    /* Ping pong buffer indicator */
-// Sundar: 
-//    uint8_t nextPingPong;
 
     /* Endpoint state bitmap */
     DRV_USBFSV1_DEVICE_ENDPOINT_STATE endpointState;
@@ -279,7 +241,6 @@ typedef struct _DRV_USBFSV1_HOST_PIPE_OBJ
     USB_HOST_IRP_LOCAL * irpQueueHead;
 
     /* The data toggle for this pipe*/
-// Sundar: 
     bool dataToggle;
 
     /* The NAK counter for the IRP
@@ -369,7 +330,7 @@ DRV_USBFSV1_HOST_TRANSFER_GROUP;
 
 /********************************************
  * This enumeration list the possible status
- * valus of a token once it has completed.
+ * value of a token once it has completed.
  ********************************************/
 
 typedef enum
@@ -447,20 +408,7 @@ typedef enum
 	DRV_USBFSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_COMPLETE,
 	DRV_USBFSV1_DEVICE_EP0_STATE_TX_DATA_STAGE_IN_PROGRESS
 }
-DRV_USBFSV1_DEVICE_EP0_STATE;
-
-    //DRV_USBFSV1_DEVICE_EP0_STATE_EXPECTING_SETUP_FROM_HOST,
-    //DRV_USBFSV1_DEVICE_EP0_STATE_WAITING_FOR_SETUP_IRP_FROM_CLIENT,
-	
-    //DRV_USBFSV1_DEVICE_EP0_STATE_WAITING_FOR_RX_DATA_IRP_FROM_CLIENT,
-    //DRV_USBFSV1_DEVICE_EP0_STATE_EXPECTING_RX_DATA_STAGE_FROM_HOST,
-    //DRV_USBFSV1_DEVICE_EP0_STATE_WAITING_FOR_RX_STATUS_IRP_FROM_CLIENT,
-	//DRV_USBFSV1_DEVICE_EP0_STATE_WAITING_FOR_RX_STATUS_COMPLETE,
-	
-    //DRV_USBFSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_DATA_IRP_FROM_CLIENT,
-    //DRV_USBFSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_IRP_FROM_CLIENT,
-	//DRV_USBFSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_COMPLETE,
-	
+DRV_USBFSV1_DEVICE_EP0_STATE;	
 	
 /***********************************************
  * Driver object structure. One object per
@@ -518,21 +466,15 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
 
     /* Sent session invalid event to the client */
     bool sessionInvalidEventSent;
-
-    /* Pointer to the endpoint table */
-//    DRV_USBFSV1_DEVICE_ENDPOINT_OBJ * endpointTable;
     
     /* This is array of device endpoint objects pointers */
     DRV_USBFSV1_DEVICE_ENDPOINT_OBJ * deviceEndpointObj[DRV_USBFSV1_ENDPOINTS_NUMBER];
 
     /* Pointer to the endpoint table */
-    usb_descriptor_device_registers_t * endpointDescriptorTable;
+    DRV_USBFSV1_ENDPOINT_DESC_TABLE endpointDescriptorTable[DRV_USBFSV1_ENDPOINTS_NUMBER];
 
     /* Pointer to the endpoint Buffers */
-    uint8_t * endpointBufferPtr[DRV_USBFSV1_ENDPOINTS_NUMBER][USB_DEVICE_EP0_NUMBER_OF_BANKS];
-	
-    /* Set if the driver is executing in an interrupt context */
-    //bool inInterruptContext;
+    uint8_t * endpointBufferPtr[DRV_USBFSV1_ENDPOINTS_NUMBER][DEVICE_DESC_BANK_NUMBER];
 
     /* Set if valid VBUS was detected in device mode */
     bool vbusIsValid;
@@ -540,8 +482,8 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
     /* Set if device if D+ pull up is enabled. */
     bool isAttached;
 
-    ///* Set if the device is suspended */
-    //bool isSuspended;
+    /* Set if the device is suspended */
+    bool isSuspended;
 
     /* Driver flags to indicate different things */
     DRV_USBFSV1_FLAGS driverFlags;
@@ -549,10 +491,6 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
     /* Next Ping Pong state */
     uint32_t  rxEndpointsNextPingPong;
     uint32_t  txEndpointsNextPingPong;
-
-    /* Pointer to the BDT table for this
-     * particular instance of the USB module */
-    DRV_USBFSV1_BDT_ENTRY * pBDT;
 
     /* Transfer Groups */
     _DRV_USBFSV1_FOR_HOST(DRV_USBFSV1_HOST_TRANSFER_GROUP, transferGroup[4]);
@@ -607,21 +545,6 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
 
 } DRV_USBFSV1_OBJ;
 
-
-/***************************************************
- * This type definition allows creation of multiple
- * aligned BDT arrays. Clubbing all members together
- * help the linker to reduce memory gaps
- ***************************************************/
-
-//typedef struct _DRV_USBFSV1_OBJ_STRUCT
-//{
-    //DRV_USBFSV1_OBJ gDrvUSBObj;
-    //DRV_USBFSV1_DEVICE_ENDPOINT_OBJ gDrvUSBEndpoints[DRV_USBFSV1_ENDPOINTS_NUMBER * 2];
-//}
-//DRV_USBFSV1_OBJ;
-
-
 /**************************************
  * Local functions.
  *************************************/
@@ -646,10 +569,8 @@ bool _DRV_USBFSV1_HOST_TransferSchedule
 
 void _DRV_USBFSV1_SendTokenToAddress
 (
-// Sundar:     USB_MODULE_ID usbID,
 	uint32_t * usbID,
     uint8_t address,
-// Sundar:     USB_PID pid,
     uint16_t pid,
     uint8_t endpoint,
     bool isLowSpeed

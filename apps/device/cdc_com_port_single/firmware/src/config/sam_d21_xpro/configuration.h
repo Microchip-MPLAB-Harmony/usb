@@ -56,6 +56,7 @@
 */
 
 #include "user.h"
+#include "toolchain_specifics.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -95,86 +96,47 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 /* Maximum instances of CDC function driver */
-#define USB_DEVICE_CDC_INSTANCES_NUMBER     1
+#define USB_DEVICE_CDC_INSTANCES_NUMBER                     1
 
 /* CDC Transfer Queue Size for both read and
    write. Applicable to all instances of the
    function driver */
-#define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED 4
+#define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED                 4
 
 /*** USB Driver Configuration ***/
 
 /* Maximum USB driver instances */
-#define DRV_USBFSV1_INSTANCES_NUMBER  1
+#define DRV_USBFSV1_INSTANCES_NUMBER                        1
 
-/* Interrupt mode enabled */
-#define DRV_USBFSV1_INTERRUPT_MODE    true
-
-
-
-
-/* EP0 size in bytes */
-#define USB_DEVICE_EP0_NUMBER_OF_BANKS      2
-    
-/* Number of Endpoints used */
-#define DRV_USBFSV1_ENDPOINTS_NUMBER  7 //TODO  Calculate this for Device 
 
 /* Enables Device Support */
-#define DRV_USBFSV1_DEVICE_SUPPORT    true
+#define DRV_USBFSV1_DEVICE_SUPPORT                          true
 	
 /* Disable Host Support */
-#define DRV_USBFSV1_HOST_SUPPORT      false
+#define DRV_USBFSV1_HOST_SUPPORT                            false
+
+/* Number of Endpoints used */
+#define DRV_USBFSV1_ENDPOINTS_NUMBER                        4
+
+/* Number of Endpoints used */
+#define DRV_USBFSV1_DUAL_BANK_ENABLE                        false
 
 /* The USB Device Layer will not initialize the USB Driver */
 #define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT
 
 /* Maximum device layer instances */
-#define USB_DEVICE_INSTANCES_NUMBER     1 
+#define USB_DEVICE_INSTANCES_NUMBER                         1
 
 /* EP0 size in bytes */
-#define USB_DEVICE_EP0_BUFFER_SIZE      64
-#define USB_DEVICE_EP1_BUFFER_SIZE      16
-#define USB_DEVICE_EP2_BUFFER_SIZE      64
+#define USB_DEVICE_EP0_BUFFER_SIZE                          64
 
-/* Enable SOF Events */ 
-#define USB_DEVICE_SOF_EVENT_ENABLE     
+/* Enable SOF Events */
+#define USB_DEVICE_SOF_EVENT_ENABLE
 
 
 
-typedef enum
-{
-	// Last transaction on Even Buffer
-	USB_PING_PONG_EVEN /*DOM-IGNORE-BEGIN*/ = 0 /*DOM-IGNORE-END*/ ,
-	// Last transaction on Odd  Buffer
-	USB_PING_PONG_ODD  /*DOM-IGNORE-BEGIN*/ = 1 /*DOM-IGNORE-END*/
-
-} USB_PING_PONG_STATE;
-
-#define USB_PING_PONG_MASK(value)  /*DOM-IGNORE-BEGIN*/ (0x0001 << value)/*DOM-IGNORE-END*/
-
-typedef enum
-{
-	USB_BUFFER_DATA0, // DATA0/1 = 0
-	USB_BUFFER_DATA1  // DATA0/1 = 1
-
-} USB_BUFFER_DATA01;
 
 
-
-/* Number of Endpoints used */
-#define USB_DEVICE_ENDPOINT_NUMBER_MASK				0x0F
-#define USB_DEVICE_ENDPOINT_DIRECTION_MASK			0x80
-
-#define USB_DEVICE_AUTO_ZLP							0
-
-//#define ENABLE_DEBUG_MESSAGE
-
-
-#if defined ENABLE_DEBUG_MESSAGE
-#define DEBUG_MESSAGE(value)			usart_async_data_write(value)
-#else
-#define DEBUG_MESSAGE(value)
-#endif
 
 
 // *****************************************************************************

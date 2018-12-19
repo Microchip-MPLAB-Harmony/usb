@@ -66,6 +66,12 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
+#define APP_MAKE_BUFFER_DMA_READY                           __attribute__((aligned(16)))
+#define APP_READ_BUFFER_SIZE                                512
+#define APP_USB_SWITCH_DEBOUNCE_COUNT_FS                    260
+#define APP_USB_SWITCH_DEBOUNCE_COUNT_HS                    500
+
+
 // *****************************************************************************
 /* Application States
 
@@ -166,15 +172,18 @@ typedef struct
     /* Switch debounce timer */
     unsigned int switchDebounceTimer;
 
+    /* Switch debounce timer count */
     unsigned int debounceCount;
 
     /* Application CDC read buffer */
-    uint8_t * readBuffer;
+    uint8_t * cdcReadBuffer;
+
+    /* Application CDC Write buffer */
+    uint8_t * cdcWriteBuffer;
 
     /* Number of bytes read from Host */ 
     uint32_t numBytesRead; 
 } APP_DATA;
-
 
 // *****************************************************************************
 // *****************************************************************************

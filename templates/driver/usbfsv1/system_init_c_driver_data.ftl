@@ -47,6 +47,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 static DRV_USB_VBUS_LEVEL DRV_USBFSV1_VBUS_Comparator(void)
 {
     DRV_USB_VBUS_LEVEL retVal = DRV_USB_VBUS_LEVEL_INVALID;
+    
 	<#if USB_DEVICE_VBUS_SENSE_PIN_NAME?has_content >
     if(true == ${USB_DEVICE_VBUS_SENSE_PIN_NAME}_Get())
     {
@@ -61,7 +62,7 @@ static DRV_USB_VBUS_LEVEL DRV_USBFSV1_VBUS_Comparator(void)
 const DRV_USBFSV1_INIT drvUSBInit =
 {
     /* Interrupt Source for USB module */
-    .interruptSource = USBFS_IRQn,
+    .interruptSource = USB_IRQn,
 
     /* System module initialization */
     .moduleInit = {0},
@@ -74,15 +75,17 @@ const DRV_USBFSV1_INIT drvUSBInit =
     .operationMode = DRV_USBFSV1_OPMODE_HOST,
 </#if>
 
-    /* To operate in USB Normal Mode */
-<#if (USB_SPEED == "High Speed")>
-    .operationSpeed = DRV_USBFSV1_DEVICE_SPEEDCONF_NORMAL,
-<#elseif (USB_SPEED == "Full Speed")>
-	.operationSpeed = DRV_USBFSV1_DEVICE_SPEEDCONF_LOW_POWER,
-</#if>    
+    /* USB Full Speed Operation */
+	.operationSpeed = USB_SPEED_FULL,
+    
+    /* Stop in idle */
+    .stopInIdle = false,
+
+    /* Suspend in sleep */
+    .suspendInSleep = false,
 
     /* Identifies peripheral (PLIB-level) ID */
-    .usbID = USBFS_REGS,
+    .usbID = USB_REGS,
 	
 <#if (USB_OPERATION_MODE == "Device") && (USB_DEVICE_VBUS_SENSE == true)>    
     /* Function to check for VBus */

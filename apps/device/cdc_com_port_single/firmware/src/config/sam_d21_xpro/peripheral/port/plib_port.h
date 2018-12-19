@@ -66,6 +66,15 @@
 // *****************************************************************************
 
 
+/*** Macros for USB_VBUS_SENSE pin ***/
+#define USB_VBUS_SENSE_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 14)
+#define USB_VBUS_SENSE_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 14)
+#define USB_VBUS_SENSE_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 14)
+#define USB_VBUS_SENSE_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 14)) & 0x01)
+#define USB_VBUS_SENSE_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 14)
+#define USB_VBUS_SENSE_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 14)
+#define USB_VBUS_SENSE_PIN                  PORT_PIN_PA14
+
 
 
 // *****************************************************************************

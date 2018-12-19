@@ -175,7 +175,7 @@ typedef uintptr_t USB_DEVICE_TRANSFER_HANDLE;
     configuration descriptors.
 
   Remarks:
-    This type is specific to the PIC32 implementation of the USB Device Stack
+    This type is specific to implementation of the USB Device Stack
     API.
 */
 
@@ -194,7 +194,7 @@ typedef const uint8_t * const USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE;
     string descriptors.
 
   Remarks:
-    This type is specific to the PIC32 implementation of the USB Device Stack
+    This type is specific to implementation of the USB Device Stack
     API.
 */
 
@@ -400,7 +400,7 @@ typedef enum
                 // A start of frame was received. This is a periodic event and
                 // can be used by the application for timing related activities.
                 // pData will point to a USB_DEVICE_EVENT_DATA_SOF type data
-                // containing the frame number. In PIC32 USB Device Stack, this
+                // containing the frame number. In USB Device Stack, this
                 // event is generated if USB_DEVICE_SOF_EVENT_ENABLE is
                 // defined in System Configuration.
 
@@ -515,7 +515,7 @@ typedef enum
                 // This means the Host has sent a Set Descriptor request. The
                 // application should interpret pData as a
                 // USB_DEVICE_EVENT_DATA_SET_DESCRIPTOR pointer type containing the
-                // details of the Set Descriptor request. In PIC32 USB Device
+                // details of the Set Descriptor request. In USB Device
                 // Stack, this event is generated if 
                 // USB_DEVICE_SET_DESCRIPTOR_EVENT_ENABLE is defined in the
                 // system configuration. The application can use
@@ -529,7 +529,7 @@ typedef enum
 
                 // This means the host has sent a Sync Frame Request. The
                 // application should interpret pData as a
-                // USB_DEVICE_EVENT_DATA_SYNCH_FRAME pointer type. In PIC32 USB Device
+                // USB_DEVICE_EVENT_DATA_SYNCH_FRAME pointer type. In USB Device
                 // Stack, this event is generated if 
                 // USB_DEVICE_SYNCH_FRAME_EVENT_ENABLE is defined in the
                 // system configuration. The application should respond be
@@ -669,7 +669,7 @@ typedef enum
        SET_DESCRIPTOR request. The pData parameter in the event handler function
        will be a pointer to a USB_DEVICE_EVENT_DATA_SET_DESCRIPTOR data type.
        The application should initiate the data stage using the
-       USB_DEVICE_ControlReceive function. In the PIC32 USB Device Stack, this
+       USB_DEVICE_ControlReceive function. In the USB Device Stack, this
        event is generated if USB_DEVICE_EVENT_ENABLE_SET_DESCRIPTOR is defined
        in the system configuration. */
 
@@ -679,7 +679,7 @@ typedef enum
        SYNCH_FRAME request. The pData parameter in the event handler function
        will be a pointer to a USB_DEVICE_EVENT_DATA_SYNCH_FRAME data type. The
        application should initiate the data stage using the
-       USB_DEVICE_ControlSend function. In the PIC32 USB Device Stack, this
+       USB_DEVICE_ControlSend function. In the USB Device Stack, this
        event is generated if USB_DEVICE_EVENT_ENABLE_SYNCH_FRAME is defined in
        the system configuration. */
 
@@ -846,7 +846,7 @@ typedef USB_DEVICE_EVENT_RESPONSE ( * USB_DEVICE_EVENT_HANDLER)
     device layer.
 
   Remarks:
-    This type is specific to the PIC32 implementation of the USB Device Stack
+    This type is specific to implementation of the USB Device Stack
     API.
 */
 
@@ -908,7 +908,7 @@ typedef struct
     registered with device layer.
 
   Remarks:
-    This type is specific to the PIC32 implementation of the USB Device Stack
+    This type is specific to implementation of the USB Device Stack
     API.
 */
 
@@ -953,7 +953,7 @@ typedef struct
     to USB_DEVICE_Initialize. 
 
   Remarks: 
-    This type is specific to the PIC32 implementation of the USB Device Stack
+    This type is specific to implementation of the USB Device Stack
     API.
 */
 

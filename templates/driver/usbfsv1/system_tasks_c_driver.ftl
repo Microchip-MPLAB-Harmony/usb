@@ -43,7 +43,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 *******************************************************************************/
 -->
 <#if HarmonyCore.SELECT_RTOS == "BareMetal">
-	/* USB FS Driver Task Routine */ 
+    /* USB FS Driver Task Routine */ 
     DRV_USBFSV1_Tasks(sysObj.drvUSBFSV1Object);
 <#elseif HarmonyCore.SELECT_RTOS == "FreeRTOS">
 	<#lt>	/* Create OS Thread for USB Driver Tasks. */

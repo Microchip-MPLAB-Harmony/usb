@@ -48,6 +48,8 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include "usb/usb_device_cdc.h"
+#include "usb/usb_cdc.h"
 #include "bsp/bsp.h"
 #include "peripheral/evsys/plib_evsys.h"
 #include "peripheral/port/plib_port.h"
@@ -56,8 +58,6 @@
 #include "driver/usb/usbfsv1/drv_usbfsv1.h"
 #include "usb/usb_chapter_9.h"
 #include "usb/usb_device.h"
-#include "usb/usb_device_cdc.h"
-#include "usb/usb_cdc.h"
 #include "system/int/sys_int.h"
 #include "osal/osal.h"
 #include "app.h"
@@ -197,7 +197,6 @@ typedef struct
 // *****************************************************************************
 
 extern const USB_DEVICE_INIT usbDevInitData; 
-extern usb_descriptor_device_registers_t __attribute__((aligned(512))) usbDeviceEndpointDescriptorTable[DRV_USBFSV1_ENDPOINTS_NUMBER];
 
 
 

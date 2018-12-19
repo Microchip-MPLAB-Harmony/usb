@@ -42,9 +42,9 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 -->
-	USB_CDC_CLASS_CODE,             // Class Code
-    USB_CDC_SUBCLASS_CODE,          // Subclass code
-    0x00,                           // Protocol code
+    USB_CDC_CLASS_CODE,                                     // Class Code
+    USB_CDC_SUBCLASS_CODE,                                  // Subclass code
+    0x00,                                                   // Protocol code
 <#--
 /*******************************************************************************
  End of File

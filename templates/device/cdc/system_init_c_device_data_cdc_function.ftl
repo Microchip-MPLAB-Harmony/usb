@@ -42,16 +42,15 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 -->
-
 	/* CDC Function ${CONFIG_USB_DEVICE_FUNCTION_INDEX} */
-    { 
-        .configurationValue = ${CONFIG_USB_DEVICE_FUNCTION_CONFIG_VALUE},                            /* Configuration value */ 
-        .interfaceNumber = ${CONFIG_USB_DEVICE_FUNCTION_INTERFACE_NUMBER},                               /* First interfaceNumber of this function */ 
-        .speed = USB_SPEED_HIGH|USB_SPEED_FULL,             /* Function Speed */ 
-        .numberOfInterfaces = ${CONFIG_USB_DEVICE_FUNCTION_NUMBER_OF_INTERFACES},                            /* Number of interfaces */
-        .funcDriverIndex = ${CONFIG_USB_DEVICE_FUNCTION_INDEX},                               /* Index of CDC Function Driver */
-        .driver = (void*)USB_DEVICE_CDC_FUNCTION_DRIVER,    /* USB CDC function data exposed to device layer */
-        .funcDriverInit = (void*)&cdcInit${CONFIG_USB_DEVICE_FUNCTION_INDEX}                  /* Function driver init data */
+    {
+        .configurationValue = ${CONFIG_USB_DEVICE_FUNCTION_CONFIG_VALUE},                            // Configuration value
+        .interfaceNumber = ${CONFIG_USB_DEVICE_FUNCTION_INTERFACE_NUMBER},                               // First interfaceNumber of this function
+        .speed = USB_SPEED_FULL,                            // Function Speed
+        .numberOfInterfaces = ${CONFIG_USB_DEVICE_FUNCTION_NUMBER_OF_INTERFACES},                            // Number of interfaces
+        .funcDriverIndex = ${CONFIG_USB_DEVICE_FUNCTION_INDEX},                               // Index of CDC Function Driver
+        .driver = (void*)USB_DEVICE_CDC_FUNCTION_DRIVER,    // USB CDC function data exposed to device layer
+        .funcDriverInit = (void*)&cdcInit${CONFIG_USB_DEVICE_FUNCTION_INDEX}                  // Function driver init data
     },
 <#--
 /*******************************************************************************

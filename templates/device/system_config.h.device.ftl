@@ -50,18 +50,21 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #define DRV_USBFSV1_ENDPOINTS_NUMBER                        ${CONFIG_USB_DEVICE_ENDPOINTS_NUMBER}
 </#if>
 
+/* Number of Endpoints used */
+#define DRV_USBFSV1_DUAL_BANK_ENABLE                        false
+
 /* The USB Device Layer will not initialize the USB Driver */
-#define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT 
+#define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT
 
 /* Maximum device layer instances */
-#define USB_DEVICE_INSTANCES_NUMBER                         1 
+#define USB_DEVICE_INSTANCES_NUMBER                         1
 
 /* EP0 size in bytes */
 #define USB_DEVICE_EP0_BUFFER_SIZE                          ${CONFIG_USB_DEVICE_EP0_BUFFER_SIZE}
 
 <#if CONFIG_USB_DEVICE_EVENT_ENABLE_SOF == true>
-/* Enable SOF Events */ 
-#define USB_DEVICE_SOF_EVENT_ENABLE     
+/* Enable SOF Events */
+#define USB_DEVICE_SOF_EVENT_ENABLE
 </#if>
 
 <#if CONFIG_USB_DEVICE_EVENT_ENABLE_SET_DESCRIPTOR == true>
@@ -70,7 +73,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 </#if>
 
 <#if CONFIG_USB_DEVICE_EVENT_ENABLE_SYNCH_FRAME == true>
-/* Enable Synch Frame Event */ 
+/* Enable Synch Frame Event */
 #define USB_DEVICE_SYNCH_FRAME_EVENT_ENABLE
 </#if>
 
@@ -80,7 +83,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 </#if>
 
 <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true>
-/* Enable Advanced String Descriptor table. This feature lets the user specify 
+/* Enable Advanced String Descriptor table. This feature lets the user specify
    String Index along with the String descriptor Structure  */
 #define USB_DEVICE_STRING_DESCRIPTOR_TABLE_ADVANCED_ENABLE
 <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_MICROSOFT_OS_DESCRIPTOR == true>

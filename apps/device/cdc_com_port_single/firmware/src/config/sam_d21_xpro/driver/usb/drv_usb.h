@@ -1,5 +1,5 @@
 /******************************************************************************
-  PIC32 USB Module Driver Interface Header File
+  USB Module Driver Interface Header File
 
   Company:
     Microchip Technology Inc.

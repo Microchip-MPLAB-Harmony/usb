@@ -76,25 +76,21 @@ SYSTEM_OBJECTS sysObj;
 /******************************************************
  * USB Driver Initialization
  ******************************************************/
-
+ 
 static DRV_USB_VBUS_LEVEL DRV_USBFSV1_VBUS_Comparator(void)
 {
     DRV_USB_VBUS_LEVEL retVal = DRV_USB_VBUS_LEVEL_INVALID;
-
-    /*if(true == USB_VBUS_INState_Get())
+    
+    if(true == USB_VBUS_SENSE_Get())
     {
         retVal = DRV_USB_VBUS_LEVEL_VALID;
-    }*/
-	retVal = DRV_USB_VBUS_LEVEL_VALID;
-    return (retVal);
+    }
+	return (retVal);
 
 }
 
 const DRV_USBFSV1_INIT drvUSBInit =
 {
-    /* Assign the endpoint table */
-    .endpointDescriptorTable = usbDeviceEndpointDescriptorTable,
-    
     /* Interrupt Source for USB module */
     .interruptSource = USB_IRQn,
 
@@ -104,7 +100,7 @@ const DRV_USBFSV1_INIT drvUSBInit =
     /* USB Controller to operate as USB Device */
     .operationMode = DRV_USBFSV1_OPMODE_DEVICE,
 
-    /* To operate in USB Full Speed Mode */
+    /* USB Full Speed Operation */
 	.operationSpeed = USB_SPEED_FULL,
     
     /* Stop in idle */
@@ -118,9 +114,6 @@ const DRV_USBFSV1_INIT drvUSBInit =
 	
     /* Function to check for VBus */
     .vbusComparator = DRV_USBFSV1_VBUS_Comparator
-            
-            
-
 };
 
 
@@ -150,9 +143,6 @@ void SYS_Initialize ( void* data )
     CLOCK_Initialize();
 
 
-	/* Change QOS values to have the best performance and correct USB behavior */
-	USB_REGS->DEVICE.USB_QOSCTRL |= USB_QOSCTRL_CQOS(3);
-	USB_REGS->DEVICE.USB_QOSCTRL |= USB_QOSCTRL_DQOS(3);
 
 	BSP_Initialize();
     EVSYS_Initialize();

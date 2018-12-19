@@ -55,19 +55,18 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "app.h"
 
-#define APP_MAKE_BUFFER_DMA_READY
-#define APP_READ_BUFFER_SIZE 512
-#define APP_USB_SWITCH_DEBOUNCE_COUNT_FS 260
-#define APP_USB_SWITCH_DEBOUNCE_COUNT_HS 500
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
 // *****************************************************************************
 // *****************************************************************************
 
-const uint8_t __attribute__((aligned(16))) switchPromptUSB[] = "\r\nPUSH BUTTON PRESSED";
+const uint8_t APP_MAKE_BUFFER_DMA_READY switchPromptUSB[] = "\r\nPUSH BUTTON PRESSED";
 
-uint8_t APP_MAKE_BUFFER_DMA_READY readBuffer[APP_READ_BUFFER_SIZE];
+uint8_t APP_MAKE_BUFFER_DMA_READY cdcReadBuffer[APP_READ_BUFFER_SIZE];
+uint8_t APP_MAKE_BUFFER_DMA_READY cdcWriteBuffer[APP_READ_BUFFER_SIZE];
+
 
 // *****************************************************************************
 /* Application Data
@@ -86,14 +85,7 @@ uint8_t APP_MAKE_BUFFER_DMA_READY readBuffer[APP_READ_BUFFER_SIZE];
 
 APP_DATA appData;
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Application Local Functions
-// *****************************************************************************
-// *****************************************************************************
-   void APP_ProcessSwitchPress(void); 
-   
-   
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Functions
@@ -108,18 +100,19 @@ APP_DATA appData;
 
 USB_DEVICE_CDC_EVENT_RESPONSE APP_USBDeviceCDCEventHandler
 (
-    USB_DEVICE_CDC_INDEX index ,
-    USB_DEVICE_CDC_EVENT event ,
+    USB_DEVICE_CDC_INDEX index,
+    USB_DEVICE_CDC_EVENT event,
     void * pData,
     uintptr_t userData
 )
 {
     APP_DATA * appDataObject;
-    appDataObject = (APP_DATA *)userData;
     USB_CDC_CONTROL_LINE_STATE * controlLineStateData;
-    USB_DEVICE_CDC_EVENT_DATA_READ_COMPLETE * eventDataRead; 
+    USB_DEVICE_CDC_EVENT_DATA_READ_COMPLETE * eventDataRead;
+    
+    appDataObject = (APP_DATA *)userData;
 
-    switch ( event )
+    switch(event)
     {
         case USB_DEVICE_CDC_EVENT_GET_LINE_CODING:
 
@@ -189,7 +182,7 @@ USB_DEVICE_CDC_EVENT_RESPONSE APP_USBDeviceCDCEventHandler
 
         case USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_SENT:
 
-            /* This means the GET LINE CODING function data is valid. We dont
+            /* This means the GET LINE CODING function data is valid. We don't
              * do much with this data in this demo. */
             break;
 
@@ -211,18 +204,23 @@ USB_DEVICE_CDC_EVENT_RESPONSE APP_USBDeviceCDCEventHandler
 /***********************************************
  * Application USB Device Layer Event Handler.
  ***********************************************/
-void APP_USBDeviceEventHandler ( USB_DEVICE_EVENT event, void * eventData, uintptr_t context )
+void APP_USBDeviceEventHandler 
+(
+    USB_DEVICE_EVENT event, 
+    void * eventData, 
+    uintptr_t context 
+)
 {
     USB_DEVICE_EVENT_DATA_CONFIGURED *configuredEventData;
 
-    switch ( event )
+    switch(event)
     {
         case USB_DEVICE_EVENT_SOF:
 
-            /* This event is used for switch de-bounce. This flag is reset
+            /* This event is used for switch debounce. This flag is reset
              * by the switch process routine. */
             appData.sofEventHasOccurred = true;
-            APP_ProcessSwitchPress();
+            
             break;
 
         case USB_DEVICE_EVENT_RESET:
@@ -238,10 +236,11 @@ void APP_USBDeviceEventHandler ( USB_DEVICE_EVENT event, void * eventData, uintp
 
             /* Check the configuration. We only support configuration 1 */
             configuredEventData = (USB_DEVICE_EVENT_DATA_CONFIGURED*)eventData;
+            
             if ( configuredEventData->configurationValue == 1)
             {
                 /* Update LED to show configured state */
-                LED_On(); 
+                LED_On();
                 
                 /* Register the CDC Device application event handler here.
                  * Note how the appData object pointer is passed as the
@@ -251,29 +250,37 @@ void APP_USBDeviceEventHandler ( USB_DEVICE_EVENT event, void * eventData, uintp
 
                 /* Mark that the device is now configured */
                 appData.isConfigured = true;
-
             }
+            
             break;
 
         case USB_DEVICE_EVENT_POWER_DETECTED:
 
             /* VBUS was detected. We can attach the device */
             USB_DEVICE_Attach(appData.deviceHandle);
+            
             break;
 
         case USB_DEVICE_EVENT_POWER_REMOVED:
 
             /* VBUS is not available any more. Detach the device. */
             USB_DEVICE_Detach(appData.deviceHandle);
+            
             LED_Off();
+            
             break;
 
         case USB_DEVICE_EVENT_SUSPENDED:
+
+            /* Switch LED to show suspended state */
+            LED_Off();
+            
             break;
 
         case USB_DEVICE_EVENT_RESUMED:
         case USB_DEVICE_EVENT_ERROR:
         default:
+            
             break;
     }
 }
@@ -288,16 +295,18 @@ void APP_ProcessSwitchPress(void)
 {
     /* This function checks if the switch is pressed and then
      * debounces the switch press*/
+    
     if(SWITCH_STATE_PRESSED == (SWITCH_Get()))
     {
         if(appData.ignoreSwitchPress)
         {
-            /* This measn the key press is in progress */
+            /* This means the key press is in progress */
             if(appData.sofEventHasOccurred)
             {
                 /* A timer event has occurred. Update the debounce timer */
                 appData.switchDebounceTimer ++;
                 appData.sofEventHasOccurred = false;
+                
                 if (USB_DEVICE_ActiveSpeedGet(appData.deviceHandle) == USB_SPEED_FULL)
                 {
                     appData.debounceCount = APP_USB_SWITCH_DEBOUNCE_COUNT_FS;
@@ -331,7 +340,6 @@ void APP_ProcessSwitchPress(void)
         appData.switchDebounceTimer = 0;
         appData.sofEventHasOccurred = false;
     }
-
 }
 
 /*****************************************************
@@ -371,13 +379,13 @@ bool APP_StateReset(void)
 
 /*******************************************************************************
   Function:
-    void APP_Initialize ( void )
+    void APP_Initialize(void)
 
   Remarks:
     See prototype in app.h.
  */
 
-void APP_Initialize ( void )
+void APP_Initialize(void)
 {
     /* Place the App state machine in its initial state. */
     appData.state = APP_STATE_INIT;
@@ -390,7 +398,7 @@ void APP_Initialize ( void )
 
     /* Initial get line coding state */
     appData.getLineCodingData.dwDTERate = 9600;
-    appData.getLineCodingData.bParityType =  0;
+    appData.getLineCodingData.bParityType = 0;
     appData.getLineCodingData.bParityType = 0;
     appData.getLineCodingData.bDataBits = 8;
 
@@ -400,7 +408,7 @@ void APP_Initialize ( void )
     /* Write Transfer Handle */
     appData.writeTransferHandle = USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID;
 
-    /* Intialize the read complete flag */
+    /* Initialize the read complete flag */
     appData.isReadComplete = true;
 
     /*Initialize the write complete flag*/
@@ -414,28 +422,32 @@ void APP_Initialize ( void )
 
     /* Reset other flags */
     appData.sofEventHasOccurred = false;
+    
+    /* To know status of Switch */
     appData.isSwitchPressed = false;
 
     /* Set up the read buffer */
-    appData.readBuffer = &readBuffer[0];
+    appData.cdcReadBuffer = &cdcReadBuffer[0];
 
-       
+    /* Set up the read buffer */
+    appData.cdcWriteBuffer = &cdcWriteBuffer[0];       
 }
 
 
 /******************************************************************************
   Function:
-    void APP_Tasks ( void )
+    void APP_Tasks(void)
 
   Remarks:
     See prototype in app.h.
  */
 
-void APP_Tasks (void )
+void APP_Tasks(void)
 {
     /* Update the application state machine based
      * on the current state */
-    int i; 
+    int i;
+    
     switch(appData.state)
     {
         case APP_STATE_INIT:
@@ -466,6 +478,7 @@ void APP_Tasks (void )
                 /* If the device is configured then lets start reading */
                 appData.state = APP_STATE_SCHEDULE_READ;
             }
+            
             break;
 
         case APP_STATE_SCHEDULE_READ:
@@ -485,7 +498,7 @@ void APP_Tasks (void )
                 appData.readTransferHandle =  USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID;
 
                 USB_DEVICE_CDC_Read (USB_DEVICE_CDC_INDEX_0,
-                        &appData.readTransferHandle, appData.readBuffer,
+                        &appData.readTransferHandle, appData.cdcReadBuffer,
                         APP_READ_BUFFER_SIZE);
                 
                 if(appData.readTransferHandle == USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID)
@@ -504,6 +517,8 @@ void APP_Tasks (void )
             {
                 break;
             }
+
+            APP_ProcessSwitchPress();
 
             /* Check if a character was received or a switch was pressed.
              * The isReadComplete flag gets updated in the CDC event handler. */
@@ -540,16 +555,16 @@ void APP_Tasks (void )
             else
             {
                 /* Else echo each received character by adding 1 */
-                for(i=0; i<appData.numBytesRead; i++)
+                for(i = 0; i < appData.numBytesRead; i++)
                 {
-                    if((appData.readBuffer[i] != 0x0A) && (appData.readBuffer[i] != 0x0D))
+                    if((appData.cdcReadBuffer[i] != 0x0A) && (appData.cdcReadBuffer[i] != 0x0D))
                     {
-                        appData.readBuffer[i] = appData.readBuffer[i] + 1;
+                        appData.cdcWriteBuffer[i] = appData.cdcReadBuffer[i] + 1;
                     }
                 }
                 USB_DEVICE_CDC_Write(USB_DEVICE_CDC_INDEX_0,
                         &appData.writeTransferHandle,
-                        appData.readBuffer, appData.numBytesRead,
+                        appData.cdcWriteBuffer, appData.numBytesRead,
                         USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE);
             }
 
@@ -573,8 +588,8 @@ void APP_Tasks (void )
             break;
 
         case APP_STATE_ERROR:
-            break;
         default:
+            
             break;
     }
 }

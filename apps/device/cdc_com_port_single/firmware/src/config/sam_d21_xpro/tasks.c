@@ -77,9 +77,9 @@ void SYS_Tasks ( void )
     
 
     /* Maintain Middleware & Other Libraries */
-    /* USB HS Driver Task Routine */ 
+        /* USB FS Driver Task Routine */ 
     DRV_USBFSV1_Tasks(sysObj.drvUSBFSV1Object);
-    
+
 	/* USB Device layer tasks routine */ 
     USB_DEVICE_Tasks(sysObj.usbDevObject0);
 
