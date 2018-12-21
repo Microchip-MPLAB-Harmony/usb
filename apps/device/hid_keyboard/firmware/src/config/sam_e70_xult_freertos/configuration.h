@@ -56,6 +56,7 @@
 */
 
 #include "user.h"
+#include "toolchain_specifics.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -72,7 +73,6 @@ extern "C" {
 // *****************************************************************************
 #define DCACHE_CLEAN_BY_ADDR(data, size)       SCB_CleanDCache_by_Addr((uint32_t *)data, size)
 #define DCACHE_INVALIDATE_BY_ADDR(data, size)  SCB_InvalidateDCache_by_Addr((uint32_t *)data, size)
-
 #define DATA_CACHE_ENABLED                     true
 
 // *****************************************************************************
@@ -97,38 +97,16 @@ extern "C" {
 /*** USB Driver Configuration ***/
 
 /* Maximum USB driver instances */
-#define DRV_USBHSV1_INSTANCES_NUMBER  1
+#define DRV_USBHSV1_INSTANCES_NUMBER                        1
 
 /* Interrupt mode enabled */
-#define DRV_USBHSV1_INTERRUPT_MODE    true
-
-
-
-
-/* Number of Endpoints used */
-#define DRV_USBHSV1_ENDPOINTS_NUMBER  3
+#define DRV_USBHSV1_INTERRUPT_MODE                          true
 
 /* Enables Device Support */
-#define DRV_USBHSV1_DEVICE_SUPPORT    true
-
+#define DRV_USBHSV1_DEVICE_SUPPORT                          true
+	
 /* Disable Host Support */
-#define DRV_USBHSV1_HOST_SUPPORT      false
-
-/* The USB Device Layer will not initialize the USB Driver */
-#define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT
-
-/* Maximum device layer instances */
-#define USB_DEVICE_INSTANCES_NUMBER     1
-
-/* EP0 size in bytes */
-#define USB_DEVICE_EP0_BUFFER_SIZE      64
-
-/* Enable SOF Events */
-#define USB_DEVICE_SOF_EVENT_ENABLE
-
-
-
-
+#define DRV_USBHSV1_HOST_SUPPORT                            false
 
 /* Maximum instances of HID function driver */
 #define USB_DEVICE_HID_INSTANCES_NUMBER     1
@@ -136,7 +114,26 @@ extern "C" {
 /* HID Transfer Queue Size for both read and
    write. Applicable to all instances of the
    function driver */
-#define USB_DEVICE_HID_QUEUE_DEPTH_COMBINED 2
+#define USB_DEVICE_HID_QUEUE_DEPTH_COMBINED 5
+
+/* Number of Endpoints used */
+#define DRV_USBHSV1_ENDPOINTS_NUMBER                        3
+
+/* The USB Device Layer will not initialize the USB Driver */
+#define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT 
+
+/* Maximum device layer instances */
+#define USB_DEVICE_INSTANCES_NUMBER                         1 
+
+/* EP0 size in bytes */
+#define USB_DEVICE_EP0_BUFFER_SIZE                          64
+
+/* Enable SOF Events */ 
+#define USB_DEVICE_SOF_EVENT_ENABLE     
+
+
+
+
 
 
 
@@ -146,33 +143,7 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 
-/*** LED Macros for LED0 ***/
-#define APP_LED0_Off()                LED1_Off()
-#define APP_LED0_On()                 LED1_On()
-#define APP_LED0_Toggle()             LED1_Toggle()
 
-/*** LED Macros for LED1 ***/
-#define APP_LED1_Off()                LED2_Off()
-#define APP_LED1_On()                 LED2_On()
-#define APP_LED1_Toggle()             LED2_Toggle()
-
-/*** SWITCH Macros for SWITCH1 ***/
-
-#define APP_SWITCH0_Get()             SWITCH_Get()
-#define APP_SWITCH0_STATE_PRESSED     SWITCH_STATE_PRESSED
-#define APP_SWITCH0_STATE_RELEASED    SWITCH_STATE_RELEASED
-
-/*** SWITCH Macros for SWITCH2 ***/
-#define APP_SWITCH1_Get()             SWITCH_Get()
-#define APP_SWITCH1_STATE_PRESSED     SWITCH_STATE_PRESSED
-#define APP_SWITCH1_STATE_RELEASED    SWITCH_STATE_RELEASED
-
-
-
-/* Tick time in 125 usec units */
-#define APP_USB_SWITCH_DEBOUNCE_COUNT (100)
-/* Macro defines USB internal DMA Buffer criteria*/
-#define APP_MAKE_BUFFER_DMA_READY __attribute__((aligned(16)))
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }

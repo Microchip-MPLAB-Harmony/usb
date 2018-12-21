@@ -143,14 +143,17 @@ typedef struct
     /* Send transfer handle */
     USB_DEVICE_HID_TRANSFER_HANDLE sendTransferHandle;
 
-    /* Keycode to be sent */
+    /* Key code to be sent */
     USB_HID_KEYBOARD_KEYPAD key;
 
     /* USB HID active Protocol */
     USB_HID_PROTOCOL_CODE activeProtocol;
 
-    /* Switch debounce timer */
+    /* Switch de-bounce timer */
     unsigned int switchDebounceTimer;
+    
+    /* Tracks De-bounce timer */
+    unsigned int debounceCount;
 
 } APP_DATA;
 
