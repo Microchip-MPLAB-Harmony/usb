@@ -57,8 +57,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #define APP_MAKE_BUFFER_DMA_READY
 #define APP_READ_BUFFER_SIZE 512
-#define BSP_LEDOn(a)
-#define BSP_LEDOff(a)
 #define APP_USB_SWITCH_DEBOUNCE_COUNT_FS 260
 #define APP_USB_SWITCH_DEBOUNCE_COUNT_HS 500
 // *****************************************************************************
@@ -88,7 +86,14 @@ uint8_t APP_MAKE_BUFFER_DMA_READY readBuffer[APP_READ_BUFFER_SIZE];
 
 APP_DATA appData;
 
-
+// *****************************************************************************
+// *****************************************************************************
+// Section: Application Local Functions
+// *****************************************************************************
+// *****************************************************************************
+   void APP_ProcessSwitchPress(void); 
+   
+   
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Functions
@@ -214,9 +219,10 @@ void APP_USBDeviceEventHandler ( USB_DEVICE_EVENT event, void * eventData, uintp
     {
         case USB_DEVICE_EVENT_SOF:
 
-            /* This event is used for switch debounce. This flag is reset
+            /* This event is used for switch de-bounce. This flag is reset
              * by the switch process routine. */
             appData.sofEventHasOccurred = true;
+            APP_ProcessSwitchPress();
             break;
 
         case USB_DEVICE_EVENT_RESET:
@@ -230,7 +236,7 @@ void APP_USBDeviceEventHandler ( USB_DEVICE_EVENT event, void * eventData, uintp
 
         case USB_DEVICE_EVENT_CONFIGURED:
 
-            /* Check the configuratio. We only support configuration 1 */
+            /* Check the configuration. We only support configuration 1 */
             configuredEventData = (USB_DEVICE_EVENT_DATA_CONFIGURED*)eventData;
             if ( configuredEventData->configurationValue == 1)
             {
@@ -263,11 +269,6 @@ void APP_USBDeviceEventHandler ( USB_DEVICE_EVENT event, void * eventData, uintp
             break;
 
         case USB_DEVICE_EVENT_SUSPENDED:
-
-            /* Switch LED to show suspended state */
-            BSP_LEDOff ( APP_USB_LED_1 );
-            BSP_LEDOn ( APP_USB_LED_2 );
-            BSP_LEDOn ( APP_USB_LED_3 );
             break;
 
         case USB_DEVICE_EVENT_RESUMED:
@@ -283,7 +284,7 @@ void APP_USBDeviceEventHandler ( USB_DEVICE_EVENT event, void * eventData, uintp
 // *****************************************************************************
 // *****************************************************************************
 
-void APP_ProcessSwitchPress()
+void APP_ProcessSwitchPress(void)
 {
     /* This function checks if the switch is pressed and then
      * debounces the switch press*/
@@ -503,8 +504,6 @@ void APP_Tasks (void )
             {
                 break;
             }
-
-            APP_ProcessSwitchPress();
 
             /* Check if a character was received or a switch was pressed.
              * The isReadComplete flag gets updated in the CDC event handler. */

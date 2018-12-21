@@ -165,11 +165,12 @@ void SYS_Initialize ( void* data )
 
 
 	BSP_Initialize();
-    NVIC_Initialize();
 	RSWDT_REGS->RSWDT_MR = RSWDT_MR_WDDIS_Msk;	// Disable RSWDT 
 
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
 
+
+    NVIC_Initialize();
 
 
 
@@ -192,4 +193,3 @@ void SYS_Initialize ( void* data )
 /*******************************************************************************
  End of File
 */
-

@@ -167,11 +167,6 @@ typedef enum
 
 #define USB_DEVICE_AUTO_ZLP							0
 
-#define APP_MAKE_BUFFER_DMA_READY  __attribute__((aligned(16)))
-#define APP_READ_BUFFER_SIZE 512
-#define APP_USB_SWITCH_DEBOUNCE_COUNT_FS 260
-#define APP_USB_SWITCH_DEBOUNCE_COUNT_HS 500
-
 //#define ENABLE_DEBUG_MESSAGE
 
 
@@ -180,28 +175,6 @@ typedef enum
 #else
 #define DEBUG_MESSAGE(value)
 #endif
-
-
-/*** LED Macros for LED0 ***/
-#define APP_LED0_Off()                LED_Off()
-#define APP_LED0_On()                 LED_On()
-#define APP_LED0_Toggle()             LED_Toggle()
-    
-/*** LED Macros for LED1 ***/
-#define APP_LED1_Off()                LED_Off()
-#define APP_LED1_On()                 LED_On()
-#define APP_LED1_Toggle()             LED_Toggle()
-                                  
-/*** SWITCH Macros for SWITCH1 ***/
-    
-#define APP_SWITCH0_Get()             SWITCH_Get()
-#define APP_SWITCH0_STATE_PRESSED     SWITCH_STATE_PRESSED
-#define APP_SWITCH0_STATE_RELEASED    SWITCH_STATE_RELEASED
-    
-/*** SWITCH Macros for SWITCH2 ***/
-#define APP_SWITCH1_Get()             SWITCH_Get()
-#define APP_SWITCH1_STATE_PRESSED     SWITCH_STATE_PRESSED
-#define APP_SWITCH1_STATE_RELEASED    SWITCH_STATE_RELEASED
 
 
 // *****************************************************************************

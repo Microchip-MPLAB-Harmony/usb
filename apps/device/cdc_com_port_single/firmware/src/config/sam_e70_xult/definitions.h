@@ -57,8 +57,6 @@
 #include "peripheral/nvic/plib_nvic.h"
 #include "usb/usb_chapter_9.h"
 #include "usb/usb_device.h"
-#include "FreeRTOS.h"
-#include "task.h"
 #include "system/int/sys_int.h"
 #include "osal/osal.h"
 #include "app.h"
