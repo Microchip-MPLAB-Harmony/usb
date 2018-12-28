@@ -1617,7 +1617,7 @@ void _USB_DEVICE_Ep0ReceiveCompleteCallback( USB_DEVICE_IRP * handle )
     USB_DEVICE_OBJ * usbDeviceThisInstance;  
     USB_DEVICE_EVENT controlEvent = 0;
     USB_DEVICE_CONTROL_TRANSFER_STRUCT * controlTransfer;
-    void * eventData;
+    void * eventData = NULL;
 
     /* If the IRP was aborted, there is nothing for us to do */
     if(irpHandle->status == USB_DEVICE_IRP_STATUS_ABORTED)
