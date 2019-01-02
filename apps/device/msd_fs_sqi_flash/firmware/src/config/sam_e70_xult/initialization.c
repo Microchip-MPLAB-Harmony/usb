@@ -45,6 +45,7 @@
 // *****************************************************************************
 #include "configuration.h"
 #include "definitions.h"
+#include "device.h"
 
 
 // ****************************************************************************
@@ -52,6 +53,35 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
+// DOM-IGNORE-BEGIN
+/*******************************************************************************
+* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+*
+* Subject to your compliance with these terms, you may use Microchip software
+* and any derivatives exclusively with Microchip products. It is your
+* responsibility to comply with third party license terms applicable to your
+* use of third party software (including open source software) that may
+* accompany Microchip software.
+*
+* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+* PARTICULAR PURPOSE.
+*
+* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+*******************************************************************************/
+
+// DOM-IGNORE-END
+#pragma config TCM_CONFIGURATION = 0
+#pragma config SECURITY_BIT = CLEAR
+#pragma config BOOT_MODE = SET
+
 
 
 // *****************************************************************************
@@ -62,19 +92,20 @@
 // <editor-fold defaultstate="collapsed" desc="DRV_SST26 Initialization Data">
 
 const DRV_SST26_PLIB_INTERFACE drvSST26PlibAPI = {
-    .CommandWrite  = QSPI_CommandWrite,
-    .RegisterRead  = QSPI_RegisterRead,
-    .RegisterWrite = QSPI_RegisterWrite,
-    .MemoryRead    = QSPI_MemoryRead,
-    .MemoryWrite   = QSPI_MemoryWrite
+    .CommandWrite   = QSPI_CommandWrite,
+    .RegisterRead   = QSPI_RegisterRead,
+    .RegisterWrite  = QSPI_RegisterWrite,
+    .MemoryRead     = QSPI_MemoryRead,
+    .MemoryWrite    = QSPI_MemoryWrite
 };
 
 const DRV_SST26_INIT drvSST26InitData =
 {
-    .sst26Plib         = &drvSST26PlibAPI,
+    .sst26Plib      = &drvSST26PlibAPI,
 };
 
 // </editor-fold>
+
 // <editor-fold defaultstate="collapsed" desc="DRV_MEMORY Instance 0 Initialization Data">
 
 static uint8_t gDrvMemory0EraseBuffer[DRV_SST26_ERASE_BUFFER_SIZE] __attribute__((aligned(32)));
@@ -131,13 +162,11 @@ SYSTEM_OBJECTS sysObj;
 static DRV_USB_VBUS_LEVEL DRV_USBHSV1_VBUS_Comparator(void)
 {
     DRV_USB_VBUS_LEVEL retVal = DRV_USB_VBUS_LEVEL_INVALID;
-
-    /*if(true == USB_VBUS_INState_Get())
+    if(true == USB_VBUS_SENSE_Get())
     {
         retVal = DRV_USB_VBUS_LEVEL_VALID;
-    }*/
-	retVal = DRV_USB_VBUS_LEVEL_VALID;
-    return (retVal);
+    }
+	return (retVal);
 
 }
 
@@ -153,7 +182,7 @@ const DRV_USBHSV1_INIT drvUSBInit =
     .operationMode = DRV_USBHSV1_OPMODE_DEVICE,
 
     /* To operate in USB Normal Mode */
-    .operationSpeed = DRV_USBHSV1_DEVICE_SPEEDCONF_NORMAL,
+	.operationSpeed = DRV_USBHSV1_DEVICE_SPEEDCONF_LOW_POWER,
 
     /* Identifies peripheral (PLIB-level) ID */
     .usbID = USBHS_REGS,
@@ -232,7 +261,6 @@ void SYS_Initialize ( void* data )
 	PIO_Initialize();
 
 
-    NVIC_Initialize();
 	RSWDT_REGS->RSWDT_MR = RSWDT_MR_WDDIS_Msk;	// Disable RSWDT 
 
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
@@ -244,6 +272,8 @@ void SYS_Initialize ( void* data )
 	BSP_Initialize();
     QSPI_Initialize();
 
+
+    NVIC_Initialize();
 
     sysObj.drvSST26 = DRV_SST26_Initialize((SYS_MODULE_INDEX)DRV_SST26_INDEX, (SYS_MODULE_INIT *)&drvSST26InitData);
 
@@ -274,4 +304,3 @@ void SYS_Initialize ( void* data )
 /*******************************************************************************
  End of File
 */
-

@@ -50,8 +50,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "usb/src/usb_device_msd_local.h"
 
 const unsigned char 
-    __attribute__((space(prog),aligned(DRV_MEMORY_DEVICE_PROGRAM_SIZE)))
-    __attribute__((address(DRV_MEMORY_DEVICE_START_ADDRESS)))
+    __attribute__((keep)) __attribute__((address(DRV_MEMORY_DEVICE_START_ADDRESS)))
     diskImage[32768] = 
 {
     /* Master Boot Record - LBA 0 */

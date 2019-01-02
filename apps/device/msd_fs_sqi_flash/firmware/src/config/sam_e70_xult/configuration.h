@@ -56,6 +56,7 @@
 */
 
 #include "user.h"
+#include "toolchain_specifics.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -72,7 +73,6 @@ extern "C" {
 // *****************************************************************************
 #define DCACHE_CLEAN_BY_ADDR(data, size)       SCB_CleanDCache_by_Addr((uint32_t *)data, size)
 #define DCACHE_INVALIDATE_BY_ADDR(data, size)  SCB_InvalidateDCache_by_Addr((uint32_t *)data, size)
-
 #define DATA_CACHE_ENABLED                     true
 
 // *****************************************************************************
@@ -84,7 +84,7 @@ extern "C" {
 #define SYS_TIME_INDEX_0                     0
 #define SYS_TIME_MAX_TIMERS                  5
 #define SYS_TIME_HW_COUNTER_WIDTH            16
-#define SYS_TIME_HW_COUNTER_PERIOD           0xFFFF
+#define SYS_TIME_HW_COUNTER_PERIOD           65535
 #define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
 #define SYS_TIME_CPU_CLOCK_FREQUENCY         300000000
 #define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (900)
@@ -126,13 +126,14 @@ extern "C" {
 #define DRV_MEMORY_INSTANCES_NUMBER          1
 /* SST26 Driver Instance Configuration */
 #define DRV_SST26_INDEX                       0
+#define DRV_SST26_CLIENTS_NUMBER              1
 #define DRV_SST26_START_ADDRESS               0x0
 #define DRV_SST26_ERASE_BUFFER_SIZE           4096
 
 
 /* Memory Driver Instance 0 Configuration */
 #define DRV_MEMORY_INDEX_0                   0
-#define DRV_MEMORY_CLIENTS_NUMBER_IDX0       1
+#define DRV_MEMORY_CLIENTS_NUMBER_IDX0       2
 #define DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0    1
 
 
@@ -143,14 +144,17 @@ extern "C" {
 // Section: Middleware & Other Library Configuration
 // *****************************************************************************
 // *****************************************************************************
+/* Number of Endpoints used */
+#define DRV_USBHSV1_ENDPOINTS_NUMBER                        3
+
 /* The USB Device Layer will not initialize the USB Driver */
-#define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT
+#define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT 
 
 /* Maximum device layer instances */
-#define USB_DEVICE_INSTANCES_NUMBER     1 
+#define USB_DEVICE_INSTANCES_NUMBER                         1 
 
 /* EP0 size in bytes */
-#define USB_DEVICE_EP0_BUFFER_SIZE      64
+#define USB_DEVICE_EP0_BUFFER_SIZE                          64
 
 /* Enable SOF Events */ 
 #define USB_DEVICE_SOF_EVENT_ENABLE     
@@ -162,22 +166,16 @@ extern "C" {
 /*** USB Driver Configuration ***/
 
 /* Maximum USB driver instances */
-#define DRV_USBHSV1_INSTANCES_NUMBER  1
+#define DRV_USBHSV1_INSTANCES_NUMBER                        1
 
 /* Interrupt mode enabled */
-#define DRV_USBHSV1_INTERRUPT_MODE    true
-
-
-
-
-/* Number of Endpoints used */
-#define DRV_USBHSV1_ENDPOINTS_NUMBER  7 //TODO  Calculate this for Device 
+#define DRV_USBHSV1_INTERRUPT_MODE                          true
 
 /* Enables Device Support */
-#define DRV_USBHSV1_DEVICE_SUPPORT    true
+#define DRV_USBHSV1_DEVICE_SUPPORT                          true
 	
 /* Disable Host Support */
-#define DRV_USBHSV1_HOST_SUPPORT      false
+#define DRV_USBHSV1_HOST_SUPPORT                            false
 
 /* Maximum instances of MSD function driver */
 #define USB_DEVICE_MSD_INSTANCES_NUMBER     1

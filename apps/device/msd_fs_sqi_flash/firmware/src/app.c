@@ -113,12 +113,14 @@ void APP_USBDeviceEventHandler
         case USB_DEVICE_EVENT_DECONFIGURED:
             {
                 /* Device was reset or deconfigured. */
+                LED1_Off(); 
                 break;
             }
 
         case USB_DEVICE_EVENT_CONFIGURED:
             {
                 /* Device is configured. */
+                LED1_On(); 
                 break;
             }
 
@@ -148,7 +150,7 @@ void APP_USBDeviceEventHandler
         case USB_DEVICE_EVENT_POWER_REMOVED:
             {
                 appData->isUsbConnected = false;
-        
+                LED1_Off(); 
                 /* VBUS is removed. Detach the device */
                 USB_DEVICE_Detach(appData->usbDeviceHandle);
                 break;
@@ -213,7 +215,7 @@ void APP_ProcessSwitchPress(void)
 {
     /* This function checks if the switch is pressed and then
      * de-bounce the switch press*/
-    if(SWITCH_STATE_PRESSED == SWITCH_Get())
+    if(appData.isUsbConnected == true)
     {
         if(appData.ignoreSwitchPress)
         {
@@ -340,10 +342,10 @@ void APP_FSTasks (void)
             { 
                 appData.isFsRunning = false;
                 appData.numLedChange = 0;
-                appData.fsState = APP_FS_STATE_WAIT_FOR_SWITCH_PRESS;
+                //appData.fsState = APP_FS_STATE_WAIT_FOR_SWITCH_PRESS;
                 /* Fall through */
             }
-
+            break; 
         case APP_FS_STATE_WAIT_FOR_SWITCH_PRESS:
             {
                 if (appData.isSwitch1Pressed == true)

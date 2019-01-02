@@ -79,9 +79,9 @@ USB_DEVICE_MSD_MEDIA_INIT_DATA __attribute__((aligned(16))) msdMediaInit0[1] =
             0x02,    // response is in format specified by SPC-2
             0x1F,    // additional length
             0x00,    // sccs etc.
-            0x00,    // bque=1 and cmdque=0,indicates simple queueing 00 is obsolete,
+            0x00,    // bque=1 and cmdque=0,indicates simple queuing 00 is obsolete,
                      // but as in case of other device, we are just using 00
-            0x00,    // 00 obsolete, 0x80 for basic task queueing
+            0x00,    // 00 obsolete, 0x80 for basic task queuing
             {
                 'M','i','c','r','o','c','h','p'
             },
@@ -134,7 +134,7 @@ const USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[1] =
         .configurationValue = 1,    /* Configuration value */ 
         .interfaceNumber = 0,       /* First interfaceNumber of this function */ 
         .speed = USB_SPEED_HIGH|USB_SPEED_FULL,    /* Function Speed */ 
-        .numberOfInterfaces = 2,    /* Number of interfaces */
+        .numberOfInterfaces = 1,    /* Number of interfaces */
         .funcDriverIndex = 0,  /* Index of MSD Function Driver */
         .driver = (void*)USB_DEVICE_MSD_FUNCTION_DRIVER,    /* USB MSD function data exposed to device layer */
         .funcDriverInit = (void*)&msdInit0    /* Function driver init data */
@@ -155,110 +155,39 @@ const USB_DEVICE_DESCRIPTOR deviceDescriptor =
     0x12,                           // Size of this descriptor in bytes
     USB_DESCRIPTOR_DEVICE,          // DEVICE descriptor type
     0x0200,                         // USB Spec Release Number in BCD format
-    0x00,                           // Class Code
-    0x00,                           // Subclass code
-    0x00,                           // Protocol code
-    USB_DEVICE_EP0_BUFFER_SIZE,     // Max packet size for EP0, see system_config.h
+        0x00,                                    // Class Code
+    0x00,                                    // Subclass code
+    0x00,                                    // Protocol code
+
+
+    USB_DEVICE_EP0_BUFFER_SIZE,     // Max packet size for EP0, see configuration.h
     0x04D8,                         // Vendor ID
     0x0009,                         // Product ID
     0x0100,                         // Device release number in BCD format
     0x01,                           // Manufacturer string index
     0x02,                           // Product string index
-	0x03,
+    0x03,                           // Device serial number string index
     0x01                            // Number of possible configurations
 };
 
-/*******************************************
- *  USB Device Qualifier Descriptor for this
- *  demo.
- *******************************************/
-const USB_DEVICE_QUALIFIER deviceQualifierDescriptor1 =
-{
-    0x0A,                               // Size of this descriptor in bytes
-    USB_DESCRIPTOR_DEVICE_QUALIFIER,    // Device Qualifier Type
-    0x0200,                             // USB Specification Release number
-    0x00,                           // Class Code
-    0x00,                           // Subclass code
-    0x00,                           // Protocol code
-    USB_DEVICE_EP0_BUFFER_SIZE,         // Maximum packet size for endpoint 0
-    0x01,                               // Number of possible configurations
-    0x00                                // Reserved for future use.
-};
-
-/*******************************************
- *  USB High Speed Configuration Descriptor
- *******************************************/
- 
-const uint8_t highSpeedConfigurationDescriptor[]=
-{
-    /* Configuration Descriptor */
-
-    0x09,                                               // Size of this descriptor in bytes
-    USB_DESCRIPTOR_CONFIGURATION,                       // Descriptor Type
-    32,0,                //(32 Bytes)Size of the Config descriptor.e
-    1,                                               // Number of interfaces in this cfg
-    0x01,                                               // Index value of this configuration
-    0x00,                                               // Configuration string index
-    USB_ATTRIBUTE_DEFAULT | USB_ATTRIBUTE_SELF_POWERED, // Attributes
-    50,                                                 // Max power consumption (2X mA)
-    
-    /* Descriptor for Function 1 - MSD     */ 
-    
-    /* Interface Descriptor */
-
-    9,                              // Size of this descriptor in bytes
-    USB_DESCRIPTOR_INTERFACE,       // INTERFACE descriptor type
-    0,                              // Interface Number
-    0,                              // Alternate Setting Number
-    2,                              // Number of endpoints in this intf
-    USB_MSD_CLASS_CODE,             // Class code
-    USB_MSD_SUBCLASS_CODE_SCSI_TRANSPARENT_COMMAND_SET, // Subclass code
-    USB_MSD_PROTOCOL,               // Protocol code
-    0,                              // Interface string index
-
-    /* Endpoint Descriptor */
-
-    7,                          // Size of this descriptor in bytes
-    USB_DESCRIPTOR_ENDPOINT,    // Endpoint Descriptor
-    1 | USB_EP_DIRECTION_IN,    // EndpointAddress ( EP1 IN )
-    USB_TRANSFER_TYPE_BULK,     // Attributes type of EP (BULK)
-    0x00, 0x02,                 // Max packet size of this EP
-    0x00,                       // Interval (in ms)
-
-
-    7,                          // Size of this descriptor in bytes
-    USB_DESCRIPTOR_ENDPOINT,    // Endpoint Descriptor
-    2 | USB_EP_DIRECTION_OUT,   // EndpointAddress ( EP1 OUT )
-    USB_TRANSFER_TYPE_BULK,     // Attributes type of EP (BULK)
-    0x00, 0x02,                 // Max packet size of this EP
-    0x00,                       // Interval (in ms)
-    
-
-};
-
-/*******************************************
- * Array of High speed config descriptors
- *******************************************/
-USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE highSpeedConfigDescSet[1] =
-{
-    highSpeedConfigurationDescriptor
-};
 
 /*******************************************
  *  USB Full Speed Configuration Descriptor
  *******************************************/
 const uint8_t fullSpeedConfigurationDescriptor[]=
 {
+
     /* Configuration Descriptor */
 
     0x09,                                               // Size of this descriptor in bytes
     USB_DESCRIPTOR_CONFIGURATION,                       // Descriptor Type
-    32,0,                //(32 Bytes)Size of the Config descriptor.e
-    1,                                               // Number of interfaces in this cfg
+    USB_DEVICE_16bitTo8bitArrange(32),                  //(32 Bytes)Size of the Config descriptor
+    1,                                                  // Number of interfaces in this cfg
     0x01,                                               // Index value of this configuration
     0x00,                                               // Configuration string index
     USB_ATTRIBUTE_DEFAULT | USB_ATTRIBUTE_SELF_POWERED, // Attributes
-    50,                                                 // Max power consumption (2X mA)
+    50,
+	
     /* Descriptor for Function 1 - MSD     */ 
     
     /* Interface Descriptor */
@@ -290,7 +219,6 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
     0x40,0x00,                  // Max packet size of this EP
     0x00,                       // Interval (in ms)
     
-
 
 };
 
@@ -346,15 +274,14 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
     {
         uint8_t bLength;        // Size of this descriptor in bytes
         uint8_t bDscType;       // STRING descriptor type
-        uint16_t string[22];    // String
+        uint16_t string[25];    // String
     }
     sd002 =
     {
         sizeof(sd002),
         USB_DESCRIPTOR_STRING,
-		{'S','i','m','p','l','e',' ','M','S','D',' ','D','e','v','i','c','e',' ','D','e','m','o'}
+		{'M','S','D',' ','S','P','I',' ','F','l','a','s','h',' ','D','e','v','i','c','e',' ','D','e','m','o'}
     }; 
-
 /******************************************************************************
  * Serial number string descriptor.  Note: This should be unique for each unit
  * built on the assembly line.  Plugging in two units simultaneously with the
@@ -395,13 +322,13 @@ const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =
     &deviceDescriptor,          /* Full speed descriptor */
     1,                          /* Total number of full speed configurations available */
     fullSpeedConfigDescSet,     /* Pointer to array of full speed configurations descriptors*/
-    &deviceDescriptor,          /* High speed device descriptor*/
-    1,                          /* Total number of high speed configurations available */
-    highSpeedConfigDescSet,     /* Pointer to array of high speed configurations descriptors. */
-    4,                           // Total number of string descriptors available.
+	NULL, 
+	0,
+	NULL,
+    3,                          // Total number of string descriptors available.
     stringDescriptors,          // Pointer to array of string descriptors.
-    &deviceQualifierDescriptor1,// Pointer to full speed dev qualifier.
-    &deviceQualifierDescriptor1 // Pointer to high speed dev qualifier.
+	NULL, 
+	NULL
 };
 
 
@@ -421,7 +348,7 @@ const USB_DEVICE_INIT usbDevInitData =
     .usbMasterDescriptor = (USB_DEVICE_MASTER_DESCRIPTOR*)&usbMasterDescriptor,
 
     /* USB Device Speed */
-    .deviceSpeed =  USB_SPEED_HIGH,    
+	.deviceSpeed =  USB_SPEED_FULL,
     
     /* Index of the USB Driver to be used by this Device Layer Instance */
     .driverIndex = DRV_USBHSV1_INDEX_0,

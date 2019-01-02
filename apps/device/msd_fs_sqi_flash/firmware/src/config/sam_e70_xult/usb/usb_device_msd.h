@@ -53,7 +53,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include <stdint.h>
 #include <stdbool.h>
 #include "configuration.h"
-#include "system/fs/sys_fs_media_manager.h"
+#include "system/system_media.h"
 #include "driver/driver_common.h"
 #include "usb/usb_common.h"
 #include "usb/usb_chapter_9.h"
@@ -132,7 +132,7 @@ typedef struct USB_DEVICE_MSD_MEDIA_FUNCTIONS
        uses the size of read region and number of read blocks to report the
        media capacity to the MSD host. This function pointer cannot be NULL. */
 
-    SYS_FS_MEDIA_GEOMETRY * (* geometryGet)(DRV_HANDLE hClient);
+    SYS_MEDIA_GEOMETRY * (* geometryGet)(DRV_HANDLE hClient);
 
     /* The MSD function driver calls this function when it needs to read a block
        of data. This function pointer cannot be NULL. */

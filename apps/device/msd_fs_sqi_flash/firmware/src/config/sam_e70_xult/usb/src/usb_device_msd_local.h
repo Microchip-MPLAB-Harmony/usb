@@ -44,7 +44,6 @@
 #define _USB_DEVICE_MSD_LOCAL_H_
 
 #include "configuration.h"
-#include "system/fs/sys_fs_media_manager.h"
 // *****************************************************************************
 // *****************************************************************************
 // Section: Constants
@@ -144,7 +143,7 @@ typedef struct
     USB_DEVICE_MSD_MEDIA_OPERATION mediaState;
     
     /* Pointer to the media geometry */
-    SYS_FS_MEDIA_GEOMETRY * mediaGeometry;
+    SYS_MEDIA_GEOMETRY * mediaGeometry;
 
     	
 } USB_DEVICE_MSD_MEDIA_DYNAMIC_DATA;

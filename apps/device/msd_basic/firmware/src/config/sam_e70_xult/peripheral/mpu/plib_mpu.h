@@ -1,20 +1,20 @@
 /*******************************************************************************
-  Board Support Package Implementation
+  MPU PLIB Header
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    bsp.c
+    plib_mpu.h
 
   Summary:
-    Board Support Package implementation.
+    MPU PLIB Header File
 
   Description:
-    This file contains routines that implement the board support package
+    None
+
 *******************************************************************************/
 
-// DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -37,49 +37,37 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
+
+#ifndef PLIB_MPU_H
+#define PLIB_MPU_H
+
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
+
+    extern "C" {
+
+#endif
 // DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Included Files
+// Section: Interface
 // *****************************************************************************
 // *****************************************************************************
 
-#include "bsp.h"
+/****************************** MPU API *********************************/
 
-// *****************************************************************************
-// *****************************************************************************
-// *****************************************************************************
-// Section: Interface Routines
-// *****************************************************************************
-// *****************************************************************************
-
-// *****************************************************************************
-/* Function:
-    void BSP_Initialize(void)
-
-  Summary:
-    Performs the necessary actions to initialize a board
-
-  Description:
-    This function initializes the LED, Switch and other ports on the board.
-    This function must be called by the user before using any APIs present in
-    this BSP.
-
-  Remarks:
-    Refer to bsp.h for usage information.
-*/
-
-void BSP_Initialize(void )
-{
+void MPU_Initialize( void );
 
 
-    /* Switch off LEDs */
-		LED1_Off(); 
+
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
+
+    }
+
+#endif
+// DOM-IGNORE-END
+#endif // PLIB_MPU_H
 
 
-}
-
-/*******************************************************************************
- End of File
-*/

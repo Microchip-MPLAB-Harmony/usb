@@ -702,18 +702,18 @@ void _USB_DEVICE_MSD_Tasks
 
 void _USB_DEVICE_MSD_BlockEventHandler
 (
-    SYS_FS_MEDIA_BLOCK_EVENT event,
-    SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE commandHandle,
+    SYS_MEDIA_BLOCK_EVENT event,
+    SYS_MEDIA_BLOCK_COMMAND_HANDLE commandHandle,
     uintptr_t context
 )
 {
     USB_DEVICE_MSD_MEDIA_DYNAMIC_DATA * mediaDynamicData = (USB_DEVICE_MSD_MEDIA_DYNAMIC_DATA *)context;
     switch(event)
     {
-        case SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE:
+        case SYS_MEDIA_EVENT_BLOCK_COMMAND_COMPLETE:
             mediaDynamicData->mediaState = USB_DEVICE_MSD_MEDIA_OPERATION_COMPLETE;
             break;
-        case SYS_FS_MEDIA_EVENT_BLOCK_COMMAND_ERROR:
+        case SYS_MEDIA_EVENT_BLOCK_COMMAND_ERROR:
             mediaDynamicData->mediaState = USB_DEVICE_MSD_MEDIA_OPERATION_ERROR;
             break;
     }
@@ -1052,7 +1052,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessRead
     size_t mediaReadBlockSize = 0;
     uint8_t logicalUnit;
 
-    SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE mediaReadWriteHandle = SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
+    SYS_MEDIA_BLOCK_COMMAND_HANDLE mediaReadWriteHandle = SYS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
     USB_DEVICE_MSD_MEDIA_FUNCTIONS * mediaFunctions;
     USB_DEVICE_MSD_MEDIA_DYNAMIC_DATA * mediaDynamicData;
 
@@ -1138,7 +1138,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessRead
                         (logicalBlockAddress.Val * (mediaDynamicData->sectorSize/mediaReadBlockSize)),
                         msdInstance->bufferOffset * (mediaDynamicData->sectorSize/mediaReadBlockSize));
 
-        if (mediaReadWriteHandle == SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID)
+        if (mediaReadWriteHandle == SYS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID)
         {
             /* Media Read Failed. */
             *commandStatus = USB_MSD_CSW_COMMAND_FAILED;
@@ -1179,7 +1179,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessWrite
     uint32_t memoryBlock = 0;
     uint8_t logicalUnit;
 
-    SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE mediaReadWriteHandle = SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
+    SYS_MEDIA_BLOCK_COMMAND_HANDLE mediaReadWriteHandle = SYS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
     USB_DEVICE_MSD_MEDIA_FUNCTIONS * mediaFunctions;
     USB_DEVICE_MSD_MEDIA_DYNAMIC_DATA * mediaDynamicData;
 
@@ -1362,7 +1362,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessWrite
                         writeBlockBackupBuffer, (memoryBlock * (mediaWriteBlockSize/mediaReadBlockSize)),
                         (mediaWriteBlockSize/mediaReadBlockSize));
 
-                if (mediaReadWriteHandle == SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID)
+                if (mediaReadWriteHandle == SYS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID)
                 {
                     /* Media read failed. */
                     *commandStatus = USB_MSD_CSW_COMMAND_FAILED;
@@ -1419,7 +1419,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessWrite
         mediaFunctions->blockWrite (drvHandle, &mediaReadWriteHandle, 
                 (uint8_t*)data, blockAddress, numBlocks);
 
-        if (mediaReadWriteHandle == SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID)
+        if (mediaReadWriteHandle == SYS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID)
         {
             /* Media write failed. */
             *commandStatus = USB_MSD_CSW_COMMAND_FAILED;
@@ -1482,7 +1482,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessNonRWCommand
     USB_DEVICE_MSD_DWORD_VAL sectorSize = {.Val = 0};
 
     DRV_HANDLE              drvHandle;
-    SYS_FS_MEDIA_GEOMETRY * mediaGeometry;
+    SYS_MEDIA_GEOMETRY * mediaGeometry;
 
     /* Pointer to the CBW */ 
     lCBW = (USB_MSD_CBW *)msdInstance->msdCBW; // Pointer to CBW
