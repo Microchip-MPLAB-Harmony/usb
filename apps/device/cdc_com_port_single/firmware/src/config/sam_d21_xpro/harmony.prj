@@ -267,8 +267,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">202FF2B40C3AB0DE93F83088C63A2A62</GeneratedChecksum>
-          <UserChecksum dnOrder="5">202FF2B40C3AB0DE93F83088C63A2A62</UserChecksum>
+          <GeneratedChecksum dnOrder="4">B60558E0B06C384C5D7B9E06117D0DBD</GeneratedChecksum>
+          <UserChecksum dnOrder="5">B60558E0B06C384C5D7B9E06117D0DBD</UserChecksum>
         </File>
         <File dnOrder="33">
           <Type dnOrder="0">HEADER</Type>

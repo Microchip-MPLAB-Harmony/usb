@@ -116,7 +116,7 @@ extern "C" {
 /* Number of Endpoints used */
 #define DRV_USBFSV1_ENDPOINTS_NUMBER                        4
 
-/* Number of Endpoints used */
+/* Enable usage of Dual Bank */
 #define DRV_USBFSV1_DUAL_BANK_ENABLE                        false
 
 /* The USB Device Layer will not initialize the USB Driver */
