@@ -45,6 +45,7 @@
 // *****************************************************************************
 #include "configuration.h"
 #include "definitions.h"
+#include "device.h"
 
 
 // ****************************************************************************
@@ -147,6 +148,7 @@ void SYS_Initialize ( void* data )
 	BSP_Initialize();
     EVSYS_Initialize();
 
+
     NVIC_Initialize();
 
 
@@ -170,4 +172,3 @@ void SYS_Initialize ( void* data )
 /*******************************************************************************
  End of File
 */
-
