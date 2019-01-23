@@ -146,7 +146,7 @@ void _DRV_USBFSV1_DEVICE_Initialize
     }
 
     /* Initialize device specific flags */
-    drvObj->vbusIsValid = false;
+//    drvObj->vbusIsValid = false;
     drvObj->isAttached = false;
     drvObj->isSuspended = false;
 
@@ -658,8 +658,8 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointEnable
             hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[0].USB_PCKSIZE |= USB_DEVICE_PCKSIZE_SIZE(bufferSize);
             hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[1].USB_PCKSIZE |= USB_DEVICE_PCKSIZE_SIZE(bufferSize);
 
-            hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[0].USB_ADDR = (uint32_t) hDriver->endpointBufferPtr[0][0];
-            hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[1].USB_ADDR = (uint32_t) hDriver->endpointBufferPtr[0][1];
+            hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[0].USB_ADDR = (uint32_t) hDriver->endpoint0BufferPtr[0];
+            hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[1].USB_ADDR = (uint32_t) hDriver->endpoint0BufferPtr[1];
 
             if (true == DRV_USBFSV1_AUTO_ZLP_ENABLE)
             {

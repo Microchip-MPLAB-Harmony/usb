@@ -427,12 +427,12 @@ void APP_Tasks ( void )
                    if ( appData.inDataArray[0] == '1')
                     {
                         /* Switch on LED  */
-                        LED1_On();
+                        LED_On();
                     }
                    else
                    {
                         /* Switch off LED  */
-                        LED1_Off();
+                        LED_Off();
                    }
                     
                     /* Send the prompt to the device and wait
