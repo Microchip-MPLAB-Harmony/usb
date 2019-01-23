@@ -105,7 +105,7 @@ const DRV_USBFSV1_INIT drvUSBInit =
 	.operationSpeed = USB_SPEED_FULL,
     
     /* Stop in idle */
-    .stopInIdle = false,
+    .runInStandby = true,
 
     /* Suspend in sleep */
     .suspendInSleep = false,

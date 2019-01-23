@@ -221,7 +221,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAMD21_DFP" vendor="Atmel" version="1.3.349"/>
+        <pack name="SAMD21_DFP" vendor="Atmel" version="1.3.366"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
       </packs>
       <compileType>

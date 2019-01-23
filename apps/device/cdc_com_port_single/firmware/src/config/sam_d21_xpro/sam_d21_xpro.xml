@@ -1909,7 +1909,17 @@
       </Symbols>
     </UniqueComponent>
     <UniqueComponent dnOrder="3" id="dfp"/>
-    <UniqueComponent dnOrder="4" id="drv_usbfs_v1"/>
+    <UniqueComponent dnOrder="4" id="drv_usbfs_v1">
+      <Symbols dnOrder="0">
+        <Menu dnOrder="0" id="__MENUSYMBOL_0">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+        </Menu>
+      </Symbols>
+    </UniqueComponent>
     <UniqueComponent dnOrder="5" id="evsys">
       <Symbols dnOrder="0">
         <Boolean dnOrder="0" id="EVSYS_CHANNEL_0_USER_READY">
@@ -2188,6 +2198,7 @@
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="usb_device_cdc_0" priority="2" value="67"/>
               <Value dnOrder="1" id="usb_device_cdc_0" priority="2" value="67"/>
+              <Value dnOrder="2" id="usb_device_cdc_0" priority="2" value="67"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -2195,7 +2206,8 @@
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="usb_device_cdc_0" priority="2" value="4"/>
-              <Value dnOrder="1" id="usb_device_cdc_0" priority="2" value="3"/>
+              <Value dnOrder="1" id="usb_device_cdc_0" priority="2" value="4"/>
+              <Value dnOrder="2" id="usb_device_cdc_0" priority="2" value="3"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -2209,6 +2221,7 @@
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="usb_device_cdc_0" priority="2" value="1"/>
               <Value dnOrder="1" id="usb_device_cdc_0" priority="2" value="1"/>
+              <Value dnOrder="2" id="usb_device_cdc_0" priority="2" value="1"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -2217,6 +2230,7 @@
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="usb_device_cdc_0" priority="2" value="2"/>
               <Value dnOrder="1" id="usb_device_cdc_0" priority="2" value="2"/>
+              <Value dnOrder="2" id="usb_device_cdc_0" priority="2" value="2"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -2253,6 +2267,7 @@
               <Value dnOrder="4" id="usb_device_cdc_0" priority="2" value="1"/>
               <Value dnOrder="5" id="usb_device_cdc_0" priority="2" value="1"/>
               <Value dnOrder="6" id="usb_device_cdc_0" priority="2" value="1"/>
+              <Value dnOrder="7" id="usb_device_cdc_0" priority="2" value="1"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -2266,6 +2281,7 @@
               <Value dnOrder="4" id="usb_device_cdc_0" priority="2" value="4"/>
               <Value dnOrder="5" id="usb_device_cdc_0" priority="2" value="4"/>
               <Value dnOrder="6" id="usb_device_cdc_0" priority="2" value="4"/>
+              <Value dnOrder="7" id="usb_device_cdc_0" priority="2" value="4"/>
             </Dynamic>
           </Values>
         </Integer>

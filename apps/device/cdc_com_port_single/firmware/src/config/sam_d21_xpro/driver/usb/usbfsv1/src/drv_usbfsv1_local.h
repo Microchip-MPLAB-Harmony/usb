@@ -61,6 +61,7 @@
 
 #define COMPILER_WORD_ALIGNED                               __attribute__((__aligned__(4)))
 
+#define DRV_USBFSV1_HOST_MAXIMUM_ENDPOINTS_NUMBER           10
 #define _DRV_USBFSV1_HOST_IRP_PER_FRAME_NUMBER              5
 #define _DRV_USBFSV1_SW_EP_NUMBER                           _DRV_USBFSV1_HOST_IRP_PER_FRAME_NUMBER
 #define DRV_USBFSV1_POST_DETACH_DELAY                       2000
@@ -213,8 +214,8 @@ typedef struct _USB_HOST_IRP_LOCAL
     uint32_t tempSize;
     DRV_USBFSV1_HOST_IRP_STATE tempState;
     uint32_t completedBytes;
-    uint32_t completedBytesInThisFrame;
     struct _USB_HOST_IRP_LOCAL * next;
+    struct _USB_HOST_IRP_LOCAL * previous;
     DRV_USB_HOST_PIPE_HANDLE  pipe;
 
 }
@@ -254,7 +255,7 @@ typedef struct _DRV_USBFSV1_HOST_PIPE_OBJ
 
     /* The next pipe */
     struct _DRV_USBFSV1_HOST_PIPE_OBJ * next;
-
+    struct _DRV_USBFSV1_HOST_PIPE_OBJ * previous;
     /* Interval in case this
      * is a Isochronous or
      * an interrupt pipe */
@@ -272,6 +273,15 @@ typedef struct _DRV_USBFSV1_HOST_PIPE_OBJ
 
     /* Pipe Speed */
     USB_SPEED speed;
+
+    /* Hub Address */
+    uint8_t hubAddress;
+
+    /* Hub Port*/
+    uint8_t hubPort;
+
+    /* Host Pipe allocated*/
+    uint8_t hostPipeN;
 }
 DRV_USBFSV1_HOST_PIPE_OBJ;
 
@@ -321,6 +331,10 @@ typedef struct _DRV_USBFSV1_HOST_TRANSFER_GROUP
     /* The current pipe being serviced
      * in this transfer group */
     DRV_USBFSV1_HOST_PIPE_OBJ * currentPipe;
+
+    /* The current IRP being serviced
+     * in the pipe */
+    void * currentIRP;
 
     /* Total number of pipes in this
      * transfer group */
@@ -379,6 +393,29 @@ typedef struct
 }
 DRV_USBFSV1_HOST_ROOT_HUB_INFO;
 
+/**********************************************
+ * Host Endpoint Object.
+ *********************************************/
+
+typedef struct
+{
+    /* Indicates this endpoint is in use */
+    bool inUse;
+    DRV_USBFSV1_HOST_PIPE_OBJ * pipe;
+
+}_DRV_USBFSV1_HOST_ENDPOINT;
+
+
+typedef struct
+{
+    /* A combination of two structures for
+     * each direction. */
+
+    _DRV_USBFSV1_HOST_ENDPOINT endpoint;
+
+}DRV_USBFSV1_HOST_ENDPOINT_OBJ;
+
+
 /*********************************************
  * Driver NON ISR Tasks routine states.
  *********************************************/
@@ -392,6 +429,44 @@ typedef enum
     DRV_USBFSV1_TASK_STATE_RUNNING
 
 } DRV_USBFSV1_TASK_STATE;
+
+
+/*********************************************
+ * Host Mode Device Attach Detach State
+ ********************************************/
+typedef enum
+{
+    /* No device is attached */
+    DRV_USBFSV1_HOST_ATTACH_STATE_CHECK_FOR_DEVICE_ATTACH = 0,
+
+    /* Waiting for debounce delay */
+    DRV_USBFSV1_HOST_ATTACH_STATE_DETECTED,
+
+    /* Debouncing is complete. Device is attached */
+    DRV_USBFSV1_HOST_ATTACH_STATE_READY,
+
+} DRV_USBFSV1_HOST_ATTACH_STATE;
+
+/*********************************************
+ * Host Mode Device Reset state
+ *********************************************/
+typedef enum
+{
+    /* No Reset in progress */
+    DRV_USBFSV1_HOST_RESET_STATE_NO_RESET = 0,
+
+    /* Start the reset signalling */
+    DRV_USBFSV1_HOST_RESET_STATE_START,
+
+    /* Check if reset duration is done and stop reset */
+    DRV_USBFSV1_HOST_RESET_STATE_WAIT_FOR_COMPLETE,
+
+    DRV_USBFSV1_HOST_RESET_STATE_COMPLETE,
+    DRV_USBFSV1_HOST_RESET_STATE_COMPLETE2
+
+} DRV_USBFSV1_HOST_RESET_STATE;
+
+
 
 typedef enum
 {
@@ -423,15 +498,26 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
     /* Set if the driver is opened */
     bool isOpened;
 
-    /* Status of this driver instance */
-    SYS_STATUS status;
+    /* Set if device if D+ pull up is enabled. */
+    bool deviceAttached;
+    
+    /* The object is current in an interrupt context */
+    bool isInInterruptContext;
 
-    /* Contains the EPO state */
-    DRV_USBFSV1_DEVICE_EP0_STATE endpoint0State;
+    /* Sent session invalid event to the client */
+    bool sessionInvalidEventSent;
 
-    /* The USB peripheral associated with 
-     * the object */
-    usb_registers_t * usbID;      
+    /* Set if valid VBUS was detected in device mode */
+    bool vbusIsValid;
+
+    /* Set if device if D+ pull up is enabled. */
+    bool isAttached;
+
+    /* Set if the device is suspended */
+    bool isSuspended;
+
+    /* Set if device if D+ pull up is enabled. */
+    bool operationEnabled;
 
     /* Current operating mode of the driver */
     uint8_t operationMode;
@@ -442,13 +528,33 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
     /* Mutex create function place holder*/
     uint8_t mutexID;
 
-	/* The object is current in an interrupt context */
-	bool isInInterruptContext;
+    /* Pointer to the endpoint 0 Buffers */
+    uint8_t * endpoint0BufferPtr[DEVICE_DESC_BANK_NUMBER];
+	
+    /* Next Ping Pong state */
+    uint32_t rxEndpointsNextPingPong;
+    uint32_t txEndpointsNextPingPong;
 
-	/* Root Hub Port 0 attached device speed */
-	/* USB Device speed */
-    USB_SPEED deviceSpeed;
+    /* Status of this driver instance */
+    SYS_STATUS status;
+
+    /* Contains the EPO state */
+    DRV_USBFSV1_DEVICE_EP0_STATE endpoint0State;
+
+    /* The USB peripheral associated with 
+     * the object */
+    usb_registers_t * usbID;
+
+    /* Attach state of the device */
+    DRV_USBFSV1_HOST_ATTACH_STATE attachState;
     
+    /* Pointer to the endpoint table */
+    DRV_USBFSV1_HOST_ENDPOINT_OBJ hostEndpointTable[DRV_USBFSV1_HOST_MAXIMUM_ENDPOINTS_NUMBER];
+
+    /* Root Hub Port 0 attached device speed in host mode
+     * In device mode, the speed at which the device attached */
+    USB_SPEED deviceSpeed;
+
     /* Non ISR Task Routine state */
     DRV_USBFSV1_TASK_STATE state;
 
@@ -463,9 +569,6 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
 
     /* Callback to determine the Vbus level */
     DRV_USBFSV1_VBUS_COMPARATOR vbusComparator;
-
-    /* Sent session invalid event to the client */
-    bool sessionInvalidEventSent;
     
     /* This is array of device endpoint objects pointers */
     DRV_USBFSV1_DEVICE_ENDPOINT_OBJ * deviceEndpointObj[DRV_USBFSV1_ENDPOINTS_NUMBER];
@@ -473,53 +576,33 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
     /* Pointer to the endpoint table */
     DRV_USBFSV1_ENDPOINT_DESC_TABLE endpointDescriptorTable[DRV_USBFSV1_ENDPOINTS_NUMBER];
 
-    /* Pointer to the endpoint Buffers */
-    uint8_t * endpointBufferPtr[DRV_USBFSV1_ENDPOINTS_NUMBER][DEVICE_DESC_BANK_NUMBER];
-
-    /* Set if valid VBUS was detected in device mode */
-    bool vbusIsValid;
-
-    /* Set if device if D+ pull up is enabled. */
-    bool isAttached;
-
-    /* Set if the device is suspended */
-    bool isSuspended;
-
     /* Driver flags to indicate different things */
     DRV_USBFSV1_FLAGS driverFlags;
-	
-    /* Next Ping Pong state */
-    uint32_t  rxEndpointsNextPingPong;
-    uint32_t  txEndpointsNextPingPong;
 
     /* Transfer Groups */
-    _DRV_USBFSV1_FOR_HOST(DRV_USBFSV1_HOST_TRANSFER_GROUP, transferGroup[4]);
+    DRV_USBFSV1_HOST_TRANSFER_GROUP controlTransferGroup;
+
+    /* This is to track the reset state */
+    DRV_USBFSV1_HOST_RESET_STATE resetState;
+
+    /* This counts the reset signal duration */
+    DRV_USBFSV1_HOST_ROOT_HUB_INFO rootHubInfo;
+
+    /* This counts the reset signal duration */
+    _DRV_USBFSV1_FOR_HOST(uint32_t, resetDuration);
 
     /* The SWEPBuffer index */
     _DRV_USBFSV1_FOR_HOST(uint8_t, numSWEpEntry);
-
-    /* EP0 TX Ping Pong Tracker */
-    _DRV_USBFSV1_FOR_HOST(USB_BUFFER_PING_PONG, ep0TxPingPong);
-    
-    /* EP0 TX Ping Pong Tracker */
-    _DRV_USBFSV1_FOR_HOST(USB_BUFFER_PING_PONG, ep0RxPingPong);
 
     /* Placeholder for bandwidth consumed in frame */
     _DRV_USBFSV1_FOR_HOST(uint8_t, globalBWConsumed);
 
     /* Variable used SW Endpoint objects that is used by this HW instances for
-     * USB transfer scheduling */
-     
+     * USB transfer scheduling */     
     _DRV_USBFSV1_FOR_HOST(DRV_USBFSV1_HOST_SW_EP, drvUSBHostSWEp[_DRV_USBFSV1_SW_EP_NUMBER]);
 
     /* This is needed to track if the host is generating reset signal */
     _DRV_USBFSV1_FOR_HOST(bool, isResetting);
-
-    /* This counts the reset signal duration */
-    _DRV_USBFSV1_FOR_HOST(uint32_t, resetDuration);
-
-    /* This counts the reset signal duration */
-    _DRV_USBFSV1_FOR_HOST(DRV_USBFSV1_HOST_ROOT_HUB_INFO, rootHubInfo);
 
     /* This counts the attach detach debounce interval*/
     _DRV_USBFSV1_FOR_HOST(uint32_t, attachDebounceCounter);
@@ -536,6 +619,9 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
     /* This flag is true if an detach event has come and device de-enumeration
      * operation is in progress  */
     _DRV_USBFSV1_FOR_HOST(bool, isDeviceDeenumerating);
+    
+    /* This is the pointer to host Pipe descriptor table */
+    _DRV_USBFSV1_FOR_HOST(usb_descriptor_host_registers_t *, hostEndpointTablePtr);
 
     /* The parent UHD assigned by the host */
     _DRV_USBFSV1_FOR_HOST(USB_HOST_DEVICE_OBJ_HANDLE, usbHostDeviceInfo);
@@ -554,10 +640,11 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver);
 void _DRV_USBFSV1_HOST_Initialize
 (
     DRV_USBFSV1_OBJ * const pusbdrvObj,
-    const SYS_MODULE_INDEX index,
-    DRV_USBFSV1_INIT * init
+    const SYS_MODULE_INDEX index
 );
 void _DRV_USBFSV1_HOST_Tasks_ISR(DRV_USBFSV1_OBJ * pusbdrvObj);
+
+void _DRV_USBFSV1_HOST_AttachDetachStateMachine (DRV_USBFSV1_OBJ * hDriver);
 
 bool _DRV_USBFSV1_HOST_TransferSchedule
 (
@@ -569,7 +656,7 @@ bool _DRV_USBFSV1_HOST_TransferSchedule
 
 void _DRV_USBFSV1_SendTokenToAddress
 (
-	uint32_t * usbID,
+	usb_registers_t * usbID,
     uint8_t address,
     uint16_t pid,
     uint8_t endpoint,
@@ -623,7 +710,7 @@ void _DRV_USBFSV1_HOST_ControlSendToken
     DRV_USBFSV1_HOST_PIPE_OBJ *pipe,
     uint8_t endpoint,
     uint8_t deviceAddress,
-    uint32_t * usbID,
+    usb_registers_t * usbID,
     bool isLowSpeed
 );
 

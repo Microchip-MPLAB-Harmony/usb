@@ -104,10 +104,12 @@
 #if (DRV_USBFSV1_HOST_SUPPORT == true)
     #define _DRV_USBFSV1_HOST_INIT(x, y)    _DRV_USBFSV1_HOST_Initialize(x , y)
     #define _DRV_USBFSV1_HOST_TASKS_ISR(x)  _DRV_USBFSV1_HOST_Tasks_ISR(x)
+    #define _DRV_USBFSV1_HOST_ATTACH_DETACH_STATE_MACHINE(x)  _DRV_USBFSV1_HOST_AttachDetachStateMachine(x)
     #define _DRV_USBFSV1_FOR_HOST(x, y)     x y
 #elif (DRV_USBFSV1_HOST_SUPPORT == false)
     #define _DRV_USBFSV1_HOST_INIT(x, y)
     #define _DRV_USBFSV1_HOST_TASKS_ISR(x) 
+    #define _DRV_USBFSV1_HOST_ATTACH_DETACH_STATE_MACHINE(x)
     #define _DRV_USBFSV1_FOR_HOST(x, y)
 #endif
 

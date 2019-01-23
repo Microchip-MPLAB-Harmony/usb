@@ -82,7 +82,7 @@
   Description:
     This constant defines the size (in bytes) of an entry in the endpoint 
     descriptor table.
-    
+
   Remarks:
     None.
 */
@@ -483,9 +483,9 @@ typedef struct
        module instance identifier. */
 	usb_registers_t * usbID;
     
-    /* This should be set to true if the USB module must stop operation in IDLE
+    /* This should be set to true if the USB module must stop operation in Standby
        mode */
-    bool stopInIdle;     
+    bool runInStandby;     
 
     /* This should be set to true if the USB module must suspend when the CPU
        enters sleep mode. */
@@ -549,7 +549,7 @@ typedef struct
 
 // *****************************************************************************
 /* Function:
-    SYS_MODULE_OBJ DRV_USBHS_Initialize
+    SYS_MODULE_OBJ DRV_USBFSV1_Initialize
     ( 
         const SYS_MODULE_INDEX drvIndex,
         const SYS_MODULE_INIT * const init    
@@ -562,7 +562,7 @@ typedef struct
     This function initializes the USB Driver, making it ready for clients to
     open. The driver initialization does not complete when this function
     returns. The DRV_USBFSV1_Tasks function must called periodically to complete
-    the driver initialization. The DRV_USBHS_Open function will fail if the
+    the driver initialization. The DRV_USBFSV1_Open function will fail if the
     driver was not initialized or if initialization has not completed.
 	
   Precondition:
@@ -599,7 +599,7 @@ typedef struct
     
     usbInitData.usbID               = USB_ID_1;
     usbInitData.opMode              = DRV_USBFSV1_OPMODE_DEVICE;
-    usbInitData.stopInIdle          = false;
+    usbInitData.runInStandby        = false;
     usbInitData.suspendInSleep      = false;
     usbInitData.operationSpeed      = USB_SPEED_FULL;
     usbInitData.interruptSource     = INT_SOURCE_USB;
@@ -657,7 +657,7 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
     
     usbInitData.usbID               = USB_ID_1;
     usbInitData.opMode              = DRV_USBFSV1_OPMODE_DEVICE;
-    usbInitData.stopInIdle          = false;
+    usbInitData.runInStandby        = false;
     usbInitData.suspendInSleep      = false;
     usbInitData.operationSpeed      = USB_SPEED_FULL;
     usbInitData.interruptSource     = INT_SOURCE_USB;
