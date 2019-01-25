@@ -19,8 +19,8 @@
           <Name dnOrder="1">bsp.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/bsp/</LogicalPath>
           <PhysicalPath dnOrder="3">/bsp/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1A81761E8B71DEB8D8FBEA31DBFD4738</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1A81761E8B71DEB8D8FBEA31DBFD4738</UserChecksum>
+          <GeneratedChecksum dnOrder="4">88EC0E8DE9765171A5719AD6829DF317</GeneratedChecksum>
+          <UserChecksum dnOrder="5">88EC0E8DE9765171A5719AD6829DF317</UserChecksum>
         </File>
         <File dnOrder="2">
           <Type dnOrder="0">SOURCE</Type>
@@ -35,8 +35,8 @@
           <Name dnOrder="1">drv_usbfsv1_host.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/driver/usb/usbfsv1/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">DF74EF5C5E33F7A024EB61771BA7FFA9</GeneratedChecksum>
-          <UserChecksum dnOrder="5">DF74EF5C5E33F7A024EB61771BA7FFA9</UserChecksum>
+          <GeneratedChecksum dnOrder="4">002E05002E2E83B33EE0CBC9F6B81730</GeneratedChecksum>
+          <UserChecksum dnOrder="5">84ECAB7F7F36488C29CDF476A2F29058</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -259,8 +259,8 @@
           <Name dnOrder="1">bsp.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/bsp/</LogicalPath>
           <PhysicalPath dnOrder="3">/bsp/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">44E1C847D8FB893346D1600261E2B889</GeneratedChecksum>
-          <UserChecksum dnOrder="5">44E1C847D8FB893346D1600261E2B889</UserChecksum>
+          <GeneratedChecksum dnOrder="4">D05C97338F4BC5DDE606CDF7129195F1</GeneratedChecksum>
+          <UserChecksum dnOrder="5">D05C97338F4BC5DDE606CDF7129195F1</UserChecksum>
         </File>
         <File dnOrder="32">
           <Type dnOrder="0">HEADER</Type>

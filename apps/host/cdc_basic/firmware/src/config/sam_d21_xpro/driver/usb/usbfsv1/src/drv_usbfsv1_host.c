@@ -1382,7 +1382,7 @@ static void _DRV_USBFSV1_HOST_ControlTransferProcess(DRV_USBFSV1_OBJ * hDriver)
 		                 * then wait end of ACK on IN pipe */
                         if (((usbID->HOST.USB_STATUS & USB_HOST_STATUS_SPEED_Msk)>>USB_HOST_STATUS_SPEED_Pos) == 0x1) /* 0x1: Low-speed mode */
                         {    
-                            // while(!usbID->USBFS_FSTPIPIMR[0].PFREEZE);  //JCB why the mask register ?
+                            // while(!usbID->USBFS_FSTPIPIMR[0].PFREEZE);
                             //while( (usbID->HOST.HOST_PIPE[0].USB_PINTFLAG & USB_HOST_PINTFLAG_TRCPT0) == USB_HOST_PINTFLAG_TRCPT0 );
                         }    
 		            }
@@ -1499,7 +1499,7 @@ static void _DRV_USBFSV1_HOST_ControlTransferProcess(DRV_USBFSV1_OBJ * hDriver)
 		             * then wait end of ACK on IN pipe */
                     if (((usbID->HOST.USB_STATUS & USB_HOST_STATUS_SPEED_Msk)>>USB_HOST_STATUS_SPEED_Pos) == 0x1) /* 0x1: Low-speed mode */
                     {    
-                        // while(!usbID->USBFS_FSTPIPIMR[0].PFREEZE);  //JCB why the mask register ?
+                        // while(!usbID->USBFS_FSTPIPIMR[0].PFREEZE);
                         //while( (usbID->HOST.HOST_PIPE[0].USB_PINTFLAG & USB_HOST_PINTFLAG_TRCPT0) != USB_HOST_PINTFLAG_TRCPT0 );
                     }                     
                     /* Clear Transfer Complete 0 Interrupt Flag */
@@ -1763,7 +1763,7 @@ static void _DRV_USBFSV1_HOST_NonControlTransferProcess
 		* then wait end of ACK on IN pipe */
         if (((usbID->HOST.USB_STATUS & USB_HOST_STATUS_SPEED_Msk)>>USB_HOST_STATUS_SPEED_Pos) == 0x1) /* 0x1: Low-speed mode */
         {    
-            // while(!usbID->USBFS_FSTPIPIMR[hostPipe].PFREEZE);  //JCB why the mask register ?
+            // while(!usbID->USBFS_FSTPIPIMR[hostPipe].PFREEZE);
             //while( (usbID->HOST.HOST_PIPE[hostPipe].USB_PINTFLAG & USB_HOST_PINTFLAG_TRCPT0) == USB_HOST_PINTFLAG_TRCPT0 );
         }  
 
@@ -2009,15 +2009,6 @@ void _DRV_USBFSV1_HOST_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
         {
             continue;
         }
-        /* PINTFLAG: Host Pipe Interrupt Flag Register */ 
-//        else if(0 != hDriver->usbID->HOST.USB_PINTSMRY)  /* Pipe Interrupt Summary */
-//        {
-            /* Manage pipe interrupts */
-            /* Get the lowest Pipe number generating a Pipe Interrupt */
-//            intPipe = ctz(hDriver->usbID->HOST.USB_PINTSMRY);
-//            intPipe = 1; //Sundar
-//            if (intPipe < 32)
-//            {
         if (hDriver->usbID->HOST.HOST_PIPE[intPipe].USB_PINTFLAG & USB_HOST_PINTFLAG_PERR_Msk)
         {
             SYS_DEBUG_MESSAGE(SYS_ERROR_ERROR, "\033[31m");

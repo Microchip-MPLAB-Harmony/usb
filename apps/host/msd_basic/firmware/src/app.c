@@ -144,12 +144,11 @@ void APP_SYSFSEventHandler(SYS_FS_EVENT event, void * eventData, uintptr_t conte
     {
         case SYS_FS_EVENT_MOUNT:
             appData.deviceIsConnected = true;
-            LED1_On();
+            LED2_On();
             break;
             
         case SYS_FS_EVENT_UNMOUNT:
             appData.deviceIsConnected = false;
-            LED1_Off(); 
             LED2_Off();
             break;
             
