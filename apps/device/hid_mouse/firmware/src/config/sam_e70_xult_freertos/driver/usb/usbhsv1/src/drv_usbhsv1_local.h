@@ -16,27 +16,27 @@
 
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
-Copyright (c) 2012 released Microchip Technology Inc.  All rights reserved.
-
-Microchip licenses to you the right to use, modify, copy and distribute
-Software only when embedded on a Microchip microcontroller or digital signal
-controller that is integrated into your product or third party product
-(pursuant to the sublicense terms in the accompanying license agreement).
-
-You should refer to the license agreement accompanying this Software for
-additional information regarding your rights and obligations.
-
-SOFTWARE AND DOCUMENTATION ARE PROVIDED AS IS WITHOUT WARRANTY OF ANY KIND,
-EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF
-MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
-IN NO EVENT SHALL MICROCHIP OR ITS LICENSORS BE LIABLE OR OBLIGATED UNDER
-CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION, BREACH OF WARRANTY, OR
-OTHER LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT DAMAGES OR EXPENSES
-INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
-CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
-SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
-(INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-*******************************************************************************/
+* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+*
+* Subject to your compliance with these terms, you may use Microchip software
+* and any derivatives exclusively with Microchip products. It is your
+* responsibility to comply with third party license terms applicable to your
+* use of third party software (including open source software) that may
+* accompany Microchip software.
+*
+* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+* PARTICULAR PURPOSE.
+*
+* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+ *******************************************************************************/
 //DOM-IGNORE-END
 
 #ifndef _DRV_USBHSV1_LOCAL_H
@@ -61,6 +61,27 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define DRV_USBHS_HOST_IRP_PER_FRAME_NUMBER 	            5
 #define DRV_USBHSV1_HOST_MAXIMUM_ENDPOINTS_NUMBER           10
 #define DRV_USBHSV1_MAX_DMA_CHANNELS                        7
+
+#define USBHS_DEVEPTIER_STALLRQS_Msk                        USBHS_DEVEPTIER_CTRL_STALLRQS_Msk
+#define USBHS_DEVEPTIDR_STALLRQC_Msk                        USBHS_DEVEPTIDR_CTRL_STALLRQC_Msk
+#define USBHS_DEVEPTISR_STALLEDI_Msk                        USBHS_DEVEPTISR_CTRL_STALLEDI_Msk
+#define USBHS_DEVEPTIER_RXSTPES_Msk                         USBHS_DEVEPTIER_CTRL_RXSTPES_Msk
+#define USBHS_DEVEPTIDR_RXSTPEC_Msk                         USBHS_DEVEPTIDR_CTRL_RXSTPEC_Msk
+#define USBHS_DEVEPTICR_RXSTPIC_Msk                         USBHS_DEVEPTICR_CTRL_RXSTPIC_Msk
+#define USBHS_DEVEPTIMR_RXSTPE_Msk                          USBHS_DEVEPTIMR_CTRL_RXSTPE_Msk
+#define USBHS_DEVEPTISR_RXSTPI_Msk                          USBHS_DEVEPTISR_CTRL_RXSTPI_Msk
+#define USBHS_DEVEPTISR0_Msk                                (0x7FF7F7FFUL)
+#define USBHS_DEVEPTIMR0_Msk                                (0x000F77FFUL)
+#define USBHS_DEVEPTISRn_Msk                                (0x7FF7F3FFUL)
+#define USBHS_DEVEPTIMRn_Msk                                (0x000F70FFUL)
+#define USBHS_HSTPIPICR_TXSTPIC_Msk                         USBHS_HSTPIPICR_CTRL_TXSTPIC_Msk
+#define USBHS_HSTPIPIER_TXSTPES_Msk                         USBHS_HSTPIPIER_CTRL_TXSTPES_Msk
+#define USBHS_HSTPIPIER_RXSTALLDES_Msk                      USBHS_HSTPIPIER_CTRL_RXSTALLDES_Msk
+#define USBHS_HSTPIPIDR_TXSTPEC_Msk                         USBHS_HSTPIPIDR_CTRL_TXSTPEC_Msk
+#define USBHS_HSTPIPISR_RXSTALLDI_Msk                       USBHS_HSTPIPISR_CTRL_RXSTALLDI_Msk
+#define USBHS_HSTPIPICR_RXSTALLDIC_Msk                      USBHS_HSTPIPICR_CTRL_RXSTALLDIC_Msk
+#define USBHS_HSTPIPISR_TXSTPI_Msk                          USBHS_HSTPIPISR_CTRL_TXSTPI_Msk
+
 
 #ifndef USBHSV1_RAM_ADDR
 #define USBHSV1_RAM_ADDR                                      0xA0100000u

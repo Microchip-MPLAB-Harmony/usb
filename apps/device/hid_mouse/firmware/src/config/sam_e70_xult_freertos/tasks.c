@@ -58,15 +58,6 @@
 // Section: RTOS "Tasks" Routine
 // *****************************************************************************
 // *****************************************************************************
-void _APP_Tasks(  void *pvParameters  )
-{
-    while(1)
-    {
-        APP_Tasks();
-        vTaskDelay(10 / portTICK_PERIOD_MS);
-    }
-}
-
 void _DRV_USBHSV1_Tasks(  void *pvParameters  )
 {
     while(1)
@@ -84,6 +75,18 @@ void _USB_DEVICE_Tasks(  void *pvParameters  )
 				 /* USB Device layer tasks routine */
         USB_DEVICE_Tasks(sysObj.usbDevObject0);
         vTaskDelay(10 / portTICK_PERIOD_MS);
+    }
+}
+
+/* Handle for the APP_Tasks. */
+TaskHandle_t xAPP_Tasks;
+
+void _APP_Tasks(  void *pvParameters  )
+{
+    while(1)
+    {
+        APP_Tasks();
+        vTaskDelay(1 / portTICK_PERIOD_MS);
     }
 }
 
@@ -106,10 +109,10 @@ void _USB_DEVICE_Tasks(  void *pvParameters  )
 void SYS_Tasks ( void )
 {
     /* Maintain system services */
-
+    
 
     /* Maintain Device Drivers */
-
+    
 
     /* Maintain Middleware & Other Libraries */
     	/* Create OS Thread for USB Driver Tasks. */
@@ -139,12 +142,12 @@ void SYS_Tasks ( void )
                 1024,
                 NULL,
                 1,
-                NULL);
+                &xAPP_Tasks);
 
 
 
     /* Start RTOS Scheduler. */
-
+    
      /**********************************************************************
      * Create all Threads for APP Tasks before starting FreeRTOS Scheduler *
      ***********************************************************************/

@@ -208,6 +208,7 @@ void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, void * eventData, uintptr
 
             /* VBUS is not available any more. Detach the device. */
             USB_DEVICE_Detach(appData.deviceHandle);
+            LED1_Off();
             break;
 
         case USB_DEVICE_EVENT_SUSPENDED:
