@@ -55,7 +55,6 @@
 // *****************************************************************************
 #include <stdint.h>
 #include <stdbool.h>
-#include "device.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -446,7 +445,7 @@
     perform task locking or completely disable all interrupts.
 
  */
-//__INLINE OSAL_CRITSECT_DATA_TYPE __attribute__((nomips16)) __attribute__((nomicromips)) OSAL_CRIT_Enter(OSAL_CRIT_TYPE severity);
+//__inline__ OSAL_CRITSECT_DATA_TYPE __attribute__((nomips16)) __attribute__((nomicromips)) OSAL_CRIT_Enter(OSAL_CRIT_TYPE severity);
 
 // *****************************************************************************
 /* Function:
@@ -494,7 +493,7 @@
     perform task locking or completely disable all interrupts.
 
  */
-//__INLINE void __attribute__((nomips16,nomicromips)) OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status);
+//__inline__ void __attribute__((nomips16,nomicromips)) OSAL_CRIT_Leave(OSAL_CRIT_TYPE severity, OSAL_CRITSECT_DATA_TYPE status);
 
 
 // *****************************************************************************
@@ -839,7 +838,7 @@
     None.
 
  */
-//__INLINE const char* OSAL_Name(void);
+//__inline__ const char* OSAL_Name(void);
 
 #endif // _OSAL_H
 

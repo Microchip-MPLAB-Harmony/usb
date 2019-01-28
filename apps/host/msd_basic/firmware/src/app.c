@@ -144,12 +144,12 @@ void APP_SYSFSEventHandler(SYS_FS_EVENT event, void * eventData, uintptr_t conte
     {
         case SYS_FS_EVENT_MOUNT:
             appData.deviceIsConnected = true;
-            LED2_On();
+            
             break;
             
         case SYS_FS_EVENT_UNMOUNT:
             appData.deviceIsConnected = false;
-            LED2_Off();
+            LED1_Off();
             break;
             
         default:
@@ -245,7 +245,7 @@ void APP_Tasks ( void )
             SYS_FS_FileClose(appData.fileHandle);
             
             /* Indicate User that File operation has been completed */
-            LED2_On(); 
+            LED1_On(); 
             /* The test was successful. Lets idle. */
             appData.state = APP_STATE_IDLE;
             break;

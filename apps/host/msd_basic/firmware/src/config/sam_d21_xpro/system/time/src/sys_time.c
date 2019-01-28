@@ -170,9 +170,7 @@ static void SYS_TIME_HwTimerCompareUpdate(void)
         }
         else
         {
-            /* Use a non-volatile intermediate to prevent dual volatile access in single statement */
-            uint32_t relativeTimePending = tmrActive->relativeTimePending;
-            nextHwCounterValue = counterObj->hwTimerCurrentValue + relativeTimePending;
+            nextHwCounterValue = counterObj->hwTimerCurrentValue + tmrActive->relativeTimePending;
         }
     }
     else
@@ -264,9 +262,7 @@ static bool SYS_TIME_RemoveFromList(SYS_TIME_TIMER_OBJ* delTimer)
     /* Add the deleted timer pending time to the next timer in the list */
     if (delTimer->tmrNext != NULL)
     {
-        /* Use a non-volatile intermediate to prevent dual volatile access in single statement */
-        uint32_t relativeTimePending = delTimer->relativeTimePending;
-        delTimer->tmrNext->relativeTimePending += relativeTimePending;
+        delTimer->tmrNext->relativeTimePending += delTimer->relativeTimePending;
     }
 
     /* If the deleted timer was at the head of the list */
@@ -343,9 +339,7 @@ static bool SYS_TIME_AddToList(SYS_TIME_TIMER_OBJ* newTimer)
         if (newTimer->tmrNext != NULL)
         {
             /* Subtract the new timers time from the next timer in the list */
-            /* Use a non-volatile intermediate to prevent dual volatile access in single statement */
-            newTimerTime = newTimer->relativeTimePending;
-            newTimer->tmrNext->relativeTimePending -= newTimerTime;
+            newTimer->tmrNext->relativeTimePending -= newTimer->relativeTimePending;
         }
     }
     return isHeadTimerUpdated;
@@ -765,22 +759,22 @@ void SYS_TIME_CounterSet ( uint32_t count )
 
 uint32_t  SYS_TIME_CountToUS ( uint32_t count )
 {
-    return (uint32_t) ((count * 1000000.0) / gSystemCounterObj.hwTimerFrequency);
+    return (uint32_t)(((float)count/gSystemCounterObj.hwTimerFrequency)*1000000.0);
 }
 
 uint32_t  SYS_TIME_CountToMS ( uint32_t count )
 {
-    return (uint32_t) ((count * 1000.0) / gSystemCounterObj.hwTimerFrequency);
+    return (uint32_t)(((float)count/gSystemCounterObj.hwTimerFrequency)*1000.0);
 }
 
 uint32_t SYS_TIME_USToCount ( uint32_t us )
 {
-    return (uint32_t) (((float) us * (float) gSystemCounterObj.hwTimerFrequency) / 1000000.);
+    return (uint32_t)(us * ((float)gSystemCounterObj.hwTimerFrequency/1000000));
 }
 
 uint32_t SYS_TIME_MSToCount ( uint32_t ms )
 {
-    return (uint32_t) (((float) ms * (float) gSystemCounterObj.hwTimerFrequency) / 1000.);
+    return (uint32_t)(ms * ((float)gSystemCounterObj.hwTimerFrequency/1000));
 }
 
 
@@ -828,7 +822,6 @@ SYS_TIME_RESULT SYS_TIME_TimerReload(
     /* Single shot timers must register a callback. */
     if ((type == SYS_TIME_SINGLE) && (callBack == NULL))
     {
-        SYS_TIME_ResourceUnlock();
         return result;
     }
 
