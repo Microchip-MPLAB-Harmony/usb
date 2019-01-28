@@ -56,6 +56,7 @@
 */
 
 #include "user.h"
+#include "toolchain_specifics.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -72,7 +73,6 @@ extern "C" {
 // *****************************************************************************
 #define DCACHE_CLEAN_BY_ADDR(data, size)       SCB_CleanDCache_by_Addr((uint32_t *)data, size)
 #define DCACHE_INVALIDATE_BY_ADDR(data, size)  SCB_InvalidateDCache_by_Addr((uint32_t *)data, size)
-
 #define DATA_CACHE_ENABLED                     true
 
 // *****************************************************************************
@@ -97,36 +97,16 @@ extern "C" {
 /*** USB Driver Configuration ***/
 
 /* Maximum USB driver instances */
-#define DRV_USBHSV1_INSTANCES_NUMBER  1
+#define DRV_USBHSV1_INSTANCES_NUMBER                        1
 
 /* Interrupt mode enabled */
-#define DRV_USBHSV1_INTERRUPT_MODE    true
-
-
-
-
-/* Number of Endpoints used */
-#define DRV_USBHSV1_ENDPOINTS_NUMBER  3 //TODO  Calculate this for Device
+#define DRV_USBHSV1_INTERRUPT_MODE                          true
 
 /* Enables Device Support */
-#define DRV_USBHSV1_DEVICE_SUPPORT    true
-
+#define DRV_USBHSV1_DEVICE_SUPPORT                          true
+	
 /* Disable Host Support */
-#define DRV_USBHSV1_HOST_SUPPORT      false
-
-/* The USB Device Layer will not initialize the USB Driver */
-#define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT
-
-/* Maximum device layer instances */
-#define USB_DEVICE_INSTANCES_NUMBER     1
-
-/* EP0 size in bytes */
-#define USB_DEVICE_EP0_BUFFER_SIZE      64
-
-
-
-
-
+#define DRV_USBHSV1_HOST_SUPPORT                            false
 
 /* Maximum instances of HID function driver */
 #define USB_DEVICE_HID_INSTANCES_NUMBER     1
@@ -136,6 +116,28 @@ extern "C" {
    function driver */
 #define USB_DEVICE_HID_QUEUE_DEPTH_COMBINED 5
 
+/* Number of Endpoints used */
+#define DRV_USBHSV1_ENDPOINTS_NUMBER                        3
+
+/* Enable usage of Dual Bank */
+#define DRV_USBFSV1_DUAL_BANK_ENABLE                        false
+
+/* The USB Device Layer will not initialize the USB Driver */
+#define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT
+
+/* Maximum device layer instances */
+#define USB_DEVICE_INSTANCES_NUMBER                         1
+
+/* EP0 size in bytes */
+#define USB_DEVICE_EP0_BUFFER_SIZE                          64
+
+/* Enable SOF Events */
+#define USB_DEVICE_SOF_EVENT_ENABLE
+
+
+
+
+
 
 
 // *****************************************************************************
@@ -144,15 +146,7 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 
-/* Tick time in 125 usec units */
-#define APP_USB_SWITCH_DEBOUNCE_COUNT (1280)
 
-/* Macro defines the conversion factor to be
- * multiplied to convert to millisecs*/
-#define APP_USB_CONVERT_TO_MILLISECOND (1/8)
-
-/* Macro defines USB internal DMA Buffer criteria*/
-#define APP_MAKE_BUFFER_DMA_READY __attribute__((aligned(16)))
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }

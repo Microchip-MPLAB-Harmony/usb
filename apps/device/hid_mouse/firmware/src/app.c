@@ -34,7 +34,11 @@
 // Section: Global Data Definitions
 // *****************************************************************************
 // *****************************************************************************
+#define APP_USB_SWITCH_DEBOUNCE_COUNT 220 
 
+/* Macro defines the conversion factor to be
+ * multiplied to convert to millisecs*/
+#define APP_USB_CONVERT_TO_MILLISECOND (1)
 // *****************************************************************************
 /* Application Data
 
@@ -53,8 +57,8 @@
 APP_DATA appData;
 
 /* Mouse Report */
-MOUSE_REPORT mouseReport APP_MAKE_BUFFER_DMA_READY;
-MOUSE_REPORT mouseReportPrevious APP_MAKE_BUFFER_DMA_READY;
+MOUSE_REPORT mouseReport __attribute__ ((aligned(16)));
+MOUSE_REPORT mouseReportPrevious __attribute__ ((aligned(16)));
 
 
 // *****************************************************************************
@@ -174,7 +178,6 @@ void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, void * eventData, uintptr
             appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
             appData.emulateMouse = true;
             LED1_Off();
-            LED2_Off();
 
             break;
 
@@ -187,7 +190,6 @@ void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, void * eventData, uintptr
                 appData.isConfigured = true;
 
                 LED1_On();
-                LED2_Off();
 
                 /* Register the Application HID Event Handler. */
 
@@ -209,8 +211,6 @@ void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, void * eventData, uintptr
             break;
 
         case USB_DEVICE_EVENT_SUSPENDED:
-            LED1_Off();
-            LED2_On();
             
             break;
 

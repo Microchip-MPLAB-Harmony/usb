@@ -48,17 +48,16 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include "driver/usb/usbhsv1/drv_usbhsv1.h"
+#include "bsp/bsp.h"
+#include "usb/usb_device_hid.h"
+#include "usb/usb_hid.h"
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/nvic/plib_nvic.h"
-#include "bsp/bsp.h"
-#include "system/int/sys_int.h"
-#include "osal/osal.h"
-#include "driver/usb/usbhsv1/drv_usbhsv1.h"
 #include "usb/usb_chapter_9.h"
 #include "usb/usb_device.h"
-#include "usb/usb_device_hid.h"
-#include "usb/usb_hid.h"
+#include "system/int/sys_int.h"
 #include "app.h"
 
 
