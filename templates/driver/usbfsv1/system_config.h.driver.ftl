@@ -55,6 +55,10 @@
 	
 /* Disable Host Support */
 #define DRV_USBFSV1_HOST_SUPPORT                            false
+
+/* Enable usage of Dual Bank */
+#define DRV_USBFSV1_DUAL_BANK_ENABLE                        false
+
 <#elseif (USB_OPERATION_MODE?has_content)
 	  && (USB_OPERATION_MODE == "Host")>
 

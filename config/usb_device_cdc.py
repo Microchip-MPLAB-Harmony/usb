@@ -110,7 +110,7 @@ def onAttachmentDisconnected(source, target):
 		nCDCInstances = nCDCInstances - 1
 		Database.clearSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_INSTANCES")
 		Database.setSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_INSTANCES", nCDCInstances, 2)
-		if nCDCInstances == 1 and functionsNumber != None and nFunctions == 1:
+		if nCDCInstances == 1 and nFunctions != None and nFunctions == 1:
 			Database.clearSymbolValue("usb_device_cdc_0", "CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
 			Database.setSymbolValue("usb_device_cdc_0", "CONFIG_USB_DEVICE_FUNCTION_USE_IAD", False, 2)
 			

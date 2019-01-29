@@ -220,7 +220,7 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceEndpointsNumber.setLabel("Number of Endpoints")	
 	usbDeviceEndpointsNumber.setVisible(False)
 	usbDeviceEndpointsNumber.setMin(0)
-	usbDeviceEndpointsNumber.setDefaultValue(1)
+	usbDeviceEndpointsNumber.setDefaultValue(0)
 	usbDeviceEndpointsNumber.setUseSingleDynamicValue(True)
 	usbDeviceEndpointsNumber.setReadOnly(True)
 	
@@ -331,6 +331,24 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceMsdDiskImageFileAdd.setUseSingleDynamicValue(True)
 	usbDeviceMsdDiskImageFileAdd.setDependencies(checkIfDiskImagefileNeeded,["CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0"])
 
+	# Read Queue Size for Vendor 
+	usbDeviceVendorReadQueueSize = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_ENDPOINT_READ_QUEUE_SIZE", None)
+	usbDeviceVendorReadQueueSize.setLabel("Combined Queue Depth")
+	usbDeviceVendorReadQueueSize.setMin(0)
+	usbDeviceVendorReadQueueSize.setMax(32767)
+	usbDeviceVendorReadQueueSize.setDefaultValue(0)
+	usbDeviceVendorReadQueueSize.setUseSingleDynamicValue(True)
+	usbDeviceVendorReadQueueSize.setVisible(False)
+	
+	# Write Queue Size for Vendor
+	usbDeviceVendorWriteQueueSize = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_ENDPOINT_WRITE_QUEUE_SIZE", None)
+	usbDeviceVendorWriteQueueSize.setLabel("Combined Queue Depth")
+	usbDeviceVendorWriteQueueSize.setMin(0)
+	usbDeviceVendorWriteQueueSize.setMax(32767)
+	usbDeviceVendorWriteQueueSize.setDefaultValue(0)
+	usbDeviceVendorWriteQueueSize.setUseSingleDynamicValue(True)
+	usbDeviceVendorWriteQueueSize.setVisible(False)
+	
 	configName = Variables.get("__CONFIGURATION_NAME")
 	
 	enable_rtos_settings = False

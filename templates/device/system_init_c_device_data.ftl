@@ -439,6 +439,14 @@ const USB_DEVICE_INIT usbDevInitData =
 
     /* Pointer to the USB Driver Functions. */
     .usbDriverInterface = ${CONFIG_USB_DRIVER_INTERFACE},
+	
+ <#if CONFIG_USB_DEVICE_ENDPOINT_READ_QUEUE_SIZE gt 0 || CONFIG_USB_DEVICE_ENDPOINT_WRITE_QUEUE_SIZE gt 0>
+	/* Specify queue size for vendor endpoint read */
+    .queueSizeEndpointRead = ${CONFIG_USB_DEVICE_ENDPOINT_READ_QUEUE_SIZE},
+    
+    /* Specify queue size for vendor endpoint write */
+    .queueSizeEndpointWrite= ${CONFIG_USB_DEVICE_ENDPOINT_WRITE_QUEUE_SIZE},
+</#if>
 };
 // </editor-fold>
 <#--

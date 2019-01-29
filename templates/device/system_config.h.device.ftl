@@ -45,13 +45,10 @@
 <#-- Instance 0 -->
 /* Number of Endpoints used */
 <#if CONFIG_USB_DRIVER_INTERFACE == "DRV_USBHSV1_DEVICE_INTERFACE">
-#define DRV_USBHSV1_ENDPOINTS_NUMBER                        ${CONFIG_USB_DEVICE_ENDPOINTS_NUMBER}
+#define DRV_USBHSV1_ENDPOINTS_NUMBER                        ${CONFIG_USB_DEVICE_ENDPOINTS_NUMBER + 1}
 <#elseif CONFIG_USB_DRIVER_INTERFACE == "DRV_USBFSV1_DEVICE_INTERFACE">
-#define DRV_USBFSV1_ENDPOINTS_NUMBER                        ${CONFIG_USB_DEVICE_ENDPOINTS_NUMBER}
+#define DRV_USBFSV1_ENDPOINTS_NUMBER                        ${CONFIG_USB_DEVICE_ENDPOINTS_NUMBER + 1}
 </#if>
-
-/* Enable usage of Dual Bank */
-#define DRV_USBFSV1_DUAL_BANK_ENABLE                        false
 
 /* The USB Device Layer will not initialize the USB Driver */
 #define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT
