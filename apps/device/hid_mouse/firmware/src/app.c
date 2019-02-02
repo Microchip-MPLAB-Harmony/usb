@@ -319,7 +319,7 @@ void APP_Tasks ( void )
     static uint8_t  movement_length = 0;
     static bool     sent_dont_move = false;
 
-    int8_t dir_table[] ={-4,-4,-4, 0, 4, 4, 4, 0};
+    int8_t dir_table[8] ={-4,-4,-4, 0, 4, 4, 4, 0};
 
     /* Check the application's current state. */
     switch ( appData.state )

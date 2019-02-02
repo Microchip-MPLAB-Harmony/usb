@@ -964,7 +964,7 @@ DRV_USBFSV1_HOST_PIPE_HANDLE DRV_USBFSV1_HOST_PipeSetup
     uint16_t defaultEndpointSize = 8;                /* Default size of Endpoint */
 
     DRV_USBFSV1_OBJ * hDriver;
-    DRV_USBFSV1_HOST_PIPE_OBJ * pipe;
+    DRV_USBFSV1_HOST_PIPE_OBJ * pipe = NULL;
 
     if(client == DRV_HANDLE_INVALID)
     {
@@ -1154,20 +1154,23 @@ DRV_USBFSV1_HOST_PIPE_HANDLE DRV_USBFSV1_HOST_PipeSetup
         return DRV_USBFSV1_HOST_PIPE_HANDLE_INVALID;
     }
     
-    /* Setup the pipe object */
-    pipe->inUse         = true;
-    pipe->deviceAddress = deviceAddress;
-    pipe->irpQueueHead  = NULL;
-    pipe->bInterval     = bInterval;
-    pipe->speed         = speed;
-    pipe->hubAddress    = hubAddress;
-    pipe->hubPort       = hubPort;
-    pipe->pipeType      = pipeType;
-    pipe->hClient       = client;
-    pipe->endpointSize  = wMaxPacketSize;
-    pipe->intervalCounter = bInterval;
-    pipe->hostPipeN     = pipeIter;
-    pipe->endpointAndDirection   = endpointAndDirection;
+	if (pipe != NULL)
+	{
+		/* Setup the pipe object */
+		pipe->inUse         = true;
+		pipe->deviceAddress = deviceAddress;
+		pipe->irpQueueHead  = NULL;
+		pipe->bInterval     = bInterval;
+		pipe->speed         = speed;
+		pipe->hubAddress    = hubAddress;
+		pipe->hubPort       = hubPort;
+		pipe->pipeType      = pipeType;
+		pipe->hClient       = client;
+		pipe->endpointSize  = wMaxPacketSize;
+		pipe->intervalCounter = bInterval;
+		pipe->hostPipeN     = pipeIter;
+		pipe->endpointAndDirection   = endpointAndDirection;
+	}
 
     /* OSAL: Release Mutex */
     if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
