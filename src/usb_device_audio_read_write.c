@@ -307,13 +307,13 @@ USB_DEVICE_AUDIO_RESULT USB_DEVICE_AUDIO_StatusSend
     int cnt;
     USB_DEVICE_IRP *irp;
     USB_DEVICE_AUDIO_IRP_DATA *audioIrpData;
-    USB_DEVICE_AUDIO_INSTANCE *thisAudioInstance; 
+    USB_DEVICE_AUDIO_INSTANCE *thisAudioInstance = NULL; 
     USB_ENDPOINT epStruct;
     OSAL_RESULT osalError;
     USB_ERROR irpErr;
     bool irpFound = false; 
     OSAL_CRITSECT_DATA_TYPE IntState;
-    USB_DEVICE_AUDIO_EP_INSTANCE * endpoint;
+    USB_DEVICE_AUDIO_EP_INSTANCE * endpoint = NULL;
     USB_DEVICE_AUDIO_RESULT audioResult = USB_DEVICE_AUDIO_RESULT_OK;
     
     /* Check the validity of the function driver index */
