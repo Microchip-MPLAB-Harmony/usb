@@ -71,9 +71,8 @@ extern "C" {
 // Section: System Configuration
 // *****************************************************************************
 // *****************************************************************************
-#define DCACHE_CLEAN_BY_ADDR(data, size)       SCB_CleanDCache_by_Addr((uint32_t *)data, size)
-#define DCACHE_INVALIDATE_BY_ADDR(data, size)  SCB_InvalidateDCache_by_Addr((uint32_t *)data, size)
-#define DATA_CACHE_ENABLED                     true
+
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -84,7 +83,7 @@ extern "C" {
 #define SYS_TIME_INDEX_0                     0
 #define SYS_TIME_MAX_TIMERS                  5
 #define SYS_TIME_HW_COUNTER_WIDTH            16
-#define SYS_TIME_HW_COUNTER_PERIOD           0xFFFF
+#define SYS_TIME_HW_COUNTER_PERIOD           65535
 #define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
 #define SYS_TIME_CPU_CLOCK_FREQUENCY         300000000
 #define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (900)
@@ -98,13 +97,11 @@ extern "C" {
 // *****************************************************************************
 /* USART Driver Instance 0 Configuration Options */
 #define DRV_USART_INDEX_0                  0
-#define DRV_USART_XMIT_QUEUE_SIZE_IDX0     5
-#define DRV_USART_RCV_QUEUE_SIZE_IDX0      5
+#define DRV_USART_CLIENTS_NUMBER_IDX0      1
+#define DRV_USART_QUEUE_SIZE_IDX0          5
 
 /* USART Driver Global Configuration Options */
 #define DRV_USART_INSTANCES_NUMBER         1
-#define DRV_USART_QUEUE_DEPTH_COMBINED     11
-
 
 
 // *****************************************************************************
@@ -149,6 +146,9 @@ extern "C" {
 
 /* Total number of devices to be supported */
 #define USB_HOST_DEVICES_NUMBER                             1
+
+/* Size of Endpoint 0 buffer */
+#define USB_DEVICE_EP0_BUFFER_SIZE                          64
 
 /* Target peripheral list entries */
 #define  USB_HOST_TPL_ENTRIES                               1 
