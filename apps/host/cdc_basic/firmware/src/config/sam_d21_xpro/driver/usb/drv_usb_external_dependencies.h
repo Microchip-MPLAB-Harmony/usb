@@ -49,10 +49,17 @@
 #include "system/system_module.h"
 
 
-#define SYS_DEBUG_PRINT(level, format, ...) 
-#define SYS_DEBUG_MESSAGE(a,b, ...)
-#define SYS_DEBUG(a,b)
-//#define SYS_DEBUG_MESSAGE(a , b)
+#ifndef SYS_DEBUG_PRINT
+	#define SYS_DEBUG_PRINT(level, format, ...) 
+#endif 
+
+#ifndef SYS_DEBUG_MESSAGE
+	#define SYS_DEBUG_MESSAGE(a,b, ...)
+#endif 
+
+#ifndef SYS_DEBUG
+	#define SYS_DEBUG(a,b)
+#endif 
 #endif 
 /*******************************************************************************
  End of File

@@ -45,7 +45,6 @@
 // *****************************************************************************
 #include "configuration.h"
 #include "definitions.h"
-#include "device.h"
 
 
 // ****************************************************************************
@@ -159,10 +158,9 @@ void SYS_Initialize ( void* data )
 	BSP_Initialize();
     EVSYS_Initialize();
 
+    NVIC_Initialize();
     TC3_TimerInitialize();
 
-
-    NVIC_Initialize();
 
 
     sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);
@@ -183,3 +181,4 @@ void SYS_Initialize ( void* data )
 /*******************************************************************************
  End of File
 */
+
