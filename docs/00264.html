@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>Receiving a Report</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00264.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00207.html" target="topic">USB Device Libraries</a> &gt; <a href="00236.html" target="topic">USB HID Device Library</a> &gt; <a href="00266.html" target="topic">Using the Library</a> &gt; <a href="00259.html" target="topic">How the Library Works</a> &gt; <a href="00264.html" target="topic">Receiving a Report</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00265.html" target="topic">Previous</a> | <a href="00259.html" target="topic">Up</a> | <a href="00254.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HIDDEV Receiving a Report Topic Title: Receiving a Report)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+Receiving a Report</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The application can receive a report from the Host by using the <a href="00768.html" target="topic">USB_DEVICE_HID_ReportReceive</a> function. This function returns a transfer handler that allows the application to track the read request. The request is completed when the Host sends the report. The application must make sure that it allocates a buffer size that is at least the size of the report. The return value of the function indicates the success of the request. A read request could fail if the driver transfer queue is full. The completion of the read transfer is indicated by a USB_DEVICE_HID_EVENT_REPORT_RECEIVED event. The reportReceived member of the eventData data structure contains details about the received report. The following code shows an example of how a USB HID Keyboard can schedule a receive report operation to get the keyboard LED status. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The following code shows how the
+ * USB HID Keyboard application schedules a
+ * receive report operation to receive the
+ * keyboard output report from the host. This
+ * report contains the keyboard LED status. The
+ * size of the report is 1 byte */</span></i>
+
+result = USB_DEVICE_HID_ReportReceive(appData.hidInstance,
+             &amp;appData.receiveTransferHandle,
+             (uint8_t *)&amp;appData.keyboardOutputReport,1);
+
+<strong><span style="color: #000080">if</span></strong>(USB_DEVICE_HID_RESULT_OK != result)
+{
+    <i><span style="color: #008000">/* Do error handling here */</span></i>
+}</pre></div></div>
+</div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00207.html" target="topic">USB Device Libraries</a> &gt; <a href="00236.html" target="topic">USB HID Device Library</a> &gt; <a href="00266.html" target="topic">Using the Library</a> &gt; <a href="00259.html" target="topic">How the Library Works</a> &gt; <a href="00264.html" target="topic">Receiving a Report</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00265.html" target="topic">Previous</a> | <a href="00259.html" target="topic">Up</a> | <a href="00254.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HIDDEV Receiving a Report Topic Title: Receiving a Report)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

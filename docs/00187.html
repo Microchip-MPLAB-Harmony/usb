@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>Using a Code Signing Certificate to Sign Driver Packages</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00187.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00183.html" target="topic">Driver Signing and Windows 8 (for v1.08)</a> &gt; <a href="00187.html" target="topic">Using a Code Signing Certificate to Sign Driver Packages</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00182.html" target="topic">Previous</a> | <a href="00183.html" target="topic">Up</a> | <a href="00098.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEV DRV WIN8 Using a Code Signing Certificate to Sign Driver Packages Topic Title: Using a Code Signing Certificate to Sign Driver Packages)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+Using a Code Signing Certificate to Sign Driver Packages</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+If you make modifications to a driver package and need to resign the package, the easiest method is to sign it with a Microsoft Authenticode code singing certificate. This can be done using the following procedure:</p>
+<ol class="Element630">
+<li value="1" class="Element600">Start from a known working driver package <span class="Element146">.inf</span> file from the latest MPLAB Harmony release.</li>
+<li value="2" class="Element600">Modify the <span class="Element146">.inf</span> file as desired. The <span class="Element146">.inf</span> file is a plain text file (i.e., editable with a text editor, such as Notepad) that contains installation instruction/information that tells the operating system what driver needs to be used for the hardware, and anything else that may need to occur during the driver installation process. When changing the <span class="Element146">.inf</span>  file device list  sections, please remove all  existing Microchip VID/PIDs, before replacing them with your own. The manufacturer and product strings should also be updated as applicable for your device.</li>
+<li value="3" class="Element600">Delete the security catalog (<span class="Element146">.cat</span>) file that is already supplied with the package. After modifying the <span class="Element146">.inf</span> file, the security catalog file will no longer be valid and you will need to create a new one.</li>
+<li value="4" class="Element600">Download the latest  version of the  Windows Driver Kit (WDK) from  Microsoft by visiting: <a href="#" onclick="openExternalLink('http://msdn.microsoft.com/en-us/library/windows/hardware/gg487428.aspx');"><img src="indicator_external_link.gif" border="0" alt="" title="">http://msdn.microsoft.com/en-us/library/windows/hardware/gg487428.aspx</a>  Version 8.0 or later is needed (prior versions don’t have awareness of Windows 8 specifics).</li>
+<li value="5" class="Element600">Use the Inf2Cat utility in the WDK to regenerate a new <span class="Element146">.cat</span> file from the modified <span class="Element146">.inf</span> file.
+<ul class="Element631">
+<li class="Element601">Inf2Cat is a command line utility. Open a command prompt, navigate to the directory of the inf2cat tool, and then run it at the command line to get a small help/explanation of usage syntax. The program is typically located in the following location: <span class="Element146">C:\Program Files\Windows Kits\8.0\bin\x64</span> (or <span class="Element146">\x86</span> folder for 32-bit)</li>
+<li class="Element601">Typical usage syntax would be similar to the following (all on one line): <span class="Element146">inf2cat  /driver:C:\[path  to  dir  with  .inf  file] /os:XP_X86,XP_X64,Vista_X86,Vista_X64,7_X86,7_X64,8_X86,8_X64,Server2003_X86,Server2003_X64,Server2008_X86,Server2008_X64,Server2008R2_X64,Server8_X64</span>. Assuming the Inf2Cat utility runs successfully, it will generate a raw <span class="Element146">.cat</span> file. The <span class="Element146">.cat</span> file will still need to be signed to be useful.</li>
+</ul></li>
+<li value="6" class="Element600">If your organization does not already have one, purchase a code signing certificate from a Certificate Authority (CA) such as VeriSign (now Symantec Corporation). See <a href="00185.html" target="topic">Obtaining a Microsoft Authenticode Code Signing Certificate</a> for more details.</li>
+<li value="7" class="Element600">Use the <span class="Element146">signtool.exe</span> utility,  along with the signing certificate  purchased from the CA, to  sign the <span class="Element146">.cat</span>  file.  The signtool utility is small Microsoft program that is distributed in the Windows SDK (and/or in older versions of the WDK, prior to v8.0). The Windows SDK can currently be obtained by visiting: <a href="#" onclick="openExternalLink('http://msdn.microsoft.com/en-us/windows/desktop/hh852363.aspx');"><img src="indicator_external_link.gif" border="0" alt="" title="">http://msdn.microsoft.com/en-us/windows/desktop/hh852363.aspx </a></li>
+<li value="8" class="Element600">Typical  syntax  when  using  the  signtool  would  be  as  follows, wwhen executed in the directory of the .cat file, assuming the directory to the signtool is in the path, and the certificate has a .pfx  extension without a password, and that the certificate resides on &quot;E:&quot;, like a typical USB flash drive: <span class="Element146">signtool sign /v /f &quot;E:\[path to certificate]\[certificate file name].pfx&quot; /t http://timestamp.verisign.com/scripts/timestamp.dll [FileNameToSign.cat]</span></li>
+<li value="9" class="Element600">Verify that the signature has been properly applied using the verify command line option: <span class="Element146">signtool verify /a /pa [FileNameToSign.cat]</span>. The verify step should report success. </li>
+</ol><p class="Element10">
+The driver  package should  now be correctly signed with a Microsoft Authenticode signature. Test it on all target operating systems. Distribute both the <span class="Element146">.inf</span>  file and <span class="Element146">.cat</span> file together to the end-consumer (along with any other driver package files that may be necessary, which may include <span class="Element146">.dll</span> files, particularly in the case of the WinUSB driver package). Never distribute the signing certificate that you purchased from the CA, this should be kept in a safe place, out of the hands of the public (the certificate can be reused to sign any number of driver packages, as well as <span class="Element146">.exe</span> files, which will have some benefits).</p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00183.html" target="topic">Driver Signing and Windows 8 (for v1.08)</a> &gt; <a href="00187.html" target="topic">Using a Code Signing Certificate to Sign Driver Packages</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00182.html" target="topic">Previous</a> | <a href="00183.html" target="topic">Up</a> | <a href="00098.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEV DRV WIN8 Using a Code Signing Certificate to Sign Driver Packages Topic Title: Using a Code Signing Certificate to Sign Driver Packages)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>
