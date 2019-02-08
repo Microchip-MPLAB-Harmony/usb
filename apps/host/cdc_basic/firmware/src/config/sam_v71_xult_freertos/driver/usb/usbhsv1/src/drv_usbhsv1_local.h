@@ -543,7 +543,7 @@ typedef struct _DRV_USBHSV1_OBJ_STRUCT
     DRV_USBHSV1_HOST_ATTACH_STATE attachState;
     
     /* True if device is attached */
-    bool deviceAttached;
+    volatile bool deviceAttached;
 
     /* Device Object handle assigned by the host */
     USB_HOST_DEVICE_OBJ_HANDLE usbHostDeviceInfo;

@@ -89,6 +89,7 @@ DRV_USBHSV1_HOST_PIPE_OBJ gDrvUSBHostPipeObj[10];
  ****************************************/
 extern DRV_USBHSV1_OBJ gDrvUSBObj[];
 
+static uint8_t usb_connected = 0;
 // ****************************************************************************
 // ****************************************************************************
 // Local Functions
@@ -224,7 +225,6 @@ void _DRV_USBHSV1_HOST_IRPTransmitFIFOLoad
     uint8_t *data, *ptrEPData;
     unsigned int count, pendingBytes;
     DRV_USBHSV1_HOST_PIPE_OBJ * pipe = (DRV_USBHSV1_HOST_PIPE_OBJ *)(irp->pipe);
-    uint32_t hstPipeCfg;
     
     /* Load the FIFO */
     pendingBytes = irp->size - irp->completedBytes;
@@ -235,11 +235,11 @@ void _DRV_USBHSV1_HOST_IRPTransmitFIFOLoad
     if(0 == hPipe)
     {
         /* Configure OUT Token for Pipe 0 */
-        hstPipeCfg = usbID->USBHS_HSTPIPCFG[0] & ~(uint32_t)(USBHS_HSTPIPCFG_PTOKEN_Msk);
-        hstPipeCfg |= USBHS_HSTPIPCFG_PTOKEN(2);
-        usbID->USBHS_HSTPIPCFG[0] = hstPipeCfg;
+        usbID->USBHS_HSTPIPCFG[0] = (usbID->USBHS_HSTPIPCFG[0] & ~(uint32_t)(USBHS_HSTPIPCFG_PTOKEN_Msk))
+                | USBHS_HSTPIPCFG_PTOKEN(2);
     }
-
+    __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
+    __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
     /* Load the endpoint FIFO with the user data */
     for(uint16_t i = 0; i < count; i ++)
     {
@@ -261,8 +261,11 @@ void _DRV_USBHSV1_HOST_IRPTransmitFIFOLoad
     usbID->USBHS_HSTPIPICR[hPipe] = USBHS_HSTPIPICR_TXOUTIC_Msk;    
     /* Enable Pipe out ready interrupt */
     usbID->USBHS_HSTPIPIER[hPipe] = USBHS_HSTPIPIER_TXOUTES_Msk;
+    __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
+    __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
     /* Clear FIFOCON and Unfreeze pipe */
-    usbID->USBHS_HSTPIPIDR[hPipe] = (USBHS_HSTPIPIDR_FIFOCONC_Msk | USBHS_HSTPIPIDR_PFREEZEC_Msk);
+    usbID->USBHS_HSTPIPIDR[hPipe] = USBHS_HSTPIPIDR_FIFOCONC_Msk;
+    usbID->USBHS_HSTPIPIDR[hPipe] = USBHS_HSTPIPIDR_PFREEZEC_Msk;
 
 }/* end of _DRV_USBHSV1_HOST_IRPTransmitFIFOLoad() */
 
@@ -277,12 +280,12 @@ void _DRV_USBHSV1_HOST_IRPTransmitSetupPacket
 
     uint8_t * data = (uint8_t *)irp->setup;
 	volatile uint8_t *ptrEPData;
-    uint32_t hstPipeCfg;
     
     /* Configure Setup Token for Pipe 0 */
-    hstPipeCfg = usbID->USBHS_HSTPIPCFG[0] & ~(uint32_t)(USBHS_HSTPIPCFG_PTOKEN_Msk);
-    hstPipeCfg |= USBHS_HSTPIPCFG_PTOKEN(0);
-    usbID->USBHS_HSTPIPCFG[0] = hstPipeCfg;
+    usbID->USBHS_HSTPIPCFG[0] = (usbID->USBHS_HSTPIPCFG[0] & ~(uint32_t)(USBHS_HSTPIPCFG_PTOKEN_Msk))
+            | USBHS_HSTPIPCFG_PTOKEN(0);
+    __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
+    __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
     /* Clear Setup Ready interrupt */
 	usbID->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_TXSTPIC_Msk;
 	ptrEPData =   (volatile uint8_t *)&drv_usbhsv1_get_pipe_fifo_access(0);
@@ -303,8 +306,11 @@ void _DRV_USBHSV1_HOST_IRPTransmitSetupPacket
    
     /* Enable setup ready interrupt */
     usbID->USBHS_HSTPIPIER[0] = USBHS_HSTPIPIER_TXSTPES_Msk;
+    __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
+    __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
     /* Clear FIFOCON and Unfreeze pipe */
-    usbID->USBHS_HSTPIPIDR[0] = (USBHS_HSTPIPIDR_FIFOCONC_Msk | USBHS_HSTPIPIDR_PFREEZEC_Msk);
+    usbID->USBHS_HSTPIPIDR[0] = USBHS_HSTPIPIDR_FIFOCONC_Msk;
+    usbID->USBHS_HSTPIPIDR[0] = USBHS_HSTPIPIDR_PFREEZEC_Msk;
 
 }/* end of _DRV_USBHSV1_HOST_IRPTransmitSetupPacket() */
 
@@ -343,7 +349,8 @@ unsigned int _DRV_USBHSV1_HOST_IRPReceiveFIFOUnload
     }
     irp->completedBytes += count;
     *pisDMAUsed = false;
-    
+    __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
+    __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
     /* Clear FIFO Status */
     usbID->USBHS_HSTPIPIDR[hPipe] = USBHS_HSTPIPIDR_FIFOCONC_Msk;
     return (count);
@@ -361,13 +368,17 @@ void _DRV_USBHSV1_HOST_Initialize
     drvObj->deviceAttached = false;
     /* Initialize the device handle */
     drvObj->attachedDeviceObjHandle = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
-    /* Set VBUS Hardware Control */
-    usbMod->USBHS_CTRL |= USBHS_CTRL_VBUSHWC_Msk;
+    /* Set VBUS Hardware Control
+     * VBUSHWC: VBUS Hardware Control Must be set to ?1?.
+     * UID: UID Pin Enable Must be set to ?0?. */
+    usbMod->USBHS_CTRL = USBHS_CTRL_USBE_Msk | USBHS_CTRL_VBUSHWC_Msk;
+    /* Requests VBus activation: Must be set to ?1?. */
+    usbMod->USBHS_SFR |= USBHS_SFR_VBUSRQS_Msk;
+
     /* Initialize the host specific members in the driver object */
     drvObj->isResetting     = false;
     drvObj->usbHostDeviceInfo = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
     drvObj->operationEnabled = false;
-   
 }/* end of _DRV_USBHSV1_HOST_Initialize() */
 
 USB_ERROR DRV_USBHSV1_HOST_IRPSubmit
@@ -507,10 +518,13 @@ USB_ERROR DRV_USBHSV1_HOST_IRPSubmit
                 usbMod->USBHS_HSTPIPINRQ[hostPipe] = 0;
                 /* Clear RX IN Interrupt */
                 usbMod->USBHS_HSTPIPICR[hostPipe] = USBHS_HSTPIPICR_RXINIC_Msk;
-                /* Enable Rx IN Interrupt */
+                 /* Enable Rx IN Interrupt */
                 usbMod->USBHS_HSTPIPIER[hostPipe] = USBHS_HSTPIPIER_RXINES_Msk;
+                __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
+                __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
                 /* Clear FIFOCON and Unfreeze pipe */
-                usbMod->USBHS_HSTPIPIDR[hostPipe] = (USBHS_HSTPIPIDR_FIFOCONC_Msk | USBHS_HSTPIPIDR_PFREEZEC_Msk);
+                usbMod->USBHS_HSTPIPIDR[hostPipe] = USBHS_HSTPIPIDR_FIFOCONC_Msk;
+                usbMod->USBHS_HSTPIPIDR[hostPipe] = USBHS_HSTPIPIDR_PFREEZEC_Msk;
             }
         }
     }
@@ -1015,7 +1029,6 @@ void _DRV_USBHSV1_HOST_ControlTransferProcess(DRV_USBHSV1_OBJ * hDriver)
     bool foundIRP = false;
     bool isDmaUsed = false;
     volatile usbhs_registers_t * usbMod;
-    uint32_t hstPipeCfg;
 
     transferGroup = &hDriver->controlTransferGroup;
     usbMod = hDriver->usbID;
@@ -1115,15 +1128,17 @@ void _DRV_USBHSV1_HOST_ControlTransferProcess(DRV_USBHSV1_OBJ * hDriver)
                     irp->tempState = DRV_USBHSV1_HOST_IRP_STATE_HANDSHAKE_SENT;
 				   
                     /* Configure pipe for IN token */
-                    hstPipeCfg = usbMod->USBHS_HSTPIPCFG[0] & ~(uint32_t)(USBHS_HSTPIPCFG_PTOKEN_Msk);
-                    hstPipeCfg |= USBHS_HSTPIPCFG_PTOKEN(1);
-                    usbMod->USBHS_HSTPIPCFG[0] = hstPipeCfg;
+                    usbMod->USBHS_HSTPIPCFG[0] = (usbMod->USBHS_HSTPIPCFG[0] & ~(uint32_t)(USBHS_HSTPIPCFG_PTOKEN_Msk))
+                                                | USBHS_HSTPIPCFG_PTOKEN(1);
 					/* Clear IN Rx Interrupt */
                     usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_RXINIC_Msk;
  					/* Enable IN Rx Interrupt */
                     usbMod->USBHS_HSTPIPIER[0] = USBHS_HSTPIPIER_RXINES_Msk;
+                    __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
+                    __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
                     /* Clear FIFOCON and Unfreeze pipe */
-                    usbMod->USBHS_HSTPIPIDR[0] = (USBHS_HSTPIPIDR_FIFOCONC_Msk | USBHS_HSTPIPIDR_PFREEZEC_Msk);
+                    usbMod->USBHS_HSTPIPIDR[0] = USBHS_HSTPIPIDR_FIFOCONC_Msk;
+                    usbMod->USBHS_HSTPIPIDR[0] = USBHS_HSTPIPIDR_PFREEZEC_Msk;
                }
                else
                {
@@ -1137,15 +1152,17 @@ void _DRV_USBHSV1_HOST_ControlTransferProcess(DRV_USBHSV1_OBJ * hDriver)
                        /* This means the data stage moves from device to host.
                         * So the host would have to send an IN token.  */
                        /* Configure pipe for IN token */
-                       hstPipeCfg = usbMod->USBHS_HSTPIPCFG[0] & ~(uint32_t)(USBHS_HSTPIPCFG_PTOKEN_Msk);
-                       hstPipeCfg |= USBHS_HSTPIPCFG_PTOKEN(1);
-                       usbMod->USBHS_HSTPIPCFG[0] = hstPipeCfg;
+                       usbMod->USBHS_HSTPIPCFG[0] = (usbMod->USBHS_HSTPIPCFG[0] & ~(uint32_t)(USBHS_HSTPIPCFG_PTOKEN_Msk))
+                                                | USBHS_HSTPIPCFG_PTOKEN(1);
                        /* Clear IN Rx Interrupt */
                        usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_RXINIC_Msk;
                        /* Enable IN Rx Interrupt */
                        usbMod->USBHS_HSTPIPIER[0] = USBHS_HSTPIPIER_RXINES_Msk;
+                       __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
+                       __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
                        /* Clear FIFOCON and Unfreeze pipe */
-                       usbMod->USBHS_HSTPIPIDR[0] = (USBHS_HSTPIPIDR_FIFOCONC_Msk | USBHS_HSTPIPIDR_PFREEZEC_Msk);
+                       usbMod->USBHS_HSTPIPIDR[0] = USBHS_HSTPIPIDR_FIFOCONC_Msk;
+                       usbMod->USBHS_HSTPIPIDR[0] = USBHS_HSTPIPIDR_PFREEZEC_Msk;
                    }
                    else
                    {
@@ -1203,31 +1220,39 @@ void _DRV_USBHSV1_HOST_ControlTransferProcess(DRV_USBHSV1_OBJ * hDriver)
                          * should move to the handshake stage. */
                         irp->tempState = DRV_USBHSV1_HOST_IRP_STATE_HANDSHAKE_SENT;
                         /* Configure pipe for OUT token */
-                        hstPipeCfg = usbMod->USBHS_HSTPIPCFG[0] & ~(uint32_t)(USBHS_HSTPIPCFG_PTOKEN_Msk);
-                        hstPipeCfg |= USBHS_HSTPIPCFG_PTOKEN(2);
-                        usbMod->USBHS_HSTPIPCFG[0] = hstPipeCfg;
+                        usbMod->USBHS_HSTPIPCFG[0] = (usbMod->USBHS_HSTPIPCFG[0] & ~(uint32_t)(USBHS_HSTPIPCFG_PTOKEN_Msk))
+                                                    | USBHS_HSTPIPCFG_PTOKEN(2);
+                        __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
+                        __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
                         /* Clear Tx Out Ready Interrupt */
                         usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_TXOUTIC_Msk;
                         /* Enable Pipe out ready interrupt */
                         usbMod->USBHS_HSTPIPIER[0] = USBHS_HSTPIPIER_TXOUTES_Msk;
+                        __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
+                        __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
                         /* Clear FIFOCON and Unfreeze pipe */
-                        usbMod->USBHS_HSTPIPIDR[0] = (USBHS_HSTPIPIDR_FIFOCONC_Msk | USBHS_HSTPIPIDR_PFREEZEC_Msk);
+                        usbMod->USBHS_HSTPIPIDR[0] = USBHS_HSTPIPIDR_FIFOCONC_Msk;
+                        usbMod->USBHS_HSTPIPIDR[0] = USBHS_HSTPIPIDR_PFREEZEC_Msk;
                    }
                    else
                    {
                         /* This means this is a multi stage control read
                          * transfer. Issue another IN token */
 					    /* Configure pipe for IN token */
-                        hstPipeCfg = usbMod->USBHS_HSTPIPCFG[0] & ~(uint32_t)(USBHS_HSTPIPCFG_PTOKEN_Msk);
-                        hstPipeCfg |= USBHS_HSTPIPCFG_PTOKEN(1);
-                        usbMod->USBHS_HSTPIPCFG[0] = hstPipeCfg;
+                        usbMod->USBHS_HSTPIPCFG[0] = (usbMod->USBHS_HSTPIPCFG[0] & ~(uint32_t)(USBHS_HSTPIPCFG_PTOKEN_Msk))
+                                                | USBHS_HSTPIPCFG_PTOKEN(1);
+                        __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
+                        __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
 					    /* Clear IN Rx Interrupt */
 					    usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_RXINIC_Msk;
 					    /* Enable IN Rx Interrupt */
 					    usbMod->USBHS_HSTPIPIER[0] = USBHS_HSTPIPIER_RXINES_Msk;
+                        __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
+                        __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
                         /* Clear FIFOCON and Unfreeze pipe */
-                        usbMod->USBHS_HSTPIPIDR[0] = (USBHS_HSTPIPIDR_FIFOCONC_Msk | USBHS_HSTPIPIDR_PFREEZEC_Msk);
-                   }
+                        usbMod->USBHS_HSTPIPIDR[0] = USBHS_HSTPIPIDR_FIFOCONC_Msk;
+                        usbMod->USBHS_HSTPIPIDR[0] = USBHS_HSTPIPIDR_PFREEZEC_Msk;
+                    }
                }
                else
                {
@@ -1242,15 +1267,19 @@ void _DRV_USBHSV1_HOST_ControlTransferProcess(DRV_USBHSV1_OBJ * hDriver)
                    {
                         /* We can move to the status stage */
                         irp->tempState = DRV_USBHSV1_HOST_IRP_STATE_HANDSHAKE_SENT;
-                        hstPipeCfg = usbMod->USBHS_HSTPIPCFG[0] & ~(uint32_t)(USBHS_HSTPIPCFG_PTOKEN_Msk);
-                        hstPipeCfg |= USBHS_HSTPIPCFG_PTOKEN(1);
-                        usbMod->USBHS_HSTPIPCFG[0] = hstPipeCfg;
+                        usbMod->USBHS_HSTPIPCFG[0] = (usbMod->USBHS_HSTPIPCFG[0] & ~(uint32_t)(USBHS_HSTPIPCFG_PTOKEN_Msk))
+                                                | USBHS_HSTPIPCFG_PTOKEN(1);
+                        __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
+                        __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
                         /* Clear IN Rx Interrupt */
                         usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_RXINIC_Msk;
                         /* Enable IN Rx Interrupt */
                         usbMod->USBHS_HSTPIPIER[0] = USBHS_HSTPIPIER_RXINES_Msk;
+                        __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
+                        __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
                         /* Clear FIFOCON and Unfreeze pipe */
-                        usbMod->USBHS_HSTPIPIDR[0] = (USBHS_HSTPIPIDR_FIFOCONC_Msk | USBHS_HSTPIPIDR_PFREEZEC_Msk);
+                        usbMod->USBHS_HSTPIPIDR[0] = USBHS_HSTPIPIDR_FIFOCONC_Msk;
+                        usbMod->USBHS_HSTPIPIDR[0] = USBHS_HSTPIPIDR_PFREEZEC_Msk;
                    }
                }
                break;
@@ -1533,8 +1562,11 @@ void _DRV_USBHSV1_HOST_NonControlTransferProcess
                 endIRP = false;
 				/* Enable IN Rx Interrupt */
 				usbMod->USBHS_HSTPIPIER[hostPipe] = USBHS_HSTPIPIER_RXINES_Msk;
+                __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
+                __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
                 /* Clear FIFOCON and Unfreeze pipe */
-                usbMod->USBHS_HSTPIPIDR[hostPipe] = (USBHS_HSTPIPIDR_FIFOCONC_Msk | USBHS_HSTPIPIDR_PFREEZEC_Msk);
+                usbMod->USBHS_HSTPIPIDR[hostPipe] = USBHS_HSTPIPIDR_FIFOCONC_Msk;
+                usbMod->USBHS_HSTPIPIDR[hostPipe] = USBHS_HSTPIPIDR_PFREEZEC_Msk;
             }
         }
         else
@@ -1584,8 +1616,11 @@ void _DRV_USBHSV1_HOST_NonControlTransferProcess
 			usbMod->USBHS_HSTPIPICR[hostPipe] = USBHS_HSTPIPICR_RXINIC_Msk;
 			/* Enable IN Rx Interrupt */
 			usbMod->USBHS_HSTPIPIER[hostPipe] = USBHS_HSTPIPIER_RXINES_Msk;
+            __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
+            __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
             /* Clear FIFOCON and Unfreeze pipe */
-            usbMod->USBHS_HSTPIPIDR[hostPipe] = (USBHS_HSTPIPIDR_FIFOCONC_Msk | USBHS_HSTPIPIDR_PFREEZEC_Msk);
+            usbMod->USBHS_HSTPIPIDR[hostPipe] = USBHS_HSTPIPIDR_FIFOCONC_Msk;
+            usbMod->USBHS_HSTPIPIDR[hostPipe] = USBHS_HSTPIPIDR_PFREEZEC_Msk;
         }
     }
 }/* end of _DRV_USBHSV1_HOST_NonControlTransferProcess() */
@@ -1594,16 +1629,39 @@ void _DRV_USBHSV1_HOST_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
 {
     uint8_t intPipe;
 	   
-    if((USBHS_HSTISR_DDISCI_Msk == (USBHS_HSTISR_DDISCI_Msk & hDriver->usbID->USBHS_HSTISR)) && (USBHS_HSTIMR_DDISCIE_Msk == (USBHS_HSTIMR_DDISCIE_Msk & hDriver->usbID->USBHS_HSTIMR)))
+    __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
+    __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
+
+    if((USBHS_HSTISR_DDISCI_Msk == (USBHS_HSTISR_DDISCI_Msk & hDriver->usbID->USBHS_HSTISR)) 
+    && (USBHS_HSTIMR_DDISCIE_Msk == (USBHS_HSTIMR_DDISCIE_Msk & hDriver->usbID->USBHS_HSTIMR)))
     {
         /* Manage Device Disconnection Interrupt 
          */
+        usb_connected = 0;
+        /* Stop reset signal, in case of disconnection during reset */
+        hDriver->usbID->USBHS_HSTCTRL &= ~USBHS_HSTCTRL_RESET_Msk;
+        /* Disable SOF */
+        hDriver->usbID->USBHS_HSTCTRL &= ~USBHS_HSTCTRL_SOFE_Msk;
         /* Clear Device Disconnection Interrupt */
         hDriver->usbID->USBHS_HSTICR = USBHS_HSTICR_DDISCIC_Msk;
-        /* Disable Device Disconnection Interrupt */
-        hDriver->usbID->USBHS_HSTIDR = USBHS_HSTIDR_DDISCIEC_Msk;
-        /* Enable Device Connection and Host Wakeup Interrupt */
-        hDriver->usbID->USBHS_HSTIER = (USBHS_HSTIER_DCONNIES_Msk | USBHS_HSTIER_HWUPIES_Msk);
+        /* Disable wakeup/resumes interrupts,
+         * in case of disconnection during suspend mode */
+        hDriver->usbID->USBHS_HSTIDR = (USBHS_HSTIDR_HWUPIEC_Msk
+                                      | USBHS_HSTIDR_RSMEDIEC_Msk
+                                      | USBHS_HSTIDR_RXRSMIEC_Msk);
+    	/* Clear Wake-up Interrupt */
+        hDriver->usbID->USBHS_HSTICR = USBHS_HSTICR_HWUPIC_Msk;
+        /* Enable Host Wakeup Interrupt */
+        hDriver->usbID->USBHS_HSTIER = USBHS_HSTIER_HWUPIES_Msk;
+
+        if (hDriver->usbID->USBHS_HSTISR & USBHS_HSTISR_DCONNI_Msk) 
+        {
+            /* Both connection and disconnection interrupts are set
+             * and to sort this out the connection flag is cleared
+             * at cost of loss the connection interrupt
+             * Clear Connection Interrupt */
+            hDriver->usbID->USBHS_HSTICR = USBHS_HSTICR_DCONNIC_Msk;
+        }
         hDriver->deviceAttached = false;
         if(hDriver->attachedDeviceObjHandle != USB_HOST_DEVICE_OBJ_HANDLE_INVALID)
         {
@@ -1613,41 +1671,69 @@ void _DRV_USBHSV1_HOST_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
         }
         hDriver->attachedDeviceObjHandle = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;        
     }
-    else if((USBHS_HSTISR_HWUPI_Msk == (USBHS_HSTISR_HWUPI_Msk & hDriver->usbID->USBHS_HSTISR)) && (USBHS_HSTIMR_HWUPIE_Msk == (USBHS_HSTIMR_HWUPIE_Msk & hDriver->usbID->USBHS_HSTIMR)))
-    {
-    	/* Manage Host Wakeup Interrupt. This interrupt is generated 
-         * even if the clock is frozen
-         */
-    	/* Clear Wake-up Interrupt */
-        hDriver->usbID->USBHS_HSTICR = USBHS_HSTICR_HWUPIC_Msk;
-        /* Disable Wake-up Interrupt */
-        hDriver->usbID->USBHS_HSTIDR = USBHS_HSTIDR_HWUPIEC_Msk;
-        /* Enable Device Connection Interrupt */
-        hDriver->usbID->USBHS_HSTIER = USBHS_HSTIER_DCONNIES_Msk;
-        /* Unfreeze clock */
-        hDriver->usbID->USBHS_CTRL |= USBHS_CTRL_FRZCLK_Msk;
-    	/* Requests VBus activation */
-        hDriver->usbID->USBHS_SFR |= USBHS_SFR_VBUSRQS_Msk;
-	}
-    else if((USBHS_HSTISR_DCONNI_Msk == (USBHS_HSTISR_DCONNI_Msk & hDriver->usbID->USBHS_HSTISR)) && (USBHS_HSTIMR_DCONNIE_Msk == (USBHS_HSTIMR_DCONNIE_Msk & hDriver->usbID->USBHS_HSTIMR)))
+    else if((USBHS_HSTISR_DCONNI_Msk == (USBHS_HSTISR_DCONNI_Msk & hDriver->usbID->USBHS_HSTISR)) 
+         && (USBHS_HSTIMR_DCONNIE_Msk == (USBHS_HSTIMR_DCONNIE_Msk & hDriver->usbID->USBHS_HSTIMR)))
     {
         /* Manage Device Connection Interrupt
          */
-        /* Clear Connection Interrupt*/
+        usb_connected = 1;
+        /* Clear Connection Interrupt */
         hDriver->usbID->USBHS_HSTICR = USBHS_HSTICR_DCONNIC_Msk;
-        /* Disable Connection Interrupt */
-        hDriver->usbID->USBHS_HSTIDR = USBHS_HSTIDR_DCONNIEC_Msk;
         /* Enable Disconnection Interrupt */
         hDriver->usbID->USBHS_HSTIER = USBHS_HSTIER_DDISCIES_Msk;
      	hDriver->deviceAttached = true;
  	}
+    /* If Wakeup interrupt is enabled and triggered and the usb is in disconnected state */
+    else if (((USBHS_HSTISR_HWUPI_Msk == (USBHS_HSTISR_HWUPI_Msk & hDriver->usbID->USBHS_HSTISR)) 
+          && (USBHS_HSTIMR_HWUPIE_Msk == (USBHS_HSTIMR_HWUPIE_Msk & hDriver->usbID->USBHS_HSTIMR))) 
+          && (usb_connected == 0))
+    {
+    	/* Manage Host Wakeup Interrupt. This interrupt is generated 
+         * even if the clock is frozen
+         */
+        /* Unfreeze clock */
+        hDriver->usbID->USBHS_CTRL |= USBHS_CTRL_FRZCLK_Msk;
+        
+        /* Here the wakeup interrupt has been used to detect connection
+         * with an asynchronous interrupt */
+        /* Disable Wake-up Interrupt */
+        hDriver->usbID->USBHS_HSTIDR = USBHS_HSTIDR_HWUPIEC_Msk;
+	}
+    else if (((USBHS_HSTISR_HWUPI_Msk | USBHS_HSTISR_RSMEDI_Msk | USBHS_HSTISR_RXRSMI_Msk) 
+                == ((USBHS_HSTISR_HWUPI_Msk | USBHS_HSTISR_RSMEDI_Msk | USBHS_HSTISR_RXRSMI_Msk) & hDriver->usbID->USBHS_HSTISR)) 
+          && (USBHS_HSTIMR_HWUPIE_Msk == (USBHS_HSTIMR_HWUPIE_Msk & hDriver->usbID->USBHS_HSTIMR))) 
+    {  
+        /* Wake up */
+        /* Unfreeze clock */
+        hDriver->usbID->USBHS_CTRL |= USBHS_CTRL_FRZCLK_Msk;
+        /* Disable Wake-up Interrupt / resumes */
+        hDriver->usbID->USBHS_HSTIDR = (USBHS_HSTIDR_HWUPIEC_Msk
+                                      | USBHS_HSTIDR_RSMEDIEC_Msk
+                                      | USBHS_HSTIDR_RXRSMIEC_Msk);
+        /* Enable SOF */
+        hDriver->usbID->USBHS_HSTCTRL |= USBHS_HSTCTRL_SOFE_Msk;
+
+        if ((!(USBHS_HSTISR_RSMEDI_Msk & hDriver->usbID->USBHS_HSTISR))
+         && (!(USBHS_HSTISR_DDISCI_Msk & hDriver->usbID->USBHS_HSTISR))) 
+        {
+            /* It is a upstream resume
+             * Note: When the CPU exits from a deep sleep mode, the event
+             * upstream_resume can be not detected because the USB clock are not available.
+             * In High Speed mode a downstream resume must be sent
+             * after a upstream to avoid a disconnection. */
+            if (hDriver->deviceSpeed == USB_SPEED_HIGH)
+            {
+                hDriver->usbID->USBHS_HSTCTRL |= USBHS_HSTCTRL_RESUME_Msk;
+            }
+            /* Wait 50ms before restarting transfer */
+            /* TODO */
+        }
+    }
     else if((USBHS_HSTISR_RSTI_Msk == (USBHS_HSTISR_RSTI_Msk & hDriver->usbID->USBHS_HSTISR)) && (USBHS_HSTIMR_RSTIE_Msk == (USBHS_HSTIMR_RSTIE_Msk & hDriver->usbID->USBHS_HSTIMR)))
 	{
         /* Manage USB Reset Sent Interrupt  */
         /* Clear USB Reset Sent Interrupt */
         hDriver->usbID->USBHS_HSTICR = USBHS_HSTICR_RSTIC_Msk;
-        /* Disable USB Reset Sent Interrupt */
-        hDriver->usbID->USBHS_HSTIDR = USBHS_HSTIDR_RSTIEC_Msk;
         /* Clear the flag */
         hDriver->isResetting = false;
         /* Now that reset is complete, we can find out the
@@ -1828,12 +1914,9 @@ void DRV_USBHSV1_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enable)
             /* The USB Global interrupt and USB module is already enabled at
              * this point. We enable the attach interrupt to detect attach
              */
-
             pUSBDrvObj->operationEnabled = true;
             /* Enable Device Connection Interrupt */
             usbMod->USBHS_HSTIER = USBHS_HSTIER_DCONNIES_Msk;
-            /* Requests VBus activation */
-            usbMod->USBHS_SFR |= USBHS_SFR_VBUSRQS_Msk;
             /* Unfreeze clock */
             usbMod->USBHS_CTRL &= ~USBHS_CTRL_FRZCLK_Msk;
         }
