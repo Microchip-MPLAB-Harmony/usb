@@ -53,8 +53,8 @@
 #include "usb/usb_chapter_9.h"
 #include "usb/usb_host.h"
 #include "usb/usb_host_client_driver.h"
-#include "driver/usb/drv_usb.h"
-
+//#include "driver/usb/drv_usb.h"
+#include "drv_usb.h"
 #include "osal/osal.h"
 
 // *****************************************************************************

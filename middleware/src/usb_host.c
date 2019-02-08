@@ -49,6 +49,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 #include "usb/src/usb_external_dependencies.h"
 #include "usb/usb_common.h"
@@ -355,7 +356,7 @@ void _USB_HOST_UpdateInterfaceStatus
     {
         /* This means that the device is in a running state and the device is
          * configured */
-        for(iterator = 0; iterator < deviceObj->nInterfaces ; iterator ++)
+        for(iterator = 0; iterator < deviceObj->nInterfaces; iterator ++)
         {
             interfaceInfo = &deviceObj->configDescriptorInfo.interfaceInfo[iterator];
 
@@ -631,7 +632,7 @@ bool _USB_HOST_ConfigurationDescriptorParse
     /* Reset the interface query context. Set up the interface query to find 
      * interface by number and alternate setting 0 */
     USB_HOST_DeviceInterfaceQueryContextClear(&interfaceQueryObj);
-    interfaceQueryObj.flags = USB_HOST_INTERFACE_QUERY_BY_NUMBER|USB_HOST_INTERFACE_QUERY_ALT_SETTING;
+    interfaceQueryObj.flags = (USB_HOST_INTERFACE_QUERY_FLAG)(USB_HOST_INTERFACE_QUERY_BY_NUMBER | USB_HOST_INTERFACE_QUERY_ALT_SETTING);
     interfaceQueryObj.bAlternateSetting = 0;
 
     for(iterator = 0; iterator < nInterfaces; iterator ++)
@@ -865,14 +866,12 @@ void _USB_HOST_UpdateConfigurationState
                  * the configuration header. The requestedConfigurationNumber
                  * member of deviceObj contains the index of the configuration to be
                  * set */
-
-                _USB_HOST_FillSetupPacket(
-                        &(deviceObj->setupPacket),
-                        ( USB_SETUP_DIRN_DEVICE_TO_HOST |
-                          USB_SETUP_TYPE_STANDARD |
-                          USB_SETUP_RECIPIENT_DEVICE ),
-                        USB_REQUEST_GET_DESCRIPTOR,
-                        ( USB_DESCRIPTOR_CONFIGURATION << 8 )+ deviceObj->requestedConfigurationNumber , 0 , 9 ) ;
+                _USB_HOST_FillSetupPacket( &(deviceObj->setupPacket),
+                    ( USB_SETUP_DIRN_DEVICE_TO_HOST | USB_SETUP_TYPE_STANDARD | USB_SETUP_RECIPIENT_DEVICE ),
+                    USB_REQUEST_GET_DESCRIPTOR,
+                    ( USB_DESCRIPTOR_CONFIGURATION << 8 )+ deviceObj->requestedConfigurationNumber,
+                    0,
+                    9 );
 
                 /* Fill IRP */
                 deviceObj->controlTransferObj.controlIRP.data = ( void * )deviceObj->buffer;
@@ -1033,10 +1032,12 @@ void _USB_HOST_UpdateConfigurationState
                 else
                 {
                     /* Place a request for the full configuration descriptor */
-                    _USB_HOST_FillSetupPacket(
-                            &(deviceObj->setupPacket), ( USB_SETUP_DIRN_DEVICE_TO_HOST | USB_SETUP_TYPE_STANDARD | USB_SETUP_RECIPIENT_DEVICE ),
-                            USB_REQUEST_GET_DESCRIPTOR, ( USB_DESCRIPTOR_CONFIGURATION << 8 ) + deviceObj->requestedConfigurationNumber,
-                            0 ,configurationDescriptor->wTotalLength) ;
+                    _USB_HOST_FillSetupPacket( &(deviceObj->setupPacket), 
+                            ( USB_SETUP_DIRN_DEVICE_TO_HOST | USB_SETUP_TYPE_STANDARD | USB_SETUP_RECIPIENT_DEVICE ),
+                            USB_REQUEST_GET_DESCRIPTOR, 
+                            ( USB_DESCRIPTOR_CONFIGURATION << 8 ) + deviceObj->requestedConfigurationNumber,
+                            0,
+                            configurationDescriptor->wTotalLength);
 
                     /* Create the IRP */
                     deviceObj->controlTransferObj.controlIRP.data = deviceObj->configDescriptorInfo.configurationDescriptor;
@@ -1073,7 +1074,6 @@ void _USB_HOST_UpdateConfigurationState
                 {
                     /* We have received the configuration descriptor. 
                      * We can set this configuration. */
-
                     deviceObj->configurationState = USB_HOST_DEVICE_CONFIG_STATE_CONFIGURATION_SET;
                 }
                 else
@@ -1097,14 +1097,12 @@ void _USB_HOST_UpdateConfigurationState
 
             case USB_HOST_DEVICE_CONFIG_STATE_CONFIGURATION_SET:
                  /* In this state, the host will set the configuration */
-                _USB_HOST_FillSetupPacket(
-                        &(deviceObj->setupPacket),
-                        ( USB_SETUP_DIRN_HOST_TO_DEVICE |
-                          USB_SETUP_TYPE_STANDARD |
-                          USB_SETUP_RECIPIENT_DEVICE ),
+                _USB_HOST_FillSetupPacket( &(deviceObj->setupPacket),
+                        ( USB_SETUP_DIRN_HOST_TO_DEVICE | USB_SETUP_TYPE_STANDARD | USB_SETUP_RECIPIENT_DEVICE ),
                         USB_REQUEST_SET_CONFIGURATION,
                         deviceObj->configDescriptorInfo.configurationDescriptor->bConfigurationValue,
-                        0 ,0 ) ;
+                        0,
+                        0 );
 
                 /* Fill IRP */
                 deviceObj->controlTransferObj.controlIRP.data = NULL;
@@ -1139,7 +1137,6 @@ void _USB_HOST_UpdateConfigurationState
                 {
                     /* The configuration set was successful. Unload the existing
                      * interface drivers */
-
                     _USB_HOST_ReleaseInterfaceDrivers(deviceObj);
 
                     /* Insert the end of the configuration descriptor marker
@@ -1367,7 +1364,7 @@ void _USB_HOST_UpdateDeviceOwnership
                     if(deviceObj->deviceClScPTried < gUSBHostObj.nTPLEntries)
                     {
                         /* This means we found a match. Assign the corresponding driver */
-                        SYS_DEBUG_PRINT(SYS_ERROR_INFO,"\r\nUSB Host Layer: Bus %d Device %d. Assiging Device CL SC P Driver %d", 
+                        SYS_DEBUG_PRINT(SYS_ERROR_INFO,"\r\nUSB Host Layer: Bus %d Device %d. Assigning Device CL SC P Driver %d", 
                                 busIndex, deviceObj->deviceAddress, deviceObj->deviceClScPTried);
                         deviceObj->deviceClientDriver = (USB_HOST_CLIENT_DRIVER *)(gUSBHostObj.tpl[deviceObj->deviceClScPTried].hostClientDriver);
                         deviceObj->deviceClientDriver->deviceAssign(deviceObj->deviceClientHandle, deviceObj->deviceIdentifier, &(deviceObj->deviceDescriptor));
@@ -1406,7 +1403,7 @@ void _USB_HOST_UpdateDeviceOwnership
             }
             else
             {
-                SYS_DEBUG_PRINT(SYS_ERROR_INFO,"\r\nUSB Host Layer: Mutex Lock failed", busIndex, deviceObj->deviceAddress); 
+                SYS_DEBUG_PRINT(SYS_ERROR_INFO,"\r\nUSB Host Layer: Bus %d Device %d Mutex Lock failed", busIndex, deviceObj->deviceAddress); 
                 /* OSAL error must be handled here. This needs to be implemented
                  * */
             }
@@ -1463,7 +1460,7 @@ USB_HOST_RESULT USB_HOST_DeviceControlTransfer
 )
 {
     USB_HOST_DEVICE_OBJ  *deviceObj;
-    uint8_t deviceIndex ;
+    uint8_t deviceIndex;
     uint16_t pnpIdentifier;
     USB_HOST_RESULT result = USB_HOST_RESULT_FAILURE;
 
@@ -1543,7 +1540,7 @@ USB_HOST_RESULT USB_HOST_DeviceControlTransfer
                 deviceObj->controlTransferObj.controlIRP.callback = _USB_HOST_DeviceControlTransferCallback;
                 deviceObj->controlTransferObj.controlIRP.userData = _USB_HOST_ControlTransferIRPUserData(pnpIdentifier, 0, deviceIndex);
                 deviceObj->controlTransferObj.context = context;
-                deviceObj->controlTransferObj.callback = callback;
+                deviceObj->controlTransferObj.callback = (void*)callback;
 
                 if(USB_ERROR_NONE != deviceObj->hcdInterface->hostIRPSubmit( deviceObj->controlPipeHandle, &(deviceObj->controlTransferObj.controlIRP)))
                 {
@@ -1801,7 +1798,7 @@ uint8_t _USB_HOST_GetNewAddress( USB_HOST_BUS_OBJ *busObj )
     uint8_t tempAddress;
 
     /* Find Free address */
-    for ( tempAddress = 1; tempAddress <= USB_HOST_DEVICES_NUMBER ; tempAddress++ )
+    for ( tempAddress = 1; tempAddress <= USB_HOST_DEVICES_NUMBER; tempAddress++ )
     {
         if ((busObj->addressBits[ tempAddress / 8] & (1 << ( tempAddress % 8 ))) == 0)
         {
@@ -1848,9 +1845,9 @@ void _USB_HOST_FillSetupPacket
 )
 {
     setupPacket->bmRequestType = requestType;
-    setupPacket->bRequest = request ;
-    setupPacket->wValue = value ;
-    setupPacket->wIndex = index ;
+    setupPacket->bRequest = request;
+    setupPacket->wValue = value;
+    setupPacket->wIndex = index;
     setupPacket->wLength = length;
 }
 
@@ -1874,7 +1871,6 @@ void _USB_HOST_FillSetupPacket
     This is a local function and should not be called by the application
     directly.
 */
-
 void _USB_HOST_MakeDeviceReady
 (
     USB_HOST_DEVICE_OBJ *deviceObj, 
@@ -1884,7 +1880,7 @@ void _USB_HOST_MakeDeviceReady
     USB_HOST_BUS_OBJ * busObj;
     USB_CONFIGURATION_DESCRIPTOR * configurationDescriptor;
     bool interruptIsEnabled;
-   
+
     busObj = &(gUSBHostBusList[busIndex]);
     
     if(!deviceObj->inUse)
@@ -1978,11 +1974,14 @@ void _USB_HOST_MakeDeviceReady
 
                     SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host Layer: Bus %d Device Reset Complete.", busIndex);
                     deviceObj->controlPipeHandle = deviceObj->hcdInterface->hostPipeSetup( deviceObj->hcdHandle,
-                            USB_HOST_DEFAULT_ADDRESS , 0 /* Endpoint */, 
-                            deviceObj->hubAddress /* Address of the hub */, 
-                            deviceObj->devicePort /* Address of the port */, 
-                            USB_TRANSFER_TYPE_CONTROL, /* Type of pipe to open */
-                            0 /* bInterval */, 8 /* Endpoint Size */, deviceObj->speed );
+                                                        USB_HOST_DEFAULT_ADDRESS,
+                                                        0 /* Endpoint */, 
+                                                        deviceObj->hubAddress /* Address of the hub */, 
+                                                        deviceObj->devicePort /* Address of the port */, 
+                                                        USB_TRANSFER_TYPE_CONTROL, /* Type of pipe to open */
+                                                        0 /* bInterval */,
+                                                        8 /* Endpoint Size */,
+                                                        deviceObj->speed );
 
                     if(DRV_USB_HOST_PIPE_HANDLE_INVALID == deviceObj->controlPipeHandle)
                     {
@@ -2004,15 +2003,18 @@ void _USB_HOST_MakeDeviceReady
                         /* Create a setup command to get the device descriptor */
                         _USB_HOST_FillSetupPacket(  &(deviceObj->setupPacket),
                                 ( USB_SETUP_DIRN_DEVICE_TO_HOST | USB_SETUP_TYPE_STANDARD | USB_SETUP_RECIPIENT_DEVICE ),
-                                USB_REQUEST_GET_DESCRIPTOR, ( USB_DESCRIPTOR_DEVICE << 8 ), 0 , 8 ) ;
+                                USB_REQUEST_GET_DESCRIPTOR, 
+                                ( USB_DESCRIPTOR_DEVICE << 8 ), 
+                                0 , 
+                                8 );
 
                         /* Fill control IRP. Note the size of the control transfer data
                          * stage. We ask for the first 8 bytes of the device descriptor. */
 
                         deviceObj->controlTransferObj.inUse = true;
                         deviceObj->controlTransferObj.controlIRP.data = (void *) &( deviceObj->deviceDescriptor );
-                        deviceObj->controlTransferObj.controlIRP.setup = &(deviceObj->setupPacket ) ;
-                        deviceObj->controlTransferObj.controlIRP.size = 8 ;
+                        deviceObj->controlTransferObj.controlIRP.setup = &(deviceObj->setupPacket );
+                        deviceObj->controlTransferObj.controlIRP.size = 8;
                         deviceObj->controlTransferObj.controlIRP.callback = NULL;
 
                         /* Change device state to next state */
@@ -2057,7 +2059,6 @@ void _USB_HOST_MakeDeviceReady
                     deviceObj->enumerationFailCount = 0;
 
                     SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host Layer: Bus %d Device Descriptor obtained. Setting device address.", busIndex);
-
                 }
                 else if ( deviceObj->controlTransferObj.controlIRP.status < USB_HOST_IRP_STATUS_COMPLETED )
                 {
@@ -2077,7 +2078,7 @@ void _USB_HOST_MakeDeviceReady
                     if (deviceObj->enumerationFailCount < USB_HOST_ENUMERATION_RETRY_COUNT)
                     {
                         /* Yes we should retry. Update the retry count */
-                        deviceObj->enumerationFailCount ++ ;
+                        deviceObj->enumerationFailCount ++;
 
                         /* Set device state for reset */
                         deviceObj->deviceState =  USB_HOST_DEVICE_STATE_WAITING_FOR_ENUMERATION;
@@ -2107,12 +2108,15 @@ void _USB_HOST_MakeDeviceReady
                 /* Create the setup request */
                 _USB_HOST_FillSetupPacket(  &(deviceObj->setupPacket),
                         ( USB_SETUP_DIRN_HOST_TO_DEVICE | USB_SETUP_TYPE_STANDARD | USB_SETUP_RECIPIENT_DEVICE ),
-                        USB_REQUEST_SET_ADDRESS , deviceObj->deviceAddress , 0 , 0 ) ;
+                        USB_REQUEST_SET_ADDRESS, 
+                        deviceObj->deviceAddress,
+                        0,
+                        0 );
 
                 /* Create the IRP packet */
                 deviceObj->controlTransferObj.controlIRP.data = (void *) ( deviceObj->buffer );
-                deviceObj->controlTransferObj.controlIRP.setup = &( deviceObj->setupPacket ) ;
-                deviceObj->controlTransferObj.controlIRP.size = 0 ;
+                deviceObj->controlTransferObj.controlIRP.setup = &( deviceObj->setupPacket );
+                deviceObj->controlTransferObj.controlIRP.size = 0;
                 deviceObj->controlTransferObj.controlIRP.callback = NULL;
 
                 /* Set the next host layer state */
@@ -2164,9 +2168,14 @@ void _USB_HOST_MakeDeviceReady
 
                     /* Open the new addressed pipe */
                     deviceObj->controlPipeHandle = deviceObj->hcdInterface->hostPipeSetup( deviceObj->hcdHandle,
-                            deviceObj->deviceAddress, 0 /* Endpoint */, deviceObj->hubAddress, deviceObj->devicePort,
-                            USB_TRANSFER_TYPE_CONTROL/* Pipe type */, 0, /* bInterval */
-                            deviceObj->deviceDescriptor.bMaxPacketSize0, deviceObj->speed );
+                                                            deviceObj->deviceAddress, 
+                                                            0 /* Endpoint */,
+                                                            deviceObj->hubAddress,
+                                                            deviceObj->devicePort,
+                                                            USB_TRANSFER_TYPE_CONTROL/* Pipe type */,
+                                                            0, /* bInterval */
+                                                            deviceObj->deviceDescriptor.bMaxPacketSize0,
+                                                            deviceObj->speed );
 
                     if( DRV_USB_HOST_PIPE_HANDLE_INVALID == deviceObj->controlPipeHandle )
                     {
@@ -2217,7 +2226,7 @@ void _USB_HOST_MakeDeviceReady
                             SYS_DEBUG_PRINT(SYS_ERROR_DEBUG, "\r\nUSB Host Layer: Bus %d. Set Address failed. Trying again.", busIndex);
 
                             /* Yes we should. Increment the failure count */
-                            deviceObj->enumerationFailCount ++ ;
+                            deviceObj->enumerationFailCount ++;
 
                             /* The device address must be released because this
                              * will be attempted again */
@@ -2263,7 +2272,7 @@ void _USB_HOST_MakeDeviceReady
                  * completed */
                 if(busObj->timerExpired)
                 {
-                    busObj->busOperationsTimerHandle = SYS_TMR_HANDLE_INVALID ;
+                    busObj->busOperationsTimerHandle = SYS_TMR_HANDLE_INVALID;
                     SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host Layer: Bus %d Post Set Address Delay completed.", busIndex);
                     SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host Layer: Bus %d Device %d Requesting Full Device Descriptor.", busIndex, deviceObj->deviceAddress);
                     deviceObj->deviceState = USB_HOST_DEVICE_STATE_GET_DEVICE_DESCRIPTOR_FULL;
@@ -2274,8 +2283,12 @@ void _USB_HOST_MakeDeviceReady
 
                 /* In the state the host layer requests for the full device
                  * descriptor. Create the setup packet. */
-                _USB_HOST_FillSetupPacket( &(deviceObj->setupPacket), ( USB_SETUP_DIRN_DEVICE_TO_HOST | USB_SETUP_TYPE_STANDARD | USB_SETUP_RECIPIENT_DEVICE ),
-                        USB_REQUEST_GET_DESCRIPTOR, ( USB_DESCRIPTOR_DEVICE << 8 ), 0 , deviceObj->deviceDescriptor.bLength ) ;
+                _USB_HOST_FillSetupPacket( &(deviceObj->setupPacket),
+                        ( USB_SETUP_DIRN_DEVICE_TO_HOST | USB_SETUP_TYPE_STANDARD | USB_SETUP_RECIPIENT_DEVICE ),
+                        USB_REQUEST_GET_DESCRIPTOR,
+                        ( USB_DESCRIPTOR_DEVICE << 8 ),
+                        0,
+                        64);  //deviceObj->deviceDescriptor.bLength );
 
                 /* Fill IRP */
                 deviceObj->controlTransferObj.controlIRP.data = (void *) &( deviceObj->deviceDescriptor );
@@ -2314,7 +2327,6 @@ void _USB_HOST_MakeDeviceReady
                 if (deviceObj->controlTransferObj.controlIRP.status == USB_HOST_IRP_STATUS_COMPLETED)
                 {
                     SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host Layer: Bus %d Device %d Full Device Descriptor obtained.", busIndex, deviceObj->deviceAddress);
-
                     /* IRP was successful. Go to the next state */
                     deviceObj->deviceState =  USB_HOST_DEVICE_STATE_GET_CONFIGURATION_DESCRIPTOR_SHORT;
 
@@ -2351,7 +2363,7 @@ void _USB_HOST_MakeDeviceReady
 
                             /* Yes we should. Increment the enumeration
                              * count and reset the device */
-                            deviceObj->enumerationFailCount ++ ;
+                            deviceObj->enumerationFailCount ++;
 
                             /* The device address must be release because the
                              * enumeration process will be repeated */
@@ -2382,8 +2394,12 @@ void _USB_HOST_MakeDeviceReady
                  * header. This is needed so that we know what is the
                  * configuration descriptor size  */
 
-                _USB_HOST_FillSetupPacket( &(deviceObj->setupPacket), ( USB_SETUP_DIRN_DEVICE_TO_HOST | USB_SETUP_TYPE_STANDARD | USB_SETUP_RECIPIENT_DEVICE ), USB_REQUEST_GET_DESCRIPTOR,
-                        ( USB_DESCRIPTOR_CONFIGURATION << 8 )+ deviceObj->configurationCheckCount , 0 , 9 ) ;
+                _USB_HOST_FillSetupPacket( &(deviceObj->setupPacket),
+                        ( USB_SETUP_DIRN_DEVICE_TO_HOST | USB_SETUP_TYPE_STANDARD | USB_SETUP_RECIPIENT_DEVICE ), 
+                        USB_REQUEST_GET_DESCRIPTOR,
+                        ( USB_DESCRIPTOR_CONFIGURATION << 8 )+ deviceObj->configurationCheckCount,
+                        0,
+                        9 );
 
                 /* Fill IRP */
                 deviceObj->controlTransferObj.controlIRP.data = ( void * )deviceObj->buffer;
@@ -2452,7 +2468,7 @@ void _USB_HOST_MakeDeviceReady
 
                             /* Yes we should. Increment the enumeration count
                              * and reset the device */
-                            deviceObj->enumerationFailCount ++ ;
+                            deviceObj->enumerationFailCount ++;
 
                             /* Set device state for enumeration */
                             deviceObj->deviceState =  USB_HOST_DEVICE_STATE_WAITING_FOR_ENUMERATION;
@@ -2493,7 +2509,7 @@ void _USB_HOST_MakeDeviceReady
                     deviceObj->hcdInterface->hostPipeClose(deviceObj->controlPipeHandle);
                     if(gUSBHostObj.hostEventHandler != NULL)
                     {
-                        SYS_DEBUG_PRINT(SYS_ERROR_DEBUG, "\r\nUSB Host Layer: Bus %d Device %d. Insufficient memory for Configuration Descriptor", busIndex);
+                        SYS_DEBUG_PRINT(SYS_ERROR_DEBUG, "\r\nUSB Host Layer: Bus %d Device %d. Insufficient memory for Configuration Descriptor", busIndex, deviceObj->deviceAddress);
                         gUSBHostObj.hostEventHandler( USB_HOST_EVENT_DEVICE_UNSUPPORTED , NULL, gUSBHostObj.context );
                     }
 
@@ -2504,9 +2520,12 @@ void _USB_HOST_MakeDeviceReady
                 else
                 {
                     /* Place a request for the full configuration descriptor */
-                    _USB_HOST_FillSetupPacket( &(deviceObj->setupPacket), ( USB_SETUP_DIRN_DEVICE_TO_HOST | USB_SETUP_TYPE_STANDARD | USB_SETUP_RECIPIENT_DEVICE ),
-                            USB_REQUEST_GET_DESCRIPTOR, ( USB_DESCRIPTOR_CONFIGURATION << 8 ) + deviceObj->configurationCheckCount ,
-                            0 ,configurationDescriptor->wTotalLength) ;
+                    _USB_HOST_FillSetupPacket( &(deviceObj->setupPacket),
+                            ( USB_SETUP_DIRN_DEVICE_TO_HOST | USB_SETUP_TYPE_STANDARD | USB_SETUP_RECIPIENT_DEVICE ),
+                            USB_REQUEST_GET_DESCRIPTOR,
+                            ( USB_DESCRIPTOR_CONFIGURATION << 8 ) + deviceObj->configurationCheckCount,
+                            0,
+                            configurationDescriptor->wTotalLength );
 
                     /* Create the IRP. Note that the configuration descriptor is
                      * read into the holding configuration descriptor. The
@@ -2554,7 +2573,6 @@ void _USB_HOST_MakeDeviceReady
                 if (deviceObj->controlTransferObj.controlIRP.status == USB_HOST_IRP_STATUS_COMPLETED)
                 {
                     SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host Layer: Bus %d Device %d Get Full Configuration Descriptor Request passed.", busIndex, deviceObj->deviceAddress);
-
                     /* Reset the failure counter */
                     deviceObj->enumerationFailCount = 0;
 
@@ -2644,7 +2662,7 @@ void _USB_HOST_MakeDeviceReady
                             SYS_DEBUG_PRINT(SYS_ERROR_DEBUG, "\r\nUSB Host Layer: Bus %d Device %d Get Configuration Descriptor Request failed. Trying again", busIndex, deviceObj->deviceAddress);
 
                             /* Increment the failure count */
-                            deviceObj->enumerationFailCount ++ ;
+                            deviceObj->enumerationFailCount ++;
 
                             /* Set device state for enumeration */
                             deviceObj->deviceState = USB_HOST_DEVICE_STATE_WAITING_FOR_ENUMERATION;
@@ -2722,7 +2740,7 @@ void _USB_HOST_MakeDeviceReady
 void _USB_HOST_UpdateDeviceTask(int busIndex)
 {
     USB_HOST_BUS_OBJ * busObj;
-    USB_HOST_DEVICE_OBJ * deviceObj = NULL ;
+    USB_HOST_DEVICE_OBJ * deviceObj = NULL;
 
     busObj = &(gUSBHostBusList[busIndex]);
 
@@ -2749,7 +2767,7 @@ void _USB_HOST_UpdateDeviceTask(int busIndex)
 
         //_USB_HOST_UpdateClientDriverState ( deviceObj );
 
-        deviceObj =   deviceObj->nextDeviceObj ;
+        deviceObj =   deviceObj->nextDeviceObj;
     }
 }
 
@@ -3121,7 +3139,7 @@ SYS_MODULE_OBJ  USB_HOST_Initialize
      * host layer cannot be initialized if the initialization data structure is
      * NULL. */
 
-    hostInit = ( USB_HOST_INIT * ) initData ;
+    hostInit = ( USB_HOST_INIT * ) initData;
     result =SYS_MODULE_OBJ_INVALID;
     SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB Host Layer: Entering USB_HOST_Initialize().");
 
@@ -3153,7 +3171,7 @@ SYS_MODULE_OBJ  USB_HOST_Initialize
                 else
                 {
                     /* Initialize the bus objects */
-                    for ( hcCount = 0 ; hcCount < USB_HOST_CONTROLLERS_NUMBER ; hcCount++ )
+                    for ( hcCount = 0; hcCount < USB_HOST_CONTROLLERS_NUMBER; hcCount++ )
                     {
                         busObj  = &(gUSBHostBusList[hcCount]);
 
@@ -3163,20 +3181,20 @@ SYS_MODULE_OBJ  USB_HOST_Initialize
                         busObj->hcdIndex = hostInit->hostControllerDrivers[hcCount].drvIndex;
 
                         /* By default bus state is disabled */
-                        busObj->state = USB_HOST_BUS_STATE_DISABLED ;
+                        busObj->state = USB_HOST_BUS_STATE_DISABLED;
 
                         /* Pointer to the HCD interface */
-                        busObj->hcdInterface = ( DRV_USB_HOST_INTERFACE * ) ( hostInit->hostControllerDrivers [hcCount]).hcdInterface ;
+                        busObj->hcdInterface = ( DRV_USB_HOST_INTERFACE * ) ( hostInit->hostControllerDrivers [hcCount]).hcdInterface;
 
                         /* Attached Device list will be NULL*/
-                        busObj->busDeviceList = NULL ;
+                        busObj->busDeviceList = NULL;
 
                         /* Initialize HCD handle to invalid */
-                        busObj->hcdHandle   = DRV_HANDLE_INVALID ;
+                        busObj->hcdHandle   = DRV_HANDLE_INVALID;
 
                         /* This flag is set when any device is enumerating on the bus. 
                          * Initialize as false. */
-                        busObj->deviceIsEnumerating = false ;
+                        busObj->deviceIsEnumerating = false;
 
                         /* Initialize handle of the system timer that this bus object will use */
                         busObj->busOperationsTimerHandle = SYS_TMR_HANDLE_INVALID;
@@ -3200,11 +3218,11 @@ SYS_MODULE_OBJ  USB_HOST_Initialize
                     /* Get the pointer to the Host TPL and the
                      * number of entries in the TPL table. */
 
-                    hostObj->tpl = hostInit->tplList ;
+                    hostObj->tpl = hostInit->tplList;
                     hostObj->nTPLEntries = hostInit->nTPLEntries;
 
                     /* Initialize all drivers in TPL List */
-                    for ( tplEntryCount = 0 ; tplEntryCount < hostObj->nTPLEntries ; tplEntryCount++ )
+                    for ( tplEntryCount = 0; tplEntryCount < hostObj->nTPLEntries; tplEntryCount++ )
                     {
                         tplEntry = &(hostObj->tpl[tplEntryCount]);
                         (( USB_HOST_CLIENT_DRIVER *)tplEntry->hostClientDriver)->initialize( tplEntry->hostClientDriverInitData );
@@ -3282,7 +3300,7 @@ void USB_HOST_Deinitialize ( SYS_MODULE_OBJ usbHostObject )
     else
     {
         /* Set the instance status to de-initialized */
-        hostObj->status =  SYS_STATUS_UNINITIALIZED ;
+        hostObj->status =  SYS_STATUS_UNINITIALIZED;
     }
 }
 
@@ -3506,8 +3524,8 @@ USB_HOST_RESULT USB_HOST_EventHandlerSet
      * host layer will not generate events. The context is returned along with
      * the event */
 
-    gUSBHostObj.hostEventHandler = eventHandler ;
-    gUSBHostObj.context = context ;
+    gUSBHostObj.hostEventHandler = eventHandler;
+    gUSBHostObj.context = context;
     return (USB_HOST_RESULT_SUCCESS);
 }
 
@@ -3619,7 +3637,7 @@ USB_HOST_RESULT USB_HOST_BusEnable(USB_HOST_BUS bus)
 {
     USB_HOST_BUS_OBJ        *busObj;
     int                      hcCount;
-    USB_HOST_RESULT          status = USB_HOST_RESULT_FALSE ;
+    USB_HOST_RESULT          status = USB_HOST_RESULT_FALSE;
 
     /* Note that this function only sets the state of the bus object
      * to indicate that the bus needs will be enabled. The actual enabling is
@@ -3627,7 +3645,7 @@ USB_HOST_RESULT USB_HOST_BusEnable(USB_HOST_BUS bus)
 
     if ( bus == USB_HOST_BUS_ALL )
     {
-        for ( hcCount = 0 ; hcCount < USB_HOST_CONTROLLERS_NUMBER ; hcCount++ )
+        for ( hcCount = 0; hcCount < USB_HOST_CONTROLLERS_NUMBER; hcCount++ )
         {
             busObj  = &(gUSBHostBusList[hcCount]);
 
@@ -3635,10 +3653,10 @@ USB_HOST_RESULT USB_HOST_BusEnable(USB_HOST_BUS bus)
             {
                 /* This means the bus is not enabled. Set the state to enable
                  * the bus. */
-                busObj->state = USB_HOST_BUS_STATE_ENABLING ;
+                busObj->state = USB_HOST_BUS_STATE_ENABLING;
                 SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host Layer: Bus %d About to Open Root Hub Driver.", hcCount);
             }
-            status  =   USB_HOST_RESULT_SUCCESS ;
+            status  =   USB_HOST_RESULT_SUCCESS;
         }
     }
     /* Enable specific bus */
@@ -3656,7 +3674,7 @@ USB_HOST_RESULT USB_HOST_BusEnable(USB_HOST_BUS bus)
             {
                 /* This means the bus is not enabled. Set the state to enable
                  * the bus. */
-                busObj->state = USB_HOST_BUS_STATE_ENABLING ;
+                busObj->state = USB_HOST_BUS_STATE_ENABLING;
                 SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host Layer: Bus %d About to Open Root Hub Driver.", bus);
             }
             status = USB_HOST_RESULT_SUCCESS;
@@ -3670,7 +3688,7 @@ USB_HOST_RESULT USB_HOST_BusDisable(USB_HOST_BUS bus)
 {
     USB_HOST_BUS_OBJ        *busObj;
     int                      hcCount;
-    USB_HOST_RESULT          status = USB_HOST_RESULT_FALSE ;
+    USB_HOST_RESULT          status = USB_HOST_RESULT_FALSE;
 
     /* Note that this function only sets the state of the bus object
      * to indicate that the bus needs will be enabled. The actual enabling is
@@ -3678,7 +3696,7 @@ USB_HOST_RESULT USB_HOST_BusDisable(USB_HOST_BUS bus)
 
     if ( bus == USB_HOST_BUS_ALL )
     {
-        for ( hcCount = 0 ; hcCount < USB_HOST_CONTROLLERS_NUMBER ; hcCount++ )
+        for ( hcCount = 0; hcCount < USB_HOST_CONTROLLERS_NUMBER; hcCount++ )
         {
             busObj  = &(gUSBHostBusList[hcCount]);
 
@@ -3686,9 +3704,9 @@ USB_HOST_RESULT USB_HOST_BusDisable(USB_HOST_BUS bus)
             {
                 /* This means the bus is not enabled. Set the state to disable 
                  * the bus. */
-                busObj->state = USB_HOST_BUS_STATE_DISABLING ;
+                busObj->state = USB_HOST_BUS_STATE_DISABLING;
             }
-            status  =   USB_HOST_RESULT_SUCCESS ;
+            status  =   USB_HOST_RESULT_SUCCESS;
         }
     }
     /* Enable specific bus */
@@ -3706,7 +3724,7 @@ USB_HOST_RESULT USB_HOST_BusDisable(USB_HOST_BUS bus)
             {
                 /* This means the bus is not enabled. Set the state to enable
                  * the bus. */
-                busObj->state = USB_HOST_BUS_STATE_DISABLING ;
+                busObj->state = USB_HOST_BUS_STATE_DISABLING;
             }
             status = USB_HOST_RESULT_SUCCESS;
         }
@@ -3740,11 +3758,11 @@ USB_HOST_RESULT USB_HOST_BusIsEnabled(USB_HOST_BUS bus)
 {
     USB_HOST_BUS_OBJ        *busObj;
     int                      hcCount;
-    USB_HOST_RESULT          status = USB_HOST_RESULT_TRUE ;
+    USB_HOST_RESULT          status = USB_HOST_RESULT_TRUE;
 
     if ( bus == USB_HOST_BUS_ALL )
     {
-        for ( hcCount = 0 ; hcCount < USB_HOST_CONTROLLERS_NUMBER ; hcCount++ )
+        for ( hcCount = 0; hcCount < USB_HOST_CONTROLLERS_NUMBER; hcCount++ )
         {
             busObj  = &(gUSBHostBusList[hcCount]);
             if(busObj->state <= USB_HOST_BUS_STATE_WAIT_FOR_ENABLE_COMPLETE)
@@ -3763,7 +3781,7 @@ USB_HOST_RESULT USB_HOST_BusIsEnabled(USB_HOST_BUS bus)
     else
     {
         /* Validate bus number */
-        if( bus < 0 || bus >= USB_HOST_CONTROLLERS_NUMBER )
+        if( (bus < 0) || (bus >= USB_HOST_CONTROLLERS_NUMBER) )
         {
             status = USB_HOST_RESULT_BUS_UNKNOWN;
         }
@@ -3790,11 +3808,11 @@ USB_HOST_RESULT USB_HOST_BusIsDisabled(USB_HOST_BUS bus)
 {
     USB_HOST_BUS_OBJ        *busObj;
     int                      hcCount;
-    USB_HOST_RESULT          status = USB_HOST_RESULT_TRUE ;
+    USB_HOST_RESULT          status = USB_HOST_RESULT_TRUE;
 
     if ( bus == USB_HOST_BUS_ALL )
     {
-        for ( hcCount = 0 ; hcCount < USB_HOST_CONTROLLERS_NUMBER ; hcCount++ )
+        for ( hcCount = 0; hcCount < USB_HOST_CONTROLLERS_NUMBER; hcCount++ )
         {
             busObj  = &(gUSBHostBusList[hcCount]);
             if(busObj->state != USB_HOST_BUS_STATE_DISABLED)
@@ -3859,12 +3877,12 @@ USB_HOST_RESULT USB_HOST_BusSuspend (USB_HOST_BUS bus)
 {
     USB_HOST_BUS_OBJ        *busObj;
     int                     hcCount;
-    USB_HOST_RESULT         status = USB_HOST_RESULT_SUCCESS ;
+    USB_HOST_RESULT         status = USB_HOST_RESULT_SUCCESS;
 
     if ( bus == USB_HOST_BUS_ALL )
     {
         /* Suspend all USB busses in the system */
-        for ( hcCount = 0 ; hcCount < USB_HOST_CONTROLLERS_NUMBER ; hcCount++ )
+        for ( hcCount = 0; hcCount < USB_HOST_CONTROLLERS_NUMBER; hcCount++ )
         {
             busObj  = &(gUSBHostBusList[hcCount]);
 
@@ -3946,18 +3964,18 @@ USB_HOST_RESULT USB_HOST_BusIsSuspended (USB_HOST_BUS bus)
 {
     USB_HOST_BUS_OBJ    *busObj;
     int                 hcCount;
-    USB_HOST_RESULT     status = USB_HOST_RESULT_SUCCESS ;
+    USB_HOST_RESULT     status = USB_HOST_RESULT_SUCCESS;
 
     if ( bus == USB_HOST_BUS_ALL )
     {
         /* Check if all USB busses are suspended */
-        for ( hcCount = 0 ; hcCount < USB_HOST_CONTROLLERS_NUMBER ; hcCount++ )
+        for ( hcCount = 0; hcCount < USB_HOST_CONTROLLERS_NUMBER; hcCount++ )
         {
             busObj  = &(gUSBHostBusList[hcCount]);
             if( busObj->state < USB_HOST_BUS_STATE_ENABLED)
             {
                 /* Bus is not enabled yet */
-                status = USB_HOST_RESULT_BUS_NOT_ENABLED ;
+                status = USB_HOST_RESULT_BUS_NOT_ENABLED;
                 break;
             }
             else if(busObj->state <= USB_HOST_BUS_STATE_SUSPENDING)
@@ -3977,7 +3995,7 @@ USB_HOST_RESULT USB_HOST_BusIsSuspended (USB_HOST_BUS bus)
         /* Check if this bus is suspended. Validate the bus number */
         if ( bus < 0 || bus >= USB_HOST_CONTROLLERS_NUMBER )
         {
-            status = USB_HOST_RESULT_BUS_UNKNOWN ;
+            status = USB_HOST_RESULT_BUS_UNKNOWN;
         }
         else
         {
@@ -3985,7 +4003,7 @@ USB_HOST_RESULT USB_HOST_BusIsSuspended (USB_HOST_BUS bus)
             if( busObj->state < USB_HOST_BUS_STATE_ENABLED)
             {
                 /* Bus is not enabled yet */
-                status = USB_HOST_RESULT_BUS_NOT_ENABLED ;
+                status = USB_HOST_RESULT_BUS_NOT_ENABLED;
             }
             else if(busObj->state < USB_HOST_BUS_STATE_SUSPENDED)
             {
@@ -4022,7 +4040,7 @@ USB_HOST_RESULT USB_HOST_BusResume (USB_HOST_BUS bus)
 {
     /* This function is not implemented in this release of the USB Host Layer */
 
-    USB_HOST_RESULT status = USB_HOST_RESULT_FAILURE ;
+    USB_HOST_RESULT status = USB_HOST_RESULT_FAILURE;
 
     return status;
 }
@@ -4146,7 +4164,7 @@ USB_HOST_DEVICE_OBJ_HANDLE USB_HOST_DeviceEnumerate
          * values */
         newDeviceObj->parentDeviceIdentifier = parentDeviceIdentifier;
         newDeviceObj->hcdHandle = busObj->hcdHandle;
-        newDeviceObj->deviceAddress = USB_HOST_DEFAULT_ADDRESS ;
+        newDeviceObj->deviceAddress = USB_HOST_DEFAULT_ADDRESS;
         newDeviceObj->deviceState = USB_HOST_DEVICE_STATE_WAITING_FOR_ENUMERATION;
         newDeviceObj->tplEntryTried = -1;
         newDeviceObj->deviceClScPTried = -1;
@@ -4334,7 +4352,7 @@ void USB_HOST_DeviceDenumerate( USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle )
                 if ( deleteDeviceObj == deviceObj  )
                 {
                     /* Remove this device from the linked list */
-                    prevDeviceObj->nextDeviceObj = deviceObj->nextDeviceObj ;
+                    prevDeviceObj->nextDeviceObj = deviceObj->nextDeviceObj;
 
                     /* Clear the nextDeviceObj of the deleted device object */
                     deleteDeviceObj->nextDeviceObj = NULL;
@@ -4402,7 +4420,7 @@ void USB_HOST_Tasks ( SYS_MODULE_OBJ usbHostObject )
     else
     {
         /* Maintain the state of each bus in the system */
-        for ( hcCount = 0 ; hcCount < USB_HOST_CONTROLLERS_NUMBER ; hcCount++ )
+        for ( hcCount = 0; hcCount < USB_HOST_CONTROLLERS_NUMBER; hcCount++ )
         {
             busObj  = &(gUSBHostBusList[hcCount]);
 
@@ -4417,8 +4435,8 @@ void USB_HOST_Tasks ( SYS_MODULE_OBJ usbHostObject )
                     if(busObj->hcdHandle == DRV_HANDLE_INVALID)
                     {
                         /* The bus is being enabled. Try opening the HCD */
-                        busObj->hcdHandle = busObj->hcdInterface->open(busObj->hcdIndex, DRV_IO_INTENT_EXCLUSIVE | 
-                                DRV_IO_INTENT_NONBLOCKING | DRV_IO_INTENT_READWRITE );
+                        busObj->hcdHandle = busObj->hcdInterface->open(busObj->hcdIndex, (DRV_IO_INTENT)(DRV_IO_INTENT_EXCLUSIVE | 
+                                DRV_IO_INTENT_NONBLOCKING | DRV_IO_INTENT_READWRITE) );
 
                         /* Validate the Open function status */
                         if (DRV_HANDLE_INVALID == busObj->hcdHandle )
@@ -4454,7 +4472,7 @@ void USB_HOST_Tasks ( SYS_MODULE_OBJ usbHostObject )
                              * incremented when a new device is attached to the bus. We
                              * consider the root hub enumeration as a new device */
 
-                            busObj->pnpIdentifier = busObj->pnpIdentifier + 1 ;
+                            busObj->pnpIdentifier = busObj->pnpIdentifier + 1;
 
                             /* The UHD for the root hub can now be formed. It is
                              * combination of the the PNP identifier, the
@@ -4467,17 +4485,17 @@ void USB_HOST_Tasks ( SYS_MODULE_OBJ usbHostObject )
                              * interface. Each of these device object is a linked list
                              * node. We set the next object to NULL. */
 
-                            rootHubDevice->deviceIdentifier = rootHubUHD ;
+                            rootHubDevice->deviceIdentifier = rootHubUHD;
                             rootHubDevice->parentDeviceIdentifier = rootHubUHD;
-                            rootHubDevice->hcdHandle = busObj->hcdHandle ;
-                            rootHubDevice->deviceAddress = USB_HOST_ROOT_HUB_ADDRESS ;
-                            rootHubDevice->deviceState = USB_HOST_DEVICE_STATE_READY ;
+                            rootHubDevice->hcdHandle = busObj->hcdHandle;
+                            rootHubDevice->deviceAddress = USB_HOST_ROOT_HUB_ADDRESS;
+                            rootHubDevice->deviceState = USB_HOST_DEVICE_STATE_READY;
                             rootHubDevice->hcdInterface = busObj->hcdInterface;
                             rootHubDevice->hubInterface = (USB_HUB_INTERFACE *) & ( busObj->hcdInterface->rootHubInterface);
                             rootHubDevice->nextDeviceObj = NULL;
 
                             /* The first device in the bus is the root hub */
-                            busObj->busDeviceList = rootHubDevice ;
+                            busObj->busDeviceList = rootHubDevice;
 
                             /* Initialize the root hub. The device identifier passed to
                              * the initialize function is returned as the parent ID when
@@ -4489,13 +4507,13 @@ void USB_HOST_Tasks ( SYS_MODULE_OBJ usbHostObject )
                             busObj->hcdInterface->rootHubInterface.rootHubInitialize( busObj->hcdHandle , rootHubDevice->deviceIdentifier );
                             busObj->hcdInterface->rootHubInterface.rootHubOperationEnable( busObj->hcdHandle , true );
                             SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host Layer: Bus %d Enabling Root Hub operation.",hcCount);
-                            busObj->state = USB_HOST_BUS_STATE_WAIT_FOR_ENABLE_COMPLETE ;
+                            busObj->state = USB_HOST_BUS_STATE_WAIT_FOR_ENABLE_COMPLETE;
                         }
                     }
                     else
                     {
                         busObj->hcdInterface->rootHubInterface.rootHubOperationEnable( busObj->hcdHandle , true );
-                        busObj->state = USB_HOST_BUS_STATE_WAIT_FOR_ENABLE_COMPLETE ;
+                        busObj->state = USB_HOST_BUS_STATE_WAIT_FOR_ENABLE_COMPLETE;
                     }
 
                     break;
@@ -4586,7 +4604,7 @@ USB_ENDPOINT_DESCRIPTOR * USB_HOST_DeviceEndpointDescriptorQuery
     uint8_t * search;
     int bNumEndPoints, iterator;
     USB_DESCRIPTOR_HEADER * descriptorHeader;
-    USB_HOST_ENDPOINT_QUERY_FLAG matchedCriteria = 0;
+    USB_HOST_ENDPOINT_QUERY_FLAG matchedCriteria = USB_HOST_ENDPOINT_QUERY_ANY;
     uint8_t * lastLocation;
 
     /* Validate input parameters */
@@ -4621,7 +4639,7 @@ USB_ENDPOINT_DESCRIPTOR * USB_HOST_DeviceEndpointDescriptorQuery
                 if(search < lastLocation)
                 {
                     /* Clear the matched criteria for  fresh search */
-                    matchedCriteria = 0;
+                    matchedCriteria = USB_HOST_ENDPOINT_QUERY_ANY;
 
                     descriptorHeader = (USB_DESCRIPTOR_HEADER *)(search);
                     while(descriptorHeader->descType != USB_DESCRIPTOR_ENDPOINT)
@@ -4767,7 +4785,7 @@ USB_INTERFACE_DESCRIPTOR * USB_HOST_DeviceInterfaceDescriptorQuery
     uint16_t wTotalLength; 
     uint8_t * search;
 
-    USB_HOST_INTERFACE_QUERY_FLAG matchedCriteria = 0;
+    USB_HOST_INTERFACE_QUERY_FLAG matchedCriteria = USB_HOST_INTERFACE_QUERY_ANY;
 
     if((NULL == configuration) || (NULL == query))
     {
@@ -4792,7 +4810,7 @@ USB_INTERFACE_DESCRIPTOR * USB_HOST_DeviceInterfaceDescriptorQuery
             descriptorHeader = (USB_DESCRIPTOR_HEADER *)(search);
             
             /* The matchedCriteria bitmap must be cleared before every search */
-            matchedCriteria = 0;
+            matchedCriteria = USB_HOST_INTERFACE_QUERY_ANY;
             
             while(descriptorHeader->descType != USB_DESCRIPTOR_INTERFACE)
             {
@@ -4995,7 +5013,7 @@ USB_HOST_CONTROL_PIPE_HANDLE USB_HOST_DeviceControlPipeOpen
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle
 )
 {
-    uint8_t deviceIndex ;
+    uint8_t deviceIndex;
     uint16_t pnpIdentifier;
     USB_HOST_DEVICE_OBJ  * deviceObj;
     USB_HOST_CONTROL_PIPE_HANDLE  controlPipeHandle = USB_HOST_CONTROL_PIPE_HANDLE_INVALID;
@@ -5145,7 +5163,7 @@ USB_HOST_RESULT USB_HOST_DeviceTransfer
     USB_HOST_PIPE_OBJ *pipeObj;
     DRV_USB_HOST_PIPE_HANDLE drvPipeHandle;
     USB_HOST_INTERFACE_DESC_INFO *interfaceInfo;
-    USB_HOST_RESULT result = USB_HOST_RESULT_SUCCESS ;
+    USB_HOST_RESULT result = USB_HOST_RESULT_SUCCESS;
     OSAL_RESULT osalResult;
     USB_HOST_OBJ * hostObj;
     int search;
@@ -5189,7 +5207,7 @@ USB_HOST_RESULT USB_HOST_DeviceTransfer
             interfaceInfo = &(deviceObj->configDescriptorInfo.interfaceInfo[interfaceIndex]);
 
             /* Get the driver pipe handle */
-            drvPipeHandle = pipeObj->pipeHandle ;
+            drvPipeHandle = pipeObj->pipeHandle;
 
             /* We need to now search for a free transfer object. It is possible that
              * the USB_HOST_DeviceTransfer() function will be called from the
@@ -5250,7 +5268,8 @@ USB_HOST_RESULT USB_HOST_DeviceTransfer
                     /* We have found a transfer object. Initialize it */
 
                     transferObj->irp.data = (void *)data;
-                    transferObj->irp.size = size ;
+                    transferObj->irp.setup = NULL;
+                    transferObj->irp.size = size;
                     transferObj->irp.userData = (uintptr_t)(transferObj);
                     transferObj->irp.callback = _USB_HOST_DataTransferIRPCallback;
                     transferObj->context = context;
@@ -5346,7 +5365,7 @@ USB_HOST_PIPE_HANDLE USB_HOST_DevicePipeOpen
     USB_HOST_DeviceInterfaceQueryContextClear(&interfaceQuery);
     interfaceQuery.bInterfaceNumber = interfaceIndex;
     interfaceQuery.bAlternateSetting = interfaceInfo->currentAlternateSetting;
-    interfaceQuery.flags = USB_HOST_INTERFACE_QUERY_BY_NUMBER|USB_HOST_INTERFACE_QUERY_ALT_SETTING;
+    interfaceQuery.flags = (USB_HOST_INTERFACE_QUERY_FLAG)(USB_HOST_INTERFACE_QUERY_BY_NUMBER | USB_HOST_INTERFACE_QUERY_ALT_SETTING);
     interfaceDescriptor = USB_HOST_DeviceGeneralInterfaceDescriptorQuery(interfaceInfo->interfaceDescriptor, &interfaceQuery);
 
     if(interfaceDescriptor != NULL)
@@ -5371,7 +5390,7 @@ USB_HOST_PIPE_HANDLE USB_HOST_DevicePipeOpen
                 if ( endpointDescriptor != NULL )
                 {
                     /* Transfer type */
-                    transferType = endpointDescriptor->transferType;
+                    transferType = (USB_TRANSFER_TYPE)endpointDescriptor->transferType;
 
                     /* Interval for periodic transfers */
                     if ( transferType ==  USB_TRANSFER_TYPE_BULK )
@@ -5394,7 +5413,7 @@ USB_HOST_PIPE_HANDLE USB_HOST_DevicePipeOpen
                      * */
                     if(OSAL_MUTEX_Lock(&(gUSBHostObj.mutexPipeObj), OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
                     {
-                        for ( pipeNumber = 0 ; pipeNumber < USB_HOST_PIPES_NUMBER ; pipeNumber++)
+                        for ( pipeNumber = 0; pipeNumber < USB_HOST_PIPES_NUMBER; pipeNumber++)
                         {
                             if( gUSBHostPipeObj[pipeNumber].inUse == false )
                             {
@@ -5443,7 +5462,7 @@ USB_HOST_PIPE_HANDLE USB_HOST_DevicePipeOpen
                         {
                             /* HCD pipe open function worked. Update the pipe object */
                             pipeObj->endpointAddress = endpointAddress;
-                            pipeObj->interfaceHandle = deviceInterfaceHandle ;
+                            pipeObj->interfaceHandle = deviceInterfaceHandle;
 
                         }
                     }
@@ -5629,13 +5648,12 @@ USB_HOST_RESULT USB_HOST_DevicePipeHaltClear
                     controlTransferObj->requestType = USB_HOST_CONTROL_REQUEST_TYPE_PIPE_HALT_CLEAR;
 
                     /* Create the setup packet */
-                    _USB_HOST_FillSetupPacket(
-                            &(deviceObj->setupPacket),
-                            ( USB_SETUP_DIRN_HOST_TO_DEVICE |
-                              USB_SETUP_TYPE_STANDARD |
-                              USB_SETUP_RECIPIENT_ENDPOINT ),
+                    _USB_HOST_FillSetupPacket( &(deviceObj->setupPacket),
+                            ( USB_SETUP_DIRN_HOST_TO_DEVICE | USB_SETUP_TYPE_STANDARD | USB_SETUP_RECIPIENT_ENDPOINT ),
                             USB_REQUEST_CLEAR_FEATURE ,
-                            USB_FEATURE_SELECTOR_ENDPOINT_HALT , pipeObj->endpointAddress  ,0 ) ;
+                            USB_FEATURE_SELECTOR_ENDPOINT_HALT,
+                            pipeObj->endpointAddress,
+                            0 );
 
                     controlTransferObj->requestType = USB_HOST_CONTROL_REQUEST_TYPE_PIPE_HALT_CLEAR;
                     controlTransferObj->controlIRP.data = NULL;
@@ -5968,7 +5986,7 @@ USB_INTERFACE_DESCRIPTOR * USB_HOST_DeviceGeneralInterfaceDescriptorQuery
     USB_DESCRIPTOR_HEADER * descriptorHeader;
     uint8_t * search;
     uint8_t * lastLocation;
-    USB_HOST_INTERFACE_QUERY_FLAG matchedCriteria = 0;
+    USB_HOST_INTERFACE_QUERY_FLAG matchedCriteria = USB_HOST_INTERFACE_QUERY_ANY;
     USB_INTERFACE_DESCRIPTOR * interfaceDescriptor;
 
     if(descriptor != NULL)
@@ -5987,7 +6005,7 @@ USB_INTERFACE_DESCRIPTOR * USB_HOST_DeviceGeneralInterfaceDescriptorQuery
         while(search < lastLocation)
         {
             /* Reset the matching criteria as this is a new search */
-            matchedCriteria = 0;
+            matchedCriteria = USB_HOST_INTERFACE_QUERY_ANY;
             descriptorHeader = (USB_DESCRIPTOR_HEADER *)(search);
             
             if(descriptorHeader->descType == USB_DESCRIPTOR_INTERFACE)
@@ -6156,7 +6174,7 @@ USB_HOST_RESULT USB_HOST_DeviceInterfaceSet
                 USB_HOST_DeviceInterfaceQueryContextClear(&interfaceQueryObject);
                 interfaceQueryObject.bInterfaceNumber = interfaceIndex;
                 interfaceQueryObject.bAlternateSetting = alternateSetting;
-                interfaceQueryObject.flags = USB_HOST_INTERFACE_QUERY_ALT_SETTING|USB_HOST_INTERFACE_QUERY_BY_NUMBER;
+                interfaceQueryObject.flags = (USB_HOST_INTERFACE_QUERY_FLAG)(USB_HOST_INTERFACE_QUERY_ALT_SETTING | USB_HOST_INTERFACE_QUERY_BY_NUMBER);
                 if(USB_HOST_DeviceGeneralInterfaceDescriptorQuery(interfaceDescInfo->interfaceDescriptor,
                             &interfaceQueryObject) == NULL)
                 {
@@ -6207,13 +6225,12 @@ USB_HOST_RESULT USB_HOST_DeviceInterfaceSet
                          * will be needed after we get the event */
                         deviceObj->requestedAlternateSetting = alternateSetting;
 
-                        _USB_HOST_FillSetupPacket(
-                                &(deviceObj->setupPacket),
-                                ( USB_SETUP_DIRN_HOST_TO_DEVICE |
-                                  USB_SETUP_TYPE_STANDARD |
-                                  USB_SETUP_RECIPIENT_INTERFACE ),
+                        _USB_HOST_FillSetupPacket( &(deviceObj->setupPacket),
+                                ( USB_SETUP_DIRN_HOST_TO_DEVICE | USB_SETUP_TYPE_STANDARD | USB_SETUP_RECIPIENT_INTERFACE ),
                                 USB_REQUEST_SET_INTERFACE,
-                                alternateSetting , interfaceIndex  ,0 ) ;
+                                alternateSetting,
+                                interfaceIndex,
+                                0 );
 
                         controlTransferObj->controlIRP.data = NULL;
                         controlTransferObj->controlIRP.setup = &deviceObj->setupPacket;
@@ -6432,13 +6449,12 @@ USB_HOST_RESULT USB_HOST_DeviceStringDescriptorGet
                                 controlTransferObj = &deviceObj->controlTransferObj;
                                 controlTransferObj->requestType = USB_HOST_CONTROL_REQUEST_TYPE_STRING_DESCRIPTOR;
 
-                                _USB_HOST_FillSetupPacket(
-                                        &(deviceObj->setupPacket),
-                                        ( USB_SETUP_DIRN_DEVICE_TO_HOST |
-                                          USB_SETUP_TYPE_STANDARD |
-                                          USB_SETUP_RECIPIENT_DEVICE ),
+                                _USB_HOST_FillSetupPacket( &(deviceObj->setupPacket),
+                                        ( USB_SETUP_DIRN_DEVICE_TO_HOST | USB_SETUP_TYPE_STANDARD | USB_SETUP_RECIPIENT_DEVICE ),
                                         USB_REQUEST_GET_DESCRIPTOR,
-                                        ((USB_DESCRIPTOR_STRING << 8)|stringIndex), languageID, length ) ;
+                                        ((USB_DESCRIPTOR_STRING << 8)|stringIndex), 
+                                        languageID,
+                                        length );
 
                                 /* The userData filed in the IRP is set to the device object
                                  * handle. This will allow the control transfer callback to
@@ -6449,9 +6465,9 @@ USB_HOST_RESULT USB_HOST_DeviceStringDescriptorGet
                                 controlTransferObj->controlIRP.setup = &deviceObj->setupPacket;
                                 controlTransferObj->controlIRP.size = deviceObj->setupPacket.wLength;
                                 controlTransferObj->controlIRP.callback = _USB_HOST_DeviceControlTransferCallback;
-                                controlTransferObj->controlIRP.userData = deviceObjHandle ;
+                                controlTransferObj->controlIRP.userData = deviceObjHandle;
                                 controlTransferObj->context = context;
-                                controlTransferObj->callback = callback;
+                                controlTransferObj->callback = (void*)callback;
 
                                 if(USB_ERROR_NONE != deviceObj->hcdInterface->hostIRPSubmit( deviceObj->controlPipeHandle, &(controlTransferObj->controlIRP)))
                                 {
@@ -6646,13 +6662,12 @@ USB_HOST_RESULT USB_HOST_DeviceConfigurationDescriptorGet
                         {
 
                             /* Create the Setup packet */
-                            _USB_HOST_FillSetupPacket(
-                                    &(deviceObj->setupPacket),
-                                    ( USB_SETUP_DIRN_DEVICE_TO_HOST |
-                                      USB_SETUP_TYPE_STANDARD |
-                                      USB_SETUP_RECIPIENT_DEVICE ),
+                            _USB_HOST_FillSetupPacket( &(deviceObj->setupPacket),
+                                    ( USB_SETUP_DIRN_DEVICE_TO_HOST | USB_SETUP_TYPE_STANDARD | USB_SETUP_RECIPIENT_DEVICE ),
                                     USB_REQUEST_GET_DESCRIPTOR,
-                                    ( USB_DESCRIPTOR_CONFIGURATION << 8 ) + configurationValue , 0 , size ) ;
+                                    ( USB_DESCRIPTOR_CONFIGURATION << 8 ) + configurationValue,
+                                    0,
+                                    size );
 
                             /* Set up the control transfer object. The endpoint halt
                              * clear request does not have a data stage. */

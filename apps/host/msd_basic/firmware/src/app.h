@@ -84,17 +84,32 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 typedef enum
 {
-	APP_STATE_BUS_ENABLE = 0,
+    /* Application enabled the bus*/
+    APP_STATE_BUS_ENABLE = 0,
+
+    /* Application waits for bus to be enabled */
     APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE,
+
+    /* Application waits for MSD Device Attach */
     APP_STATE_WAIT_FOR_DEVICE_ATTACH,
+
     APP_STATE_DEVICE_CONNECTED,
+
     APP_STATE_MOUNT_DISK,
+
     APP_STATE_UNMOUNT_DISK,
+
     APP_STATE_OPEN_FILE,
+
     APP_STATE_WRITE_TO_FILE,
+
     APP_STATE_CLOSE_FILE,
+
     APP_STATE_IDLE,
+
+    /* Application is in error state */
     APP_STATE_ERROR
+
 } APP_STATES;
 
 

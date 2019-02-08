@@ -243,17 +243,17 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
-    unsigned    bSize :2;
-    unsigned    bType :2;
-    unsigned    bTag  :4;
+    uint8_t    bSize :2;
+    uint8_t    bType :2;
+    uint8_t    bTag  :4;
 
 } USB_HID_REPORT_ITEM_HEADER_SHORT;
 
 typedef struct __attribute__((packed))
 {
-    unsigned    bSize :2;
-    unsigned    bType :2;
-    unsigned    bTag  :4;
+    uint8_t    bSize :2;
+    uint8_t    bType :2;
+    uint8_t    bTag  :4;
     uint8_t     bDataSize;
     uint8_t     bLongItemTag;
 
