@@ -101,7 +101,7 @@ void _DRV_USBHSV1_HOST_AttachDetachStateMachine (DRV_USBHSV1_OBJ * hDriver)
     /* In the host mode, we perform attach de-bouncing */
     
     bool interruptWasEnabled;
-	
+    
     switch(hDriver->attachState)
     {
         case DRV_USBHSV1_HOST_ATTACH_STATE_CHECK_FOR_DEVICE_ATTACH:
@@ -191,18 +191,18 @@ void _DRV_USBHSV1_HOST_ResetStateMachine(DRV_USBHSV1_OBJ * hDriver)
                  * speed of the attached device. */
                 switch ((USBHS_SR_SPEED_Msk & hDriver->usbID->USBHS_SR) >> USBHS_SR_SPEED_Pos)
                 {
-        	        case 0x0:
-        	            hDriver->deviceSpeed = USB_SPEED_FULL;
-        	        break;
-        	        case 0x1:
-            	        hDriver->deviceSpeed = USB_SPEED_HIGH;
-        	        break;
-        	        case 0x2:
-        	            hDriver->deviceSpeed = USB_SPEED_LOW;
+                    case 0x0:
+                        hDriver->deviceSpeed = USB_SPEED_FULL;
+                    break;
+                    case 0x1:
+                        hDriver->deviceSpeed = USB_SPEED_HIGH;
+                    break;
+                    case 0x2:
+                        hDriver->deviceSpeed = USB_SPEED_LOW;
                     break;    
-        	        default:
-        	        break;
-    	        }
+                    default:
+                    break;
+                }
             }
         break;
 
@@ -243,7 +243,7 @@ void _DRV_USBHSV1_HOST_IRPTransmitFIFOLoad
     /* Load the endpoint FIFO with the user data */
     for(uint16_t i = 0; i < count; i ++)
     {
-	    *ptrEPData++ = *data++;
+        *ptrEPData++ = *data++;
     }
                 
     /* Check if the cache is enabled */
@@ -279,7 +279,7 @@ void _DRV_USBHSV1_HOST_IRPTransmitSetupPacket
      * pipe0 FIFO and then transmit the setup packet. */
 
     uint8_t * data = (uint8_t *)irp->setup;
-	volatile uint8_t *ptrEPData;
+    volatile uint8_t *ptrEPData;
     
     /* Configure Setup Token for Pipe 0 */
     usbID->USBHS_HSTPIPCFG[0] = (usbID->USBHS_HSTPIPCFG[0] & ~(uint32_t)(USBHS_HSTPIPCFG_PTOKEN_Msk))
@@ -287,8 +287,8 @@ void _DRV_USBHSV1_HOST_IRPTransmitSetupPacket
     __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
     __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
     /* Clear Setup Ready interrupt */
-	usbID->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_TXSTPIC_Msk;
-	ptrEPData =   (volatile uint8_t *)&drv_usbhsv1_get_pipe_fifo_access(0);
+    usbID->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_TXSTPIC_Msk;
+    ptrEPData =   (volatile uint8_t *)&drv_usbhsv1_get_pipe_fifo_access(0);
 
    /* Load the endpoint FIFO with the user data */
     for(uint16_t i = 0; i < 8; i ++)
@@ -332,10 +332,10 @@ unsigned int _DRV_USBHSV1_HOST_IRPReceiveFIFOUnload
     /* Copy the data from the FIFO0 to the application
      * buffer and then update the complete byte count
      * and clear the RX packet ready bit */
-	ptrEPData = (uint8_t *) &drv_usbhsv1_get_pipe_fifo_access(hPipe);
+    ptrEPData = (uint8_t *) &drv_usbhsv1_get_pipe_fifo_access(hPipe);
     data = (uint8_t *)((uint8_t *)irp->data + irp->completedBytes);
-	/* Get byte count to read data */
-	count = (USBHS_HSTPIPISR_PBYCT_Msk & usbID->USBHS_HSTPIPISR[hPipe]) >> USBHS_HSTPIPISR_PBYCT_Pos;
+    /* Get byte count to read data */
+    count = (USBHS_HSTPIPISR_PBYCT_Msk & usbID->USBHS_HSTPIPISR[hPipe]) >> USBHS_HSTPIPISR_PBYCT_Pos;
 
     /* Check if the cache is enabled */
     if( (SCB->CCR & SCB_CCR_DC_Msk) == SCB_CCR_DC_Msk)
@@ -345,7 +345,7 @@ unsigned int _DRV_USBHSV1_HOST_IRPReceiveFIFOUnload
 
     for(uint16_t i = 0; i < count; i ++)
     {
-	    *data++ = *ptrEPData++;
+        *data++ = *ptrEPData++;
     }
     irp->completedBytes += count;
     *pisDMAUsed = false;
@@ -905,20 +905,22 @@ DRV_USBHSV1_HOST_PIPE_HANDLE DRV_USBHSV1_HOST_PipeSetup
                             {
                                 /* Disable Pipe */
                                 Clr_bits(hDriver->usbID->USBHS_HSTPIP, (1 << (pipeIter)));
-                                return DRV_USBHSV1_HOST_PIPE_HANDLE_INVALID;
                             }
-                            /* Configure address of Pipe */
-                            Wr_bitfield((&hDriver->usbID->USBHS_HSTADDR1)[(pipeIter)>>2], 0x7F << (((pipeIter)&0x03)<<3), deviceAddress);
+                            else
+                            {
+                                /* Configure address of Pipe */
+                                Wr_bitfield((&hDriver->usbID->USBHS_HSTADDR1)[(pipeIter)>>2], 0x7F << (((pipeIter)&0x03)<<3), deviceAddress);
 
-                            /* Always enable stall and error interrupts of control endpoint */
-                            /* Enable Stall Interrupt */
-                            hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_RXSTALLDES_Msk;
-                            /* Enable Pipe Error Interrupt */
-                            hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_PERRES_Msk;
-                            /* Enable Pipe Interrupt */
-                            Set_bits(hDriver->usbID->USBHS_HSTIER, ((1 << 8) << (pipeIter)));
-                            epFound = true;
-                            pipe = &gDrvUSBHostPipeObj[pipeIter];
+                                /* Always enable stall and error interrupts of control endpoint */
+                                /* Enable Stall Interrupt */
+                                hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_RXSTALLDES_Msk;
+                                /* Enable Pipe Error Interrupt */
+                                hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_PERRES_Msk;
+                                /* Enable Pipe Interrupt */
+                                Set_bits(hDriver->usbID->USBHS_HSTIER, ((1 << 8) << (pipeIter)));
+                                epFound = true;
+                                pipe = &gDrvUSBHostPipeObj[pipeIter];
+                            }
                         }
                     }
                     else
@@ -959,24 +961,25 @@ DRV_USBHSV1_HOST_PIPE_HANDLE DRV_USBHSV1_HOST_PipeSetup
                                 {
                                     /* Disable Pipe */
                                     Clr_bits(hDriver->usbID->USBHS_HSTPIP, (1 << (pipeIter)));
-                                    return DRV_USBHSV1_HOST_PIPE_HANDLE_INVALID;
                                 }
+                                else
+                                {
+                                    /* Configure address of Pipe */
+                                    Wr_bitfield((&hDriver->usbID->USBHS_HSTADDR1)[(pipeIter)>>2], 0x7F << (((pipeIter)&0x03)<<3), deviceAddress);
 
-                                /* Configure address of Pipe */
-                                Wr_bitfield((&hDriver->usbID->USBHS_HSTADDR1)[(pipeIter)>>2], 0x7F << (((pipeIter)&0x03)<<3), deviceAddress);
+                                    /* Enable Stall Interrupt */
+                                    hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_RXSTALLDES_Msk;
+                                    /* Enable Pipe Error Interrupt */
+                                    hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_PERRES_Msk;
+                                    /* Enable Pipe Interrupt */
+                                    Set_bits(hDriver->usbID->USBHS_HSTIER, ((1 << 8) << (pipeIter)));
 
-                                /* Enable Stall Interrupt */
-                                hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_RXSTALLDES_Msk;
-                                /* Enable Pipe Error Interrupt */
-                                hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_PERRES_Msk;
-                                /* Enable Pipe Interrupt */
-                                Set_bits(hDriver->usbID->USBHS_HSTIER, ((1 << 8) << (pipeIter)));
-
-                                epFound = true;
-                                pipe = &gDrvUSBHostPipeObj[pipeIter];
-                                hDriver->hostEndpointTable[pipeIter].endpoint.inUse = true;
-                                hDriver->hostEndpointTable[pipeIter].endpoint.pipe = pipe;                
-                                break;
+                                    epFound = true;
+                                    pipe = &gDrvUSBHostPipeObj[pipeIter];
+                                    hDriver->hostEndpointTable[pipeIter].endpoint.inUse = true;
+                                    hDriver->hostEndpointTable[pipeIter].endpoint.pipe = pipe;                
+                                    break;
+                                }
                             }                            
                         } /* for */
                     } 
@@ -1050,8 +1053,8 @@ void _DRV_USBHSV1_HOST_ControlTransferProcess(DRV_USBHSV1_OBJ * hDriver)
         return;
     }
 
-	/* Disable setup, IN and OUT interrupts of control endpoint */
-	usbMod->USBHS_HSTPIPIDR[0] = (USBHS_HSTPIPIDR_TXSTPEC_Msk | USBHS_HSTPIPIDR_RXINEC_Msk | USBHS_HSTPIPIDR_TXOUTEC_Msk);
+    /* Disable setup, IN and OUT interrupts of control endpoint */
+    usbMod->USBHS_HSTPIPIDR[0] = (USBHS_HSTPIPIDR_TXSTPEC_Msk | USBHS_HSTPIPIDR_RXINEC_Msk | USBHS_HSTPIPIDR_TXOUTEC_Msk);
 
     /* If here means, we have a valid IRP and pipe.  Check the status register.
      * The IRP could have been aborted. This would be known in the temp state.
@@ -1077,7 +1080,7 @@ void _DRV_USBHSV1_HOST_ControlTransferProcess(DRV_USBHSV1_OBJ * hDriver)
         irp->status = USB_HOST_IRP_STATUS_ERROR_STALL;
         /* Clear Stall Interrupt */
         usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_RXSTALLDIC_Msk;
-	    /* Reset DATA Toggle */
+        /* Reset DATA Toggle */
         usbMod->USBHS_HSTPIPIER[0] = USBHS_HSTPIPIER_RSTDTS_Msk;
         /* Reset Pipe*/
         Set_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (0)));
@@ -1086,11 +1089,11 @@ void _DRV_USBHSV1_HOST_ControlTransferProcess(DRV_USBHSV1_OBJ * hDriver)
     else if(USBHS_HSTPIPISR_PERRI_Msk == (USBHS_HSTPIPISR_PERRI_Msk & usbMod->USBHS_HSTPIPISR[0]))
     {
         /* This means there was a pipe error. Set the error status and then
-		 * clear the error bits */
+         * clear the error bits */
 
         endIRP = true;
         irp->status = USB_HOST_IRP_STATUS_ERROR_DATA;
-		/* Ack all errors */
+        /* Ack all errors */
         usbMod->USBHS_HSTPIPERR[0] = 0;
         /* Reset Pipe */
         Set_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (0)));
@@ -1104,19 +1107,18 @@ void _DRV_USBHSV1_HOST_ControlTransferProcess(DRV_USBHSV1_OBJ * hDriver)
         switch(irp->tempState)
         {
              case DRV_USBHSV1_HOST_IRP_STATE_SETUP_STAGE:
-				if (USBHS_HSTPIPISR_TXSTPI_Msk == (USBHS_HSTPIPISR_TXSTPI_Msk & usbMod->USBHS_HSTPIPISR[0]))
+                if (USBHS_HSTPIPISR_TXSTPI_Msk == (USBHS_HSTPIPISR_TXSTPI_Msk & usbMod->USBHS_HSTPIPISR[0]))
                 {
-					 /* SETUP packet sent */
-                     /* Freeze Pipe */
-					 usbMod->USBHS_HSTPIPIER[0] = USBHS_HSTPIPIER_PFREEZES_Msk;
-                     /* Clear Tx Setup Ready Interrupt */
-                     usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_TXSTPIC_Msk;
-					 
-				}
-				else
-				{
-					return;
-				}
+                    /* SETUP packet sent */
+                    /* Freeze Pipe */
+                    usbMod->USBHS_HSTPIPIER[0] = USBHS_HSTPIPIER_PFREEZES_Msk;
+                    /* Clear Tx Setup Ready Interrupt */
+                    usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_TXSTPIC_Msk;
+                }
+                else
+                {
+                    return;
+                }
  
                /* We got an interrupt after this stage. This means that the
                 * setup stage has completed.  We need to check if a data stage
@@ -1129,13 +1131,13 @@ void _DRV_USBHSV1_HOST_ControlTransferProcess(DRV_USBHSV1_OBJ * hDriver)
                     * we need to send an IN token to the device */
 
                     irp->tempState = DRV_USBHSV1_HOST_IRP_STATE_HANDSHAKE_SENT;
-				   
+                   
                     /* Configure pipe for IN token */
                     usbMod->USBHS_HSTPIPCFG[0] = (usbMod->USBHS_HSTPIPCFG[0] & ~(uint32_t)(USBHS_HSTPIPCFG_PTOKEN_Msk))
                                                 | USBHS_HSTPIPCFG_PTOKEN(1);
-					/* Clear IN Rx Interrupt */
+                    /* Clear IN Rx Interrupt */
                     usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_RXINIC_Msk;
- 					/* Enable IN Rx Interrupt */
+                    /* Enable IN Rx Interrupt */
                     usbMod->USBHS_HSTPIPIER[0] = USBHS_HSTPIPIER_RXINES_Msk;
                     __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
                     __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
@@ -1178,30 +1180,29 @@ void _DRV_USBHSV1_HOST_ControlTransferProcess(DRV_USBHSV1_OBJ * hDriver)
 
            case DRV_USBHSV1_HOST_IRP_STATE_DATA_STAGE_SENT:
 
-				if (USBHS_HSTPIPISR_RXINI_Msk == (USBHS_HSTPIPISR_RXINI_Msk & usbMod->USBHS_HSTPIPISR[0]))
+                if (USBHS_HSTPIPISR_RXINI_Msk == (USBHS_HSTPIPISR_RXINI_Msk & usbMod->USBHS_HSTPIPISR[0]))
                 {
-					/* IN packet received */
+                    /* IN packet received */
                     /* In case of low USB speed and with a high CPU frequency,
-		             * a ACK from host can be always running on USB line
-		             * then wait end of ACK on IN pipe */
+                     * a ACK from host can be always running on USB line
+                     * then wait end of ACK on IN pipe */
                     if (USBHS_SR_SPEED_LOW_SPEED == (USBHS_SR_SPEED_LOW_SPEED & usbMod->USBHS_SR))
                     {    
                         while(USBHS_HSTPIPIMR_PFREEZE_Msk != (USBHS_HSTPIPIMR_PFREEZE_Msk & usbMod->USBHS_HSTPIPIMR[0]));
                     }    
                     /* Clear IN Rx Interrupt */        
-					usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_RXINIC_Msk;
-				}
-				else if (USBHS_HSTPIPISR_TXOUTI_Msk == (USBHS_HSTPIPISR_TXOUTI_Msk & usbMod->USBHS_HSTPIPISR[0]))
+                    usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_RXINIC_Msk;
+                }
+                else if (USBHS_HSTPIPISR_TXOUTI_Msk == (USBHS_HSTPIPISR_TXOUTI_Msk & usbMod->USBHS_HSTPIPISR[0]))
                 {
-					/* OUT packet sent */
+                    /* OUT packet sent */
                     /* Clear Tx Setup Ready Interrupt */
                     usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_TXOUTIC_Msk;
-				}
-				else
-				{
-					return;
-				}
-	
+                }
+                else
+                {
+                    return;
+                }
 
                /* We reach here after an interrupt which means that a data stage
                 * interaction was completed. Find out what was the direction the
@@ -1241,15 +1242,15 @@ void _DRV_USBHSV1_HOST_ControlTransferProcess(DRV_USBHSV1_OBJ * hDriver)
                    {
                         /* This means this is a multi stage control read
                          * transfer. Issue another IN token */
-					    /* Configure pipe for IN token */
+                        /* Configure pipe for IN token */
                         usbMod->USBHS_HSTPIPCFG[0] = (usbMod->USBHS_HSTPIPCFG[0] & ~(uint32_t)(USBHS_HSTPIPCFG_PTOKEN_Msk))
                                                 | USBHS_HSTPIPCFG_PTOKEN(1);
                         __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
                         __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
-					    /* Clear IN Rx Interrupt */
-					    usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_RXINIC_Msk;
-					    /* Enable IN Rx Interrupt */
-					    usbMod->USBHS_HSTPIPIER[0] = USBHS_HSTPIPIER_RXINES_Msk;
+                        /* Clear IN Rx Interrupt */
+                        usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_RXINIC_Msk;
+                        /* Enable IN Rx Interrupt */
+                        usbMod->USBHS_HSTPIPIER[0] = USBHS_HSTPIPIER_RXINES_Msk;
                         __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
                         __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
                         /* Clear FIFOCON and Unfreeze pipe */
@@ -1293,30 +1294,30 @@ void _DRV_USBHSV1_HOST_ControlTransferProcess(DRV_USBHSV1_OBJ * hDriver)
                 * completed. Check the direction of the data stage, update the
                 * irp status flag and then end the irp. */
 
-               	if (USBHS_HSTPIPISR_RXINI_Msk == (USBHS_HSTPIPISR_RXINI_Msk & usbMod->USBHS_HSTPIPISR[0]))
+                   if (USBHS_HSTPIPISR_RXINI_Msk == (USBHS_HSTPIPISR_RXINI_Msk & usbMod->USBHS_HSTPIPISR[0]))
                 {
-					/* IN packet received */
-					/* IN packet received */
+                    /* IN packet received */
+                    /* IN packet received */
                     /* In case of low USB speed and with a high CPU frequency,
-		             * a ACK from host can be always running on USB line
-		             * then wait end of ACK on IN pipe */
+                     * a ACK from host can be always running on USB line
+                     * then wait end of ACK on IN pipe */
                     if (USBHS_SR_SPEED_LOW_SPEED == (USBHS_SR_SPEED_LOW_SPEED & usbMod->USBHS_SR))
                     {    
                         while(USBHS_HSTPIPIMR_PFREEZE_Msk != (USBHS_HSTPIPIMR_PFREEZE_Msk & usbMod->USBHS_HSTPIPIMR[0]));
                     }                     
                     /* Clear IN Rx Interrupt */
-					usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_RXINIC_Msk;
-				}
-				else if (USBHS_HSTPIPISR_TXOUTI_Msk == (USBHS_HSTPIPISR_TXOUTI_Msk & usbMod->USBHS_HSTPIPISR[0]))
+                    usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_RXINIC_Msk;
+                }
+                else if (USBHS_HSTPIPISR_TXOUTI_Msk == (USBHS_HSTPIPISR_TXOUTI_Msk & usbMod->USBHS_HSTPIPISR[0]))
                 {
-					/* OUT packet sent */
+                    /* OUT packet sent */
                     /* Clear Tx Setup Ready Interrupt */
                     usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_TXOUTIC_Msk;
-				}
-				else
-				{
-					return;
-				}
+                }
+                else
+                {
+                    return;
+                }
                irp->status = USB_HOST_IRP_STATUS_COMPLETED;
                
                if(irp->flags & 0x80)
@@ -1445,13 +1446,13 @@ void _DRV_USBHSV1_HOST_NonControlTransferProcess
     volatile usbhs_registers_t * usbMod;
     bool endIRP = false;
     bool isDmaUsed = false;
-	bool endIRPOut = false;
+    bool endIRPOut = false;
     unsigned int count;
 
     endpointTable = &(hDriver->hostEndpointTable[hostPipe]);
     usbMod = hDriver->usbID;
     pipe = endpointTable->endpoint.pipe; 
-	
+    
     if((!endpointTable->endpoint.inUse) ||
        (pipe == NULL) ||
        (pipe == (DRV_USBHSV1_HOST_PIPE_OBJ *)(DRV_USBHSV1_HOST_PIPE_HANDLE_INVALID)))
@@ -1461,7 +1462,7 @@ void _DRV_USBHSV1_HOST_NonControlTransferProcess
     }
 
     irp = pipe->irpQueueHead;
-	
+    
     /* We got an interrupt for data moving from host to to device. Check if
      * there were any transmission errors. Then check if there is any more
      * data to be sent in the IRP. If we are done, then end the IRP and
@@ -1482,7 +1483,7 @@ void _DRV_USBHSV1_HOST_NonControlTransferProcess
         irp->status = USB_HOST_IRP_STATUS_ERROR_STALL;
         /* Clear Stall Interrupt */
         usbMod->USBHS_HSTPIPICR[hostPipe] = USBHS_HSTPIPICR_RXSTALLDIC_Msk;
-	    /* Reset DATA Toggle */
+        /* Reset DATA Toggle */
         usbMod->USBHS_HSTPIPIER[hostPipe] = USBHS_HSTPIPIER_RSTDTS_Msk;
         /* Reset Pipe*/
         Set_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (hostPipe)));
@@ -1495,8 +1496,8 @@ void _DRV_USBHSV1_HOST_NonControlTransferProcess
 
         endIRP = true;
         irp->status = USB_HOST_IRP_STATUS_ERROR_DATA;
-		/* Ack all errors */
-		usbMod->USBHS_HSTPIPERR[hostPipe] = 0;
+        /* Ack all errors */
+        usbMod->USBHS_HSTPIPERR[hostPipe] = 0;
         /* Reset Pipe*/
         Set_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (hostPipe)));
         Clr_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (hostPipe)));
@@ -1512,7 +1513,7 @@ void _DRV_USBHSV1_HOST_NonControlTransferProcess
         if(irp->completedBytes >= irp->size)
         {
             endIRP = true;
-		    endIRPOut = true;
+            endIRPOut = true;
             irp->status = USB_HOST_IRP_STATUS_COMPLETED;
         }
         else
@@ -1530,8 +1531,8 @@ void _DRV_USBHSV1_HOST_NonControlTransferProcess
     else if(USBHS_HSTPIPISR_RXINI_Msk == (USBHS_HSTPIPISR_RXINI_Msk & usbMod->USBHS_HSTPIPISR[hostPipe]))
     {
         /* In case of low USB speed and with a high CPU frequency,
-		* a ACK from host can be always running on USB line
-		* then wait end of ACK on IN pipe */
+        * a ACK from host can be always running on USB line
+        * then wait end of ACK on IN pipe */
         if (USBHS_SR_SPEED_LOW_SPEED == (USBHS_SR_SPEED_LOW_SPEED & usbMod->USBHS_SR))
         {    
             while(USBHS_HSTPIPIMR_PFREEZE_Msk != (USBHS_HSTPIPIMR_PFREEZE_Msk & usbMod->USBHS_HSTPIPIMR[hostPipe]));
@@ -1563,8 +1564,8 @@ void _DRV_USBHSV1_HOST_NonControlTransferProcess
                  * packet */
 
                 endIRP = false;
-				/* Enable IN Rx Interrupt */
-				usbMod->USBHS_HSTPIPIER[hostPipe] = USBHS_HSTPIPIER_RXINES_Msk;
+                /* Enable IN Rx Interrupt */
+                usbMod->USBHS_HSTPIPIER[hostPipe] = USBHS_HSTPIPIER_RXINES_Msk;
                 __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
                 __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
                 /* Clear FIFOCON and Unfreeze pipe */
@@ -1581,9 +1582,9 @@ void _DRV_USBHSV1_HOST_NonControlTransferProcess
     }
     else
     {
-	    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Unknown Pipe Interrupt");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Unknown Pipe Interrupt");
     }
-		
+        
 
     if(endIRP)
     {
@@ -1615,10 +1616,10 @@ void _DRV_USBHSV1_HOST_NonControlTransferProcess
                 
             /* We do have another IRP to process. Request for
              * an IN packet. */
-			/* Clear IN Rx Interrupt */
-			usbMod->USBHS_HSTPIPICR[hostPipe] = USBHS_HSTPIPICR_RXINIC_Msk;
-			/* Enable IN Rx Interrupt */
-			usbMod->USBHS_HSTPIPIER[hostPipe] = USBHS_HSTPIPIER_RXINES_Msk;
+            /* Clear IN Rx Interrupt */
+            usbMod->USBHS_HSTPIPICR[hostPipe] = USBHS_HSTPIPICR_RXINIC_Msk;
+            /* Enable IN Rx Interrupt */
+            usbMod->USBHS_HSTPIPIER[hostPipe] = USBHS_HSTPIPIER_RXINES_Msk;
             __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
             __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
             /* Clear FIFOCON and Unfreeze pipe */
@@ -1631,7 +1632,7 @@ void _DRV_USBHSV1_HOST_NonControlTransferProcess
 void _DRV_USBHSV1_HOST_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
 {
     uint8_t intPipe;
-	   
+       
     __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
     __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
 
@@ -1653,7 +1654,7 @@ void _DRV_USBHSV1_HOST_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
         hDriver->usbID->USBHS_HSTIDR = (USBHS_HSTIDR_HWUPIEC_Msk
                                       | USBHS_HSTIDR_RSMEDIEC_Msk
                                       | USBHS_HSTIDR_RXRSMIEC_Msk);
-    	/* Clear Wake-up Interrupt */
+        /* Clear Wake-up Interrupt */
         hDriver->usbID->USBHS_HSTICR = USBHS_HSTICR_HWUPIC_Msk;
         /* Enable Host Wakeup Interrupt */
         hDriver->usbID->USBHS_HSTIER = USBHS_HSTIER_HWUPIES_Msk;
@@ -1685,14 +1686,14 @@ void _DRV_USBHSV1_HOST_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
         hDriver->usbID->USBHS_HSTICR = USBHS_HSTICR_DCONNIC_Msk;
         /* Enable Disconnection Interrupt */
         hDriver->usbID->USBHS_HSTIER = USBHS_HSTIER_DDISCIES_Msk;
-     	hDriver->deviceAttached = true;
- 	}
+         hDriver->deviceAttached = true;
+     }
     /* If Wakeup interrupt is enabled and triggered and the usb is in disconnected state */
     else if (((USBHS_HSTISR_HWUPI_Msk == (USBHS_HSTISR_HWUPI_Msk & hDriver->usbID->USBHS_HSTISR)) 
           && (USBHS_HSTIMR_HWUPIE_Msk == (USBHS_HSTIMR_HWUPIE_Msk & hDriver->usbID->USBHS_HSTIMR))) 
           && (hDriver->deviceAttached == false))
     {
-    	/* Manage Host Wakeup Interrupt. This interrupt is generated 
+        /* Manage Host Wakeup Interrupt. This interrupt is generated 
          * even if the clock is frozen
          */
         SYS_DEBUG_MESSAGE(SYS_ERROR_DEBUG, " WAKEUP");
@@ -1703,7 +1704,7 @@ void _DRV_USBHSV1_HOST_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
          * with an asynchronous interrupt */
         /* Disable Wake-up Interrupt */
         hDriver->usbID->USBHS_HSTIDR = USBHS_HSTIDR_HWUPIEC_Msk;
-	}
+    }
     else if (((USBHS_HSTISR_HWUPI_Msk | USBHS_HSTISR_RSMEDI_Msk | USBHS_HSTISR_RXRSMI_Msk) 
                 == ((USBHS_HSTISR_HWUPI_Msk | USBHS_HSTISR_RSMEDI_Msk | USBHS_HSTISR_RXRSMI_Msk) & hDriver->usbID->USBHS_HSTISR)) 
           && (USBHS_HSTIMR_HWUPIE_Msk == (USBHS_HSTIMR_HWUPIE_Msk & hDriver->usbID->USBHS_HSTIMR))) 
@@ -1735,7 +1736,7 @@ void _DRV_USBHSV1_HOST_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
         }
     }
     else if((USBHS_HSTISR_RSTI_Msk == (USBHS_HSTISR_RSTI_Msk & hDriver->usbID->USBHS_HSTISR)) && (USBHS_HSTIMR_RSTIE_Msk == (USBHS_HSTIMR_RSTIE_Msk & hDriver->usbID->USBHS_HSTIMR)))
-	{
+    {
         /* Manage USB Reset Sent Interrupt  */
         /* Clear USB Reset Sent Interrupt */
         hDriver->usbID->USBHS_HSTICR = USBHS_HSTICR_RSTIC_Msk;
@@ -1758,22 +1759,22 @@ void _DRV_USBHSV1_HOST_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
                 SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Unknown Speed at Reset");
             break;
         }
-	}
-	else if(0 != (hDriver->usbID->USBHS_HSTISR & 0x3FF00))
+    }
+    else if(0 != (hDriver->usbID->USBHS_HSTISR & 0x3FF00))
     {
         /* Manage pipe interrupts */
         /* Get the lowest Pipe number generating
          * a Pipe Interrupt */
         intPipe = ctz(((hDriver->usbID->USBHS_HSTISR & hDriver->usbID->USBHS_HSTIMR) >> 8) | (1 << 10));
-	    if (intPipe == 0) 
+        if (intPipe == 0) 
         {
-		     /* Manage control pipe */
-		    _DRV_USBHSV1_HOST_ControlTransferProcess(hDriver);
-	    }
+             /* Manage control pipe */
+            _DRV_USBHSV1_HOST_ControlTransferProcess(hDriver);
+        }
         else
         {
-		    /* Manage Non-control pipe */
-		    _DRV_USBHSV1_HOST_NonControlTransferProcess(hDriver, intPipe);
+            /* Manage Non-control pipe */
+            _DRV_USBHSV1_HOST_NonControlTransferProcess(hDriver, intPipe);
         }
     } 
     else
@@ -1815,11 +1816,11 @@ USB_SPEED DRV_USBHSV1_HOST_DeviceCurrentSpeedGet(DRV_HANDLE client)
     
   Summary:
     Disables host mode events.
-	
+    
   Description:
     This function disables the host mode events. This function is called by the
     Host Layer when it wants to execute code atomically. 
-	
+    
   Remarks:
     Refer to drv_usbfs.h for usage information.
 */
@@ -1831,7 +1832,7 @@ bool DRV_USBHSV1_HOST_EventsDisable
 {
     DRV_USBHSV1_OBJ * pUSBDrvObj;
     bool result = false; 
-	
+    
     if((DRV_HANDLE_INVALID != handle) && (0 != handle))
     {
         pUSBDrvObj = (DRV_USBHSV1_OBJ *)(handle);
@@ -1851,12 +1852,12 @@ bool DRV_USBHSV1_HOST_EventsDisable
     
   Summary:
     Restores the events to the specified the original value.
-	
+    
   Description:
     This function will restore the enable disable state of the events.
     eventRestoreContext should be equal to the value returned by the
     DRV_USBHSV1_HOST_EventsDisable() function.
-	
+    
   Remarks:
     Refer to drv_usbfs.h for usage information.
 */
@@ -2198,12 +2199,12 @@ bool DRV_USBHSV1_HOST_ROOT_HUB_PortResetIsComplete
     
   Summary:
     Resets the specified root hub port.
-	
+    
   Description:
     This function resets the root hub port. The reset duration is defined by
     DRV_USBHSV1_ROOT_HUB_RESET_DURATION. The status of the reset signaling can be
     checked using the DRV_USBHSV1_ROOT_HUB_PortResetIsComplete() function.
-	
+    
   Remarks:
     Refer to drv_usbfs.h for usage information.
 */
