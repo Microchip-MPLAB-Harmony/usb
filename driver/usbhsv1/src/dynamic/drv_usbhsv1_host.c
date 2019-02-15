@@ -38,7 +38,7 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *******************************************************************************/
+*******************************************************************************/
 //DOM-IGNORE-END
 
 #include "configuration.h"
@@ -48,6 +48,7 @@
 #include "usb/usb_host.h"
 #include "usb/usb_host_client_driver.h"
 #define SYS_DEBUG_MESSAGE(a,b,...)
+
 /**********************************************************
  * This structure is a set of pointer to the USBFS driver
  * functions. It is provided to the host and device layer
@@ -89,7 +90,6 @@ DRV_USBHSV1_HOST_PIPE_OBJ gDrvUSBHostPipeObj[10];
  ****************************************/
 extern DRV_USBHSV1_OBJ gDrvUSBObj[];
 
-static uint8_t usb_connected = 0;
 // ****************************************************************************
 // ****************************************************************************
 // Local Functions
@@ -397,171 +397,178 @@ USB_ERROR DRV_USBHSV1_HOST_IRPSubmit
     DRV_USBHSV1_HOST_PIPE_OBJ * pipe = (DRV_USBHSV1_HOST_PIPE_OBJ *)(hPipe);
     DRV_USBHSV1_OBJ * hDriver;
     volatile usbhs_registers_t * usbMod;
+    USB_ERROR returnValue = USB_ERROR_PARAMETER_INVALID;
 
     if((pipe == NULL) || (hPipe == (DRV_USBHSV1_HOST_PIPE_HANDLE_INVALID)))
     {
-        /* This means an invalid pipe was specified. 
-         * Return with an error */
-
+        /* This means an invalid pipe was specified.  Return with an error */
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Pipe handle is not valid");
-        return USB_ERROR_PARAMETER_INVALID;
-    }
-
-    hDriver = (DRV_USBHSV1_OBJ *)(pipe->hClient);
-    usbMod = hDriver->usbID;
-    controlTransferGroup = &hDriver->controlTransferGroup;
-
-    /* Assign owner pipe */
-    irp->pipe = hPipe;
-    irp->status = USB_HOST_IRP_STATUS_PENDING;
-    irp->tempState = DRV_USBHSV1_HOST_IRP_STATE_PROCESSING;
-    hostPipe = pipe->hostPipeN;
-    direction = (pipe->endpointAndDirection & 0x80) >> 7;
-
-    /* We need to disable interrupts was the queue state
-     * does not change asynchronously */
-
-    if(!hDriver->isInInterruptContext)
-    {
-        /* OSAL: Get Mutex */
-        if(OSAL_MUTEX_Lock(&(hDriver->mutexID), OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
-        {
-            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Mutex lock failed");
-            return USB_ERROR_OSAL_FUNCTION;
-        }
-        interruptWasEnabled = _DRV_USBHSV1_InterruptSourceDisable(hDriver->interruptSource);
-    }
-
-    /* This needs to be done for all irp irrespective
-     * of type or if there IRP is immediately processed */
-
-    irp->next = NULL;
-    irp->completedBytes = 0;
-    irp->status = USB_HOST_IRP_STATUS_PENDING;
-
-    if(pipe->irpQueueHead == NULL)
-    {
-        /* This means that there are no
-         * IRPs on this pipe. We can add
-         * this IRP directly */
-
-        irp->previous = NULL;
-        pipe->irpQueueHead = irp;
-
-        if(pipe->pipeType == USB_TRANSFER_TYPE_CONTROL)
-        {
-            /* Set the initial stage of the IRP */
-            irp->tempState = DRV_USBHSV1_HOST_IRP_STATE_SETUP_STAGE;
-
-            /* We need to update the flags parameter of the IRP
-             * to indicate the direction of the control transfer. */
-
-            if(*((uint8_t*)(irp->setup)) & 0x80)
-            {
-                /* This means the data stage moves from device to 
-                 * host. Set bit 15 of the flags parameter */
-
-                irp->flags |= 0x80;
-            }
-            else
-            {
-                /* This means the data stage moves from host to
-                 * device. Clear bit 15 of the flags parameter. */
-
-                irp->flags &= 0x7F;
-            }
-
-            /* We need to check if the endpoint 0 is free and if so
-             * then start processing the IRP */
-
-            if(controlTransferGroup->currentIRP == NULL)
-            {
-                /* This means that no IRPs are being processed
-                 * So we should start the IRP processing. Else
-                 * the IRP processing will start in interrupt.
-                 * We start by copying the setup command */
-
-                controlTransferGroup->currentIRP = irp;
-                controlTransferGroup->currentPipe = pipe;
-                irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
-
-                /* Send the setup packet to device */
-                _DRV_USBHSV1_HOST_IRPTransmitSetupPacket(usbMod, irp);
-            }
-        }
-        else
-        {
-            /* For non control transfers, if this is the first
-             * irp in the queue, then we can start the irp */
-
-            irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
-
-            if(USB_DATA_DIRECTION_HOST_TO_DEVICE == direction)
-            {
-                /* Data is moving from host to device. We
-                 * need to copy data into the FIFO and
-                 * then and set the TX request bit. If the
-                 * IRP size is greater than endpoint size then
-                 * we must packetize. */
-                
-                /* Clear Tx Out Ready Interrupt */
-                usbMod->USBHS_HSTPIPICR[hostPipe] = USBHS_HSTPIPICR_TXOUTIC_Msk;
-                _DRV_USBHSV1_HOST_IRPTransmitFIFOLoad(usbMod, irp, hostPipe);
-            }
-            else
-            {
-                /* Data is moving from device to host
-                 * We need to set the Rx Packet Request
-                 * bit */
-                
-                /* Perform 1 IN requests before freezing the pipe. */
-                usbMod->USBHS_HSTPIPINRQ[hostPipe] = 0;
-                /* Clear RX IN Interrupt */
-                usbMod->USBHS_HSTPIPICR[hostPipe] = USBHS_HSTPIPICR_RXINIC_Msk;
-                 /* Enable Rx IN Interrupt */
-                usbMod->USBHS_HSTPIPIER[hostPipe] = USBHS_HSTPIPIER_RXINES_Msk;
-                __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
-                __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
-                /* Clear FIFOCON and Unfreeze pipe */
-                usbMod->USBHS_HSTPIPIDR[hostPipe] = USBHS_HSTPIPIDR_FIFOCONC_Msk;
-                usbMod->USBHS_HSTPIPIDR[hostPipe] = USBHS_HSTPIPIDR_PFREEZEC_Msk;
-            }
-        }
     }
     else
     {
-        /* We need to add the irp to the last irp
-         * in the pipe queue (which is a linked list) */
-        irpIterator = pipe->irpQueueHead;
+        hDriver = (DRV_USBHSV1_OBJ *)(pipe->hClient);
+        usbMod = hDriver->usbID;
+        controlTransferGroup = &hDriver->controlTransferGroup;
 
-        /* Find the last IRP in the linked list*/
-        while(irpIterator->next != 0)
+        /* Assign owner pipe */
+        irp->pipe = hPipe;
+        irp->status = USB_HOST_IRP_STATUS_PENDING;
+        irp->tempState = DRV_USBHSV1_HOST_IRP_STATE_PROCESSING;
+        hostPipe = pipe->hostPipeN;
+        direction = (pipe->endpointAndDirection & 0x80) >> 7;
+
+        /* We need to disable interrupts was the queue state
+         * does not change asynchronously */
+
+        if(!hDriver->isInInterruptContext)
         {
-            irpIterator = irpIterator->next;
+            if(OSAL_MUTEX_Lock(&(hDriver->mutexID), OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
+            {
+                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Mutex lock failed in DRV_USBHSV1_HOST_IRPSubmit()");
+                    returnValue = USB_ERROR_OSAL_FUNCTION;
+            }
+            else
+            {
+                interruptWasEnabled = _DRV_USBHSV1_InterruptSourceDisable(hDriver->interruptSource);
+            }
         }
 
-        /* Add the item to the last irp in the linked list */
-        irpIterator->next = irp;
-        irp->previous = irpIterator;
+        if(USB_ERROR_OSAL_FUNCTION != returnValue)
+        {
+           /* This needs to be done for all irp irrespective
+             * of type or if there IRP is immediately processed */
+
+            irp->next = NULL;
+            irp->completedBytes = 0;
+            irp->status = USB_HOST_IRP_STATUS_PENDING;
+
+            if(pipe->irpQueueHead == NULL)
+            {
+                /* This means that there are no IRPs on this pipe. We can add
+                 * this IRP directly */
+
+                irp->previous = NULL;
+                pipe->irpQueueHead = irp;
+
+                if(pipe->pipeType == USB_TRANSFER_TYPE_CONTROL)
+                {
+                    /* Set the initial stage of the IRP */
+                    irp->tempState = DRV_USBHSV1_HOST_IRP_STATE_SETUP_STAGE;
+
+                    /* We need to update the flags parameter of the IRP to
+                     * indicate the direction of the control transfer. */
+
+                    if(*((uint8_t*)(irp->setup)) & 0x80)
+                    {
+                        /* This means the data stage moves from device to host.
+                         * Set bit 15 of the flags parameter */
+
+                        irp->flags |= 0x80;
+                    }
+                    else
+                    {
+                        /* This means the data stage moves from host to device.
+                         * Clear bit 15 of the flags parameter. */
+
+                        irp->flags &= 0x7F;
+                    }
+
+                    /* We need to check if the endpoint 0 is free and if so
+                     * then start processing the IRP */
+
+                    if(controlTransferGroup->currentIRP == NULL)
+                    {
+                        /* This means that no IRPs are being processed
+                         * So we should start the IRP processing. Else
+                         * the IRP processing will start in interrupt.
+                         * We start by copying the setup command */
+
+                        controlTransferGroup->currentIRP = irp;
+                        controlTransferGroup->currentPipe = pipe;
+                        irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
+
+                        /* Send the setup packet to device */
+                        _DRV_USBHSV1_HOST_IRPTransmitSetupPacket(usbMod, irp);
+                    }
+                }
+                else
+                {
+                    /* For non control transfers, if this is the first irp in
+                     * the queue, then we can start the irp */
+
+                    irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
+
+                    if(USB_DATA_DIRECTION_HOST_TO_DEVICE == direction)
+                    {
+                        /* Data is moving from host to device. We need to copy
+                         * data into the FIFO and then and set the TX request
+                         * bit. If the IRP size is greater than endpoint size
+                         * then we must packetize. */
+
+                        /* Clear Tx Out Ready Interrupt */
+                        usbMod->USBHS_HSTPIPICR[hostPipe] = USBHS_HSTPIPICR_TXOUTIC_Msk;
+                        _DRV_USBHSV1_HOST_IRPTransmitFIFOLoad(usbMod, irp, hostPipe);
+                    }
+                    else
+                    {
+                        /* Data is moving from device to host
+                         * We need to set the Rx Packet Request
+                         * bit */
+
+                        /* Perform 1 IN requests before freezing the pipe. */
+                        usbMod->USBHS_HSTPIPINRQ[hostPipe] = 0;
+                        /* Clear RX IN Interrupt */
+                        usbMod->USBHS_HSTPIPICR[hostPipe] = USBHS_HSTPIPICR_RXINIC_Msk;
+                        /* Enable Rx IN Interrupt */
+                        usbMod->USBHS_HSTPIPIER[hostPipe] = USBHS_HSTPIPIER_RXINES_Msk;
+                        __DSB(); /* The DMB instruction ensures the observed ordering of memory accesses. */
+                        __ISB(); /* The ISB instruction flushes the processor pipeline fetch buffers. */
+                        /* Clear FIFOCON and Unfreeze pipe */
+                        usbMod->USBHS_HSTPIPIDR[hostPipe] = USBHS_HSTPIPIDR_FIFOCONC_Msk;
+                        usbMod->USBHS_HSTPIPIDR[hostPipe] = USBHS_HSTPIPIDR_PFREEZEC_Msk;
+                    }
+                }
+            }
+            else
+            {
+                /* We need to add the irp to the last irp
+                * in the pipe queue (which is a linked list) */
+               irpIterator = pipe->irpQueueHead;
+
+               /* Find the last IRP in the linked list*/
+               while(irpIterator->next != 0)
+               {
+                   irpIterator = irpIterator->next;
+               }
+
+               /* Add the item to the last irp in the linked list */
+               irpIterator->next = irp;
+               irp->previous = irpIterator;
+            }
+
+            if(!hDriver->isInInterruptContext)
+            {
+                if(interruptWasEnabled)
+                {
+                    _DRV_USBHSV1_InterruptSourceEnable(hDriver->interruptSource);
+                }
+
+                if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
+                {
+                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Mutex unlock failed");
+                }
+            }
+            returnValue = USB_ERROR_NONE;
+        }
     }
 
-    if(!hDriver->isInInterruptContext)
-    {
-        if(interruptWasEnabled)
-        {
-            _DRV_USBHSV1_InterruptSourceEnable(hDriver->interruptSource);
-        }
-        /* OSAL: Return Mutex */
-        if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
-        {
-            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Mutex unlock failed");
-        }
-    }
-
-    return USB_ERROR_NONE;
+    return (returnValue);
 }/* end of DRV_USBHSV1_HOST_IRPSubmit() */
 
-void DRV_USBHSV1_HOST_IRPCancel(USB_HOST_IRP * inputIRP)
+void DRV_USBHSV1_HOST_IRPCancel
+(
+    USB_HOST_IRP * inputIRP
+)
 {
     /* This function cancels an IRP */
 
@@ -573,84 +580,78 @@ void DRV_USBHSV1_HOST_IRPCancel(USB_HOST_IRP * inputIRP)
     if(irp->pipe == DRV_USBHSV1_HOST_PIPE_HANDLE_INVALID)
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Invalid pipe");
-        return;
     }
-
-    if(irp->status <= USB_HOST_IRP_STATUS_COMPLETED_SHORT)
+    else if(irp->status <= USB_HOST_IRP_STATUS_COMPLETED_SHORT)
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: IRP is not pending or in progress");
-        return;
-    }
-
-    pipe = (DRV_USBHSV1_HOST_PIPE_OBJ *)irp->pipe;
-    hDriver = (DRV_USBHSV1_OBJ *) pipe->hClient;
-
-    if(!hDriver->isInInterruptContext)
-    {
-        /* OSAL: Get Mutex */
-        if(OSAL_MUTEX_Lock(&(hDriver->mutexID), OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
-        {
-            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Mutex lock failed");
-        }
-        interruptWasEnabled = _DRV_USBHSV1_InterruptSourceDisable(hDriver->interruptSource);
-    }
-
-    if(irp->previous == NULL)
-    {
-        /* This means this was the first
-         * irp in the queue. Update the pipe
-         * queue head directly */
-
-        pipe->irpQueueHead = irp->next;
-        if(irp->next != NULL)
-        {
-            irp->next->previous = NULL;
-        }
     }
     else
     {
-        /* Remove the IRP from the linked
-         * list */
-        irp->previous->next = irp->next;
+        pipe = (DRV_USBHSV1_HOST_PIPE_OBJ *)irp->pipe;
+        hDriver = (DRV_USBHSV1_OBJ *) pipe->hClient;
 
-        if(irp->next != NULL)
+        if(!hDriver->isInInterruptContext)
         {
-            /* This applies if this is not the last
-             * irp in the linked list */
-            irp->next->previous = irp->previous;
-        }
-    }
-
-    if(irp->status == USB_HOST_IRP_STATUS_IN_PROGRESS)
-    {
-        /* If the irp is already in progress then
-         * we set the temporary state. This will get
-         * caught in _DRV_USBHSV1_HOST_ControlXferProcess()
-         * and _DRV_USBHSV1_HOST_NonControlIRPProcess()
-         * functions. */
-
-        irp->tempState = DRV_USBHSV1_HOST_IRP_STATE_ABORTED;
-    }
-    else
-    {
-        irp->status = USB_HOST_IRP_STATUS_ABORTED;
-        if(irp->callback != NULL)
-        {
-            irp->callback((USB_HOST_IRP *)irp);
-        }
-    }
-
-    if(!hDriver->isInInterruptContext)
-    {
-        if(interruptWasEnabled)
-        {
-            _DRV_USBHSV1_InterruptSourceEnable(hDriver->interruptSource);
+            if(OSAL_MUTEX_Lock(&(hDriver->mutexID), OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
+            {
+                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Mutex lock failed");
+            }
+            interruptWasEnabled = _DRV_USBHSV1_InterruptSourceDisable(hDriver->interruptSource);
         }
 
-        /* OSAL: Release Mutex */
-        if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
+        if(irp->previous == NULL)
         {
-            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Mutex unlock failed");
+            /* This means this was the first irp in the queue. Update the pipe
+             * queue head directly */
+
+            pipe->irpQueueHead = irp->next;
+             if(irp->next != NULL)
+            {
+                irp->next->previous = NULL;
+            }
+        }
+        else
+        {
+            /* Remove the IRP from the linked list */
+            irp->previous->next = irp->next;
+
+            if(irp->next != NULL)
+            {
+                /* This applies if this is not the last
+                 * irp in the linked list */
+                irp->next->previous = irp->previous;
+            }
+        }
+
+        if(irp->status == USB_HOST_IRP_STATUS_IN_PROGRESS)
+        {
+            /* If the irp is already in progress then
+             * we set the temporary state. This will get
+             * caught in _DRV_USBHSV1_HOST_ControlXferProcess()
+             * and _DRV_USBHSV1_HOST_NonControlIRPProcess() functions. */
+
+            irp->tempState = DRV_USBHSV1_HOST_IRP_STATE_ABORTED;
+        }
+        else
+        {
+            irp->status = USB_HOST_IRP_STATUS_ABORTED;
+            if(irp->callback != NULL)
+            {
+                irp->callback((USB_HOST_IRP *)irp);
+            }
+        }
+
+        if(!hDriver->isInInterruptContext)
+        {
+            if(interruptWasEnabled)
+            {
+                _DRV_USBHSV1_InterruptSourceEnable(hDriver->interruptSource);
+            }
+
+            if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
+            {
+                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Mutex unlock failed");
+            }
         }
     }
 }/* end of DRV_USBHSV1_HOST_IRPCancel() */
@@ -675,131 +676,131 @@ void DRV_USBHSV1_HOST_PipeClose
     if( ( pipeHandle == 0 )  || pipeHandle == DRV_USBHSV1_HOST_PIPE_HANDLE_INVALID)
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Invalid pipe handle");
-        return;
-    }
-
-    pipe = (DRV_USBHSV1_HOST_PIPE_OBJ*) pipeHandle;
-
-    /* Make sure that we are working with a pipe in use */
-    if(pipe->inUse != true)
-    {
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Pipe is not in use");
-        return;
-    }
-
-    hDriver = (DRV_USBHSV1_OBJ *)pipe->hClient;
-    usbMod = hDriver->usbID;
-
-    /* Disable the interrupt */
-
-    if(!hDriver->isInInterruptContext)
-    {
-        /* OSAL: Get Mutex */
-        if(OSAL_MUTEX_Lock(&hDriver->mutexID, OSAL_WAIT_FOREVER) !=
-                OSAL_RESULT_TRUE)
-        {
-            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Mutex lock failed");
-        }
-        interruptWasEnabled = _DRV_USBHSV1_InterruptSourceDisable(hDriver->interruptSource);
-    }
-
-    if(USB_TRANSFER_TYPE_CONTROL == pipe->pipeType)
-    {
-        transferGroup = &hDriver->controlTransferGroup;
-
-        if(pipe->previous == NULL)
-        {
-            /* The previous pipe could be null if this was the first pipe in the
-             * transfer group */
-
-            transferGroup->pipe = pipe->next;
-            if(pipe->next != NULL)
-            {
-                pipe->next->previous = NULL;
-            }
-        }
-        else
-        {
-            /* Remove this pipe from the linked
-             * list */
-
-            pipe->previous->next = pipe->next;
-            if(pipe->next != NULL)
-            {
-                pipe->next->previous = pipe->previous;
-            }
-        }
-
-        if(transferGroup->nPipes != 0)
-        {
-            /* Reduce the count only if its
-             * not zero already */
-
-            transferGroup->nPipes --;
-        }
     }
     else
     {
-        /* Non control transfer pipes are not stored as groups.  We deallocate
-         * the endpoint object that this pipe used */
+        pipe = (DRV_USBHSV1_HOST_PIPE_OBJ*) pipeHandle;
 
-        endpointObj = &hDriver->hostEndpointTable[pipe->hostPipeN];
-        endpointObj->endpoint.inUse = false;
-        endpointObj->endpoint.pipe = NULL;
-
-        /* Clear the error status */
-        usbMod->USBHS_HSTPIPERR[pipe->hostPipeN] = 0;
-    }
-
-    /* Now we invoke the call back for each IRP in this pipe and say that it is
-     * aborted.  If the IRP is in progress, then that IRP will be actually
-     * aborted on the next SOF This will allow the USB module to complete any
-     * transaction that was in progress. */
-
-    irp = (USB_HOST_IRP_LOCAL *)pipe->irpQueueHead;
-    while(irp != NULL)
-    {
-        irp->pipe = DRV_USBHSV1_HOST_PIPE_HANDLE_INVALID;
-
-        if(irp->status == USB_HOST_IRP_STATUS_IN_PROGRESS)
+        /* Make sure that we are working with a pipe in use */
+        if(pipe->inUse != true)
         {
-            /* If the IRP is in progress, then we set the temp IRP state. This
-             * will be caught in the _DRV_USBHSV1_HOST_NonControlTransferProcess() and
-             * _DRV_USBHSV1_HOST_ControlTransferProcess() functions */
-            irp->status = USB_HOST_IRP_STATUS_ABORTED;
-            if(irp->callback != NULL)
-            {
-                irp->callback((USB_HOST_IRP*)irp);
-            }
-            irp->tempState = DRV_USBHSV1_HOST_IRP_STATE_ABORTED;
+            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Pipe is not in use");
         }
         else
         {
-            /* IRP is pending */
-            irp->status = USB_HOST_IRP_STATUS_ABORTED;
-            if(irp->callback != NULL)
+            hDriver = (DRV_USBHSV1_OBJ *)pipe->hClient;
+            usbMod = hDriver->usbID;
+
+            /* Disable the interrupt */
+
+            if(!hDriver->isInInterruptContext)
             {
-                irp->callback((USB_HOST_IRP*)irp);
+                if(OSAL_MUTEX_Lock(&hDriver->mutexID, OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
+                {
+                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Mutex lock failed");
+                }
+                interruptWasEnabled = _DRV_USBHSV1_InterruptSourceDisable(hDriver->interruptSource);
             }
-        }
-        irp = irp->next;
-    }
 
-    /* Now we return the pipe back to the driver */
-    pipe->inUse = false ;
+            if(USB_TRANSFER_TYPE_CONTROL == pipe->pipeType)
+            {
+                transferGroup = &hDriver->controlTransferGroup;
 
-    /* Enable the interrupts */
-    if(!hDriver->isInInterruptContext)
-    {
-        if(interruptWasEnabled)
-        {
-            _DRV_USBHSV1_InterruptSourceEnable(hDriver->interruptSource);
-        }
+                if(pipe->previous == NULL)
+                {
+                    /* The previous pipe could be null if this was the first pipe in the
+                     * transfer group */
 
-        /* OSAL: Return Mutex */
-        if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
-        {
-            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Mutex unlock failed");
+                    transferGroup->pipe = pipe->next;
+                    if(pipe->next != NULL)
+                    {
+                        pipe->next->previous = NULL;
+                    }
+                }
+                else
+                {
+                    /* Remove this pipe from the linked list */
+
+                    pipe->previous->next = pipe->next;
+                    if(pipe->next != NULL)
+                    {
+                        pipe->next->previous = pipe->previous;
+                    }
+                }
+
+                if(transferGroup->nPipes != 0)
+                {
+                    /* Reduce the count only if its not zero already */
+
+                    transferGroup->nPipes --;
+                }
+            }
+            else
+            {
+                /* Non control transfer pipes are not stored as groups.  We deallocate
+                 * the endpoint object that this pipe used */
+
+                endpointObj = &hDriver->hostEndpointTable[pipe->hostPipeN];
+                endpointObj->endpoint.inUse = false;
+                endpointObj->endpoint.pipe = NULL;
+
+                /* Clear the error status */
+                usbMod->USBHS_HSTPIPERR[pipe->hostPipeN] = 0;
+            }
+
+            /* Now we invoke the call back for each IRP in this pipe and say that it is
+             * aborted.  If the IRP is in progress, then that IRP will be actually
+             * aborted on the next SOF This will allow the USB module to complete any
+             * transaction that was in progress. */
+
+            irp = (USB_HOST_IRP_LOCAL *)pipe->irpQueueHead;
+            while(irp != NULL)
+            {
+                irp->pipe = DRV_USBHSV1_HOST_PIPE_HANDLE_INVALID;
+
+                if(irp->status == USB_HOST_IRP_STATUS_IN_PROGRESS)
+                {
+                    /* If the IRP is in progress, then we set the temp IRP state. This
+                     * will be caught in the _DRV_USBHSV1_HOST_NonControlTransferProcess() and
+                     * _DRV_USBHSV1_HOST_ControlTransferProcess() functions */
+
+                    irp->status = USB_HOST_IRP_STATUS_ABORTED;
+
+                    if(irp->callback != NULL)
+                    {
+                        irp->callback((USB_HOST_IRP*)irp);
+                    }
+                    irp->tempState = DRV_USBHSV1_HOST_IRP_STATE_ABORTED;
+                }
+                else
+                {
+                    /* IRP is pending */
+                    irp->status = USB_HOST_IRP_STATUS_ABORTED;
+
+                    if(irp->callback != NULL)
+                    {
+                        irp->callback((USB_HOST_IRP*)irp);
+                    }
+                }
+                irp = irp->next;
+            }
+
+            /* Now we return the pipe back to the driver */
+            pipe->inUse = false ;
+
+            /* Enable the interrupts */
+            if(!hDriver->isInInterruptContext)
+            {
+                if(interruptWasEnabled)
+                {
+                    _DRV_USBHSV1_InterruptSourceEnable(hDriver->interruptSource);
+                }
+
+                if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
+                {
+                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Mutex unlock failed");
+                }
+            }
         }
     }
 }/* end of DRV_USBHSV1_HOST_PipeClose() */
@@ -825,193 +826,195 @@ DRV_USBHSV1_HOST_PIPE_HANDLE DRV_USBHSV1_HOST_PipeSetup
 
     DRV_USBHSV1_OBJ * hDriver;
     DRV_USBHSV1_HOST_PIPE_OBJ * pipe = NULL;
+    DRV_USBHSV1_HOST_PIPE_HANDLE pipeHandle = DRV_USBHSV1_HOST_PIPE_HANDLE_INVALID;
   
-    if(client == DRV_HANDLE_INVALID)
+    if((client == DRV_HANDLE_INVALID) || (((DRV_USBHSV1_OBJ *)client) == NULL))
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Invalid client handle");
-        return DRV_USBHSV1_HOST_PIPE_HANDLE_INVALID;
     }
 
-    if((speed == USB_SPEED_LOW) || (speed == USB_SPEED_FULL) || (speed == USB_SPEED_HIGH))
+    else if(((DRV_USBHSV1_OBJ *)client)->inUse)
     {
-        if(pipeType != USB_TRANSFER_TYPE_CONTROL)
+        if((speed == USB_SPEED_LOW) || (speed == USB_SPEED_FULL) || (speed == USB_SPEED_HIGH))
         {
-            if(wMaxPacketSize < 8)
+            /* wMaxPacketSize can be less than 8 for Non control endpoints. E.g.
+             * Interrupt IN endpoints can be 4 bytes for HID Mouse device. This
+             * USB module requires minimum 2 to the power 3 i.e. 8 bytes as the
+             * wMaxPacketSize.
+             * 
+             * For Control endpoints the minimum has to be 8 bytes.  */
+
+            if(pipeType != USB_TRANSFER_TYPE_CONTROL)
             {
-                wMaxPacketSize = 8;
+                if(wMaxPacketSize < 8)
+                {
+                    wMaxPacketSize = 8;
+                }
+            }
+
+            if((wMaxPacketSize < 8) ||(wMaxPacketSize > 4096))
+            {
+                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Invalid pipe endpoint size");
+            }
+            else
+            {
+
+                hDriver = (DRV_USBHSV1_OBJ *)client;
+                endpoint = (endpointAndDirection & 0x0F);
+                epDirection = (endpointAndDirection & 0x80) >> 7;
+
+
+                if(OSAL_MUTEX_Lock(&hDriver->mutexID, OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
+                {
+                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Mutex lock failed");
+                }
+                else
+                {
+                    if(pipeType == USB_TRANSFER_TYPE_CONTROL)
+                    {
+                        /* Set pipeIter to zero to indicate that we must use pipe 0
+                         * for control transfers. We also add the control transfer pipe
+                         * to the control transfer group. */
+                        pipeIter = 0;
+
+                        if (wMaxPacketSize >= 8)
+                        {
+                            /* Reset Pipe */
+                            Set_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (pipeIter)));
+                            Clr_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (pipeIter)));
+
+                            /* Enable Pipe */
+                            Set_bits(hDriver->usbID->USBHS_HSTPIP, (1 << (pipeIter)));
+                            /* Configure Pipe */
+                            hstPipeCfg = ((0 << 2)|((drv_usbhsv1_format_pipe_size(wMaxPacketSize) & 7) << 4)|
+                                          (0 << 8)|(0 << 10)|(0 << 12)|(pipeIter << 16)|(0 << 24));
+
+                            /* Enable PINGEN for HS Control Pipe */ 
+                            if((USB_TRANSFER_TYPE_CONTROL == pipeType) && \
+                               (USB_SPEED_HIGH == hDriver->deviceSpeed))
+                            {
+                                hstPipeCfg |= (1<<20);
+                            }
+        
+                            /* Allocate the Pipe Memory */
+                            hstPipeCfg |= (USBHS_HSTPIPCFG_ALLOC_Msk);
+                            hDriver->usbID->USBHS_HSTPIPCFG[pipeIter]  = hstPipeCfg;
+
+                            /* Check if Pipe configuration status is OK */
+                            if(USBHS_HSTPIPISR_CFGOK_Msk != (USBHS_HSTPIPISR_CFGOK_Msk & hDriver->usbID->USBHS_HSTPIPISR[pipeIter]))
+                            {
+                                /* Disable Pipe */
+                                Clr_bits(hDriver->usbID->USBHS_HSTPIP, (1 << (pipeIter)));
+                                return DRV_USBHSV1_HOST_PIPE_HANDLE_INVALID;
+                            }
+                            /* Configure address of Pipe */
+                            Wr_bitfield((&hDriver->usbID->USBHS_HSTADDR1)[(pipeIter)>>2], 0x7F << (((pipeIter)&0x03)<<3), deviceAddress);
+
+                            /* Always enable stall and error interrupts of control endpoint */
+                            /* Enable Stall Interrupt */
+                            hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_RXSTALLDES_Msk;
+                            /* Enable Pipe Error Interrupt */
+                            hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_PERRES_Msk;
+                            /* Enable Pipe Interrupt */
+                            Set_bits(hDriver->usbID->USBHS_HSTIER, ((1 << 8) << (pipeIter)));
+                            epFound = true;
+                            pipe = &gDrvUSBHostPipeObj[pipeIter];
+                        }
+                    }
+                    else
+                    {
+                        /* Pipe allocation for non-control transfer */
+                        for(pipeIter = 1; pipeIter < 10; pipeIter ++)
+                        {
+                            if((false == gDrvUSBHostPipeObj[pipeIter].inUse) && \
+                               (false == Tst_bits(hDriver->usbID->USBHS_HSTPIP, (1 << (pipeIter)))))
+                            {
+                                /* This means we have found a free pipe object */
+                                uint16_t ep_dir;
+                                ep_dir = (epDirection == USB_DATA_DIRECTION_DEVICE_TO_HOST)?(0x1):(0x2);
+                                /* Reset Pipe*/
+                                Set_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (pipeIter)));
+                                Clr_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (pipeIter)));
+
+                                /* Enable Pipe */
+                                Set_bits(hDriver->usbID->USBHS_HSTPIP, (1 << (pipeIter)));
+
+                                /* Configure Pipe */
+                                hstPipeCfg = ((0 << 2)|((drv_usbhsv1_format_pipe_size(wMaxPacketSize) & 7) << 4)|
+                                (ep_dir << 8)|(0 << 10)|(pipeType << 12)|(endpoint << 16)|(bInterval << 24));
+
+                                /* Enable PINGEN for HS BULK-OUT Pipe */ 
+                                if((0x2 == ep_dir) && (USB_TRANSFER_TYPE_BULK == pipeType) && \
+                                   (USB_SPEED_HIGH == hDriver->deviceSpeed))
+                                {
+                                    hstPipeCfg |= (1<<20);
+                                }
+
+                                /* Allocate the Pipe Memory */
+                                hstPipeCfg |= (USBHS_HSTPIPCFG_ALLOC_Msk);
+                                hDriver->usbID->USBHS_HSTPIPCFG[pipeIter]  = hstPipeCfg;
+
+                                /* Check if Pipe configuration status is OK */
+                                if(USBHS_HSTPIPISR_CFGOK_Msk != (USBHS_HSTPIPISR_CFGOK_Msk & hDriver->usbID->USBHS_HSTPIPISR[pipeIter]))
+                                {
+                                    /* Disable Pipe */
+                                    Clr_bits(hDriver->usbID->USBHS_HSTPIP, (1 << (pipeIter)));
+                                    return DRV_USBHSV1_HOST_PIPE_HANDLE_INVALID;
+                                }
+
+                                /* Configure address of Pipe */
+                                Wr_bitfield((&hDriver->usbID->USBHS_HSTADDR1)[(pipeIter)>>2], 0x7F << (((pipeIter)&0x03)<<3), deviceAddress);
+
+                                /* Enable Stall Interrupt */
+                                hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_RXSTALLDES_Msk;
+                                /* Enable Pipe Error Interrupt */
+                                hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_PERRES_Msk;
+                                /* Enable Pipe Interrupt */
+                                Set_bits(hDriver->usbID->USBHS_HSTIER, ((1 << 8) << (pipeIter)));
+
+                                epFound = true;
+                                pipe = &gDrvUSBHostPipeObj[pipeIter];
+                                hDriver->hostEndpointTable[pipeIter].endpoint.inUse = true;
+                                hDriver->hostEndpointTable[pipeIter].endpoint.pipe = pipe;                
+                                break;
+                            }                            
+                        } /* for */
+                    } 
+
+                    if(!epFound)
+                    {
+                        /* This means we could not find a spare endpoint for this
+                         * non control transfer. */
+                        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Could not allocate endpoint");
+                    }
+                    if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
+                    { 
+                        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Mutex unlock failed");
+                    }
+                }
+
+                if (pipe != NULL)
+                {
+                    /* Setup the pipe object */
+                    pipe->inUse         = true;
+                    pipe->deviceAddress = deviceAddress;
+                    pipe->irpQueueHead  = NULL;
+                    pipe->bInterval     = bInterval;
+                    pipe->speed         = speed;
+                    pipe->hubAddress    = hubAddress;
+                    pipe->hubPort       = hubPort;
+                    pipe->pipeType      = pipeType;
+                    pipe->hClient       = client;
+                    pipe->endpointSize  = wMaxPacketSize;
+                    pipe->intervalCounter = bInterval;
+                    pipe->hostPipeN     = pipeIter;
+                    pipe->endpointAndDirection   = endpointAndDirection;
+                    pipeHandle = (DRV_USBHSV1_HOST_PIPE_HANDLE)pipe;
+                }
             }
         }
     }
-    if((wMaxPacketSize < 8) ||(wMaxPacketSize > 4096))
-    {
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Invalid pipe endpoint size");
-        return DRV_USBHSV1_HOST_PIPE_HANDLE_INVALID;
-    }
-
-    hDriver = (DRV_USBHSV1_OBJ *)client;
-    endpoint = (endpointAndDirection & 0x0F);
-    epDirection = (endpointAndDirection & 0x80) >> 7;
-
-    /* OSAL: Mutex Lock */
-    if(OSAL_MUTEX_Lock(&hDriver->mutexID, OSAL_WAIT_FOREVER) !=
-                OSAL_RESULT_TRUE)
-    {
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Mutex lock failed");
-        return USB_ERROR_OSAL_FUNCTION;
-    }
-    
-    
-    if(pipeType == USB_TRANSFER_TYPE_CONTROL)
-    {
-        /* Set pipeIter to zero to indicate that we must use pipe 0
-         * for control transfers. We also add the control transfer pipe
-         * to the control transfer group. */
-        pipeIter = 0;
-
-	    if (wMaxPacketSize < 8)
-        {
-    	    return DRV_USBHSV1_HOST_PIPE_HANDLE_INVALID;
-	    }
-        /* Reset Pipe */
-        Set_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (pipeIter)));
-        Clr_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (pipeIter)));
-
-        /* Enable Pipe */
-        Set_bits(hDriver->usbID->USBHS_HSTPIP, (1 << (pipeIter)));
-
-        /* Configure Pipe */
-        hstPipeCfg = ((0 << 2)|((drv_usbhsv1_format_pipe_size(wMaxPacketSize) & 7) << 4)|
-                      (0 << 8)|(0 << 10)|(0 << 12)|(pipeIter << 16)|(0 << 24));
-
-        /* Enable PINGEN for HS Control Pipe */ 
-        if((USB_TRANSFER_TYPE_CONTROL == pipeType) && \
-           (USB_SPEED_HIGH == hDriver->deviceSpeed))
-        {
-            hstPipeCfg |= (1<<20);
-        }
-        
-        /* Allocate the Pipe Memory */
-        hstPipeCfg |= (USBHS_HSTPIPCFG_ALLOC_Msk);
-        hDriver->usbID->USBHS_HSTPIPCFG[pipeIter]  = hstPipeCfg;
-
-        /* Check if Pipe configuration status is OK */
-        if(USBHS_HSTPIPISR_CFGOK_Msk != (USBHS_HSTPIPISR_CFGOK_Msk & hDriver->usbID->USBHS_HSTPIPISR[pipeIter]))
-        {
-            /* Disable Pipe */
-            Clr_bits(hDriver->usbID->USBHS_HSTPIP, (1 << (pipeIter)));
-            return DRV_USBHSV1_HOST_PIPE_HANDLE_INVALID;
-        }
-        /* Configure address of Pipe */
-        Wr_bitfield((&hDriver->usbID->USBHS_HSTADDR1)[(pipeIter)>>2], 0x7F << (((pipeIter)&0x03)<<3), deviceAddress);
-
-        /* Always enable stall and error interrupts of control endpoint */
-        /* Enable Stall Interrupt */
-        hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_RXSTALLDES_Msk;
-        /* Enable Pipe Error Interrupt */
-        hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_PERRES_Msk;
-        /* Enable Pipe Interrupt */
-        Set_bits(hDriver->usbID->USBHS_HSTIER, ((1 << 8) << (pipeIter)));
-        epFound = true;
-        pipe = &gDrvUSBHostPipeObj[pipeIter];
-    }
-    else
-    {
-        /* Pipe allocation for non-control transfer */
-        for(pipeIter = 1; pipeIter < 10; pipeIter ++)
-        {
-            if((false == gDrvUSBHostPipeObj[pipeIter].inUse) && \
-               (false == Tst_bits(hDriver->usbID->USBHS_HSTPIP, (1 << (pipeIter)))))
-            {
-                /* This means we have found a free pipe object */
-                uint16_t ep_dir;
-                ep_dir = (epDirection == USB_DATA_DIRECTION_DEVICE_TO_HOST)?(0x1):(0x2);
-                /* Reset Pipe*/
-                Set_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (pipeIter)));
-                Clr_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (pipeIter)));
-        
-                /* Enable Pipe */
-                Set_bits(hDriver->usbID->USBHS_HSTPIP, (1 << (pipeIter)));
-                
-                /* Configure Pipe */
-                hstPipeCfg = ((0 << 2)|((drv_usbhsv1_format_pipe_size(wMaxPacketSize) & 7) << 4)|
-                (ep_dir << 8)|(0 << 10)|(pipeType << 12)|(endpoint << 16)|(bInterval << 24));
-  
-                /* Enable PINGEN for HS BULK-OUT Pipe */ 
-                if((0x2 == ep_dir) && (USB_TRANSFER_TYPE_BULK == pipeType) && \
-                   (USB_SPEED_HIGH == hDriver->deviceSpeed))
-                {
-                    hstPipeCfg |= (1<<20);
-                }
-        
-                /* Allocate the Pipe Memory */
-                hstPipeCfg |= (USBHS_HSTPIPCFG_ALLOC_Msk);
-                hDriver->usbID->USBHS_HSTPIPCFG[pipeIter]  = hstPipeCfg;
-
-                /* Check if Pipe configuration status is OK */
-                if(USBHS_HSTPIPISR_CFGOK_Msk != (USBHS_HSTPIPISR_CFGOK_Msk & hDriver->usbID->USBHS_HSTPIPISR[pipeIter]))
-                {
-                    /* Disable Pipe */
-                    Clr_bits(hDriver->usbID->USBHS_HSTPIP, (1 << (pipeIter)));
-                    return DRV_USBHSV1_HOST_PIPE_HANDLE_INVALID;
-                }
-                
-                /* Configure address of Pipe */
-                Wr_bitfield((&hDriver->usbID->USBHS_HSTADDR1)[(pipeIter)>>2], 0x7F << (((pipeIter)&0x03)<<3), deviceAddress);
-                
-                /* Enable Stall Interrupt */
-                hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_RXSTALLDES_Msk;
-                /* Enable Pipe Error Interrupt */
-                hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_PERRES_Msk;
-                /* Enable Pipe Interrupt */
-                Set_bits(hDriver->usbID->USBHS_HSTIER, ((1 << 8) << (pipeIter)));
-                
-                epFound = true;
-                pipe = &gDrvUSBHostPipeObj[pipeIter];
-                hDriver->hostEndpointTable[pipeIter].endpoint.inUse = true;
-                hDriver->hostEndpointTable[pipeIter].endpoint.pipe = pipe;                
-                break;
-            }                            
-        }            
-    }    
-
-    if(!epFound)
-    {
-        /* This means we could not find a spare endpoint for this
-         * non control transfer. */
-
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Could not allocate endpoint");
-        /* OSAL: Mutex Unlock */
-        if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
-        {
-            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Mutex unlock failed");
-        }
-        return DRV_USBHSV1_HOST_PIPE_HANDLE_INVALID;
-    }
-    
-	if (pipe != NULL)
-	{
-		/* Setup the pipe object */
-		pipe->inUse         = true;
-		pipe->deviceAddress = deviceAddress;
-		pipe->irpQueueHead  = NULL;
-		pipe->bInterval     = bInterval;
-		pipe->speed         = speed;
-		pipe->hubAddress    = hubAddress;
-		pipe->hubPort       = hubPort;
-		pipe->pipeType      = pipeType;
-		pipe->hClient       = client;
-		pipe->endpointSize  = wMaxPacketSize;
-		pipe->intervalCounter = bInterval;
-		pipe->hostPipeN     = pipeIter;
-		pipe->endpointAndDirection   = endpointAndDirection;
-	}
-
-    /* OSAL: Release Mutex */
-    if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
-    {
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Mutex unlock failed");
-    }
-    return((DRV_USBHSV1_HOST_PIPE_HANDLE)pipe);
+    return(pipeHandle);
 
 }/* end of DRV_USBHSV1_HOST_PipeSetup() */
 
@@ -1637,7 +1640,8 @@ void _DRV_USBHSV1_HOST_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
     {
         /* Manage Device Disconnection Interrupt 
          */
-        usb_connected = 0;
+        SYS_DEBUG_MESSAGE(SYS_ERROR_DEBUG, "\r\nDRV USBHSV1: Interrupt: DDISC");
+
         /* Stop reset signal, in case of disconnection during reset */
         hDriver->usbID->USBHS_HSTCTRL &= ~USBHS_HSTCTRL_RESET_Msk;
         /* Disable SOF */
@@ -1676,7 +1680,7 @@ void _DRV_USBHSV1_HOST_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
     {
         /* Manage Device Connection Interrupt
          */
-        usb_connected = 1;
+        SYS_DEBUG_MESSAGE(SYS_ERROR_DEBUG, " DCONN");  
         /* Clear Connection Interrupt */
         hDriver->usbID->USBHS_HSTICR = USBHS_HSTICR_DCONNIC_Msk;
         /* Enable Disconnection Interrupt */
@@ -1686,11 +1690,12 @@ void _DRV_USBHSV1_HOST_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
     /* If Wakeup interrupt is enabled and triggered and the usb is in disconnected state */
     else if (((USBHS_HSTISR_HWUPI_Msk == (USBHS_HSTISR_HWUPI_Msk & hDriver->usbID->USBHS_HSTISR)) 
           && (USBHS_HSTIMR_HWUPIE_Msk == (USBHS_HSTIMR_HWUPIE_Msk & hDriver->usbID->USBHS_HSTIMR))) 
-          && (usb_connected == 0))
+          && (hDriver->deviceAttached == false))
     {
     	/* Manage Host Wakeup Interrupt. This interrupt is generated 
          * even if the clock is frozen
          */
+        SYS_DEBUG_MESSAGE(SYS_ERROR_DEBUG, " WAKEUP");
         /* Unfreeze clock */
         hDriver->usbID->USBHS_CTRL |= USBHS_CTRL_FRZCLK_Msk;
         
@@ -1835,7 +1840,6 @@ bool DRV_USBHSV1_HOST_EventsDisable
 
     return(result);
 }
-
 
 // ****************************************************************************
 /* Function:
