@@ -38,21 +38,20 @@
 #include "configuration.h"
 #include "definitions.h" 
 
-USB_HOST_HID_USAGE_DRIVER_INTERFACE usageDriverInterface =
+USB_HOST_HID_USAGE_DRIVER_INTERFACE usageDriverInterfaceKeyboard =
 {
   .initialize = NULL,
   .deinitialize = NULL,
   .usageDriverEventHandler = _USB_HOST_HID_KEYBOARD_EventHandler,
   .usageDriverTask = _USB_HOST_HID_KEYBOARD_Task
 };
-
 USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY usageDriverTableEntry[1] =
 {
     {
         .usage = (USB_HID_USAGE_PAGE_GENERIC_DESKTOP_CONTROLS << 16) | USB_HID_GENERIC_DESKTOP_KEYBOARD,
         .initializeData = NULL,
-        .interface = &usageDriverInterface
-    }
+        .interface = &usageDriverInterfaceKeyboard
+    },
 };
 
 

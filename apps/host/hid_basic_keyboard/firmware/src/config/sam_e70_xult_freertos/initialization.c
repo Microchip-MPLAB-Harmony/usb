@@ -93,10 +93,10 @@
 // *****************************************************************************
 // <editor-fold defaultstate="collapsed" desc="DRV_USART Instance 0 Initialization Data">
 
-static DRV_USART_CLIENT_OBJ drvUSART0ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX0] = {0};
+static DRV_USART_CLIENT_OBJ drvUSART0ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX0];
 
 /* USART transmit/receive transfer objects pool */
-static DRV_USART_BUFFER_OBJ drvUSART0BufferObjPool[DRV_USART_QUEUE_SIZE_IDX0] = {0};
+static DRV_USART_BUFFER_OBJ drvUSART0BufferObjPool[DRV_USART_QUEUE_SIZE_IDX0];
 
 const DRV_USART_PLIB_INTERFACE drvUsart0PlibAPI = {
     .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)USART1_ReadCallbackRegister,
@@ -112,7 +112,7 @@ const DRV_USART_PLIB_INTERFACE drvUsart0PlibAPI = {
 };
 
 const uint32_t drvUsart0remapDataWidth[] = { 0x0, 0x40, 0x80, 0xC0, 0x20000 };
-const uint32_t drvUsart0remapParity[] = { 0x800, 0x200, 0x0, 0x600, 0x400, 0xC00 };
+const uint32_t drvUsart0remapParity[] = { 0x800, 0x0, 0x200, 0x600, 0x400, 0xC00 };
 const uint32_t drvUsart0remapStopBits[] = { 0x0, 0x1000, 0x2000 };
 const uint32_t drvUsart0remapError[] = { 0x20, 0x80, 0x40 };
 
@@ -120,6 +120,7 @@ const DRV_USART_INTERRUPT_SOURCES drvUSART0InterruptSources =
 {
     /* Peripheral has single interrupt vector */
     .isSingleIntSrc                        = true,
+
     /* Peripheral interrupt line */
     .intSources.usartInterrupt             = USART1_IRQn,
 };
@@ -259,8 +260,6 @@ void SYS_Initialize ( void* data )
 	USART1_Initialize();
 
 
-    NVIC_Initialize();
-
     sysObj.drvUsart0 = DRV_USART_Initialize(DRV_USART_INDEX_0, (SYS_MODULE_INIT *)&drvUsart0InitData);
 
 
@@ -276,7 +275,8 @@ void SYS_Initialize ( void* data )
     APP_Initialize();
 
 
-  
+    NVIC_Initialize();
+
 }
 
 

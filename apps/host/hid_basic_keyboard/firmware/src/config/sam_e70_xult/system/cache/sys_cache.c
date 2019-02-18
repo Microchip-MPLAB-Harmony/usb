@@ -48,8 +48,8 @@
 #include "device.h"
 #include "system/cache/sys_cache.h"
 
-#define DATA_CACHE_IS_ENABLED            (SCB->CCR & (uint32_t)SCB_CCR_DC_Msk)
-#define INSTRUCTION_CACHE_IS_ENABLED     (SCB->CCR & (uint32_t)SCB_CCR_IC_Msk)
+#define DATA_CACHE_IS_ENABLED()            (SCB->CCR & (uint32_t)SCB_CCR_DC_Msk)
+#define INSTRUCTION_CACHE_IS_ENABLED()     (SCB->CCR & (uint32_t)SCB_CCR_IC_Msk)
 
 // *****************************************************************************
 // *****************************************************************************
@@ -58,7 +58,7 @@
 // *****************************************************************************
 void SYS_CACHE_EnableCaches (void)
 {
-    if ((INSTRUCTION_CACHE_IS_ENABLED == 0) && (DATA_CACHE_IS_ENABLED == 0)) // If Data and Instruction Caches are disabled
+    if ((INSTRUCTION_CACHE_IS_ENABLED() == 0) && (DATA_CACHE_IS_ENABLED() == 0)) // If Data and Instruction Caches are disabled
     {
         SCB_EnableICache();
         SCB_EnableDCache();
@@ -67,7 +67,7 @@ void SYS_CACHE_EnableCaches (void)
 
 void SYS_CACHE_DisableCaches (void)
 {
-    if (INSTRUCTION_CACHE_IS_ENABLED && DATA_CACHE_IS_ENABLED) // If Data and Instruction Caches are enabled
+    if (INSTRUCTION_CACHE_IS_ENABLED() && DATA_CACHE_IS_ENABLED()) // If Data and Instruction Caches are enabled
     {
         SCB_DisableICache();
         SCB_DisableDCache();
@@ -75,7 +75,7 @@ void SYS_CACHE_DisableCaches (void)
 }
 void SYS_CACHE_EnableICache (void)
 {
-    if (INSTRUCTION_CACHE_IS_ENABLED == 0) // If Instruction Cache is disabled
+    if (INSTRUCTION_CACHE_IS_ENABLED() == 0) // If Instruction Cache is disabled
     {
         SCB_EnableICache();
     }
@@ -83,7 +83,7 @@ void SYS_CACHE_EnableICache (void)
 
 void SYS_CACHE_DisableICache (void)
 {
-    if (INSTRUCTION_CACHE_IS_ENABLED) // If Instruction Cache is enabled
+    if (INSTRUCTION_CACHE_IS_ENABLED()) // If Instruction Cache is enabled
     {
         SCB_DisableICache();
     }
@@ -91,7 +91,7 @@ void SYS_CACHE_DisableICache (void)
 
 void SYS_CACHE_InvalidateICache (void)
 {
-    if (INSTRUCTION_CACHE_IS_ENABLED) // If Instruction Cache is enabled
+    if (INSTRUCTION_CACHE_IS_ENABLED()) // If Instruction Cache is enabled
     {
         SCB_InvalidateICache();
     }
@@ -99,7 +99,7 @@ void SYS_CACHE_InvalidateICache (void)
 
 void SYS_CACHE_EnableDCache (void)
 {
-    if (DATA_CACHE_IS_ENABLED == 0) // If Data Cache is disabled
+    if (DATA_CACHE_IS_ENABLED() == 0) // If Data Cache is disabled
     {
         SCB_EnableDCache();
     }
@@ -107,7 +107,7 @@ void SYS_CACHE_EnableDCache (void)
 
 void SYS_CACHE_DisableDCache (void)
 {
-    if (DATA_CACHE_IS_ENABLED) // If Data Cache is enabled
+    if (DATA_CACHE_IS_ENABLED()) // If Data Cache is enabled
     {
         SCB_DisableDCache();
     }
@@ -115,7 +115,7 @@ void SYS_CACHE_DisableDCache (void)
 
 void SYS_CACHE_InvalidateDCache (void)
 {
-    if (DATA_CACHE_IS_ENABLED) // If Data Cache is enabled
+    if (DATA_CACHE_IS_ENABLED()) // If Data Cache is enabled
     {
         SCB_InvalidateDCache();
     }
@@ -123,7 +123,7 @@ void SYS_CACHE_InvalidateDCache (void)
 
 void SYS_CACHE_CleanDCache (void)
 {
-    if (DATA_CACHE_IS_ENABLED) // If Data Cache is enabled
+    if (DATA_CACHE_IS_ENABLED()) // If Data Cache is enabled
     {
         SCB_CleanDCache();
     }
@@ -131,7 +131,7 @@ void SYS_CACHE_CleanDCache (void)
 
 void SYS_CACHE_CleanInvalidateDCache (void)
 {
-    if (DATA_CACHE_IS_ENABLED) // If Data Cache is enabled
+    if (DATA_CACHE_IS_ENABLED()) // If Data Cache is enabled
     {
         SCB_CleanInvalidateDCache();
     }
@@ -139,7 +139,7 @@ void SYS_CACHE_CleanInvalidateDCache (void)
 
 void SYS_CACHE_InvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
 {
-    if (DATA_CACHE_IS_ENABLED) // If Data Cache is enabled
+    if (DATA_CACHE_IS_ENABLED()) // If Data Cache is enabled
     {
         SCB_InvalidateDCache_by_Addr(addr, size);
     }
@@ -147,7 +147,7 @@ void SYS_CACHE_InvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
 
 void SYS_CACHE_CleanDCache_by_Addr (uint32_t *addr, int32_t size)
 {
-    if (DATA_CACHE_IS_ENABLED) // If Data Cache is enabled
+    if (DATA_CACHE_IS_ENABLED()) // If Data Cache is enabled
     {
         SCB_CleanDCache_by_Addr(addr, size);
     }
@@ -155,7 +155,7 @@ void SYS_CACHE_CleanDCache_by_Addr (uint32_t *addr, int32_t size)
 
 void SYS_CACHE_CleanInvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
 {
-    if (DATA_CACHE_IS_ENABLED) // If Data Cache is enabled
+    if (DATA_CACHE_IS_ENABLED()) // If Data Cache is enabled
     {
         SCB_CleanInvalidateDCache_by_Addr(addr, size);
     }

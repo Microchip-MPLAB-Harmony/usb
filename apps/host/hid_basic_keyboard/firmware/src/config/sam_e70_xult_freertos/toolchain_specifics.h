@@ -1,21 +1,4 @@
 /*******************************************************************************
-  USB stack external dependencies file
-
-  Company:
-    Microchip Technology Inc.
-
-  File Name:
-    drv_usb_external_dependencies.h
-
-  Summary:
-    USB Driver external dependencies file
-
-  Description:
-    USB Driver external dependencies file. 
-*******************************************************************************/
-
-//DOM-IGNORE-BEGIN
-/*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
@@ -36,31 +19,17 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *******************************************************************************/
-//DOM-IGNORE-END
+*******************************************************************************/
 
-#ifndef _DRV_USB_EXTERNAL_DEPENDENCIES_H
-#define _DRV_USB_EXTERNAL_DEPENDENCIES_H
+#ifndef TOOLCHAIN_SPECIFICS_H
+#define TOOLCHAIN_SPECIFICS_H
 
-#include <string.h>
-#include "system/system_common.h"
-#include "configuration.h"
-#include "definitions.h"
-#include "system/system_module.h"
+#include <sys/types.h>
+#define NO_INIT        __attribute__((section(".no_init")))
+#define SECTION(a)     __attribute__((__section__(a)))
+
+#define CACHE_ALIGN    __ALIGNED(32)
 
 
-#ifndef SYS_DEBUG_PRINT
-	#define SYS_DEBUG_PRINT(level, format, ...) 
-#endif 
+#endif // end of header
 
-#ifndef SYS_DEBUG_MESSAGE
-	#define SYS_DEBUG_MESSAGE(a,b, ...)
-#endif 
-
-#ifndef SYS_DEBUG
-	#define SYS_DEBUG(a,b)
-#endif 
-#endif 
-/*******************************************************************************
- End of File
-*/
