@@ -50,6 +50,7 @@
 // *****************************************************************************
 
 #include "usb/usb_host_hid.h"
+#include "usb/src/usb_external_dependencies.h"
 
 
 // DOM-IGNORE-BEGIN

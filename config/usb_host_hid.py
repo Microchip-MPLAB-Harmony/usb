@@ -19,12 +19,11 @@ usbHostHidKeyboardLocalHeaderFile  = None
 usbHostHidMouseSourceFile  = None
 usbHostHidMouseHeaderFile  = None
 usbHostHidMouseLocalHeaderFile  = None
-usbHostHidKeyboardString = None
 
 
 def onAttachmentConnected(source, target):
 	ownerComponent = source["component"]
-	print("USB Host Layer Connected")
+	print("USB Host HID Client Driver: USB Host Layer Connected")
 	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
 	if readValue != None:
 		Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
@@ -32,7 +31,7 @@ def onAttachmentConnected(source, target):
 	
 def onAttachmentDisconnected(source, target):
 	ownerComponent = source["component"]
-	print("USB Host Layer Disconnected")
+	print("USB Host HID Client Driver: USB Host Layer Disconnected")
 	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
 	if readValue != None:
 		Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
@@ -45,15 +44,14 @@ def destroyComponent(component):
 		Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue - 1 , 2)
 		
 def mouseEnable(symbol, event):
+	global usbHostHidClientDriverTotalUsageInst
 	if (event["value"] == True):
 		symbol.setEnabled(True)
-		usbHostHidKeyboardString.setValue("ENABLED")
 	else:
 		symbol.setEnabled(False)
-		usbHostHidKeyboardString.setValue("DISABLED")
 
 def keyBoardEnable(symbol, event):
-	
+	global usbHostHidClientDriverTotalUsageInst
 	if (event["value"] == True):
 		symbol.setEnabled(True)
 	else:
@@ -64,6 +62,14 @@ def setVisible (symbol, event):
 		symbol.setVisible(True)
 	else:
 		symbol.setVisible(False)
+
+def updateUsageDriverInstanceNumber (symbol, event):
+	if (event["value"] == True):
+		usageDriverInstances = symbol.getValue()
+		symbol.setValue(usageDriverInstances + 1, 2)
+	else:
+		usageDriverInstances = symbol.getValue()
+		symbol.setValue(usageDriverInstances - 1, 2)
 		
 def instantiateComponent(usbHostHidComponent):
 	
@@ -88,7 +94,6 @@ def instantiateComponent(usbHostHidComponent):
 	global usbHostHidMouseSourceFile 
 	global usbHostHidMouseHeaderFile 
 	global usbHostHidMouseLocalHeaderFile  
-	global usbHostHidKeyboardString
 
 	res = Database.activateComponents(["usb_host"])
 
@@ -105,13 +110,6 @@ def instantiateComponent(usbHostHidComponent):
 	usbHostHidClientDriverIntEPsNumber.setDescription("Enter the number of INTERRUPT IN endpoints supported per HID interface.")
 	usbHostHidClientDriverIntEPsNumber.setVisible(True)
 	usbHostHidClientDriverIntEPsNumber.setDefaultValue(1)
-	
-	# USB Host HID Client driver Total Usage Driver instances 
-	usbHostHidClientDriverTotalUsageInst = usbHostHidComponent.createIntegerSymbol("CONFIG_USB_HID_TOTAL_USAGE_DRIVER_INSTANCES", None)
-	usbHostHidClientDriverTotalUsageInst.setLabel("Number of Usage Driver instances")
-	usbHostHidClientDriverTotalUsageInst.setDescription("Enter the number of total usage driver instances registered with HID client driver.")
-	usbHostHidClientDriverTotalUsageInst.setVisible(True)
-	usbHostHidClientDriverTotalUsageInst.setDefaultValue(1)
 	
 	# USB Host HID Client driver Global Push Pop Stack size
 	usbHostHidClientDriverPushPopStackSize = usbHostHidComponent.createIntegerSymbol("CONFIG_USB_HID_GLOBAL_PUSH_POP_STACK_SIZE", None)
@@ -132,7 +130,7 @@ def instantiateComponent(usbHostHidComponent):
 	usbHostHidClientDriverMouseButtonsNumber.setLabel("Number of Mouse buttons")
 	usbHostHidClientDriverMouseButtonsNumber.setDescription("Enter the Number of Mouse buttons whose value will be captured per HID Mouse device")
 	usbHostHidClientDriverMouseButtonsNumber.setVisible(False)
-	usbHostHidClientDriverMouseButtonsNumber.setDefaultValue(False)
+	usbHostHidClientDriverMouseButtonsNumber.setDefaultValue(5)
 	usbHostHidClientDriverMouseButtonsNumber.setDependencies(setVisible, ["CONFIG_USB_HOST_USE_MOUSE"])
 	
 	# USB Host HID Client driver Keyboard 
@@ -142,9 +140,14 @@ def instantiateComponent(usbHostHidComponent):
 	usbHostHidClientDriverKeyboard.setVisible(True)
 	usbHostHidClientDriverKeyboard.setDefaultValue(False)
 	
-	usbHostHidKeyboardString = usbHostHidComponent.createStringSymbol("CONFIG_USB_HOST_USE_KEYBOARD_STRING", None)
-	usbHostHidKeyboardString.setVisible(False)
-	usbHostHidKeyboardString.setDefaultValue("DISABLED")
+	# USB Host HID Client driver Total Usage Driver instances 
+	usbHostHidClientDriverTotalUsageInst = usbHostHidComponent.createIntegerSymbol("CONFIG_USB_HID_TOTAL_USAGE_DRIVER_INSTANCES", None)
+	usbHostHidClientDriverTotalUsageInst.setLabel("Number of Usage Driver instances")
+	usbHostHidClientDriverTotalUsageInst.setDescription("Enter the number of total usage driver instances registered with HID client driver.")
+	usbHostHidClientDriverTotalUsageInst.setVisible(True)
+	usbHostHidClientDriverTotalUsageInst.setDefaultValue(0)
+	usbHostHidClientDriverTotalUsageInst.setUseSingleDynamicValue(True)
+	usbHostHidClientDriverTotalUsageInst.setDependencies(updateUsageDriverInstanceNumber, ["CONFIG_USB_HOST_USE_MOUSE","CONFIG_USB_HOST_USE_KEYBOARD"])
 		
 	##############################################################
 	# system_definitions.h file for USB Host HID Client driver   
@@ -199,38 +202,29 @@ def instantiateComponent(usbHostHidComponent):
 	addFileName('usb_host_hid_local.h', usbHostHidComponent, usbHostHidLocalHeaderFile, "src/", "/usb/src", True, None)
 	
 	usbHostHidKeyboardSourceFile = usbHostHidComponent.createFileSymbol(None, None)
-	# Check if File Symbol is enabled or not 
-	#keyboardSourceFileEnabled = usbHostHidKeyboardSourceFile.getEnabled()
-	#print ( "Keyboard:", usbHostHidKeyboardString.getValue())
 	addFileName('usb_host_hid_keyboard.c', usbHostHidComponent, usbHostHidKeyboardSourceFile, "src/", "/usb/src/", usbHostHidClientDriverKeyboard.getValue(), keyBoardEnable)
-	#usbHostHidKeyboardSourceFile.setEnabled(usbHostHidClientDriverKeyboard.getValue())
+
 	
 	usbHostHidKeyboardHeaderFile = usbHostHidComponent.createFileSymbol(None, None)
-	#keyboardHeaderFileEnabled = usbHostHidKeyboardHeaderFile.getEnabled()
 	addFileName('usb_host_hid_keyboard.h', usbHostHidComponent, usbHostHidKeyboardHeaderFile, "", "/usb/", usbHostHidClientDriverKeyboard.getValue(), keyBoardEnable)
 	
 	
 	usbHostHidKeyboardLocalHeaderFile = usbHostHidComponent.createFileSymbol(None, None)
-	#keyboardLocalHeaderFileEnabled = usbHostHidKeyboardLocalHeaderFile.getEnabled()
 	addFileName('usb_host_hid_keyboard_local.h', usbHostHidComponent, usbHostHidKeyboardLocalHeaderFile, "src/", "/usb/src", usbHostHidClientDriverKeyboard.getValue(), keyBoardEnable)
 	
 	usbHostHidMouseSourceFile = usbHostHidComponent.createFileSymbol(None, None)
-	#mouseSourceFileEnabled = usbHostHidMouseSourceFile.getEnabled()
 	addFileName('usb_host_hid_mouse.c', usbHostHidComponent, usbHostHidMouseSourceFile, "src/", "/usb/src/", usbHostHidClientDriverMouse.getValue(), mouseEnable)
 	
 	usbHostHidMouseHeaderFile = usbHostHidComponent.createFileSymbol(None, None)
-	#mouseHeaderFileEnabled = usbHostHidMouseHeaderFile.getEnabled()
 	addFileName('usb_host_hid_mouse.h', usbHostHidComponent, usbHostHidMouseHeaderFile, "", "/usb/", usbHostHidClientDriverMouse.getValue(), mouseEnable)
 	
 	usbHostHidMouseLocalHeaderFile = usbHostHidComponent.createFileSymbol(None, None)
-	#mouseLocalHeaderFileEnabled = usbHostHidMouseLocalHeaderFile.getEnabled()
 	addFileName('usb_host_hid_mouse_local.h', usbHostHidComponent, usbHostHidMouseLocalHeaderFile, "src/", "/usb/src", usbHostHidClientDriverMouse.getValue(), mouseEnable)
 
 	
 	# all files go into src/
 def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callback):
 	configName1 = Variables.get("__CONFIGURATION_NAME")
-	#filename = component.createFileSymbol(None, None)
 	symbol.setProjectPath("config/" + configName1 + destPath)
 	symbol.setSourcePath(srcPath + fileName)
 	symbol.setOutputName(fileName)

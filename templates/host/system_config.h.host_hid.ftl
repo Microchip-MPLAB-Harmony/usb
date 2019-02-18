@@ -54,6 +54,11 @@
 /* Maximum number PUSH items that can be saved in the Global item queue per field
  * per HID interface */
 #define USB_HID_GLOBAL_PUSH_POP_STACK_SIZE 1
+
+<#if CONFIG_USB_HOST_USE_MOUSE == true>
+/* Maximum number Mouse buttons whose value will be captured per HID Mouse device */
+#define USB_HOST_HID_MOUSE_BUTTONS_NUMBER ${CONFIG_USB_HOST_HID_MOUSE_BUTTONS_NUMBER}
+</#if>
 <#--
 /*******************************************************************************
  End of File

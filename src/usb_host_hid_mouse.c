@@ -46,12 +46,12 @@
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-
+#include <stdbool.h>
 #include "usb/usb_host_hid_mouse.h"
 #include "usb/src/usb_host_hid_mouse_local.h"
-#include "system/debug/sys_debug.h"
+#include "usb/src/usb_external_dependencies.h"
 #include "usb/usb_host_hid.h"
-#include <p32xxxx.h>
+
 
 /* Mouse driver information on a per instance basis */
 USB_HOST_HID_MOUSE_DATA_OBJ mouseData[USB_HOST_HID_USAGE_DRIVER_SUPPORT_NUMBER];
