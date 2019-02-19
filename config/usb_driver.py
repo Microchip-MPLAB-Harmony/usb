@@ -270,10 +270,16 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbExternalDependenciesFile.setOverwrite(True)
 	
 	drvUsbHsV1HeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbHsV1HeaderFile.setSourcePath(usbDriverPath + "usbhsv1/drv_usbhsv1.h")
-	drvUsbHsV1HeaderFile.setOutputName("drv_usbhsv1.h")
-	drvUsbHsV1HeaderFile.setDestPath(usbDriverProjectPath+ "usbhsv1")
-	drvUsbHsV1HeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath+ "usbhsv1")
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
+		drvUsbHsV1HeaderFile.setSourcePath(usbDriverPath + "usbhsv1/drv_usbhsv1.h")
+		drvUsbHsV1HeaderFile.setOutputName("drv_usbhsv1.h")
+		drvUsbHsV1HeaderFile.setDestPath(usbDriverProjectPath+ "usbhsv1")
+		drvUsbHsV1HeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath+ "usbhsv1")
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+		drvUsbHsV1HeaderFile.setSourcePath(usbDriverPath + "usbhs/drv_usbhs.h")
+		drvUsbHsV1HeaderFile.setOutputName("drv_usbhs.h")
+		drvUsbHsV1HeaderFile.setDestPath(usbDriverProjectPath+ "usbhs")
+		drvUsbHsV1HeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath+ "usbhs")
 	drvUsbHsV1HeaderFile.setType("HEADER")
 	drvUsbHsV1HeaderFile.setOverwrite(True)
 	
