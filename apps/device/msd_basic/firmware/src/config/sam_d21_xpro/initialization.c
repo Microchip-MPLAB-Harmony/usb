@@ -61,7 +61,7 @@
 #pragma config BOD33_EN = ENABLED
 #pragma config BOD33_ACTION = RESET
 
-#pragma config BOD33_HYST = ENABLED
+#pragma config BOD33_HYST = DISABLED
 #pragma config NVMCTRL_REGION_LOCKS = 0xffff // Enter Hexadecimal value
 
 #pragma config WDT_ENABLE = DISABLED

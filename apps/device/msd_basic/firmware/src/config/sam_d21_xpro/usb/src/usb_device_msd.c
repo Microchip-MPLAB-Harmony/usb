@@ -54,7 +54,7 @@
  *************************************/
 static USB_DEVICE_MSD_INSTANCE gUSBDeviceMSDInstance [USB_DEVICE_INSTANCES_NUMBER];
 
-static SCSI_SENSE_DATA gUSBDeviceMSDSenseData[USB_DEVICE_MSD_LUNS_NUMBER] MSD_COHERENT_ATTRIBUTE __attribute__((aligned(16)));
+static SCSI_SENSE_DATA gUSBDeviceMSDSenseData[USB_DEVICE_MSD_LUNS_NUMBER] CACHE_ALIGN;
 
 /***************************************
  * USB device MSD init objects.
@@ -851,8 +851,6 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_VerifyCommand
      * state should be based on the CBW verfication. */
     USB_MSD_CBW * lCBW;
     USB_DEVICE_MSD_INSTANCE * msdInstance = &gUSBDeviceMSDInstance[iMSD];
-    
-   
 
     USB_DEVICE_MSD_MEDIA_FUNCTIONS * mediaFunctions;
     USB_DEVICE_MSD_MEDIA_DYNAMIC_DATA * mediaDynamicData;
@@ -860,12 +858,6 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_VerifyCommand
     *commandStatus = USB_MSD_CSW_COMMAND_PASSED; 
     /* Obtain the pointer to the CBW data structure */
     lCBW = (USB_MSD_CBW *)msdInstance->msdCBW;
-    
-     if ((msdInstance->irpRx.size != sizeof(USB_MSD_CBW))
-            || (lCBW->dCBWSignature != USB_MSD_VALID_CBW_SIGNATURE))
-    {
-         return USB_DEVICE_MSD_STATE_STALL_IN_OUT;
-    }
 
     logicalUnit = msdInstance->msdCBW->bCBWLUN;
     /* Reset media state */

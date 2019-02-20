@@ -27,8 +27,6 @@
               <itemPath>../src/config/sam_d21_xpro/driver/usb/drv_usb.h</itemPath>
               <itemPath>../src/config/sam_d21_xpro/driver/usb/drv_usb_external_dependencies.h</itemPath>
             </logicalFolder>
-            <itemPath>../src/config/sam_d21_xpro/driver/driver.h</itemPath>
-            <itemPath>../src/config/sam_d21_xpro/driver/driver_common.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f4" displayName="clock" projectFiles="true">
@@ -52,10 +50,6 @@
               <itemPath>../src/config/sam_d21_xpro/system/int/sys_int.h</itemPath>
               <itemPath>../src/config/sam_d21_xpro/system/int/sys_int_mapping.h</itemPath>
             </logicalFolder>
-            <itemPath>../src/config/sam_d21_xpro/system/system.h</itemPath>
-            <itemPath>../src/config/sam_d21_xpro/system/system_common.h</itemPath>
-            <itemPath>../src/config/sam_d21_xpro/system/system_module.h</itemPath>
-            <itemPath>../src/config/sam_d21_xpro/system/system_media.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="usb" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
@@ -209,10 +203,10 @@
           <itemPath>../src/config/sam_d21_xpro/startup_xc32.c</itemPath>
           <itemPath>../src/config/sam_d21_xpro/libc_syscalls.c</itemPath>
           <itemPath>../src/config/sam_d21_xpro/usb_device_init_data.c</itemPath>
-          <itemPath>../src/config/sam_d21_xpro/diskImage.c</itemPath>
           <itemPath>../src/config/sam_d21_xpro/tasks.c</itemPath>
         </logicalFolder>
       </logicalFolder>
+      <itemPath>../src/config/sam_d21_xpro/diskImage.c</itemPath>
       <itemPath>../src/main.c</itemPath>
       <itemPath>../src/app.c</itemPath>
     </logicalFolder>

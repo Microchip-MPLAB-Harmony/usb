@@ -133,8 +133,6 @@ extern "C" {
 /* Number of Logical Units */
 #define USB_DEVICE_MSD_LUNS_NUMBER      1
 
-/* Size of disk image (in KB) in Program Flash Memory */
-#define DRV_NVM_BLOCK_MEMORY_SIZE       36
 
 
 /*** USB Driver Configuration ***/
