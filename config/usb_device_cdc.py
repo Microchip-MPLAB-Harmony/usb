@@ -3,6 +3,8 @@ currentQSizeWrite = 1
 currentQSizeSerialStateNotification = 1
 cdcInterfacesNumber = 2
 cdcDescriptorSize = 58
+cdcEndpointsPic32 = 2
+cdcEndpointsSAM = 3
 indexFunction = None
 configValue = None 
 startInterfaceNumber = None 
@@ -11,6 +13,8 @@ useIad = None
 epNumberInterrupt = None
 epNumberBulkOut = None
 epNumberBulkIn = None
+cdcEndpointNumber = None
+
 
 def onAttachmentConnected(source, target):
 	global cdcInterfacesNumber
@@ -22,6 +26,9 @@ def onAttachmentConnected(source, target):
 	global epNumberInterrupt
 	global epNumberBulkOut
 	global epNumberBulkIn
+	global cdcEndpointsPic32
+	global cdcEndpointsSAM
+	
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
 	
@@ -68,11 +75,17 @@ def onAttachmentConnected(source, target):
 			
 		nEndpoints = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if nEndpoints != None:
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", nEndpoints + 3 , 2)
 			epNumberInterrupt.setValue(nEndpoints + 1, 1)
 			epNumberBulkOut.setValue(nEndpoints + 2, 1)
-			epNumberBulkIn.setValue(nEndpoints + 3, 1)
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+				epNumberBulkIn.setValue(nEndpoints + 2, 1)
+				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", nEndpoints + cdcEndpointsPic32 , 2)
+			else:
+				epNumberBulkIn.setValue(nEndpoints + 3, 1)
+				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", nEndpoints + cdcEndpointsSAM , 2)
+			
 
 def onAttachmentDisconnected(source, target):
 
@@ -86,6 +99,8 @@ def onAttachmentDisconnected(source, target):
 	global epNumberInterrupt
 	global epNumberBulkOut
 	global epNumberBulkIn
+	global cdcEndpointsPic32
+	global cdcEndpointsSAM
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
 	
@@ -96,9 +111,13 @@ def onAttachmentDisconnected(source, target):
 		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", nFunctions , 2)
 	
 	endpointNumber = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-	if endpointNumber != None: 
-		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", endpointNumber -  3 , 2)
+	if endpointNumber != None:
+		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", endpointNumber -  cdcEndpointsPic32 , 2)
+		else:
+			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", endpointNumber -  cdcEndpointsSAM , 2)
 	
 	interfaceNumber = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 	if interfaceNumber != None: 
@@ -243,24 +262,35 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	epNumberInterrupt.setLabel("Interrupt Endpoint Number")
 	epNumberInterrupt.setVisible(True)
 	epNumberInterrupt.setMin(1)
-	epNumberInterrupt.setMax(10)
 	epNumberInterrupt.setDefaultValue(1)
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+		epNumberInterrupt.setMax(7)
+	else:
+		epNumberInterrupt.setMax(10)
+	
 
 	# CDC Function driver Data OUT Endpoint Number   
 	epNumberBulkOut = usbDeviceCdcComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_BULK_OUT_ENDPOINT_NUMBER", None)
 	epNumberBulkOut.setLabel("Bulk OUT Endpoint Number")
 	epNumberBulkOut.setVisible(True)
 	epNumberBulkOut.setMin(1)
-	epNumberBulkOut.setMax(10)
 	epNumberBulkOut.setDefaultValue(2)
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+		epNumberBulkOut.setMax(7)
+	else:
+		epNumberBulkOut.setMax(10)
 	
 	# CDC Function driver Data IN Endpoint Number   
 	epNumberBulkIn = usbDeviceCdcComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER", None)
 	epNumberBulkIn.setLabel("Bulk IN Endpoint Number")
 	epNumberBulkIn.setVisible(True)
 	epNumberBulkIn.setMin(1)
-	epNumberBulkIn.setMax(10)
-	epNumberBulkIn.setDefaultValue(3)
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+		epNumberBulkIn.setMax(7)
+		epNumberBulkIn.setDefaultValue(2)
+	else:
+		epNumberBulkIn.setMax(10)
+		epNumberBulkIn.setDefaultValue(3)
 	
 	usbDeviceCdcBufPool = usbDeviceCdcComponent.createBooleanSymbol("CONFIG_USB_DEVICE_CDC_BUFFER_POOL", None)
 	usbDeviceCdcBufPool.setLabel("**** Buffer Pool Update ****")

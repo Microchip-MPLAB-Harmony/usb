@@ -1813,18 +1813,22 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
 
                                 irpDataPtr = (uint8_t *)(irp->data + offset);
 
+								
                                 hDriver->endpointDescriptorTable[endpoint].DEVICE_DESC_BANK[direction].USB_ADDR = (uint32_t) irpDataPtr;
 
                                 irp->nPendingBytes -= byteCount;
             
                                 hDriver->endpointDescriptorTable[endpoint].DEVICE_DESC_BANK[direction].USB_PCKSIZE &= ~USB_DEVICE_PCKSIZE_BYTE_COUNT_Msk;
 
+								hDriver->endpointDescriptorTable[endpoint].DEVICE_DESC_BANK[direction].USB_PCKSIZE &= ~USB_DEVICE_PCKSIZE_BYTE_COUNT_Msk; 
+								
                                 hDriver->endpointDescriptorTable[endpoint].DEVICE_DESC_BANK[direction].USB_PCKSIZE |= USB_DEVICE_PCKSIZE_BYTE_COUNT(byteCount);
 
                                 /* Enable the TXINI interrupt and clear the interrupt flag
                                  * to initiate a Tx the packet */
 
                                 usbID->DEVICE.DEVICE_ENDPOINT[endpoint].USB_EPINTENSET = USB_DEVICE_EPINTENSET_TRCPT1_Msk;
+								
 
                                 usbID->DEVICE.DEVICE_ENDPOINT[endpoint].USB_EPSTATUSSET = USB_DEVICE_EPSTATUSSET_BK1RDY_Msk;   // NAK will be sent until EPSTATUS.BK1RDY is zero
 

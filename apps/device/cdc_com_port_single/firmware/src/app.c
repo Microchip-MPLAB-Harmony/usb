@@ -62,7 +62,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-const uint8_t APP_MAKE_BUFFER_DMA_READY switchPromptUSB[] = "\r\nPUSH BUTTON PRESSED";
+const uint8_t __attribute__((aligned(16))) switchPromptUSB[] = "\r\nPUSH BUTTON PRESSED";
 
 uint8_t APP_MAKE_BUFFER_DMA_READY cdcReadBuffer[APP_READ_BUFFER_SIZE];
 uint8_t APP_MAKE_BUFFER_DMA_READY cdcWriteBuffer[APP_READ_BUFFER_SIZE];

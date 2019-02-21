@@ -5,6 +5,8 @@ msdDescriptorSize = 23
 msdEndpointsNumber = 2
 msdLunNumberMax = 3
 usbDeviceMSDLunCount = 0
+msdEndpointsPic32 = 1
+msdEndpointsSAM = 2
 
 
 indexFunction = None
@@ -29,6 +31,8 @@ def onAttachmentConnected(source, target):
 	global usbDeviceHidBufPool
 	global usbDeviceMsdEPNumberBulkOut
 	global usbDeviceMsdEPNumberBulkIn
+	global msdEndpointsPic32
+	global msdEndpointsSAM
 	
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
@@ -58,11 +62,26 @@ def onAttachmentConnected(source, target):
 	# Update Total Endpoints used 
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if readValue != None:
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue + msdEndpointsNumber , 2)
-			usbDeviceMsdEPNumberBulkIn.setValue(readValue + 1, 1)
-			usbDeviceMsdEPNumberBulkOut.setValue(readValue + 2, 1)	
-	
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue + msdEndpointsPic32 , 2)
+				usbDeviceMsdEPNumberBulkIn.setValue(readValue + 1, 1)
+				usbDeviceMsdEPNumberBulkOut.setValue(readValue + 1, 1)	
+			else:
+				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue + msdEndpointsSAM , 2)
+				usbDeviceMsdEPNumberBulkIn.setValue(readValue + 1, 1)
+				usbDeviceMsdEPNumberBulkOut.setValue(readValue + 2, 1)
+				
+		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+		if readValue != None:
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue - msdEndpointsPic32 , 2)
+			else:
+				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue - msdEndpointsSAM , 2)
+					
 	if (dependencyID == "usb_device_msd_media_dependency"):
 		global usbDeviceMSDLunCount
 		usbDeviceMSDLunCount = usbDeviceMSDLunCount + 1 
@@ -90,6 +109,8 @@ def onAttachmentDisconnected(source, target):
 	global usbDeviceHidBufPool
 	global usbDeviceMsdEPNumberBulkOut
 	global usbDeviceMsdEPNumberBulkIn
+	global msdEndpointsPic32
+	global msdEndpointsSAM
 	
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
@@ -217,14 +238,14 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 	# MSD Function driver Bulk Out Endpoint Number 
 	usbDeviceMsdEPNumberBulkOut = usbDeviceMsdComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_BULK_OUT_ENDPOINT_NUMBER", None)		
 	usbDeviceMsdEPNumberBulkOut.setLabel("Bulk OUT Endpoint Number")
-	usbDeviceMsdEPNumberBulkOut.setVisible(False)
+	usbDeviceMsdEPNumberBulkOut.setVisible(True)
 	usbDeviceMsdEPNumberBulkOut.setMin(1)
 	usbDeviceMsdEPNumberBulkOut.setDefaultValue(1)
 
 	# MSD Function driver Bulk IN Endpoint Number 
 	usbDeviceMsdEPNumberBulkIn = usbDeviceMsdComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER", None)		
 	usbDeviceMsdEPNumberBulkIn.setLabel("Bulk IN Endpoint Number")
-	usbDeviceMsdEPNumberBulkIn.setVisible(False)
+	usbDeviceMsdEPNumberBulkIn.setVisible(True)
 	usbDeviceMsdEPNumberBulkIn.setMin(1)
 	usbDeviceMsdEPNumberBulkIn.setDefaultValue(2)
 		

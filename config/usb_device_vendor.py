@@ -1,6 +1,8 @@
 # Constants specific to USB Device Vendor 
 VENDOR_INTERFACES_NUMBER = 1
 VENDOR_DESCRIPTOR_SIZE = 23
+VENDOR_ENDPOINTS_PIC32 = 1
+VENDOR_ENDPOINTS_SAM = 2
 
 # Variables 
 currentQSizeRead  = 1
@@ -26,6 +28,9 @@ def onAttachmentConnected(source, target):
 	global epNumberBulkIn
 	global queueSizeRead
 	global queueSizeWrite
+	global VENDOR_ENDPOINTS_PIC32
+	global VENDOR_ENDPOINTS_SAM
+	
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
 	
@@ -53,10 +58,16 @@ def onAttachmentConnected(source, target):
 			
 		nEndpoints = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if nEndpoints != None:
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", nEndpoints + 2 , 2)
-			epNumberBulkOut.setValue(nEndpoints + 1, 1)
-			epNumberBulkIn.setValue(nEndpoints + 2, 1)
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", nEndpoints + VENDOR_ENDPOINTS_PIC32 , 2)
+				epNumberBulkOut.setValue(nEndpoints + 1, 1)
+				epNumberBulkIn.setValue(nEndpoints + 1, 1)
+			else:
+				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", nEndpoints + VENDOR_ENDPOINTS_SAM , 2)
+				epNumberBulkOut.setValue(nEndpoints + 1, 1)
+				epNumberBulkIn.setValue(nEndpoints + 2, 1)
 			
 		readQSize = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINT_READ_QUEUE_SIZE")
 		if readQSize!= None:
@@ -82,6 +93,9 @@ def onAttachmentDisconnected(source, target):
 	global epNumberBulkIn
 	global queueSizeRead
 	global queueSizeWrite
+	global VENDOR_ENDPOINTS_PIC32
+	global VENDOR_ENDPOINTS_SAM
+	
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
 	
@@ -92,9 +106,13 @@ def onAttachmentDisconnected(source, target):
 		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", nFunctions , 2)
 	
 	endpointNumber = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-	if endpointNumber != None: 
-		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", endpointNumber -  2 , 2)
+	if endpointNumber != None:
+		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", endpointNumber -  VENDOR_ENDPOINTS_PIC32 , 2)
+		else:
+			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", endpointNumber -  VENDOR_ENDPOINTS_SAM , 2)
 	
 	interfaceNumber = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 	if interfaceNumber != None: 

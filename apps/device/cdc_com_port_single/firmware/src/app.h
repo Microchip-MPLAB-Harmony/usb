@@ -65,11 +65,16 @@
 // Section: Type Definitions
 // *****************************************************************************
 // *****************************************************************************
+#ifdef __PIC32MZ__ 
+    #define APP_MAKE_BUFFER_DMA_READY                           __attribute__((coherent)) __attribute__((aligned(16)))
+#else
+    #define APP_MAKE_BUFFER_DMA_READY                           __attribute__((aligned(16)))
+#endif 
 
-#define APP_MAKE_BUFFER_DMA_READY                           __attribute__((aligned(16)))
 #define APP_READ_BUFFER_SIZE                                512
-#define APP_USB_SWITCH_DEBOUNCE_COUNT_FS                    260
-#define APP_USB_SWITCH_DEBOUNCE_COUNT_HS                    500
+#define APP_USB_SWITCH_DEBOUNCE_COUNT_FS                    200
+#define APP_USB_SWITCH_DEBOUNCE_COUNT_HS                    1280
+
 
 
 // *****************************************************************************

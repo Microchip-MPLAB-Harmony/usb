@@ -2,6 +2,8 @@ currentQSizeRead  = 1
 currentQSizeWrite = 1
 hidInterfacesNumber = 1
 hidDescriptorSize = 32
+hidEndpointsPic32 = 1
+hidEndpointsSAM = 2
 
 usbDeviceHidReportList = ["Mouse", "Keyboard", "Joystick", "Custom"]
 
@@ -31,6 +33,8 @@ def onAttachmentConnected(source, target):
 	global usbDeviceHidBufPool
 	global epNumberInterruptIn
 	global epNumberInterruptOut
+	global hidEndpointsPic32
+	global hidEndpointsSAM
 	
 	ownerComponent = source["component"]
 	dependencyID = source["id"]
@@ -53,13 +57,21 @@ def onAttachmentConnected(source, target):
 		
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if readValue != None:
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue + 2 , 2)
-			epNumberInterruptIn.setValue(readValue + 1, 1)
-			epNumberInterruptOut.setValue(readValue + 2, 1)
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue + hidEndpointsPic32 , 2)
+				epNumberInterruptIn.setValue(readValue + 1, 1)
+				epNumberInterruptOut.setValue(readValue + 1, 1)
+			else:
+				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue + hidEndpointsSAM , 2)
+				epNumberInterruptIn.setValue(readValue + 1, 1)
+				epNumberInterruptOut.setValue(readValue + 2, 1)
 
 def onAttachmentDisconnected(source, target):
-
+	global hidEndpointsPic32
+	global hidEndpointsSAM
+	
 	print ("HID Function Driver: Detached")
 	ownerComponent = source["component"]
 	dependencyID = source["id"]
@@ -81,8 +93,12 @@ def onAttachmentDisconnected(source, target):
 		
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if readValue != None:
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue - 2 , 2)
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue - hidEndpointsPic32 , 2)
+			else:
+				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue - hidEndpointsSAM , 2)
 			
 def destroyComponent(component):
 	print ("HID Function Driver: Destroyed")
@@ -185,16 +201,22 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	epNumberInterruptIn.setLabel("Interrupt IN Endpoint Number")
 	epNumberInterruptIn.setVisible(True)
 	epNumberInterruptIn.setMin(1)
-	epNumberInterruptIn.setMax(10)
-	epNumberInterruptIn.setDefaultValue(1)
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+		epNumberInterruptIn.setMax(7)
+	else:
+		epNumberInterruptIn.setMax(10)
 	
 	# HID Function driver Interrupt OUT Endpoint Number  
 	epNumberInterruptOut = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INT_OUT_ENDPOINT_NUMBER", None)
 	epNumberInterruptOut.setLabel("Interrupt OUT Endpoint Number")
 	epNumberInterruptOut.setVisible(True)
 	epNumberInterruptOut.setMin(1)
-	epNumberInterruptOut.setMax(10)
-	epNumberInterruptOut.setDefaultValue(2)
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+		epNumberInterruptOut.setMax(7)
+		epNumberInterruptOut.setDefaultValue(1)
+	else:
+		epNumberInterruptOut.setMax(10)
+		epNumberInterruptOut.setDefaultValue(2)
 	
 	############################################################################
 	#### Dependency ####

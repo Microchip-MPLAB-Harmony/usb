@@ -47,7 +47,7 @@
 #include "driver/usb/usbhsv1/src/drv_usbhsv1_local.h"
 #include "usb/usb_host.h"
 #include "usb/usb_host_client_driver.h"
-#define SYS_DEBUG_MESSAGE(a,b,...)
+
 
 /**********************************************************
  * This structure is a set of pointer to the USBFS driver
