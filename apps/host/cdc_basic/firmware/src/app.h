@@ -67,6 +67,13 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define APP_HOST_CDC_PARITY_TYPE        0
 #define APP_HOST_CDC_STOP_BITS          0
 #define APP_HOST_CDC_NO_OF_DATA_BITS    8
+
+#ifndef LED1_On
+#define LED1_Toggle()                   LED_Toggle()
+#define LED1_On()                       LED_On()
+#define LED1_Off()                      LED_Off()
+#endif
+
 // *****************************************************************************
 /* Application States
 

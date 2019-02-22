@@ -115,7 +115,35 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverRTOSTaskDelayVal.setDefaultValue(10) 
 	usbDriverRTOSTaskDelayVal.setVisible((usbDriverRTOSTaskDelay.getValue() == True))
 	usbDriverRTOSTaskDelayVal.setDependencies(setVisible, ["USB_DRIVER_RTOS_USE_DELAY"])
+
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD20", "SAMD21"]):
+		# Update USB General Interrupt Handler 
+		Database.setSymbolValue("core", "USB_INTERRUPT_ENABLE", True, 1)
+		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER_LOCK", True, 1)
+		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER", "DRV_USBFSV1_USB_Handler", 1)
 	
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD51", "SAME51", "SAME53", "SAME54"]):
+
+		# Update USB General Interrupt Handler 
+		Database.setSymbolValue("core", "USB_OTHER_INTERRUPT_ENABLE", True, 1)
+		Database.setSymbolValue("core", "USB_OTHER_INTERRUPT_HANDLER_LOCK", True, 1)
+		Database.setSymbolValue("core", "USB_OTHER_INTERRUPT_HANDLER", "DRV_USBFSV1_OTHER_Handler", 1)
+
+		# Update USB General Interrupt Handler 
+		Database.setSymbolValue("core", "USB_SOF_HSOF_INTERRUPT_ENABLE", True, 1)
+		Database.setSymbolValue("core", "USB_SOF_HSOF_INTERRUPT_HANDLER_LOCK", True, 1)
+		Database.setSymbolValue("core", "USB_SOF_HSOF_INTERRUPT_HANDLER", "DRV_USBFSV1_SOF_HSOF_Handler", 1)
+
+		# Update USB General Interrupt Handler 
+		Database.setSymbolValue("core", "USB_TRCPT0_INTERRUPT_ENABLE", True, 1)
+		Database.setSymbolValue("core", "USB_TRCPT0_INTERRUPT_HANDLER_LOCK", True, 1)
+		Database.setSymbolValue("core", "USB_TRCPT0_INTERRUPT_HANDLER", "DRV_USBFSV1_TRCPT0_Handler", 1)
+
+		# Update USB General Interrupt Handler 
+		Database.setSymbolValue("core", "USB_TRCPT1_INTERRUPT_ENABLE", True, 1)
+		Database.setSymbolValue("core", "USB_TRCPT1_INTERRUPT_HANDLER_LOCK", True, 1)
+		Database.setSymbolValue("core", "USB_TRCPT1_INTERRUPT_HANDLER", "DRV_USBFSV1_TRCPT1_Handler", 1)
+
 	############################################################################
     #### Dependency ####
     ############################################################################

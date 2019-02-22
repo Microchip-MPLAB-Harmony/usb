@@ -4,9 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <logicalFolder name="f2" displayName="arm" projectFiles="true">
-        <itemPath>../src/arm/toolchain_specifics.h</itemPath>
-      </logicalFolder>
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_d21_xpro" projectFiles="true">
           <logicalFolder name="f2" displayName="bsp" projectFiles="true">
@@ -53,6 +50,7 @@
             <logicalFolder name="f2" displayName="time" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/system/time/sys_time.h</itemPath>
               <itemPath>../src/config/sam_d21_xpro/system/time/sys_time_definitions.h</itemPath>
+              <itemPath>../src/config/sam_d21_xpro/system/time/src/sys_time_local.h</itemPath>
             </logicalFolder>
             <itemPath>../src/config/sam_d21_xpro/system/system.h</itemPath>
             <itemPath>../src/config/sam_d21_xpro/system/system_common.h</itemPath>
@@ -74,17 +72,19 @@
             <itemPath>../src/config/sam_d21_xpro/usb/usb_host_cdc.h</itemPath>
             <itemPath>../src/config/sam_d21_xpro/usb/usb_cdc.h</itemPath>
           </logicalFolder>
+          <itemPath>../src/config/sam_d21_xpro/device_cache.h</itemPath>
+          <itemPath>../src/config/sam_d21_xpro/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_d21_xpro/definitions.h</itemPath>
           <itemPath>../src/config/sam_d21_xpro/user.h</itemPath>
           <itemPath>../src/config/sam_d21_xpro/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f4" displayName="osal" projectFiles="true">
+      <logicalFolder name="f3" displayName="osal" projectFiles="true">
         <itemPath>../src/config/sam_d21_xpro/osal/osal.h</itemPath>
         <itemPath>../src/config/sam_d21_xpro/osal/osal_definitions.h</itemPath>
         <itemPath>../src/config/sam_d21_xpro/osal/osal_impl_basic.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="packs" projectFiles="true">
+      <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAMD21J18A_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
             <itemPath>../src/packs/ATSAMD21J18A_DFP/component/ac.h</itemPath>
@@ -122,6 +122,7 @@
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm0plus.h</itemPath>
@@ -189,7 +190,6 @@
             </logicalFolder>
             <logicalFolder name="f2" displayName="time" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/system/time/src/sys_time.c</itemPath>
-              <itemPath>../src/config/sam_d21_xpro/system/time/src/sys_time_local.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f1" displayName="usb" projectFiles="true">
@@ -203,7 +203,7 @@
           <itemPath>../src/config/sam_d21_xpro/initialization.c</itemPath>
           <itemPath>../src/config/sam_d21_xpro/interrupts.c</itemPath>
           <itemPath>../src/config/sam_d21_xpro/exceptions.c</itemPath>
-          <itemPath>../src/config/sam_d21_xpro/startup.c</itemPath>
+          <itemPath>../src/config/sam_d21_xpro/startup_xc32.c</itemPath>
           <itemPath>../src/config/sam_d21_xpro/libc_syscalls.c</itemPath>
           <itemPath>../src/config/sam_d21_xpro/tasks.c</itemPath>
         </logicalFolder>
@@ -234,7 +234,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAMD21_DFP" vendor="Atmel" version="1.3.349"/>
+        <pack name="SAMD21_DFP" vendor="Microchip" version="2.0.4"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
       </packs>
       <compileType>
