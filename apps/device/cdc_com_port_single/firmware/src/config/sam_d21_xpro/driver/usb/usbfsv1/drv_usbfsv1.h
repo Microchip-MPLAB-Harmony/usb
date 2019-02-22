@@ -67,6 +67,7 @@
 #include "usb/usb_hub.h"
 #include "usb/usb_chapter_9.h"
 
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: USB Device Driver Constants
@@ -495,6 +496,21 @@ typedef struct
        interrupt source identifier for the USB module instance specified in
        usbID. */
     uint8_t interruptSource;
+
+    /* Specify the interrupt source for the USB module. This should be the
+       interrupt source identifier for the USB module instance specified in
+       usbID. */
+    uint8_t interruptSource1;
+
+    /* Specify the interrupt source for the USB module. This should be the
+       interrupt source identifier for the USB module instance specified in
+       usbID. */
+    uint8_t interruptSource2;
+
+    /* Specify the interrupt source for the USB module. This should be the
+       interrupt source identifier for the USB module instance specified in
+       usbID. */
+    uint8_t interruptSource3;
 
     /* Specify the operational speed of the USB module. This should always be
        set to USB_SPEED_FULL. */

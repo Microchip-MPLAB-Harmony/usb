@@ -113,11 +113,11 @@ extern "C" {
 /* Disable Host Support */
 #define DRV_USBFSV1_HOST_SUPPORT                            false
 
-/* Number of Endpoints used */
-#define DRV_USBFSV1_ENDPOINTS_NUMBER                        4
-
 /* Enable usage of Dual Bank */
 #define DRV_USBFSV1_DUAL_BANK_ENABLE                        false
+
+/* Number of Endpoints used */
+#define DRV_USBFSV1_ENDPOINTS_NUMBER                        4
 
 /* The USB Device Layer will not initialize the USB Driver */
 #define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT

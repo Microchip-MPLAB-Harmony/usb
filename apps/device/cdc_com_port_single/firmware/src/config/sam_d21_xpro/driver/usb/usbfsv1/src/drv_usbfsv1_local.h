@@ -525,6 +525,15 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
     /* Interrupt source for USB module */
     uint8_t interruptSource;
 
+    /* Interrupt source for USB module */
+    uint8_t interruptSource1;
+
+    /* Interrupt source for USB module */
+    uint8_t interruptSource2;
+
+    /* Interrupt source for USB module */
+    uint8_t interruptSource3;
+
     /* Mutex create function place holder*/
     uint8_t mutexID;
 

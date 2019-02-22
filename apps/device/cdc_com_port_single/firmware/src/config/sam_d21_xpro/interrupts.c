@@ -67,7 +67,6 @@ void __attribute__((optimize("-O1"),section(".text.Dummy_Handler"),long_call))Du
     {
     }
 }
-
 /* Device vectors list dummy definition*/
 void Reset_Handler              ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void NonMaskableInt_Handler     ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -82,7 +81,7 @@ void RTC_Handler                ( void ) __attribute__((weak, alias("Dummy_Handl
 void EIC_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void NVMCTRL_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void DMAC_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void USB_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void DRV_USBFSV1_USB_Handler    ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void EVSYS_Handler              ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM0_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM1_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -103,7 +102,7 @@ void AC_Handler                 ( void ) __attribute__((weak, alias("Dummy_Handl
 void DAC_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void PTC_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void I2S_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
-    
+
 
 
 /* Mutiple handlers for vector */
@@ -113,8 +112,8 @@ void I2S_Handler                ( void ) __attribute__((weak, alias("Dummy_Handl
 __attribute__ ((section(".vectors")))
 const DeviceVectors exception_table=
 {
-  /* Configure Initial Stack Pointer, using linker-generated symbols */
-  .pvStack = (void*) (&_stack),
+    /* Configure Initial Stack Pointer, using linker-generated symbols */
+    .pvStack = (void*) (&_stack),
 
     .pfnReset_Handler              = ( void * ) Reset_Handler,
     .pfnNonMaskableInt_Handler     = ( void * ) NonMaskableInt_Handler,
@@ -129,7 +128,7 @@ const DeviceVectors exception_table=
     .pfnEIC_Handler                = ( void * ) EIC_Handler,
     .pfnNVMCTRL_Handler            = ( void * ) NVMCTRL_Handler,
     .pfnDMAC_Handler               = ( void * ) DMAC_Handler,
-    .pfnUSB_Handler                = ( void * ) USB_Handler,
+    .pfnUSB_Handler                = ( void * ) DRV_USBFSV1_USB_Handler,
     .pfnEVSYS_Handler              = ( void * ) EVSYS_Handler,
     .pfnSERCOM0_Handler            = ( void * ) SERCOM0_Handler,
     .pfnSERCOM1_Handler            = ( void * ) SERCOM1_Handler,
@@ -154,7 +153,6 @@ const DeviceVectors exception_table=
 
 
 };
-
 
 /*******************************************************************************
  End of File

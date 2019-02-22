@@ -145,6 +145,10 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
 
             drvObj->sessionInvalidEventSent = false;
             drvObj->interruptSource  = usbInit->interruptSource;
+            drvObj->interruptSource1  = usbInit->interruptSource1;
+            drvObj->interruptSource2  = usbInit->interruptSource2;
+            drvObj->interruptSource3  = usbInit->interruptSource3;
+            drvObj->isInInterruptContext = 0;
 
             /* Assign the endpoint table */
             drvObj->endpoint0BufferPtr[0] = gDrvEP0BufferBank0;
@@ -152,7 +156,8 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
 
             /* Set the configuration */
             
-			drvObj->usbID->HOST.USB_CTRLA = USB_CTRLA_SWRST(USB_CTRLA_SWRST_Msk);
+			drvObj->usbID->HOST.USB_CTRLA = USB_CTRLA_SWRST_Msk;
+            
 			while (drvObj->usbID->HOST.USB_SYNCBUSY & USB_SYNCBUSY_SWRST_Msk);
             
             if(usbInit->runInStandby == true)
@@ -191,12 +196,16 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
 
             /* Enable the USB device by clearing the . This function
              * also enables the D+ pull up resistor.  */
-            drvObj->usbID->DEVICE.USB_CTRLA |= USB_CTRLA_ENABLE_Msk;
+            drvObj->usbID->HOST.USB_CTRLA |= USB_CTRLA_ENABLE_Msk;
 
-            while (drvObj->usbID->DEVICE.USB_SYNCBUSY == USB_SYNCBUSY_ENABLE_Msk);
+            while ((drvObj->usbID->HOST.USB_SYNCBUSY & USB_SYNCBUSY_ENABLE_Msk) == USB_SYNCBUSY_ENABLE_Msk);
 
             /* Enable interrupts for this USB module */
-            SYS_INT_SourceEnable(drvObj->interruptSource);
+            _DRV_USBFSV1_SYS_INT_SourceEnable(
+                    drvObj->interruptSource, 
+                    drvObj->interruptSource1, 
+                    drvObj->interruptSource2, 
+                    drvObj->interruptSource3 );
 
             drvObj->status = SYS_STATUS_READY;
             retVal = drvIndex;
@@ -283,9 +292,18 @@ void DRV_USBFSV1_Tasks
                 }
 
                 /* Clear and enable the interrupts */
-                SYS_INT_SourceStatusClear(hDriver->interruptSource);
-                SYS_INT_SourceEnable(hDriver->interruptSource);
-                
+                _DRV_USBFSV1_SYS_INT_SourceStatusClear(
+                        hDriver->interruptSource,
+                        hDriver->interruptSource1,
+                        hDriver->interruptSource2,
+                        hDriver->interruptSource3 );
+                        
+                _DRV_USBFSV1_SYS_INT_SourceEnable(
+                        hDriver->interruptSource,
+                        hDriver->interruptSource1,
+                        hDriver->interruptSource2,
+                        hDriver->interruptSource3 );
+                                
                 /* Indicate that the object is ready
                  * and change the state to running */
 
@@ -412,8 +430,17 @@ void DRV_USBFSV1_Deinitialize
         hDriver->pEventCallBack = NULL;
 
         /* Clear and disable the interrupts */
-        SYS_INT_SourceDisable(hDriver->interruptSource);
-        SYS_INT_SourceStatusClear(hDriver->interruptSource);
+        _DRV_USBFSV1_SYS_INT_SourceDisable(
+                hDriver->interruptSource,
+                hDriver->interruptSource1,
+                hDriver->interruptSource2,
+                hDriver->interruptSource3 );
+        
+        _DRV_USBFSV1_SYS_INT_SourceStatusClear(
+                hDriver->interruptSource,
+                hDriver->interruptSource1,
+                hDriver->interruptSource2,
+                hDriver->interruptSource3 );
 
         hDriver->usbID->DEVICE.USB_CTRLA &= ~USB_CTRLA_ENABLE_Msk;
 
@@ -611,8 +638,12 @@ void DRV_USBFSV1_Tasks_ISR
         /* Save current interrupt state and disable them */
         sysInterruptStatus = SYS_INT_Disable();
 
-        /* Clear the interrupt */
-        SYS_INT_SourceStatusClear(drvObj->interruptSource);
+        /* Clear the interrupt */        
+        _DRV_USBFSV1_SYS_INT_SourceStatusClear(
+                drvObj->interruptSource,
+                drvObj->interruptSource1,
+                drvObj->interruptSource2,
+                drvObj->interruptSource3 );
 
         /* We are entering an interrupt context */
         drvObj->isInInterruptContext = true;
@@ -633,6 +664,10 @@ void DRV_USBFSV1_Tasks_ISR
 
             case DRV_USBFSV1_OPMODE_OTG:
                 /* OTG mode is not supported yet */
+                break;
+
+            case DRV_USBFSV1_OPMODE_DUAL_ROLE:
+                /* Dual mode is not supported yet */
                 break;
 
             default:
@@ -665,9 +700,33 @@ void DRV_USBFSV1_Tasks_ISR
     See drv_usbfsv1.h for usage information.
 */
 
-void USB_Handler(void)
+void DRV_USBFSV1_USB_Handler(void)
 {
-    DRV_USBFSV1_Tasks_ISR(sysObj.drvUSBFSV1Object);
+    _DRV_USBFSV1_ISR_OTHER(sysObj.drvUSBFSV1Object);
+
+}/* end of USB_Handler() */
+
+void DRV_USBFSV1_OTHER_Handler(void)
+{
+    _DRV_USBFSV1_ISR_OTHER(sysObj.drvUSBFSV1Object);
+
+}/* end of USB_Handler() */
+
+void DRV_USBFSV1_SOF_HSOF_Handler(void)
+{
+    _DRV_USBFSV1_ISR_SOF_HSOF(sysObj.drvUSBFSV1Object);
+
+}/* end of USB_Handler() */
+
+void DRV_USBFSV1_TRCPT0_Handler(void)
+{
+    _DRV_USBFSV1_ISR_TRCPT0(sysObj.drvUSBFSV1Object);
+
+}/* end of USB_Handler() */
+
+void DRV_USBFSV1_TRCPT1_Handler(void)
+{
+    _DRV_USBFSV1_ISR_TRCPT1(sysObj.drvUSBFSV1Object);
 
 }/* end of USB_Handler() */
 

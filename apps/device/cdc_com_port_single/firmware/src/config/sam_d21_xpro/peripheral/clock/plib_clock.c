@@ -94,18 +94,6 @@ static void GCLK0_Initialize(void)
     }
 }
 
-
-static void GCLK2_Initialize(void)
-{
-    GCLK_REGS->GCLK_GENCTRL = GCLK_GENCTRL_SRC(6) | GCLK_GENCTRL_DIVSEL_Msk | GCLK_GENCTRL_GENEN_Msk | GCLK_GENCTRL_ID(2);
-
-    GCLK_REGS->GCLK_GENDIV = GCLK_GENDIV_DIV(2) | GCLK_GENDIV_ID(2);
-    while((GCLK_REGS->GCLK_STATUS & GCLK_STATUS_SYNCBUSY_Msk) == GCLK_STATUS_SYNCBUSY_Msk)
-    {
-        /* wait for the Generator 2 synchronization */
-    }
-}
-
 void CLOCK_Initialize (void)
 {
     /* NVM Wait States */
@@ -115,12 +103,13 @@ void CLOCK_Initialize (void)
     SYSCTRL_Initialize();
 
     DFLL_Initialize();
-    GCLK2_Initialize();
     GCLK0_Initialize();
 
 
 
     /* Selection of the Generator and write Lock for USB */
     GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(6) | GCLK_CLKCTRL_GEN(0x0)  | GCLK_CLKCTRL_CLKEN_Msk;
-
+    /* Selection of the Generator and write Lock for SERCOM3_CORE */
+    GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(23) | GCLK_CLKCTRL_GEN(0x0)  | GCLK_CLKCTRL_CLKEN_Msk;
+    
 }
