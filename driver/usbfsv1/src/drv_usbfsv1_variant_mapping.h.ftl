@@ -57,10 +57,72 @@
  * Macro Mapping
  **********************************************/
 
-/* With v1.04 the USB Driver implementation has been been split such
- * multiple USB Driver can be included in the same application. But to
- * continue support for application developed before v1.04, we should
- * map the DRV_USB configuration macros to DRV_USBFSV1 macros */
+<#if __PROCESSOR?matches("ATSAME5.*") == true>
+/* SAME5x Family Devices has Four interrupt vectors for USB module */ 
+#define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE true
+<#elseif __PROCESSOR?matches("ATSAMD.*") == true>
+/* SAMD Family Devices has only one interrupt vector for USB module */ 
+#define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE false
+</#if>
+  
+#if (DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE == true)
+    #define _DRV_USBFSV1_SYS_INT_SourceEnable(a, b, c, d);          \
+            SYS_INT_SourceEnable(a);                                \
+            SYS_INT_SourceEnable(b);                                \
+            SYS_INT_SourceEnable(c);                                \
+            SYS_INT_SourceEnable(d);
+
+    #define _DRV_USBFSV1_SYS_INT_SourceStatusClear(a, b, c, d);     \
+            SYS_INT_SourceStatusClear(a);                           \
+            SYS_INT_SourceStatusClear(b);                           \
+            SYS_INT_SourceStatusClear(c);                           \
+            SYS_INT_SourceStatusClear(d);
+
+    #define _DRV_USBFSV1_SYS_INT_SourceDisable(a, b, c, d);         \
+            SYS_INT_SourceDisable(a);                               \
+            SYS_INT_SourceDisable(b);                               \
+            SYS_INT_SourceDisable(c);                               \
+            SYS_INT_SourceDisable(d);
+
+    #define _DRV_USBFSV1_SYS_INT_SourceDisableSave(w, a, x, b, y, c, z, d);     \
+            w = SYS_INT_SourceDisable(a);                                       \
+            x = SYS_INT_SourceDisable(b);                                       \
+            y = SYS_INT_SourceDisable(c);                                       \
+            z = SYS_INT_SourceDisable(d);
+
+    #define _DRV_USBFSV1_SYS_INT_SourceEnableRestore(w, a, x, b, y, c, z, d);   \
+            if(w == true)   SYS_INT_SourceEnable(a);                            \
+            if(x == true)   SYS_INT_SourceEnable(b);                            \
+            if(y == true)   SYS_INT_SourceEnable(c);                            \
+            if(z == true)   SYS_INT_SourceEnable(d);                            \
+
+    #define _DRV_USBFSV1_DECLARE_BOOL_VARIABLE(a);                  \
+            bool a = false;                                         \
+            bool a##1 = false;                                      \
+            bool a##2 = false;                                      \
+            bool a##3 = false;
+
+
+#elif (DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE == false)
+    #define _DRV_USBFSV1_SYS_INT_SourceEnable(a, b, c, d);          \
+            SYS_INT_SourceEnable(a);
+
+    #define _DRV_USBFSV1_SYS_INT_SourceStatusClear(a, b, c, d);     \
+            SYS_INT_SourceStatusClear(a);
+
+    #define _DRV_USBFSV1_SYS_INT_SourceDisable(a, b, c, d);         \
+            SYS_INT_SourceStatusClear(a);            
+
+    #define _DRV_USBFSV1_SYS_INT_SourceDisableSave(w, a, x, b, y, c, z, d);     \
+            w = SYS_INT_SourceDisable(a);
+
+    #define _DRV_USBFSV1_SYS_INT_SourceEnableRestore(w, a, x, b, y, c, z, d);   \
+            if(w == true)   SYS_INT_SourceEnable(a);
+
+    #define _DRV_USBFSV1_DECLARE_BOOL_VARIABLE(a);                              \
+            bool a = false;                                                     \
+
+#endif
 
 #if defined(DRV_USB_INSTANCES_NUMBER)
     #define DRV_USBFSV1_INSTANCES_NUMBER  DRV_USB_INSTANCES_NUMBER

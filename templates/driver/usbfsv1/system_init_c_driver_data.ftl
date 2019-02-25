@@ -61,8 +61,22 @@ static DRV_USB_VBUS_LEVEL DRV_USBFSV1_VBUS_Comparator(void)
 
 const DRV_USBFSV1_INIT drvUSBInit =
 {
+	<#if __PROCESSOR?matches("ATSAME5.*") == true>
+	/* Interrupt Source for USB module */
+	.interruptSource = USB_OTHER_IRQn,
+ 
+	/* Interrupt Source for USB module */
+	.interruptSource1 = USB_SOF_HSOF_IRQn,
+ 
+	/* Interrupt Source for USB module */
+	.interruptSource2 = USB_TRCPT0_IRQn,
+ 
+	/* Interrupt Source for USB module */
+	.interruptSource3 = USB_TRCPT1_IRQn,
+<#elseif __PROCESSOR?matches("ATSAMD.*") == true>
     /* Interrupt Source for USB module */
     .interruptSource = USB_IRQn,
+</#if>
 
     /* System module initialization */
     .moduleInit = {0},
