@@ -974,7 +974,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointStall
 
         if(hDriver->isInInterruptContext == false)
         {
-            if(OSAL_MUTEX_Lock(&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+            if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
             {
                 /* Disable  the USB Interrupt as this is not called inside ISR */  
                 _DRV_USBFSV1_SYS_INT_SourceDisableSave(
@@ -1039,7 +1039,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointStall
                         interruptWasEnabled3, hDriver->interruptSource3 );        
 
                 /* Release the mutex */
-                OSAL_MUTEX_Unlock(&hDriver->mutexID);
+                OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
             }
         }
     }
@@ -1105,7 +1105,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointStallClear
         
         if(hDriver->isInInterruptContext == false)
         {
-            if(OSAL_MUTEX_Lock(&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+            if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
             {
                 /* Disable  the USB Interrupt as this is not called inside ISR */  
                 _DRV_USBFSV1_SYS_INT_SourceDisableSave(
@@ -1191,7 +1191,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointStallClear
                         interruptWasEnabled3, hDriver->interruptSource3 );        
 
                 /* Release the mutex */
-                OSAL_MUTEX_Unlock(&hDriver->mutexID);
+                OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
             }
         }
     }
@@ -1427,7 +1427,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
 
                 if(hDriver->isInInterruptContext == false)
                 {
-                    if(OSAL_MUTEX_Lock(&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+                    if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
                     {
                         /* Disable the interrupt as we will update the
                          * endpoint IRP queue. We do not want a USB
@@ -1928,7 +1928,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
                             interruptWasEnabled3, hDriver->interruptSource3 );        
 
                     /* Unlock the mutex */
-                    OSAL_MUTEX_Unlock(&hDriver->mutexID);
+                    OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
                 }
             }
         }
@@ -1995,7 +1995,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancelAll
 
         if(hDriver->isInInterruptContext == false)
         {
-            if(OSAL_MUTEX_Lock(&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+            if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
             {
                 /* Disable  the USB Interrupt as this is not called inside ISR */    
                 _DRV_USBFSV1_SYS_INT_SourceDisableSave(
@@ -2024,7 +2024,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancelAll
                         interruptWasEnabled2, hDriver->interruptSource2,
                         interruptWasEnabled3, hDriver->interruptSource3 );        
 
-                OSAL_MUTEX_Unlock(&hDriver->mutexID);
+                OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
             }
         }
     }
@@ -2105,7 +2105,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancel
 
             if(hDriver->isInInterruptContext == false)
             {
-                if(OSAL_MUTEX_Lock(&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+                if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
                 {
                     /* Disable  the USB Interrupt as this is not called inside ISR */    
                     _DRV_USBFSV1_SYS_INT_SourceDisableSave(
@@ -2170,7 +2170,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancel
                             interruptWasEnabled2, hDriver->interruptSource2,
                             interruptWasEnabled3, hDriver->interruptSource3 );        
 
-                    OSAL_MUTEX_Unlock(&hDriver->mutexID); 
+                    OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID); 
                 }
             }
         }
