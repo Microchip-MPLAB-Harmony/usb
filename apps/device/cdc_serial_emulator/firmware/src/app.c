@@ -60,14 +60,32 @@ APP_DATA appData;
 // *****************************************************************************
 // *****************************************************************************
 
-void APP_WriteCallback(uintptr_t context)
+void APP_BufferEventHandler(
+    DRV_USART_BUFFER_EVENT bufferEvent, 
+    DRV_USART_BUFFER_HANDLE bufferHandle, 
+    uintptr_t context 
+)
 {
-	appData.isUSARTWriteComplete = true;
-}
+    switch(bufferEvent)
+    {
+        case DRV_USART_BUFFER_EVENT_COMPLETE:
+            if(appData.isUSARTWriteInProgress == true)
+            {
+                appData.isUSARTWriteInProgress = false;
+            }
+            else if(appData.isUSARTReadInProgress == true)
+            {
+                appData.isUSARTReadInProgress = false;
+            }
+            break;
+        
+        case DRV_USART_BUFFER_EVENT_ERROR:        
+            appData.errorStatus = true;
+            break;        
 
-void APP_ReadCallback(uintptr_t context)
-{
-	appData.isUSARTReadComplete = true;
+        default:        
+            break;        
+    }
 }
 
 /*******************************************************
@@ -309,20 +327,15 @@ bool APP_StateReset(void)
  * This function Handles the Set Line coding command from Host.
  ***************************************************************************/
 void _APP_SetLineCodingHandler(void)
-{
-    USART_SERIAL_SETUP UsartSetup;
+{    
+    DRV_USART_SERIAL_SETUP UsartSetup;
 
     UsartSetup.baudRate = appData.setLineCodingData.dwDTERate;
     UsartSetup.parity = appData.setLineCodingData.bParityType;
     UsartSetup.dataWidth = appData.setLineCodingData.bDataBits;
     UsartSetup.stopBits = appData.setLineCodingData.bCharFormat;
 
-//    USART1_SerialSetup(&UsartSetup, CHIP_FREQ_CPU_MAX);
-
-
-//    resultUsartBaurateSet = DRV_USART_BaudSet(appData.usartHandle, appData.setLineCodingData.dwDTERate);
-
-    if (true == USART1_SerialSetup(&UsartSetup, CHIP_FREQ_CPU_MAX))
+    if (true == DRV_USART_SerialSetup(appData.usartHandle, &UsartSetup))
     {
         /* Baudrate is changed successfully. Update Baudrate info in the
          * Get line coding structure. */
@@ -410,18 +423,19 @@ void APP_Initialize ( void )
     appData.uartReceivedData = &uartReceivedData;
 
     appData.uartTxCount = 0;
+    
+    appData.usartHandle = DRV_HANDLE_INVALID;
+    appData.bufferHandler = DRV_USART_BUFFER_HANDLE_INVALID;  
 
     /* Initialize the Set Line coding flags */
     appData.isBaudrateDataReceived = false;
     appData.isSetLineCodingCommandInProgress = false;
 
-	/* Register callback functions */
-	USART1_WriteCallbackRegister(APP_WriteCallback, 0);
-	USART1_ReadCallbackRegister(APP_ReadCallback, 0);
-
+    appData.isUSARTWriteInProgress = false;
+    appData.isUSARTReadInProgress = false;
+    
     LED_Off();
 }
-
 
 /******************************************************************************
   Function:
@@ -442,7 +456,6 @@ void APP_Tasks ( void )
 
     /* Update the application state machine based
      * on the current state */
-
     switch(appData.state)
     {
         case APP_STATE_INIT:
@@ -452,13 +465,25 @@ void APP_Tasks ( void )
 
             if(appData.usbDevHandle != USB_DEVICE_HANDLE_INVALID)
             {
-                /* Register a callback with device layer to get event notification (for end point 0) */
-                USB_DEVICE_EventHandlerSet(appData.usbDevHandle,  APP_USBDeviceEventHandler, 0);
-
-                /* Application waits for device configuration. */
-                appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
+                appData.usartHandle = DRV_USART_Open(DRV_USART_INDEX_0, DRV_IO_INTENT_READWRITE);
                 
-                LED_Off();
+                if (appData.usartHandle != DRV_HANDLE_INVALID)
+                {
+                    DRV_USART_BufferEventHandlerSet(appData.usartHandle, APP_BufferEventHandler, 0);
+                    
+                    /* Register a callback with device layer to get event notification (for end point 0) */
+                    USB_DEVICE_EventHandlerSet(appData.usbDevHandle,  APP_USBDeviceEventHandler, 0);
+
+                    /* Application waits for device configuration. */
+                    appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
+
+                    LED_Off();
+                }
+                else
+                {
+                    appData.state = APP_STATE_ERROR;
+                }
+
             }
             else
             {
@@ -474,16 +499,9 @@ void APP_Tasks ( void )
             if(appData.deviceIsConfigured)
             {
                 /* Schedule the first read from CDC function driver */
-
-                LED_Off();
-                
-                appData.state = APP_STATE_CHECK_CDC_READ;
+                appData.state = APP_STATE_CHECK_CDC_READ;                
                 appData.isCDCReadComplete = false;
-
-				appData.isUSARTReadComplete = false;
-
-                USART1_Read(&appData.uartReceivedData, 1);
-
+                
                 USB_DEVICE_CDC_Read (appData.cdcInstance, &(appData.readTransferHandle),
                         appData.readBuffer, APP_READ_BUFFER_SIZE);
             }
@@ -496,25 +514,24 @@ void APP_Tasks ( void )
                 break;
             }
 
-            /* If CDC read is complete, send the received data to the UART. */
             if(appData.isCDCReadComplete == true)
             {
-                if(true == USART1_Write(&appData.readBuffer[0], appData.readLength))
-				{
+                /* If CDC read is complete, send the received data to the UART. */
+                appData.isUSARTWriteInProgress = true;
+                DRV_USART_WriteBufferAdd(appData.usartHandle, (void*)&appData.readBuffer[0], appData.readLength, &appData.bufferHandler);
+                
+                if (appData.bufferHandler != DRV_USART_BUFFER_HANDLE_INVALID)
+                {
 					appData.isCDCReadComplete = false;
-
-					appData.isUSARTWriteComplete = false;
 
                     LED_Toggle();
 
-                    /* This means we have sent all the data. We schedule the next
-                     * CDC Read. */
+                    /* This means we have sent all the data. We schedule the next CDC Read. */
                     USB_DEVICE_CDC_Read (appData.cdcInstance, &appData.readTransferHandle,
                         appData.readBuffer, APP_READ_BUFFER_SIZE);
 
                     appData.state = APP_STATE_CHECK_UART_RECEIVE;
-
-				}
+                }            
             }
             else
             {
@@ -532,7 +549,7 @@ void APP_Tasks ( void )
             }
 
             /* Check if a character was received on the UART */
-            if(appData.isUSARTReadComplete == true)
+            if(appData.isUSARTReadInProgress == false)
             {
                 LED_Toggle();
 
@@ -540,10 +557,14 @@ void APP_Tasks ( void )
                         &appData.uartReceivedData, 1,
                         USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE);
 
-				appData.isUSARTReadComplete = false;
-
-                USART1_Read(&appData.uartReceivedData, 1);
-
+				appData.isUSARTReadInProgress = true;
+                
+                DRV_USART_ReadBufferAdd(appData.usartHandle, &appData.uartReceivedData, 1, &appData.bufferHandler);
+                
+                if (appData.bufferHandler != DRV_USART_BUFFER_HANDLE_INVALID)
+                {
+                    appData.state = APP_STATE_CHECK_CDC_READ;
+                }
             }
 			else
 			{

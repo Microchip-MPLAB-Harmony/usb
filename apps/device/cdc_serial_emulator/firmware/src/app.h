@@ -149,10 +149,19 @@ typedef struct
     bool isCDCWriteComplete;
 
     /* True if a character was read */
-    bool isUSARTReadComplete;
+    bool isUSARTReadInProgress;
 
     /* True if a character was written*/
-    bool isUSARTWriteComplete;
+    bool isUSARTWriteInProgress;
+    
+    /* To indicate the transfer completion status */
+    volatile bool completeStatus;
+    
+    /* To indicate the error status */
+    volatile bool errorStatus;
+    
+    /* USART Buffer Handler */
+    DRV_USART_BUFFER_HANDLE bufferHandler;
 
     /* UART1 received data */
     uint8_t * uartReceivedData;
