@@ -821,7 +821,7 @@ DRV_USBHSV1_HOST_PIPE_HANDLE DRV_USBHSV1_HOST_PipeSetup
     bool epFound = false;
     uint8_t endpoint;
     unsigned int epDirection;
-    int pipeIter;
+    int pipeIter = 0;
     uint32_t hstPipeCfg;
 
     DRV_USBHSV1_OBJ * hDriver;
