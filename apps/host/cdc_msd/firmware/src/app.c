@@ -170,7 +170,7 @@ void APP_SYSFSEventHandler(SYS_FS_EVENT event, void * eventData, uintptr_t conte
             
         case SYS_FS_EVENT_UNMOUNT:
             appMSDData.deviceIsConnected = false;
-            
+            LED1_Off();
             break;
             
         default:
@@ -339,7 +339,7 @@ void APP_MSD_Tasks (  )
 
             /* Close the file */
             SYS_FS_FileClose(appMSDData.fileHandle);
-
+            LED1_On();
             /* The test was successful. Lets idle. */
             appMSDData.state = APP_MSD_STATE_IDLE;
             break;
@@ -350,7 +350,7 @@ void APP_MSD_Tasks (  )
              * successfully. Provide LED indication. Wait for device detach
              * and if detached, wait for attach. */
 
-           // LED_On();
+            
             if(appMSDData.deviceIsConnected == false)
             {
                 appMSDData.state = APP_MSD_STATE_WAIT_FOR_DEVICE_ATTACH;
@@ -552,19 +552,13 @@ void APP_CDC_Tasks( )
                     {
                         /* Switch on LED 1 */
 
-                      // LED_On();
+                       LED1_On();
                     }
-                    else if ( appCDCData.inDataArray[0] == '2')
+                    else 
                     {
                         /* Switch on LED 2 */
-                       // LED_On();
+                        LED1_Off();
                     }
-                    else if (appCDCData.inDataArray[0]== '3')
-                    {
-                        /* Switch on LED 3 */
-                       // LED_On();
-                    }
-
                     /* Send the prompt to the device and wait
                      * for data again */
                     appCDCData.state = APP_CDC_STATE_SEND_PROMPT_TO_DEVICE;
