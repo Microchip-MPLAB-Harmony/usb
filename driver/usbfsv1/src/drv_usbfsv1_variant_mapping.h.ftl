@@ -140,10 +140,6 @@
     #define DRV_USBFSV1_ENDPOINTS_NUMBER  DRV_USB_ENDPOINTS_NUMBER
 #endif
 
-/* This macro is defined true for SAME5x/SAMD5x devices */
-/* It is defined false for SAMD2x devices */
-#define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE                  true
-
 /**********************************************
  * Sets up driver mode-specific init routine
  * based on selected support.
