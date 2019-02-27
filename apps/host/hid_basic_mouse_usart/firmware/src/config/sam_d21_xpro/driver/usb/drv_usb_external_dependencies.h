@@ -1,4 +1,20 @@
-<#--
+/*******************************************************************************
+  USB stack external dependencies file
+
+  Company:
+    Microchip Technology Inc.
+
+  File Name:
+    drv_usb_external_dependencies.h
+
+  Summary:
+    USB Driver external dependencies file
+
+  Description:
+    USB Driver external dependencies file. 
+*******************************************************************************/
+
+//DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -21,18 +37,30 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
- -->
-<#if (CONFIG_USB_HOST_HID_NUMBER_OF_INSTANCES?has_content == true)  
-		&& (CONFIG_USB_HOST_HID_NUMBER_OF_INSTANCES?number == 1)>
-	<#if CONFIG_USB_HOST_USE_KEYBOARD == true>
-	TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL(0x03, 0x01, 0x01, &hidInitData,  USB_HOST_HID_INTERFACE),
-	</#if>
-	<#if CONFIG_USB_HOST_USE_MOUSE == true>
-	TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL(0x03, 0x01, 0x02, &hidInitData,  USB_HOST_HID_INTERFACE),
-	</#if>
-</#if>
-<#--
+//DOM-IGNORE-END
+
+#ifndef _DRV_USB_EXTERNAL_DEPENDENCIES_H
+#define _DRV_USB_EXTERNAL_DEPENDENCIES_H
+
+#include <string.h>
+#include "system/system_common.h"
+#include "configuration.h"
+#include "definitions.h"
+#include "system/system_module.h"
+
+
+#ifndef SYS_DEBUG_PRINT
+	#define SYS_DEBUG_PRINT(level, format, ...) 
+#endif 
+
+#ifndef SYS_DEBUG_MESSAGE
+	#define SYS_DEBUG_MESSAGE(a,b, ...)
+#endif 
+
+#ifndef SYS_DEBUG
+	#define SYS_DEBUG(a,b)
+#endif 
+#endif 
 /*******************************************************************************
  End of File
 */
--->

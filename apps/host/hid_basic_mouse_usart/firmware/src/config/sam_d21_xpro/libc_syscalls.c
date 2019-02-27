@@ -1,4 +1,4 @@
-<#--
+// DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -20,19 +20,38 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *******************************************************************************/
- -->
-<#if (CONFIG_USB_HOST_HID_NUMBER_OF_INSTANCES?has_content == true)  
-		&& (CONFIG_USB_HOST_HID_NUMBER_OF_INSTANCES?number == 1)>
-	<#if CONFIG_USB_HOST_USE_KEYBOARD == true>
-	TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL(0x03, 0x01, 0x01, &hidInitData,  USB_HOST_HID_INTERFACE),
-	</#if>
-	<#if CONFIG_USB_HOST_USE_MOUSE == true>
-	TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL(0x03, 0x01, 0x02, &hidInitData,  USB_HOST_HID_INTERFACE),
-	</#if>
-</#if>
-<#--
-/*******************************************************************************
- End of File
-*/
--->
+*******************************************************************************/
+// DOM-IGNORE-END
+
+#include <stdio.h>
+#include <stdarg.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <device.h> /* for ARM CMSIS __BKPT() */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* Harmony specific
+ * We implement only the syscalls we want over the stubs provided by libpic32c
+ */
+extern void _exit(int status);
+
+extern void _exit(int status)
+{
+    /* Software breakpoint */
+#ifdef DEBUG
+//    asm("bkpt #0");
+    __BKPT(0);
+#endif
+
+    /* halt CPU */
+    while (1)
+    {
+    }
+}
+
+#ifdef __cplusplus
+}
+#endif

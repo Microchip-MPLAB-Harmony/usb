@@ -1,4 +1,20 @@
-<#--
+/*******************************************************************************
+ Debug Console Source file 
+
+  Company:
+    Microchip Technology Inc.
+
+  File Name:
+    debug_console.c
+
+  Summary:
+    RSTC Source File
+
+  Description:
+    None
+
+*******************************************************************************/
+
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -20,19 +36,14 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *******************************************************************************/
- -->
-<#if (CONFIG_USB_HOST_HID_NUMBER_OF_INSTANCES?has_content == true)  
-		&& (CONFIG_USB_HOST_HID_NUMBER_OF_INSTANCES?number == 1)>
-	<#if CONFIG_USB_HOST_USE_KEYBOARD == true>
-	TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL(0x03, 0x01, 0x01, &hidInitData,  USB_HOST_HID_INTERFACE),
-	</#if>
-	<#if CONFIG_USB_HOST_USE_MOUSE == true>
-	TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL(0x03, 0x01, 0x02, &hidInitData,  USB_HOST_HID_INTERFACE),
-	</#if>
-</#if>
-<#--
-/*******************************************************************************
- End of File
-*/
--->
+*******************************************************************************/
+
+
+int _mon_getc(int canblock)
+{
+   return 0;
+}
+
+void _mon_putc(char c)
+{
+}

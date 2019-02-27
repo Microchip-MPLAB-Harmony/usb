@@ -1,4 +1,20 @@
-<#--
+/*******************************************************************************
+  USB Host Hub Driver interface names mapping
+
+  Company:
+    Microchip Technology Inc.
+
+  File Name:
+    usb_hub_mapping.h
+
+  Summary:
+    USB Device Layer Interface names mapping
+
+  Description:
+    This file contain mapppings required for the hub driver.
+*******************************************************************************/
+
+//DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -21,18 +37,20 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
- -->
-<#if (CONFIG_USB_HOST_HID_NUMBER_OF_INSTANCES?has_content == true)  
-		&& (CONFIG_USB_HOST_HID_NUMBER_OF_INSTANCES?number == 1)>
-	<#if CONFIG_USB_HOST_USE_KEYBOARD == true>
-	TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL(0x03, 0x01, 0x01, &hidInitData,  USB_HOST_HID_INTERFACE),
-	</#if>
-	<#if CONFIG_USB_HOST_USE_MOUSE == true>
-	TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL(0x03, 0x01, 0x02, &hidInitData,  USB_HOST_HID_INTERFACE),
-	</#if>
-</#if>
-<#--
-/*******************************************************************************
- End of File
-*/
--->
+//DOM-IGNORE-END
+
+#ifndef _USB_HOST_HUB_MAPPING_H
+#define _USB_HOST_HUB_MAPPING_H
+
+#include "usb/src/usb_external_dependencies.h"
+
+#if (USB_HOST_HUB_SUPPORT == true)
+    #include "usb/usb_host_hub_interface.h"
+    extern USB_HUB_INTERFACE externalHubInterface;
+    #define USB_HOST_HUB_INTERFACE &externalHubInterface;
+#else
+    #define USB_HOST_HUB_INTERFACE (NULL)
+#endif
+
+
+#endif
