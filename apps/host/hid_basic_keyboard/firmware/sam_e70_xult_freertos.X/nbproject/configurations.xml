@@ -130,7 +130,6 @@
       <logicalFolder name="f4" displayName="osal" projectFiles="true">
         <itemPath>../src/config/sam_e70_xult_freertos/osal/osal.h</itemPath>
         <itemPath>../src/config/sam_e70_xult_freertos/osal/osal_definitions.h</itemPath>
-        <itemPath>../src/config/sam_e70_xult_freertos/osal/osal_impl_basic.h</itemPath>
         <itemPath>../src/config/sam_e70_xult_freertos/osal/osal_freertos.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
@@ -335,7 +334,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAME70_DFP" vendor="Atmel" version="2.4.157"/>
+        <pack name="SAME70_DFP" vendor="Microchip" version="3.0.10"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
       </packs>
       <compileType>
@@ -356,8 +355,8 @@
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
         <makeCustomizationPreStep></makeCustomizationPreStep>
-        <makeCustomizationPostStepEnabled>true</makeCustomizationPostStepEnabled>
-        <makeCustomizationPostStep>edbg_msg.bat</makeCustomizationPostStep>
+        <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
+        <makeCustomizationPostStep></makeCustomizationPostStep>
         <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
