@@ -189,36 +189,36 @@ def instantiateComponent(usbHostHidComponent):
 	################################################
 	# USB Host HID Client driver Files 
 	################################################
-	usbHostHidHeaderFile = usbHostHidComponent.createFileSymbol(None, None)
+	usbHostHidHeaderFile = usbHostHidComponent.createFileSymbol("USB_HOST_HID_FILE_HEADER", None)
 	addFileName('usb_host_hid.h', usbHostHidComponent, usbHostHidHeaderFile, "", "/usb/", True, None)
 	
-	usbHidHeaderFile = usbHostHidComponent.createFileSymbol(None, None)
+	usbHidHeaderFile = usbHostHidComponent.createFileSymbol("USB_HID_FILE_HEADER", None)
 	addFileName('usb_hid.h', usbHostHidComponent, usbHidHeaderFile, "", "/usb/", True, None)
 	
-	usbHostHidSourceFile = usbHostHidComponent.createFileSymbol(None, None)
+	usbHostHidSourceFile = usbHostHidComponent.createFileSymbol("USB_HOST_HID_FILE_SOURCE", None)
 	addFileName('usb_host_hid.c', usbHostHidComponent, usbHostHidSourceFile, "src/", "/usb/src/", True, None)
 	
-	usbHostHidLocalHeaderFile = usbHostHidComponent.createFileSymbol(None, None)
+	usbHostHidLocalHeaderFile = usbHostHidComponent.createFileSymbol("USB_HOST_HID_FILE_HEADER_LOCAL", None)
 	addFileName('usb_host_hid_local.h', usbHostHidComponent, usbHostHidLocalHeaderFile, "src/", "/usb/src", True, None)
 	
-	usbHostHidKeyboardSourceFile = usbHostHidComponent.createFileSymbol(None, None)
+	usbHostHidKeyboardSourceFile = usbHostHidComponent.createFileSymbol("USB_HOST_HID_KEYBOARD_SOURCE", None)
 	addFileName('usb_host_hid_keyboard.c', usbHostHidComponent, usbHostHidKeyboardSourceFile, "src/", "/usb/src/", usbHostHidClientDriverKeyboard.getValue(), keyBoardEnable)
 
 	
-	usbHostHidKeyboardHeaderFile = usbHostHidComponent.createFileSymbol(None, None)
+	usbHostHidKeyboardHeaderFile = usbHostHidComponent.createFileSymbol("USB_HOST_HID_KEYBOARD_HEADER", None)
 	addFileName('usb_host_hid_keyboard.h', usbHostHidComponent, usbHostHidKeyboardHeaderFile, "", "/usb/", usbHostHidClientDriverKeyboard.getValue(), keyBoardEnable)
 	
 	
-	usbHostHidKeyboardLocalHeaderFile = usbHostHidComponent.createFileSymbol(None, None)
+	usbHostHidKeyboardLocalHeaderFile = usbHostHidComponent.createFileSymbol("USB_HOST_HID_KEYBOARD_HEADER_LOCAL", None)
 	addFileName('usb_host_hid_keyboard_local.h', usbHostHidComponent, usbHostHidKeyboardLocalHeaderFile, "src/", "/usb/src", usbHostHidClientDriverKeyboard.getValue(), keyBoardEnable)
 	
-	usbHostHidMouseSourceFile = usbHostHidComponent.createFileSymbol(None, None)
+	usbHostHidMouseSourceFile = usbHostHidComponent.createFileSymbol("USB_HOST_HID_MOUSE_SOURCE", None)
 	addFileName('usb_host_hid_mouse.c', usbHostHidComponent, usbHostHidMouseSourceFile, "src/", "/usb/src/", usbHostHidClientDriverMouse.getValue(), mouseEnable)
 	
-	usbHostHidMouseHeaderFile = usbHostHidComponent.createFileSymbol(None, None)
+	usbHostHidMouseHeaderFile = usbHostHidComponent.createFileSymbol("USB_HOST_HID_MOUSE_HEADER", None)
 	addFileName('usb_host_hid_mouse.h', usbHostHidComponent, usbHostHidMouseHeaderFile, "", "/usb/", usbHostHidClientDriverMouse.getValue(), mouseEnable)
 	
-	usbHostHidMouseLocalHeaderFile = usbHostHidComponent.createFileSymbol(None, None)
+	usbHostHidMouseLocalHeaderFile = usbHostHidComponent.createFileSymbol("USB_HOST_HID_MOUSE_HEADER_LOCAL", None)
 	addFileName('usb_host_hid_mouse_local.h', usbHostHidComponent, usbHostHidMouseLocalHeaderFile, "src/", "/usb/src", usbHostHidClientDriverMouse.getValue(), mouseEnable)
 
 	
