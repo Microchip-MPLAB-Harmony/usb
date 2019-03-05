@@ -895,3 +895,40 @@ void DRV_USBHS_ClientEventCallBackSet
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBHS Driver: Invalid client in DRV_USBHS_ClientEventCallBackSet()");
     }
 }
+
+// *****************************************************************************
+/* Function:
+    void DRV_USBHS_InterruptHandler(void)
+
+  Summary:
+    USBHS Interrupt Handler 
+	
+  Description:
+    This is USBHS Interrupt Handler 
+
+  Remarks:
+	None 
+*/
+
+void DRV_USBHS_InterruptHandler(void)
+{
+	DRV_USBHS_Tasks_ISR(sysObj.drvUSBHSObject); 
+}
+
+// *****************************************************************************
+/* Function:
+    void DRV_USBHS_DMAInterruptHandler(void)
+
+  Summary:
+    USBHS DAM Interrupt Handler 
+	
+  Description:
+    This is USBHS DMA Interrupt Handler 
+
+  Remarks:
+	None 
+*/
+void DRV_USBHS_DMAInterruptHandler(void)
+{
+	DRV_USBHS_Tasks_ISR_USBDMA(sysObj.drvUSBHSObject); 
+}

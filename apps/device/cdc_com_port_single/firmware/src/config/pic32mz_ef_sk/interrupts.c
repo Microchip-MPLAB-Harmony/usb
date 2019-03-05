@@ -59,19 +59,27 @@
 // *****************************************************************************
 
 
+void CORE_TIMER_InterruptHandler( void );
+void DRV_USBHS_InterruptHandler( void );
+void DRV_USBHS_DMAInterruptHandler( void );
 
 
 
 /* All the handlers are defined here.  Each will call its PLIB-specific function. */
 
-void __ISR(_USB_VECTOR, ipl4AUTO) USB_Handler (void)
+void __ISR(_CORE_TIMER_VECTOR, ipl1AUTO) CORE_TIMER_Handler (void)
 {
-    DRV_USBHS_Tasks_ISR(sysObj.drvUSBHSObject);
+    CORE_TIMER_InterruptHandler();
 }
 
-void __ISR(_USB_DMA_VECTOR, ipl4AUTO) USB_DMA_Handler (void)
+void __ISR(_USB_VECTOR, ipl1AUTO) USB_Handler (void)
 {
-     DRV_USBHS_Tasks_ISR_USBDMA(sysObj.drvUSBHSObject);
+    DRV_USBHS_InterruptHandler();
+}
+
+void __ISR(_USB_DMA_VECTOR, ipl1AUTO) USB_DMA_Handler (void)
+{
+    DRV_USBHS_DMAInterruptHandler();
 }
 
 

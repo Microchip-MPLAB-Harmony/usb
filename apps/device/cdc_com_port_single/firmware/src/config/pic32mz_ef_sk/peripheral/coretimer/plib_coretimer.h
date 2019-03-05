@@ -1,22 +1,21 @@
 /*******************************************************************************
-  USB stack external dependencies file
+  Interface definition of Core Timer PLIB.
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    drv_usb_external_dependencies.h
+    plib_coretimer.h
 
   Summary:
-    USB Driver external dependencies file
+    Interface definition of the Core Timer Plib .
 
   Description:
-    USB Driver external dependencies file. 
+    This file defines the interface for the Core Timer Plib.
 *******************************************************************************/
 
-//DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -36,38 +35,41 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *******************************************************************************/
-//DOM-IGNORE-END
+*******************************************************************************/
 
-#ifndef _DRV_USB_EXTERNAL_DEPENDENCIES_H
-#define _DRV_USB_EXTERNAL_DEPENDENCIES_H
+#ifndef PLIB_CORETIMER_H    // Guards against multiple inclusion
+#define PLIB_CORETIMER_H
 
-#include <string.h>
-#include "system/system_common.h"
-#include "configuration.h"
-#include "definitions.h"
-#include "system/system_module.h"
+#include <stdint.h>
 
-#if defined DRV_USBHS_INSTANCES_NUMBER
-#include "system/time/sys_time.h"
-#define SYS_TMR_HANDLE SYS_TIME_HANDLE
-#define SYS_TMR_HANDLE_INVALID SYS_TIME_HANDLE_INVALID
-#define SYS_TMR_CallbackSingle(delay,context,callback) SYS_TIME_CallbackRegisterMS(callback,context,delay, SYS_TIME_SINGLE)
-#define SYS_TMR_ObjectDelete SYS_TIME_TimerDestroy
-#endif 
+#ifdef __cplusplus // Provide C++ Compatibility
+	extern "C" {
+#endif
 
-#ifndef SYS_DEBUG_PRINT
-	#define SYS_DEBUG_PRINT(level, format, ...) 
-#endif 
+#define CORE_TIMER_FREQUENCY    100000000
 
-#ifndef SYS_DEBUG_MESSAGE
-	#define SYS_DEBUG_MESSAGE(a,b, ...)
-#endif 
+typedef void (*CORETIMER_CALLBACK)(uintptr_t context);
 
-#ifndef SYS_DEBUG
-	#define SYS_DEBUG(a,b)
-#endif 
-#endif 
-/*******************************************************************************
- End of File
-*/
+typedef struct
+{
+    CORETIMER_CALLBACK  callback;
+    uintptr_t           context;
+} CORETIMER_OBJECT ;
+
+void CORETIMER_Initialize( void );
+void CORETIMER_CallbackSet ( CORETIMER_CALLBACK callback, uintptr_t context );
+uint32_t CORETIMER_FrequencyGet ( void );
+void CORETIMER_Start();
+void CORETIMER_Stop();
+uint32_t CORETIMER_CounterGet();
+void CORETIMER_CompareSet(uint32_t compare);
+
+void CORETIMER_DelayMs ( uint32_t delay_ms);
+void CORETIMER_DelayUs ( uint32_t delay_us);
+
+
+#ifdef __cplusplus // Provide C++ Compatibility
+ }
+#endif
+
+#endif

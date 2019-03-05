@@ -47,19 +47,32 @@
 /***********************************************
  * Sector buffer needed by for the MSD LUN.
  ***********************************************/
+<#if __PROCESSOR?contains("PIC32MZ") == true>
+uint8_t sectorBuffer[512 * USB_DEVICE_MSD_NUM_SECTOR_BUFFERS] __attribute__ ((coherent, aligned(16)));
+<#else>
 uint8_t sectorBuffer[512 * USB_DEVICE_MSD_NUM_SECTOR_BUFFERS] __attribute__((aligned(16)));
+</#if>
 
 /***********************************************
  * CBW and CSW structure needed by for the MSD
  * function driver instance.
  ***********************************************/
+<#if __PROCESSOR?contains("PIC32MZ") == true>
+USB_MSD_CBW msdCBW${CONFIG_USB_DEVICE_FUNCTION_INDEX} __attribute__ ((coherent, aligned(16)));
+USB_MSD_CSW msdCSW${CONFIG_USB_DEVICE_FUNCTION_INDEX} __attribute__ ((coherent, aligned(16)));
+<#else>
 USB_MSD_CBW msdCBW${CONFIG_USB_DEVICE_FUNCTION_INDEX} __attribute__((aligned(16)));
 USB_MSD_CSW msdCSW${CONFIG_USB_DEVICE_FUNCTION_INDEX} __attribute__((aligned(16)));
+</#if>
 
 /*******************************************
  * MSD Function Driver initialization
  *******************************************/
+ <#if __PROCESSOR?contains("PIC32MZ") == true>
+ USB_DEVICE_MSD_MEDIA_INIT_DATA __attribute__ ((coherent, aligned(16))) msdMediaInit${CONFIG_USB_DEVICE_FUNCTION_INDEX}[1] =
+ <#else>
 USB_DEVICE_MSD_MEDIA_INIT_DATA __attribute__((aligned(16))) msdMediaInit${CONFIG_USB_DEVICE_FUNCTION_INDEX}[1] =
+</#if>
 {
     {
 <#if (USB_DEVICE_FUNCTION_MSD_LUN_MEDIA_TYPE_0?has_content)>

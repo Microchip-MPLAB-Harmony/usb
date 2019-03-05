@@ -79,6 +79,15 @@ extern "C" {
 // Section: System Service Configuration
 // *****************************************************************************
 // *****************************************************************************
+/* TIME System Service Configuration Options */
+#define SYS_TIME_INDEX_0                     0
+#define SYS_TIME_MAX_TIMERS                  5
+#define SYS_TIME_HW_COUNTER_WIDTH            32
+#define SYS_TIME_HW_COUNTER_PERIOD           4294967295U
+#define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
+#define SYS_TIME_CPU_CLOCK_FREQUENCY         200000000
+#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (620)
+
 
 
 // *****************************************************************************
@@ -93,14 +102,6 @@ extern "C" {
 // Section: Middleware & Other Library Configuration
 // *****************************************************************************
 // *****************************************************************************
-/* Maximum instances of CDC function driver */
-#define USB_DEVICE_CDC_INSTANCES_NUMBER                     1
-
-/* CDC Transfer Queue Size for both read and
-   write. Applicable to all instances of the
-   function driver */
-#define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED                 4
-
 /*** USB Driver Configuration ***/
 
 /* Maximum USB driver instances */
@@ -119,8 +120,16 @@ extern "C" {
 
 
 
+/* Maximum instances of CDC function driver */
+#define USB_DEVICE_CDC_INSTANCES_NUMBER                     1
+
+/* CDC Transfer Queue Size for both read and
+   write. Applicable to all instances of the
+   function driver */
+#define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED                 4
+
 /* Number of Endpoints used */
-#define DRV_USBHS_ENDPOINTS_NUMBER                        4
+#define DRV_USBHS_ENDPOINTS_NUMBER                        3
 
 /* The USB Device Layer will not initialize the USB Driver */
 #define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT
@@ -131,8 +140,6 @@ extern "C" {
 /* EP0 size in bytes */
 #define USB_DEVICE_EP0_BUFFER_SIZE                          64
 
-/* Enable SOF Events */
-#define USB_DEVICE_SOF_EVENT_ENABLE
 
 
 

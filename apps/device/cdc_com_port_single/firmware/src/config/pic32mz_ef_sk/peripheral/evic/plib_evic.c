@@ -54,8 +54,9 @@ void EVIC_Initialize( void )
     INTCONSET = _INTCON_MVEC_MASK;
 
     /* Set up priority / subpriority of enabled interrupts */
-    IPC33SET = 0x10 | 0x0;  /* USB:  Priority 4 / Subpriority 0 */
-    IPC33SET = 0x1000 | 0x0;  /* USB_DMA:  Priority 4 / Subpriority 0 */
+    IPC0SET = 0x4 | 0x0;  /* CORE_TIMER:  Priority 1 / Subpriority 0 */
+    IPC33SET = 0x4 | 0x0;  /* USB:  Priority 1 / Subpriority 0 */
+    IPC33SET = 0x400 | 0x0;  /* USB_DMA:  Priority 1 / Subpriority 0 */
 }
 
 void EVIC_SourceEnable( INT_SOURCE source )

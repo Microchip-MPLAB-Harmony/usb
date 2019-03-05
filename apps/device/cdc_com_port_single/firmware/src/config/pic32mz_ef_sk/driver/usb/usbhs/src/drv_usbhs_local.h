@@ -564,6 +564,9 @@ typedef struct _DRV_USBHS_COMMON_OBJ_STRUCT
     /* Non ISR Task Routine state */
     DRV_USBHS_TASK_STATE state;
 
+    /* System Timer Service delay handle */
+    SYS_TMR_HANDLE timerHandle;
+    
     /* Current VBUS level when running in device mode */
     USBHS_VBUS_LEVEL vbusLevel;
     

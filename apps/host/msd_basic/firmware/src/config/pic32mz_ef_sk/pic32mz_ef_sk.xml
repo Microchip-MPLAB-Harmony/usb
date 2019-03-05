@@ -516,7 +516,7 @@
         </String>
         <String dnOrder="102" id="BSP_PIN_25_FUNCTION_NAME">
           <Values dnOrder="0">
-            <User dnOrder="0" value="VBUS_AH_RB5"/>
+            <User dnOrder="0" value="VBUS_AH"/>
           </Values>
         </String>
         <String dnOrder="103" id="BSP_PIN_25_FUNCTION_TYPE">
@@ -541,7 +541,7 @@
         </String>
         <String dnOrder="107" id="BSP_PIN_25_PD">
           <Values dnOrder="0">
-            <User dnOrder="0" value="True"/>
+            <User dnOrder="0" value=""/>
           </Values>
         </String>
         <String dnOrder="108" id="BSP_PIN_25_PU">
@@ -1561,7 +1561,7 @@
         <String dnOrder="300" id="EVIC_132_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="DRV_USBHS_Tasks_ISR(sysObj.drvUSBHSObject)"/>
+              <Value dnOrder="0" id="core" priority="2" value="DRV_USBHS_InterruptHandler"/>
             </Dynamic>
           </Values>
         </String>
@@ -1582,7 +1582,7 @@
         <String dnOrder="303" id="EVIC_133_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="DRV_USBHS_Tasks_ISR_USBDMA(sysObj.drvUSBHSObject)"/>
+              <Value dnOrder="0" id="core" priority="2" value="DRV_USBHS_DMAInterruptHandler"/>
             </Dynamic>
           </Values>
         </String>
@@ -1727,7 +1727,7 @@
         <Hex dnOrder="324" id="SYS_PORT_B_CNPD">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="32"/>
+              <Value dnOrder="0" id="core" priority="2" value="0"/>
             </Dynamic>
           </Values>
         </Hex>
@@ -1853,7 +1853,7 @@
         <String dnOrder="342" id="USB_DMA_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="drv_usbhs_v1" priority="1" value="DRV_USBHS_Tasks_ISR_USBDMA(sysObj.drvUSBHSObject)"/>
+              <Value dnOrder="0" id="drv_usbhs_v1" priority="1" value="DRV_USBHS_DMAInterruptHandler"/>
             </Dynamic>
           </Values>
         </String>
@@ -1881,7 +1881,7 @@
         <String dnOrder="346" id="USB_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="drv_usbhs_v1" priority="1" value="DRV_USBHS_Tasks_ISR(sysObj.drvUSBHSObject)"/>
+              <Value dnOrder="0" id="drv_usbhs_v1" priority="1" value="DRV_USBHS_InterruptHandler"/>
             </Dynamic>
           </Values>
         </String>
@@ -1981,11 +1981,26 @@
     <UniqueComponent dnOrder="3" id="dfp"/>
     <UniqueComponent dnOrder="4" id="drv_usbhs_v1">
       <Symbols dnOrder="0">
-        <Combo dnOrder="0" id="USB_OPERATION_MODE">
+        <Integer dnOrder="0" id="USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Integer>
+        <Integer dnOrder="1" id="USB_DRV_HOST_RESET_DUARTION">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Integer>
+        <Combo dnOrder="2" id="USB_OPERATION_MODE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="usb_host" priority="2" value="Host"/>
               <Value dnOrder="1" id="usb_host" priority="2" value="Host"/>
+              <Value dnOrder="2" id="usb_host" priority="2" value="Host"/>
             </Dynamic>
           </Values>
         </Combo>
@@ -1993,7 +2008,21 @@
     </UniqueComponent>
     <UniqueComponent dnOrder="5" id="HarmonyCore">
       <Symbols dnOrder="0">
-        <Boolean dnOrder="0" id="ENABLE_APP_FILE">
+        <File dnOrder="0" id="APP0_C">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="1" id="APP0_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <Boolean dnOrder="2" id="ENABLE_APP_FILE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="HarmonyCore" priority="1" value="true"/>
@@ -2001,7 +2030,7 @@
             </Dynamic>
           </Values>
         </Boolean>
-        <Boolean dnOrder="1" id="ENABLE_DRV_COMMON">
+        <Boolean dnOrder="3" id="ENABLE_DRV_COMMON">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="drv_usbhs_v1" priority="2" value="true"/>
@@ -2009,7 +2038,7 @@
             </Dynamic>
           </Values>
         </Boolean>
-        <Boolean dnOrder="2" id="ENABLE_OSAL">
+        <Boolean dnOrder="4" id="ENABLE_OSAL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="HarmonyCore" priority="1" value="true"/>
@@ -2017,14 +2046,14 @@
             </Dynamic>
           </Values>
         </Boolean>
-        <Boolean dnOrder="3" id="ENABLE_SYS_CACHE">
+        <Boolean dnOrder="5" id="ENABLE_SYS_CACHE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="HarmonyCore" priority="1" value="false"/>
             </Dynamic>
           </Values>
         </Boolean>
-        <Boolean dnOrder="4" id="ENABLE_SYS_COMMON">
+        <Boolean dnOrder="6" id="ENABLE_SYS_COMMON">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="drv_usbhs_v1" priority="2" value="true"/>
@@ -2033,7 +2062,7 @@
             </Dynamic>
           </Values>
         </Boolean>
-        <Boolean dnOrder="5" id="ENABLE_SYS_INT">
+        <Boolean dnOrder="7" id="ENABLE_SYS_INT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="HarmonyCore" priority="1" value="true"/>
@@ -2041,14 +2070,14 @@
             </Dynamic>
           </Values>
         </Boolean>
-        <Boolean dnOrder="6" id="ENABLE_SYS_MEDIA">
+        <Boolean dnOrder="8" id="ENABLE_SYS_MEDIA">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="sys_fs" priority="2" value="true"/>
             </Dynamic>
           </Values>
         </Boolean>
-        <Combo dnOrder="7" id="SELECT_RTOS">
+        <Combo dnOrder="9" id="SELECT_RTOS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="HarmonyCore" priority="1" value="BareMetal"/>
@@ -2157,6 +2186,7 @@
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="usb_host_msd" priority="2" value="1"/>
               <Value dnOrder="1" id="usb_host_msd" priority="2" value="1"/>
+              <Value dnOrder="2" id="usb_host_msd" priority="2" value="1"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -2184,12 +2214,12 @@
         <ElementPosition dnOrder="0" id="BSP_PIC32MZ_EF_Starter_Kit" x="17" y="64"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="343" y="16"/>
         <ElementPosition dnOrder="2" id="core" x="240" y="20"/>
-        <ElementPosition dnOrder="3" id="core_timer" x="22" y="295"/>
+        <ElementPosition dnOrder="3" id="core_timer" x="23" y="295"/>
         <ElementPosition dnOrder="4" id="dfp" x="20" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_usbhs_v1" x="15" y="126"/>
-        <ElementPosition dnOrder="6" id="sys_fs" x="530" y="140"/>
+        <ElementPosition dnOrder="5" id="drv_usbhs_v1" x="15" y="137"/>
+        <ElementPosition dnOrder="6" id="sys_fs" x="532" y="127"/>
         <ElementPosition dnOrder="7" id="sys_time" x="206" y="249"/>
-        <ElementPosition dnOrder="8" id="usb_host" x="201" y="130"/>
+        <ElementPosition dnOrder="8" id="usb_host" x="215" y="126"/>
         <ElementPosition dnOrder="9" id="usb_host_msd" x="362" y="131"/>
       </ElementPositions>
     </ComponentGraph>

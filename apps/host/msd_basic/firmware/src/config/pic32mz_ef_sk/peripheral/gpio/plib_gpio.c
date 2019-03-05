@@ -63,7 +63,6 @@ void GPIO_Initialize ( void )
     TRISBCLR = 0x20; /* Direction Control */
     ANSELBCLR = 0x7020; /* Digital Mode Enable */
     CNPUBSET = 0x7000; /* Pull-Up Enable */
-    CNPDBSET = 0x20; /* Pull-Down Enable */
 
     /* PORTC Initialization */
 

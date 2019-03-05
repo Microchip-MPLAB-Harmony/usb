@@ -48,7 +48,7 @@
 #include "definitions.h"
 #include "system/system_module.h"
 
-#if defined (USB_HOST_DEVICES_NUMBER) &&  (USB_HOST_DEVICES_NUMBER > 0)
+#if defined DRV_USBHS_INSTANCES_NUMBER
 #include "system/time/sys_time.h"
 #define SYS_TMR_HANDLE SYS_TIME_HANDLE
 #define SYS_TMR_HANDLE_INVALID SYS_TIME_HANDLE_INVALID

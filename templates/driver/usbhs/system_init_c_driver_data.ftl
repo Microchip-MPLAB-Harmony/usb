@@ -42,6 +42,27 @@
 /******************************************************
  * USB Driver Initialization
  ******************************************************/
+<#if (USB_OPERATION_MODE == "Host")> 
+void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
+{
+	/* Note: USB Host applications should have a way for Enabling/Disabling the 
+	   VBUS. Applications can use a GPIO to turn VBUS on/off through a switch. 
+	   In MHC Pin Settings select the pin used as VBUS Power Enable as output and 
+	   name it to "VBUS_AH". If you a see a build error from this function either 
+	   you have not configured the VBUS Power Enable in MHC pin settings or the 
+	   Pin name entered in MHC is not "VBUS_AH". */ 
+    if (enable == true)
+	{
+		/* Enable the VBUS */
+		VBUS_AH_PowerEnable();
+	}
+	else
+	{
+		/* Disable the VBUS */
+		VBUS_AH_PowerDisable();
+	}
+}
+</#if>
 
 const DRV_USBHS_INIT drvUSBInit =
 {
@@ -79,7 +100,10 @@ const DRV_USBHS_INIT drvUSBInit =
     /* Identifies peripheral (PLIB-level) ID */
     .usbID = USBHS_ID_0,
 	
-<#if (USB_OPERATION_MODE == "Host")>        
+<#if (USB_OPERATION_MODE == "Host")> 
+	/* USB Host Power Enable. USB Driver uses this function to Enable the VBUS */ 
+	.portPowerEnable = DRV_USB_VBUSPowerEnable,
+	
     /* Root hub available current in milliamperes */
     .rootHubAvailableCurrent = 500,
 </#if>
