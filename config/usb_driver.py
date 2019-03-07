@@ -131,9 +131,10 @@ def instantiateComponent(usbDriverComponent):
     #### Dependency ####
     ############################################################################
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
-		NVICVector = "NVIC_USBHS_ENABLE"
-		NVICHandler = "NVIC_USBHS_HANDLER"
-		NVICHandlerLock = "NVIC_USBHS_HANDLER_LOCK"
+		# Update USB General Interrupt Handler 
+		Database.setSymbolValue("core", "USBHS_INTERRUPT_ENABLE", True, 1)
+		Database.setSymbolValue("core", "USBHS_INTERRUPT_HANDLER_LOCK", True, 1)
+		Database.setSymbolValue("core", "USBHS_INTERRUPT_HANDLER", "DRV_USBHSV1_USBHS_Handler", 1)
 
 		# Initial settings for CLK and NVIC
 		Database.clearSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN")
@@ -146,12 +147,7 @@ def instantiateComponent(usbDriverComponent):
 		Database.setSymbolValue("core", "USBHS_CLOCK_ENABLE", True, 2)
 		Database.clearSymbolValue("core", "PMC_SCER_USBCLK")
 		Database.setSymbolValue("core", "PMC_SCER_USBCLK", True, 2)
-		Database.clearSymbolValue("core", NVICVector)
-		Database.setSymbolValue("core", NVICVector, True, 2)
-		Database.clearSymbolValue("core", NVICHandler)
-		Database.setSymbolValue("core", NVICHandler, "USBHS_InterruptHandler", 2)
-		Database.clearSymbolValue("core", NVICHandlerLock)
-		Database.setSymbolValue("core", NVICHandlerLock, True, 2)
+	
 		
 		# Dependency Status
 		usbhsSymClkEnComment = usbDriverComponent.createCommentSymbol("USBHS_CLK_ENABLE_COMMENT", None)
@@ -162,7 +158,8 @@ def instantiateComponent(usbDriverComponent):
 		usbhsSymIntEnComment = usbDriverComponent.createCommentSymbol("USBHS_NVIC_ENABLE_COMMENT", None)
 		usbhsSymIntEnComment.setVisible(False)
 		usbhsSymIntEnComment.setLabel("Warning!!! USBHS Interrupt is Disabled in Interrupt Manager")
-		usbhsSymIntEnComment.setDependencies(dependencyStatus, ["core." + NVICVector])
+		usbhsSymIntEnComment.setDependencies(dependencyStatus, ["core." + "USBHS_INTERRUPT_ENABLE"])
+		
 	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
 		# Update USB General Interrupt Handler 
 		Database.setSymbolValue("core", "USB_INTERRUPT_ENABLE", True, 1)
@@ -173,14 +170,6 @@ def instantiateComponent(usbDriverComponent):
 		Database.setSymbolValue("core", "USB_DMA_INTERRUPT_ENABLE", True, 1)
 		Database.setSymbolValue("core", "USB_DMA_INTERRUPT_HANDLER_LOCK", True, 1)
 		Database.setSymbolValue("core", "USB_DMA_INTERRUPT_HANDLER", "DRV_USBHS_DMAInterruptHandler", 1)
-		
-	
-	
-    # NVIC Dynamic settings
-	# usbhsNVICControl = usbDriverComponent.createBooleanSymbol("NVIC_USBHS_ENABLE", None)
-	# usbhsNVICControl.setDependencies(NVICControl, ["INTERRUPT_MODE"])
-	# usbhsNVICControl.setVisible(False)
-
 
 	
 	# Enable dependent Harmony core components
