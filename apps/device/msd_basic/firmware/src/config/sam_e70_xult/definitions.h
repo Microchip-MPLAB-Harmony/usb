@@ -64,6 +64,7 @@
 #include "bsp/bsp.h"
 #include "driver/memory/drv_memory_efc.h"
 #include "system/int/sys_int.h"
+#include "system/cache/sys_cache.h"
 #include "osal/osal.h"
 #include "app.h"
 

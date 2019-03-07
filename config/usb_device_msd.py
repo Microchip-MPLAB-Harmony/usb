@@ -1,5 +1,4 @@
 # USB Device MSD global 
-usbDeviceMsdMaxNumberofSectors = ["1", "2", "4", "8"]	
 msdInterfacesNumber = 1
 msdDescriptorSize = 23
 msdEndpointsNumber = 2
@@ -72,15 +71,6 @@ def onAttachmentConnected(source, target):
 				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue + msdEndpointsSAM , 2)
 				usbDeviceMsdEPNumberBulkIn.setValue(readValue + 1, 1)
 				usbDeviceMsdEPNumberBulkOut.setValue(readValue + 2, 1)
-				
-		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-		if readValue != None:
-			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue - msdEndpointsPic32 , 2)
-			else:
-				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue - msdEndpointsSAM , 2)
 					
 	if (dependencyID == "usb_device_msd_media_dependency"):
 		global usbDeviceMSDLunCount
@@ -134,6 +124,14 @@ def onAttachmentDisconnected(source, target):
 			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", readValue - 1 , 2)
 			startInterfaceNumber.setValue(readValue, 1)
 			
+		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+		if readValue != None:
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue - msdEndpointsPic32 , 2)
+			else:
+				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue - msdEndpointsSAM , 2)		
 			
 	if  dependencyID == "usb_device_msd_media_dependency":
 		lunNoSymbol = ownerComponent.getSymbolByID("CONFIG_USB_DEVICE_FUNCTION_MSD_LUN")
@@ -213,11 +211,6 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 	numberOfInterfaces.setMax(16)
 	numberOfInterfaces.setDefaultValue(msdInterfacesNumber)
 	
-	# MSD Function driver Max numbers sectors to buffer 
-	usbDeviceMsdMaxSectorsToBuffer = usbDeviceMsdComponent.createComboSymbol("CONFIG_USB_DEVICE_FUNCTION_MSD_MAX_SECTORS", None, usbDeviceMsdMaxNumberofSectors)
-	usbDeviceMsdMaxSectorsToBuffer.setLabel("Max number of sectors to buffer")
-	usbDeviceMsdMaxSectorsToBuffer.setVisible(True)
-	
 	# MSD Function driver Number of Logical units  
 	usbDeviceMsdNumberOfLogicalUnits = usbDeviceMsdComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_MSD_LUN", None)
 	usbDeviceMsdNumberOfLogicalUnits.setLabel("Number of Logical Units")
@@ -234,13 +227,6 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 	usbDeviceMSDLunMedia_0.setLabel("Media Driver")
 	usbDeviceMSDLunMedia_0.setReadOnly(True)
 	usbDeviceMSDLunMedia_0.setVisible(False)
-		
-	# MSD Function driver Bulk Out Endpoint Number 
-	usbDeviceMsdEPNumberBulkOut = usbDeviceMsdComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_BULK_OUT_ENDPOINT_NUMBER", None)		
-	usbDeviceMsdEPNumberBulkOut.setLabel("Bulk OUT Endpoint Number")
-	usbDeviceMsdEPNumberBulkOut.setVisible(True)
-	usbDeviceMsdEPNumberBulkOut.setMin(1)
-	usbDeviceMsdEPNumberBulkOut.setDefaultValue(1)
 
 	# MSD Function driver Bulk IN Endpoint Number 
 	usbDeviceMsdEPNumberBulkIn = usbDeviceMsdComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER", None)		
@@ -248,6 +234,13 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 	usbDeviceMsdEPNumberBulkIn.setVisible(True)
 	usbDeviceMsdEPNumberBulkIn.setMin(1)
 	usbDeviceMsdEPNumberBulkIn.setDefaultValue(2)
+	
+	# MSD Function driver Bulk Out Endpoint Number 
+	usbDeviceMsdEPNumberBulkOut = usbDeviceMsdComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_BULK_OUT_ENDPOINT_NUMBER", None)		
+	usbDeviceMsdEPNumberBulkOut.setLabel("Bulk OUT Endpoint Number")
+	usbDeviceMsdEPNumberBulkOut.setVisible(True)
+	usbDeviceMsdEPNumberBulkOut.setMin(1)
+	usbDeviceMsdEPNumberBulkOut.setDefaultValue(1)
 		
 		
 	############################################################################

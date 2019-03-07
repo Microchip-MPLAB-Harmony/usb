@@ -1,3 +1,5 @@
+usbDeviceMsdMaxNumberofSectors = ["1", "2", "4", "8"]	
+
 def instantiateComponent(usbMsdComponentCommon):
 	print ("usb_device_msd_common.py")
 	usbDeviceMsdInstnces = usbMsdComponentCommon.createIntegerSymbol("CONFIG_USB_DEVICE_MSD_INSTANCES", None)
@@ -14,12 +16,10 @@ def instantiateComponent(usbMsdComponentCommon):
 	usbDeviceMsdLunNumber.setDefaultValue(3)
 	usbDeviceMsdLunNumber.setVisible(False)
 	
-	usbDeviceMsdMaxSectorsToBufferCommon = usbMsdComponentCommon.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_MSD_MAX_SECTORS_COMMON", None)
-	usbDeviceMsdMaxSectorsToBufferCommon.setLabel("Combined Queue Depth")
-	usbDeviceMsdMaxSectorsToBufferCommon.setMin(1)
-	usbDeviceMsdMaxSectorsToBufferCommon.setMax(32767)
-	usbDeviceMsdMaxSectorsToBufferCommon.setDefaultValue(3)
-	usbDeviceMsdMaxSectorsToBufferCommon.setVisible(False)
+	usbDeviceMsdMaxSectorsToBufferCommon = usbMsdComponentCommon.createComboSymbol("CONFIG_USB_DEVICE_FUNCTION_MSD_MAX_SECTORS_COMMON", None, usbDeviceMsdMaxNumberofSectors)
+	usbDeviceMsdMaxSectorsToBufferCommon.setLabel("Max Sectors To Buffer")
+	usbDeviceMsdMaxSectorsToBufferCommon.setDefaultValue("1")
+	usbDeviceMsdMaxSectorsToBufferCommon.setVisible(True)
 	
 	#########################################################
 	# system_config.h file for USB Device MSD function driver 
