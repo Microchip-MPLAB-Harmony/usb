@@ -71,19 +71,19 @@ def instantiateComponent(usbHostAudioComponent):
 	# USB Host Audio Client driver Files 
 	################################################
 	usbHostAudioHeaderFile = usbHostAudioComponent.createFileSymbol(None, None)
-	addFileName('usb_host_audio_v1_0.h', usbHostAudioComponent, usbHostAudioHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_host_audio_v1_0.h', usbHostAudioComponent, usbHostAudioHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbAudioHeaderFile = usbHostAudioComponent.createFileSymbol(None, None)
-	addFileName('usb_audio_v1_0.h', usbHostAudioComponent, usbAudioHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_audio_v1_0.h', usbHostAudioComponent, usbAudioHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbHostAudioSourceFile = usbHostAudioComponent.createFileSymbol(None, None)
-	addFileName('usb_host_audio_v1_0.c', usbHostAudioComponent, usbHostAudioSourceFile, "src/", "/usb/src/", True, None)
+	addFileName('usb_host_audio_v1_0.c', usbHostAudioComponent, usbHostAudioSourceFile, "middleware/src/", "/usb/src/", True, None)
 		
 	usbHostAudioLocalHeaderFile = usbHostAudioComponent.createFileSymbol(None, None)
-	addFileName('usb_host_audio_local.h', usbHostAudioComponent, usbHostAudioLocalHeaderFile, "src/", "/usb/src", True, None)
+	addFileName('usb_host_audio_local.h', usbHostAudioComponent, usbHostAudioLocalHeaderFile, "middleware/src/", "/usb/src", True, None)
 	
 	usbHostAudioLocalHeaderFile = usbHostAudioComponent.createFileSymbol(None, None)
-	addFileName('usb_host_audio_v1_mapping', usbHostAudioComponent, usbHostAudioLocalHeaderFile, "src/", "/usb/src", True, None)
+	addFileName('usb_host_audio_v1_mapping', usbHostAudioComponent, usbHostAudioLocalHeaderFile, "middleware/src/", "/usb/src", True, None)
 	
 	
 	# all files go into src/

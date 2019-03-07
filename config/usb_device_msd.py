@@ -317,19 +317,19 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 	# USB MSD Function driver Files 
 	################################################
 	usbDeviceMsdHeaderFile = usbDeviceMsdComponent.createFileSymbol("USB_DEVICE_MSD_HEADER_FILE", None)
-	addFileName('usb_device_msd.h', usbDeviceMsdHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_device_msd.h', usbDeviceMsdHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbMsdHeaderFile = usbDeviceMsdComponent.createFileSymbol("USB_MSD_HEADER_FILE", None)
-	addFileName('usb_msd.h', usbMsdHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_msd.h', usbMsdHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbMsdScsiHeaderFile = usbDeviceMsdComponent.createFileSymbol("USB_MSD_SCSCI_HEADER_FILE", None)
-	addFileName('scsi.h', usbMsdScsiHeaderFile, "", "/usb/", True, None)
+	addFileName('scsi.h', usbMsdScsiHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbDeviceMsdSourceFile = usbDeviceMsdComponent.createFileSymbol("USB_DEVICE_MSD_SOURCE_FILE", None)
-	addFileName('usb_device_msd.c', usbDeviceMsdSourceFile, "src/", "/usb/src", True, None)
+	addFileName('usb_device_msd.c', usbDeviceMsdSourceFile, "middleware/src/", "/usb/src", True, None)
 	
 	usbDeviceMsdLocalHeaderFile = usbDeviceMsdComponent.createFileSymbol("USB_DEVICE_MSD_LOCAL_HEADER_FILE", None)
-	addFileName('usb_device_msd_local.h', usbDeviceMsdLocalHeaderFile, "src/", "/usb/src", True, None)
+	addFileName('usb_device_msd_local.h', usbDeviceMsdLocalHeaderFile, "middleware/src/", "/usb/src", True, None)
 	
 	
 	# all files go into src/

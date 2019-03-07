@@ -191,7 +191,7 @@ def instantiateComponent(usbDriverComponent):
 	configName = Variables.get("__CONFIGURATION_NAME")
 	
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
-		sourcePath = "templates/"
+		sourcePath = "templates/driver/usbhsv1/"
 	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
 		sourcePath = "templates/driver/usbhs/"
 	
@@ -323,16 +323,16 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1LocalHeaderFile.setOverwrite(True)
 	
 	usbHostControllerDriverHeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	addFileName('usb_host_client_driver.h', usbDriverComponent, usbHostControllerDriverHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_host_client_driver.h', usbDriverComponent, usbHostControllerDriverHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbHostHubInterfaceHeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	addFileName('usb_host_hub_interface.h', usbDriverComponent, usbHostHubInterfaceHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_host_hub_interface.h', usbDriverComponent, usbHostHubInterfaceHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbHostHeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	addFileName('usb_host.h', usbDriverComponent, usbHostHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_host.h', usbDriverComponent, usbHostHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbHubHeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	addFileName('usb_hub.h', usbDriverComponent, usbHubHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_hub.h', usbDriverComponent, usbHubHeaderFile, "middleware/", "/usb/", True, None)
 	
 	################################################
 	# USB Driver Source files  

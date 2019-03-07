@@ -199,25 +199,25 @@ def instantiateComponent(usbHostComponent):
 	# USB Host Layer Files 
 	################################################
 	usbHostHeaderFile = usbHostComponent.createFileSymbol(None, None)
-	addFileName('usb_host.h', usbHostComponent, usbHostHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_host.h', usbHostComponent, usbHostHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbHostSourceFile = usbHostComponent.createFileSymbol(None, None)
-	addFileName('usb_host.c', usbHostComponent, usbHostSourceFile, "src/", "/usb/src", True, None)
+	addFileName('usb_host.c', usbHostComponent, usbHostSourceFile, "middleware/src/", "/usb/src", True, None)
 
 	usbHostLocalHeaderFile = usbHostComponent.createFileSymbol(None, None)
-	addFileName('usb_host_local.h', usbHostComponent, usbHostLocalHeaderFile, "src/", "/usb/src", True, None)
+	addFileName('usb_host_local.h', usbHostComponent, usbHostLocalHeaderFile, "middleware/src/", "/usb/src", True, None)
 	
 	usbCommonFile = usbHostComponent.createFileSymbol(None, None)
-	addFileName('usb_common.h', usbHostComponent, usbCommonFile, "", "/usb/", True, None)
+	addFileName('usb_common.h', usbHostComponent, usbCommonFile, "middleware/", "/usb/", True, None)
 	
 	usbChapter9File = usbHostComponent.createFileSymbol(None, None)
-	addFileName('usb_chapter_9.h', usbHostComponent, usbChapter9File, "", "/usb/", True, None)
+	addFileName('usb_chapter_9.h', usbHostComponent, usbChapter9File, "middleware/", "/usb/", True, None)
 	
 	usbHostHubMappingFile = usbHostComponent.createFileSymbol(None, None)
-	addFileName('usb_host_hub_mapping.h', usbHostComponent, usbHostHubMappingFile, "src/", "/usb/src", True, None)
+	addFileName('usb_host_hub_mapping.h', usbHostComponent, usbHostHubMappingFile, "middleware/src/", "/usb/src", True, None)
 	
 	usbExternalDependenciesFile = usbHostComponent.createFileSymbol(None, None)
-	addFileName('usb_external_dependencies.h', usbHostComponent, usbExternalDependenciesFile, "src/", "/usb/src", True, None)
+	addFileName('usb_external_dependencies.h', usbHostComponent, usbExternalDependenciesFile, "middleware/src/", "/usb/src", True, None)
 		
 	
 	

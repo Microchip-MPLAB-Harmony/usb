@@ -273,7 +273,7 @@ def instantiateComponent(usbDeviceComponent):
 	# Enable Auto timed remote wakeup functions  
 	usbDeviceFeatureEnableAutioTimeRemoteWakeup = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FEATURE_ENABLE_AUTO_TIMED_REMOTE_WAKEUP_FUNCTIONS", usbDeviceFeatureEnable)
 	usbDeviceFeatureEnableAutioTimeRemoteWakeup.setLabel("Use Auto Timed Remote Wake up Functions")	
-	usbDeviceFeatureEnableAutioTimeRemoteWakeup.setVisible(True)	
+	usbDeviceFeatureEnableAutioTimeRemoteWakeup.setVisible(False)	
 	
 	# USB Device EP0 Buffer Size  
 	usbDeviceEp0BufferSize = usbDeviceComponent.createComboSymbol("CONFIG_USB_DEVICE_EP0_BUFFER_SIZE", None, usbDeviceEp0BufferSizes)
@@ -471,28 +471,28 @@ def instantiateComponent(usbDeviceComponent):
 	# USB Device Layer Files 
 	################################################
 	usbDeviceHeaderFile = usbDeviceComponent.createFileSymbol(None, None)
-	addFileName('usb_device.h', usbDeviceComponent, usbDeviceHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_device.h', usbDeviceComponent, usbDeviceHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbDeviceCommonHeaderFile = usbDeviceComponent.createFileSymbol(None, None)
-	addFileName('usb_common.h', usbDeviceComponent, usbDeviceCommonHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_common.h', usbDeviceComponent, usbDeviceCommonHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbDeviceChapter9HeaderFile = usbDeviceComponent.createFileSymbol(None, None)
-	addFileName('usb_chapter_9.h', usbDeviceComponent, usbDeviceChapter9HeaderFile, "", "/usb/", True, None)
+	addFileName('usb_chapter_9.h', usbDeviceComponent, usbDeviceChapter9HeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbDeviceLocalHeaderFile = usbDeviceComponent.createFileSymbol(None, None)
-	addFileName('usb_device_local.h', usbDeviceComponent, usbDeviceLocalHeaderFile, "src/", "/usb/src", True, None)
+	addFileName('usb_device_local.h', usbDeviceComponent, usbDeviceLocalHeaderFile, "middleware/src/", "/usb/src", True, None)
 	
 	usbDeviceMappingHeaderFile = usbDeviceComponent.createFileSymbol(None, None)
-	addFileName('usb_device_mapping.h', usbDeviceComponent, usbDeviceMappingHeaderFile, "src/", "/usb/src", True, None)
+	addFileName('usb_device_mapping.h', usbDeviceComponent, usbDeviceMappingHeaderFile, "middleware/src/", "/usb/src", True, None)
 	
 	usbDeviceFunctionDriverHeaderFile = usbDeviceComponent.createFileSymbol(None, None)
-	addFileName('usb_device_function_driver.h', usbDeviceComponent, usbDeviceFunctionDriverHeaderFile, "src/", "/usb/src", True, None)
+	addFileName('usb_device_function_driver.h', usbDeviceComponent, usbDeviceFunctionDriverHeaderFile, "middleware/src/", "/usb/src", True, None)
 
 	usbDeviceSourceFile = usbDeviceComponent.createFileSymbol(None, None)
-	addFileName('usb_device.c', usbDeviceComponent, usbDeviceSourceFile, "src/", "/usb/src", True, None)
+	addFileName('usb_device.c', usbDeviceComponent, usbDeviceSourceFile, "middleware/src/", "/usb/src", True, None)
 	
 	usbExternalDependenciesFile = usbDeviceComponent.createFileSymbol(None, None)
-	addFileName('usb_external_dependencies.h', usbDeviceComponent, usbExternalDependenciesFile, "src/", "/usb/src", True, None)
+	addFileName('usb_external_dependencies.h', usbDeviceComponent, usbExternalDependenciesFile, "middleware/src/", "/usb/src", True, None)
 	
 	################################################
 	# USB Device Application files  

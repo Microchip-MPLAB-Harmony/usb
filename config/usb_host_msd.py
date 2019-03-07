@@ -69,29 +69,29 @@ def instantiateComponent(usbHostMsdComponent):
 	# USB Host MSD Client driver Files 
 	################################################
 	usbHostMsdHeaderFile = usbHostMsdComponent.createFileSymbol(None, None)
-	addFileName('usb_host_msd.h', usbHostMsdComponent, usbHostMsdHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_host_msd.h', usbHostMsdComponent, usbHostMsdHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbHostScsiHeaderFile = usbHostMsdComponent.createFileSymbol(None, None)
-	addFileName('usb_host_scsi.h', usbHostMsdComponent, usbHostScsiHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_host_scsi.h', usbHostMsdComponent, usbHostScsiHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbMsdHeaderFile = usbHostMsdComponent.createFileSymbol(None, None)
-	addFileName('usb_msd.h', usbHostMsdComponent, usbMsdHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_msd.h', usbHostMsdComponent, usbMsdHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbScsiHeaderFile = usbHostMsdComponent.createFileSymbol(None, None)
-	addFileName('scsi.h', usbHostMsdComponent, usbScsiHeaderFile, "", "/usb/", True, None)
+	addFileName('scsi.h', usbHostMsdComponent, usbScsiHeaderFile, "middleware/", "/usb/", True, None)
 	
 	
 	usbHostMsdSourceFile = usbHostMsdComponent.createFileSymbol(None, None)
-	addFileName('usb_host_msd.c', usbHostMsdComponent, usbHostMsdSourceFile, "src/", "/usb/src", True, None)
+	addFileName('usb_host_msd.c', usbHostMsdComponent, usbHostMsdSourceFile, "middleware/src/", "/usb/src", True, None)
 	
 	usbHostScsiSourceFile = usbHostMsdComponent.createFileSymbol(None, None)
-	addFileName('usb_host_scsi.c', usbHostMsdComponent, usbHostScsiSourceFile, "src/", "/usb/src", True, None)
+	addFileName('usb_host_scsi.c', usbHostMsdComponent, usbHostScsiSourceFile, "middleware/src/", "/usb/src", True, None)
 
 	usbHostMsdLocalHeaderFile = usbHostMsdComponent.createFileSymbol(None, None)
-	addFileName('usb_host_msd_local.h', usbHostMsdComponent, usbHostMsdLocalHeaderFile, "src/", "/usb/src", True, None)
+	addFileName('usb_host_msd_local.h', usbHostMsdComponent, usbHostMsdLocalHeaderFile, "middleware/src/", "/usb/src", True, None)
 	
 	usbHostScsiLocalHeaderFile = usbHostMsdComponent.createFileSymbol(None, None)
-	addFileName('usb_host_scsi_local.h', usbHostMsdComponent, usbHostScsiLocalHeaderFile, "src/", "/usb/src", True, None)
+	addFileName('usb_host_scsi_local.h', usbHostMsdComponent, usbHostScsiLocalHeaderFile, "middleware/src/", "/usb/src", True, None)
 	
 	
 	# all files go into src/

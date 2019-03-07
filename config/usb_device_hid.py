@@ -289,16 +289,16 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	# USB HID Function driver Files 
 	################################################
 	usbDeviceHidHeaderFile = usbDeviceHidComponent.createFileSymbol(None, None)
-	addFileName('usb_device_hid.h', usbDeviceHidComponent, usbDeviceHidHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_device_hid.h', usbDeviceHidComponent, usbDeviceHidHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbHidHeaderFile = usbDeviceHidComponent.createFileSymbol(None, None)
-	addFileName('usb_hid.h', usbDeviceHidComponent, usbHidHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_hid.h', usbDeviceHidComponent, usbHidHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbDeviceHidSourceFile = usbDeviceHidComponent.createFileSymbol(None, None)
-	addFileName('usb_device_hid.c', usbDeviceHidComponent, usbDeviceHidSourceFile, "src/", "/usb/src", True, None)
+	addFileName('usb_device_hid.c', usbDeviceHidComponent, usbDeviceHidSourceFile, "middleware/src/", "/usb/src", True, None)
 	
 	usbDeviceHidLocalHeaderFile = usbDeviceHidComponent.createFileSymbol(None, None)
-	addFileName('usb_device_hid_local.h', usbDeviceHidComponent, usbDeviceHidLocalHeaderFile, "src/", "/usb/src", True, None)
+	addFileName('usb_device_hid_local.h', usbDeviceHidComponent, usbDeviceHidLocalHeaderFile, "middleware/src/", "/usb/src", True, None)
 	
 	# all files go into src/
 def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callback):

@@ -156,26 +156,26 @@ def usbDeviceAudioBufferQueueSize(usbSymbolSource, event):
 def usbDeviceAudioSpecVersionChanged(usbSymbolSource, event):
 	if event["value"] == "Audio v1":
 		if usbSymbolSource.getID() == "USB_DEVICE_AUDIO_HEADER_FILE":
-			addFileName('usb_device_audio_v1_0.h', usbSymbolSource, "", "/usb/", True, None)
+			addFileName('usb_device_audio_v1_0.h', usbSymbolSource, "middleware/", "/usb/", True, None)
 		elif usbSymbolSource.getID() == "USB_AUDIO_HEADER_FILE":
-			addFileName('usb_audio_v1_0.h', usbSymbolSource, "", "/usb/", True, None)
+			addFileName('usb_audio_v1_0.h', usbSymbolSource, "middleware/", "/usb/", True, None)
 		elif usbSymbolSource.getID() == "USB_DEVICE_AUDIO_SOURCE_FILE":
-			addFileName('usb_device_audio_v1_0.c', usbSymbolSource, "src/", "/usb/src", True, None)
+			addFileName('usb_device_audio_v1_0.c', usbSymbolSource, "middleware/src/", "/usb/src", True, None)
 		elif usbSymbolSource.getID() == "USB_DEVICE_AUDIO_TRANSFER_SOURCE_FILE":
-			addFileName('usb_device_audio_read_write.c', usbSymbolSource, "src/", "/usb/src", True, None)
+			addFileName('usb_device_audio_read_write.c', usbSymbolSource, "middleware/src/", "/usb/src", True, None)
 		elif usbSymbolSource.getID() == "USB_DEVICE_AUDIO_LOCAL_HEADER_FILE":
-			addFileName('usb_device_audio_local.h', usbSymbolSource, "src/", "/usb/src", True, None)
+			addFileName('usb_device_audio_local.h', usbSymbolSource, "middleware/src/", "/usb/src", True, None)
 	elif event["value"] == "Audio v2":	
 		if usbSymbolSource.getID() == "USB_DEVICE_AUDIO_HEADER_FILE":
-			addFileName('usb_device_audio_v2_0.h', usbSymbolSource, "", "/usb/", True, None)
+			addFileName('usb_device_audio_v2_0.h', usbSymbolSource, "middleware/", "/usb/", True, None)
 		elif usbSymbolSource.getID() == "USB_AUDIO_HEADER_FILE":
-			addFileName('usb_audio_v2_0.h', usbSymbolSource, "", "/usb/", True, None)
+			addFileName('usb_audio_v2_0.h', usbSymbolSource, "middleware/", "/usb/", True, None)
 		elif usbSymbolSource.getID() == "USB_DEVICE_AUDIO_SOURCE_FILE":
-			addFileName('usb_device_audio_v2_0.c', usbSymbolSource, "src/", "/usb/src", True, None)
+			addFileName('usb_device_audio_v2_0.c', usbSymbolSource, "middleware/src/", "/usb/src", True, None)
 		elif usbSymbolSource.getID() == "USB_DEVICE_AUDIO_TRANSFER_SOURCE_FILE":
-			addFileName('usb_device_audio_v2_read_write.c', usbSymbolSource, "src/", "/usb/src", True, None)
+			addFileName('usb_device_audio_v2_read_write.c', usbSymbolSource, "middleware/src/", "/usb/src", True, None)
 		elif usbSymbolSource.getID() == "USB_DEVICE_AUDIO_LOCAL_HEADER_FILE":
-			addFileName('usb_device_audio_v2_local.h', usbSymbolSource, "src/", "/usb/src", True, None)
+			addFileName('usb_device_audio_v2_local.h', usbSymbolSource, "middleware/src/", "/usb/src", True, None)
 
 def usbDeviceAudioIadUpdate(usbSymbolSource, event):
 	if (event["value"] == "Audio v2.0 USB Speaker"):	
@@ -487,23 +487,23 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 	# USB Audio Function driver Files 
 	################################################
 	usbDeviceAudioHeaderFile = usbDeviceAudioComponent.createFileSymbol("USB_DEVICE_AUDIO_HEADER_FILE", None)
-	addFileName('usb_device_audio_v1_0.h', usbDeviceAudioHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_device_audio_v1_0.h', usbDeviceAudioHeaderFile, "middleware/", "/usb/", True, None)
 	usbDeviceAudioHeaderFile.setDependencies(usbDeviceAudioSpecVersionChanged, ["CONFIG_USB_DEVICE_FUNCTION_AUDIO_VERSION"])
 	
 	usbAudioHeaderFile = usbDeviceAudioComponent.createFileSymbol("USB_AUDIO_HEADER_FILE", None)
-	addFileName('usb_audio_v1_0.h', usbAudioHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_audio_v1_0.h', usbAudioHeaderFile, "middleware/", "/usb/", True, None)
 	usbAudioHeaderFile.setDependencies(usbDeviceAudioSpecVersionChanged, ["CONFIG_USB_DEVICE_FUNCTION_AUDIO_VERSION"])
 	
 	usbDeviceAudioSourceFile = usbDeviceAudioComponent.createFileSymbol("USB_DEVICE_AUDIO_SOURCE_FILE", None)
-	addFileName('usb_device_audio_v1_0.c', usbDeviceAudioSourceFile, "src/", "/usb/src", True, None)
+	addFileName('usb_device_audio_v1_0.c', usbDeviceAudioSourceFile, "middleware/src/", "/usb/src", True, None)
 	usbDeviceAudioSourceFile.setDependencies(usbDeviceAudioSpecVersionChanged, ["CONFIG_USB_DEVICE_FUNCTION_AUDIO_VERSION"])
 	
 	usbDeviceAudioTransferSourceFile = usbDeviceAudioComponent.createFileSymbol("USB_DEVICE_AUDIO_TRANSFER_SOURCE_FILE", None)
-	addFileName('usb_device_audio_read_write.c', usbDeviceAudioTransferSourceFile, "src/", "/usb/src", True, None)
+	addFileName('usb_device_audio_read_write.c', usbDeviceAudioTransferSourceFile, "middleware/src/", "/usb/src", True, None)
 	usbDeviceAudioTransferSourceFile.setDependencies(usbDeviceAudioSpecVersionChanged, ["CONFIG_USB_DEVICE_FUNCTION_AUDIO_VERSION"])
 	
 	usbDeviceAudioLocalHeaderFile = usbDeviceAudioComponent.createFileSymbol("USB_DEVICE_AUDIO_LOCAL_HEADER_FILE", None)
-	addFileName('usb_device_audio_local.h', usbDeviceAudioLocalHeaderFile, "src/", "/usb/src", True, None)
+	addFileName('usb_device_audio_local.h', usbDeviceAudioLocalHeaderFile, "middleware/src/", "/usb/src", True, None)
 	usbDeviceAudioLocalHeaderFile.setDependencies(usbDeviceAudioSpecVersionChanged, ["CONFIG_USB_DEVICE_FUNCTION_AUDIO_VERSION"])
 	
 	

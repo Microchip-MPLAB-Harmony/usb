@@ -67,19 +67,19 @@ def instantiateComponent(usbHostCdcComponent):
 	# USB Host CDC Client driver Files 
 	################################################
 	usbHostCdcHeaderFile = usbHostCdcComponent.createFileSymbol(None, None)
-	addFileName('usb_host_cdc.h', usbHostCdcComponent, usbHostCdcHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_host_cdc.h', usbHostCdcComponent, usbHostCdcHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbCdcHeaderFile = usbHostCdcComponent.createFileSymbol(None, None)
-	addFileName('usb_cdc.h', usbHostCdcComponent, usbCdcHeaderFile, "", "/usb/", True, None)
+	addFileName('usb_cdc.h', usbHostCdcComponent, usbCdcHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbHostCdcSourceFile = usbHostCdcComponent.createFileSymbol(None, None)
-	addFileName('usb_host_cdc.c', usbHostCdcComponent, usbHostCdcSourceFile, "src/", "/usb/src/", True, None)
+	addFileName('usb_host_cdc.c', usbHostCdcComponent, usbHostCdcSourceFile, "middleware/src/", "/usb/src/", True, None)
 	
 	usbHostCdcAcmSourceFile = usbHostCdcComponent.createFileSymbol(None, None)
-	addFileName('usb_host_cdc_acm.c', usbHostCdcComponent, usbHostCdcAcmSourceFile, "src/", "/usb/src/", True, None)
+	addFileName('usb_host_cdc_acm.c', usbHostCdcComponent, usbHostCdcAcmSourceFile, "middleware/src/", "/usb/src/", True, None)
 	
 	usbHostCdcLocalHeaderFile = usbHostCdcComponent.createFileSymbol(None, None)
-	addFileName('usb_host_cdc_local.h', usbHostCdcComponent, usbHostCdcLocalHeaderFile, "src/", "/usb/src", True, None)
+	addFileName('usb_host_cdc_local.h', usbHostCdcComponent, usbHostCdcLocalHeaderFile, "middleware/src/", "/usb/src", True, None)
 	
 	
 	# all files go into src/

@@ -323,7 +323,7 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	# USB Vendor Function driver Files 
 	################################################
 	usbDeviceVendorSourceFile = usbDeviceVendorComponent.createFileSymbol(None, None)
-	addFileName('usb_device_endpoint_functions.c', usbDeviceVendorComponent, usbDeviceVendorSourceFile, "src/", "/usb/src", True, None)
+	addFileName('usb_device_endpoint_functions.c', usbDeviceVendorComponent, usbDeviceVendorSourceFile, "middleware/src/", "/usb/src", True, None)
 	
 
 	

@@ -4,7 +4,7 @@ def loadModule():
 	# Create USB Driver Components 
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32MZ"]):
 		print("create component: USB Driver")
-		usbDriverComponent =  Module.CreateComponent("drv_usbhs_v1", "USB High Speed Driver", "/Harmony/Drivers", "config/usb_driver.py")
+		usbDriverComponent =  Module.CreateComponent("drv_usbhs_v1", "USB High Speed Driver", "/Harmony/Drivers", "config/usbhs_driver.py")
 		usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
 	
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD20", "SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54"]):
