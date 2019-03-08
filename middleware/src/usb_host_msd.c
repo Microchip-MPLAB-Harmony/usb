@@ -91,8 +91,8 @@ USB_HOST_MSD_INSTANCE  gUSBHostMSDInstance[USB_HOST_MSD_INSTANCES_NUMBER];
  * CBW and CSW structure needed by for the MSD
  * function driver instance.
  ***********************************************/
-uint8_t gUSBHostMSDCBW[USB_HOST_MSD_INSTANCES_NUMBER][32] COHERENT_ATTRIBUTE __attribute__((aligned(16)));
-uint8_t gUSBHostMSDCSW[USB_HOST_MSD_INSTANCES_NUMBER][16] COHERENT_ATTRIBUTE __attribute__((aligned(16)));
+uint8_t gUSBHostMSDCBW[USB_HOST_MSD_INSTANCES_NUMBER][32] CACHE_ALIGN;
+uint8_t gUSBHostMSDCSW[USB_HOST_MSD_INSTANCES_NUMBER][16] CACHE_ALIGN;
 
 // *****************************************************************************
 // *****************************************************************************

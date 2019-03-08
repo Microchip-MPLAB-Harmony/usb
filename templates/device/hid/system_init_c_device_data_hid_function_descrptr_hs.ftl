@@ -71,7 +71,7 @@
     USB_DESCRIPTOR_ENDPOINT,        // Endpoint Descriptor
     ${CONFIG_USB_DEVICE_FUNCTION_INT_IN_ENDPOINT_NUMBER} | USB_EP_DIRECTION_IN,    // EndpointAddress ( EP${CONFIG_USB_DEVICE_FUNCTION_INT_IN_ENDPOINT_NUMBER} IN )
     USB_TRANSFER_TYPE_INTERRUPT,    // Attributes
-    0x40,0x00,                      // Size
+    0x00,0x02,                      // Size
     0x01,                           // Interval
 
     /* Endpoint Descriptor */
@@ -80,7 +80,7 @@
     USB_DESCRIPTOR_ENDPOINT,        // Endpoint Descriptor
     ${CONFIG_USB_DEVICE_FUNCTION_INT_OUT_ENDPOINT_NUMBER} | USB_EP_DIRECTION_OUT,   // EndpointAddress ( EP${CONFIG_USB_DEVICE_FUNCTION_INT_OUT_ENDPOINT_NUMBER} OUT )
     USB_TRANSFER_TYPE_INTERRUPT,    // Attributes
-    0x40,0x00,                      // size
+    0x00,0x02,                      // size
     0x01,                           // Interval
     
     
