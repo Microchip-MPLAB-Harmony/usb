@@ -706,16 +706,14 @@ void DRV_USBHS_DEVICE_Attach
 )
 {
     DRV_USBHS_OBJ * hDriver =  NULL;
-    USBHS_MODULE_ID usbID = USBHS_NUMBER_OF_MODULES;
 
     if( (DRV_HANDLE_INVALID !=  handle) && (NULL != ((DRV_USBHS_CLIENT_OBJ *)handle)) )
     {
         if(((DRV_USBHS_CLIENT_OBJ *)handle)->inUse)
         {
             hDriver = ((DRV_USBHS_CLIENT_OBJ *)handle)->hDriver;
-            usbID = hDriver->usbDrvCommonObj.usbID;
             {
-                _DRV_USBHS_CLOCK_CONTROL_SETUP_DEVICE_MODE
+                _DRV_USBHS_CLOCK_CONTROL_SETUP_DEVICE_MODE(hDriver->usbDrvCommonObj.usbID);
                 
 
                 /* The role change will require the USB module to be reset. This

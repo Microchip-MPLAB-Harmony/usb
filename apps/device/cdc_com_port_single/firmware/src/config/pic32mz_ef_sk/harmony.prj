@@ -35,8 +35,8 @@
           <Name dnOrder="1">drv_usbhs_device.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/driver/usb/usbhs/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1939FFC59DCF1237CC216D3E6CD1A107</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1939FFC59DCF1237CC216D3E6CD1A107</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4077D43E885DA849CE14D6D2EC9DF8D0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4077D43E885DA849CE14D6D2EC9DF8D0</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -75,8 +75,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">C4C33D754A88185B9741FC9B2085273C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C4C33D754A88185B9741FC9B2085273C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">AE67EF207FA1798CBAE6A93021590D8C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AE67EF207FA1798CBAE6A93021590D8C</UserChecksum>
         </File>
         <File dnOrder="9">
           <Type dnOrder="0">SOURCE</Type>
@@ -187,16 +187,16 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">7CDE24DC6D92CAB73F8D38C103351C57</GeneratedChecksum>
-          <UserChecksum dnOrder="5">7CDE24DC6D92CAB73F8D38C103351C57</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F7EAA949424FF6582CF345D94E55D104</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F7EAA949424FF6582CF345D94E55D104</UserChecksum>
         </File>
         <File dnOrder="23">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">EF3C48EBA4C45CB4723B68675C7D5409</GeneratedChecksum>
-          <UserChecksum dnOrder="5">EF3C48EBA4C45CB4723B68675C7D5409</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F3CB292E3C09B85D63BDAB9E71C3F5BB</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F3CB292E3C09B85D63BDAB9E71C3F5BB</UserChecksum>
         </File>
         <File dnOrder="24">
           <Type dnOrder="0">HEADER</Type>
@@ -275,8 +275,8 @@
           <Name dnOrder="1">osal_definitions.h</Name>
           <LogicalPath dnOrder="2">/osal/</LogicalPath>
           <PhysicalPath dnOrder="3">/osal/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0C6AF7550A40F9EDF5A15DB9444D7D8E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0C6AF7550A40F9EDF5A15DB9444D7D8E</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0AC88C49E4585B606FD5AC6804F0C340</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0AC88C49E4585B606FD5AC6804F0C340</UserChecksum>
         </File>
         <File dnOrder="34">
           <Type dnOrder="0">HEADER</Type>
@@ -291,8 +291,8 @@
           <Name dnOrder="1">plib_clk.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">97DD80BC27ABDDC370B1628A74E51C1F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">97DD80BC27ABDDC370B1628A74E51C1F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">3E3D4E58DB06EE9CC23A83588DC5276A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3E3D4E58DB06EE9CC23A83588DC5276A</UserChecksum>
         </File>
         <File dnOrder="36">
           <Type dnOrder="0">HEADER</Type>
@@ -587,8 +587,8 @@
           <Name dnOrder="1">usbhs_HighSpeedSupport_Default.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/driver/usb/usbhs/src/templates</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhs/src/templates/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">C6C285020920BE09CADBECFD27916777</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C6C285020920BE09CADBECFD27916777</UserChecksum>
+          <GeneratedChecksum dnOrder="4">56D99729B7C2636DF31B1402C21A328D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">56D99729B7C2636DF31B1402C21A328D</UserChecksum>
         </File>
         <File dnOrder="73">
           <Type dnOrder="0">HEADER</Type>

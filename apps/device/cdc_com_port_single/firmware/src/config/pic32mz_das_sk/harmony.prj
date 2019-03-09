@@ -27,16 +27,16 @@
           <Name dnOrder="1">drv_usbhs.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk/driver/usb/usbhs/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">211ADDAE8220FD74052E65037A6260F6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">211ADDAE8220FD74052E65037A6260F6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">61FD4E5A1D63F33B9D3CE91856FFC2F8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">61FD4E5A1D63F33B9D3CE91856FFC2F8</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_usbhs_device.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk/driver/usb/usbhs/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">4077D43E885DA849CE14D6D2EC9DF8D0</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4077D43E885DA849CE14D6D2EC9DF8D0</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4FC9C8844840FA41A8E98C1BA496A670</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4FC9C8844840FA41A8E98C1BA496A670</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -259,8 +259,8 @@
           <Name dnOrder="1">drv_usbhs_variant_mapping.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk/driver/usb/usbhs/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">FBF59656B71C35F8A3F321070DEB4BA1</GeneratedChecksum>
-          <UserChecksum dnOrder="5">FBF59656B71C35F8A3F321070DEB4BA1</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9E342EE43594612EE8D5ED88AB99353D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9E342EE43594612EE8D5ED88AB99353D</UserChecksum>
         </File>
         <File dnOrder="32">
           <Type dnOrder="0">HEADER</Type>

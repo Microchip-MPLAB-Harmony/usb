@@ -482,6 +482,7 @@ PLIB_TEMPLATE bool USBHS_TestModeExit_Default( USBHS_MODULE_ID index , uint8_t t
 	{
 		usbhs->TESTMODEbits.w &= (~(testModeRegValue));
 	}
+	return result;
 }
 
 

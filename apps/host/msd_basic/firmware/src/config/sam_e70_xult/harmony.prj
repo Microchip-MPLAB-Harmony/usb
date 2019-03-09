@@ -211,16 +211,16 @@
           <Name dnOrder="1">usb_host_msd.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">987F34E1D0E92F6E6FBBDA18C6E2C51F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">987F34E1D0E92F6E6FBBDA18C6E2C51F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">7CCCE94EA4EC00F19FEF9D03B6CA7100</GeneratedChecksum>
+          <UserChecksum dnOrder="5">7CCCE94EA4EC00F19FEF9D03B6CA7100</UserChecksum>
         </File>
         <File dnOrder="26">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">usb_host_scsi.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">6293EBC81DB58945E58766E9FE2E2C17</GeneratedChecksum>
-          <UserChecksum dnOrder="5">6293EBC81DB58945E58766E9FE2E2C17</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C9D7C2C564F15F65105CF8F7C22B02AB</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C9D7C2C564F15F65105CF8F7C22B02AB</UserChecksum>
         </File>
         <File dnOrder="27">
           <Type dnOrder="0">SOURCE</Type>
@@ -995,8 +995,8 @@
           <Name dnOrder="1">usb_host_msd_local.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1B824E8D334465764117983ABC45296B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1B824E8D334465764117983ABC45296B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">63248F6D2F2EA2803C1BF9C5197767F4</GeneratedChecksum>
+          <UserChecksum dnOrder="5">63248F6D2F2EA2803C1BF9C5197767F4</UserChecksum>
         </File>
         <File dnOrder="124">
           <Type dnOrder="0">HEADER</Type>
@@ -1011,8 +1011,8 @@
           <Name dnOrder="1">usb_host_scsi_local.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">940E55F91BFC65C3F9038E928436F5A2</GeneratedChecksum>
-          <UserChecksum dnOrder="5">940E55F91BFC65C3F9038E928436F5A2</UserChecksum>
+          <GeneratedChecksum dnOrder="4">813B0739B544674D0AFD4AE5155C1D2E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">813B0739B544674D0AFD4AE5155C1D2E</UserChecksum>
         </File>
         <File dnOrder="126">
           <Type dnOrder="0">HEADER</Type>
