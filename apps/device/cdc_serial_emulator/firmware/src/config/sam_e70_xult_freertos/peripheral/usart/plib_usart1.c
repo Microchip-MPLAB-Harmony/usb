@@ -180,7 +180,7 @@ void USART1_Initialize( void )
     USART1_REGS->US_MR = (US_MR_USCLKS_MCK | US_MR_CHRL_8_BIT | US_MR_USART_PAR_NO | US_MR_USART_NBSTOP_1_BIT | (0 << US_MR_USART_OVER_Pos));
 
     /* Configure USART1 Baud Rate */
-    USART1_REGS->US_BRGR = US_BRGR_CD(976);
+    USART1_REGS->US_BRGR = US_BRGR_CD(81);
 
     /* Initialize instance object */
     usart1Obj.rxBuffer = NULL;

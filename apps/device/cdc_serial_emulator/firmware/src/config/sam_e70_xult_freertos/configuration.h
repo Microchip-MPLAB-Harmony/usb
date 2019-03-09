@@ -71,9 +71,8 @@ extern "C" {
 // Section: System Configuration
 // *****************************************************************************
 // *****************************************************************************
-#define DCACHE_CLEAN_BY_ADDR(data, size)       SCB_CleanDCache_by_Addr((uint32_t *)data, size)
-#define DCACHE_INVALIDATE_BY_ADDR(data, size)  SCB_InvalidateDCache_by_Addr((uint32_t *)data, size)
-#define DATA_CACHE_ENABLED                     true
+
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -87,6 +86,13 @@ extern "C" {
 // Section: Driver Configuration
 // *****************************************************************************
 // *****************************************************************************
+/* USART Driver Instance 0 Configuration Options */
+#define DRV_USART_INDEX_0                  0
+#define DRV_USART_CLIENTS_NUMBER_IDX0      1
+#define DRV_USART_QUEUE_SIZE_IDX0          5
+
+/* USART Driver Global Configuration Options */
+#define DRV_USART_INSTANCES_NUMBER         1
 
 
 // *****************************************************************************
@@ -94,6 +100,25 @@ extern "C" {
 // Section: Middleware & Other Library Configuration
 // *****************************************************************************
 // *****************************************************************************
+/* Number of Endpoints used */
+#define DRV_USBHSV1_ENDPOINTS_NUMBER                        4
+
+/* The USB Device Layer will not initialize the USB Driver */
+#define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT
+
+/* Maximum device layer instances */
+#define USB_DEVICE_INSTANCES_NUMBER                         1
+
+/* EP0 size in bytes */
+#define USB_DEVICE_EP0_BUFFER_SIZE                          64
+
+/* Enable SOF Events */
+#define USB_DEVICE_SOF_EVENT_ENABLE
+
+
+
+
+
 /* Maximum instances of CDC function driver */
 #define USB_DEVICE_CDC_INSTANCES_NUMBER                     1
 
@@ -115,25 +140,6 @@ extern "C" {
 	
 /* Disable Host Support */
 #define DRV_USBHSV1_HOST_SUPPORT                            false
-
-/* Number of Endpoints used */
-#define DRV_USBHSV1_ENDPOINTS_NUMBER                        4
-
-/* The USB Device Layer will not initialize the USB Driver */
-#define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT 
-
-/* Maximum device layer instances */
-#define USB_DEVICE_INSTANCES_NUMBER                         1 
-
-/* EP0 size in bytes */
-#define USB_DEVICE_EP0_BUFFER_SIZE                          64
-
-/* Enable SOF Events */ 
-#define USB_DEVICE_SOF_EVENT_ENABLE     
-
-
-
-
 
 
 
