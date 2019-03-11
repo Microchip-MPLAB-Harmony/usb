@@ -3744,6 +3744,8 @@
               <Value dnOrder="12" id="usb_device_msd_0" priority="2" value="32"/>
               <Value dnOrder="13" id="usb_device_msd_0" priority="2" value="32"/>
               <Value dnOrder="14" id="usb_device_msd_0" priority="2" value="32"/>
+              <Value dnOrder="15" id="usb_device_msd_0" priority="2" value="32"/>
+              <Value dnOrder="16" id="usb_device_msd_0" priority="2" value="32"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -3752,8 +3754,8 @@
             <Dynamic dnOrder="0">
               <Value dnOrder="0" id="usb_device_msd_0" priority="2" value="2"/>
               <Value dnOrder="1" id="usb_device_msd_0" priority="2" value="2"/>
-              <Value dnOrder="2" id="usb_device_msd_0" priority="2" value="3"/>
-              <Value dnOrder="3" id="usb_device_msd_0" priority="2" value="3"/>
+              <Value dnOrder="2" id="usb_device_msd_0" priority="2" value="2"/>
+              <Value dnOrder="3" id="usb_device_msd_0" priority="2" value="2"/>
               <Value dnOrder="4" id="usb_device_msd_0" priority="2" value="3"/>
               <Value dnOrder="5" id="usb_device_msd_0" priority="2" value="3"/>
               <Value dnOrder="6" id="usb_device_msd_0" priority="2" value="3"/>
@@ -3764,7 +3766,9 @@
               <Value dnOrder="11" id="usb_device_msd_0" priority="2" value="3"/>
               <Value dnOrder="12" id="usb_device_msd_0" priority="2" value="3"/>
               <Value dnOrder="13" id="usb_device_msd_0" priority="2" value="3"/>
-              <Value dnOrder="14" id="usb_device_msd_0" priority="2" value="2"/>
+              <Value dnOrder="14" id="usb_device_msd_0" priority="2" value="3"/>
+              <Value dnOrder="15" id="usb_device_msd_0" priority="2" value="3"/>
+              <Value dnOrder="16" id="usb_device_msd_0" priority="2" value="2"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -3788,7 +3792,9 @@
               <Value dnOrder="14" id="usb_device_msd_0" priority="2" value="1"/>
               <Value dnOrder="15" id="usb_device_msd_0" priority="2" value="1"/>
               <Value dnOrder="16" id="usb_device_msd_0" priority="2" value="1"/>
-              <Value dnOrder="17" id="usb_device_msd_0" priority="2" value="2"/>
+              <Value dnOrder="17" id="usb_device_msd_0" priority="2" value="1"/>
+              <Value dnOrder="18" id="usb_device_msd_0" priority="2" value="1"/>
+              <Value dnOrder="19" id="usb_device_msd_0" priority="2" value="2"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -3810,6 +3816,8 @@
               <Value dnOrder="12" id="usb_device_msd_0" priority="2" value="1"/>
               <Value dnOrder="13" id="usb_device_msd_0" priority="2" value="1"/>
               <Value dnOrder="14" id="usb_device_msd_0" priority="2" value="1"/>
+              <Value dnOrder="15" id="usb_device_msd_0" priority="2" value="1"/>
+              <Value dnOrder="16" id="usb_device_msd_0" priority="2" value="1"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -3864,6 +3872,8 @@
               <Value dnOrder="11" id="usb_device" priority="2" value="true"/>
               <Value dnOrder="12" id="usb_device" priority="2" value="true"/>
               <Value dnOrder="13" id="usb_device" priority="2" value="true"/>
+              <Value dnOrder="14" id="usb_device" priority="2" value="true"/>
+              <Value dnOrder="15" id="usb_device" priority="2" value="true"/>
             </Dynamic>
           </Values>
         </Boolean>
@@ -3919,7 +3929,9 @@
                   <Value dnOrder="10" id="usb_device_msd_0" priority="2" value="1"/>
                   <Value dnOrder="11" id="usb_device_msd_0" priority="2" value="1"/>
                   <Value dnOrder="12" id="usb_device_msd_0" priority="2" value="1"/>
-                  <Value dnOrder="13" id="usb_device_msd_0" priority="2" value="2"/>
+                  <Value dnOrder="13" id="usb_device_msd_0" priority="2" value="1"/>
+                  <Value dnOrder="14" id="usb_device_msd_0" priority="2" value="1"/>
+                  <Value dnOrder="15" id="usb_device_msd_0" priority="2" value="2"/>
                 </Dynamic>
               </Values>
             </Integer>
@@ -3951,17 +3963,17 @@
     <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_E70_Xplained_Ultra" x="21" y="68"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="417" y="33"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="381" y="31"/>
         <ElementPosition dnOrder="2" id="cmsis" x="285" y="23"/>
         <ElementPosition dnOrder="3" id="core" x="205" y="21"/>
         <ElementPosition dnOrder="4" id="dfp" x="20" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_memory" x="237" y="219"/>
-        <ElementPosition dnOrder="6" id="drv_usbhs_v1" x="24" y="137"/>
-        <ElementPosition dnOrder="7" id="efc" x="19" y="239"/>
-        <ElementPosition dnOrder="8" id="sys_time" x="238" y="393"/>
-        <ElementPosition dnOrder="9" id="tc0" x="31" y="418"/>
+        <ElementPosition dnOrder="5" id="drv_memory" x="240" y="196"/>
+        <ElementPosition dnOrder="6" id="drv_usbhs_v1" x="60" y="123"/>
+        <ElementPosition dnOrder="7" id="efc" x="103" y="251"/>
+        <ElementPosition dnOrder="8" id="sys_time" x="247" y="353"/>
+        <ElementPosition dnOrder="9" id="tc0" x="107" y="397"/>
         <ElementPosition dnOrder="10" id="usb_device" x="229" y="122"/>
-        <ElementPosition dnOrder="11" id="usb_device_msd" x="420" y="124"/>
+        <ElementPosition dnOrder="11" id="usb_device_msd" x="376" y="121"/>
       </ElementPositions>
     </ComponentGraph>
     <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>

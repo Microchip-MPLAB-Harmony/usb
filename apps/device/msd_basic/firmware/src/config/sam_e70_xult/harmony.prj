@@ -195,16 +195,16 @@
           <Name dnOrder="1">usb_device_init_data.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">468C81E5FBFE9143CA8E575F969B6E59</GeneratedChecksum>
-          <UserChecksum dnOrder="5">468C81E5FBFE9143CA8E575F969B6E59</UserChecksum>
+          <GeneratedChecksum dnOrder="4">06EA0610D7A54BE7B9E2C9F6CA6C81D7</GeneratedChecksum>
+          <UserChecksum dnOrder="5">06EA0610D7A54BE7B9E2C9F6CA6C81D7</UserChecksum>
         </File>
         <File dnOrder="24">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">usb_device_msd.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">25C528515B369A447B4B4F99EF5FAD2D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">25C528515B369A447B4B4F99EF5FAD2D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">8E0799E1554E4233F3498472FDA09149</GeneratedChecksum>
+          <UserChecksum dnOrder="5">8E0799E1554E4233F3498472FDA09149</UserChecksum>
         </File>
         <File dnOrder="25">
           <Type dnOrder="0">SOURCE</Type>
@@ -947,8 +947,8 @@
           <Name dnOrder="1">usb_device_msd_local.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">FBC4362AFF57B424C19AC2A5CA7F11A3</GeneratedChecksum>
-          <UserChecksum dnOrder="5">FBC4362AFF57B424C19AC2A5CA7F11A3</UserChecksum>
+          <GeneratedChecksum dnOrder="4">78DD3C60D6E25569FE9F0143064D2E20</GeneratedChecksum>
+          <UserChecksum dnOrder="5">78DD3C60D6E25569FE9F0143064D2E20</UserChecksum>
         </File>
         <File dnOrder="118">
           <Type dnOrder="0">HEADER</Type>
@@ -1054,7 +1054,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="audio;bsp;bt;core;crypto;csp;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;crypto;csp;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>

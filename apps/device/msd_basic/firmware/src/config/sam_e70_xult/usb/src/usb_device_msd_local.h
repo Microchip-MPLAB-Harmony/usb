@@ -255,17 +255,6 @@ typedef union
 
 } USB_DEVICE_MSD_DWORD_VAL;
 
-/************************************************
- * The coherent attribute is not available in 
- * ARM GCC compiler for PIC32C. Do this to avoid
- * the compile warning.
- ************************************************/
-
-#if defined (__PIC32C__)
-#define MSD_COHERENT_ATTRIBUTE
-#else
-#define MSD_COHERENT_ATTRIBUTE __attribute__((coherent))
-#endif
 
 // *****************************************************************************
 // *****************************************************************************

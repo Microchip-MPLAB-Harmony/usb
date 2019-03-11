@@ -52,19 +52,20 @@
 	/***********************************************
  * Sector buffer needed by for the MSD LUN.
  ***********************************************/
-uint8_t sectorBuffer[512 * USB_DEVICE_MSD_NUM_SECTOR_BUFFERS] __attribute__((aligned(16)));
+uint8_t sectorBuffer[512 * USB_DEVICE_MSD_NUM_SECTOR_BUFFERS] CACHE_ALIGN;
 
 /***********************************************
  * CBW and CSW structure needed by for the MSD
  * function driver instance.
  ***********************************************/
-USB_MSD_CBW msdCBW0 __attribute__((aligned(16)));
-USB_MSD_CSW msdCSW0 __attribute__((aligned(16)));
+USB_MSD_CBW msdCBW0 CACHE_ALIGN;
+USB_MSD_CSW msdCSW0 CACHE_ALIGN;
+
 
 /*******************************************
  * MSD Function Driver initialization
  *******************************************/
-USB_DEVICE_MSD_MEDIA_INIT_DATA __attribute__((aligned(16))) msdMediaInit0[1] =
+USB_DEVICE_MSD_MEDIA_INIT_DATA CACHE_ALIGN  msdMediaInit0[1] =
 {
     {
         DRV_MEMORY_INDEX_0,
