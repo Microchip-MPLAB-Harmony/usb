@@ -137,10 +137,8 @@
 /***********************************************
  * Read\Write Data buffers needed by for the HID function driver instance.
  ***********************************************/
-volatile uint8_t gUSBHostHIDReadBuffer[USB_HOST_HID_INSTANCES_NUMBER][64] 
-                          HID_COHERENT_ATTRIBUTE __attribute__((aligned(16)));
-volatile uint8_t gUSBHostHIDWriteBuffer[USB_HOST_HID_INSTANCES_NUMBER][64]
-                          HID_COHERENT_ATTRIBUTE __attribute__((aligned(16)));
+volatile uint8_t gUSBHostHIDReadBuffer[USB_HOST_HID_INSTANCES_NUMBER][64] CACHE_ALIGN;
+volatile uint8_t gUSBHostHIDWriteBuffer[USB_HOST_HID_INSTANCES_NUMBER][64] CACHE_ALIGN;
 
 // *****************************************************************************
 /* USB HOST HID command request object

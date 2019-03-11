@@ -43,16 +43,16 @@
           <Name dnOrder="1">drv_usbhsv1.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/driver/usb/usbhsv1/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">684F8AD2549018E8EDF676B2E52E9F7C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">684F8AD2549018E8EDF676B2E52E9F7C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">06C481D798CBDEB1752EFC3ADABE11F0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">06C481D798CBDEB1752EFC3ADABE11F0</UserChecksum>
         </File>
         <File dnOrder="5">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_usbhsv1_host.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/driver/usb/usbhsv1/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F0EA8F83D450C19C39611DDB5617EC0C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F0EA8F83D450C19C39611DDB5617EC0C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">B2D668E5C3FE5EA5F9C468A631149F2E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">B2D668E5C3FE5EA5F9C468A631149F2E</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -67,16 +67,16 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">D37A142C4137AF1EA3E208251A0BDF1A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">D37A142C4137AF1EA3E208251A0BDF1A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">5A3AF163E6BA53F7C456C08BC6C80A0D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">5A3AF163E6BA53F7C456C08BC6C80A0D</UserChecksum>
         </File>
         <File dnOrder="8">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">interrupts.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">6292941628479447DC0E1BE296915CCE</GeneratedChecksum>
-          <UserChecksum dnOrder="5">6292941628479447DC0E1BE296915CCE</UserChecksum>
+          <GeneratedChecksum dnOrder="4">5FC26736692E33655BE6E719554A2586</GeneratedChecksum>
+          <UserChecksum dnOrder="5">5FC26736692E33655BE6E719554A2586</UserChecksum>
         </File>
         <File dnOrder="9">
           <Type dnOrder="0">SOURCE</Type>
@@ -99,16 +99,16 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1B32BCE936D95C32B3B7A0348B2A437B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1B32BCE936D95C32B3B7A0348B2A437B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">41EF50FDFCCB9B501255A456B8BA07A9</GeneratedChecksum>
+          <UserChecksum dnOrder="5">41EF50FDFCCB9B501255A456B8BA07A9</UserChecksum>
         </File>
         <File dnOrder="12">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_nvic.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/peripheral/nvic/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/nvic/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">3897C1E0BAE3F3A188AAAEA262E53433</GeneratedChecksum>
-          <UserChecksum dnOrder="5">3897C1E0BAE3F3A188AAAEA262E53433</UserChecksum>
+          <GeneratedChecksum dnOrder="4">DEFA741E8CF6B8FB5FC737EAB65F15BE</GeneratedChecksum>
+          <UserChecksum dnOrder="5">DEFA741E8CF6B8FB5FC737EAB65F15BE</UserChecksum>
         </File>
         <File dnOrder="13">
           <Type dnOrder="0">SOURCE</Type>
@@ -403,8 +403,8 @@
           <Name dnOrder="1">drv_usart.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/driver/usart/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usart/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">54BCB04C1F8804CCCD3FAFFC1DBADCB1</GeneratedChecksum>
-          <UserChecksum dnOrder="5">54BCB04C1F8804CCCD3FAFFC1DBADCB1</UserChecksum>
+          <GeneratedChecksum dnOrder="4">51C7B4F72276D0DF26BB9BF5CE4082D7</GeneratedChecksum>
+          <UserChecksum dnOrder="5">51C7B4F72276D0DF26BB9BF5CE4082D7</UserChecksum>
         </File>
         <File dnOrder="50">
           <Type dnOrder="0">HEADER</Type>
@@ -427,8 +427,8 @@
           <Name dnOrder="1">drv_usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">87D30C10A1FB4A78BADB4B40A116E9AF</GeneratedChecksum>
-          <UserChecksum dnOrder="5">87D30C10A1FB4A78BADB4B40A116E9AF</UserChecksum>
+          <GeneratedChecksum dnOrder="4">AC352A9B0E4A4B622674870B8738E826</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AC352A9B0E4A4B622674870B8738E826</UserChecksum>
         </File>
         <File dnOrder="53">
           <Type dnOrder="0">HEADER</Type>
@@ -547,8 +547,8 @@
           <Name dnOrder="1">osal_definitions.h</Name>
           <LogicalPath dnOrder="2">/osal/</LogicalPath>
           <PhysicalPath dnOrder="3">/osal/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0C6AF7550A40F9EDF5A15DB9444D7D8E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0C6AF7550A40F9EDF5A15DB9444D7D8E</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0AC88C49E4585B606FD5AC6804F0C340</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0AC88C49E4585B606FD5AC6804F0C340</UserChecksum>
         </File>
         <File dnOrder="68">
           <Type dnOrder="0">HEADER</Type>
@@ -571,8 +571,8 @@
           <Name dnOrder="1">plib_clk.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">3176DF5386ABD348A93A3A6169F52E8B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">3176DF5386ABD348A93A3A6169F52E8B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">115B0136EFE9ED871D67D3B10CBEBDC8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">115B0136EFE9ED871D67D3B10CBEBDC8</UserChecksum>
         </File>
         <File dnOrder="71">
           <Type dnOrder="0">HEADER</Type>
@@ -827,8 +827,8 @@
           <Name dnOrder="1">toolchain_specifics.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">ECBE73246282EC07A1EC6DB84AE3A470</GeneratedChecksum>
-          <UserChecksum dnOrder="5">ECBE73246282EC07A1EC6DB84AE3A470</UserChecksum>
+          <GeneratedChecksum dnOrder="4">05E9A0D057500FDF32C8D711811FF003</GeneratedChecksum>
+          <UserChecksum dnOrder="5">05E9A0D057500FDF32C8D711811FF003</UserChecksum>
         </File>
         <File dnOrder="103">
           <Type dnOrder="0">HEADER</Type>
@@ -947,8 +947,8 @@
           <Name dnOrder="1">usb_host_hid_local.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">6E127B974DFCFBB85A50FD02DB23F19B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">6E127B974DFCFBB85A50FD02DB23F19B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">90685682C696370CCF53E34AE4B4059E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">90685682C696370CCF53E34AE4B4059E</UserChecksum>
         </File>
         <File dnOrder="118">
           <Type dnOrder="0">HEADER</Type>

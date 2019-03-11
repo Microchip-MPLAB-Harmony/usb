@@ -114,7 +114,7 @@ void DACC_Handler               ( void ) __attribute__((weak, alias("Dummy_Handl
 void PWM0_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void ICM_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void ACC_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void USBHS_Handler              ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void DRV_USBHSV1_USBHS_Handler  ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void MCAN0_INT0_Handler         ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void MCAN0_INT1_Handler         ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void MCAN1_INT0_Handler         ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -207,7 +207,7 @@ const DeviceVectors exception_table=
     .pfnPWM0_Handler               = ( void * ) PWM0_Handler,
     .pfnICM_Handler                = ( void * ) ICM_Handler,
     .pfnACC_Handler                = ( void * ) ACC_Handler,
-    .pfnUSBHS_Handler              = ( void * ) USBHS_Handler,
+    .pfnUSBHS_Handler              = ( void * ) DRV_USBHSV1_USBHS_Handler,
     .pfnMCAN0_INT0_Handler         = ( void * ) MCAN0_INT0_Handler,
     .pfnMCAN0_INT1_Handler         = ( void * ) MCAN0_INT1_Handler,
     .pfnMCAN1_INT0_Handler         = ( void * ) MCAN1_INT0_Handler,
