@@ -60,6 +60,7 @@
 #include "task.h"
 #include "bsp/bsp.h"
 #include "system/int/sys_int.h"
+#include "system/cache/sys_cache.h"
 #include "osal/osal.h"
 #include "app.h"
 
