@@ -65,6 +65,12 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
+#ifndef LED1_On
+#define LED1_Toggle()                   LED_Toggle()
+#define LED1_On()                       LED_On()
+#define LED1_Off()                      LED_Off()
+#endif
+
 // *****************************************************************************
 /* Application States
 
