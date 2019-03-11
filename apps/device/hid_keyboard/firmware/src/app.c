@@ -58,7 +58,7 @@
 // Section: Global Data Definitions
 // *****************************************************************************
 // *****************************************************************************
-#define APP_USB_SWITCH_DEBOUNCE_COUNT_FS 260
+#define APP_USB_SWITCH_DEBOUNCE_COUNT_FS 200
 #define APP_USB_SWITCH_DEBOUNCE_COUNT_HS 500
 
 // *****************************************************************************
