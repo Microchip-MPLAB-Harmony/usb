@@ -71,9 +71,8 @@ extern "C" {
 // Section: System Configuration
 // *****************************************************************************
 // *****************************************************************************
-#define DCACHE_CLEAN_BY_ADDR(data, size)       SCB_CleanDCache_by_Addr((uint32_t *)data, size)
-#define DCACHE_INVALIDATE_BY_ADDR(data, size)  SCB_InvalidateDCache_by_Addr((uint32_t *)data, size)
-#define DATA_CACHE_ENABLED                     true
+
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -84,7 +83,7 @@ extern "C" {
 #define SYS_TIME_INDEX_0                     0
 #define SYS_TIME_MAX_TIMERS                  5
 #define SYS_TIME_HW_COUNTER_WIDTH            16
-#define SYS_TIME_HW_COUNTER_PERIOD           0xFFFF
+#define SYS_TIME_HW_COUNTER_PERIOD           65535U
 #define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
 #define SYS_TIME_CPU_CLOCK_FREQUENCY         300000000
 #define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (900)
@@ -106,30 +105,28 @@ extern "C" {
 /*** USB Driver Configuration ***/
 
 /* Maximum USB driver instances */
-#define DRV_USBHSV1_INSTANCES_NUMBER  1
+#define DRV_USBHSV1_INSTANCES_NUMBER                        1
 
 /* Interrupt mode enabled */
-#define DRV_USBHSV1_INTERRUPT_MODE    true
-
-
+#define DRV_USBHSV1_INTERRUPT_MODE                          true
 
 /* Disable Device Support */
-#define DRV_USBHSV1_DEVICE_SUPPORT    false
+#define DRV_USBHSV1_DEVICE_SUPPORT                          false
 	
 /* Enable Host Support */
-#define DRV_USBHSV1_HOST_SUPPORT      true
+#define DRV_USBHSV1_HOST_SUPPORT                            true
 
 /* Number of NAKs to wait before returning transfer failure */ 
-#define DRV_USBHSV1_HOST_NAK_LIMIT      2000 
+#define DRV_USBHSV1_HOST_NAK_LIMIT                          2000 
 
 /* Maximum Number of pipes */
-#define DRV_USBHSV1_HOST_PIPES_NUMBER    10  
+#define DRV_USBHSV1_HOST_PIPES_NUMBER                       10  
 
 /* Attach Debounce duration in milli Seconds */ 
-#define DRV_USBHSV1_HOST_ATTACH_DEBOUNCE_DURATION 500
+#define DRV_USBHSV1_HOST_ATTACH_DEBOUNCE_DURATION           500
 
 /* Reset duration in milli Seconds */ 
-#define DRV_USBHSV1_HOST_RESET_DURATION 100
+#define DRV_USBHSV1_HOST_RESET_DURATION                     100
 
 // *****************************************************************************
 // *****************************************************************************
@@ -138,26 +135,29 @@ extern "C" {
 // **************************************************************************
 
 /* Number of Endpoints used */
-#define DRV_USBHSV1_ENDPOINTS_NUMBER  1
+#define DRV_USBHSV1_ENDPOINTS_NUMBER                        1
 
 /* Total number of devices to be supported */
-#define USB_HOST_DEVICES_NUMBER         1
+#define USB_HOST_DEVICES_NUMBER                             1
+
+/* Size of Endpoint 0 buffer */
+#define USB_DEVICE_EP0_BUFFER_SIZE                          64
 
 /* Target peripheral list entries */
-#define  USB_HOST_TPL_ENTRIES           1 
+#define  USB_HOST_TPL_ENTRIES                               1 
 
 /* Maximum number of configurations supported per device */
-#define USB_HOST_DEVICE_INTERFACES_NUMBER     5    
+#define USB_HOST_DEVICE_INTERFACES_NUMBER                   5    
 
-#define USB_HOST_CONTROLLERS_NUMBER           1
+#define USB_HOST_CONTROLLERS_NUMBER                         1
 
-#define USB_HOST_TRANSFERS_NUMBER             10
+#define USB_HOST_TRANSFERS_NUMBER                           10
 
 /* Provides Host pipes number */
-#define USB_HOST_PIPES_NUMBER    10
+#define USB_HOST_PIPES_NUMBER                               10
 
 /* Number of Host Layer Clients */
-#define USB_HOST_CLIENTS_NUMBER               1   
+#define USB_HOST_CLIENTS_NUMBER                             1   
 
 /* Number of CDC Function driver instances in the application */
 #define USB_HOST_CDC_INSTANCES_NUMBER         1

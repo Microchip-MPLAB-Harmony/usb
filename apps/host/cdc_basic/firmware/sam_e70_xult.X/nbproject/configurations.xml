@@ -4,9 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <logicalFolder name="f2" displayName="arm" projectFiles="true">
-        <itemPath>../src/arm/toolchain_specifics.h</itemPath>
-      </logicalFolder>
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_e70_xult" projectFiles="true">
           <logicalFolder name="f3" displayName="bsp" projectFiles="true">
@@ -24,8 +21,6 @@
               <itemPath>../src/config/sam_e70_xult/driver/usb/drv_usb.h</itemPath>
               <itemPath>../src/config/sam_e70_xult/driver/usb/drv_usb_external_dependencies.h</itemPath>
             </logicalFolder>
-            <itemPath>../src/config/sam_e70_xult/driver/driver.h</itemPath>
-            <itemPath>../src/config/sam_e70_xult/driver/driver_common.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f4" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
@@ -43,13 +38,17 @@
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f5" displayName="system" projectFiles="true">
+            <logicalFolder name="f2" displayName="cache" projectFiles="true">
+              <itemPath>../src/config/sam_e70_xult/system/cache/sys_cache.h</itemPath>
+            </logicalFolder>
             <logicalFolder name="f1" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/system/int/sys_int.h</itemPath>
               <itemPath>../src/config/sam_e70_xult/system/int/sys_int_mapping.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="time" projectFiles="true">
+            <logicalFolder name="f3" displayName="time" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/system/time/sys_time.h</itemPath>
               <itemPath>../src/config/sam_e70_xult/system/time/sys_time_definitions.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/system/time/src/sys_time_local.h</itemPath>
             </logicalFolder>
             <itemPath>../src/config/sam_e70_xult/system/system.h</itemPath>
             <itemPath>../src/config/sam_e70_xult/system/system_common.h</itemPath>
@@ -71,17 +70,19 @@
             <itemPath>../src/config/sam_e70_xult/usb/usb_host_cdc.h</itemPath>
             <itemPath>../src/config/sam_e70_xult/usb/usb_cdc.h</itemPath>
           </logicalFolder>
+          <itemPath>../src/config/sam_e70_xult/device_cache.h</itemPath>
+          <itemPath>../src/config/sam_e70_xult/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_e70_xult/definitions.h</itemPath>
           <itemPath>../src/config/sam_e70_xult/user.h</itemPath>
           <itemPath>../src/config/sam_e70_xult/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f4" displayName="osal" projectFiles="true">
+      <logicalFolder name="f3" displayName="osal" projectFiles="true">
         <itemPath>../src/config/sam_e70_xult/osal/osal.h</itemPath>
         <itemPath>../src/config/sam_e70_xult/osal/osal_definitions.h</itemPath>
         <itemPath>../src/config/sam_e70_xult/osal/osal_impl_basic.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="packs" projectFiles="true">
+      <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAME70Q21B_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
             <itemPath>../src/packs/ATSAME70Q21B_DFP/component/acc.h</itemPath>
@@ -132,6 +133,7 @@
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm7.h</itemPath>
@@ -191,12 +193,14 @@
             <itemPath>../src/config/sam_e70_xult/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f6" displayName="system" projectFiles="true">
+            <logicalFolder name="f2" displayName="cache" projectFiles="true">
+              <itemPath>../src/config/sam_e70_xult/system/cache/sys_cache.c</itemPath>
+            </logicalFolder>
             <logicalFolder name="f1" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="time" projectFiles="true">
+            <logicalFolder name="f3" displayName="time" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/system/time/src/sys_time.c</itemPath>
-              <itemPath>../src/config/sam_e70_xult/system/time/src/sys_time_local.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f2" displayName="usb" projectFiles="true">
@@ -210,7 +214,7 @@
           <itemPath>../src/config/sam_e70_xult/initialization.c</itemPath>
           <itemPath>../src/config/sam_e70_xult/interrupts.c</itemPath>
           <itemPath>../src/config/sam_e70_xult/exceptions.c</itemPath>
-          <itemPath>../src/config/sam_e70_xult/startup.c</itemPath>
+          <itemPath>../src/config/sam_e70_xult/startup_xc32.c</itemPath>
           <itemPath>../src/config/sam_e70_xult/libc_syscalls.c</itemPath>
           <itemPath>../src/config/sam_e70_xult/tasks.c</itemPath>
         </logicalFolder>
@@ -241,7 +245,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAME70_DFP" vendor="Atmel" version="2.4.133"/>
+        <pack name="SAME70_DFP" vendor="Microchip" version="3.0.10"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
       </packs>
       <compileType>
@@ -262,8 +266,8 @@
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
         <makeCustomizationPreStep></makeCustomizationPreStep>
-        <makeCustomizationPostStepEnabled>true</makeCustomizationPostStepEnabled>
-        <makeCustomizationPostStep>edbg_msg.bat</makeCustomizationPostStep>
+        <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
+        <makeCustomizationPostStep></makeCustomizationPostStep>
         <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
