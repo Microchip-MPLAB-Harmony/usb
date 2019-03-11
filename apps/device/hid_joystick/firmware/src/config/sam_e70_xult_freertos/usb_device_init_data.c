@@ -219,7 +219,7 @@ const uint8_t highSpeedConfigurationDescriptor[]=
     USB_DESCRIPTOR_ENDPOINT,        // Endpoint Descriptor
     1 | USB_EP_DIRECTION_IN,    // EndpointAddress ( EP1 IN )
     USB_TRANSFER_TYPE_INTERRUPT,    // Attributes
-    0x40,0x00,                      // Size
+    0x00,0x02,                      // Size
     0x01,                           // Interval
 
     /* Endpoint Descriptor */
@@ -228,7 +228,7 @@ const uint8_t highSpeedConfigurationDescriptor[]=
     USB_DESCRIPTOR_ENDPOINT,        // Endpoint Descriptor
     2 | USB_EP_DIRECTION_OUT,   // EndpointAddress ( EP2 OUT )
     USB_TRANSFER_TYPE_INTERRUPT,    // Attributes
-    0x40,0x00,                      // size
+    0x00,0x02,                      // size
     0x01,                           // Interval
     
     
