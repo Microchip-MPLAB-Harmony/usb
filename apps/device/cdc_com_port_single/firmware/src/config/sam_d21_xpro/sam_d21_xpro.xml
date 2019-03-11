@@ -427,19 +427,25 @@
         </Boolean>
         <Boolean dnOrder="63" id="NVIC_7_0_ENABLE">
           <Values dnOrder="0">
-            <User dnOrder="0" value="false"/>
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="true"/>
+            </Dynamic>
           </Values>
         </Boolean>
         <String dnOrder="64" id="NVIC_7_0_HANDLER">
           <Values dnOrder="0">
-            <User dnOrder="0" value="USB_Handler"/>
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="DRV_USBFSV1_USB_Handler"/>
+            </Dynamic>
           </Values>
         </String>
-        <Combo dnOrder="65" id="NVIC_7_0_PRIORITY">
+        <Boolean dnOrder="65" id="NVIC_7_0_HANDLER_LOCK">
           <Values dnOrder="0">
-            <User dnOrder="0" value="3"/>
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="true"/>
+            </Dynamic>
           </Values>
-        </Combo>
+        </Boolean>
         <String dnOrder="66" id="NVM_RWS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
@@ -2033,10 +2039,31 @@
             </Dynamic>
           </Values>
         </Boolean>
-        <Boolean dnOrder="319" id="USB_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="319" id="USB_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0">
-              <Value dnOrder="0" id="core" priority="2" value="true"/>
+              <Value dnOrder="0" id="drv_usbfs_v1" priority="1" value="true"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="320" id="USB_INTERRUPT_ENABLE_UPDATE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="core" priority="2" value="false"/>
+            </Dynamic>
+          </Values>
+        </Boolean>
+        <String dnOrder="321" id="USB_INTERRUPT_HANDLER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="drv_usbfs_v1" priority="1" value="DRV_USBFSV1_USB_Handler"/>
+            </Dynamic>
+          </Values>
+        </String>
+        <Boolean dnOrder="322" id="USB_INTERRUPT_HANDLER_LOCK">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0">
+              <Value dnOrder="0" id="drv_usbfs_v1" priority="1" value="true"/>
             </Dynamic>
           </Values>
         </Boolean>
@@ -2328,6 +2355,7 @@
               <Value dnOrder="5" id="usb_device_cdc_0" priority="2" value="67"/>
               <Value dnOrder="6" id="usb_device_cdc_0" priority="2" value="67"/>
               <Value dnOrder="7" id="usb_device_cdc_0" priority="2" value="67"/>
+              <Value dnOrder="8" id="usb_device_cdc_0" priority="2" value="67"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -2339,9 +2367,10 @@
               <Value dnOrder="2" id="usb_device_cdc_0" priority="2" value="3"/>
               <Value dnOrder="3" id="usb_device_cdc_0" priority="2" value="3"/>
               <Value dnOrder="4" id="usb_device_cdc_0" priority="2" value="3"/>
-              <Value dnOrder="5" id="usb_device_cdc_0" priority="2" value="4"/>
+              <Value dnOrder="5" id="usb_device_cdc_0" priority="2" value="3"/>
               <Value dnOrder="6" id="usb_device_cdc_0" priority="2" value="4"/>
-              <Value dnOrder="7" id="usb_device_cdc_0" priority="2" value="3"/>
+              <Value dnOrder="7" id="usb_device_cdc_0" priority="2" value="4"/>
+              <Value dnOrder="8" id="usb_device_cdc_0" priority="2" value="3"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -2361,6 +2390,7 @@
               <Value dnOrder="5" id="usb_device_cdc_0" priority="2" value="1"/>
               <Value dnOrder="6" id="usb_device_cdc_0" priority="2" value="1"/>
               <Value dnOrder="7" id="usb_device_cdc_0" priority="2" value="1"/>
+              <Value dnOrder="8" id="usb_device_cdc_0" priority="2" value="1"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -2375,6 +2405,7 @@
               <Value dnOrder="5" id="usb_device_cdc_0" priority="2" value="2"/>
               <Value dnOrder="6" id="usb_device_cdc_0" priority="2" value="2"/>
               <Value dnOrder="7" id="usb_device_cdc_0" priority="2" value="2"/>
+              <Value dnOrder="8" id="usb_device_cdc_0" priority="2" value="2"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -2417,6 +2448,7 @@
               <Value dnOrder="10" id="usb_device_cdc_0" priority="2" value="1"/>
               <Value dnOrder="11" id="usb_device_cdc_0" priority="2" value="1"/>
               <Value dnOrder="12" id="usb_device_cdc_0" priority="2" value="1"/>
+              <Value dnOrder="13" id="usb_device_cdc_0" priority="2" value="1"/>
             </Dynamic>
           </Values>
         </Integer>
@@ -2436,6 +2468,7 @@
               <Value dnOrder="10" id="usb_device_cdc_0" priority="2" value="4"/>
               <Value dnOrder="11" id="usb_device_cdc_0" priority="2" value="4"/>
               <Value dnOrder="12" id="usb_device_cdc_0" priority="2" value="4"/>
+              <Value dnOrder="13" id="usb_device_cdc_0" priority="2" value="4"/>
             </Dynamic>
           </Values>
         </Integer>

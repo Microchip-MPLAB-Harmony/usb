@@ -128,7 +128,7 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
         drvObj = &gDrvUSBObj[drvIndex];
 
         /* Create the global mutex and proceed if successful. */   
-        if(OSAL_RESULT_TRUE == OSAL_MUTEX_Create(&drvObj->mutexID))
+        if(OSAL_RESULT_TRUE == OSAL_MUTEX_Create((OSAL_MUTEX_HANDLE_TYPE *)&drvObj->mutexID))
         {            
             /* Populate the driver instance object with required data */
             drvObj->inUse = true;
@@ -425,7 +425,7 @@ void DRV_USBFSV1_Deinitialize
         hDriver->isOpened = false;
 
         /* Delete the mutex */
-        OSAL_MUTEX_Delete(&hDriver->mutexID);
+        OSAL_MUTEX_Delete((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
 
         hDriver->pEventCallBack = NULL;
 

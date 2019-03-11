@@ -203,10 +203,10 @@
           <itemPath>../src/config/sam_d21_xpro/startup_xc32.c</itemPath>
           <itemPath>../src/config/sam_d21_xpro/libc_syscalls.c</itemPath>
           <itemPath>../src/config/sam_d21_xpro/usb_device_init_data.c</itemPath>
+          <itemPath>../src/config/sam_d21_xpro/diskImage.c</itemPath>
           <itemPath>../src/config/sam_d21_xpro/tasks.c</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <itemPath>../src/config/sam_d21_xpro/diskImage.c</itemPath>
       <itemPath>../src/main.c</itemPath>
       <itemPath>../src/app.c</itemPath>
     </logicalFolder>
@@ -298,7 +298,7 @@
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
         <property key="make-warnings-into-errors" value="true"/>
-        <property key="optimization-level" value=""/>
+        <property key="optimization-level" value="-O1"/>
         <property key="place-data-into-section" value="true"/>
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>

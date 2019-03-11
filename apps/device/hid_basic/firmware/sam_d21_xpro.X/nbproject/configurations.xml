@@ -216,7 +216,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>Simulator</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.10</languageToolchainVersion>
+        <languageToolchainVersion>2.15</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
@@ -423,6 +423,10 @@
         <property key="programoptions.uselvpprogramming" value="false"/>
         <property key="voltagevalue" value="3.25"/>
       </PICkit3PlatformTool>
+      <Simulator>
+        <property key="W0102_SIM_PERIPH_MISSING" value="report"/>
+        <property key="W0106_SIM_PERIPH_PARTIAL_SUPPORT" value="report"/>
+      </Simulator>
     </conf>
   </confs>
 </configurationDescriptor>
