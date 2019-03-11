@@ -318,5 +318,6 @@ const USB_DEVICE_INIT usbDevInitData =
 
     /* Pointer to the USB Driver Functions. */
     .usbDriverInterface = DRV_USBHSV1_DEVICE_INTERFACE,
+	
 };
 // </editor-fold>

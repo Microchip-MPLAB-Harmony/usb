@@ -206,7 +206,20 @@ SYS_MODULE_OBJ DRV_USBHSV1_Initialize
 
 } /* end of DRV_USBHSV1_Initialize() */
 
-void USBHS_Handler(void)
+// *****************************************************************************
+/* Function:
+    void DRV_USBHSV1_USBHS_Handler(void)
+
+  Summary:
+    USB interrupt handler.
+    
+  Description:
+    USB interrupt handler.
+
+  Remarks:
+    See drv_usbfsv1.h for usage information.
+*/
+void DRV_USBHSV1_USBHS_Handler(void)
 {
     DRV_USBHSV1_Tasks_ISR(sysObj.drvUSBHSV1Object);
 } 
