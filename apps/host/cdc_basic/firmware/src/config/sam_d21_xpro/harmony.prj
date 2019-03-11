@@ -27,16 +27,16 @@
           <Name dnOrder="1">drv_usbfsv1.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/driver/usb/usbfsv1/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">ABBC5F463308DEB3210F90290E5EA385</GeneratedChecksum>
-          <UserChecksum dnOrder="5">ABBC5F463308DEB3210F90290E5EA385</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E7F01195A9739CC6A8CC8C796AD5B57C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E7F01195A9739CC6A8CC8C796AD5B57C</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_usbfsv1_host.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/driver/usb/usbfsv1/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F4BCFAD2278B19BA9E4750AD8141A9C5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F4BCFAD2278B19BA9E4750AD8141A9C5</UserChecksum>
+          <GeneratedChecksum dnOrder="4">FEC70755299937DF5C80340FF1B40D6C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">FEC70755299937DF5C80340FF1B40D6C</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -371,8 +371,8 @@
           <Name dnOrder="1">drv_usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">87D30C10A1FB4A78BADB4B40A116E9AF</GeneratedChecksum>
-          <UserChecksum dnOrder="5">87D30C10A1FB4A78BADB4B40A116E9AF</UserChecksum>
+          <GeneratedChecksum dnOrder="4">AC352A9B0E4A4B622674870B8738E826</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AC352A9B0E4A4B622674870B8738E826</UserChecksum>
         </File>
         <File dnOrder="46">
           <Type dnOrder="0">HEADER</Type>
@@ -483,8 +483,8 @@
           <Name dnOrder="1">osal_definitions.h</Name>
           <LogicalPath dnOrder="2">/osal/</LogicalPath>
           <PhysicalPath dnOrder="3">/osal/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0C6AF7550A40F9EDF5A15DB9444D7D8E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0C6AF7550A40F9EDF5A15DB9444D7D8E</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0AC88C49E4585B606FD5AC6804F0C340</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0AC88C49E4585B606FD5AC6804F0C340</UserChecksum>
         </File>
         <File dnOrder="60">
           <Type dnOrder="0">HEADER</Type>
@@ -691,8 +691,8 @@
           <Name dnOrder="1">toolchain_specifics.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">17977FA08815BEA33AFA421957178FD6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">17977FA08815BEA33AFA421957178FD6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4F3C5B6A299E310404C004FB60312B4A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4F3C5B6A299E310404C004FB60312B4A</UserChecksum>
         </File>
         <File dnOrder="86">
           <Type dnOrder="0">HEADER</Type>

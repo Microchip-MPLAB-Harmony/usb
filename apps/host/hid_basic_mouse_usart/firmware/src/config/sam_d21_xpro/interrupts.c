@@ -81,7 +81,7 @@ void RTC_Handler                ( void ) __attribute__((weak, alias("Dummy_Handl
 void EIC_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void NVMCTRL_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void DMAC_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void DRV_USBFSV1_USB_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void DRV_USBFSV1_USB_Handler    ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void EVSYS_Handler              ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM0_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM1_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));

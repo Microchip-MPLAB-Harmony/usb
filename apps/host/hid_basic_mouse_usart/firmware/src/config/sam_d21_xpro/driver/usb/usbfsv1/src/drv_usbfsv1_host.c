@@ -489,7 +489,7 @@ USB_ERROR DRV_USBFSV1_HOST_IRPSubmit
     if(!hDriver->isInInterruptContext)
     {
         /* OSAL: Get Mutex */
-        if(OSAL_MUTEX_Lock(&(hDriver->mutexID), OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
+        if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
         {
             SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBFSV1: Mutex lock failed");
             return USB_ERROR_OSAL_FUNCTION;
@@ -634,7 +634,7 @@ USB_ERROR DRV_USBFSV1_HOST_IRPSubmit
             SYS_INT_SourceEnable(hDriver->interruptSource);
         }
         /* OSAL: Return Mutex */
-        if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
+        if(OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID) != OSAL_RESULT_TRUE)
         {
             SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBFSV1: Mutex unlock failed");
         }
@@ -685,7 +685,7 @@ void DRV_USBFSV1_HOST_IRPCancel(USB_HOST_IRP * pInputIRP)
     if(!hDriver->isInInterruptContext)
     {
         /* OSAL: Get Mutex */
-        if(OSAL_MUTEX_Lock(&(hDriver->mutexID), OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
+        if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
         {
             SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBFSV1: Mutex lock failed");
         }
@@ -745,7 +745,7 @@ void DRV_USBFSV1_HOST_IRPCancel(USB_HOST_IRP * pInputIRP)
         }
 
         /* OSAL: Release Mutex */
-        if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
+        if(OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID) != OSAL_RESULT_TRUE)
         {
             SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBFSV1: Mutex unlock failed");
         }
@@ -808,7 +808,7 @@ void DRV_USBFSV1_HOST_PipeClose
     if(!hDriver->isInInterruptContext)
     {
         /* OSAL: Get Mutex */
-        if(OSAL_MUTEX_Lock(&hDriver->mutexID, OSAL_WAIT_FOREVER) !=
+        if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) !=
                 OSAL_RESULT_TRUE)
         {
             SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBFSV1: Mutex lock failed");
@@ -911,7 +911,7 @@ void DRV_USBFSV1_HOST_PipeClose
         }
 
         /* OSAL: Return Mutex */
-        if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
+        if(OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID) != OSAL_RESULT_TRUE)
         {
             SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBFSV1: Mutex unlock failed");
         }
@@ -991,7 +991,7 @@ DRV_USBFSV1_HOST_PIPE_HANDLE DRV_USBFSV1_HOST_PipeSetup
     hDriver = (DRV_USBFSV1_OBJ *)client;
 
     /* OSAL: Mutex Lock */
-    if(OSAL_MUTEX_Lock(&hDriver->mutexID, OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
+    if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBFSV1: Mutex lock failed");
         return USB_ERROR_OSAL_FUNCTION;
@@ -1147,7 +1147,7 @@ DRV_USBFSV1_HOST_PIPE_HANDLE DRV_USBFSV1_HOST_PipeSetup
          * non control transfer. */
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\r\nDRV USBFSV1: Could not allocate endpoint\033[39m");
         /* OSAL: Mutex Unlock */
-        if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
+        if(OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID) != OSAL_RESULT_TRUE)
         {
             SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\r\nDRV USBFSV1: Mutex unlock failed\033[39m");
         }
@@ -1173,7 +1173,7 @@ DRV_USBFSV1_HOST_PIPE_HANDLE DRV_USBFSV1_HOST_PipeSetup
 	}
 
     /* OSAL: Release Mutex */
-    if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
+    if(OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID) != OSAL_RESULT_TRUE)
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBFSV1: Mutex unlock failed");
     }

@@ -57,7 +57,7 @@
  * Macro Mapping
  **********************************************/
 
-/* SAMD Family Devices has only one interrupt vector for USB module */ 
+/* SAMD2x Family Devices has one interrupt vector for USB module */ 
 #define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE false
   
 #if (DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE == true)
@@ -148,10 +148,17 @@
     #error "DRV_USBFSV1_HOST_SUPPORT must be defined and be either true or false"
 #endif
 
+    #define _DRV_USBFSV1_ISR(x)                 DRV_USBFSV1_Tasks_ISR(x)
+    #define _DRV_USBFSV1_ISR_OTHER(x)           DRV_USBFSV1_Tasks_ISR(x)
+    #define _DRV_USBFSV1_ISR_SOF_HSOF(x)        DRV_USBFSV1_Tasks_ISR(x)
+    #define _DRV_USBFSV1_ISR_TRCPT0(x)          DRV_USBFSV1_Tasks_ISR(x)
+    #define _DRV_USBFSV1_ISR_TRCPT1(x)          DRV_USBFSV1_Tasks_ISR(x)
+
 #if (DRV_USBFSV1_DEVICE_SUPPORT == true)
     #define _DRV_USBFSV1_DEVICE_INIT(x, y)      _DRV_USBFSV1_DEVICE_Initialize(x , y)
     #define _DRV_USBFSV1_DEVICE_TASKS_ISR(x)    _DRV_USBFSV1_DEVICE_Tasks_ISR(x)
     #define _DRV_USBFSV1_FOR_DEVICE(x, y)       x y
+    
 #elif (DRV_USBFSV1_DEVICE_SUPPORT == false)
     #define _DRV_USBFSV1_DEVICE_INIT(x, y)  
     #define _DRV_USBFSV1_DEVICE_TASKS_ISR(x) 
@@ -163,6 +170,13 @@
     #define _DRV_USBFSV1_HOST_TASKS_ISR(x)  _DRV_USBFSV1_HOST_Tasks_ISR(x)
     #define _DRV_USBFSV1_HOST_ATTACH_DETACH_STATE_MACHINE(x)  _DRV_USBFSV1_HOST_AttachDetachStateMachine(x)
     #define _DRV_USBFSV1_FOR_HOST(x, y)     x y
+
+    #define max(x, y) ((x) > (y) ? (x) : (y))
+    #define min(x, y) ((x) > (y) ? (y) : (x))
+    #if (defined __GNUC__) || (defined __CC_ARM)
+        #define clz(u) __builtin_clz(u)
+    #endif
+
 #elif (DRV_USBFSV1_HOST_SUPPORT == false)
     #define _DRV_USBFSV1_HOST_INIT(x, y)
     #define _DRV_USBFSV1_HOST_TASKS_ISR(x) 

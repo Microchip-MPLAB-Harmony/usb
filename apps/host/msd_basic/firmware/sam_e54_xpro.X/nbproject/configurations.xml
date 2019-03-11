@@ -280,7 +280,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>Simulator</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.10</languageToolchainVersion>
+        <languageToolchainVersion>2.15</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>

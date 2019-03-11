@@ -57,7 +57,7 @@
  * Macro Mapping
  **********************************************/
 
-/* SAMD Family Devices has only one interrupt vector for USB module */ 
+/* SAMD2x Family Devices has one interrupt vector for USB module */ 
 #define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE false
   
 #if (DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE == true)
@@ -148,76 +148,16 @@
     #error "DRV_USBFSV1_HOST_SUPPORT must be defined and be either true or false"
 #endif
 
-
-#if (DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE == true)
-    #define _DRV_USBFSV1_SYS_INT_SourceEnable(a, b, c, d);          \
-            SYS_INT_SourceEnable(a);                                \
-            SYS_INT_SourceEnable(b);                                \
-            SYS_INT_SourceEnable(c);                                \
-            SYS_INT_SourceEnable(d);
-
-    #define _DRV_USBFSV1_SYS_INT_SourceStatusClear(a, b, c, d);     \
-            SYS_INT_SourceStatusClear(a);                           \
-            SYS_INT_SourceStatusClear(b);                           \
-            SYS_INT_SourceStatusClear(c);                           \
-            SYS_INT_SourceStatusClear(d);
-
-    #define _DRV_USBFSV1_SYS_INT_SourceDisable(a, b, c, d);         \
-            SYS_INT_SourceDisable(a);                               \
-            SYS_INT_SourceDisable(b);                               \
-            SYS_INT_SourceDisable(c);                               \
-            SYS_INT_SourceDisable(d);
-
-    #define _DRV_USBFSV1_SYS_INT_SourceDisableSave(w, a, x, b, y, c, z, d);     \
-            w = SYS_INT_SourceDisable(a);                                       \
-            x = SYS_INT_SourceDisable(b);                                       \
-            y = SYS_INT_SourceDisable(c);                                       \
-            z = SYS_INT_SourceDisable(d);
-
-    #define _DRV_USBFSV1_SYS_INT_SourceEnableRestore(w, a, x, b, y, c, z, d);   \
-            if(w == true)   SYS_INT_SourceEnable(a);                            \
-            if(x == true)   SYS_INT_SourceEnable(b);                            \
-            if(y == true)   SYS_INT_SourceEnable(c);                            \
-            if(z == true)   SYS_INT_SourceEnable(d);                            \
-
-    #define _DRV_USBFSV1_DECLARE_BOOL_VARIABLE(a);                  \
-            bool a = false;                                         \
-            bool a##1 = false;                                      \
-            bool a##2 = false;                                      \
-            bool a##3 = false;
-
-
-#elif (DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE == false)
-    #define _DRV_USBFSV1_SYS_INT_SourceEnable(a, b, c, d);          \
-            SYS_INT_SourceEnable(a);
-
-    #define _DRV_USBFSV1_SYS_INT_SourceStatusClear(a, b, c, d);     \
-            SYS_INT_SourceStatusClear(a);
-
-    #define _DRV_USBFSV1_SYS_INT_SourceDisable(a, b, c, d);         \
-            SYS_INT_SourceStatusClear(a);            
-
-    #define _DRV_USBFSV1_SYS_INT_SourceDisableSave(w, a, x, b, y, c, z, d);     \
-            w = SYS_INT_SourceDisable(a);
-
-    #define _DRV_USBFSV1_SYS_INT_SourceEnableRestore(w, a, x, b, y, c, z, d);   \
-            if(w == true)   SYS_INT_SourceEnable(a);
-
-    #define _DRV_USBFSV1_DECLARE_BOOL_VARIABLE(a);                              \
-            bool a = false;                                                     \
-
-#endif
-
-#if (DRV_USBFSV1_DEVICE_SUPPORT == true)
-    #define _DRV_USBFSV1_DEVICE_INIT(x, y)      _DRV_USBFSV1_DEVICE_Initialize(x , y)
-    #define _DRV_USBFSV1_DEVICE_TASKS_ISR(x)    _DRV_USBFSV1_DEVICE_Tasks_ISR(x)
-    #define _DRV_USBFSV1_FOR_DEVICE(x, y)       x y
-
     #define _DRV_USBFSV1_ISR(x)                 DRV_USBFSV1_Tasks_ISR(x)
     #define _DRV_USBFSV1_ISR_OTHER(x)           DRV_USBFSV1_Tasks_ISR(x)
     #define _DRV_USBFSV1_ISR_SOF_HSOF(x)        DRV_USBFSV1_Tasks_ISR(x)
     #define _DRV_USBFSV1_ISR_TRCPT0(x)          DRV_USBFSV1_Tasks_ISR(x)
     #define _DRV_USBFSV1_ISR_TRCPT1(x)          DRV_USBFSV1_Tasks_ISR(x)
+
+#if (DRV_USBFSV1_DEVICE_SUPPORT == true)
+    #define _DRV_USBFSV1_DEVICE_INIT(x, y)      _DRV_USBFSV1_DEVICE_Initialize(x , y)
+    #define _DRV_USBFSV1_DEVICE_TASKS_ISR(x)    _DRV_USBFSV1_DEVICE_Tasks_ISR(x)
+    #define _DRV_USBFSV1_FOR_DEVICE(x, y)       x y
     
 #elif (DRV_USBFSV1_DEVICE_SUPPORT == false)
     #define _DRV_USBFSV1_DEVICE_INIT(x, y)  
@@ -230,12 +170,6 @@
     #define _DRV_USBFSV1_HOST_TASKS_ISR(x)  _DRV_USBFSV1_HOST_Tasks_ISR(x)
     #define _DRV_USBFSV1_HOST_ATTACH_DETACH_STATE_MACHINE(x)  _DRV_USBFSV1_HOST_AttachDetachStateMachine(x)
     #define _DRV_USBFSV1_FOR_HOST(x, y)     x y
-
-    #define _DRV_USBFSV1_ISR(x)                 DRV_USBFSV1_Tasks_ISR(x)
-    #define _DRV_USBFSV1_ISR_OTHER(x)           DRV_USBFSV1_Tasks_ISR(x)
-    #define _DRV_USBFSV1_ISR_SOF_HSOF(x)        DRV_USBFSV1_Tasks_ISR(x)
-    #define _DRV_USBFSV1_ISR_TRCPT0(x)          DRV_USBFSV1_Tasks_ISR(x)
-    #define _DRV_USBFSV1_ISR_TRCPT1(x)          DRV_USBFSV1_Tasks_ISR(x)
 
     #define max(x, y) ((x) > (y) ? (x) : (y))
     #define min(x, y) ((x) > (y) ? (y) : (x))

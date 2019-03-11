@@ -57,7 +57,7 @@
 // *****************************************************************************
 
 /* SERCOM3 USART baud value for 115200 Hz baud rate */
-#define SERCOM3_USART_INT_BAUD_VALUE			(50436U)
+#define SERCOM3_USART_INT_BAUD_VALUE            (50436U)
 
 SERCOM_USART_OBJECT sercom3USARTObj;
 

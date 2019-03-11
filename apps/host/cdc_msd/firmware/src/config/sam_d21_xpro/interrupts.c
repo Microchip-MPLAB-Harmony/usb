@@ -81,7 +81,7 @@ void RTC_Handler                ( void ) __attribute__((weak, alias("Dummy_Handl
 void EIC_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void NVMCTRL_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void DMAC_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void USB_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void DRV_USBFSV1_USB_Handler    ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void EVSYS_Handler              ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM0_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM1_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -128,7 +128,7 @@ const DeviceVectors exception_table=
     .pfnEIC_Handler                = ( void * ) EIC_Handler,
     .pfnNVMCTRL_Handler            = ( void * ) NVMCTRL_Handler,
     .pfnDMAC_Handler               = ( void * ) DMAC_Handler,
-    .pfnUSB_Handler                = ( void * ) USB_Handler,
+    .pfnUSB_Handler                = ( void * ) DRV_USBFSV1_USB_Handler,
     .pfnEVSYS_Handler              = ( void * ) EVSYS_Handler,
     .pfnSERCOM0_Handler            = ( void * ) SERCOM0_Handler,
     .pfnSERCOM1_Handler            = ( void * ) SERCOM1_Handler,
