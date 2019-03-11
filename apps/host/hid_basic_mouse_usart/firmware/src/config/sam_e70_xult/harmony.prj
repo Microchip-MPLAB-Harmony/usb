@@ -363,8 +363,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">315F8E802A1308D1534020C911A17D3F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">315F8E802A1308D1534020C911A17D3F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E3D93B0BB8A81C0A1ABB37B741D3992D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E3D93B0BB8A81C0A1ABB37B741D3992D</UserChecksum>
         </File>
         <File dnOrder="45">
           <Type dnOrder="0">HEADER</Type>

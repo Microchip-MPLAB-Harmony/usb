@@ -53,6 +53,44 @@
 #include "configuration.h"
 #include "definitions.h"
 
+// *****************************************************************************
+// *****************************************************************************
+// Section: RTOS "Tasks" Routine
+// *****************************************************************************
+// *****************************************************************************
+void _DRV_USBHSV1_Tasks(  void *pvParameters  )
+{
+    while(1)
+    {
+				 /* USB HS Driver Task Routine */
+        DRV_USBHSV1_Tasks(sysObj.drvUSBHSV1Object);
+        vTaskDelay(10 / portTICK_PERIOD_MS);
+    }
+}
+
+void _USB_HOST_Tasks(  void *pvParameters  )
+{
+    while(1)
+    {
+				/* USB Host layer tasks routine */ 
+        USB_HOST_Tasks(sysObj.usbHostObject0);
+        vTaskDelay(10 / portTICK_PERIOD_MS);
+    }
+}
+
+/* Handle for the APP_Tasks. */
+TaskHandle_t xAPP_Tasks;
+
+void _APP_Tasks(  void *pvParameters  )
+{
+    while(1)
+    {
+        APP_Tasks();
+        vTaskDelay(10 / portTICK_PERIOD_MS);
+    }
+}
+
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -77,19 +115,43 @@ void SYS_Tasks ( void )
     
 
     /* Maintain Middleware & Other Libraries */
-    	/* USB HS Driver Task Routine */ 
-    DRV_USBHSV1_Tasks(sysObj.drvUSBHSV1Object);
+    	/* Create OS Thread for USB Driver Tasks. */
+    xTaskCreate( _DRV_USBHSV1_Tasks,
+        "DRV_USBHSV1_TASKS",
+        1024,
+        (void*)NULL,
+        1,
+        (TaskHandle_t*)NULL
+    );
 
-	/* USB Host Task Routine */ 
-     USB_HOST_Tasks(sysObj.usbHostObject0);
+    /* Create OS Thread for USB_HOST_Tasks. */
+    xTaskCreate( _USB_HOST_Tasks,
+        "USB_HOST_TASKS",
+        1024,
+        (void*)NULL,
+        1,
+        (TaskHandle_t*)NULL
+    );
 
 
 
     /* Maintain the application's state machine. */
-        /* Call Application task APP. */
-    APP_Tasks();
+        /* Create OS Thread for APP_Tasks. */
+    xTaskCreate((TaskFunction_t) _APP_Tasks,
+                "APP_Tasks",
+                1024,
+                NULL,
+                1,
+                &xAPP_Tasks);
 
 
+
+    /* Start RTOS Scheduler. */
+    
+     /**********************************************************************
+     * Create all Threads for APP Tasks before starting FreeRTOS Scheduler *
+     ***********************************************************************/
+    vTaskStartScheduler(); /* This function never returns. */
 
 }
 
