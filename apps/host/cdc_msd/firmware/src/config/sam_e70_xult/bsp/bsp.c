@@ -73,12 +73,10 @@
 void BSP_Initialize(void )
 {
 
-    /* Disable VBUS power */
-		VBUS_HOST_EN_PowerDisable(); 
 
     /* Switch off LEDs */
-		LED0_Off(); 
 		LED1_Off(); 
+		LED2_Off(); 
 
 
 }

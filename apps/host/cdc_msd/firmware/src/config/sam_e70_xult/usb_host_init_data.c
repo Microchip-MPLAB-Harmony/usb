@@ -37,7 +37,8 @@
 // DOM-IGNORE-END
 #include "configuration.h"
 #include "definitions.h" 
- 
+
+
 const USB_HOST_TPL_ENTRY USBTPList[2] = 
 {
 	TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL(0x08, 0x06, 0x50, NULL,  USB_HOST_MSD_INTERFACE) ,

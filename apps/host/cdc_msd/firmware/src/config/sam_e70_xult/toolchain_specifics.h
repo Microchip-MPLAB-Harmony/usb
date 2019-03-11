@@ -21,8 +21,15 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
-#ifndef __OSAL_DEFINITIONS_H
-#define __OSAL_DEFINITIONS_H
+#ifndef TOOLCHAIN_SPECIFICS_H
+#define TOOLCHAIN_SPECIFICS_H
 
-#include "osal/osal_impl_basic.h"
-#endif//__OSAL_DEFINITIONS_H
+#include <sys/types.h>
+#define NO_INIT        __attribute__((section(".no_init")))
+#define SECTION(a)     __attribute__((__section__(a)))
+
+#define CACHE_ALIGN    __ALIGNED(32)
+
+
+#endif // end of header
+
