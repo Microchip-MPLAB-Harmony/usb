@@ -68,7 +68,7 @@
           <LogicalPath dnOrder="2">config/sam_e54_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">4E5BC680F4B2370A9787340B8B5261D2</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4E5BC680F4B2370A9787340B8B5261D2</UserChecksum>
+          <UserChecksum dnOrder="5">8B5DDE878BB814D9039EA4EC7767EFF1</UserChecksum>
         </File>
         <File dnOrder="8">
           <Type dnOrder="0">SOURCE</Type>

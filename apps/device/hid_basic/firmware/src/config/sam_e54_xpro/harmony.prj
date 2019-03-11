@@ -52,7 +52,7 @@
           <LogicalPath dnOrder="2">config/sam_e54_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">6550C18B8379EB6FE51650E3312D4B48</GeneratedChecksum>
-          <UserChecksum dnOrder="5">6550C18B8379EB6FE51650E3312D4B48</UserChecksum>
+          <UserChecksum dnOrder="5">FC968D26C3B17A1E6F030E560611BCF1</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -155,7 +155,7 @@
           <Name dnOrder="1">usb_device_init_data.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B013FF3F2BB180D25BC1145120698701</GeneratedChecksum>
+          <GeneratedChecksum dnOrder="4">1B563329537BE3CE455B7008A0A9968C</GeneratedChecksum>
           <UserChecksum dnOrder="5">1B563329537BE3CE455B7008A0A9968C</UserChecksum>
         </File>
         <File dnOrder="19">

@@ -974,7 +974,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointStall
 
         if(hDriver->isInInterruptContext == false)
         {
-            if(OSAL_MUTEX_Lock(&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+            if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
             {
                 /* Disable  the USB Interrupt as this is not called inside ISR */  
                 _DRV_USBFSV1_SYS_INT_SourceDisableSave(
@@ -1039,7 +1039,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointStall
                         interruptWasEnabled3, hDriver->interruptSource3 );        
 
                 /* Release the mutex */
-                OSAL_MUTEX_Unlock(&hDriver->mutexID);
+                OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
             }
         }
     }
@@ -1105,7 +1105,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointStallClear
         
         if(hDriver->isInInterruptContext == false)
         {
-            if(OSAL_MUTEX_Lock(&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+            if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
             {
                 /* Disable  the USB Interrupt as this is not called inside ISR */  
                 _DRV_USBFSV1_SYS_INT_SourceDisableSave(
@@ -1191,7 +1191,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointStallClear
                         interruptWasEnabled3, hDriver->interruptSource3 );        
 
                 /* Release the mutex */
-                OSAL_MUTEX_Unlock(&hDriver->mutexID);
+                OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
             }
         }
     }
@@ -1427,7 +1427,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
 
                 if(hDriver->isInInterruptContext == false)
                 {
-                    if(OSAL_MUTEX_Lock(&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+                    if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
                     {
                         /* Disable the interrupt as we will update the
                          * endpoint IRP queue. We do not want a USB
@@ -1898,9 +1898,9 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
                                 {
                                     /* Host has not sent any data and IRP is already added
                                      * to the queue. IRP will be processed in the ISR */
-                                    usbID->DEVICE.DEVICE_ENDPOINT[endpoint].USB_EPSTATUSCLR = USB_DEVICE_EPSTATUSCLR_BK0RDY_Msk;
-
                                     hDriver->endpointDescriptorTable[endpoint].DEVICE_DESC_BANK[direction].USB_ADDR = (uint32_t)irp->data;
+                                    
+                                    usbID->DEVICE.DEVICE_ENDPOINT[endpoint].USB_EPSTATUSCLR = USB_DEVICE_EPSTATUSCLR_BK0RDY_Msk;
                                 }
                             }/* End of non zero RX IRP submit */
                         }/* End of non zero IRP submit */
@@ -1928,7 +1928,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
                             interruptWasEnabled3, hDriver->interruptSource3 );        
 
                     /* Unlock the mutex */
-                    OSAL_MUTEX_Unlock(&hDriver->mutexID);
+                    OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
                 }
             }
         }
@@ -1995,7 +1995,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancelAll
 
         if(hDriver->isInInterruptContext == false)
         {
-            if(OSAL_MUTEX_Lock(&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+            if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
             {
                 /* Disable  the USB Interrupt as this is not called inside ISR */    
                 _DRV_USBFSV1_SYS_INT_SourceDisableSave(
@@ -2024,7 +2024,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancelAll
                         interruptWasEnabled2, hDriver->interruptSource2,
                         interruptWasEnabled3, hDriver->interruptSource3 );        
 
-                OSAL_MUTEX_Unlock(&hDriver->mutexID);
+                OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
             }
         }
     }
@@ -2105,7 +2105,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancel
 
             if(hDriver->isInInterruptContext == false)
             {
-                if(OSAL_MUTEX_Lock(&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+                if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
                 {
                     /* Disable  the USB Interrupt as this is not called inside ISR */    
                     _DRV_USBFSV1_SYS_INT_SourceDisableSave(
@@ -2170,7 +2170,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancel
                             interruptWasEnabled2, hDriver->interruptSource2,
                             interruptWasEnabled3, hDriver->interruptSource3 );        
 
-                    OSAL_MUTEX_Unlock(&hDriver->mutexID); 
+                    OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID); 
                 }
             }
         }
@@ -2203,11 +2203,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancel
 
 void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
 {
-//    DRV_USBFSV1_DEVICE_ENDPOINT_OBJ * endpointObjReceive;
-//    DRV_USBFSV1_DEVICE_ENDPOINT_OBJ * endpointObjTransmit;
-//    DRV_USBFSV1_DEVICE_ENDPOINT_OBJ * endpointObjNonZero;
     DRV_USBFSV1_DEVICE_ENDPOINT_OBJ * endpointObj;
-//    DRV_USBFSV1_DEVICE_ENDPOINT_OBJ * endpointObjPlus;
     USB_DEVICE_IRP_LOCAL * irp;
     uint16_t endpoint0DataStageSize;
     uint16_t endpoint0DataStageDirection;
@@ -2217,7 +2213,6 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
     uint16_t byteCount;
     uint16_t offset;
     uint32_t loopIndex;
-//    uint8_t epNonZeroIndex;
     uint8_t epIndex;
 
     if(!hDriver->isOpened)
@@ -2594,30 +2589,17 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                         
                         byteCount = hDriver->endpointDescriptorTable[epIndex].DEVICE_DESC_BANK[0].USB_PCKSIZE & USB_DEVICE_PCKSIZE_BYTE_COUNT_Msk;
 
-                        irpDataPtr = (uint8_t *)irp->data;
-
-                        endpointDataPtr = (uint8_t *)hDriver->endpointDescriptorTable[epIndex].DEVICE_DESC_BANK[0].USB_ADDR;
-
-                        irpDataPtr = (uint8_t *)&irpDataPtr[irp->nPendingBytes];
-
                         /* This is not acceptable as it may corrupt the ram location */
                         if((irp->nPendingBytes + byteCount) > irp->size)
                         {
                             byteCount = irp->size - irp->nPendingBytes;
                         }
                         
-                        for(loopIndex = 0; loopIndex < byteCount; loopIndex++)
-                        {
-                            *((uint8_t *)(irpDataPtr + loopIndex)) = *endpointDataPtr++;
-                        }
-
                         irp->nPendingBytes += byteCount;
 
                         if((irp->nPendingBytes < irp->size) && (byteCount >= endpointObj->maxPacketSize))
                         {
                             usbID->DEVICE.DEVICE_ENDPOINT[epIndex].USB_EPSTATUSCLR = USB_DEVICE_EPSTATUSCLR_BK0RDY_Msk;
-
-                            usbID->DEVICE.DEVICE_ENDPOINT[epIndex].USB_EPINTFLAG |= USB_DEVICE_EPINTFLAG_TRCPT0_Msk;
                         }
                         else
                         {
@@ -2625,7 +2607,7 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                             {
                                 irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
                             }
-                            else
+                            else if(byteCount < endpointObj->maxPacketSize)
                             {
                                 /* Short Packet */
                                 irp->status = USB_DEVICE_IRP_STATUS_COMPLETED_SHORT;
@@ -2634,11 +2616,9 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                             if(epIndex == 0)
                             {
                                 hDriver->endpoint0State = DRV_USBFSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_IRP_FROM_CLIENT;
+
+                                usbID->DEVICE.DEVICE_ENDPOINT[epIndex].USB_EPSTATUSCLR = USB_DEVICE_EPSTATUSCLR_BK0RDY_Msk;
                             }
-
-                            usbID->DEVICE.DEVICE_ENDPOINT[epIndex].USB_EPINTFLAG |= USB_DEVICE_EPINTFLAG_TRCPT0_Msk;
-
-                            usbID->DEVICE.DEVICE_ENDPOINT[epIndex].USB_EPSTATUSCLR = USB_DEVICE_EPSTATUSCLR_BK0RDY_Msk;
 
                             endpointObj->irpQueue = irp->next;
 
@@ -2649,6 +2629,11 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                                 irp->callback((USB_DEVICE_IRP *)irp);
                             }
                         }
+                        
+                        usbID->DEVICE.DEVICE_ENDPOINT[epIndex].USB_EPINTFLAG |= USB_DEVICE_EPINTFLAG_TRCPT0_Msk;
+
+                        usbID->DEVICE.DEVICE_ENDPOINT[epIndex].USB_EPINTENSET = USB_DEVICE_EPINTENSET_TRCPT0_Msk;  
+                        
                     }
                 }
             }

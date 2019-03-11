@@ -57,45 +57,9 @@
  * Macro Mapping
  **********************************************/
 
-/* With v1.04 the USB Driver implementation has been been split such
- * multiple USB Driver can be included in the same application. But to
- * continue support for application developed before v1.04, we should
- * map the DRV_USB configuration macros to DRV_USBFSV1 macros */
-
-#if defined(DRV_USB_INSTANCES_NUMBER)
-    #define DRV_USBFSV1_INSTANCES_NUMBER  DRV_USB_INSTANCES_NUMBER
-#endif
-
-#if defined(DRV_USB_DEVICE_SUPPORT)
-    #define DRV_USBFSV1_DEVICE_SUPPORT  DRV_USB_DEVICE_SUPPORT
-#endif
-
-#if defined(DRV_USB_HOST_SUPPORT)
-    #define DRV_USBFSV1_HOST_SUPPORT  DRV_USB_HOST_SUPPORT
-#endif
-
-#if defined(DRV_USB_ENDPOINTS_NUMBER)
-    #define DRV_USBFSV1_ENDPOINTS_NUMBER  DRV_USB_ENDPOINTS_NUMBER
-#endif
-
-/* This macro is defined true for SAME5x/SAMD5x devices */
-/* It is defined false for SAMD2x devices */
-#define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE                  true
-
-/**********************************************
- * Sets up driver mode-specific init routine
- * based on selected support.
- *********************************************/
-
-#ifndef DRV_USBFSV1_DEVICE_SUPPORT
-    #error "DRV_USBFSV1_DEVICE_SUPPORT must be defined and be either true or false"
-#endif
-
-#ifndef DRV_USBFSV1_HOST_SUPPORT
-    #error "DRV_USBFSV1_HOST_SUPPORT must be defined and be either true or false"
-#endif
-
-
+/* SAME5x Family Devices has Four interrupt vectors for USB module */ 
+#define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE true
+  
 #if (DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE == true)
     #define _DRV_USBFSV1_SYS_INT_SourceEnable(a, b, c, d);          \
             SYS_INT_SourceEnable(a);                                \
@@ -155,16 +119,45 @@
 
 #endif
 
-#if (DRV_USBFSV1_DEVICE_SUPPORT == true)
-    #define _DRV_USBFSV1_DEVICE_INIT(x, y)      _DRV_USBFSV1_DEVICE_Initialize(x , y)
-    #define _DRV_USBFSV1_DEVICE_TASKS_ISR(x)    _DRV_USBFSV1_DEVICE_Tasks_ISR(x)
-    #define _DRV_USBFSV1_FOR_DEVICE(x, y)       x y
+#if defined(DRV_USB_INSTANCES_NUMBER)
+    #define DRV_USBFSV1_INSTANCES_NUMBER  DRV_USB_INSTANCES_NUMBER
+#endif
+
+#if defined(DRV_USB_DEVICE_SUPPORT)
+    #define DRV_USBFSV1_DEVICE_SUPPORT  DRV_USB_DEVICE_SUPPORT
+#endif
+
+#if defined(DRV_USB_HOST_SUPPORT)
+    #define DRV_USBFSV1_HOST_SUPPORT  DRV_USB_HOST_SUPPORT
+#endif
+
+#if defined(DRV_USB_ENDPOINTS_NUMBER)
+    #define DRV_USBFSV1_ENDPOINTS_NUMBER  DRV_USB_ENDPOINTS_NUMBER
+#endif
+
+/**********************************************
+ * Sets up driver mode-specific init routine
+ * based on selected support.
+ *********************************************/
+
+#ifndef DRV_USBFSV1_DEVICE_SUPPORT
+    #error "DRV_USBFSV1_DEVICE_SUPPORT must be defined and be either true or false"
+#endif
+
+#ifndef DRV_USBFSV1_HOST_SUPPORT
+    #error "DRV_USBFSV1_HOST_SUPPORT must be defined and be either true or false"
+#endif
 
     #define _DRV_USBFSV1_ISR(x)                 DRV_USBFSV1_Tasks_ISR(x)
     #define _DRV_USBFSV1_ISR_OTHER(x)           DRV_USBFSV1_Tasks_ISR(x)
     #define _DRV_USBFSV1_ISR_SOF_HSOF(x)        DRV_USBFSV1_Tasks_ISR(x)
     #define _DRV_USBFSV1_ISR_TRCPT0(x)          DRV_USBFSV1_Tasks_ISR(x)
     #define _DRV_USBFSV1_ISR_TRCPT1(x)          DRV_USBFSV1_Tasks_ISR(x)
+
+#if (DRV_USBFSV1_DEVICE_SUPPORT == true)
+    #define _DRV_USBFSV1_DEVICE_INIT(x, y)      _DRV_USBFSV1_DEVICE_Initialize(x , y)
+    #define _DRV_USBFSV1_DEVICE_TASKS_ISR(x)    _DRV_USBFSV1_DEVICE_Tasks_ISR(x)
+    #define _DRV_USBFSV1_FOR_DEVICE(x, y)       x y
     
 #elif (DRV_USBFSV1_DEVICE_SUPPORT == false)
     #define _DRV_USBFSV1_DEVICE_INIT(x, y)  
@@ -177,12 +170,6 @@
     #define _DRV_USBFSV1_HOST_TASKS_ISR(x)  _DRV_USBFSV1_HOST_Tasks_ISR(x)
     #define _DRV_USBFSV1_HOST_ATTACH_DETACH_STATE_MACHINE(x)  _DRV_USBFSV1_HOST_AttachDetachStateMachine(x)
     #define _DRV_USBFSV1_FOR_HOST(x, y)     x y
-
-    #define _DRV_USBFSV1_ISR(x)                 DRV_USBFSV1_Tasks_ISR(x)
-    #define _DRV_USBFSV1_ISR_OTHER(x)           DRV_USBFSV1_Tasks_ISR(x)
-    #define _DRV_USBFSV1_ISR_SOF_HSOF(x)        DRV_USBFSV1_Tasks_ISR(x)
-    #define _DRV_USBFSV1_ISR_TRCPT0(x)          DRV_USBFSV1_Tasks_ISR(x)
-    #define _DRV_USBFSV1_ISR_TRCPT1(x)          DRV_USBFSV1_Tasks_ISR(x)
 
     #define max(x, y) ((x) > (y) ? (x) : (y))
     #define min(x, y) ((x) > (y) ? (y) : (x))

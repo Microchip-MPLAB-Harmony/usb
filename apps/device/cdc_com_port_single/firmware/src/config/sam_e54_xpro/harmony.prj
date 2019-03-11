@@ -27,16 +27,16 @@
           <Name dnOrder="1">drv_usbfsv1.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/driver/usb/usbfsv1/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">ABBC5F463308DEB3210F90290E5EA385</GeneratedChecksum>
-          <UserChecksum dnOrder="5">ABBC5F463308DEB3210F90290E5EA385</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E7F01195A9739CC6A8CC8C796AD5B57C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E7F01195A9739CC6A8CC8C796AD5B57C</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_usbfsv1_device.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/driver/usb/usbfsv1/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">2EE825219952A3C971D78FD09821572D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">2EE825219952A3C971D78FD09821572D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">D0D04FE7A21294AC77A24FBA0A37063F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">D0D04FE7A21294AC77A24FBA0A37063F</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -51,15 +51,15 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">3B73447B64AF55878919DC66198686E2</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9E621E605422A83EFC3FA89CC2D72E10</UserChecksum>
+          <GeneratedChecksum dnOrder="4">6550C18B8379EB6FE51650E3312D4B48</GeneratedChecksum>
+          <UserChecksum dnOrder="5">04C418ED8798CB5A4387D7126C5A0535</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">interrupts.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A184FE191564B96E7C7A56338752ACFB</GeneratedChecksum>
+          <GeneratedChecksum dnOrder="4">406853E55691613D80ABEC39C545906D</GeneratedChecksum>
           <UserChecksum dnOrder="5">406853E55691613D80ABEC39C545906D</UserChecksum>
         </File>
         <File dnOrder="7">
@@ -83,8 +83,8 @@
           <Name dnOrder="1">plib_clock.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/peripheral/clock/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clock/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">945E7F0504B382EF256CDC5FB855C6BE</GeneratedChecksum>
-          <UserChecksum dnOrder="5">945E7F0504B382EF256CDC5FB855C6BE</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0C81535BA4E6567EEA1A5F85EAF01093</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0C81535BA4E6567EEA1A5F85EAF01093</UserChecksum>
         </File>
         <File dnOrder="10">
           <Type dnOrder="0">SOURCE</Type>
@@ -99,8 +99,8 @@
           <Name dnOrder="1">plib_nvic.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/peripheral/nvic/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/nvic/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A1A3B7BE595D37F770A2449276309A5A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A1A3B7BE595D37F770A2449276309A5A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">D4C6D67E341663C3D06BD6C0E419561F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">D4C6D67E341663C3D06BD6C0E419561F</UserChecksum>
         </File>
         <File dnOrder="12">
           <Type dnOrder="0">SOURCE</Type>
@@ -387,8 +387,8 @@
           <Name dnOrder="1">drv_usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">87D30C10A1FB4A78BADB4B40A116E9AF</GeneratedChecksum>
-          <UserChecksum dnOrder="5">87D30C10A1FB4A78BADB4B40A116E9AF</UserChecksum>
+          <GeneratedChecksum dnOrder="4">AC352A9B0E4A4B622674870B8738E826</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AC352A9B0E4A4B622674870B8738E826</UserChecksum>
         </File>
         <File dnOrder="48">
           <Type dnOrder="0">HEADER</Type>
@@ -411,8 +411,8 @@
           <Name dnOrder="1">drv_usbfsv1_variant_mapping.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/driver/usb/usbfsv1/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">09ED5251B7DFCB99212B3363A7F95E18</GeneratedChecksum>
-          <UserChecksum dnOrder="5">09ED5251B7DFCB99212B3363A7F95E18</UserChecksum>
+          <GeneratedChecksum dnOrder="4">78E3D60A0FDCC50C0575464F3349F8A6</GeneratedChecksum>
+          <UserChecksum dnOrder="5">78E3D60A0FDCC50C0575464F3349F8A6</UserChecksum>
         </File>
         <File dnOrder="51">
           <Type dnOrder="0">HEADER</Type>
@@ -523,8 +523,8 @@
           <Name dnOrder="1">osal_definitions.h</Name>
           <LogicalPath dnOrder="2">/osal/</LogicalPath>
           <PhysicalPath dnOrder="3">/osal/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0C6AF7550A40F9EDF5A15DB9444D7D8E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0C6AF7550A40F9EDF5A15DB9444D7D8E</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0AC88C49E4585B606FD5AC6804F0C340</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0AC88C49E4585B606FD5AC6804F0C340</UserChecksum>
         </File>
         <File dnOrder="65">
           <Type dnOrder="0">HEADER</Type>
@@ -579,8 +579,8 @@
           <Name dnOrder="1">plib_clock.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/peripheral/clock/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clock/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">89D93D4ABD8E81C4C5891B22B5CE2C7B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">89D93D4ABD8E81C4C5891B22B5CE2C7B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0416F129713FDF989ACC1FC57065125C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0416F129713FDF989ACC1FC57065125C</UserChecksum>
         </File>
         <File dnOrder="72">
           <Type dnOrder="0">HEADER</Type>
@@ -731,8 +731,8 @@
           <Name dnOrder="1">toolchain_specifics.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">4F420CFA2C818361711422A469F6B262</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4F420CFA2C818361711422A469F6B262</UserChecksum>
+          <GeneratedChecksum dnOrder="4">6AFF17EB43477034115ED7E02FBB7E69</GeneratedChecksum>
+          <UserChecksum dnOrder="5">6AFF17EB43477034115ED7E02FBB7E69</UserChecksum>
         </File>
         <File dnOrder="91">
           <Type dnOrder="0">HEADER</Type>
