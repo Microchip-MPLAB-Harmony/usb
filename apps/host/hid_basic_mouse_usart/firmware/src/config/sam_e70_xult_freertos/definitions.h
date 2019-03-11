@@ -61,8 +61,6 @@
 #include "usb/usb_host_hid.h"
 #include "usb/usb_hid.h"
 #include "usb/usb_host_hid_mouse.h"
-#include "FreeRTOS.h"
-#include "task.h"
 #include "peripheral/usart/plib_usart1.h"
 #include "system/int/sys_int.h"
 #include "system/cache/sys_cache.h"
@@ -190,8 +188,8 @@ void SYS_Tasks ( void );
 
 typedef struct
 {
-    SYS_MODULE_OBJ  sysTime;
     SYS_MODULE_OBJ  drvUsart0;
+    SYS_MODULE_OBJ  sysTime;
 	SYS_MODULE_OBJ  drvUSBHSV1Object;
 
 	SYS_MODULE_OBJ  usbHostObject0;
