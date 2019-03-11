@@ -53,6 +53,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
+#include "definitions.h"
 #include "app.h"
 
 // *****************************************************************************
@@ -61,11 +62,11 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
-/* Receive data buffer */
-uint8_t receiveDataBuffer[64] __attribute__ ((aligned(16)));
+/* Recieve data buffer */
+uint8_t receiveDataBuffer[64] CACHE_ALIGN;
 
 /* Transmit data buffer */
-uint8_t  transmitDataBuffer[64] __attribute__ ((aligned(16)));
+uint8_t  transmitDataBuffer[64] CACHE_ALIGN;
 
 // *****************************************************************************
 /* Application Data
@@ -90,308 +91,141 @@ APP_DATA appData;
 // *****************************************************************************
 // *****************************************************************************
 
-/**************************************************************
- * USB Device HID Events - Application Event Handler.
- **************************************************************/
-
-static void APP_USBDeviceHIDEventHandler
+USB_DEVICE_HID_EVENT_RESPONSE APP_USBDeviceHIDEventHandler
 (
-    USB_DEVICE_HID_INDEX hidInstance,
-    USB_DEVICE_HID_EVENT event, 
-    void * eventData, 
+    USB_DEVICE_HID_INDEX iHID,
+    USB_DEVICE_HID_EVENT event,
+    void * eventData,
     uintptr_t userData
 )
 {
-    APP_DATA * appData = (APP_DATA *)userData;
+    USB_DEVICE_HID_EVENT_DATA_REPORT_SENT * reportSent;
+    USB_DEVICE_HID_EVENT_DATA_REPORT_RECEIVED * reportReceived;
 
-    switch(event)
+    /* Check type of event */
+    switch (event)
     {
         case USB_DEVICE_HID_EVENT_REPORT_SENT:
 
-            /* This means a Report has been sent.  We are free to send next
-             * report. An application flag can be updated here. */
+            /* The eventData parameter will be USB_DEVICE_HID_EVENT_REPORT_SENT
+             * pointer type containing details about the report that was
+             * sent. */
+            reportSent = (USB_DEVICE_HID_EVENT_DATA_REPORT_SENT *) eventData;
+            if(reportSent->handle == appData.txTransferHandle )
             {
-                USB_DEVICE_HID_EVENT_DATA_REPORT_SENT * report = 
-                        (USB_DEVICE_HID_EVENT_DATA_REPORT_SENT *)eventData;
-                if(report->handle == appData->txTransferHandle )
-                {
-                    // Transfer progressed.
-                    appData->hidDataTransmitted = true;
-                }
+                // Transfer progressed.
+                appData.hidDataTransmitted = true;
             }
+            
             break;
 
         case USB_DEVICE_HID_EVENT_REPORT_RECEIVED:
 
-            /* This means Report has been received from the Host. Report
-             * received can be over Interrupt OUT or Control endpoint based on
-             * Interrupt OUT endpoint availability. An application flag can be
-             * updated here. */
-            {
-                USB_DEVICE_HID_EVENT_DATA_REPORT_RECEIVED * report = 
-                        (USB_DEVICE_HID_EVENT_DATA_REPORT_RECEIVED *)eventData;
-                if(report->handle == appData->rxTransferHandle )
-                {
-                    // Transfer progressed.
-                    appData->hidDataReceived = true;
-                }
-            }
-            break;
+            /* The eventData parameter will be USB_DEVICE_HID_EVENT_REPORT_RECEIVED
+             * pointer type containing details about the report that was
+             * received. */
 
+            reportReceived = (USB_DEVICE_HID_EVENT_DATA_REPORT_RECEIVED *) eventData;
+            if(reportReceived->handle == appData.rxTransferHandle )
+            {
+                // Transfer progressed.
+                appData.hidDataReceived = true;
+            }
+          
+            break;
 
         case USB_DEVICE_HID_EVENT_SET_IDLE:
 
-            /* Save Idle rate received from Host */
-            appData->idleRate = ((USB_DEVICE_HID_EVENT_DATA_SET_IDLE*)eventData)->duration;
+            /* For now we just accept this request as is. We acknowledge
+             * this request using the USB_DEVICE_HID_ControlStatus()
+             * function with a USB_DEVICE_CONTROL_STATUS_OK flag */
 
-            /* Acknowledge the Control Write Transfer */
-            USB_DEVICE_ControlStatus(appData->handleUsbDevice, USB_DEVICE_CONTROL_STATUS_OK);
+            USB_DEVICE_ControlStatus(appData.usbDevHandle, USB_DEVICE_CONTROL_STATUS_OK);
 
+            /* Save Idle rate recieved from Host */
+            appData.idleRate = ((USB_DEVICE_HID_EVENT_DATA_SET_IDLE*)eventData)->duration;
             break;
 
         case USB_DEVICE_HID_EVENT_GET_IDLE:
 
             /* Host is requesting for Idle rate. Now send the Idle rate */
-            USB_DEVICE_ControlSend(appData->handleUsbDevice, &(appData->idleRate),1);
+            USB_DEVICE_ControlSend(appData.usbDevHandle, & (appData.idleRate),1);
 
-            /* On successfully receiving Idle rate, the Host would acknowledge
-             * back with a Zero Length packet. The HID function driver returns
-             * an event USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_DATA_SENT to the
-             * application upon receiving this Zero Length packet from Host.
-             * USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_DATA_SENT event indicates
-             * this control transfer event is complete */
-
-            break;
-
-        case USB_DEVICE_HID_EVENT_SET_PROTOCOL:
-
-            /* Host is trying set protocol. Now receive the protocol and save */
-            appData->activeProtocol = *(USB_HID_PROTOCOL_CODE *)eventData;
-
-            /* Acknowledge the Control Write Transfer */
-            USB_DEVICE_ControlStatus(appData->handleUsbDevice, USB_DEVICE_CONTROL_STATUS_OK);
-            
-            break;
-
-        case  USB_DEVICE_HID_EVENT_GET_PROTOCOL:
-
-            /* Host is requesting for Current Protocol. Now send the Idle rate */
-             USB_DEVICE_ControlSend(appData->handleUsbDevice, &(appData->activeProtocol), 1);
-
-             /* On successfully receiving Idle rate, the Host would acknowledge
-             * back with a Zero Length packet. The HID function driver returns
-             * an event USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_DATA_SENT to the
-             * application upon receiving this Zero Length packet from Host.
-             * USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_DATA_SENT event indicates
-             * this control transfer event is complete */
+            /* On successfully reciveing Idle rate, the Host would acknowledge back with a
+               Zero Length packet. The HID function drvier returns an event
+               USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_DATA_SENT to the application upon
+               receiving this Zero Length packet from Host.
+               USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_DATA_SENT event indicates this control transfer
+               event is complete */
 
             break;
-
-        case USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_DATA_SENT:
-
-            /* This event occurs when the data stage of a control read transfer
-             * has completed. This happens after the application uses the
-             * USB_DEVICE_ControlSend function to respond to a HID Function
-             * Driver Control Transfer Event that requires data to be sent to
-             * the host. The pData parameter will be NULL */
-            
-            break;
-
-        case USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
-
-            /* This event occurs when the data stage of a control write transfer
-             * has completed. This happens after the application uses the
-             * USB_DEVICE_ControlReceive function to respond to a HID Function
-             * Driver Control Transfer Event that requires data to be received
-             * from the host. */
-            
-            break;
-        
-        case USB_DEVICE_HID_EVENT_GET_REPORT:
-
-            /* This event occurs when the host issues a GET REPORT command. */
-            
-            break;
-
-        case USB_DEVICE_HID_EVENT_SET_REPORT:
-
-            /* This event occurs when the host issues a SET REPORT command */
-            
-            break;
-
-        case USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_ABORTED:
-
-            /* This event occurs when an ongoing control transfer was aborted.
-             * The application must stop any pending control transfer related
-             * activities. */
-            
-            break;
-			
         default:
-
+            // Nothing to do.
             break;
     }
+    return USB_DEVICE_HID_EVENT_RESPONSE_NONE;
 }
 
-/******************************************************
- * Application USB Device Layer Event Handler
- ******************************************************/
-
-static void APP_USBDeviceEventHandler
-(
-    USB_DEVICE_EVENT event, 
-    void * eventData, 
-    uintptr_t context
-)
+void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, void * eventData, uintptr_t context)
 {
-    USB_DEVICE_EVENT_DATA_CONFIGURED * configurationValue;
-    
     switch(event)
     {
-        case USB_DEVICE_EVENT_SOF:
-            
-            break;
-            
         case USB_DEVICE_EVENT_RESET:
         case USB_DEVICE_EVENT_DECONFIGURED:
-        
-            /* Device got deconfigured */
-            appData.usbDeviceIsConfigured = false;
 
+            /* Host has de configured the device or a bus reset has happened.
+             * Device layer is going to de-initialize all function drivers.
+             * Hence close handles to all function drivers (Only if they are
+             * opened previously. */
+
+            LED_Off(); 
+            appData.deviceConfigured = false;
+            appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
             break;
 
         case USB_DEVICE_EVENT_CONFIGURED:
+            LED_On(); 
+            /* Set the flag indicating device is configured. */
+            appData.deviceConfigured = true;
 
-            /* Device is configured */
-            configurationValue = (USB_DEVICE_EVENT_DATA_CONFIGURED *)eventData;
-            if(configurationValue->configurationValue == 1)
-            {
-                /* Register the Application HID Event Handler. */
-                USB_DEVICE_HID_EventHandlerSet(USB_DEVICE_HID_INDEX_0, APP_USBDeviceHIDEventHandler, (uintptr_t)&appData);
-                
-                appData.usbDeviceIsConfigured = true;
-            }
+            /* Save the other details for later use. */
+            appData.configurationValue = ((USB_DEVICE_EVENT_DATA_CONFIGURED*)eventData)->configurationValue;
+
+            /* Register application HID event handler */
+            USB_DEVICE_HID_EventHandlerSet(USB_DEVICE_HID_INDEX_0, APP_USBDeviceHIDEventHandler, (uintptr_t)&appData);
+
+
+            break;
+
+        case USB_DEVICE_EVENT_SUSPENDED:
             break;
 
         case USB_DEVICE_EVENT_POWER_DETECTED:
 
             /* VBUS was detected. We can attach the device */
-            USB_DEVICE_Attach(appData.handleUsbDevice);
-            
+
+            USB_DEVICE_Attach (appData.usbDevHandle);
             break;
 
         case USB_DEVICE_EVENT_POWER_REMOVED:
-
-            /* VBUS is not available any more. Detach the device. */
-            USB_DEVICE_Detach(appData.handleUsbDevice);
-            appData.usbDeviceIsConfigured = false;      
-            
+            LED_Off(); 
+            /* VBUS is not available */
+            USB_DEVICE_Detach(appData.usbDevHandle);
             break;
 
-        case USB_DEVICE_EVENT_SUSPENDED:
-            
-            break;
-
-        case USB_DEVICE_EVENT_CONTROL_TRANSFER_ABORTED:
+        /* These events are not used in this demo */
+        case USB_DEVICE_EVENT_RESUMED:
         case USB_DEVICE_EVENT_ERROR:
         default:
-            
             break;
-
-    } 
+    }
 }
-
-/* TODO:  Add any necessary callback functions.
-*/
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Local Functions
 // *****************************************************************************
 // *****************************************************************************
-
-
-/******************************************************************************
-  Function:
-    static void USB_Task (void)
-    
-   Remarks:
-    Services the USB task. 
-*/
-static void USB_Task (void)
-{
-    if(appData.usbDeviceIsConfigured)
-    {
-        /* Write USB HID Application Logic here. Note that this function is
-         * being called periodically the APP_Tasks() function. The application
-         * logic should be implemented as state machine. It should not block */
-        
-        switch (appData.stateUSB)
-        {
-            case USB_STATE_INIT:
-
-                appData.hidDataTransmitted = true;
-                appData.txTransferHandle = USB_DEVICE_HID_TRANSFER_HANDLE_INVALID;
-                appData.rxTransferHandle = USB_DEVICE_HID_TRANSFER_HANDLE_INVALID;
-                appData.stateUSB = USB_STATE_SCHEDULE_READ;
-
-                break;
-                
-            case USB_STATE_SCHEDULE_READ:
-                
-                /* Place a new read request. */
-                appData.hidDataReceived = false;
-                USB_DEVICE_HID_ReportReceive (USB_DEVICE_HID_INDEX_0,
-                    &appData.rxTransferHandle, appData.receiveDataBuffer, 64 );
-                appData.stateUSB = USB_STATE_WAITING_FOR_DATA;
-                break;                
-                
-            case USB_STATE_WAITING_FOR_DATA:
-                
-                if( appData.hidDataReceived )
-                {
-                    if (appData.receiveDataBuffer[0]==0x80)
-                    {
-                        LED_Toggle();
-                        appData.stateUSB = USB_STATE_SCHEDULE_READ;
-                    }
-                    else if (appData.receiveDataBuffer[0]==0x81)
-                    {
-                        appData.stateUSB = USB_STATE_SEND_REPORT;
-                    }
-                    else
-                    {
-                        appData.stateUSB = USB_STATE_SCHEDULE_READ;
-                    }
-                }
-                break;
-
-            case USB_STATE_SEND_REPORT:
-                
-                if(appData.hidDataTransmitted)
-                {
-                    appData.transmitDataBuffer[0] = 0x81;
-                    if( SWITCH_Get() == SWITCH_STATE_PRESSED )
-                    {
-                        appData.transmitDataBuffer[1] = 0x00;
-                    }
-                    else
-                    {
-                        appData.transmitDataBuffer[1] = 0x01;
-                    }
-                    appData.hidDataTransmitted = false;
-                    USB_DEVICE_HID_ReportSend (USB_DEVICE_HID_INDEX_0,
-                        &appData.txTransferHandle, appData.transmitDataBuffer, 64 );
-                    appData.stateUSB = USB_STATE_SCHEDULE_READ;
-                }
-                break;
-        }                
-    }
-    else
-    {
-        appData.stateUSB = USB_STATE_INIT;
-    }
-}
 
 /* TODO:  Add any necessary local functions.
 */
@@ -415,21 +249,15 @@ void APP_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
     appData.state = APP_STATE_INIT;
-
-
-    {
-        /* Initialize USB Mouse Device application data */
-        appData.handleUsbDevice       = USB_DEVICE_HANDLE_INVALID;
-        appData.usbDeviceIsConfigured = false;
-        appData.idleRate              = 0;
-        appData.receiveDataBuffer = &receiveDataBuffer[0];
-        appData.transmitDataBuffer = &transmitDataBuffer[0];
-        appData.stateUSB = USB_STATE_INIT;
-    }
     
-    /* TODO: Initialize your application's state machine and other
-     * parameters.
-     */
+    appData.usbDevHandle = USB_DEVICE_HANDLE_INVALID;
+    appData.deviceConfigured = false;
+    appData.txTransferHandle = USB_DEVICE_HID_TRANSFER_HANDLE_INVALID;
+    appData.rxTransferHandle = USB_DEVICE_HID_TRANSFER_HANDLE_INVALID;
+    appData.hidDataReceived = false;
+    appData.hidDataTransmitted = true;
+    appData.receiveDataBuffer = &receiveDataBuffer[0];
+    appData.transmitDataBuffer = &transmitDataBuffer[0];
 }
 
 
@@ -441,64 +269,128 @@ void APP_Initialize ( void )
     See prototype in app.h.
  */
 
-void APP_Tasks ( void )
+void APP_Tasks (void )
 {
 
-    /* Check the application's current state. */
-    switch ( appData.state )
+    /* Check if device is configured.  See if it is configured with correct
+     * configuration value  */
+
+    switch(appData.state)
     {
-        /* Application's initial state. */
         case APP_STATE_INIT:
-        {
-            bool appInitialized = true;
-       
 
             /* Open the device layer */
-            if (appData.handleUsbDevice == USB_DEVICE_HANDLE_INVALID)
-            {
-                appData.handleUsbDevice = USB_DEVICE_Open( USB_DEVICE_INDEX_0, DRV_IO_INTENT_READWRITE );
-                if(appData.handleUsbDevice != USB_DEVICE_HANDLE_INVALID)
-                {
-                    appInitialized = true;
-                }
-                else
-                {
-                    appInitialized = false;
-                }
-            }
-        
-            if (appInitialized)
-            {
+            appData.usbDevHandle = USB_DEVICE_Open( USB_DEVICE_INDEX_0, DRV_IO_INTENT_READWRITE );
 
+            if(appData.usbDevHandle != USB_DEVICE_HANDLE_INVALID)
+            {
                 /* Register a callback with device layer to get event notification (for end point 0) */
-                USB_DEVICE_EventHandlerSet(appData.handleUsbDevice,APP_USBDeviceEventHandler, 0);
-            
-                appData.state = APP_STATE_SERVICE_TASKS;
+                USB_DEVICE_EventHandlerSet(appData.usbDevHandle, APP_USBDeviceEventHandler, 0);
+
+                appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
+            }
+            else
+            {
+                /* The Device Layer is not ready to be opened. We should try
+                 * again later. */
+            }
+
+            break;
+
+        case APP_STATE_WAIT_FOR_CONFIGURATION:
+
+            if(appData.deviceConfigured == true)
+            {
+                /* Device is ready to run the main task */
+                appData.hidDataReceived = false;
+                appData.hidDataTransmitted = true;
+                appData.state = APP_STATE_MAIN_TASK;
+
+                /* Place a new read request. */
+                USB_DEVICE_HID_ReportReceive (USB_DEVICE_HID_INDEX_0,
+                        &appData.rxTransferHandle, appData.receiveDataBuffer, 64);
             }
             break;
-        }
 
-        case APP_STATE_SERVICE_TASKS:
-        {
-            USB_Task();
-        
+        case APP_STATE_MAIN_TASK:
+
+            if(!appData.deviceConfigured)
+            {
+                /* Device is not configured */
+                appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
+            }
+            else if( appData.hidDataReceived )
+            {
+                /* Look at the data the host sent, to see what
+                 * kind of application specific command it sent. */
+
+                switch(appData.receiveDataBuffer[0])
+                {
+                    case 0x80:
+
+                        /* Toggle on board LED1 to LED2. */
+                        LED_Toggle(  );
+
+                        appData.hidDataReceived = false;
+
+                        /* Place a new read request. */
+                        USB_DEVICE_HID_ReportReceive (USB_DEVICE_HID_INDEX_0,
+                                &appData.rxTransferHandle, appData.receiveDataBuffer, 64 );
+
+                        break;
+
+                    case 0x81:
+
+                        if(appData.hidDataTransmitted)
+                        {
+                            /* Echo back to the host PC the command we are fulfilling in
+                             * the first byte.  In this case, the Get Push-button State
+                             * command. */
+
+                            appData.transmitDataBuffer[0] = 0x81;
+
+                            if( SWITCH_Get() == SWITCH_STATE_PRESSED )
+                            {
+                                appData.transmitDataBuffer[1] = 0x00;
+                            }
+                            else
+                            {
+                                appData.transmitDataBuffer[1] = 0x01;
+                            }
+
+                            appData.hidDataTransmitted = false;
+
+                            /* Prepare the USB module to send the data packet to the host */
+                            USB_DEVICE_HID_ReportSend (USB_DEVICE_HID_INDEX_0,
+                                    &appData.txTransferHandle, appData.transmitDataBuffer, 64 );
+
+                            appData.hidDataReceived = false;
+
+                            /* Place a new read request. */
+                            USB_DEVICE_HID_ReportReceive (USB_DEVICE_HID_INDEX_0,
+                                    &appData.rxTransferHandle, appData.receiveDataBuffer, 64 );
+                        }
+                        break;
+
+                    default:
+
+                        appData.hidDataReceived = false;
+
+                        /* Place a new read request. */
+                        USB_DEVICE_HID_ReportReceive (USB_DEVICE_HID_INDEX_0,
+                                &appData.rxTransferHandle, appData.receiveDataBuffer, 64 );
+                        break;
+                }
+            }
+        case APP_STATE_ERROR:
             break;
-        }
-
-        /* TODO: implement your application state machine.*/
-        
-
-        /* The default state should never be executed. */
         default:
-        {
-            /* TODO: Handle error in application's state machine. */
             break;
-        }
     }
 }
-
  
 
 /*******************************************************************************
  End of File
  */
+
