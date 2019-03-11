@@ -73,18 +73,6 @@
     #define _USB_HOST_MSD_ERROR_CALLBACK(x, y)
 #endif
 
-/******************************************
- * At this time coherent attribute is no
- * not available on PIC32C. Using this to
- * to fix the warning that get generated
- ******************************************/
-
-#if defined (__PIC32C__)
-#define COHERENT_ATTRIBUTE
-#else
-#define COHERENT_ATTRIBUTE __attribute__ ((coherent))
-#endif
-
 /**********************************************
  * Macro to create the LUN handle and get the
  * MSD instance and LUN from the LUN handle.

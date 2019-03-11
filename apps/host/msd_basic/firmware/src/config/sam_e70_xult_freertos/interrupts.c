@@ -70,7 +70,6 @@ void __attribute__((optimize("-O1"),section(".text.Dummy_Handler"),long_call))Du
     {
     }
 }
-
 /* Device vectors list dummy definition*/
 void Reset_Handler              ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void NonMaskableInt_Handler     ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -78,9 +77,9 @@ void HardFault_Handler          ( void ) __attribute__((weak, alias("Dummy_Handl
 void MemoryManagement_Handler   ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void BusFault_Handler           ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void UsageFault_Handler         ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void SVCall_Handler             ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void vPortSVCHandler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void DebugMonitor_Handler       ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void PendSV_Handler             ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void xPortPendSVHandler         ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void xPortSysTickHandler        ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SUPC_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void RSTC_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -115,7 +114,7 @@ void DACC_Handler               ( void ) __attribute__((weak, alias("Dummy_Handl
 void PWM0_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void ICM_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void ACC_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void USBHS_Handler              ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void DRV_USBHSV1_USBHS_Handler  ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void MCAN0_INT0_Handler         ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void MCAN0_INT1_Handler         ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void MCAN1_INT0_Handler         ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -152,7 +151,7 @@ void I2SC1_Handler              ( void ) __attribute__((weak, alias("Dummy_Handl
 void GMAC_Q3_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void GMAC_Q4_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void GMAC_Q5_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
-    
+
 
 
 /* Mutiple handlers for vector */
@@ -162,8 +161,8 @@ void GMAC_Q5_Handler            ( void ) __attribute__((weak, alias("Dummy_Handl
 __attribute__ ((section(".vectors")))
 const DeviceVectors exception_table=
 {
-  /* Configure Initial Stack Pointer, using linker-generated symbols */
-  .pvStack = (void*) (&_stack),
+    /* Configure Initial Stack Pointer, using linker-generated symbols */
+    .pvStack = (void*) (&_stack),
 
 
     .pfnReset_Handler              = ( void * ) Reset_Handler,
@@ -172,9 +171,9 @@ const DeviceVectors exception_table=
     .pfnMemoryManagement_Handler   = ( void * ) MemoryManagement_Handler,
     .pfnBusFault_Handler           = ( void * ) BusFault_Handler,
     .pfnUsageFault_Handler         = ( void * ) UsageFault_Handler,
-    .pfnSVCall_Handler             = ( void * ) SVCall_Handler,
+    .pfnSVCall_Handler             = ( void * ) vPortSVCHandler,
     .pfnDebugMonitor_Handler       = ( void * ) DebugMonitor_Handler,
-    .pfnPendSV_Handler             = ( void * ) PendSV_Handler,
+    .pfnPendSV_Handler             = ( void * ) xPortPendSVHandler,
     .pfnSysTick_Handler            = ( void * ) xPortSysTickHandler,
     .pfnSUPC_Handler               = ( void * ) SUPC_Handler,
     .pfnRSTC_Handler               = ( void * ) RSTC_Handler,
@@ -209,7 +208,7 @@ const DeviceVectors exception_table=
     .pfnPWM0_Handler               = ( void * ) PWM0_Handler,
     .pfnICM_Handler                = ( void * ) ICM_Handler,
     .pfnACC_Handler                = ( void * ) ACC_Handler,
-    .pfnUSBHS_Handler              = ( void * ) USBHS_Handler,
+    .pfnUSBHS_Handler              = ( void * ) DRV_USBHSV1_USBHS_Handler,
     .pfnMCAN0_INT0_Handler         = ( void * ) MCAN0_INT0_Handler,
     .pfnMCAN0_INT1_Handler         = ( void * ) MCAN0_INT1_Handler,
     .pfnMCAN1_INT0_Handler         = ( void * ) MCAN1_INT0_Handler,
@@ -249,7 +248,6 @@ const DeviceVectors exception_table=
 
 
 };
-
 
 /*******************************************************************************
  End of File

@@ -129,17 +129,6 @@
 
 #define USB_HOST_SCSI_DETACH_TIME_OUT 500
 
-/******************************************
- * At this time coherent attribute is no
- * not available on PIC32C. Using this to
- * to fix the warning that get generated
- ******************************************/
-
-#if defined (__PIC32C__)
-#define SCSI_COHERENT_ATTRIBUTE
-#else
-#define SCSI_COHERENT_ATTRIBUTE __attribute__ ((coherent))
-#endif
 
 /*******************************************
  * USB Host CDC Attach Listener Objects
