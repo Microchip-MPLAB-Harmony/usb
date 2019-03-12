@@ -52,19 +52,20 @@
 	/***********************************************
  * Sector buffer needed by for the MSD LUN.
  ***********************************************/
-uint8_t sectorBuffer[512 * USB_DEVICE_MSD_NUM_SECTOR_BUFFERS] __attribute__ ((coherent, aligned(16)));
+uint8_t sectorBuffer[512 * USB_DEVICE_MSD_NUM_SECTOR_BUFFERS] CACHE_ALIGN;
 
 /***********************************************
  * CBW and CSW structure needed by for the MSD
  * function driver instance.
  ***********************************************/
-USB_MSD_CBW msdCBW0 __attribute__ ((coherent, aligned(16)));
-USB_MSD_CSW msdCSW0 __attribute__ ((coherent, aligned(16)));
+USB_MSD_CBW msdCBW0 CACHE_ALIGN;
+USB_MSD_CSW msdCSW0 CACHE_ALIGN;
+
 
 /*******************************************
  * MSD Function Driver initialization
  *******************************************/
- USB_DEVICE_MSD_MEDIA_INIT_DATA __attribute__ ((coherent, aligned(16))) msdMediaInit0[1] =
+USB_DEVICE_MSD_MEDIA_INIT_DATA CACHE_ALIGN  msdMediaInit0[1] =
 {
     {
         DRV_MEMORY_INDEX_0,
@@ -166,7 +167,7 @@ const USB_DEVICE_DESCRIPTOR deviceDescriptor =
     0x0100,                                                 // Device release number in BCD format
     0x01,                                                   // Manufacturer string index
     0x02,                                                   // Product string index
-	0x00,                                                   // Device serial number string index
+    0x03,                                                   // Device serial number string index
     0x01                                                    // Number of possible configurations
 };
 
@@ -364,14 +365,36 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
         USB_DESCRIPTOR_STRING,
 		{'S','i','m','p','l','e',' ','M','S','D',' ','D','e','v','i','c','e',' ','D','e','m','o'}
     }; 
+/******************************************************************************
+ * Serial number string descriptor.  Note: This should be unique for each unit
+ * built on the assembly line.  Plugging in two units simultaneously with the
+ * same serial number into a single machine can cause problems.  Additionally,
+ * not all hosts support all character values in the serial number string.  The
+ * MSD Bulk Only Transport (BOT) specs v1.0 restrict the serial number to
+ * consist only of ASCII characters "0" through "9" and capital letters "A"
+ * through "F".
+ ******************************************************************************/
+const struct
+{
+    uint8_t bLength;
+    uint8_t bDscType;
+    uint16_t string[12];
+}
+sd003 =
+{
+    sizeof(sd003),
+    USB_DESCRIPTOR_STRING,
+    {'1','2','3','4','5','6','7','8','9','9','9','9'}
+};
 /***************************************
  * Array of string descriptors
  ***************************************/
-USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[3]=
+ USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[4]=
 {
     (const uint8_t *const)&sd000,
     (const uint8_t *const)&sd001,
-    (const uint8_t *const)&sd002
+    (const uint8_t *const)&sd002,
+	(const uint8_t *const)&sd003
 };
 
 /*******************************************

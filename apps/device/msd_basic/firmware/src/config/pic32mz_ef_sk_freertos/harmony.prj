@@ -67,16 +67,16 @@
           <Name dnOrder="1">drv_usbhs.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/usb/usbhs/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">211ADDAE8220FD74052E65037A6260F6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">211ADDAE8220FD74052E65037A6260F6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">61FD4E5A1D63F33B9D3CE91856FFC2F8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">61FD4E5A1D63F33B9D3CE91856FFC2F8</UserChecksum>
         </File>
         <File dnOrder="8">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_usbhs_device.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/usb/usbhs/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1939FFC59DCF1237CC216D3E6CD1A107</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1939FFC59DCF1237CC216D3E6CD1A107</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4FC9C8844840FA41A8E98C1BA496A670</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4FC9C8844840FA41A8E98C1BA496A670</UserChecksum>
         </File>
         <File dnOrder="9">
           <Type dnOrder="0">SOURCE</Type>
@@ -275,16 +275,16 @@
           <Name dnOrder="1">usb_device_init_data.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9B172EBB17794B5E4C2F6BB263B3287C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9B172EBB17794B5E4C2F6BB263B3287C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">FA494751E112F1B02BC262170D70781B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">FA494751E112F1B02BC262170D70781B</UserChecksum>
         </File>
         <File dnOrder="34">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">usb_device_msd.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">25C528515B369A447B4B4F99EF5FAD2D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">25C528515B369A447B4B4F99EF5FAD2D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">8E0799E1554E4233F3498472FDA09149</GeneratedChecksum>
+          <UserChecksum dnOrder="5">8E0799E1554E4233F3498472FDA09149</UserChecksum>
         </File>
         <File dnOrder="35">
           <Type dnOrder="0">SOURCE</Type>
@@ -355,8 +355,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">79438E736A6DA71A558497677F568D92</GeneratedChecksum>
-          <UserChecksum dnOrder="5">79438E736A6DA71A558497677F568D92</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1BD3CDF7B7CE436626E7A4AB320577EC</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1BD3CDF7B7CE436626E7A4AB320577EC</UserChecksum>
         </File>
         <File dnOrder="44">
           <Type dnOrder="0">HEADER</Type>
@@ -459,8 +459,8 @@
           <Name dnOrder="1">drv_usbhs_variant_mapping.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/usb/usbhs/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">FBF59656B71C35F8A3F321070DEB4BA1</GeneratedChecksum>
-          <UserChecksum dnOrder="5">FBF59656B71C35F8A3F321070DEB4BA1</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9E342EE43594612EE8D5ED88AB99353D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9E342EE43594612EE8D5ED88AB99353D</UserChecksum>
         </File>
         <File dnOrder="57">
           <Type dnOrder="0">HEADER</Type>
@@ -803,8 +803,8 @@
           <Name dnOrder="1">usb_device_msd_local.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">FBC4362AFF57B424C19AC2A5CA7F11A3</GeneratedChecksum>
-          <UserChecksum dnOrder="5">FBC4362AFF57B424C19AC2A5CA7F11A3</UserChecksum>
+          <GeneratedChecksum dnOrder="4">78DD3C60D6E25569FE9F0143064D2E20</GeneratedChecksum>
+          <UserChecksum dnOrder="5">78DD3C60D6E25569FE9F0143064D2E20</UserChecksum>
         </File>
         <File dnOrder="100">
           <Type dnOrder="0">HEADER</Type>
@@ -923,8 +923,8 @@
           <Name dnOrder="1">usbhs_HighSpeedSupport_Default.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/usb/usbhs/src/templates</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhs/src/templates/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">C6C285020920BE09CADBECFD27916777</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C6C285020920BE09CADBECFD27916777</UserChecksum>
+          <GeneratedChecksum dnOrder="4">56D99729B7C2636DF31B1402C21A328D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">56D99729B7C2636DF31B1402C21A328D</UserChecksum>
         </File>
         <File dnOrder="115">
           <Type dnOrder="0">HEADER</Type>
@@ -1051,8 +1051,8 @@
           <Name dnOrder="1">user.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">4B3C3EF8A318908A22B78500515C3288</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4B3C3EF8A318908A22B78500515C3288</UserChecksum>
+          <GeneratedChecksum dnOrder="4"/>
+          <UserChecksum dnOrder="5"/>
         </File>
       </Files>
       <Settings dnOrder="1">
@@ -1070,7 +1070,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="audio;bsp;bt;core;crypto;csp;net;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;crypto;csp;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>

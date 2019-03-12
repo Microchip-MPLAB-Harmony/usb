@@ -259,7 +259,7 @@ void DRV_USBHS_Tasks
                      * operation.  In the PIC32MZ DA devices, the
                      * USBCRCON register needs to configured */
 
-                    _DRV_USBHS_CLOCK_CONTROL_SETUP_DEVICE_MODE
+                    _DRV_USBHS_CLOCK_CONTROL_SETUP_DEVICE_MODE(usbID);
                                 _DRV_USBHS_DEVICE_INIT(hDriver, object);
                     break;
 
@@ -269,7 +269,7 @@ void DRV_USBHS_Tasks
                      * operation.  In the PICMZ DA devices, the USBCRCON
                      * register needs to configured. */
                     _DRV_USBHS_HOST_INIT(hDriver, object);
-                    _DRV_USBHS_CLOCK_CONTROL_SETUP_HOST_MODE
+                    _DRV_USBHS_CLOCK_CONTROL_SETUP_HOST_MODE(usbID);
 
                     break;
 
