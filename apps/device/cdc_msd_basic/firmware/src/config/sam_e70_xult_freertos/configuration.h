@@ -103,7 +103,7 @@ extern "C" {
 #define DRV_MEMORY_CLIENTS_NUMBER_IDX0       1
 #define DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0    1
 #define DRV_MEMORY_DEVICE_START_ADDRESS      0x500000
-#define DRV_MEMORY_DEVICE_MEDIA_SIZE         1024UL
+#define DRV_MEMORY_DEVICE_MEDIA_SIZE         32UL
 #define DRV_MEMORY_DEVICE_PROGRAM_SIZE       512
 #define DRV_MEMORY_DEVICE_ERASE_SIZE         8192
 
@@ -130,8 +130,6 @@ extern "C" {
 /* EP0 size in bytes */
 #define USB_DEVICE_EP0_BUFFER_SIZE                          64
 
-/* Enable SOF Events */
-#define USB_DEVICE_SOF_EVENT_ENABLE
 
 
 
@@ -167,8 +165,6 @@ extern "C" {
 /* Number of Logical Units */
 #define USB_DEVICE_MSD_LUNS_NUMBER      1
 
-/* Size of disk image (in KB) in Program Flash Memory */
-#define DRV_NVM_BLOCK_MEMORY_SIZE       36
 
 
 
