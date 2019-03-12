@@ -94,7 +94,7 @@ extern "C" {
 #define DRV_MEMORY_CLIENTS_NUMBER_IDX0       1
 #define DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0    1
 #define DRV_MEMORY_DEVICE_START_ADDRESS      0x500000
-#define DRV_MEMORY_DEVICE_MEDIA_SIZE         1024UL
+#define DRV_MEMORY_DEVICE_MEDIA_SIZE         32UL
 #define DRV_MEMORY_DEVICE_PROGRAM_SIZE       512
 #define DRV_MEMORY_DEVICE_ERASE_SIZE         8192
 
@@ -107,7 +107,7 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 /* Number of Endpoints used */
-#define DRV_USBHSV1_ENDPOINTS_NUMBER                        7
+#define DRV_USBHSV1_ENDPOINTS_NUMBER                        5
 
 /* The USB Device Layer will not initialize the USB Driver */
 #define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT
@@ -153,8 +153,6 @@ extern "C" {
 /* Number of Logical Units */
 #define USB_DEVICE_MSD_LUNS_NUMBER      1
 
-/* Size of disk image (in KB) in Program Flash Memory */
-#define DRV_NVM_BLOCK_MEMORY_SIZE       36
 
 
 

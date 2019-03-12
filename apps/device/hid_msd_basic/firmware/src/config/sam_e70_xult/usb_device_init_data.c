@@ -52,19 +52,20 @@
 	/***********************************************
  * Sector buffer needed by for the MSD LUN.
  ***********************************************/
-uint8_t sectorBuffer[512 * USB_DEVICE_MSD_NUM_SECTOR_BUFFERS] __attribute__((aligned(16)));
+uint8_t sectorBuffer[512 * USB_DEVICE_MSD_NUM_SECTOR_BUFFERS] CACHE_ALIGN;
 
 /***********************************************
  * CBW and CSW structure needed by for the MSD
  * function driver instance.
  ***********************************************/
-USB_MSD_CBW msdCBW0 __attribute__((aligned(16)));
-USB_MSD_CSW msdCSW0 __attribute__((aligned(16)));
+USB_MSD_CBW msdCBW0 CACHE_ALIGN;
+USB_MSD_CSW msdCSW0 CACHE_ALIGN;
+
 
 /*******************************************
  * MSD Function Driver initialization
  *******************************************/
-USB_DEVICE_MSD_MEDIA_INIT_DATA __attribute__((aligned(16))) msdMediaInit0[1] =
+USB_DEVICE_MSD_MEDIA_INIT_DATA CACHE_ALIGN  msdMediaInit0[1] =
 {
     {
         DRV_MEMORY_INDEX_0,
@@ -165,7 +166,7 @@ const USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[2] =
 	/* MSD Function 0 */
     { 
         .configurationValue = 1,    /* Configuration value */ 
-        .interfaceNumber = 1,       /* First interfaceNumber of this function */ 
+        .interfaceNumber = 0,       /* First interfaceNumber of this function */ 
         .speed = USB_SPEED_HIGH|USB_SPEED_FULL,    /* Function Speed */ 
         .numberOfInterfaces = 1,    /* Number of interfaces */
         .funcDriverIndex = 0,  /* Index of MSD Function Driver */
@@ -178,7 +179,7 @@ const USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[2] =
 	/* HID Function 0 */
     { 
         .configurationValue = 1,    /* Configuration value */ 
-        .interfaceNumber = 0,       /* First interfaceNumber of this function */ 
+        .interfaceNumber = 1,       /* First interfaceNumber of this function */ 
         .speed = USB_SPEED_HIGH|USB_SPEED_FULL,    /* Function Speed */ 
         .numberOfInterfaces = 1,    /* Number of interfaces */
         .funcDriverIndex = 0,  /* Index of HID Function Driver */
@@ -256,7 +257,7 @@ const uint8_t highSpeedConfigurationDescriptor[]=
 
     9,                              // Size of this descriptor in bytes
     USB_DESCRIPTOR_INTERFACE,       // INTERFACE descriptor type
-    1,                              // Interface Number
+    0,                              // Interface Number
     0,                              // Alternate Setting Number
     2,                              // Number of endpoints in this intf
     USB_MSD_CLASS_CODE,             // Class code
@@ -268,7 +269,7 @@ const uint8_t highSpeedConfigurationDescriptor[]=
 
     7,                          // Size of this descriptor in bytes
     USB_DESCRIPTOR_ENDPOINT,    // Endpoint Descriptor
-    5  | USB_EP_DIRECTION_IN,    // EndpointAddress ( EP1 IN )
+    1  | USB_EP_DIRECTION_IN,    // EndpointAddress ( EP1 IN )
     USB_TRANSFER_TYPE_BULK,     // Attributes type of EP (BULK)
     0x00,0x02,                  // Max packet size of this EP
     0x00,                       // Interval (in ms)
@@ -276,7 +277,7 @@ const uint8_t highSpeedConfigurationDescriptor[]=
 
     7,                          // Size of this descriptor in bytes
     USB_DESCRIPTOR_ENDPOINT,    // Endpoint Descriptor
-    6  | USB_EP_DIRECTION_OUT,   // EndpointAddress ( EP2 OUT )
+    2  | USB_EP_DIRECTION_OUT,   // EndpointAddress ( EP2 OUT )
     USB_TRANSFER_TYPE_BULK,     // Attributes type of EP (BULK)
     0x00,0x02,                  // Max packet size of this EP
     0x00,                       // Interval (in ms)
@@ -289,7 +290,7 @@ const uint8_t highSpeedConfigurationDescriptor[]=
 
     0x09,                               // Size of this descriptor in bytes
     USB_DESCRIPTOR_INTERFACE,           // Descriptor Type is Interface descriptor
-    0,                                  // Interface Number
+    1,                                  // Interface Number
     0x00,                                  // Alternate Setting Number
     0x02,                                  // Number of endpoints in this interface
     USB_HID_CLASS_CODE,                 // Class code
@@ -361,7 +362,7 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
 
     9,                              // Size of this descriptor in bytes
     USB_DESCRIPTOR_INTERFACE,       // INTERFACE descriptor type
-    1,                              // Interface Number
+    0,                              // Interface Number
     0,                              // Alternate Setting Number
     2,                              // Number of endpoints in this intf
     USB_MSD_CLASS_CODE,             // Class code
@@ -373,7 +374,7 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
 
     7,                          // Size of this descriptor in bytes
     USB_DESCRIPTOR_ENDPOINT,    // Endpoint Descriptor
-    5  | USB_EP_DIRECTION_IN,    // EndpointAddress ( EP1 IN )
+    1  | USB_EP_DIRECTION_IN,    // EndpointAddress ( EP1 IN )
     USB_TRANSFER_TYPE_BULK,     // Attributes type of EP (BULK)
     0x40,0x00,                  // Max packet size of this EP
     0x00,                       // Interval (in ms)
@@ -381,7 +382,7 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
 
     7,                          // Size of this descriptor in bytes
     USB_DESCRIPTOR_ENDPOINT,    // Endpoint Descriptor
-    6  | USB_EP_DIRECTION_OUT,   // EndpointAddress ( EP2 OUT )
+    2  | USB_EP_DIRECTION_OUT,   // EndpointAddress ( EP2 OUT )
     USB_TRANSFER_TYPE_BULK,     // Attributes type of EP (BULK)
     0x40,0x00,                  // Max packet size of this EP
     0x00,                       // Interval (in ms)
@@ -391,7 +392,7 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
 
     0x09,                               // Size of this descriptor in bytes
     USB_DESCRIPTOR_INTERFACE,           // Descriptor Type is Interface descriptor
-    0,                                  // Interface Number
+    1,                                  // Interface Number
     0x00,                                  // Alternate Setting Number
     0x02,                                  // Number of endpoints in this interface
     USB_HID_CLASS_CODE,                 // Class code

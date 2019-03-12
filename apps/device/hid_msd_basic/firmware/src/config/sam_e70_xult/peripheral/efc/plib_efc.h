@@ -63,7 +63,7 @@
 #define EFC_PAGESIZE                512
 #define EFC_LOCKSIZE                0x4000
 #define EFC_START_ADDRESS           0x500000
-#define EFC_MEDIA_SIZE              1024
+#define EFC_MEDIA_SIZE              32
 #define EFC_ERASE_BUFFER_SIZE       8192
 
 
