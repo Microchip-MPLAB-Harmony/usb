@@ -71,6 +71,7 @@ void GPIO_Initialize ( void )
     /* PORTE Initialization */
 
     /* PORTF Initialization */
+    CNPDFSET = 0x8; /* Pull-Down Enable */
 
     /* PORTG Initialization */
 

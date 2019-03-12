@@ -2664,7 +2664,7 @@ void DRV_USBHS_HOST_ROOT_HUB_OperationEnable
                     pUSBDrvObj->usbDrvCommonObj.isDeviceRoleActive = false;
                 }
                 
-                _DRV_USBHS_CLOCK_CONTROL_SETUP_HOST_MODE
+                _DRV_USBHS_CLOCK_CONTROL_SETUP_HOST_MODE(usbID);
                 
                 PLIB_USBHS_SoftResetEnable(usbID);
                 

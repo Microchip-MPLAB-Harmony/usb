@@ -61,6 +61,14 @@
 // *****************************************************************************
 // *****************************************************************************
 
+/*** Macros for GPIO_RF3 pin ***/
+#define GPIO_RF3_Set()               (LATFSET = (1<<3))
+#define GPIO_RF3_Clear()             (LATFCLR = (1<<3))
+#define GPIO_RF3_Toggle()            (LATFINV= (1<<3))
+#define GPIO_RF3_Get()               ((PORTF >> 3) & 0x1)
+#define GPIO_RF3_OutputEnable()      (TRISFCLR = (1<<3))
+#define GPIO_RF3_InputEnable()       (TRISFSET = (1<<3))
+#define GPIO_RF3_PIN                  GPIO_PIN_RF3
 
 
 // *****************************************************************************
