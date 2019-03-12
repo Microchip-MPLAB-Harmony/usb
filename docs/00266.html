@@ -1,15 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Using the Library</title>
+<title>USB Host Library Architecture</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00266.html');" onmousedown="onBodyMouseDown();">
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
 
 <!-- Begin Popups -->
 
@@ -18,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00207.html" target="topic">USB Device Libraries</a> &gt; <a href="00236.html" target="topic">USB HID Device Library</a> &gt; <a href="00266.html" target="topic">Using the Library</a></div>
+<a href="00290.html">USB Libraries Help</a> &gt; <a href="00272.html">USB Host Libraries</a> &gt; <a href="00273.html">USB Host Library - Getting Started</a> &gt; <a href="00266.html">USB Host Library Architecture</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +28,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00260.html" target="topic">Previous</a> | <a href="00236.html" target="topic">Up</a> | <a href="00252.html" target="topic">Next</a></div>
+<a href="00264.html">Previous</a> | <a href="00273.html">Up</a> | <a href="00265.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HIDDEV Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST GS USB Host Library Architecture Topic Title: USB Host Library Architecture)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Using the Library</div>
+USB Host Library Architecture</div>
 </div>
 </div>
 
@@ -45,62 +47,57 @@ Using the Library</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<a name="PageContent"></a><div class="Element58">
+<div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This topic describes the basic architecture of the HID Function Driver and provides information and examples on its use.</p></div>
-</div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00252.html" target="topic">Abstraction Model</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Provides an architectural overview of the USB HID Function Driver.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00261.html" target="topic">Library Overview</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-The USB HID Device Library mainly interacts with the system, its clients and function drivers, as shown in the <a href="00252.html" target="topic">Abstraction Model</a><span style="color: #000000">.</span><br><span style="color: #000000">The library interface routines are divided into sub-sections, which address one of the blocks or the overall operation of the USB HID Device Library.</span> &nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00259.html" target="topic">How the Library Works</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
- &nbsp;</div></td></tr></table></div></div>
-</div>
+The USB Host Library Architecture features a modular and layered architecture as illustrated in the following figure. </p><p class="Element10" style="text-align: center;">
+<strong>USB Host Library Architecture</strong>&nbsp;</p>
+<p class="Element10">
+As seen in the figure, the USB Device Library consists of the following three major components.</p><div class="Element15">
+Host Controller Driver (HCD)</div>
+<p class="Element10">
+The HCD manages the state of the USB peripheral and provides the Host Layer with structured methods to access data on the USB. The HCD is a MPLAB Harmony driver and uses the MPLAB Harmony framework components (USB Peripheral Library and the Interrupt System Service) of its operation. The HCD is initialized in the system initialization routine and its tasks routine is invoked in the system tasks routine. It is accessed exclusively by the Host layer. The HCD provides the following services to the host layer:</p>
+<ul class="Element630">
+<li class="Element600">Establish and manage communication pipes between the host layer and the attached devices</li>
+<li class="Element600">Manage USB transfers</li>
+</ul><div class="Element15">
+Root Hub Driver</div>
+<p class="Element10">
+The Root Hub Driver models the USB peripheral as a Hub. It then allows the Host Layer to perform the same actions on the Root Hub port that would be performed on an external Hub’s port. The Root Hub Driver thus leads to an optimized implementation of Hub support in the Host Layer. The Root Hub Driver is hardware specific and is implemented as a part of the HCD. It provides the following services to the Host Layer</p>
+<ul class="Element630">
+<li class="Element600">Provides device attach and detach events</li>
+<li class="Element600">Allows the Host to suspend, resume, and reset the port</li>
+</ul><p class="Element10">
+The Root Hub Driver works in tandem with the HCD to provides the Host Layer with required USB protocol related means and methods to manage the attached USB device.</p><div class="Element15">
+Host Layer</div>
+<p class="Element10">
+The Host Layer receives attach and detach events from the Root Hub Driver. It enumerates attached devices based on information contained in the Target Peripheral List (TPL). It allows client drivers to access the attached device through Host Layer methods. This includes allowing the client driver to set the device configuration. Where the client driver does not set the device configuration, the Host Layer will set the device configuration.&nbsp;</p>
+<p class="Element10">
+The Host layer opens the HCD, instantiates the Root Hub Driver, then controls and communicates with the attached device. The user application can call the Host Layer API to get information on attached devices. It can also register a Host Layer Event handler to get device related events. The user application can additionally suspend or resume a device. The Host Layer also provides bus level control where the application can suspend or resume all devices connected to a USB.</p><div class="Element15">
+Client Driver</div>
+<p class="Element10">
+The USB Host Stack Client Drivers implement the support for different device classes as per the class specifications. Along with Host Layer, the client drivers are designed to support multiple device of the same type (where multiple devices are connected to the host through a hub or is a single device with multiple interfaces). A client driver abstracts intricate details of the class specification and provides a high level command and data interface to the application. Completion of requests is indicated by events. The application must register an event handler to receive these events.&nbsp;</p>
+<p class="Element10">
+The Client Driver may manage devices whose functionality is specified by USB VID and PID. In such cases, the client driver can set the device configuration. The client driver may manage a device whose functionality is defined by an interface class, subclass and protocol. In such a case, the configuration is set by the Host layer. The client driver can also manage devices whose functionality is defined by a combination of VID PID and class, sub-class and protocol.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00207.html" target="topic">USB Device Libraries</a> &gt; <a href="00236.html" target="topic">USB HID Device Library</a> &gt; <a href="00266.html" target="topic">Using the Library</a></div>
+<a href="00290.html">USB Libraries Help</a> &gt; <a href="00272.html">USB Host Libraries</a> &gt; <a href="00273.html">USB Host Library - Getting Started</a> &gt; <a href="00266.html">USB Host Library Architecture</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="25%">
+<tr><td width="100%">
 <div class="Element3">
-MPLAB Harmony USB Stack </div>
-</td><td width="25%">
+ MPLAB Harmony USB Stack </div>
+</td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
-</td><td width="25%">
-<div class="Element91">
-<a href="00260.html" target="topic">Previous</a> | <a href="00236.html" target="topic">Up</a> | <a href="00252.html" target="topic">Next</a></div>
-</td><td width="25%">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+</td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HIDDEV Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST GS USB Host Library Architecture Topic Title: USB Host Library Architecture)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

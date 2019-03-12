@@ -1,15 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>USB Audio 2.0 Device Library</title>
+<title>Detecting Device Attach</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00137.html');" onmousedown="onBodyMouseDown();">
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
 
 <!-- Begin Popups -->
 
@@ -18,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00207.html" target="topic">USB Device Libraries</a> &gt; <a href="00137.html" target="topic">USB Audio 2.0 Device Library</a></div>
+<a href="00290.html">USB Libraries Help</a> &gt; <a href="00272.html">USB Host Libraries</a> &gt; <a href="00128.html">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00150.html">Using the Library</a> &gt; <a href="00140.html">How the Library Works</a> &gt; <a href="00137.html">Detecting Device Attach</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +28,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00540.html" target="topic">Previous</a> | <a href="00207.html" target="topic">Up</a> | <a href="00131.html" target="topic">Next</a></div>
+<a href="00149.html">Previous</a> | <a href="00140.html">Up</a> | <a href="00145.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB Audio 2.0 Device Library Topic Title: USB Audio 2.0 Device Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Detecting Device Attach Topic Title: Detecting Device Attach)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB Audio 2.0 Device Library</div>
+Detecting Device Attach</div>
 </div>
 </div>
 
@@ -45,55 +47,77 @@ USB Audio 2.0 Device Library</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<a name="PageContent"></a><div class="Element58">
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
-<div class="Element11">
+<div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00131.html" target="topic">Introduction</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information on library design, configuration, usage and the library interface for the USB Audio 2.0 Device Library.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00135.html" target="topic">Using the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This topic describes the basic architecture of the Audio 2.0 Function Driver and provides information and examples on its use.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00129.html" target="topic">How the Library Works</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
- &nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00124.html" target="topic">Configuring the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-The application designer must specify the following configuration parameters while using the USB Audio 2.0 Device Driver. The configuration macros that implement these parameters must be located in the <span class="Element146">system_config.h</span> file in the application project and a compiler include path (to point to the folder that contains this file) should be specified.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00123.html" target="topic">Building the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section lists the files that are available in the USB Audio 2.0 Device Library.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00133.html" target="topic">Library Interface</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes the Application Programming Interface (API) functions of the USB Device Audio Library<br>Refer to each section for a detailed description.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00127.html" target="topic">Files</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section lists the source and header files used by the library.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+The application will need to know when a Audio v1.0 Device is attached. To receive this attach event from the Audio v1.0 Host Client Driver, the application must register an Attach Event Handler by calling the USB_HOST_AUDIO_V1_0_AttachEventHandlerSet function. This function should be called before the USB_HOST_BusEnable function is called, else the application may miss Audio v1.0 attach events. It can be called multiple times to register multiple event handlers, each for different application clients that need to know about Audio v1.0 Device Attach events.&nbsp;</p>
+<p class="Element10">
+The total number of event handlers that can be registered is defined by USB_HOST_AUDIO_V1_0_ATTACH_LISTENERS_NUMBER configuration option in <span class="Element146">system_config.h</span>. When a device is attached, the Audio v1.0 Host Client Driver will send the attach event to all the registered event handlers. In this event handler, the USB Audio v1.0 Host Client Driver will pass a USB_HOST_AUDIO V1_0_OBJ that can be opened to gain access to the device. The following code shows an example of how to register attach event handlers. </p><div class="Element170">
+<a href="#" onclick="CopyElementToClipboard('code00055');">Copy Code</a></div>
+<div class="Element13"><div class="Element12" id="code00055"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of Audio v1.0 Attach Event Handler and how this
+ * attach event handler can be registered with the Audio v1.0 Host Client Driver */</span></i>
+<strong><span style="color: #000080">bool</span></strong> isAudioDeviceAttached = <strong><span style="color: #000080">false</span></strong>;
+USB_HOST_AUDIO_V1_0_OBJ audioDeviceObj;
+
+<i><span style="color: #008000">/* Audio attach event listener function */</span></i>
+<strong><span style="color: #000080">void</span></strong> APP_USBHostAudioAttachEventListener
+(
+    USB_HOST_AUDIO_V1_0_OBJ audioObj,
+    USB_HOST_AUDIO_V1_0_EVENT event,
+    uintptr_t context
+)
+{
+    <i><span style="color: #008000">/* This function gets called when the Audio v1.0 device is attached/detached. In this
+     * example we let the application know that a device is attached and we
+     * store the Audio v1.0 device object. This object will be required to open the
+     * device. */</span></i>
+    <strong><span style="color: #000080">switch</span></strong> (event)
+    {
+        <strong><span style="color: #000080">case</span></strong> USB_HOST_AUDIO_V1_0_EVENT_ATTACH:
+            <strong><span style="color: #000080">if</span></strong> (isAudioDeviceAttached == <strong><span style="color: #000080">false</span></strong>)
+            {
+                isAudioDeviceAttached = <strong><span style="color: #000080">true</span></strong>;
+                audioDeviceObj = audioObj;
+            }
+            <strong><span style="color: #000080">else</span></strong>
+            {
+                <i><span style="color: #008000">/* This application supports only one Audio Device . Handle Error Here.*/</span></i>
+            }
+        <strong><span style="color: #000080">break</span></strong>;
+        <strong><span style="color: #000080">case</span></strong> USB_HOST_AUDIO_V1_0_EVENT_DETACH:
+            <strong><span style="color: #000080">if</span></strong> (isAudioDeviceAttached == <strong><span style="color: #000080">true</span></strong>)
+            {
+                <i><span style="color: #008000">/* This means the device was detached. There is no event data
+                 * associated with this event.*/</span></i>
+                isAudioDeviceAttached = <strong><span style="color: #000080">false</span></strong>;
+                <strong><span style="color: #000080">break</span></strong>;
+            }
+        <strong><span style="color: #000080">break</span></strong>;
+    }
+}
+
+
+<strong><span style="color: #000080">void</span></strong> APP_Tasks(<strong><span style="color: #000080">void</span></strong>)
+{
+    <strong><span style="color: #000080">switch</span></strong> (appData.state)
+    {
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_BUS_ENABLE:
+
+            <i><span style="color: #008000">/* In this state the application enables the USB Host Bus. Note
+             * how the Audio v1.0 Attach event handler is registered before the bus
+             * is enabled. */</span></i>
+
+            USB_HOST_AUDIO_V1_0_AttachEventHandlerSet(APP_USBHostAudioAttachEventListener, (uintptr_t) 0);
+            USB_HOST_BusEnable(0);
+            appData.state = APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE;
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE:
+            <i><span style="color: #008000">/* Here we wait for the bus enable operation to complete. */</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+    }
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -101,21 +125,18 @@ This section lists the source and header files used by the library.&nbsp;</div><
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00207.html" target="topic">USB Device Libraries</a> &gt; <a href="00137.html" target="topic">USB Audio 2.0 Device Library</a></div>
+<a href="00290.html">USB Libraries Help</a> &gt; <a href="00272.html">USB Host Libraries</a> &gt; <a href="00128.html">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00150.html">Using the Library</a> &gt; <a href="00140.html">How the Library Works</a> &gt; <a href="00137.html">Detecting Device Attach</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="25%">
+<tr><td width="100%">
 <div class="Element3">
-MPLAB Harmony USB Stack </div>
-</td><td width="25%">
+ MPLAB Harmony USB Stack </div>
+</td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
-</td><td width="25%">
-<div class="Element91">
-<a href="00540.html" target="topic">Previous</a> | <a href="00207.html" target="topic">Up</a> | <a href="00131.html" target="topic">Next</a></div>
-</td><td width="25%">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+</td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB Audio 2.0 Device Library Topic Title: USB Audio 2.0 Device Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Detecting Device Attach Topic Title: Detecting Device Attach)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

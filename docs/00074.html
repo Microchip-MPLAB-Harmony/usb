@@ -1,15 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Driver Device Mode Client Functions</title>
+<title>Driver Host Root Hub Interface</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00074.html');" onmousedown="onBodyMouseDown();">
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
 
 <!-- Begin Popups -->
 
@@ -18,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00873.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00072.html" target="topic">Common Interface</a> &gt; <a href="00074.html" target="topic">Driver Device Mode Client Functions</a></div>
+<a href="00290.html">USB Libraries Help</a> &gt; <a href="00351.html">USB Common Driver Interface</a> &gt; <a href="00069.html">Common Interface</a> &gt; <a href="00073.html">Driver Host Mode Client Functions</a> &gt; <a href="00074.html">Driver Host Root Hub Interface</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +28,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00078.html" target="topic">Previous</a> | <a href="00072.html" target="topic">Up</a> | <a href="00075.html" target="topic">Next</a></div>
+<a href="00073.html">Previous</a> | <a href="00073.html">Up</a> | <a href="00075.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver Device Mode Client Functions Topic Title: Driver Device Mode Client Functions)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver Host Root Hub Interface Topic Title: Driver Host Root Hub Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Driver Device Mode Client Functions</div>
+Driver Host Root Hub Interface</div>
 </div>
 </div>
 
@@ -45,168 +47,83 @@ Driver Device Mode Client Functions</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<a name="PageContent"></a><div class="Element58">
+<div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The DRV_USB_DEVICE_INTERFACE structure contains pointers to the USB Driver’s Device mode Client Functions. These functions are only applicable when the USB module is operating as a USB Device. A USB Driver must implement these functions and ensure that the Device Stack can access these functions through the driver’s DRV_USB_DEVICE_INTERFACE structure. Descriptions of the Driver Device Mode Client functions in the DRV_USB_DEVICE_INTERFACE structure include:</p>
+The USB Driver Common Interface requires the USB Driver to be operating in Host mode to provide root hub control functions. If the USB peripheral does not contain root hub features in hardware, these features must be emulated in software by the driver. The USB peripheral on PIC32MX and PIC32MZ devices does not contain root hub features; therefore, the USB Driver for these peripherals emulates the root hub functionality in software. The <span class="Element146">rootHubInterface</span> member of the DRV_USB_HOST_INTERFACE structure is a structure of type DRV_USB_ROOT_HUB_INTERFACE. The members of this structure are function pointers to the root hub control functions of the USB Driver.&nbsp;</p>
+<p class="Element10">
+Along with other Host mode functions, the USB Driver while operating in Host mode must also ensure that the <span class="Element146">rootHubInterface</span> member of DRV_USB_HOST_INTERFACE is set up correctly so that the USB Host Stack can access the root hub functions. Descriptions of the function pointer types in the DRV_USB_ROOT_HUB_INTERFACE include:</p>
 <ul class="Element630">
-<li class="Element600">Driver Device Address Set Function</li>
-<li class="Element600">Driver Device Current Speed Get Function</li>
-<li class="Element600">Driver Device SOF Number Get Function</li>
-<li class="Element600">Driver Device Attach Function</li>
-<li class="Element600">Driver Device Detach Function</li>
-<li class="Element600">Driver Device Endpoint Enable Function</li>
-<li class="Element600">Driver Device Endpoint Disable Function</li>
-<li class="Element600">Driver Device Endpoint Stall Function</li>
-<li class="Element600">Driver Device Endpoint Stall Clear Function</li>
-<li class="Element600">Driver Device Endpoint Enable Status Function</li>
-<li class="Element600">Driver Device Endpoint Stall Status Function</li>
-<li class="Element600">Driver Device IRP Submit Function</li>
-<li class="Element600">Driver Device IRP Cancel All Function</li>
-<li class="Element600">Driver Device IRP Cancel Function</li>
-<li class="Element600">Driver Device Remote Wakeup Start Function</li>
-<li class="Element600">Driver Device Remote Wakeup Stop Function</li>
-<li class="Element600">Driver Device Test Mode Enter Function</li>
-</ul><p class="Element10">
-The PIC32MZ and the PIC32MX USB peripheral drivers implement the Device mode functions and export these functions to the Device Stack though their respective DRV_USB_DEVICE_INTERFACE structure.</p><div class="Element15">
-Driver Device Address Set Function</div>
+<li class="Element600">Driver Host Root Hub Speed Get Function</li>
+<li class="Element600">Driver Host Root Hub Port Numbers Get Function</li>
+<li class="Element600">Driver Host Root Hub Maximum Current Get Function</li>
+<li class="Element600">Driver Host Root Hub Operation Enable Function</li>
+<li class="Element600">Driver Host Root Hub Operation Enable Status Function</li>
+<li class="Element600">Driver Host Root Hub Initialize Function</li>
+</ul><div class="Element15">
+Driver Host Root Hub Speed Get Function</div>
 <p class="Element10">
-The <span class="Element146">deviceAddressSet</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Device Address Set function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> (*deviceAddressSet)(DRV_HANDLE handle, uint8_t address);</pre></div></div>
+The <span class="Element146">rootHubSpeedGet</span> member of the DRV_USB_ROOT_HUB_INTERFACE structure should point to the USB Driver Root Hub Speed Get function. The signature of this function is as follows: </p><div class="Element170">
+<a href="#" onclick="CopyElementToClipboard('code00088');">Copy Code</a></div>
+<div class="Element13"><div class="Element12" id="code00088"><pre class="Element12">USB_SPEED (*rootHubSpeedGet)(DRV_HANDLE handle);</pre></div></div>
 <p class="Element10">
-The USB Driver Device Address Set Function should match this signature. The USB Device Stack will call this function to set the Device USB Address. The function will be called in an interrupt context and hence the function implementation must be interrupt-safe. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">address</span> parameter is the address provided by the USB Host through the Set Device Address Standard request.</p><div class="Element15">
-Driver Device Current Speed Get Function</div>
+The USB Driver Root Hub Speed Get function must match this signature. The USB Host Stack calls this function to identify the speed at which the root hub is operating. The <span class="Element146">handle</span> parameter is the handle obtained by calling the USB Driver Open function. The operation speed is configured by the USB Driver initialization and depends on the capability of the USB peripheral. For example, the USB peripheral on PIC32MZ devices supports both Hi-Speed and Full-Speed Host mode operation. It can be configured through initialization to only operate at Full-Speed. The Root Hub Speed Get function must return the USB speed at which the USB peripheral is operating. This should not be confused with the speed of the attached device.</p><div class="Element15">
+Driver Host Root Hub Port Numbers Get Function</div>
 <p class="Element10">
-The <span class="Element146">deviceCurrentSpeedGet</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Current Speed Get function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_SPEED (*deviceCurrentSpeedGet)(DRV_HANDLE handle);</pre></div></div>
+The <span class="Element146">rootHubPortNumbersGet</span> member of the DRV_USB_ROOT_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Numbers Get function. The signature of this function is as follows: </p><div class="Element170">
+<a href="#" onclick="CopyElementToClipboard('code00089');">Copy Code</a></div>
+<div class="Element13"><div class="Element12" id="code00089"><pre class="Element12">USB_SPEED (*rootHubSpeedGet)(DRV_HANDLE handle);</pre></div></div>
 <p class="Element10">
-The USB Driver Device Current Speed Get function should match this signature. The USB Device Stack will call this function to obtain the speed at which the device has connected to the USB. It will call this function after reset signaling has completed. The <span class="Element146">handle</span> parameter is driver handle obtained from calling the driver Open function. This function is called in an interrupt context and should be interrupt-safe.</p><div class="Element15">
-Driver Device SOF Number Get Function</div>
+The USB Driver Root Hub Speed Get function must match this signature. This function should return the number of ports that the root hub contains. On the USB peripheral for both PIC32MZ and PIC32MX devices, this value is always '1'.</p><div class="Element15">
+Driver Host Root Hub Maximum Current Get Function</div>
 <p class="Element10">
-The <span class="Element146">deviceSOFNumberGet</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Start-Of-Frame Number Get function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">uint16_t (*deviceSOFNumberGet)(DRV_HANDLE handle);</pre></div></div>
+The <span class="Element146">rootHubMaxCurrentGet</span> member of the DRV_USB_ROOT_HUB_INTERFACE structure should point to the USB Driver Root Hub Maximum Current Get function. The signature of this function is as follows: </p><div class="Element170">
+<a href="#" onclick="CopyElementToClipboard('code00090');">Copy Code</a></div>
+<div class="Element13"><div class="Element12" id="code00090"><pre class="Element12">uint32_t (*rootHubMaxCurrentGet)(DRV_HANDLE handle);</pre></div></div>
 <p class="Element10">
-The USB Driver SOF Number Get function should match this signature. The USB Device Stack will call this function to obtain the current SOF number. The USB peripheral uses a 16 bit counter to count the number of SOFs that have occurred since USB reset. This value is returned along with the Device Stack Start of Frame event. This function is called from an interrupt context and should be interrupt-safe. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function.</p><div class="Element15">
-Driver Device Attach Function</div>
+The USB Driver Root Hub Maximum Current Get function must match this signature. This function returns the maximum VBUS current that the root hub can provide. The USB Host Stack calls this function to know the maximum current that the root hub VBUS power supply can provide. This value is then used to determine if the Host can support the current requirements of the attached device. The <span class="Element146">handle</span> parameter is the driver handle obtained by calling the driver Open function.&nbsp;</p>
 <p class="Element10">
-The <span class="Element146">deviceAttach</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Attach function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">uint16_t(*deviceAttach)(DRV_HANDLE handle);</pre></div></div>
+The PIC32MX and the PIC32MZ USB peripherals cannot supply VBUS. The root hub driver only switches the VBUS supply. The current rating of the VBUS is specified through the USB Driver initialization. The root hub maximum current get function implementation in these drivers returns this value to the Host Stack.</p><div class="Element15">
+Driver Host Root Hub Operation Enable Function</div>
 <p class="Element10">
-The USB Driver Attach function should match this signature. The USB Device Stack will call this function when the Device application calls the USB Device Stack Device Attach function. The USB Driver will enable the required signaling resistors for indicate attach to the Host. The application could call this function in response to a VBUS power available event. This function must be interrupt-safe. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function.</p><div class="Element15">
-Driver Device Detach Function</div>
+The <span class="Element146">rootHubOperationEnable</span> member of the DRV_USB_ROOT_HUB_INTERFACE structure should point to the USB Driver Root Hub Operation Enable function. The signature of this function is as follows&quot; </p><div class="Element170">
+<a href="#" onclick="CopyElementToClipboard('code00091');">Copy Code</a></div>
+<div class="Element13"><div class="Element12" id="code00091"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> (*rootHubOperationEnable)(DRV_HANDLE handle, <strong><span style="color: #000080">bool</span></strong> enable);</pre></div></div>
 <p class="Element10">
-The deviceDetach member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Detach function. The signature of this function is as follows:&nbsp;</p>
+The USB Driver Root Hub Operation Enable function must match this signature. The USB Host Stack calls this function when it ready to receive device attach events from the root hub. Calling this function will cause the USB Driver root hub functionality to enable detection of device attach and detach. The USB Driver will then raise events to the USB Host Stack. The <span class="Element146">handle</span> parameter is the driver handle obtained by calling the driver Open function. Setting the <span class="Element146">enable</span> parameter to true enables the root hub operation. Setting the <span class="Element146">enable</span> parameter to false disables the root hub operation.</p><div class="Element15">
+Driver Host Root Hub Operation Enable Status Function</div>
 <p class="Element10">
-uint16_t(*deviceDetach)(DRV_HANDLE handle);&nbsp;</p>
+The <span class="Element146">rootHubOperationIsEnabled</span> member of the DRV_USB_ROOT_HUB_INTERFACE structure should point to the USB Driver Root Hub Operation Enable Status function. The signature of this function is as follows: </p><div class="Element170">
+<a href="#" onclick="CopyElementToClipboard('code00092');">Copy Code</a></div>
+<div class="Element13"><div class="Element12" id="code00092"><pre class="Element12"><strong><span style="color: #000080">bool</span></strong> (*rootHubOperationIsEnabled)(DRV_HANDLE handle);</pre></div></div>
 <p class="Element10">
-The USB Driver Detach function should match this signature. The USB Device Stack will call this function when the Device application calls the USB Device Stack Device Detach function. The USB Driver will disable the required signaling resistors to indicate detach to the Host. The application could call this function in response to a VBUS power not available event. This function should be interrupt-safe. The <span class="Element146">handle</span> parameter is driver handle obtained from calling the driver Open function.</p><div class="Element15">
-Driver Device Endpoint Enable Function</div>
+The USB Driver Root Hub Operation Enable Status function must match this signature. This USB Host Stack calls this function after calling the operation enable function to check if this has completed. The function returns true if the operation enable function has completed. The USB Host Stack will call this function periodically until it returns true.</p><div class="Element15">
+Driver Host Root Hub Initialize Function</div>
 <p class="Element10">
-The <span class="Element146">deviceEndpointEnable</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Endpoint Enable function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR (*deviceEndpointEnable)(DRV_HANDLE handle, USB_ENDPOINT endpoint,
-            USB_TRANSFER_TYPE transferType, uint16_t endpointSize);</pre></div></div>
+The <span class="Element146">rootHubInitialize</span> member of the DRV_USB_ROOT_HUB_INTERFACE structure should point to the USB Driver Root Hub Initialize function. The signature of this function is as follows: </p><div class="Element170">
+<a href="#" onclick="CopyElementToClipboard('code00093');">Copy Code</a></div>
+<div class="Element13"><div class="Element12" id="code00093"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> (*rootHubInitialize)(DRV_HANDLE handle, USB_HOST_DEVICE_OBJ_HANDLE usbHostDeviceInfo);</pre></div></div>
 <p class="Element10">
-The USB Driver Endpoint Enable function should match this signature. The USB Device Stack Function Driver will call this function when it is initialized by the USB Device Layer. The Device Layer, on receiving the Set Configuration request from the Host, identifies the function drivers that are required by the configuration and initializes them. The function drivers will call the endpoint enable function to enable the endpoints required for their operation. Enabling the endpoint will cause it reply to transaction requests from the Host and accept transfer requests from the device application.&nbsp;</p>
-<p class="Element10">
-The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">endpoint</span> parameter is the USB endpoint (which indicates the direction along with endpoint number) that should be enabled. The transferType is the type of the USB transfer that this endpoint will handle. The endpointSize is the size of the maximum transaction that the endpoint will handle. This should match the endpoint size communicated to the Host via the device endpoint descriptors.&nbsp;</p>
-<p class="Element10">
-The function will return USB_ERRROR_NONE if the endpoint was configured successfully. The function will return USB_ERROR_DEVICE_ENDPOINT_INVALID if the specified endpoint is not provisioned in the system configuration. It will return USB_ERROR_PARAMETER_INVALID if the driver handle is not valid.&nbsp;</p>
-<p class="Element10">
-The endpoint enable function will be called in an interrupt context and should be interrupt-safe. It is not expected to be thread safe. For standard function drivers, the endpoint enable function will be called in the context of the USB Device Layer Client. For vendor USB devices, the vendor application must call the endpoint enable function in response to and within the context of the device configured event. Again this event itself will execute in the context of the Device Layer.</p><div class="Element15">
-Driver Device Endpoint Disable Function</div>
-<p class="Element10">
-The <span class="Element146">deviceEndpointDisable</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Endpoint Disable function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR (*deviceEndpointDisable)(DRV_HANDLE handle, USB_ENDPOINT endpoint);</pre></div></div>
-<p class="Element10">
-The USB Driver Endpoint Disable function should match this signature. The USB Device Stack Function Driver will call this function when it is deinitialized by the USB Device Layer. The Device Layer will deinitialize function drivers when it receives a USB reset event from the driver or on receiving the Set Configuration request from the Host with configuration parameter 0. Disabling the endpoint will cause it NAK transaction request from the Host and not accept transfer requests from the device application.&nbsp;</p>
-<p class="Element10">
-The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">endpoint</span> parameter is the USB endpoint (which indicates the direction along with endpoint number) that should be disabled.&nbsp;</p>
-<p class="Element10">
-The function will return USB_ERRROR_NONE if the function executed successfully. The function will return USB_ERROR_DEVICE_ENDPOINT_INVALID if the specified endpoint is not provisioned in the system configuration. It will return USB_ERROR_PARAMETER_INVALID if the driver handle is not valid.&nbsp;</p>
-<p class="Element10">
-The endpoint disable function will be called in an interrupt context and should be interrupt-safe. It is not expected to be thread safe. For standard function drivers, the endpoint disable function will be called in the context of the USB Device Layer Client. For vendor USB devices, the vendor application must call the endpoint enable function in response to and within the context of the device reset event. Again this event itself will execute in the context of the Device Layer. Disabling the endpoint will not cancel any transfers that have been queued against the endpoint. The function drivers will call the IRP Cancel All function to cancel any pending transfers.</p><div class="Element15">
-Driver Device Endpoint Stall Function</div>
-<p class="Element10">
-The <span class="Element146">deviceEndpointStall</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Endpoint Stall function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR (*deviceEndpointStall)(DRV_HANDLE handle, USB_ENDPOINT endpoint);</pre></div></div>
-<p class="Element10">
-The USB Driver Endpoint Stall function should match this signature. The USB Device Stack Function Driver will call this function to stall an endpoint. The Device Layer itself will stall endpoint 0 for several reasons including non-support of the Host request or failure while executing the request. A function driver will also stall an endpoint for protocol specific reasons. The driver will stall both, receive and transmit directions when stalling Endpoint 0. The driver will stall the specified direction while stalling a non-zero endpoint.&nbsp;</p>
-<p class="Element10">
-This function must be thread safe and interrupt safe. Stalling the endpoint will abort all the transfers queued on the endpoint with the completion status set to USB_DEVICE_IRP_STATUS_ABORTED_ENDPOINT_HALT. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">endpoint</span> parameter is the USB endpoint (which indicates the direction along with endpoint number) that should be stalled. The function will return USB_ERRROR_NONE if the function executed successfully. The function will return USB_ERROR_DEVICE_ENDPOINT_INVALID if the specified endpoint is not provisioned in the system configuration. It will return USB_ERROR_PARAMETER_INVALID if the driver handle is not valid.</p><div class="Element15">
-Driver Device Endpoint Stall Clear Function</div>
-<p class="Element10">
-The <span class="Element146">deviceEndpointStallClear</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Endpoint Stall Clear function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR (*deviceEndpointStallClear)(DRV_HANDLE handle, USB_ENDPOINT endpoint);</pre></div></div>
-<p class="Element10">
-The USB Driver Endpoint Stall Clear function should match this signature. The USB Device Stack Function Driver will call this function to clear the stall on a non-zero endpoint. The Device Layer will call this function to clear the stall condition on Endpoint 0. Clearing the stall on a non-zero endpoint will clear all transfers scheduled on the endpoint and transfer completion status will be set to USB_DEVICE_IRP_STATUS_TERMINATED_BY_HOST. When the stall is cleared, the data toggle for non-zero endpoint will be set to DATA0. The data toggle on Endpoint 0 OUT endpoint will be set to DATA1. The USB Driver will clear the Stall condition on an endpoint even if it was not stalled.&nbsp;</p>
-<p class="Element10">
-This function must be thread safe and interrupt safe. Stalling the endpoint will flush all the transfers queued on the endpoint. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">endpoint</span> parameter is the USB endpoint (which indicates the direction along with endpoint number) whose stall condition must be cleared. The function will return USB_ERRROR_NONE if the function executed successfully. The function will return USB_ERROR_DEVICE_ENDPOINT_INVALID if the specified endpoint is not provisioned in the system configuration. It will return USB_ERROR_PARAMETER_INVALID if the driver handle is not valid.</p><div class="Element15">
-Driver Device Endpoint Enable Status Function</div>
-<p class="Element10">
-The <span class="Element146">deviceEndpointIsEnabled</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Endpoint Enable Status function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">bool</span></strong> (*deviceEndpointIsEnabled)(DRV_HANDLE handle, USB_ENDPOINT endpoint);</pre></div></div>
-<p class="Element10">
-The USB Driver Endpoint Enable Status function should match this signature. The USB Device Stack function will call this function to check if an endpoint has been enabled. The function returns true if the endpoint is enabled. The endpoint is enabled through the USB Driver Endpoint Enable function. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">endpoint</span> parameter is the USB endpoint (which indicates the direction along with endpoint number) whose enable status needs to be queried.</p><div class="Element15">
-Driver Device Endpoint Stall Status Function</div>
-<p class="Element10">
-The <span class="Element146">deviceEndpointIsStalled</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Endpoint Stall Status function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">bool</span></strong> (*deviceEndpointIsStalled)(DRV_HANDLE handle, USB_ENDPOINT endpoint);</pre></div></div>
-<p class="Element10">
-The USB Driver Endpoint Stall Status function should match this signature. The USB Device Stack function will call this function to check if an endpoint has been stalled. The function returns true if the endpoint is stalled. The endpoint is stalled through the USB Driver Endpoint Stall function. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">endpoint</span> parameter is the USB endpoint (which indicates the direction along with endpoint number) whose stall status needs to be queried.</p><div class="Element15">
-Driver Device IRP Submit Function</div>
-<p class="Element10">
-The deviceIRPSubmit member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Device IRP Submit function. The signature of the IRP submit function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR (*deviceIRPSubmit)(DRV_HANDLE handle, USB_ENDPOINT endpoint, USB_DEVICE_IRP * irp);</pre></div></div>
-<p class="Element10">
-The USB Driver Device IRP Submit function must match this signature. The Device Stack (USB Device calls this function to submit an IRP to the USB Driver. The USB Driver provides this mechanism to transfer data between the device and the Host. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">endpoint</span> parameter should set to endpoint through which transfer must be processed. The <span class="Element146">irp</span> parameter should point to the Device IRP data structure. The IRP data structure will transport an entire transfer over the endpoint. The USB Driver will split up the transfer into transactions based on the endpoint size specified at the time of enabling the endpoint. This process does not require Device Stack intervention.&nbsp;</p>
-<p class="Element10">
-The function will return USB_ERRROR_NONE if the function executed successfully. The function will return USB_ERROR_DEVICE_ENDPOINT_INVALID if the specified endpoint is not provisioned in the system configuration. It will return USB_ERROR_PARAMETER_INVALID if the driver handle is not valid. It will return USB_ERROR_DEVICE_IRP_IN_USE if an in progress IRP is resubmitted. It will return USB_ERROR_ENDPOINT_NOT_CONFIGURED if the IRP is submitted to an endpoint that is not enabled.&nbsp;</p>
-<p class="Element10">
-The USB Driver will queue the IRP if there is already an IRP being processed on the endpoint. The completion of the IRP processing is indicated by the USB Driver calling the IRP callback function specified within the IRP. The Device IRP Submit function must be thread safe and IRP callback safe. The Device Stack may resubmit the IRP within the IRP callback function. The IRP callback function itself executes within an interrupt context. The completion status of the IRP will be available in the status member of the IRP when the IRP callback function is invoked.</p><div class="Element15">
-Driver Device IRP Cancel All Function</div>
-<p class="Element10">
-The <span class="Element146">deviceIRPCancelAll</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Device IRP Cancel All function. The signature of this is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR (*deviceIRPCancelAll)(DRV_HANDLE handle, USB_ENDPOINT endpoint);</pre></div></div>
-<p class="Element10">
-The USB Driver Device IRP Cancel All function must match this signature. The USB Device Stack will call this function before disabling the endpoint. Calling this function will call all IRPs that are queued on the endpoint to be canceled. The callback of each IRP will be invoked and the IRP completion status will be set to USB_DEVICE_IRP_STATUS_ABORTED. If an IRP is in progress, an ongoing transaction will be allowed to complete and pending transactions will be canceled. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">endpoint</span> parameter is the USB endpoint (which indicates the direction along with endpoint number) whose queued IRPs must be canceled.&nbsp;</p>
-<p class="Element10">
-The function is thread safe and interrupt safe and will return USB_ERRROR_NONE if it executed successfully. The function will return USB_ERROR_DEVICE_ENDPOINT_INVALID if the specified endpoint is not provisioned in the system configuration. It will return USB_ERROR_PARAMETER_INVALID if the driver handle is not valid.</p><div class="Element15">
-Driver Device IRP Cancel Function</div>
-<p class="Element10">
-The <span class="Element146">deviceIRPCancel</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Device IRP Cancel function. The signature of this is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR (*deviceIRPCancel)(DRV_HANDLE handle, USB_DEVICE_IRP * IRP);</pre></div></div>
-<p class="Element10">
-The USB Driver Device IRP Cancel function must match this signature. This function is called by the USB Device Stack function driver to cancel a scheduled IRP. If the IRP is in the queue but it’s processing has not started, the IRP will removed from the queue and the IRP callback function will be called from within the cancel function. The callback will be invoked with the IRP completion status set to USB_DEVICE_IRP_STATUS_ABORTED. If an IRP is in progress, an ongoing transaction will be allowed to complete and pending transactions will be canceled. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">irp</span> parameter is the IRP to be canceled.&nbsp;</p>
-<p class="Element10">
-The function is thread safe and will return USB_ERRROR_NONE if it executed successfully. It will return USB_ERROR_PARAMETER_INVALID if the driver handle is not valid or if the IRP has status indicates that this IRP is not queued or not in progress. The application should not release the data memory associated with IRP unless the callback has been received.</p><div class="Element15">
-Driver Device Remote Wakeup Start Function</div>
-<p class="Element10">
-The <span class="Element146">deviceRemoteWakeupStart</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Device Remote Wakeup Start function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> (*deviceRemoteWakeupStart)(DRV_HANDLE handle);</pre></div></div>
-<p class="Element10">
-The USB Driver Device Remote Wakeup Start function must match this signature. The USB Device Stack will call the function when the device application wants to start remote wakeup signaling. This would happen if the device supports remote wake-up capability and this has been enabled by the Host. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function.</p><div class="Element15">
-Driver Device Remote Wakeup Stop Function</div>
-<p class="Element10">
-The <span class="Element146">deviceRemoteWakeupStop</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Device Remote Wakeup Stop function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> (*deviceRemoteWakeupStop)(DRV_HANDLE handle);</pre></div></div>
-<p class="Element10">
-The USB Driver Device Remote Wakeup Stop function must match this signature. The USB Device Stack will call the function when the device application wants to stop remote wakeup signaling. The application would call after calling the remote wakeup start function. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function.</p><div class="Element15">
-Driver Device Test Mode Enter Function</div>
-<p class="Element10">
-The <span class="Element146">deviceTestModeEnter</span> parameter of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Device Test Mode Enter function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR (*deviceTestModeEnter)(DRV_HANDLE handle, USB_TEST_MODE_SELECTORS testMode);</pre></div></div>
-<p class="Element10">
-The USB Driver Device Test Mode Enter function should match this signature. The USB Device Stack calls this driver function to place the driver into test mode. This is required when the USB Host (operating at Hi-Speed) send the Set Feature request with the feature selector test set to test mode. This request also specifies which of the test mode signals, the driver should enable. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">testMode</span> parameter should be set to one of the test modes as defined in table 9-7 of the USB 2.0 specification.&nbsp;</p>
-<p class="Element10">
-The test mode enter function is only supported by the PIC32MZ USB Driver as the USB peripheral on this controller supports Hi-Speed operation. The function will return USB_ERRROR_NONE if it executed successfully. It will return USB_ERROR_PARAMETER_INVALID if the driver handle is not valid.&nbsp;</p>
-<p class="Element10">
-This concludes the discussion on the DRV_USB_DEVICE_INTERFACE structure. The following sections describe using the USB Common Driver.</p></div>
+The USB Driver Root Hub Initialize function must match this signature. The USB Host Stack calls this function to assign a device identifier (usbHostDeviceInfo) to the root hub. This function is called before the Host Stack enables the root hub operation. The USB Driver root hub should use this identifier as the parent identifier when it calls the USB_HOST_DeviceEnumerate function to enumerate the attached device. At the time of enumeration, the USB Host Stack will use this parent identifier to identify the parent hub (whether root hub or external hub) of the attached device. The USB Driver root hub should retain the <span class="Element146">usbHostDeviceInfo</span> parameter for the life time of its operation.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00873.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00072.html" target="topic">Common Interface</a> &gt; <a href="00074.html" target="topic">Driver Device Mode Client Functions</a></div>
+<a href="00290.html">USB Libraries Help</a> &gt; <a href="00351.html">USB Common Driver Interface</a> &gt; <a href="00069.html">Common Interface</a> &gt; <a href="00073.html">Driver Host Mode Client Functions</a> &gt; <a href="00074.html">Driver Host Root Hub Interface</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="25%">
+<tr><td width="100%">
 <div class="Element3">
-MPLAB Harmony USB Stack </div>
-</td><td width="25%">
+ MPLAB Harmony USB Stack </div>
+</td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
-</td><td width="25%">
-<div class="Element91">
-<a href="00078.html" target="topic">Previous</a> | <a href="00072.html" target="topic">Up</a> | <a href="00075.html" target="topic">Next</a></div>
-</td><td width="25%">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+</td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver Device Mode Client Functions Topic Title: Driver Device Mode Client Functions)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver Host Root Hub Interface Topic Title: Driver Host Root Hub Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

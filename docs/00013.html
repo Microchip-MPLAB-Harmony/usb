@@ -1,15 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>0xFF Enumeration</title>
+<title>cdc_msd</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00013.html');" onmousedown="onBodyMouseDown();">
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
 
 <!-- Begin Popups -->
 
@@ -18,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00282.html" target="topic">USB Host Libraries</a> &gt; <a href="00281.html" target="topic">USB Host Layer Library</a> &gt; <a href="00284.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00013.html" target="topic">0xFF Enumeration</a></div>
+<a href="00171.html">USB Demonstrations Help</a> &gt; <a href="00050.html">Host Demonstrations</a> &gt; <a href="00013.html">cdc_msd</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +28,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00012.html" target="topic">Previous</a> | <a href="00284.html" target="topic">Up</a> | <a href="00014.html" target="topic">Next</a></div>
+<a href="00004.html">Previous</a> | <a href="00050.html">Up</a> | <a href="00014.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: 0xFF Topic Title: 0xFF Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB cdc_msd Topic Title: cdc_msd)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-0xFF Enumeration</div>
+cdc_msd</div>
 </div>
 </div>
 
@@ -45,51 +47,59 @@ MPLAB Harmony USB Stack </div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<a name="PageContent"></a><div class="Element58">
+<div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</p>
-<p class="Element10">
-This enumeration defines the possible matching criteria flag that can be specified for a Host TPL table entry. The tplFlag member of the TPL table entry should be set to one or more of these flags. These flags define the criteria that the Host layer will use while matching the attached device to the TPL table entry. For example, if a device is specified by class, subclass and protocol specifying the TPL_FLAG_IGNORE_SUBCLASS flag will cause the Host layer to ignore the subclass while comparing the class, subclass and protocol of the attached device.&nbsp;</p>
-<p class="Element10">
-Multiple flags can be specified as a logically OR'ed combination. While combining multiple flags, VID and PID criteria flags cannot be combined with the Class, Subclass, Protocol flags. For example, the TPL_FLAG_VID_PID flag cannot be combined with TPL_FLAG_IGNORE_SUBCLASS.</p></div>
+This demonstration application creates a USB Host that can support different device classes in one application.</p></div>
 </div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
-  <strong><span style="color: #000000"><a href="00101.html" target="topic">initData</a></span></strong>,
-  <strong><span style="color: #000000"><a href="00070.html" target="topic">classCode</a></span></strong>,
-  <strong><span style="color: #000000"><a href="00105.html" target="topic">subClassCode</a></span></strong>,
-  <strong><span style="color: #000000">protocolCode</span></strong>
-} driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL), \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .hostClientDriverInitData = <a href="00101.html" target="topic">initData</a>, driver)\ {\ .id.cl_sc_p = { <a href="00070.html" target="topic">classCode</a>, <a href="00105.html" target="topic">subClassCode</a>, \ .hostClientDriverInitData = <a href="00101.html" target="topic">initData</a>, driver)\ {\ .id.cl_sc_p = { <a href="00070.html" target="topic">classCode</a>, <a href="00105.html" target="topic">subClassCode</a>, 0xFF }, driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL), \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .hostClientDriverInitData = <a href="00101.html" target="topic">initData</a>, driver)\ {\ .id.cl_sc_p = { <a href="00070.html" target="topic">classCode</a>, \ .hostClientDriverInitData = <a href="00101.html" target="topic">initData</a>, driver)\ {\ .id.cl_sc_p = { <a href="00070.html" target="topic">classCode</a>, 0xFF, 0xFF }, driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL), \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .hostClientDriverInitData = <a href="00101.html" target="topic">initData</a>, \ .hostClientDriverInitData = <a href="00101.html" target="topic">initData</a>, 0xFF, 0xFF, 0xFF }, driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL), \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .hostClientDriverInitData = <a href="00101.html" target="topic">initData</a>, driver)\ {\ .id.vid_pid = { <a href="01243.html" target="topic">vid</a>, <a href="00103.html" target="topic">pid</a>, \ .hostClientDriverInitData = <a href="00101.html" target="topic">initData</a>, driver)\ {\ .id.vid_pid = { <a href="01243.html" target="topic">vid</a>, <a href="00103.html" target="topic">pid</a> }, driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_VID_PID), \ .tplFlags.ignoreVIDPID = 0, \ .tplFlags.ignoreVIDPID = 0, \ .hostClientDriverInitData = <a href="00101.html" target="topic">initData</a>, driver)\ {\ .id.vid_pid = { <a href="01243.html" target="topic">vid</a>, <a href="00103.html" target="topic">pid</a>, \ .pidMask = <a href="00102.html" target="topic">mask</a>, \ .hostClientDriverInitData = <a href="00101.html" target="topic">initData</a>, driver)\ {\ .id.vid_pid = { <a href="01243.html" target="topic">vid</a>, <a href="00103.html" target="topic">pid</a> }, \ .pidMask = <a href="00102.html" target="topic">mask</a>, \ .tplFlags.driverType = (TPL_FLAG_VID_PID), \ .tplFlags.ignoreVIDPID = 1, \ .tplFlags.ignoreVIDPID = 0, \ .hostClientDriverInitData = <a href="00101.html" target="topic">initData</a>, \ .hostClientDriverInitData = <a href="00101.html" target="topic">initData</a>, driver)\ {\ .id.vid_pid = { 0xFFFF, 0xFFFF }, \ .pidMask = 0x0000, \ .tplFlags.driverType = (TPL_FLAG_VID_PID), \ .tplFlags.ignoreVIDPID = 1, \ .tplFlags.ignoreVIDPID = 1, \ .hostClientDriverInitData = <a href="00101.html" target="topic">initData</a>, \ .hostClientDriver = driver\ } <strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">struct</span></strong> { <strong><span style="color: #000080">union</span></strong> { uint32_t value; <strong><span style="color: #000080">struct</span></strong> { uint16_t <a href="01243.html" target="topic">vid</a>; uint16_t <a href="00103.html" target="topic">pid</a>; } vid_pid; <strong><span style="color: #000080">struct</span></strong> { uint8_t <a href="00070.html" target="topic">classCode</a>; uint8_t <a href="00105.html" target="topic">subClassCode</a>; uint8_t protocolCode; } cl_sc_p; } id; uint16_t pidMask; <strong><span style="color: #000080">struct</span></strong> { <strong><span style="color: #000080">unsigned</span></strong> driverType :1; <strong><span style="color: #000080">unsigned</span></strong> ignoreClass :1; <strong><span style="color: #000080">unsigned</span></strong> ignoreSubClass :1; <strong><span style="color: #000080">unsigned</span></strong> ignoreProtocol :1; <strong><span style="color: #000080">unsigned</span></strong> pidMasked :1; <strong><span style="color: #000080">unsigned</span></strong> ignoreVIDPID :1; } tplFlags; <strong><span style="color: #000080">void</span></strong> * hostClientDriverInitData; <strong><span style="color: #000080">void</span></strong> * hostClientDriver; } <a href="01236.html" target="topic">USB_HOST_TARGET_PERIPHERAL_LIST_ENTRY</a>, <a href="01238.html" target="topic">USB_HOST_TPL_ENTRY</a>;</pre></div></div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-None.</p></div>
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00014.html">Building the Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section identifies the MPLAB X IDE projects contained in this demo application, the name and location of the projects and lists the target hardware development board for each project.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00015.html">Configuring the Hardware</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00016.html">Running the Demonstration</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Provides instructions on how to build and run the USB CDC MSD demonstration.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00282.html" target="topic">USB Host Libraries</a> &gt; <a href="00281.html" target="topic">USB Host Layer Library</a> &gt; <a href="00284.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00013.html" target="topic">0xFF Enumeration</a></div>
+<a href="00171.html">USB Demonstrations Help</a> &gt; <a href="00050.html">Host Demonstrations</a> &gt; <a href="00013.html">cdc_msd</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="25%">
+<tr><td width="100%">
 <div class="Element3">
-MPLAB Harmony USB Stack </div>
-</td><td width="25%">
+ MPLAB Harmony USB Stack </div>
+</td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
-</td><td width="25%">
-<div class="Element91">
-<a href="00012.html" target="topic">Previous</a> | <a href="00284.html" target="topic">Up</a> | <a href="00014.html" target="topic">Next</a></div>
-</td><td width="25%">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+</td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: 0xFF Topic Title: 0xFF Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB cdc_msd Topic Title: cdc_msd)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

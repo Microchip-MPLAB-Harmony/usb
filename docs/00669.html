@@ -1,15 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
 <title>USB_DEVICE_EndpointTransferCancel Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00669.html');" onmousedown="onBodyMouseDown();">
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
 
 <!-- Begin Popups -->
 
@@ -18,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00207.html" target="topic">USB Device Libraries</a> &gt; <a href="00206.html" target="topic">USB Device Layer Library</a> &gt; <a href="00229.html" target="topic">Library Interface</a> &gt; e) Endpoint Management Functions &gt; <a href="00669.html" target="topic">USB_DEVICE_EndpointTransferCancel Function</a></div>
+<a href="00300.html">USB Libraries Help</a> &gt; <a href="00207.html">USB Device Libraries</a> &gt; <a href="00206.html">USB Device Layer Library</a> &gt; <a href="00229.html">Library Interface</a> &gt; e) Endpoint Management Functions &gt; <a href="00669.html">USB_DEVICE_EndpointTransferCancel Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,13 +28,13 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00181.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00666.html" target="topic">Previous</a> | <a href="00229.html" target="topic">Up</a> | <a href="00670.html" target="topic">Next</a></div>
+<a href="00666.html">Previous</a> | <a href="00229.html">Up</a> | <a href="00670.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_EndpointTransferCancel@USB_DEVICE_HANDLE@USB_ENDPOINT_ADDRESS@USB_DEVICE_TRANSFER_HANDLE Topic Title: USB_DEVICE_EndpointTransferCancel Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_EndpointTransferCancel@USB_DEVICE_HANDLE@USB_ENDPOINT_ADDRESS@USB_DEVICE_TRANSFER_HANDLE Topic Title: USB_DEVICE_EndpointTransferCancel Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 USB_DEVICE_EndpointTransferCancel Function</div>
 </div>
@@ -45,19 +47,21 @@ USB_DEVICE_EndpointTransferCancel Function</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<a name="PageContent"></a><div class="Element58">
-<a name="4465736372697074696F6E"></a><div class="Element11">
-<div class="Element10">
-<p class="Element10">
-This function cancels a transfer scheduled on an endpoint using the <a href="00666.html" target="topic">USB_DEVICE_EndpointRead</a> and <a href="00670.html" target="topic">USB_DEVICE_EndpointWrite</a> functions. If a transfer is still in the queue and its processing has not started, the transfer is canceled completely. A transfer that is in progress may or may not get canceled depending on the transaction that is presently in progress. If the last transaction of the transfer is in progress, the transfer will not be canceled. If it is not the last transaction in progress, the in progress transfer will be allowed to complete. Pending transactions will be canceled. The first transaction of an in progress transfer cannot be canceled.</p></div>
-</div>
+<div class="Element58">
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00854.html" target="topic">USB_DEVICE_RESULT</a> <strong><span style="color: #000000">USB_DEVICE_EndpointTransferCancel</span></strong>(
-    <a href="00710.html" target="topic">USB_DEVICE_HANDLE</a> <strong><span style="color: #000000">usbDeviceHandle</span></strong>, 
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00854.html">USB_DEVICE_RESULT</a> <strong><span style="color: #000000">USB_DEVICE_EndpointTransferCancel</span></strong>(
+    <a href="00710.html">USB_DEVICE_HANDLE</a> <strong><span style="color: #000000">usbDeviceHandle</span></strong>, 
     USB_ENDPOINT_ADDRESS <strong><span style="color: #000000">endpoint</span></strong>, 
-    <a href="00871.html" target="topic">USB_DEVICE_TRANSFER_HANDLE</a> <strong><span style="color: #000000">transferHandle</span></strong>
+    <a href="00871.html">USB_DEVICE_TRANSFER_HANDLE</a> <strong><span style="color: #000000">transferHandle</span></strong>
 );</pre></div></div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This function cancels a transfer scheduled on an endpoint using the <a href="00666.html">USB_DEVICE_EndpointRead</a> and <a href="00670.html">USB_DEVICE_EndpointWrite</a> functions. If a transfer is still in the queue and its processing has not started, the transfer is canceled completely. A transfer that is in progress may or may not get canceled depending on the transaction that is presently in progress. If the last transaction of the transfer is in progress, the transfer will not be canceled. If it is not the last transaction in progress, the in progress transfer will be allowed to complete. Pending transactions will be canceled. The first transaction of an in progress transfer cannot be canceled.</p></div>
+</div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
@@ -115,11 +119,13 @@ None.</p></div>
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">
+<div class="Element170">
+<a href="#" onclick="CopyElementToClipboard('code00038');">Copy Code</a></div>
+<div class="Element13"><div class="Element12" id="code00038"><pre class="Element12">
 <i><span style="color: #008000">// The following code example cancels a transfer on endpoint 1, IN direction.</span></i>
 
-<a href="00871.html" target="topic">USB_DEVICE_TRANSFER_HANDLE</a> transferHandle;
-<a href="00854.html" target="topic">USB_DEVICE_RESULT</a> result;
+<a href="00871.html">USB_DEVICE_TRANSFER_HANDLE</a> transferHandle;
+<a href="00854.html">USB_DEVICE_RESULT</a> result;
 
 result = USB_DEVICE_EndpointTransferCancel(usbDeviceHandle, 
             (0x1|USB_EP_DIRECTION_IN), transferHandle);
@@ -137,21 +143,18 @@ result = USB_DEVICE_EndpointTransferCancel(usbDeviceHandle,
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00207.html" target="topic">USB Device Libraries</a> &gt; <a href="00206.html" target="topic">USB Device Layer Library</a> &gt; <a href="00229.html" target="topic">Library Interface</a> &gt; e) Endpoint Management Functions &gt; <a href="00669.html" target="topic">USB_DEVICE_EndpointTransferCancel Function</a></div>
+<a href="00300.html">USB Libraries Help</a> &gt; <a href="00207.html">USB Device Libraries</a> &gt; <a href="00206.html">USB Device Layer Library</a> &gt; <a href="00229.html">Library Interface</a> &gt; e) Endpoint Management Functions &gt; <a href="00669.html">USB_DEVICE_EndpointTransferCancel Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="25%">
+<tr><td width="100%">
 <div class="Element3">
-MPLAB Harmony USB Stack </div>
-</td><td width="25%">
+ MPLAB Harmony USB Stack </div>
+</td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
-</td><td width="25%">
-<div class="Element91">
-<a href="00666.html" target="topic">Previous</a> | <a href="00229.html" target="topic">Up</a> | <a href="00670.html" target="topic">Next</a></div>
-</td><td width="25%">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00181.html">Home</a></div>
+</td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_EndpointTransferCancel@USB_DEVICE_HANDLE@USB_ENDPOINT_ADDRESS@USB_DEVICE_TRANSFER_HANDLE Topic Title: USB_DEVICE_EndpointTransferCancel Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_EndpointTransferCancel@USB_DEVICE_HANDLE@USB_ENDPOINT_ADDRESS@USB_DEVICE_TRANSFER_HANDLE Topic Title: USB_DEVICE_EndpointTransferCancel Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

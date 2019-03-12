@@ -1,15 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Event Handling</title>
+<title>TPL Table Configuration for CDC Devices</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00169.html');" onmousedown="onBodyMouseDown();">
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
 
 <!-- Begin Popups -->
 
@@ -18,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00282.html" target="topic">USB Host Libraries</a> &gt; <a href="00173.html" target="topic">USB CDC Host Library</a> &gt; <a href="00180.html" target="topic">Using the Library</a> &gt; <a href="00171.html" target="topic">How the Library Works</a> &gt; <a href="00169.html" target="topic">Event Handling</a></div>
+<a href="00290.html">USB Libraries Help</a> &gt; <a href="00272.html">USB Host Libraries</a> &gt; <a href="00163.html">USB CDC Host Library</a> &gt; <a href="00170.html">Using the Library</a> &gt; <a href="00161.html">How the Library Works</a> &gt; <a href="00169.html">TPL Table Configuration for CDC Devices</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +28,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00177.html" target="topic">Previous</a> | <a href="00171.html" target="topic">Up</a> | <a href="00165.html" target="topic">Next</a></div>
+<a href="00161.html">Previous</a> | <a href="00161.html">Up</a> | <a href="00158.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Event Handling Topic Title: Event Handling)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST TPL Table Configuration for CDC Devices Topic Title: TPL Table Configuration for CDC Devices)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Event Handling</div>
+TPL Table Configuration for CDC Devices</div>
 </div>
 </div>
 
@@ -45,114 +47,30 @@ Event Handling</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<a name="PageContent"></a><div class="Element58">
+<div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The CDC Host Client Driver presents an event driven interface to the application. The CDC Host Client Driver requires the application client to set two event handlers for meaningful operation:</p>
-<ul class="Element630">
-<li class="Element600">The Attach event handler is not client specific and is registered before the <a href="01058.html" target="topic">USB_HOST_BusEnable</a> function is called. This event handler and the attach event is discussed in the Detecting Device Attach section.</li>
-<li class="Element600">The client specific command, data transfer and detach events. The CDC Class specific command request events are discussed in the Sending Class Specific Control Transfers section. The data transfer related events are discussed in the Reading and Writing Data section. Some general points about these events are discussed below.</li>
-</ul><p class="Element10">
-A request to send a command or transfer data typically completes after the command request or transfer function has exited. The application must then use the CDC Host Client Driver event to track the completion of this command or data transfer request. In a case where multiple data transfers are queued, the transfer handles can be used to identify the transfer requests.&nbsp;</p>
+The Host Layer attaches the CDC Host Client Driver to a device when the device class, subclass, protocol in the device descriptor or when the class, subclass and protocol fields in the Interface Association Descriptor (IAD) or Interface descriptor matches the entry in the TPL table. When specifying the entry for the CDC device, the entry for the CDC device, the driver interface must be set to USB_HOST_CDC_INTERFACE. This will attach the CDC Host Client Driver to the device when the USB Host matches the TPL entry to the device. The following code shows possible TPL table options for matching CDC Devices.&nbsp;</p>
 <p class="Element10">
-The application must use the <a href="01096.html" target="topic">USB_HOST_CDC_EventHandlerSet</a> function to register a client specific event handler. This event handler will be called when a command, data transfer or detach event has occurred and should be registered before the client request for command or a data transfer. The following code shows an example of registering an event handler.&nbsp;</p>
-<p class="Element10">
-<strong>Example:</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of setting an event handler and an example
- * event handler. For the full set of events that the CDC Host Client generates,
- * refer to USB_HOST_CDC_EVENT enumeration description */</span></i>
+<strong>Example:</strong> &nbsp;</p><div class="Element170">
+<a href="#" onclick="CopyElementToClipboard('code00063');">Copy Code</a></div>
+<div class="Element13"><div class="Element12" id="code00063"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of TPL table entries for supporting CDC
+ * devices. Note the driver interface is set to USB_HOST_CDC_INTERFACE. This
+ * will load the CDC Host Client Driver when there is TPL match */</span></i>
 
-USB_HOST_CDC_EVENT_RESPONSE APP_USBHostCDCEventHandler
-(
-    USB_HOST_CDC_HANDLE cdcHandle,
-    USB_HOST_CDC_EVENT event,
-    <strong><span style="color: #000080">void</span></strong> * eventData,
-    uintptr_t context
-)
+<strong><span style="color: #000080">const</span></strong> USB_HOST_TPL_ENTRY USBTPList[1] =
 {
-    <i><span style="color: #008000">/* This function is called when a CDC Host event has occurred. A pointer to
-     * this function is registered after opening the device. See the call to
-     * USB_HOST_CDC_EventHandlerSet() function. */</span></i>
+    <i><span style="color: #008000">/* This entry looks for any CDC device. The CDC Host Client Driver will
+     * check if this is an ACM device and will then load itself */</span></i>
+    TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL(USB_CDC_CLASS_CODE, USB_CDC_SUBCLASS_CODE, 0x0 , NULL,  USB_HOST_CDC_INTERFACE),
 
-    USB_HOST_CDC_EVENT_ACM_SET_LINE_CODING_COMPLETE_DATA * setLineCodingEventData;
-    USB_HOST_CDC_EVENT_ACM_SET_CONTROL_LINE_STATE_COMPLETE_DATA * setControlLineStateEventData;
-    USB_HOST_CDC_EVENT_WRITE_COMPLETE_DATA * writeCompleteEventData;
-    USB_HOST_CDC_EVENT_READ_COMPLETE_DATA * readCompleteEventData;
+    <i><span style="color: #008000">/* This entry looks specifically for the communications class protocol.
+     * This entry should be used if the host application is expected to support
+     * CDC as a part of an composite device */</span></i>
+    TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOLUSB_CDC_COMMUNICATIONS_INTERFACE_CLASS_CODE,  USB_CDC_SUBCLASS_ABSTRACT_CONTROL_MODEL, USB_CDC_PROTOCOL_AT_V250 , NULL,  USB_HOST_CDC_INTERFACE),
 
-    <strong><span style="color: #000080">switch</span></strong>(event)
-    {
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_CDC_EVENT_ACM_SET_LINE_CODING_COMPLETE:
-
-            <i><span style="color: #008000">/* This means the application requested Set Line Coding request is
-             * complete. */</span></i>
-            setLineCodingEventData = (USB_HOST_CDC_EVENT_ACM_SET_LINE_CODING_COMPLETE_DATA *)(eventData);
-            appData.controlRequestDone = <strong><span style="color: #000080">true</span></strong>;
-            appData.controlRequestResult = setLineCodingEventData-&gt;result;
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_CDC_EVENT_ACM_SET_CONTROL_LINE_STATE_COMPLETE:
-
-            <i><span style="color: #008000">/* This means the application requested Set Control Line State
-             * request has completed. */</span></i>
-            setControlLineStateEventData = (USB_HOST_CDC_EVENT_ACM_SET_CONTROL_LINE_STATE_COMPLETE_DATA *)(eventData);
-            appData.controlRequestDone = <strong><span style="color: #000080">true</span></strong>;
-            appData.controlRequestResult = setControlLineStateEventData-&gt;result;
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_CDC_EVENT_WRITE_COMPLETE:
-
-            <i><span style="color: #008000">/* This means an application requested write has completed */</span></i>
-            appData.writeTransferDone = <strong><span style="color: #000080">true</span></strong>;
-            writeCompleteEventData = (USB_HOST_CDC_EVENT_WRITE_COMPLETE_DATA *)(eventData);
-            appData.writeTransferResult = writeCompleteEventData-&gt;result;
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_CDC_EVENT_READ_COMPLETE:
-
-            <i><span style="color: #008000">/* This means an application requested write has completed */</span></i>
-            appData.readTransferDone = <strong><span style="color: #000080">true</span></strong>;
-            readCompleteEventData = (USB_HOST_CDC_EVENT_READ_COMPLETE_DATA *)(eventData);
-            appData.readTransferResult = readCompleteEventData-&gt;result;
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_CDC_EVENT_DEVICE_DETACHED:
-
-            <i><span style="color: #008000">/* The device was detached */</span></i>
-            appData.deviceWasDetached = <strong><span style="color: #000080">true</span></strong>;
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">default</span></strong>:
-            <strong><span style="color: #000080">break</span></strong>;
-    }
-
-    <strong><span style="color: #000080">return</span></strong>(USB_HOST_CDC_EVENT_RESPONE_NONE);
-}
-
-
-<strong><span style="color: #000080">void</span></strong> APP_Tasks(<strong><span style="color: #000080">void</span></strong>)
-{
-    <strong><span style="color: #000080">switch</span></strong>(appData.state)
-    {
-        <i><span style="color: #008000">/* The application states that enable the bus and wait for device attach
-         * are not shown here for brevity */</span></i>
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_OPEN_DEVICE:
-
-            <i><span style="color: #008000">/* In this state the application opens the attached device */</span></i>
-            appData.cdcHostHandle = USB_HOST_CDC_Open(appData.cdcObj);
-            <strong><span style="color: #000080">if</span></strong>(appData.cdcHostHandle != USB_HOST_CDC_HANDLE_INVALID)
-            {
-                <i><span style="color: #008000">/* The driver was opened successfully. Set the event handler
-                 * and then go to the next state. */</span></i>
-                USB_HOST_CDC_EventHandlerSet(appData.cdcHostHandle, APP_USBHostCDCEventHandler, (uintptr_t)0);
-                appData.state = APP_STATE_SET_LINE_CODING;
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">default</span></strong>:
-            <strong><span style="color: #000080">break</span></strong>;
-
-    }
-}</pre></div></div>
+};</pre></div></div>
 </div>
 </div>
 </div>
@@ -160,21 +78,18 @@ USB_HOST_CDC_EVENT_RESPONSE APP_USBHostCDCEventHandler
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00282.html" target="topic">USB Host Libraries</a> &gt; <a href="00173.html" target="topic">USB CDC Host Library</a> &gt; <a href="00180.html" target="topic">Using the Library</a> &gt; <a href="00171.html" target="topic">How the Library Works</a> &gt; <a href="00169.html" target="topic">Event Handling</a></div>
+<a href="00290.html">USB Libraries Help</a> &gt; <a href="00272.html">USB Host Libraries</a> &gt; <a href="00163.html">USB CDC Host Library</a> &gt; <a href="00170.html">Using the Library</a> &gt; <a href="00161.html">How the Library Works</a> &gt; <a href="00169.html">TPL Table Configuration for CDC Devices</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="25%">
+<tr><td width="100%">
 <div class="Element3">
-MPLAB Harmony USB Stack </div>
-</td><td width="25%">
+ MPLAB Harmony USB Stack </div>
+</td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
-</td><td width="25%">
-<div class="Element91">
-<a href="00177.html" target="topic">Previous</a> | <a href="00171.html" target="topic">Up</a> | <a href="00165.html" target="topic">Next</a></div>
-</td><td width="25%">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+</td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Event Handling Topic Title: Event Handling)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST TPL Table Configuration for CDC Devices Topic Title: TPL Table Configuration for CDC Devices)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

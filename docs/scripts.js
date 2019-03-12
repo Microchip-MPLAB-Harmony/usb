@@ -317,7 +317,7 @@ function highlightTOCEntry(framedoc, element)
 // highlights the corresponding node in the tree.
 function doSynchTOC(topicfile)
 {
-    var frm = findFrame(top, "tocidx");
+    var frm = findFrame(top, "");
     var links = null;
     var idx;
     var toctreeid = "toctree";
@@ -350,12 +350,12 @@ function doSynchTOC(topicfile)
 // TOC with that topic.
 function synchTOC(topicfile)
 {
-    var frm = findFrame(top, "tocidx");
+    var frm = findFrame(top, "");
     if (frm != null) {
         // if we're loading the TOC or index file
         // then frm.document == document
         if (document.location == frm.document.location) {
-            var topicfrm = findFrame(top, "topic");
+            var topicfrm = findFrame(top, "");
             if (topicfrm != null) {
                 var href = topicfrm.document.location.href;
                 var pathidx = href.lastIndexOf("/");
@@ -702,10 +702,10 @@ var collapseStateCookieName = "DOM_Collapsed_Sections"
 var collapsePersistenceName = "domdocSettings"
 
 // If we create browser based HTML files, this variable will be true
-var useCookies = true;
+var useCookies = false;
 
 // If we create HTML Help or Help 2, this variable will be true
-var usePersistence = false;
+var usePersistence = true;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Cookie helper functions
@@ -1078,7 +1078,7 @@ function GetQuote()
 function IndexPrintEntry(text, url, divclass)
 {
     var result = "";
-    var target = "topic";
+    var target = "";
 
     result = "<div class=" + GetQuote() + divclass + GetQuote() + ">";
 

@@ -1,15 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
 <title>USB_DEVICE_Status Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00865.html');" onmousedown="onBodyMouseDown();">
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
 
 <!-- Begin Popups -->
 
@@ -18,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00207.html" target="topic">USB Device Libraries</a> &gt; <a href="00206.html" target="topic">USB Device Layer Library</a> &gt; <a href="00229.html" target="topic">Library Interface</a> &gt; a) System Interaction Functions &gt; <a href="00865.html" target="topic">USB_DEVICE_Status Function</a></div>
+<a href="00300.html">USB Libraries Help</a> &gt; <a href="00207.html">USB Device Libraries</a> &gt; <a href="00206.html">USB Device Layer Library</a> &gt; <a href="00229.html">Library Interface</a> &gt; a) System Interaction Functions &gt; <a href="00865.html">USB_DEVICE_Status Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,13 +28,13 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00181.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00660.html" target="topic">Previous</a> | <a href="00229.html" target="topic">Up</a> | <a href="00867.html" target="topic">Next</a></div>
+<a href="00660.html">Previous</a> | <a href="00229.html">Up</a> | <a href="00867.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_Status@SYS_MODULE_OBJ Topic Title: USB_DEVICE_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_Status@SYS_MODULE_OBJ Topic Title: USB_DEVICE_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 USB_DEVICE_Status Function</div>
 </div>
@@ -45,23 +47,25 @@ USB_DEVICE_Status Function</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<a name="PageContent"></a><div class="Element58">
-<a name="4465736372697074696F6E"></a><div class="Element11">
-<div class="Element10">
-<p class="Element10">
-This function provides the current status of the USB device layer.</p></div>
-</div>
+<div class="Element58">
 <a name="43"></a><div class="Element99">
 C</div>
 <div class="Element101"><div class="Element100"><pre class="Element100">SYS_STATUS <strong><span style="color: #000000">USB_DEVICE_Status</span></strong>(
     SYS_MODULE_OBJ <strong><span style="color: #000000">object</span></strong>
 );</pre></div></div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This function provides the current status of the USB device layer.</p></div>
+</div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="00802.html" target="topic">USB_DEVICE_Initialize</a> function must have been called before calling this function.</p></div>
+The <a href="00802.html">USB_DEVICE_Initialize</a> function must have been called before calling this function.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -80,7 +84,7 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element303">
 object&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Driver object handle, returned from <a href="00802.html" target="topic">USB_DEVICE_Initialize</a>&nbsp;</div></td></tr></table></div></div>
+Driver object handle, returned from <a href="00802.html">USB_DEVICE_Initialize</a>&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -103,7 +107,9 @@ None.</p></div>
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// This code example shows how the USB_DEVICE_Status function</span></i>
+<div class="Element170">
+<a href="#" onclick="CopyElementToClipboard('code00013');">Copy Code</a></div>
+<div class="Element13"><div class="Element12" id="code00013"><pre class="Element12"><i><span style="color: #008000">// This code example shows how the USB_DEVICE_Status function</span></i>
 <i><span style="color: #008000">// can be used to check if the USB Device Layer is ready</span></i>
 <i><span style="color: #008000">// for client operations. </span></i>
 
@@ -123,21 +129,18 @@ status = USB_DEVICE_Status(object);
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00207.html" target="topic">USB Device Libraries</a> &gt; <a href="00206.html" target="topic">USB Device Layer Library</a> &gt; <a href="00229.html" target="topic">Library Interface</a> &gt; a) System Interaction Functions &gt; <a href="00865.html" target="topic">USB_DEVICE_Status Function</a></div>
+<a href="00300.html">USB Libraries Help</a> &gt; <a href="00207.html">USB Device Libraries</a> &gt; <a href="00206.html">USB Device Layer Library</a> &gt; <a href="00229.html">Library Interface</a> &gt; a) System Interaction Functions &gt; <a href="00865.html">USB_DEVICE_Status Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="25%">
+<tr><td width="100%">
 <div class="Element3">
-MPLAB Harmony USB Stack </div>
-</td><td width="25%">
+ MPLAB Harmony USB Stack </div>
+</td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
-</td><td width="25%">
-<div class="Element91">
-<a href="00660.html" target="topic">Previous</a> | <a href="00229.html" target="topic">Up</a> | <a href="00867.html" target="topic">Next</a></div>
-</td><td width="25%">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00181.html">Home</a></div>
+</td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_Status@SYS_MODULE_OBJ Topic Title: USB_DEVICE_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_Status@SYS_MODULE_OBJ Topic Title: USB_DEVICE_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

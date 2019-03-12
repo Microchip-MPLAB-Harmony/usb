@@ -1,15 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Library Interface</title>
+<title>Abstraction Model</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00297.html');" onmousedown="onBodyMouseDown();">
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
 
 <!-- Begin Popups -->
 
@@ -18,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00282.html" target="topic">USB Host Libraries</a> &gt; <a href="00289.html" target="topic">USB Hub Host Client Driver Library</a> &gt; <a href="00297.html" target="topic">Library Interface</a></div>
+<a href="00290.html">USB Libraries Help</a> &gt; <a href="00272.html">USB Host Libraries</a> &gt; <a href="00306.html">USB MSD Host Client Driver Library</a> &gt; <a href="00310.html">Using the Library</a> &gt; <a href="00297.html">Abstraction Model</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +28,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00288.html" target="topic">Previous</a> | <a href="00289.html" target="topic">Up</a> | <a href="01174.html" target="topic">Next</a></div>
+<a href="00310.html">Previous</a> | <a href="00310.html">Up</a> | <a href="00307.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HUB HOST Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSD HOST Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Library Interface</div>
+Abstraction Model</div>
 </div>
 </div>
 
@@ -45,58 +47,35 @@ Library Interface</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<a name="PageContent"></a><div class="Element58">
+<div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This section describes the Application Programming Interface (API) functions of the USB Hub Host Client Driver Library.&nbsp;</p>
+The USB MSD Host Client Driver provides the transport for SCSI commands that implements that media read, write and control operations. If abstracts the details of initiating and completing a BOT transfer and performing error handling and presents a simple event driven interface to the top-level block storage command driver library.&nbsp;</p>
 <p class="Element10">
-Refer to each section for a detailed description.</p></div>
-</div>
-<a name="4461746120547970657320616E6420436F6E7374616E7473"></a><div class="Element14">
-Data Types and Constants</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01174.html" target="topic">USB_HOST_HUB_INTERFACE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Hub Host Client Driver Interface Pointer.&nbsp;</div></td></tr></table></div></div>
-</div>
+The USB MSD Host Client Driver uses the USB Host data transfer and pipe management routines to implement the three stages of a BOT transfer. The library accepts a SCSI command from the SCSI Block Storage driver and transports this command in the command block of the Command Block Wrapper in the CBW stage of the BOT transfer. If the command requires a data stage, the USB MSD Host Client Driver library will transfer data between the USB Host and the device. The USB MSD Host Client Driver will then terminate the BOT transfer by requesting for the Command Status Wrapper (CSW) from the device.&nbsp;</p>
+<p class="Element10">
+If the device stalls any stage of the transfer, the USB MSD Host Client Driver will clear the stall and will automatically initiate the CSW stage to complete the transfer. The transfer result is communicated to the top level block storage driver library through a callback mechanism.&nbsp;</p>
+<p class="Element10">
+The USB Host layer will attach the USB MSD Host Client Driver to a mass storage device based on a TPL entry match. The USB MSD Host Client Driver will then open data and communication control pipes to the device. It will first get the number of logical units (LUN) that the device contains. It will then initialize the SCSI block storage driver for each reported LUN and mark the device state as being ready for data transfers.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00282.html" target="topic">USB Host Libraries</a> &gt; <a href="00289.html" target="topic">USB Hub Host Client Driver Library</a> &gt; <a href="00297.html" target="topic">Library Interface</a></div>
+<a href="00290.html">USB Libraries Help</a> &gt; <a href="00272.html">USB Host Libraries</a> &gt; <a href="00306.html">USB MSD Host Client Driver Library</a> &gt; <a href="00310.html">Using the Library</a> &gt; <a href="00297.html">Abstraction Model</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="25%">
+<tr><td width="100%">
 <div class="Element3">
-MPLAB Harmony USB Stack </div>
-</td><td width="25%">
+ MPLAB Harmony USB Stack </div>
+</td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
-</td><td width="25%">
-<div class="Element91">
-<a href="00288.html" target="topic">Previous</a> | <a href="00289.html" target="topic">Up</a> | <a href="01174.html" target="topic">Next</a></div>
-</td><td width="25%">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+</td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HUB HOST Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSD HOST Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

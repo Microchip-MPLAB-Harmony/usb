@@ -1,15 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Abstraction Model</title>
+<title>What are &quot;Signed&quot; Drivers?</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00209.html');" onmousedown="onBodyMouseDown();">
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
 
 <!-- Begin Popups -->
 
@@ -18,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00207.html" target="topic">USB Device Libraries</a> &gt; <a href="00206.html" target="topic">USB Device Layer Library</a> &gt; <a href="00234.html" target="topic">Using the Library</a> &gt; <a href="00209.html" target="topic">Abstraction Model</a></div>
+<a href="00274.html">USB Libraries Help</a> &gt; <a href="00157.html">Driver Signing and Windows 8 (for v1.08)</a> &gt; <a href="00209.html">What are &quot;Signed&quot; Drivers?</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +28,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00155.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00234.html" target="topic">Previous</a> | <a href="00234.html" target="topic">Up</a> | <a href="00230.html" target="topic">Next</a></div>
+<a href="00157.html">Previous</a> | <a href="00157.html">Up</a> | <a href="00158.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DRV DEV WIN 8 What are %22Signed%22 Drivers Topic Title: What are %22Signed%22 Drivers?)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Abstraction Model</div>
+What are &quot;Signed&quot; Drivers?</div>
 </div>
 </div>
 
@@ -45,62 +47,53 @@ Abstraction Model</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<a name="PageContent"></a><div class="Element58">
+<div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<span style="color: #000000">The Device Layer in the MPLAB Harmony USB Device Stack handles enumeration requests from the USB Host and provides an abstracted access to Control Transfers and Non-Control Endpoint Management. The Device Layer intercepts all Control transfers issues by the host. Only those control transfers that require application or function driver intervention are forwarded. Standard device control transfers are completely handled by the Device Layer. All access to the bus is routed via the Device Layer.</span>&nbsp;</p>
+Most USB drivers operate in what is known as &quot;Kernel mode&quot; on Windows-based personal computers (PC). Kernel mode drivers have low-level access to the PC and its resources. This low-level access to the PC is normally necessary to implement the kind of functionality that the driver is intended to provide to top-level applications.&nbsp;</p>
 <p class="Element10">
-<span style="color: #000000">The following block diagram shows the USB Device Layer interaction with USB Controller Driver, Function Drivers, User Application and the Harmony System module.</span> </p><p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<span style="color: #000000"><strong>USB Device Layer Interaction Block Diagram</strong></span>&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-&nbsp;</p>
+Malicious software developers would want their software to operate, since it provides the greatest control and access to the PC. Therefore, in the interest of protecting Windows security, Windows operating systems place restrictions on what code is allowed to be operated in Kernel mode.&nbsp;</p>
 <p class="Element10">
-<span style="color: #000000"><strong>Harmony System Module Interaction</strong></span>&nbsp;</p>
+Windows &quot;trusts&quot; drivers and executable programs that have been signed, more so than software that is unsigned. Signing a driver package is analogous to placing an embossed wax seal on an envelope. The signature/wax seal does not effect or alter the contents of the package, but it provides proof that the contents have not been modified or tampered with, since the time that the signature/wax seal was first applied.&nbsp;</p>
 <p class="Element10">
-<span style="color: #000000">The MPLAB Harmony System Module initializes the Device Layer in the SYS_Initialize() function. It calls the USB Device Layer task routine periodically from the SYS_Tasks() function.</span>&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000"><strong>USB Controller Driver Interaction</strong></span>&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000">The Device Layer opens the USB Controller Driver exclusively. It is the only client to the controller driver. The Device Layer manages Endpoint 0 and has exclusive access to this endpoint. It maintains the Control Transfer state machine and seeks intervention from the Application or the Function Drivers where required. The Device Layer provides layered access to the required USB Controller Driver functions.</span>&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000"><strong>Function Driver Interaction</strong></span>&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000">The USB Device Layer interaction with the function driver involves the following:</span></p>
+There are three types of USB driver signatures:</p>
 <ul class="Element630">
-<li class="Element600"><span style="color: #000000">It initializes the function driver when device is configured by the Host. This happens when the Host issues the standard USB Set Configuration Request to the device. The device</span><span style="color: #FFFFFF">_</span><span style="color: #000000">layer initializes only those function drivers that are part of the selected configuration.</span></li>
-<li class="Element600"><span style="color: #000000">Deinitializes the function driver when the Host issues a bus reset or when device is detached from the host or when the Host issues a Set Configuration request with configuration value set to '0'.</span></li>
-<li class="Element600">The Device Layer executes the F<span style="color: #000000">unction driver task routines from within its own tasks routine (<a href="00867.html" target="topic">USB_DEVICE_Tasks</a>() function). In an RTOS application, this implies that the function driver</span> task routines run at the same priority and context as the device<span style="color: #FFFFFF">_</span>layer task routine.</li>
-<li class="Element600"><span style="color: #000000">Forwards class/interface specific control transfer requests from host to function drivers for processing. The function drivers can use Device layer</span><span style="color: #FFFFFF">_</span><span style="color: #000000">API routines to read and write data to Endpoint 0.</span></li>
-</ul><p class="Element10">
-<span style="color: #000000">The Device Layer initiates all of the above interactions with the function driver independent of function driver type. Each </span>function driver implements a set of common APIs. These common API allow the Device Layer to initialize/deinitialize the function driver, forward control transfers and invoke the function driver's task routine. Function Drivers are registered with the Device Layer as a part of the Device Stack Configuration. This is a compile time step. Function driver registration is explained elsewhere in this help section.&nbsp;</p>
+<li class="Element600">Embedded digital signatures</li>
+<li class="Element600">Full driver package (digital signature - Microsoft Authenticode)</li>
+<li class="Element600">Full driver package (digital signature - WHQL</li>
+</ul><div class="Element15">
+Embedded Digital Signatures</div>
 <p class="Element10">
-<strong>User Application (Client) Interaction</strong>&nbsp;</p>
+This type of signature resides inside of driver <span class="Element146">.sys</span> files (Kernel mode driver binary files). No additional/external files are associated with this type of signature. These types of signatures only protect against tampering with the <span class="Element146">.sys</span> file itself, and do not include other files that may be a part of the driver package (i.e., <span class="Element146">.inf</span> and <span class="Element146">.dll</span> files). All driver <span class="Element146">.sys</span> files provided by Microsoft operating systems, as well as most third-party Kernel mode drivers will contain at least this level of signature.</p><div class="Element15">
+&quot;Full Driver Package” Digital Signature – Microsoft Authenticode</div>
 <p class="Element10">
-The user application opens the Device Layer and becomes a Device Layer client. It registers an event callback function with the Device<span style="color: #FFFFFF">_</span>layer to get Device Layer event notifications. Other than receiving such notifications, the application client can also interact with the Device Layer<span style="color: #FFFFFF">_</span>to determine device status such as USB speed or initiate a remote wake-up. The Device Layer will forward Control Transfers, whose recipient field is set to Other, to the application. The application must use the Device Layer Control Transfer Routines to complete these control transfers.</p></div>
+This type of signature can be thought of as a &quot;wrapper&quot; over the entire driver package content files. A driver package can be as simple as a single <span class="Element146">.inf</span> file (a plain text installation instruction file that Windows uses when installing new drivers), or may encompass additional files (such as <span class="Element146">.dll</span> and/or <span class="Element146">.sys</span> files). The full driver package signature comes in the form of a properly created security catalog file (<span class="Element146">.cat</span>), which will be part of the driver package distribution. A driver package signed with an Authenticode signature is relatively easy to create; however, it less trustworthy to that of a WHQL digital signature.</p><div class="Element15">
+“Full Driver Package” Digital Signature – WHQL</div>
+<p class="Element10">
+This type of signature is the most trusted by Windows, and is very similar to the full driver package Microsoft Authenticode signature, but is more expensive and harder to obtain. To obtain a Windows Hardware Quality Labs (WHQL) signature, a driver package must undergo extensive testing, and passing log files and submission fees must be supplied to Microsoft. If a driver package has already previously been tested and WHQL-certified, but has since been modified, in some cases it is possible to get the driver recertified through a simpler and less expensive &quot;Driver Update Acceptable&quot; process with Microsoft.&nbsp;</p>
+<p class="Element10">
+Any modifications to a driver package once the signature has been applied, including adding or deleting a single character of whitespace in the driver <span class="Element146">.inf</span> file, will invalidate a full driver package signature. However, a driver package can have two simultaneous signatures, one covering the full driver package, and one embedded inside the driver binary file(s). Modifications to a <span class="Element146">.inf</span> file do not invalidate an embedded digital signature inside of a driver binary file.&nbsp;</p>
+<p class="Element10">
+Once a signature has been invalidated, Windows will no longer trust the driver package as much, and will place restrictions on its installation (or outright prevent its installation on some operating systems). The driver package can however be resigned, to restore the trustworthiness of the driver to Windows.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00207.html" target="topic">USB Device Libraries</a> &gt; <a href="00206.html" target="topic">USB Device Layer Library</a> &gt; <a href="00234.html" target="topic">Using the Library</a> &gt; <a href="00209.html" target="topic">Abstraction Model</a></div>
+<a href="00274.html">USB Libraries Help</a> &gt; <a href="00157.html">Driver Signing and Windows 8 (for v1.08)</a> &gt; <a href="00209.html">What are &quot;Signed&quot; Drivers?</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="25%">
+<tr><td width="100%">
 <div class="Element3">
-MPLAB Harmony USB Stack </div>
-</td><td width="25%">
+ MPLAB Harmony USB Stack </div>
+</td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
-</td><td width="25%">
-<div class="Element91">
-<a href="00234.html" target="topic">Previous</a> | <a href="00234.html" target="topic">Up</a> | <a href="00230.html" target="topic">Next</a></div>
-</td><td width="25%">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00155.html">Home</a></div>
+</td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DRV DEV WIN 8 What are %22Signed%22 Drivers Topic Title: What are %22Signed%22 Drivers?)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

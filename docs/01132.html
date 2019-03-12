@@ -1,15 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
 <title>USB_HOST_DeviceGetFirst Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '01132.html');" onmousedown="onBodyMouseDown();">
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
 
 <!-- Begin Popups -->
 
@@ -18,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00282.html" target="topic">USB Host Libraries</a> &gt; <a href="00281.html" target="topic">USB Host Layer Library</a> &gt; <a href="00284.html" target="topic">Library Interface</a> &gt; a) Functions &gt; <a href="01132.html" target="topic">USB_HOST_DeviceGetFirst Function</a></div>
+<a href="00300.html">USB Libraries Help</a> &gt; <a href="00282.html">USB Host Libraries</a> &gt; <a href="00281.html">USB Host Layer Library</a> &gt; <a href="00284.html">Library Interface</a> &gt; a) Functions &gt; <a href="01132.html">USB_HOST_DeviceGetFirst Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,13 +28,13 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00181.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01062.html" target="topic">Previous</a> | <a href="00284.html" target="topic">Up</a> | <a href="01133.html" target="topic">Next</a></div>
+<a href="01062.html">Previous</a> | <a href="00284.html">Up</a> | <a href="01133.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_DeviceGetFirst@USB_HOST_BUS@USB_HOST_DEVICE_INFO * Topic Title: USB_HOST_DeviceGetFirst Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_DeviceGetFirst@USB_HOST_BUS@USB_HOST_DEVICE_INFO * Topic Title: USB_HOST_DeviceGetFirst Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 USB_HOST_DeviceGetFirst Function</div>
 </div>
@@ -45,24 +47,26 @@ USB_HOST_DeviceGetFirst Function</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<a name="PageContent"></a><div class="Element58">
-<a name="4465736372697074696F6E"></a><div class="Element11">
-<div class="Element10">
-<p class="Element10">
-This function returns information about the first attached device on the specified bus. The <a href="01133.html" target="topic">USB_HOST_DeviceGetNext</a>() function can be used to get the reference to the next attached device on the bus. The <a href="01120.html" target="topic">USB_HOST_DEVICE_INFO</a> object is provided by the application.The device information will be populated into this object. If there are no devices attached on the bus, the function will set the deviceObjHandle parameter, in the <a href="01120.html" target="topic">USB_HOST_DEVICE_INFO</a> object, to <a href="01124.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE</a> INVALID.</p></div>
-</div>
+<div class="Element58">
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01216.html" target="topic">USB_HOST_RESULT</a> <strong><span style="color: #000000">USB_HOST_DeviceGetFirst</span></strong>(
-    <a href="01056.html" target="topic">USB_HOST_BUS</a> <strong><span style="color: #000000">bus</span></strong>, 
-    <a href="01120.html" target="topic">USB_HOST_DEVICE_INFO</a> * <strong><span style="color: #000000">deviceInfo</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01216.html">USB_HOST_RESULT</a> <strong><span style="color: #000000">USB_HOST_DeviceGetFirst</span></strong>(
+    <a href="01056.html">USB_HOST_BUS</a> <strong><span style="color: #000000">bus</span></strong>, 
+    <a href="01120.html">USB_HOST_DEVICE_INFO</a> * <strong><span style="color: #000000">deviceInfo</span></strong>
 );</pre></div></div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This function returns information about the first attached device on the specified bus. The <a href="01133.html">USB_HOST_DeviceGetNext</a>() function can be used to get the reference to the next attached device on the bus. The <a href="01120.html">USB_HOST_DEVICE_INFO</a> object is provided by the application.The device information will be populated into this object. If there are no devices attached on the bus, the function will set the deviceObjHandle parameter, in the <a href="01120.html">USB_HOST_DEVICE_INFO</a> object, to <a href="01124.html">USB_HOST_DEVICE_OBJ_HANDLE</a> INVALID.</p></div>
+</div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="01058.html" target="topic">USB_HOST_BusEnable</a> function should have been called to enable detection of attached devices.</p></div>
+The <a href="01058.html">USB_HOST_BusEnable</a> function should have been called to enable detection of attached devices.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -86,7 +90,7 @@ the bus to be queried for attached devices.<br>&nbsp;</div></td></tr><tr>
 <div class="Element303">
 deviceInfo&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-output parameter. Will contain device information when the function returns. If the deviceObjHandle member of the structure contains <a href="01124.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE</a> INVALID, then there are no attached devices on the bus and the deviceAddress and the bus member of the info object will contain indeterminate values.&nbsp;</div></td></tr></table></div></div>
+output parameter. Will contain device information when the function returns. If the deviceObjHandle member of the structure contains <a href="01124.html">USB_HOST_DEVICE_OBJ_HANDLE</a> INVALID, then there are no attached devices on the bus and the deviceAddress and the bus member of the info object will contain indeterminate values.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -107,7 +111,9 @@ None.</p></div>
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">TBD.</pre></div></div>
+<div class="Element170">
+<a href="#" onclick="CopyElementToClipboard('code00127');">Copy Code</a></div>
+<div class="Element13"><div class="Element12" id="code00127"><pre class="Element12">TBD.</pre></div></div>
 </div>
 </div>
 </div>
@@ -115,21 +121,18 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00282.html" target="topic">USB Host Libraries</a> &gt; <a href="00281.html" target="topic">USB Host Layer Library</a> &gt; <a href="00284.html" target="topic">Library Interface</a> &gt; a) Functions &gt; <a href="01132.html" target="topic">USB_HOST_DeviceGetFirst Function</a></div>
+<a href="00300.html">USB Libraries Help</a> &gt; <a href="00282.html">USB Host Libraries</a> &gt; <a href="00281.html">USB Host Layer Library</a> &gt; <a href="00284.html">Library Interface</a> &gt; a) Functions &gt; <a href="01132.html">USB_HOST_DeviceGetFirst Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="25%">
+<tr><td width="100%">
 <div class="Element3">
-MPLAB Harmony USB Stack </div>
-</td><td width="25%">
+ MPLAB Harmony USB Stack </div>
+</td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
-</td><td width="25%">
-<div class="Element91">
-<a href="01062.html" target="topic">Previous</a> | <a href="00284.html" target="topic">Up</a> | <a href="01133.html" target="topic">Next</a></div>
-</td><td width="25%">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00181.html">Home</a></div>
+</td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_DeviceGetFirst@USB_HOST_BUS@USB_HOST_DEVICE_INFO * Topic Title: USB_HOST_DeviceGetFirst Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_DeviceGetFirst@USB_HOST_BUS@USB_HOST_DEVICE_INFO * Topic Title: USB_HOST_DeviceGetFirst Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,15 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Device Endpoint Operations</title>
+<title>Driver Host Mode Client Functions</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00073.html');" onmousedown="onBodyMouseDown();">
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
 
 <!-- Begin Popups -->
 
@@ -18,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00873.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00072.html" target="topic">Common Interface</a> &gt; <a href="00082.html" target="topic">USB Driver Device Mode Operation</a> &gt; <a href="00073.html" target="topic">Device Endpoint Operations</a></div>
+<a href="00290.html">USB Libraries Help</a> &gt; <a href="00351.html">USB Common Driver Interface</a> &gt; <a href="00069.html">Common Interface</a> &gt; <a href="00073.html">Driver Host Mode Client Functions</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +28,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00079.html" target="topic">Previous</a> | <a href="00082.html" target="topic">Up</a> | <a href="00081.html" target="topic">Next</a></div>
+<a href="00069.html">Previous</a> | <a href="00069.html">Up</a> | <a href="00074.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Device Endpoint Operations Topic Title: Device Endpoint Operations)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver Host Mode Client Functions Topic Title: Driver Host Mode Client Functions)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Device Endpoint Operations</div>
+Driver Host Mode Client Functions</div>
 </div>
 </div>
 
@@ -45,119 +47,100 @@ Device Endpoint Operations</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<a name="PageContent"></a><div class="Element58">
+<div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The UBSCD Endpoint functions allow the Driver Client to enable, disable, stall and clear the stall condition on an endpoint. The client submits requests to transmit and receive data from the USB Host on an endpoint.</p><div class="Element15">
-Endpoint Enable and Disable functions</div>
+The DRV_USB_HOST_INTERFACE structure contains pointers to the USB Driver’s Host mode Client functions. These functions are only applicable when the USB module is operating as a USB Host. Along with the function pointers to the driver’s Host mode specific functions, the DRV_USB_HOST_INTERFACE structure also contains another structure of function pointers of the type DRV_USB_ROOT_HUB_INTERFACE. This structure contains function pointers to the USB Driver’s Root Hub functions. A USB Driver must implement these functions and ensure that the Host Stack can access these functions through the driver’s DRV_USB_HOST_INTERFACE structure. The Driver Host mode Client functions in the DRV_USB_HOST_INTERFACE structure are:</p>
+<ul class="Element630">
+<li class="Element600">Driver Host Pipe Setup Function</li>
+<li class="Element600">Driver Host Pipe Close Function</li>
+<li class="Element600">Driver Host Events Disable Function</li>
+<li class="Element600">Driver Host Events Enable Function</li>
+<li class="Element600">Driver Host IRP Submit Function</li>
+<li class="Element600">Driver Host IRP Cancel Function</li>
+</ul><div class="Element15">
+Driver Host Pipe Setup Function</div>
 <p class="Element10">
-The USBCD client must enable an endpoint it must use the endpoint for communicating with the USB Host. The client will call the USBCD deviceEndpointEnable function to enable the endpoint. While calling this function, the client must specify the endpoint address, the transfer type to be processed on this endpoint and the maximum size of a transaction on this endpoint. This function is thread-safe when called in an RTOS application. The USBCD allows an endpoint to be accessed by one thread only. The USB Device Layer and the device function drivers will enable the endpoint when the Host sets the device configuration. The USBCD deviceEndpointIsEnabled function is available to check if an endpoint is enabled. The following code example shows how the USB Device Layer enables the device endpoint. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The following code example shows the USB Device Layer enables Endpoint 0 to
- * prepare for the enumeration process after it has received reset signaling
- * from the Host. The Device Layer calls the deviceEndpointEnable function to
- * to enable the endpoint. The driverInterface member of the
- * usbDeviceThisInstance structure points to the USB Device Mode Driver Common
- * Interface. */</span></i>
-
-<strong><span style="color: #000080">void</span></strong> _USB_DEVICE_EventHandler
-(
-    uintptr_t referenceHandle,
-    DRV_USB_EVENT eventType,
-    <strong><span style="color: #000080">void</span></strong> * eventData
-)
-{
-    <i><span style="color: #008000">/* Code not shown due to space constraints */</span></i>
-
-    <strong><span style="color: #000080">switch</span></strong>(eventType)
-    {
-        <strong><span style="color: #000080">case</span></strong> DRV_USB_EVENT_RESET_DETECT:
-
-            <i><span style="color: #008000">/* Clear the suspended state */</span></i>
-            usbDeviceThisInstance-&gt;usbDeviceStatusStruct.isSuspended = <strong><span style="color: #000080">false</span></strong>;
-
-            <i><span style="color: #008000">/* Cancel any IRP already submitted in the RX direction. */</span></i>
-            DRV_USB_DEVICE_IRPCancelAll( usbDeviceThisInstance-&gt;usbCDHandle,
-                    controlEndpointRx );
-
-            <i><span style="color: #008000">/* Cancel any IRP already submitted in the TX direction. */</span></i>
-            DRV_USB_DEVICE_IRPCancelAll( usbDeviceThisInstance-&gt;usbCDHandle,
-                    controlEndpointTx );
-
-            <i><span style="color: #008000">/* Deinitialize all function drivers.*/</span></i>
-            _USB_DEVICE_DeInitializeAllFunctionDrivers ( usbDeviceThisInstance );
-
-            <i><span style="color: #008000">/* Disable all endpoints except for EP0.*/</span></i>
-            DRV_USB_DEVICE_EndpointDisableAll(usbDeviceThisInstance-&gt;usbCDHandle);
-
-            <i><span style="color: #008000">/* Enable EP0 endpoint in RX direction */</span></i>
-            (<strong><span style="color: #000080">void</span></strong>)usbDeviceThisInstance-&gt;driverInterface-&gt;deviceEndpointEnable
-                  (usbDeviceThisInstance-&gt;usbCDHandle,
-                    controlEndpointTx, USB_TRANSFER_TYPE_CONTROL, USB_DEVICE_EP0_BUFFER_SIZE);
-
-            <i><span style="color: #008000">/* Code not shown due to space constraints */</span></i>
-
-            <strong><span style="color: #000080">break</span></strong>;
-    }
-}</pre></div></div>
+The <span class="Element146">hostPipeSetup</span> member of the DRV_USB_HOST_INTERFACE structure should point to the USB Driver Host Pipe Setup function. The signature of the Host Pipe Setup function is as follows: </p><div class="Element170">
+<a href="#" onclick="CopyElementToClipboard('code00082');">Copy Code</a></div>
+<div class="Element13"><div class="Element12" id="code00082"><pre class="Element12">DRV_USB_HOST_PIPE_HANDLE (*hostPipeSetup)  ( DRV_HANDLE client,  uint8_t deviceAddress,
+                           USB_ENDPOINT endpointAndDirection, uint8_t hubAddress,
+                           uint8_t hubPort, USB_TRANSFER_TYPE pipeType, uint8_t bInterval,
+                           uint16_t wMaxPacketSize, USB_SPEED speed);</pre></div></div>
 <p class="Element10">
-The USB Device Layer and the Function drivers will disable an endpoint when the Host sets a zero-device configuration or when the Host resets the device. The USBCD deviceEndpointDisable function disables an endpoint. When an endpoint is disabled, it does not accept requests for Host communication. Disabling an endpoint does not cancel any communication requests that that have been submitted on the endpoint. These requests must be canceled explicitly.</p><div class="Element15">
-Device Endpoint Stall and Stall Clear</div>
+The USB Driver Host mode Pipe Setup function must match this signature. The USB Host Stack calls this function to create a communication pipe to the attached device. The function parameters define the property of this communication pipe. The <span class="Element146">driverHandle</span> parameter is the handle to the driver obtained through the driver Open function. The <span class="Element146">deviceAddress</span> and the <span class="Element146">endpointAddress</span> parameters specify the address of the USB device and the endpoint on this device to which this pipe must connect.&nbsp;</p>
 <p class="Element10">
-The USBCD client can call the deviceEndpointStall and deviceEndpointStallClear functions to stall and cleat the stall on an endpoint respectively. The USB Device Layer and function driver may stall endpoint to indicate error or to indicate a protocol state. The endpoint stall condition may be cleared in response to a USB Host Clear Feature request. Stalling or clearing the stall on an endpoint will cause all communication requests on the endpoint to be canceled. The function calls are thread safe and interrupt safe. The deviceEndpointIsStalled function is also available to check if an endpoint is in a stalled state. The following code example shows how the USB Device Layer calls these functions to stall and clear the stall on an endpoint. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The following code example shows how the USB Device Layer calls the driver
- * endpoint stall function (deviceEndpointStall) to stall an endpoint when the a
- * Host send a Set Feature request with feature selector set to endpoint halt.
- * The endpoint to be halted is identified in the setup packet and is identified
- * in this code example as usbEndpoint. Also shown is how the stall clear
- * (deviceEndpointStallClear) and stall status check (deviceEndpointIsStalled)
- * functions are called. */</span></i>
-
-<i><span style="color: #008000">/* The driverInterface member of the usbDeviceThisInstance structure is a
- * pointer to the USB Driver Common Interface. */</span></i>
-
-<strong><span style="color: #000080">void</span></strong> _USB_DEVICE_ProcessStandardEndpointRequest
-(
-    USB_DEVICE_OBJ * usbDeviceThisInstance,
-    uint8_t interfaceNumber,
-    USB_SETUP_PACKET * setupPkt
-)
-{
-    USB_ENDPOINT usbEndpoint;
-    usbEndpoint = setupPkt-&gt;bEPID;
-
-    <strong><span style="color: #000080">if</span></strong>( setupPkt-&gt;bRequest == USB_REQUEST_GET_STATUS )
-    {
-        usbDeviceThisInstance-&gt;getStatusResponse.status = 0x00;
-        usbDeviceThisInstance-&gt;getStatusResponse.endPointHalt
-            =  usbDeviceThisInstance-&gt;driverInterface-&gt;deviceEndpointIsStalled
-               (usbDeviceThisInstance-&gt;usbCDHandle, usbEndpoint );
-
-        USB_DEVICE_ControlSend( (USB_DEVICE_HANDLE)usbDeviceThisInstance,
-                (uint8_t *)&amp;usbDeviceThisInstance-&gt;getStatusResponse, 2 );
-    }
-    <strong><span style="color: #000080">else</span></strong> <strong><span style="color: #000080">if</span></strong>( setupPkt-&gt;bRequest == USB_REQUEST_CLEAR_FEATURE )
-    {
-        <strong><span style="color: #000080">if</span></strong>( setupPkt-&gt;wValue == USB_FEATURE_SELECTOR_ENDPOINT_HALT )
-        {
-            usbDeviceThisInstance-&gt;driverInterface-&gt;deviceEndpointStallClear
-            (usbDeviceThisInstance-&gt;usbCDHandle, usbEndpoint );
-            USB_DEVICE_ControlStatus((USB_DEVICE_HANDLE)usbDeviceThisInstance,
-                                      USB_DEVICE_CONTROL_STATUS_OK );
-        }
-    }
-    <strong><span style="color: #000080">else</span></strong> <strong><span style="color: #000080">if</span></strong> (setupPkt-&gt;bRequest == USB_REQUEST_SET_FEATURE )
-    {
-        <strong><span style="color: #000080">if</span></strong>( setupPkt-&gt;wValue == USB_FEATURE_SELECTOR_ENDPOINT_HALT )
-        {
-            usbEndpoint = setupPkt-&gt;bEPID;
-            usbDeviceThisInstance-&gt;driverInterface-&gt;deviceEndpointStall
-                                  (usbDeviceThisInstance-&gt;usbCDHandle, usbEndpoint );
-            USB_DEVICE_ControlStatus((USB_DEVICE_HANDLE)usbDeviceThisInstance,
-                                      USB_DEVICE_CONTROL_STATUS_OK );
-        }
-    }
-
-    <i><span style="color: #008000">/* Additional code is not shown due to space constraints */</span></i>
-}</pre></div></div>
+If the device is connected to the Host though a hub, <span class="Element146">hubAddress</span> and <span class="Element146">hubPort</span> must specify the address of the hub and port to which the device is connected. The USB Driver will use these parameters to schedule split transactions if the target device is a Low-Speed or Full-Speed device and is connected to the Host through a high-speed hub. If the device is connected directly to the Host, these parameters should be set to zero ('<span class="Element146">0</span>').&nbsp;</p>
+<p class="Element10">
+The <span class="Element146">pipeType</span> parameter specifies the type of USB transfers that this pipe would support. The <span class="Element146">bInterval</span> parameter is interpreted as per the USB 2.0 Specification based on the transfer type and the speed of the pipe. The <span class="Element146">wMaxPacketSize</span> parameter defines the maximum size of a transaction that the driver should use while transporting a transfer on the pipe. The Host layer will use the information obtained from the USB device descriptors of the attached device to decide the <span class="Element146">wMaxPacketSize</span> parameter.&nbsp;</p>
+<p class="Element10">
+The Driver Host Pipe Setup function should be thread-safe, but does not have to be event safe. The Host layer (or the Host Client Drivers) will not, and should not attempt to create a pipe in an interrupt, and therefore, an event context. The function should return DRV_USB_PIPE_HANDLE_INVALID if the driver could not open the pipe. The driver may not be able to open a pipe due to incorrect function parameters or due to lack of resources.</p><div class="Element15">
+Driver Host Pipe Close Function</div>
+<p class="Element10">
+The <span class="Element146">hostPipeClose</span> member of the DRV_USB_HOST_INTERFACE structure should point to the USB Driver Host Pipe Close function. The signature of the Host Pipe Close function is as follows: </p><div class="Element170">
+<a href="#" onclick="CopyElementToClipboard('code00083');">Copy Code</a></div>
+<div class="Element13"><div class="Element12" id="code00083"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> (*hostPipeClose)(DRV_USB_HOST_PIPE_HANDLE pipeHandle);</pre></div></div>
+<p class="Element10">
+The USB Driver Host mode Pipe Close function must match this signature. The USB Host Stack calls this function to close communication pipes. The <span class="Element146">pipeHandle</span> parameter is the pipe handle obtained from the Pipe Setup function. The Host Client Driver typically closes pipes when a device detach was detected. The Client Driver may also close pipes when a device configuration needs to change or when the Client Driver is being unloaded by the Host. The Pipe Close function has no side effect if the pipe handle is invalid. Closing the pipe will abort all I/O Request Packets (IRP) that are scheduled on the pipe. Any transaction in progress will complete. The IRP callback functions for each IRP scheduled in the pipe will be called with a USB_HOST_IRP_STATUS_ABORTED status.&nbsp;</p>
+<p class="Element10">
+The USB Driver Pipe Close function must be thread-safe and event-safe. The latter requirement allows the Pipe Close function to be called in the context of the device detach Interrupt Service Routine.</p><div class="Element15">
+Driver Host Event Disable Function</div>
+<p class="Element10">
+The <span class="Element146">hostEventsDisable</span> member of the DRV_USB_HOST_INTERFACE structure should point to the USB Driver Host mode Driver Events Disable function. The signature of the Events Disable function is as follows: </p><div class="Element170">
+<a href="#" onclick="CopyElementToClipboard('code00084');">Copy Code</a></div>
+<div class="Element13"><div class="Element12" id="code00084"><pre class="Element12"><strong><span style="color: #000080">bool</span></strong> (*hostEventsDisable)(DRV_HANDLE handle);</pre></div></div>
+<p class="Element10">
+The USB Driver Host mode Driver Events Disable function must match this signature. The Host Stack will call this function when it wants to execute a section of code that should not be interrupted by the USB Driver. Calling this function should disable USB Driver event generation. The <span class="Element146">handle</span> parameter is set to the driver handle obtained via the driver Open function. The function will return the present state of the event generation, whether it is enabled or disabled. The Host Stack will pass this value to the USB Driver Host mode Driver Events Enable function when it needs to enable the driver events.</p><div class="Element15">
+Driver Host Events Enable Function</div>
+<p class="Element10">
+The <span class="Element146">hostEventsEnable</span> member of the DRV_USB_HOST_INTERFACE structure should point to the USB Driver Host mode Driver Events Enable function. The signature of the events enable function is as follows: </p><div class="Element170">
+<a href="#" onclick="CopyElementToClipboard('code00085');">Copy Code</a></div>
+<div class="Element13"><div class="Element12" id="code00085"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> (*hostEventsEnable)(DRV_HANDLE handle, <strong><span style="color: #000080">bool</span></strong> eventContext);</pre></div></div>
+<p class="Element10">
+The USB Driver Host mode Driver Events Enable function must match this signature. The USB Host Stack calls this function to re-enable the USB Driver Host mode Events (if they were enabled) after it called the USB Driver Host mode Events Disable function to disable driver events. The <span class="Element146">handle</span> parameter is set to the driver handle obtained via the driver Open function. The <span class="Element146">eventContext</span> parameter is set to the value returned by the Host mode Driver Events Disable function. The USB Driver will use the <span class="Element146">eventContext</span> parameter to restore the event generation status (enabled or disabled) to what it was when the USB Driver Host mode Driver Events Disable function was called.</p><div class="Element15">
+Driver Host IRP Submit Function</div>
+<p class="Element10">
+The <span class="Element146">hostIRPSubmit</span> member of the DRV_USB_HOST_INTERFACE structure should point to the USB Driver Host IRP Submit function. The signature of the IRP Submit function is as follows: </p><div class="Element170">
+<a href="#" onclick="CopyElementToClipboard('code00086');">Copy Code</a></div>
+<div class="Element13"><div class="Element12" id="code00086"><pre class="Element12">USB_ERROR (*hostIRPSubmit)(DRV_USB_HOST_PIPE_HANDLE pipeHandle, USB_HOST_IRP * irp);</pre></div></div>
+<p class="Element10">
+The USB Driver Host IRP Submit function must match this signature. The Host Stack calls this function to submit an IRP to the USB Driver. The USB Driver provides this mechanism to transfer data between the Host Stack and the attached device. The <span class="Element146">pipeHandle</span> parameter should be set to the pipe handle obtained by the Pipe Setup function. The pipe handle specifies the pipe, and therefore, the target device, endpoint, speed and transfer type, on which the I/O must be processed. The <span class="Element146">irp</span> parameter should point to the IRP data structure. The IRP data structure will transport an entire transfer over the pipe. The USB Driver will split up the transfer into transactions based on the parameters specified at the time of pipe creation. This process does not require Host Stack intervention.&nbsp;</p>
+<p class="Element10">
+The function will return USB_ERROR_HOST_PIPE_INVALID if the pipe handle is not valid. It will return USB_ERROR_OSAL_FUNCTION if an error occurred while performing a RTOS-related operation. It will return USB_ERROR_NONE if the IRP was submitted successfully.&nbsp;</p>
+<p class="Element10">
+The USB Driver will queue the IRP if there is already an IRP being processed on the pipe. The completion of the IRP processing is indicated by the USB Driver calling the IRP Callback function specified within the IRP. The Host IRP Submit function must be thread-safe and IRP callback-safe. The Host Stack may resubmit the IRP within the IRP Callback function. The IRP Callback function itself executes within an interrupt context. The completion status of the IRP will be available in the <span class="Element146">status</span> member of the IRP when the IRP callback function is invoked.</p><div class="Element15">
+Driver Host IRP Cancel Function</div>
+<p class="Element10">
+The <span class="Element146">hostIRPCancel</span> member of the DRV_USB_HOST_INTERFACE structure should point to the USB Driver Host IRP Cancel function. The signature of the IRP Cancel function is as follows </p><div class="Element170">
+<a href="#" onclick="CopyElementToClipboard('code00087');">Copy Code</a></div>
+<div class="Element13"><div class="Element12" id="code00087"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> (*hostIRPCancel)(USB_HOST_IRP * irp);</pre></div></div>
+<p class="Element10">
+The USB Driver Host IRP Cancel function must match this signature. The Host Stack and Host Client Drivers will call this function to cancel an IRP that was submitted. The IRP will be aborted successfully if it is not in progress. If the IRP processing has begun, the on-going transaction will complete and pending transactions in the transfer will be aborted. In either case, the IRP Callback function will be called with the IRP status as USB_HOST_IRP_STATUS_ABORTED.</p></div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00074.html">Driver Host Root Hub Interface</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Provides information on the Root Hub interface for the USB Host Driver.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00075.html">Driver Host USB Root Hub Port Interface</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Provides information on the Root Hub Port interface of the USB Host Driver.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -165,21 +148,18 @@ The USBCD client can call the deviceEndpointStall and deviceEndpointStallClear f
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00873.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00072.html" target="topic">Common Interface</a> &gt; <a href="00082.html" target="topic">USB Driver Device Mode Operation</a> &gt; <a href="00073.html" target="topic">Device Endpoint Operations</a></div>
+<a href="00290.html">USB Libraries Help</a> &gt; <a href="00351.html">USB Common Driver Interface</a> &gt; <a href="00069.html">Common Interface</a> &gt; <a href="00073.html">Driver Host Mode Client Functions</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="25%">
+<tr><td width="100%">
 <div class="Element3">
-MPLAB Harmony USB Stack </div>
-</td><td width="25%">
+ MPLAB Harmony USB Stack </div>
+</td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
-</td><td width="25%">
-<div class="Element91">
-<a href="00079.html" target="topic">Previous</a> | <a href="00082.html" target="topic">Up</a> | <a href="00081.html" target="topic">Next</a></div>
-</td><td width="25%">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+</td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Device Endpoint Operations Topic Title: Device Endpoint Operations)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver Host Mode Client Functions Topic Title: Driver Host Mode Client Functions)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

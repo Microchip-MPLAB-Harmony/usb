@@ -1,15 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
 <title>USB_HOST_CDC_ACM_ControlLineStateSet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '01064.html');" onmousedown="onBodyMouseDown();">
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
 
 <!-- Begin Popups -->
 
@@ -18,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00282.html" target="topic">USB Host Libraries</a> &gt; <a href="00173.html" target="topic">USB CDC Host Library</a> &gt; <a href="00174.html" target="topic">Library Interface</a> &gt; c) CDC Class-specific Functions &gt; <a href="01064.html" target="topic">USB_HOST_CDC_ACM_ControlLineStateSet Function</a></div>
+<a href="00300.html">USB Libraries Help</a> &gt; <a href="00282.html">USB Host Libraries</a> &gt; <a href="00173.html">USB CDC Host Library</a> &gt; <a href="00174.html">Library Interface</a> &gt; c) CDC Class-specific Functions &gt; <a href="01064.html">USB_HOST_CDC_ACM_ControlLineStateSet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,13 +28,13 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00181.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01114.html" target="topic">Previous</a> | <a href="00174.html" target="topic">Up</a> | <a href="01065.html" target="topic">Next</a></div>
+<a href="01114.html">Previous</a> | <a href="00174.html">Up</a> | <a href="01065.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_ACM_ControlLineStateSet@USB_HOST_CDC_HANDLE@USB_HOST_CDC_REQUEST_HANDLE *@USB_CDC_CONTROL_LINE_STATE * Topic Title: USB_HOST_CDC_ACM_ControlLineStateSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_ACM_ControlLineStateSet@USB_HOST_CDC_HANDLE@USB_HOST_CDC_REQUEST_HANDLE *@USB_CDC_CONTROL_LINE_STATE * Topic Title: USB_HOST_CDC_ACM_ControlLineStateSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 USB_HOST_CDC_ACM_ControlLineStateSet Function</div>
 </div>
@@ -45,19 +47,21 @@ USB_HOST_CDC_ACM_ControlLineStateSet Function</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<a name="PageContent"></a><div class="Element58">
-<a name="4465736372697074696F6E"></a><div class="Element11">
-<div class="Element10">
-<p class="Element10">
-This function sends a request to the attached to set its Control Line State. The function schedules a SET CONTROL LINE STATE control transfer. If successful, the requestHandle parameter will contain a valid request handle, else it will contain <a href="01104.html" target="topic">USB_HOST_CDC_REQUEST_HANDLE_INVALID</a>. When completed, the CDC client driver will generate a USB_HOST_CDC_EVENT_ACM_SET_CONTROL_LINE_STATE_COMPLETE event.</p></div>
-</div>
+<div class="Element58">
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01105.html" target="topic">USB_HOST_CDC_RESULT</a> <strong><span style="color: #000000">USB_HOST_CDC_ACM_ControlLineStateSet</span></strong>(
-    <a href="01097.html" target="topic">USB_HOST_CDC_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
-    <a href="01103.html" target="topic">USB_HOST_CDC_REQUEST_HANDLE</a> * <strong><span style="color: #000000">requestHandle</span></strong>, 
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01105.html">USB_HOST_CDC_RESULT</a> <strong><span style="color: #000000">USB_HOST_CDC_ACM_ControlLineStateSet</span></strong>(
+    <a href="01097.html">USB_HOST_CDC_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <a href="01103.html">USB_HOST_CDC_REQUEST_HANDLE</a> * <strong><span style="color: #000000">requestHandle</span></strong>, 
     USB_CDC_CONTROL_LINE_STATE * <strong><span style="color: #000000">controlLineState</span></strong>
 );</pre></div></div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This function sends a request to the attached to set its Control Line State. The function schedules a SET CONTROL LINE STATE control transfer. If successful, the requestHandle parameter will contain a valid request handle, else it will contain <a href="01104.html">USB_HOST_CDC_REQUEST_HANDLE_INVALID</a>. When completed, the CDC client driver will generate a USB_HOST_CDC_EVENT_ACM_SET_CONTROL_LINE_STATE_COMPLETE event.</p></div>
+</div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
@@ -70,21 +74,18 @@ Refer to usb_host_cdc_acm.h for usage information.</p></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00282.html" target="topic">USB Host Libraries</a> &gt; <a href="00173.html" target="topic">USB CDC Host Library</a> &gt; <a href="00174.html" target="topic">Library Interface</a> &gt; c) CDC Class-specific Functions &gt; <a href="01064.html" target="topic">USB_HOST_CDC_ACM_ControlLineStateSet Function</a></div>
+<a href="00300.html">USB Libraries Help</a> &gt; <a href="00282.html">USB Host Libraries</a> &gt; <a href="00173.html">USB CDC Host Library</a> &gt; <a href="00174.html">Library Interface</a> &gt; c) CDC Class-specific Functions &gt; <a href="01064.html">USB_HOST_CDC_ACM_ControlLineStateSet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="25%">
+<tr><td width="100%">
 <div class="Element3">
-MPLAB Harmony USB Stack </div>
-</td><td width="25%">
+ MPLAB Harmony USB Stack </div>
+</td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
-</td><td width="25%">
-<div class="Element91">
-<a href="01114.html" target="topic">Previous</a> | <a href="00174.html" target="topic">Up</a> | <a href="01065.html" target="topic">Next</a></div>
-</td><td width="25%">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00181.html">Home</a></div>
+</td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_ACM_ControlLineStateSet@USB_HOST_CDC_HANDLE@USB_HOST_CDC_REQUEST_HANDLE *@USB_CDC_CONTROL_LINE_STATE * Topic Title: USB_HOST_CDC_ACM_ControlLineStateSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_ACM_ControlLineStateSet@USB_HOST_CDC_HANDLE@USB_HOST_CDC_REQUEST_HANDLE *@USB_CDC_CONTROL_LINE_STATE * Topic Title: USB_HOST_CDC_ACM_ControlLineStateSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

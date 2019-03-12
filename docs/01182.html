@@ -1,15 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
 <title>USB_HOST_MSD_ERROR_CODE Enumeration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '01182.html');" onmousedown="onBodyMouseDown();">
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
 
 <!-- Begin Popups -->
 
@@ -18,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00282.html" target="topic">USB Host Libraries</a> &gt; <a href="00316.html" target="topic">USB MSD Host Client Driver Library</a> &gt; <a href="00318.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="01182.html" target="topic">USB_HOST_MSD_ERROR_CODE Enumeration</a></div>
+<a href="00300.html">USB Libraries Help</a> &gt; <a href="00282.html">USB Host Libraries</a> &gt; <a href="00316.html">USB MSD Host Client Driver Library</a> &gt; <a href="00318.html">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="01182.html">USB_HOST_MSD_ERROR_CODE Enumeration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,13 +28,13 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00181.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01196.html" target="topic">Previous</a> | <a href="00318.html" target="topic">Up</a> | <a href="00313.html" target="topic">Next</a></div>
+<a href="01196.html">Previous</a> | <a href="00318.html">Up</a> | <a href="00313.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_MSD_ERROR_CODE Topic Title: USB_HOST_MSD_ERROR_CODE Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_MSD_ERROR_CODE Topic Title: USB_HOST_MSD_ERROR_CODE Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 USB_HOST_MSD_ERROR_CODE Enumeration</div>
 </div>
@@ -45,14 +47,7 @@ USB_HOST_MSD_ERROR_CODE Enumeration</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<a name="PageContent"></a><div class="Element58">
-<a name="4465736372697074696F6E"></a><div class="Element11">
-<div class="Element10">
-<p class="Element10">
-USB Host MSD Error Codes.&nbsp;</p>
-<p class="Element10">
-This enumeration defines the codes that the MSD Client Driver returns for possible errors that lead to the device being placed in an error state. The MSD client driver will not operate on a device which is in an error state. The error are returned in the USB_HOST_MSD_ErrorCallback function.</p></div>
-</div>
+<div class="Element58">
 <a name="43"></a><div class="Element99">
 C</div>
 <div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
@@ -68,6 +63,15 @@ C</div>
   <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_CSW_PHASE_ERROR</span></strong>,
   <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_CSW_UNKNOWN_ERROR</span></strong>
 } USB_HOST_MSD_ERROR_CODE;</pre></div></div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+USB Host MSD Error Codes.&nbsp;</p>
+<p class="Element10">
+This enumeration defines the codes that the MSD Client Driver returns for possible errors that lead to the device being placed in an error state. The MSD client driver will not operate on a device which is in an error state. The error are returned in the USB_HOST_MSD_ErrorCallback function.</p></div>
+</div>
 <a name="4D656D62657273"></a><div class="Element14">
 Members</div>
 <div class="Element11">
@@ -91,7 +95,7 @@ This error occurs when the number of MSD instances defined via</p>
 <li class="Element600">example, this error would occur if the value of</li>
 <li class="Element600">USB_HOST_MSD_INSTANCES_NUMBER is 2, two MSC devices are already connected</li>
 <li class="Element600">and third MSC device is connected to the host. The object identifier in</li>
-<li class="Element600">this case will be the <a href="01124.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE</a> value.</li>
+<li class="Element600">this case will be the <a href="01124.html">USB_HOST_DEVICE_OBJ_HANDLE</a> value.</li>
 </ul><p class="Element267">
 &nbsp;</div></td></tr><tr>
 <td class="Element262" valign="top" width="35%">
@@ -101,7 +105,7 @@ USB_HOST_MSD_ERROR_CODE_NOT_FOUND_BULK_IN_ENDPOINT&nbsp;</div></td><td class="El
 This error occurs when the driver descriptor parser could not find a Bulk</p>
 <ul class="Element630">
 <li class="Element600">IN endpoint in the interface descriptor. The object identifier in this</li>
-<li class="Element600">case will be the <a href="01124.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE</a> value.</li>
+<li class="Element600">case will be the <a href="01124.html">USB_HOST_DEVICE_OBJ_HANDLE</a> value.</li>
 </ul><p class="Element267">
 &nbsp;</div></td></tr><tr>
 <td class="Element262" valign="top" width="35%">
@@ -111,7 +115,7 @@ USB_HOST_MSD_ERROR_CODE_NOT_FOUND_BULK_OUT_ENDPOINT&nbsp;</div></td><td class="E
 This error occurs when the driver descriptor parser could not find a Bulk</p>
 <ul class="Element630">
 <li class="Element600">OUT endpoint in the interface descriptor. The object identifier in this</li>
-<li class="Element600">case will be <a href="01124.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE</a> value.</li>
+<li class="Element600">case will be <a href="01124.html">USB_HOST_DEVICE_OBJ_HANDLE</a> value.</li>
 </ul><p class="Element267">
 &nbsp;</div></td></tr><tr>
 <td class="Element262" valign="top" width="35%">
@@ -122,7 +126,7 @@ This error occurs when the driver could not open a Bulk pipe. This</p>
 <ul class="Element630">
 <li class="Element600">typically happens either due to a host layer error or due to insufficient</li>
 <li class="Element600">number of pipes (which is configured via USB_HOST_PIPES_NUMBER). The</li>
-<li class="Element600">object idenfier in this case will be <a href="01124.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE</a> value.</li>
+<li class="Element600">object idenfier in this case will be <a href="01124.html">USB_HOST_DEVICE_OBJ_HANDLE</a> value.</li>
 </ul><p class="Element267">
 &nbsp;</div></td></tr><tr>
 <td class="Element262" valign="top" width="35%">
@@ -217,21 +221,18 @@ None.</p></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00282.html" target="topic">USB Host Libraries</a> &gt; <a href="00316.html" target="topic">USB MSD Host Client Driver Library</a> &gt; <a href="00318.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="01182.html" target="topic">USB_HOST_MSD_ERROR_CODE Enumeration</a></div>
+<a href="00300.html">USB Libraries Help</a> &gt; <a href="00282.html">USB Host Libraries</a> &gt; <a href="00316.html">USB MSD Host Client Driver Library</a> &gt; <a href="00318.html">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="01182.html">USB_HOST_MSD_ERROR_CODE Enumeration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="25%">
+<tr><td width="100%">
 <div class="Element3">
-MPLAB Harmony USB Stack </div>
-</td><td width="25%">
+ MPLAB Harmony USB Stack </div>
+</td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
-</td><td width="25%">
-<div class="Element91">
-<a href="01196.html" target="topic">Previous</a> | <a href="00318.html" target="topic">Up</a> | <a href="00313.html" target="topic">Next</a></div>
-</td><td width="25%">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00181.html">Home</a></div>
+</td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_MSD_ERROR_CODE Topic Title: USB_HOST_MSD_ERROR_CODE Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_MSD_ERROR_CODE Topic Title: USB_HOST_MSD_ERROR_CODE Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

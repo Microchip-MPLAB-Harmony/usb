@@ -1,0 +1,1627 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Contents</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body>
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB Demonstrations Help">
+    <PARAM name="Local" value="00171.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Introduction">
+    <PARAM name="Local" value="00059.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB MSD Host USB Pen Drive Tests">
+    <PARAM name="Local" value="00068.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Device Demonstrations">
+    <PARAM name="Local" value="00021.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="cdc_com_port_dual">
+    <PARAM name="Local" value="00005.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Application">
+    <PARAM name="Local" value="00006.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Hardware">
+    <PARAM name="Local" value="00007.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running the Demonstration">
+    <PARAM name="Local" value="00008.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="cdc_com_port_single">
+    <PARAM name="Local" value="00009.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Application">
+    <PARAM name="Local" value="00010.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Hardware">
+    <PARAM name="Local" value="00011.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running the Demonstration">
+    <PARAM name="Local" value="00012.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="cdc_msd_basic">
+    <PARAM name="Local" value="00022.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Application">
+    <PARAM name="Local" value="00023.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Hardware">
+    <PARAM name="Local" value="00024.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running the Demonstration">
+    <PARAM name="Local" value="00025.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="cdc_serial_emulator">
+    <PARAM name="Local" value="00017.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Application">
+    <PARAM name="Local" value="00018.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Hardware">
+    <PARAM name="Local" value="00019.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running the Demonstration">
+    <PARAM name="Local" value="00020.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="hid_basic">
+    <PARAM name="Local" value="00038.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Application">
+    <PARAM name="Local" value="00039.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Hardware">
+    <PARAM name="Local" value="00040.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running the Demonstration">
+    <PARAM name="Local" value="00041.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="hid_joystick">
+    <PARAM name="Local" value="00026.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Application">
+    <PARAM name="Local" value="00027.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Hardware">
+    <PARAM name="Local" value="00028.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running the Demonstration">
+    <PARAM name="Local" value="00029.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="hid_keyboard">
+    <PARAM name="Local" value="00042.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Application">
+    <PARAM name="Local" value="00043.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Hardware">
+    <PARAM name="Local" value="00044.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running the Demonstration">
+    <PARAM name="Local" value="00045.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="hid_mouse">
+    <PARAM name="Local" value="00046.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Application">
+    <PARAM name="Local" value="00047.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Hardware">
+    <PARAM name="Local" value="00048.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running the Demonstration">
+    <PARAM name="Local" value="00049.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="hid_msd_basic">
+    <PARAM name="Local" value="00030.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Application">
+    <PARAM name="Local" value="00031.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Hardware">
+    <PARAM name="Local" value="00032.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running the Demonstration">
+    <PARAM name="Local" value="00033.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="msd_basic">
+    <PARAM name="Local" value="00060.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Application">
+    <PARAM name="Local" value="00061.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Hardware">
+    <PARAM name="Local" value="00062.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running the Demonstration">
+    <PARAM name="Local" value="00067.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="vendor">
+    <PARAM name="Local" value="00034.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Application">
+    <PARAM name="Local" value="00035.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Hardware">
+    <PARAM name="Local" value="00036.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running the Demonstration">
+    <PARAM name="Local" value="00037.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Host Demonstrations">
+    <PARAM name="Local" value="00050.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="cdc_basic">
+    <PARAM name="Local" value="00001.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Application">
+    <PARAM name="Local" value="00002.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Hardware">
+    <PARAM name="Local" value="00003.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running the Demonstration">
+    <PARAM name="Local" value="00004.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="cdc_msd">
+    <PARAM name="Local" value="00013.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Application">
+    <PARAM name="Local" value="00014.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Hardware">
+    <PARAM name="Local" value="00015.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running the Demonstration">
+    <PARAM name="Local" value="00016.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="hid_basic_keyboard">
+    <PARAM name="Local" value="00051.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Application">
+    <PARAM name="Local" value="00052.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Hardware">
+    <PARAM name="Local" value="00053.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running the Demonstration">
+    <PARAM name="Local" value="00054.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="msd_basic">
+    <PARAM name="Local" value="00063.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Application">
+    <PARAM name="Local" value="00064.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Hardware">
+    <PARAM name="Local" value="00065.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running the Demonstration">
+    <PARAM name="Local" value="00066.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="hid_basic_mouse_usart">
+    <PARAM name="Local" value="00055.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Application">
+    <PARAM name="Local" value="00056.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Hardware">
+    <PARAM name="Local" value="00057.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Running the Demonstration">
+    <PARAM name="Local" value="00058.html">
+    </OBJECT>
+</ul>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB Libraries Help">
+    <PARAM name="Local" value="00290.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB Device Libraries">
+    <PARAM name="Local" value="00197.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB Device Library - Getting Started">
+    <PARAM name="Local" value="00198.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Introduction">
+    <PARAM name="Local" value="00292.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB Device Library Architecture">
+    <PARAM name="Local" value="00294.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB Device Library - Application Interaction">
+    <PARAM name="Local" value="00293.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Creating Your Own USB Device">
+    <PARAM name="Local" value="00291.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB Device Layer Library">
+    <PARAM name="Local" value="00196.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Introduction">
+    <PARAM name="Local" value="00217.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Using the Library">
+    <PARAM name="Local" value="00224.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Abstraction Model">
+    <PARAM name="Local" value="00199.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Overview">
+    <PARAM name="Local" value="00220.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="How the Library Works">
+    <PARAM name="Local" value="00214.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Initialization">
+    <PARAM name="Local" value="00216.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Master Descriptor Table">
+    <PARAM name="Local" value="00221.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Function Driver Registration Table">
+    <PARAM name="Local" value="00213.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Initializing the Device Layer">
+    <PARAM name="Local" value="00215.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Device Layer Task Routines">
+    <PARAM name="Local" value="00207.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Application Client Interaction">
+    <PARAM name="Local" value="00200.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Event Handling">
+    <PARAM name="Local" value="00211.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Device Layer Control Transfers">
+    <PARAM name="Local" value="00206.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="String Descriptor Table">
+    <PARAM name="Local" value="00222.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="BOS Descriptor Support">
+    <PARAM name="Local" value="00201.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Library">
+    <PARAM name="Local" value="00218.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Library">
+    <PARAM name="Local" value="00202.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Interface">
+    <PARAM name="Local" value="00219.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="a) System Interaction Functions">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="b) Client Core Functions">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="c) Device Power State Management Functions">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="d) Device Management Functions">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="e) Endpoint Management Functions">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="f) Control Transfer Functions">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="g) Data Types and Constants">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Files">
+    <PARAM name="Local" value="00212.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_device.h">
+    <PARAM name="Local" value="00339.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_device_config_template.h">
+    <PARAM name="Local" value="00346.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB Audio 1.0 Device Library">
+    <PARAM name="Local" value="00126.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Introduction">
+    <PARAM name="Local" value="00107.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Using the Library">
+    <PARAM name="Local" value="00111.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Abstraction Model">
+    <PARAM name="Local" value="00101.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Overview">
+    <PARAM name="Local" value="00108.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="How the Library Works">
+    <PARAM name="Local" value="00106.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Initializing the Library">
+    <PARAM name="Local" value="00100.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Event Handling">
+    <PARAM name="Local" value="00104.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Transferring Data">
+    <PARAM name="Local" value="00110.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Library">
+    <PARAM name="Local" value="00103.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Library">
+    <PARAM name="Local" value="00102.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Interface">
+    <PARAM name="Local" value="00109.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="a) Functions">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="b) Data Types and Constants">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Files">
+    <PARAM name="Local" value="00105.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_device_audio_v1_0.h">
+    <PARAM name="Local" value="00340.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_device_audio_v1_0_config_template.h">
+    <PARAM name="Local" value="00341.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB Audio 2.0 Device Library">
+    <PARAM name="Local" value="00127.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Introduction">
+    <PARAM name="Local" value="00121.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Using the Library">
+    <PARAM name="Local" value="00125.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Abstraction Model">
+    <PARAM name="Local" value="00112.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Overview">
+    <PARAM name="Local" value="00122.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="How the Library Works">
+    <PARAM name="Local" value="00119.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Initializing the Library">
+    <PARAM name="Local" value="00120.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Event Handling">
+    <PARAM name="Local" value="00116.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Transferring Data">
+    <PARAM name="Local" value="00124.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Library">
+    <PARAM name="Local" value="00114.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Library">
+    <PARAM name="Local" value="00113.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Interface">
+    <PARAM name="Local" value="00123.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="a) Functions">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="b) Data Types and Constants">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Files">
+    <PARAM name="Local" value="00117.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_device_audio_v2_0.h">
+    <PARAM name="Local" value="00342.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_device_audio_v2_0_config_template.h">
+    <PARAM name="Local" value="00343.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB CDC Device Library">
+    <PARAM name="Local" value="00195.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Introduction">
+    <PARAM name="Local" value="00188.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Using the Library">
+    <PARAM name="Local" value="00194.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Abstraction Model">
+    <PARAM name="Local" value="00180.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Abstract Control Model (ACM)">
+    <PARAM name="Local" value="00179.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Overview">
+    <PARAM name="Local" value="00189.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="How the Library Works">
+    <PARAM name="Local" value="00187.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Initialization">
+    <PARAM name="Local" value="00190.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Event Handling">
+    <PARAM name="Local" value="00184.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Sending Data">
+    <PARAM name="Local" value="00193.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Receiving Data">
+    <PARAM name="Local" value="00192.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Library">
+    <PARAM name="Local" value="00182.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Library">
+    <PARAM name="Local" value="00181.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Interface">
+    <PARAM name="Local" value="00191.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="a) Functions">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="b) Data Types and Constants">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Files">
+    <PARAM name="Local" value="00185.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_device_cdc.h">
+    <PARAM name="Local" value="00344.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_cdc.h">
+    <PARAM name="Local" value="00338.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_device_cdc_config_template.h">
+    <PARAM name="Local" value="00345.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB HID Device Library">
+    <PARAM name="Local" value="00226.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Introduction">
+    <PARAM name="Local" value="00250.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Using the Library">
+    <PARAM name="Local" value="00256.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Abstraction Model">
+    <PARAM name="Local" value="00242.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Overview">
+    <PARAM name="Local" value="00251.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="How the Library Works">
+    <PARAM name="Local" value="00249.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Initialization">
+    <PARAM name="Local" value="00252.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Event Handling">
+    <PARAM name="Local" value="00246.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Sending a Report">
+    <PARAM name="Local" value="00255.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Receiving a Report">
+    <PARAM name="Local" value="00254.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Library">
+    <PARAM name="Local" value="00244.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Library">
+    <PARAM name="Local" value="00243.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Interface">
+    <PARAM name="Local" value="00253.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="a) Functions">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="b) Data Types and Constants">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Files">
+    <PARAM name="Local" value="00247.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_device_hid.h">
+    <PARAM name="Local" value="00347.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_device_hid_config_template.h">
+    <PARAM name="Local" value="00348.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Generic USB Device Library">
+    <PARAM name="Local" value="00323.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Introduction">
+    <PARAM name="Local" value="00333.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Using the Library">
+    <PARAM name="Local" value="00337.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Overview">
+    <PARAM name="Local" value="00336.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Abstraction Model">
+    <PARAM name="Local" value="00324.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="How the Library Works">
+    <PARAM name="Local" value="00332.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Initialization">
+    <PARAM name="Local" value="00334.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Event Handling">
+    <PARAM name="Local" value="00331.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Control Transfer Events">
+    <PARAM name="Local" value="00327.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Endpoint Data Transfer Events">
+    <PARAM name="Local" value="00329.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Endpoint Management">
+    <PARAM name="Local" value="00330.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Endpoint Data Transfer">
+    <PARAM name="Local" value="00328.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Library">
+    <PARAM name="Local" value="00326.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Library">
+    <PARAM name="Local" value="00325.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Interface">
+    <PARAM name="Local" value="00335.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB MSD Device Library">
+    <PARAM name="Local" value="00296.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Introduction">
+    <PARAM name="Local" value="00317.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Using the Library">
+    <PARAM name="Local" value="00322.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Abstraction Model">
+    <PARAM name="Local" value="00311.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Overview">
+    <PARAM name="Local" value="00320.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="How the Library Works">
+    <PARAM name="Local" value="00316.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Initialization">
+    <PARAM name="Local" value="00318.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Data Transfer">
+    <PARAM name="Local" value="00313.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Library">
+    <PARAM name="Local" value="00295.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Library">
+    <PARAM name="Local" value="00312.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Interface">
+    <PARAM name="Local" value="00319.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="a) System Configuration Functions">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Data Types and Constants">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Files">
+    <PARAM name="Local" value="00315.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_device_msd.h">
+    <PARAM name="Local" value="00349.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_device_msd_config_template.h">
+    <PARAM name="Local" value="00350.html">
+    </OBJECT>
+</ul>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB Host Libraries">
+    <PARAM name="Local" value="00272.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB Host Library - Getting Started">
+    <PARAM name="Local" value="00273.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Introduction">
+    <PARAM name="Local" value="00264.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB Host Library Architecture">
+    <PARAM name="Local" value="00266.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB Host Library - Application Interaction">
+    <PARAM name="Local" value="00265.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB Host Layer Library">
+    <PARAM name="Local" value="00271.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Introduction">
+    <PARAM name="Local" value="00270.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Using the Library">
+    <PARAM name="Local" value="00276.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Abstraction Model">
+    <PARAM name="Local" value="00257.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Overview">
+    <PARAM name="Local" value="00275.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="How the Library Works">
+    <PARAM name="Local" value="00269.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Host Layer Initialization">
+    <PARAM name="Local" value="00268.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Host Layer - Application Interaction">
+    <PARAM name="Local" value="00267.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Event Handling">
+    <PARAM name="Local" value="00261.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Library">
+    <PARAM name="Local" value="00259.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Library">
+    <PARAM name="Local" value="00258.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Interface">
+    <PARAM name="Local" value="00274.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="a) Functions">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="b) Data Types and Constants">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Files">
+    <PARAM name="Local" value="00262.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_host.h">
+    <PARAM name="Local" value="00352.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_host_config_template.h">
+    <PARAM name="Local" value="00357.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB Audio v1.0 Host Client Driver Library">
+    <PARAM name="Local" value="00128.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Introduction">
+    <PARAM name="Local" value="00141.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Using the Library">
+    <PARAM name="Local" value="00150.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Abstraction Model">
+    <PARAM name="Local" value="00129.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Overview">
+    <PARAM name="Local" value="00142.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="How the Library Works">
+    <PARAM name="Local" value="00140.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="TPL Table Configuration for Audio v1.0 Devices">
+    <PARAM name="Local" value="00149.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Detecting Device Attach">
+    <PARAM name="Local" value="00137.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Obtaining Audio v1.0 Device Audio Stream Details">
+    <PARAM name="Local" value="00145.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Obtaining an Audio Stream">
+    <PARAM name="Local" value="00144.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Audio Stream Event Handling">
+    <PARAM name="Local" value="00133.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Enabling Audio Stream">
+    <PARAM name="Local" value="00138.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Setting the Desired Audio Stream Sampling Rate">
+    <PARAM name="Local" value="00148.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Audio Data Streaming">
+    <PARAM name="Local" value="00130.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Sending Class Specific Control Transfers">
+    <PARAM name="Local" value="00147.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Library">
+    <PARAM name="Local" value="00135.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Library">
+    <PARAM name="Local" value="00134.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Interface">
+    <PARAM name="Local" value="00143.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="a) Audio Device Access Functions">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="b) Audio Stream Access Functions">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="c) Other Functions">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="d) Data Types and Constants">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Files">
+    <PARAM name="Local" value="00139.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_host_audio_v1_0.h">
+    <PARAM name="Local" value="00353.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_host_cdc.h">
+    <PARAM name="Local" value="00355.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_host_hub_config_template.h">
+    <PARAM name="Local" value="00361.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_host_audio_v1_0_config_template.h">
+    <PARAM name="Local" value="00354.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB CDC Host Library">
+    <PARAM name="Local" value="00163.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Introduction">
+    <PARAM name="Local" value="00162.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Using the Library">
+    <PARAM name="Local" value="00170.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Abstraction Model">
+    <PARAM name="Local" value="00151.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Overview">
+    <PARAM name="Local" value="00165.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="How the Library Works">
+    <PARAM name="Local" value="00161.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="TPL Table Configuration for CDC Devices">
+    <PARAM name="Local" value="00169.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Detecting Device Attach">
+    <PARAM name="Local" value="00158.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Opening the CDC Host Client Driver">
+    <PARAM name="Local" value="00166.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Sending Class-specific Control Transfers">
+    <PARAM name="Local" value="00168.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Reading and Writing Data">
+    <PARAM name="Local" value="00167.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Event Handling">
+    <PARAM name="Local" value="00159.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Library">
+    <PARAM name="Local" value="00155.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Library">
+    <PARAM name="Local" value="00152.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Interface">
+    <PARAM name="Local" value="00164.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="a) Client Access Functions">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="b) Data Transfer Functions">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="c) CDC Class-specific Functions">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="d) Data Types and Constants">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Files">
+    <PARAM name="Local" value="00160.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_host_cdc_config_template.h">
+    <PARAM name="Local" value="00356.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB HID Host Mouse Driver Library">
+    <PARAM name="Local" value="00232.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Introduction">
+    <PARAM name="Local" value="00236.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Using the Library">
+    <PARAM name="Local" value="00241.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Abstraction Model">
+    <PARAM name="Local" value="00227.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Overview">
+    <PARAM name="Local" value="00237.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="How the Library Works">
+    <PARAM name="Local" value="00235.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="HID Device TPL Table Configuration">
+    <PARAM name="Local" value="00234.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Detecting Device Attach">
+    <PARAM name="Local" value="00231.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Mouse Data Event Handling">
+    <PARAM name="Local" value="00240.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Library">
+    <PARAM name="Local" value="00229.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Library">
+    <PARAM name="Local" value="00228.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Interface">
+    <PARAM name="Local" value="00238.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="a) Mouse Access Functions">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="b) Data Types and Constants">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Files">
+    <PARAM name="Local" value="00233.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_host_hid_mouse.h">
+    <PARAM name="Local" value="00359.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_host_hid_config_template.h">
+    <PARAM name="Local" value="00358.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB Hub Host Client Driver Library">
+    <PARAM name="Local" value="00279.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Introduction">
+    <PARAM name="Local" value="00285.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Using the Library">
+    <PARAM name="Local" value="00289.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Abstraction Model">
+    <PARAM name="Local" value="00277.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Overview">
+    <PARAM name="Local" value="00286.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="How the Library Works">
+    <PARAM name="Local" value="00283.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Hub TPL Table Configuration">
+    <PARAM name="Local" value="00284.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB Hub Host Client Driver Test Results">
+    <PARAM name="Local" value="00288.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Library">
+    <PARAM name="Local" value="00280.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Library">
+    <PARAM name="Local" value="00278.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Interface">
+    <PARAM name="Local" value="00287.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Data Types and Constants">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Files">
+    <PARAM name="Local" value="00282.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_host_hub.h">
+    <PARAM name="Local" value="00360.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB MSD Host Client Driver Library">
+    <PARAM name="Local" value="00306.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Introduction">
+    <PARAM name="Local" value="00305.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Using the Library">
+    <PARAM name="Local" value="00310.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Abstraction Model">
+    <PARAM name="Local" value="00297.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Overview">
+    <PARAM name="Local" value="00307.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="How the Library Works">
+    <PARAM name="Local" value="00304.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="MSD TPL Table Configuration">
+    <PARAM name="Local" value="00309.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Data Transfer">
+    <PARAM name="Local" value="00300.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Configuring the Library">
+    <PARAM name="Local" value="00299.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Building the Library">
+    <PARAM name="Local" value="00298.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Library Interface">
+    <PARAM name="Local" value="00308.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="a) Data Transfer Functions">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="b) Data Types and Constants">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Files">
+    <PARAM name="Local" value="00303.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_host_msd.h">
+    <PARAM name="Local" value="00362.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="usb_host_msd_config_template.h">
+    <PARAM name="Local" value="00363.html">
+    </OBJECT>
+</ul>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB Common Driver Interface">
+    <PARAM name="Local" value="00351.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Common Interface">
+    <PARAM name="Local" value="00069.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Driver Host Mode Client Functions">
+    <PARAM name="Local" value="00073.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Driver Host Root Hub Interface">
+    <PARAM name="Local" value="00074.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Driver Host USB Root Hub Port Interface">
+    <PARAM name="Local" value="00075.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Driver Device Mode Client Functions">
+    <PARAM name="Local" value="00071.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Driver General Client Functions">
+    <PARAM name="Local" value="00072.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Opening the Driver">
+    <PARAM name="Local" value="00077.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB Driver Host Mode Operation">
+    <PARAM name="Local" value="00080.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB Driver Device Mode Operation">
+    <PARAM name="Local" value="00079.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="General Device Mode Operations">
+    <PARAM name="Local" value="00076.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Device Endpoint Operations">
+    <PARAM name="Local" value="00070.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Transferring Data to the Host">
+    <PARAM name="Local" value="00078.html">
+    </OBJECT>
+</ul>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Driver Signing and Windows 8 (for v1.08)">
+    <PARAM name="Local" value="00173.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="What are &quot;Signed&quot; Drivers?">
+    <PARAM name="Local" value="00225.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Minimum Driver Signature Requirements">
+    <PARAM name="Local" value="00174.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Using Older Drivers With Windows 8">
+    <PARAM name="Local" value="00178.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="USB Application Project Driver Signatures">
+    <PARAM name="Local" value="00176.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Obtaining a Microsoft Authenticode Code Signing Certificate">
+    <PARAM name="Local" value="00175.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Code Signing Certificates (Other Uses)">
+    <PARAM name="Local" value="00172.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Using a Code Signing Certificate to Sign Driver Packages">
+    <PARAM name="Local" value="00177.html">
+    </OBJECT>
+</ul>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Support">
+    <PARAM name="Local" value="00094.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Using the Help">
+    <PARAM name="Local" value="00082.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Trademarks">
+    <PARAM name="Local" value="00096.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Typographic Conventions">
+    <PARAM name="Local" value="00085.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Recommended Reading">
+    <PARAM name="Local" value="00093.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Documentation Feedback">
+    <PARAM name="Local" value="00087.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Help Features">
+    <PARAM name="Local" value="00089.html">
+    </OBJECT>
+<ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="CHM Help Features">
+    <PARAM name="Local" value="00083.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="HTML Help Features">
+    <PARAM name="Local" value="00090.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="PDF Help Features">
+    <PARAM name="Local" value="00092.html">
+    </OBJECT>
+</ul>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Microchip Website">
+    <PARAM name="Local" value="00095.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Microchip Forums">
+    <PARAM name="Local" value="00091.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Customer Support">
+    <PARAM name="Local" value="00086.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Contact Microchip Technology">
+    <PARAM name="Local" value="00084.html">
+    </OBJECT>
+<li><OBJECT type="text/sitemap">
+    <PARAM name="Name" value="Glossary">
+    <PARAM name="Local" value="00088.html">
+    </OBJECT>
+</ul>
+</ul>
+
+<!-- End Client Area -->
+</body></html>

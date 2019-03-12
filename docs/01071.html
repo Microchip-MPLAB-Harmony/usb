@@ -1,15 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
 <title>USB_HOST_CDC_EVENT Enumeration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '01071.html');" onmousedown="onBodyMouseDown();">
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
 
 <!-- Begin Popups -->
 
@@ -18,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00282.html" target="topic">USB Host Libraries</a> &gt; <a href="00138.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00153.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01071.html" target="topic">USB_HOST_CDC_EVENT Enumeration</a></div>
+<a href="00300.html">USB Libraries Help</a> &gt; <a href="00282.html">USB Host Libraries</a> &gt; <a href="00138.html">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00153.html">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01071.html">USB_HOST_CDC_EVENT Enumeration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,13 +28,13 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00181.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00904.html" target="topic">Previous</a> | <a href="00153.html" target="topic">Up</a> | <a href="00910.html" target="topic">Next</a></div>
+<a href="00904.html">Previous</a> | <a href="00153.html">Up</a> | <a href="00910.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_EVENT Topic Title: USB_HOST_CDC_EVENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_EVENT Topic Title: USB_HOST_CDC_EVENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 USB_HOST_CDC_EVENT Enumeration</div>
 </div>
@@ -45,16 +47,7 @@ USB_HOST_CDC_EVENT Enumeration</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<a name="PageContent"></a><div class="Element58">
-<a name="4465736372697074696F6E"></a><div class="Element11">
-<div class="Element10">
-<p class="Element10">
-CDC Class Driver Events&nbsp;</p>
-<p class="Element10">
-This enumeration identifies the possible events that the CDC Class Driver can generate. The application should register an event handler using the <a href="01096.html" target="topic">USB_HOST_CDC_EventHandlerSet</a> function to receive CDC Class Driver events.&nbsp;</p>
-<p class="Element10">
-An event may have data associated with it. Events that are generated due to a transfer of data between the host and device are accompanied by data structures that provide the status of the transfer termination. For example, the USB_HOST_CDC_EVENT_ACM_SET_LINE_CODING_COMPLETE event is accompanied by a pointer to a <a href="01086.html" target="topic">USB_HOST_CDC_EVENT_ACM_SET_LINE_CODING_COMPLETE_DATA</a> data structure. The transferStatus member of this data structure indicates the success or failure of the transfer. A transfer may fail due to device not responding on the bus, if the device stalls any stages of the transfer or due to NAK timeouts. The event description provides details on the nature of the event and the data that is associated with the event.</p></div>
-</div>
+<div class="Element58">
 <a name="43"></a><div class="Element99">
 C</div>
 <div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
@@ -67,6 +60,17 @@ C</div>
   <strong><span style="color: #000000">USB_HOST_CDC_EVENT_SERIAL_STATE_NOTIFICATION_RECEIVED</span></strong>,
   <strong><span style="color: #000000">USB_HOST_CDC_EVENT_DEVICE_DETACHED</span></strong>
 } USB_HOST_CDC_EVENT;</pre></div></div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+CDC Class Driver Events&nbsp;</p>
+<p class="Element10">
+This enumeration identifies the possible events that the CDC Class Driver can generate. The application should register an event handler using the <a href="01096.html">USB_HOST_CDC_EventHandlerSet</a> function to receive CDC Class Driver events.&nbsp;</p>
+<p class="Element10">
+An event may have data associated with it. Events that are generated due to a transfer of data between the host and device are accompanied by data structures that provide the status of the transfer termination. For example, the USB_HOST_CDC_EVENT_ACM_SET_LINE_CODING_COMPLETE event is accompanied by a pointer to a <a href="01086.html">USB_HOST_CDC_EVENT_ACM_SET_LINE_CODING_COMPLETE_DATA</a> data structure. The transferStatus member of this data structure indicates the success or failure of the transfer. A transfer may fail due to device not responding on the bus, if the device stalls any stages of the transfer or due to NAK timeouts. The event description provides details on the nature of the event and the data that is associated with the event.</p></div>
+</div>
 <a name="4D656D62657273"></a><div class="Element14">
 Members</div>
 <div class="Element11">
@@ -84,37 +88,37 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element263">
 USB_HOST_CDC_EVENT_READ_COMPLETE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
 <div class="Element267">
-This event occurs when a CDC Client Driver Read operation has completed i.e when the data has been received from the connected CDC device. This event is generated after the application calls the <a href="01102.html" target="topic">USB_HOST_CDC_Read</a> function. The eventData parameter in the event call back function will be of a pointer to a <a href="01088.html" target="topic">USB_HOST_CDC_EVENT_READ_COMPLETE_DATA</a> structure. This contains details about the transfer handle associated with this read request, the amount of data read and the termination status of the read request.&nbsp;</div></td></tr><tr>
+This event occurs when a CDC Client Driver Read operation has completed i.e when the data has been received from the connected CDC device. This event is generated after the application calls the <a href="01102.html">USB_HOST_CDC_Read</a> function. The eventData parameter in the event call back function will be of a pointer to a <a href="01088.html">USB_HOST_CDC_EVENT_READ_COMPLETE_DATA</a> structure. This contains details about the transfer handle associated with this read request, the amount of data read and the termination status of the read request.&nbsp;</div></td></tr><tr>
 <td class="Element262" valign="top" width="35%">
 <div class="Element263">
 USB_HOST_CDC_EVENT_WRITE_COMPLETE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
 <div class="Element267">
-This event occurs when a CDC Client Driver Write operation has completed i.e when the data has been written to the connected CDC device. This event is generated after the application calls the <a href="01117.html" target="topic">USB_HOST_CDC_Write</a> function. The eventData parameter in the event call back function will be a pointer to a <a href="01095.html" target="topic">USB_HOST_CDC_EVENT_WRITE_COMPLETE_DATA</a> structure. This contains details about the transfer handle associated with this write request, the amount of data written and the termination status of the write request.&nbsp;</div></td></tr><tr>
+This event occurs when a CDC Client Driver Write operation has completed i.e when the data has been written to the connected CDC device. This event is generated after the application calls the <a href="01117.html">USB_HOST_CDC_Write</a> function. The eventData parameter in the event call back function will be a pointer to a <a href="01095.html">USB_HOST_CDC_EVENT_WRITE_COMPLETE_DATA</a> structure. This contains details about the transfer handle associated with this write request, the amount of data written and the termination status of the write request.&nbsp;</div></td></tr><tr>
 <td class="Element262" valign="top" width="35%">
 <div class="Element263">
 USB_HOST_CDC_EVENT_ACM_SEND_BREAK_COMPLETE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
 <div class="Element267">
-This event occurs when a CDC Client Driver Send Break request has completed. This event is generated after the application calls the USB_HOST_CDC_ACM_BreakSend function and the device has either acknowledged or stalled the request. The eventData parameter in the event call back function will be of a pointer to a <a href="01085.html" target="topic">USB_HOST_CDC_EVENT_ACM_SET_CONTROL_LINE_STATE_COMPLETE_DATA</a> structure. This contains details about the transfer handle associated with this request, the amount of data sent and the termination status of the set request.&nbsp;</div></td></tr><tr>
+This event occurs when a CDC Client Driver Send Break request has completed. This event is generated after the application calls the USB_HOST_CDC_ACM_BreakSend function and the device has either acknowledged or stalled the request. The eventData parameter in the event call back function will be of a pointer to a <a href="01085.html">USB_HOST_CDC_EVENT_ACM_SET_CONTROL_LINE_STATE_COMPLETE_DATA</a> structure. This contains details about the transfer handle associated with this request, the amount of data sent and the termination status of the set request.&nbsp;</div></td></tr><tr>
 <td class="Element262" valign="top" width="35%">
 <div class="Element263">
 USB_HOST_CDC_EVENT_ACM_SET_CONTROL_LINE_STATE_COMPLETE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
 <div class="Element267">
-This event occurs when a CDC Client Driver Set Control Line State request has completed. This event is generated after the application calls the <a href="01064.html" target="topic">USB_HOST_CDC_ACM_ControlLineStateSet</a> function and the device has either acknowledged or stalled the request. The eventData parameter in the event call back function will be of a pointer to a <a href="01085.html" target="topic">USB_HOST_CDC_EVENT_ACM_SET_CONTROL_LINE_STATE_COMPLETE_DATA</a> structure. This contains details about the transfer handle associated with this request, the amount of data sent and the termination status of the set request.&nbsp;</div></td></tr><tr>
+This event occurs when a CDC Client Driver Set Control Line State request has completed. This event is generated after the application calls the <a href="01064.html">USB_HOST_CDC_ACM_ControlLineStateSet</a> function and the device has either acknowledged or stalled the request. The eventData parameter in the event call back function will be of a pointer to a <a href="01085.html">USB_HOST_CDC_EVENT_ACM_SET_CONTROL_LINE_STATE_COMPLETE_DATA</a> structure. This contains details about the transfer handle associated with this request, the amount of data sent and the termination status of the set request.&nbsp;</div></td></tr><tr>
 <td class="Element262" valign="top" width="35%">
 <div class="Element263">
 USB_HOST_CDC_EVENT_ACM_SET_LINE_CODING_COMPLETE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
 <div class="Element267">
-This event occurs when a CDC Client Driver Set Line Coding request has completed. This event is generated after the application calls the <a href="01065.html" target="topic">USB_HOST_CDC_ACM_LineCodingSet</a> function and the device either acknowledged or stalled the request. The eventData parameter in the event call back function will be of a pointer to a <a href="01086.html" target="topic">USB_HOST_CDC_EVENT_ACM_SET_LINE_CODING_COMPLETE_DATA</a> structure. This contains details about the transfer handle associated with this request, the amount of data sent and the termination status of the set request.&nbsp;</div></td></tr><tr>
+This event occurs when a CDC Client Driver Set Line Coding request has completed. This event is generated after the application calls the <a href="01065.html">USB_HOST_CDC_ACM_LineCodingSet</a> function and the device either acknowledged or stalled the request. The eventData parameter in the event call back function will be of a pointer to a <a href="01086.html">USB_HOST_CDC_EVENT_ACM_SET_LINE_CODING_COMPLETE_DATA</a> structure. This contains details about the transfer handle associated with this request, the amount of data sent and the termination status of the set request.&nbsp;</div></td></tr><tr>
 <td class="Element262" valign="top" width="35%">
 <div class="Element263">
 USB_HOST_CDC_EVENT_ACM_GET_LINE_CODING_COMPLETE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
 <div class="Element267">
-This event occurs when a CDC Client Driver Get Line Coding request has completed. This event is generated after the application calls the USB_HOST_CDC_ACM_LineCodingGet function and the device sends the line coding to the host. The eventData parameter in the event call back function will be of a pointer to a <a href="01080.html" target="topic">USB_HOST_CDC_EVENT_ACM_GET_LINE_CODING_COMPLETE_DATA</a> structure. This contains details about the transfer handle associated with this request, the amount of data received and the termination status of the get request.&nbsp;</div></td></tr><tr>
+This event occurs when a CDC Client Driver Get Line Coding request has completed. This event is generated after the application calls the USB_HOST_CDC_ACM_LineCodingGet function and the device sends the line coding to the host. The eventData parameter in the event call back function will be of a pointer to a <a href="01080.html">USB_HOST_CDC_EVENT_ACM_GET_LINE_CODING_COMPLETE_DATA</a> structure. This contains details about the transfer handle associated with this request, the amount of data received and the termination status of the get request.&nbsp;</div></td></tr><tr>
 <td class="Element262" valign="top" width="35%">
 <div class="Element263">
 USB_HOST_CDC_EVENT_SERIAL_STATE_NOTIFICATION_RECEIVED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
 <div class="Element267">
-This event occurs when a CDC Client Driver Serial State Notification Get operation has completed. This event is generated after the application calls the <a href="01114.html" target="topic">USB_HOST_CDC_SerialStateNotificationGet</a> and the device sends a serial state notification to the host. The eventData parameter in the event call back function will be of a pointer to a <a href="01091.html" target="topic">USB_HOST_CDC_EVENT_SERIAL_STATE_NOTIFICATION_RECEIVED_DATA</a> structure. This contains details about the transfer handle associated with this request, the amount of data received and the termination status of the get request.&nbsp;</div></td></tr><tr>
+This event occurs when a CDC Client Driver Serial State Notification Get operation has completed. This event is generated after the application calls the <a href="01114.html">USB_HOST_CDC_SerialStateNotificationGet</a> and the device sends a serial state notification to the host. The eventData parameter in the event call back function will be of a pointer to a <a href="01091.html">USB_HOST_CDC_EVENT_SERIAL_STATE_NOTIFICATION_RECEIVED_DATA</a> structure. This contains details about the transfer handle associated with this request, the amount of data received and the termination status of the get request.&nbsp;</div></td></tr><tr>
 <td class="Element262" valign="top" width="35%">
 <div class="Element263">
 USB_HOST_CDC_EVENT_DEVICE_DETACHED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
@@ -139,21 +143,18 @@ None.</p></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00282.html" target="topic">USB Host Libraries</a> &gt; <a href="00138.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00153.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01071.html" target="topic">USB_HOST_CDC_EVENT Enumeration</a></div>
+<a href="00300.html">USB Libraries Help</a> &gt; <a href="00282.html">USB Host Libraries</a> &gt; <a href="00138.html">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00153.html">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01071.html">USB_HOST_CDC_EVENT Enumeration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="25%">
+<tr><td width="100%">
 <div class="Element3">
-MPLAB Harmony USB Stack </div>
-</td><td width="25%">
+ MPLAB Harmony USB Stack </div>
+</td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
-</td><td width="25%">
-<div class="Element91">
-<a href="00904.html" target="topic">Previous</a> | <a href="00153.html" target="topic">Up</a> | <a href="00910.html" target="topic">Next</a></div>
-</td><td width="25%">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00181.html">Home</a></div>
+</td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_EVENT Topic Title: USB_HOST_CDC_EVENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_EVENT Topic Title: USB_HOST_CDC_EVENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

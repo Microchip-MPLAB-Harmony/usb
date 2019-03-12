@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Creating Your Own USB Device</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00290.html">USB Libraries Help</a> &gt; <a href="00197.html">USB Device Libraries</a> &gt; <a href="00198.html">USB Device Library - Getting Started</a> &gt; <a href="00291.html">Creating Your Own USB Device</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00293.html">Previous</a> | <a href="00198.html">Up</a> | <a href="00196.html">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MID Creating Your Own USB Device Topic Title: Creating Your Own USB Device)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+Creating Your Own USB Device</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The first step in creating a USB device is identifying whether the desired device function fits into any of the standard USB device class functions. Using standard USB classes may be advantageous as major operating systems feature Host driver support for standard USB devices. However, the application may not want to tolerate the overhead associated with standard USB device class protocols, in which case, a Vendor USB device can be implemented. A Vendor USB device can be implemented by using the USB Device Layer Endpoint functions; however, these devices will require custom USB host drivers for their operation. Having identified the device class to be used, the recommended approach is to use the available demonstration applications as a starting point for the application.</p><div class="Element15">
+Use the Available Library Demonstration Applications</div>
+<p class="Element10">
+The USB Device Library release package contains a set of demonstration applications that are representative of common USB devices. These can be modified easily to include application specific initialization and application logic. The application logic must be non-blocking and could be implemented as a state machine. Note that the function names and file names referred to in the following section are the those used in the USB Device Library demonstration applications.</p>
+<ul class="Element630">
+<li class="Element600">The application specific initialization can be called in the APP_Initialize function (in the <span class="Element146">app.c</span> file). The APP_Initialize function is called from the SYS_Initialize function, which in turn is called when the device comes out of Power-on Reset (POR).</li>
+<li class="Element600">The application logic is implemented as a state machine in the APP_Tasks function (in the <span class="Element146">app.c</span> file). The application logic can interact with the function driver and the Device<span style="color: #FFFFFF">_</span>layer by using available API calls.</li>
+<li class="Element600">The application logic can track device events by processing the events in the application USB device event handler function (APP_USBDeviceEventHandler function in <span class="Element146">app.c</span>).</li>
+</ul></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00290.html">USB Libraries Help</a> &gt; <a href="00197.html">USB Device Libraries</a> &gt; <a href="00198.html">USB Device Library - Getting Started</a> &gt; <a href="00291.html">Creating Your Own USB Device</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="100%">
+<div class="Element3">
+ MPLAB Harmony USB Stack </div>
+</td></tr><tr><td width="100%">
+<div class="Element4">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+</td></tr><tr><td width="100%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MID Creating Your Own USB Device Topic Title: Creating Your Own USB Device)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

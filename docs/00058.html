@@ -1,15 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Configuring the Hardware</title>
+<title>Running the Demonstration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00058.html');" onmousedown="onBodyMouseDown();">
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
 
 <!-- Begin Popups -->
 
@@ -18,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00181.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00055.html" target="topic">Host Demonstrations</a> &gt; <a href="00056.html" target="topic">hid_basic_keyboard</a> &gt; <a href="00058.html" target="topic">Configuring the Hardware</a></div>
+<a href="00171.html">USB Demonstrations Help</a> &gt; <a href="00050.html">Host Demonstrations</a> &gt; <a href="00055.html">hid_basic_mouse_usart</a> &gt; <a href="00058.html">Running the Demonstration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +28,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00057.html" target="topic">Previous</a> | <a href="00056.html" target="topic">Up</a> | <a href="00059.html" target="topic">Next</a></div>
+<a href="00057.html">Previous</a> | <a href="00055.html">Up</a> | <a href="00290.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB HOST hid_basic_keyboard_config Topic Title: Configuring the Hardware)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB Host hid_basic_mouse_usart_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Configuring the Hardware</div>
+Running the Demonstration</div>
 </div>
 </div>
 
@@ -45,39 +47,39 @@ Configuring the Hardware</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<a name="PageContent"></a><div class="Element58">
+<div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<strong>SAME70 Xplained Ultra</strong></p>
+Open the project in MPLAB X IDE and select the project configuration.</p>
 <ul class="Element630">
-<li class="Element600">Jumper J204 must be shorted between PB08 and LED 1(positions 1 and 2).</li>
-<li class="Element600">LED2 indicates a Device Connection. (Attached device has been successfully enumerated and configured).</li>
-<li class="Element600">Use TARGET USB J202 connector on the board to connect the USB Device to the the USB Host. A USB micro AB to type A USB Host receptacle converter will be needed to connect the keyboard.</li>
-<li class="Element600">A commercially available USB Keyboard will be needed.</li>
-<li class="Element600">The demonstration uses the EDBG Serial Interface to transfer demonstration application messages on a PC.</li>
-</ul></div>
+<li class="Element600">Build the code and program the device.</li>
+<li class="Element600">Launch a terminal emulator, such as Tera Term. Select the appropriate COM port and set the serial port settings to 115200-N-1.</li>
+<li class="Element600">If a USB mouse is not connected to the Host connector, the serial terminal emulator window will show the &quot;Connect Mouse&quot; prompt.</li>
+<li class="Element600">Attach a USB mouse to the Host connector of the target hardware. The message, &quot;Mouse Connected&quot;, will display in the serial terminal emulator window.</li>
+<li class="Element600">Begin moving the mouse and the appropriate relative coordinate changes for X,Y, and Z axes should be displayed in the serial terminal window.</li>
+<li class="Element600">Click the mouse button to toggle LEDs on the board.</li>
+<li class="Element600">Disconnecting the mouse will result in the message, &quot;Connect Mouse&quot;, to reappear on the serial console.</li>
+</ul><p class="Element10" style="text-align: center;">
+<img src="usb_host_hid_mouse.png" border="0" alt="" title=""></p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00181.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00055.html" target="topic">Host Demonstrations</a> &gt; <a href="00056.html" target="topic">hid_basic_keyboard</a> &gt; <a href="00058.html" target="topic">Configuring the Hardware</a></div>
+<a href="00171.html">USB Demonstrations Help</a> &gt; <a href="00050.html">Host Demonstrations</a> &gt; <a href="00055.html">hid_basic_mouse_usart</a> &gt; <a href="00058.html">Running the Demonstration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="25%">
+<tr><td width="100%">
 <div class="Element3">
-MPLAB Harmony USB Stack </div>
-</td><td width="25%">
+ MPLAB Harmony USB Stack </div>
+</td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
-</td><td width="25%">
-<div class="Element91">
-<a href="00057.html" target="topic">Previous</a> | <a href="00056.html" target="topic">Up</a> | <a href="00059.html" target="topic">Next</a></div>
-</td><td width="25%">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+</td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB HOST hid_basic_keyboard_config Topic Title: Configuring the Hardware)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB Host hid_basic_mouse_usart_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

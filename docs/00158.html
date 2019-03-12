@@ -1,15 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Setting the Desired Audio Stream Sampling Rate</title>
+<title>Detecting Device Attach</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00158.html');" onmousedown="onBodyMouseDown();">
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
 
 <!-- Begin Popups -->
 
@@ -18,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00282.html" target="topic">USB Host Libraries</a> &gt; <a href="00138.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00160.html" target="topic">Using the Library</a> &gt; <a href="00150.html" target="topic">How the Library Works</a> &gt; <a href="00158.html" target="topic">Setting the Desired Audio Stream Sampling Rate</a></div>
+<a href="00290.html">USB Libraries Help</a> &gt; <a href="00272.html">USB Host Libraries</a> &gt; <a href="00163.html">USB CDC Host Library</a> &gt; <a href="00170.html">Using the Library</a> &gt; <a href="00161.html">How the Library Works</a> &gt; <a href="00158.html">Detecting Device Attach</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +28,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00148.html" target="topic">Previous</a> | <a href="00150.html" target="topic">Up</a> | <a href="00140.html" target="topic">Next</a></div>
+<a href="00169.html">Previous</a> | <a href="00161.html">Up</a> | <a href="00166.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Setting the Desired Audio Stream Sampling Rate Topic Title: Setting the Desired Audio Stream Sampling Rate)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Detecting Device Attach Topic Title: Detecting Device Attach)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Setting the Desired Audio Stream Sampling Rate</div>
+Detecting Device Attach</div>
 </div>
 </div>
 
@@ -45,273 +47,51 @@ Setting the Desired Audio Stream Sampling Rate</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<a name="PageContent"></a><div class="Element58">
+<div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Sampling rate of an audio stream can be set using <a href="00957.html" target="topic">USB_HOST_AUDIO_V1_0_StreamSamplingRateSet</a> function. Supported sampling rates for an audio stream is returned as part of <a href="00921.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_INFO</a> by the <a href="00953.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetFirst</a> and USB_HOST_AUDIO_V1_0_StreamGetNextfunctions. Return values of these function indicates if the request has been placed successfully or failed. When the set sampling rate request is completed the stream event handler generates an event USB_HOST_AUDIO_V1_0_STREAM_EVENT_SAMPLING_RATE_SET_COMPLETE. The event data USB_HOST_AUDIO_V1_0_STREAM_EVENT_SAMPLING_RATE_SET_COMPLETE_DATA has request handle and the requestStatus which indicates the set sampling request was accepted by the device or failed. The following code shows an example of how sampling rates can be set in an audio stream. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of Set sampling rate to an audio stream */</span></i>
+The application will need to know when a CDC Device is attached. To receive this attach event from the CDC Host Client Driver, the application must register an Attach Event Handler by calling the USB_HOST_CDC_AttachEventHandlerSet function. This function should be called before the USB_HOST_BusEnable function is called, else the application may miss CDC attach events. It can be called multiple times to register multiple event handlers, each for different application clients that need to know about CDC Device Attach events.&nbsp;</p>
+<p class="Element10">
+The total number of event handlers that can be registered is defined by USB_HOST_CDC_ATTACH_LISTENERS_NUMBER configuration option in <span class="Element146">system_config.h</span>. When a device is attached, the CDC Host Client Driver will send the attach event to all the registered event handlers. In this event handler, the CDC Host Client Driver will pass a USB_HOST_CDC_OBJ that can be opened to gain access to the device. The following code shows an example of how to register attach event handlers.&nbsp;</p>
+<p class="Element10">
+<strong>Example:</strong> &nbsp;</p><div class="Element170">
+<a href="#" onclick="CopyElementToClipboard('code00064');">Copy Code</a></div>
+<div class="Element13"><div class="Element12" id="code00064"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of CDC Attach Event Handler and how this
+ * attach event handler can be registered with the CDC Host Client Driver */</span></i>
 
-<i><span style="color: #008000">/* Specify the Audio Stream format details that this application supports */</span></i>
-<strong><span style="color: #000080">const</span></strong> APP_USB_HOST_AUDIO_STREAM_FORTMAT audioSpeakerStreamFormat =
+<strong><span style="color: #000080">void</span></strong> APP_USBHostCDCAttachEventListener(USB_HOST_CDC_OBJ cdcObj, uintptr_t context)
 {
-
-    .streamDirection = USB_HOST_AUDIO_V1_0_DIRECTION_OUT,
-    .format = USB_AUDIO_FORMAT_PCM,
-    .nChannels = 2,
-    .bitResolution = 16,
-    .subFrameSize = 2,
-    .samplingRate = 48000
-};
-
-<strong><span style="color: #000080">bool</span></strong> isAudioDeviceAttached = <strong><span style="color: #000080">false</span></strong>;
-<strong><span style="color: #000080">bool</span></strong> isStreamEnabled = <strong><span style="color: #000080">false</span></strong>;
-<strong><span style="color: #000080">bool</span></strong> isSampleRateSetComplete = <strong><span style="color: #000080">false</span></strong>;
-USB_HOST_AUDIO_V1_0_OBJ audioDeviceObj;
-
-
-<i><span style="color: #008000">/*************************************************************
- * Audio Stream Event Handler function.
- ************************************************************/</span></i>
-
-USB_HOST_AUDIO_V1_0_STREAM_EVENT_RESPONSE APP_USBHostAudioStreamEventHandler
-(
-    USB_HOST_AUDIO_V1_0_STREAM_HANDLE streamHandle,
-    USB_HOST_AUDIO_V1_0_STREAM_EVENT event,
-    <strong><span style="color: #000080">void</span></strong> * eventData,
-    uintptr_t context
-)
-{
-    USB_HOST_AUDIO_V1_0_STREAM_EVENT_WRITE_COMPLETE_DATA * writeCompleteEventData;
-    <strong><span style="color: #000080">switch</span></strong>(event)
-    {
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_AUDIO_V1_0_STREAM_EVENT_DISABLE_COMPLETE:
-
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_AUDIO_V1_0_STREAM_EVENT_ENABLE_COMPLETE:
-            <i><span style="color: #008000">/* Check eventData result member to know if stream enable is complete */</span></i>
-                isStreamEnabled = <strong><span style="color: #000080">true</span></strong>;
-
-            <strong><span style="color: #000080">break</span></strong>;
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_AUDIO_V1_0_STREAM_EVENT_WRITE_COMPLETE:
-
-
-            <strong><span style="color: #000080">break</span></strong>;
-
-         <strong><span style="color: #000080">case</span></strong> USB_HOST_AUDIO_V1_0_STREAM_EVENT_SAMPLING_RATE_SET_COMPLETE:
-                <i><span style="color: #008000">/* Check eventData result member to know if stream enable is complete */</span></i>
-                isSampleRateSetComplete = <strong><span style="color: #000080">true</span></strong>;
-
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">default</span></strong>:
-            <strong><span style="color: #000080">break</span></strong>;
-    }
-    <strong><span style="color: #000080">return</span></strong> USB_HOST_AUDIO_V1_0_STREAM_EVENT_RESPONSE_NONE;
-}
-<i><span style="color: #008000">/*************************************************************/</span></i>
-<i><span style="color: #008000">/* Function to search for a specific Audio Stream */</span></i>
-<i><span style="color: #008000">/************************************************************/</span></i>
-USB_HOST_AUDIO_V1_0_STREAM_OBJ App_USBHostAudioSpeakerStreamFind
-(
-    USB_HOST_AUDIO_V1_0_OBJ audioDeviceObj,
-    APP_USB_HOST_AUDIO_STREAM_FORTMAT audioStream,
-    uint8_t* numberofStreamGroups
-)
-{
-    USB_HOST_AUDIO_V1_0_RESULT result;
-    USB_HOST_AUDIO_V1_0_STREAM_INFO streamInfo;
-
-    <i><span style="color: #008000">/* Get Number of Stream Groups */</span></i>
-    *numberofStreamGroups = USB_HOST_AUDIO_V1_0_NumberOfStreamGroupsGet(audioDeviceObj);
-    <strong><span style="color: #000080">if</span></strong> (*numberofStreamGroups == 0)
-    {
-        <strong><span style="color: #000080">return</span></strong> (USB_HOST_AUDIO_V1_0_STREAM_OBJ)0;
-    }
-    <i><span style="color: #008000">/* Get the First Stream Information in the Stream Group */</span></i>
-    result = USB_HOST_AUDIO_V1_0_StreamGetFirst(appData.audioDeviceObj, 0, &amp;streamInfo);
-    <strong><span style="color: #000080">if</span></strong> (result == USB_HOST_AUDIO_V1_0_RESULT_SUCCESS)
-    {
-         <i><span style="color: #008000">/* Compare Audio Stream info */</span></i>
-        <strong><span style="color: #000080">if</span></strong> ((streamInfo.format == audioStream.format)
-            &amp;&amp; (streamInfo.streamDirection == audioStream.streamDirection)
-                    &amp;&amp; (streamInfo.nChannels == audioStream.nChannels)
-                    &amp;&amp; (streamInfo.bitResolution == audioStream.bitResolution)
-                    &amp;&amp; (streamInfo.subFrameSize == audioStream.subFrameSize))
-        {
-            <strong><span style="color: #000080">return</span></strong> streamInfo.streamObj;
-        }
-    }
-    <strong><span style="color: #000080">return</span></strong> (USB_HOST_AUDIO_V1_0_STREAM_OBJ)0;
-}
-
-<i><span style="color: #008000">/*************************************************************/</span></i>
-<i><span style="color: #008000">/* Audio attach event listener function */</span></i>
-<i><span style="color: #008000">/************************************************************/</span></i>
-<strong><span style="color: #000080">void</span></strong> APP_USBHostAudioAttachEventListener
-(
-    USB_HOST_AUDIO_V1_0_OBJ audioObj,
-    USB_HOST_AUDIO_V1_0_EVENT event,
-    uintptr_t context
-)
-{
-    <i><span style="color: #008000">/* This function gets called when the Audio v1.0 device is attached/detached. In this
+    <i><span style="color: #008000">/* This function gets called when the CDC device is attached. In this
      * example we let the application know that a device is attached and we
-     * store the Audio v1.0 device object. This object will be required to open the
+     * store the CDC device object. This object will be required to open the
      * device. */</span></i>
-    <strong><span style="color: #000080">switch</span></strong> (event)
-    {
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_AUDIO_V1_0_EVENT_ATTACH:
-            <strong><span style="color: #000080">if</span></strong> (isAudioDeviceAttached == <strong><span style="color: #000080">false</span></strong>)
-            {
-                isAudioDeviceAttached = <strong><span style="color: #000080">true</span></strong>;
-                audioDeviceObj = audioObj;
-            }
-            <strong><span style="color: #000080">else</span></strong>
-            {
-                <i><span style="color: #008000">/* This application supports only one Audio Device . Handle Error Here.*/</span></i>
-            }
-        <strong><span style="color: #000080">break</span></strong>;
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_AUDIO_V1_0_EVENT_DETACH:
-            <strong><span style="color: #000080">if</span></strong> (isAudioDeviceAttached == <strong><span style="color: #000080">true</span></strong>)
-            {
-                <i><span style="color: #008000">/* This means the device was detached. There is no event data
-                 * associated with this event.*/</span></i>
-                isAudioDeviceAttached = <strong><span style="color: #000080">false</span></strong>;
-                <strong><span style="color: #000080">break</span></strong>;
-            }
-        <strong><span style="color: #000080">break</span></strong>;
-    }
+
+    appData.deviceIsAttached = <strong><span style="color: #000080">true</span></strong>;
+    appData.cdcObj = cdcObj;
 }
 
-<i><span style="color: #008000">/*************************************************************/</span></i>
-<i><span style="color: #008000">/* Audio Tasks function */</span></i>
-<i><span style="color: #008000">/************************************************************/</span></i>
-<strong><span style="color: #000080">void</span></strong> APP_Tasks ( <strong><span style="color: #000080">void</span></strong> )
-{
-    USB_HOST_AUDIO_V1_0_RESULT audioResult;
-    USB_HOST_AUDIO_V1_0_STREAM_RESULT streamResult;
 
-    <i><span style="color: #008000">/* Check the application's current state. */</span></i>
-    <strong><span style="color: #000080">switch</span></strong> ( appData.state )
+<strong><span style="color: #000080">void</span></strong> APP_Tasks(<strong><span style="color: #000080">void</span></strong>)
+{
+    <strong><span style="color: #000080">switch</span></strong> (appData.state)
     {
         <strong><span style="color: #000080">case</span></strong> APP_STATE_BUS_ENABLE:
 
-            <i><span style="color: #008000">/* Register a callback for Audio Device Attach. */</span></i>
-            audioResult = USB_HOST_AUDIO_V1_0_AttachEventHandlerSet
-                          (
-                              &amp;APP_USBHostAudioAttachEventListener,
-                              (uintptr_t)0
-                          );
+            <i><span style="color: #008000">/* In this state the application enables the USB Host Bus. Note
+             * how the CDC Attach event handler is registered before the bus
+             * is enabled. */</span></i>
 
-            <strong><span style="color: #000080">if</span></strong> (audioResult == USB_HOST_AUDIO_V1_0_RESULT_SUCCESS )
-            {
-                <i><span style="color: #008000">/* Set Host Event Handler */</span></i>
-                USB_HOST_EventHandlerSet(APP_USBHostEventHandler, 0);
-                USB_HOST_BusEnable(0);
-                <i><span style="color: #008000">/* Advance application state */</span></i>
-                appData.state = APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE;
-            }
+            USB_HOST_CDC_AttachEventHandlerSet(APP_USBHostCDCAttachEventListener, (uintptr_t) 0);
+            USB_HOST_BusEnable(0);
+            appData.state = APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE;
             <strong><span style="color: #000080">break</span></strong>;
 
         <strong><span style="color: #000080">case</span></strong> APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE:
-            <strong><span style="color: #000080">if</span></strong>(USB_HOST_BusIsEnabled(0))
-            {
-                appData.state = APP_STATE_WAIT_FOR_DEVICE_ATTACH;
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_WAIT_FOR_DEVICE_ATTACH:
-            <i><span style="color: #008000">/* Check if an Audio Device has been attached  */</span></i>
-            <strong><span style="color: #000080">if</span></strong>(appData.isAudioDeviceAttached == <strong><span style="color: #000080">true</span></strong>)
-            {
-                appData.nAudioStreamGroups = 0;
-                <i><span style="color: #008000">/* Find an Audio Stream matching to our requirement */</span></i>
-                appData.ouStreamObj = App_USBHostAudioSpeakerStreamFind
-                                      (
-                                          appData.audioDeviceObj,
-                                          audioSpeakerStreamFormat,
-                                          &amp;appData.nAudioStreamGroups
-                                      );
-                <strong><span style="color: #000080">if</span></strong> (appData.nAudioStreamGroups == 0)
-                {
-                    appData.state = APP_STATE_ERROR;
-                    <strong><span style="color: #000080">break</span></strong>;
-                }
-
-                <i><span style="color: #008000">/* Open Audio Stream */</span></i>
-                appData.outStreamHandle = USB_HOST_AUDIO_V1_0_StreamOpen
-                                          (
-                                              appData.ouStreamObj
-                                          );
-
-                <strong><span style="color: #000080">if</span></strong> (appData.outStreamHandle == USB_HOST_AUDIO_V1_0_STREAM_HANDLE_INVALID)
-                {
-                    appData.state = APP_STATE_ERROR;
-                    <strong><span style="color: #000080">break</span></strong>;
-                }
-
-                <i><span style="color: #008000">/* Set Stream Event Handler  */</span></i>
-                streamResult = USB_HOST_AUDIO_V1_0_StreamEventHandlerSet
-                               (
-                                   appData.outStreamHandle,
-                                   APP_USBHostAudioStreamEventHandler,
-                                   (uintptr_t)appData.ouStreamObj
-                               );
-
-                <strong><span style="color: #000080">if</span></strong> (streamResult != USB_HOST_AUDIO_V1_0_STREAM_SUCCESS)
-                {
-                    appData.state = APP_STATE_ERROR;
-                    <strong><span style="color: #000080">break</span></strong>;
-                }
-                appData.state = APP_STATE_ENABLE_AUDIO_STREAM;
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-
-            <strong><span style="color: #000080">case</span></strong>  APP_STATE_ENABLE_AUDIO_STREAM:
-                isStreamEnableComplete = <strong><span style="color: #000080">false</span></strong>;
-                 <i><span style="color: #008000">/* Set default interface setting of the streaming interface */</span></i>
-                streamResult = USB_HOST_AUDIO_V1_0_StreamEnable
-                               (
-                                   appData.outStreamHandle,
-                                   &amp;appData.requestHandle
-                               );
-                <strong><span style="color: #000080">if</span></strong> (streamResult != USB_HOST_AUDIO_V1_0_STREAM_SUCCESS)
-                {
-                    appData.state = APP_STATE_ERROR;
-                    <strong><span style="color: #000080">break</span></strong>;
-                }
-                appData.state = APP_STATE_WAIT_FOR_ENABLE_AUDIO_STREAM;
-            <strong><span style="color: #000080">break</span></strong>;
-        <strong><span style="color: #000080">case</span></strong>  APP_STATE_WAIT_FOR_ENABLE_AUDIO_STREAM:
-            <strong><span style="color: #000080">if</span></strong> (isStreamEnabled == <strong><span style="color: #000080">true</span></strong>)
-            {
-                <i><span style="color: #008000">/* Set sampling rate 48000 Hz */</span></i>
-                isSampleRateSetComplete = <strong><span style="color: #000080">false</span></strong>;
-                streamResult = USB_HOST_AUDIO_V1_0_StreamSamplingRateSet
-                               (
-                                   appData.outStreamHandle,
-                                   &amp;appData.requestHandle,
-                                   48000
-                               );
-                <strong><span style="color: #000080">if</span></strong> (streamResult != USB_HOST_AUDIO_V1_0_STREAM_SUCCESS)
-                {
-                    appData.state = APP_STATE_ERROR;
-                    <strong><span style="color: #000080">break</span></strong>;
-                }
-                appData.state = APP_STATE_WAIT_FOR_SAMPLE_RATE_SET_COMPLETE;
-
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-        <strong><span style="color: #000080">case</span></strong>  APP_STATE_WAIT_FOR_SAMPLE_RATE_SET_COMPLETE:
-            <strong><span style="color: #000080">if</span></strong> (isSampleRateSetComplete == <strong><span style="color: #000080">true</span></strong>)
-            {
-                <i><span style="color: #008000">/* Set sampling rate completed */</span></i>
-            }
-        <strong><span style="color: #000080">default</span></strong>:
+            <i><span style="color: #008000">/* Here we wait for the bus enable operation to complete. */</span></i>
             <strong><span style="color: #000080">break</span></strong>;
     }
-} </pre></div></div>
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -319,21 +99,18 @@ USB_HOST_AUDIO_V1_0_STREAM_OBJ App_USBHostAudioSpeakerStreamFind
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00282.html" target="topic">USB Host Libraries</a> &gt; <a href="00138.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00160.html" target="topic">Using the Library</a> &gt; <a href="00150.html" target="topic">How the Library Works</a> &gt; <a href="00158.html" target="topic">Setting the Desired Audio Stream Sampling Rate</a></div>
+<a href="00290.html">USB Libraries Help</a> &gt; <a href="00272.html">USB Host Libraries</a> &gt; <a href="00163.html">USB CDC Host Library</a> &gt; <a href="00170.html">Using the Library</a> &gt; <a href="00161.html">How the Library Works</a> &gt; <a href="00158.html">Detecting Device Attach</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="25%">
+<tr><td width="100%">
 <div class="Element3">
-MPLAB Harmony USB Stack </div>
-</td><td width="25%">
+ MPLAB Harmony USB Stack </div>
+</td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
-</td><td width="25%">
-<div class="Element91">
-<a href="00148.html" target="topic">Previous</a> | <a href="00150.html" target="topic">Up</a> | <a href="00140.html" target="topic">Next</a></div>
-</td><td width="25%">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+</td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Setting the Desired Audio Stream Sampling Rate Topic Title: Setting the Desired Audio Stream Sampling Rate)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Detecting Device Attach Topic Title: Detecting Device Attach)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

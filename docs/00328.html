@@ -1,15 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Library Initialization</title>
+<title>Endpoint Data Transfer</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
+    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00328.html');" onmousedown="onBodyMouseDown();">
+<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
+<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
 
 <!-- Begin Popups -->
 
@@ -18,7 +20,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00207.html" target="topic">USB Device Libraries</a> &gt; <a href="00306.html" target="topic">USB MSD Device Library</a> &gt; <a href="00332.html" target="topic">Using the Library</a> &gt; <a href="00326.html" target="topic">How the Library Works</a> &gt; <a href="00328.html" target="topic">Library Initialization</a></div>
+<a href="00290.html">USB Libraries Help</a> &gt; <a href="00197.html">USB Device Libraries</a> &gt; <a href="00323.html">Generic USB Device Library</a> &gt; <a href="00337.html">Using the Library</a> &gt; <a href="00332.html">How the Library Works</a> &gt; <a href="00328.html">Endpoint Data Transfer</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +28,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00326.html" target="topic">Previous</a> | <a href="00326.html" target="topic">Up</a> | <a href="00323.html" target="topic">Next</a></div>
+<a href="00330.html">Previous</a> | <a href="00332.html">Up</a> | <a href="00326.html">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSDDEV Library Initialization Topic Title: Library Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Endpoint Data Transfer Topic Title: Endpoint Data Transfer)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Library Initialization</div>
+Endpoint Data Transfer</div>
 </div>
 </div>
 
@@ -45,150 +47,81 @@ Library Initialization</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<a name="PageContent"></a><div class="Element58">
+<div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The MSD Function Driver instance for a USB Device configuration is initialized by the USB Device Layer when the Host sets that configuration. This process does not require application intervention. Each instance of the MSD Function Driver should be registered with the USB Device Layer through the <a href="00223.html" target="topic">Device Layer Function Driver Registration Table</a>. While registering the MSD Function Driver, the driver member of the Function Driver Registration Table entry should be set to <a href="00818.html" target="topic">USB_DEVICE_MSD_FUNCTION_DRIVER</a>. This is an opaque function driver entry point provided by the MSD Function Driver for the Device Layer to use.&nbsp;</p>
+The application should call the USB_DEVICE_EndpointRead and USB_DEVICE_EndpointWrite functions to transfer data over an enabled endpoint. Calling this function causes a USB transfer to be scheduled on the endpoint. The transfer is added to the endpoint queue and is serviced as the host schedules the transaction on the bus. The USB_DEVICE_EndpointRead and USB_DEVICE_EndpointWrite functions return a unique transfer handle which can be track the transfer. These transfer handles are returned along with the USB_DEVICE_EVENT_ENDPOINT_READ_COMPLETE (when a endpoint read transfer is complete) and USB_DEVICE_EVENT_ENDPOINT_WRITE_COMPLETE (when an endpoint write is complete) events.&nbsp;</p>
 <p class="Element10">
-The MSD Function Driver requires an initialization data structure to be defined for each instance of the function driver. This initialization data structure should be of the type <a href="00819.html" target="topic">USB_DEVICE_MSD_INIT</a>. This initialization data structure contains the following:</p>
+The following code shows an example of sending data over an endpoint. </p><div class="Element170">
+<a href="#" onclick="CopyElementToClipboard('code00043');">Copy Code</a></div>
+<div class="Element13"><div class="Element12" id="code00043"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of using the USB_DEVICE_EndpointWrite
+ * function to send data over the endpoint. The completion of the write is
+ * indicated by the USB_DEVICE_EVENT_ENDPOINT_WRITE_COMPLETE event. The
+ * transfer handle is returned in appData.writeTransferHandle */</span></i>
+USB_DEVICE_EndpointWrite ( appData.usbDevHandle, &amp;appData.writeTranferHandle,
+        appData.endpointTx, &amp;transmitDataBuffer[0], <strong><span style="color: #000080">sizeof</span></strong>(transmitDataBuffer),
+        USB_DEVICE_TRANSFER_FLAGS_DATA_COMPLETE );
+
+<strong><span style="color: #000080">void</span></strong> APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, <strong><span style="color: #000080">void</span></strong> * eventData, uintptr_t context)
+{
+    <i><span style="color: #008000">/* This is the Device Layer event handler */</span></i>
+    <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_ENDPOINT_WRITE_COMPLETE:
+        <i><span style="color: #008000">/* Endpoint write is complete */</span></i>
+        appData.epDataWritePending = <strong><span style="color: #000080">false</span></strong>;
+        <strong><span style="color: #000080">break</span></strong>;
+}</pre></div></div>
+<p class="Element10">
+The USB_DEVICE_EndpointWrite function allows the application to send data to the host without ending the transfer. This is done by specifying USB_DEVICE_TRANSFER_FLAGS_DATA_PENDING as the transfer flag in the call to the USB_DEVICE_EndpointWrite function. The application can use this option when the data to be sent is not readily available or when the application is memory constrained. The combination of the transfer flag and the transfer size affects how the data is sent to the host:</p>
 <ul class="Element630">
-<li class="Element600">The number of Logical Unit Numbers (LUNs) in this MSD Function Driver instance</li>
-<li class="Element600">A pointer to the USB_MSD_CBW type data structure. This pointer is used by the MSD Function Driver to receive the Command Block Wrapper (CBW) from the Host. For a PIC32MZ device, this array should be placed in coherent memory and should be aligned on a 4-byte boundary.</li>
-<li class="Element600">A pointer to the USB_MSD_CSW type data structure. This pointer is used by the MSD Function Driver to send the Command Status Wrapper (CSW) to the Host. For a PIC32MZ device, this array should be placed in coherent memory and should be aligned on a 4-byte boundary.</li>
-<li class="Element600">A pointer to the array of media driver initialization data structure. There should be one structure for every LUN. This is a <a href="00834.html" target="topic">USB_DEVICE_MSD_MEDIA_INIT_DATA</a> type of data structure. There exists a one-to-one mapping between the LUN and the media driver initialization data structure.</li>
+<li class="Element600">If size is a multiple of maxPacketSize (the IN endpoint size) and flag is set as USB_DEVICE_TRANSFER_FLAGS_DATA_COMPLETE, the write function will append a Zero Length Packet (ZLP) to complete the transfer</li>
+<li class="Element600">If size is a multiple of maxPacketSize and flag is set as USB_DEVICE_TRANSFER_FLAGS_MORE_DATA_PENDING, the write function will not append a ZLP and therefore and hence will not complete the transfer</li>
+<li class="Element600">If size is greater than but not a multiple of maxPacketSize and flags is set as USB_DEVICE_TRANSFER_FLAGS_DATA_COMPLETE, the write function schedules (length/maxPacketSize) packets and one packet for the residual data</li>
+<li class="Element600">If size is greater than but not a multiple of maxPacketSize and flags is set as USB_DEVICE_TRANSFER_FLAGS_MORE_DATA_PENDING, the write function returns an error code and sets the transferHandle parameter to USB_DEVICE_TRANSFER_HANDLE_INVALID</li>
+<li class="Element600">If size is less than maxPacketSize and flag is set USB_DEVICE_TRANSFER_FLAGS_DATA_COMPLETE, the write function schedules one packet</li>
+<li class="Element600">If size is less than maxPacketSize and flag is set as USB_DEVICE_TRANSFER_FLAGS_MORE_DATA_PENDING, the write function returns an error code and sets the transferHandle parameter to USB_DEVICE_TRANSFER_HANDLE_INVALID</li>
 </ul><p class="Element10">
-The following figure shows a pictorial representation of the MSD Function Driver initialization data structure.&nbsp;</p>
+Refer to USB_DEVICE_EndpointWrite function API description for more details and code examples.&nbsp;</p>
 <p class="Element10">
-&nbsp;</p>
+The application should use the USB_DEVICE_EndpointRead function to read data from an endpoint. The size of the buffer that is specified in this function should always be a multiple of the endpoint size. The following code shows an example of using the USB_DEVICE_EndpointRead function. </p><div class="Element170">
+<a href="#" onclick="CopyElementToClipboard('code00044');">Copy Code</a></div>
+<div class="Element13"><div class="Element12" id="code00044"><pre class="Element12"><i><span style="color: #008000">/* This code shows to use the USB_DEVICE_EndpointRead function
+ * to read from an endpoint.  The transfer handle is returned in
+ * appData.readTransferHandle. The size of receivedDataBuffer should
+ * be a multiple of the receive endpoint size. */</span></i>
+
+USB_DEVICE_EndpointRead(appData.usbDevHandle, &amp;appData.readTranferHandle,
+              appData.endpointRx, &amp;receivedDataBuffer[0], <strong><span style="color: #000080">sizeof</span></strong>(receivedDataBuffer) );
+<strong><span style="color: #000080">void</span></strong> APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, <strong><span style="color: #000080">void</span></strong> * eventData, uintptr_t context)
+{
+    <i><span style="color: #008000">/* This is the Device Layer event handler */</span></i>
+    <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_ENDPOINT_READ_COMPLETE:
+        <i><span style="color: #008000">/* Endpoint write is complete */</span></i>
+        appData.epDataReadPending = <strong><span style="color: #000080">false</span></strong>;
+        <strong><span style="color: #000080">break</span></strong>;
+}</pre></div></div>
 <p class="Element10">
-The <a href="00834.html" target="topic">USB_DEVICE_MSD_MEDIA_INIT_DATA</a> data structure allows a media driver to be plugged into the MSD Function Driver. Any media driver that needs to be plugged into the MSD Function Driver needs to implement the interface (function pointer signatures) specified by the <a href="00824.html" target="topic">USB_DEVICE_MSD_MEDIA_FUNCTIONS</a> type. For every LUN, a SCSI Inquiry Response data structure needs to be made available.&nbsp;</p>
+In a case where a transfer is in progress, the USB_DEVICE_EndpointRead and USB_DEVICE_EndpointWrite functions can queue up transfers. The maximum number of read transfers that can queued (on any receive endpoint) is specified by the endpointQueueSizeRead member of the USB_DEVICE_INIT data structure. The maximum number of write transfers that can queued (on any transmit endpoint) is specified by the endpointQueueSizeWrite member of the USB_DEVICE_INIT data structure. The USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED configuration macro should be set to total of read and write transfers that need to be queued.&nbsp;</p>
 <p class="Element10">
-Use the following guidelines while implementing the media driver:</p>
-<ul class="Element630">
-<li class="Element600">Read functions should be non-blocking</li>
-<li class="Element600">Write functions should be non-blocking</li>
-<li class="Element600">The media driver should provide an event to indicate when a block transfer has complete. It should allow the event handler to be registered.</li>
-<li class="Element600">Where required, the write function should erase and write to the storage area in one operation. The MSD Function Driver does not explicitly call the erase operation.</li>
-<li class="Element600">The media driver should provide a media geometry object when required. This media geometry object allows the MSD Function Driver to understand the media characteristics. This object is of the type, SYS_FS_MEDIA_GEOMETRY.</li>
-</ul><p class="Element10">
-The following code shows an example of plugging the MPLAB Harmony NVM Driver into the MSD Function Driver. The coherency and alignment attributes that are applied to the sectorBuffer, msdCBW, and msdCBW data objects is needed for operation on PIC32MZ devices. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/***********************************************
- * Sector buffer needed by for the MSD LUN.
- ***********************************************/</span></i>
-uint8_t sectorBuffer[512] __attribute__((coherent)) __attribute__((aligned(4)));
-
-<i><span style="color: #008000">/***********************************************
- * CBW and CSW structure needed by the MSD
- * function driver instance.
- ***********************************************/</span></i>
-USB_MSD_CBW msdCBW __attribute__((coherent)) __attribute__((aligned(4)));
-USB_MSD_CSW msdCSW __attribute__((coherent)) __attribute__((aligned(4)));
-
-<i><span style="color: #008000">/***********************************************
- * Because the PIC32MZ flash row size if 2048
- * and the media sector size if 512 bytes, we
- * have to allocate a buffer of size 2048
- * to backup the row. A pointer to this row
- * is passed in the media initialization data
- * structure.
- ***********************************************/</span></i>
-uint8_t flashRowBackupBuffer [DRV_NVM_ROW_SIZE];
-<i><span style="color: #008000">/*******************************************
- * MSD Function Driver initialization
- *******************************************/</span></i>
-
-USB_DEVICE_MSD_MEDIA_INIT_DATA msdMediaInit[1] =
-{
-    {
-        DRV_NVM_INDEX_0,
-        512,
-        sectorBuffer,
-        flashRowBackupBuffer,
-        (<strong><span style="color: #000080">void</span></strong> *)diskImage,
-        {
-            0x00,    <i><span style="color: #008000">// peripheral device is connected, direct access block device</span></i>
-            0x80,       <i><span style="color: #008000">// removable</span></i>
-            0x04,    <i><span style="color: #008000">// version = 00=&gt; does not conform to any standard, 4=&gt; SPC-2</span></i>
-            0x02,    <i><span style="color: #008000">// response is in format specified by SPC-2</span></i>
-            0x20,    <i><span style="color: #008000">// n-4 = 36-4=32= 0x20</span></i>
-            0x00,    <i><span style="color: #008000">// sccs etc.</span></i>
-            0x00,    <i><span style="color: #008000">// bque=1 and cmdque=0,indicates simple queuing 00 is obsolete,</span></i>
-                        <i><span style="color: #008000">// but as in case of other device, we are just using 00</span></i>
-            0x00,    <i><span style="color: #008000">// 00 obsolete, 0x80 for basic task queuing</span></i>
-            {
-                'M','i','c','r','o','c','h','p'
-            },
-            {
-                'M','a','s','s',' ','S','t','o','r','a','g','e',' ',' ',' ',' '
-            },
-            {
-                '0','0','0','1'
-            }
-        },
-        {
-            DRV_NVM_IsAttached,
-            DRV_NVM_BLOCK_Open,
-            DRV_NVM_BLOCK_Close,
-            DRV_NVM_GeometryGet,
-            DRV_NVM_BlockRead,
-            DRV_NVM_BlockEraseWrite,
-            DRV_NVM_IsWriteProtected,
-            DRV_NVM_BLOCK_EventHandlerSet,
-            DRV_NVM_BlockStartAddressSet
-        }
-    }
-};
-<i><span style="color: #008000">/*******************************************
- * MSD Function Driver initialization
- *******************************************/</span></i>
-USB_DEVICE_MSD_INIT msdInit =
-{
-    <i><span style="color: #008000">/* Number of LUNS */</span></i>
-    1,
-    <i><span style="color: #008000">/* Pointer to a CBW structure */</span></i>
-    &amp;msdCBW,
-    <i><span style="color: #008000">/* Pointer to a CSW structure */</span></i>
-    &amp;msdCSW,
-    <i><span style="color: #008000">/* Pointer to a table of Media Initialization data structures */</span></i>
-    &amp;msdMediaInit[0]
-};
-<i><span style="color: #008000">/*****************************************************
- * USB Device Function Registration Table
- *****************************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[1] =
-{
-    {
-        .speed = USB_SPEED_FULL | USB_SPEED_HIGH,   <i><span style="color: #008000">// Device Speed</span></i>
-        .configurationValue =  1,                   <i><span style="color: #008000">// Configuration value</span></i>
-        .interfaceNumber = 0,                       <i><span style="color: #008000">// Start interface number</span></i>
-        .numberOfInterfaces = 1,                    <i><span style="color: #008000">// Number of interfaces owned</span></i>
-        .funcDriverIndex = 0,                       <i><span style="color: #008000">// Function driver index</span></i>
-        .funcDriverInit = (<strong><span style="color: #000080">void</span></strong>*)&amp;msdInit,          <i><span style="color: #008000">// Pointer to initialization data structure</span></i>
-        .driver = USB_DEVICE_MSD_FUNCTION_DRIVER    <i><span style="color: #008000">// Pointer to function driver</span></i>
-    }
-};</pre></div></div>
-</div>
+For example, consider a Generic USB Device that contains two OUT (read) endpoint (EP1 and EP2) and one IN write endpoint (EP1). The application will queue a maximum of three read transfers on EP1, a maximum of five read transfers on EP2 and a maximum of four write transfers on EP1. Therefore, the total read transfer that will be queued in eight (3 + 5) and total write transfers that will be queued is four. The endpointQueueSizeRead member of the USB_DEVICE_INIT data structure should be set to eight. The endpointQueueSizeWrite member of the USB_DEVICE_INIT data structure should be set to four. The USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED configuration macro should be set to 12 (8 + 4).</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00300.html" target="topic">USB Libraries Help</a> &gt; <a href="00207.html" target="topic">USB Device Libraries</a> &gt; <a href="00306.html" target="topic">USB MSD Device Library</a> &gt; <a href="00332.html" target="topic">Using the Library</a> &gt; <a href="00326.html" target="topic">How the Library Works</a> &gt; <a href="00328.html" target="topic">Library Initialization</a></div>
+<a href="00290.html">USB Libraries Help</a> &gt; <a href="00197.html">USB Device Libraries</a> &gt; <a href="00323.html">Generic USB Device Library</a> &gt; <a href="00337.html">Using the Library</a> &gt; <a href="00332.html">How the Library Works</a> &gt; <a href="00328.html">Endpoint Data Transfer</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="25%">
+<tr><td width="100%">
 <div class="Element3">
-MPLAB Harmony USB Stack </div>
-</td><td width="25%">
+ MPLAB Harmony USB Stack </div>
+</td></tr><tr><td width="100%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00181.html" target="topic">Home</a></div>
-</td><td width="25%">
-<div class="Element91">
-<a href="00326.html" target="topic">Previous</a> | <a href="00326.html" target="topic">Up</a> | <a href="00323.html" target="topic">Next</a></div>
-</td><td width="25%">
+<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+</td></tr><tr><td width="100%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSDDEV Library Initialization Topic Title: Library Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Endpoint Data Transfer Topic Title: Endpoint Data Transfer)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
