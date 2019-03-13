@@ -61,7 +61,6 @@ uint8_t sectorBuffer[512 * USB_DEVICE_MSD_NUM_SECTOR_BUFFERS] CACHE_ALIGN;
 USB_MSD_CBW msdCBW0 CACHE_ALIGN;
 USB_MSD_CSW msdCSW0 CACHE_ALIGN;
 
-
 /*******************************************
  * MSD Function Driver initialization
  *******************************************/
@@ -217,7 +216,7 @@ const uint8_t highSpeedConfigurationDescriptor[]=
 
     0x09,                                                   // Size of this descriptor in bytes
     USB_DESCRIPTOR_CONFIGURATION,                           // Descriptor Type
-    USB_DEVICE_16bitTo8bitArrange(106),                      //(106 Bytes)Size of the Configuration descriptor
+    USB_DEVICE_16bitTo8bitArrange(98),                      //(106 Bytes)Size of the Configuration descriptor
     3,                                                      // Number of interfaces in this configuration
     0x01,                                               // Index value of this configuration
     0x00,                                               // Configuration string index
@@ -309,7 +308,7 @@ const uint8_t highSpeedConfigurationDescriptor[]=
 
     0x07,                           // Size of this descriptor
     USB_DESCRIPTOR_ENDPOINT,        // Endpoint Descriptor
-    1 | USB_EP_DIRECTION_IN,    // EndpointAddress ( EP1 IN INTERRUPT)
+    3 | USB_EP_DIRECTION_IN,    // EndpointAddress ( EP3 IN INTERRUPT)
     USB_TRANSFER_TYPE_INTERRUPT,    // Attributes type of EP (INTERRUPT)
     0x10,0x00,                      // Max packet size of this EP
     0x02,                           // Interval (in ms)
@@ -330,7 +329,7 @@ const uint8_t highSpeedConfigurationDescriptor[]=
 
     0x07,                       // Size of this descriptor
     USB_DESCRIPTOR_ENDPOINT,    // Endpoint Descriptor
-    2 | USB_EP_DIRECTION_OUT,   // EndpointAddress ( EP2 OUT )
+    4 | USB_EP_DIRECTION_OUT,   // EndpointAddress ( EP4 OUT )
     USB_TRANSFER_TYPE_BULK,     // Attributes type of EP (BULK)
     0x00, 0x02,                 // Max packet size of this EP
     0x00,                       // Interval (in ms)
@@ -339,7 +338,7 @@ const uint8_t highSpeedConfigurationDescriptor[]=
 
     0x07,                       // Size of this descriptor
     USB_DESCRIPTOR_ENDPOINT,    // Endpoint Descriptor
-    3 | USB_EP_DIRECTION_IN,    // EndpointAddress ( EP3 IN )
+    5 | USB_EP_DIRECTION_IN,    // EndpointAddress ( EP5 IN )
     0x02,                       // Attributes type of EP (BULK)
     0x00, 0x02,                 // Max packet size of this EP
     0x00,                       // Interval (in ms)
@@ -454,7 +453,7 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
 
     0x07,                                                   // Size of this descriptor
     USB_DESCRIPTOR_ENDPOINT,                                // Endpoint Descriptor
-    1 | USB_EP_DIRECTION_IN,                                // EndpointAddress ( EP1 IN INTERRUPT)
+    3 | USB_EP_DIRECTION_IN,                                // EndpointAddress ( EP3 IN INTERRUPT)
     USB_TRANSFER_TYPE_INTERRUPT,                            // Attributes type of EP (INTERRUPT)
     0x10,0x00,                                              // Max packet size of this EP
     0x02,                                                   // Interval (in ms)
@@ -475,7 +474,7 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
 
     0x07,                                                   // Size of this descriptor
     USB_DESCRIPTOR_ENDPOINT,                                // Endpoint Descriptor
-    2 | USB_EP_DIRECTION_OUT,                               // EndpointAddress ( EP2 OUT )
+    4 | USB_EP_DIRECTION_OUT,                               // EndpointAddress ( EP4 OUT )
     USB_TRANSFER_TYPE_BULK,                                 // Attributes type of EP (BULK)
     0x40, 0x00,                                             // Max packet size of this EP
     0x00,                                                   // Interval (in ms)
@@ -484,7 +483,7 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
 
     0x07,                                                   // Size of this descriptor
     USB_DESCRIPTOR_ENDPOINT,                                // Endpoint Descriptor
-    3 | USB_EP_DIRECTION_IN,                                // EndpointAddress ( EP3 IN )
+    5 | USB_EP_DIRECTION_IN,                                // EndpointAddress ( EP5 IN )
     0x02,                                                   // Attributes type of EP (BULK)
     0x40, 0x00,                                             // Max packet size of this EP
     0x00,                                                   // Interval (in ms)

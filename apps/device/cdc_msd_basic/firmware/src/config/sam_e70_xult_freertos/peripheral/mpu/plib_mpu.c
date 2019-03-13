@@ -55,8 +55,8 @@ void MPU_Initialize(void)
 
     /*** Configure MPU Regions  ***/
 
-    /* Region 0 Name: FLASH, Base Address: 0x400000, Size: 1MB  */
-    MPU->RBAR = MPU_REGION(0, 0x400000);
+    /* Region 0 Name: FLASH, Base Address: 0x500000, Size: 1MB  */
+    MPU->RBAR = MPU_REGION(0, 0x500000);
     MPU->RASR = MPU_REGION_SIZE(19) | MPU_RASR_AP(MPU_RASR_AP_READWRITE_Val) | MPU_ATTR_NORMAL_WT \
                 | MPU_ATTR_ENABLE  ;
 

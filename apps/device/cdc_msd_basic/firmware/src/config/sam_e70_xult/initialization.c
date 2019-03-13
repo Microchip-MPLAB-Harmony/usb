@@ -142,7 +142,7 @@ const DRV_USBHSV1_INIT drvUSBInit =
     .operationMode = DRV_USBHSV1_OPMODE_DEVICE,
 
     /* To operate in USB Normal Mode */
-	.operationSpeed = DRV_USBHSV1_DEVICE_SPEEDCONF_LOW_POWER,
+    .operationSpeed = DRV_USBHSV1_DEVICE_SPEEDCONF_NORMAL,
 
     /* Identifies peripheral (PLIB-level) ID */
     .usbID = USBHS_REGS,
