@@ -299,8 +299,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9A847343D94C87C9173689E556835F31</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9A847343D94C87C9173689E556835F31</UserChecksum>
+          <GeneratedChecksum dnOrder="4">244B0B543C849EBAB6C0AEB372A80B72</GeneratedChecksum>
+          <UserChecksum dnOrder="5">244B0B543C849EBAB6C0AEB372A80B72</UserChecksum>
         </File>
         <File dnOrder="37">
           <Type dnOrder="0">HEADER</Type>
