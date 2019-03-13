@@ -43,16 +43,16 @@
           <Name dnOrder="1">drv_usbhs.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/usb/usbhs/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">211ADDAE8220FD74052E65037A6260F6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">211ADDAE8220FD74052E65037A6260F6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">61FD4E5A1D63F33B9D3CE91856FFC2F8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">61FD4E5A1D63F33B9D3CE91856FFC2F8</UserChecksum>
         </File>
         <File dnOrder="5">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_usbhs_device.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/usb/usbhs/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1939FFC59DCF1237CC216D3E6CD1A107</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1939FFC59DCF1237CC216D3E6CD1A107</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4FC9C8844840FA41A8E98C1BA496A670</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4FC9C8844840FA41A8E98C1BA496A670</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -91,8 +91,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">C7C264926FF3EA68BB954A544C0F709B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C7C264926FF3EA68BB954A544C0F709B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1B435F1B8347AA85C634B598BEBDC4D6</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1B435F1B8347AA85C634B598BEBDC4D6</UserChecksum>
         </File>
         <File dnOrder="11">
           <Type dnOrder="0">SOURCE</Type>
@@ -323,8 +323,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">3621586164EF832D1FF05FC8F381E3AB</GeneratedChecksum>
-          <UserChecksum dnOrder="5">3621586164EF832D1FF05FC8F381E3AB</UserChecksum>
+          <GeneratedChecksum dnOrder="4">634A8D32FECC73CF3EDAEE9DA6C10B66</GeneratedChecksum>
+          <UserChecksum dnOrder="5">634A8D32FECC73CF3EDAEE9DA6C10B66</UserChecksum>
         </File>
         <File dnOrder="40">
           <Type dnOrder="0">HEADER</Type>
@@ -395,8 +395,8 @@
           <Name dnOrder="1">drv_usbhs_variant_mapping.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/usb/usbhs/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">FBF59656B71C35F8A3F321070DEB4BA1</GeneratedChecksum>
-          <UserChecksum dnOrder="5">FBF59656B71C35F8A3F321070DEB4BA1</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9E342EE43594612EE8D5ED88AB99353D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9E342EE43594612EE8D5ED88AB99353D</UserChecksum>
         </File>
         <File dnOrder="49">
           <Type dnOrder="0">HEADER</Type>
@@ -811,8 +811,8 @@
           <Name dnOrder="1">usbhs_HighSpeedSupport_Default.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/usb/usbhs/src/templates</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhs/src/templates/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">C6C285020920BE09CADBECFD27916777</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C6C285020920BE09CADBECFD27916777</UserChecksum>
+          <GeneratedChecksum dnOrder="4">56D99729B7C2636DF31B1402C21A328D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">56D99729B7C2636DF31B1402C21A328D</UserChecksum>
         </File>
         <File dnOrder="101">
           <Type dnOrder="0">HEADER</Type>

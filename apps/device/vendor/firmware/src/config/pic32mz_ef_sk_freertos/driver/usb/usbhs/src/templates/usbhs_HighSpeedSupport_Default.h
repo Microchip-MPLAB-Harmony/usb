@@ -353,6 +353,7 @@ PLIB_TEMPLATE bool USBHS_ExistsHighSpeedSupport_Default( USBHS_MODULE_ID index )
     return true;
 }
 
+
 //******************************************************************************
 /* Function :  USBHS_TestModeEnter_Default
 
@@ -370,29 +371,55 @@ PLIB_TEMPLATE bool USBHS_TestModeEnter_Default
 )
 {
     volatile usbhs_registers_t * usbhs = (usbhs_registers_t *)(index);
-    bool result = false;
-	
-	uint8_t PLIB_USBHS_TestModeMapping[5] = 
-    {
-        0x0, /* Not used */ 
-        0x2, /* Test_J */ 
-        0x4, /* Test_K */
-        0x1, /* Test_SE0_NAK */
-        0x8  /* Test Packet */
-    };
+    bool result = true;
+	uint8_t testModeRegValue = 0; 
     
     if((usbhs->TESTMODEbits.w & 0x7F) == 0x0)
     {
         /* We can proceed only if bits D6-D0 are are all 0. Now check if 
          * testMode is not zero and is not greater than 5. This is not a valid test 
          * mode */
-        
-        if((testMode != 0) && (testMode < 5))
-        {
-            usbhs->TESTMODEbits.w |= PLIB_USBHS_TestModeMapping[testMode];
-            result = true;
+		switch(testMode)
+		{
+			case USB_TEST_MODE_SELCTOR_TEST_J: 
+			{
+				testModeRegValue = 0x2; 
+			}
+			break;
+				
+			case USB_TEST_MODE_SELCTOR_TEST_K:
+			{
+				testModeRegValue = 0x4;
+			}
+			break; 
+			
+			case USB_TEST_MODE_SELCTOR_TEST_SE0_NAK: 
+			{
+				testModeRegValue = 0x1;
+			}
+			break; 
+			
+			case USB_TEST_MODE_SELCTOR_TEST_PACKET: 
+			{
+				testModeRegValue = 0x8; 
+			}
+			break; 
+			
+			default: 
+			{
+				result = false; 
+				testModeRegValue = 0; 
+			}
+		}
+		if (result == true)
+		{
+            usbhs->TESTMODEbits.w |= testModeRegValue;
         }
     }
+	else
+	{
+		result = false; 
+	}
   
 	return result;
 }
@@ -411,28 +438,50 @@ PLIB_TEMPLATE bool USBHS_TestModeEnter_Default
 
 PLIB_TEMPLATE bool USBHS_TestModeExit_Default( USBHS_MODULE_ID index , uint8_t testMode )
 {
-    volatile usbhs_registers_t * usbhs = (usbhs_registers_t *)(index);
-    bool result = false;
-	
-	uint8_t PLIB_USBHS_TestModeMapping[5] = 
-    {
-        0x0, /* Not used */ 
-        0x2, /* Test_J */ 
-        0x4, /* Test_K */
-        0x1, /* Test_SE0_NAK */
-        0x8  /* Test Packet */
-    };
+	volatile usbhs_registers_t * usbhs = (usbhs_registers_t *)(index);
+    bool result = true;
+	uint8_t testModeRegValue = 0; 
     
-    /* We can proceed only if bits D6-D0 are are all 0. Now check if 
-     * testMode is not zero and is not greater than 5. This is not a valid test 
-     * mode */
-
-    if((testMode != 0) && (testMode < 5))
-    {
-        usbhs->TESTMODEbits.w &= (~(PLIB_USBHS_TestModeMapping[testMode]));
-        result = true;
-    }
-   
+    
+	/* We can proceed only if bits D6-D0 are are all 0. Now check if 
+	 * testMode is not zero and is not greater than 5. This is not a valid test 
+	 * mode */
+	switch(testMode)
+	{
+		case USB_TEST_MODE_SELCTOR_TEST_J: 
+		{
+			testModeRegValue = 0x2; 
+		}
+		break;
+			
+		case USB_TEST_MODE_SELCTOR_TEST_K:
+		{
+			testModeRegValue = 0x4;
+		}
+		break; 
+		
+		case USB_TEST_MODE_SELCTOR_TEST_SE0_NAK: 
+		{
+			testModeRegValue = 0x1;
+		}
+		break; 
+		
+		case USB_TEST_MODE_SELCTOR_TEST_PACKET: 
+		{
+			testModeRegValue = 0x8; 
+		}
+		break; 
+		
+		default: 
+		{
+			result = false; 
+			testModeRegValue = 0; 
+		}
+	}
+	if (result == true)
+	{
+		usbhs->TESTMODEbits.w &= (~(testModeRegValue));
+	}
 	return result;
 }
 

@@ -206,11 +206,11 @@
     /* The DA device USB module also has a clock control register that needs to
      * be configured depending on whether the module is being setup for device
      * mode or host mode operation. */
-    #define _DRV_USBHS_CLOCK_CONTROL_SETUP_DEVICE_MODE  PLIB_USBHS_USBIDOverrideEnable(usbID);\
+    #define _DRV_USBHS_CLOCK_CONTROL_SETUP_DEVICE_MODE(usbID)  PLIB_USBHS_USBIDOverrideEnable(usbID);\
                                                         PLIB_USBHS_PhyIDMonitoringEnable(usbID);\
                                                         PLIB_USBHS_USBIDOverrideValueSet(usbID, USBHS_USBID_ENABLE);
 
-    #define _DRV_USBHS_CLOCK_CONTROL_SETUP_HOST_MODE  PLIB_USBHS_USBIDOverrideEnable(usbID);\
+    #define _DRV_USBHS_CLOCK_CONTROL_SETUP_HOST_MODE(usbID)  PLIB_USBHS_USBIDOverrideEnable(usbID);\
                                                         PLIB_USBHS_PhyIDMonitoringEnable(usbID);\
                                                         PLIB_USBHS_USBIDOverrideValueSet(usbID, USBHS_USBID_DISABLE);
 
@@ -218,8 +218,8 @@
 #else
     #define _DRV_USBHS_ID_OVERRIDE_IS_NEEDED              false
     #define _DRV_USBHS_INTERRUPT_PERSISTENT               true
-    #define _DRV_USBHS_CLOCK_CONTROL_SETUP_DEVICE_MODE   
-    #define _DRV_USBHS_CLOCK_CONTROL_SETUP_HOST_MODE  
+    #define _DRV_USBHS_CLOCK_CONTROL_SETUP_DEVICE_MODE(usbID)   
+    #define _DRV_USBHS_CLOCK_CONTROL_SETUP_HOST_MODE(usbID)  
 #endif
 
 #if (_DRV_USBHS_INTERRUPT_PERSISTENT == false)

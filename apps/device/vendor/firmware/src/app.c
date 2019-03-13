@@ -63,9 +63,14 @@
 // *****************************************************************************
 #define APP_USB_SWITCH_DEBOUNCE_COUNT_FS                    260
 #define APP_USB_SWITCH_DEBOUNCE_COUNT_HS                    500
+
+#ifdef __PIC32MZ__
+#define APP_EP_BULK_OUT 1
+#define APP_EP_BULK_IN 1
+#else
 #define APP_EP_BULK_OUT 1
 #define APP_EP_BULK_IN 2
-
+#endif 
 // *****************************************************************************
 /* Application Data
 
@@ -84,10 +89,10 @@
 APP_DATA appData;
 
 /* Receive data buffer */
-uint8_t receivedDataBuffer[512] __attribute__((aligned(16)));
+uint8_t receivedDataBuffer[512] CACHE_ALIGN;
 
 /* Transmit data buffer */
-uint8_t  transmitDataBuffer[512] __attribute__((aligned(16)));
+uint8_t  transmitDataBuffer[512] CACHE_ALIGN;
 
 /* The endpoint size is 64 for FS and 512 for HS */
 uint16_t endpointSize;
