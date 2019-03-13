@@ -61,7 +61,6 @@ uint8_t sectorBuffer[512 * USB_DEVICE_MSD_NUM_SECTOR_BUFFERS] CACHE_ALIGN;
 USB_MSD_CBW msdCBW0 CACHE_ALIGN;
 USB_MSD_CSW msdCSW0 CACHE_ALIGN;
 
-
 /*******************************************
  * MSD Function Driver initialization
  *******************************************/
@@ -312,7 +311,7 @@ const uint8_t highSpeedConfigurationDescriptor[]=
 
     0x07,                           // Size of this descriptor in bytes
     USB_DESCRIPTOR_ENDPOINT,        // Endpoint Descriptor
-    1 | USB_EP_DIRECTION_IN,    // EndpointAddress ( EP1 IN )
+    3 | USB_EP_DIRECTION_IN,    // EndpointAddress ( EP3 IN )
     USB_TRANSFER_TYPE_INTERRUPT,    // Attributes
     0x40,0x00,                      // Size
     0x01,                           // Interval
@@ -321,7 +320,7 @@ const uint8_t highSpeedConfigurationDescriptor[]=
 
     0x07,                           // Size of this descriptor in bytes
     USB_DESCRIPTOR_ENDPOINT,        // Endpoint Descriptor
-    2 | USB_EP_DIRECTION_OUT,   // EndpointAddress ( EP2 OUT )
+    4 | USB_EP_DIRECTION_OUT,   // EndpointAddress ( EP4 OUT )
     USB_TRANSFER_TYPE_INTERRUPT,    // Attributes
     0x40,0x00,                      // size
     0x01,                           // Interval
@@ -414,7 +413,7 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
 
     0x07,                           // Size of this descriptor in bytes
     USB_DESCRIPTOR_ENDPOINT,        // Endpoint Descriptor
-    1 | USB_EP_DIRECTION_IN,    // EndpointAddress ( EP1 IN )
+    3 | USB_EP_DIRECTION_IN,    // EndpointAddress ( EP3 IN )
     USB_TRANSFER_TYPE_INTERRUPT,    // Attributes
     0x40,0x00,                      // Size
     0x01,                           // Interval
@@ -423,7 +422,7 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
 
     0x07,                           // Size of this descriptor in bytes
     USB_DESCRIPTOR_ENDPOINT,        // Endpoint Descriptor
-    2 | USB_EP_DIRECTION_OUT,   // EndpointAddress ( EP2 OUT )
+    4 | USB_EP_DIRECTION_OUT,   // EndpointAddress ( EP4 OUT )
     USB_TRANSFER_TYPE_INTERRUPT,    // Attributes
     0x40,0x00,                      // size
     0x01,                           // Interval

@@ -57,8 +57,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
-#include "definitions.h"
 #include "configuration.h"
+#include "definitions.h"
+#include "usb/usb_chapter_9.h"
+#include "usb/usb_device.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -79,8 +81,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 typedef enum
 {
-    /* Application's state machine's initial state. */
-    APP_STATE_INIT=0,
+    /* Application is initializing */
+    APP_STATE_INIT,
 
     /* Application is waiting for configuration */
     APP_STATE_WAIT_FOR_CONFIGURATION,
@@ -90,7 +92,7 @@ typedef enum
 
     /* Application is in an error state */
     APP_STATE_ERROR
-
+            
 } APP_STATES;
 
 
@@ -109,11 +111,11 @@ typedef enum
 
 typedef struct
 {
-    /* Device layer handle returned by device layer open function */
-    USB_DEVICE_HANDLE  usbDevHandle;
+    /* The application's current state */
+    APP_STATES state;
 
-    /* LED blink status*/
-    bool blinkStatusValid;
+      /* Device layer handle returned by device layer open function */
+    USB_DEVICE_HANDLE  usbDevHandle;
 
     /* Recieve data buffer */
     uint8_t * receiveDataBuffer;
@@ -121,12 +123,9 @@ typedef struct
     /* Transmit data buffer */
     uint8_t * transmitDataBuffer;
 
-    /* Current state of the application */
-    APP_STATES state;
-
     /* Device configured */
     bool deviceConfigured;
-    
+
     /* Send report transfer handle*/
     USB_DEVICE_HID_TRANSFER_HANDLE txTransferHandle;
 
@@ -136,18 +135,14 @@ typedef struct
     /* Configuration value selected by the host*/
     uint8_t configurationValue;
 
-    /* USB speed*/
-    USB_SPEED usbSpeed;
-
     /* HID data received flag*/
     bool hidDataReceived;
 
     /* HID data transmitted flag */
     bool hidDataTransmitted;
 
-    /* USB HID current Idle */
+     /* USB HID current Idle */
     uint8_t idleRate;
-
 
 } APP_DATA;
 
@@ -172,12 +167,12 @@ typedef struct
     void APP_Initialize ( void )
 
   Summary:
-     MPLAB Harmony application initialization routine.
+     MPLAB Harmony Demo application initialization routine
 
   Description:
-    This function initializes the Harmony application.  It places the 
-    application in its initial state and prepares it to run so that its 
-    APP_Tasks function can be called.
+    This routine initializes Harmony Demo application.  This function opens
+    the necessary drivers, initializes the timer and registers the application
+    callback with the USART driver.
 
   Precondition:
     All other system initialization routines should be called before calling
@@ -232,6 +227,8 @@ void APP_Initialize ( void );
  */
 
 void APP_Tasks ( void );
+
+
 
 
 #endif /* _APP_H */
