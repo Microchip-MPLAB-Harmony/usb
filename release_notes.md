@@ -1,9 +1,41 @@
 # Microchip MPLAB Harmony 3 Release Notes
-## USB Release v3.1.1
+## USB Release v3.2.0
 ### NEW FEATURES
-- Added USB Host demos for SAMD2x Devices. 
-- Added MHC support for Generic USB Devices. 
-- Minor documentation update. 
+- **New part support** - This release introduces initial support for [PIC32MZ DA](https://www.microchip.com/design-centers/32-bit/pic-32-bit-mcus/pic32mz-da-family), [PIC32MZ EF](https://www.microchip.com/design-centers/32-bit/pic-32-bit-mcus/pic32mz-ef-family), [SAM E54](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-e-mcus), families of 32-bit microcontrollers. 
+
+- **Development kit and demo application support** - The following table provides number of demo application available for different development kits newly added in this release.
+
+| Development kits | Applications |
+| --- | --- | --- |
+| [PIC32MZ Embedded Graphics with Stacked DRAM (DA) Starter Kit (Crypto)](https://www.microchip.com/DevelopmentTools/ProductDetails/DM320010-C) | 2 |
+| [PIC32MZ Embedded Connectivity with FPU(EF) Starter Kit](https://www.microchip.com/Developmenttools/ProductDetails/Dm320007) | 11 |
+| [SAM E54 Xplained Pro Evaluation Kit](https://www.microchip.com/developmenttools/ProductDetails/ATSAME54-XPRO) | 7 |
+
+### Known Issues
+
+The current known issues are as follows:
+
+- Programming and debugging through PKOB is not yet supported for PIC32MZ DA, need to use external debugger (ICD4)
+
+- PIC32MZ DA(S) device family will be supported by next coming XC32 release.
+
+- The ICD4 loads the reset line of the SAM V71 Xplained Ultra board. Do not press reset button on the Xplained Ultra board while ICD4 is connected to the board.
+
+- Interactive help using the Show User Manual Entry in the Right-click menu for configuration options provided by this module is not yet available from within the MPLAB Harmony Configurator (MHC).  Please see the &quot;Configuring the Library&quot; section in the help documentation in the doc folder for this module instead.  Help is available in both CHM and PDF formats.
+
+- USB Device MSD (apps\device\msd_basic) SAME5x and SAMD2x demos does not write data into the files correctly. 
+
+- USB Device (apps\device\cdc_msd_basic) demo does not enumerate correctly. 
+
+- USB Host MSD (apps\host\msd_basic) demo has been tested only with limited number of pen drives. The list of tested pen drives are provided in the USB Help doc section  "USB MSD Host USB Pen Drive Tests" 
+
+
+### Development Tools
+
+* [MPLAB X IDE v5.15](https://www.microchip.com/mplab/mplab-x-ide)
+* [MPLAB XC32 C/C++ Compiler v2.15](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Harmony Configurator (MHC) v3.2.0.0.
 
 ## USB Release v3.1.0
 ### NEW FEATURES
