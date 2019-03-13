@@ -55,21 +55,21 @@
 // ****************************************************************************
 // ****************************************************************************
 
-//#pragma config BOD33_DIS = SET
-//#pragma config BOD33USERLEVEL = 0x1c
-//#pragma config BOD33_ACTION = RESET
-//#pragma config BOD33_HYST = 0x2
-//#pragma config NVMCTRL_BOOTPROT = 0
-//#pragma config NVMCTRL_SEESBLK = 0x0
-//#pragma config NVMCTRL_SEEPSZ = 0x0
-//#pragma config RAMECC_ECCDIS = SET
-//#pragma config WDT_ENABLE = CLEAR
-//#pragma config WDT_ALWAYSON = CLEAR
-//#pragma config WDT_PER = CYC8192
-//#pragma config WDT_WINDOW = CYC8192
-//#pragma config WDT_EWOFFSET = CYC8192
-//#pragma config WDT_WEN = CLEAR
-//#pragma config NVMCTRL_REGION_LOCKS = 0xffffffff
+#pragma config BOD33_DIS = SET
+#pragma config BOD33USERLEVEL = 0x1c
+#pragma config BOD33_ACTION = RESET
+#pragma config BOD33_HYST = 0x2
+#pragma config NVMCTRL_BOOTPROT = 0
+#pragma config NVMCTRL_SEESBLK = 0x0
+#pragma config NVMCTRL_SEEPSZ = 0x0
+#pragma config RAMECC_ECCDIS = SET
+#pragma config WDT_ENABLE = CLEAR
+#pragma config WDT_ALWAYSON = CLEAR
+#pragma config WDT_PER = CYC8192
+#pragma config WDT_WINDOW = CYC8192
+#pragma config WDT_EWOFFSET = CYC8192
+#pragma config WDT_WEN = CLEAR
+#pragma config NVMCTRL_REGION_LOCKS = 0xffffffff
 
 
 
@@ -94,7 +94,7 @@ const DRV_MEMORY_DEVICE_INTERFACE drvMemory0DeviceAPI = {
     .SectorErase        = DRV_NVMCTRL_SectorErase,
     .Read               = DRV_NVMCTRL_Read,
     .PageWrite          = DRV_NVMCTRL_PageWrite,
-    .EventHandlerSet    = NULL,
+    .EventHandlerSet    = (DRV_MEMORY_DEVICE_EVENT_HANDLER_SET)DRV_NVMCTRL_EventHandlerSet,
     .GeometryGet        = (DRV_MEMORY_DEVICE_GEOMETRY_GET)DRV_NVMCTRL_GeometryGet,
     .TransferStatusGet  = (DRV_MEMORY_DEVICE_TRANSFER_STATUS_GET)DRV_NVMCTRL_TransferStatusGet
 };
@@ -103,7 +103,7 @@ const DRV_MEMORY_INIT drvMemory0InitData =
 {
     .memDevIndex                = 0,
     .memoryDevice               = &drvMemory0DeviceAPI,
-    .isMemDevInterruptEnabled   = false,
+    .isMemDevInterruptEnabled   = true,
     .isFsEnabled                = false,
     .ewBuffer                   = &gDrvMemory0EraseBuffer[0],
     .clientObjPool              = (uintptr_t)&gDrvMemory0ClientObject[0],

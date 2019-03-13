@@ -68,9 +68,16 @@
 #define NVMCTRL_FLASH_BLOCKSIZE            (8192U)
 
 #define NVMCTRL_START_ADDRESS              0x80000
-#define NVMCTRL_MEDIA_SIZE                 512
+#define NVMCTRL_MEDIA_SIZE                 32
 #define NVMCTRL_ERASE_BUFFER_SIZE          8192
 
+typedef void (*NVMCTRL_CALLBACK)(uintptr_t context);
+
+typedef struct
+{
+    NVMCTRL_CALLBACK callback_fn;
+    uintptr_t context;
+}NVMCTRL_CALLBACK_OBJECT;
 
 /* NVM supports four write modes */
 typedef enum
@@ -81,6 +88,18 @@ typedef enum
     NVMCTRL_WMODE_AP = NVMCTRL_CTRLA_WMODE_AP,
 } NVMCTRL_WRITEMODE;
 
+/* Interrupt sources for the main flash */
+typedef enum
+{
+    NVMCTRL_INT_DONE = NVMCTRL_INTENCLR_DONE_Msk,
+    NVMCTRL_INT_ADDRE = NVMCTRL_INTENCLR_ADDRE_Msk,
+    NVMCTRL_INT_PROGE = NVMCTRL_INTENCLR_PROGE_Msk,
+    NVMCTRL_INT_LOCKE = NVMCTRL_INTENCLR_LOCKE_Msk,
+    NVMCTRL_INT_ECCSE = NVMCTRL_INTENCLR_ECCSE_Msk,
+    NVMCTRL_INT_ECCDE = NVMCTRL_INTENCLR_ECCDE_Msk,
+    NVMCTRL_INT_NVME = NVMCTRL_INTENCLR_NVME_Msk,
+    NVMCTRL_INT_SUSP = NVMCTRL_INTENCLR_SUSP_Msk
+} NVMCTRL_INTERRUPT0_SOURCE;
 
 
 void NVMCTRL_Initialize(void);
@@ -121,6 +140,9 @@ void NVMCTRL_SmartEepromFlushPageBuffer(void);
 
 void NVMCTRL_BankSwap(void);
 
+void NVMCTRL_CallbackRegister( NVMCTRL_CALLBACK callback, uintptr_t context );
+void NVMCTRL_EnableMainFlashInterruptSource(NVMCTRL_INTERRUPT0_SOURCE int_source);
+void NVMCTRL_DisableMainFlashInterruptSource(NVMCTRL_INTERRUPT0_SOURCE int_source);
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus // Provide C++ Compatibility

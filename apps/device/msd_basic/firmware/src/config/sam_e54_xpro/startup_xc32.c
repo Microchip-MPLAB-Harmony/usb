@@ -157,6 +157,8 @@ void __attribute__((optimize("-O1"), section(".text.Reset_Handler"), long_call))
     /* Initialize the C library */
     __libc_init_array();
 
+    /* Initialize MPU */
+    MPU_Initialize();
 
 
 

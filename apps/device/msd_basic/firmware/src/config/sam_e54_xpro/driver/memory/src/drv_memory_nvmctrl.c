@@ -53,12 +53,17 @@
 // Section: Global objects
 // *****************************************************************************
 // *****************************************************************************
+DRV_MEMORY_EVENT_HANDLER   nvmctrlEventHandler;
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Driver NVMCTRL Local Functions
 // *****************************************************************************
 // *****************************************************************************
+static void DRV_NVMCTRL_EventHandler( uintptr_t context)
+{
+    nvmctrlEventHandler(MEMORY_DEVICE_TRANSFER_COMPLETED, context);
+}
 
 // *****************************************************************************
 // *****************************************************************************
@@ -93,6 +98,11 @@ bool DRV_NVMCTRL_SectorErase( const DRV_HANDLE handle, uint32_t address )
     return (NVMCTRL_BlockErase(address));
 }
 
+void DRV_NVMCTRL_EventHandlerSet( const DRV_HANDLE handle, const DRV_MEMORY_EVENT_HANDLER eventHandler, const uintptr_t context )
+{
+    nvmctrlEventHandler = eventHandler;
+    NVMCTRL_CallbackRegister(DRV_NVMCTRL_EventHandler, context);
+}
 
 bool DRV_NVMCTRL_GeometryGet( const DRV_HANDLE handle, MEMORY_DEVICE_GEOMETRY *geometry )
 {

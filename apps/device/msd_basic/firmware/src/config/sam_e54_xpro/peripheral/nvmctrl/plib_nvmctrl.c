@@ -60,10 +60,14 @@ static uint16_t smart_eep_status;
 // *****************************************************************************
 // *****************************************************************************
 
+NVMCTRL_CALLBACK_OBJECT nvmctrlCallbackObjMain;
 
 
 void NVMCTRL_Initialize(void)
 {
+    /* Clear all interrupt flags */
+    NVMCTRL_REGS->NVMCTRL_INTFLAG = NVMCTRL_INTFLAG_Msk;
+    NVMCTRL_REGS->NVMCTRL_INTENSET = NVMCTRL_INTENSET_DONE_Msk;
 }
 
 bool NVMCTRL_Read( uint32_t *data, uint32_t length, const uint32_t address )
@@ -257,4 +261,32 @@ void NVMCTRL_SmartEepromFlushPageBuffer(void)
     NVMCTRL_REGS->NVMCTRL_CTRLB = NVMCTRL_CTRLB_CMD_SEEFLUSH | NVMCTRL_CTRLB_CMDEX_KEY;
 }
 
+void NVMCTRL_EnableMainFlashInterruptSource(NVMCTRL_INTERRUPT0_SOURCE int_source)
+{
+    NVMCTRL_REGS->NVMCTRL_INTENSET |= int_source;
+}
+
+void NVMCTRL_DisableMainFlashInterruptSource(NVMCTRL_INTERRUPT0_SOURCE int_source)
+{
+    NVMCTRL_REGS->NVMCTRL_INTENCLR |= int_source;
+}
+
+void NVMCTRL_CallbackRegister( NVMCTRL_CALLBACK callback, uintptr_t context )
+{
+    /* Register callback function */
+    nvmctrlCallbackObjMain.callback_fn = callback;
+    nvmctrlCallbackObjMain.context = context;
+}
+void NVMCTRL_Main_Interrupt_Handler(void)
+{
+    /* Store previous and current error flags */
+    nvm_error |= NVMCTRL_REGS->NVMCTRL_INTFLAG;
+
+    NVMCTRL_REGS->NVMCTRL_INTFLAG = NVMCTRL_REGS->NVMCTRL_INTFLAG;
+
+    if(nvmctrlCallbackObjMain.callback_fn != NULL)
+    {
+        nvmctrlCallbackObjMain.callback_fn(nvmctrlCallbackObjMain.context);
+    }
+}
 
