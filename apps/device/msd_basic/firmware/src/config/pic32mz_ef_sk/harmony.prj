@@ -171,8 +171,8 @@
           <Name dnOrder="1">usb_device_init_data.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">FA494751E112F1B02BC262170D70781B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A4E15713356394EBE5FF1D64FCF5B406</UserChecksum>
+          <GeneratedChecksum dnOrder="4">AB95DEC183A71CCADDC77450655E8E2F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AB95DEC183A71CCADDC77450655E8E2F</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">SOURCE</Type>
@@ -211,16 +211,16 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">88CE986A68A13581D21C458232A4D45F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">88CE986A68A13581D21C458232A4D45F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">311E679E80B3151846B8789F10F1D640</GeneratedChecksum>
+          <UserChecksum dnOrder="5">311E679E80B3151846B8789F10F1D640</UserChecksum>
         </File>
         <File dnOrder="26">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">4E65F0DF248C68A7ACDAED08D2B9651F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4E65F0DF248C68A7ACDAED08D2B9651F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">A41154E2A0D9D8923ACA6CCEDBF2985F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">A41154E2A0D9D8923ACA6CCEDBF2985F</UserChecksum>
         </File>
         <File dnOrder="27">
           <Type dnOrder="0">HEADER</Type>
@@ -379,8 +379,8 @@
           <Name dnOrder="1">plib_nvm.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/peripheral/nvm/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/nvm/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5FD0BADA078EED7D3864BA0851748077</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5FD0BADA078EED7D3864BA0851748077</UserChecksum>
+          <GeneratedChecksum dnOrder="4">AD996DFF8D072646E8446765E15DB357</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AD996DFF8D072646E8446765E15DB357</UserChecksum>
         </File>
         <File dnOrder="47">
           <Type dnOrder="0">HEADER</Type>

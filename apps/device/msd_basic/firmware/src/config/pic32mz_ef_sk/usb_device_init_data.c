@@ -60,7 +60,6 @@ uint8_t sectorBuffer[512 * USB_DEVICE_MSD_NUM_SECTOR_BUFFERS] CACHE_ALIGN;
  ***********************************************/
 USB_MSD_CBW msdCBW0 CACHE_ALIGN;
 USB_MSD_CSW msdCSW0 CACHE_ALIGN;
-
 /***********************************************
  * Because the PIC32MZ flash row size if 2048
  * and the media sector size if 512 bytes, we
@@ -69,13 +68,7 @@ USB_MSD_CSW msdCSW0 CACHE_ALIGN;
  * is passed in the media initialization data
  * structure.
  ***********************************************/
-
-#define     DRV_MEMORY_ROW_SIZE   0x800 
-uint8_t flashRowBackupBuffer [DRV_MEMORY_ROW_SIZE];
-
-extern const unsigned char 
-    __attribute__((keep)) __attribute__((address(DRV_MEMORY_DEVICE_START_ADDRESS)))
-    diskImage[32768];
+uint8_t flashRowBackupBuffer [DRV_MEMORY_DEVICE_PROGRAM_SIZE] CACHE_ALIGN;
 
 /*******************************************
  * MSD Function Driver initialization
@@ -86,8 +79,8 @@ USB_DEVICE_MSD_MEDIA_INIT_DATA CACHE_ALIGN  msdMediaInit0[1] =
         DRV_MEMORY_INDEX_0,
         512,
         sectorBuffer,
-        flashRowBackupBuffer,
-        (void *)diskImage,
+		flashRowBackupBuffer,
+        NULL,
         {
             0x00,    // peripheral device is connected, direct access block device
             0x80,    // removable

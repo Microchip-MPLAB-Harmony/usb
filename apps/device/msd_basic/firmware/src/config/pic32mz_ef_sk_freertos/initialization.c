@@ -58,7 +58,7 @@
 /*** DEVCFG0 ***/
 #pragma config DEBUG =      OFF
 #pragma config JTAGEN =     OFF
-#pragma config ICESEL =     ICS_PGx1
+#pragma config ICESEL =     ICS_PGx2
 #pragma config TRCEN =      OFF
 #pragma config BOOTISA =    MIPS32
 #pragma config FECCCON =    OFF_UNLOCKED
@@ -77,7 +77,7 @@
 #pragma config DMTINTV =    WIN_127_128
 #pragma config FSOSCEN =    OFF
 #pragma config IESO =       OFF
-#pragma config POSCMOD =    OFF
+#pragma config POSCMOD =    EC
 #pragma config OSCIOFNC =   OFF
 #pragma config FCKSM =      CSECME
 #pragma config WDTPS =      PS1048576

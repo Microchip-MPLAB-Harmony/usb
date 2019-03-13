@@ -498,14 +498,14 @@ def instantiateComponent(usbDeviceComponent):
 	# USB Device Application files  
 	################################################
 	usbDeviceMsdDiskImageFile = usbDeviceComponent.createFileSymbol("USB_DEVICE_DISK_IMAGE_FILE", None)
-	addFileName('diskImage.c', usbDeviceComponent, usbDeviceMsdDiskImageFile, "templates/device/msd/", "", False, None)
+	addFileName('diskImage.c', usbDeviceComponent, usbDeviceMsdDiskImageFile, "templates/device/msd/", "", usbDeviceMsdDiskImageFileAdd.getValue(), None)
 	#usbDeviceMsdDiskImageFile.setDependencies(checkIfDiskImagefileNeeded, ["CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0"])
-	if (usbDeviceMsdDiskImageFileAdd.getValue() == True):
-		print("Disk Image File Enabled")
-		usbDeviceMsdDiskImageFile.setEnabled(True)
-	else:	
-		print("Disk Image File Disabled")
-		usbDeviceMsdDiskImageFile.setEnabled(False)
+	# if (usbDeviceMsdDiskImageFileAdd.getValue() == True):
+		# print("Disk Image File Enabled")
+		# usbDeviceMsdDiskImageFile.setEnabled(True)
+	# else:	
+		# print("Disk Image File Disabled")
+		# usbDeviceMsdDiskImageFile.setEnabled(False)
 		
 # all files go into src/
 def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callback):
