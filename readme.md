@@ -14,6 +14,7 @@ Software Development Framework.  The USB module components provide USB middlewar
 and drivers. Refer to the following links for release notes, training materials, 
 and interface reference information.
  - [Release Notes](./release_notes.md)
+ - [MPLAB Harmony License](mplab_harmony_license.md)
  - [MPLAB Harmony 3 USB Wiki](https://github.com/Microchip-MPLAB-Harmony/usb/wiki)
  - [MPLAB Harmony 3 USB API Help](https://microchip-mplab-harmony.github.io/usb)
 

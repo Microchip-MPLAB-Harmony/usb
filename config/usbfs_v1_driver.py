@@ -1,8 +1,30 @@
-# Global definitions  
+"""*****************************************************************************
+* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+*
+* Subject to your compliance with these terms, you may use Microchip software
+* and any derivatives exclusively with Microchip products. It is your
+* responsibility to comply with third party license terms applicable to your
+* use of third party software (including open source software) that may
+* accompany Microchip software.
+*
+* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+* PARTICULAR PURPOSE.
+*
+* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+*****************************************************************************"""
+# Global definitions
 listUsbSpeed = ["High Speed", "Full Speed"]
 #listUsbSpeed = ["DRV_USBHSV1_DEVICE_SPEEDCONF_NORMAL", "DRV_USBHSV1_DEVICE_SPEEDCONF_LOW_POWER"]
 listUsbOperationMode = ["Device", "Host", "Dual Role"]
-usbDebugLogs = 1 
+usbDebugLogs = 1
 usbDriverPath = "driver/"
 usbDriverProjectPath = "/driver/usb/"
 
@@ -23,32 +45,32 @@ def setVisible(symbol, event):
 		symbol.setVisible(True)
 	else:
 		symbol.setVisible(False)
-		
+
 def showRTOSMenu(symbol, event):
 	show_rtos_menu = False
 
 	if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
 		show_rtos_menu = True
 	symbol.setVisible(show_rtos_menu)
-def instantiateComponent(usbDriverComponent):	
+def instantiateComponent(usbDriverComponent):
 	res = Database.activateComponents(["HarmonyCore"])
-	
-	# USB Driver Speed selection 	
+
+	# USB Driver Speed selection
 	usbSpeed = usbDriverComponent.createComboSymbol("USB_SPEED", None, listUsbSpeed)
 	usbSpeed.setLabel("USB Speed Selection")
 	usbSpeed.setVisible(False)
 	usbSpeed.setDescription("Select USB Operation Speed")
 	usbSpeed.setDefaultValue("Full Speed")
 	usbSpeed.setDependencies(blUSBDriverSpeedChanged, ["USB_SPEED"])
-	
-	# USB Driver Operation mode selection 
+
+	# USB Driver Operation mode selection
 	usbOpMode = usbDriverComponent.createComboSymbol("USB_OPERATION_MODE", None, listUsbOperationMode)
 	usbOpMode.setLabel("USB Mode Selection")
 	usbOpMode.setVisible(True)
 	usbOpMode.setDescription("Select USB Operation Mode")
 	usbOpMode.setDefaultValue("Device")
 	usbOpMode.setUseSingleDynamicValue(True)
-	
+
 	usbVbusSense = usbDriverComponent.createBooleanSymbol("USB_DEVICE_VBUS_SENSE", usbOpMode)
 	usbVbusSense.setLabel("Enable VBUS Sense")
 	usbVbusSense.setDescription("A Self Powered USB Device firmware must have some means to detect VBUS from Host. A GPIO pin can be configured as an Input and connected to VBUS (through a resistor), and can be used to detect when VBUS is high (host actively powering). This configuration instructs MHC to generate a VBUS SENSE function. The GPIO pin name must be configured as in the below ")
@@ -57,21 +79,21 @@ def instantiateComponent(usbDriverComponent):
 	usbVbusSense.setDefaultValue(True)
 	usbVbusSense.setUseSingleDynamicValue(True)
 	usbVbusSense.setDependencies(blUSBDriverOperationModeDevice, ["USB_OPERATION_MODE"])
-	
+
 	usbVbusSenseFunctionName = usbDriverComponent.createStringSymbol("USB_DEVICE_VBUS_SENSE_PIN_NAME", usbVbusSense)
 	usbVbusSenseFunctionName.setLabel("VBUS SENSE Pin Name")
 	usbVbusSenseFunctionName.setDefaultValue("USB_VBUS_SENSE")
 	usbVbusSenseFunctionName.setVisible(True)
 	usbVbusSenseFunctionName.setDependencies(blUsbVbusPinName, ["USB_DEVICE_VBUS_SENSE"])
-	
-	# USB Driver Host mode Attach de-bounce duration 
+
+	# USB Driver Host mode Attach de-bounce duration
 	usbDriverHostAttachDebounce = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION", usbOpMode)
 	usbDriverHostAttachDebounce.setLabel("Attach De-bounce Duration (mSec)")
 	usbDriverHostAttachDebounce.setVisible(False)
 	usbDriverHostAttachDebounce.setDescription("Set USB Host Attach De-bounce duration")
 	usbDriverHostAttachDebounce.setDefaultValue(500)
 	usbDriverHostAttachDebounce.setDependencies(blUSBDriverOperationModeChanged, ["USB_OPERATION_MODE"])
-	
+
 	# USB Driver Host mode Reset Duration
 	usbDriverHostResetDuration = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_RESET_DUARTION", usbOpMode)
 	usbDriverHostResetDuration.setLabel("Reset Duration (mSec)")
@@ -79,13 +101,13 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverHostResetDuration.setDescription("Set USB Host Attach De-bounce duration")
 	usbDriverHostResetDuration.setDefaultValue(100)
 	usbDriverHostResetDuration.setDependencies(blUSBDriverOperationModeChanged, ["USB_OPERATION_MODE"])
-	
+
 	enable_rtos_settings = False
 
 	if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
 		enable_rtos_settings = True
 
-	# RTOS Settings 
+	# RTOS Settings
 	usbDriverRTOSMenu = usbDriverComponent.createMenuSymbol(None, None)
 	usbDriverRTOSMenu.setLabel("RTOS settings")
 	usbDriverRTOSMenu.setDescription("RTOS settings")
@@ -112,34 +134,34 @@ def instantiateComponent(usbDriverComponent):
 
 	usbDriverRTOSTaskDelayVal = usbDriverComponent.createIntegerSymbol("USB_DRIVER_RTOS_DELAY", usbDriverRTOSMenu)
 	usbDriverRTOSTaskDelayVal.setLabel("Task Delay")
-	usbDriverRTOSTaskDelayVal.setDefaultValue(10) 
+	usbDriverRTOSTaskDelayVal.setDefaultValue(10)
 	usbDriverRTOSTaskDelayVal.setVisible((usbDriverRTOSTaskDelay.getValue() == True))
 	usbDriverRTOSTaskDelayVal.setDependencies(setVisible, ["USB_DRIVER_RTOS_USE_DELAY"])
 
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD20", "SAMD21"]):
-		# Update USB General Interrupt Handler 
+		# Update USB General Interrupt Handler
 		Database.setSymbolValue("core", "USB_INTERRUPT_ENABLE", True, 1)
 		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER_LOCK", True, 1)
 		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER", "DRV_USBFSV1_USB_Handler", 1)
-	
+
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD51", "SAME51", "SAME53", "SAME54"]):
 
-		# Update USB General Interrupt Handler 
+		# Update USB General Interrupt Handler
 		Database.setSymbolValue("core", "USB_OTHER_INTERRUPT_ENABLE", True, 1)
 		Database.setSymbolValue("core", "USB_OTHER_INTERRUPT_HANDLER_LOCK", True, 1)
 		Database.setSymbolValue("core", "USB_OTHER_INTERRUPT_HANDLER", "DRV_USBFSV1_OTHER_Handler", 1)
 
-		# Update USB General Interrupt Handler 
+		# Update USB General Interrupt Handler
 		Database.setSymbolValue("core", "USB_SOF_HSOF_INTERRUPT_ENABLE", True, 1)
 		Database.setSymbolValue("core", "USB_SOF_HSOF_INTERRUPT_HANDLER_LOCK", True, 1)
 		Database.setSymbolValue("core", "USB_SOF_HSOF_INTERRUPT_HANDLER", "DRV_USBFSV1_SOF_HSOF_Handler", 1)
 
-		# Update USB General Interrupt Handler 
+		# Update USB General Interrupt Handler
 		Database.setSymbolValue("core", "USB_TRCPT0_INTERRUPT_ENABLE", True, 1)
 		Database.setSymbolValue("core", "USB_TRCPT0_INTERRUPT_HANDLER_LOCK", True, 1)
 		Database.setSymbolValue("core", "USB_TRCPT0_INTERRUPT_HANDLER", "DRV_USBFSV1_TRCPT0_Handler", 1)
 
-		# Update USB General Interrupt Handler 
+		# Update USB General Interrupt Handler
 		Database.setSymbolValue("core", "USB_TRCPT1_INTERRUPT_ENABLE", True, 1)
 		Database.setSymbolValue("core", "USB_TRCPT1_INTERRUPT_HANDLER_LOCK", True, 1)
 		Database.setSymbolValue("core", "USB_TRCPT1_INTERRUPT_HANDLER", "DRV_USBFSV1_TRCPT1_Handler", 1)
@@ -169,7 +191,7 @@ def instantiateComponent(usbDriverComponent):
 	Database.clearSymbolValue("core", NVICHandlerLock)
 	Database.setSymbolValue("core", NVICHandlerLock, True, 2)
 
-	
+
     # NVIC Dynamic settings
 	# usbhsNVICControl = usbDriverComponent.createBooleanSymbol("NVIC_USBHS_ENABLE", None)
 	# usbhsNVICControl.setDependencies(NVICControl, ["INTERRUPT_MODE"])
@@ -185,11 +207,11 @@ def instantiateComponent(usbDriverComponent):
 	usbhsSymIntEnComment.setVisible(False)
 	usbhsSymIntEnComment.setLabel("Warning!!! USBHS Interrupt is Disabled in Interrupt Manager")
 	usbhsSymIntEnComment.setDependencies(dependencyStatus, ["core." + NVICVector])
-	
+
 	# Enable dependent Harmony core components
 	Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
 	Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
-	
+
 	Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
 	Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
 
@@ -204,60 +226,60 @@ def instantiateComponent(usbDriverComponent):
 
 	Database.clearSymbolValue("HarmonyCore", "ENABLE_APP_FILE")
 	Database.setSymbolValue("HarmonyCore", "ENABLE_APP_FILE", True, 2)
-	
+
 	configName = Variables.get("__CONFIGURATION_NAME")
-	
+
 	################################################
-	# system_definitions.h file for USB Driver   
+	# system_definitions.h file for USB Driver
 	################################################
 	usbDriverSystemDefIncludeFile = usbDriverComponent.createFileSymbol(None, None)
 	usbDriverSystemDefIncludeFile.setType("STRING")
 	usbDriverSystemDefIncludeFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
 	usbDriverSystemDefIncludeFile.setSourcePath("templates/driver/usbfsv1/system_definitions.h.driver_includes.ftl")
 	usbDriverSystemDefIncludeFile.setMarkup(True)
-	
+
 	usbDriverSystemDefObjFile = usbDriverComponent.createFileSymbol(None, None)
 	usbDriverSystemDefObjFile.setType("STRING")
 	usbDriverSystemDefObjFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_OBJECTS")
 	usbDriverSystemDefObjFile.setSourcePath("templates/driver/usbfsv1/system_definitions.h.driver_objects.ftl")
 	usbDriverSystemDefObjFile.setMarkup(True)
-	
+
 	################################################
-	# system_config.h file for USB Driver   
+	# system_config.h file for USB Driver
 	################################################
 	usbDriverSystemConfigFile = usbDriverComponent.createFileSymbol(None, None)
 	usbDriverSystemConfigFile.setType("STRING")
 	usbDriverSystemConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION")
 	usbDriverSystemConfigFile.setSourcePath("templates/driver/usbfsv1/system_config.h.driver.ftl")
 	usbDriverSystemConfigFile.setMarkup(True)
-	
+
 	################################################
-	# system_init.c file for USB Driver   
+	# system_init.c file for USB Driver
 	################################################
 	usbDriverSystemInitDataFile = usbDriverComponent.createFileSymbol(None, None)
 	usbDriverSystemInitDataFile.setType("STRING")
 	usbDriverSystemInitDataFile.setOutputName("core.LIST_SYSTEM_INIT_C_LIBRARY_INITIALIZATION_DATA")
 	usbDriverSystemInitDataFile.setSourcePath("templates/driver/usbfsv1/system_init_c_driver_data.ftl")
 	usbDriverSystemInitDataFile.setMarkup(True)
-	
+
 	usbDriverSystemInitCallsFile = usbDriverComponent.createFileSymbol(None, None)
 	usbDriverSystemInitCallsFile.setType("STRING")
 	usbDriverSystemInitCallsFile.setOutputName("core.LIST_SYSTEM_INIT_C_INITIALIZE_MIDDLEWARE")
 	usbDriverSystemInitCallsFile.setSourcePath("templates/driver/usbfsv1/system_init_c_driver_calls.ftl")
 	usbDriverSystemInitCallsFile.setMarkup(True)
-	
+
 	################################################
-	# system_interrupt.c file for USB Driver   
+	# system_interrupt.c file for USB Driver
 	################################################
 	usbDriverSystemInterruptFile = usbDriverComponent.createFileSymbol(None, None)
 	usbDriverSystemInterruptFile.setType("STRING")
 	usbDriverSystemInterruptFile.setOutputName("core.LIST_SYSTEM_INTERRUPT_HANDLERS")
 	usbDriverSystemInterruptFile.setSourcePath("templates/driver/usbfsv1/system_interrupt_c_driver.ftl")
 	usbDriverSystemInterruptFile.setMarkup(True)
-	
-	
+
+
 	################################################
-	# system_tasks.c file for USB Driver   
+	# system_tasks.c file for USB Driver
 	################################################
 	usbDriverSystemTasksFile = usbDriverComponent.createFileSymbol(None, None)
 	usbDriverSystemTasksFile.setType("STRING")
@@ -270,9 +292,9 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverSystemTasksFileRTOS.setSourcePath("templates/driver/usbfsv1/system_tasks_c_driver_rtos.ftl")
 	usbDriverSystemTasksFileRTOS.setMarkup(True)
 	usbDriverSystemTasksFileRTOS.setEnabled(enable_rtos_settings)
-	
+
 	################################################
-	# USB Driver Header files  
+	# USB Driver Header files
 	################################################
 	drvUsbHeaderFile = usbDriverComponent.createFileSymbol(None, None)
 	drvUsbHeaderFile.setSourcePath(usbDriverPath + "drv_usb.h")
@@ -281,7 +303,7 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath)
 	drvUsbHeaderFile.setType("HEADER")
 	drvUsbHeaderFile.setOverwrite(True)
-	
+
 	drvUsbExternalDependenciesFile = usbDriverComponent.createFileSymbol(None, None)
 	drvUsbExternalDependenciesFile.setSourcePath(usbDriverPath + "drv_usb_external_dependencies.h")
 	drvUsbExternalDependenciesFile.setOutputName("drv_usb_external_dependencies.h")
@@ -289,7 +311,7 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbExternalDependenciesFile.setProjectPath("config/" + configName + usbDriverProjectPath)
 	drvUsbExternalDependenciesFile.setType("HEADER")
 	drvUsbExternalDependenciesFile.setOverwrite(True)
-	
+
 	drvUsbHsV1HeaderFile = usbDriverComponent.createFileSymbol(None, None)
 	drvUsbHsV1HeaderFile.setSourcePath(usbDriverPath + "usbfsv1/drv_usbfsv1.h")
 	drvUsbHsV1HeaderFile.setOutputName("drv_usbfsv1.h")
@@ -297,7 +319,7 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1HeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath+ "usbfsv1")
 	drvUsbHsV1HeaderFile.setType("HEADER")
 	drvUsbHsV1HeaderFile.setOverwrite(True)
-	
+
 	drvUsbHsV1VarMapHeaderFile = usbDriverComponent.createFileSymbol(None, None)
 	drvUsbHsV1VarMapHeaderFile.setSourcePath(usbDriverPath + "usbfsv1/src/drv_usbfsv1_variant_mapping.h.ftl")
 	drvUsbHsV1VarMapHeaderFile.setOutputName("drv_usbfsv1_variant_mapping.h")
@@ -307,7 +329,7 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1VarMapHeaderFile.setOverwrite(True)
 	drvUsbHsV1VarMapHeaderFile.setMarkup(True)
 
-	
+
 	drvUsbHsV1LocalHeaderFile = usbDriverComponent.createFileSymbol(None, None)
 	drvUsbHsV1LocalHeaderFile.setSourcePath(usbDriverPath + "usbfsv1/src/drv_usbfsv1_local.h")
 	drvUsbHsV1LocalHeaderFile.setOutputName("drv_usbfsv1_local.h")
@@ -315,21 +337,21 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1LocalHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbfsv1/src")
 	drvUsbHsV1LocalHeaderFile.setType("HEADER")
 	drvUsbHsV1LocalHeaderFile.setOverwrite(True)
-	
+
 	usbHostControllerDriverHeaderFile = usbDriverComponent.createFileSymbol(None, None)
 	addFileName('usb_host_client_driver.h', usbDriverComponent, usbHostControllerDriverHeaderFile, "middleware/", "/usb/", True, None)
-	
+
 	usbHostHubInterfaceHeaderFile = usbDriverComponent.createFileSymbol(None, None)
 	addFileName('usb_host_hub_interface.h', usbDriverComponent, usbHostHubInterfaceHeaderFile, "middleware/", "/usb/", True, None)
-	
+
 	usbHostHeaderFile = usbDriverComponent.createFileSymbol(None, None)
 	addFileName('usb_host.h', usbDriverComponent, usbHostHeaderFile, "middleware/", "/usb/", True, None)
-	
+
 	usbHubHeaderFile = usbDriverComponent.createFileSymbol(None, None)
 	addFileName('usb_hub.h', usbDriverComponent, usbHubHeaderFile, "middleware/", "/usb/", True, None)
-	
+
 	################################################
-	# USB Driver Source files  
+	# USB Driver Source files
 	################################################
 	drvUsbHsV1SourceFile = usbDriverComponent.createFileSymbol(None, None)
 	drvUsbHsV1SourceFile.setSourcePath(usbDriverPath + "usbfsv1/src/dynamic/drv_usbfsv1.c")
@@ -339,7 +361,7 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1SourceFile.setType("SOURCE")
 	drvUsbHsV1SourceFile.setOverwrite(True)
 	#drvUsbHsV1SourceFile.setDependencies(blDrvUsbHsV1SourceFile, ["USB_OPERATION_MODE"])
-	
+
 	drvUsbHsV1DeviceSourceFile = usbDriverComponent.createFileSymbol(None, None)
 	drvUsbHsV1DeviceSourceFile.setSourcePath(usbDriverPath + "usbfsv1/src/dynamic/drv_usbfsv1_device.c")
 	drvUsbHsV1DeviceSourceFile.setOutputName("drv_usbfsv1_device.c")
@@ -348,7 +370,7 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1DeviceSourceFile.setType("SOURCE")
 	drvUsbHsV1DeviceSourceFile.setOverwrite(True)
 	drvUsbHsV1DeviceSourceFile.setDependencies(blDrvUsbHsV1DeviceSourceFile, ["USB_OPERATION_MODE"])
-	
+
 	drvUsbHsV1HostSourceFile = usbDriverComponent.createFileSymbol(None, None)
 	drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "usbfsv1/src/dynamic/drv_usbfsv1_host.c")
 	drvUsbHsV1HostSourceFile.setOutputName("drv_usbfsv1_host.c")
@@ -374,13 +396,13 @@ def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callbac
 	symbol.setEnabled(enabled)
 	if callback != None:
 		symbol.setDependencies(callback, ["USB_OPERATION_MODE"])
-		
+
 def blDrvUsbHsV1DeviceSourceFile (usbSymbolSource, event):
 	if (event["value"] == "Device"):
 		usbSymbolSource.setEnabled(True)
 	elif (event["value"] == "Host"):
 		usbSymbolSource.setEnabled(False)
-		
+
 def blDrvUsbHsV1HostSourceFile (usbSymbolSource, event):
 	if (event["value"] == "Device"):
 		usbSymbolSource.setEnabled(False)
@@ -392,20 +414,19 @@ def blUSBDriverOperationModeDevice(usbSymbolSource, event):
 		usbSymbolSource.setVisible(False)
 	else:
 		usbSymbolSource.setVisible(True)
-	
+
 def blUSBDriverOperationModeChanged(usbSymbolSource, event):
 	if (event["value"] == "Device"):
 		usbSymbolSource.setVisible(False)
 	else:
 		usbSymbolSource.setVisible(True)
-		
+
 def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
 	print(ownerComponent, dependencyID, dependentComponent)
-	
+
 def blUsbVbusPinName(usbSymbolSource, event):
 	if (event["value"] == True):
 		usbSymbolSource.setVisible(True)
 	else:
 		usbSymbolSource.setVisible(False)
-	
-	
+
