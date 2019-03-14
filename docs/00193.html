@@ -1,17 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
 <title>Sending Data</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
-    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
-<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00193.html');" onmousedown="onBodyMouseDown();">
 
 <!-- Begin Popups -->
 
@@ -20,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00290.html">USB Libraries Help</a> &gt; <a href="00197.html">USB Device Libraries</a> &gt; <a href="00195.html">USB CDC Device Library</a> &gt; <a href="00194.html">Using the Library</a> &gt; <a href="00187.html">How the Library Works</a> &gt; <a href="00193.html">Sending Data</a></div>
+<a href="00290.html" target="topic">USB Libraries Help</a> &gt; <a href="00197.html" target="topic">USB Device Libraries</a> &gt; <a href="00195.html" target="topic">USB CDC Device Library</a> &gt; <a href="00194.html" target="topic">Using the Library</a> &gt; <a href="00187.html" target="topic">How the Library Works</a> &gt; <a href="00193.html" target="topic">Sending Data</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,13 +26,13 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00171.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00184.html">Previous</a> | <a href="00187.html">Up</a> | <a href="00192.html">Next</a></div>
+<a href="00184.html" target="topic">Previous</a> | <a href="00187.html" target="topic">Up</a> | <a href="00192.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVCDC Sending Data Topic Title: Sending Data)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVCDC Sending Data Topic Title: Sending Data)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 Sending Data</div>
 </div>
@@ -47,7 +45,7 @@ Sending Data</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<div class="Element58">
+<a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
@@ -67,9 +65,7 @@ The USB_DEVICE_CDC_Write function also allows the application to send data to th
 </ul><p class="Element10">
 The following code shows a set of examples of various conditions attempting to send data with the USB_DEVICE_CDC_Write command.&nbsp;</p>
 <p class="Element10">
-<strong>Example 1</strong> &nbsp;</p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00020');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00020"><pre class="Element12"><i><span style="color: #008000">// This example assume that the maxPacketSize is 64.</span></i>
+<strong>Example 1</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// This example assume that the maxPacketSize is 64.</span></i>
 USB_DEVICE_CDC_TRANSFER_HANDLE transferHandle;
 USB_DEVICE_CDC_INDEX instance;
 USB_DEVICE_CDC_RESULT writeRequestResult;
@@ -83,9 +79,7 @@ writeRequestResult = USB_DEVICE_CDC_Write(instance,&amp;transferHandle, data, 34
     <i><span style="color: #008000">//Do Error handling here</span></i>
 }</pre></div></div>
 <p class="Element10">
-<strong>Example 2</strong> </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00021');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00021"><pre class="Element12"><i><span style="color: #008000">//-------------------------------------------------------</span></i>
+<strong>Example 2</strong> </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">//-------------------------------------------------------</span></i>
 <i><span style="color: #008000">// In this example we want to send 64 bytes only.</span></i>
 <i><span style="color: #008000">// This will cause a ZLP to be sent.</span></i>
 
@@ -102,9 +96,7 @@ writeRequestResult = USB_DEVICE_CDC_Write(instance,&amp;transferHandle, data, 64
 <i><span style="color: #008000">//Do Error handling here</span></i>
 }</pre></div></div>
 <p class="Element10">
-<strong>Example 3</strong> </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00022');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00022"><pre class="Element12"><i><span style="color: #008000">//-------------------------------------------------------</span></i>
+<strong>Example 3</strong> </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">//-------------------------------------------------------</span></i>
 <i><span style="color: #008000">// This example will return an error because size is less</span></i>
 <i><span style="color: #008000">// than maxPacketSize and the flag indicates that more</span></i>
 <i><span style="color: #008000">// data is pending.</span></i>
@@ -117,9 +109,7 @@ uint8_t data[64];
 writeRequestResult = USB_DEVICE_CDC_Write(instance,&amp;transferHandle, data, 32,
                                        USB_DEVICE_CDC_TRANSFER_FLAGS_MORE_DATA_PENDING);</pre></div></div>
 <p class="Element10">
-<strong>Example 4</strong> </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00023');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00023"><pre class="Element12"><i><span style="color: #008000">//-------------------------------------------------------</span></i>
+<strong>Example 4</strong> </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">//-------------------------------------------------------</span></i>
 <i><span style="color: #008000">// In this example we want to place a request for a 70 byte transfer.</span></i>
 <i><span style="color: #008000">// The 70 bytes will be sent out in a 64 byte transaction and a 6 byte</span></i>
 <i><span style="color: #008000">// transaction completing the transfer.</span></i>
@@ -137,9 +127,7 @@ writeRequestResult = USB_DEVICE_CDC_Write(instance,&amp;transferHandle, data, 70
 <i><span style="color: #008000">//Do Error handling here</span></i>
 }</pre></div></div>
 <p class="Element10">
-<strong>Example 5</strong> </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00024');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00024"><pre class="Element12"><i><span style="color: #008000">//-------------------------------------------------------</span></i>
+<strong>Example 5</strong> </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">//-------------------------------------------------------</span></i>
 <i><span style="color: #008000">// In this example we want to place a request for a 70 bytes to be sent</span></i>
 <i><span style="color: #008000">// but that we don't end the transfer as more data is coming. 64 bytes</span></i>
 <i><span style="color: #008000">// of the 70 will be sent out and the USB_DEVICE_CDC_EVENT_WRITE_COMPLETE</span></i>
@@ -165,9 +153,7 @@ writeRequestResult = USB_DEVICE_CDC_Write(instance,&amp;transferHandle, data, 70
 <div class="Element15">
 Sending a Serial State Notification</div>
 <p class="Element10">
-The application can send a Serial State Notification by using the USB_DEVICE_CDC_SerialStateSend function. This function returns a transfer handle that allows the application to track the read request. The request is completed when the Host has requested the data. The completion of the transfer is indicated by a USB_DEVICE_CDC_EVENT_SERIAL_STATE_NOTIFICATION_COMPLETE event. The transfer request could fail if the function driver transfer queue is full. The following code shows an example of how this can be done. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00025');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00025"><pre class="Element12">USB_DEVICE_CDC_INDEX instanceIndex;
+The application can send a Serial State Notification by using the USB_DEVICE_CDC_SerialStateSend function. This function returns a transfer handle that allows the application to track the read request. The request is completed when the Host has requested the data. The completion of the transfer is indicated by a USB_DEVICE_CDC_EVENT_SERIAL_STATE_NOTIFICATION_COMPLETE event. The transfer request could fail if the function driver transfer queue is full. The following code shows an example of how this can be done. </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_DEVICE_CDC_INDEX instanceIndex;
 USB_DEVICE_CDC_TRANSFER_HANDLE transferHandle;
 USB_DEVICE_CDC_SERIAL_STATE_NOTIFICATION_DATA notificationData;
 
@@ -192,18 +178,21 @@ result = USB_DEVICE_CDC_SerialStateDataSend(instanceIndex, &amp;transferHandle,
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00290.html">USB Libraries Help</a> &gt; <a href="00197.html">USB Device Libraries</a> &gt; <a href="00195.html">USB CDC Device Library</a> &gt; <a href="00194.html">Using the Library</a> &gt; <a href="00187.html">How the Library Works</a> &gt; <a href="00193.html">Sending Data</a></div>
+<a href="00290.html" target="topic">USB Libraries Help</a> &gt; <a href="00197.html" target="topic">USB Device Libraries</a> &gt; <a href="00195.html" target="topic">USB CDC Device Library</a> &gt; <a href="00194.html" target="topic">Using the Library</a> &gt; <a href="00187.html" target="topic">How the Library Works</a> &gt; <a href="00193.html" target="topic">Sending Data</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="100%">
+<tr><td width="25%">
 <div class="Element3">
- MPLAB Harmony USB Stack </div>
-</td></tr><tr><td width="100%">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
-</td></tr><tr><td width="100%">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00171.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00184.html" target="topic">Previous</a> | <a href="00187.html" target="topic">Up</a> | <a href="00192.html" target="topic">Next</a></div>
+</td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVCDC Sending Data Topic Title: Sending Data)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVCDC Sending Data Topic Title: Sending Data)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

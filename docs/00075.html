@@ -1,17 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
 <title>Driver Host USB Root Hub Port Interface</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
-    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
-<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00075.html');" onmousedown="onBodyMouseDown();">
 
 <!-- Begin Popups -->
 
@@ -20,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00290.html">USB Libraries Help</a> &gt; <a href="00351.html">USB Common Driver Interface</a> &gt; <a href="00069.html">Common Interface</a> &gt; <a href="00073.html">Driver Host Mode Client Functions</a> &gt; <a href="00075.html">Driver Host USB Root Hub Port Interface</a></div>
+<a href="00290.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00069.html" target="topic">Common Interface</a> &gt; <a href="00073.html" target="topic">Driver Host Mode Client Functions</a> &gt; <a href="00075.html" target="topic">Driver Host USB Root Hub Port Interface</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,13 +26,13 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00171.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00074.html">Previous</a> | <a href="00073.html">Up</a> | <a href="00071.html">Next</a></div>
+<a href="00074.html" target="topic">Previous</a> | <a href="00073.html" target="topic">Up</a> | <a href="00071.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver Host USB Root Hub Port Interface Topic Title: Driver Host USB Root Hub Port Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver Host USB Root Hub Port Interface Topic Title: Driver Host USB Root Hub Port Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 Driver Host USB Root Hub Port Interface</div>
 </div>
@@ -47,7 +45,7 @@ Driver Host USB Root Hub Port Interface</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<div class="Element58">
+<a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
@@ -61,45 +59,35 @@ The <span class="Element146">rootHubPortInterface</span> member of the DRV_USB_R
 </ul><div class="Element15">
 Driver Host Hub Port Reset Function</div>
 <p class="Element10">
-The <span class="Element146">hubPortReset</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Reset function. The signature of this function is as follows: </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00094');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00094"><pre class="Element12">USB_ERROR (*hubPortReset)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
+The <span class="Element146">hubPortReset</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Reset function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR (*hubPortReset)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
 <p class="Element10">
 The USB Driver Root Hub Port Reset function must follow this signature. This function starts reset signaling on the port. If the device is connected to the root hub, the USB Host Stack will set the <span class="Element146">hubAddress</span> parameter to the driver handle obtained through the driver Open function. The USB Host Stack uses the parent identifier provided by the root hub driver when the USB_HOST_DeviceEnumerate function was called to query the driver handle that is linked to this root hub. If the device is connected to an external hub, the <span class="Element146">hubAddress</span> parameter is directly set to the parent identifier.&nbsp;</p>
 <p class="Element10">
 For the PIC32MX and PIC32MZ USB Drivers, the <span class="Element146">port</span> parameter is ignored. For an external hub, this must be set to the port to which the device is connected. The function returns USB_ERROR_NONE if the function was successful. If the reset signaling is already in progress on the port, calling this function has no effect. The USB Driver will itself time duration of the reset signal. This does not require USB Host Stack intervention. The USB Host Stack will call the port reset completion status function to check if the reset signaling has completed. Calling this function on a port which exists on an external hub will cause the hub driver to issue a control transfer to start the port reset procedure.</p><div class="Element15">
 Driver Host Hub Port Reset Completion Status Function</div>
 <p class="Element10">
-The <span class="Element146">hubPortResetIsComplete</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Reset Completion Status function. The signature of this function is as follows: </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00095');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00095"><pre class="Element12"><strong><span style="color: #000080">bool</span></strong> (*hubPortResetIsComplete)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
+The <span class="Element146">hubPortResetIsComplete</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Reset Completion Status function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">bool</span></strong> (*hubPortResetIsComplete)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
 <p class="Element10">
 The USB Driver Root Hub Port Reset Completion Status function must follow this signature. The USB Host Stack calls this function to check if the port reset sequence that was started on a port has completed. The function returns true if the reset signaling has completed. If the device is connected to the root hub, the USB Host Stack will set the <span class="Element146">hubAddress</span> parameter to the driver handle obtained through the driver Open function. If the device is connected to an external hub, the <span class="Element146">hubAddress</span> parameter is directly set to the parent identifier.&nbsp;</p>
 <p class="Element10">
 For the PIC32MX and PIC32MZ USB Drivers, the <span class="Element146">port</span> parameter is ignored. For an external hub, this parameter must be set to the port to which the device is connected.</p><div class="Element15">
 Driver Host Hub Port Suspend Function</div>
 <p class="Element10">
-The <span class="Element146">hubPortSuspend</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Suspend function. The signature of this function is as follows: </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00096');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00096"><pre class="Element12">USB_ERROR(*hubPortSuspend)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
+The <span class="Element146">hubPortSuspend</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Suspend function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR(*hubPortSuspend)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
 <p class="Element10">
 The USB Driver Root Hub Port Suspend function must follow this signature. The USB Host Stack calls this function to suspend the port. If the device is connected to the root hub, the USB Host Stack will set the <span class="Element146">hubAddress</span> parameter to the driver handle obtained through the driver Open function. If the device is connected to an external hub, the <span class="Element146">hubAddress</span> parameter is directly set to the parent identifier.&nbsp;</p>
 <p class="Element10">
 For the PIC32MX and PIC32MZ USB Drivers, the <span class="Element146">port</span> parameter is ignored. For an external hub, this parameter must be set to the port to which the device is connected. The function returns USB_ERROR_NONE if the request was successful. Calling this function on a suspended port will not have any effect.</p><div class="Element15">
 Driver Host Hub Port Resume Function</div>
 <p class="Element10">
-The <span class="Element146">hubPortResume</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Resume function. The signature of this function is as follows: </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00097');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00097"><pre class="Element12">USB_ERROR(*hubPortResume)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
+The <span class="Element146">hubPortResume</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Resume function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR(*hubPortResume)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
 <p class="Element10">
 The USB Driver Root Hub Port Resume function must follow this signature. The USB Host Stack calls this function to resume a suspended port. If the device is connected to the root hub, the USB Host Stack will set the <span class="Element146">hubAddress</span> parameter to the driver handle obtained through the driver Open function. If the device is connected to an external hub, the <span class="Element146">hubAddress</span> parameter is directly set to the parent identifier.&nbsp;</p>
 <p class="Element10">
 For the PIC32MX and PIC32MZ USB Drivers, the <span class="Element146">port</span> parameter is ignored. For an external hub, this parameter must be set to the port to which the device is connected. The function returns USB_ERROR_NONE if the request was successful. Calling this function on a port that is not suspended will not have any effect.</p><div class="Element15">
 Driver Host Hub Port Speed Get Function</div>
 <p class="Element10">
-The <span class="Element146">hubPortSpeedGet</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Speed Get function. The signature of this function is as follows: </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00098');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00098"><pre class="Element12">USB_SPEED(*hubPortSpeedGet)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
+The <span class="Element146">hubPortSpeedGet</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Speed Get function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_SPEED(*hubPortSpeedGet)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
 <p class="Element10">
 The USB Driver Root Hub Port Speed Get function must follow this signature. The USB Host Stack calls this function to obtain the USB speed of the device that is attached to the port. The Host Stack calls this function only after it has completed reset of the port. If the device is connected to the root hub, the USB Host Stack will set the <span class="Element146">hubAddress</span> parameter to the driver handle obtained through the driver Open function. If the device is connected to an external hub, the <span class="Element146">hubAddress</span> parameter is directly set to the parent identifier.&nbsp;</p>
 <p class="Element10">
@@ -112,18 +100,21 @@ This concludes the section describing the USB Driver Host mode Client Functions.
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00290.html">USB Libraries Help</a> &gt; <a href="00351.html">USB Common Driver Interface</a> &gt; <a href="00069.html">Common Interface</a> &gt; <a href="00073.html">Driver Host Mode Client Functions</a> &gt; <a href="00075.html">Driver Host USB Root Hub Port Interface</a></div>
+<a href="00290.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00069.html" target="topic">Common Interface</a> &gt; <a href="00073.html" target="topic">Driver Host Mode Client Functions</a> &gt; <a href="00075.html" target="topic">Driver Host USB Root Hub Port Interface</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="100%">
+<tr><td width="25%">
 <div class="Element3">
- MPLAB Harmony USB Stack </div>
-</td></tr><tr><td width="100%">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
-</td></tr><tr><td width="100%">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00171.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00074.html" target="topic">Previous</a> | <a href="00073.html" target="topic">Up</a> | <a href="00071.html" target="topic">Next</a></div>
+</td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver Host USB Root Hub Port Interface Topic Title: Driver Host USB Root Hub Port Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver Host USB Root Hub Port Interface Topic Title: Driver Host USB Root Hub Port Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

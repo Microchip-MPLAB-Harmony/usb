@@ -1,17 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
 <title>Transferring Data to the Host</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
-    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
-<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00078.html');" onmousedown="onBodyMouseDown();">
 
 <!-- Begin Popups -->
 
@@ -20,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00290.html">USB Libraries Help</a> &gt; <a href="00351.html">USB Common Driver Interface</a> &gt; <a href="00069.html">Common Interface</a> &gt; <a href="00079.html">USB Driver Device Mode Operation</a> &gt; <a href="00078.html">Transferring Data to the Host</a></div>
+<a href="00290.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00069.html" target="topic">Common Interface</a> &gt; <a href="00079.html" target="topic">USB Driver Device Mode Operation</a> &gt; <a href="00078.html" target="topic">Transferring Data to the Host</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,13 +26,13 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00171.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00070.html">Previous</a> | <a href="00079.html">Up</a> | <a href="00173.html">Next</a></div>
+<a href="00070.html" target="topic">Previous</a> | <a href="00079.html" target="topic">Up</a> | <a href="00173.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Transferring Data to the Host Topic Title: Transferring Data to the Host)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Transferring Data to the Host Topic Title: Transferring Data to the Host)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 Transferring Data to the Host</div>
 </div>
@@ -47,7 +45,7 @@ Transferring Data to the Host</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<div class="Element58">
+<a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
@@ -55,9 +53,7 @@ The USB Device Layer, the USBCD client, needs to transfer data to the Host in re
 <p class="Element10">
 A Device IRP is a USB_DEVICE_IRP type data structure. The IRP is created by the Device Layer and submitted to the USBCD for processing through the deviceIRPSubmit function. At the time of submitting the IRP, the endpoint over which the IRP must be transported is specified. The data request in the IRP is transported using the attributes of the endpoint. When an IRP is submitted to the USBCD, it is owned by the USBCD and cannot be modified by the Device Layer until the USBCD issues an IRP callback. The USBCD will issue the IRP callback when it has completed or terminated processing of the IRP.&nbsp;</p>
 <p class="Element10">
-An IRP does not have its own transfer type. It inherits the properties of the endpoint to which it is submitted. Hence an IRP becomes a control transfer IRP it was submitted to a control endpoint. An endpoint allows multiple IRPs to be queued. This allows the Device Layer to submit IRPs to an endpoint even while an IRP is being processed on the endpoint. The USBCD will process an IRP in the order that it was received. The following code example shows the USB_DEVICE_IRP data structure: </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00135');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00135"><pre class="Element12"><i><span style="color: #008000">/* This code example shows the USB_DEVICE_IPR structure. The Device Layer
+An IRP does not have its own transfer type. It inherits the properties of the endpoint to which it is submitted. Hence an IRP becomes a control transfer IRP it was submitted to a control endpoint. An endpoint allows multiple IRPs to be queued. This allows the Device Layer to submit IRPs to an endpoint even while an IRP is being processed on the endpoint. The USBCD will process an IRP in the order that it was received. The following code example shows the USB_DEVICE_IRP data structure: </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code example shows the USB_DEVICE_IPR structure. The Device Layer
  * uses such a structure to transfer data through the driver. A structure of
  * this type is allocated by the Device Layer and the other function drivers and
  * passed to the deviceIRPSubmit function. */</span></i>
@@ -96,9 +92,7 @@ The <span class="Element146">size</span> member of the USB_DEVICE_IRP structure 
 <p class="Element10">
 For interrupt and isochronous transfers, the size of transfer specified in the IRP cannot exceed the size of the transaction. If size is specified as 0, then the driver will send or expect a zero length packet. The <span class="Element146">size</span> parameter of the IRP is updated by the driver when IRP processing is completed. This will contain the size of the completed transfer.&nbsp;</p>
 <p class="Element10">
-The <span class="Element146">status</span> member of the IRP provides the completion status of the IRP and should be checked only when the IRP processing has completed. This is indicated by the driver calling the IRP callback function. The IRP status is a USB_DEVICE_IRP_STATUS type. The following code example shows the different possible values of the <span class="Element146">status</span> member and example usage of IRPs to transfer data between the device and the Host. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00136');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00136"><pre class="Element12"><i><span style="color: #008000">/* The followoing code shows example usage of the device IRP. The submit status
+The <span class="Element146">status</span> member of the IRP provides the completion status of the IRP and should be checked only when the IRP processing has completed. This is indicated by the driver calling the IRP callback function. The IRP status is a USB_DEVICE_IRP_STATUS type. The following code example shows the different possible values of the <span class="Element146">status</span> member and example usage of IRPs to transfer data between the device and the Host. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The followoing code shows example usage of the device IRP. The submit status
  * of the IRP is available when IRP submit function returns. The completion
  * status of the IRP is available when the IRP has terminated and the IRP
  * callback function is invoked. The IRP callback
@@ -238,9 +232,7 @@ result = DRV_USBFS_DEVICE_IRPSubmit(driverHandle, 0x04, &amp;irp);</pre></div></
 <p class="Element10">
 For IRPs submitted to an Interrupt or Isochronous endpoints, the driver will always send either the less than or equal to the maximum endpoint packet size worth of bytes in a transaction. The application could either submit an IRP per Interrupt/Isochronous polling interval or it could submit one IRP for multiple polling intervals.&nbsp;</p>
 <p class="Element10">
-The <span class="Element146">flags</span> member of the USB_DEVICE_IRP structure specifies flags which affect the behavior of the IRP. The USB_DEVICE_IRP_FLAG enumeration specifies the available option. The USB_DEVICE_IRP_FLAG_DATA_COMPLETE causes the driver to add a Zero Length Packet (ZLP) to the data stage of the IN transfer when the transfer size is an exact multiple of the endpoint size. If the transfer size is not a multiple of the endpoint size, no ZLP will be sent. The USB_DEVICE_IRP_FLAG_PENDING flag will cause the driver to not send a ZLP in a case where the size of the IN transfer is an exact multiple of the endpoint size. The following code example demonstrates this. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00137');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00137"><pre class="Element12"><i><span style="color: #008000">/* In the following code example, the IRP is submitted to an IN endpoint whose size
+The <span class="Element146">flags</span> member of the USB_DEVICE_IRP structure specifies flags which affect the behavior of the IRP. The USB_DEVICE_IRP_FLAG enumeration specifies the available option. The USB_DEVICE_IRP_FLAG_DATA_COMPLETE causes the driver to add a Zero Length Packet (ZLP) to the data stage of the IN transfer when the transfer size is an exact multiple of the endpoint size. If the transfer size is not a multiple of the endpoint size, no ZLP will be sent. The USB_DEVICE_IRP_FLAG_PENDING flag will cause the driver to not send a ZLP in a case where the size of the IN transfer is an exact multiple of the endpoint size. The following code example demonstrates this. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* In the following code example, the IRP is submitted to an IN endpoint whose size
  * is 64. The transfer size is 128, which is an exact multiple of the endpoint
  * size. The flag is set to USB_DEVICE_IRP_FLAG_DATA_COMPLETE. The driver
  * will send two transactions of 64 bytes each and will then automatically send a
@@ -289,18 +281,21 @@ The <span class="Element146">privateData</span> member of the IRP is used by the
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00290.html">USB Libraries Help</a> &gt; <a href="00351.html">USB Common Driver Interface</a> &gt; <a href="00069.html">Common Interface</a> &gt; <a href="00079.html">USB Driver Device Mode Operation</a> &gt; <a href="00078.html">Transferring Data to the Host</a></div>
+<a href="00290.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00069.html" target="topic">Common Interface</a> &gt; <a href="00079.html" target="topic">USB Driver Device Mode Operation</a> &gt; <a href="00078.html" target="topic">Transferring Data to the Host</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="100%">
+<tr><td width="25%">
 <div class="Element3">
- MPLAB Harmony USB Stack </div>
-</td></tr><tr><td width="100%">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
-</td></tr><tr><td width="100%">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00171.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00070.html" target="topic">Previous</a> | <a href="00079.html" target="topic">Up</a> | <a href="00173.html" target="topic">Next</a></div>
+</td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Transferring Data to the Host Topic Title: Transferring Data to the Host)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Transferring Data to the Host Topic Title: Transferring Data to the Host)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

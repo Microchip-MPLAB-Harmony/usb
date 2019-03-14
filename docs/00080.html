@@ -1,17 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
 <title>USB Driver Host Mode Operation</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
-    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
-<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00080.html');" onmousedown="onBodyMouseDown();">
 
 <!-- Begin Popups -->
 
@@ -20,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00290.html">USB Libraries Help</a> &gt; <a href="00351.html">USB Common Driver Interface</a> &gt; <a href="00069.html">Common Interface</a> &gt; <a href="00080.html">USB Driver Host Mode Operation</a></div>
+<a href="00290.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00069.html" target="topic">Common Interface</a> &gt; <a href="00080.html" target="topic">USB Driver Host Mode Operation</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,13 +26,13 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00171.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00077.html">Previous</a> | <a href="00069.html">Up</a> | <a href="00079.html">Next</a></div>
+<a href="00077.html" target="topic">Previous</a> | <a href="00069.html" target="topic">Up</a> | <a href="00079.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON USB Driver Host Mode Operation Topic Title: USB Driver Host Mode Operation)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON USB Driver Host Mode Operation Topic Title: USB Driver Host Mode Operation)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 USB Driver Host Mode Operation</div>
 </div>
@@ -47,7 +45,7 @@ USB Driver Host Mode Operation</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<div class="Element58">
+<a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
@@ -68,9 +66,7 @@ Handling Host Mode Driver Events</div>
 Currently, the HCD does not provide any events to the client. The client can optionally register an event handler through the eventHandlerSet function pointer in the DRV_USB_HOST_INTERFACE structure. Future releases of the USB Driver may contain features that provide events to the Driver Client. Please refer to the following <strong>Root Hub Operation</strong> section for details on how the driver indicates device attach and detach to the client.</p><div class="Element15">
 Root Hub Operation</div>
 <p class="Element10">
-A key feature of the HCD is the Root Hub Driver. The Root Hub Driver emulates hub operation in USB Driver software and provides a hub like interface to the USB Host Layer. The USB Host Layer treats the root hub like an external hub. This simplifies the implementation of USB Host Layer while supporting multiple devices through a hub. In that, the USB Host layer does not have to treat a device connected directly to the USB peripheral differently than a device connected to an external hub. The following code example shows how the USB Host Layer calls the root hub function to obtain information about the root hub. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00121');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00121"><pre class="Element12"><i><span style="color: #008000">/* This code example shows how the USB Host Layer calls the root hub functions to
+A key feature of the HCD is the Root Hub Driver. The Root Hub Driver emulates hub operation in USB Driver software and provides a hub like interface to the USB Host Layer. The USB Host Layer treats the root hub like an external hub. This simplifies the implementation of USB Host Layer while supporting multiple devices through a hub. In that, the USB Host layer does not have to treat a device connected directly to the USB peripheral differently than a device connected to an external hub. The following code example shows how the USB Host Layer calls the root hub function to obtain information about the root hub. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code example shows how the USB Host Layer calls the root hub functions to
  * obtain information about the root. The USB Host Layer first opens the HCD and
  * then accesses the root hub functions through the rootHubInterface member of
  * hcdInterface. rootHubInterface is of the type DRV_USB_ROOT_HUB_INTERFACE and
@@ -116,9 +112,7 @@ A key feature of the HCD is the Root Hub Driver. The Root Hub Driver emulates hu
         busObj-&gt;rootHubInfo.rootHubPortInterface =
              busObj-&gt;hcdInterface-&gt;rootHubInterface.rootHubPortInterface;</pre></div></div>
 <p class="Element10">
-The USB Host Layer must initialize and enable the operation of the root hub. While initializing the Root Hub Driver, the Host layer will assign a unique identifier to the root hub. The root hub will return this value as the parent identifier while calling the USB_HOST_DeviceEnumerate function. The USB Host Layer must then enable the operation of the root hub driver. This will cause the root hub driver to detect device attach and detach. The following code example shows how the USB Host Layer initializes and enables the root hub driver </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00122');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00122"><pre class="Element12"><i><span style="color: #008000">/* The following code example show how the USB Host Layer initializes the root
+The USB Host Layer must initialize and enable the operation of the root hub. While initializing the Root Hub Driver, the Host layer will assign a unique identifier to the root hub. The root hub will return this value as the parent identifier while calling the USB_HOST_DeviceEnumerate function. The USB Host Layer must then enable the operation of the root hub driver. This will cause the root hub driver to detect device attach and detach. The following code example shows how the USB Host Layer initializes and enables the root hub driver </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The following code example show how the USB Host Layer initializes the root
  * hub and then enables the root hub operation. The
  * rootHubDevice-&gt;deviceIdentifier is a unique identifier that allows the USB
  * Host layer to identify this root hub. It is returned by the root hub driver
@@ -133,9 +127,7 @@ busObj-&gt;hcdInterface-&gt;rootHubInterface.rootHubInitialize( busObj-&gt;hcdHa
 busObj-&gt;hcdInterface-&gt;rootHubInterface.rootHubOperationEnable( busObj-&gt;hcdHandle , <strong><span style="color: #000080">true</span></strong> );
 </pre></div></div>
 <p class="Element10">
-When a device is attached, the Root Hub Driver will implement the required settling attach settling delay and will then call the USB Host Layer’s USB_HOST_DeviceEnumerate function to enumerate the device. While calling this function, the root hub driver will provide the identifier that was provided to it in its initialize function. The USB_HOST_DeviceEnumerate function will return an identifier which uniquely identifies the attached device. The root hub driver uses this value to identify the device to the Host when the USB_HOST_DeviceDenumerate function is called on device detach. The following code example shows how the Root Hub driver calls the USB_HOST_DeviceEnumerate and the USB_HOST_DeviceDenumerate functions. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00123');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00123"><pre class="Element12"><i><span style="color: #008000">/* The following code shows how the root hub driver calls the
+When a device is attached, the Root Hub Driver will implement the required settling attach settling delay and will then call the USB Host Layer’s USB_HOST_DeviceEnumerate function to enumerate the device. While calling this function, the root hub driver will provide the identifier that was provided to it in its initialize function. The USB_HOST_DeviceEnumerate function will return an identifier which uniquely identifies the attached device. The root hub driver uses this value to identify the device to the Host when the USB_HOST_DeviceDenumerate function is called on device detach. The following code example shows how the Root Hub driver calls the USB_HOST_DeviceEnumerate and the USB_HOST_DeviceDenumerate functions. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The following code shows how the root hub driver calls the
  * USB_HOST_DeviceEnumerate() function in the device attach interrupt. As seen
  * here, the root hub returns the identifier that the USB Host Layer assigned to
  * it the rootHubInitialize function call. The pUSBDrvObj-&gt;usbHostDeviceInfo
@@ -181,9 +173,7 @@ When a device is attached, the Root Hub Driver will implement the required settl
 <div class="Element15">
 Root Hub Port Operation</div>
 <p class="Element10">
-The HCD Root Hub Driver exposes a set of port related functions that allow the USB Host Layer to control the port. The most commonly used functions are the function to reset the port and get the port speed. In this case, this is the speed of the attached device. The following code example shows how the USB Host Layer calls the hubPortReset, hubPortResetIsComplete and hubPortSpeedGet port functions. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00124');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00124"><pre class="Element12"><i><span style="color: #008000">/* The following code shows an example of how the Host Layer called the
+The HCD Root Hub Driver exposes a set of port related functions that allow the USB Host Layer to control the port. The most commonly used functions are the function to reset the port and get the port speed. In this case, this is the speed of the attached device. The following code example shows how the USB Host Layer calls the hubPortReset, hubPortResetIsComplete and hubPortSpeedGet port functions. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The following code shows an example of how the Host Layer called the
  * hubPortReset function to reset the port to which the device is connected.
  * The code proceeds with the port reset if no device on the bus is in an
  * enumeration state. It will then call the hubPortReset function of the parent
@@ -226,9 +216,7 @@ Opening and Closing a Pipe</div>
 <p class="Element10">
 The HCD client can open a pipe to the device after resetting the device. The USB Host Layer calls the hostPipeSetup function in the DRV_USB_HOST_INTERFACE structure to open a pipe. The USB Host Layer must open a pipe to communicate to a specific endpoint on a target device. While opening the pipe, the USB Host Layer must specify parameters which specify the address of the target device, the type of the transfer that the pipe must support and the speed of the pipe. If the device is connected to a hub, the address of the hub must be specified. The HCD Pipe Setup function <i>is not</i> interrupt-safe. It should not be called in any event handler that executes in an interrupt context.&nbsp;</p>
 <p class="Element10">
-The Pipe Setup function returns a valid pipe handle if the pipe was opened successfully. Pipe creation may fail if the target device was disconnected or if there are insufficient resources to open the pipe. The pipe handle is then used along with the hostIRPSubmit function to transfer data between the Host and the device. The following code shows example usage of a Pipe Open function. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00125');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00125"><pre class="Element12"><i><span style="color: #008000">/* The following code example shows how the Host Layer uses the hostPipeSetup
+The Pipe Setup function returns a valid pipe handle if the pipe was opened successfully. Pipe creation may fail if the target device was disconnected or if there are insufficient resources to open the pipe. The pipe handle is then used along with the hostIRPSubmit function to transfer data between the Host and the device. The following code shows example usage of a Pipe Open function. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The following code example shows how the Host Layer uses the hostPipeSetup
  * function to open a control pipe to the attached device. Most of the
  * parameters that are passed to this function become known when the device is
  * attached. The pipe handle is checked for validity after the hostPipeSetup
@@ -259,9 +247,7 @@ The Pipe Setup function returns a valid pipe handle if the pipe was opened succe
     }
 }</pre></div></div>
 <p class="Element10">
-An open pipe consumes computational and memory resources and must therefore must be closed if it will not be used. This is especially true of pipes to a device that is detached. The Host Layer calls the hostPipeClose function in the DRV_USB_HOST_INTERFACE structure to close the pipe. The pipe to be closed is specified by the pipe handle. The Pipe Close function can be called from an event handler. It is interrupt safe. Closing a pipe will cancel all pending transfers on that pipe. The IRP callback for such canceled transfers will be called with the status USB_HOST_IRP_STATUS_ABORTED. The following code example shows an example of closing the pipe. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00126');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00126"><pre class="Element12"><i><span style="color: #008000">/* The following code example shows an example of how the Host Layer calls the
+An open pipe consumes computational and memory resources and must therefore must be closed if it will not be used. This is especially true of pipes to a device that is detached. The Host Layer calls the hostPipeClose function in the DRV_USB_HOST_INTERFACE structure to close the pipe. The pipe to be closed is specified by the pipe handle. The Pipe Close function can be called from an event handler. It is interrupt safe. Closing a pipe will cancel all pending transfers on that pipe. The IRP callback for such canceled transfers will be called with the status USB_HOST_IRP_STATUS_ABORTED. The following code example shows an example of closing the pipe. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The following code example shows an example of how the Host Layer calls the
  * hostPipeClose function to close an open pipe. Pipe should be closed if it
  * will not used. An open pipe consumes memory resources. In this example, the
  * Host Layer closes the pipe if it was not able successfully submit an IRP to
@@ -292,9 +278,7 @@ The USB Host Layer, the HCD client, needs to transfer data to the attached devic
 <p class="Element10">
 A Host IRP is a USB_HOST_IRP type data structure. The IRP is created by the Host layer and submitted to the HCD for processing through the hostIRPSubmit function. At the time of submitting the IRP, the pipe over which the IRP must be transported is specified. The data request in the IRP is transported using the attributes of pipe. When an IRP is submitted to the HCD, it is owned by the HCD and cannot be modified by the Host Layer until the HCD issues an IRP callback. The HCD will issue the IRP callback when it has completed or terminated processing of the IRP.&nbsp;</p>
 <p class="Element10">
-An IRP does not have its own transfer type. It inherits the properties of the pipe to which it is submitted. Hence an IRP becomes a control transfer IRP it was submitted to a control transfer pipe. A pipe allows multiple IRPs to be queued. This allows the Host Layer to submit IRPs to a pipe even while an IRP is being processed on the pipe. The HCD will process an IRP in the order that it was received. The following code example shows the USB_HOST_IRP data structure. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00127');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00127"><pre class="Element12"><i><span style="color: #008000">/* The following code example shows the USB_HOST_IRP structure. The Host Layer
+An IRP does not have its own transfer type. It inherits the properties of the pipe to which it is submitted. Hence an IRP becomes a control transfer IRP it was submitted to a control transfer pipe. A pipe allows multiple IRPs to be queued. This allows the Host Layer to submit IRPs to a pipe even while an IRP is being processed on the pipe. The HCD will process an IRP in the order that it was received. The following code example shows the USB_HOST_IRP data structure. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The following code example shows the USB_HOST_IRP structure. The Host Layer
  * uses this structure to place data transfer requests on a pipe. */</span></i>
 
 <strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">struct</span></strong> _USB_HOST_IRP
@@ -336,9 +320,7 @@ The <span class="Element146">data</span> member of the USB_HOST_IRP structure po
 <p class="Element10">
 The <span class="Element146">size</span> member of the USB_HOST_IRP structure contains the size of the transfer. for Bulk transfers, the size of the transfer can exceed the size of the transaction (which is equal to size of the endpoint reported by the device). The HCD in such a case will split up the transfer into transactions. This process does not require external intervention. For control transfers, the size of the transfer is specified in the setup packet (pointed to by the <span class="Element146">setup</span> member of the USB_HOST_IRP structure). The driver will itself process the Setup, Data (if required) and Handshake stages of control transfer. This process again does not require external intervention. For interrupt and isochronous transfers, the size of transfer specified in the IRP cannot exceed the size of the transaction. If size is specified as 0, then the driver will send a zero length packet. The <span class="Element146">size</span> parameter of the IRP is updated by the driver when IRP processing is completed. This will contain the size of the completed transfer.&nbsp;</p>
 <p class="Element10">
-The <span class="Element146">status</span> member of the IRP provides the completion status of the IRP and should be checked only when the IRP processing has completed. This is indicated by the driver calling the IRP callback function. The IRP status is a USB_HOST_IRP_STATUS type. The following code example shows the different possible values of the <span class="Element146">status</span> member and an example of submit a control transfer IRP. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00128');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00128"><pre class="Element12"><i><span style="color: #008000">/* The following code shows an example of how the Host Layer populates
+The <span class="Element146">status</span> member of the IRP provides the completion status of the IRP and should be checked only when the IRP processing has completed. This is indicated by the driver calling the IRP callback function. The IRP status is a USB_HOST_IRP_STATUS type. The following code example shows the different possible values of the <span class="Element146">status</span> member and an example of submit a control transfer IRP. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The following code shows an example of how the Host Layer populates
  * the IRP object and then submits it. IRP_Callback function is called when an
  * IRP has completed processing. The status of the IRP at completion can be
  * checked in the status flag. The size field of the irp will contain the amount
@@ -435,9 +417,7 @@ The <span class="Element146">callback</span> member of the USB_HOST_IRP structur
 <p class="Element10">
 The <span class="Element146">userData</span> member of the USB_HOST_IRP structure can be used by the client to associate a client specific context with the Host. This context can then be used by the client, in the IRP callback function to identify the context in which the IRP was submitted. This member is particularly useful if the client wants to implement one callback function for all IRPs.&nbsp;</p>
 <p class="Element10">
-The <span class="Element146">privateData</span> member of the IRP is used by the driver and should not be accessed or manipulated by the Driver Client. The following code examples show usage of IRPs to transfer data between the Host and the attached device and along with the different flags. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00129');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00129"><pre class="Element12"><i><span style="color: #008000">/* The following code shows an example of submitting an IRP to send data
+The <span class="Element146">privateData</span> member of the IRP is used by the driver and should not be accessed or manipulated by the Driver Client. The following code examples show usage of IRPs to transfer data between the Host and the attached device and along with the different flags. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The following code shows an example of submitting an IRP to send data
  * to a device. In this example we will request the driver to send a ZLP after
  * sending the last transaction. The driver will send the ZLP only if the size
  * of the transfer is a multiple of the endpoint size. This is not a control
@@ -483,18 +463,21 @@ result = DRV_USBFS_HOST_IPRSubmit( bulkINPipeHandle, &amp;irp );</pre></div></di
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00290.html">USB Libraries Help</a> &gt; <a href="00351.html">USB Common Driver Interface</a> &gt; <a href="00069.html">Common Interface</a> &gt; <a href="00080.html">USB Driver Host Mode Operation</a></div>
+<a href="00290.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00069.html" target="topic">Common Interface</a> &gt; <a href="00080.html" target="topic">USB Driver Host Mode Operation</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="100%">
+<tr><td width="25%">
 <div class="Element3">
- MPLAB Harmony USB Stack </div>
-</td></tr><tr><td width="100%">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
-</td></tr><tr><td width="100%">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00171.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00077.html" target="topic">Previous</a> | <a href="00069.html" target="topic">Up</a> | <a href="00079.html" target="topic">Next</a></div>
+</td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON USB Driver Host Mode Operation Topic Title: USB Driver Host Mode Operation)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON USB Driver Host Mode Operation Topic Title: USB Driver Host Mode Operation)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

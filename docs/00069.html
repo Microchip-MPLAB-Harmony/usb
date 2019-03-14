@@ -1,17 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
 <title>Common Interface</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
-    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
-<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00069.html');" onmousedown="onBodyMouseDown();">
 
 <!-- Begin Popups -->
 
@@ -20,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00290.html">USB Libraries Help</a> &gt; <a href="00351.html">USB Common Driver Interface</a> &gt; <a href="00069.html">Common Interface</a></div>
+<a href="00290.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00069.html" target="topic">Common Interface</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,13 +26,13 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00171.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00351.html">Previous</a> | <a href="00351.html">Up</a> | <a href="00073.html">Next</a></div>
+<a href="00351.html" target="topic">Previous</a> | <a href="00351.html" target="topic">Up</a> | <a href="00073.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Common Interface Topic Title: Common Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Common Interface Topic Title: Common Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 Common Interface</div>
 </div>
@@ -47,7 +45,7 @@ Common Interface</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<div class="Element58">
+<a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
@@ -68,9 +66,7 @@ The USB Driver Common Interface contains functions that are grouped as follows:<
 <li class="Element600"><i>Driver Host Mode Client Functions</i> - These functions are called exclusively by the USB Host Stack to operate and access the USB as a Host</li>
 <li class="Element600"><i>Driver Device Mode Client Functions</i> - These functions are called exclusively by the USB Device Stack to operate and access the USB as a Device</li>
 </ul><p class="Element10">
-The USB Driver Common Interface is defined in the <span class="Element146">&lt;install-dir&gt;</span>\<span class="Element146">framework\driver\usb\drv_usb.h</span> file. This file contains the data types and structures that define the interface. Specifically, the DRV_USB_HOST_INTERFACE structure, contained in this file, is the common interface for USB Driver Host mode functions. It is a structure of function pointers, pointing to functions that define the Driver Host mode Client functions. The following code example shows this structure and the function pointer it contains. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00074');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00074"><pre class="Element12"><i><span style="color: #008000">// *****************************************************************************</span></i>
+The USB Driver Common Interface is defined in the <span class="Element146">&lt;install-dir&gt;</span>\<span class="Element146">framework\driver\usb\drv_usb.h</span> file. This file contains the data types and structures that define the interface. Specifically, the DRV_USB_HOST_INTERFACE structure, contained in this file, is the common interface for USB Driver Host mode functions. It is a structure of function pointers, pointing to functions that define the Driver Host mode Client functions. The following code example shows this structure and the function pointer it contains. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// *****************************************************************************</span></i>
 <i><span style="color: #008000">/* USB Driver Client Functions Interface (For Host mode)
 
   Summary:
@@ -133,9 +129,7 @@ The USB Driver Common Interface is defined in the <span class="Element146">&lt;i
 
 } DRV_USB_HOST_INTERFACE;</pre></div></div>
 <p class="Element10">
-The DRV_USB_DEVICE_INTERFACE structure, contained in this file, is the common interface for USB Driver Device mode functions. It is a structure of function pointers, pointer to functions that define the Driver Device mode Client functions. The following code example shows this structure and the function pointer it contains. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00075');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00075"><pre class="Element12"><i><span style="color: #008000">// *****************************************************************************</span></i>
+The DRV_USB_DEVICE_INTERFACE structure, contained in this file, is the common interface for USB Driver Device mode functions. It is a structure of function pointers, pointer to functions that define the Driver Device mode Client functions. The following code example shows this structure and the function pointer it contains. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// *****************************************************************************</span></i>
 <i><span style="color: #008000">/* USB Driver Client Functions Interface (For Device Mode)
 
   Summary:
@@ -214,9 +208,7 @@ The DRV_USB_DEVICE_INTERFACE structure, contained in this file, is the common in
 
 } DRV_USB_DEVICE_INTERFACE;</pre></div></div>
 <p class="Element10">
-Both of these structures also contain pointers to General Client functions. The specific PIC32 device USB Driver allocates and initializes such a structure. The following code example shows how the PIC32MX USB Host mode Driver allocates and initializes the DRV_USB_HOST_INTERFACE structure. This code is contained in the <span class="Element146">&lt;install-dir&gt;\framework\driver\usb\usbhs\src\dynamic\drv_usbfs_host.c</span> file. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00076');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00076"><pre class="Element12"><i><span style="color: #008000">/**********************************************************
+Both of these structures also contain pointers to General Client functions. The specific PIC32 device USB Driver allocates and initializes such a structure. The following code example shows how the PIC32MX USB Host mode Driver allocates and initializes the DRV_USB_HOST_INTERFACE structure. This code is contained in the <span class="Element146">&lt;install-dir&gt;\framework\driver\usb\usbhs\src\dynamic\drv_usbfs_host.c</span> file. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/**********************************************************
  * This structure is a set of pointer to the USBFS driver
  * functions. It is provided to the Host layer as the
  * interface to the driver.
@@ -248,9 +240,7 @@ DRV_USB_HOST_INTERFACE gDrvUSBFSHostInterface =
     .rootHubInterface.rootHubOperationIsEnabled = DRV_USBFS_HOST_ROOT_HUB_OperationIsEnabled,
 };</pre></div></div>
 <p class="Element10">
-Similarly, the PIC32MX USB Device mode Driver allocates and initializes the DRV_USB_DEVICE_INTERFACE structure. This can be reviewed in the <span class="Element146">&lt;install-dir&gt;\framework\driver\usb\usbhs\src\dynamic\drv_usbfs_device.c</span> file. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00077');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00077"><pre class="Element12"><i><span style="color: #008000">/*****************************************************
+Similarly, the PIC32MX USB Device mode Driver allocates and initializes the DRV_USB_DEVICE_INTERFACE structure. This can be reviewed in the <span class="Element146">&lt;install-dir&gt;\framework\driver\usb\usbhs\src\dynamic\drv_usbfs_device.c</span> file. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/*****************************************************
  * This structure is a pointer to a set of USB Driver
  * Device mode functions. This set is exported to the
  * Device Layer when the Device Layer must use the
@@ -282,20 +272,12 @@ DRV_USB_DEVICE_INTERFACE gDrvUSBFSDeviceInterface =
 
 };</pre></div></div>
 <p class="Element10">
-A pointer to the DRV_USB_HOST_INTERFACE structure is passed to the USB Host Stack as part of USB Host Stack initialization. The following code example shows how this is done. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00078');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00078"><pre class="Element12"><i><span style="color: #008000">/********************************************************************************</span></i></pre></div></div>
-<div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00079');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00079"><pre class="Element12"> * This is a table of the USB Host mode drivers that <strong><span style="color: #000080">this</span></strong> application will
+A pointer to the DRV_USB_HOST_INTERFACE structure is passed to the USB Host Stack as part of USB Host Stack initialization. The following code example shows how this is done. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/********************************************************************************</span></i></pre></div></div>
+<div class="Element13"><div class="Element12"><pre class="Element12"> * This is a table of the USB Host mode drivers that <strong><span style="color: #000080">this</span></strong> application will
  * support. Also contained in the driver index. In <strong><span style="color: #000080">this</span></strong> example, the
  * application will want to use instance 0 of the PIC32MX USB Full-Speed driver.</pre></div></div>
-<div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00080');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00080"><pre class="Element12"> * *****************************************************************************/</pre></div></div>
-<div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00081');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00081"><pre class="Element12"><strong><span style="color: #000080">const</span></strong> USB_HOST_HCD hcdTable =
+<div class="Element13"><div class="Element12"><pre class="Element12"> * *****************************************************************************/</pre></div></div>
+<div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">const</span></strong> USB_HOST_HCD hcdTable =
 {
     .drvIndex = DRV_USBFS_INDEX_0,
     .hcdInterface = DRV_USBFS_HOST_INTERFACE
@@ -331,32 +313,32 @@ Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00073.html">Driver Host Mode Client Functions</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00073.html" target="topic">Driver Host Mode Client Functions</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
 Provides information on the Host mode Client functions for the USB Driver.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00071.html">Driver Device Mode Client Functions</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00071.html" target="topic">Driver Device Mode Client Functions</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
 Provides information on the USB Driver Device mode Client functions.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00072.html">Driver General Client Functions</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00072.html" target="topic">Driver General Client Functions</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
 Provides information on the General Client functions for the USB Driver.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00077.html">Opening the Driver</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00077.html" target="topic">Opening the Driver</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
 Provides information and examples for opening the driver.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00080.html">USB Driver Host Mode Operation</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00080.html" target="topic">USB Driver Host Mode Operation</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
 Provides information on Host mode operation.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00079.html">USB Driver Device Mode Operation</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00079.html" target="topic">USB Driver Device Mode Operation</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
 Provides information on Device mode operation.&nbsp;</div></td></tr></table></div></div>
 </div>
@@ -366,18 +348,21 @@ Provides information on Device mode operation.&nbsp;</div></td></tr></table></di
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00290.html">USB Libraries Help</a> &gt; <a href="00351.html">USB Common Driver Interface</a> &gt; <a href="00069.html">Common Interface</a></div>
+<a href="00290.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00069.html" target="topic">Common Interface</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="100%">
+<tr><td width="25%">
 <div class="Element3">
- MPLAB Harmony USB Stack </div>
-</td></tr><tr><td width="100%">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
-</td></tr><tr><td width="100%">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00171.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00351.html" target="topic">Previous</a> | <a href="00351.html" target="topic">Up</a> | <a href="00073.html" target="topic">Next</a></div>
+</td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Common Interface Topic Title: Common Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Common Interface Topic Title: Common Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

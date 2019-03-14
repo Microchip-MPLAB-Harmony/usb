@@ -1,17 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
 <title>Opening the Driver</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
-    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
-<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00077.html');" onmousedown="onBodyMouseDown();">
 
 <!-- Begin Popups -->
 
@@ -20,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00290.html">USB Libraries Help</a> &gt; <a href="00351.html">USB Common Driver Interface</a> &gt; <a href="00069.html">Common Interface</a> &gt; <a href="00077.html">Opening the Driver</a></div>
+<a href="00290.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00069.html" target="topic">Common Interface</a> &gt; <a href="00077.html" target="topic">Opening the Driver</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,13 +26,13 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00171.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00072.html">Previous</a> | <a href="00069.html">Up</a> | <a href="00080.html">Next</a></div>
+<a href="00072.html" target="topic">Previous</a> | <a href="00069.html" target="topic">Up</a> | <a href="00080.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Opening the Driver Topic Title: Opening the Driver)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Opening the Driver Topic Title: Opening the Driver)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 Opening the Driver</div>
 </div>
@@ -47,7 +45,7 @@ Opening the Driver</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<div class="Element58">
+<a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
@@ -55,9 +53,7 @@ The USB Host Stack and the USB Device Stack must obtain a handle to the USB Driv
 <p class="Element10">
 The USB Host Stack can open the USB Driver but can call its Host mode functions only if the USB Driver was initialized for Host mode or Dual Role operation. The USB Host Stack accesses the driver functions through the DRV_USB_HOST_INTERFACE pointer that was provided to the Host Layer through the Host Stack initialization. The USB Device Stack can open the USB Driver but can call its Device mode functions only if the USB Driver was initialized for Device mode or Dual Role operation. The USB Device Stack accesses the driver functions through the DRV_USB_HOST_INTERFACE pointer that was provided to the Host Layer through the Host Stack initialization&nbsp;</p>
 <p class="Element10">
-The following code example shows how the USB Host Layer opens the USB Driver. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00119');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00119"><pre class="Element12"><i><span style="color: #008000">/* This code example shows how the Host Layer open the HCD via the hcdInterface.
+The following code example shows how the USB Host Layer opens the USB Driver. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code example shows how the Host Layer open the HCD via the hcdInterface.
  * The driver handle is stored in hcdHandle member of the busObj data structure.
  * The busObj data structure Host Layer local data structure. The Host Layer
  * opens the HCD when the bus is enabled. This operation takes place in the
@@ -82,9 +78,7 @@ The following code example shows how the USB Host Layer opens the USB Driver. </
          * changed. */</span></i>
     }</pre></div></div>
 <p class="Element10">
-The following code example shows how the USB Device Layer opens the USB Driver. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00120');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00120"><pre class="Element12"><i><span style="color: #008000">/* This code example shows how the USB Device Layer calls the USBCD open
+The following code example shows how the USB Device Layer opens the USB Driver. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code example shows how the USB Device Layer calls the USBCD open
  * function to open the USBCD. The Device Layer accesses the USBCD Open function
  * through the driverInterface member of the usbDeviceInstanceState object. The
  * driverInterface member is a DRV_USB_DEVICE_INTERFACE type. The
@@ -125,18 +119,21 @@ The following code example shows how the USB Device Layer opens the USB Driver. 
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00290.html">USB Libraries Help</a> &gt; <a href="00351.html">USB Common Driver Interface</a> &gt; <a href="00069.html">Common Interface</a> &gt; <a href="00077.html">Opening the Driver</a></div>
+<a href="00290.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00069.html" target="topic">Common Interface</a> &gt; <a href="00077.html" target="topic">Opening the Driver</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="100%">
+<tr><td width="25%">
 <div class="Element3">
- MPLAB Harmony USB Stack </div>
-</td></tr><tr><td width="100%">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
-</td></tr><tr><td width="100%">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00171.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00072.html" target="topic">Previous</a> | <a href="00069.html" target="topic">Up</a> | <a href="00080.html" target="topic">Next</a></div>
+</td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Opening the Driver Topic Title: Opening the Driver)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Opening the Driver Topic Title: Opening the Driver)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

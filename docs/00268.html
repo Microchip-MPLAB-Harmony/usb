@@ -1,17 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
 <title>Host Layer Initialization</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
-    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
-<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00268.html');" onmousedown="onBodyMouseDown();">
 
 <!-- Begin Popups -->
 
@@ -20,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00290.html">USB Libraries Help</a> &gt; <a href="00272.html">USB Host Libraries</a> &gt; <a href="00271.html">USB Host Layer Library</a> &gt; <a href="00276.html">Using the Library</a> &gt; <a href="00269.html">How the Library Works</a> &gt; <a href="00268.html">Host Layer Initialization</a></div>
+<a href="00290.html" target="topic">USB Libraries Help</a> &gt; <a href="00272.html" target="topic">USB Host Libraries</a> &gt; <a href="00271.html" target="topic">USB Host Layer Library</a> &gt; <a href="00276.html" target="topic">Using the Library</a> &gt; <a href="00269.html" target="topic">How the Library Works</a> &gt; <a href="00268.html" target="topic">Host Layer Initialization</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,13 +26,13 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00171.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00269.html">Previous</a> | <a href="00269.html">Up</a> | <a href="00267.html">Next</a></div>
+<a href="00269.html" target="topic">Previous</a> | <a href="00269.html" target="topic">Up</a> | <a href="00267.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST Host Layer Initialization Topic Title: Host Layer Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST Host Layer Initialization Topic Title: Host Layer Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 Host Layer Initialization</div>
 </div>
@@ -47,7 +45,7 @@ Host Layer Initialization</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<div class="Element58">
+<a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
@@ -60,9 +58,7 @@ The Host Layer requires the following information for initialization:</p>
 </ul><p class="Element10">
 The Host Layer is capable of operating more than one USB device. This is possible on PIC32 microcontrollers that feature multiple USB Controller Peripherals. The one instance of the Host Layer manages multiple HCDs. The interface to each to every instance of the HCD that the Host Layer must operate must be specified in the Host Layer initialization. The total number of USB devices the Host Layer should manage is defined statically by the USB_HOST_CONTROLLERS_NUMBER configuration macro in the <span class="Element146">system_config.h</span> file. The following code shows an example initialization of a PIC32MX USB HCD.&nbsp;</p>
 <p class="Element10">
-<strong>Example: PIC32MZ USB HCD Initialization</strong> &nbsp;</p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00046');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00046"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of how to initialize the PIC32MX USB
+<strong>Example: PIC32MZ USB HCD Initialization</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of how to initialize the PIC32MX USB
  * Driver for host mode operation. For more details on the PIC32MX Full-Speed
  * USB Driver, please refer to the Driver Libraries documentation. */</span></i>
 
@@ -141,9 +137,7 @@ SYS_MODULE_OBJ drvUSBObj = SYS_MODULE_OBJ_INVALID;
 <p class="Element10">
 The Host Layer Initialization requires a USB_HOST_HCD data structure. This data structure specifies the HCD module index and the HCD Host Layer Interface for each bus. The following code shows the USB_HOST_HCD data structure is initialized for a single USB Controller Peripheral PIC32MX microcontroller device.&nbsp;</p>
 <p class="Element10">
-<strong>Example: Data Structure Initialized for a Single USB Controller Peripheral PIC32MX MCU</strong> &nbsp;</p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00047');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00047"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of setting up the USB_HOST_HCD data
+<strong>Example: Data Structure Initialized for a Single USB Controller Peripheral PIC32MX MCU</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of setting up the USB_HOST_HCD data
  * structure for the PIC32MX USB controller */</span></i>
 
 USB_HOST_HCD usbHostHCD =
@@ -168,9 +162,7 @@ An entry in the TPL contains the following information:</p>
 </ul><p class="Element10">
 The following code shows an example TPL table.&nbsp;</p>
 <p class="Element10">
-<strong>Example: TPL Table</strong> &nbsp;</p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00048');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00048"><pre class="Element12">    <i><span style="color: #008000">/* This code shows some examples of configuring the USB Host Layer
+<strong>Example: TPL Table</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">    <i><span style="color: #008000">/* This code shows some examples of configuring the USB Host Layer
      * TPL Table. In this example, the USB Host layer is configured to support
      * three different types of devices. */</span></i>
 
@@ -218,9 +210,7 @@ The following code shows an example TPL table.&nbsp;</p>
 The Host Layer can now be initialized. The following code shows how the USB_HOST_HCD and the TPL table are specified in the USB_HOST_INIT (the Host Layer Initialization) data structure. In addition, the following figure illustrates the various initialization inputs needed by the Host Layer. </p><p class="Element10">
 The USB_HOST_Initialize function is called to initialize the Host Layer. The initialization process may not complete when the USB_HOST_Initialization function exits. This will complete in subsequent calls to the USB_HOST_Tasks function.&nbsp;</p>
 <p class="Element10">
-<strong>Example: Specifying the TPL Table</strong> &nbsp;</p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00049');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00049"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of the USB Host Layer Initialization data
+<strong>Example: Specifying the TPL Table</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of the USB Host Layer Initialization data
  * structure. In this case the number of TPL entries is one and there is only
  * one HCD (and hence only one USB bus) in the application */</span></i>
 
@@ -253,18 +243,21 @@ The USB_HOST_Initialize function is called to initialize the Host Layer. The ini
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00290.html">USB Libraries Help</a> &gt; <a href="00272.html">USB Host Libraries</a> &gt; <a href="00271.html">USB Host Layer Library</a> &gt; <a href="00276.html">Using the Library</a> &gt; <a href="00269.html">How the Library Works</a> &gt; <a href="00268.html">Host Layer Initialization</a></div>
+<a href="00290.html" target="topic">USB Libraries Help</a> &gt; <a href="00272.html" target="topic">USB Host Libraries</a> &gt; <a href="00271.html" target="topic">USB Host Layer Library</a> &gt; <a href="00276.html" target="topic">Using the Library</a> &gt; <a href="00269.html" target="topic">How the Library Works</a> &gt; <a href="00268.html" target="topic">Host Layer Initialization</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="100%">
+<tr><td width="25%">
 <div class="Element3">
- MPLAB Harmony USB Stack </div>
-</td></tr><tr><td width="100%">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
-</td></tr><tr><td width="100%">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00171.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00269.html" target="topic">Previous</a> | <a href="00269.html" target="topic">Up</a> | <a href="00267.html" target="topic">Next</a></div>
+</td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST Host Layer Initialization Topic Title: Host Layer Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST Host Layer Initialization Topic Title: Host Layer Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

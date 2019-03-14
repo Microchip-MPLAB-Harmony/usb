@@ -1,17 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
 <title>Endpoint Data Transfer</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
-    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
-<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00328.html');" onmousedown="onBodyMouseDown();">
 
 <!-- Begin Popups -->
 
@@ -20,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00290.html">USB Libraries Help</a> &gt; <a href="00197.html">USB Device Libraries</a> &gt; <a href="00323.html">Generic USB Device Library</a> &gt; <a href="00337.html">Using the Library</a> &gt; <a href="00332.html">How the Library Works</a> &gt; <a href="00328.html">Endpoint Data Transfer</a></div>
+<a href="00290.html" target="topic">USB Libraries Help</a> &gt; <a href="00197.html" target="topic">USB Device Libraries</a> &gt; <a href="00323.html" target="topic">Generic USB Device Library</a> &gt; <a href="00337.html" target="topic">Using the Library</a> &gt; <a href="00332.html" target="topic">How the Library Works</a> &gt; <a href="00328.html" target="topic">Endpoint Data Transfer</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,13 +26,13 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00171.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00330.html">Previous</a> | <a href="00332.html">Up</a> | <a href="00326.html">Next</a></div>
+<a href="00330.html" target="topic">Previous</a> | <a href="00332.html" target="topic">Up</a> | <a href="00326.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Endpoint Data Transfer Topic Title: Endpoint Data Transfer)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Endpoint Data Transfer Topic Title: Endpoint Data Transfer)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 Endpoint Data Transfer</div>
 </div>
@@ -47,15 +45,13 @@ Endpoint Data Transfer</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<div class="Element58">
+<a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
 The application should call the USB_DEVICE_EndpointRead and USB_DEVICE_EndpointWrite functions to transfer data over an enabled endpoint. Calling this function causes a USB transfer to be scheduled on the endpoint. The transfer is added to the endpoint queue and is serviced as the host schedules the transaction on the bus. The USB_DEVICE_EndpointRead and USB_DEVICE_EndpointWrite functions return a unique transfer handle which can be track the transfer. These transfer handles are returned along with the USB_DEVICE_EVENT_ENDPOINT_READ_COMPLETE (when a endpoint read transfer is complete) and USB_DEVICE_EVENT_ENDPOINT_WRITE_COMPLETE (when an endpoint write is complete) events.&nbsp;</p>
 <p class="Element10">
-The following code shows an example of sending data over an endpoint. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00043');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00043"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of using the USB_DEVICE_EndpointWrite
+The following code shows an example of sending data over an endpoint. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of using the USB_DEVICE_EndpointWrite
  * function to send data over the endpoint. The completion of the write is
  * indicated by the USB_DEVICE_EVENT_ENDPOINT_WRITE_COMPLETE event. The
  * transfer handle is returned in appData.writeTransferHandle */</span></i>
@@ -83,9 +79,7 @@ The USB_DEVICE_EndpointWrite function allows the application to send data to the
 </ul><p class="Element10">
 Refer to USB_DEVICE_EndpointWrite function API description for more details and code examples.&nbsp;</p>
 <p class="Element10">
-The application should use the USB_DEVICE_EndpointRead function to read data from an endpoint. The size of the buffer that is specified in this function should always be a multiple of the endpoint size. The following code shows an example of using the USB_DEVICE_EndpointRead function. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00044');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00044"><pre class="Element12"><i><span style="color: #008000">/* This code shows to use the USB_DEVICE_EndpointRead function
+The application should use the USB_DEVICE_EndpointRead function to read data from an endpoint. The size of the buffer that is specified in this function should always be a multiple of the endpoint size. The following code shows an example of using the USB_DEVICE_EndpointRead function. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows to use the USB_DEVICE_EndpointRead function
  * to read from an endpoint.  The transfer handle is returned in
  * appData.readTransferHandle. The size of receivedDataBuffer should
  * be a multiple of the receive endpoint size. */</span></i>
@@ -110,18 +104,21 @@ For example, consider a Generic USB Device that contains two OUT (read) endpoint
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00290.html">USB Libraries Help</a> &gt; <a href="00197.html">USB Device Libraries</a> &gt; <a href="00323.html">Generic USB Device Library</a> &gt; <a href="00337.html">Using the Library</a> &gt; <a href="00332.html">How the Library Works</a> &gt; <a href="00328.html">Endpoint Data Transfer</a></div>
+<a href="00290.html" target="topic">USB Libraries Help</a> &gt; <a href="00197.html" target="topic">USB Device Libraries</a> &gt; <a href="00323.html" target="topic">Generic USB Device Library</a> &gt; <a href="00337.html" target="topic">Using the Library</a> &gt; <a href="00332.html" target="topic">How the Library Works</a> &gt; <a href="00328.html" target="topic">Endpoint Data Transfer</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="100%">
+<tr><td width="25%">
 <div class="Element3">
- MPLAB Harmony USB Stack </div>
-</td></tr><tr><td width="100%">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
-</td></tr><tr><td width="100%">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00171.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00330.html" target="topic">Previous</a> | <a href="00332.html" target="topic">Up</a> | <a href="00326.html" target="topic">Next</a></div>
+</td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Endpoint Data Transfer Topic Title: Endpoint Data Transfer)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Endpoint Data Transfer Topic Title: Endpoint Data Transfer)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

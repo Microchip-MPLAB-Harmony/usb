@@ -1,17 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
 <title>Obtaining an Audio Stream</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
-    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
-<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00144.html');" onmousedown="onBodyMouseDown();">
 
 <!-- Begin Popups -->
 
@@ -20,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00290.html">USB Libraries Help</a> &gt; <a href="00272.html">USB Host Libraries</a> &gt; <a href="00128.html">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00150.html">Using the Library</a> &gt; <a href="00140.html">How the Library Works</a> &gt; <a href="00144.html">Obtaining an Audio Stream</a></div>
+<a href="00290.html" target="topic">USB Libraries Help</a> &gt; <a href="00272.html" target="topic">USB Host Libraries</a> &gt; <a href="00128.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00150.html" target="topic">Using the Library</a> &gt; <a href="00140.html" target="topic">How the Library Works</a> &gt; <a href="00144.html" target="topic">Obtaining an Audio Stream</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,13 +26,13 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00171.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00145.html">Previous</a> | <a href="00140.html">Up</a> | <a href="00133.html">Next</a></div>
+<a href="00145.html" target="topic">Previous</a> | <a href="00140.html" target="topic">Up</a> | <a href="00133.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Obtaining an Audio Stream Topic Title: Obtaining an Audio Stream)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Obtaining an Audio Stream Topic Title: Obtaining an Audio Stream)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 Obtaining an Audio Stream</div>
 </div>
@@ -47,15 +45,13 @@ Obtaining an Audio Stream</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<div class="Element58">
+<a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
 Once application has identified which audio stream to use, application must open that audio stream by using USB_HOST_AUDIO_V1_0_StreamOpen function. This function takes audio stream object USB_HOST_AUDIO_V1_0_STREAM_OBJ as an argument which obtained by USB_HOST_AUDIO_V1_0_StreamGetFirst and USB_HOST_AUDIO_V1_0_StreamGetNext functions and returns audio stream handle USB_HOST_AUDIO_V1_0_STREAM_HANDLE. If the open function fails, it returns an invalid handle (USB_HOST_AUDIO_V1_0_STREAM_HANDLE _INVALID). Once opened successfully, a valid handle tracks the relationship between the client and the Audio Stream. This handle should be used with other Audio Stream functions.&nbsp;</p>
 <p class="Element10">
-An audio stream can be opened multiple times by different application clients. In an RTOS based application each client could running its own thread. Multiple clients can read write data to the one Audio stream. In such a case, the read and write requests are queued. The following code shows an example of how an Audio Stream is opened. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00057');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00057"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of opening an audio stream */</span></i>
+An audio stream can be opened multiple times by different application clients. In an RTOS based application each client could running its own thread. Multiple clients can read write data to the one Audio stream. In such a case, the read and write requests are queued. The following code shows an example of how an Audio Stream is opened. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of opening an audio stream */</span></i>
 
 <i><span style="color: #008000">/* Specify the Audio Stream format details that this application supports */</span></i>
 <strong><span style="color: #000080">const</span></strong> APP_USB_HOST_AUDIO_STREAM_FORTMAT audioSpeakerStreamFormat =
@@ -227,18 +223,21 @@ USB_HOST_AUDIO_V1_0_STREAM_OBJ App_USBHostAudioSpeakerStreamFind
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00290.html">USB Libraries Help</a> &gt; <a href="00272.html">USB Host Libraries</a> &gt; <a href="00128.html">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00150.html">Using the Library</a> &gt; <a href="00140.html">How the Library Works</a> &gt; <a href="00144.html">Obtaining an Audio Stream</a></div>
+<a href="00290.html" target="topic">USB Libraries Help</a> &gt; <a href="00272.html" target="topic">USB Host Libraries</a> &gt; <a href="00128.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00150.html" target="topic">Using the Library</a> &gt; <a href="00140.html" target="topic">How the Library Works</a> &gt; <a href="00144.html" target="topic">Obtaining an Audio Stream</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="100%">
+<tr><td width="25%">
 <div class="Element3">
- MPLAB Harmony USB Stack </div>
-</td></tr><tr><td width="100%">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
-</td></tr><tr><td width="100%">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00171.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00145.html" target="topic">Previous</a> | <a href="00140.html" target="topic">Up</a> | <a href="00133.html" target="topic">Next</a></div>
+</td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Obtaining an Audio Stream Topic Title: Obtaining an Audio Stream)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Obtaining an Audio Stream Topic Title: Obtaining an Audio Stream)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

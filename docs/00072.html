@@ -1,17 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
 <title>Driver General Client Functions</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
-    <meta name="save" content="history" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <link rel="STYLESHEET" href="default.css" type="text/css" />
 
 <script type="text/javascript" src="scripts.js"></script>
 </head>
-<body class="Element700" onload="onBodyLoad();" onmousedown="onBodyMouseDown();">
-<div id="persistenceDiv" style="display:none; behavior:url(#default#userData);"></div>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00072.html');" onmousedown="onBodyMouseDown();">
 
 <!-- Begin Popups -->
 
@@ -20,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00290.html">USB Libraries Help</a> &gt; <a href="00351.html">USB Common Driver Interface</a> &gt; <a href="00069.html">Common Interface</a> &gt; <a href="00072.html">Driver General Client Functions</a></div>
+<a href="00290.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00069.html" target="topic">Common Interface</a> &gt; <a href="00072.html" target="topic">Driver General Client Functions</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -28,13 +26,13 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00171.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00071.html">Previous</a> | <a href="00069.html">Up</a> | <a href="00077.html">Next</a></div>
+<a href="00071.html" target="topic">Previous</a> | <a href="00069.html" target="topic">Up</a> | <a href="00077.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver General Client Functions Topic Title: Driver General Client Functions)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver General Client Functions Topic Title: Driver General Client Functions)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 Driver General Client Functions</div>
 </div>
@@ -47,7 +45,7 @@ Driver General Client Functions</div>
 <div class="Element721">
 
 <!-- Begin Page Content -->
-<div class="Element58">
+<a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
@@ -59,29 +57,21 @@ The DRV_USB_HOST_INTERFACE and the DRV_USB_DEVICE_INTERFACE structures contain p
 </ul><div class="Element15">
 Driver Open Function</div>
 <p class="Element10">
-The <span class="Element146">open</span> member of the DRV_USB_HOST_INTERFACE and the DRV_USB_DEVICE_INTERFACE structures should point to the USB Driver Open function. The signature of the Open function is as follows: </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00115');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00115"><pre class="Element12">DRV_HANDLE (*open)(<strong><span style="color: #000080">const</span></strong> SYS_MODULE_INDEX drvIndex, <strong><span style="color: #000080">const</span></strong> DRV_IO_INTENT intent);</pre></div></div>
+The <span class="Element146">open</span> member of the DRV_USB_HOST_INTERFACE and the DRV_USB_DEVICE_INTERFACE structures should point to the USB Driver Open function. The signature of the Open function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">DRV_HANDLE (*open)(<strong><span style="color: #000080">const</span></strong> SYS_MODULE_INDEX drvIndex, <strong><span style="color: #000080">const</span></strong> DRV_IO_INTENT intent);</pre></div></div>
 <p class="Element10">
 The USB Driver Open function must match this signature. The Driver Client uses the USB Driver index (drvIndex) to specify the instance of the USB module that Host Stack or the Device Stack should open. The USB Driver should ignore the <span class="Element146">intent</span> parameter. The function should return a driver handle. If the driver is not ready to be opened, it should return an invalid handle (DRV_HANDLE_INVALID). In such a case, the client will continue trying to open the driver by calling the Open function again. The driver may also fail to open for an invalid <span class="Element146">index</span> parameter or if USB module is in an error condition.&nbsp;</p>
 <p class="Element10">
 When supporting Dual Role operation, both the Host Stack and Device Stack will call the Driver Open function in one application. The USB Driver must support multiple calls to the Open function in the same application. The Open function should be thread-safe.</p><div class="Element15">
 Driver Close Function</div>
 <p class="Element10">
-The <span class="Element146">close</span> member of the DRV_USB_HOST_INTERFACE and the DRV_USB_DEVICE_INTERFACE structures should point to the USB Driver Close function. The signature of the Close function is as follows: </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00116');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00116"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> (*close)(DRV_HANDLE handle);</pre></div></div>
+The <span class="Element146">close</span> member of the DRV_USB_HOST_INTERFACE and the DRV_USB_DEVICE_INTERFACE structures should point to the USB Driver Close function. The signature of the Close function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> (*close)(DRV_HANDLE handle);</pre></div></div>
 <p class="Element10">
 The USB Driver Close function must match this signature. The Driver Client passes the handle obtained from the Driver Open function as a parameter to the close. The USB Host Stack or USB Device Stack will close the driver only when the stack is deinitialized (which is typically a rare case). The USB Driver should deallocate any client-related resources in the Close function. If the specified driver handle is not valid, the Close function should not have any side effects. The USB Driver expects the Close function to be called from the context of the thread in which the driver was opened; therefore, this function <i>is not</i> expected to be thread-safe.</p><div class="Element15">
 Driver Event Handler Set Function</div>
 <p class="Element10">
-The <span class="Element146">eventHandlerSet</span> member of the DRV_USB_HOST_INTERFACE and the DRV_USB_DEVICE_INTERFACE structures should point to the USB Driver Event Handler Set function. The signature of the Event Handler Set function is as follows: </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00117');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00117"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> (*eventHandlerSet)(DRV_HANDLE handle, uintptr_t hReferenceData, DRV_USB_EVENT_CALLBACK eventHandler);</pre></div></div>
+The <span class="Element146">eventHandlerSet</span> member of the DRV_USB_HOST_INTERFACE and the DRV_USB_DEVICE_INTERFACE structures should point to the USB Driver Event Handler Set function. The signature of the Event Handler Set function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> (*eventHandlerSet)(DRV_HANDLE handle, uintptr_t hReferenceData, DRV_USB_EVENT_CALLBACK eventHandler);</pre></div></div>
 <p class="Element10">
-The USB Driver Event Handler Set function must match this signature. The signature of the Client Event Handling function should match DRV_USB_EVENT_CALLBACK. The USB Driver calls this function when it must communicate USB events to the client. The client can set the <span class="Element146">eventHandler</span> parameter to NULL if it does not want to receive USB Driver events. The client will receive Host mode events if the USB Driver is operating in Host mode. It will receive Device mode events if the USB Driver is operating in Device mode. The DRV_USB_EVENT type enumeration contains all the possible events that the USB Driver would generate. The following code example shows the enumeration. </p><div class="Element170">
-<a href="#" onclick="CopyElementToClipboard('code00118');">Copy Code</a></div>
-<div class="Element13"><div class="Element12" id="code00118"><pre class="Element12"><i><span style="color: #008000">// *****************************************************************************</span></i>
+The USB Driver Event Handler Set function must match this signature. The signature of the Client Event Handling function should match DRV_USB_EVENT_CALLBACK. The USB Driver calls this function when it must communicate USB events to the client. The client can set the <span class="Element146">eventHandler</span> parameter to NULL if it does not want to receive USB Driver events. The client will receive Host mode events if the USB Driver is operating in Host mode. It will receive Device mode events if the USB Driver is operating in Device mode. The DRV_USB_EVENT type enumeration contains all the possible events that the USB Driver would generate. The following code example shows the enumeration. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// *****************************************************************************</span></i>
 <i><span style="color: #008000">/* USB Driver Events Enumeration
 
   Summary:
@@ -143,18 +133,21 @@ This completes the discussion on the Driver General Client Functions.</p></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00290.html">USB Libraries Help</a> &gt; <a href="00351.html">USB Common Driver Interface</a> &gt; <a href="00069.html">Common Interface</a> &gt; <a href="00072.html">Driver General Client Functions</a></div>
+<a href="00290.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00069.html" target="topic">Common Interface</a> &gt; <a href="00072.html" target="topic">Driver General Client Functions</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
-<tr><td width="100%">
+<tr><td width="25%">
 <div class="Element3">
- MPLAB Harmony USB Stack </div>
-</td></tr><tr><td width="100%">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
 <div class="Element4">
-<a href="contents.htm">Contents</a> | <a href="idx.html">Index</a> | <a href="00171.html">Home</a></div>
-</td></tr><tr><td width="100%">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00171.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00071.html" target="topic">Previous</a> | <a href="00069.html" target="topic">Up</a> | <a href="00077.html" target="topic">Next</a></div>
+</td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver General Client Functions Topic Title: Driver General Client Functions)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver General Client Functions Topic Title: Driver General Client Functions)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
