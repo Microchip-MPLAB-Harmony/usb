@@ -216,7 +216,7 @@ const uint8_t highSpeedConfigurationDescriptor[]=
 
     0x09,                                                   // Size of this descriptor in bytes
     USB_DESCRIPTOR_CONFIGURATION,                           // Descriptor Type
-    USB_DEVICE_16bitTo8bitArrange(106),                      //(106 Bytes)Size of the Configuration descriptor
+    USB_DEVICE_16bitTo8bitArrange(98),                      //(106 Bytes)Size of the Configuration descriptor
     3,                                                      // Number of interfaces in this configuration
     0x01,                                               // Index value of this configuration
     0x00,                                               // Configuration string index
