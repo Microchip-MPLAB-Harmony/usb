@@ -203,8 +203,8 @@
           <Name dnOrder="1">usb_device_init_data.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1CA499E23977A13C7F6B7EB744AAF2BB</GeneratedChecksum>
-          <UserChecksum dnOrder="5">7F0BD6B56A8E9199B8FA40442958BF1A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9718C6F7677F06AF18F9826931AB56B4</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9718C6F7677F06AF18F9826931AB56B4</UserChecksum>
         </File>
         <File dnOrder="25">
           <Type dnOrder="0">SOURCE</Type>
