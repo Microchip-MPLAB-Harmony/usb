@@ -9,3 +9,8 @@
 **/*.X/debug
 **/*.X/dist
 **/*.X/build
+**/*.IAR/Debug
+**/*.IAR/settings
+**/*.IAR/*.dep
+**/*.IAR/*.custom_argvars
+**/*third_party/rtos/MicriumOSIII/
