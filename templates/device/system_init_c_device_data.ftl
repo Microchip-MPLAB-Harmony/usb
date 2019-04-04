@@ -399,7 +399,11 @@ const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =
 	0,
 	NULL,
 </#if>
-    3,                                                      // Total number of string descriptors available.
+<#if CONFIG_USB_DEVICE_USE_MSD == true>
+	4,  													// Total number of string descriptors available.
+<#else>
+    3,														// Total number of string descriptors available.
+</#if>
     stringDescriptors,                                      // Pointer to array of string descriptors.
 <#if CONFIG_USB_DEVICE_SPEED == "High Speed">
     &deviceQualifierDescriptor1,                            // Pointer to full speed dev qualifier.
