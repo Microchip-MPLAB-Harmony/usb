@@ -392,6 +392,7 @@ USB_ERROR DRV_USBHSV1_HOST_IRPSubmit
     bool interruptWasEnabled = false;
     unsigned int direction;
     uint8_t hostPipe;
+	uint8_t microFrameNumber;
 
     USB_HOST_IRP_LOCAL * irp        = (USB_HOST_IRP_LOCAL *)inputIRP;
     DRV_USBHSV1_HOST_PIPE_OBJ * pipe = (DRV_USBHSV1_HOST_PIPE_OBJ *)(hPipe);
@@ -452,6 +453,22 @@ USB_ERROR DRV_USBHSV1_HOST_IRPSubmit
 
                 if(pipe->pipeType == USB_TRANSFER_TYPE_CONTROL)
                 {
+					/* USB Host stack must give enough time for the attached 
+					 * USB Device to be ready to receive data on the Control
+					 * Endpoint. The below code waits for 2 micro frames 
+					 * before scheduling a control transfer */   
+					if ( pipe->speed == USB_SPEED_HIGH )
+                    {
+                        /* Get the Micro Frame number */
+                        microFrameNumber = ( ( hDriver->usbID->USBHS_HSTFNUM ) & USBHS_HSTFNUM_MFNUM_Msk );
+						
+                        /* There are 8 microframes */
+                        microFrameNumber = ( microFrameNumber + 2 ) % 8 ;
+						
+                        /* Wait for 2 microframes time before proceeding with control transfer */ 
+                        while ( microFrameNumber != (( hDriver->usbID->USBHS_HSTFNUM) & USBHS_HSTFNUM_MFNUM_Msk ));
+                    }
+					
                     /* Set the initial stage of the IRP */
                     irp->tempState = DRV_USBHSV1_HOST_IRP_STATE_SETUP_STAGE;
 
