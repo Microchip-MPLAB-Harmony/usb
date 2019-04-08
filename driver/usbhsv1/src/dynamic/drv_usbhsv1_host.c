@@ -392,13 +392,14 @@ USB_ERROR DRV_USBHSV1_HOST_IRPSubmit
     bool interruptWasEnabled = false;
     unsigned int direction;
     uint8_t hostPipe;
-	uint8_t microFrameNumber;
+	
 
     USB_HOST_IRP_LOCAL * irp        = (USB_HOST_IRP_LOCAL *)inputIRP;
     DRV_USBHSV1_HOST_PIPE_OBJ * pipe = (DRV_USBHSV1_HOST_PIPE_OBJ *)(hPipe);
     DRV_USBHSV1_OBJ * hDriver;
     volatile usbhs_registers_t * usbMod;
     USB_ERROR returnValue = USB_ERROR_PARAMETER_INVALID;
+	SYS_TIME_HANDLE timer;
 
     if((pipe == NULL) || (hPipe == (DRV_USBHSV1_HOST_PIPE_HANDLE_INVALID)))
     {
@@ -455,18 +456,19 @@ USB_ERROR DRV_USBHSV1_HOST_IRPSubmit
                 {
 					/* USB Host stack must give enough time for the attached 
 					 * USB Device to be ready to receive data on the Control
-					 * Endpoint. The below code waits for 2 micro frames 
+					 * Endpoint. The below code waits for 50 micro seconds  
 					 * before scheduling a control transfer */   
 					if ( pipe->speed == USB_SPEED_HIGH )
                     {
-                        /* Get the Micro Frame number */
-                        microFrameNumber = ( ( hDriver->usbID->USBHS_HSTFNUM ) & USBHS_HSTFNUM_MFNUM_Msk );
-						
-                        /* There are 8 microframes */
-                        microFrameNumber = ( microFrameNumber + 2 ) % 8 ;
-						
-                        /* Wait for 2 microframes time before proceeding with control transfer */ 
-                        while ( microFrameNumber != (( hDriver->usbID->USBHS_HSTFNUM) & USBHS_HSTFNUM_MFNUM_Msk ));
+                        if (SYS_TIME_DelayUS( 50, &timer) != SYS_TIME_SUCCESS)
+                        {
+                            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Handle error ");
+                        }
+                        else if (SYS_TIME_DelayIsComplete(timer) != true)
+                        {
+                            /* Wait till the delay expired */
+                            while (SYS_TIME_DelayIsComplete(timer) == false);
+                        }
                     }
 					
                     /* Set the initial stage of the IRP */

@@ -43,8 +43,8 @@
           <Name dnOrder="1">drv_usbhsv1_host.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/driver/usb/usbhsv1/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">EB47A31637B34A9A1A14E1F0179DE982</GeneratedChecksum>
-          <UserChecksum dnOrder="5">EB47A31637B34A9A1A14E1F0179DE982</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4ECFA4E002AD455D1C9E56C7237EA3F8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4ECFA4E002AD455D1C9E56C7237EA3F8</UserChecksum>
         </File>
         <File dnOrder="5">
           <Type dnOrder="0">SOURCE</Type>
