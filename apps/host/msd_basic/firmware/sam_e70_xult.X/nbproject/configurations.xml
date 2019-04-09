@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="66">
+<configurationDescriptor version="65">
   <logicalFolder name="root" displayName="root" projectFiles="true">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -7,176 +7,176 @@
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_e70_xult" projectFiles="true">
           <logicalFolder name="f3" displayName="bsp" projectFiles="true">
-            <itemPath ex="false">../src/config/sam_e70_xult/bsp/bsp.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/bsp/bsp.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="usb" projectFiles="true">
               <logicalFolder name="f1" displayName="usbhsv1" projectFiles="true">
                 <logicalFolder name="f1" displayName="src" projectFiles="true">
-                  <itemPath ex="false">../src/config/sam_e70_xult/driver/usb/usbhsv1/src/drv_usbhsv1_variant_mapping.h</itemPath>
-                  <itemPath ex="false">../src/config/sam_e70_xult/driver/usb/usbhsv1/src/drv_usbhsv1_local.h</itemPath>
+                  <itemPath>../src/config/sam_e70_xult/driver/usb/usbhsv1/src/drv_usbhsv1_variant_mapping.h</itemPath>
+                  <itemPath>../src/config/sam_e70_xult/driver/usb/usbhsv1/src/drv_usbhsv1_local.h</itemPath>
                 </logicalFolder>
-                <itemPath ex="false">../src/config/sam_e70_xult/driver/usb/usbhsv1/drv_usbhsv1.h</itemPath>
+                <itemPath>../src/config/sam_e70_xult/driver/usb/usbhsv1/drv_usbhsv1.h</itemPath>
               </logicalFolder>
-              <itemPath ex="false">../src/config/sam_e70_xult/driver/usb/drv_usb.h</itemPath>
-              <itemPath ex="false">../src/config/sam_e70_xult/driver/usb/drv_usb_external_dependencies.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/driver/usb/drv_usb.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/driver/usb/drv_usb_external_dependencies.h</itemPath>
             </logicalFolder>
-            <itemPath ex="false">../src/config/sam_e70_xult/driver/driver.h</itemPath>
-            <itemPath ex="false">../src/config/sam_e70_xult/driver/driver_common.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/driver/driver.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/driver/driver_common.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f5" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
-              <itemPath ex="false">../src/config/sam_e70_xult/peripheral/clk/plib_clk.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/peripheral/clk/plib_clk.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="nvic" projectFiles="true">
-              <itemPath ex="false">../src/config/sam_e70_xult/peripheral/nvic/plib_nvic.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/peripheral/nvic/plib_nvic.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="pio" projectFiles="true">
-              <itemPath ex="false">../src/config/sam_e70_xult/peripheral/pio/plib_pio.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/peripheral/pio/plib_pio.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="tc" projectFiles="true">
-              <itemPath ex="false">../src/config/sam_e70_xult/peripheral/tc/plib_tc0.h</itemPath>
-              <itemPath ex="false">../src/config/sam_e70_xult/peripheral/tc/plib_tc_common.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/peripheral/tc/plib_tc0.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/peripheral/tc/plib_tc_common.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
             <logicalFolder name="f3" displayName="cache" projectFiles="true">
-              <itemPath ex="false">../src/config/sam_e70_xult/system/cache/sys_cache.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/system/cache/sys_cache.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="fs" projectFiles="true">
               <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
                 <logicalFolder name="f1" displayName="file_system" projectFiles="true">
-                  <itemPath ex="false">../src/config/sam_e70_xult/system/fs/fat_fs/src/file_system/ff.h</itemPath>
-                  <itemPath ex="false">../src/config/sam_e70_xult/system/fs/fat_fs/src/file_system/ffconf.h</itemPath>
+                  <itemPath>../src/config/sam_e70_xult/system/fs/fat_fs/src/file_system/ff.h</itemPath>
+                  <itemPath>../src/config/sam_e70_xult/system/fs/fat_fs/src/file_system/ffconf.h</itemPath>
                 </logicalFolder>
                 <logicalFolder name="f2" displayName="hardware_access" projectFiles="true">
-                  <itemPath ex="false">../src/config/sam_e70_xult/system/fs/fat_fs/src/hardware_access/diskio.h</itemPath>
+                  <itemPath>../src/config/sam_e70_xult/system/fs/fat_fs/src/hardware_access/diskio.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
               <logicalFolder name="f2" displayName="mpfs" projectFiles="true">
-                <itemPath ex="false">../src/config/sam_e70_xult/system/fs/mpfs/mpfs.h</itemPath>
-                <itemPath ex="false">../src/config/sam_e70_xult/system/fs/mpfs/src/mpfs_local.h</itemPath>
+                <itemPath>../src/config/sam_e70_xult/system/fs/mpfs/mpfs.h</itemPath>
+                <itemPath>../src/config/sam_e70_xult/system/fs/mpfs/src/mpfs_local.h</itemPath>
               </logicalFolder>
-              <itemPath ex="false">../src/config/sam_e70_xult/system/fs/sys_fs.h</itemPath>
-              <itemPath ex="false">../src/config/sam_e70_xult/system/fs/src/sys_fs_local.h</itemPath>
-              <itemPath ex="false">../src/config/sam_e70_xult/system/fs/sys_fs_media_manager.h</itemPath>
-              <itemPath ex="false">../src/config/sam_e70_xult/system/fs/src/sys_fs_media_manager_local.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/system/fs/sys_fs.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/system/fs/src/sys_fs_local.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/system/fs/sys_fs_media_manager.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/system/fs/src/sys_fs_media_manager_local.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="int" projectFiles="true">
-              <itemPath ex="false">../src/config/sam_e70_xult/system/int/sys_int.h</itemPath>
-              <itemPath ex="false">../src/config/sam_e70_xult/system/int/sys_int_mapping.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/system/int/sys_int.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/system/int/sys_int_mapping.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="time" projectFiles="true">
-              <itemPath ex="false">../src/config/sam_e70_xult/system/time/sys_time.h</itemPath>
-              <itemPath ex="false">../src/config/sam_e70_xult/system/time/sys_time_definitions.h</itemPath>
-              <itemPath ex="false">../src/config/sam_e70_xult/system/time/src/sys_time_local.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/system/time/sys_time.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/system/time/sys_time_definitions.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/system/time/src/sys_time_local.h</itemPath>
             </logicalFolder>
-            <itemPath ex="false">../src/config/sam_e70_xult/system/system.h</itemPath>
-            <itemPath ex="false">../src/config/sam_e70_xult/system/system_common.h</itemPath>
-            <itemPath ex="false">../src/config/sam_e70_xult/system/system_module.h</itemPath>
-            <itemPath ex="false">../src/config/sam_e70_xult/system/system_media.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/system/system.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/system/system_common.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/system/system_module.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/system/system_media.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="usb" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
-              <itemPath ex="false">../src/config/sam_e70_xult/usb/src/usb_host_local.h</itemPath>
-              <itemPath ex="false">../src/config/sam_e70_xult/usb/src/usb_host_hub_mapping.h</itemPath>
-              <itemPath ex="false">../src/config/sam_e70_xult/usb/src/usb_external_dependencies.h</itemPath>
-              <itemPath ex="false">../src/config/sam_e70_xult/usb/src/usb_host_msd_local.h</itemPath>
-              <itemPath ex="false">../src/config/sam_e70_xult/usb/src/usb_host_scsi_local.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/usb/src/usb_host_local.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/usb/src/usb_host_hub_mapping.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/usb/src/usb_external_dependencies.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/usb/src/usb_host_msd_local.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/usb/src/usb_host_scsi_local.h</itemPath>
             </logicalFolder>
-            <itemPath ex="false">../src/config/sam_e70_xult/usb/usb_host_client_driver.h</itemPath>
-            <itemPath ex="false">../src/config/sam_e70_xult/usb/usb_host_hub_interface.h</itemPath>
-            <itemPath ex="false">../src/config/sam_e70_xult/usb/usb_host.h</itemPath>
-            <itemPath ex="false">../src/config/sam_e70_xult/usb/usb_hub.h</itemPath>
-            <itemPath ex="false">../src/config/sam_e70_xult/usb/usb_common.h</itemPath>
-            <itemPath ex="false">../src/config/sam_e70_xult/usb/usb_chapter_9.h</itemPath>
-            <itemPath ex="false">../src/config/sam_e70_xult/usb/usb_host_msd.h</itemPath>
-            <itemPath ex="false">../src/config/sam_e70_xult/usb/usb_host_scsi.h</itemPath>
-            <itemPath ex="false">../src/config/sam_e70_xult/usb/usb_msd.h</itemPath>
-            <itemPath ex="false">../src/config/sam_e70_xult/usb/scsi.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/usb/usb_host_client_driver.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/usb/usb_host_hub_interface.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/usb/usb_host.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/usb/usb_hub.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/usb/usb_common.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/usb/usb_chapter_9.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/usb/usb_host_msd.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/usb/usb_host_scsi.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/usb/usb_msd.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/usb/scsi.h</itemPath>
           </logicalFolder>
-          <itemPath ex="false">../src/config/sam_e70_xult/device_cache.h</itemPath>
-          <itemPath ex="false">../src/config/sam_e70_xult/toolchain_specifics.h</itemPath>
-          <itemPath ex="false">../src/config/sam_e70_xult/definitions.h</itemPath>
-          <itemPath ex="false">../src/config/sam_e70_xult/user.h</itemPath>
-          <itemPath ex="false">../src/config/sam_e70_xult/configuration.h</itemPath>
+          <itemPath>../src/config/sam_e70_xult/device_cache.h</itemPath>
+          <itemPath>../src/config/sam_e70_xult/toolchain_specifics.h</itemPath>
+          <itemPath>../src/config/sam_e70_xult/definitions.h</itemPath>
+          <itemPath>../src/config/sam_e70_xult/user.h</itemPath>
+          <itemPath>../src/config/sam_e70_xult/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f3" displayName="osal" projectFiles="true">
-        <itemPath ex="false">../src/config/sam_e70_xult/osal/osal.h</itemPath>
-        <itemPath ex="false">../src/config/sam_e70_xult/osal/osal_definitions.h</itemPath>
-        <itemPath ex="false">../src/config/sam_e70_xult/osal/osal_impl_basic.h</itemPath>
+        <itemPath>../src/config/sam_e70_xult/osal/osal.h</itemPath>
+        <itemPath>../src/config/sam_e70_xult/osal/osal_definitions.h</itemPath>
+        <itemPath>../src/config/sam_e70_xult/osal/osal_impl_basic.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAME70Q21B_DFP" projectFiles="true">
           <logicalFolder name="f1" displayName="component" projectFiles="true">
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/acc.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/aes.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/afec.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/chipid.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/dacc.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/efc.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/gmac.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/gpbr.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/hsmci.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/i2sc.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/icm.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/isi.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/matrix.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/mcan.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/pio.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/pmc.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/pwm.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/qspi.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/rstc.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/rswdt.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/rtc.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/rtt.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/sdramc.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/smc.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/spi.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/ssc.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/supc.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/tc.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/trng.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/twihs.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/uart.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/usart.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/usbhs.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/utmi.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/wdt.h</itemPath>
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/component/xdmac.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/acc.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/aes.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/afec.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/chipid.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/dacc.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/efc.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/gmac.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/gpbr.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/hsmci.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/i2sc.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/icm.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/isi.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/matrix.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/mcan.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/pio.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/pmc.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/pwm.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/qspi.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/rstc.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/rswdt.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/rtc.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/rtt.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/sdramc.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/smc.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/spi.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/ssc.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/supc.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/tc.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/trng.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/twihs.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/uart.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/usart.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/usbhs.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/utmi.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/wdt.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/component/xdmac.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="pio" projectFiles="true">
-            <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/pio/same70q21b.h</itemPath>
+            <itemPath>../src/packs/ATSAME70Q21B_DFP/pio/same70q21b.h</itemPath>
           </logicalFolder>
-          <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/device.h</itemPath>
-          <itemPath ex="false">../src/packs/ATSAME70Q21B_DFP/atsame70q21b.h</itemPath>
+          <itemPath>../src/packs/ATSAME70Q21B_DFP/device.h</itemPath>
+          <itemPath>../src/packs/ATSAME70Q21B_DFP/atsame70q21b.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="CMSIS" projectFiles="true">
           <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
-                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
-                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
-                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
-                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
-                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/core_cm7.h</itemPath>
-                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
-                <itemPath ex="false">../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm7.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
               </logicalFolder>
             </logicalFolder>
             <logicalFolder name="f2" displayName="DSP" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
-                <itemPath ex="false">../src/packs/CMSIS/CMSIS/DSP/Include/arm_common_tables.h</itemPath>
-                <itemPath ex="false">../src/packs/CMSIS/CMSIS/DSP/Include/arm_const_structs.h</itemPath>
-                <itemPath ex="false">../src/packs/CMSIS/CMSIS/DSP/Include/arm_math.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_common_tables.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_const_structs.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_math.h</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
-      <itemPath ex="false">../src/app.h</itemPath>
+      <itemPath>../src/app.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -188,80 +188,80 @@
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_e70_xult" projectFiles="true">
           <logicalFolder name="f3" displayName="bsp" projectFiles="true">
-            <itemPath ex="false">../src/config/sam_e70_xult/bsp/bsp.c</itemPath>
+            <itemPath>../src/config/sam_e70_xult/bsp/bsp.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="usb" projectFiles="true">
               <logicalFolder name="f1" displayName="usbhsv1" projectFiles="true">
                 <logicalFolder name="f1" displayName="src" projectFiles="true">
-                  <itemPath ex="false">../src/config/sam_e70_xult/driver/usb/usbhsv1/src/drv_usbhsv1.c</itemPath>
-                  <itemPath ex="false">../src/config/sam_e70_xult/driver/usb/usbhsv1/src/drv_usbhsv1_host.c</itemPath>
+                  <itemPath>../src/config/sam_e70_xult/driver/usb/usbhsv1/src/drv_usbhsv1.c</itemPath>
+                  <itemPath>../src/config/sam_e70_xult/driver/usb/usbhsv1/src/drv_usbhsv1_host.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f6" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
-              <itemPath ex="false">../src/config/sam_e70_xult/peripheral/clk/plib_clk.c</itemPath>
+              <itemPath>../src/config/sam_e70_xult/peripheral/clk/plib_clk.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="nvic" projectFiles="true">
-              <itemPath ex="false">../src/config/sam_e70_xult/peripheral/nvic/plib_nvic.c</itemPath>
+              <itemPath>../src/config/sam_e70_xult/peripheral/nvic/plib_nvic.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="pio" projectFiles="true">
-              <itemPath ex="false">../src/config/sam_e70_xult/peripheral/pio/plib_pio.c</itemPath>
+              <itemPath>../src/config/sam_e70_xult/peripheral/pio/plib_pio.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="tc" projectFiles="true">
-              <itemPath ex="false">../src/config/sam_e70_xult/peripheral/tc/plib_tc0.c</itemPath>
+              <itemPath>../src/config/sam_e70_xult/peripheral/tc/plib_tc0.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f5" displayName="stdio" projectFiles="true">
-            <itemPath ex="false">../src/config/sam_e70_xult/stdio/xc32_monitor.c</itemPath>
+            <itemPath>../src/config/sam_e70_xult/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
             <logicalFolder name="f3" displayName="cache" projectFiles="true">
-              <itemPath ex="false">../src/config/sam_e70_xult/system/cache/sys_cache.c</itemPath>
+              <itemPath>../src/config/sam_e70_xult/system/cache/sys_cache.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="fs" projectFiles="true">
               <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
-                <itemPath ex="false">../src/config/sam_e70_xult/system/fs/fat_fs/src/ff.c</itemPath>
-                <itemPath ex="false">../src/config/sam_e70_xult/system/fs/fat_fs/src/diskio.c</itemPath>
+                <itemPath>../src/config/sam_e70_xult/system/fs/fat_fs/src/ff.c</itemPath>
+                <itemPath>../src/config/sam_e70_xult/system/fs/fat_fs/src/diskio.c</itemPath>
               </logicalFolder>
               <logicalFolder name="f2" displayName="mpfs" projectFiles="true">
-                <itemPath ex="false">../src/config/sam_e70_xult/system/fs/mpfs/src/mpfs.c</itemPath>
+                <itemPath>../src/config/sam_e70_xult/system/fs/mpfs/src/mpfs.c</itemPath>
               </logicalFolder>
-              <itemPath ex="false">../src/config/sam_e70_xult/system/fs/src/sys_fs.c</itemPath>
-              <itemPath ex="false">../src/config/sam_e70_xult/system/fs/src/sys_fs_media_manager.c</itemPath>
+              <itemPath>../src/config/sam_e70_xult/system/fs/src/sys_fs.c</itemPath>
+              <itemPath>../src/config/sam_e70_xult/system/fs/src/sys_fs_media_manager.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="int" projectFiles="true">
-              <itemPath ex="false">../src/config/sam_e70_xult/system/int/src/sys_int.c</itemPath>
+              <itemPath>../src/config/sam_e70_xult/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f4" displayName="time" projectFiles="true">
-              <itemPath ex="false">../src/config/sam_e70_xult/system/time/src/sys_time.c</itemPath>
+              <itemPath>../src/config/sam_e70_xult/system/time/src/sys_time.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f2" displayName="usb" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
-              <itemPath ex="false">../src/config/sam_e70_xult/usb/src/usb_host.c</itemPath>
-              <itemPath ex="false">../src/config/sam_e70_xult/usb/src/usb_host_msd.c</itemPath>
-              <itemPath ex="false">../src/config/sam_e70_xult/usb/src/usb_host_scsi.c</itemPath>
+              <itemPath>../src/config/sam_e70_xult/usb/src/usb_host.c</itemPath>
+              <itemPath>../src/config/sam_e70_xult/usb/src/usb_host_msd.c</itemPath>
+              <itemPath>../src/config/sam_e70_xult/usb/src/usb_host_scsi.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <itemPath ex="false">../src/config/sam_e70_xult/usb_host_init_data.c</itemPath>
-          <itemPath ex="false">../src/config/sam_e70_xult/initialization.c</itemPath>
-          <itemPath ex="false">../src/config/sam_e70_xult/interrupts.c</itemPath>
-          <itemPath ex="false">../src/config/sam_e70_xult/exceptions.c</itemPath>
-          <itemPath ex="false">../src/config/sam_e70_xult/startup_xc32.c</itemPath>
-          <itemPath ex="false">../src/config/sam_e70_xult/libc_syscalls.c</itemPath>
-          <itemPath ex="false">../src/config/sam_e70_xult/tasks.c</itemPath>
+          <itemPath>../src/config/sam_e70_xult/usb_host_init_data.c</itemPath>
+          <itemPath>../src/config/sam_e70_xult/initialization.c</itemPath>
+          <itemPath>../src/config/sam_e70_xult/interrupts.c</itemPath>
+          <itemPath>../src/config/sam_e70_xult/exceptions.c</itemPath>
+          <itemPath>../src/config/sam_e70_xult/startup_xc32.c</itemPath>
+          <itemPath>../src/config/sam_e70_xult/libc_syscalls.c</itemPath>
+          <itemPath>../src/config/sam_e70_xult/tasks.c</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <itemPath ex="false">../src/main.c</itemPath>
-      <itemPath ex="false">../src/app.c</itemPath>
+      <itemPath>../src/main.c</itemPath>
+      <itemPath>../src/app.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false">
-      <itemPath ex="false">Makefile</itemPath>
+      <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -281,7 +281,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAME70_DFP" vendor="Microchip" version="3.0.18"/>
+        <pack name="SAME70_DFP" vendor="Microchip" version="3.0.10"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
       </packs>
       <compileType>

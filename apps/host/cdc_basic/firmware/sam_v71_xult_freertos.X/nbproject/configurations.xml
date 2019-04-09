@@ -23,8 +23,6 @@
               <itemPath>../src/config/sam_v71_xult_freertos/driver/usb/drv_usb.h</itemPath>
               <itemPath>../src/config/sam_v71_xult_freertos/driver/usb/drv_usb_external_dependencies.h</itemPath>
             </logicalFolder>
-            <itemPath>../src/config/sam_v71_xult_freertos/driver/driver.h</itemPath>
-            <itemPath>../src/config/sam_v71_xult_freertos/driver/driver_common.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f3" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
@@ -305,7 +303,7 @@
         <targetDevice>ATSAMV71Q21B</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>ICD4Tool</platformTool>
+        <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.15</languageToolchainVersion>
         <platform>3</platform>

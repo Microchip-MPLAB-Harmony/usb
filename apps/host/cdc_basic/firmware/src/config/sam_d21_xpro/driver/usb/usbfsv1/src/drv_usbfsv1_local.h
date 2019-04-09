@@ -534,8 +534,8 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
     /* Interrupt source for USB module */
     uint8_t interruptSource3;
 
-    /* Mutex create function place holder*/
-    uint8_t mutexID;
+    /* Mutex create function */
+    OSAL_MUTEX_DECLARE(mutexID);
 
     /* Pointer to the endpoint 0 Buffers */
     uint8_t * endpoint0BufferPtr[DEVICE_DESC_BANK_NUMBER];
