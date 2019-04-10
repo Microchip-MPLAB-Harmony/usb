@@ -179,8 +179,8 @@
           <Name dnOrder="1">usb_device_init_data.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">7B35C625953F2CF888CBDEA39206A7F6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">7B35C625953F2CF888CBDEA39206A7F6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">EFFAB18B5CBE67BF28A815FBA413FCAC</GeneratedChecksum>
+          <UserChecksum dnOrder="5">EFFAB18B5CBE67BF28A815FBA413FCAC</UserChecksum>
         </File>
         <File dnOrder="22">
           <Type dnOrder="0">SOURCE</Type>
@@ -299,8 +299,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">244B0B543C849EBAB6C0AEB372A80B72</GeneratedChecksum>
-          <UserChecksum dnOrder="5">244B0B543C849EBAB6C0AEB372A80B72</UserChecksum>
+          <GeneratedChecksum dnOrder="4">8033A295CD9C709BBA0B3A512ADF6D66</GeneratedChecksum>
+          <UserChecksum dnOrder="5">8033A295CD9C709BBA0B3A512ADF6D66</UserChecksum>
         </File>
         <File dnOrder="37">
           <Type dnOrder="0">HEADER</Type>
@@ -411,8 +411,8 @@
           <Name dnOrder="1">drv_usbfsv1_local.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/driver/usb/usbfsv1/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">AF24BD627B2FCD0768452BF9FB33BE60</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AF24BD627B2FCD0768452BF9FB33BE60</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F8C36CA8059A82910EE3F2704824A106</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F8C36CA8059A82910EE3F2704824A106</UserChecksum>
         </File>
         <File dnOrder="51">
           <Type dnOrder="0">HEADER</Type>
@@ -555,8 +555,8 @@
           <Name dnOrder="1">plib_nvmctrl.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/peripheral/nvmctrl/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/nvmctrl/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F52B888E83E6CFACEF875127DA9B61A2</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F52B888E83E6CFACEF875127DA9B61A2</UserChecksum>
+          <GeneratedChecksum dnOrder="4">24DF0FDD4F078BE6C916D5458BA98068</GeneratedChecksum>
+          <UserChecksum dnOrder="5">24DF0FDD4F078BE6C916D5458BA98068</UserChecksum>
         </File>
         <File dnOrder="69">
           <Type dnOrder="0">HEADER</Type>
@@ -827,7 +827,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>
