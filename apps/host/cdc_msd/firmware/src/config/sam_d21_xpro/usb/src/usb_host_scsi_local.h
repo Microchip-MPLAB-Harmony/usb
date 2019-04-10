@@ -52,9 +52,6 @@
 #include "usb/usb_host_scsi.h"
 #include "system/time/sys_time.h"
 
-#define SYS_DEBUG_PRINT(level, format, ...) 
-#define SYS_DEBUG_MESSAGE(a,b, ...)
-
 /* If the USB_HOST_SCSI_FILE_SYSTEM_REGISTER constant is defined and is set to
  * to false, then the any instance of the SCSI driver will not register with 
  * file system */
@@ -88,8 +85,7 @@
 
     /* If the USB_HOST_SCSI_ATTACH_LISTENERS_NUMBER is not defined in system_config.h
      * then we know that the project does not want to use SCSI attach listeners */
-    #define USB_HOST_SCSI_ATTACH_LISTENERS_NUMBER 0
-    // JCB: 0 Error[Pe094]: the size of an array must be greater than zero C:\jcb\usb\repo\H3\usb\apps\host\msd_basic\firmware\src\config\sam_a5d2_xult\usb_host_scsi.c 68 
+    #define USB_HOST_SCSI_ATTACH_LISTENERS_NUMBER 1
 #endif
 
 /* If the USB_HOST_SCSI_ERROR_CALLBACK constant is defined and is set to true,

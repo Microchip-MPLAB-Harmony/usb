@@ -59,6 +59,11 @@ def instantiateComponent(usbHostComponent):
 		driverInterface = "DRV_USBFSV1_HOST_INTERFACE"
 		Database.clearSymbolValue("drv_usbfs_v1", "USB_OPERATION_MODE")
 		Database.setSymbolValue("drv_usbfs_v1", "USB_OPERATION_MODE", "Host" , 2)
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2"]):
+		res = Database.activateComponents(["drv_usbhs_v1"])
+		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
+		driverIndex = "DRV_USB_UHP_INDEX_0"
+		driverInterface = "DRV_USB_UHP_HOST_INTERFACE"
 	
 	
 	# USB Driver Index - This symbol actually should get set from a Driver dependency connected callback. 
@@ -221,7 +226,10 @@ def instantiateComponent(usbHostComponent):
 	# USB Host Layer Files 
 	################################################
 	usbHostHeaderFile = usbHostComponent.createFileSymbol(None, None)
-	addFileName('usb_host.h', usbHostComponent, usbHostHeaderFile, "middleware/", "/usb/", True, None)
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2"]):
+		addFileName('usb_host.h', usbHostComponent, usbHostHeaderFile, "templates/driver/uhp/differed_files/", "/usb/", True, None)
+	else:
+		addFileName('usb_host.h', usbHostComponent, usbHostHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbHostSourceFile = usbHostComponent.createFileSymbol(None, None)
 	addFileName('usb_host.c', usbHostComponent, usbHostSourceFile, "middleware/src/", "/usb/src", True, None)
@@ -233,7 +241,10 @@ def instantiateComponent(usbHostComponent):
 	addFileName('usb_common.h', usbHostComponent, usbCommonFile, "middleware/", "/usb/", True, None)
 	
 	usbChapter9File = usbHostComponent.createFileSymbol(None, None)
-	addFileName('usb_chapter_9.h', usbHostComponent, usbChapter9File, "middleware/", "/usb/", True, None)
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2"]):
+		addFileName('usb_chapter_9.h', usbHostComponent, usbChapter9File, "templates/driver/uhp/differed_files/", "/usb/", True, None)
+	else:
+		addFileName('usb_chapter_9.h', usbHostComponent, usbChapter9File, "middleware/", "/usb/", True, None)
 	
 	usbHostHubMappingFile = usbHostComponent.createFileSymbol(None, None)
 	addFileName('usb_host_hub_mapping.h', usbHostComponent, usbHostHubMappingFile, "middleware/src/", "/usb/src", True, None)

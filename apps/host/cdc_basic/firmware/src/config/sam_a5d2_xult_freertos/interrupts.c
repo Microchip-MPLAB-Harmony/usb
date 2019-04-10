@@ -152,7 +152,7 @@ void PMC_Handler( void )                 __attribute__((weak, alias("DefaultInte
 void RSTC_Handler( void )                __attribute__((weak, alias("DefaultInterruptHandler")));
 void RTC_Handler( void )                 __attribute__((weak, alias("DefaultInterruptHandler")));
 
-void FreeRTOS_Tick_Handler( void );
+void FreeRTOS_Tick_Handler(              void );
 void TC0_InterruptHandler(               void );
 
 /* Handlers for vectors that are shared by multiple interrupts */

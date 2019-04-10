@@ -77,14 +77,50 @@ SYSTEM_OBJECTS sysObj;
 // Section: Library/Stack Initialization Data
 // *****************************************************************************
 // *****************************************************************************
+/******************************************************
+ * USB Driver Initialization
+ ******************************************************/
+void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
+{
+    /* Note: USB Host applications should have a way for Enabling/Disabling the 
+       VBUS. Applications can use a GPIO to turn VBUS on/off through a switch. 
+       In MHC Pin Settings select the pin used as VBUS Power Enable as output and 
+       name it to "VBUS_AH". If you a see a build error from this function either 
+       you have not configured the VBUS Power Enable in MHC pin settings or the 
+       Pin name entered in MHC is not "VBUS_AH". */ 
+    if (enable == true)
+    {
+        /* Enable the VBUS */
+        VBUS_AH_PowerEnable();
+    }
+    else
+    {
+        /* Disable the VBUS */
+        VBUS_AH_PowerDisable();
+    }
+}
+
+
+DRV_USB_UHP_INIT drvUSBInit =
+{
+	/* Interrupt Source for USB module */
+    .interruptSource = (INT_SOURCE)41,
+	
+	/* Enable High Speed Operation */
+    .operationSpeed = USB_SPEED_HIGH,
+	
+	/* USB Host Power Enable. USB Driver uses this function to Enable the VBUS */ 
+    .portPowerEnable = DRV_USB_VBUSPowerEnable,
+	
+	/* Root hub available current in milliamperes */	
+    .rootHubAvailableCurrent = 500,
+	
+	/* Root hub available current in milliamperes */
+    .usbID = ((uhphs_registers_t*)0x00500000)
+};
+
 /*** File System Initialization Data ***/
 
-
-//const SYS_FS_MEDIA_MOUNT_DATA sysfsMountTable[SYS_FS_VOLUME_NUMBER] = 
-//{
-//	{NULL}
-//};
-//JCB
 const SYS_FS_MEDIA_MOUNT_DATA sysfsMountTable[SYS_FS_VOLUME_NUMBER] = 
 {
 	{
@@ -135,40 +171,6 @@ const SYS_TIME_INIT sysTimeInitData =
 
 // </editor-fold>
 
-DRV_USB_UHP_INIT drvUSBInit = 
-{
-    .interruptSource = (INT_SOURCE)41,
-    .operationSpeed = USB_SPEED_HIGH,
-    .portIndication = NULL,
-    .portPowerEnable = NULL,
-    .portOverCurrentDetect = NULL, 
-    .rootHubAvailableCurrent = 500,
-    .usbID = ((uhphs_registers_t*)0x00500000)
-};
-
-const USB_HOST_TPL_ENTRY USBTPList[1] = 
-{
-    /* classCode, subClassCode, protocolCode, initData, driver */
-    TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL(0x08, 0x06, 0x50, NULL, USB_HOST_MSD_INTERFACE) ,
-    // classCode:    0x08: Mass Storage
-    // subClassCode: 0x06: SCSI transparent command set
-    // protocolCode: 0x50: Bulk only
-};
-
-const USB_HOST_HCD hcdTable = 
-{
-    /* Index of the USB Driver used by the Host Layer */
-    .drvIndex = DRV_USB_UHP_INDEX_0,
-    /* Pointer to the USB Driver Functions. */
-    .hcdInterface = DRV_USB_UHP_HOST_INTERFACE
-};
-
-const USB_HOST_INIT usbHostInitData = 
-{
-    .nTPLEntries = 1 ,
-    .tplList = (USB_HOST_TPL_ENTRY *)USBTPList,
-    .hostControllerDrivers = (USB_HOST_HCD *)&hcdTable
-};
 
 
 /*******************************************************************************
@@ -188,9 +190,6 @@ void SYS_Initialize ( void* data )
 	PIO_Initialize();
 
 
-	BSP_Initialize();
-	UART1_Initialize();
-
     MMU_Initialize();
     Matrix_Initialize();
 
@@ -203,18 +202,22 @@ void SYS_Initialize ( void* data )
     TC0_CH0_TimerInitialize(); 
      
     
+	BSP_Initialize();
+	UART1_Initialize();
+
 
 
     sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);
 
-    /* Initialize the USB Host layer */
-    sysObj.usbHostObject0 = USB_HOST_Initialize ((SYS_MODULE_INIT *)&usbHostInitData );
+	/* Initialize USB Driver */ 
+    sysObj.drvUSBObject = DRV_USB_UHP_Initialize (DRV_USB_UHP_INDEX_0, (SYS_MODULE_INIT *) &drvUSBInit);	
+
+	/* Initialize the USB Host layer */
+    sysObj.usbHostObject0 = USB_HOST_Initialize (( SYS_MODULE_INIT *)& usbHostInitData );	
 
     /*** File System Service Initialization Code ***/
     SYS_FS_Initialize( (const void *) sysFSInit );
 
-    /* Initialize USB Driver */ 
-    sysObj.drvUSBObject = DRV_USB_UHP_Initialize (DRV_USB_UHP_INDEX_0, (SYS_MODULE_INIT *) &drvUSBInit);
 
     APP_Initialize();
 

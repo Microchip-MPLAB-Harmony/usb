@@ -2443,6 +2443,27 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\device_cache.h</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\driver.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\driver_common.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\usb\drv_usb.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\usb\drv_usb_external_dependencies.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\usb\uhp\drv_usb_uhp.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\usb\uhp\src\drv_usb_uhp_local.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\usb\uhp\src\drv_usb_uhp_variant_mapping.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\flexcom.h</name>
             </file>
             <file>
@@ -2632,6 +2653,42 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\uhphs.h</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\usb_cdc.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\usb_chapter_9.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\usb_common.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\src\usb_external_dependencies.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\usb_host.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\usb_host_cdc.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\src\usb_host_cdc_local.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\usb_host_client_driver.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\usb_host_hub_interface.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\src\usb_host_hub_mapping.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\src\usb_host_local.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\usb_hub.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\user.h</name>
             </file>
             <file>
@@ -2651,6 +2708,12 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\cstartup.s</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\usb\uhp\src\drv_usb_uhp.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\usb\uhp\src\drv_usb_uhp_ehci_host.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\exceptions.c</name>
@@ -2704,26 +2767,23 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\tasks.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\src\usb_host.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\src\usb_host_cdc.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\src\usb_host_cdc_acm.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb_host_init_data.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\vectortrap.s</name>
             </file>
         </group>
     </group>
     <file>
-        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\usb\uhp\src\drv_uhp.c</name>
-    </file>
-    <file>
-        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\usb\uhp\src\drv_uhp_ehci_host.c</name>
-    </file>
-    <file>
         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\sam_a5d2_xult.ipcf</name>
-    </file>
-    <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\middleware\src\usb_host.c</name>
-    </file>
-    <file>
-        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\src\usb_host_cdc.c</name>
-    </file>
-    <file>
-        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\src\usb_host_cdc_acm.c</name>
     </file>
 </project>

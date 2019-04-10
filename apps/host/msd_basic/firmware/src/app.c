@@ -54,7 +54,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 #include "app.h"
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -76,7 +75,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     Application strings and buffers are be defined outside this structure.
 */
 
-APP_DATA appData __attribute__((aligned(16))) ;
+APP_DATA appData CACHE_ALIGN;
 
 /* This is the string that will written to the file */
  const uint8_t writeData[12]  __attribute__((aligned(16))) = "Hello World ";
@@ -130,7 +129,6 @@ USB_HOST_EVENT_RESPONSE APP_USBHostEventHandler (USB_HOST_EVENT event, void * ev
     switch (event)
     {
         case USB_HOST_EVENT_DEVICE_UNSUPPORTED:
-            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rNo driver matched this device.");
             break;
         default:
             break;
@@ -151,15 +149,13 @@ void APP_SYSFSEventHandler(SYS_FS_EVENT event, void * eventData, uintptr_t conte
             
         case SYS_FS_EVENT_UNMOUNT:
             appData.deviceIsConnected = false;
-//            LED1_Off();
+            LED1_Off();
             break;
             
         default:
             break;
     }
 }
-
-
 /******************************************************************************
   Function:
     void APP_Tasks ( void )
@@ -173,16 +169,15 @@ void APP_Tasks ( void )
     switch(appData.state)
     {
         case APP_STATE_BUS_ENABLE:
-
-            /* Set the event handler and enable the bus */
+                      
+           /* Set the event handler and enable the bus */
+            SYS_FS_EventHandlerSet((void *)APP_SYSFSEventHandler, (uintptr_t)NULL);
             USB_HOST_EventHandlerSet(APP_USBHostEventHandler, 0);
-            SYS_FS_EventHandlerSet((void *)APP_SYSFSEventHandler, (uintptr_t) 0);
             USB_HOST_BusEnable(0);
             appData.state = APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE;
             break;
             
         case APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE:
-            /* In this state we wait for the Bus enable to complete */
             if(USB_HOST_BusIsEnabled(0))
             {
                 appData.state = APP_STATE_WAIT_FOR_DEVICE_ATTACH;
@@ -198,6 +193,7 @@ void APP_Tasks ( void )
             {
                 appData.state = APP_STATE_DEVICE_CONNECTED;
             }
+
             break;
 
         case APP_STATE_DEVICE_CONNECTED:
@@ -207,14 +203,14 @@ void APP_Tasks ( void )
             break;
 
         case APP_STATE_OPEN_FILE:
-            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rAPP_STATE_OPEN_FILE");
+
             /* Try opening the file for append */
             appData.fileHandle = SYS_FS_FileOpen("/mnt/myDrive1/file.txt", (SYS_FS_FILE_OPEN_APPEND_PLUS));
             if(appData.fileHandle == SYS_FS_HANDLE_INVALID)
             {
                 /* Could not open the file. Error out*/
                 appData.state = APP_STATE_ERROR;
-                SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rCould not open the file");
+
             }
             else
             {
@@ -225,7 +221,7 @@ void APP_Tasks ( void )
             break;
 
         case APP_STATE_WRITE_TO_FILE:
-            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rAPP_STATE_WRITE_TO_FILE");
+
             /* Try writing to the file */
             if (SYS_FS_FileWrite( appData.fileHandle, (const void *) writeData, 12 ) == -1)
             {
@@ -233,7 +229,7 @@ void APP_Tasks ( void )
                  * and error out.*/
                 SYS_FS_FileClose(appData.fileHandle);
                 appData.state = APP_STATE_ERROR;
-                SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rWrite was not successful.");
+
             }
             else
             {
@@ -246,11 +242,10 @@ void APP_Tasks ( void )
         case APP_STATE_CLOSE_FILE:
 
             /* Close the file */
-            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rAPP_STATE_CLOSE_FILE");
             SYS_FS_FileClose(appData.fileHandle);
             
             /* Indicate User that File operation has been completed */
-//            LED1_On(); 
+            LED1_On(); 
             /* The test was successful. Lets idle. */
             appData.state = APP_STATE_IDLE;
             break;

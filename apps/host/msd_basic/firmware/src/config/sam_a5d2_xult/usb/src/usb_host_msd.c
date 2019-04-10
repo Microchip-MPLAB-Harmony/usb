@@ -53,6 +53,7 @@
 #include "usb/usb_host_client_driver.h"
 #include "usb/src/usb_external_dependencies.h"
 #include "usb/usb_host_scsi.h"
+//#include <p32xxxx.h>
 
 /*************************************************
  * Driver interface that is provide to the 
@@ -289,7 +290,7 @@ void _USB_HOST_MSD_TransferTasks
                              * passed. This is know in the bCSWStatus of CSW. */
                             processedBytes = msdInstanceInfo->msdCBW->dCBWDataTransferLength - msdCSW->dCSWDataResidue;
                             transferIsDone = true;
-                            msdResult = (USB_HOST_MSD_RESULT)msdCSW->bCSWStatus;
+                            msdResult = msdCSW->bCSWStatus;
                         }
                         else if (msdCSW->bCSWStatus == USB_MSD_CSW_STATUS_PHASE_ERROR)
                         {
@@ -298,7 +299,7 @@ void _USB_HOST_MSD_TransferTasks
                              * This is done in the transfer error tasks routine. */
                             msdInstanceInfo->transferState = USB_HOST_MSD_TRANSFER_STATE_ERROR;
                             msdInstanceInfo->transferErrorTaskState = USB_HOST_MSD_TRANSFER_ERROR_STATE_RESET_RECOVERY;
-                            SYS_DEBUG_PRINT("\n\r Problem CSW");
+                            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r Problem CSW");
                             msdInstanceInfo->cswPhaseError = true;
                             _USB_HOST_MSD_ERROR_CALLBACK(msdInstanceIndex, USB_HOST_MSD_ERROR_CODE_CSW_PHASE_ERROR);
                         }
@@ -314,7 +315,7 @@ void _USB_HOST_MSD_TransferTasks
                             msdInstanceInfo->msdErrorCode = USB_HOST_MSD_ERROR_CODE_FAILED_BOT_TRANSFER;
                             msdInstanceInfo->msdState = USB_HOST_MSD_STATE_ERROR;
                             transferIsDone = true;
-                            SYS_DEBUG_PRINT("\n\r Error in CSW phase");
+                            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r Error in CSW phase");
                             processedBytes = 0;
                             msdResult = USB_HOST_MSD_RESULT_FAILURE;
                         }
@@ -325,10 +326,10 @@ void _USB_HOST_MSD_TransferTasks
                          * performed. See Figure 2 - Status transport flow in
                          * the BOT specification. */
 
-                        SYS_DEBUG_PRINT("\n\r Problem CSW");
-                        SYS_DEBUG_PRINT("\n\r Sig = 0x53425355 = 0x%X", msdCSW->dCSWSignature);
-                        SYS_DEBUG_PRINT("\n\r Tag = 0xDD1331DD = 0x%X", msdCSW->dCSWTag);
-                        SYS_DEBUG_PRINT("\n\r size(13) = %d", size);
+                        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r Problem CSW");
+                        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r Sig = 0x53425355 = 0x%X", msdCSW->dCSWSignature);
+                        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r Tag = 0xDD1331DD = 0x%X", msdCSW->dCSWTag);
+                        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r size(13) = %d", size);
                         
                         msdInstanceInfo->transferState = USB_HOST_MSD_TRANSFER_STATE_ERROR;
                         msdInstanceInfo->transferErrorTaskState = USB_HOST_MSD_TRANSFER_ERROR_STATE_RESET_RECOVERY;
@@ -341,7 +342,7 @@ void _USB_HOST_MSD_TransferTasks
                      * machine is in a CSW retry state, then we know that this
                      * is the second time. */
 
-                    SYS_DEBUG_PRINT("\n\r CSW Stalled");
+                    SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r CSW Stalled");
                     msdInstanceInfo->transferState = USB_HOST_MSD_TRANSFER_STATE_ERROR;
                     if(msdInstanceInfo->transferErrorTaskState == USB_HOST_MSD_TRANSFER_ERROR_STATE_CSW_RETRY)
                     {
@@ -1168,7 +1169,7 @@ void _USB_HOST_MSD_InterfaceAssign
          * this, a query must be setup first. */
 
         USB_HOST_DeviceEndpointQueryContextClear(&endpointQuery);
-        endpointQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)(USB_HOST_ENDPOINT_QUERY_BY_DIRECTION|USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE);
+        endpointQuery.flags = USB_HOST_ENDPOINT_QUERY_BY_DIRECTION|USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE;
         endpointQuery.direction  = USB_DATA_DIRECTION_DEVICE_TO_HOST;
         endpointQuery.transferType = USB_TRANSFER_TYPE_BULK;
 
@@ -1185,7 +1186,7 @@ void _USB_HOST_MSD_InterfaceAssign
                 /* Now open the the bulk out pipe */
 
                 USB_HOST_DeviceEndpointQueryContextClear(&endpointQuery);
-                endpointQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)(USB_HOST_ENDPOINT_QUERY_BY_DIRECTION|USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE);
+                endpointQuery.flags = USB_HOST_ENDPOINT_QUERY_BY_DIRECTION|USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE;
                 endpointQuery.direction  = USB_DATA_DIRECTION_HOST_TO_DEVICE;
                 endpointQuery.transferType = USB_TRANSFER_TYPE_BULK;
 

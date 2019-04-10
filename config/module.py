@@ -23,6 +23,27 @@
 def loadModule():
 	#print("Load Module: Harmony USB Middle ware")
 	loadUSBLibrary = False
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2"]):
+		loadUSBLibrary = False
+		print("create component: USB Driver")
+		usbDriverComponent =  Module.CreateComponent("drv_usbhs_v1", "USB Host High Speed Port (UHPHS) Driver", "/Harmony/Drivers", "config/usb_uhp_driver.py")
+		usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
+		
+		# Create USB Host Stack Component 
+		print("create component: USB Host")
+		usbHostComponent = Module.CreateSharedComponent("usb_host", "Host Layer", "/Libraries/USB/Host Stack", "config/usb_host.py")
+		usbHostComponent.addDependency("usb_driver_dependency", "DRV_USB", True, True)
+		usbHostComponent.addDependency("usb_host_tmr_dependency", "SYS_TIME", True, True)
+		usbHostComponent.addCapability("usb_host", "USB_HOST", True)
+		
+		print("create component: USB Host MSD")
+		usbHostMsdComponent = Module.CreateComponent("usb_host_msd", "MSD Client Driver", "/Libraries/USB/Host Stack","config/usb_host_msd.py")
+		usbHostMsdComponent.addDependency("usb_host_dependency", "USB_HOST", True, True)
+		usbHostMsdComponent.addCapability("USB Host MSD", "DRV_MEDIA")
+		
+		print("create component: USB Host CDC")
+		usbHostCdcComponent = Module.CreateComponent("usb_host_cdc", "CDC Client Driver", "/Libraries/USB/Host Stack", "config/usb_host_cdc.py")
+		usbHostCdcComponent.addDependency("usb_host_dependency", "USB_HOST", True, True)
 	# Create USB Driver Components 
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32MZ"]):
 		print("create component: USB Driver")

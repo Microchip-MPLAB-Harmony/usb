@@ -49,6 +49,9 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include "driver/usb/uhp/drv_usb_uhp.h"
+#include "usb/usb_chapter_9.h"
+#include "usb/usb_host.h"
 #include "bsp/bsp.h"
 #include "peripheral/uart/plib_uart1.h"
 #include "peripheral/mmu/plib_mmu.h"
@@ -65,9 +68,8 @@
 #include "osal/osal.h"
 #include "system/time/sys_time.h"
 #include "app.h"
-#include "usb/usb_host.h"  //JCB
-#include "driver\usb\uhp\drv_uhp.h"
-#include "usb/src/usb_external_dependencies.h"
+
+
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -187,11 +189,11 @@ void SYS_Tasks ( void );
 
 typedef struct
 {
+	SYS_MODULE_OBJ  drvUSBObject;
+
+	SYS_MODULE_OBJ  usbHostObject0;
+
     SYS_MODULE_OBJ  sysTime;
-
-    SYS_MODULE_OBJ  drvUSBObject;  // JCB
-
-    SYS_MODULE_OBJ  usbHostObject0;  // JCB
 
 } SYSTEM_OBJECTS;
 
@@ -201,6 +203,8 @@ typedef struct
 // Section: extern declarations
 // *****************************************************************************
 // *****************************************************************************
+
+extern const USB_HOST_INIT usbHostInitData; 
 
 
 

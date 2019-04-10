@@ -2434,13 +2434,13 @@
                 <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core_A\Include\core_ca.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\Include\croutine.h</name>
+                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\croutine.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\definitions.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\Include\deprecated_definitions.h</name>
+                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\deprecated_definitions.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\device.h</name>
@@ -2449,13 +2449,43 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\device_cache.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\Include\event_groups.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\fs\fat_fs\src\hardware_access\diskio.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\driver.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\driver_common.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\usb\drv_usb.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\usb\drv_usb_external_dependencies.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\usb\uhp\drv_usb_uhp.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\usb\uhp\src\drv_usb_uhp_local.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\usb\uhp\src\drv_usb_uhp_variant_mapping.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\event_groups.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\fs\fat_fs\src\file_system\ff.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\fs\fat_fs\src\file_system\ffconf.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\flexcom.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\Include\FreeRTOS.h</name>
+                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\FreeRTOS.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\FreeRTOSConfig.h</name>
@@ -2479,7 +2509,7 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\lcdc.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\Include\list.h</name>
+                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\list.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\matrix.h</name>
@@ -2488,16 +2518,22 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\mcan.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\Include\message_buffer.h</name>
+                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\message_buffer.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\mpddrc.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\Include\mpu_prototypes.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\fs\mpfs\mpfs.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\Include\mpu_wrappers.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\fs\mpfs\src\mpfs_local.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\mpu_prototypes.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\mpu_wrappers.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\osal\osal.h</name>
@@ -2557,7 +2593,7 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\pmc.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\Include\portable.h</name>
+                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\portable.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\portASM.h</name>
@@ -2566,7 +2602,7 @@
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\portmacro.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\Include\projdefs.h</name>
+                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\projdefs.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\ptc.h</name>
@@ -2578,7 +2614,7 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\qspi.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\Include\queue.h</name>
+                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\queue.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\rstc.h</name>
@@ -2596,13 +2632,16 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\sckc.h</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb\scsi.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\sdmmc.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\secumod.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\Include\semphr.h</name>
+                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\semphr.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\sfc.h</name>
@@ -2629,13 +2668,25 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\ssc.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\Include\stack_macros.h</name>
+                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\stack_macros.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\Include\stream_buffer.h</name>
+                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\stream_buffer.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\cache\sys_cache.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\fs\sys_fs.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\fs\src\sys_fs_local.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\fs\sys_fs_media_manager.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\fs\src\sys_fs_media_manager_local.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\int\sys_int.h</name>
@@ -2659,10 +2710,13 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\system_common.h</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\system_media.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\system_module.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\Include\task.h</name>
+                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\task.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\tc.h</name>
@@ -2671,7 +2725,7 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\tdes.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\Include\timers.h</name>
+                <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\include\timers.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\toolchain_specifics.h</name>
@@ -2690,6 +2744,48 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\component\uhphs.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb\usb_chapter_9.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb\usb_common.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb\src\usb_external_dependencies.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb\usb_host.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb\usb_host_client_driver.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb\usb_host_hub_interface.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb\src\usb_host_hub_mapping.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb\src\usb_host_local.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb\usb_host_msd.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb\src\usb_host_msd_local.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb\usb_host_scsi.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb\src\usb_host_scsi_local.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb\usb_hub.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb\usb_msd.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\user.h</name>
@@ -2716,10 +2812,22 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\cstartup.s</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\fs\fat_fs\src\diskio.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\usb\uhp\src\drv_usb_uhp.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\usb\uhp\src\drv_usb_uhp_ehci_host.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\event_groups.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\exceptions.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\fs\fat_fs\src\ff.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\freertos_hooks.c</name>
@@ -2747,6 +2855,9 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\main.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\fs\mpfs\src\mpfs.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\osal\osal_freertos.c</name>
@@ -2794,6 +2905,12 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\cache\sys_cache.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\fs\src\sys_fs.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\fs\src\sys_fs_media_manager.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\int\src\sys_int.c</name>
             </file>
             <file>
@@ -2806,6 +2923,18 @@
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\timers.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb\src\usb_host.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb_host_init_data.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb\src\usb_host_msd.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb\src\usb_host_scsi.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\vectortrap.s</name>
             </file>
         </group>
@@ -2814,33 +2943,6 @@
         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\ddr.icf</name>
     </file>
     <file>
-        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\fs\fat_fs\src\diskio.c</name>
-    </file>
-    <file>
-        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\usb\uhp\src\drv_uhp.c</name>
-    </file>
-    <file>
-        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\usb\uhp\src\drv_uhp_ehci_host.c</name>
-    </file>
-    <file>
-        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\fs\fat_fs\src\ff.c</name>
-    </file>
-    <file>
         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\sam_a5d2_xult_freertos.ipcf</name>
-    </file>
-    <file>
-        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\fs\src\sys_fs.c</name>
-    </file>
-    <file>
-        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\fs\src\sys_fs_media_manager.c</name>
-    </file>
-    <file>
-        <name>$PROJ_DIR$\..\..\..\..\..\middleware\src\usb_host.c</name>
-    </file>
-    <file>
-        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb\src\usb_host_msd.c</name>
-    </file>
-    <file>
-        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb\src\usb_host_scsi.c</name>
     </file>
 </project>

@@ -330,7 +330,6 @@ static void _SYS_FS_MountVolume
             {
                 if (gSYSFSEventHandler[handlerIndex].eventHandler)
                 {
-                    /* Call event Mount */
                     gSYSFSEventHandler[handlerIndex].eventHandler(SYS_FS_EVENT_MOUNT,
                             (void*)fsMount[volumeIndex].mountName,
                             gSYSFSEventHandler[handlerIndex].context);

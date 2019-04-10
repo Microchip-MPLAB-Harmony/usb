@@ -50,8 +50,7 @@
 
 #include "system/fs/sys_fs_media_manager.h"
 #include "usb/usb_host_msd.h"
-//#include "driver/driver_common.h"
-#include "driver_common.h"
+#include "driver/driver_common.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

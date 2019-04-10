@@ -1174,7 +1174,7 @@ USB_HOST_CDC_RESULT USB_HOST_CDC_AttachEventHandlerSet
     
     if(eventHandler == NULL)
     {
-        result = USB_HOST_RESULT_PARAMETER_INVALID;
+        result = USB_HOST_CDC_RESULT_INVALID_PARAMETER;
     }
     else
     {

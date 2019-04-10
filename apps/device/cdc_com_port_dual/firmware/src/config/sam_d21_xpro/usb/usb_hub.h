@@ -53,8 +53,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include "system/system_common.h"
-//#include "driver/driver_common.h"
-#include "driver_common.h"
+#include "driver/driver_common.h"
 #include "usb/usb_host.h"
 #include "usb/usb_host_client_driver.h"
 

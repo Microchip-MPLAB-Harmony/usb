@@ -371,8 +371,8 @@
           <Name dnOrder="1">drv_usbfsv1_local.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/driver/usb/usbfsv1/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">AF24BD627B2FCD0768452BF9FB33BE60</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AF24BD627B2FCD0768452BF9FB33BE60</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F8C36CA8059A82910EE3F2704824A106</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F8C36CA8059A82910EE3F2704824A106</UserChecksum>
         </File>
         <File dnOrder="46">
           <Type dnOrder="0">HEADER</Type>

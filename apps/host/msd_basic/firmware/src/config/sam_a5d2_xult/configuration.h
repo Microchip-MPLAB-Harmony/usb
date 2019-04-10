@@ -79,30 +79,6 @@ extern "C" {
 // Section: System Service Configuration
 // *****************************************************************************
 // *****************************************************************************
-
-/* File System Service Configuration */
-
-#define SYS_FS_MEDIA_NUMBER               1
-
-#define SYS_FS_VOLUME_NUMBER              1
-
-#define SYS_FS_AUTOMOUNT_ENABLE           true // JCB false
-#define SYS_FS_MAX_FILES                  1
-#define SYS_FS_MAX_FILE_SYSTEM_TYPE       1
-#define SYS_FS_MEDIA_MAX_BLOCK_SIZE       512
-#define SYS_FS_MEDIA_MANAGER_BUFFER_SIZE  2048
-#define SYS_FS_FILE_NAME_LEN              255
-#define SYS_FS_CWD_STRING_LEN             1024
-
-// JCB
-#define SYS_FS_CLIENT_NUMBER              1
-#define SYS_FS_MEDIA_TYPE_IDX0 				SYS_FS_MEDIA_TYPE_MSD
-#define SYS_FS_TYPE_IDX0 					FAT
-					#define SYS_FS_MEDIA_IDX0_MOUNT_NAME_VOLUME_IDX0 			"/mnt/myDrive1"
-#define SYS_FS_MEDIA_IDX0_DEVICE_NAME_VOLUME_IDX0			"/dev/sda1"
-// JCB
-
-
 /* TIME System Service Configuration Options */
 #define SYS_TIME_INDEX_0                     0
 #define SYS_TIME_MAX_TIMERS                  5
@@ -113,19 +89,32 @@ extern "C" {
 #define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (2200)
 
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: System Service Configuration
-// *****************************************************************************
-// *****************************************************************************
-// *****************************************************************************
-/* Common System Service Configuration Options
-*/
-#define SYS_VERSION_STR           "2.04"
-#define SYS_VERSION               20400
+/* File System Service Configuration */
 
-/*** Interrupt System Service Configuration ***/
-#define SYS_INT                     true
+#define SYS_FS_MEDIA_NUMBER               1
+
+#define SYS_FS_VOLUME_NUMBER              (1)
+
+#define SYS_FS_AUTOMOUNT_ENABLE           true
+#define SYS_FS_CLIENT_NUMBER              1
+#define SYS_FS_MAX_FILES                  1
+#define SYS_FS_MAX_FILE_SYSTEM_TYPE       1
+#define SYS_FS_MEDIA_MAX_BLOCK_SIZE       512
+#define SYS_FS_MEDIA_MANAGER_BUFFER_SIZE  2048
+#define SYS_FS_FILE_NAME_LEN              255
+#define SYS_FS_CWD_STRING_LEN             1024
+
+
+
+
+#define SYS_FS_MEDIA_TYPE_IDX0 				SYS_FS_MEDIA_TYPE_MSD
+#define SYS_FS_TYPE_IDX0 					FAT
+					
+#define SYS_FS_MEDIA_IDX0_MOUNT_NAME_VOLUME_IDX0 			"/mnt/myDrive1"
+#define SYS_FS_MEDIA_IDX0_DEVICE_NAME_VOLUME_IDX0			"/dev/sda1"
+								
+
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -133,76 +122,71 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 
-/*** NVM Driver Configuration ***/
-#define DRV_NVM_INSTANCES_NUMBER     	1
-#define DRV_NVM_CLIENTS_NUMBER        	1
-#define DRV_NVM_BUFFER_OBJECT_NUMBER  	7
-#define DRV_NVM_INTERRUPT_MODE        	true
-#define DRV_NVM_INTERRUPT_SOURCE      	EFC_IRQn
-
-#define DRV_NVM_MEDIA_SIZE              512
-#define DRV_NVM_MEDIA_START_ADDRESS     0x00480000
-
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Middleware & Other Library Configuration
 // *****************************************************************************
 // *****************************************************************************
-/*** USB Driver Configuration ***/
-
-
-/* Maximum USB driver instances */
-#define DRV_USB_UHP_INSTANCES_NUMBER   1
-
-/* Interrupt mode enabled */
-#define DRV_USB_UHP_INTERRUPT_MODE     true
-
-/* Number of Endpoints used */
-#define DRV_USB_UHP_ENDPOINTS_NUMBER    1
-
-#define DRV_USB_UHP_NAK_LIMIT      2000
-/* Provides Host pipes number */
-#define DRV_USB_UHP_PIPES_NUMBER    10
-#define DRV_USB_UHP_ATTACH_DEBOUNCE_DURATION 500
-#define DRV_USB_UHP_RESET_DURATION 100
-// *****************************************************************************
-// *****************************************************************************
-// Section: USB Device Layer Configuration
-// *****************************************************************************
-// *****************************************************************************
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: USB Host Layer Configuration
-// *****************************************************************************
-// **************************************************************************
- 
-/* Total number of devices to be supported */
-#define USB_HOST_DEVICES_NUMBER         1
-
-/* Target peripheral list entries */
-#define  USB_HOST_TPL_ENTRIES           1 
-
-/* Maximum number of configurations supported per device */
-#define USB_HOST_DEVICE_INTERFACES_NUMBER     5    
-
-#define USB_HOST_CONTROLLERS_NUMBER           1
-
-#define USB_HOST_TRANSFERS_NUMBER             10
-
-/* Provides Host pipes number */
-#define USB_HOST_PIPES_NUMBER    10
-
-/* Number of Host Layer Clients */
-#define USB_HOST_CLIENTS_NUMBER               1   
-
 /* Number of MSD Function driver instances in the application */
 #define USB_HOST_MSD_INSTANCES_NUMBER         1
 
 /* Number of Logical Units */
 #define USB_HOST_SCSI_INSTANCES_NUMBER        1
 #define USB_HOST_MSD_LUN_NUMBERS              1
+
+
+/*** USB Driver Configuration ***/
+
+/* Maximum USB driver instances */
+#define DRV_USB_UHP_INSTANCES_NUMBER                         1
+
+/* Interrupt mode enabled */
+#define DRV_USB_UHP_INTERRUPT_MODE                           true
+
+/* Number of NAKs to wait before returning transfer failure */ 
+#define DRV_USB_UHP_NAK_LIMIT                          2000 
+
+/* Maximum Number of pipes */
+#define DRV_USB_UHP_PIPES_NUMBER                       10  
+
+/* Attach Debounce duration in milli Seconds */ 
+#define DRV_USB_UHP_ATTACH_DEBOUNCE_DURATION           500
+
+/* Reset duration in milli Seconds */ 
+#define DRV_USB_UHP_RESET_DURATION                     100
+
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: USB Host Layer Configuration
+// *****************************************************************************
+// **************************************************************************
+
+/* Number of Endpoints used */
+#define DRV_USB_UHP_ENDPOINTS_NUMBER                        1
+
+/* Total number of devices to be supported */
+#define USB_HOST_DEVICES_NUMBER                             1
+
+/* Size of Endpoint 0 buffer */
+#define USB_DEVICE_EP0_BUFFER_SIZE                          64
+
+/* Target peripheral list entries */
+#define  USB_HOST_TPL_ENTRIES                               1 
+
+/* Maximum number of configurations supported per device */
+#define USB_HOST_DEVICE_INTERFACES_NUMBER                   5    
+
+#define USB_HOST_CONTROLLERS_NUMBER                         1
+
+#define USB_HOST_TRANSFERS_NUMBER                           10
+
+/* Provides Host pipes number */
+#define USB_HOST_PIPES_NUMBER                               10
+
+/* Number of Host Layer Clients */
+#define USB_HOST_CLIENTS_NUMBER                             1   
 
 
 

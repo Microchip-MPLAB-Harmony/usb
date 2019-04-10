@@ -30,9 +30,12 @@
     </linkerFile>
     <files relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_a5d2_xult_freertos">
         <group name="Header Files" relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_a5d2_xult_freertos">
-            <path>\bsp\bsp.h</path>
-            <path>\peripheral\uart\plib_uart_common.h</path>
-            <path>\peripheral\uart\plib_uart1.h</path>
+            <path>\usb\usb_host_msd.h</path>
+            <path>\usb\usb_host_scsi.h</path>
+            <path>\usb\usb_msd.h</path>
+            <path>\usb\scsi.h</path>
+            <path>\usb\src\usb_host_msd_local.h</path>
+            <path>\usb\src\usb_host_scsi_local.h</path>
             <path>\peripheral\pit\plib_pit.h</path>
             <path>\device_cache.h</path>
             <path>\toolchain_specifics.h</path>
@@ -43,6 +46,37 @@
             <path>\peripheral\clk\plib_clk.h</path>
             <path>\peripheral\pio\plib_pio.h</path>
             <path>\peripheral\aic\plib_aic.h</path>
+            <path>\peripheral\tc\plib_tc0.h</path>
+            <path>\peripheral\tc\plib_tc_common.h</path>
+            <path>\system\time\sys_time.h</path>
+            <path>\system\time\sys_time_definitions.h</path>
+            <path>\system\time\src\sys_time_local.h</path>
+            <path>\driver\usb\drv_usb.h</path>
+            <path>\driver\usb\drv_usb_external_dependencies.h</path>
+            <path>\driver\usb\uhp\drv_usb_uhp.h</path>
+            <path>\driver\usb\uhp\src\drv_usb_uhp_variant_mapping.h</path>
+            <path>\driver\usb\uhp\src\drv_usb_uhp_local.h</path>
+            <path>\usb\usb_host_client_driver.h</path>
+            <path>\usb\usb_host_hub_interface.h</path>
+            <path>\usb\usb_host.h</path>
+            <path>\usb\usb_hub.h</path>
+            <path>\usb\src\usb_host_local.h</path>
+            <path>\usb\usb_common.h</path>
+            <path>\usb\usb_chapter_9.h</path>
+            <path>\usb\src\usb_host_hub_mapping.h</path>
+            <path>\usb\src\usb_external_dependencies.h</path>
+            <path>\bsp\bsp.h</path>
+            <path>\peripheral\uart\plib_uart_common.h</path>
+            <path>\peripheral\uart\plib_uart1.h</path>
+            <path>\system\fs\sys_fs.h</path>
+            <path>\system\fs\src\sys_fs_local.h</path>
+            <path>\system\fs\sys_fs_media_manager.h</path>
+            <path>\system\fs\src\sys_fs_media_manager_local.h</path>
+            <path>\system\fs\fat_fs\src\file_system\ff.h</path>
+            <path>\system\fs\fat_fs\src\file_system\ffconf.h</path>
+            <path>\system\fs\fat_fs\src\hardware_access\diskio.h</path>
+            <path>\system\fs\mpfs\mpfs.h</path>
+            <path>\system\fs\mpfs\src\mpfs_local.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\device.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\component\acc.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\component\adc.h</path>
@@ -103,8 +137,6 @@
             <path>\..\..\packs\CMSIS\CMSIS\DSP\Include\arm_common_tables.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\DSP\Include\arm_const_structs.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\DSP\Include\arm_math.h</path>
-            <path>\peripheral\tc\plib_tc0.h</path>
-            <path>\peripheral\tc\plib_tc_common.h</path>
             <path>\FreeRTOSConfig.h</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\include\croutine.h</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\include\event_groups.h</path>
@@ -124,9 +156,12 @@
             <path>\..\..\third_party\rtos\FreeRTOS\Source\include\message_buffer.h</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\portASM.h</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\portmacro.h</path>
+            <path>\driver\driver.h</path>
+            <path>\driver\driver_common.h</path>
             <path>\system\system.h</path>
             <path>\system\system_common.h</path>
             <path>\system\system_module.h</path>
+            <path>\system\system_media.h</path>
             <path>\system\int\sys_int.h</path>
             <path>\system\int\sys_int_mapping.h</path>
             <path>\system\cache\sys_cache.h</path>
@@ -136,13 +171,10 @@
             <path>\..\..\app.h</path>
             <path>\user.h</path>
             <path>\configuration.h</path>
-            <path>\system\time\sys_time.h</path>
-            <path>\system\time\sys_time_definitions.h</path>
-            <path>\system\time\src\sys_time_local.h</path>
         </group>
         <group name="Source Files" relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_a5d2_xult_freertos">
-            <path>\bsp\bsp.c</path>
-            <path>\peripheral\uart\plib_uart1.c</path>
+            <path>\usb\src\usb_host_msd.c</path>
+            <path>\usb\src\usb_host_scsi.c</path>
             <path>\peripheral\pit\plib_pit.c</path>
             <path>\..\..\main.c</path>
             <path>\initialization.c</path>
@@ -158,6 +190,18 @@
             <path>\cstartup.s</path>
             <path>\vectortrap.s</path>
             <path>\peripheral\tc\plib_tc0.c</path>
+            <path>\system\time\src\sys_time.c</path>
+            <path>\driver\usb\uhp\src\drv_usb_uhp.c</path>
+            <path>\driver\usb\uhp\src\drv_usb_uhp_ehci_host.c</path>
+            <path>\usb_host_init_data.c</path>
+            <path>\usb\src\usb_host.c</path>
+            <path>\bsp\bsp.c</path>
+            <path>\peripheral\uart\plib_uart1.c</path>
+            <path>\system\fs\src\sys_fs.c</path>
+            <path>\system\fs\src\sys_fs_media_manager.c</path>
+            <path>\system\fs\fat_fs\src\ff.c</path>
+            <path>\system\fs\fat_fs\src\diskio.c</path>
+            <path>\system\fs\mpfs\src\mpfs.c</path>
             <path>\freertos_hooks.c</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\croutine.c</path>
             <path>\..\..\third_party\rtos\FreeRTOS\Source\list.c</path>
@@ -175,7 +219,6 @@
             <path>\osal\osal_freertos.c</path>
             <path>\..\..\app.c</path>
             <path>\tasks.c</path>
-            <path>\system\time\src\sys_time.c</path>
         </group>
     </files>
 </iarProjectConnection>

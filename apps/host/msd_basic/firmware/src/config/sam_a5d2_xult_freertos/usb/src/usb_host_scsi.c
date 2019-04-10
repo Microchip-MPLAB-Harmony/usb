@@ -204,7 +204,7 @@ void _USB_HOST_SCSI_Transfer
                 /* Set up the command based on direction */
                 if(direction == USB_HOST_MSD_TRANSFER_DIRECTION_DEVICE_TO_HOST)
                 {
-                    SYS_DEBUG_PRINT("\n\r USB_HOST_SCSI_READ10_COMMAND");
+                    SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r USB_HOST_SCSI_READ10_COMMAND");
                     commandObj->cdb[0] = USB_HOST_SCSI_READ10_COMMAND;
                     commandObj->cdb[1] = 0x00;
                 }
@@ -212,7 +212,7 @@ void _USB_HOST_SCSI_Transfer
                 {
                     commandObj->cdb[0] = USB_HOST_SCSI_WRITE10_COMMAND;
 
-                    SYS_DEBUG_PRINT("\n\r USB_HOST_SCSI_WRITE10_COMMAND");
+                    SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r USB_HOST_SCSI_WRITE10_COMMAND");
                     /* Set the FUA bit in the command so that the media will
                      * the completed the command only when the data has been 
                      * written to the media. */
@@ -769,7 +769,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
 
         case USB_HOST_SCSI_STATE_INQUIRY_RESPONSE:
 
-            SYS_DEBUG_PRINT("\n\r USB_HOST_SCSI_STATE_INQUIRY_RESPONSE ");
+            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r USB_HOST_SCSI_STATE_INQUIRY_RESPONSE ");
             /* We get the SCSI Enquiry response. Although there isn't much
              * that we can do with this data */
             _USB_HOST_SCSI_InquiryResponseCommand(scsiObj->taskCommandObj.cdb);
@@ -806,7 +806,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
 
         case USB_HOST_SCSI_STATE_READ_CAPACITY:
 
-            SYS_DEBUG_PRINT("\n\r USB_HOST_SCSI_STATE_READ_CAPACITY ");
+            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r USB_HOST_SCSI_STATE_READ_CAPACITY ");
             /* Here we send the read capacity command */
             _USB_HOST_SCSI_ReadCapacityCommand(scsiObj->taskCommandObj.cdb);
 
@@ -892,7 +892,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
 
         case USB_HOST_SCSI_STATE_MODE_SENSE:
 
-            SYS_DEBUG_PRINT("\n\r USB_HOST_SCSI_STATE_MODE_SENSE ");
+            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r USB_HOST_SCSI_STATE_MODE_SENSE ");
             /* In this state we send the mode sense command to find out if
              * the device is write protected */
 
@@ -1040,7 +1040,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
 
         case USB_HOST_SCSI_STATE_REQUEST_SENSE:
 
-            SYS_DEBUG_PRINT("\n\r USB_HOST_SCSI_STATE_REQUEST_SENSE ");
+            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r USB_HOST_SCSI_STATE_REQUEST_SENSE ");
             /* In this state, we send the request sense command */
 
             _USB_HOST_SCSI_RequestSenseCommand(scsiObj->taskCommandObj.cdb);
@@ -1067,7 +1067,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
 
         case USB_HOST_SCSI_STATE_WAIT_REQUEST_SENSE:
 
-            SYS_DEBUG_PRINT("\n\r USB_HOST_SCSI_STATE_WAIT_REQUEST_SENSE ");
+            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r USB_HOST_SCSI_STATE_WAIT_REQUEST_SENSE ");
             /* In this state we wait for the command to complete */
 
             if(scsiObj->taskCommandObj.commandCompleted)
@@ -1185,7 +1185,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
             scsiObj->taskCommandObj.inUse = true;
             scsiObj->taskCommandObj.commandCompleted = false;
 
-            SYS_DEBUG_PRINT("\n\r USB_HOST_SCSI_STATE_TEST_UNIT_READY ");
+            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r USB_HOST_SCSI_STATE_TEST_UNIT_READY ");
             result = USB_HOST_MSD_Transfer(scsiObj->lunHandle, scsiObj->taskCommandObj.cdb, 6, NULL, 0, 
                     USB_HOST_MSD_TRANSFER_DIRECTION_DEVICE_TO_HOST, _USB_HOST_SCSI_CommandCallback, 
                     (uintptr_t)(&scsiObj->taskCommandObj));
@@ -1202,7 +1202,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
 
         case USB_HOST_SCSI_STATE_WAIT_TEST_UNIT_READY:
 
-            SYS_DEBUG_PRINT("\n\r USB_HOST_SCSI_STATE_WAIT_TEST_UNIT_READY ");
+            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r USB_HOST_SCSI_STATE_WAIT_TEST_UNIT_READY ");
             /* Here we are waiting for the test unit command to complete */
 
             if(scsiObj->taskCommandObj.commandCompleted)
@@ -1232,7 +1232,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
 
         case USB_HOST_SCSI_STATE_ERROR:
 
-            SYS_DEBUG_PRINT("\n\r USB_HOST_SCSI_STATE_ERROR ");
+            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r USB_HOST_SCSI_STATE_ERROR ");
             /* We are in the state because a media error has occurred. There
              * is really nothing to be done here. The media is assumed
              * un-usable and should be un-plugged. */
@@ -1593,7 +1593,7 @@ void _USB_HOST_SCSI_DetachDetectTasks(int scsiObjIndex)
 
         case USB_HOST_SCSI_DETACH_TASK_STATE_TEST_UNIT_READY_SEND:
 
-            SYS_DEBUG_PRINT("\n\r USB_HOST_SCSI_DETACH_TASK_STATE_TEST_UNIT_READY_SEND");
+            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r USB_HOST_SCSI_DETACH_TASK_STATE_TEST_UNIT_READY_SEND");
             /* In this state, the driver prepares and send the Test Unit
              * ready command */
             _USB_HOST_SCSI_TestUnitReadyCommand(scsiObj->taskCommandObj.cdb);
@@ -1803,7 +1803,7 @@ void USB_HOST_SCSI_TransferTasks(USB_HOST_MSD_LUN_HANDLE lunHandle)
 
             case USB_HOST_SCSI_TRANSFER_STATE_REQUEST_SENSE:
 
-                SYS_DEBUG_PRINT("\n\r USB_HOST_SCSI_TRANSFER_STATE_REQUEST_SENSE ");
+                SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r USB_HOST_SCSI_TRANSFER_STATE_REQUEST_SENSE ");
                 /* We get into this state when a block command (READ10 or WRITE
                  * 10) has failed. We have to find out why. Note that we are not
                  * using the commandObj command object for these commands.
@@ -1844,7 +1844,7 @@ void USB_HOST_SCSI_TransferTasks(USB_HOST_MSD_LUN_HANDLE lunHandle)
 
             case USB_HOST_SCSI_TRANSFER_STATE_WAIT_REQUEST_SENSE:
 
-                SYS_DEBUG_PRINT("\n\r USB_HOST_SCSI_TRANSFER_STATE_WAIT_REQUEST_SENSE ");
+                SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r USB_HOST_SCSI_TRANSFER_STATE_WAIT_REQUEST_SENSE ");
                 /* Here we check if the request sense command has completed */
 
                 if(scsiObj->transferErrorCommandObj.commandCompleted)
@@ -1903,7 +1903,7 @@ void USB_HOST_SCSI_TransferTasks(USB_HOST_MSD_LUN_HANDLE lunHandle)
 
             case USB_HOST_SCSI_TRANSFER_STATE_TEST_UNIT_READY:
 
-                SYS_DEBUG_PRINT("\n\r USB_HOST_SCSI_TRANSFER_STATE_TEST_UNIT_READY ");
+                SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r USB_HOST_SCSI_TRANSFER_STATE_TEST_UNIT_READY ");
                 /* We get into this state if a SCSI block command failed and the
                  * request sense returned a sense code an media not ready. In
                  * this state we will periodically send the Test Unit ready
@@ -1944,7 +1944,7 @@ void USB_HOST_SCSI_TransferTasks(USB_HOST_MSD_LUN_HANDLE lunHandle)
 
             case USB_HOST_SCSI_TRANSFER_STATE_WAIT_TEST_UNIT_READY:
 
-                SYS_DEBUG_PRINT("\n\r USB_HOST_SCSI_TRANSFER_STATE_WAIT_TEST_UNIT_READY ");
+                SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r USB_HOST_SCSI_TRANSFER_STATE_WAIT_TEST_UNIT_READY ");
                 /* Here we are waiting for the test unit command to complete */
 
                 if(scsiObj->transferErrorCommandObj.commandCompleted)

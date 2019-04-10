@@ -55,8 +55,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "app.h"
 
-#define TRACE_DEBUG(...)       printf(__VA_ARGS__)
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -81,7 +79,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 APP_DATA appData __attribute__((aligned(16))) ;
 
 /* This is the string that will written to the file */
-const uint8_t prompt[8]  __attribute__((aligned(16)))  = "LED";
+const uint8_t prompt[8]  __attribute__((aligned(16)))  = "\r\nLED : ";
 
 // *****************************************************************************
 // *****************************************************************************
@@ -245,8 +243,6 @@ void APP_Initialize ( void )
 
 void APP_Tasks ( void )
 {
-    uint8_t i;
-
     /* Check the application's current state. */
    USB_HOST_CDC_RESULT result;
    
@@ -313,8 +309,7 @@ void APP_Tasks ( void )
             
             /* Here we set the Line coding. The control request done flag will
              * be set to true when the control request has completed. */
-            TRACE_DEBUG("\r\nAPP_STATE_SET_LINE_CODING");
-
+            
             appData.controlRequestDone = false;
             result = USB_HOST_CDC_ACM_LineCodingSet(appData.cdcHostHandle, NULL, &appData.cdcHostLineCoding);
             
@@ -323,10 +318,7 @@ void APP_Tasks ( void )
                 /* We wait for the set line coding to complete */
                 appData.state = APP_STATE_WAIT_FOR_SET_LINE_CODING;
             }
-            else
-            {
-                TRACE_DEBUG("\033[31m\n\rError\033[0m");
-            }
+                            
             break;
             
         case APP_STATE_WAIT_FOR_SET_LINE_CODING:
@@ -349,8 +341,6 @@ void APP_Tasks ( void )
         case APP_STATE_SEND_SET_CONTROL_LINE_STATE:
             
             /* Here we set the control line state */
-            TRACE_DEBUG("\r\nAPP_STATE_SEND_SET_CONTROL_LINE_STATE");
-
             appData.controlRequestDone = false;
             result = USB_HOST_CDC_ACM_ControlLineStateSet(appData.cdcHostHandle, NULL, 
                     &appData.controlLineState);
@@ -360,10 +350,7 @@ void APP_Tasks ( void )
                 /* We wait for the set line coding to complete */
                 appData.state = APP_STATE_WAIT_FOR_SET_CONTROL_LINE_STATE;
             }
-            else
-            {
-                TRACE_DEBUG("\033[31m\n\rError\033[0m");
-            }
+            
             break;
             
         case APP_STATE_WAIT_FOR_SET_CONTROL_LINE_STATE:
@@ -382,24 +369,20 @@ void APP_Tasks ( void )
                     appData.state = APP_STATE_SEND_PROMPT_TO_DEVICE;
                 }
             }
+            
             break;
             
         case APP_STATE_SEND_PROMPT_TO_DEVICE:
             
             /* The prompt is sent to the device here. The write transfer done
              * flag is updated in the event handler. */
-            TRACE_DEBUG("\r\nAPP_STATE_SEND_PROMPT_TO_DEVICE");
-
+            
             appData.writeTransferDone = false;
-            result = USB_HOST_CDC_Write(appData.cdcHostHandle, NULL, ( void * )prompt, sizeof(prompt));
+            result = USB_HOST_CDC_Write(appData.cdcHostHandle, NULL, ( void * )prompt, 8);
             
             if(result == USB_HOST_CDC_RESULT_SUCCESS)
             {
                 appData.state = APP_STATE_WAIT_FOR_PROMPT_SEND_COMPLETE;
-            }
-            else
-            {
-                TRACE_DEBUG("\033[31m\n\rError\033[0m");
             }
             break;
             
@@ -416,25 +399,20 @@ void APP_Tasks ( void )
                 else
                 {
                     /* Try sending the prompt again. */
-//                    appData.state = APP_STATE_SEND_PROMPT_TO_DEVICE;
+                    appData.state = APP_STATE_SEND_PROMPT_TO_DEVICE;
                 }
             }
+            
             break;
             
         case APP_STATE_GET_DATA_FROM_DEVICE:
             
             /* Here we request data from the device */
-            TRACE_DEBUG("\r\nAPP_STATE_GET_DATA_FROM_DEVICE");
-
             appData.readTransferDone = false;
-            result = USB_HOST_CDC_Read(appData.cdcHostHandle, NULL, appData.inDataArray, sizeof(prompt));
+            result = USB_HOST_CDC_Read(appData.cdcHostHandle, NULL, appData.inDataArray, 1);
             if(result == USB_HOST_CDC_RESULT_SUCCESS)
             {
                 appData.state = APP_STATE_WAIT_FOR_DATA_FROM_DEVICE;
-            }
-            else
-            {
-                TRACE_DEBUG("\033[31m\n\rError\033[0m");
             }
             break;
            
@@ -446,42 +424,28 @@ void APP_Tasks ( void )
             {
                 if(appData.readTransferResult == USB_HOST_CDC_RESULT_SUCCESS)
                 {
-                    for (i=0; i<sizeof(prompt); i++)
-                    {
-                        TRACE_DEBUG(" 0x%X ", appData.inDataArray[i] );
-                    } 
-                    
-                    if ( appData.inDataArray[0] & 0x01 )  // ODD or even
+                   if ( appData.inDataArray[0] == '1')
                     {
                         /* Switch on LED  */
-//                        LED1_On();
-                        TRACE_DEBUG("\033[31;1;4;5;7m1\033[0m");  // ODD
+                        LED1_On();
                     }
-                    else
-                    {
+                   else
+                   {
                         /* Switch off LED  */
-//                        LED1_Off();
-                        TRACE_DEBUG("\033[31;1;4;5;7m0\033[0m");  // EVEN
-                    }
+                        LED1_Off();
+                   }
                     
                     /* Send the prompt to the device and wait
                      * for data again */
                     appData.state = APP_STATE_SEND_PROMPT_TO_DEVICE;
                 }
-                else
-                {
-                    TRACE_DEBUG("\033[31m\n\rError\033[0m");
-                }
             }
-            break;
-  
+            
         case APP_STATE_ERROR:
             /* An error has occurred */
-            TRACE_DEBUG("\033[31m\n\rError\033[0m");
             break;
             
         default:
-            TRACE_DEBUG("\033[31m\n\rdefault\033[0m");
             break;
     }
 }

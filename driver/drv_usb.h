@@ -53,14 +53,14 @@
     are also included
 */
 
-//#include <stdint.h>
-//#include <stdbool.h>
-//#include "usb/usb_common.h"
-//#include "usb/usb_chapter_9.h"
+#include <stdint.h>
+#include <stdbool.h>
+#include "usb/usb_common.h"
+#include "usb/usb_chapter_9.h"
 #include "driver/driver_common.h"
-//#include "system/int/sys_int.h"
-//#include "system/system_module.h"
-//#include "usb/usb_host_client_driver.h"
+#include "system/int/sys_int.h"
+#include "system/system_module.h"
+#include "usb/usb_host_client_driver.h"
 #include "usb/usb_host_hub_interface.h"
 
 // *****************************************************************************

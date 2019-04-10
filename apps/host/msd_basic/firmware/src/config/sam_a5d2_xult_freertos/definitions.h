@@ -49,35 +49,36 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include "bsp/bsp.h"
-#include "peripheral/uart/plib_uart1.h"
+#include "usb/usb_msd.h"
+#include "usb/usb_host_msd.h"
+#include "usb/usb_host_scsi.h"
 #include "peripheral/pit/plib_pit.h"
-#include "system/fs/sys_fs.h"
-#include "system/fs/sys_fs_media_manager.h"
-#include "system/fs/fat_fs/src/file_system/ff.h"
-#include "system/fs/fat_fs/src/file_system/ffconf.h"
-#include "system/fs/fat_fs/src/hardware_access/diskio.h"
-
 #include "peripheral/mmu/plib_mmu.h"
 #include "peripheral/matrix/plib_matrix.h"
 #include "peripheral/l2cc/plib_l2cc.h"
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/aic/plib_aic.h"
-#include "usb/usb_msd.h"
-#include "usb/usb_host_msd.h"
-#include "usb/usb_host_scsi.h"
 #include "peripheral/tc/plib_tc0.h"
+#include "system/time/sys_time.h"
+#include "driver/usb/uhp/drv_usb_uhp.h"
+#include "usb/usb_chapter_9.h"
+#include "usb/usb_host.h"
+#include "bsp/bsp.h"
+#include "peripheral/uart/plib_uart1.h"
+#include "system/fs/sys_fs.h"
+#include "system/fs/sys_fs_media_manager.h"
+#include "system/fs/fat_fs/src/file_system/ff.h"
+#include "system/fs/fat_fs/src/file_system/ffconf.h"
+#include "system/fs/fat_fs/src/hardware_access/diskio.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "system/int/sys_int.h"
 #include "system/cache/sys_cache.h"
 #include "osal/osal.h"
-#include "system/time/sys_time.h"
 #include "app.h"
-#include "usb/usb_host.h"  //JCB
-#include "driver\usb\uhp\drv_uhp.h"
-#include "usb/src/usb_external_dependencies.h"
+
+
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -198,10 +199,10 @@ void SYS_Tasks ( void );
 typedef struct
 {
     SYS_MODULE_OBJ  sysTime;
+	SYS_MODULE_OBJ  drvUSBObject;
 
-    SYS_MODULE_OBJ  drvUSBObject;  // JCB
+	SYS_MODULE_OBJ  usbHostObject0;
 
-    SYS_MODULE_OBJ  usbHostObject0;  // JCB
 
 } SYSTEM_OBJECTS;
 
@@ -211,6 +212,8 @@ typedef struct
 // Section: extern declarations
 // *****************************************************************************
 // *****************************************************************************
+
+extern const USB_HOST_INIT usbHostInitData; 
 
 
 

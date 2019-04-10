@@ -243,16 +243,16 @@
           <Name dnOrder="1">usb_host.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult_freertos/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">53FDEC33854935BF4E88893C81FF010A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">53FDEC33854935BF4E88893C81FF010A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">A7DE3B75F6DBA4C6CA8F799D415FFC49</GeneratedChecksum>
+          <UserChecksum dnOrder="5">A7DE3B75F6DBA4C6CA8F799D415FFC49</UserChecksum>
         </File>
         <File dnOrder="30">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">usb_host_cdc.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult_freertos/usb/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">7F03AD9011542D1E3EADEC5BAF8F1FA8</GeneratedChecksum>
-          <UserChecksum dnOrder="5">7F03AD9011542D1E3EADEC5BAF8F1FA8</UserChecksum>
+          <GeneratedChecksum dnOrder="4">189A48B71F3AEAFA32544A95020BB58D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">189A48B71F3AEAFA32544A95020BB58D</UserChecksum>
         </File>
         <File dnOrder="31">
           <Type dnOrder="0">SOURCE</Type>
@@ -1035,8 +1035,8 @@
           <Name dnOrder="1">usb_chapter_9.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult_freertos/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">12305C07373D4BA81E64624A692ECA17</GeneratedChecksum>
-          <UserChecksum dnOrder="5">12305C07373D4BA81E64624A692ECA17</UserChecksum>
+          <GeneratedChecksum dnOrder="4">39659CDE2CC726544BD68544FB7EF4B2</GeneratedChecksum>
+          <UserChecksum dnOrder="5">39659CDE2CC726544BD68544FB7EF4B2</UserChecksum>
         </File>
         <File dnOrder="129">
           <Type dnOrder="0">HEADER</Type>
@@ -1059,8 +1059,8 @@
           <Name dnOrder="1">usb_host.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult_freertos/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A4B832998D00C49BD4F9A3FC6A6CFC7D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A4B832998D00C49BD4F9A3FC6A6CFC7D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F127C67A3E33E5788C0F057F648EE57C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F127C67A3E33E5788C0F057F648EE57C</UserChecksum>
         </File>
         <File dnOrder="132">
           <Type dnOrder="0">HEADER</Type>
@@ -1115,8 +1115,8 @@
           <Name dnOrder="1">usb_hub.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult_freertos/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">2E521F42F432473872209E966F85F2A8</GeneratedChecksum>
-          <UserChecksum dnOrder="5">2E521F42F432473872209E966F85F2A8</UserChecksum>
+          <GeneratedChecksum dnOrder="4">3E3CC6BC9128194CB4D19F29C57E312B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3E3CC6BC9128194CB4D19F29C57E312B</UserChecksum>
         </File>
         <File dnOrder="139">
           <Type dnOrder="0">HEADER</Type>

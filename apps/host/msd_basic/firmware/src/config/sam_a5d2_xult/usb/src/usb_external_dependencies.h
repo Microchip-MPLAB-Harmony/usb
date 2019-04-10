@@ -53,18 +53,17 @@
 #define SYS_TMR_CallbackSingle(delay,context,callback) SYS_TIME_CallbackRegisterMS(callback,context,delay, SYS_TIME_SINGLE)
 #endif 
 
-
 #ifndef SYS_DEBUG_PRINT
-	#define SYS_DEBUG_PRINT(level, format, ...)    printf(format, __VA_ARGS__)
+	#define SYS_DEBUG_PRINT(level, format, ...) 
 #endif 
 
 #ifndef SYS_DEBUG_MESSAGE
-	#define SYS_DEBUG_MESSAGE(a,b, ...)  printf(b)
+	#define SYS_DEBUG_MESSAGE(a,b, ...)
 #endif 
 
 #ifndef SYS_DEBUG
-	#define SYS_DEBUG(a,b) 
-#endif  
+	#define SYS_DEBUG(a,b)
+#endif 
 #endif 
 /*******************************************************************************
  End of File

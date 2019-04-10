@@ -63,26 +63,6 @@
 
 
 
-/*** Macros for USBB_EN5V_PB10 pin ***/
-#define USBB_EN5V_PB10_Set()               (PIOB_REGS->PIO_SODR = (1<<10))
-#define USBB_EN5V_PB10_Clear()             (PIOB_REGS->PIO_CODR = (1<<10))
-#define USBB_EN5V_PB10_Toggle()            do {\
-                                            PIOB_REGS->PIO_MSKR = (1<<10); \
-                                            PIOB_REGS->PIO_ODSR ^= (1<<10);\
-                                        } while (0)
-#define USBB_EN5V_PB10_Get()               ((PIOB_REGS->PIO_PDSR >> 10) & 0x1)
-#define USBB_EN5V_PB10_OutputEnable()      do {\
-                                            PIOB_REGS->PIO_MSKR = (1<<10); \
-										     PIOB_REGS->PIO_CFGR |=(1 << PIO_CFGR_DIR_Pos);\
-                                        }while(0)
-#define USBB_EN5V_PB10_InputEnable()       do { \
-                                            PIOB_REGS->PIO_MSKR = (1<<10); \
-										     PIOB_REGS->PIO_CFGR &= ~(1 << PIO_CFGR_DIR_Pos);\
-                                        } while (0)
-#define USBB_EN5V_PB10_InterruptEnable()   (PIOB_REGS->PIO_IER = (1<<10))
-#define USBB_EN5V_PB10_InterruptDisable()  (PIOB_REGS->PIO_IDR = (1<<10))
-#define USBB_EN5V_PB10_PIN                  PIO_PIN_PB10
-
 /*** Macros for VBUS_LEVEL_GPIO_PD23 pin ***/
 #define VBUS_LEVEL_GPIO_PD23_Set()               (PIOD_REGS->PIO_SODR = (1<<23))
 #define VBUS_LEVEL_GPIO_PD23_Clear()             (PIOD_REGS->PIO_CODR = (1<<23))

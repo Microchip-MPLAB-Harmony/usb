@@ -59,34 +59,6 @@
 */
 void PIO_Initialize ( void )
 {
- /* Port A Peripheral function A configuration */
-	PIOA_REGS->PIO_MSKR = 0x0L;
-	PIOA_REGS->PIO_CFGR = 0x1;
-	
- /* Port A Peripheral function B configuration */
-	PIOA_REGS->PIO_MSKR = 0x0L;
-	PIOA_REGS->PIO_CFGR = 0x2;
-	
- /* Port A Peripheral function C configuration */
-	PIOA_REGS->PIO_MSKR = 0x0L;
-	PIOA_REGS->PIO_CFGR = 0x3;
-	
- /* Port A Peripheral function D configuration */
-	PIOA_REGS->PIO_MSKR = 0x0L;
-	PIOA_REGS->PIO_CFGR = 0x4;
-	
- /* Port A Peripheral function E configuration */
-	PIOA_REGS->PIO_MSKR = 0x0L;
-	PIOA_REGS->PIO_CFGR = 0x5;
-	
- /* Port A Peripheral function F configuration */
-	PIOA_REGS->PIO_MSKR = 0x0L;
-	PIOA_REGS->PIO_CFGR = 0x6;
-	
- /* Port A Peripheral function G configuration */
-	PIOA_REGS->PIO_MSKR = 0x0L;
-	PIOA_REGS->PIO_CFGR = 0x7;
-	
  /* Port B Pin 0 configuration */
 	PIOB_REGS->PIO_MSKR = 0x1;
 	PIOB_REGS->PIO_CFGR |= 0x100;
@@ -109,10 +81,6 @@ void PIO_Initialize ( void )
 	
  /* Port B Latch configuration */
 	PIOB_REGS->PIO_SODR = 0x61;
-	
- /* Port D Pin 23 configuration */
-	PIOD_REGS->PIO_MSKR = 0x800000;
-	PIOD_REGS->PIO_CFGR |= 0x500;
 	
 }
 

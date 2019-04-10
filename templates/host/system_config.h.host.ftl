@@ -60,6 +60,8 @@
 #define DRV_USBHS_ENDPOINTS_NUMBER 							1
 <#elseif CONFIG_USB_DRIVER_INTERFACE == "DRV_USBFSV1_HOST_INTERFACE">
 #define DRV_USBFSV1_ENDPOINTS_NUMBER                        1
+<#elseif CONFIG_USB_DRIVER_INTERFACE == "DRV_USB_UHP_HOST_INTERFACE">
+#define DRV_USB_UHP_ENDPOINTS_NUMBER                        1
 </#if>
 
 /* Total number of devices to be supported */
