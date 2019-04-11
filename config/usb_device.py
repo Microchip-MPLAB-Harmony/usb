@@ -26,7 +26,7 @@ usbDebugLogs = 1
 listUsbSpeed = ["High Speed", "Full Speed"]
 
 # USB Device Global definitions 
-usbDeviceClasses =["CDC", "MSD", "HID", "Vendor", "Audio V1", "Audio V2" ]
+usbDeviceClasses =["CDC", "MSD", "HID", "Vendor", "Audio V1", "Audio V2", "Printer"]
 usbDeviceEp0BufferSizes = ["64", "32", "16", "8"]
 usbDeviceDemoList = [
 "Enter Product ID", 
@@ -49,6 +49,7 @@ usbDeviceDemoList = [
 "msd_sdcard_demo",
 "msd_spiflash_demo",
 "msd_multiple_luns_demo",
+"printer_basic_demo",
 "vendor_demo",
 ]
 
@@ -73,6 +74,7 @@ usbDeviceDemoProductList = [
 "0x0009",
 "0x0009",
 "0x0009",
+"0xA000",
 "0x0053",
 ]
 
@@ -96,7 +98,8 @@ usbDeviceProductStringList = [
 "Simple MSD Device Demo", 
 "Simple MSD Device Demo", 
 "MSD SPI Flash Device Demo", 
-"Multiple LUN MSD Demo", 
+"Multiple LUN MSD Demo",
+"Generic Text Printer Demo",
 "Simple WinUSB Device Demo" 
 ]
 
