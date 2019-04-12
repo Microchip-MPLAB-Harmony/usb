@@ -56,8 +56,8 @@
 #include "usb/usb_msd.h"
 
 
-#define SYS_DEBUG_PRINT(level, format, ...) 
-#define SYS_DEBUG_MESSAGE(a,b, ...)
+//#define SYS_DEBUG_PRINT(level, format, ...) 
+//#define SYS_DEBUG_MESSAGE(a,b, ...)
 
 #if defined(USB_HOST_MSD_ERROR_CALLBACK)
     /* Check if error callback has been configured */
