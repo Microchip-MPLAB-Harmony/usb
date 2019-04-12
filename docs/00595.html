@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>USB_DEVICE_AUDIO_V2_EventHandlerSet Function</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00595.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00233.html" target="topic">USB Device Libraries</a> &gt; <a href="00163.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00159.html" target="topic">Library Interface</a> &gt; a) Functions &gt; <a href="00595.html" target="topic">USB_DEVICE_AUDIO_V2_EventHandlerSet Function</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00159.html" target="topic">Previous</a> | <a href="00159.html" target="topic">Up</a> | <a href="00605.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_AUDIO_V2_EventHandlerSet@USB_DEVICE_AUDIO_V2_INDEX@USB_DEVICE_AUDIO_V2_EVENT_HANDLER@uintptr_t Topic Title: USB_DEVICE_AUDIO_V2_EventHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+USB_DEVICE_AUDIO_V2_EventHandlerSet Function</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This function registers a event handler for the specified Audio function driver instance. This function should be called by the application when it receives a SET CONFIGURATION event from the device layer. The application must register an event handler with the function driver in order to receive and respond to function driver specific events and control transfers. If the event handler is not registered, the device layer will stall function driver specific commands and the USB device may not function.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00606.html" target="topic">USB_DEVICE_AUDIO_V2_RESULT</a> <strong><span style="color: #000000">USB_DEVICE_AUDIO_V2_EventHandlerSet</span></strong>(
+    <a href="00597.html" target="topic">USB_DEVICE_AUDIO_V2_INDEX</a> <strong><span style="color: #000000">instanceIndex</span></strong>, 
+    <a href="00592.html" target="topic">USB_DEVICE_AUDIO_V2_EVENT_HANDLER</a> <strong><span style="color: #000000">eventHandler</span></strong>, 
+    uintptr_t <strong><span style="color: #000000">context</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This function should be called when the function driver has been initialized as a result of a set configuration.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+instance&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Instance of the Audio v2.0 Function Driver.&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+eventHandler&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+A pointer to event handler function.&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+context&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Application specific context that is returned in the event handler.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+
+<ul class="Element630">
+<li class="Element600">USB_DEVICE_AUDIO_V2_RESULT_OK - The operation was successful</li>
+<li class="Element600">USB_DEVICE_AUDIO_V2_RESULT_ERROR_INSTANCE_INVALID - The specified instance does not exist.</li>
+<li class="Element600">USB_DEVICE_AUDIO_V2_RESULT_ERROR_PARAMETER_INVALID - The eventHandler parameter is NULL</li>
+</ul></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// The following code shows an example registering an event handler. The</span></i>
+<i><span style="color: #008000">// application specifies the context parameter as a pointer to an</span></i>
+<i><span style="color: #008000">// application object (appObject) that should be associated with this </span></i>
+<i><span style="color: #008000">// instance of the Audio function driver.</span></i>
+
+<a href="00606.html" target="topic">USB_DEVICE_AUDIO_V2_RESULT</a> result;
+
+<a href="00593.html" target="topic">USB_DEVICE_AUDIO_V2_EVENT_RESPONSE</a> APP_USBDeviceAUDIOEventHandler
+(
+    <a href="00597.html" target="topic">USB_DEVICE_AUDIO_V2_INDEX</a> instanceIndex ,
+    <a href="00574.html" target="topic">USB_DEVICE_AUDIO_V2_EVENT</a> event ,
+    <strong><span style="color: #000080">void</span></strong>* pData,
+    uintptr_t context
+)
+{
+    <i><span style="color: #008000">// Event Handling comes here</span></i>
+
+    <strong><span style="color: #000080">switch</span></strong>(event) 
+    {
+        ...
+    }
+
+    <strong><span style="color: #000080">return</span></strong>(<a href="00594.html" target="topic">USB_DEVICE_AUDIO_V2_EVENT_RESPONSE_NONE</a>);
+}
+
+result = USB_DEVICE_AUDIO_V2_EventHandlerSet ( USB_DEVICE_AUDIO_V2_INSTANCE_0 ,
+            &amp;APP_USBDeviceAUDIOEventHandler, (uintptr_t) &amp;appObject);
+
+<strong><span style="color: #000080">if</span></strong>(USB_DEVICE_AUDIO_V2_RESULT_OK != result)
+{
+    <i><span style="color: #008000">// Do error handling here</span></i>
+}
+</pre></div></div>
+</div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00233.html" target="topic">USB Device Libraries</a> &gt; <a href="00163.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00159.html" target="topic">Library Interface</a> &gt; a) Functions &gt; <a href="00595.html" target="topic">USB_DEVICE_AUDIO_V2_EventHandlerSet Function</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00159.html" target="topic">Previous</a> | <a href="00159.html" target="topic">Up</a> | <a href="00605.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_AUDIO_V2_EventHandlerSet@USB_DEVICE_AUDIO_V2_INDEX@USB_DEVICE_AUDIO_V2_EVENT_HANDLER@uintptr_t Topic Title: USB_DEVICE_AUDIO_V2_EventHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

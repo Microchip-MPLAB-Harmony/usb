@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>USB_DEVICE_FUNCTION_REGISTRATION_TABLE Structure</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00743.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00233.html" target="topic">USB Device Libraries</a> &gt; <a href="00232.html" target="topic">USB Device Layer Library</a> &gt; <a href="00255.html" target="topic">Library Interface</a> &gt; g) Data Types and Constants &gt; <a href="00743.html" target="topic">USB_DEVICE_FUNCTION_REGISTRATION_TABLE Structure</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00740.html" target="topic">Previous</a> | <a href="00255.html" target="topic">Up</a> | <a href="00848.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_FUNCTION_REGISTRATION_TABLE Topic Title: USB_DEVICE_FUNCTION_REGISTRATION_TABLE Structure)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+USB_DEVICE_FUNCTION_REGISTRATION_TABLE Structure</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+USB Device Function Registration Structure&nbsp;</p>
+<p class="Element10">
+This data type defines the USB Device Function Registration Structure. A table containing entries for each function driver instance should be registered with device layer.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">struct</span></strong> {
+  USB_SPEED <strong><span style="color: #000000">speed</span></strong>;
+  uint8_t <strong><span style="color: #000000">configurationValue</span></strong>;
+  uint8_t <strong><span style="color: #000000">interfaceNumber</span></strong>;
+  uint8_t <strong><span style="color: #000000">numberOfInterfaces</span></strong>;
+  uintptr_t <strong><span style="color: #000000">funcDriverIndex</span></strong>;
+  <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">funcDriverInit</span></strong>;
+  <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">driver</span></strong>;
+} USB_DEVICE_FUNCTION_REGISTRATION_TABLE;</pre></div></div>
+<a name="4D656D62657273"></a><div class="Element14">
+Members</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element272">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element260" valign="top" width="35%">
+<div class="Element261">
+Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
+<div class="Element265">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_SPEED speed;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Type of speed (high, full or low speed)&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+uint8_t configurationValue;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Configuration Value to which the function driver has to be tied&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+uint8_t interfaceNumber;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Interface number to which this function driver has to be tied&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+uint8_t numberOfInterfaces;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Number of interfaces used by the function&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+uintptr_t funcDriverIndex;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Function driver instance index&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+void * funcDriverInit;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Pointer to a structure that contains function driver initialization data&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+void * driver;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Pointer to a standard structure that exposes function driver APIs to USB device layer&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This type is specific to implementation of the USB Device Stack API.</p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00233.html" target="topic">USB Device Libraries</a> &gt; <a href="00232.html" target="topic">USB Device Layer Library</a> &gt; <a href="00255.html" target="topic">Library Interface</a> &gt; g) Data Types and Constants &gt; <a href="00743.html" target="topic">USB_DEVICE_FUNCTION_REGISTRATION_TABLE Structure</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00740.html" target="topic">Previous</a> | <a href="00255.html" target="topic">Up</a> | <a href="00848.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_FUNCTION_REGISTRATION_TABLE Topic Title: USB_DEVICE_FUNCTION_REGISTRATION_TABLE Structure)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>
