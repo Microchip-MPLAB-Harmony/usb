@@ -5,7 +5,7 @@
     Microchip Technology Inc.
 
   File Name:
-    drv_usb_uhp_ehci_local.h
+    drv_usb_uhp_local.h
 
   Summary:
     USB driver local declarations and definitions
@@ -42,76 +42,26 @@
 #ifndef _DRV_USB_UHP_LOCAL_H
 #define _DRV_USB_UHP_LOCAL_H
 
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: File includes
 // *****************************************************************************
 // *****************************************************************************
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <stddef.h>
-
 #include "definitions.h"
 #include "driver/usb/drv_usb_external_dependencies.h"
-#include "driver/usb/uhp/drv_usb_uhp.h"
 #include "drv_usb_uhp_variant_mapping.h"
-#include "osal/osal.h"
 
-#define DRV_USBHS_HOST_IRP_PER_FRAME_NUMBER 	     5
+#define NUMBER_OF_PORTS   (hDriver->usbIDOHCI->UHP_OHCI_HCRHDESCRIPTORA & UHP_OHCI_HCRHDESCRIPTORA_NDP_Msk)
+/* #define HSIC */
+
 #define DRV_USB_UHP_HOST_MAXIMUM_ENDPOINTS_NUMBER   USB_HOST_PIPES_NUMBER
-#define DRV_USB_UHP_MAX_DMA_CHANNELS                7
-
-#ifndef UHP_EHCI_RAM_ADDR
-#define UHP_EHCI_RAM_ADDR                            0xA0100000u
-#endif
-#ifndef UHP_OHCI_RAM_ADDR
-#define UHP_OHCI_RAM_ADDR                            0xA0100000u
-#endif
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Data Type Definitions
 // *****************************************************************************
 // *****************************************************************************
-
-
-/***************************************************
- * This is an intermediate flag that is set by
- * the driver to indicate that a ZLP should be sent
- ***************************************************/
-#define USB_DEVICE_IRP_FLAG_SEND_ZLP 0x80
-
-
-/************************************************
- * Endpoint state enumeration.
- ************************************************/
-typedef enum
-{
-    DRV_USB_UHP_DEVICE_ENDPOINT_STATE_ENABLED = 0x1,
-    DRV_USB_UHP_DEVICE_ENDPOINT_STATE_STALLED = 0x2
-}
-DRV_USB_UHP_DEVICE_ENDPOINT_STATE;
-
-/************************************************
- * Endpoint data structure. This data structure
- * holds the IRP queue and other flags associated
- * with functioning of the endpoint.
- ************************************************/
-
-typedef struct
-{
-    /* Max packet size for the endpoint */
-    uint16_t maxPacketSize;
-
-    /* Endpoint type */
-    USB_TRANSFER_TYPE endpointType;
-
-    /* Endpoint state bitmap */
-    DRV_USB_UHP_DEVICE_ENDPOINT_STATE endpointState;
-}
-DRV_USB_UHP_DEVICE_ENDPOINT_OBJ;
 
 /*********************************************
  * These IRP states are used internally by the
@@ -127,24 +77,6 @@ typedef enum
 DRV_USB_UHP_HOST_IRP_STATE; 
 
 
-#define _CC_PRAGMA(x) _Pragma(#x)
-
-
-#if defined(__ICCARM__)
-	#define WEAK __weak
-	#define USED __root
-	#define CONSTRUCTOR
-//	#define SECTION(a) _CC_PRAGMA(location = a)
-	#define ALIGNED(a) _CC_PRAGMA(data_alignment = a)
-#elif defined(__GNUC__)
-	#define WEAK __attribute__((weak))
-	#define USED __attribute__((used))
-	#define CONSTRUCTOR __attribute__((constructor))
-	#define SECTION(a) __attribute__((__section__(a)))
-	#define ALIGNED(a) __attribute__((__aligned__(a)))
-#else
-	#error Unknown compiler!
-#endif
 /*********************************************
  * This is the local USB Host IRP object
  ********************************************/
@@ -205,9 +137,6 @@ typedef struct _DRV_USB_UHP_HOST_PIPE_OBJ
      * an interrupt pipe */
     uint8_t bInterval;
 
-    uint8_t noOfSlots;
-    unsigned int startingOffset;
-
     /* Client that owns this pipe */
     DRV_HANDLE hClient;
     
@@ -223,10 +152,9 @@ typedef struct _DRV_USB_UHP_HOST_PIPE_OBJ
     /* The NAK counter for the IRP
      * being served on the pipe */
     
-    uint32_t nakCounter;
+//    uint32_t nakCounter;
 
     /* Pipe endpoint size*/
-
     unsigned int endpointSize;
 
     /* The next and previous pipe */
@@ -234,7 +162,6 @@ typedef struct _DRV_USB_UHP_HOST_PIPE_OBJ
     struct _DRV_USB_UHP_HOST_PIPE_OBJ * previous;
 
     /* Interval counter */
-
     uint8_t intervalCounter;
 
     /* Pipe Speed */
@@ -248,6 +175,9 @@ typedef struct _DRV_USB_UHP_HOST_PIPE_OBJ
 
     /* Host Pipe allocated*/
     uint8_t hostPipeN;
+    
+    /* Host Pipe Queue Head used */
+//    uint32_t *HostPipeQueueHead;
 }
 DRV_USB_UHP_HOST_PIPE_OBJ;
 
@@ -320,14 +250,6 @@ typedef enum
 
 } DRV_USB_UHP_TASK_STATE;
 
-typedef struct _DRV_USB_UHP_DMA_POOL_STRUCT
-{
-    bool inUse;
-    bool endpointDir;
-    uint8_t iEndpoint;
-    unsigned int count;
-
-} DRV_USB_UHP_DMA_POOL;
 
 /*********************************************
  * Host Mode Device Attach Detach State
@@ -339,6 +261,7 @@ typedef enum
 
     /* Waiting for debounce delay */
     DRV_USB_UHP_HOST_ATTACH_STATE_DETECTED,
+    DRV_USB_UHP_HOST_ATTACH_STATE_DETECTED_DEBOUNCE,
 
     /* Debouncing is complete. Device is attached */
     DRV_USB_UHP_HOST_ATTACH_STATE_READY,
@@ -355,12 +278,14 @@ typedef enum
 
     /* Start the reset signalling */
     DRV_USB_UHP_HOST_RESET_STATE_START,
+    DRV_USB_UHP_HOST_RESET_STATE_START_DELAYED,
 
     /* Check if reset duration is done and stop reset */
     DRV_USB_UHP_HOST_RESET_STATE_WAIT_FOR_COMPLETE,
 
     DRV_USB_UHP_HOST_RESET_STATE_COMPLETE,
-    DRV_USB_UHP_HOST_RESET_STATE_COMPLETE2
+    DRV_USB_UHP_HOST_RESET_STATE_OHCI_RESET_START,
+    DRV_USB_UHP_HOST_RESET_STATE_OHCI_WAIT_FOR_COMPLETE
 
 } DRV_USB_UHP_HOST_RESET_STATE;
 
@@ -398,16 +323,14 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
     /* Indicates that the client has opened the instance */
     bool isOpened;
 
-    DRV_USB_UHP_DMA_POOL gDrvUSBDMAPool[DRV_USB_UHP_MAX_DMA_CHANNELS + 1];
-
     /* Status of this driver instance */
     SYS_STATUS status;     
 
-    /* Contains the consumed FIFO size */
-    unsigned int consumedFIFOSize;
+    /* The USB peripheral associated with the object */
+    volatile uhphs_registers_t * usbIDEHCI;
 
     /* The USB peripheral associated with the object */
-    volatile uhphs_registers_t * usbID;
+    volatile UhpOhci * usbIDOHCI;
 
     /* Interrupt source for USB module */
     INT_SOURCE interruptSource;
@@ -416,10 +339,7 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
     OSAL_MUTEX_DECLARE (mutexID);
 
     /* Pointer to the endpoint table */
-    DRV_USB_UHP_DEVICE_ENDPOINT_OBJ *endpointTable;
-
-    /* Pointer to the endpoint table */
-    DRV_USB_UHP_HOST_ENDPOINT_OBJ hostEndpointTable[DRV_USB_UHP_HOST_MAXIMUM_ENDPOINTS_NUMBER];
+   DRV_USB_UHP_HOST_ENDPOINT_OBJ hostEndpointTable[DRV_USB_UHP_HOST_MAXIMUM_ENDPOINTS_NUMBER];
 
     /* The object is current in an interrupt context */
     bool isInInterruptContext;
@@ -458,7 +378,7 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
     uint8_t portNumber;
 
     /* True if the Host Controller sets this bit to 1 on the completion of a USB transaction */
-    volatile uint8_t int_xfr_qtd_complete;
+    volatile uint8_t intXfrQtdComplete;
     volatile uint8_t hostPipeInUse;
     
     uint8_t staticDToggleIn;
@@ -489,17 +409,7 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
 
 extern void _DRV_USB_UHP_HOST_AttachDetachStateMachine (DRV_USB_UHP_OBJ * hDriver);
 extern void _DRV_USB_UHP_HOST_ResetStateMachine(DRV_USB_UHP_OBJ * hDriver);
-extern void _DRV_USB_UHP_DEVICE_Initialize(DRV_USB_UHP_OBJ * drvObj, SYS_MODULE_INDEX index);
-extern void _DRV_USB_UHP_DEVICE_Tasks_ISR(DRV_USB_UHP_OBJ * hDriver);
-extern void _DRV_USB_UHP_DEVICE_Tasks_ISR_USBDMA(DRV_USB_UHP_OBJ * hDriver);
 extern void _DRV_USB_UHP_HOST_Initialize(DRV_USB_UHP_OBJ * drvObj, SYS_MODULE_INDEX index);
 extern void _DRV_USB_UHP_HOST_Tasks_ISR(DRV_USB_UHP_OBJ * hDriver);
-extern void _DRV_USB_UHP_HOST_Tasks_ISR_USBDMA(DRV_USB_UHP_OBJ * hDriver);
-extern uint8_t _DRV_USB_UHP_DEVICE_Get_FreeDMAChannel
-(
-    DRV_USB_UHP_OBJ * hDriver,
-    bool endpointDir,
-    uint8_t iEndpoint
-);
 
 #endif  // _DRV_USB_UHP_LOCAL_H

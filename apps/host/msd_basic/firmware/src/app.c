@@ -78,7 +78,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 APP_DATA appData CACHE_ALIGN;
 
 /* This is the string that will written to the file */
- const uint8_t writeData[12]  __attribute__((aligned(16))) = "Hello World ";
+ const CACHE_ALIGN uint8_t writeData[12] = "Hello World ";
 
 // *****************************************************************************
 // *****************************************************************************

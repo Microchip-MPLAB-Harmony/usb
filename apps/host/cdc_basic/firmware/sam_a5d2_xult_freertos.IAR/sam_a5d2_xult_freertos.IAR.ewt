@@ -2886,6 +2886,9 @@
         </group>
     </group>
     <file>
+        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\usb\uhp\src\drv_usb_uhp_ohci_host.c</name>
+    </file>
+    <file>
         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\sam_a5d2_xult_freertos.ipcf</name>
     </file>
 </project>

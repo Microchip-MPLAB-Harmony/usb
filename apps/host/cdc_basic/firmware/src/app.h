@@ -160,12 +160,13 @@ typedef enum
 
 typedef struct
 {
+    /* First place to be aligned. 
+     * Array to hold read data */
+    uint8_t inDataArray[64];
+    
    /* The application's current state */
     APP_STATES state;
 
-    /* Array to hold read data */
-    uint8_t inDataArray[64];
-    
     /* CDC Object */
     USB_HOST_CDC_OBJ cdcObj;
     

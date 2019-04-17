@@ -2761,6 +2761,9 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\exceptions.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\fault_handlers.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\system\fs\fat_fs\src\ff.c</name>
             </file>
             <file>
@@ -2832,11 +2835,14 @@
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\src\usb_host_scsi.c</name>
             </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\vectortrap.s</name>
-            </file>
         </group>
     </group>
+    <file>
+        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\ddr.icf</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\usb\uhp\src\drv_usb_uhp_ohci_host.c</name>
+    </file>
     <file>
         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\sam_a5d2_xult.ipcf</name>
     </file>

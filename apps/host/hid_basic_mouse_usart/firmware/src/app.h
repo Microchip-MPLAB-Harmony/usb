@@ -116,6 +116,7 @@ typedef enum
   Remarks:
     Application strings and buffers are be defined outside this structure.
  */
+typedef uintptr_t DRV_USART_BUFFER_HANDLE;
 
 typedef struct
 {

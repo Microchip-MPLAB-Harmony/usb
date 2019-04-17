@@ -76,10 +76,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     Application strings and buffers are be defined outside this structure.
 */
 
-APP_DATA appData __attribute__((aligned(16))) ;
+APP_DATA CACHE_ALIGN appData;
 
 /* This is the string that will written to the file */
-const uint8_t prompt[8]  __attribute__((aligned(16)))  = "\r\nLED : ";
+const CACHE_ALIGN uint8_t prompt[8]  = "\r\nLED : ";
 
 // *****************************************************************************
 // *****************************************************************************
@@ -409,7 +409,7 @@ void APP_Tasks ( void )
             
             /* Here we request data from the device */
             appData.readTransferDone = false;
-            result = USB_HOST_CDC_Read(appData.cdcHostHandle, NULL, appData.inDataArray, 1);
+            result = USB_HOST_CDC_Read(appData.cdcHostHandle, NULL, appData.inDataArray, 8);
             if(result == USB_HOST_CDC_RESULT_SUCCESS)
             {
                 appData.state = APP_STATE_WAIT_FOR_DATA_FROM_DEVICE;

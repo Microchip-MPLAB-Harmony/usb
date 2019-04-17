@@ -115,8 +115,9 @@ DRV_USB_UHP_INIT drvUSBInit =
 	/* Root hub available current in milliamperes */	
     .rootHubAvailableCurrent = 500,
 	
-	/* Root hub available current in milliamperes */
-    .usbID = ((uhphs_registers_t*)0x00500000)
+	/* USB base address */
+    .usbIDEHCI = ((uhphs_registers_t*)UHPHS_EHCI_ADDR),
+    .usbIDOHCI = ((UhpOhci*)UHPHS_OHCI_ADDR),
 };
 
 
@@ -164,7 +165,6 @@ void SYS_Initialize ( void* data )
     CLK_Initialize();
 	PIO_Initialize();
 
-
 	BSP_Initialize();
 	UART1_Initialize();
 
@@ -175,6 +175,8 @@ void SYS_Initialize ( void* data )
 
     INT_Initialize();
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
+
+  
 
  
     TC0_CH0_TimerInitialize(); 

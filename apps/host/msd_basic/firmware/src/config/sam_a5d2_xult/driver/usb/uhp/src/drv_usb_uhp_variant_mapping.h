@@ -170,8 +170,6 @@
  *********************************************/
 
 #define _DRV_USB_UHP_HOST_INIT(x, y)                      _DRV_USB_UHP_HOST_Initialize(x , y)
-#define _DRV_USB_UHP_HOST_TASKS_ISR(x)                    _DRV_USB_UHP_HOST_Tasks_ISR(x)
-#define _DRV_USB_UHP_HOST_ATTACH_DETACH_STATE_MACHINE(x)  _DRV_USB_UHP_HOST_AttachDetachStateMachine(x)
 #define _DRV_USB_UHP_HOST_RESET_STATE_MACHINE(x)          _DRV_USB_UHP_HOST_ResetStateMachine(x)
 
 #endif

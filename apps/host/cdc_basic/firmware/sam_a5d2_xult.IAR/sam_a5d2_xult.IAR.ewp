@@ -66,7 +66,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.3.20186</state>
+                    <state>8.32.2.19370</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -429,7 +429,7 @@
                 </option>
                 <option>
                     <name>CCOptimizationNoSizeConstraints</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCNoLiteralPool</name>
@@ -2449,6 +2449,9 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\exceptions.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\fault_handlers.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\stdio\iar_monitor.c</name>
             </file>
             <file>
@@ -2508,11 +2511,14 @@
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb_host_init_data.c</name>
             </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\vectortrap.s</name>
-            </file>
         </group>
     </group>
+    <file>
+        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\ddr.icf</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\usb\uhp\src\drv_usb_uhp_ohci_host.c</name>
+    </file>
     <file>
         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\sam_a5d2_xult.ipcf</name>
     </file>

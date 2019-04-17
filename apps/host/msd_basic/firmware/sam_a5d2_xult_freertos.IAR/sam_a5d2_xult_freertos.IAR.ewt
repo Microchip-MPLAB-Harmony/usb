@@ -2827,6 +2827,9 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\exceptions.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\fault_handlers.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\system\fs\fat_fs\src\ff.c</name>
             </file>
             <file>
@@ -2934,13 +2937,13 @@
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\usb\src\usb_host_scsi.c</name>
             </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\vectortrap.s</name>
-            </file>
         </group>
     </group>
     <file>
         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\ddr.icf</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\usb\uhp\src\drv_usb_uhp_ohci_host.c</name>
     </file>
     <file>
         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\sam_a5d2_xult_freertos.ipcf</name>
