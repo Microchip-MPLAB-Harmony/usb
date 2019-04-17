@@ -5,7 +5,7 @@
     Microchip Technology Inc.
 
   File Name:
-    usb_device_Printer_local.h
+    usb_device_printer_local.h
 
   Summary:
     USB Printer class driver interface header

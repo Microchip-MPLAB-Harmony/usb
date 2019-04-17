@@ -20,7 +20,7 @@
 *******************************************************************************/
 
 /*******************************************************************************
-Copyright (c) 2014 released Microchip Technology Inc.  All rights reserved.
+Copyright (c) 2019 released Microchip Technology Inc.  All rights reserved.
 
 Microchip licenses to you the right to use, modify, copy and distribute
 Software only when embedded on a Microchip microcontroller or digital signal
