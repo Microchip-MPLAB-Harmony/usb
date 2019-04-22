@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Driver General Client Functions</title>
+<title>Running the Demonstration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00924.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00099.html" target="topic">Common Interface</a> &gt; <a href="00102.html" target="topic">Driver General Client Functions</a></div>
+<a href="00213.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00052.html" target="topic">Device Demonstrations</a> &gt; <a href="00031.html" target="topic">printer_basic</a> &gt; <a href="00102.html" target="topic">Running the Demonstration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00101.html" target="topic">Previous</a> | <a href="00099.html" target="topic">Up</a> | <a href="00107.html" target="topic">Next</a></div>
+<a href="00101.html" target="topic">Previous</a> | <a href="00031.html" target="topic">Up</a> | <a href="00081.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver General Client Functions Topic Title: Driver General Client Functions)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB printer_basic_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Driver General Client Functions</div>
+Running the Demonstration</div>
 </div>
 </div>
 
@@ -48,92 +48,136 @@ Driver General Client Functions</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
+<div class="Element15">
+Demo functional blocks</div>
 <p class="Element10">
-The DRV_USB_HOST_INTERFACE and the DRV_USB_DEVICE_INTERFACE structures contain pointers to the USB Driver’s General Client functions. These functions are not specific to the operation mode (Host, Device, or Dual Role) of the driver. A USB Driver must implement these functions and ensure that the Host or Device Stack can access these functions through the driver’s common interface structures. The common interface contains three general client functions:</p>
-<ul class="Element630">
-<li class="Element600">Driver Open Function</li>
-<li class="Element600">Driver Close Function</li>
-<li class="Element600">Driver Event Handler Set Function</li>
-</ul><div class="Element15">
-Driver Open Function</div>
+This demo uses PC running Windows 7 as a Host. SAM E54 Xplained Pro running the demo application on top of USB printer function driver when connected to the host, enumerates as &quot;USB Printing Support&quot; device under USB controllers in Device Manager. This demo allows the user to print the text from Notepad or similar application in Windows using built in &quot;Generic/Text Only&quot; print driver.&nbsp;</p>
 <p class="Element10">
-The <span class="Element146">open</span> member of the DRV_USB_HOST_INTERFACE and the DRV_USB_DEVICE_INTERFACE structures should point to the USB Driver Open function. The signature of the Open function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">DRV_HANDLE (*open)(<strong><span style="color: #000080">const</span></strong> SYS_MODULE_INDEX drvIndex, <strong><span style="color: #000080">const</span></strong> DRV_IO_INTENT intent);</pre></div></div>
+Generic / Text Only driver simply outputs the data to the connected USB printer in raw format without performing any translation on the data to be printed.&nbsp;</p>
 <p class="Element10">
-The USB Driver Open function must match this signature. The Driver Client uses the USB Driver index (drvIndex) to specify the instance of the USB module that Host Stack or the Device Stack should open. The USB Driver should ignore the <span class="Element146">intent</span> parameter. The function should return a driver handle. If the driver is not ready to be opened, it should return an invalid handle (DRV_HANDLE_INVALID). In such a case, the client will continue trying to open the driver by calling the Open function again. The driver may also fail to open for an invalid <span class="Element146">index</span> parameter or if USB module is in an error condition.&nbsp;</p>
+There is no Printer head mechanism used in this demo, instead, the print data received from the host is sent to the serial terminal application running in the host itself by the demo application.&nbsp;</p>
 <p class="Element10">
-When supporting Dual Role operation, both the Host Stack and Device Stack will call the Driver Open function in one application. The USB Driver must support multiple calls to the Open function in the same application. The Open function should be thread-safe.</p><div class="Element15">
-Driver Close Function</div>
+Open any serial terminal application with 115200/8-N-1 settings for the Virtual COM port associated with the EDBG.&nbsp;</p>
 <p class="Element10">
-The <span class="Element146">close</span> member of the DRV_USB_HOST_INTERFACE and the DRV_USB_DEVICE_INTERFACE structures should point to the USB Driver Close function. The signature of the Close function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> (*close)(DRV_HANDLE handle);</pre></div></div>
+&nbsp;</p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element67" valign="top" width="10%" style="border:none;">
+<div class="Element68">
+<img src="Note Icon.png" border="0" alt="" title=""> <strong>Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<div class="Element68">
+Check the 'Device Manager' for the Virtual COM number associated with the EDBG.&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
-The USB Driver Close function must match this signature. The Driver Client passes the handle obtained from the Driver Open function as a parameter to the close. The USB Host Stack or USB Device Stack will close the driver only when the stack is deinitialized (which is typically a rare case). The USB Driver should deallocate any client-related resources in the Close function. If the specified driver handle is not valid, the Close function should not have any side effects. The USB Driver expects the Close function to be called from the context of the thread in which the driver was opened; therefore, this function <i>is not</i> expected to be thread-safe.</p><div class="Element15">
-Driver Event Handler Set Function</div>
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="Figure_1.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+Opening demo application</div>
 <p class="Element10">
-The <span class="Element146">eventHandlerSet</span> member of the DRV_USB_HOST_INTERFACE and the DRV_USB_DEVICE_INTERFACE structures should point to the USB Driver Event Handler Set function. The signature of the Event Handler Set function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> (*eventHandlerSet)(DRV_HANDLE handle, uintptr_t hReferenceData, DRV_USB_EVENT_CALLBACK eventHandler);</pre></div></div>
+Open the Demo application in MPLAB X IDE and build the project. After successful build, program the connected SAM E54 Xplained Pro kit.&nbsp;</p>
 <p class="Element10">
-The USB Driver Event Handler Set function must match this signature. The signature of the Client Event Handling function should match DRV_USB_EVENT_CALLBACK. The USB Driver calls this function when it must communicate USB events to the client. The client can set the <span class="Element146">eventHandler</span> parameter to NULL if it does not want to receive USB Driver events. The client will receive Host mode events if the USB Driver is operating in Host mode. It will receive Device mode events if the USB Driver is operating in Device mode. The DRV_USB_EVENT type enumeration contains all the possible events that the USB Driver would generate. The following code example shows the enumeration. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// *****************************************************************************</span></i>
-<i><span style="color: #008000">/* USB Driver Events Enumeration
-
-  Summary:
-    Identifies the different events that the USB Driver provides.
-
-  Description:
-    Identifies the different events that the USB Driver provides. The USB Driver
-    should be able to provide these events.
-
-  Remarks:
-    None.
-*/</span></i>
-
-<strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong>
-{
-    <i><span style="color: #008000">/* Bus error occurred and was reported. This event can be generated in both
-     * Host and Device mode. */</span></i>
-    DRV_USB_EVENT_ERROR = 1,
-
-    <i><span style="color: #008000">/* Host has issued a device Reset. This event occurs only in Device mode */</span></i>
-    DRV_USB_EVENT_RESET_DETECT,
-
-    <i><span style="color: #008000">/* Resume detected while USB in suspend mode. This event can be generated in
-     * both Host and Device mode. In Host mode, the events occurs when a remote
-     * wakeup capable device has generated resume signaling. In Device mode,
-     * this event will occur when the Host has issued resume signaling. */</span></i>
-    DRV_USB_EVENT_RESUME_DETECT,
-
-    <i><span style="color: #008000">/* This event is generated in Device mode only. It occurs when the Host
-     * suspends the bus and the bus goes idle. */</span></i>
-    DRV_USB_EVENT_IDLE_DETECT,
-
-    <i><span style="color: #008000">/* This event is generated in Host mode and Device mode. In Host mode, this
-     * event occurs when the device has stalled the Host. In Device mode, this
-     * event occurs when the Host has accessed a stalled endpoint thus
-     * triggering the device to send a STALL to the Host. */</span></i>
-    DRV_USB_EVENT_STALL,
-
-    <i><span style="color: #008000">/* This event is generated in Host mode and Device mode. In Device mode,
-     * this event occurs when a SOF has been generated by the Host. In Host
-     * mode, this event occurs when controller is about to generate an SOF.
-     * */</span></i>
-    DRV_USB_EVENT_SOF_DETECT,
-
-    <i><span style="color: #008000">/* This event is generated in Device mode when the VBUS voltage is above
-     * VBUS session valid. */</span></i>
-    DRV_USB_EVENT_DEVICE_SESSION_VALID,
-
-    <i><span style="color: #008000">/* This event is generated in Device mode when the VBUS voltage falls
-     * below VBUS session valid. */</span></i>
-    DRV_USB_EVENT_DEVICE_SESSION_INVALID,
-
-} DRV_USB_EVENT;</pre></div></div>
+Once the programming is completed successfully, connect the &quot;Target USB&quot; port of SAM E54 Xplained Pro to the Host.&nbsp;</p>
 <p class="Element10">
-This completes the discussion on the Driver General Client Functions.</p></div>
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="Figure_2.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+Installing the printer</div>
+<p class="Element10">
+The SAM E54 Xplained Pro attached to the host PC enumerates as &quot;USB Printing Support&quot; in Device Manager as shown below.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="Figure_3.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+At this point, a new device by the name &quot;Generic Text Printer Demo&quot; should be available under Control Panel -&gt; Devices and Printers as shown below.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="Figure_4.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+Follow the below steps to add &quot;Generic/Text Only&quot; printer and link it to the attached USB printer.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+1) Open Devices and Printers from the Control Panel and right click then click &quot;Add a printer&quot;&nbsp;</p>
+<p class="Element10">
+2) In the Add Printer wizard, click &quot;Add a local printer&quot;.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="Figure_5.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+3) In the printer port selection option, choose &quot;Use an existing port&quot; and from the drop-down list, select &quot;USB001 (Virtual printer port for USB)&quot;.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="Figure_6.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+4) In the printer driver selection, select &quot;Generic&quot; from the Manufacturer list and &quot;Generic / Text Only&quot; from the Printers list.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="Figure_7.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+5) Use the default option in driver version select window and click Next.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="Figure_8.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+6) In the printer name window, use the default name &quot;Generic / Text Only&quot; or provide any other name and click Next.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="Figure_9.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+7) Click Finish to complete the Add printer wizard.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="Figure_10.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+8) At this point, a new printer icon with the name provided in step #6 should be visible under Devices and Printers window as shown below.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="Figure_11.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<div class="Element15">
+Print test page</div>
+<p class="Element10">
+After successful installation of the &quot;Generic / Text Only&quot; printer, follow below steps to print a test page.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+1) On the printer icon, right click and select &quot;Printer Properties&quot;&nbsp;</p>
+<p class="Element10">
+2) In the properties window, click &quot;Print Test Page&quot; as shown below.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="Figure_12.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="Figure_13.png" border="0" alt="" title=""></p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+3) Now the test page data will be printed on the serial terminal application as shown below. This shows the successful reception of print data sent by the host PC.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="Figure_14.png" border="0" alt="" title="">&nbsp;</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00924.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00099.html" target="topic">Common Interface</a> &gt; <a href="00102.html" target="topic">Driver General Client Functions</a></div>
+<a href="00213.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00052.html" target="topic">Device Demonstrations</a> &gt; <a href="00031.html" target="topic">printer_basic</a> &gt; <a href="00102.html" target="topic">Running the Demonstration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -141,13 +185,13 @@ This completes the discussion on the Driver General Client Functions.</p></div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00101.html" target="topic">Previous</a> | <a href="00099.html" target="topic">Up</a> | <a href="00107.html" target="topic">Next</a></div>
+<a href="00101.html" target="topic">Previous</a> | <a href="00031.html" target="topic">Up</a> | <a href="00081.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver General Client Functions Topic Title: Driver General Client Functions)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB printer_basic_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

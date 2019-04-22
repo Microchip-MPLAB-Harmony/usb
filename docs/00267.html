@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Detecting Device Attach</title>
+<title>Using the Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00308.html" target="topic">USB Host Libraries</a> &gt; <a href="00268.html" target="topic">USB HID Host Mouse Driver Library</a> &gt; <a href="00277.html" target="topic">Using the Library</a> &gt; <a href="00271.html" target="topic">How the Library Works</a> &gt; <a href="00267.html" target="topic">Detecting Device Attach</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00238.html" target="topic">USB Device Layer Library</a> &gt; <a href="00267.html" target="topic">Using the Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00270.html" target="topic">Previous</a> | <a href="00271.html" target="topic">Up</a> | <a href="00276.html" target="topic">Next</a></div>
+<a href="00260.html" target="topic">Previous</a> | <a href="00238.html" target="topic">Up</a> | <a href="00242.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HID HOST MOUSE Detecting Device Attach Topic Title: Detecting Device Attach)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Detecting Device Attach</div>
+Using the Library</div>
 </div>
 </div>
 
@@ -49,14 +49,44 @@ Detecting Device Attach</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The application will need to know when a HID mouse device is attached. To receive this attach event from the USB HID Host Mouse Driver, the application must register an Attach Event Handler by calling the <a href="01229.html" target="topic">USB_HOST_HID_MOUSE_EventHandlerSet</a> function. This function should be called before calling the <a href="01115.html" target="topic">USB_HOST_BusEnable</a> function; otherwise, the application may miss HID attach events.</p></div>
+This topic describes the basic architecture of the USB Device Layer Library and provides information and examples on its use.</p></div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00242.html" target="topic">Abstraction Model</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes the Abstraction Model implemented by USB Device Layer.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00263.html" target="topic">Library Overview</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+The Device Layer Library provides API routines which allow the Harmony System module, function driver and the user application to interact with it.<br><span style="color: #000000">The library interface routines can be classified as shown in the table below</span> &nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00257.html" target="topic">How the Library Works</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This topic describes the operation of the Device Layer.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00308.html" target="topic">USB Host Libraries</a> &gt; <a href="00268.html" target="topic">USB HID Host Mouse Driver Library</a> &gt; <a href="00277.html" target="topic">Using the Library</a> &gt; <a href="00271.html" target="topic">How the Library Works</a> &gt; <a href="00267.html" target="topic">Detecting Device Attach</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00238.html" target="topic">USB Device Layer Library</a> &gt; <a href="00267.html" target="topic">Using the Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -64,13 +94,13 @@ The application will need to know when a HID mouse device is attached. To receiv
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00270.html" target="topic">Previous</a> | <a href="00271.html" target="topic">Up</a> | <a href="00276.html" target="topic">Next</a></div>
+<a href="00260.html" target="topic">Previous</a> | <a href="00238.html" target="topic">Up</a> | <a href="00242.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HID HOST MOUSE Detecting Device Attach Topic Title: Detecting Device Attach)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Abstraction Model</title>
+<title>How the Library Works</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00308.html" target="topic">USB Host Libraries</a> &gt; <a href="00307.html" target="topic">USB Host Layer Library</a> &gt; <a href="00312.html" target="topic">Using the Library</a> &gt; <a href="00293.html" target="topic">Abstraction Model</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00330.html" target="topic">USB Host Libraries</a> &gt; <a href="00290.html" target="topic">USB HID Host Mouse Driver Library</a> &gt; <a href="00299.html" target="topic">Using the Library</a> &gt; <a href="00293.html" target="topic">How the Library Works</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00312.html" target="topic">Previous</a> | <a href="00312.html" target="topic">Up</a> | <a href="00311.html" target="topic">Next</a></div>
+<a href="00295.html" target="topic">Previous</a> | <a href="00299.html" target="topic">Up</a> | <a href="00292.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HID HOST MOUSE How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Abstraction Model</div>
+How the Library Works</div>
 </div>
 </div>
 
@@ -49,22 +49,44 @@ Abstraction Model</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The USB Host Layer abstracts USB HCD hardware interaction details and presents an easy-to-use interface to the application and the client drivers. The Host Layer provides the application with a device object handle, which the application can use to suspend or resume the device. The Host Layer provides client drivers with device client handles and interface handles. These handles allow the client drivers to interact with the device and its interfaces. The Host Layer allows the client drivers to</p>
-<ul class="Element630">
-<li class="Element600">Open control pipes and schedule control transfers</li>
-<li class="Element600">Open bulk, isochronous, and interrupt pipes</li>
-<li class="Element600">Perform data transfers</li>
-<li class="Element600">Claim and release ownership of the device and device interfaces</li>
-<li class="Element600">Perform standard device operations.</li>
-</ul><p class="Element10">
-The Host Layer has exclusive access to the HCD and the Root Hub. It opens the HCD and presents an abstracted interface to the application and client drivers.</p></div>
+The USB HID Host Mouse Driver provides the user application with an easy to use interface to the attached HID device. The USB Host Layer initializes the USB HID Host Client Driver when a device is attached. This process does not require application intervention. The following sections describe the steps and methods required for the user application to interact with the attached mouse devices through the USB Host HID Mouse Driver.</p></div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00292.html" target="topic">HID Device TPL Table Configuration</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Provides information on configuring the TPL table for HID devices.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00289.html" target="topic">Detecting Device Attach</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describe how to detect when a HID mouse device is attached.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00298.html" target="topic">Mouse Data Event Handling</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes mouse data event handling, which includes a code example.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00308.html" target="topic">USB Host Libraries</a> &gt; <a href="00307.html" target="topic">USB Host Layer Library</a> &gt; <a href="00312.html" target="topic">Using the Library</a> &gt; <a href="00293.html" target="topic">Abstraction Model</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00330.html" target="topic">USB Host Libraries</a> &gt; <a href="00290.html" target="topic">USB HID Host Mouse Driver Library</a> &gt; <a href="00299.html" target="topic">Using the Library</a> &gt; <a href="00293.html" target="topic">How the Library Works</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -72,13 +94,13 @@ The Host Layer has exclusive access to the HCD and the Root Hub. It opens the HC
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00312.html" target="topic">Previous</a> | <a href="00312.html" target="topic">Up</a> | <a href="00311.html" target="topic">Next</a></div>
+<a href="00295.html" target="topic">Previous</a> | <a href="00299.html" target="topic">Up</a> | <a href="00292.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HID HOST MOUSE How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

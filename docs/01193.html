@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_HOST_DeviceGetFirst Function</title>
+<title>USB_HOST_CDC_AttachEventHandlerSet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00308.html" target="topic">USB Host Libraries</a> &gt; <a href="00307.html" target="topic">USB Host Layer Library</a> &gt; <a href="00310.html" target="topic">Library Interface</a> &gt; a) Functions &gt; <a href="01193.html" target="topic">USB_HOST_DeviceGetFirst Function</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00330.html" target="topic">USB Host Libraries</a> &gt; <a href="00205.html" target="topic">USB CDC Host Library</a> &gt; <a href="00206.html" target="topic">Library Interface</a> &gt; a) Client Access Functions &gt; <a href="01193.html" target="topic">USB_HOST_CDC_AttachEventHandlerSet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01119.html" target="topic">Previous</a> | <a href="00310.html" target="topic">Up</a> | <a href="01194.html" target="topic">Next</a></div>
+<a href="01194.html" target="topic">Previous</a> | <a href="00206.html" target="topic">Up</a> | <a href="01222.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_DeviceGetFirst@USB_HOST_BUS@USB_HOST_DEVICE_INFO * Topic Title: USB_HOST_DeviceGetFirst Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_AttachEventHandlerSet@USB_HOST_CDC_ATTACH_EVENT_HANDLER@uintptr_t Topic Title: USB_HOST_CDC_AttachEventHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_HOST_DeviceGetFirst Function</div>
+USB_HOST_CDC_AttachEventHandlerSet Function</div>
 </div>
 </div>
 
@@ -49,20 +49,20 @@ USB_HOST_DeviceGetFirst Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function returns information about the first attached device on the specified bus. The <a href="01194.html" target="topic">USB_HOST_DeviceGetNext</a>() function can be used to get the reference to the next attached device on the bus. The <a href="01180.html" target="topic">USB_HOST_DEVICE_INFO</a> object is provided by the application.The device information will be populated into this object. If there are no devices attached on the bus, the function will set the deviceObjHandle parameter, in the <a href="01180.html" target="topic">USB_HOST_DEVICE_INFO</a> object, to <a href="01185.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE</a> INVALID.</p></div>
+This function will set an attach event handler. The attach event handler will be called when a CDC device has been attached. The context will be returned in the event handler. This function should be called before the bus has been enabled.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01289.html" target="topic">USB_HOST_RESULT</a> <strong><span style="color: #000000">USB_HOST_DeviceGetFirst</span></strong>(
-    <a href="01113.html" target="topic">USB_HOST_BUS</a> <strong><span style="color: #000000">bus</span></strong>, 
-    <a href="01180.html" target="topic">USB_HOST_DEVICE_INFO</a> * <strong><span style="color: #000000">deviceInfo</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01232.html" target="topic">USB_HOST_CDC_RESULT</a> <strong><span style="color: #000000">USB_HOST_CDC_AttachEventHandlerSet</span></strong>(
+    <a href="01191.html" target="topic">USB_HOST_CDC_ATTACH_EVENT_HANDLER</a> <strong><span style="color: #000000">eventHandler</span></strong>, 
+    uintptr_t <strong><span style="color: #000000">context</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="01115.html" target="topic">USB_HOST_BusEnable</a> function should have been called to enable detection of attached devices.</p></div>
+None.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -79,14 +79,14 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-bus&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+eventHandler&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-the bus to be queried for attached devices.<br>&nbsp;</div></td></tr><tr>
+pointer to the attach event handler<br>&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-deviceInfo&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+context&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-output parameter. Will contain device information when the function returns. If the deviceObjHandle member of the structure contains <a href="01185.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE</a> INVALID, then there are no attached devices on the bus and the deviceAddress and the bus member of the info object will contain indeterminate values.&nbsp;</div></td></tr></table></div></div>
+an application defined context that will be returned in the event handler.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -94,20 +94,22 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-USB_HOST_RESULT_SUCCESS - The function executed successfully. USB_HOST_RESULT_END_OF_DEVICE_LIST - There are no attached devices on the bus. USB_HOST_RESULT_BUS_UNKNOWN - The specified bus does not exist in the system. USB_HOST_RESULT_BUS_NOT_ENABLED - The specified bus is not enabled. USB_HOST_RESULT_PARAMETER_INVALID - the deviceInfo parameter is NULL. USB_HOST_RESULT_FAILURE - an unknown failure occurred.</p></div>
+USB_HOST_CDC_RESULT_SUCCESS - if the attach event handler was registered successfully.&nbsp;</p>
+<p class="Element10">
+USB_HOST_CDC_RESULT_FAILURE - if the number of registered event handlers has exceeded <a href="01192.html" target="topic">USB_HOST_CDC_ATTACH_LISTENERS_NUMBER</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+Function should be called before <a href="01183.html" target="topic">USB_HOST_BusEnable</a>() function is called.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">TBD.</pre></div></div>
+<div class="Element13"><div class="Element12"><pre class="Element12"></pre></div></div>
 </div>
 </div>
 </div>
@@ -115,7 +117,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00308.html" target="topic">USB Host Libraries</a> &gt; <a href="00307.html" target="topic">USB Host Layer Library</a> &gt; <a href="00310.html" target="topic">Library Interface</a> &gt; a) Functions &gt; <a href="01193.html" target="topic">USB_HOST_DeviceGetFirst Function</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00330.html" target="topic">USB Host Libraries</a> &gt; <a href="00205.html" target="topic">USB CDC Host Library</a> &gt; <a href="00206.html" target="topic">Library Interface</a> &gt; a) Client Access Functions &gt; <a href="01193.html" target="topic">USB_HOST_CDC_AttachEventHandlerSet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -123,13 +125,13 @@ Example</div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01119.html" target="topic">Previous</a> | <a href="00310.html" target="topic">Up</a> | <a href="01194.html" target="topic">Next</a></div>
+<a href="01194.html" target="topic">Previous</a> | <a href="00206.html" target="topic">Up</a> | <a href="01222.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_DeviceGetFirst@USB_HOST_BUS@USB_HOST_DEVICE_INFO * Topic Title: USB_HOST_DeviceGetFirst Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_AttachEventHandlerSet@USB_HOST_CDC_ATTACH_EVENT_HANDLER@uintptr_t Topic Title: USB_HOST_CDC_AttachEventHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Abstraction Model</title>
+<title>Sending a Report</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00308.html" target="topic">USB Host Libraries</a> &gt; <a href="00315.html" target="topic">USB Hub Host Client Driver Library</a> &gt; <a href="00325.html" target="topic">Using the Library</a> &gt; <a href="00313.html" target="topic">Abstraction Model</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00284.html" target="topic">USB HID Device Library</a> &gt; <a href="00314.html" target="topic">Using the Library</a> &gt; <a href="00307.html" target="topic">How the Library Works</a> &gt; <a href="00313.html" target="topic">Sending a Report</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00325.html" target="topic">Previous</a> | <a href="00325.html" target="topic">Up</a> | <a href="00322.html" target="topic">Next</a></div>
+<a href="00304.html" target="topic">Previous</a> | <a href="00307.html" target="topic">Up</a> | <a href="00312.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HUB HOST Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HIDDEV Sending a Report Topic Title: Sending a Report)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Abstraction Model</div>
+Sending a Report</div>
 </div>
 </div>
 
@@ -49,16 +49,28 @@ Abstraction Model</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The USB Hub Host Client Driver abstracts the complexities of Hub operation and presents a simple interface to the Host Layer. The interface allows the Host Layer to perform port operations such as port reset, port suspend and port resume. The port interface offered by the Hub Host Client Driver is the same as that offered by the root hub driver. In that, the Host Layer does not differentiate between an external hub and the root hub.&nbsp;</p>
+The USB HID Device sends data to the USB HID Host as reports. The USB HID Device application should use the <a href="00834.html" target="topic">USB_DEVICE_HID_ReportSend</a> function to send the report. This function returns a transfer handler that allows the application to track the read request. The request is completed when the Host has requested the data. A report send request could fail if the driver instance transfer queue is full. The completion of the write transfer is indicated by a USB_DEVICE_HID_EVENT_REPORT_SENT event. The transfer handle and the amount of data sent is returned in the reportSent member of the eventData data structure along with the event.&nbsp;</p>
 <p class="Element10">
-The USB Hub Host Client Driver does not have any application callable API. It only interacts with the Host Layer. The USB Hub Host Client Driver performs the task of powering up the ports, detecting device attach and detach and notifying the same to the Host Layer and detecting over current conditions. The USB Hub Host Client Driver performs the control transfers required for these tasks.</p></div>
+The following code shows an example of how a USB HID Mouse application sends a report to the host. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* In this code example, the application uses the
+ * USB_HID_MOUSE_ReportCreate to create the mouse report
+ * and then uses the USB_DEVICE_HID_ReportSend() function
+ * to send the report */</span></i>
+
+USB_HID_MOUSE_ReportCreate(appData.xCoordinate, appData.yCoordinate,
+    appData.mouseButton, &amp;appData.mouseReport);
+
+<i><span style="color: #008000">/* Send the mouse report. */</span></i>
+USB_DEVICE_HID_ReportSend(appData.hidInstance,
+    &amp;appData.reportTransferHandle, (uint8_t*)&amp;appData.mouseReport,
+    <strong><span style="color: #000080">sizeof</span></strong>(USB_HID_MOUSE_REPORT));</pre></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00308.html" target="topic">USB Host Libraries</a> &gt; <a href="00315.html" target="topic">USB Hub Host Client Driver Library</a> &gt; <a href="00325.html" target="topic">Using the Library</a> &gt; <a href="00313.html" target="topic">Abstraction Model</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00284.html" target="topic">USB HID Device Library</a> &gt; <a href="00314.html" target="topic">Using the Library</a> &gt; <a href="00307.html" target="topic">How the Library Works</a> &gt; <a href="00313.html" target="topic">Sending a Report</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -66,13 +78,13 @@ The USB Hub Host Client Driver does not have any application callable API. It on
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00325.html" target="topic">Previous</a> | <a href="00325.html" target="topic">Up</a> | <a href="00322.html" target="topic">Next</a></div>
+<a href="00304.html" target="topic">Previous</a> | <a href="00307.html" target="topic">Up</a> | <a href="00312.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HUB HOST Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HIDDEV Sending a Report Topic Title: Sending a Report)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

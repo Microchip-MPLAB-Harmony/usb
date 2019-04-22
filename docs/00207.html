@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB Demonstrations Help</title>
+<title>Library Overview</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00207.html" target="topic">USB Demonstrations Help</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00330.html" target="topic">USB Host Libraries</a> &gt; <a href="00205.html" target="topic">USB CDC Host Library</a> &gt; <a href="00212.html" target="topic">Using the Library</a> &gt; <a href="00207.html" target="topic">Library Overview</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00087.html" target="topic">Next</a></div>
+<a href="00193.html" target="topic">Previous</a> | <a href="00212.html" target="topic">Up</a> | <a href="00203.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB Demonstrations Topic Title: USB Demonstrations Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Library Overview Topic Title: Library Overview)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB Demonstrations Help</div>
+Library Overview</div>
 </div>
 </div>
 
@@ -46,39 +46,33 @@ USB Demonstrations Help</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
-<div class="Element11">
+<a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<div class="Element212">
+<p class="Element10">
+The USB CDC Host Client Driver API is grouped functionally, as shown in the following table. </p><div class="Element63">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table1">
 <tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
+<td class="Element65" valign="top" width="19%">
+<div class="Element66">
+Library Interface Section&nbsp;</div></td><td class="Element65" valign="top" width="81%">
+<div class="Element66">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00087.html" target="topic">Introduction</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Library Demonstration Applications Help&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00096.html" target="topic">USB MSD Host USB Pen Drive Tests</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Provides pen drive test specifications.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00049.html" target="topic">Device Demonstrations</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes the USB Device demonstrations.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00078.html" target="topic">Host Demonstrations</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes the USB Host demonstrations.&nbsp;</div></td></tr></table></div></div>
+<td class="Element67" valign="top" width="19%">
+<div class="Element68">
+Client Access Functions&nbsp;</div></td><td class="Element67" valign="top" width="81%">
+<div class="Element68">
+These functions allow application clients to open, close the client and register event handlers. These functions are implemented in <span class="Element146">usb_host_cdc.c</span>.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="19%">
+<div class="Element68">
+Data Transfer Functions&nbsp;</div></td><td class="Element67" valign="top" width="81%">
+<div class="Element68">
+These functions allow the application client to transfer data to the attached device. These functions are implemented in <span class="Element146">usb_host_cdc.c</span>.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="19%">
+<div class="Element68">
+CDC Class-specific Command Functions&nbsp;</div></td><td class="Element67" valign="top" width="81%">
+<div class="Element68">
+These functions allow the application to send class specific control transfer requests to the application. These functions are implemented in <span class="Element146">usb_host_cdc_acm.c</span>.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -86,7 +80,7 @@ This section describes the USB Host demonstrations.&nbsp;</div></td></tr></table
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00207.html" target="topic">USB Demonstrations Help</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00330.html" target="topic">USB Host Libraries</a> &gt; <a href="00205.html" target="topic">USB CDC Host Library</a> &gt; <a href="00212.html" target="topic">Using the Library</a> &gt; <a href="00207.html" target="topic">Library Overview</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -94,13 +88,13 @@ This section describes the USB Host demonstrations.&nbsp;</div></td></tr></table
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00087.html" target="topic">Next</a></div>
+<a href="00193.html" target="topic">Previous</a> | <a href="00212.html" target="topic">Up</a> | <a href="00203.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB Demonstrations Topic Title: USB Demonstrations Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Library Overview Topic Title: Library Overview)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Abstraction Model</title>
+<title>How the Library Works</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00233.html" target="topic">USB Device Libraries</a> &gt; <a href="00163.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00161.html" target="topic">Using the Library</a> &gt; <a href="00148.html" target="topic">Abstraction Model</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00168.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00153.html" target="topic">Using the Library</a> &gt; <a href="00148.html" target="topic">How the Library Works</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00161.html" target="topic">Previous</a> | <a href="00161.html" target="topic">Up</a> | <a href="00158.html" target="topic">Next</a></div>
+<a href="00150.html" target="topic">Previous</a> | <a href="00153.html" target="topic">Up</a> | <a href="00142.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDDEV V2_0 Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDDEV V1_0 How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Abstraction Model</div>
+How the Library Works</div>
 </div>
 </div>
 
@@ -48,18 +48,44 @@ Abstraction Model</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10">
-<span style="color: #000000">The Audio 2.0 Function Driver offers various services to the USB Audio 2.0 device to communicate with the host by abstracting USB specification details. </span>It must be used along with the USB Device<span style="color: #FFFFFF">_</span>layer and USB controller to communicate with the USB host. Figure 1 shows a block diagram of the MPLAB Harmony USB Device Stack Architecture and where the Audio 2.0 Function Driver is placed. </p><p class="Element10" style="text-align: center;">
-<strong>Figure 1: USB Device Audio Device Driver</strong>&nbsp;</p>
-<p class="Element10">
-The USB controller driver takes the responsibility of managing the USB peripheral on the device. The USB Device Layer handles the device enumeration, etc. The USB Device Layer forwards all Audio-specific control transfers to the Audio 2.0 Function Driver. The Audio 2.0 Function Driver interprets the control transfers and requests application's intervention through event handlers and a well-defined set of API. The application must respond to the Audio events either in or out of the event handler. Some of these events are related to Audio 2.0 Device Class specific control transfers. The application must complete these control transfers within the timing constraints defined by USB.</p></div>
+</div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00142.html" target="topic">Initializing the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes how the USB Audio 1.0 Device driver is initialized.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00146.html" target="topic">Event Handling</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes Audio 1.0 Function Driver event handler registration and event handling.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00152.html" target="topic">Transferring Data</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes how to send/receive data to/from USB Host using this USB Audio 1.0 Device Driver.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00233.html" target="topic">USB Device Libraries</a> &gt; <a href="00163.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00161.html" target="topic">Using the Library</a> &gt; <a href="00148.html" target="topic">Abstraction Model</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00168.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00153.html" target="topic">Using the Library</a> &gt; <a href="00148.html" target="topic">How the Library Works</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -67,13 +93,13 @@ The USB controller driver takes the responsibility of managing the USB periphera
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00161.html" target="topic">Previous</a> | <a href="00161.html" target="topic">Up</a> | <a href="00158.html" target="topic">Next</a></div>
+<a href="00150.html" target="topic">Previous</a> | <a href="00153.html" target="topic">Up</a> | <a href="00142.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDDEV V2_0 Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDDEV V1_0 How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

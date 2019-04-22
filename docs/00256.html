@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Library Overview</title>
+<title>Function Driver Registration Table</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00233.html" target="topic">USB Device Libraries</a> &gt; <a href="00232.html" target="topic">USB Device Layer Library</a> &gt; <a href="00260.html" target="topic">Using the Library</a> &gt; <a href="00256.html" target="topic">Library Overview</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00238.html" target="topic">USB Device Layer Library</a> &gt; <a href="00267.html" target="topic">Using the Library</a> &gt; <a href="00257.html" target="topic">How the Library Works</a> &gt; <a href="00259.html" target="topic">Library Initialization</a> &gt; <a href="00256.html" target="topic">Function Driver Registration Table</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00235.html" target="topic">Previous</a> | <a href="00260.html" target="topic">Up</a> | <a href="00250.html" target="topic">Next</a></div>
+<a href="00264.html" target="topic">Previous</a> | <a href="00259.html" target="topic">Up</a> | <a href="00258.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Library Overview Topic Title: Library Overview)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Function Driver Registration Table Topic Title: Function Driver Registration Table)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Library Overview</div>
+Function Driver Registration Table</div>
 </div>
 </div>
 
@@ -49,55 +49,68 @@ Library Overview</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The Device Layer Library provides API routines which allow the Harmony System module, function driver and the user application to interact with it.&nbsp;</p>
+The Function Driver Registration Table (defined by the <a href="00765.html" target="topic">USB_DEVICE_FUNCTION_REGISTRATION_TABLE</a> data type) contains information about the function drivers that are present in the application. The Device Layer needs this information to establish the intended functionality of the USB Device and then manage the operation of the device.&nbsp;</p>
 <p class="Element10">
-<span style="color: #000000">The library interface routines can be classified as shown in the table below</span> &nbsp;</p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="40%">
-<div class="Element66">
-Library Interface Section&nbsp;</div></td><td class="Element65" valign="top" width="60%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="40%">
-<div class="Element68">
-System Interaction Functions&nbsp;</div></td><td class="Element67" valign="top" width="60%">
-<div class="Element68">
-These functions allow the Harmony System Module to perform library initialization, deinitialization, reinitialization and task functions.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="40%">
-<div class="Element68">
-Client Core Functions&nbsp;</div></td><td class="Element67" valign="top" width="60%">
-<div class="Element68">
-These functions allow the application client to a register an event callback function.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="40%">
-<div class="Element68">
-Device Power State Management Functions&nbsp;</div></td><td class="Element67" valign="top" width="60%">
-<div class="Element68">
-These functions manage the power state of the device (self or bus powered) and remote wake-up.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="40%">
-<div class="Element68">
-Endpoint Management Functions&nbsp;</div></td><td class="Element67" valign="top" width="60%">
-<div class="Element68">
-These functions allow the application to manage (enable, disable and stall) endpoints. These are required in case of a Generic or a Vendor USB Device Implementation.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="40%">
-<div class="Element68">
-Device Management Functions&nbsp;</div></td><td class="Element67" valign="top" width="60%">
-<div class="Element68">
-These functions allow the application to manage (attach, detach etc.) the state of the device.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="40%">
-<div class="Element68">
-Control Transfer Functions&nbsp;</div></td><td class="Element67" valign="top" width="60%">
-<div class="Element68">
-These functions allow the application to complete control transfers.&nbsp;</div></td></tr></table></div></div>
-</div>
+The Function Driver Registration Table contains an entry for every function driver instance contained in the application. Each entry is configuration specific. If a device that features multiple configurations, the Function Driver Registration Table will contains an entry for every function driver in each configuration. Entries are instance and configuration specific. Hence if a configuration contains two instances of the same function driver type, the Function Driver Registration Table will contain two entries to for the same function driver but with different instance indexes. A description of each member of the Function Driver Registration Table entry is as follows:</p>
+<ul class="Element630">
+<li class="Element600">The configurationValue member of the entry specifies to which configuration this entry belongs. The Device Layer will process this entry when the configurationValue configuration is set.</li>
+<li class="Element600">The driver member of the entry should be set to Function Driver – Device Layer Interface Functions Object exported by the function driver. This object is provided by the function driver. In case of the CDC function driver, this is <a href="00670.html" target="topic">USB_DEVICE_CDC_FUNCTION_DRIVER</a>. In case of HID function driver, this is <a href="00816.html" target="topic">USB_DEVICE_HID_FUNCTION_DRIVER</a>. . Refer to the &quot;Library Initialization&quot; topic in Function Driver Specific help section for more details.</li>
+<li class="Element600">The funcDriverIndex member of the entry specifies the instance of the function driver that this entry relates to. The Device Layer will use this instance when communicating with the function driver. In a case where there are multiple instances of the same function driver in a configuration, the funcDriverIndex allows the Device Layer to uniquely identify the function driver.</li>
+<li class="Element600">The funcDriverInit member of the entry must point to the function driver instance specific initialization data structure. Function Drivers typically require an initialization data structure to be specified. The Device Layer passes the pointer to the initialization data structure when the function driver is initialized. Refer to the &quot;Library Initialization&quot; topic in Function Driver Specific help section for more details.</li>
+<li class="Element600">The interfaceNumber member of the entry must contain the interface number of the first interface that is owned by this function driver instance. The information is available from the Device Configuration Descriptor.</li>
+<li class="Element600">The numberOfInterfaces member of the entry must contain the number of interfaces following the interfaceNumber interface that is owned by this function driver instance. For example, a CDC Device requires two interfaces. The interfaceNumber member of Function Driver Registration Table entry for this function driver would be 0 and the numberOfInterfaces member would be 2. This indicates that Interface 0 and Interface 1 in the Device Configuration Descriptor are owned by this function driver.</li>
+<li class="Element600">The speed member of the entry specifies the device speeds for which this function driver should be initialized. This can be set to either USB_SPEED_FULL, USB_SPEED_HIGH or a logical OR combination of both. The Device Layer will initialize the function if the device attach speed matches the speed mention in the speed member of the entry.</li>
+</ul><p class="Element10">
+The following code shows an example of Function Driver Registration Table for one function driver. The CDC Function Driver in this case has two interfaces. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/**************************************************
+ * USB Device Layer Function Driver Registration
+ * Table
+ **************************************************/</span></i>
+<strong><span style="color: #000080">const</span></strong> USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[1] =
+{
+    {
+         .configurationValue = 1 ,                  <i><span style="color: #008000">// Configuration descriptor index</span></i>
+         .driver = USB_DEVICE_CDC_FUNCTION_DRIVER,  <i><span style="color: #008000">// CDC APIs exposed to the device layer</span></i>
+         .funcDriverIndex = 0 ,                     <i><span style="color: #008000">// Instance index of CDC function driver</span></i>
+         .funcDriverInit = (<strong><span style="color: #000080">void</span></strong> *)&amp;cdcInit,        <i><span style="color: #008000">// CDC init data</span></i>
+         .interfaceNumber = 0 ,                     <i><span style="color: #008000">// Start interface number of this instance</span></i>
+         .numberOfInterfaces = 2 ,                  <i><span style="color: #008000">// Total number of interfaces contained in this instance</span></i>
+         .speed = USB_SPEED_FULL|USB_SPEED_HIGH     <i><span style="color: #008000">// USB Speed</span></i>
+    }
+};</pre></div></div>
+<p class="Element10">
+The following code shows an example of Function Driver Registration Table for two function drivers. This example demonstrates a Composite (CDC + MSD ) device. The CDC Function Driver uses two interfaces starting from interface 0. The MSD Function Driver has one interface starting from interface 2. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/***********************************************
+ * Function Driver Registration Table
+ **********************************************/</span></i>
+USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[2] =
+{
+    {
+        .speed = USB_SPEED_FULL|USB_SPEED_HIGH,     <i><span style="color: #008000">// Speed at which this device can operate</span></i>
+        .configurationValue = 1,                    <i><span style="color: #008000">// Configuration number to which this device belongs</span></i>
+        .interfaceNumber = 1,                       <i><span style="color: #008000">// Starting interface number for this function driver</span></i>
+        .numberOfInterfaces = 2,                    <i><span style="color: #008000">// Number of interfaces that this function driver owns.</span></i>
+        .funcDriverIndex = 0,                       <i><span style="color: #008000">// Function Driver index</span></i>
+        .funcDriverInit = &amp;cdcInit,                 <i><span style="color: #008000">// Function Driver initialization data structure</span></i>
+        .driver = USB_DEVICE_CDC_FUNCTION_DRIVER    <i><span style="color: #008000">// CDC Function Driver.</span></i>
+    },
+    {
+        .speed = USB_SPEED_FULL|USB_SPEED_HIGH,     <i><span style="color: #008000">// Speed at which this device can operate</span></i>
+        .configurationValue = 1,                    <i><span style="color: #008000">// Configuration number to which this device belongs</span></i>
+        .interfaceNumber = 0,                       <i><span style="color: #008000">// Starting interface number for this function driver</span></i>
+        .numberOfInterfaces = 1,                    <i><span style="color: #008000">// Number of interfaces that this function driver owns.</span></i>
+        .funcDriverIndex = 0,                       <i><span style="color: #008000">// Function Driver index</span></i>
+        .funcDriverInit = &amp;msdInit,                 <i><span style="color: #008000">// Function Driver initialization data structure</span></i>
+        .driver = USB_DEVICE_MSD_FUNCTION_DRIVER    <i><span style="color: #008000">// MSD Function Driver.</span></i>
+    },
+};</pre></div></div>
+<p class="Element10">
+The USB Device Layer Function Driver registration table can be placed in the data or program memory of the microcontroller. The contents of this table should not be modified while the application is running. Doing this will affect the operation of the device stack. A typical USB device application will not need to change the contents of this table while the application is running.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00233.html" target="topic">USB Device Libraries</a> &gt; <a href="00232.html" target="topic">USB Device Layer Library</a> &gt; <a href="00260.html" target="topic">Using the Library</a> &gt; <a href="00256.html" target="topic">Library Overview</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00238.html" target="topic">USB Device Layer Library</a> &gt; <a href="00267.html" target="topic">Using the Library</a> &gt; <a href="00257.html" target="topic">How the Library Works</a> &gt; <a href="00259.html" target="topic">Library Initialization</a> &gt; <a href="00256.html" target="topic">Function Driver Registration Table</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -105,13 +118,13 @@ These functions allow the application to complete control transfers.&nbsp;</div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00235.html" target="topic">Previous</a> | <a href="00260.html" target="topic">Up</a> | <a href="00250.html" target="topic">Next</a></div>
+<a href="00264.html" target="topic">Previous</a> | <a href="00259.html" target="topic">Up</a> | <a href="00258.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Library Overview Topic Title: Library Overview)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Function Driver Registration Table Topic Title: Function Driver Registration Table)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

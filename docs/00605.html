@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_DEVICE_AUDIO_V2_Read Function</title>
+<title>USB_DEVICE_AUDIO_V2_EVENT_DATA_READ_COMPLETE Structure</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00233.html" target="topic">USB Device Libraries</a> &gt; <a href="00163.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00159.html" target="topic">Library Interface</a> &gt; a) Functions &gt; <a href="00605.html" target="topic">USB_DEVICE_AUDIO_V2_Read Function</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00169.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00165.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00605.html" target="topic">USB_DEVICE_AUDIO_V2_EVENT_DATA_READ_COMPLETE Structure</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00595.html" target="topic">Previous</a> | <a href="00159.html" target="topic">Up</a> | <a href="00619.html" target="topic">Next</a></div>
+<a href="00596.html" target="topic">Previous</a> | <a href="00165.html" target="topic">Up</a> | <a href="00606.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_AUDIO_V2_Read@USB_DEVICE_AUDIO_V2_INDEX@USB_DEVICE_AUDIO_V2_TRANSFER_HANDLE*@uint8_t@void *@size_t Topic Title: USB_DEVICE_AUDIO_V2_Read Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_AUDIO_V2_EVENT_DATA_READ_COMPLETE Topic Title: USB_DEVICE_AUDIO_V2_EVENT_DATA_READ_COMPLETE Structure)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_DEVICE_AUDIO_V2_Read Function</div>
+USB_DEVICE_AUDIO_V2_EVENT_DATA_READ_COMPLETE Structure</div>
 </div>
 </div>
 
@@ -49,124 +49,74 @@ USB_DEVICE_AUDIO_V2_Read Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function requests a data read from the USB Device Audio v2.0 Function Driver Layer. The function places a requests with driver, the request will get serviced as data is made available by the USB Host. A handle to the request is returned in the transferHandle parameter. The termination of the request is indicated by the USB_DEVICE_AUDIO_V2_EVENT_READ_COMPLETE event. The amount of data read and the transfer handle associated with the request is returned along with the event. The transfer handle expires when event handler for the USB_DEVICE_AUDIO_V2_EVENT_READ_COMPLETE exits. If the read request could not be accepted, the function returns an error code and transferHandle will contain the value <a href="00618.html" target="topic">USB_DEVICE_AUDIO_V2_TRANSFER_HANDLE_INVALID</a>.</p></div>
+USB Device Audio v2.0 Function Driver Read and Write Complete Event Data.&nbsp;</p>
+<p class="Element10">
+This data type defines the data structure returned by the driver along with USB_DEVICE_AUDIO_V2_EVENT_READ_COMPLETE, USB_DEVICE_AUDIO_V2_EVENT_WRITE_COMPLETE, events.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00606.html" target="topic">USB_DEVICE_AUDIO_V2_RESULT</a> <strong><span style="color: #000000">USB_DEVICE_AUDIO_V2_Read</span></strong>(
-    <a href="00597.html" target="topic">USB_DEVICE_AUDIO_V2_INDEX</a> <strong><span style="color: #000000">instanceIndex</span></strong>, 
-    <a href="00617.html" target="topic">USB_DEVICE_AUDIO_V2_TRANSFER_HANDLE</a>* <strong><span style="color: #000000">transferHandle</span></strong>, 
-    uint8_t <strong><span style="color: #000000">interfaceNumber</span></strong>, 
-    <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">data</span></strong>, 
-    size_t <strong><span style="color: #000000">size</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">struct</span></strong> {
+  <a href="00639.html" target="topic">USB_DEVICE_AUDIO_V2_TRANSFER_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>;
+  uint16_t <strong><span style="color: #000000">length</span></strong>;
+  uint8_t <strong><span style="color: #000000">interfaceNum</span></strong>;
+  <a href="00628.html" target="topic">USB_DEVICE_AUDIO_V2_RESULT</a> <strong><span style="color: #000000">status</span></strong>;
+} <a href="00609.html" target="topic">USB_DEVICE_AUDIO_V2_EVENT_DATA_WRITE_COMPLETE</a>, USB_DEVICE_AUDIO_V2_EVENT_DATA_READ_COMPLETE;</pre></div></div>
+<a name="4D656D62657273"></a><div class="Element14">
+Members</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-The function driver should have been configured.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
+<div class="Element272">
 <div class="TableDiv">
-<table cellspacing="0" class="Table3">
+<table cellspacing="0" class="Table4">
 <tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
+<td class="Element260" valign="top" width="35%">
+<div class="Element261">
+Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
+<div class="Element265">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-instance&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-USB Device Audio v2.0 Function Driver instance.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-transferHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to a <a href="00617.html" target="topic">USB_DEVICE_AUDIO_V2_TRANSFER_HANDLE</a> type of variable. This variable will contain the transfer handle in case the read request was successful.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-interfaceNum&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-The USB Audio v2.0 streaming interface number on which read request is to placed.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-data&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-pointer to the data buffer where read data will be stored. In case of PIC32MZ device, this buffer should be located in coherent memory and should be aligned a 16 byte boundary.&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-size&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Size of the data buffer. Refer to the description section for more details on how the size affects the transfer.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_AUDIO_V2_TRANSFER_HANDLE handle;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Transfer handle associated with this</p>
 <ul class="Element630">
-<li class="Element600">USB_DEVICE_AUDIO_V2_RESULT_OK - The read request was successful. transferHandle contains a valid transfer handle.</li>
-<li class="Element600">USB_DEVICE_AUDIO_V2_RESULT_ERROR_TRANSFER_QUEUE_FULL - internal request queue is full. The read request could not be added.</li>
-<li class="Element600">USB_DEVICE_AUDIO_V2_RESULT_ERROR_INSTANCE_NOT_CONFIGURED - The specified instance is not configured yet.</li>
-<li class="Element600">USB_DEVICE_AUDIO_V2_RESULT_ERROR_INSTANCE_INVALID - The specified instance was not provisioned in the application and is invalid.</li>
-</ul></div>
+<li class="Element600">read or write request</li>
+</ul><p class="Element267">
+&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+uint16_t length;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Indicates the amount of data (in bytes) that was</p>
+<ul class="Element630">
+<li class="Element600">read or written</li>
+</ul><p class="Element267">
+&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+uint8_t interfaceNum;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Interface Number&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_AUDIO_V2_RESULT status;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Completion status of the transfer&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-While the using the Audio Function Driver with PIC32MZ USB module, the audio buffer provided to the USB_DEVICE_AUDIO_V2_Read function should be placed in coherent memory and aligned at a 16 byte boundary. This can be done by declaring the buffer using the __attribute__((coherent, aligned(16))) attribute, as shown in the following example: </p><div class="Element13"><div class="Element12"><pre class="Element12">uint8_t data[256] __attribute__((coherent, aligned(16)));</pre></div></div>
-</div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">
-<i><span style="color: #008000">// Shows an example of how to read. This assumes that</span></i>
-<i><span style="color: #008000">// device had been configured. The example attempts to read</span></i>
-<i><span style="color: #008000">// data from interface 1.</span></i>
-
-<a href="00597.html" target="topic">USB_DEVICE_AUDIO_V2_INDEX</a> instanceIndex;
-<a href="00617.html" target="topic">USB_DEVICE_AUDIO_V2_TRANSFER_HANDLE</a> transferHandle;
-unit8_t interfaceNumber;
-<i><span style="color: #008000">// Use this attribute for PIC32MZ __attribute__((coherent, aligned(16)))</span></i>
-unit8_t rxBuffer[192]; 
-<a href="00606.html" target="topic">USB_DEVICE_AUDIO_V2_RESULT</a> readRequestResult;
-
-instanceIndex = 0; <i><span style="color: #008000">//specify the Audio v2.0 Function driver instance number.</span></i>
-interfaceNumber = 1; <i><span style="color: #008000">//Specify the Audio v2.0 Streaming interface number.</span></i>
-
-readRequestResult = USB_DEVICE_AUDIO_V2_Read ( instanceIndex, &amp;transferHandle,
-                        interfaceNumber, &amp;rxBuffer, 192);
-
-<strong><span style="color: #000080">if</span></strong>(USB_DEVICE_AUDIO_V2_RESULT_OK != readRequestResult)
-{
-    <i><span style="color: #008000">//Do Error handling here</span></i>
-}
-
-<i><span style="color: #008000">// The completion of the read request will be indicated by the</span></i>
-<i><span style="color: #008000">// USB_DEVICE_AUDIO_V2_EVENT_READ_COMPLETE event. The transfer handle</span></i>
-<i><span style="color: #008000">// and the amount of data read will be returned along with the </span></i>
-<i><span style="color: #008000">// event.</span></i>
-</pre></div></div>
-</div>
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00233.html" target="topic">USB Device Libraries</a> &gt; <a href="00163.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00159.html" target="topic">Library Interface</a> &gt; a) Functions &gt; <a href="00605.html" target="topic">USB_DEVICE_AUDIO_V2_Read Function</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00169.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00165.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00605.html" target="topic">USB_DEVICE_AUDIO_V2_EVENT_DATA_READ_COMPLETE Structure</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -174,13 +124,13 @@ readRequestResult = USB_DEVICE_AUDIO_V2_Read ( instanceIndex, &amp;transferHandl
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00595.html" target="topic">Previous</a> | <a href="00159.html" target="topic">Up</a> | <a href="00619.html" target="topic">Next</a></div>
+<a href="00596.html" target="topic">Previous</a> | <a href="00165.html" target="topic">Up</a> | <a href="00606.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_AUDIO_V2_Read@USB_DEVICE_AUDIO_V2_INDEX@USB_DEVICE_AUDIO_V2_TRANSFER_HANDLE*@uint8_t@void *@size_t Topic Title: USB_DEVICE_AUDIO_V2_Read Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_AUDIO_V2_EVENT_DATA_READ_COMPLETE Topic Title: USB_DEVICE_AUDIO_V2_EVENT_DATA_READ_COMPLETE Structure)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

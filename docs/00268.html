@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB HID Host Mouse Driver Library</title>
+<title>Abstraction Model</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00308.html" target="topic">USB Host Libraries</a> &gt; <a href="00268.html" target="topic">USB HID Host Mouse Driver Library</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00241.html" target="topic">USB Printer Device Library</a> &gt; <a href="00282.html" target="topic">Using the Library</a> &gt; <a href="00268.html" target="topic">Abstraction Model</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01127.html" target="topic">Previous</a> | <a href="00308.html" target="topic">Up</a> | <a href="00272.html" target="topic">Next</a></div>
+<a href="00282.html" target="topic">Previous</a> | <a href="00282.html" target="topic">Up</a> | <a href="00279.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HID Host Mouse Driver Library Topic Title: USB HID Host Mouse Driver Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVPrinter Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB HID Host Mouse Driver Library</div>
+Abstraction Model</div>
 </div>
 </div>
 
@@ -46,57 +46,53 @@ USB HID Host Mouse Driver Library</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
-<div class="Element11">
+<a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00272.html" target="topic">Introduction</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Introduces the MPLAB Harmony USB HID Host Mouse Driver Library.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00277.html" target="topic">Using the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This topic describes the basic architecture of the USB HID Host Mouse Driver Library and provides information and examples on its use.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00265.html" target="topic">Configuring the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Describes how to configure the USB HID Host Mouse Driver.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00264.html" target="topic">Building the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Describes the files to be included in the project while using the USB HID Host Mouse Driver.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00274.html" target="topic">Library Interface</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes the Application Programming Interface (API) functions of the USB HID Host Mouse Driver Library.<br>The USB Mouse driver does not require explicit API call by the application to obtain Mouse data. The data in the appropriate format is sent to the application during an application event handler function call.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00269.html" target="topic">Files</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section lists the source and header files used by the library.&nbsp;</div></td></tr></table></div></div>
-</div>
+<p class="Element10">
+The Printer Function Driver offers services to a USB Printer Device to communicate with the host by abstracting the USB specification details. It must be used along with the USB Device Layer and USB controller to communicate with the USB Host. Figure 1 shows a block diagram of the MPLAB Harmony USB Architecture and where the Printer Function Driver is placed.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="printer_function_driver.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<strong>Figure 1: Printer Function Driver</strong>&nbsp;</p><p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+As shown in Figure 1, the USB Controller Driver takes the responsibility of managing the USB peripheral on the device. The USB Device Layer handles the device enumeration, etc. The USB Device layer forwards all USB Printer specific control transfers to the Printer Function Driver. Though the Printer Function Driver layer interprets and handles majority of the control transfers, some requests are sent to application layer through event handlers and well-defined set of API. The application must register an event handler with the Printer Function Driver in the Device Layer Set Configuration Event (<a href="00930.html" target="topic">USB_DEVICE_PRINTER_EventHandlerSet</a>()). The application should respond to Printer events. Response to Printer event that require control transfer response can be deferred by responding to the event after returning from the event handler. The application interacts directly with the Printer Function Driver to send/receive data through configured Bulk endpoints.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+As per the Printer specification, a USB Printer Device support three possible interfaces, but only one can be enabled at any given time. The interfaces are defined as follows:&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+• Unidirectional Interface: The unidirectional interface supports only the sending of data to the printer via a Bulk OUT endpoint.&nbsp;</p>
+<p class="Element10">
+• Bi-directional Interface: The bi-directional interface supports sending data to the printer via a Bulk OUT endpoint and receiving status and other information from the printer via a Bulk IN endpoint.&nbsp;</p>
+<p class="Element10">
+• IEEE 1284.4 compatible Bi-directional Interface: The 1284.4 interface supports sending data to the printer via a Bulk OUT endpoint and receiving status and other information from the printer via a Bulk IN endpoint, just as the bi-directional interface does. The 1284.4 interface additionally specifies that data will be transmitted to and from the device using the 1284.4 protocol.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><p class="Element10" style="text-align: center;">
+<img src="printer_function_architecture.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<strong>Figure 2: Printer Function Driver Architecture</strong>&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p><p class="Element10">
+Figure 2 shows the architecture of the Printer Function Driver.&nbsp;</p>
+<p class="Element10">
+The device management on Endpoint 0 is handled by the device library (class specific requests are routed to the Printer Function Driver by the USB Device Layer). An instance of the Printer Function Driver consists of the bulk data interface.&nbsp;</p>
+<p class="Element10">
+The Printer function library is implemented in usb_device_printer.c file.&nbsp;</p>
+<p class="Element10">
+This file implements the Printer data handling, the control transfer interpretation and event generation. The application must respond to control transfer related Printer events by directly calling the Device Layer control transfer routines.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00308.html" target="topic">USB Host Libraries</a> &gt; <a href="00268.html" target="topic">USB HID Host Mouse Driver Library</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00241.html" target="topic">USB Printer Device Library</a> &gt; <a href="00282.html" target="topic">Using the Library</a> &gt; <a href="00268.html" target="topic">Abstraction Model</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -104,13 +100,13 @@ This section lists the source and header files used by the library.&nbsp;</div><
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01127.html" target="topic">Previous</a> | <a href="00308.html" target="topic">Up</a> | <a href="00272.html" target="topic">Next</a></div>
+<a href="00282.html" target="topic">Previous</a> | <a href="00282.html" target="topic">Up</a> | <a href="00279.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HID Host Mouse Driver Library Topic Title: USB HID Host Mouse Driver Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVPrinter Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

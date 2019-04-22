@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Configuring the Library</title>
+<title>How the Library Works</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00233.html" target="topic">USB Device Libraries</a> &gt; <a href="00359.html" target="topic">Generic USB Device Library</a> &gt; <a href="00362.html" target="topic">Configuring the Library</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00330.html" target="topic">USB Host Libraries</a> &gt; <a href="00364.html" target="topic">USB MSD Host Client Driver Library</a> &gt; <a href="00368.html" target="topic">Using the Library</a> &gt; <a href="00362.html" target="topic">How the Library Works</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00364.html" target="topic">Previous</a> | <a href="00359.html" target="topic">Up</a> | <a href="00361.html" target="topic">Next</a></div>
+<a href="00365.html" target="topic">Previous</a> | <a href="00368.html" target="topic">Up</a> | <a href="00367.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSD HOST How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Configuring the Library</div>
+How the Library Works</div>
 </div>
 </div>
 
@@ -49,24 +49,33 @@ Configuring the Library</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The application designer must specify the following configuration parameters while implementing the Generic USB Device. The configuration macros that implement these parameters must be located in the <span class="Element146">system_config.h</span> file in the application project and a compiler include path (to point to the folder that contains this file) should be specified. </p><div class="Element63">
+The USB MSD Host Client Driver provides the top level block storage driver with an easy to use, event driven, interface to transport the block storage command and data between the block storage command driver library and a compliant mass storage device. The USB MSD Host Client Driver in the MPLAB Harmony USB Host stack immediately supports mass storage devices that advertise support of the SCSI command set. Indeed, most of the commercially available USB storage devices such as USB pen driver and USB card readers respond to SCSI command requests.&nbsp;</p>
+<p class="Element10">
+The process of initializing the SCSI block storage driver library when a device is attached is performed automatically, by the USB MSD Host Client Driver. This does not require user application intervention. The following sections describe the TPL table design (application responsibility) and USB MSD Host Client Driver data transfer function (typically called by the SCSI block storage driver library).</p></div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
 <div class="TableDiv">
-<table cellspacing="0" class="Table1">
+<table cellspacing="0" class="Table0">
 <tr>
-<td class="Element65" valign="top" width="12%">
-<div class="Element66">
-Configuration Macro Name&nbsp;</div></td><td class="Element65" valign="top" width="17%">
-<div class="Element66">
-Description&nbsp;</div></td><td class="Element65" valign="top" width="71%">
-<div class="Element66">
-Comments&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="12%">
-<div class="Element68">
-<a href="00701.html" target="topic">USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED</a>&nbsp;</div></td><td class="Element67" valign="top" width="17%">
-<div class="Element68">
-Size of buffer object pool for Endpoint Read and Endpoint Write functions.&nbsp;</div></td><td class="Element67" valign="top" width="71%">
-<div class="Element68">
-This macro defines the total number of transfers that can be queued across all Generic USB Device endpoints. The number of read transfers that can be queued is specified by the endpointQueueSizeRead member of the <a href="00829.html" target="topic">USB_DEVICE_INIT</a> data structure. The number of write transfers that can be queued is specified by the endpointQueueSizeWrite member of the <a href="00829.html" target="topic">USB_DEVICE_INIT</a> data structure.&nbsp;</div></td></tr></table></div></div>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00367.html" target="topic">MSD TPL Table Configuration</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes TPL table design for matching MSD devices.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00358.html" target="topic">Data Transfer</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes how to transfer data, which includes a code example.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -74,7 +83,7 @@ This macro defines the total number of transfers that can be queued across all G
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00233.html" target="topic">USB Device Libraries</a> &gt; <a href="00359.html" target="topic">Generic USB Device Library</a> &gt; <a href="00362.html" target="topic">Configuring the Library</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00330.html" target="topic">USB Host Libraries</a> &gt; <a href="00364.html" target="topic">USB MSD Host Client Driver Library</a> &gt; <a href="00368.html" target="topic">Using the Library</a> &gt; <a href="00362.html" target="topic">How the Library Works</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -82,13 +91,13 @@ This macro defines the total number of transfers that can be queued across all G
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00364.html" target="topic">Previous</a> | <a href="00359.html" target="topic">Up</a> | <a href="00361.html" target="topic">Next</a></div>
+<a href="00365.html" target="topic">Previous</a> | <a href="00368.html" target="topic">Up</a> | <a href="00367.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSD HOST How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB Application Project Driver Signatures</title>
+<title>Using the Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00209.html" target="topic">Driver Signing and Windows 8 (for v1.08)</a> &gt; <a href="00212.html" target="topic">USB Application Project Driver Signatures</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00330.html" target="topic">USB Host Libraries</a> &gt; <a href="00205.html" target="topic">USB CDC Host Library</a> &gt; <a href="00212.html" target="topic">Using the Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00214.html" target="topic">Previous</a> | <a href="00209.html" target="topic">Up</a> | <a href="00211.html" target="topic">Next</a></div>
+<a href="00204.html" target="topic">Previous</a> | <a href="00205.html" target="topic">Up</a> | <a href="00193.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEV DRV WIN8 USB Application Project Driver Signatures Topic Title: USB Application Project Driver Signatures)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB Application Project Driver Signatures</div>
+Using the Library</div>
 </div>
 </div>
 
@@ -46,27 +46,42 @@ USB Application Project Driver Signatures</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="4465736372697074696F6E"></a><div class="Element11">
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
 <div class="Element10">
-<div class="Element15">
-Projects Based on WinUSB</div>
-<p class="Element10">
-WinUSB is a Microsoft created/supplied driver.  All Microsoft-supplied drivers contain an embedded signature from Microsoft.&nbsp;</p>
-<p class="Element10">
-In operating systems prior to Windows 8, WinUSB-based devices require the user to install a driver package for the hardware. However, starting with Windows 8, it is possible to make WinUSB-based devices that are fully &quot;plug and play&quot;, and do not require any user-supplied driver package. Windows 8 allows for automatic installation of the WinUSB driver, when the device firmware implements the correct Microsoft specific &quot;OS&quot; and related USB descriptors. These special descriptors are optional, but when implemented, allow for automatic driver installation using the WinUSB driver that is distributed with the operating system installation.</p><div class="Element15">
-Projects Based on CDC</div>
-<p class="Element10">
-When used with Windows, the CDC projects in MPLAB Harmony use the Microsoft created/supplied <span class="Element146">usbser.sys</span> driver. This driver contains an embedded signature from Microsoft.</p><div class="Element15">
-Projects Based on HID, MSD, Audio Class</div>
-<p class="Element10">
-These USB device classes/projects rely on Microsoft-supplied drivers that are distributed with the operating system, and do not require any user-supplied driver packages or <span class="Element146">.inf</span> files. Therefore, driver  package signing is usually not relevant for these types of applications, as the drivers are normally installed automatically when the hardware is attached to the PC.</p></div>
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00193.html" target="topic">Abstraction Model</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes the Abstraction Model of the USB CDC Host Client Driver Library.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00207.html" target="topic">Library Overview</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+The USB CDC Host Client Driver API is grouped functionally, as shown in the following table. &nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00203.html" target="topic">How the Library Works</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes how the Library works and how it should be used.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00209.html" target="topic">Driver Signing and Windows 8 (for v1.08)</a> &gt; <a href="00212.html" target="topic">USB Application Project Driver Signatures</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00330.html" target="topic">USB Host Libraries</a> &gt; <a href="00205.html" target="topic">USB CDC Host Library</a> &gt; <a href="00212.html" target="topic">Using the Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -74,13 +89,13 @@ These USB device classes/projects rely on Microsoft-supplied drivers that are di
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00214.html" target="topic">Previous</a> | <a href="00209.html" target="topic">Up</a> | <a href="00211.html" target="topic">Next</a></div>
+<a href="00204.html" target="topic">Previous</a> | <a href="00205.html" target="topic">Up</a> | <a href="00193.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEV DRV WIN8 USB Application Project Driver Signatures Topic Title: USB Application Project Driver Signatures)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

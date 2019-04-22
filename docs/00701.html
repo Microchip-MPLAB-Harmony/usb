@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED Macro</title>
+<title>USB_DEVICE_CDC_TRANSFER_HANDLE Type</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00233.html" target="topic">USB Device Libraries</a> &gt; <a href="00232.html" target="topic">USB Device Layer Library</a> &gt; <a href="00254.html" target="topic">Configuring the Library</a> &gt; <a href="00701.html" target="topic">USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED Macro</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00237.html" target="topic">USB CDC Device Library</a> &gt; <a href="00233.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00701.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE Type</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00846.html" target="topic">Previous</a> | <a href="00254.html" target="topic">Up</a> | <a href="00911.html" target="topic">Next</a></div>
+<a href="00698.html" target="topic">Previous</a> | <a href="00233.html" target="topic">Up</a> | <a href="00668.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED Topic Title: USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_CDC_TRANSFER_HANDLE Topic Title: USB_DEVICE_CDC_TRANSFER_HANDLE Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED Macro</div>
+USB_DEVICE_CDC_TRANSFER_HANDLE Type</div>
 </div>
 </div>
 
@@ -49,28 +49,26 @@ USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED Macro</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-USB Device Layer Combined Endpoint Queue Depth&nbsp;</p>
+USB Device CDC Function Driver Transfer Handle Definition&nbsp;</p>
 <p class="Element10">
-This configuration constant specifies the combined endpoint queue depth in a case where the endpoint read and endpoint write functions are used to implement a vendor USB device. This constant should be used in conjunction with the usb_device_endpoint_functions.c file.&nbsp;</p>
-<p class="Element10">
-This macro defines the number of entries in all IN and OUT endpoint queues in all instances of the USB Device Layer. This value can be obtained by adding up the endpoint read and write queue sizes of each USB Device Layer instance . In a simple single instance USB Device Layer, that requires only one read and one write endpoint with one buffer each, the USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED macro can be set to 2. Consider a case with one Device Layer instance using 2 IN and 2 OUT endpoints, each requiring 2 buffers, this macro should be set to 8 (2 + 2 + 2 + 2).</p></div>
+This definition defines a USB Device CDC Function Driver Transfer Handle. A Transfer Handle is owned by the application but its value is modified by the <a href="00703.html" target="topic">USB_DEVICE_CDC_Write</a>, <a href="00686.html" target="topic">USB_DEVICE_CDC_Read</a> and the <a href="00697.html" target="topic">USB_DEVICE_CDC_SerialStateNotificationSend</a> functions. The transfer handle is valid for the life time of the transfer and expires when the transfer related event had occurred.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED</span></strong> 2</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> uintptr_t <strong><span style="color: #000000">USB_DEVICE_CDC_TRANSFER_HANDLE</span></strong>;</pre></div></div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This constant needs to be specified only if a Vendor USB Device is to be implemented and the usb_device_endpoint_functions.c file is included in the project. This constant does not have any effect on queues of other standard function drivers that are included in the USB device implementation.</p></div>
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00326.html" target="topic">USB Libraries Help</a> &gt; <a href="00233.html" target="topic">USB Device Libraries</a> &gt; <a href="00232.html" target="topic">USB Device Layer Library</a> &gt; <a href="00254.html" target="topic">Configuring the Library</a> &gt; <a href="00701.html" target="topic">USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED Macro</a></div>
+<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00237.html" target="topic">USB CDC Device Library</a> &gt; <a href="00233.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00701.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE Type</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -78,13 +76,13 @@ This constant needs to be specified only if a Vendor USB Device is to be impleme
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00207.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00846.html" target="topic">Previous</a> | <a href="00254.html" target="topic">Up</a> | <a href="00911.html" target="topic">Next</a></div>
+<a href="00698.html" target="topic">Previous</a> | <a href="00233.html" target="topic">Up</a> | <a href="00668.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED Topic Title: USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_CDC_TRANSFER_HANDLE Topic Title: USB_DEVICE_CDC_TRANSFER_HANDLE Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
