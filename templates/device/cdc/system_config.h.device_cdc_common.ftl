@@ -43,7 +43,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 *******************************************************************************/
 -->
 /* Maximum instances of CDC function driver */
-#define USB_DEVICE_CDC_INSTANCES_NUMBER                     ${CONFIG_USB_DEVICE_CDC_INSTANCES}
+#define USB_DEVICE_CDC_INSTANCES_NUMBER                     ${__INSTANCE_COUNT}
 
 /* CDC Transfer Queue Size for both read and
    write. Applicable to all instances of the

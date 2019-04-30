@@ -74,7 +74,7 @@ def onAttachmentConnected(source, target):
 		
 			Database.clearSymbolValue("usb_device_cdc_0", "CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
 			Database.setSymbolValue("usb_device_cdc_0", "CONFIG_USB_DEVICE_FUNCTION_USE_IAD", True, 2)
-			nCDCInstances = Database.getSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_INSTANCES")
+			nCDCInstances = Database.getSymbolValue("usb_device_cdc", "__INSTANCE_COUNT")
 			if nCDCInstances != None:
 				if nCDCInstances > 1:
 					configDescriptorSize = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
@@ -149,11 +149,8 @@ def onAttachmentDisconnected(source, target):
 		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", interfaceNumber - 2, 2)
 		
-	nCDCInstances = Database.getSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_INSTANCES")
+	nCDCInstances = Database.getSymbolValue("usb_device_cdc", "__INSTANCE_COUNT")
 	if nCDCInstances != None:
-		nCDCInstances = nCDCInstances - 1
-		Database.clearSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_INSTANCES")
-		Database.setSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_INSTANCES", nCDCInstances, 2)
 		if nCDCInstances == 1 and nFunctions != None and nFunctions == 1:
 			Database.clearSymbolValue("usb_device_cdc_0", "CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
 			Database.setSymbolValue("usb_device_cdc_0", "CONFIG_USB_DEVICE_FUNCTION_USE_IAD", False, 2)
@@ -332,7 +329,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	
 	Log.writeDebugMessage ("Dependency Started")
 	
-	numInstances  = Database.getSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_INSTANCES")
+	numInstances  = Database.getSymbolValue("usb_device_cdc", "__INSTANCE_COUNT")
 	if (numInstances == None):
 		numInstances = 0
 		
@@ -340,8 +337,6 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	if (queueDepthCombined == None):
 		queueDepthCombined = 0
 
-	Database.clearSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_INSTANCES")
-	Database.setSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_INSTANCES", (index+1), 2)
 	Database.clearSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED")
 	Database.setSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED", queueDepthCombined + currentQSizeRead + currentQSizeWrite + currentQSizeSerialStateNotification, 2)
 	

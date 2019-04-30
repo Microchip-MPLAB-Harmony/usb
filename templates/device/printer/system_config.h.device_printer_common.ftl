@@ -43,7 +43,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 *******************************************************************************/
 -->
 /* Maximum instances of Printer function driver */
-#define USB_DEVICE_PRINTER_INSTANCES_NUMBER           ${CONFIG_USB_DEVICE_PRINTER_INSTANCES}
+#define USB_DEVICE_PRINTER_INSTANCES_NUMBER          ${__INSTANCE_COUNT} 
 
 /* Printer Transfer Queue Size for both read and
    write. Applicable to all instances of the

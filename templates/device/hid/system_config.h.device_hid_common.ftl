@@ -43,7 +43,7 @@
  *******************************************************************************/
 -->
 /* Maximum instances of HID function driver */
-#define USB_DEVICE_HID_INSTANCES_NUMBER     ${CONFIG_USB_DEVICE_HID_INSTANCES}
+#define USB_DEVICE_HID_INSTANCES_NUMBER     ${__INSTANCE_COUNT} 
 
 /* HID Transfer Queue Size for both read and
    write. Applicable to all instances of the

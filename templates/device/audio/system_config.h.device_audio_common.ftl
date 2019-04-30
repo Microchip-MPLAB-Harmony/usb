@@ -43,7 +43,7 @@
  *******************************************************************************/
 -->
 /* Maximum instances of Audio function driver */
-#define USB_DEVICE_AUDIO_INSTANCES_NUMBER     ${CONFIG_USB_DEVICE_AUDIO_INSTANCES}
+#define USB_DEVICE_AUDIO_INSTANCES_NUMBER    ${__INSTANCE_COUNT} 
 
 /* Audio Transfer Queue Size for both read and
    write. Applicable to all instances of the

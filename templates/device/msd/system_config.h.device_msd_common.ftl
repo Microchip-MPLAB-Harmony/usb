@@ -43,7 +43,7 @@
  *******************************************************************************/
 -->
 /* Maximum instances of MSD function driver */
-#define USB_DEVICE_MSD_INSTANCES_NUMBER     ${CONFIG_USB_DEVICE_MSD_INSTANCES}
+#define USB_DEVICE_MSD_INSTANCES_NUMBER     ${__INSTANCE_COUNT} 
 
 #define USB_DEVICE_MSD_NUM_SECTOR_BUFFERS ${CONFIG_USB_DEVICE_FUNCTION_MSD_MAX_SECTORS_COMMON}
 
