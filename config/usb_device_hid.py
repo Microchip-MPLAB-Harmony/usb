@@ -63,30 +63,30 @@ def onAttachmentConnected(source, target):
 	if (dependencyID == "usb_device_dependency"):
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 		if readValue != None: 
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", readValue + 1  , 2)
+			args = {"nFunction":readValue + 1}
+			res = Database.sendMessage("usb_device", "UPDATE_FUNCTIONS_NUMBER", args)
 		
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 		if readValue != None: 
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", readValue + hidDescriptorSize , 2)
+			args = {"nFunction": readValue + hidDescriptorSize}
+			res = Database.sendMessage("usb_device", "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 		
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 		if readValue != None: 
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", readValue + hidInterfacesNumber , 2)
+			args = {"nFunction": readValue + hidInterfacesNumber}
+			res = Database.sendMessage("usb_device", "UPDATE_INTERFACES_NUMBER", args)
 			startInterfaceNumber.setValue(readValue, 1)
 		
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if readValue != None:
 			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue + hidEndpointsPic32 , 2)
+				rgs = {"nFunction":  readValue + hidEndpointsPic32}
+				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 				epNumberInterruptIn.setValue(readValue + 1, 1)
 				epNumberInterruptOut.setValue(readValue + 1, 1)
 			else:
-				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue + hidEndpointsSAM , 2)
+				rgs = {"nFunction":  readValue + hidEndpointsSAM}
+				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 				epNumberInterruptIn.setValue(readValue + 1, 1)
 				epNumberInterruptOut.setValue(readValue + 2, 1)
 
@@ -100,27 +100,28 @@ def onAttachmentDisconnected(source, target):
 	if (dependencyID == "usb_device_dependency"):
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 		if readValue != None: 
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", readValue - 1  , 2)
+			args = {"nFunction":readValue - 1}
+			res = Database.sendMessage("usb_device", "UPDATE_FUNCTIONS_NUMBER", args)
 		
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 		if readValue != None: 
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", readValue - hidDescriptorSize , 2)
+			args = {"nFunction": readValue - hidDescriptorSize }
+			res = Database.sendMessage("usb_device", "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 		
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 		if readValue != None: 
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", readValue - hidInterfacesNumber , 2)
+			rgs = {"nFunction":   readValue - hidInterfacesNumber}
+			res = Database.sendMessage("usb_device", "UPDATE_INTERFACES_NUMBER", args)
 		
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if readValue != None:
 			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue - hidEndpointsPic32 , 2)
+				args = {"nFunction": readValue - hidEndpointsPic32 }
+				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 			else:
-				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue - hidEndpointsSAM , 2)
+				args = {"nFunction":  readValue - hidEndpointsSAM }
+				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
+				
 			
 def destroyComponent(component):
 	print ("HID Function Driver: Destroyed")
@@ -136,8 +137,10 @@ def usbDeviceHidBufferQueueSize(usbSymbolSource, event):
 	if (event["id"] == "CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE"):
 		queueDepthCombined = queueDepthCombined - currentQSizeWrite  + event["value"]
 		currentQSizeWrite = event["value"]
-	Database.clearSymbolValue("usb_device_hid", "CONFIG_USB_DEVICE_HID_QUEUE_DEPTH_COMBINED")
-	Database.setSymbolValue("usb_device_hid", "CONFIG_USB_DEVICE_HID_QUEUE_DEPTH_COMBINED", queueDepthCombined, 2)
+	#Database.clearSymbolValue("usb_device_hid", "CONFIG_USB_DEVICE_HID_QUEUE_DEPTH_COMBINED")
+	#Database.setSymbolValue("usb_device_hid", "CONFIG_USB_DEVICE_HID_QUEUE_DEPTH_COMBINED", queueDepthCombined, 2)
+	args = {"hidQueueDepth": queueDepthCombined}
+	res = Database.sendMessage("usb_device_hid", "UPDATE_HID_QUEUE_DEPTH_COMBINED", args)
 
 
 
@@ -253,14 +256,11 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	if (queueDepthCombined == None):
 		queueDepthCombined = 0
 	#if numInstances < (index+1):
-	Database.clearSymbolValue("usb_device_hid", "CONFIG_USB_DEVICE_HID_INSTANCES")
-	Database.setSymbolValue("usb_device_hid", "CONFIG_USB_DEVICE_HID_INSTANCES", (index+1), 2)
-	Database.clearSymbolValue("usb_device_hid", "CONFIG_USB_DEVICE_HID_QUEUE_DEPTH_COMBINED")
-	if (Database.setSymbolValue("usb_device_hid", "CONFIG_USB_DEVICE_HID_QUEUE_DEPTH_COMBINED", queueDepthCombined + currentQSizeRead + currentQSizeWrite, 1) == True):
-		print("queueDepthCombined:", queueDepthCombined + currentQSizeRead + currentQSizeWrite)
-	else:
-		print("queueDepthCombined was not set")
+	args = {"hidInstanceCount": index+1}
+	res = Database.sendMessage("usb_device_cdc", "UPDATE_HID_INSTANCES", args)
 	
+	args = {"hidQueueDepth": queueDepthCombined + currentQSizeRead + currentQSizeWrite}
+	res = Database.sendMessage("usb_device_hid", "UPDATE_HID_QUEUE_DEPTH_COMBINED", args)
 	
 	#############################################################
 	# Function Init Entry for HID

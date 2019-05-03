@@ -20,10 +20,19 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
+usbDeviceMsdInstnces = None
 usbDeviceMsdMaxNumberofSectors = ["1", "2", "4", "8"]	
+
+
+def handleMessage(messageID, args):	
+	global usbDeviceMsdInstnces
+	if (messageID == "UPDATE_MSD_INSTANCES"):
+		usbDeviceMsdInstnces.setValue(args["cdcInstanceCount"])
+
 
 def instantiateComponent(usbMsdComponentCommon):
 	print ("usb_device_msd_common.py")
+	global usbDeviceMsdInstnce
 	usbDeviceMsdInstnces = usbMsdComponentCommon.createIntegerSymbol("CONFIG_USB_DEVICE_MSD_INSTANCES", None)
 	usbDeviceMsdInstnces.setLabel("Number of Instances")
 	usbDeviceMsdInstnces.setMin(1)

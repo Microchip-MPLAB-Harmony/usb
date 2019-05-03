@@ -20,7 +20,23 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
+
+usbDevicePrinterInstnces = None 
+usbDevicePrinterQueuDepth = None 
+
+def handleMessage(messageID, args):	
+	global usbDevicePrinterInstnces
+	global usbDevicePrinterQueuDepth
+	if (messageID == "UPDATE_PRINTER_INSTANCES"):
+		usbDevicePrinterInstnces.setValue(args["printerInstanceCount"])
+	elif (messageID == "UPDATE_PRINTER_QUEUE_DEPTH_COMBINED"):
+		usbDevicePrinterQueuDepth.setValue(args["printerQueueDepth"])
+
+
 def instantiateComponent(usbPrinterComponentCommon):
+
+	global usbDevicePrinterInstnces
+	global usbDevicePrinterQueuDepth 
 	print ("usb_device_printer_common.py")
 	usbDevicePrinterInstnces = usbPrinterComponentCommon.createIntegerSymbol("CONFIG_USB_DEVICE_PRINTER_INSTANCES", None)
 	usbDevicePrinterInstnces.setLabel("Number of Instances")

@@ -66,24 +66,24 @@ def onAttachmentConnected(source, target):
 		if (dependencyID == "usb_device_dependency"):
 			readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 			if readValue != None: 
-				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", readValue + 1  , 2)
+				args = {"nFunction":readValue + 1}
+				res = Database.sendMessage("usb_device", "UPDATE_FUNCTIONS_NUMBER", args)
 		
 			readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 			if readValue != None: 
-				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
-				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", readValue + audioDescriptorSize , 2)
+				args = {"nFunction": readValue + audioDescriptorSize}
+				res = Database.sendMessage("usb_device", "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 		
 			readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 			if readValue != None: 
-				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
-				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", readValue + audioInterfacesNumber , 2)
+				args = {"nFunction":  readValue + audioInterfacesNumber}
+				res = Database.sendMessage("usb_device", "UPDATE_INTERFACES_NUMBER", args)
 				startInterfaceNumber.setValue(readValue, 1)
 		
 			readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 			if readValue != None:
-				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue + 2 , 2)
+				args = {"nFunction":   readValue + 2}
+				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 				epNumberIn.setValue(readValue , 1)
 				epNumberOut.setValue(readValue + 1, 1)
 		
@@ -108,23 +108,23 @@ def onAttachmentDisconnected(source, target):
 	if (dependencyID == "usb_device_dependency"):
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 		if readValue != None: 
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", readValue - 1  , 2)
+			args = {"nFunction":readValue - 1}
+			res = Database.sendMessage("usb_device", "UPDATE_FUNCTIONS_NUMBER", args)
 		
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 		if readValue != None: 
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", readValue - audioDescriptorSize , 2)
+			args = {"nFunction": readValue - audioDescriptorSize}
+			res = Database.sendMessage("usb_device", "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 		
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 		if readValue != None: 
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", readValue - audioInterfacesNumber , 2)
+			args = {"nFunction":  readValue - audioInterfacesNumber}
+			res = Database.sendMessage("usb_device", "UPDATE_INTERFACES_NUMBER", args)
 		
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if readValue != None:
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue - 2 , 2)
+			args = {"nFunction":readValue - 2 }
+			res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 			
 			
 def destroyComponent(component):
@@ -137,14 +137,14 @@ def updateConfigurationDescriptorSize(descriptorSizeOld):
 		print("I am at updateConfigurationDescriptorSize 1")
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 		if (readValue != None):
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", readValue + audioDescriptorSize, 2)
+			args = {"nFunction":readValue + audioDescriptorSize}
+			res = Database.sendMessage("usb_device", "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 	else:
 		print("I am at updateConfigurationDescriptorSize 2")
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 		if (readValue != None):
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", readValue + audioDescriptorSize - descriptorSizeOld, 2)
+			args = {"nFunction": readValue + audioDescriptorSize - descriptorSizeOld}
+			res = Database.sendMessage("usb_device", "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 	usbConfigSizeUpdated = True
 
 def updateNumberOfInterfaces(numberOfInterfacesOld, nInterfacesNew):
@@ -152,13 +152,13 @@ def updateNumberOfInterfaces(numberOfInterfacesOld, nInterfacesNew):
 	if (usbNumberOfInterfacesUpdated == False):
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 		if (readValue != None):
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", readValue + audioInterfacesNumber, 2)
+			args = {"nFunction":  readValue + audioInterfacesNumber}
+			res = Database.sendMessage("usb_device", "UPDATE_INTERFACES_NUMBER", args)
 	else:
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 		if (readValue != None):
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", readValue + nInterfacesNew - numberOfInterfacesOld, 2)
+			args = {"nFunction":   readValue + nInterfacesNew - numberOfInterfacesOld}
+			res = Database.sendMessage("usb_device", "UPDATE_INTERFACES_NUMBER", args)
 			print(audioInterfacesNumber,numberOfInterfacesOld )
 	usbNumberOfInterfacesUpdated = True 
 
@@ -434,12 +434,11 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 		maxIntfcAltSettings = 0
 	
 	#if numInstances < (index+1):
-	Database.clearSymbolValue("usb_device_audio", "CONFIG_USB_DEVICE_AUDIO_INSTANCES")
-	Database.setSymbolValue("usb_device_audio", "CONFIG_USB_DEVICE_AUDIO_INSTANCES", (index+1), 2)
-	Database.clearSymbolValue("usb_device_audio", "CONFIG_USB_DEVICE_AUDIO_QUEUE_DEPTH_COMBINED")
-	Database.setSymbolValue("usb_device_audio", "CONFIG_USB_DEVICE_AUDIO_QUEUE_DEPTH_COMBINED", queueDepthCombined + currentQSizeRead + currentQSizeWrite, 2)
-	print(maxStreamingIntfc, maxIntfcAltSettings, currentQSizeRead,currentQSizeWrite)
+	args = {"audioInstanceCount": index+1}
+	res = Database.sendMessage("usb_device_audio", "UPDATE_AUDIO_INSTANCES", args)
 	
+	args = {"audioQueueDepth": queueDepthCombined + currentQSizeRead + currentQSizeWrite }
+	res = Database.sendMessage("usb_device_audio", "UPDATE_AUDIO_QUEUE_DEPTH_COMBINED", args)
 	
 	Database.clearSymbolValue("usb_device_audio", "CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER_COMBINED")
 	Database.setSymbolValue("usb_device_audio", "CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER_COMBINED", 1, 2)

@@ -20,8 +20,21 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
+usbDeviceHidInstnces = None 
+usbDeviceHidQueuDepth = None 
+
+def handleMessage(messageID, args):	
+	global usbDeviceHidInstnces
+	global usbDeviceHidQueuDepth
+	if (messageID == "UPDATE_HID_INSTANCES"):
+		usbDeviceHidInstnces.setValue(args["hidInstanceCount"])
+	elif (messageID == "UPDATE_HID_QUEUE_DEPTH_COMBINED"):
+		usbDeviceHidQueuDepth.setValue(args["hidQueueDepth"])
+		
 def instantiateComponent(usbHidComponentCommon):
-	print ("usb_device_hid_common.py")
+	global usbDeviceHidInstnces
+	global usbDeviceHidQueuDepth
+
 	usbDeviceHidInstnces = usbHidComponentCommon.createIntegerSymbol("CONFIG_USB_DEVICE_HID_INSTANCES", None)
 	usbDeviceHidInstnces.setLabel("Number of Instances")
 	usbDeviceHidInstnces.setMin(1)

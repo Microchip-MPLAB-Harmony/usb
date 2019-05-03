@@ -209,23 +209,28 @@ def instantiateComponent(usbDriverComponent):
 	usbhsSymIntEnComment.setDependencies(dependencyStatus, ["core." + NVICVector])
 
 	# Enable dependent Harmony core components
-	Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
-	Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
+	if Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False: 
+		Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
+		Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
 
-	Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
-	Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
+	if Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False: 
+		Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
+		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
 
-	Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_INT")
-	Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_INT", True, 2)
+	if Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_INT") == False: 
+		Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_INT")
+		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_INT", True, 2)
 
     # Database.clearSymbolValue("Harmony", "ENABLE_SYS_DMA")
     # Database.setSymbolValue("Harmony", "ENABLE_SYS_DMA", True, 2)
 
-	Database.clearSymbolValue("HarmonyCore", "ENABLE_OSAL")
-	Database.setSymbolValue("HarmonyCore", "ENABLE_OSAL", True, 2)
-
-	Database.clearSymbolValue("HarmonyCore", "ENABLE_APP_FILE")
-	Database.setSymbolValue("HarmonyCore", "ENABLE_APP_FILE", True, 2)
+	if Database.getSymbolValue("HarmonyCore", "ENABLE_OSAL") == False: 
+		Database.clearSymbolValue("HarmonyCore", "ENABLE_OSAL")
+		Database.setSymbolValue("HarmonyCore", "ENABLE_OSAL", True, 2)
+	
+	if Database.getSymbolValue("HarmonyCore", "ENABLE_APP_FILE") == False: 
+		Database.clearSymbolValue("HarmonyCore", "ENABLE_APP_FILE")
+		Database.setSymbolValue("HarmonyCore", "ENABLE_APP_FILE", True, 2)
 
 	configName = Variables.get("__CONFIGURATION_NAME")
 

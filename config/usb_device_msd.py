@@ -64,33 +64,33 @@ def onAttachmentConnected(source, target):
 	
 	if (dependencyID == "usb_device_dependency"):
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", readValue + 1, 2)
+		args = {"nFunction":readValue + 1}
+		res = Database.sendMessage("usb_device", "UPDATE_FUNCTIONS_NUMBER", args)
 		
 		# Update Total configuration descriptor size 
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 		if readValue != None:
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", readValue + msdDescriptorSize , 2)
+			args = {"nFunction": readValue + msdDescriptorSize}
+			res = Database.sendMessage("usb_device", "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 	
 		# Update Total Interfaces number 
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 		if readValue != None:
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", readValue + 1 , 2)
+			args = {"nFunction":    readValue + 1}
+			res = Database.sendMessage("usb_device", "UPDATE_INTERFACES_NUMBER", args)
 			startInterfaceNumber.setValue(readValue, 1)
 	
 	# Update Total Endpoints used 
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if readValue != None:
 			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue + msdEndpointsPic32 , 2)
+				args = {"nFunction": readValue + msdEndpointsPic32 }
+				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 				usbDeviceMsdEPNumberBulkIn.setValue(readValue + 1, 1)
 				usbDeviceMsdEPNumberBulkOut.setValue(readValue + 1, 1)	
 			else:
-				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue + msdEndpointsSAM , 2)
+				args = {"nFunction": readValue + msdEndpointsSAM }
+				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 				usbDeviceMsdEPNumberBulkIn.setValue(readValue + 1, 1)
 				usbDeviceMsdEPNumberBulkOut.setValue(readValue + 2, 1)
 					
@@ -130,30 +130,30 @@ def onAttachmentDisconnected(source, target):
 	if  dependencyID == "usb_device_dependency":
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 		if readValue!= None:
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", readValue - 1, 2)
+			args = {"nFunction":readValue - 1}
+			res = Database.sendMessage("usb_device", "UPDATE_FUNCTIONS_NUMBER", args)
 		
 		# Update Total configuration descriptor size 
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 		if readValue != None:
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", readValue - msdDescriptorSize , 2)
+			args = {"nFunction":  readValue - msdDescriptorSize}
+			res = Database.sendMessage("usb_device", "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 	
 		# Update Total Interfaces number 
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 		if readValue != None:
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", readValue - 1 , 2)
+			args = {"nFunction":   readValue - 1}
+			res = Database.sendMessage("usb_device", "UPDATE_INTERFACES_NUMBER", args)
 			startInterfaceNumber.setValue(readValue, 1)
 			
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if readValue != None:
 			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue - msdEndpointsPic32 , 2)
+				args = {"nFunction":readValue - msdEndpointsPic32 }
+				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 			else:
-				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", readValue - msdEndpointsSAM , 2)		
+				args = {"nFunction":readValue - msdEndpointsSAM  }
+				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 			
 	if  dependencyID == "usb_device_msd_media_dependency":
 		lunNoSymbol = ownerComponent.getSymbolByID("CONFIG_USB_DEVICE_FUNCTION_MSD_LUN")
@@ -275,8 +275,8 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 		numInstances = 0
 	
 	#if numInstances < (index+1):
-	Database.clearSymbolValue("usb_device_msd", "CONFIG_USB_DEVICE_MSD_INSTANCES")
-	Database.setSymbolValue("usb_device_msd", "CONFIG_USB_DEVICE_MSD_INSTANCES", (index+1), 2)
+	args = {"msdInstanceCount": index+1}
+	res = Database.sendMessage("usb_device_msd", "UPDATE_MSD_INSTANCES", args)
 			
 	##############################################################
 	# system_definitions.h file for USB Device MSD Function driver   

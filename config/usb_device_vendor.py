@@ -63,43 +63,43 @@ def onAttachmentConnected(source, target):
 		#Log.writeDebugMessage ("USB Device Vendor Function Driver: Attachment connected")
 		
 		# Update Number of Functions in USB Device, Increment the value by One. 
-		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", nFunctions + 1 , 2)
+		args = {"nFunction":nFunctions + 1}
+		res = Database.sendMessage("usb_device", "UPDATE_FUNCTIONS_NUMBER", args)
 		
 		configDescriptorSize = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
+		descriptorSize =  VENDOR_DESCRIPTOR_SIZE
 		if configDescriptorSize != None: 
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
-			descriptorSize =  VENDOR_DESCRIPTOR_SIZE
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", configDescriptorSize + descriptorSize , 2)
+			args = {"nFunction": configDescriptorSize + descriptorSize }
+			res = Database.sendMessage("usb_device", "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 	
 		nInterfaces = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 		if nInterfaces != None: 
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", nInterfaces + VENDOR_INTERFACES_NUMBER , 2)
+			args = {"nFunction": nInterfaces + VENDOR_INTERFACES_NUMBER }
+			res = Database.sendMessage("usb_device", "UPDATE_INTERFACES_NUMBER", args)
 			startInterfaceNumber.setValue(nInterfaces, 1)
 			
 		nEndpoints = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if nEndpoints != None:
 			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", nEndpoints + VENDOR_ENDPOINTS_PIC32 , 2)
+				args = {"nFunction":  nEndpoints + VENDOR_ENDPOINTS_PIC32 }
+				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 				epNumberBulkOut.setValue(nEndpoints + 1, 1)
 				epNumberBulkIn.setValue(nEndpoints + 1, 1)
 			else:
-				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", nEndpoints + VENDOR_ENDPOINTS_SAM , 2)
+				args = {"nFunction":  nEndpoints + VENDOR_ENDPOINTS_SAM }
+				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 				epNumberBulkOut.setValue(nEndpoints + 1, 1)
 				epNumberBulkIn.setValue(nEndpoints + 2, 1)
 			
 		readQSize = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINT_READ_QUEUE_SIZE")
 		if readQSize!= None:
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINT_READ_QUEUE_SIZE")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINT_READ_QUEUE_SIZE", readQSize + queueSizeRead.getValue(), 2)
+			args = {"nFunction":  readQSize + queueSizeRead.getValue()}
+			res = Database.sendMessage("usb_device", "UPDATE_ENDPOINT_READ_QUEUE_SIZE", args)
 		
 		writeQSize = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINT_WRITE_QUEUE_SIZE")
 		if writeQSize!= None:
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINT_WRITE_QUEUE_SIZE")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINT_WRITE_QUEUE_SIZE", writeQSize + queueSizeWrite.getValue(), 2)
+			args = {"nFunction":  writeQSize + queueSizeWrite.getValue()}
+			res = Database.sendMessage("usb_device", "UPDATE_ENDPOINT_WRITE_QUEUE_SIZE", args)
 
 def onAttachmentDisconnected(source, target):
 
@@ -288,10 +288,11 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	if (queueDepthCombined == None):
 		queueDepthCombined = 0
 
-	Database.clearSymbolValue("usb_device_vendor", "CONFIG_USB_DEVICE_VENDOR_INSTANCES")
-	Database.setSymbolValue("usb_device_vendor", "CONFIG_USB_DEVICE_VENDOR_INSTANCES", (index+1), 2)
-	Database.clearSymbolValue("usb_device_vendor", "CONFIG_USB_DEVICE_VENDOR_QUEUE_DEPTH_COMBINED")
-	Database.setSymbolValue("usb_device_vendor", "CONFIG_USB_DEVICE_VENDOR_QUEUE_DEPTH_COMBINED", queueDepthCombined + currentQSizeRead + currentQSizeWrite, 2)
+	args = {"vendorInstanceCount": index+1}
+	res = Database.sendMessage("usb_device_vendor", "UPDATE_VENDOR_INSTANCES", args)
+	
+	args = {"vendorQueueDepth": queueDepthCombined + currentQSizeRead + currentQSizeWrite }
+	res = Database.sendMessage("usb_device_vendor", "UPDATE_VENDOR_QUEUE_DEPTH_COMBINED", args)
 	
 	
 	#############################################################

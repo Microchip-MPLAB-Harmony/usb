@@ -20,8 +20,22 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
+usbDeviceAudioInstnces = None 
+usbDeviceAudioQueuDepth = None 
+
+def handleMessage(messageID, args):	
+	global usbDeviceAudioInstnces
+	global usbDeviceAudioQueuDepth
+	if (messageID == "UPDATE_AUDIO_INSTANCES"):
+		usbDeviceAudioInstnces.setValue(args["audioInstanceCount"])
+	elif (messageID == "UPDATE_AUDIO_QUEUE_DEPTH_COMBINED"):
+		usbDeviceAudioQueuDepth.setValue(args["audioQueueDepth"])
+		
+
 def instantiateComponent(usbAudioComponentCommon):
 	print ("usb_device_audio_common.py")
+	global usbDeviceAudioInstnces 
+	global usbDeviceAudioQueuDepth 
 	usbDeviceAudioInstnces = usbAudioComponentCommon.createIntegerSymbol("CONFIG_USB_DEVICE_AUDIO_INSTANCES", None)
 	usbDeviceAudioInstnces.setLabel("Number of Instances")
 	usbDeviceAudioInstnces.setMin(1)

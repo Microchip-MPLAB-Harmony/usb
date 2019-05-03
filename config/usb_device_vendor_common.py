@@ -20,7 +20,22 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
+usbDeviceVendorInstnces = None 
+usbDeviceVendorQueuDepth = None 
+
+
+def handleMessage(messageID, args):	
+	global usbDeviceVendorInstnces
+	global usbDeviceVendorQueuDepth
+	if (messageID == "UPDATE_VENDOR_INSTANCES"):
+		usbDeviceVendorInstnces.setValue(args["vendorInstanceCount"])
+	elif (messageID == "UPDATE_VENDOR_QUEUE_DEPTH_COMBINED"):
+		usbDeviceVendorQueuDepth.setValue(args["vendorQueueDepth"])
+
+
 def instantiateComponent(usbVendorComponentCommon):
+	global usbDeviceVendorInstnces
+	global usbDeviceVendorQueuDepth
 	usbDeviceVendorInstnces = usbVendorComponentCommon.createIntegerSymbol("CONFIG_USB_DEVICE_VENDOR_INSTANCES", None)
 	usbDeviceVendorInstnces.setLabel("Number of Instances")
 	usbDeviceVendorInstnces.setMin(1)

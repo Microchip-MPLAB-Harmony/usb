@@ -54,19 +54,21 @@ def onAttachmentConnected(source, target):
 		#Log.writeDebugMessage ("USB Device Printer Function Driver: Attachment connected")
 		
 		# Update Number of Functions in USB Device, Increment the value by One. 
-		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", nFunctions + 1 , 2)
+		#Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
+		#Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", nFunctions + 1 , 2)
+		args = {"nFunction":nFunctions + 1}
+		res = Database.sendMessage("usb_device", "UPDATE_FUNCTIONS_NUMBER", args)
 	
 		configDescriptorSize = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 		if configDescriptorSize != None: 
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", configDescriptorSize + printerDescriptorSize , 2)
+			args = {"nFunction":  configDescriptorSize + printerDescriptorSize}
+			res = Database.sendMessage("usb_device", "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 	
 		# Update Total Interfaces number 
 		nInterfaces = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 		if nInterfaces != None: 
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", nInterfaces + printerInterfacesNumber , 2)
+			args = {"nFunction":  nInterfaces + printerInterfacesNumber}
+			res = Database.sendMessage("usb_device", "UPDATE_INTERFACES_NUMBER", args)
 			startInterfaceNumber.setValue(nInterfaces, 1)
 			
 	# Update Total Endpoints used 
@@ -75,11 +77,11 @@ def onAttachmentConnected(source, target):
 
 			epNumberBulkOut.setValue(nEndpoints + 1, 1)
 			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", nEndpoints + printerEndpointsPic32 , 2)
+				args = {"nFunction": nEndpoints + printerEndpointsPic32}
+				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 			else:
-				Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-				Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", nEndpoints + printerEndpointsSAM , 2)
+				args = {"nFunction": nEndpoints + printerEndpointsSAM}
+				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 			
 
 def onAttachmentDisconnected(source, target):
@@ -99,29 +101,29 @@ def onAttachmentDisconnected(source, target):
 	nFunctions = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 	if nFunctions != None: 
 		nFunctions = nFunctions - 1
-		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", nFunctions , 2)
+		args = {"nFunction": nFunctions}
+		res = Database.sendMessage("usb_device", "UPDATE_FUNCTIONS_NUMBER", args)
 	
 	endpointNumber = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 	if endpointNumber != None:
 		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", endpointNumber -  printerEndpointsPic32 , 2)
+			args = {"nFunction": endpointNumber -  printerEndpointsPic32 }
+			res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 		else:
-			Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-			Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", endpointNumber -  printerEndpointsSAM , 2)
+			args = {"nFunction": endpointNumber -  printerEndpointsSAM }
+			res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 	
 	# Update Total Interfaces number
 	interfaceNumber = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 	if interfaceNumber != None: 
-		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
-		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER", interfaceNumber - 2, 2)
+		args = {"nFunction":   interfaceNumber - 2}
+		res = Database.sendMessage("usb_device", "UPDATE_INTERFACES_NUMBER", args)
 
 	# Update Total configuration descriptor size 	
 	configDescriptorSize = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 	if configDescriptorSize != None: 
-		Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
-		Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", configDescriptorSize - printerDescriptorSize , 2)
+		args = {"nFunction": configDescriptorSize - printerDescriptorSize }
+		res = Database.sendMessage("usb_device", "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 		
 	
 def destroyComponent(component):
@@ -237,11 +239,11 @@ def instantiateComponent(usbDevicePrinterComponent, index):
 	if (queueDepthCombined == None):
 		queueDepthCombined = 0
 
-	Database.clearSymbolValue("usb_device_printer", "CONFIG_USB_DEVICE_PRINTER_INSTANCES")
-	Database.setSymbolValue("usb_device_printer", "CONFIG_USB_DEVICE_PRINTER_INSTANCES", (index+1), 2)
-	Database.clearSymbolValue("usb_device_printer", "CONFIG_USB_DEVICE_PRINTER_QUEUE_DEPTH_COMBINED")
-	Database.setSymbolValue("usb_device_printer", "CONFIG_USB_DEVICE_PRINTER_QUEUE_DEPTH_COMBINED", queueDepthCombined + currentQSizeRead + currentQSizeWrite, 2)
+	args = {"printerInstanceCount": index+1}
+	res = Database.sendMessage("usb_device_cdc", "UPDATE_PRINTER_INSTANCES", args)
 	
+	args = {"printerQueueDepth": queueDepthCombined + currentQSizeRead + currentQSizeWrite}
+	res = Database.sendMessage("usb_device_printer", "UPDATE_PRINTER_QUEUE_DEPTH_COMBINED", args)
 	
 	#############################################################
 	# Function Init Entry for Printer

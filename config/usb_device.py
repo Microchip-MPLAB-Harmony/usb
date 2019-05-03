@@ -103,7 +103,13 @@ usbDeviceProductStringList = [
 "Simple WinUSB Device Demo" 
 ]
 
-
+usbDeviceFunctionNumber = None
+usbDeviceIadEnable = None
+usbDeviceConfigDscrptrSize = None
+usbDeviceInterfacesNumber = None
+usbDeviceEndpointsNumber = None
+usbDeviceVendorReadQueueSize = None
+usbDeviceVendorWriteQueueSize = None
 usbDeviceFunctionsNumberMax = 10
 usbDeviceFunctionsNumberDefaultValue = 2 
 usbDeviceFunctionsNumberValue = usbDeviceFunctionsNumberDefaultValue
@@ -180,12 +186,41 @@ def onAttachmentDisconnected(source, target):
 	if (remoteID == "usb_device_msd"):
 		usbDeviceMsdSupport.setValue(False, 2)
 	
-		
+def handleMessage(messageID, args):	
+	global usbDeviceFunctionNumber
+	global usbDeviceIadEnable
+	global usbDeviceConfigDscrptrSize
+	global usbDeviceInterfacesNumber
+	global usbDeviceEndpointsNumber
+	global usbDeviceVendorReadQueueSize
+	global usbDeviceVendorWriteQueueSize
+	print("Message arrived")
+	if (messageID == "UPDATE_FUNCTIONS_NUMBER"):
+		usbDeviceFunctionNumber.setValue(args["nFunction"])
+	elif (messageID == "UPDATE_IAD_ENABLE"):
+		usbDeviceIadEnable.setValue(args["nFunction"])
+	elif (messageID == "UPDATE_CONFIG_DESCRPTR_SIZE"): 
+		usbDeviceConfigDscrptrSize.setValue(args["nFunction"])
+	elif (messageID == "UPDATE_INTERFACES_NUMBER"): 
+		usbDeviceInterfacesNumber.setValue(args["nFunction"])
+	elif (messageID == "UPDATE_ENDPOINTS_NUMBER"): 
+		usbDeviceEndpointsNumber.setValue(args["nFunction"])
+	elif (messageID == "UPDATE_ENDPOINT_READ_QUEUE_SIZE"): 
+		usbDeviceVendorReadQueueSize.setValue(args["nFunction"])
+	elif (messageID == "UPDATE_ENDPOINT_WRITE_QUEUE_SIZE"): 
+		usbDeviceVendorWriteQueueSize.setValue(args["nFunction"])
 
 def instantiateComponent(usbDeviceComponent):	
 	global usbDeviceMsdSupport
 	global usbDeviceMsdDiskImageFile
 	global usbDeviceMsdDiskImageFileAdd
+	global usbDeviceFunctionNumber
+	global usbDeviceIadEnable
+	global usbDeviceConfigDscrptrSize
+	global usbDeviceInterfacesNumber
+	global usbDeviceEndpointsNumber
+	global usbDeviceVendorReadQueueSize
+	global usbDeviceVendorWriteQueueSize
 	res = Database.activateComponents(["HarmonyCore"])
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
 		res = Database.activateComponents(["drv_usbhs_v1"])

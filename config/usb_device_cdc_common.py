@@ -20,8 +20,22 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
+usbDeviceCdcInstnces = None 
+usbDeviceCdcQueuDepth = None 
+
+
+def handleMessage(messageID, args):	
+	global usbDeviceCdcInstnces
+	global usbDeviceCdcQueuDepth
+	if (messageID == "UPDATE_CDC_INSTANCES"):
+		usbDeviceCdcInstnces.setValue(args["cdcInstanceCount"])
+	elif (messageID == "UPDATE_CDC_QUEUE_DEPTH_COMBINED"):
+		usbDeviceCdcQueuDepth.setValue(args["cdcQueueDepth"])
+
 def instantiateComponent(usbCdcComponentCommon):
-	print ("usb_device_cdc_common.py")
+	global usbDeviceCdcInstnces
+	global usbDeviceCdcQueuDepth
+
 	usbDeviceCdcInstnces = usbCdcComponentCommon.createIntegerSymbol("CONFIG_USB_DEVICE_CDC_INSTANCES", None)
 	usbDeviceCdcInstnces.setLabel("Number of Instances")
 	usbDeviceCdcInstnces.setMin(1)
