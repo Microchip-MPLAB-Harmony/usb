@@ -37,7 +37,12 @@ epNumberBulkOut = None
 epNumberBulkIn = None
 cdcEndpointNumber = None
 
-
+def handleMessage(messageID, args):
+	global useIad
+	if (messageID == "UPDATE_CDC_IAD_ENABLE"):
+		useIad.setValue(args["iadEnable"])
+	return args
+	
 def onAttachmentConnected(source, target):
 	global cdcInterfacesNumber
 	global cdcDescriptorSize
@@ -50,11 +55,14 @@ def onAttachmentConnected(source, target):
 	global epNumberBulkIn
 	global cdcEndpointsPic32
 	global cdcEndpointsSAM
+	global currentQSizeRead
+	global currentQSizeWrite
+	global currentQSizeSerialStateNotification
+	
+	print ("CDC Function Driver: Attached")
 	
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
-	
-
 	
 	# Read number of functions from USB Device Layer 
 	nFunctions = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
@@ -76,8 +84,8 @@ def onAttachmentConnected(source, target):
 		
 			isIadEnabled = Database.getSymbolValue("usb_device_cdc_0", "CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
 			if isIadEnabled == False:
-				Database.clearSymbolValue("usb_device_cdc_0", "CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
-				Database.setSymbolValue("usb_device_cdc_0", "CONFIG_USB_DEVICE_FUNCTION_USE_IAD", True, 2)
+				args = {"iadEnable":True}
+				res = Database.sendMessage("usb_device_cdc_0", "UPDATE_CDC_IAD_ENABLE", args)
 			
 			nCDCInstances = Database.getSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_INSTANCES")
 			if nCDCInstances == 2:
@@ -114,7 +122,15 @@ def onAttachmentConnected(source, target):
 				epNumberBulkIn.setValue(nEndpoints + 3, 1)
 				args = {"nFunction":  nEndpoints + cdcEndpointsSAM}
 				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
+	
 
+	queueDepthCombined = Database.getSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED")
+	if (queueDepthCombined == None):
+		queueDepthCombined = 0
+	args = {"cdcQueueDepth": queueDepthCombined + currentQSizeRead + currentQSizeWrite + currentQSizeSerialStateNotification}
+	res = Database.sendMessage("usb_device_cdc", "UPDATE_CDC_QUEUE_DEPTH_COMBINED", args)	
+	
+	
 def onAttachmentDisconnected(source, target):
 
 	print ("CDC Function Driver: Detached")
@@ -130,6 +146,9 @@ def onAttachmentDisconnected(source, target):
 	global cdcEndpointsPic32
 	global cdcEndpointsSAM
 	global cdcInstancesCount
+	global currentQSizeRead
+	global currentQSizeWrite
+	global currentQSizeSerialStateNotification
 	
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
@@ -145,7 +164,6 @@ def onAttachmentDisconnected(source, target):
 		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
 			args = {"nFunction":endpointNumber -  cdcEndpointsPic32 }
 			res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
-			
 		else:
 			args = {"nFunction":endpointNumber -  cdcEndpointsSAM }
 			res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
@@ -160,9 +178,19 @@ def onAttachmentDisconnected(source, target):
 		nCDCInstances = nCDCInstances - 1
 		args = {"cdcInstanceCount": nCDCInstances}
 		res = Database.sendMessage("usb_device_cdc", "UPDATE_CDC_INSTANCES", args)
+		
+		# As the component is destroyed update the Combined Queue Length 
+		queueDepthCombined = Database.getSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED")
+		if (queueDepthCombined == None):
+			queueDepthCombined = 0
+		args = {"cdcQueueDepth": queueDepthCombined - (currentQSizeRead + currentQSizeWrite + currentQSizeSerialStateNotification)}
+		res = Database.sendMessage("usb_device_cdc", "UPDATE_CDC_QUEUE_DEPTH_COMBINED", args)
+		
 		if nCDCInstances == 1 and nFunctions != None and nFunctions == 1:
-			Database.clearSymbolValue("usb_device_cdc_0", "CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
-			Database.setSymbolValue("usb_device_cdc_0", "CONFIG_USB_DEVICE_FUNCTION_USE_IAD", False, 2)
+			args = {"iadEnable":False}
+			res = Database.sendMessage("usb_device_cdc_0", "UPDATE_CDC_IAD_ENABLE", args)
+			#Database.clearSymbolValue("usb_device_cdc_0", "CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
+			#Database.setSymbolValue("usb_device_cdc_0", "CONFIG_USB_DEVICE_FUNCTION_USE_IAD", False, 2)
 			
 			configDescriptorSize = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 			if configDescriptorSize != None:
@@ -182,7 +210,7 @@ def destroyComponent(component):
 	print ("CDC Function Driver: Destroyed")
 			
 		
-	
+# This function is called when user modifies the CDC Queue Size. 
 def usbDeviceCdcBufferQueueSize(usbSymbolSource, event):
 	global currentQSizeRead
 	global currentQSizeWrite
@@ -197,8 +225,10 @@ def usbDeviceCdcBufferQueueSize(usbSymbolSource, event):
 	if (event["id"] == "CONFIG_USB_DEVICE_FUNCTION_SERIAL_NOTIFIACATION_Q_SIZE"):
 		queueDepthCombined = queueDepthCombined - currentQSizeSerialStateNotification + event["value"]
 		currentQSizeSerialStateNotification = event["value"]
-	Database.clearSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED")
-	Database.setSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED", queueDepthCombined, 2)
+	# We have updated queueDepthCombined variable with current combined queue length. 
+	# Now send a message to USB_DEVICE_CDC_COMMON.PY to modify the Combined queue length. 
+	args = {"cdcQueueDepth": queueDepthCombined}
+	res = Database.sendMessage("usb_device_cdc", "UPDATE_CDC_QUEUE_DEPTH_COMBINED", args)
 	
 def instantiateComponent(usbDeviceCdcComponent, index):
 	global cdcDescriptorSize
@@ -344,12 +374,6 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 
 	args = {"cdcInstanceCount": index+1}
 	res = Database.sendMessage("usb_device_cdc", "UPDATE_CDC_INSTANCES", args)
-	
-	queueDepthCombined = Database.getSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED")
-	if (queueDepthCombined == None):
-		queueDepthCombined = 0
-	args = {"cdcQueueDepth": queueDepthCombined + currentQSizeRead + currentQSizeWrite + currentQSizeSerialStateNotification}
-	res = Database.sendMessage("usb_device_cdc", "UPDATE_CDC_QUEUE_DEPTH_COMBINED", args)
 	
 	
 	#############################################################

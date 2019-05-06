@@ -31,26 +31,29 @@ def handleMessage(messageID, args):
 		usbDeviceCdcInstnces.setValue(args["cdcInstanceCount"])
 	elif (messageID == "UPDATE_CDC_QUEUE_DEPTH_COMBINED"):
 		usbDeviceCdcQueuDepth.setValue(args["cdcQueueDepth"])
-
+	return args
+	
 def instantiateComponent(usbCdcComponentCommon):
 	global usbDeviceCdcInstnces
 	global usbDeviceCdcQueuDepth
+	
+	print("CDC Function Driver Common: Instantiated")
 
 	usbDeviceCdcInstnces = usbCdcComponentCommon.createIntegerSymbol("CONFIG_USB_DEVICE_CDC_INSTANCES", None)
 	usbDeviceCdcInstnces.setLabel("Number of Instances")
 	usbDeviceCdcInstnces.setMin(1)
 	usbDeviceCdcInstnces.setMax(10)
 	usbDeviceCdcInstnces.setDefaultValue(1)
-	usbDeviceCdcInstnces.setUseSingleDynamicValue(True)
+	#usbDeviceCdcInstnces.setUseSingleDynamicValue(True)
 	usbDeviceCdcInstnces.setVisible(False)
 	
 	usbDeviceCdcQueuDepth = usbCdcComponentCommon.createIntegerSymbol("CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED", None)
 	usbDeviceCdcQueuDepth.setLabel("Combined Queue Depth")
-	usbDeviceCdcQueuDepth.setMin(1)
+	usbDeviceCdcQueuDepth.setMin(0)
 	usbDeviceCdcQueuDepth.setMax(32767)
-	usbDeviceCdcQueuDepth.setDefaultValue(0)
-	usbDeviceCdcQueuDepth.setUseSingleDynamicValue(True)
-	usbDeviceCdcQueuDepth.setVisible(False)
+	usbDeviceCdcQueuDepth.setDefaultValue(3)
+	#usbDeviceCdcQueuDepth.setUseSingleDynamicValue(True)
+	usbDeviceCdcQueuDepth.setVisible(True)
 	
 	################################################
 	# system_config.h file for USB Device stack    

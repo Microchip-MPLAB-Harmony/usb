@@ -194,7 +194,6 @@ def handleMessage(messageID, args):
 	global usbDeviceEndpointsNumber
 	global usbDeviceVendorReadQueueSize
 	global usbDeviceVendorWriteQueueSize
-	print("Message arrived")
 	if (messageID == "UPDATE_FUNCTIONS_NUMBER"):
 		usbDeviceFunctionNumber.setValue(args["nFunction"])
 	elif (messageID == "UPDATE_IAD_ENABLE"):
