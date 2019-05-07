@@ -61,7 +61,6 @@ uint8_t sectorBuffer[512 * USB_DEVICE_MSD_NUM_SECTOR_BUFFERS] CACHE_ALIGN;
 USB_MSD_CBW msdCBW0 CACHE_ALIGN;
 USB_MSD_CSW msdCSW0 CACHE_ALIGN;
 
-
 /*******************************************
  * MSD Function Driver initialization
  *******************************************/
@@ -326,7 +325,7 @@ const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =
 	NULL, 
 	0,
 	NULL,
-    3,                                                      // Total number of string descriptors available.
+	4,  													// Total number of string descriptors available.
     stringDescriptors,                                      // Pointer to array of string descriptors.
 	NULL, 
 	NULL

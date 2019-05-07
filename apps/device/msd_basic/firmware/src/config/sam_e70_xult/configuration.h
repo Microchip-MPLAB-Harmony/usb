@@ -147,7 +147,7 @@ extern "C" {
 #define DRV_USBHSV1_HOST_SUPPORT                            false
 
 /* Maximum instances of MSD function driver */
-#define USB_DEVICE_MSD_INSTANCES_NUMBER     1
+#define USB_DEVICE_MSD_INSTANCES_NUMBER     1 
 
 #define USB_DEVICE_MSD_NUM_SECTOR_BUFFERS 1
 
