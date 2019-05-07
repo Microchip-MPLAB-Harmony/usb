@@ -31,9 +31,9 @@ def onAttachmentConnected(source, target):
 		print("USB Host Layer Connected")
 		readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
 		if readValue != None:
-			Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
-			Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue + 1 , 2)
-	
+			args = {"nTpl":readValue + 1}
+			res = Database.sendMessage("usb_host", "UPDATE_TPL_ENTRY_NUMBER", args)
+
 def onAttachmentDisconnected(source, target):
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
@@ -44,9 +44,9 @@ def onAttachmentDisconnected(source, target):
 	if (dependencyID == "usb_host_dependency"):
 		readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
 		if readValue != None:
-			Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
-			Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue - 1 , 2)
-		
+			args = {"nTpl":readValue - 1}
+			res = Database.sendMessage("usb_host", "UPDATE_TPL_ENTRY_NUMBER", args)
+
 def destroyComponent(component):	
 	print("USB HOST MSD Client Driver: Destroyed")
 		

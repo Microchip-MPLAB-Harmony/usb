@@ -20,6 +20,9 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
+
+usbHostTplEntryNumber = None
+
 def setVisible(symbol, event):
 	if (event["value"] == True):
 		symbol.setVisible(True)
@@ -32,10 +35,16 @@ def showRTOSMenu(symbol, event):
 	if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
 		show_rtos_menu = True
 	symbol.setVisible(show_rtos_menu)
+	
+
+def handleMessage(messageID, args):	
+	global usbHostTplEntryNumber
+	if (messageID == "UPDATE_TPL_ENTRY_NUMBER"):
+		usbHostTplEntryNumber.setValue(args["nTpl"])
 
 
 def instantiateComponent(usbHostComponent):
-
+	global usbHostTplEntryNumber
 	res = Database.activateComponents(["HarmonyCore"])
 	res = Database.activateComponents(["sys_time"])
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):

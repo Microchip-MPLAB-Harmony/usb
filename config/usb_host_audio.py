@@ -25,22 +25,22 @@ def onAttachmentConnected(source, target):
 	print("USB Host Layer Connected")
 	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
 	if readValue != None:
-		Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
-		Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue + 1 , 2)
+		args = {"nTpl":readValue + 1 }
+		res = Database.sendMessage("usb_host", "UPDATE_TPL_ENTRY_NUMBER", args)
 	
 def onAttachmentDisconnected(source, target):
 	ownerComponent = source["component"]
 	print("USB Host Layer Disconnected")
 	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
 	if readValue != None:
-		Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
-		Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue - 1 , 2)
+		args = {"nTpl":readValue - 1 }
+		res = Database.sendMessage("usb_host", "UPDATE_TPL_ENTRY_NUMBER", args)
 		
 def destroyComponent(component):	
 	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
 	if readValue != None:
-		Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
-		Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue - 1 , 2)		
+		args = {"nTpl":readValue - 1 }
+		res = Database.sendMessage("usb_host", "UPDATE_TPL_ENTRY_NUMBER", args)
 		
 def instantiateComponent(usbHostAudioComponent):
 
