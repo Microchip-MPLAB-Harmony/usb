@@ -54,8 +54,6 @@ def onAttachmentConnected(source, target):
 		#Log.writeDebugMessage ("USB Device Printer Function Driver: Attachment connected")
 		
 		# Update Number of Functions in USB Device, Increment the value by One. 
-		#Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-		#Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", nFunctions + 1 , 2)
 		args = {"nFunction":nFunctions + 1}
 		res = Database.sendMessage("usb_device", "UPDATE_FUNCTIONS_NUMBER", args)
 	
@@ -141,8 +139,8 @@ def usbDevicePrinterBufferQueueSize(usbSymbolSource, event):
 	if (event["id"] == "CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE"):
 		queueDepthCombined = queueDepthCombined - currentQSizeWrite  + event["value"]
 		currentQSizeWrite = event["value"]
-	Database.clearSymbolValue("usb_device_printer", "CONFIG_USB_DEVICE_PRINTER_QUEUE_DEPTH_COMBINED")
-	Database.setSymbolValue("usb_device_printer", "CONFIG_USB_DEVICE_PRINTER_QUEUE_DEPTH_COMBINED", queueDepthCombined, 2)
+	args = {"printerQueueDepth": queueDepthCombined}
+	res = Database.sendMessage("usb_device_cdc", "UPDATE_PRINTER_QUEUE_DEPTH_COMBINED", args)
 	
 def instantiateComponent(usbDevicePrinterComponent, index):
 	global printerDescriptorSize

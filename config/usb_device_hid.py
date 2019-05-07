@@ -137,8 +137,6 @@ def usbDeviceHidBufferQueueSize(usbSymbolSource, event):
 	if (event["id"] == "CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE"):
 		queueDepthCombined = queueDepthCombined - currentQSizeWrite  + event["value"]
 		currentQSizeWrite = event["value"]
-	#Database.clearSymbolValue("usb_device_hid", "CONFIG_USB_DEVICE_HID_QUEUE_DEPTH_COMBINED")
-	#Database.setSymbolValue("usb_device_hid", "CONFIG_USB_DEVICE_HID_QUEUE_DEPTH_COMBINED", queueDepthCombined, 2)
 	args = {"hidQueueDepth": queueDepthCombined}
 	res = Database.sendMessage("usb_device_hid", "UPDATE_HID_QUEUE_DEPTH_COMBINED", args)
 
