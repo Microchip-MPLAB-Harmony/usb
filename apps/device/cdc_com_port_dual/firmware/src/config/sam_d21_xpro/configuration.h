@@ -99,7 +99,7 @@ extern "C" {
 /* CDC Transfer Queue Size for both read and
    write. Applicable to all instances of the
    function driver */
-#define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED                 7
+#define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED                 6
 
 /*** USB Driver Configuration ***/
 
@@ -128,8 +128,6 @@ extern "C" {
 /* EP0 size in bytes */
 #define USB_DEVICE_EP0_BUFFER_SIZE                          64
 
-/* Enable SOF Events */
-#define USB_DEVICE_SOF_EVENT_ENABLE
 
 
 

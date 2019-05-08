@@ -275,8 +275,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9ACBE33FEB523CD04C5001902F6EB32E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9ACBE33FEB523CD04C5001902F6EB32E</UserChecksum>
+          <GeneratedChecksum dnOrder="4">70E9FC58A15E5CB4F8659030F26CF842</GeneratedChecksum>
+          <UserChecksum dnOrder="5">70E9FC58A15E5CB4F8659030F26CF842</UserChecksum>
         </File>
         <File dnOrder="34">
           <Type dnOrder="0">HEADER</Type>
@@ -299,8 +299,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">75C3F77C9217AD7CD794464407ABA012</GeneratedChecksum>
-          <UserChecksum dnOrder="5">75C3F77C9217AD7CD794464407ABA012</UserChecksum>
+          <GeneratedChecksum dnOrder="4">AC841FA1E7AAC84A5942F7DA22AB6F61</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AC841FA1E7AAC84A5942F7DA22AB6F61</UserChecksum>
         </File>
         <File dnOrder="37">
           <Type dnOrder="0">HEADER</Type>

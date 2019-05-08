@@ -159,16 +159,21 @@ def instantiateComponent(usbDriverComponent):
 		Database.setSymbolValue("core", "USBHS_INTERRUPT_HANDLER", "DRV_USBHSV1_USBHS_Handler", 1)
 
 		# Initial settings for CLK and NVIC
-		Database.clearSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN")
-		Database.setSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN", True, 2)
-		Database.clearSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL")
-		Database.setSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL", True, 2)
-		Database.clearSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN")
-		Database.setSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN", True, 2)
-		Database.clearSymbolValue("core", "USBHS_CLOCK_ENABLE")
-		Database.setSymbolValue("core", "USBHS_CLOCK_ENABLE", True, 2)
-		Database.clearSymbolValue("core", "PMC_SCER_USBCLK")
-		Database.setSymbolValue("core", "PMC_SCER_USBCLK", True, 2)
+		if Database.getSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN") == False: 
+			Database.clearSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN")
+			Database.setSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN", True, 2)
+		if Database.getSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL") == False:
+			Database.clearSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL")
+			Database.setSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL", True, 2)
+		if Database.getSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN") == False:
+			Database.clearSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN")
+			Database.setSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN", True, 2)
+		if Database.getSymbolValue("core", "USBHS_CLOCK_ENABLE") == False:
+			Database.clearSymbolValue("core", "USBHS_CLOCK_ENABLE")
+			Database.setSymbolValue("core", "USBHS_CLOCK_ENABLE", True, 2)
+		if Database.getSymbolValue("core", "PMC_SCER_USBCLK") == False:
+			Database.clearSymbolValue("core", "PMC_SCER_USBCLK")
+			Database.setSymbolValue("core", "PMC_SCER_USBCLK", True, 2)
 	
 		
 		# Dependency Status

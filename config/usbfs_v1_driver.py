@@ -174,22 +174,30 @@ def instantiateComponent(usbDriverComponent):
 	NVICHandlerLock = "NVIC_USBHS_HANDLER_LOCK"
 
     # Initial settings for CLK and NVIC
-	Database.clearSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN")
-	Database.setSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN", True, 2)
-	Database.clearSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL")
-	Database.setSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL", True, 2)
-	Database.clearSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN")
-	Database.setSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN", True, 2)
-	Database.clearSymbolValue("core", "PMC_ID_USBHS")
-	Database.setSymbolValue("core", "PMC_ID_USBHS", True, 2)
-	Database.clearSymbolValue("core", "PMC_SCER_USBCLK")
-	Database.setSymbolValue("core", "PMC_SCER_USBCLK", True, 2)
-	Database.clearSymbolValue("core", NVICVector)
-	Database.setSymbolValue("core", NVICVector, True, 2)
-	Database.clearSymbolValue("core", NVICHandler)
-	Database.setSymbolValue("core", NVICHandler, "USBHS_InterruptHandler", 2)
-	Database.clearSymbolValue("core", NVICHandlerLock)
-	Database.setSymbolValue("core", NVICHandlerLock, True, 2)
+	if Database.getSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN") == False: 
+		Database.clearSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN")
+		Database.setSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN", True, 2)
+	if Database.getSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL") == False: 
+		Database.clearSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL")
+		Database.setSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL", True, 2)
+	if Database.getSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN") == False:
+		Database.clearSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN")
+		Database.setSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN", True, 2)
+	if Database.getSymbolValue("core", "PMC_ID_USBHS") == False:
+		Database.clearSymbolValue("core", "PMC_ID_USBHS")
+		Database.setSymbolValue("core", "PMC_ID_USBHS", True, 2)
+	if Database.getSymbolValue("core", "PMC_SCER_USBCLK") == False:
+		Database.clearSymbolValue("core", "PMC_SCER_USBCLK")
+		Database.setSymbolValue("core", "PMC_SCER_USBCLK", True, 2)
+	if Database.getSymbolValue("core", "NVICVector") == False:
+		Database.clearSymbolValue("core", NVICVector)
+		Database.setSymbolValue("core", NVICVector, True, 2)
+	if Database.getSymbolValue("core", "NVICHandler") == False:
+		Database.clearSymbolValue("core", NVICHandler)
+		Database.setSymbolValue("core", NVICHandler, "USBHS_InterruptHandler", 2)
+	if Database.getSymbolValue("core", "NVICHandlerLock") == False:
+		Database.clearSymbolValue("core", NVICHandlerLock)
+		Database.setSymbolValue("core", NVICHandlerLock, True, 2)
 
 
     # NVIC Dynamic settings
