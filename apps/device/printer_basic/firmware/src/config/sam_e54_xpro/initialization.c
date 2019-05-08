@@ -244,6 +244,7 @@ void SYS_Initialize ( void* data )
     CLOCK_Initialize();
 
 
+
     SERCOM2_USART_Initialize();
 
     EVSYS_Initialize();

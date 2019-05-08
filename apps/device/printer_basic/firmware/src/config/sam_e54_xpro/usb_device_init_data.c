@@ -96,7 +96,7 @@ const USB_DEVICE_DESCRIPTOR deviceDescriptor =
 
     USB_DEVICE_EP0_BUFFER_SIZE,                             // Max packet size for EP0, see configuration.h
     0x04D8,                                                 // Vendor ID
-    0xA000,                                                 // Product ID				
+    0x00E7,                                                 // Product ID				
     0x0100,                                                 // Device release number in BCD format
     0x01,                                                   // Manufacturer string index
     0x02,                                                   // Product string index
@@ -227,7 +227,7 @@ const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =
 	NULL, 
 	0,
 	NULL,
-    3,                                                      // Total number of string descriptors available.
+    3,														// Total number of string descriptors available.
     stringDescriptors,                                      // Pointer to array of string descriptors.
 	NULL, 
 	NULL
