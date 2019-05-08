@@ -189,6 +189,8 @@ def onAttachmentDisconnected(source, target):
 		if nCDCInstances == 1 and nFunctions != None and nFunctions == 1:
 			args = {"iadEnable":False}
 			res = Database.sendMessage("usb_device_cdc_0", "UPDATE_CDC_IAD_ENABLE", args)
+			args = {"nFunction":False}
+			res = Database.sendMessage("usb_device", "UPDATE_IAD_ENABLE", args)
 			configDescriptorSize = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 			if configDescriptorSize != None:
 				args = {"nFunction": configDescriptorSize - 8}

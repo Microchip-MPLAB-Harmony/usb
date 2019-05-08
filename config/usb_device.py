@@ -124,24 +124,6 @@ listUsbDeviceFunctionType = []
 listUsbDeviceStartInterfaceNumber = []
 listUsbDeviceNumberOfInterfaces = []
 
-# USB Device CDC global definitions 
-usbDeviceCdcQueueSizeRead = []
-usbDeviceCdcQueueSizeWrite = []
-usbDeviceCdcQueueSizeSerialStateNotification = []
-usbDeviceCdcEPNumberInt = []
-usbDeviceCdcEPNumberBulkOut = []
-usbDeviceCdcEPNumberBulkIn = []
-
-# USB Device HID global definitions
-usbDeviceHidQueueSizeReportSend = []
-usbDeviceHidQueueSizeReportReceive = []
-usbDeviceHidDeviceType = []	
-usbDeviceHidEPNumberIntOut = []
-usbDeviceHidEPNumberIntIn = []
-
-#USB Device Vendor 
-usbDeviceEndpointReadQueueSize = []
-usbDeviceEndpointWriteQueueSize = []
 
 usbDeviceMsdSupport = None
 usbDeviceMsdDiskImageFile = None
@@ -159,32 +141,75 @@ def showRTOSMenu(symbol, event):
 	if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
 		show_rtos_menu = True
 	symbol.setVisible(show_rtos_menu)
-
+	
 
 def onAttachmentConnected(source, target):
 	global usbDeviceMsdSupport
+	global usbDeviceMsdDiskImageFile
+	global usbDeviceMsdDiskImageFileAdd
+	global usbDeviceFunctionNumber
+	global usbDeviceIadEnable
+	global usbDeviceConfigDscrptrSize
+	global usbDeviceInterfacesNumber
+	global usbDeviceEndpointsNumber
+	global usbDeviceVendorReadQueueSize
+	global usbDeviceVendorWriteQueueSize
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
 	remoteComponent = target["component"]
 	remoteID = remoteComponent.getID()
+	remoteID_instance = remoteID[:-1]
 	connectID = source["id"]
 	targetID = target["id"]
+	print('USB Device: Attachment Connected:', remoteID)
+	print 'USB Device:', remoteID_instance 
 	if (remoteID == "usb_device_msd"):
 		usbDeviceMsdSupport.setValue(True, 2)
+	if (remoteID_instance == "usb_device_msd_") or (remoteID_instance == "usb_device_vendor_") or (remoteID_instance == "usb_device_audio_") or (remoteID_instance == "usb_device_hid_") or (remoteID_instance == "usb_device_printer_"):
+		if (usbDeviceFunctionNumber.getValue() > 1):
+			# Check if there are more than One CDC Function connected
+			print("USB Device: A new Function connected" )
+			# We have more than One function connected. Enable IAD 
+			# Enable cdc_0 IAD if not enabled. 
+			isIadEnabled = Database.getSymbolValue("usb_device_cdc_0", "CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
+			if isIadEnabled != None:
+				if isIadEnabled == False:
+					usbDeviceIadEnable.setValue(True)
+					args = {"iadEnable":True}
+					res = Database.sendMessage("usb_device_cdc_0", "UPDATE_CDC_IAD_ENABLE", args)
+					localConfigDescriptorSize = usbDeviceConfigDscrptrSize.getValue() 
+					usbDeviceConfigDscrptrSize.setValue(localConfigDescriptorSize + 8)
+			
 		
-
-	
-	
 def onAttachmentDisconnected(source, target):
 	global usbDeviceMsdSupport
+	global usbDeviceCDCFunctionCount
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
 	remoteComponent = target["component"]
 	remoteID = remoteComponent.getID()
 	connectID = source["id"]
 	targetID = target["id"]
+	remoteID_instance = remoteID[:-1]
+	print('USB Device: Attachment Disconnected:', remoteID)
+	print 'USB Device:', remoteID_instance 
 	if (remoteID == "usb_device_msd"):
 		usbDeviceMsdSupport.setValue(False, 2)
+	if (remoteID_instance == "usb_device_msd_") or (remoteID_instance == "usb_device_vendor_") or (remoteID_instance == "usb_device_audio_") or (remoteID_instance == "usb_device_hid_") or (remoteID_instance == "usb_device_printer_"):
+		if (usbDeviceFunctionNumber.getValue() == 1):
+			# Check if there are more than One CDC Function connected
+			print("USB Device: A Function Removed" )
+			# We have more than One function connected. Enable IAD 
+			# Enable cdc_0 IAD if not enabled. 
+			isIadEnabled = Database.getSymbolValue("usb_device_cdc_0", "CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
+			if isIadEnabled != None:
+				if isIadEnabled == True:
+					usbDeviceIadEnable.setValue(False)
+					args = {"iadEnable":False}
+					res = Database.sendMessage("usb_device_cdc_0", "UPDATE_CDC_IAD_ENABLE", args)
+					localConfigDescriptorSize = usbDeviceConfigDscrptrSize.getValue() 
+					usbDeviceConfigDscrptrSize.setValue(localConfigDescriptorSize - 8)
+
 	
 def handleMessage(messageID, args):	
 	global usbDeviceFunctionNumber

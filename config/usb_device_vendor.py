@@ -145,7 +145,7 @@ def onAttachmentDisconnected(source, target):
 	nVendorInstances = Database.getSymbolValue("usb_device_vendor", "CONFIG_USB_DEVICE_VENDOR_INSTANCES")
 	if nVendorInstances != None:
 		nVendorInstances = nVendorInstances - 1
-		args = {"VendorInstanceCount": nVendorInstances}
+		args = {"vendorInstanceCount": nVendorInstances}
 		res = Database.sendMessage("usb_device_vendor", "UPDATE_VENDOR_INSTANCES", args)
 	
 	configDescriptorSize = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
@@ -220,6 +220,7 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	startInterfaceNumber.setMin(0)
 	startInterfaceNumber.setDefaultValue(0)
 	startInterfaceNumber.setReadOnly(True)
+	
 	
 	# Adding Number of Interfaces
 	numberOfInterfaces = usbDeviceVendorComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_NUMBER_OF_INTERFACES", None)
