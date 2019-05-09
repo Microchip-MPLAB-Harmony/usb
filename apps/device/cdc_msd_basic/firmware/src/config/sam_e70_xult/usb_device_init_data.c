@@ -216,7 +216,7 @@ const uint8_t highSpeedConfigurationDescriptor[]=
 
     0x09,                                                   // Size of this descriptor in bytes
     USB_DESCRIPTOR_CONFIGURATION,                           // Descriptor Type
-    USB_DEVICE_16bitTo8bitArrange(98),                      //(98 Bytes)Size of the Configuration descriptor
+    USB_DEVICE_16bitTo8bitArrange(106),                      //(106 Bytes)Size of the Configuration descriptor
     3,                                                      // Number of interfaces in this configuration
     0x01,                                               // Index value of this configuration
     0x00,                                               // Configuration string index
@@ -364,7 +364,7 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
 
     0x09,                                                   // Size of this descriptor in bytes
     USB_DESCRIPTOR_CONFIGURATION,                           // Descriptor Type
-    USB_DEVICE_16bitTo8bitArrange(98),                      //(98 Bytes)Size of the Configuration descriptor
+    USB_DEVICE_16bitTo8bitArrange(106),                      //(106 Bytes)Size of the Configuration descriptor
     3,                                                      // Number of interfaces in this configuration
     0x01,                                                   // Index value of this configuration
     0x00,                                                   // Configuration string index
@@ -596,7 +596,7 @@ const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =
     &deviceDescriptor,                                      // High speed device descriptor
     1,                                                      // Total number of high speed configurations available
     highSpeedConfigDescSet,                                 // Pointer to array of high speed configurations descriptors
-    3,                                                      // Total number of string descriptors available.
+	4,  													// Total number of string descriptors available.
     stringDescriptors,                                      // Pointer to array of string descriptors.
     &deviceQualifierDescriptor1,                            // Pointer to full speed dev qualifier.
     &deviceQualifierDescriptor1                             // Pointer to high speed dev qualifier.
