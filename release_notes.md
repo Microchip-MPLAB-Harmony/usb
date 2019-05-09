@@ -2,6 +2,39 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 # Microchip MPLAB Harmony 3 Release Notes
+
+## USB Release v3.2.2
+### NEW FEATURES
+- **USB Device Printer Function Driver** - This release adds USB Device printer function driver library. This release also adds Genric Text Only USB printer demo for [SAM E54 Xplained Pro Evaluation Kit](https://www.microchip.com/developmenttools/ProductDetails/ATSAME54-XPRO).
+
+### Known Issues
+
+The current known issues are as follows:
+
+- Programming and debugging through PKOB is not yet supported for PIC32MZ DA, need to use external debugger (ICD4)
+
+- PIC32MZ DA(S) device family will be supported by next coming XC32 release.
+
+- The ICD4 loads the reset line of the SAM V71 Xplained Ultra board. Do not press reset button on the Xplained Ultra board while ICD4 is connected to the board.
+
+- Interactive help using the Show User Manual Entry in the Right-click menu for configuration options provided by this module is not yet available from within the MPLAB Harmony Configurator (MHC).  Please see the &quot;Configuring the Library&quot; section in the help documentation in the doc folder for this module instead.  Help is available in both CHM and PDF formats.
+
+- USB HS Host Port Driver for SAMA5D2 will freeze its operation if the attached USB device responds with a STALL. Many USB Devices will not work due to this issue. This will be fixed in future releases. 
+
+- USB Host Layer does not reset data toggle after sending an ENDPOINT_HALT Clear Feature. Certain USB Devices may not work due to this issue. 
+
+- USB Host Mass Storage Client Driver for SAME70/V71/S70 will freeze its operation if the attached USB Mass Storage device responds with a STALL during a SCSI MODE_SENSE command. Few USB Devices will not work due to this issue. This will be fixed in future releases. 
+
+
+
+### Development Tools
+
+* [MPLAB X IDE v5.15](https://www.microchip.com/mplab/mplab-x-ide)
+* [MPLAB XC32 C/C++ Compiler v2.15](https://www.microchip.com/mplab/compilers)
+* MPLAB X IDE plug-ins:
+  * MPLAB Harmony Configurator (MHC) v3.3.0.1.
+
+
 ## USB Release v3.2.1
 ### NEW FEATURES
 - **New part support** - This release introduces initial support for [SAMA5D2](https://www.microchip.com/design-centers/32-bit-mpus/microprocessors/sama5/sama5d2-series) family of 32-bit microprocessors. 
@@ -22,7 +55,7 @@ The current known issues are as follows:
 
 - Interactive help using the Show User Manual Entry in the Right-click menu for configuration options provided by this module is not yet available from within the MPLAB Harmony Configurator (MHC).  Please see the &quot;Configuring the Library&quot; section in the help documentation in the doc folder for this module instead.  Help is available in both CHM and PDF formats.
 
-- USB HS Host Port Driver for SAMA5D2 will freez its operation if the attached USB device responds with a STALL. Many USB Devices will not work due to this issue. This will be fixed in future releases. 
+- USB HS Host Port Driver for SAMA5D2 will freeze its operation if the attached USB device responds with a STALL. Many USB Devices will not work due to this issue. This will be fixed in future releases. 
 
 - USB Host Layer does not reset data toggle after sending an ENDPOINT_HALT Clear Feature. Certain USB Devices may not work due to this issue. 
 
@@ -35,7 +68,6 @@ The current known issues are as follows:
   * MPLAB Harmony Configurator (MHC) v3.2.0.0.
 
 
-# Microchip MPLAB Harmony 3 Release Notes
 ## USB Release v3.2.0
 ### NEW FEATURES
 - **New part support** - This release introduces initial support for [PIC32MZ DA](https://www.microchip.com/design-centers/32-bit/pic-32-bit-mcus/pic32mz-da-family), [PIC32MZ EF](https://www.microchip.com/design-centers/32-bit/pic-32-bit-mcus/pic32mz-ef-family), [SAM E54](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-e-mcus), families of 32-bit microcontrollers. 
