@@ -5,7 +5,7 @@
     Microchip Technology Inc.
 
   File Name:
-    usb_device_Printer.h
+    usb_device_printer.h
 
   Summary:
     USB Device Printer Function Driver Interface

@@ -101,7 +101,7 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 /* Maximum instances of Printer function driver */
-#define USB_DEVICE_PRINTER_INSTANCES_NUMBER           1
+#define USB_DEVICE_PRINTER_INSTANCES_NUMBER          1 
 
 /* Printer Transfer Queue Size for both read and
    write. Applicable to all instances of the

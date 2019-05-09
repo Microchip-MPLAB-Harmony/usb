@@ -907,7 +907,7 @@
           <Name dnOrder="1">usb_device_printer.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">62925B4E1C0D77EA4D28F3BAA5A3256E</GeneratedChecksum>
+          <GeneratedChecksum dnOrder="4">55B5D193EAFC10D2905368FE4A2E2CA0</GeneratedChecksum>
           <UserChecksum dnOrder="5">55B5D193EAFC10D2905368FE4A2E2CA0</UserChecksum>
         </File>
         <File dnOrder="113">
