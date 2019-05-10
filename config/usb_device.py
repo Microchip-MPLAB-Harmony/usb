@@ -4,6 +4,7 @@
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
 * responsibility to comply with third party license terms applicable to your
+* responsibility to comply with third party license terms applicable to your
 * use of third party software (including open source software) that may
 * accompany Microchip software.
 *
@@ -161,14 +162,11 @@ def onAttachmentConnected(source, target):
 	remoteID_instance = remoteID[:-1]
 	connectID = source["id"]
 	targetID = target["id"]
-	print('USB Device: Attachment Connected:', remoteID)
-	print 'USB Device:', remoteID_instance 
 	if (remoteID == "usb_device_msd"):
 		usbDeviceMsdSupport.setValue(True, 2)
 	if (remoteID_instance == "usb_device_msd_") or (remoteID_instance == "usb_device_vendor_") or (remoteID_instance == "usb_device_audio_") or (remoteID_instance == "usb_device_hid_") or (remoteID_instance == "usb_device_printer_"):
 		if (usbDeviceFunctionNumber.getValue() > 1):
 			# Check if there are more than One CDC Function connected
-			print("USB Device: A new Function connected" )
 			# We have more than One function connected. Enable IAD 
 			# Enable cdc_0 IAD if not enabled. 
 			isIadEnabled = Database.getSymbolValue("usb_device_cdc_0", "CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
@@ -191,14 +189,11 @@ def onAttachmentDisconnected(source, target):
 	connectID = source["id"]
 	targetID = target["id"]
 	remoteID_instance = remoteID[:-1]
-	print('USB Device: Attachment Disconnected:', remoteID)
-	print 'USB Device:', remoteID_instance 
 	if (remoteID == "usb_device_msd"):
 		usbDeviceMsdSupport.setValue(False, 2)
 	if (remoteID_instance == "usb_device_msd_") or (remoteID_instance == "usb_device_vendor_") or (remoteID_instance == "usb_device_audio_") or (remoteID_instance == "usb_device_hid_") or (remoteID_instance == "usb_device_printer_"):
 		if (usbDeviceFunctionNumber.getValue() == 1):
 			# Check if there are more than One CDC Function connected
-			print("USB Device: A Function Removed" )
 			# We have more than One function connected. Enable IAD 
 			# Enable cdc_0 IAD if not enabled. 
 			isIadEnabled = Database.getSymbolValue("usb_device_cdc_0", "CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
@@ -583,13 +578,7 @@ def instantiateComponent(usbDeviceComponent):
 	################################################
 	usbDeviceMsdDiskImageFile = usbDeviceComponent.createFileSymbol("USB_DEVICE_DISK_IMAGE_FILE", None)
 	addFileName('diskImage.c', usbDeviceComponent, usbDeviceMsdDiskImageFile, "templates/device/msd/", "", usbDeviceMsdDiskImageFileAdd.getValue(), None)
-	#usbDeviceMsdDiskImageFile.setDependencies(checkIfDiskImagefileNeeded, ["CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0"])
-	# if (usbDeviceMsdDiskImageFileAdd.getValue() == True):
-		# print("Disk Image File Enabled")
-		# usbDeviceMsdDiskImageFile.setEnabled(True)
-	# else:	
-		# print("Disk Image File Disabled")
-		# usbDeviceMsdDiskImageFile.setEnabled(False)
+
 		
 # all files go into src/
 def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callback):
@@ -628,13 +617,11 @@ def checkIfDiskImagefileNeeded (usbSymbolSource, event):
 	if any(x in usbDeviceDemoList[index] for x in ["msd_basic_demo", "hid_msd_demo" , "cdc_msd_basic_demo" , "cdc_serial_emulator_msd_demo"]):
 		usbSymbolSource.setValue(True, 2)
 		usbDeviceMsdDiskImageFile.setEnabled(True)
-		print ("Disk Image Enabled")
 	else:
 		usbSymbolSource.setValue(False, 2)
 		usbDeviceMsdDiskImageFile.setEnabled(False)
 	
 def blUSBDeviceProductIDSelection(usbSymbolSource, event):
-	print("blUSBDeviceProductIDSelection is called")
 	index = usbDeviceDemoList.index(event["value"])
 	usbSymbolSource.setValue(usbDeviceDemoProductList[index],2)
 	

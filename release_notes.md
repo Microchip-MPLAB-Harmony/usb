@@ -25,6 +25,7 @@ The current known issues are as follows:
 
 - USB Host Mass Storage Client Driver for SAME70/V71/S70 will freeze its operation if the attached USB Mass Storage device responds with a STALL during a SCSI MODE_SENSE command. Few USB Devices will not work due to this issue. This will be fixed in future releases. 
 
+- In a case where a MPLAB Harmony USB Device Project requires multiple Function Driver instances in the project, the MPLAB Harmony Configurator(MHC) may generate incorrect USB descriptors if a USB Device function driver component is added and then removed from the MHC Project Graph.  Removing all the USB components from project graph and starting over fixes this issue. The issue will be fixed in an upcoming release.
 
 
 ### Development Tools

@@ -99,6 +99,84 @@ const USB_DEVICE_DESCRIPTOR deviceDescriptor =
     0x01                                                    // Number of possible configurations
 };
 
+/*******************************************
+ *  USB Device Qualifier Descriptor for this
+ *  demo.
+ *******************************************/
+const USB_DEVICE_QUALIFIER deviceQualifierDescriptor1 =
+{
+    0x0A,                                                   // Size of this descriptor in bytes
+    USB_DESCRIPTOR_DEVICE_QUALIFIER,                        // Device Qualifier Type
+    0x0200,                                                 // USB Specification Release number
+	    0x00,         // Class Code
+    0x00,         // Subclass code
+    0x00,         // Protocol code
+
+
+    USB_DEVICE_EP0_BUFFER_SIZE,                             // Maximum packet size for endpoint 0
+    0x01,                                                   // Number of possible configurations
+    0x00                                                    // Reserved for future use.
+};
+
+
+/*******************************************
+ *  USB High Speed Configuration Descriptor
+ *******************************************/
+ 
+const uint8_t highSpeedConfigurationDescriptor[]=
+{
+	/* Configuration Descriptor */
+
+    0x09,                                                   // Size of this descriptor in bytes
+    USB_DESCRIPTOR_CONFIGURATION,                           // Descriptor Type
+    USB_DEVICE_16bitTo8bitArrange(32),                      //(32 Bytes)Size of the Configuration descriptor
+    1,                                                      // Number of interfaces in this configuration
+    0x01,                                               // Index value of this configuration
+    0x00,                                               // Configuration string index
+    USB_ATTRIBUTE_DEFAULT | USB_ATTRIBUTE_SELF_POWERED, // Attributes
+    50,
+	
+	/* Interface Descriptor */
+
+    0x09,                       // Size of this descriptor in bytes
+    USB_DESCRIPTOR_INTERFACE,   // INTERFACE descriptor type
+    0,                          // Interface Number
+    0,                          // Alternate Setting Number
+    2,                          // Number of endpoints in this intf
+    0xFF,                       // Class code
+    0xFF,                       // Subclass code
+    0xFF,                       // Protocol code
+    0,                          // Interface string index
+
+    /* Endpoint (OUT) Descriptor */
+
+    0x07,                       // Size of this descriptor in bytes
+    USB_DESCRIPTOR_ENDPOINT,    // Endpoint Descriptor 
+    1 | USB_EP_DIRECTION_OUT,   // EndpointAddress ( EP1 OUT )
+    USB_TRANSFER_TYPE_BULK,     // Attributes
+    0x00,0x02,                  // Max packet size of this EP
+    1,                          // Interval
+
+    /* Endpoint (IN) Descriptor */
+
+    0x07,                       // Size of this descriptor in bytes
+    USB_DESCRIPTOR_ENDPOINT,    // Endpoint Descriptor
+    2 | USB_EP_DIRECTION_IN,    // EndpointAddress ( EP1 IN )
+    USB_TRANSFER_TYPE_BULK,     // Attributes
+    0x00,0x02,                  // Max packet size of this EP
+    1,                          // Interval
+
+
+
+};
+
+/*******************************************
+ * Array of High speed config descriptors
+ *******************************************/
+USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE highSpeedConfigDescSet[1] =
+{
+    highSpeedConfigurationDescriptor
+};
 
 /*******************************************
  *  USB Full Speed Configuration Descriptor
@@ -229,13 +307,13 @@ const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =
     &deviceDescriptor,                                      // Full speed descriptor
     1,                                                      // Total number of full speed configurations available
     fullSpeedConfigDescSet,                                 // Pointer to array of full speed configurations descriptors
-	NULL, 
-	0,
-	NULL,
-    3,                                                      // Total number of string descriptors available.
+    &deviceDescriptor,                                      // High speed device descriptor
+    1,                                                      // Total number of high speed configurations available
+    highSpeedConfigDescSet,                                 // Pointer to array of high speed configurations descriptors
+    3,														// Total number of string descriptors available.
     stringDescriptors,                                      // Pointer to array of string descriptors.
-	NULL, 
-	NULL
+    &deviceQualifierDescriptor1,                            // Pointer to full speed dev qualifier.
+    &deviceQualifierDescriptor1                             // Pointer to high speed dev qualifier.
 };
 
 
@@ -255,7 +333,7 @@ const USB_DEVICE_INIT usbDevInitData =
     .usbMasterDescriptor = (USB_DEVICE_MASTER_DESCRIPTOR*)&usbMasterDescriptor,
 
     /* USB Device Speed */
-	.deviceSpeed =  USB_SPEED_FULL,
+    .deviceSpeed =  USB_SPEED_HIGH,   
 	
 	/* Index of the USB Driver to be used by this Device Layer Instance */
     .driverIndex = DRV_USBHSV1_INDEX_0,

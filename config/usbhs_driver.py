@@ -160,19 +160,14 @@ def instantiateComponent(usbDriverComponent):
 
 		# Initial settings for CLK and NVIC
 		if Database.getSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN") == False: 
-			Database.clearSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN")
 			Database.setSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN", True, 2)
 		if Database.getSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL") == False:
-			Database.clearSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL")
 			Database.setSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL", True, 2)
 		if Database.getSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN") == False:
-			Database.clearSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN")
 			Database.setSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN", True, 2)
 		if Database.getSymbolValue("core", "USBHS_CLOCK_ENABLE") == False:
-			Database.clearSymbolValue("core", "USBHS_CLOCK_ENABLE")
 			Database.setSymbolValue("core", "USBHS_CLOCK_ENABLE", True, 2)
 		if Database.getSymbolValue("core", "PMC_SCER_USBCLK") == False:
-			Database.clearSymbolValue("core", "PMC_SCER_USBCLK")
 			Database.setSymbolValue("core", "PMC_SCER_USBCLK", True, 2)
 	
 		
@@ -201,26 +196,18 @@ def instantiateComponent(usbDriverComponent):
 	
 	# Enable dependent Harmony core components
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False: 
-		Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
 		Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
 
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False: 
-		Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
 		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
 
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_INT") == False: 
-		Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_INT")
 		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_INT", True, 2)
 
-    # Database.clearSymbolValue("Harmony", "ENABLE_SYS_DMA")
-    # Database.setSymbolValue("Harmony", "ENABLE_SYS_DMA", True, 2)
-
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_OSAL") == False: 
-		Database.clearSymbolValue("HarmonyCore", "ENABLE_OSAL")
 		Database.setSymbolValue("HarmonyCore", "ENABLE_OSAL", True, 2)
 	
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_APP_FILE") == False: 
-		Database.clearSymbolValue("HarmonyCore", "ENABLE_APP_FILE")
 		Database.setSymbolValue("HarmonyCore", "ENABLE_APP_FILE", True, 2)
 	
 	configName = Variables.get("__CONFIGURATION_NAME")

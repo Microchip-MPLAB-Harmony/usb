@@ -46,9 +46,9 @@ def instantiateComponent(usbVendorComponentCommon):
 	
 	usbDeviceVendorQueuDepth = usbVendorComponentCommon.createIntegerSymbol("CONFIG_USB_DEVICE_VENDOR_QUEUE_DEPTH_COMBINED", None)
 	usbDeviceVendorQueuDepth.setLabel("Combined Queue Depth")
-	usbDeviceVendorQueuDepth.setMin(0)
+	usbDeviceVendorQueuDepth.setMin(2)
 	usbDeviceVendorQueuDepth.setMax(32767)
-	usbDeviceVendorQueuDepth.setDefaultValue(0)
+	usbDeviceVendorQueuDepth.setDefaultValue(2)
 	usbDeviceVendorQueuDepth.setUseSingleDynamicValue(True)
 	usbDeviceVendorQueuDepth.setVisible(False)
 	

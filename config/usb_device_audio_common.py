@@ -33,7 +33,6 @@ def handleMessage(messageID, args):
 		
 
 def instantiateComponent(usbAudioComponentCommon):
-	print ("usb_device_audio_common.py")
 	global usbDeviceAudioInstnces 
 	global usbDeviceAudioQueuDepth 
 	usbDeviceAudioInstnces = usbAudioComponentCommon.createIntegerSymbol("CONFIG_USB_DEVICE_AUDIO_INSTANCES", None)
@@ -48,7 +47,7 @@ def instantiateComponent(usbAudioComponentCommon):
 	usbDeviceAudioQueuDepth.setLabel("Combined Queue Depth")
 	usbDeviceAudioQueuDepth.setMin(0)
 	usbDeviceAudioQueuDepth.setMax(32767)
-	usbDeviceAudioQueuDepth.setDefaultValue(0)
+	usbDeviceAudioQueuDepth.setDefaultValue(3)
 	usbDeviceAudioQueuDepth.setUseSingleDynamicValue(True)
 	usbDeviceAudioQueuDepth.setVisible(False)
 	

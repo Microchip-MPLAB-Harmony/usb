@@ -175,28 +175,20 @@ def instantiateComponent(usbDriverComponent):
 
     # Initial settings for CLK and NVIC
 	if Database.getSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN") == False: 
-		Database.clearSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN")
 		Database.setSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN", True, 2)
 	if Database.getSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL") == False: 
-		Database.clearSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL")
 		Database.setSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL", True, 2)
 	if Database.getSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN") == False:
-		Database.clearSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN")
 		Database.setSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN", True, 2)
 	if Database.getSymbolValue("core", "PMC_ID_USBHS") == False:
-		Database.clearSymbolValue("core", "PMC_ID_USBHS")
 		Database.setSymbolValue("core", "PMC_ID_USBHS", True, 2)
 	if Database.getSymbolValue("core", "PMC_SCER_USBCLK") == False:
-		Database.clearSymbolValue("core", "PMC_SCER_USBCLK")
 		Database.setSymbolValue("core", "PMC_SCER_USBCLK", True, 2)
 	if Database.getSymbolValue("core", "NVICVector") == False:
-		Database.clearSymbolValue("core", NVICVector)
 		Database.setSymbolValue("core", NVICVector, True, 2)
 	if Database.getSymbolValue("core", "NVICHandler") == False:
-		Database.clearSymbolValue("core", NVICHandler)
 		Database.setSymbolValue("core", NVICHandler, "USBHS_InterruptHandler", 2)
 	if Database.getSymbolValue("core", "NVICHandlerLock") == False:
-		Database.clearSymbolValue("core", NVICHandlerLock)
 		Database.setSymbolValue("core", NVICHandlerLock, True, 2)
 
 
@@ -218,26 +210,21 @@ def instantiateComponent(usbDriverComponent):
 
 	# Enable dependent Harmony core components
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False: 
-		Database.clearSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON")
 		Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
 
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False: 
-		Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON")
 		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
 
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_INT") == False: 
-		Database.clearSymbolValue("HarmonyCore", "ENABLE_SYS_INT")
 		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_INT", True, 2)
 
     # Database.clearSymbolValue("Harmony", "ENABLE_SYS_DMA")
     # Database.setSymbolValue("Harmony", "ENABLE_SYS_DMA", True, 2)
 
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_OSAL") == False: 
-		Database.clearSymbolValue("HarmonyCore", "ENABLE_OSAL")
 		Database.setSymbolValue("HarmonyCore", "ENABLE_OSAL", True, 2)
 	
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_APP_FILE") == False: 
-		Database.clearSymbolValue("HarmonyCore", "ENABLE_APP_FILE")
 		Database.setSymbolValue("HarmonyCore", "ENABLE_APP_FILE", True, 2)
 
 	configName = Variables.get("__CONFIGURATION_NAME")
@@ -373,7 +360,6 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1SourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbfsv1/src/")
 	drvUsbHsV1SourceFile.setType("SOURCE")
 	drvUsbHsV1SourceFile.setOverwrite(True)
-	#drvUsbHsV1SourceFile.setDependencies(blDrvUsbHsV1SourceFile, ["USB_OPERATION_MODE"])
 
 	drvUsbHsV1DeviceSourceFile = usbDriverComponent.createFileSymbol(None, None)
 	drvUsbHsV1DeviceSourceFile.setSourcePath(usbDriverPath + "usbfsv1/src/dynamic/drv_usbfsv1_device.c")
@@ -397,7 +383,6 @@ def instantiateComponent(usbDriverComponent):
 # all files go into src/
 def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callback):
 	configName1 = Variables.get("__CONFIGURATION_NAME")
-	#filename = component.createFileSymbol(None, None)
 	symbol.setProjectPath("config/" + configName1 + destPath)
 	symbol.setSourcePath(srcPath + fileName)
 	symbol.setOutputName(fileName)

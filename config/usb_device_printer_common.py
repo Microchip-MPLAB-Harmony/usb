@@ -49,7 +49,7 @@ def instantiateComponent(usbPrinterComponentCommon):
 	usbDevicePrinterQueuDepth.setLabel("Combined Queue Depth")
 	usbDevicePrinterQueuDepth.setMin(1)
 	usbDevicePrinterQueuDepth.setMax(32767)
-	usbDevicePrinterQueuDepth.setDefaultValue(0)
+	usbDevicePrinterQueuDepth.setDefaultValue(2)
 	usbDevicePrinterQueuDepth.setUseSingleDynamicValue(True)
 	usbDevicePrinterQueuDepth.setVisible(False)
 

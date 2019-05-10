@@ -162,7 +162,6 @@ def destroyComponent(component):
 		
 	
 def usbDeviceVendorBufferQueueSize(usbSymbolSource, event):
-	print("usbDeviceVendorBufferQueueSize" )
 	global currentQSizeRead
 	global currentQSizeWrite
 	readQSize = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINT_READ_QUEUE_SIZE")
