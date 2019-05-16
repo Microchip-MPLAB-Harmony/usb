@@ -80,12 +80,12 @@ def onAttachmentConnected(source, target):
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if readValue != None:
 			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-				rgs = {"nFunction":  readValue + hidEndpointsPic32}
+				args = {"nFunction":  readValue + hidEndpointsPic32}
 				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 				epNumberInterruptIn.setValue(readValue + 1, 1)
 				epNumberInterruptOut.setValue(readValue + 1, 1)
 			else:
-				rgs = {"nFunction":  readValue + hidEndpointsSAM}
+				args = {"nFunction":  readValue + hidEndpointsSAM}
 				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 				epNumberInterruptIn.setValue(readValue + 1, 1)
 				epNumberInterruptOut.setValue(readValue + 2, 1)

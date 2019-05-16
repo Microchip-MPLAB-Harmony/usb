@@ -44,9 +44,9 @@ def instantiateComponent(usbHidComponentCommon):
 	
 	usbDeviceHidQueuDepth = usbHidComponentCommon.createIntegerSymbol("CONFIG_USB_DEVICE_HID_QUEUE_DEPTH_COMBINED", None)
 	usbDeviceHidQueuDepth.setLabel("Combined Queue Depth")
-	usbDeviceHidQueuDepth.setMin(1)
+	usbDeviceHidQueuDepth.setMin(0)
 	usbDeviceHidQueuDepth.setMax(32767)
-	usbDeviceHidQueuDepth.setDefaultValue(3)
+	usbDeviceHidQueuDepth.setDefaultValue(2)
 	usbDeviceHidQueuDepth.setUseSingleDynamicValue(True)
 	usbDeviceHidQueuDepth.setVisible(False)
 	

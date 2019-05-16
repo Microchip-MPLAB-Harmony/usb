@@ -50,8 +50,6 @@ def onAttachmentConnected(source, target):
 	if readValue != None:
 		args = {"nTpl": readValue + 1}
 		res = Database.sendMessage("usb_host", "UPDATE_TPL_ENTRY_NUMBER", args)
-		Database.clearSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
-		Database.setSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER", readValue + 1 , 2)
 	
 def onAttachmentDisconnected(source, target):
 	ownerComponent = source["component"]
