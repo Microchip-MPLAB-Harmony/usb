@@ -64,7 +64,7 @@
 #define APP_USB_SWITCH_DEBOUNCE_COUNT_FS                    260
 #define APP_USB_SWITCH_DEBOUNCE_COUNT_HS                    500
 
-#ifdef __PIC32MZ__
+#if defined (__PIC32MZ__) || defined (__SAMD21__)
 #define APP_EP_BULK_OUT 1
 #define APP_EP_BULK_IN 1
 #else

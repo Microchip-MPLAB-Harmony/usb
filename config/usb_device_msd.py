@@ -88,6 +88,11 @@ def onAttachmentConnected(source, target):
 				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 				usbDeviceMsdEPNumberBulkIn.setValue(readValue + 1, 1)
 				usbDeviceMsdEPNumberBulkOut.setValue(readValue + 1, 1)	
+			elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21"]):
+				args = {"nFunction": readValue + msdEndpointsPic32 }
+				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
+				usbDeviceMsdEPNumberBulkIn.setValue(readValue + 1, 1)
+				usbDeviceMsdEPNumberBulkOut.setValue(readValue + 1, 1)	
 			else:
 				args = {"nFunction": readValue + msdEndpointsSAM }
 				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)

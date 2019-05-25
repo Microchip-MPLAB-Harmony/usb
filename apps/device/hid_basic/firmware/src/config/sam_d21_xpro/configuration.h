@@ -94,12 +94,12 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 /* Maximum instances of HID function driver */
-#define USB_DEVICE_HID_INSTANCES_NUMBER     1
+#define USB_DEVICE_HID_INSTANCES_NUMBER     1 
 
 /* HID Transfer Queue Size for both read and
    write. Applicable to all instances of the
    function driver */
-#define USB_DEVICE_HID_QUEUE_DEPTH_COMBINED 5
+#define USB_DEVICE_HID_QUEUE_DEPTH_COMBINED 2
 
 /*** USB Driver Configuration ***/
 
@@ -117,7 +117,7 @@ extern "C" {
 #define DRV_USBFSV1_DUAL_BANK_ENABLE                        false
 
 /* Number of Endpoints used */
-#define DRV_USBFSV1_ENDPOINTS_NUMBER                        3
+#define DRV_USBFSV1_ENDPOINTS_NUMBER                        2
 
 /* The USB Device Layer will not initialize the USB Driver */
 #define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT

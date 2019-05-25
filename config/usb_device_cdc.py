@@ -118,6 +118,10 @@ def onAttachmentConnected(source, target):
 				epNumberBulkIn.setValue(nEndpoints + 2, 1)
 				args = {"nFunction":  nEndpoints + cdcEndpointsPic32}
 				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
+			elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21"]):
+				epNumberBulkIn.setValue(nEndpoints + 2, 1)
+				args = {"nFunction":  nEndpoints + cdcEndpointsPic32}
+				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 			else:
 				epNumberBulkIn.setValue(nEndpoints + 3, 1)
 				args = {"nFunction":  nEndpoints + cdcEndpointsSAM}
