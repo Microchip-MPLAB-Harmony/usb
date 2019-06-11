@@ -28,10 +28,6 @@ usbDebugLogs = 1
 usbDriverPath = "driver/"
 usbDriverProjectPath = "/driver/usb/"
 
-def speedChanged(symbol, event):
-	Database.clearSymbolValue("core", "PMC_SCER_USBCLK")
-	Database.setSymbolValue("core", "PMC_SCER_USBCLK", True, 2)
-
 def dependencyStatus(symbol, event):
 	if (event["value"] == False):
 		symbol.setVisible(True)
@@ -53,6 +49,13 @@ def showRTOSMenu(symbol, event):
 		show_rtos_menu = True
 	symbol.setVisible(show_rtos_menu)
 def instantiateComponent(usbDriverComponent):
+
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAML22"]):
+		usbDriverSourcePath = "usbfsv1_device_only"	
+	else:
+		usbDriverSourcePath = "usbfsv1"
+	
+	
 	res = Database.activateComponents(["HarmonyCore"])
 
 	# USB Driver Speed selection
@@ -70,6 +73,9 @@ def instantiateComponent(usbDriverComponent):
 	usbOpMode.setDescription("Select USB Operation Mode")
 	usbOpMode.setDefaultValue("Device")
 	usbOpMode.setUseSingleDynamicValue(True)
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAML22"]):
+		usbOpMode.setReadOnly(True)
+		
 
 	usbVbusSense = usbDriverComponent.createBooleanSymbol("USB_DEVICE_VBUS_SENSE", usbOpMode)
 	usbVbusSense.setLabel("Enable VBUS Sense")
@@ -138,11 +144,13 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverRTOSTaskDelayVal.setVisible((usbDriverRTOSTaskDelay.getValue() == True))
 	usbDriverRTOSTaskDelayVal.setDependencies(setVisible, ["USB_DRIVER_RTOS_USE_DELAY"])
 
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD20", "SAMD21"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD20", "SAMD21", "SAML21", "SAML22"]):
 		# Update USB General Interrupt Handler
 		Database.setSymbolValue("core", "USB_INTERRUPT_ENABLE", True, 1)
 		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER_LOCK", True, 1)
 		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER", "DRV_USBFSV1_USB_Handler", 1)
+		
+		Database.setSymbolValue("core", "USB_CLOCK_ENABLE", True, 1) 
 
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD51", "SAME51", "SAME53", "SAME54"]):
 
@@ -165,48 +173,9 @@ def instantiateComponent(usbDriverComponent):
 		Database.setSymbolValue("core", "USB_TRCPT1_INTERRUPT_ENABLE", True, 1)
 		Database.setSymbolValue("core", "USB_TRCPT1_INTERRUPT_HANDLER_LOCK", True, 1)
 		Database.setSymbolValue("core", "USB_TRCPT1_INTERRUPT_HANDLER", "DRV_USBFSV1_TRCPT1_Handler", 1)
+		
+		Database.setSymbolValue("core", "USB_CLOCK_ENABLE", True, 1) 
 
-	############################################################################
-    #### Dependency ####
-    ############################################################################
-	NVICVector = "NVIC_USBHS_ENABLE"
-	NVICHandler = "NVIC_USBHS_HANDLER"
-	NVICHandlerLock = "NVIC_USBHS_HANDLER_LOCK"
-
-    # Initial settings for CLK and NVIC
-	if Database.getSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN") == False: 
-		Database.setSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN", True, 2)
-	if Database.getSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL") == False: 
-		Database.setSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL", True, 2)
-	if Database.getSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN") == False:
-		Database.setSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN", True, 2)
-	if Database.getSymbolValue("core", "PMC_ID_USBHS") == False:
-		Database.setSymbolValue("core", "PMC_ID_USBHS", True, 2)
-	if Database.getSymbolValue("core", "PMC_SCER_USBCLK") == False:
-		Database.setSymbolValue("core", "PMC_SCER_USBCLK", True, 2)
-	if Database.getSymbolValue("core", "NVICVector") == False:
-		Database.setSymbolValue("core", NVICVector, True, 2)
-	if Database.getSymbolValue("core", "NVICHandler") == False:
-		Database.setSymbolValue("core", NVICHandler, "USBHS_InterruptHandler", 2)
-	if Database.getSymbolValue("core", "NVICHandlerLock") == False:
-		Database.setSymbolValue("core", NVICHandlerLock, True, 2)
-
-
-    # NVIC Dynamic settings
-	# usbhsNVICControl = usbDriverComponent.createBooleanSymbol("NVIC_USBHS_ENABLE", None)
-	# usbhsNVICControl.setDependencies(NVICControl, ["INTERRUPT_MODE"])
-	# usbhsNVICControl.setVisible(False)
-
-    # Dependency Status
-	usbhsSymClkEnComment = usbDriverComponent.createCommentSymbol("USBHS_CLK_ENABLE_COMMENT", None)
-	usbhsSymClkEnComment.setVisible(False)
-	usbhsSymClkEnComment.setLabel("Warning!!! USBHS Peripheral Clock is Disabled in Clock Manager")
-	usbhsSymClkEnComment.setDependencies(dependencyStatus, ["core.PMC_ID_USBHS"])
-
-	usbhsSymIntEnComment = usbDriverComponent.createCommentSymbol("USBHS_NVIC_ENABLE_COMMENT", None)
-	usbhsSymIntEnComment.setVisible(False)
-	usbhsSymIntEnComment.setLabel("Warning!!! USBHS Interrupt is Disabled in Interrupt Manager")
-	usbhsSymIntEnComment.setDependencies(dependencyStatus, ["core." + NVICVector])
 
 	# Enable dependent Harmony core components
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False: 
@@ -217,9 +186,6 @@ def instantiateComponent(usbDriverComponent):
 
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_INT") == False: 
 		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_INT", True, 2)
-
-    # Database.clearSymbolValue("Harmony", "ENABLE_SYS_DMA")
-    # Database.setSymbolValue("Harmony", "ENABLE_SYS_DMA", True, 2)
 
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_OSAL") == False: 
 		Database.setSymbolValue("HarmonyCore", "ENABLE_OSAL", True, 2)
@@ -313,7 +279,7 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbExternalDependenciesFile.setOverwrite(True)
 
 	drvUsbHsV1HeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbHsV1HeaderFile.setSourcePath(usbDriverPath + "usbfsv1/drv_usbfsv1.h")
+	drvUsbHsV1HeaderFile.setSourcePath(usbDriverPath + usbDriverSourcePath + "/drv_usbfsv1.h")
 	drvUsbHsV1HeaderFile.setOutputName("drv_usbfsv1.h")
 	drvUsbHsV1HeaderFile.setDestPath(usbDriverProjectPath+ "usbfsv1")
 	drvUsbHsV1HeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath+ "usbfsv1")
@@ -354,7 +320,7 @@ def instantiateComponent(usbDriverComponent):
 	# USB Driver Source files
 	################################################
 	drvUsbHsV1SourceFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbHsV1SourceFile.setSourcePath(usbDriverPath + "usbfsv1/src/dynamic/drv_usbfsv1.c")
+	drvUsbHsV1SourceFile.setSourcePath(usbDriverPath + usbDriverSourcePath + "/src/dynamic/drv_usbfsv1.c")
 	drvUsbHsV1SourceFile.setOutputName("drv_usbfsv1.c")
 	drvUsbHsV1SourceFile.setDestPath(usbDriverProjectPath + "usbfsv1/src")
 	drvUsbHsV1SourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbfsv1/src/")
@@ -362,7 +328,7 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1SourceFile.setOverwrite(True)
 
 	drvUsbHsV1DeviceSourceFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbHsV1DeviceSourceFile.setSourcePath(usbDriverPath + "usbfsv1/src/dynamic/drv_usbfsv1_device.c")
+	drvUsbHsV1DeviceSourceFile.setSourcePath(usbDriverPath + usbDriverSourcePath + "/src/dynamic/drv_usbfsv1_device.c")
 	drvUsbHsV1DeviceSourceFile.setOutputName("drv_usbfsv1_device.c")
 	drvUsbHsV1DeviceSourceFile.setDestPath(usbDriverProjectPath + "usbfsv1/src")
 	drvUsbHsV1DeviceSourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbfsv1/src/")

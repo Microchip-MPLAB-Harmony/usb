@@ -21,100 +21,153 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 def loadModule():
-	#print("Load Module: Harmony USB Middle ware")
-	loadUSBLibrary = False
+	
+	# Initially Set all USB Library modules to False. We will enable each -  
+	# Library depending on the Micro-controller selected.  
+	loadUSBHostLayer = False
+	loadUSBHostCDC = False
+	loadUSBHostMSD = False
+	loadUSBHostHID = False
+	loadUSBHostAudio = False 
+	
+	loadUSBDeviceLayer = False
+	loadUSBDeviceCDC = False
+	loadUSBDeviceHID = False
+	loadUSBDeviceAudio = False
+	loadUSBDeviceMSD = False
+	loadUSBDeviceVendor = False 
+	loadUSBDevicePrinter = False 
+	
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2"]):
-		loadUSBLibrary = False
-		print("create component: USB Driver")
+		# Create USB High Speed Host Port Driver Component for SAMA5D2
 		usbDriverComponent =  Module.CreateComponent("drv_usbhs_v1", "USB Host High Speed Port (UHPHS) Driver", "/Harmony/Drivers", "config/usb_uhp_driver.py")
 		usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
 		
-		# Create USB Host Stack Component 
-		print("create component: USB Host")
-		usbHostComponent = Module.CreateSharedComponent("usb_host", "Host Layer", "/Libraries/USB/Host Stack", "config/usb_host.py")
-		usbHostComponent.addDependency("usb_driver_dependency", "DRV_USB", True, True)
-		usbHostComponent.addDependency("usb_host_tmr_dependency", "SYS_TIME", True, True)
-		usbHostComponent.addCapability("usb_host", "USB_HOST", True)
+		loadUSBHostLayer = True 
+		loadUSBHostCDC = True
+		loadUSBHostMSD = True
 		
-		print("create component: USB Host MSD")
-		usbHostMsdComponent = Module.CreateComponent("usb_host_msd", "MSD Client Driver", "/Libraries/USB/Host Stack","config/usb_host_msd.py")
-		usbHostMsdComponent.addDependency("usb_host_dependency", "USB_HOST", True, True)
-		usbHostMsdComponent.addCapability("USB Host MSD", "DRV_MEDIA")
-		
-		print("create component: USB Host CDC")
-		usbHostCdcComponent = Module.CreateComponent("usb_host_cdc", "CDC Client Driver", "/Libraries/USB/Host Stack", "config/usb_host_cdc.py")
-		usbHostCdcComponent.addDependency("usb_host_dependency", "USB_HOST", True, True)
-	# Create USB Driver Components 
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32MZ"]):
-		print("create component: USB Driver")
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32MZ"]):
+		# Create USB High Speed Driver Component
 		usbDriverComponent =  Module.CreateComponent("drv_usbhs_v1", "USB High Speed Driver", "/Harmony/Drivers", "config/usbhs_driver.py")
 		usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
-		loadUSBLibrary = True
+		
+		# Enable USB Library modules 
+		loadUSBHostLayer = True
+		loadUSBHostCDC = True
+		loadUSBHostMSD = True
+		loadUSBHostHID = True
+		loadUSBHostAudio = True 
 	
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD20", "SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54"]):
-		print("create component: USB Driver")
+		loadUSBDeviceLayer = True
+		loadUSBDeviceCDC = True
+		loadUSBDeviceHID = True
+		loadUSBDeviceAudio = True
+		loadUSBDeviceMSD = True
+		loadUSBDeviceVendor = True 
+		loadUSBDevicePrinter = True 
+	
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD20", "SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21"]):
+		# Create USB Full Speed Driver Component
 		usbDriverComponent =  Module.CreateComponent("drv_usbfs_v1", "USB Full Speed Driver", "/Harmony/Drivers", "config/usbfs_v1_driver.py")
 		usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
-		loadUSBLibrary = True
+		
+		# Enable USB Library modules 
+		loadUSBHostLayer = True
+		loadUSBHostCDC = True
+		loadUSBHostMSD = True
+		loadUSBHostHID = True
+		loadUSBHostAudio = True 
 	
-	if  loadUSBLibrary == True:	
-		# Create USB Device Stack Component 
+		loadUSBDeviceLayer = True
+		loadUSBDeviceCDC = True
+		loadUSBDeviceHID = True
+		loadUSBDeviceAudio = True
+		loadUSBDeviceMSD = True
+		loadUSBDeviceVendor = True
+		loadUSBDevicePrinter = True  
+		
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAML22"]):
+		# Create USB Full Speed Driver Component
+		usbDriverComponent =  Module.CreateComponent("drv_usbfs_v1", "USB Full Speed Driver", "/Harmony/Drivers", "config/usbfs_v1_driver.py")
+		usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
+		
+		loadUSBDeviceLayer = True
+		loadUSBDeviceCDC = True
+		loadUSBDeviceHID = True
+		loadUSBDeviceAudio = True
+		loadUSBDeviceMSD = True
+		loadUSBDeviceVendor = True
+		loadUSBDevicePrinter = True  
+		
+	# Create USB Device Stack Component
+	if  loadUSBDeviceLayer == True:	 
 		usbDeviceComponent = Module.CreateSharedComponent("usb_device", "USB Device Layer", "/Libraries/USB/Device Stack", "config/usb_device.py")
 		usbDeviceComponent.addDependency("usb_driver_dependency", "DRV_USB", True, True)
 		usbDeviceComponent.addCapability("USB Device", "USB_DEVICE", True)
-						
-		print("create component: USB Device CDC")
+	
+	# Create USB Device CDC Function driver Component 
+	if loadUSBDeviceCDC == True:
 		usbDeviceCdcComponent = Module.CreateGeneratorComponent("usb_device_cdc", "CDC Function Driver", "/Libraries/USB/Device Stack", "config/usb_device_cdc_common.py", "config/usb_device_cdc.py")
 		usbDeviceCdcComponent.addDependency("usb_device_dependency", "USB_DEVICE", True, True)
 		usbDeviceCdcComponent.addCapability("USB Device", "USB_DEVICE_CDC")
-		
-		print("create component: USB Device Vendor")
+	
+	# Create USB Device Vendor Component 
+	if loadUSBDeviceVendor == True:	
 		usbDeviceVendorComponent = Module.CreateGeneratorComponent("usb_device_vendor", "Vendor Function", "/Libraries/USB/Device Stack", "config/usb_device_vendor_common.py", "config/usb_device_vendor.py")
 		usbDeviceVendorComponent.addDependency("usb_device_dependency", "USB_DEVICE" , True, True)
 		usbDeviceVendorComponent.addCapability("USB Device", "USB_DEVICE_VENDOR")
-		
-		print("create component: USB Device Audio")
+	
+	# Create USB Device Audio Component 
+	if loadUSBDeviceAudio == True:
 		usbDeviceAudioComponent = Module.CreateGeneratorComponent("usb_device_audio", "Audio Function Driver", "/Libraries/USB/Device Stack", "config/usb_device_audio_common.py", "config/usb_device_audio.py")
 		usbDeviceAudioComponent.addDependency("usb_device_dependency", "USB_DEVICE" , True, True)
 		usbDeviceAudioComponent.addCapability("USB Device", "USB_DEVICE_AUDIO")
 		
-		print("create component: USB Device HID")
+	# Create USB Device HID Component 
+	if loadUSBDeviceHID == True:
 		usbDeviceHidComponent = Module.CreateGeneratorComponent("usb_device_hid", "HID Function Driver", "/Libraries/USB/Device Stack", "config/usb_device_hid_common.py", "config/usb_device_hid.py")
 		usbDeviceHidComponent.addDependency("usb_device_dependency", "USB_DEVICE" , True, True)
 		usbDeviceHidComponent.addCapability("USB Device", "USB_DEVICE_HID")
-		
-		print("create component: USB Device MSD")
+	
+	# Create USB Device MSD Component 
+	if loadUSBDeviceMSD == True:
 		usbDeviceMsdComponent = Module.CreateGeneratorComponent("usb_device_msd", "MSD Function Driver", "/Libraries/USB/Device Stack", "config/usb_device_msd_common.py", "config/usb_device_msd.py")
 		usbDeviceMsdComponent.addDependency("usb_device_dependency", "USB_DEVICE", True, True)
 		usbDeviceMsdComponent.addDependency("usb_device_msd_media_dependency", "DRV_MEDIA", False, True)
 		usbDeviceMsdComponent.addCapability("USB Device", "USB_DEVICE_MSD")
 
-		print("create component: USB Device Printer")
+	# Create USB Device Printer Component 
+	if loadUSBDevicePrinter == True:
 		usbDevicePrinterComponent = Module.CreateGeneratorComponent("usb_device_printer", "Printer Function Driver", "/Libraries/USB/Device Stack", "config/usb_device_printer_common.py", "config/usb_device_printer.py")
 		usbDevicePrinterComponent.addDependency("usb_device_dependency", "USB_DEVICE", True, True)
 		usbDevicePrinterComponent.addCapability("USB Device", "USB_DEVICE_PRINTER")		
-		
-		# Create USB Host Stack Component 
-		print("create component: USB Host")
+	
+	# Create USB Host Layer Component 	
+	if loadUSBHostLayer == True:
 		usbHostComponent = Module.CreateSharedComponent("usb_host", "Host Layer", "/Libraries/USB/Host Stack", "config/usb_host.py")
 		usbHostComponent.addDependency("usb_driver_dependency", "DRV_USB", True, True)
 		usbHostComponent.addDependency("usb_host_tmr_dependency", "SYS_TIME", True, True)
 		usbHostComponent.addCapability("usb_host", "USB_HOST", True)
-		
-		print("create component: USB Host MSD")
+	
+	# Create USB Host Stack MSD Component 
+	if loadUSBHostMSD == True:
 		usbHostMsdComponent = Module.CreateComponent("usb_host_msd", "MSD Client Driver", "/Libraries/USB/Host Stack","config/usb_host_msd.py")
 		usbHostMsdComponent.addDependency("usb_host_dependency", "USB_HOST", True, True)
 		usbHostMsdComponent.addCapability("USB Host MSD", "DRV_MEDIA")
-		
-		print("create component: USB Host CDC")
+	
+	# Create USB Host Stack CDC Component 
+	if loadUSBHostCDC == True:	
 		usbHostCdcComponent = Module.CreateComponent("usb_host_cdc", "CDC Client Driver", "/Libraries/USB/Host Stack", "config/usb_host_cdc.py")
 		usbHostCdcComponent.addDependency("usb_host_dependency", "USB_HOST", True, True)
-		
-		print("create component: USB Host HID")
+	
+	# Create USB Host Stack HID Component 	
+	if loadUSBHostHID == True:
 		usbHostHidComponent = Module.CreateComponent("usb_host_hid", "HID Client Driver", "/Libraries/USB/Host Stack", "config/usb_host_hid.py")
 		usbHostHidComponent.addDependency("usb_host_dependency", "USB_HOST", True, True)
-
-		print("create component: USB Host Audio")
+	
+	# Create USB Host Stack Audio Component 
+	if loadUSBHostAudio == True:
 		usbHostAudioComponent = Module.CreateComponent("usb_host_audio", "Audio Client Driver", "/Libraries/USB/Host Stack", "config/usb_host_audio.py")
 		usbHostAudioComponent.addDependency("usb_host_dependency", "USB_HOST", True, True)
 		
