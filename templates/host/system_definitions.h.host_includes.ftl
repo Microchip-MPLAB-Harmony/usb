@@ -25,6 +25,12 @@
 
 #include "usb/usb_chapter_9.h"
 #include "usb/usb_host.h"
+<#if CONFIG_USB_HOST_HUB_SUPPORT?has_content == true>
+<#if CONFIG_USB_HOST_HUB_SUPPORT == true >
+#include "usb/usb_host_hub.h"
+</#if>
+</#if>
+
 <#--
 /*******************************************************************************
  End of File

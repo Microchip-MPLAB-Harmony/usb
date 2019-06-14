@@ -64,8 +64,14 @@
 #define DRV_USB_UHP_ENDPOINTS_NUMBER                        1
 </#if>
 
+<#if CONFIG_USB_HOST_HUB_SUPPORT?has_content == false>
+#define USB_HOST_DEVICES_NUMBER                             1
+<#elseif CONFIG_USB_HOST_HUB_SUPPORT == false>
 /* Total number of devices to be supported */
-#define USB_HOST_DEVICES_NUMBER                             ${CONFIG_USB_HOST_DEVICE_NUMNBER}
+#define USB_HOST_DEVICES_NUMBER                             1
+<#else>
+#define USB_HOST_DEVICES_NUMBER                             ${CONFIG_USB_HOST_DEVICE_NUMNBER} 
+</#if>
 
 /* Size of Endpoint 0 buffer */
 #define USB_DEVICE_EP0_BUFFER_SIZE                          64

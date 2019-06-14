@@ -23,7 +23,7 @@
  *******************************************************************************/
  -->
 <#if (CONFIG_USB_HOST_MSD_NUMBER_OF_INSTANCES?has_content == true)  
-		&& (CONFIG_USB_HOST_MSD_NUMBER_OF_INSTANCES?number == 1)>
+		&& (CONFIG_USB_HOST_MSD_NUMBER_OF_INSTANCES?number >= 1)>
 	TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL(0x08, 0x06, 0x50, NULL,  USB_HOST_MSD_INTERFACE) ,
 </#if>
 <#--

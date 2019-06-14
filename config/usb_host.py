@@ -86,14 +86,6 @@ def instantiateComponent(usbHostComponent):
 	usbDeviceDriverInterface = usbHostComponent.createStringSymbol("CONFIG_USB_DRIVER_INTERFACE", None)
 	usbDeviceDriverInterface.setVisible(False)
 	usbDeviceDriverInterface.setDefaultValue(driverInterface)
-	
-	# USB Host Max Number of Devices   
-	usbHostDeviceNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_DEVICE_NUMNBER", None)
-	usbHostDeviceNumber.setLabel("Maximum Number of Devices")
-	usbHostDeviceNumber.setVisible(False)
-	usbHostDeviceNumber.setDescription("Maximum Number of Devices that will be attached to this Host")
-	usbHostDeviceNumber.setDefaultValue(1)
-	usbHostDeviceNumber.setDependencies(blUsbHostDeviceNumber, ["USB_OPERATION_MODE"])
 
 	# USB Host Number of TPL Entries 
 	usbHostTplEntryNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_TPL_ENTRY_NUMBER", None)
@@ -102,7 +94,7 @@ def instantiateComponent(usbHostComponent):
 	usbHostTplEntryNumber.setDescription("Number of TPL entries")
 	usbHostTplEntryNumber.setDefaultValue(0)
 	usbHostTplEntryNumber.setUseSingleDynamicValue(True)
-	usbHostTplEntryNumber.setDependencies(blUsbHostDeviceNumber, ["USB_OPERATION_MODE"])
+	#usbHostTplEntryNumber.setDependencies(blUsbHostDeviceNumber, ["USB_OPERATION_MODE"])
 	usbHostTplEntryNumber.setReadOnly(True)
 
 	# USB Host Max Interfaces  
@@ -120,6 +112,45 @@ def instantiateComponent(usbHostComponent):
 	usbHostTransfersNumber.setDescription("Maximum number of transfers that host layer should handle")
 	usbHostTransfersNumber.setDefaultValue(10)
 	usbHostTransfersNumber.setDependencies(blUsbHostMaxInterfaceNumber, ["USB_OPERATION_MODE"])	
+	
+	# USB Host Hub Support
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX" , "SAMA5D2" ]):
+		usbHostHubsupport = usbHostComponent.createBooleanSymbol("CONFIG_USB_HOST_HUB_SUPPORT", None)
+		usbHostHubsupport.setLabel( "Hub support" )
+		usbHostHubsupport.setVisible( True)
+		usbHostHubsupport.setDefaultValue(False)
+		usbHostHubsupport.setDependencies(hubUpdateTPL, ["CONFIG_USB_HOST_HUB_SUPPORT"])
+		
+		
+		# USB Host Hub Client Driver instances
+		usbHostHubDriverInstance = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_HUB_NUMBER_OF_INSTANCES", usbHostHubsupport)
+		usbHostHubDriverInstance.setLabel( "Number of Hub Client Driver Instances" )
+		usbHostHubDriverInstance.setDescription("Enter the number of HUB Class Driver instances required in the application.")
+		usbHostHubDriverInstance.setVisible(False)
+		usbHostHubDriverInstance.setDefaultValue(1)
+		usbHostHubDriverInstance.setDependencies(hubSupportSetVisible, ["CONFIG_USB_HOST_HUB_SUPPORT"])	
+		
+		# USB Host Max Number of Devices  
+		usbHostDeviceNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_DEVICE_NUMNBER", usbHostHubsupport)
+		usbHostDeviceNumber.setLabel("Maximum Number of Devices")
+		usbHostDeviceNumber.setVisible(False)
+		usbHostDeviceNumber.setDescription("Maximum Number of Devices that will be attached to this Host")
+		usbHostDeviceNumber.setDefaultValue(1)
+		usbHostDeviceNumber.setUseSingleDynamicValue(True)
+		usbHostDeviceNumber.setDependencies(hubSupportSetVisible, ["CONFIG_USB_HOST_HUB_SUPPORT"])
+			
+			
+	##############################################################
+	# TPL Entry for HUB client driver 
+	##############################################################
+		usbHostHubTplEntryFile = usbHostComponent.createFileSymbol(None, None)
+		usbHostHubTplEntryFile.setType("STRING")
+		usbHostHubTplEntryFile.setOutputName("usb_host.LIST_USB_HOST_TPL_ENTRY")
+		usbHostHubTplEntryFile.setSourcePath("templates/host/system_init_c_hub_tpl.ftl")
+		usbHostHubTplEntryFile.setMarkup(True)
+		usbHostHubTplEntryFile.setEnabled(False)
+		usbHostHubTplEntryFile.setDependencies(hubSupportSetEnable, ["CONFIG_USB_HOST_HUB_SUPPORT"])
+		
 	
 	enable_rtos_settings = False
 
@@ -197,6 +228,18 @@ def instantiateComponent(usbHostComponent):
 	#usbHostSystemInitDataFile1.setOutputName("core.LIST_SYSTEM_INIT_C_LIBRARY_INITIALIZATION_DATA")
 	#usbHostSystemInitDataFile1.setOutputName("usb_host_tpl_init.c")
 	
+	# system_config.h file for USB Host Layer    
+	################################################
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX" , "SAMA5D2" ]):
+		usbHostHubConfigFile = usbHostComponent.createFileSymbol(None, None)
+		usbHostHubConfigFile.setType("STRING")
+		usbHostHubConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION")
+		usbHostHubConfigFile.setSourcePath("templates/host/system_config.h.host_hub.ftl")
+		usbHostHubConfigFile.setMarkup(True)
+		usbHostHubConfigFile.setEnabled(False)
+		usbHostHubConfigFile.setDependencies(hubSupportSetEnable, ["CONFIG_USB_HOST_HUB_SUPPORT"])
+		
+	
 	usbHostSystemInitDataFile = usbHostComponent.createFileSymbol(None, None)
 	usbHostSystemInitDataFile.setType("SOURCE")
 	#usbHostSystemInitDataFile.setOutputName("core.LIST_SYSTEM_INIT_C_LIBRARY_INITIALIZATION_DATA")
@@ -261,10 +304,20 @@ def instantiateComponent(usbHostComponent):
 	usbExternalDependenciesFile = usbHostComponent.createFileSymbol(None, None)
 	addFileName('usb_external_dependencies.h', usbHostComponent, usbExternalDependenciesFile, "middleware/src/", "/usb/src", True, None)
 		
+	################################################
+	# USB Host HUB Client driver Files 
+	################################################
 	
+	usbHostHubLocalHeaderFile = usbHostComponent.createFileSymbol(None, None)
+	addFileName('usb_host_hub_local.h', usbHostComponent, usbHostHubLocalHeaderFile, "middleware/src/", "/usb/src", False, hubSupportSetEnable)
+	
+	usbHostHubSourceFile = usbHostComponent.createFileSymbol(None, None)
+	addFileName('usb_host_hub.c', usbHostComponent, usbHostHubSourceFile, "middleware/src/", "/usb/src", False, hubSupportSetEnable)
+			
+	usbHostHubHeaderFile = usbHostComponent.createFileSymbol(None, None)
+	addFileName('usb_host_hub.h', usbHostComponent, usbHostHubHeaderFile, "middleware/", "/usb/", False, hubSupportSetEnable)
 	
 def blUsbHostDeviceNumber(usbSymbolSource, event):
-	blUsbLog(usbSymbolSource, event)
 	if (event["value"] == "Host"):		
 		blUsbPrint("Set Visible " + usbSymbolSource.getID().encode('ascii', 'ignore'))
 		usbSymbolSource.setVisible(True)
@@ -307,10 +360,35 @@ def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callbac
 	else:
 		symbol.setType("SOURCE")
 	symbol.setEnabled(enabled)
-	if callback != None:
-		symbol.setDependencies(callback, ["USB_DEVICE_FUNCTION_1_DEVICE_CLASS"])
+	if callback == hubSupportSetEnable:
+		symbol.setDependencies(callback, ["CONFIG_USB_HOST_HUB_SUPPORT"])
 		
 def onDependentComponentAdded(component, id, usart):
 	if id == "usb_driver_dependency" :
 		Database.clearSymbolValue("drv_usbhs_v1", "USB_OPERATION_MODE")
 		Database.setSymbolValue("drv_usbhs_v1", "USB_OPERATION_MODE", "Host" , 2)
+
+def hubSupportSetVisible(usbSymbolSource, event):
+	if (event["value"] == True):		
+		usbSymbolSource.setVisible(True)
+	else:
+		usbSymbolSource.setVisible(False)
+
+def hubSupportSetEnable(usbSymbolSource, event):
+		
+	if (event["value"] == True):		
+		usbSymbolSource.setEnabled(True)
+	else:
+		usbSymbolSource.setEnabled(False)
+		
+			
+def hubUpdateTPL(usbSymbolSource, event):	
+	global usbHostTplEntryNumber
+	if (event["value"] == True):		
+		readValue = usbHostTplEntryNumber.getValue()
+		if readValue != None:
+			usbHostTplEntryNumber.setValue(readValue + 1)
+	else:
+		readValue = usbHostTplEntryNumber.getValue()
+		if readValue != None:
+			usbHostTplEntryNumber.setValue(readValue - 1)
