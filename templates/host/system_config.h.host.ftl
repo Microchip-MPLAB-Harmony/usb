@@ -62,6 +62,8 @@
 #define DRV_USBFSV1_ENDPOINTS_NUMBER                        1
 <#elseif CONFIG_USB_DRIVER_INTERFACE == "DRV_USB_UHP_HOST_INTERFACE">
 #define DRV_USB_UHP_ENDPOINTS_NUMBER                        1
+<#elseif CONFIG_USB_DRIVER_INTERFACE == "DRV_USBFS_HOST_INTERFACE">
+#define DRV_USBFS_ENDPOINTS_NUMBER 							1
 </#if>
 
 <#if CONFIG_USB_HOST_HUB_SUPPORT?has_content == false>
