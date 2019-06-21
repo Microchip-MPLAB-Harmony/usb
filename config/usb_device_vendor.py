@@ -80,7 +80,7 @@ def onAttachmentConnected(source, target):
 			
 		nEndpoints = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if nEndpoints != None:
-			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MK", "SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22"]):
 				args = {"nFunction":  nEndpoints + VENDOR_ENDPOINTS_PIC32 }
 				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 				epNumberBulkOut.setValue(nEndpoints + 1, 1)
@@ -129,7 +129,7 @@ def onAttachmentDisconnected(source, target):
 	
 	endpointNumber = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 	if endpointNumber != None:
-		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MK", "SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22"]):
 			args = {"nFunction":endpointNumber -  VENDOR_ENDPOINTS_PIC32 }
 			res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 		else:
@@ -196,6 +196,19 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	
 	res = Database.activateComponents(["usb_device"])
 	
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+		MaxEpNumber = 7
+		BulkInDefaultEpNumber = 1
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX", "PIC32MK"]):
+		MaxEpNumber = 15
+		BulkInDefaultEpNumber = 1
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22"]):
+		MaxEpNumber = 7
+		BulkInDefaultEpNumber = 1
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAME70", "SAMS70", "SAMV70", "SAMV71"]):
+		MaxEpNumber = 9
+		BulkInDefaultEpNumber = 2
+	
 	# Index of this function 
 	indexFunction = usbDeviceVendorComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INDEX", None)
 	indexFunction.setVisible(False)
@@ -255,16 +268,16 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	epNumberBulkOut.setLabel("Bulk OUT Endpoint Number")
 	epNumberBulkOut.setVisible(True)
 	epNumberBulkOut.setMin(1)
-	epNumberBulkOut.setMax(10)
-	epNumberBulkOut.setDefaultValue(2)
+	epNumberBulkOut.setMax(MaxEpNumber)
+	epNumberBulkOut.setDefaultValue(1)
 	
 	# Vendor Function driver Data IN Endpoint Number   
 	epNumberBulkIn = usbDeviceVendorComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER", None)
 	epNumberBulkIn.setLabel("Bulk IN Endpoint Number")
 	epNumberBulkIn.setVisible(True)
 	epNumberBulkIn.setMin(1)
-	epNumberBulkIn.setMax(10)
-	epNumberBulkIn.setDefaultValue(3)
+	epNumberBulkIn.setMax(MaxEpNumber)
+	epNumberBulkIn.setDefaultValue(BulkInDefaultEpNumber)
 	
 	usbDeviceVendorBufPool = usbDeviceVendorComponent.createBooleanSymbol("CONFIG_USB_DEVICE_VENDOR_BUFFER_POOL", None)
 	usbDeviceVendorBufPool.setLabel("**** Buffer Pool Update ****")
@@ -364,5 +377,3 @@ def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callbac
 	else:
 		symbol.setType("SOURCE")
 	symbol.setEnabled(enabled)
-	if callback != None:
-		symbol.setDependencies(callback, ["USB_DEVICE_FUNCTION_1_DEVICE_CLASS"])

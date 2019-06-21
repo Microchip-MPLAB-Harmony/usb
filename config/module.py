@@ -38,14 +38,29 @@ def loadModule():
 	loadUSBDeviceVendor = False 
 	loadUSBDevicePrinter = False 
 	
+	USBDriverCapabilityName = "DRV_USB" 
+	
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2"]):
 		# Create USB High Speed Host Port Driver Component for SAMA5D2
-		usbDriverComponent =  Module.CreateComponent("drv_usbhs_v1", "USB Host High Speed Port (UHPHS) Driver", "/Harmony/Drivers", "config/usb_uhp_driver.py")
+		usbDriverComponent =  Module.CreateComponent("drv_usbhs_v1", "USB UHPHS Host Driver", "/Harmony/Drivers", "config/usb_uhp_driver.py")
 		usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
 		
+		# Create USB Device Port High Speed (UDPHS) Driver Component for SAMA5D2
+		usbDevicePortHighSpeedDriverComponent =  Module.CreateComponent("drv_usb_udphs", "USB UDPHS Device Driver", "/Harmony/Drivers", "config/usb_udphs_driver.py")
+		usbDevicePortHighSpeedDriverComponent.addCapability("DRV_UDPHS", "DRV_UDPHS",True)
+		
+		# Add Generic Dependency on Core Service
+		usbDevicePortHighSpeedDriverComponent.addDependency("usb_udphs_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
+		USBDriverCapabilityName = "DRV_UDPHS"
 		loadUSBHostLayer = True 
 		loadUSBHostCDC = True
-		loadUSBHostMSD = True
+		loadUSBHostMSD = True		
+		loadUSBDeviceLayer = True
+		loadUSBDeviceCDC = True
+		loadUSBDeviceHID = True
+		loadUSBDeviceMSD = True
+		loadUSBDeviceVendor = True 
+		loadUSBDevicePrinter = True 
 		
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32MZ"]):
 		# Create USB High Speed Driver Component
@@ -103,7 +118,7 @@ def loadModule():
 	# Create USB Device Stack Component
 	if  loadUSBDeviceLayer == True:	 
 		usbDeviceComponent = Module.CreateSharedComponent("usb_device", "USB Device Layer", "/Libraries/USB/Device Stack", "config/usb_device.py")
-		usbDeviceComponent.addDependency("usb_driver_dependency", "DRV_USB", True, True)
+		usbDeviceComponent.addDependency("usb_driver_dependency", USBDriverCapabilityName, True, True)
 		usbDeviceComponent.addCapability("USB Device", "USB_DEVICE", True)
 	
 	# Create USB Device CDC Function driver Component 

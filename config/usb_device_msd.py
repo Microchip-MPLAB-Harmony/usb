@@ -83,12 +83,7 @@ def onAttachmentConnected(source, target):
 	# Update Total Endpoints used 
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if readValue != None:
-			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-				args = {"nFunction": readValue + msdEndpointsPic32 }
-				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
-				usbDeviceMsdEPNumberBulkIn.setValue(readValue + 1, 1)
-				usbDeviceMsdEPNumberBulkOut.setValue(readValue + 1, 1)	
-			elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAML21", "SAML22"]):
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MK", "SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22"]):
 				args = {"nFunction": readValue + msdEndpointsPic32 }
 				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 				usbDeviceMsdEPNumberBulkIn.setValue(readValue + 1, 1)
@@ -153,7 +148,7 @@ def onAttachmentDisconnected(source, target):
 			
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if readValue != None:
-			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MK", "SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22"]):
 				args = {"nFunction":readValue - msdEndpointsPic32 }
 				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 			else:
@@ -185,10 +180,10 @@ def destroyComponent(component):
 	print ("MSD Function Driver: Destroyed")
 
 def setVisible(symbol, event):
-    if (event["value"] == True):
-        symbol.setVisible(True)
-    else:
-        symbol.setVisible(False)
+	if (event["value"] == True):
+		symbol.setVisible(True)
+	else:
+		symbol.setVisible(False)
 		
 # This function is called during component activation */ 	
 def instantiateComponent(usbDeviceMsdComponent, index):
@@ -208,6 +203,15 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 	# Auto load USB Device Layer 
 	res = Database.activateComponents(["usb_device"])
 
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+		BulkInDefaultEpNumber = 1
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX", "PIC32MK"]):
+		BulkInDefaultEpNumber = 1
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22"]):
+		BulkInDefaultEpNumber = 1
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAME70", "SAMS70", "SAMV70", "SAMV71"]):
+		BulkInDefaultEpNumber = 2
+	
 	#Index of this function 
 	indexFunction = usbDeviceMsdComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INDEX", None)
 	indexFunction.setVisible(False)
@@ -254,13 +258,6 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 	usbDeviceMSDLunMedia_0.setLabel("Media Driver")
 	usbDeviceMSDLunMedia_0.setReadOnly(True)
 	usbDeviceMSDLunMedia_0.setVisible(False)
-
-	# MSD Function driver Bulk IN Endpoint Number 
-	usbDeviceMsdEPNumberBulkIn = usbDeviceMsdComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER", None)		
-	usbDeviceMsdEPNumberBulkIn.setLabel("Bulk IN Endpoint Number")
-	usbDeviceMsdEPNumberBulkIn.setVisible(True)
-	usbDeviceMsdEPNumberBulkIn.setMin(1)
-	usbDeviceMsdEPNumberBulkIn.setDefaultValue(2)
 	
 	# MSD Function driver Bulk Out Endpoint Number 
 	usbDeviceMsdEPNumberBulkOut = usbDeviceMsdComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_BULK_OUT_ENDPOINT_NUMBER", None)		
@@ -268,6 +265,13 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 	usbDeviceMsdEPNumberBulkOut.setVisible(True)
 	usbDeviceMsdEPNumberBulkOut.setMin(1)
 	usbDeviceMsdEPNumberBulkOut.setDefaultValue(1)
+
+	# MSD Function driver Bulk IN Endpoint Number 
+	usbDeviceMsdEPNumberBulkIn = usbDeviceMsdComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER", None)		
+	usbDeviceMsdEPNumberBulkIn.setLabel("Bulk IN Endpoint Number")
+	usbDeviceMsdEPNumberBulkIn.setVisible(True)
+	usbDeviceMsdEPNumberBulkIn.setMin(1)
+	usbDeviceMsdEPNumberBulkIn.setDefaultValue(BulkInDefaultEpNumber)
 		
 		
 	############################################################################
@@ -371,5 +375,3 @@ def addFileName(fileName, symbol, srcPath, destPath, enabled, callback):
 	else:
 		symbol.setType("SOURCE")
 	symbol.setEnabled(enabled)
-	if callback != None:
-		symbol.setDependencies(callback, ["USB_DEVICE_FUNCTION_1_DEVICE_CLASS"])

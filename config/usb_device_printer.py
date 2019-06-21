@@ -74,7 +74,7 @@ def onAttachmentConnected(source, target):
 		if nEndpoints != None:
 
 			epNumberBulkOut.setValue(nEndpoints + 1, 1)
-			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MK", "SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22"]):
 				args = {"nFunction": nEndpoints + printerEndpointsPic32}
 				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 			else:
@@ -104,7 +104,7 @@ def onAttachmentDisconnected(source, target):
 	
 	endpointNumber = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 	if endpointNumber != None:
-		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MK", "SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22"]):
 			args = {"nFunction": endpointNumber -  printerEndpointsPic32 }
 			res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 		else:
@@ -153,6 +153,15 @@ def instantiateComponent(usbDevicePrinterComponent, index):
 	global epNumberBulkOut
 	
 	res = Database.activateComponents(["usb_device"])
+	
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+		BulkOutMaxEpNumber = 7
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX", "PIC32MK"]):
+		BulkOutMaxEpNumber = 15
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22"]):
+		BulkOutMaxEpNumber = 7
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAME70", "SAMS70", "SAMV70", "SAMV71"]):
+		BulkOutMaxEpNumber = 9
 	
 	# Index of this function 
 	indexFunction = usbDevicePrinterComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INDEX", None)
@@ -211,10 +220,7 @@ def instantiateComponent(usbDevicePrinterComponent, index):
 	epNumberBulkOut.setVisible(True)
 	epNumberBulkOut.setMin(1)
 	epNumberBulkOut.setDefaultValue(1)
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-		epNumberBulkOut.setMax(7)
-	else:
-		epNumberBulkOut.setMax(8)	
+	epNumberBulkOut.setMax(BulkOutMaxEpNumber)	
 
 	usbDevicePrinterBufPool = usbDevicePrinterComponent.createBooleanSymbol("CONFIG_USB_DEVICE_PRINTER_BUFFER_POOL", None)
 	usbDevicePrinterBufPool.setLabel("**** Buffer Pool Update ****")
@@ -319,5 +325,3 @@ def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callbac
 	else:
 		symbol.setType("SOURCE")
 	symbol.setEnabled(enabled)
-	if callback != None:
-		symbol.setDependencies(callback, ["USB_DEVICE_FUNCTION_1_DEVICE_CLASS"])

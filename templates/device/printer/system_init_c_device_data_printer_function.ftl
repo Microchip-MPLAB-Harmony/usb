@@ -46,7 +46,7 @@
     {
         .configurationValue = ${CONFIG_USB_DEVICE_FUNCTION_CONFIG_VALUE},         // Configuration value
         .interfaceNumber = ${CONFIG_USB_DEVICE_FUNCTION_INTERFACE_NUMBER},        // First interfaceNumber of this function
-        .speed = USB_SPEED_HIGH|USB_SPEED_FULL,                                                  // Function Speed
+        .speed = USB_SPEED_HIGH|USB_SPEED_FULL,             // Function Speed
         .numberOfInterfaces = ${CONFIG_USB_DEVICE_FUNCTION_NUMBER_OF_INTERFACES}, // Number of interfaces
         .funcDriverIndex = ${CONFIG_USB_DEVICE_FUNCTION_INDEX},                   // Index of Printer Function Driver
         .driver = (void*)USB_DEVICE_PRINTER_FUNCTION_DRIVER,                      // USB Printer function data exposed to device layer

@@ -368,17 +368,30 @@ sd003 =
  <#if CONFIG_USB_DEVICE_USE_MSD == true>
  USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[4]=
 {
+<#if __PROCESSOR?contains("SAMA5D2") == true>
+    (uint8_t *)&sd000,
+    (uint8_t *)&sd001,
+    (uint8_t *)&sd002,
+    (uint8_t *)&sd003
+<#else>
     (const uint8_t *const)&sd000,
     (const uint8_t *const)&sd001,
     (const uint8_t *const)&sd002,
-	(const uint8_t *const)&sd003
+    (const uint8_t *const)&sd003
+</#if>
 };
  <#else>
 USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[3]=
 {
+<#if __PROCESSOR?contains("SAMA5D2") == true>
+    (uint8_t *)&sd000,
+    (uint8_t *)&sd001,
+    (uint8_t *)&sd002
+<#else>
     (const uint8_t *const)&sd000,
     (const uint8_t *const)&sd001,
     (const uint8_t *const)&sd002
+</#if>
 };
 </#if>
 

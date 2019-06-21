@@ -79,12 +79,7 @@ def onAttachmentConnected(source, target):
 		
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if readValue != None:
-			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-				args = {"nFunction":  readValue + hidEndpointsPic32}
-				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
-				epNumberInterruptIn.setValue(readValue + 1, 1)
-				epNumberInterruptOut.setValue(readValue + 1, 1)
-			elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAML21", "SAML22"]):
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MK", "SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22"]):
 				args = {"nFunction":  readValue + hidEndpointsPic32}
 				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 				epNumberInterruptIn.setValue(readValue + 1, 1)
@@ -120,7 +115,7 @@ def onAttachmentDisconnected(source, target):
 		
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if readValue != None:
-			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MK", "SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22"]):
 				args = {"nFunction": readValue - hidEndpointsPic32 }
 				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 			else:
@@ -160,6 +155,19 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	global epNumberInterruptOut
 	
 	res = Database.activateComponents(["usb_device"])
+		
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+		MaxIntEpNumber = 7
+		IntOutDefaultEpNumber = 1
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX", "PIC32MK"]):
+		MaxIntEpNumber = 15
+		IntOutDefaultEpNumber = 1
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22"]):
+		MaxIntEpNumber = 7
+		IntOutDefaultEpNumber = 1
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAME70", "SAMS70", "SAMV70", "SAMV71"]):
+		MaxIntEpNumber = 9
+		IntOutDefaultEpNumber = 2
 	
 	# Index of this function 
 	indexFunction = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INDEX", None)
@@ -229,22 +237,15 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	epNumberInterruptIn.setLabel("Interrupt IN Endpoint Number")
 	epNumberInterruptIn.setVisible(True)
 	epNumberInterruptIn.setMin(1)
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-		epNumberInterruptIn.setMax(7)
-	else:
-		epNumberInterruptIn.setMax(10)
+	epNumberInterruptIn.setMax(MaxIntEpNumber)
 	
 	# HID Function driver Interrupt OUT Endpoint Number  
 	epNumberInterruptOut = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INT_OUT_ENDPOINT_NUMBER", None)
 	epNumberInterruptOut.setLabel("Interrupt OUT Endpoint Number")
 	epNumberInterruptOut.setVisible(True)
 	epNumberInterruptOut.setMin(1)
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-		epNumberInterruptOut.setMax(7)
-		epNumberInterruptOut.setDefaultValue(1)
-	else:
-		epNumberInterruptOut.setMax(10)
-		epNumberInterruptOut.setDefaultValue(2)
+	epNumberInterruptOut.setMax(MaxIntEpNumber)
+	epNumberInterruptOut.setDefaultValue(IntOutDefaultEpNumber)
 	
 	############################################################################
 	#### Dependency ####
@@ -338,5 +339,3 @@ def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callbac
 	else:
 		symbol.setType("SOURCE")
 	symbol.setEnabled(enabled)
-	if callback != None:
-		symbol.setDependencies(callback, ["USB_DEVICE_FUNCTION_1_DEVICE_CLASS"])
