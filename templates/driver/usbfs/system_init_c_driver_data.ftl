@@ -72,10 +72,18 @@ const DRV_USBFS_INIT drvUSBFSInit =
 {
 	 /* Assign the endpoint table */
     .endpointTable= endPointTable1,
+<#if __PROCESSOR?matches("PIC32MK.*") == true>
 	
 	/* Interrupt Source for USB module */
+	.interruptSource = INT_SOURCE_USB_1,
+</#if>
+
+<#if __PROCESSOR?matches("PIC32MX.*") == true>
+
+	/* Interrupt Source for USB module */
 	.interruptSource = INT_SOURCE_USB,
-	    
+</#if>
+    
 <#if (USB_OPERATION_MODE == "Device")>
     /* USB Controller to operate as USB Device */
     .operationMode = DRV_USBFS_OPMODE_DEVICE,
