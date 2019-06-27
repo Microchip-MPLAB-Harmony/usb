@@ -2291,6 +2291,8 @@ void _DRV_USB_UDPHS_DEVICE_Tasks_ISR
         if(((UDPHS_IEN_WAKE_UP_Msk == (UDPHS_IEN_WAKE_UP_Msk & usbID->UDPHS_IEN)) && (UDPHS_INTSTA_WAKE_UP_Msk == (UDPHS_INTSTA_WAKE_UP_Msk & usbID->UDPHS_INTSTA))) ||
            ((UDPHS_IEN_ENDOFRSM_Msk == (UDPHS_IEN_ENDOFRSM_Msk & usbID->UDPHS_IEN)) && (UDPHS_INTSTA_ENDOFRSM_Msk == (UDPHS_INTSTA_ENDOFRSM_Msk & usbID->UDPHS_INTSTA))))
         {
+            /* This means End of Resume signal is received. Send this to device layer. */
+            hDriver->pEventCallBack(hDriver->hClientArg, (DRV_USB_EVENT)DRV_USB_UDPHS_EVENT_RESUME_DETECT, NULL);
 
             /* Acknowledge the interrupt */
 			usbID->UDPHS_CLRINT = UDPHS_CLRINT_WAKE_UP_Msk | UDPHS_CLRINT_ENDOFRSM_Msk | UDPHS_CLRINT_DET_SUSPD_Msk;
