@@ -1,20 +1,20 @@
 /*******************************************************************************
-  USB stack external dependencies file
+  Matrix (AHB) PLIB
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    drv_usb_external_dependencies.h
+    plib_matrix.c
 
   Summary:
-    USB Driver external dependencies file
+    AHB Matrix PLIB implementation file
 
   Description:
-    USB Driver external dependencies file. 
+    Configure AHB masters and slaves.
 *******************************************************************************/
 
-//DOM-IGNORE-BEGIN
+// DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -36,38 +36,46 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *******************************************************************************/
-//DOM-IGNORE-END
+*******************************************************************************/
+// DOM-IGNORE-END
 
-#ifndef _DRV_USB_EXTERNAL_DEPENDENCIES_H
-#define _DRV_USB_EXTERNAL_DEPENDENCIES_H
 
-#include <string.h>
-#include "system/system_common.h"
-#include "configuration.h"
-#include "definitions.h"
-#include "system/system_module.h"
+// *****************************************************************************
+// *****************************************************************************
+// Section: Included Files
+// *****************************************************************************
+// *****************************************************************************
+#include <device.h>
 
-#if defined DRV_USBHS_INSTANCES_NUMBER
-#include "system/time/sys_time.h"
-#define SYS_TMR_HANDLE SYS_TIME_HANDLE
-#define SYS_TMR_HANDLE_INVALID SYS_TIME_HANDLE_INVALID
-#define SYS_TMR_CallbackSingle(delay,context,callback) SYS_TIME_CallbackRegisterMS(callback,context,delay, SYS_TIME_SINGLE)
-#define SYS_TMR_ObjectDelete SYS_TIME_TimerDestroy
-#endif 
+// *****************************************************************************
+/* Function:
+    void Matrix_Initialize(void)
 
-#ifndef SYS_DEBUG_PRINT
-	#define SYS_DEBUG_PRINT(level, format, ...) 
-#endif 
+  Summary:
+    Initialize AHB Masters and Slaves.
 
-#ifndef SYS_DEBUG_MESSAGE
-	#define SYS_DEBUG_MESSAGE(a,b, ...)
-#endif 
+  Description:
+    Inialize AHB Masters and Slaves and peripheral's as secure or non-secure.
 
-#ifndef SYS_DEBUG
-	#define SYS_DEBUG(a,b)
-#endif 
-#endif 
+  Remarks:
+    Until security is implemented all peripherals will be non-secure.
+*/
+void Matrix_Initialize(void)
+{
+    int i;
+    uint32_t key;
+
+    for (i=0; i<3; i++) {
+        MATRIX0_REGS->MATRIX_SPSELR[i] = MATRIX_SPSELR_Msk;
+        MATRIX1_REGS->MATRIX_SPSELR[i] = MATRIX_SPSELR_Msk;
+    }
+
+    key = 0xb6d81c4d ^ SFR_REGS->SFR_SN1;
+    key &= 0xfffffffe;
+
+    SFR_REGS->SFR_AICREDIR = key | SFR_AICREDIR_NSAIC_Msk;
+}
+
 /*******************************************************************************
  End of File
 */

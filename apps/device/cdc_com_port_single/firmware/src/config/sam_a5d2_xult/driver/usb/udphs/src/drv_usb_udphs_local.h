@@ -53,7 +53,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
-#include "driver/usb/drv_usb_external_dependencies.h"
+#include "definitions.h"
 #include "driver/usb/udphs/drv_usb_udphs.h"
 #include "driver/usb/udphs/src/drv_usb_udphs_variant_mapping.h"
 #include "osal/osal.h"
@@ -75,10 +75,6 @@
 #define ENDPOINT_FIFO_ADDRESS(endpoint)                     (((uint8_t*) UDPHS_RAM_ADDR) + EPT_VIRTUAL_SIZE * (endpoint))
 
 #define DRV_USB_UDPHS_AUTO_ZLP_ENABLE                         false
-
-
-extern uint8_t GCounter;
-
 
 // *****************************************************************************
 // *****************************************************************************
@@ -239,15 +235,6 @@ typedef enum
 
 } DRV_USB_UDPHS_TASK_STATE;
 
-typedef struct _DRV_USB_UDPHS_DMA_POOL_STRUCT
-{
-    bool inUse;
-    bool endpointDir;
-    uint8_t iEndpoint;
-    unsigned int count;
-
-} DRV_USB_UDPHS_DMA_POOL;
-
 /***********************************************
  * Driver object structure. One object per
  * hardware instance
@@ -323,135 +310,20 @@ typedef struct _DRV_USB_UDPHS_OBJ_STRUCT
 
 } DRV_USB_UDPHS_OBJ;
 
-/****************************************************************************
- * Get 64-, 32-, 16- or 8-bit access to FIFO data register of selected pipe.
- * p:      Target Pipe number
- * scale:  Data scale in bits: 64, 32, 16 or 8
- * return  Volatile 64-, 32-, 16- or 8-bit data pointer to FIFO data register
- *
- * warning It is up to the user of this macro to make sure that all accesses
- * are aligned with their natural boundaries except 64-bit accesses which
- * require only 32-bit alignment.
- *
- * warning It is up to the user of this macro to make sure that used HSB
- * addresses are identical to the DPRAM internal pointer modulo 32 bits.
- ***************************************************************************/
-  #define drv_usb_udphs_get_pipe_fifo_access(p) \
-  (((volatile uint8_t(*)[0x8000])0xA0100000u)[(p)])
 
-/****************************************************************************
- * Bounds given integer size to allowed range and rounds it up to the nearest
- * available greater size, then applies register format of USBHS controller
- * for pipe size bit-field.
- ****************************************************************************/
-#define drv_usb_udphs_format_pipe_size(size) \
-(32 - clz(((uint32_t)min(max(size, 8), 1024) << 1) - 1) - 1 - 3)
+#ifndef SYS_DEBUG_PRINT
+	#define SYS_DEBUG_PRINT(level, format, ...)
+#endif
 
+#ifndef SYS_DEBUG_MESSAGE
+	#define SYS_DEBUG_MESSAGE(a,b, ...)
+#endif
 
-/*! \brief Tests the bits of a value specified by a given bit-mask.
- *
- * \param value Value of which to test bits.
- * \param mask  Bit-mask indicating bits to test.
- *
- * \return \c 1 if at least one of the tested bits is set, else \c 0.
- */
-#define Tst_bits( value, mask)  (Rd_bits(value, mask) != 0)
-
-/*! \brief Clears the bits of a C lvalue specified by a given bit-mask.
- *
- * \param lvalue  C lvalue of which to clear bits.
- * \param mask    Bit-mask indicating bits to clear.
- *
- * \return Resulting value with cleared bits.
- */
-#define Clr_bits(lvalue, mask)  ((lvalue) &= ~(mask))
-
-/*! \brief Sets the bits of a C lvalue specified by a given bit-mask.
- *
- * \param lvalue  C lvalue of which to set bits.
- * \param mask    Bit-mask indicating bits to set.
- *
- * \return Resulting value with set bits.
- */
-#define Set_bits(lvalue, mask)  ((lvalue) |=  (mask))
-
-/*! \brief Writes the bit-field of a C lvalue specified by a given bit-mask.
- *
- * \param lvalue    C lvalue to write a bit-field to.
- * \param mask      Bit-mask indicating the bit-field to write.
- * \param bitfield  Bit-field to write.
- *
- * \return Resulting value with written bit-field.
- */
-#define Wr_bitfield(lvalue, mask, bitfield) (Wr_bits(lvalue, mask, (uint32_t)(bitfield) << ctz(mask)))
-
-/*! \brief Reads the bits of a value specified by a given bit-mask.
- *
- * \param value Value to read bits from.
- * \param mask  Bit-mask indicating bits to read.
- *
- * \return Read bits.
- */
-#define Rd_bits( value, mask)        ((value) & (mask))
-
-/*! \brief Writes the bits of a C lvalue specified by a given bit-mask.
- *
- * \param lvalue  C lvalue to write bits to.
- * \param mask    Bit-mask indicating bits to write.
- * \param bits    Bits to write.
- *
- * \return Resulting value with written bits.
- */
-#define Wr_bits(lvalue, mask, bits)  ((lvalue) = ((lvalue) & ~(mask)) |\
-                                                 ((bits  ) &  (mask)))
-
-/*! \brief Takes the minimal value of \a a and \a b.
- *
- * \param a Input value.
- * \param b Input value.
- *
- * \return Minimal value of \a a and \a b.
- *
- * \note More optimized if only used with values unknown at compile time.
- */
-#define min(a, b)   (((a) < (b)) ?  (a) : (b))
-
-/*! \brief Takes the maximal value of \a a and \a b.
- *
- * \param a Input value.
- * \param b Input value.
- *
- * \return Maximal value of \a a and \a b.
- *
- * \note More optimized if only used with values unknown at compile time.
- */
-#define max(a, b)   (((a) > (b)) ?  (a) : (b))
-
-/*! \brief Counts the trailing zero bits of the given value considered as a 32-bit integer.
- *
- * \param u Value of which to count the trailing zero bits.
- *
- * \return The count of trailing zero bits in \a u.
- */
-#   define ctz(u)              ((u) ? __builtin_ctz(u) : 32)
-
-/*! \brief Counts the leading zero bits of the given value considered as a 32-bit integer.
- *
- * \param u Value of which to count the leading zero bits.
- *
- * \return The count of leading zero bits in \a u.
- */
-#   define clz(u)              ((u) ? __builtin_clz(u) : 32)
-
+#ifndef SYS_DEBUG
+	#define SYS_DEBUG(a,b)
+#endif
 
 void _DRV_USB_UDPHS_DEVICE_Initialize(DRV_USB_UDPHS_OBJ * drvObj, SYS_MODULE_INDEX index);
 void _DRV_USB_UDPHS_DEVICE_Tasks_ISR(DRV_USB_UDPHS_OBJ * hDriver);
-void _DRV_USB_UDPHS_DEVICE_Tasks_ISR_USBDMA(DRV_USB_UDPHS_OBJ * hDriver);
-uint8_t _DRV_USB_UDPHS_DEVICE_Get_FreeDMAChannel
-(
-    DRV_USB_UDPHS_OBJ * hDriver,
-    bool endpointDir,
-    uint8_t iEndpoint
-);
 
 #endif
