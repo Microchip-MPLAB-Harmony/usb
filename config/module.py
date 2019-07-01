@@ -21,9 +21,9 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 def loadModule():
-	
+	print Variables.get("__PROCESSOR")
 	# Initially Set all USB Library modules to False. We will enable each -  
-	# Library depending on the Micro-controller selected.  
+	# Library Module depending on the MCU/MPU selected.  
 	loadUSBHostLayer = False
 	loadUSBHostCDC = False
 	loadUSBHostMSD = False
@@ -38,12 +38,23 @@ def loadModule():
 	loadUSBDeviceVendor = False 
 	loadUSBDevicePrinter = False 
 	
-	USBDriverCapabilityName = "DRV_USB" 
+	# Below variables used to help using different capability names for SAMA5D2 
+	USBDeviceDriverCapabilityName = "DRV_USB" 
+	USBHostDriverCapabilityName = "DRV_USB" 
 	
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2"]):
 		# Create USB High Speed Host Port Driver Component for SAMA5D2
-		usbDriverComponent =  Module.CreateComponent("drv_usbhs_v1", "USB UHPHS Host Driver", "/Harmony/Drivers", "config/usb_uhp_driver.py")
-		usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
+		usbUhpHsDriverComponent =  Module.CreateComponent("drv_usb_uhphs", "USB UHPHS Host Driver", "/Harmony/Drivers", "config/usb_uhp_driver.py")
+		usbUhpHsDriverComponent.addCapability("DRV_USB", "DRV_USB", True)
+		usbUhpHsDriverComponent.addDependency("usb_uhphs_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
+		
+		# Use different name for UHPHS Driver 
+		USBHostDriverCapabilityName = "DRV_UHPHS"
+		
+		# Load USB Host Layer Components  
+		loadUSBHostLayer = True 
+		loadUSBHostCDC = True
+		loadUSBHostMSD = True
 		
 		# Create USB Device Port High Speed (UDPHS) Driver Component for SAMA5D2
 		usbDevicePortHighSpeedDriverComponent =  Module.CreateComponent("drv_usb_udphs", "USB UDPHS Device Driver", "/Harmony/Drivers", "config/usb_udphs_driver.py")
@@ -51,6 +62,7 @@ def loadModule():
 		
 		# Add Generic Dependency on Core Service
 		usbDevicePortHighSpeedDriverComponent.addDependency("usb_udphs_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
+<<<<<<< HEAD
 		USBDriverCapabilityName = "DRV_UDPHS"
 		loadUSBHostLayer = True 
 		loadUSBHostCDC = True
@@ -62,10 +74,25 @@ def loadModule():
 		loadUSBDeviceVendor = True 
 		loadUSBDevicePrinter = True 
 		
+<<<<<<< HEAD
+=======
+=======
+		USBDeviceDriverCapabilityName = "DRV_UDPHS"
+
+>>>>>>> [MH3-12699] - USB python modifications to generate USB Host power enable function
+		loadUSBDeviceLayer = True
+		loadUSBDeviceCDC = True
+		loadUSBDeviceHID = True
+		loadUSBDeviceVendor = True 
+		loadUSBDevicePrinter = True 
+		
+>>>>>>> 42c93d29... [MH3-12699] - USB python modifications to generate USB Host power enable function
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32MZ"]):
 		# Create USB High Speed Driver Component
-		usbDriverComponent =  Module.CreateComponent("drv_usbhs_v1", "USB High Speed Driver", "/Harmony/Drivers", "config/usbhs_driver.py")
+		usbDriverComponent =  Module.CreateComponent("drv_usbhs", "USB High Speed Driver", "/Harmony/Drivers", "config/usbhs_driver.py")
 		usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
+		usbDriverComponent.addDependency("drv_usb_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
+		
 		
 		# Enable USB Library modules 
 		loadUSBHostLayer = True
@@ -82,10 +109,12 @@ def loadModule():
 		loadUSBDeviceVendor = True 
 		loadUSBDevicePrinter = True 
 	
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD20", "SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21","PIC32MK" , "PIC32MX"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMD5", "SAME5", "SAML21", "PIC32MK", "PIC32MX2", "PIC32MX3", "PIC32MX4", "PIC32MX5", "PIC32MX6", "PIC32MX7"]):
 		# Create USB Full Speed Driver Component
-		usbDriverComponent =  Module.CreateComponent("drv_usbfs_v1", "USB Full Speed Driver", "/Harmony/Drivers", "config/usbfs_v1_driver.py")
+		usbDriverComponent =  Module.CreateComponent("drv_usbfs", "USB Full Speed Driver", "/Harmony/Drivers", "config/usbfs_v1_driver.py")
 		usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
+		usbDriverComponent.addDependency("drv_usb_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
+		
 		
 		# Enable USB Library modules 
 		loadUSBHostLayer = True
@@ -104,8 +133,10 @@ def loadModule():
 		
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAML22"]):
 		# Create USB Full Speed Driver Component
-		usbDriverComponent =  Module.CreateComponent("drv_usbfs_v1", "USB Full Speed Driver", "/Harmony/Drivers", "config/usbfs_v1_driver.py")
+		usbDriverComponent =  Module.CreateComponent("drv_usbfs", "USB Full Speed Driver", "/Harmony/Drivers", "config/usbfs_v1_driver.py")
 		usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
+		usbDriverComponent.addDependency("drv_usb_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
+		
 		
 		loadUSBDeviceLayer = True
 		loadUSBDeviceCDC = True
@@ -115,10 +146,10 @@ def loadModule():
 		loadUSBDeviceVendor = True
 		loadUSBDevicePrinter = True  
 		
-	# Create USB Device Stack Component
+	# Create USB Device Layer Component
 	if  loadUSBDeviceLayer == True:	 
 		usbDeviceComponent = Module.CreateSharedComponent("usb_device", "USB Device Layer", "/Libraries/USB/Device Stack", "config/usb_device.py")
-		usbDeviceComponent.addDependency("usb_driver_dependency", USBDriverCapabilityName, True, True)
+		usbDeviceComponent.addDependency("usb_driver_dependency", USBDeviceDriverCapabilityName, True, True)
 		usbDeviceComponent.addCapability("USB Device", "USB_DEVICE", True)
 	
 	# Create USB Device CDC Function driver Component 
@@ -161,7 +192,7 @@ def loadModule():
 	# Create USB Host Layer Component 	
 	if loadUSBHostLayer == True:
 		usbHostComponent = Module.CreateSharedComponent("usb_host", "Host Layer", "/Libraries/USB/Host Stack", "config/usb_host.py")
-		usbHostComponent.addDependency("usb_driver_dependency", "DRV_USB", True, True)
+		usbHostComponent.addDependency("usb_driver_dependency", USBHostDriverCapabilityName, True, True)
 		usbHostComponent.addDependency("usb_host_tmr_dependency", "SYS_TIME", True, True)
 		usbHostComponent.addCapability("usb_host", "USB_HOST", True)
 	

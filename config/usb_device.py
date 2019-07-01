@@ -242,23 +242,23 @@ def instantiateComponent(usbDeviceComponent):
 	global usbDeviceVendorWriteQueueSize
 	res = Database.activateComponents(["HarmonyCore"])
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
-		res = Database.activateComponents(["drv_usbhs_v1"])
-		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
+		res = Database.activateComponents(["drv_usbhs"])
+		speed = Database.getSymbolValue("drv_usbhs", "USB_SPEED")
 		driverIndex = "DRV_USBHSV1_INDEX_0"
 		driverInterface = "DRV_USBHSV1_DEVICE_INTERFACE"
 	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-		res = Database.activateComponents(["drv_usbhs_v1"])
-		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
+		res = Database.activateComponents(["drv_usbhs"])
+		speed = Database.getSymbolValue("drv_usbhs", "USB_SPEED")
 		driverIndex = "DRV_USBHS_INDEX_0"
 		driverInterface = "DRV_USBHS_DEVICE_INTERFACE"
 	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX"]):
-		res = Database.activateComponents(["drv_usbfs_v1"])
-		speed = Database.getSymbolValue("drv_usbfs_v1", "USB_SPEED")
+		res = Database.activateComponents(["drv_usbfs"])
+		speed = Database.getSymbolValue("drv_usbfs", "USB_SPEED")
 		driverIndex = "DRV_USBFS_INDEX_0"
 		driverInterface = "DRV_USBFS_DEVICE_INTERFACE"
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22"]):
-		res = Database.activateComponents(["drv_usbfs_v1"])
-		speed = Database.getSymbolValue("drv_usbfs_v1", "USB_SPEED")
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMD5", "SAME5", "SAML21", "SAML22"]):
+		res = Database.activateComponents(["drv_usbfs"])
+		speed = Database.getSymbolValue("drv_usbfs", "USB_SPEED")
 		driverIndex = "DRV_USBFSV1_INDEX_0"
 		driverInterface = "DRV_USBFSV1_DEVICE_INTERFACE"
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2"]):

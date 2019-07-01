@@ -57,6 +57,30 @@ static DRV_USB_VBUS_LEVEL DRV_USBHSV1_VBUS_Comparator(void)
 
 }
 </#if>
+<#if (USB_OPERATION_MODE == "Host") && (USB_HOST_VBUS_ENABLE == true)> 
+void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
+{
+	/* Note: Most USB Host applications will likely to have a way for 
+	   Enabling/Disabling the VBUS. Applications can use a GPIO to turn VBUS
+	   on/off through a switch. In MHC Pin Settings select the pin used as 
+	   VBUS Power Enable as output and name it to "VBUS_AH". If you a see a 
+	   build error from this function either you have not configured the VBUS 
+	   Power Enable in MHC pin settings or the Pin name entered in MHC is not 
+	   "VBUS_AH". */
+	<#if USB_DEVICE_VBUS_SENSE_PIN_NAME?has_content >	   
+    if (enable == true)
+	{
+		/* Enable the VBUS */
+		VBUS_AH_PowerEnable();
+	}
+	else
+	{
+		/* Disable the VBUS */
+		VBUS_AH_PowerDisable();
+	}
+	</#if>
+}
+</#if>
 
 const DRV_USBHSV1_INIT drvUSBInit =
 {

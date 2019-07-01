@@ -28,14 +28,23 @@ usbDebugLogs = 1
 usbDriverPath = "driver/"
 usbDriverProjectPath = "/driver/usb/"
 
+usbOpMode = None 
+
+def handleMessage(messageID, args):	
+	global usbOpMode
+	if (messageID == "UPDATE_OPERATION_MODE"):
+		usbOpMode.setValue(args["operationMode"])
+		
 def dependencyStatus(symbol, event):
 	if (event["value"] == False):
 		symbol.setVisible(True)
 	else :
 		symbol.setVisible(False)
+		
 def blUSBDriverSpeedChanged(symbol, event):
 	Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED")
 	Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED", event["value"], 2)
+	
 def setVisible(symbol, event):
 	if (event["value"] == True):
 		symbol.setVisible(True)
@@ -48,8 +57,10 @@ def showRTOSMenu(symbol, event):
 	if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
 		show_rtos_menu = True
 	symbol.setVisible(show_rtos_menu)
+	
 def instantiateComponent(usbDriverComponent):
-
+	global usbOpMode
+	
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAML22"]):
 		usbDriverSourcePath = "usbfsv1_device_only"	
 	else:
@@ -144,7 +155,7 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverRTOSTaskDelayVal.setVisible((usbDriverRTOSTaskDelay.getValue() == True))
 	usbDriverRTOSTaskDelayVal.setDependencies(setVisible, ["USB_DRIVER_RTOS_USE_DELAY"])
 
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD20", "SAMD21", "SAML21", "SAML22","SAML21","SAML22"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAML21", "SAML22"]):
 		# Update USB General Interrupt Handler
 		Database.setSymbolValue("core", "USB_INTERRUPT_ENABLE", True, 1)
 		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER_LOCK", True, 1)
@@ -160,13 +171,15 @@ def instantiateComponent(usbDriverComponent):
 		Database.setSymbolValue("core", "USB_1_INTERRUPT_ENABLE", True, 1)
 		Database.setSymbolValue("core", "USB_1_INTERRUPT_HANDLER_LOCK", True, 1)
 		Database.setSymbolValue("core", "USB_1_INTERRUPT_HANDLER", "DRV_USBFS_USB_Handler", 1)
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK"]):	
-		Database.setSymbolValue("core", "USB1_CLOCK_ENABLE", True, 1)
-	if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MX"]):
-		Database.setSymbolValue("core", "USB_CLOCK_ENABLE", True, 1)
+		
+		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK"]):	
+			Database.setSymbolValue("core", "USB1_CLOCK_ENABLE", True, 1)
+		
+		if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MX"]):
+			Database.setSymbolValue("core", "USB_CLOCK_ENABLE", True, 1)
 	
 
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD51", "SAME51", "SAME53", "SAME54"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD5", "SAME5"]):
 
 		# Update USB General Interrupt Handler
 		Database.setSymbolValue("core", "USB_OTHER_INTERRUPT_ENABLE", True, 1)
@@ -210,7 +223,7 @@ def instantiateComponent(usbDriverComponent):
 	configName = Variables.get("__CONFIGURATION_NAME")
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX"]):
 		sourcePath = "templates/driver/usbfs/"
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD51", "SAME51", "SAME53", "SAME54" ,"SAMD20", "SAMD21","SAML21","SAML22"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD5", "SAME5", "SAMD21","SAML21","SAML22"]):
 		sourcePath = "templates/driver/usbfsv1/"
 
 	################################################
@@ -382,7 +395,7 @@ def instantiateComponent(usbDriverComponent):
 	# USB Driver Source files
 	################################################
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD51", "SAME51", "SAME53", "SAME54" ,"SAMD20", "SAMD21","SAML21","SAML22"]):
-		drvUsbHsV1SourceFile = usbDriverComponent.createFileSymbol(None, None)
+		drvUsbHsV1SourceFile = usbDriverComponent.createFileSymbol("DRV_USB_SOURCE_FILE_COMMON", None)
 		drvUsbHsV1SourceFile.setSourcePath(usbDriverPath + usbDriverSourcePath + "/src/dynamic/drv_usbfsv1.c")
 		drvUsbHsV1SourceFile.setOutputName("drv_usbfsv1.c")
 		drvUsbHsV1SourceFile.setDestPath(usbDriverProjectPath + "usbfsv1/src")
@@ -390,7 +403,7 @@ def instantiateComponent(usbDriverComponent):
 		drvUsbHsV1SourceFile.setType("SOURCE")
 		drvUsbHsV1SourceFile.setOverwrite(True)
 
-		drvUsbHsV1DeviceSourceFile = usbDriverComponent.createFileSymbol(None, None)
+		drvUsbHsV1DeviceSourceFile = usbDriverComponent.createFileSymbol("DRV_USB_SOURCE_FILE_DEVICE", None)
 		drvUsbHsV1DeviceSourceFile.setSourcePath(usbDriverPath + usbDriverSourcePath + "/src/dynamic/drv_usbfsv1_device.c")
 		drvUsbHsV1DeviceSourceFile.setOutputName("drv_usbfsv1_device.c")
 		drvUsbHsV1DeviceSourceFile.setDestPath(usbDriverProjectPath + "usbfsv1/src")
@@ -399,7 +412,7 @@ def instantiateComponent(usbDriverComponent):
 		drvUsbHsV1DeviceSourceFile.setOverwrite(True)
 		drvUsbHsV1DeviceSourceFile.setDependencies(blDrvUsbHsV1DeviceSourceFile, ["USB_OPERATION_MODE"])
 
-		drvUsbHsV1HostSourceFile = usbDriverComponent.createFileSymbol(None, None)
+		drvUsbHsV1HostSourceFile = usbDriverComponent.createFileSymbol("DRV_USB_SOURCE_FILE_HOST", None)
 		drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "usbfsv1/src/dynamic/drv_usbfsv1_host.c")
 		drvUsbHsV1HostSourceFile.setOutputName("drv_usbfsv1_host.c")
 		drvUsbHsV1HostSourceFile.setDestPath(usbDriverProjectPath + "usbfsv1/src")
@@ -408,8 +421,10 @@ def instantiateComponent(usbDriverComponent):
 		drvUsbHsV1HostSourceFile.setOverwrite(True)
 		drvUsbHsV1HostSourceFile.setEnabled(False)
 		drvUsbHsV1HostSourceFile.setDependencies(blDrvUsbHsV1HostSourceFile, ["USB_OPERATION_MODE"])
+		
+		
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX"]):
-		drvUsbHsV1HostSourceFile = usbDriverComponent.createFileSymbol(None, None)
+		drvUsbHsV1HostSourceFile = usbDriverComponent.createFileSymbol("DRV_USB_SOURCE_FILE_COMMON", None)
 		drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "usbfs/src/drv_usbfs.c")
 		drvUsbHsV1HostSourceFile.setOutputName("drv_usbfs.c")
 		drvUsbHsV1HostSourceFile.setDestPath(usbDriverProjectPath + "usbfs/src")
@@ -417,7 +432,7 @@ def instantiateComponent(usbDriverComponent):
 		drvUsbHsV1HostSourceFile.setType("SOURCE")
 		drvUsbHsV1HostSourceFile.setOverwrite(True)
 				
-		drvUsbHsV1DeviceSourceFile = usbDriverComponent.createFileSymbol(None, None)
+		drvUsbHsV1DeviceSourceFile = usbDriverComponent.createFileSymbol("DRV_USB_SOURCE_FILE_DEVICE", None)
 		drvUsbHsV1DeviceSourceFile.setSourcePath(usbDriverPath + "usbfs/src/drv_usbfs_device.c")
 		drvUsbHsV1DeviceSourceFile.setOutputName("drv_usbfs_device.c")
 		drvUsbHsV1DeviceSourceFile.setDestPath(usbDriverProjectPath + "usbfs/src")
@@ -426,7 +441,7 @@ def instantiateComponent(usbDriverComponent):
 		drvUsbHsV1DeviceSourceFile.setOverwrite(True)
 		drvUsbHsV1DeviceSourceFile.setDependencies(blDrvUsbHsV1DeviceSourceFile, ["USB_OPERATION_MODE"])
 		
-		drvUsbHsV1HostSourceFile = usbDriverComponent.createFileSymbol(None, None)
+		drvUsbHsV1HostSourceFile = usbDriverComponent.createFileSymbol("DRV_USB_SOURCE_FILE_HOST", None)
 		drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "usbfs/src/drv_usbfs_host.c")
 		drvUsbHsV1HostSourceFile.setOutputName("drv_usbfs_host.c")
 		drvUsbHsV1HostSourceFile.setDestPath(usbDriverProjectPath + "usbfs/src")
@@ -435,6 +450,7 @@ def instantiateComponent(usbDriverComponent):
 		drvUsbHsV1HostSourceFile.setOverwrite(True)
 		drvUsbHsV1HostSourceFile.setEnabled(False)
 		drvUsbHsV1HostSourceFile.setDependencies(blDrvUsbHsV1HostSourceFile, ["USB_OPERATION_MODE"])
+		
 	# Add USBHS PLIB files for PIC32MK
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX" ]):
 		plib_usbfs_h = usbDriverComponent.createFileSymbol(None, None)	

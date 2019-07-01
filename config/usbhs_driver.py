@@ -27,12 +27,31 @@ listUsbOperationMode = ["Device", "Host", "Dual Role"]
 usbDebugLogs = 1 
 usbDriverPath = "driver/"
 usbDriverProjectPath = "/driver/usb/"
+usbOpMode = None 
+drvUsbHsV1DeviceSourceFile = None 
+drvUsbHsV1HostSourceFile = None 
+addDrvUsbDeviceFile = None 
+addDrvUsbHostFile = None 
 
+def handleMessage(messageID, args):	
+	global usbOpMode
+	if (messageID == "UPDATE_OPERATION_MODE"):
+		usbOpMode.setValue(args["operationMode"])
 
 def speedChanged(symbol, event):
 	Database.clearSymbolValue("core", "PMC_SCER_USBCLK")
 	Database.setSymbolValue("core", "PMC_SCER_USBCLK", True, 2)
 
+def blUSBDriverOpModeChanged(symbol, event):
+	global addDrvUsbDeviceFile
+	global addDrvUsbHostFile
+	if (event["value"] == "Device"):
+		addDrvUsbDeviceFile.setValue(True)
+		addDrvUsbHostFile.setValue(False)
+	elif (event["value"] == "Host"):
+		addDrvUsbDeviceFile.setValue(False)
+		addDrvUsbHostFile.setValue(True)
+		
 def dependencyStatus(symbol, event):
 	if (event["value"] == False):
 		symbol.setVisible(True)
@@ -42,7 +61,7 @@ def dependencyStatus(symbol, event):
 def blUSBDriverSpeedChanged(symbol, event):
 	Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED")
 	Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED", event["value"], 2)
-
+	
 def setVisible(symbol, event):
 	if (event["value"] == True):
 		symbol.setVisible(True)
@@ -57,7 +76,12 @@ def showRTOSMenu(symbol, event):
 	symbol.setVisible(show_rtos_menu)
 	
 def instantiateComponent(usbDriverComponent):	
-
+	global usbOpMode
+	global drvUsbHsV1DeviceSourceFile
+	global drvUsbHsV1HostSourceFile
+	global addDrvUsbDeviceFile
+	global addDrvUsbHostFile
+	
 	res = Database.activateComponents(["HarmonyCore"])
 	
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
@@ -79,6 +103,17 @@ def instantiateComponent(usbDriverComponent):
 	usbOpMode.setDefaultValue("Device")
 	usbOpMode.setReadOnly(True)
 	usbOpMode.setUseSingleDynamicValue(True)
+	usbOpMode.setDependencies(blUSBDriverOpModeChanged, ["USB_OPERATION_MODE"])
+	
+	addDrvUsbDeviceFile = usbDriverComponent.createBooleanSymbol("ENABLE_DRV_USB_DEVICE_SOURCE", None)
+	addDrvUsbDeviceFile.setLabel("Add USB Driver Device Mode File")
+	addDrvUsbDeviceFile.setVisible(False)
+	addDrvUsbDeviceFile.setDefaultValue(True)
+	
+	addDrvUsbHostFile = usbDriverComponent.createBooleanSymbol("ENABLE_DRV_USB_HOST_SOURCE", None)
+	addDrvUsbHostFile.setLabel("Add USB Driver Host Mode File")
+	addDrvUsbHostFile.setVisible(False)
+	addDrvUsbHostFile.setDefaultValue(False)
 	
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
 		usbVbusSense = usbDriverComponent.createBooleanSymbol("USB_DEVICE_VBUS_SENSE", usbOpMode)
@@ -96,6 +131,20 @@ def instantiateComponent(usbDriverComponent):
 		usbVbusSenseFunctionName.setVisible(True)
 		usbVbusSenseFunctionName.setDependencies(blUsbVbusPinName, ["USB_DEVICE_VBUS_SENSE"])
 	
+	usbHostVbusEnable = usbDriverComponent.createBooleanSymbol("USB_HOST_VBUS_ENABLE", usbOpMode)
+	usbHostVbusEnable.setLabel("Generate VBUS Enable Function")
+	usbHostVbusEnable.setDescription("Generate the Port Power Enable function. Driver will call this function when the port power must be enabled")
+	usbHostVbusEnable.setVisible(False)
+	usbHostVbusEnable.setDescription("Select USB Operation Mode")
+	usbHostVbusEnable.setDefaultValue(True)
+	usbHostVbusEnable.setUseSingleDynamicValue(True)
+	usbHostVbusEnable.setDependencies(blusbHostVbusEnable, ["USB_OPERATION_MODE"])
+		
+	usbHostVbusEnableFunctionName = usbDriverComponent.createStringSymbol("USB_HOST_VBUS_ENABLE_PIN_NAME", usbHostVbusEnable)
+	usbHostVbusEnableFunctionName.setLabel("VBUS Enable Pin Name")
+	usbHostVbusEnableFunctionName.setDefaultValue("VBUS_AH")
+	usbHostVbusEnableFunctionName.setVisible(True)
+	usbHostVbusEnableFunctionName.setDependencies(blUsbHostVbusEnablePinName, ["USB_HOST_VBUS_ENABLE"])
 	
 	# USB Driver Host mode Attach de-bounce duration 
 	usbDriverHostAttachDebounce = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION", usbOpMode)
@@ -159,10 +208,6 @@ def instantiateComponent(usbDriverComponent):
 		Database.setSymbolValue("core", "USBHS_INTERRUPT_HANDLER", "DRV_USBHSV1_USBHS_Handler", 1)
 
 		# Initial settings for CLK and NVIC
-		if Database.getSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN") == False: 
-			Database.setSymbolValue("core", "PMC_CKGR_MOR_MOSCXTEN", True, 2)
-		if Database.getSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL") == False:
-			Database.setSymbolValue("core", "PMC_CKGR_MOR_MOSCSEL", True, 2)
 		if Database.getSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN") == False:
 			Database.setSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN", True, 2)
 		if Database.getSymbolValue("core", "USBHS_CLOCK_ENABLE") == False:
@@ -359,7 +404,7 @@ def instantiateComponent(usbDriverComponent):
 	################################################
 	# USB Driver Source files  
 	################################################
-	drvUsbHsV1SourceFile = usbDriverComponent.createFileSymbol(None, None)
+	drvUsbHsV1SourceFile = usbDriverComponent.createFileSymbol("DRV_USB_SOURCE_FILE_COMMON", None)
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
 		drvUsbHsV1SourceFile.setSourcePath(usbDriverPath + "usbhsv1/src/dynamic/drv_usbhsv1.c")
 		drvUsbHsV1SourceFile.setOutputName("drv_usbhsv1.c")
@@ -373,7 +418,7 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1SourceFile.setType("SOURCE")
 	drvUsbHsV1SourceFile.setOverwrite(True)
 	
-	drvUsbHsV1DeviceSourceFile = usbDriverComponent.createFileSymbol(None, None)
+	drvUsbHsV1DeviceSourceFile = usbDriverComponent.createFileSymbol("DRV_USB_SOURCE_FILE_DEVICE", None)
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
 		drvUsbHsV1DeviceSourceFile.setSourcePath(usbDriverPath + "usbhsv1/src/dynamic/drv_usbhsv1_device.c")
 		drvUsbHsV1DeviceSourceFile.setOutputName("drv_usbhsv1_device.c")
@@ -386,9 +431,10 @@ def instantiateComponent(usbDriverComponent):
 		drvUsbHsV1DeviceSourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbhs/src/")
 	drvUsbHsV1DeviceSourceFile.setType("SOURCE")
 	drvUsbHsV1DeviceSourceFile.setOverwrite(True)
-	drvUsbHsV1DeviceSourceFile.setDependencies(blDrvUsbHsV1DeviceSourceFile, ["USB_OPERATION_MODE"])
+	drvUsbHsV1DeviceSourceFile.setEnabled(False)
+	drvUsbHsV1DeviceSourceFile.setDependencies(blDrvUsbHsV1DeviceSourceFile, ["ENABLE_DRV_USB_DEVICE_SOURCE"])
 	
-	drvUsbHsV1HostSourceFile = usbDriverComponent.createFileSymbol(None, None)
+	drvUsbHsV1HostSourceFile = usbDriverComponent.createFileSymbol("DRV_USB_SOURCE_FILE_HOST", None)
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
 		drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "usbhsv1/src/dynamic/drv_usbhsv1_host.c")
 		drvUsbHsV1HostSourceFile.setOutputName("drv_usbhsv1_host.c")
@@ -402,7 +448,7 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1HostSourceFile.setType("SOURCE")
 	drvUsbHsV1HostSourceFile.setOverwrite(True)
 	drvUsbHsV1HostSourceFile.setEnabled(False)
-	drvUsbHsV1HostSourceFile.setDependencies(blDrvUsbHsV1HostSourceFile, ["USB_OPERATION_MODE"])
+	drvUsbHsV1HostSourceFile.setDependencies(blDrvUsbHsV1HostSourceFile, ["ENABLE_DRV_USB_HOST_SOURCE"])
 
 	# Add USBHS PLIB files for PIC32MZ 
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
@@ -501,20 +547,21 @@ def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callbac
 	if callback != None:
 		symbol.setDependencies(callback, ["USB_OPERATION_MODE"])
 		
-def blDrvUsbHsV1DeviceSourceFile (usbSymbolSource, event):
-	if (event["value"] == "Device"):
-		usbSymbolSource.setEnabled(True)
-	elif (event["value"] == "Host"):
-		usbSymbolSource.setEnabled(False)
+def blDrvUsbHsV1DeviceSourceFile (symbol, event):
+	symbol.setEnabled(event["value"])
 		
-def blDrvUsbHsV1HostSourceFile (usbSymbolSource, event):
-	if (event["value"] == "Device"):
-		usbSymbolSource.setEnabled(False)
-	elif (event["value"] == "Host"):
-		usbSymbolSource.setEnabled(True)
+def blDrvUsbHsV1HostSourceFile (symbol, event):
+	symbol.setEnabled(event["value"])
 
 def blUSBDriverOperationModeDevice(usbSymbolSource, event):
 	if (event["value"] == "Host"):
+		usbSymbolSource.setVisible(False)
+	else:
+		usbSymbolSource.setVisible(True)
+		
+
+def blusbHostVbusEnable(usbSymbolSource, event):
+	if (event["value"] == "Device"):
 		usbSymbolSource.setVisible(False)
 	else:
 		usbSymbolSource.setVisible(True)
@@ -533,5 +580,10 @@ def blUsbVbusPinName(usbSymbolSource, event):
 		usbSymbolSource.setVisible(True)
 	else:
 		usbSymbolSource.setVisible(False)
-	
+		
+def blUsbHostVbusEnablePinName(usbSymbolSource, event):
+	if (event["value"] == True):
+		usbSymbolSource.setVisible(True)
+	else:
+		usbSymbolSource.setVisible(False)
 	

@@ -48,36 +48,36 @@ def instantiateComponent(usbHostComponent):
 	res = Database.activateComponents(["HarmonyCore"])
 	res = Database.activateComponents(["sys_time"])
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
-		res = Database.activateComponents(["drv_usbhs_v1"])
-		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
+		res = Database.activateComponents(["drv_usbhs"])
+		speed = Database.getSymbolValue("drv_usbhs", "USB_SPEED")
 		driverIndex = "DRV_USBHSV1_INDEX_0"
 		driverInterface = "DRV_USBHSV1_HOST_INTERFACE"
-		Database.clearSymbolValue("drv_usbhs_v1", "USB_OPERATION_MODE")
-		Database.setSymbolValue("drv_usbhs_v1", "USB_OPERATION_MODE", "Host" , 2)
+		args = {"operationMode":"Host"}
+		Database.sendMessage("drv_usbhs", "UPDATE_OPERATION_MODE", args)
 	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-		res = Database.activateComponents(["drv_usbhs_v1"])
-		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
+		res = Database.activateComponents(["drv_usbhs"])
+		speed = Database.getSymbolValue("drv_usbhs", "USB_SPEED")
 		driverIndex = "DRV_USBHS_INDEX_0"
 		driverInterface = "DRV_USBHS_HOST_INTERFACE"
-		Database.clearSymbolValue("drv_usbhs_v1", "USB_OPERATION_MODE")
-		Database.setSymbolValue("drv_usbhs_v1", "USB_OPERATION_MODE", "Host" , 2)
+		args = {"operationMode":"Host"}
+		Database.sendMessage("drv_usbhs", "UPDATE_OPERATION_MODE", args)
 	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX"]):
 		res = Database.activateComponents(["drv_usbfs"])
 		speed = Database.getSymbolValue("drv_usbfs", "USB_SPEED")
 		driverIndex = "DRV_USBFS_INDEX_0"
 		driverInterface = "DRV_USBFS_HOST_INTERFACE"
-		Database.clearSymbolValue("drv_usbhs", "USB_OPERATION_MODE")
-		Database.setSymbolValue("drv_usbfs", "USB_OPERATION_MODE", "Host" , 2)
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD20", "SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21"]):
-		res = Database.activateComponents(["drv_usbfs_v1"])
-		speed = Database.getSymbolValue("drv_usbfs_v1", "USB_SPEED")
+		args = {"operationMode":"Host"}
+		Database.sendMessage("drv_usbfs", "UPDATE_OPERATION_MODE", args)
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMD5", "SAME5", "SAML21"]):
+		res = Database.activateComponents(["drv_usbfs"])
+		speed = Database.getSymbolValue("drv_usbfs", "USB_SPEED")
 		driverIndex = "DRV_USBFSV1_INDEX_0"
 		driverInterface = "DRV_USBFSV1_HOST_INTERFACE"
-		Database.clearSymbolValue("drv_usbfs_v1", "USB_OPERATION_MODE")
-		Database.setSymbolValue("drv_usbfs_v1", "USB_OPERATION_MODE", "Host" , 2)
+		args = {"operationMode":"Host"}
+		Database.sendMessage("drv_usbhs", "UPDATE_OPERATION_MODE", args)
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2"]):
-		res = Database.activateComponents(["drv_usbhs_v1"])
-		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
+		res = Database.activateComponents(["drv_usb_uhphs"])
+		speed = Database.getSymbolValue("drv_usb_uhphs", "USB_SPEED")
 		driverIndex = "DRV_USB_UHP_INDEX_0"
 		driverInterface = "DRV_USB_UHP_HOST_INTERFACE"
 	
@@ -285,10 +285,7 @@ def instantiateComponent(usbHostComponent):
 	# USB Host Layer Files 
 	################################################
 	usbHostHeaderFile = usbHostComponent.createFileSymbol(None, None)
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2"]):
-		addFileName('usb_host.h', usbHostComponent, usbHostHeaderFile, "templates/driver/uhp/differed_files/", "/usb/", True, None)
-	else:
-		addFileName('usb_host.h', usbHostComponent, usbHostHeaderFile, "middleware/", "/usb/", True, None)
+	addFileName('usb_host.h', usbHostComponent, usbHostHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbHostSourceFile = usbHostComponent.createFileSymbol(None, None)
 	addFileName('usb_host.c', usbHostComponent, usbHostSourceFile, "middleware/src/", "/usb/src", True, None)
@@ -300,10 +297,7 @@ def instantiateComponent(usbHostComponent):
 	addFileName('usb_common.h', usbHostComponent, usbCommonFile, "middleware/", "/usb/", True, None)
 	
 	usbChapter9File = usbHostComponent.createFileSymbol(None, None)
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2"]):
-		addFileName('usb_chapter_9.h', usbHostComponent, usbChapter9File, "templates/driver/uhp/differed_files/", "/usb/", True, None)
-	else:
-		addFileName('usb_chapter_9.h', usbHostComponent, usbChapter9File, "middleware/", "/usb/", True, None)
+	addFileName('usb_chapter_9.h', usbHostComponent, usbChapter9File, "middleware/", "/usb/", True, None)
 	
 	usbHostHubMappingFile = usbHostComponent.createFileSymbol(None, None)
 	addFileName('usb_host_hub_mapping.h', usbHostComponent, usbHostHubMappingFile, "middleware/src/", "/usb/src", True, None)
@@ -382,7 +376,6 @@ def hubSupportSetVisible(usbSymbolSource, event):
 		usbSymbolSource.setVisible(False)
 
 def hubSupportSetEnable(usbSymbolSource, event):
-		
 	if (event["value"] == True):		
 		usbSymbolSource.setEnabled(True)
 	else:
