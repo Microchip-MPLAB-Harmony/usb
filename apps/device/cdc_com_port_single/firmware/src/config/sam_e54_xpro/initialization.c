@@ -54,7 +54,6 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
-
 #pragma config BOD33_DIS = SET
 #pragma config BOD33USERLEVEL = 0x1c
 #pragma config BOD33_ACTION = RESET
@@ -112,17 +111,17 @@ static DRV_USB_VBUS_LEVEL DRV_USBFSV1_VBUS_Comparator(void)
 
 const DRV_USBFSV1_INIT drvUSBInit =
 {
-    /* Interrupt Source for USB module */
-    .interruptSource = USB_OTHER_IRQn,
-    
-    /* Interrupt Source for USB module */
-    .interruptSource1 = USB_SOF_HSOF_IRQn,
-    
-    /* Interrupt Source for USB module */
-    .interruptSource2 = USB_TRCPT0_IRQn,
-    
-    /* Interrupt Source for USB module */
-    .interruptSource3 = USB_TRCPT1_IRQn,
+	/* Interrupt Source for USB module */
+	.interruptSource = USB_OTHER_IRQn,
+ 
+	/* Interrupt Source for USB module */
+	.interruptSource1 = USB_SOF_HSOF_IRQn,
+ 
+	/* Interrupt Source for USB module */
+	.interruptSource2 = USB_TRCPT0_IRQn,
+ 
+	/* Interrupt Source for USB module */
+	.interruptSource3 = USB_TRCPT1_IRQn,
 
     /* System module initialization */
     .moduleInit = {0},
@@ -169,11 +168,12 @@ const DRV_USBFSV1_INIT drvUSBInit =
 
 void SYS_Initialize ( void* data )
 {
+    NVMCTRL_Initialize( );
+
   
     PORT_Initialize();
 
     CLOCK_Initialize();
-
 
 
 	BSP_Initialize();
