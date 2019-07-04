@@ -53,6 +53,7 @@
 #include "peripheral/nvic/plib_nvic.h"
 #include "usb/usb_chapter_9.h"
 #include "usb/usb_device.h"
+#include "peripheral/efc/plib_efc.h"
 #include "usb/usb_device_cdc.h"
 #include "usb/usb_cdc.h"
 #include "driver/usb/usbhsv1/drv_usbhsv1.h"
