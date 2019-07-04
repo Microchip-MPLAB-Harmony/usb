@@ -62,7 +62,7 @@ def loadModule():
 		
 		# Add Generic Dependency on Core Service
 		usbDevicePortHighSpeedDriverComponent.addDependency("usb_udphs_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
-<<<<<<< HEAD
+
 		USBDriverCapabilityName = "DRV_UDPHS"
 		loadUSBHostLayer = True 
 		loadUSBHostCDC = True
@@ -74,19 +74,7 @@ def loadModule():
 		loadUSBDeviceVendor = True 
 		loadUSBDevicePrinter = True 
 		
-<<<<<<< HEAD
-=======
-=======
-		USBDeviceDriverCapabilityName = "DRV_UDPHS"
 
->>>>>>> [MH3-12699] - USB python modifications to generate USB Host power enable function
-		loadUSBDeviceLayer = True
-		loadUSBDeviceCDC = True
-		loadUSBDeviceHID = True
-		loadUSBDeviceVendor = True 
-		loadUSBDevicePrinter = True 
-		
->>>>>>> 42c93d29... [MH3-12699] - USB python modifications to generate USB Host power enable function
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32MZ"]):
 		# Create USB High Speed Driver Component
 		usbDriverComponent =  Module.CreateComponent("drv_usbhs", "USB High Speed Driver", "/Harmony/Drivers", "config/usbhs_driver.py")
