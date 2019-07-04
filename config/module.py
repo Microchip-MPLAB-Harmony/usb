@@ -77,7 +77,7 @@ def loadModule():
 
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32MZ"]):
 		# Create USB High Speed Driver Component
-		usbDriverComponent =  Module.CreateComponent("drv_usbhs", "USB High Speed Driver", "/Harmony/Drivers", "config/usbhs_driver.py")
+		usbDriverComponent =  Module.CreateComponent("drv_usbhs_v1", "USB High Speed Driver", "/Harmony/Drivers", "config/usbhs_driver.py")
 		usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
 		usbDriverComponent.addDependency("drv_usb_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
 		
@@ -99,7 +99,7 @@ def loadModule():
 	
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMD5", "SAME5", "SAML21", "PIC32MK", "PIC32MX2", "PIC32MX3", "PIC32MX4", "PIC32MX5", "PIC32MX6", "PIC32MX7"]):
 		# Create USB Full Speed Driver Component
-		usbDriverComponent =  Module.CreateComponent("drv_usbfs", "USB Full Speed Driver", "/Harmony/Drivers", "config/usbfs_v1_driver.py")
+		usbDriverComponent =  Module.CreateComponent("drv_usbfs_v1", "USB Full Speed Driver", "/Harmony/Drivers", "config/usbfs_v1_driver.py")
 		usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
 		usbDriverComponent.addDependency("drv_usb_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
 		
@@ -121,7 +121,7 @@ def loadModule():
 		
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAML22"]):
 		# Create USB Full Speed Driver Component
-		usbDriverComponent =  Module.CreateComponent("drv_usbfs", "USB Full Speed Driver", "/Harmony/Drivers", "config/usbfs_v1_driver.py")
+		usbDriverComponent =  Module.CreateComponent("drv_usbfs_v1", "USB Full Speed Driver", "/Harmony/Drivers", "config/usbfs_v1_driver.py")
 		usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
 		usbDriverComponent.addDependency("drv_usb_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
 		

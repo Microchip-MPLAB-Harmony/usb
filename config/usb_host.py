@@ -48,33 +48,33 @@ def instantiateComponent(usbHostComponent):
 	res = Database.activateComponents(["HarmonyCore"])
 	res = Database.activateComponents(["sys_time"])
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
-		res = Database.activateComponents(["drv_usbhs"])
-		speed = Database.getSymbolValue("drv_usbhs", "USB_SPEED")
+		res = Database.activateComponents(["drv_usbhs_v1"])
+		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
 		driverIndex = "DRV_USBHSV1_INDEX_0"
 		driverInterface = "DRV_USBHSV1_HOST_INTERFACE"
 		args = {"operationMode":"Host"}
-		Database.sendMessage("drv_usbhs", "UPDATE_OPERATION_MODE", args)
+		Database.sendMessage("drv_usbhs_v1", "UPDATE_OPERATION_MODE", args)
 	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-		res = Database.activateComponents(["drv_usbhs"])
-		speed = Database.getSymbolValue("drv_usbhs", "USB_SPEED")
+		res = Database.activateComponents(["drv_usbhs_v1"])
+		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
 		driverIndex = "DRV_USBHS_INDEX_0"
 		driverInterface = "DRV_USBHS_HOST_INTERFACE"
 		args = {"operationMode":"Host"}
-		Database.sendMessage("drv_usbhs", "UPDATE_OPERATION_MODE", args)
+		Database.sendMessage("drv_usbhs_v1", "UPDATE_OPERATION_MODE", args)
 	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX"]):
-		res = Database.activateComponents(["drv_usbfs"])
-		speed = Database.getSymbolValue("drv_usbfs", "USB_SPEED")
+		res = Database.activateComponents(["drv_usbfs_v1"])
+		speed = Database.getSymbolValue("drv_usbfs_v1", "USB_SPEED")
 		driverIndex = "DRV_USBFS_INDEX_0"
 		driverInterface = "DRV_USBFS_HOST_INTERFACE"
 		args = {"operationMode":"Host"}
-		Database.sendMessage("drv_usbfs", "UPDATE_OPERATION_MODE", args)
+		Database.sendMessage("drv_usbfs_v1", "UPDATE_OPERATION_MODE", args)
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMD5", "SAME5", "SAML21"]):
-		res = Database.activateComponents(["drv_usbfs"])
-		speed = Database.getSymbolValue("drv_usbfs", "USB_SPEED")
+		res = Database.activateComponents(["drv_usbfs_v1"])
+		speed = Database.getSymbolValue("drv_usbfs_v1", "USB_SPEED")
 		driverIndex = "DRV_USBFSV1_INDEX_0"
 		driverInterface = "DRV_USBFSV1_HOST_INTERFACE"
 		args = {"operationMode":"Host"}
-		Database.sendMessage("drv_usbhs", "UPDATE_OPERATION_MODE", args)
+		Database.sendMessage("drv_usbhs_v1", "UPDATE_OPERATION_MODE", args)
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2"]):
 		res = Database.activateComponents(["drv_usb_uhphs"])
 		speed = Database.getSymbolValue("drv_usb_uhphs", "USB_SPEED")
