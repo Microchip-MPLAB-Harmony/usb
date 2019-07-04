@@ -60,7 +60,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult_freertos/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">26FBC1A85C86E2D74B226C4E6BC75256</GeneratedChecksum>
-          <UserChecksum dnOrder="5">26FBC1A85C86E2D74B226C4E6BC75256</UserChecksum>
+          <UserChecksum dnOrder="5">43B66A888684E40920C47BDDC2CE367C</UserChecksum>
         </File>
         <File dnOrder="7">
           <Type dnOrder="0">SOURCE</Type>
@@ -68,7 +68,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult_freertos/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">8AC747ABA067180FCC1BDBD38769DD6F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8AC747ABA067180FCC1BDBD38769DD6F</UserChecksum>
+          <UserChecksum dnOrder="5">2269DBAE26853D9A5CB0C41B4FB22B34</UserChecksum>
         </File>
         <File dnOrder="8">
           <Type dnOrder="0">SOURCE</Type>
@@ -132,7 +132,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">F4412835DCF1E3175C36FAD3B1639B6E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F4412835DCF1E3175C36FAD3B1639B6E</UserChecksum>
+          <UserChecksum dnOrder="5">08503E043329E3A232B63034825144EE</UserChecksum>
         </File>
         <File dnOrder="16">
           <Type dnOrder="0">SOURCE</Type>
@@ -444,7 +444,7 @@
           <LogicalPath dnOrder="2">packs/ATSAMA5D27_DFP/</LogicalPath>
           <PhysicalPath dnOrder="3">/../../packs/ATSAMA5D27_DFP/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">F24A23F69AF921F2803FA3F748E385FC</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F24A23F69AF921F2803FA3F748E385FC</UserChecksum>
+          <UserChecksum dnOrder="5">B0B715F47113B3B580515453DF54A1F7</UserChecksum>
         </File>
         <File dnOrder="55">
           <Type dnOrder="0">HEADER</Type>
@@ -604,7 +604,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult_freertos/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">AC352A9B0E4A4B622674870B8738E826</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AC352A9B0E4A4B622674870B8738E826</UserChecksum>
+          <UserChecksum dnOrder="5">ACC5FFED9458E3CC1A6C30334A595EC7</UserChecksum>
         </File>
         <File dnOrder="75">
           <Type dnOrder="0">HEADER</Type>
@@ -612,7 +612,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult_freertos/driver/usb/uhp</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">5ABE83F2D274E1D83A9BF279B54D3A6A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5ABE83F2D274E1D83A9BF279B54D3A6A</UserChecksum>
+          <UserChecksum dnOrder="5">1946F8BCD8077A769F608864D908DEF9</UserChecksum>
         </File>
         <File dnOrder="76">
           <Type dnOrder="0">HEADER</Type>
@@ -620,7 +620,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult_freertos/driver/usb/uhp/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">4B9746F35C70BFD9F98E66D342B90865</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4B9746F35C70BFD9F98E66D342B90865</UserChecksum>
+          <UserChecksum dnOrder="5">88597A245B352D365C43E1D5811BBFB7</UserChecksum>
         </File>
         <File dnOrder="77">
           <Type dnOrder="0">HEADER</Type>
@@ -628,7 +628,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult_freertos/driver/usb/uhp/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">C0CED11DD7AC2C83DDA80DF707AAC33E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C0CED11DD7AC2C83DDA80DF707AAC33E</UserChecksum>
+          <UserChecksum dnOrder="5">9840D42CC0956688A8443FF9B5984702</UserChecksum>
         </File>
         <File dnOrder="78">
           <Type dnOrder="0">HEADER</Type>
@@ -1300,7 +1300,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">0EAC3A85FB97F7922EACDDEB885A0230</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0EAC3A85FB97F7922EACDDEB885A0230</UserChecksum>
+          <UserChecksum dnOrder="5">981B5E2FA336ABCC265AD5B6092F0A2B</UserChecksum>
         </File>
         <File dnOrder="162">
           <Type dnOrder="0">HEADER</Type>
@@ -1355,7 +1355,7 @@
           <Name dnOrder="1">usb_common.h</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult_freertos/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">E7A10AF4199961E4A1B62C664A81F911</GeneratedChecksum>
+          <GeneratedChecksum dnOrder="4">ACC8AF90F98B09095480B6B1F07082A0</GeneratedChecksum>
           <UserChecksum dnOrder="5">E7A10AF4199961E4A1B62C664A81F911</UserChecksum>
         </File>
         <File dnOrder="169">
@@ -1486,7 +1486,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;usb;usb;usb;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>

@@ -36,7 +36,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">26FBC1A85C86E2D74B226C4E6BC75256</GeneratedChecksum>
-          <UserChecksum dnOrder="5">26FBC1A85C86E2D74B226C4E6BC75256</UserChecksum>
+          <UserChecksum dnOrder="5">24ECC7BC9EEB52D5F0F712CB24034706</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -44,7 +44,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">8AC747ABA067180FCC1BDBD38769DD6F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8AC747ABA067180FCC1BDBD38769DD6F</UserChecksum>
+          <UserChecksum dnOrder="5">A0D9C7BB9D492F890F28B87182ECC9E5</UserChecksum>
         </File>
         <File dnOrder="5">
           <Type dnOrder="0">SOURCE</Type>
@@ -83,8 +83,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9161DB563EED9EDEA950858847C3104D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9161DB563EED9EDEA950858847C3104D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">DE39E3153325C6083974004C1DF998C9</GeneratedChecksum>
+          <UserChecksum dnOrder="5">024ECD5062272303C7CE31D659DC9CC8</UserChecksum>
         </File>
         <File dnOrder="10">
           <Type dnOrder="0">SOURCE</Type>
@@ -211,7 +211,7 @@
           <Name dnOrder="1">tasks.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">165ED89C599A8F233B3EC2516AF75F27</GeneratedChecksum>
+          <GeneratedChecksum dnOrder="4">5E395F43CD6C9FB46964F781E13DB332</GeneratedChecksum>
           <UserChecksum dnOrder="5">165ED89C599A8F233B3EC2516AF75F27</UserChecksum>
         </File>
         <File dnOrder="26">
@@ -220,7 +220,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">A7DE3B75F6DBA4C6CA8F799D415FFC49</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A7DE3B75F6DBA4C6CA8F799D415FFC49</UserChecksum>
+          <UserChecksum dnOrder="5">9AB567FCE4458B627EDB7063B5AADD60</UserChecksum>
         </File>
         <File dnOrder="27">
           <Type dnOrder="0">SOURCE</Type>
@@ -236,7 +236,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">58E7330E231318640AAA830A3D572556</GeneratedChecksum>
-          <UserChecksum dnOrder="5">58E7330E231318640AAA830A3D572556</UserChecksum>
+          <UserChecksum dnOrder="5">E7DF06DEE8A5CEC424DAF5B2989DA70B</UserChecksum>
         </File>
         <File dnOrder="29">
           <Type dnOrder="0">SOURCE</Type>
@@ -244,7 +244,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">02ACDC96E4593C7EB976507B8714CD81</GeneratedChecksum>
-          <UserChecksum dnOrder="5">02ACDC96E4593C7EB976507B8714CD81</UserChecksum>
+          <UserChecksum dnOrder="5">B9CADB2912191D3FB598A28624DC6C1D</UserChecksum>
         </File>
         <File dnOrder="30">
           <Type dnOrder="0">HEADER</Type>
@@ -316,7 +316,7 @@
           <LogicalPath dnOrder="2">packs/ATSAMA5D27_DFP/</LogicalPath>
           <PhysicalPath dnOrder="3">/../../packs/ATSAMA5D27_DFP/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">F24A23F69AF921F2803FA3F748E385FC</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F24A23F69AF921F2803FA3F748E385FC</UserChecksum>
+          <UserChecksum dnOrder="5">B0B715F47113B3B580515453DF54A1F7</UserChecksum>
         </File>
         <File dnOrder="39">
           <Type dnOrder="0">HEADER</Type>
@@ -387,7 +387,7 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">4BDFA125C3C4B40399A6DB6FC2CDC1AB</GeneratedChecksum>
+          <GeneratedChecksum dnOrder="4">371C76A354B26E02805596C3537E1A6A</GeneratedChecksum>
           <UserChecksum dnOrder="5">4BDFA125C3C4B40399A6DB6FC2CDC1AB</UserChecksum>
         </File>
         <File dnOrder="48">
@@ -403,7 +403,7 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8DDEE941297CE317E860D91FD68F8388</GeneratedChecksum>
+          <GeneratedChecksum dnOrder="4">1209DC93FDBAFB47C2A307607DDFCE12</GeneratedChecksum>
           <UserChecksum dnOrder="5">8DDEE941297CE317E860D91FD68F8388</UserChecksum>
         </File>
         <File dnOrder="50">
@@ -460,7 +460,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">AC352A9B0E4A4B622674870B8738E826</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AC352A9B0E4A4B622674870B8738E826</UserChecksum>
+          <UserChecksum dnOrder="5">ACC5FFED9458E3CC1A6C30334A595EC7</UserChecksum>
         </File>
         <File dnOrder="57">
           <Type dnOrder="0">HEADER</Type>
@@ -468,7 +468,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usb/uhp</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">5ABE83F2D274E1D83A9BF279B54D3A6A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5ABE83F2D274E1D83A9BF279B54D3A6A</UserChecksum>
+          <UserChecksum dnOrder="5">1946F8BCD8077A769F608864D908DEF9</UserChecksum>
         </File>
         <File dnOrder="58">
           <Type dnOrder="0">HEADER</Type>
@@ -476,7 +476,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usb/uhp/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">4B9746F35C70BFD9F98E66D342B90865</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4B9746F35C70BFD9F98E66D342B90865</UserChecksum>
+          <UserChecksum dnOrder="5">6422F30892F1D73556FCF7394031A4EC</UserChecksum>
         </File>
         <File dnOrder="59">
           <Type dnOrder="0">HEADER</Type>
@@ -484,7 +484,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usb/uhp/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">C0CED11DD7AC2C83DDA80DF707AAC33E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C0CED11DD7AC2C83DDA80DF707AAC33E</UserChecksum>
+          <UserChecksum dnOrder="5">9840D42CC0956688A8443FF9B5984702</UserChecksum>
         </File>
         <File dnOrder="60">
           <Type dnOrder="0">HEADER</Type>
@@ -1028,7 +1028,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">0EAC3A85FB97F7922EACDDEB885A0230</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0EAC3A85FB97F7922EACDDEB885A0230</UserChecksum>
+          <UserChecksum dnOrder="5">981B5E2FA336ABCC265AD5B6092F0A2B</UserChecksum>
         </File>
         <File dnOrder="128">
           <Type dnOrder="0">HEADER</Type>
@@ -1083,7 +1083,7 @@
           <Name dnOrder="1">usb_common.h</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">E7A10AF4199961E4A1B62C664A81F911</GeneratedChecksum>
+          <GeneratedChecksum dnOrder="4">ACC8AF90F98B09095480B6B1F07082A0</GeneratedChecksum>
           <UserChecksum dnOrder="5">E7A10AF4199961E4A1B62C664A81F911</UserChecksum>
         </File>
         <File dnOrder="135">
@@ -1092,14 +1092,14 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">EC508303014905CAA66CE126A0FE7297</GeneratedChecksum>
-          <UserChecksum dnOrder="5">EC508303014905CAA66CE126A0FE7297</UserChecksum>
+          <UserChecksum dnOrder="5">701AC68BCD7179C61C5054D38F657599</UserChecksum>
         </File>
         <File dnOrder="136">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_host.h</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F127C67A3E33E5788C0F057F648EE57C</GeneratedChecksum>
+          <GeneratedChecksum dnOrder="4">A4B832998D00C49BD4F9A3FC6A6CFC7D</GeneratedChecksum>
           <UserChecksum dnOrder="5">F127C67A3E33E5788C0F057F648EE57C</UserChecksum>
         </File>
         <File dnOrder="137">
@@ -1214,7 +1214,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;usb;usb;usb;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>

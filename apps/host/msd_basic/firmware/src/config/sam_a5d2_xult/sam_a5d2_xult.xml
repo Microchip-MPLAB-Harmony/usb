@@ -1741,7 +1741,7 @@
             </Boolean>
           </Attributes>
           <Values dnOrder="1">
-            <Dynamic dnOrder="0" id="core" value="true"/>
+            <Dynamic dnOrder="0" id="drv_usbhs_v1" value="true"/>
           </Values>
         </Boolean>
         <String dnOrder="328" id="UHPHS_INTERRUPT_HANDLER">
@@ -1889,7 +1889,7 @@
         </Boolean>
         <Boolean dnOrder="6" id="ENABLE_DRV_COMMON">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="drv_usbhs_v1" value="true"/>
+            <Dynamic dnOrder="0" id="sys_fs" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="7" id="ENABLE_OSAL">
@@ -1905,7 +1905,7 @@
         </Boolean>
         <Boolean dnOrder="9" id="ENABLE_SYS_COMMON">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="drv_usbhs_v1" value="true"/>
+            <Dynamic dnOrder="0" id="sys_fs" value="true"/>
           </Values>
         </Boolean>
         <Boolean dnOrder="10" id="ENABLE_SYS_INT">
@@ -2444,12 +2444,12 @@
     <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
     <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="BSP_SAM_A5D2_Xplained_Ultra" x="480" y="20"/>
+        <ElementPosition dnOrder="0" id="BSP_SAM_A5D2_Xplained_Ultra" x="479" y="20"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="21" y="66"/>
         <ElementPosition dnOrder="2" id="cmsis" x="340" y="20"/>
         <ElementPosition dnOrder="3" id="core" x="242" y="21"/>
         <ElementPosition dnOrder="4" id="dfp" x="20" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_usbhs_v1" x="23" y="314"/>
+        <ElementPosition dnOrder="5" id="drv_usbhs_v1" x="61" y="311"/>
         <ElementPosition dnOrder="6" id="stdio" x="213" y="232"/>
         <ElementPosition dnOrder="7" id="sys_fs" x="699" y="244"/>
         <ElementPosition dnOrder="8" id="sys_time" x="508" y="117"/>

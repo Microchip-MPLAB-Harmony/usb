@@ -291,7 +291,6 @@ void _USB_HOST_MSD_TransferTasks
                             processedBytes = msdInstanceInfo->msdCBW->dCBWDataTransferLength - msdCSW->dCSWDataResidue;
                             transferIsDone = true;
                             msdResult = msdCSW->bCSWStatus;
-//                            printf("\n\r CSW is good"); 
                         }
                         else if (msdCSW->bCSWStatus == USB_MSD_CSW_STATUS_PHASE_ERROR)
                         {

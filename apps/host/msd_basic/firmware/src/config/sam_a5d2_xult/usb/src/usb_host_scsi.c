@@ -867,7 +867,6 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
                     scsiObj->mediaGeometry.geometryTable = scsiObj->mediaRegionGeometry;
                     SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host SCSI: SCSI Instance %d Read Capacity Successful", scsiObjIndex);
                     SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host SCSI: SCSI Instance %d Capacity is %d blocks", scsiObjIndex, scsiObj->mediaRegionGeometry[1].numBlocks);
-                    printf("\r\n\033[31m!USB Host SCSI: SCSI Instance %d Capacity is %d blocks\033[0m", scsiObjIndex, scsiObj->mediaRegionGeometry[1].numBlocks);
 
                     /* Now we can check if the device is write protected.
                      * */
@@ -1221,7 +1220,6 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
                 }
                 else
                 {
-printf(" MSD_RESULT_COMMAND FAILED " );
                     scsiObj->state = USB_HOST_SCSI_STATE_TEST_UNIT_READY_DELAY_START;
                 }
             }

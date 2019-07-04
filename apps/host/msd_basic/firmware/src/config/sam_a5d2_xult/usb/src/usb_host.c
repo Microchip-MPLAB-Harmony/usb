@@ -525,7 +525,6 @@ void _USB_HOST_UpdateInterfaceStatus
              * device to an error state */
 
             SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host Layer: Bus %d Device %d not matched to any TPL entry", busIndex, deviceObj->deviceAddress);
-            printf("\r\nUSB Host Layer: Bus %d Device %d not matched to any TPL entry", busIndex, deviceObj->deviceAddress);
             deviceObj->deviceState = USB_HOST_DEVICE_STATE_ERROR;
             deviceObj->hcdInterface->hostPipeClose(deviceObj->controlPipeHandle);
             if(gUSBHostObj.hostEventHandler != NULL)
