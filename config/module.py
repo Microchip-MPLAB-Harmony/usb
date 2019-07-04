@@ -55,6 +55,7 @@ def loadModule():
 		loadUSBHostLayer = True 
 		loadUSBHostCDC = True
 		loadUSBHostMSD = True
+		loadUSBHostHID = True 
 		
 		# Create USB Device Port High Speed (UDPHS) Driver Component for SAMA5D2
 		usbDevicePortHighSpeedDriverComponent =  Module.CreateComponent("drv_usb_udphs", "USB UDPHS Device Driver", "/Harmony/Drivers", "config/usb_udphs_driver.py")
@@ -63,10 +64,9 @@ def loadModule():
 		# Add Generic Dependency on Core Service
 		usbDevicePortHighSpeedDriverComponent.addDependency("usb_udphs_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
 
-		USBDriverCapabilityName = "DRV_UDPHS"
-		loadUSBHostLayer = True 
-		loadUSBHostCDC = True
-		loadUSBHostMSD = True		
+		USBDeviceDriverCapabilityName = "DRV_UDPHS"
+			
+		# Load USB Device Layer Components 
 		loadUSBDeviceLayer = True
 		loadUSBDeviceCDC = True
 		loadUSBDeviceHID = True
