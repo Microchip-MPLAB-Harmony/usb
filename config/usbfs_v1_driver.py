@@ -62,7 +62,7 @@ def instantiateComponent(usbDriverComponent):
 	global usbOpMode
 	
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAML22"]):
-		usbDriverSourcePath = "usbfsv1_device_only"	
+		usbDriverSourcePath = "usbfsv2"	
 	else:
 		usbDriverSourcePath = "usbfsv1"
 	

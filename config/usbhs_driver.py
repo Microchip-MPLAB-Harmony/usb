@@ -571,9 +571,6 @@ def blUSBDriverOperationModeChanged(usbSymbolSource, event):
 		usbSymbolSource.setVisible(False)
 	else:
 		usbSymbolSource.setVisible(True)
-		
-def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
-	print(ownerComponent, dependencyID, dependentComponent)
 	
 def blUsbVbusPinName(usbSymbolSource, event):
 	if (event["value"] == True):
