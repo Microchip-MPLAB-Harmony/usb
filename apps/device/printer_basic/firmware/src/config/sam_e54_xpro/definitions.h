@@ -49,9 +49,10 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include "peripheral/sercom/usart/plib_sercom2_usart.h"
+#include "peripheral/nvmctrl/plib_nvmctrl.h"
+#include "peripheral/evsys/plib_evsys.h"
 #include "usb/usb_device_printer.h"
 #include "usb/usb_printer.h"
-#include "peripheral/evsys/plib_evsys.h"
 #include "peripheral/port/plib_port.h"
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"

@@ -106,7 +106,7 @@ extern "C" {
 /* Printer Transfer Queue Size for both read and
    write. Applicable to all instances of the
    function driver */
-#define USB_DEVICE_PRINTER_QUEUE_DEPTH_COMBINED       3
+#define USB_DEVICE_PRINTER_QUEUE_DEPTH_COMBINED       2
 
 /* Length of the Device ID string including length in the first two bytes */
 #define USB_DEVICE_PRINTER_DEVICE_ID_STRING_LENGTH    81
@@ -115,7 +115,7 @@ extern "C" {
 #define USB_DEVICE_PRINTER_DEVICE_ID_STRING  {0,81,'M','F','G',':','M','i','c','r','o','c','h','i','p',';','M','D','L',':','G','e','n','e','r','i','c',';','C','M','D',':','E','P','S','O','N',';','C','L','S',':','P','R','I','N','T','E','R',';','D','E','S',':','G','e','n','e','r','i','c','T','e','x','t','O','n','l','y','P','r','i','n','t','e','r','D','e','m','o',';'},
 
 /* Number of Endpoints used */
-#define DRV_USBFSV1_ENDPOINTS_NUMBER                        3
+#define DRV_USBFSV1_ENDPOINTS_NUMBER                        2
 
 /* The USB Device Layer will not initialize the USB Driver */
 #define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT

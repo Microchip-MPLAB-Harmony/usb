@@ -68,7 +68,7 @@ const USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[1] =
     {
         .configurationValue = 1,         // Configuration value
         .interfaceNumber = 0,        // First interfaceNumber of this function
-        .speed = USB_SPEED_HIGH|USB_SPEED_FULL,                                                  // Function Speed
+        .speed = USB_SPEED_HIGH|USB_SPEED_FULL,             // Function Speed
         .numberOfInterfaces = 1, // Number of interfaces
         .funcDriverIndex = 0,                   // Index of Printer Function Driver
         .driver = (void*)USB_DEVICE_PRINTER_FUNCTION_DRIVER,                      // USB Printer function data exposed to device layer
