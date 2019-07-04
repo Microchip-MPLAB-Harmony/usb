@@ -1,27 +1,23 @@
 /*******************************************************************************
-  Interrupt System Service Library Interface Implementation File
+  Cache System Service Library Implementation Source File
 
   Company
     Microchip Technology Inc.
 
   File Name
-    sys_int_nvic.c
+    sys_cache.c
 
   Summary
-    NVIC implementation of interrupt system service library.
+    Cache System Service Library interface implementation.
 
   Description
-    This file implements the interface to the interrupt system service library
-    not provided in CMSIS.
-
-  Remarks:
-    None.
+    This file implements the interface to the Cache System Service Library.
 
 *******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -44,83 +40,68 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-#include "system/int/sys_int.h"
+#include "device.h"
+#include "device_cache.h"
+#include "system/cache/sys_cache.h"
 
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: Interface Implementation
+// Section: System Cache Interface Functions
 // *****************************************************************************
 // *****************************************************************************
-
-// *****************************************************************************
-void SYS_INT_Enable( void )
+void SYS_CACHE_EnableCaches (void)
 {
-    __DMB();
-    __enable_irq();
-
-    return;
 }
 
-
-// *****************************************************************************
-bool SYS_INT_Disable( void )
+void SYS_CACHE_DisableCaches (void)
 {
-    bool processorStatus;
-
-    processorStatus = (bool) (__get_PRIMASK() == 0);
-
-    __disable_irq();
-    __DMB();
-
-    return processorStatus;
+}
+void SYS_CACHE_EnableICache (void)
+{
 }
 
-
-// *****************************************************************************
-void SYS_INT_Restore( bool state )
+void SYS_CACHE_DisableICache (void)
 {
-    if( state == true )
-    {
-        __DMB();
-        __enable_irq();
-    }
-    else
-    {
-        __disable_irq();
-        __DMB();
-    }
-
-    return;
 }
 
-bool SYS_INT_SourceDisable( INT_SOURCE source )
+void SYS_CACHE_InvalidateICache (void)
 {
-    bool processorStatus;
-    bool intSrcStatus;
-
-    processorStatus = SYS_INT_Disable();
-
-    intSrcStatus = NVIC_GetEnableIRQ(source);
-
-    NVIC_DisableIRQ( source );
-
-    SYS_INT_Restore( processorStatus );
-
-    /* return the source status */
-    return intSrcStatus;
 }
 
-void SYS_INT_SourceRestore( INT_SOURCE source, bool status )
+void SYS_CACHE_EnableDCache (void)
 {
-    if( status ) {
-        SYS_INT_SourceEnable( source );
-    }
-    return;
+}
+
+void SYS_CACHE_DisableDCache (void)
+{
+}
+
+void SYS_CACHE_InvalidateDCache (void)
+{
+}
+
+void SYS_CACHE_CleanDCache (void)
+{
+}
+
+void SYS_CACHE_CleanInvalidateDCache (void)
+{
+}
+
+void SYS_CACHE_InvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
+{
+}
+
+void SYS_CACHE_CleanDCache_by_Addr (uint32_t *addr, int32_t size)
+{
+}
+
+void SYS_CACHE_CleanInvalidateDCache_by_Addr (uint32_t *addr, int32_t size)
+{
 }
