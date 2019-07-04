@@ -9,12 +9,12 @@
           <logicalFolder name="f3" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_e70_xult/bsp/bsp.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f1" displayName="driver" projectFiles="true">
-            <logicalFolder name="f2" displayName="usart" projectFiles="true">
-              <itemPath>../src/config/sam_e70_xult/driver/usart/drv_usart_definitions.h</itemPath>
+          <logicalFolder name="f2" displayName="driver" projectFiles="true">
+            <logicalFolder name="f1" displayName="usart" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/driver/usart/drv_usart.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/driver/usart/drv_usart_definitions.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="usb" projectFiles="true">
+            <logicalFolder name="f2" displayName="usb" projectFiles="true">
               <logicalFolder name="f1" displayName="usbhsv1" projectFiles="true">
                 <logicalFolder name="f1" displayName="src" projectFiles="true">
                   <itemPath>../src/config/sam_e70_xult/driver/usb/usbhsv1/src/drv_usbhsv1_variant_mapping.h</itemPath>
@@ -32,6 +32,9 @@
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/peripheral/clk/plib_clk.h</itemPath>
             </logicalFolder>
+            <logicalFolder name="f4" displayName="efc" projectFiles="true">
+              <itemPath>../src/config/sam_e70_xult/peripheral/efc/plib_efc.h</itemPath>
+            </logicalFolder>
             <logicalFolder name="f3" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/peripheral/nvic/plib_nvic.h</itemPath>
             </logicalFolder>
@@ -40,7 +43,7 @@
               <itemPath>../src/config/sam_e70_xult/peripheral/pio/plib_pio_pin.h</itemPath>
               <itemPath>../src/config/sam_e70_xult/peripheral/pio/plib_pio.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="usart" projectFiles="true">
+            <logicalFolder name="f5" displayName="usart" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/peripheral/usart/plib_usart_common.h</itemPath>
               <itemPath>../src/config/sam_e70_xult/peripheral/usart/plib_usart1.h</itemPath>
             </logicalFolder>
@@ -61,7 +64,7 @@
             <itemPath>../src/config/sam_e70_xult/system/system_common.h</itemPath>
             <itemPath>../src/config/sam_e70_xult/system/system_module.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="usb" projectFiles="true">
+          <logicalFolder name="f1" displayName="usb" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/usb/src/usb_device_local.h</itemPath>
               <itemPath>../src/config/sam_e70_xult/usb/src/usb_device_mapping.h</itemPath>
@@ -69,13 +72,13 @@
               <itemPath>../src/config/sam_e70_xult/usb/src/usb_external_dependencies.h</itemPath>
               <itemPath>../src/config/sam_e70_xult/usb/src/usb_device_cdc_local.h</itemPath>
             </logicalFolder>
+            <itemPath>../src/config/sam_e70_xult/usb/usb_device.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/usb/usb_common.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/usb/usb_chapter_9.h</itemPath>
             <itemPath>../src/config/sam_e70_xult/usb/usb_host_client_driver.h</itemPath>
             <itemPath>../src/config/sam_e70_xult/usb/usb_host_hub_interface.h</itemPath>
             <itemPath>../src/config/sam_e70_xult/usb/usb_host.h</itemPath>
             <itemPath>../src/config/sam_e70_xult/usb/usb_hub.h</itemPath>
-            <itemPath>../src/config/sam_e70_xult/usb/usb_device.h</itemPath>
-            <itemPath>../src/config/sam_e70_xult/usb/usb_common.h</itemPath>
-            <itemPath>../src/config/sam_e70_xult/usb/usb_chapter_9.h</itemPath>
             <itemPath>../src/config/sam_e70_xult/usb/usb_device_cdc.h</itemPath>
             <itemPath>../src/config/sam_e70_xult/usb/usb_cdc.h</itemPath>
           </logicalFolder>
@@ -171,10 +174,10 @@
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_e70_xult" projectFiles="true">
-          <logicalFolder name="f2" displayName="bsp" projectFiles="true">
+          <logicalFolder name="f5" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_e70_xult/bsp/bsp.c</itemPath>
           </logicalFolder>
-          <logicalFolder name="f1" displayName="driver" projectFiles="true">
+          <logicalFolder name="f4" displayName="driver" projectFiles="true">
             <logicalFolder name="f2" displayName="usart" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/driver/usart/src/drv_usart.c</itemPath>
               <itemPath>../src/config/sam_e70_xult/driver/usart/src/drv_usart_local.h</itemPath>
@@ -188,9 +191,12 @@
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f4" displayName="peripheral" projectFiles="true">
+          <logicalFolder name="f2" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/peripheral/clk/plib_clk.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="efc" projectFiles="true">
+              <itemPath>../src/config/sam_e70_xult/peripheral/efc/plib_efc.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/peripheral/nvic/plib_nvic.c</itemPath>
@@ -198,11 +204,11 @@
             <logicalFolder name="f2" displayName="pio" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/peripheral/pio/plib_pio.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="usart" projectFiles="true">
+            <logicalFolder name="f5" displayName="usart" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/peripheral/usart/plib_usart1.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="stdio" projectFiles="true">
+          <logicalFolder name="f1" displayName="stdio" projectFiles="true">
             <itemPath>../src/config/sam_e70_xult/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f6" displayName="system" projectFiles="true">
@@ -216,7 +222,7 @@
               <itemPath>../src/config/sam_e70_xult/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f5" displayName="usb" projectFiles="true">
+          <logicalFolder name="f3" displayName="usb" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/usb/src/usb_device.c</itemPath>
               <itemPath>../src/config/sam_e70_xult/usb/src/usb_device_cdc.c</itemPath>
@@ -252,14 +258,14 @@
         <targetDevice>ATSAME70Q21B</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>ICD4Tool</platformTool>
+        <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.15</languageToolchainVersion>
+        <languageToolchainVersion>2.20</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAME70_DFP" vendor="Microchip" version="3.0.10"/>
         <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
+        <pack name="SAME70_DFP" vendor="Microchip" version="3.0.10"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -318,7 +324,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/sam_e70_xult;../src/packs/ATSAME70Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src;../src/config/sam_e70_xult;../src/packs/ATSAME70Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm"/>
+                  value="../src;../src/config/sam_e70_xult;../src/packs/ATSAME70Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -379,7 +385,7 @@
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-cross-reference-file" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
-        <property key="heap-size" value="0"/>
+        <property key="heap-size" value="512"/>
         <property key="input-libraries" value=""/>
         <property key="kseg-length" value=""/>
         <property key="kseg-origin" value=""/>
@@ -439,6 +445,37 @@
         <property key="save-temps" value="false"/>
         <property key="wpo-lto" value="false"/>
       </C32Global>
+      <EdbgTool>
+        <property key="AutoSelectMemRanges" value="auto"/>
+        <property key="communication.interface" value="jtag"/>
+        <property key="communication.speed" value="${communication.speed.default}"/>
+        <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="memories.aux" value="false"/>
+        <property key="memories.bootflash" value="true"/>
+        <property key="memories.configurationmemory" value="true"/>
+        <property key="memories.configurationmemory2" value="true"/>
+        <property key="memories.dataflash" value="true"/>
+        <property key="memories.eeprom" value="true"/>
+        <property key="memories.exclude.configurationmemory" value="true"/>
+        <property key="memories.flashdata" value="true"/>
+        <property key="memories.id" value="true"/>
+        <property key="memories.instruction.ram.ranges"
+                  value="${memories.instruction.ram.ranges}"/>
+        <property key="memories.programmemory" value="true"/>
+        <property key="memories.programmemory.ranges" value="400000-5fffff"/>
+        <property key="poweroptions.powerenable" value="false"/>
+        <property key="programoptions.eraseb4program" value="true"/>
+        <property key="programoptions.preservedataflash" value="false"/>
+        <property key="programoptions.preservedataflash.ranges"
+                  value="${memories.dataflash.default}"/>
+        <property key="programoptions.preserveeeprom" value="false"/>
+        <property key="programoptions.preserveeeprom.ranges" value=""/>
+        <property key="programoptions.preserveprogram.ranges" value="0-2045ffff"/>
+        <property key="programoptions.preserveprogramrange" value="false"/>
+        <property key="programoptions.preserveuserid" value="false"/>
+        <property key="programoptions.programuserotp" value="false"/>
+        <property key="voltagevalue" value=""/>
+      </EdbgTool>
       <ICD4Tool>
         <property key="AutoSelectMemRanges" value="auto"/>
         <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>

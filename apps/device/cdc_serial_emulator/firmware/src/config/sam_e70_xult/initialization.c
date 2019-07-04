@@ -174,12 +174,12 @@ const DRV_USBHSV1_INIT drvUSBInit =
     .operationMode = DRV_USBHSV1_OPMODE_DEVICE,
 
     /* To operate in USB Normal Mode */
-	.operationSpeed = DRV_USBHSV1_DEVICE_SPEEDCONF_LOW_POWER,
+    .operationSpeed = DRV_USBHSV1_DEVICE_SPEEDCONF_NORMAL,
 
     /* Identifies peripheral (PLIB-level) ID */
     .usbID = USBHS_REGS,
 	
-    /* Function to check for VBus */
+    /* Function to check for VBUS */
     .vbusComparator = DRV_USBHSV1_VBUS_Comparator
 };
 
@@ -206,16 +206,17 @@ const DRV_USBHSV1_INIT drvUSBInit =
 
 void SYS_Initialize ( void* data )
 {
+
+    EFC_Initialize();
   
     CLK_Initialize();
 	PIO_Initialize();
 
-
-	BSP_Initialize();
 	RSWDT_REGS->RSWDT_MR = RSWDT_MR_WDDIS_Msk;	// Disable RSWDT 
 
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
 
+	BSP_Initialize();
 	USART1_Initialize();
 
 
@@ -223,14 +224,14 @@ void SYS_Initialize ( void* data )
 
 
 
-	/* Initialize USB Driver */ 
-    sysObj.drvUSBHSV1Object = DRV_USBHSV1_Initialize(DRV_USBHSV1_INDEX_0, (SYS_MODULE_INIT *) &drvUSBInit);	
-
 
 	 /* Initialize the USB device layer */
     sysObj.usbDevObject0 = USB_DEVICE_Initialize (USB_DEVICE_INDEX_0 , ( SYS_MODULE_INIT* ) & usbDevInitData);
 	
 	
+
+	/* Initialize USB Driver */ 
+    sysObj.drvUSBHSV1Object = DRV_USBHSV1_Initialize(DRV_USBHSV1_INDEX_0, (SYS_MODULE_INIT *) &drvUSBInit);	
 
 
     APP_Initialize();
