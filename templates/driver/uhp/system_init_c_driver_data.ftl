@@ -77,8 +77,9 @@ DRV_USB_UHP_INIT drvUSBInit =
 	/* Root hub available current in milliamperes */	
     .rootHubAvailableCurrent = 500,
 	
-	/* Root hub available current in milliamperes */
-    .usbID = ((uhphs_registers_t*)0x00500000)
+	/* USB base address */
+    .usbIDEHCI = ((uhphs_registers_t*)UHPHS_EHCI_ADDR),
+    .usbIDOHCI = ((UhpOhci*)UHPHS_OHCI_ADDR),
 };
 <#--
 /*******************************************************************************

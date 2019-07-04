@@ -192,11 +192,11 @@ def instantiateComponent(usbDriverComponent):
 	################################################
 	# system_interrupt.c file for USB Driver   
 	################################################
-	usbDriverSystemInterruptFile = usbDriverComponent.createFileSymbol(None, None)
-	usbDriverSystemInterruptFile.setType("STRING")
-	usbDriverSystemInterruptFile.setOutputName("core.LIST_SYSTEM_INTERRUPT_HANDLERS")
-	usbDriverSystemInterruptFile.setSourcePath(sourcePath + "system_interrupt_c_driver.ftl")
-	usbDriverSystemInterruptFile.setMarkup(True)
+	# usbDriverSystemInterruptFile = usbDriverComponent.createFileSymbol(None, None)
+	# usbDriverSystemInterruptFile.setType("STRING")
+	# usbDriverSystemInterruptFile.setOutputName("core.LIST_SYSTEM_INTERRUPT_HANDLERS")
+	# usbDriverSystemInterruptFile.setSourcePath(sourcePath + "system_interrupt_c_driver.ftl")
+	# usbDriverSystemInterruptFile.setMarkup(True)
 	
 	
 	################################################
@@ -269,15 +269,15 @@ def instantiateComponent(usbDriverComponent):
 	addFileName('usb_host_hub_interface.h', usbDriverComponent, usbHostHubInterfaceHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbHostHeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	addFileName('usb_host.h', usbDriverComponent, usbHostHeaderFile, "templates/driver/uhp/differed_files/", "/usb/", True, None)
+	addFileName('usb_host.h', usbDriverComponent, usbHostHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbHubHeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	addFileName('usb_hub.h', usbDriverComponent, usbHubHeaderFile, "templates/driver/uhp/differed_files/", "/usb/", True, None)
+	addFileName('usb_hub.h', usbDriverComponent, usbHubHeaderFile, "middleware/", "/usb/", True, None)
 	
 	################################################
 	# USB Driver Source files  
 	################################################
-	drvUsbHsV1SourceFile = usbDriverComponent.createFileSymbol(None, None)
+	drvUsbHsV1SourceFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_SOURCE_FILE_COMMON", None)
 	drvUsbHsV1SourceFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp.c")
 	drvUsbHsV1SourceFile.setOutputName("drv_usb_uhp.c")
 	drvUsbHsV1SourceFile.setDestPath(usbDriverProjectPath + "uhp/src")
@@ -285,7 +285,7 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1SourceFile.setType("SOURCE")
 	drvUsbHsV1SourceFile.setOverwrite(True)
 	
-	drvUsbHsV1HostSourceFile = usbDriverComponent.createFileSymbol(None, None)
+	drvUsbHsV1HostSourceFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_SOURCE_FILE_EHCI", None)
 	drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_ehci_host.c")
 	drvUsbHsV1HostSourceFile.setOutputName("drv_usb_uhp_ehci_host.c")
 	drvUsbHsV1HostSourceFile.setDestPath(usbDriverProjectPath + "uhp/src")
@@ -293,6 +293,15 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1HostSourceFile.setType("SOURCE")
 	drvUsbHsV1HostSourceFile.setOverwrite(True)
 	drvUsbHsV1HostSourceFile.setEnabled(True)
+	
+	drvUsbHsV1HostSourceFileOhci = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_SOURCE_FILE_OHCI", None)
+	drvUsbHsV1HostSourceFileOhci.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_ohci_host.c")
+	drvUsbHsV1HostSourceFileOhci.setOutputName("drv_usb_uhp_ohci_host.c")
+	drvUsbHsV1HostSourceFileOhci.setDestPath(usbDriverProjectPath + "uhp/src")
+	drvUsbHsV1HostSourceFileOhci.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src/")
+	drvUsbHsV1HostSourceFileOhci.setType("SOURCE")
+	drvUsbHsV1HostSourceFileOhci.setOverwrite(True)
+	drvUsbHsV1HostSourceFileOhci.setEnabled(True)
 
 		
 # all files go into src/

@@ -36,7 +36,7 @@ def loadModule():
 	loadUSBDeviceAudio = False
 	loadUSBDeviceMSD = False
 	loadUSBDeviceVendor = False 
-	loadUSBDevicePrinter = False 
+	loadUSBDevicePrinter = False  
 	
 	# Below variables used to help using different capability names for SAMA5D2 
 	USBDeviceDriverCapabilityName = "DRV_USB" 
@@ -44,8 +44,8 @@ def loadModule():
 	
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2"]):
 		# Create USB High Speed Host Port Driver Component for SAMA5D2
-		usbUhpHsDriverComponent =  Module.CreateComponent("drv_usb_uhphs", "USB UHPHS Host Driver", "/Harmony/Drivers", "config/usb_uhp_driver.py")
-		usbUhpHsDriverComponent.addCapability("DRV_USB", "DRV_USB", True)
+		usbUhpHsDriverComponent =  Module.CreateComponent("drv_usbhs_v1", "USB UHPHS Host Driver", "/Harmony/Drivers", "config/usb_uhp_driver.py")
+		usbUhpHsDriverComponent.addCapability("DRV_UHPHS", "DRV_UHPHS", True)
 		usbUhpHsDriverComponent.addDependency("usb_uhphs_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
 		
 		# Use different name for UHPHS Driver 

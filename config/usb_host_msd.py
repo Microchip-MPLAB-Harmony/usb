@@ -97,16 +97,10 @@ def instantiateComponent(usbHostMsdComponent):
 	addFileName('usb_host_scsi.h', usbHostMsdComponent, usbHostScsiHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbMsdHeaderFile = usbHostMsdComponent.createFileSymbol(None, None)
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2"]):
-		addFileName('usb_msd.h', usbHostMsdComponent, usbMsdHeaderFile, "templates/driver/uhp/differed_files/", "/usb/", True, None)
-	else:
-		addFileName('usb_msd.h', usbHostMsdComponent, usbMsdHeaderFile, "middleware/", "/usb/", True, None)
+	addFileName('usb_msd.h', usbHostMsdComponent, usbMsdHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbScsiHeaderFile = usbHostMsdComponent.createFileSymbol(None, None)
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2"]):
-		addFileName('scsi.h', usbHostMsdComponent, usbScsiHeaderFile, "templates/driver/uhp/differed_files/", "/usb/", True, None)
-	else:
-		addFileName('scsi.h', usbHostMsdComponent, usbScsiHeaderFile, "middleware/", "/usb/", True, None)
+	addFileName('scsi.h', usbHostMsdComponent, usbScsiHeaderFile, "middleware/", "/usb/", True, None)
 	
 	
 	usbHostMsdSourceFile = usbHostMsdComponent.createFileSymbol(None, None)

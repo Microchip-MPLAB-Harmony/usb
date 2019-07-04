@@ -431,7 +431,7 @@ def instantiateComponent(usbDriverComponent):
 		drvUsbHsV1DeviceSourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbhs/src/")
 	drvUsbHsV1DeviceSourceFile.setType("SOURCE")
 	drvUsbHsV1DeviceSourceFile.setOverwrite(True)
-	drvUsbHsV1DeviceSourceFile.setEnabled(False)
+	drvUsbHsV1DeviceSourceFile.setEnabled(True)
 	drvUsbHsV1DeviceSourceFile.setDependencies(blDrvUsbHsV1DeviceSourceFile, ["ENABLE_DRV_USB_DEVICE_SOURCE"])
 	
 	drvUsbHsV1HostSourceFile = usbDriverComponent.createFileSymbol("DRV_USB_SOURCE_FILE_HOST", None)
