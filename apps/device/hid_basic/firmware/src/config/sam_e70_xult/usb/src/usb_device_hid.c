@@ -358,7 +358,7 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportSend
     *transferHandle = USB_DEVICE_HID_TRANSFER_HANDLE_INVALID;
 
     /* Check if we have a valid instance index */
-    if( (iHID < 0) || ( iHID > USB_DEVICE_HID_INSTANCES_NUMBER) )
+    if(iHID > USB_DEVICE_HID_INSTANCES_NUMBER)
     {
         SYS_ASSERT(false, "HID instance is not valid");
         return USB_DEVICE_HID_RESULT_ERROR_INSTANCE_INVALID ;
@@ -431,7 +431,7 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportSend
                 /*Do not proceed, unlock was not complete, or error occurred, let user know about error*/
                 return (USB_DEVICE_HID_RESULT_ERROR);
             }
-            return hidSendError;
+            return (USB_DEVICE_HID_RESULT)hidSendError;
 
          }
     }
@@ -479,7 +479,7 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_TransferCancel
     /* End of local variables */
     
     /* Check if we have a valid instance index */
-    if( (iHID < 0) || ( iHID >= USB_DEVICE_HID_INSTANCES_NUMBER) )
+    if(iHID >= USB_DEVICE_HID_INSTANCES_NUMBER)
     {
         SYS_ASSERT(false, "HID instance is not valid");
         returnValue = USB_DEVICE_HID_RESULT_ERROR_INSTANCE_INVALID;
@@ -632,7 +632,7 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportReceive
     *transferHandle = USB_DEVICE_HID_TRANSFER_HANDLE_INVALID;
 
     /* Check if we have a valid instance index */
-    if( (iHID < 0) || ( iHID > USB_DEVICE_HID_INSTANCES_NUMBER) )
+    if(iHID > USB_DEVICE_HID_INSTANCES_NUMBER)
     {
         SYS_ASSERT(false, "HID instance is not valid");
         return USB_DEVICE_HID_RESULT_ERROR_INSTANCE_INVALID ;
@@ -702,7 +702,7 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportReceive
                 /*Do not proceed, unlock was not complete, or error occurred, let user know about error*/
                 return (USB_DEVICE_HID_RESULT_ERROR);
             }
-             return hidReceiveError;
+             return (USB_DEVICE_HID_RESULT)hidReceiveError;
          }
     }
 
@@ -898,7 +898,7 @@ void _USB_DEVICE_HID_ControlTransferHandler
             ( hidThisInstance->appCallBack != NULL))
     {
         /* These are control transfer related events */
-        hidThisInstance->appCallBack(iHID, controlEvent, NULL, hidThisInstance->userData);
+        hidThisInstance->appCallBack(iHID, (USB_DEVICE_HID_EVENT)controlEvent, NULL, hidThisInstance->userData);
     }
 }
 
@@ -966,7 +966,7 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_EventHandlerSet
     USB_DEVICE_HID_INSTANCE * thisHIDInstance;
 
     /* Check if we have a valid instance */
-    if( (iHID < 0) || ( iHID > USB_DEVICE_HID_INSTANCES_NUMBER) )
+    if(iHID > USB_DEVICE_HID_INSTANCES_NUMBER)
     {
         SYS_ASSERT(false, "Invalid HID Instance");
         return USB_DEVICE_HID_RESULT_ERROR_INSTANCE_INVALID ;
