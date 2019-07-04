@@ -99,7 +99,7 @@ extern "C" {
 /* CDC Transfer Queue Size for both read and
    write. Applicable to all instances of the
    function driver */
-#define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED                 4
+#define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED                 3
 
 /*** USB Driver Configuration ***/
 
@@ -117,7 +117,7 @@ extern "C" {
 #define DRV_USBFSV1_DUAL_BANK_ENABLE                        false
 
 /* Number of Endpoints used */
-#define DRV_USBFSV1_ENDPOINTS_NUMBER                        4
+#define DRV_USBFSV1_ENDPOINTS_NUMBER                        3
 
 /* The USB Device Layer will not initialize the USB Driver */
 #define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT

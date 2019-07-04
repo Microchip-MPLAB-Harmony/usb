@@ -121,9 +121,6 @@ static void GCLK1_Initialize(void)
 
 void CLOCK_Initialize (void)
 {
-    /* NVM Wait States */
-    NVMCTRL_REGS->NVMCTRL_CTRLA |= NVMCTRL_CTRLA_RWS(3);
-
     /* Function to Initialize the Oscillators */
     OSCCTRL_Initialize();
 
