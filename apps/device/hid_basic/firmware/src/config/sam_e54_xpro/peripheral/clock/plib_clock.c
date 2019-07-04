@@ -71,17 +71,14 @@ static void GCLK0_Initialize(void)
 
 void CLOCK_Initialize (void)
 {
-    /* NVM Wait States */
-    NVMCTRL_REGS->NVMCTRL_CTRLA |= NVMCTRL_CTRLA_RWS(1);
-
     /* Function to Initialize the Oscillators */
     OSCCTRL_Initialize();
 
     /* Function to Initialize the 32KHz Oscillators */
     OSC32KCTRL_Initialize();
 
-   GCLK0_Initialize();
-   DFLL_Initialize();
+    DFLL_Initialize();
+    GCLK0_Initialize();
 
     /* selection of the CPU clock Division */
     MCLK_REGS->MCLK_CPUDIV = MCLK_CPUDIV_DIV(0x01);
@@ -107,5 +104,6 @@ void CLOCK_Initialize (void)
 
     /* Configure the APBB Bridge Clocks */
     MCLK_REGS->MCLK_APBBMASK = 0x18057;
+
 
 }
