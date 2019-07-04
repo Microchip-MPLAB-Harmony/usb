@@ -1844,7 +1844,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
 
                                 usbID->DEVICE.DEVICE_ENDPOINT[endpoint].USB_EPINTENSET = USB_DEVICE_EPINTENSET_TRCPT1_Msk;
 
-                                usbID->DEVICE.DEVICE_ENDPOINT[endpoint].USB_EPSTATUSSET = USB_DEVICE_EPSTATUSSET_BK1RDY_Msk;   // NAK will be sent until EPSTATUS.BK1RDY is zero
+                                usbID->DEVICE.DEVICE_ENDPOINT[endpoint].USB_EPSTATUSSET = USB_DEVICE_EPSTATUSSET_BK1RDY_Msk;
 
                                 /* The rest of the IRP processing takes place in ISR */
                             }
@@ -2428,9 +2428,6 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                     }
 
                     usbID->DEVICE.DEVICE_ENDPOINT[0].USB_EPINTFLAG |= USB_DEVICE_EPINTFLAG_TRCPT1_Msk;
-
-                    /* Disable the TRCPT1 interrupt as there is no TX transaction happening */
-                    //usbID->DEVICE.DEVICE_ENDPOINT[0].USB_EPINTENCLR = USB_DEVICE_EPINTENCLR_TRCPT1_Msk;
                 }
                 else if(irp->nPendingBytes == 0)
                 {
@@ -2447,9 +2444,6 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                         hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[1].USB_PCKSIZE &= ~USB_DEVICE_PCKSIZE_BYTE_COUNT_Msk;
 
                         usbID->DEVICE.DEVICE_ENDPOINT[0].USB_EPINTFLAG |= USB_DEVICE_EPINTFLAG_TRCPT1_Msk;
-
-                        //TODO: This may not be needed. We have not disabled the interrupt, to enable it.
-                        //usbID->DEVICE.DEVICE_ENDPOINT[0].USB_EPINTENSET = USB_DEVICE_EPINTENSET_TRCPT1_Msk;   
 
                         /* Set the BK1RDY bit to TX the ZLP to host */
                         usbID->DEVICE.DEVICE_ENDPOINT[0].USB_EPSTATUSSET = USB_DEVICE_EPSTATUSSET_BK1RDY_Msk;   
@@ -2468,9 +2462,6 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                         {
                             irp->callback((USB_DEVICE_IRP *)irp);
                         }
-
-                        /* Disable the TRCPT1 interrupt as there is no TX transaction happening */
-                        //usbID->DEVICE.DEVICE_ENDPOINT[0].USB_EPINTENCLR = USB_DEVICE_EPINTENCLR_TRCPT1_Msk;
 
                         usbID->DEVICE.DEVICE_ENDPOINT[0].USB_EPINTFLAG |= USB_DEVICE_EPINTFLAG_TRCPT1_Msk;
 
@@ -2534,11 +2525,8 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
 
                     hDriver->endpoint0State = DRV_USBFSV1_DEVICE_EP0_STATE_EXPECTING_SETUP_FROM_HOST;
 
-                    //usbID->DEVICE.DEVICE_ENDPOINT[0].USB_EPINTENSET = USB_DEVICE_EPINTENSET_TRCPT0_Msk;
-
                     usbID->DEVICE.DEVICE_ENDPOINT[0].USB_EPINTFLAG |= USB_DEVICE_EPINTFLAG_TRCPT0_Msk;
-
-                    //TODO: Is this needed here? IRP sumbit for RXSETUP should do this. But SETUP packet can be received without IRP 
+                    
                     usbID->DEVICE.DEVICE_ENDPOINT[0].USB_EPSTATUSCLR = USB_DEVICE_EPSTATUSCLR_BK0RDY_Msk;
 
                     endpointObj->irpQueue = irp->next;
@@ -2609,8 +2597,8 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
 
                         hDriver->endpoint0State = DRV_USBFSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_IRP_FROM_CLIENT;
 
-                                usbID->DEVICE.DEVICE_ENDPOINT[0].USB_EPINTFLAG |= USB_DEVICE_EPINTFLAG_TRCPT0_Msk;
-                        //TODO: Check if this needs to be done late.
+                        usbID->DEVICE.DEVICE_ENDPOINT[0].USB_EPINTFLAG |= USB_DEVICE_EPINTFLAG_TRCPT0_Msk;
+                                
                         usbID->DEVICE.DEVICE_ENDPOINT[0].USB_EPSTATUSCLR = USB_DEVICE_EPSTATUSCLR_BK0RDY_Msk;
 
                         endpointObj->irpQueue = irp->next;
@@ -2661,7 +2649,7 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
 
                             usbID->DEVICE.DEVICE_ENDPOINT[epIndex].USB_EPINTENSET = USB_DEVICE_EPINTENSET_TRCPT1_Msk;
 
-                            usbID->DEVICE.DEVICE_ENDPOINT[epIndex].USB_EPSTATUSSET = USB_DEVICE_EPSTATUSSET_BK1RDY_Msk;   // NAK will be sent until EPSTATUS.BK1RDY is zero
+                            usbID->DEVICE.DEVICE_ENDPOINT[epIndex].USB_EPSTATUSSET = USB_DEVICE_EPSTATUSSET_BK1RDY_Msk;
                         }
                         else
                         {
