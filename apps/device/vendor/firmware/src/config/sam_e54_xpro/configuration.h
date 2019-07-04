@@ -109,7 +109,7 @@ extern "C" {
 #define DRV_USBFSV1_DUAL_BANK_ENABLE                        false
 
 /* Number of Endpoints used */
-#define DRV_USBFSV1_ENDPOINTS_NUMBER                        3
+#define DRV_USBFSV1_ENDPOINTS_NUMBER                        2
 
 /* The USB Device Layer will not initialize the USB Driver */
 #define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT

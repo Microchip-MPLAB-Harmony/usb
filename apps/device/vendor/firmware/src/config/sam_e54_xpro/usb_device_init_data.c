@@ -141,7 +141,7 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
 
     0x07,                       // Size of this descriptor in bytes
     USB_DESCRIPTOR_ENDPOINT,    // Endpoint Descriptor
-    2 | USB_EP_DIRECTION_IN,    // EndpointAddress ( EP1 IN )
+    1 | USB_EP_DIRECTION_IN,    // EndpointAddress ( EP1 IN )
     USB_TRANSFER_TYPE_BULK,     // Attributes
     0x40,0x00,                  // Max packet size of this EP
     1,                          // Interval
@@ -232,7 +232,7 @@ const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =
 	NULL, 
 	0,
 	NULL,
-    3,                                                      // Total number of string descriptors available.
+    3,														// Total number of string descriptors available.
     stringDescriptors,                                      // Pointer to array of string descriptors.
 	NULL, 
 	NULL

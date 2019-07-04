@@ -207,13 +207,14 @@ typedef struct __attribute__ ((packed))
 {
     uint8_t bLength;
     uint8_t bDescriptorType;
-    union 
+
+    union
     {
-          struct __attribute__ ((packed))
+        struct __attribute__ ((packed))
          {
-            unsigned epAddress:4;
-            unsigned :3;
-            unsigned dirn: 1;
+            uint8_t epAddress:4;
+            uint8_t :3;
+            uint8_t dirn: 1;
           };
         uint8_t bEndpointAddress;
     }; 
@@ -222,10 +223,10 @@ typedef struct __attribute__ ((packed))
     {        
         struct __attribute__ ((packed))
         {
-            unsigned transferType:2;
-            unsigned syncType:2;
-            unsigned usageType:2;
-            unsigned :2;
+            uint8_t transferType:2;
+            uint8_t syncType:2;
+            uint8_t usageType:2;
+            uint8_t :2;
         };
         uint8_t bmAttributes;
     };
@@ -234,9 +235,9 @@ typedef struct __attribute__ ((packed))
     {
         struct __attribute__ ((packed))
         {
-            unsigned packetSize:11;
-            unsigned addTransaction:2;
-            unsigned :3;
+            uint16_t packetSize:11;
+            uint16_t addTransaction:2;
+            uint16_t :3;
         };       
         
         uint16_t wMaxPacketSize;       
@@ -341,24 +342,24 @@ typedef union __attribute__ ((packed))
     };
     struct __attribute__ ((packed))
     {
-        unsigned :8;
-        unsigned :8;
+        uint16_t :8;
+        uint16_t :8;
         USB_WORD_VAL W_Value;  //from Table 9-2 of the USB 2.0 specification, allows byte/bitwise access
         USB_WORD_VAL W_Index;  //from Table 9-2 of the USB 2.0 specification, allows byte/bitwise access
         USB_WORD_VAL W_Length; //from Table 9-2 of the USB 2.0 specification, allows byte/bitwise access
     };
     struct __attribute__ ((packed))
     {
-        unsigned Recipient:5;   //Device,Interface,Endpoint,Other
-        unsigned RequestType:2; //Standard,Class,Vendor,Reserved
-        unsigned DataDir:1;     //Host-to-device,Device-to-host
-        unsigned :8;
-        uint8_t bFeature;          //DEVICE_REMOTE_WAKEUP,ENDPOINT_HALT
-        unsigned :8;
-        unsigned :8;
-        unsigned :8;
-        unsigned :8;
-        unsigned :8;
+        uint16_t Recipient:5;   //Device,Interface,Endpoint,Other
+        uint16_t RequestType:2; //Standard,Class,Vendor,Reserved
+        uint16_t DataDir:1;     //Host-to-device,Device-to-host
+        uint16_t :8;
+        uint16_t bFeature:8;          //DEVICE_REMOTE_WAKEUP,ENDPOINT_HALT
+        uint16_t :8;
+        uint16_t :8;
+        uint16_t :8;
+        uint16_t :8;
+        uint16_t :8;
     };
     struct __attribute__ ((packed))
     {
@@ -375,70 +376,70 @@ typedef union __attribute__ ((packed))
     };
     struct __attribute__ ((packed))
     {
-        unsigned :8;
-        unsigned :8;
+        uint16_t :8;
+        uint16_t :8;
         uint8_t bDscIndex;          //For Configuration and String DSC Only
         uint8_t bDescriptorType;    //Device,Configuration,String
         uint16_t wLangID;           //Language ID
-        unsigned :8;
-        unsigned :8;
+        uint16_t :8;
+        uint16_t :8;
     };
     struct __attribute__ ((packed))
     {
-        unsigned :8;
-        unsigned :8;
+        uint16_t :8;
+        uint16_t :8;
         uint8_t bDevADR;           //Device Address 0-127
         uint8_t bDevADRH;          //Must equal zero
-        unsigned :8;
-        unsigned :8;
-        unsigned :8;
-        unsigned :8;
+        uint16_t :8;
+        uint16_t :8;
+        uint16_t :8;
+        uint16_t :8;
     };
     struct __attribute__ ((packed))
     {
-        unsigned :8;
-        unsigned :8;
+        uint16_t :8;
+        uint16_t :8;
         uint8_t bConfigurationValue;         //Configuration Value 0-255
         uint8_t bCfgRSD;           //Must equal zero (Reserved)
-        unsigned :8;
-        unsigned :8;
-        unsigned :8;
-        unsigned :8;
+        uint16_t :8;
+        uint16_t :8;
+        uint16_t :8;
+        uint16_t :8;
     };
     struct __attribute__ ((packed))
     {
-        unsigned :8;
-        unsigned :8;
+        uint16_t :8;
+        uint16_t :8;
         uint8_t bAltID;            //Alternate Setting Value 0-255
         uint8_t bAltID_H;          //Must equal zero
         uint8_t bIntfID;           //Interface Number Value 0-255
         uint8_t bIntfID_H;         //Must equal zero
-        unsigned :8;
-        unsigned :8;
+        uint16_t :8;
+        uint16_t :8;
     };
     struct __attribute__ ((packed))
     {
-        unsigned :8;
-        unsigned :8;
-        unsigned :8;
-        unsigned :8;
+        uint16_t :8;
+        uint16_t :8;
+        uint16_t :8;
+        uint16_t :8;
         uint8_t bEPID;             //Endpoint ID (Number & Direction)
         uint8_t bEPID_H;           //Must equal zero
-        unsigned :8;
-        unsigned :8;
+        uint16_t :8;
+        uint16_t :8;
     };
     struct __attribute__ ((packed))
     {
-        unsigned :8;
-        unsigned :8;
-        unsigned :8;
-        unsigned :8;
-        unsigned EPNum:4;       //Endpoint Number 0-15
-        unsigned :3;
-        unsigned EPDir:1;       //Endpoint Direction: 0-OUT, 1-IN
-        unsigned :8;
-        unsigned :8;
-        unsigned :8;
+        uint16_t :8;
+        uint16_t :8;
+        uint16_t :8;
+        uint16_t :8;
+        uint16_t EPNum:4;       // Endpoint Number 0-15
+        uint16_t :3;
+        uint16_t EPDir:1;       // Endpoint Direction: 0-OUT, 1-IN
+        uint16_t :8;
+        uint16_t :8;
+        uint16_t :8;
     };
 
     /** End: Standard Device Requests ******************************/
@@ -466,9 +467,9 @@ typedef union __attribute__((packed))
 {
     struct
     {
-        unsigned selfPowered    :1;
-        unsigned remoteWakeup   :1;
-        unsigned                :14;
+        uint16_t selfPowered    :1;
+        uint16_t remoteWakeup   :1;
+        uint16_t                :14;
     };
 
     uint16_t value;
