@@ -300,7 +300,8 @@
         </KeyValueSet>
         <Boolean dnOrder="56" id="GCLK_ID_6_CHEN">
           <Values dnOrder="0">
-            <User dnOrder="0" value="true"/>
+            <Dynamic dnOrder="0" id="core" value="true"/>
+            <User dnOrder="1" value="true"/>
           </Values>
         </Boolean>
         <Integer dnOrder="57" id="GCLK_ID_6_FREQ">
@@ -1843,199 +1844,214 @@
             <Dynamic dnOrder="0" id="core" value="6"/>
           </Values>
         </Integer>
-        <String dnOrder="365" id="PM_APBC_INITIAL_VALUE">
+        <String dnOrder="365" id="PM_APBB_INITIAL_VALUE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0x7f"/>
+          </Values>
+        </String>
+        <String dnOrder="366" id="PM_APBC_INITIAL_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x10000"/>
           </Values>
         </String>
-        <Boolean dnOrder="366" id="PORT_GROUP_0">
+        <Boolean dnOrder="367" id="PORT_GROUP_0">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="367" id="PORT_GROUP_0_DIR">
+        <String dnOrder="368" id="PORT_GROUP_0_DIR">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
-        <String dnOrder="368" id="PORT_GROUP_0_OUT">
+        <String dnOrder="369" id="PORT_GROUP_0_OUT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x8000"/>
           </Values>
         </String>
-        <String dnOrder="369" id="PORT_GROUP_0_PAD_14">
+        <String dnOrder="370" id="PORT_GROUP_0_PAD_14">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="PA14"/>
           </Values>
         </String>
-        <String dnOrder="370" id="PORT_GROUP_0_PAD_15">
+        <String dnOrder="371" id="PORT_GROUP_0_PAD_15">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="PA15"/>
           </Values>
         </String>
-        <String dnOrder="371" id="PORT_GROUP_0_PAD_16">
+        <String dnOrder="372" id="PORT_GROUP_0_PAD_16">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="PA16"/>
           </Values>
         </String>
-        <String dnOrder="372" id="PORT_GROUP_0_PAD_22">
+        <String dnOrder="373" id="PORT_GROUP_0_PAD_22">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="PA22"/>
           </Values>
         </String>
-        <String dnOrder="373" id="PORT_GROUP_0_PAD_23">
+        <String dnOrder="374" id="PORT_GROUP_0_PAD_23">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="PA23"/>
           </Values>
         </String>
-        <String dnOrder="374" id="PORT_GROUP_0_PAD_24">
+        <String dnOrder="375" id="PORT_GROUP_0_PAD_24">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="PA24"/>
           </Values>
         </String>
-        <String dnOrder="375" id="PORT_GROUP_0_PINCFG14">
+        <String dnOrder="376" id="PORT_GROUP_0_PINCFG14">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x6"/>
           </Values>
         </String>
-        <String dnOrder="376" id="PORT_GROUP_0_PINCFG15">
+        <String dnOrder="377" id="PORT_GROUP_0_PINCFG15">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x6"/>
           </Values>
         </String>
-        <String dnOrder="377" id="PORT_GROUP_0_PINCFG16">
+        <String dnOrder="378" id="PORT_GROUP_0_PINCFG16">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
-        <String dnOrder="378" id="PORT_GROUP_0_PINCFG22">
+        <String dnOrder="379" id="PORT_GROUP_0_PINCFG22">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
-        <String dnOrder="379" id="PORT_GROUP_0_PINCFG23">
+        <String dnOrder="380" id="PORT_GROUP_0_PINCFG23">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
-        <String dnOrder="380" id="PORT_GROUP_0_PINCFG24">
+        <String dnOrder="381" id="PORT_GROUP_0_PINCFG24">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x1"/>
           </Values>
         </String>
-        <String dnOrder="381" id="PORT_GROUP_0_PINCFG25">
+        <String dnOrder="382" id="PORT_GROUP_0_PINCFG25">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x1"/>
           </Values>
         </String>
-        <String dnOrder="382" id="PORT_GROUP_0_PMUX11">
+        <String dnOrder="383" id="PORT_GROUP_0_PMUX11">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
-        <String dnOrder="383" id="PORT_GROUP_0_PMUX12">
+        <String dnOrder="384" id="PORT_GROUP_0_PMUX12">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x66"/>
           </Values>
         </String>
-        <String dnOrder="384" id="PORT_GROUP_0_PMUX7">
+        <String dnOrder="385" id="PORT_GROUP_0_PMUX7">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
-        <String dnOrder="385" id="PORT_GROUP_0_PMUX8">
+        <String dnOrder="386" id="PORT_GROUP_0_PMUX8">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
-        <Boolean dnOrder="386" id="PORT_GROUP_1">
+        <Boolean dnOrder="387" id="PORT_GROUP_1">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="387" id="PORT_GROUP_1_DIR">
+        <String dnOrder="388" id="PORT_GROUP_1_DIR">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x40000000"/>
           </Values>
         </String>
-        <String dnOrder="388" id="PORT_GROUP_1_OUT">
+        <String dnOrder="389" id="PORT_GROUP_1_OUT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x40000000"/>
           </Values>
         </String>
-        <String dnOrder="389" id="PORT_GROUP_1_PAD_30">
+        <String dnOrder="390" id="PORT_GROUP_1_PAD_30">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="PB30"/>
           </Values>
         </String>
-        <String dnOrder="390" id="PORT_GROUP_1_PINCFG30">
+        <String dnOrder="391" id="PORT_GROUP_1_PINCFG30">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
-        <String dnOrder="391" id="PORT_GROUP_1_PMUX15">
+        <String dnOrder="392" id="PORT_GROUP_1_PMUX15">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
-        <Boolean dnOrder="392" id="PendSV_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="393" id="PendSV_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="393" id="SERCOM3_CORE_CLOCK_FREQUENCY">
+        <Integer dnOrder="394" id="SERCOM3_CORE_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="394" id="SERCOM3_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="395" id="SERCOM3_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="395" id="SVCall_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="396" id="SVCall_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="396" id="SYSTICK_PERIOD">
+        <String dnOrder="397" id="SYSTICK_PERIOD">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0xbb80"/>
           </Values>
         </String>
-        <Float dnOrder="397" id="SYSTICK_PERIOD_MS">
+        <Float dnOrder="398" id="SYSTICK_PERIOD_MS">
           <Attributes dnOrder="0">
             <Float dnOrder="0" id="max">
               <Value dnOrder="0">349.5253</Value>
             </Float>
           </Attributes>
         </Float>
-        <Integer dnOrder="398" id="SYSTICK_PERIOD_US">
+        <Integer dnOrder="399" id="SYSTICK_PERIOD_US">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="1000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="399" id="SysTick_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="400" id="SysTick_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="400" id="USB_INTERRUPT_ENABLE">
+        <Boolean dnOrder="401" id="USB_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="401" id="USB_INTERRUPT_ENABLE_UPDATE">
+        <Integer dnOrder="402" id="USB_CLOCK_FREQUENCY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="48000000"/>
+          </Values>
+        </Integer>
+        <Boolean dnOrder="403" id="USB_INTERRUPT_ENABLE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="404" id="USB_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="402" id="USB_INTERRUPT_HANDLER">
+        <String dnOrder="405" id="USB_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbfs_v1" value="DRV_USBFSV1_USB_Handler"/>
           </Values>
         </String>
-        <Boolean dnOrder="403" id="USB_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="406" id="USB_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
           </Values>
@@ -2345,7 +2361,14 @@
       </Symbols>
     </UniqueComponent>
     <GeneratorComponent dnOrder="9" id="usb_device_cdc">
-      <Instances dnOrder="0">
+      <Symbols dnOrder="0">
+        <Integer dnOrder="0" id="CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="usb_device_cdc" value="6"/>
+          </Values>
+        </Integer>
+      </Symbols>
+      <Instances dnOrder="1">
         <InstanceComponent dnOrder="0" id="usb_device_cdc" instance="0">
           <Symbols dnOrder="0">
             <Integer dnOrder="0" id="CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER">
@@ -2374,20 +2397,20 @@
     </GeneratorComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
-    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_D21_Xplained_Pro" x="230" y="60"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="243" y="96"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="215" y="99"/>
         <ElementPosition dnOrder="2" id="cmsis" x="500" y="20"/>
         <ElementPosition dnOrder="3" id="core" x="400" y="20"/>
         <ElementPosition dnOrder="4" id="dfp" x="180" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_usbfs_v1" x="450" y="109"/>
+        <ElementPosition dnOrder="5" id="drv_usbfs_v1" x="391" y="121"/>
         <ElementPosition dnOrder="6" id="evsys" x="20" y="20"/>
-        <ElementPosition dnOrder="7" id="nvmctrl" x="430" y="180"/>
+        <ElementPosition dnOrder="7" id="nvmctrl" x="212" y="211"/>
         <ElementPosition dnOrder="8" id="usb_device" x="30" y="206"/>
         <ElementPosition dnOrder="9" id="usb_device_cdc" x="31" y="80"/>
       </ElementPositions>
     </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
