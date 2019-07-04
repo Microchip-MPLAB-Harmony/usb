@@ -78,7 +78,7 @@ const USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[2] =
     {
         .configurationValue = 1,                            // Configuration value
         .interfaceNumber = 0,                               // First interfaceNumber of this function
-        .speed = USB_SPEED_HIGH|USB_SPEED_FULL,                            // Function Speed
+        .speed = USB_SPEED_HIGH|USB_SPEED_FULL,             // Function Speed
         .numberOfInterfaces = 2,                            // Number of interfaces
         .funcDriverIndex = 0,                               // Index of CDC Function Driver
         .driver = (void*)USB_DEVICE_CDC_FUNCTION_DRIVER,    // USB CDC function data exposed to device layer
@@ -89,7 +89,7 @@ const USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[2] =
     {
         .configurationValue = 1,                            // Configuration value
         .interfaceNumber = 2,                               // First interfaceNumber of this function
-        .speed = USB_SPEED_HIGH|USB_SPEED_FULL,                            // Function Speed
+        .speed = USB_SPEED_HIGH|USB_SPEED_FULL,             // Function Speed
         .numberOfInterfaces = 2,                            // Number of interfaces
         .funcDriverIndex = 1,                               // Index of CDC Function Driver
         .driver = (void*)USB_DEVICE_CDC_FUNCTION_DRIVER,    // USB CDC function data exposed to device layer
@@ -221,7 +221,7 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
 
     0x07,                                                   // Size of this descriptor
     USB_DESCRIPTOR_ENDPOINT,                                // Endpoint Descriptor
-    3 | USB_EP_DIRECTION_IN,                                // EndpointAddress ( EP3 IN )
+    2 | USB_EP_DIRECTION_IN,                                // EndpointAddress ( EP2 IN )
     0x02,                                                   // Attributes type of EP (BULK)
     0x40, 0x00,                                             // Max packet size of this EP
     0x00,                                                   // Interval (in ms)
@@ -278,7 +278,7 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
 
     0x07,                                                   // Size of this descriptor
     USB_DESCRIPTOR_ENDPOINT,                                // Endpoint Descriptor
-    4 | USB_EP_DIRECTION_IN,                                // EndpointAddress ( EP4 IN INTERRUPT)
+    3 | USB_EP_DIRECTION_IN,                                // EndpointAddress ( EP3 IN INTERRUPT)
     USB_TRANSFER_TYPE_INTERRUPT,                            // Attributes type of EP (INTERRUPT)
     0x10,0x00,                                              // Max packet size of this EP
     0x02,                                                   // Interval (in ms)
@@ -299,7 +299,7 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
 
     0x07,                                                   // Size of this descriptor
     USB_DESCRIPTOR_ENDPOINT,                                // Endpoint Descriptor
-    5 | USB_EP_DIRECTION_OUT,                               // EndpointAddress ( EP5 OUT )
+    4 | USB_EP_DIRECTION_OUT,                               // EndpointAddress ( EP4 OUT )
     USB_TRANSFER_TYPE_BULK,                                 // Attributes type of EP (BULK)
     0x40, 0x00,                                             // Max packet size of this EP
     0x00,                                                   // Interval (in ms)
@@ -308,7 +308,7 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
 
     0x07,                                                   // Size of this descriptor
     USB_DESCRIPTOR_ENDPOINT,                                // Endpoint Descriptor
-    6 | USB_EP_DIRECTION_IN,                                // EndpointAddress ( EP6 IN )
+    4 | USB_EP_DIRECTION_IN,                                // EndpointAddress ( EP4 IN )
     0x02,                                                   // Attributes type of EP (BULK)
     0x40, 0x00,                                             // Max packet size of this EP
     0x00,                                                   // Interval (in ms)
