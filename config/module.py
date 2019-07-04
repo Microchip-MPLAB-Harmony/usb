@@ -64,9 +64,10 @@ def loadModule():
 		# Add Generic Dependency on Core Service
 		usbDevicePortHighSpeedDriverComponent.addDependency("usb_udphs_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
 
-		USBDeviceDriverCapabilityName = "DRV_UDPHS"
-			
-		# Load USB Device Layer Components 
+		USBDriverCapabilityName = "DRV_UDPHS"
+		loadUSBHostLayer = True 
+		loadUSBHostCDC = True
+		loadUSBHostMSD = True		
 		loadUSBDeviceLayer = True
 		loadUSBDeviceCDC = True
 		loadUSBDeviceHID = True

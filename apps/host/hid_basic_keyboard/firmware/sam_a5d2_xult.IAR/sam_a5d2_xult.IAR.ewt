@@ -2677,10 +2677,25 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\src\usb_external_dependencies.h</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\usb_hid.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\usb_host.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\usb_host_client_driver.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\usb_host_hid.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\usb_host_hid_keyboard.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\src\usb_host_hid_keyboard_local.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\src\usb_host_hid_local.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\usb_host_hub_interface.h</name>
@@ -2728,7 +2743,13 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\usb\uhp\src\drv_usb_uhp_ehci_host.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\usb\uhp\src\drv_usb_uhp_ohci_host.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\exceptions.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\fault_handlers.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\stdio\iar_monitor.c</name>
@@ -2788,10 +2809,13 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\src\usb_host.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb_host_init_data.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\src\usb_host_hid.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\vectortrap.s</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\src\usb_host_hid_keyboard.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb_host_init_data.c</name>
             </file>
         </group>
     </group>
@@ -2799,18 +2823,6 @@
         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\ddr.icf</name>
     </file>
     <file>
-        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\usb\uhp\src\drv_usb_uhp_ohci_host.c</name>
-    </file>
-    <file>
         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\sam_a5d2_xult.ipcf</name>
-    </file>
-    <file>
-        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\src\usb_host_hid.c</name>
-    </file>
-    <file>
-        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\src\usb_host_hid_keyboard.c</name>
-    </file>
-    <file>
-        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\usb\src\usb_host_hid_mouse.c</name>
     </file>
 </project>

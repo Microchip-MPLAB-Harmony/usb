@@ -208,14 +208,14 @@ typedef struct __attribute__ ((packed))
     uint8_t bLength;
     uint8_t bDescriptorType;
 
-    union 
+    union
     {
         struct __attribute__ ((packed))
-        {
+         {
             uint8_t epAddress:4;
             uint8_t :3;
             uint8_t dirn: 1;
-        };
+          };
         uint8_t bEndpointAddress;
     }; 
     
@@ -363,14 +363,14 @@ typedef union __attribute__ ((packed))
     };
     struct __attribute__ ((packed))
     {
-        union                          // offset   description
-        {                              // ------   ------------------------
-            uint8_t bmRequestType;     //   0      Bit-map of request type
+        union                           // offset   description
+        {                               // ------   ------------------------
+            uint8_t bmRequestType;      //   0      Bit-map of request type
             struct
             {
-                uint8_t recipient: 5;  //          Recipient of the request
-                uint8_t type:      2;  //          Type of request
-                uint8_t direction: 1;  //          Direction of data X-fer
+                uint8_t    recipient:  5;  //          Recipient of the request
+                uint8_t    type:       2;  //          Type of request
+                uint8_t    direction:  1;  //          Direction of data X-fer
             };
         }requestInfo;
     };
@@ -378,9 +378,9 @@ typedef union __attribute__ ((packed))
     {
         uint16_t :8;
         uint16_t :8;
-        uint8_t bDscIndex;          // For Configuration and String DSC Only
-        uint8_t bDescriptorType;    // Device,Configuration,String
-        uint16_t wLangID;           // Language ID
+        uint8_t bDscIndex;          //For Configuration and String DSC Only
+        uint8_t bDescriptorType;    //Device,Configuration,String
+        uint16_t wLangID;           //Language ID
         uint16_t :8;
         uint16_t :8;
     };
@@ -388,19 +388,8 @@ typedef union __attribute__ ((packed))
     {
         uint16_t :8;
         uint16_t :8;
-        uint8_t bDevADR;           // Device Address 0-127
-        uint8_t bDevADRH;          // Must equal zero
-        uint16_t :8;
-        uint16_t :8;
-        uint16_t :8;
-        uint16_t :8;
-    };
-    struct __attribute__ ((packed))
-    {
-        uint16_t :8;
-        uint16_t :8;
-        uint8_t bConfigurationValue; // Configuration Value 0-255
-        uint8_t bCfgRSD;             // Must equal zero (Reserved)
+        uint8_t bDevADR;           //Device Address 0-127
+        uint8_t bDevADRH;          //Must equal zero
         uint16_t :8;
         uint16_t :8;
         uint16_t :8;
@@ -410,10 +399,21 @@ typedef union __attribute__ ((packed))
     {
         uint16_t :8;
         uint16_t :8;
-        uint8_t bAltID;            // Alternate Setting Value 0-255
-        uint8_t bAltID_H;          // Must equal zero
-        uint8_t bIntfID;           // Interface Number Value 0-255
-        uint8_t bIntfID_H;         // Must equal zero
+        uint8_t bConfigurationValue;         //Configuration Value 0-255
+        uint8_t bCfgRSD;           //Must equal zero (Reserved)
+        uint16_t :8;
+        uint16_t :8;
+        uint16_t :8;
+        uint16_t :8;
+    };
+    struct __attribute__ ((packed))
+    {
+        uint16_t :8;
+        uint16_t :8;
+        uint8_t bAltID;            //Alternate Setting Value 0-255
+        uint8_t bAltID_H;          //Must equal zero
+        uint8_t bIntfID;           //Interface Number Value 0-255
+        uint8_t bIntfID_H;         //Must equal zero
         uint16_t :8;
         uint16_t :8;
     };
@@ -423,8 +423,8 @@ typedef union __attribute__ ((packed))
         uint16_t :8;
         uint16_t :8;
         uint16_t :8;
-        uint8_t bEPID;             // Endpoint ID (Number & Direction)
-        uint8_t bEPID_H;           // Must equal zero
+        uint8_t bEPID;             //Endpoint ID (Number & Direction)
+        uint8_t bEPID_H;           //Must equal zero
         uint16_t :8;
         uint16_t :8;
     };
