@@ -14,3 +14,4 @@
 **/*.IAR/*.dep
 **/*.IAR/*.custom_argvars
 **/*third_party/rtos/MicriumOSIII/
+/apps/host/cdc_basic/firmware/sam_e54_xpro_freertos.IAR
