@@ -27,16 +27,16 @@
           <Name dnOrder="1">drv_usb_udphs.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usb/udphs/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/udphs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B22699F376758FE2BED5B1F7A2ABCF52</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B22699F376758FE2BED5B1F7A2ABCF52</UserChecksum>
+          <GeneratedChecksum dnOrder="4">7ADA05C7B4650795B00297B726046CFE</GeneratedChecksum>
+          <UserChecksum dnOrder="5">7ADA05C7B4650795B00297B726046CFE</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_usb_udphs_device.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usb/udphs/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/udphs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">EBC33D332437D0FBE1EDA43038868967</GeneratedChecksum>
-          <UserChecksum dnOrder="5">EBC33D332437D0FBE1EDA43038868967</UserChecksum>
+          <GeneratedChecksum dnOrder="4">3A724BEDB8D1ECB116BD2BFBA84638C7</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3A724BEDB8D1ECB116BD2BFBA84638C7</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -115,8 +115,8 @@
           <Name dnOrder="1">plib_pio.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/peripheral/pio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/pio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">7E18FA8177902C13CCFDA8F6C44C80FE</GeneratedChecksum>
-          <UserChecksum dnOrder="5">7E18FA8177902C13CCFDA8F6C44C80FE</UserChecksum>
+          <GeneratedChecksum dnOrder="4">DCB375B672C96CE467E5B367BEF702F8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">28D4B204730EE6656DD1F34745E513E3</UserChecksum>
         </File>
         <File dnOrder="14">
           <Type dnOrder="0">SOURCE</Type>
@@ -891,8 +891,8 @@
           <Name dnOrder="1">usb_host.h</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A4B832998D00C49BD4F9A3FC6A6CFC7D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A4B832998D00C49BD4F9A3FC6A6CFC7D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F127C67A3E33E5788C0F057F648EE57C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F127C67A3E33E5788C0F057F648EE57C</UserChecksum>
         </File>
         <File dnOrder="111">
           <Type dnOrder="0">HEADER</Type>
@@ -915,8 +915,8 @@
           <Name dnOrder="1">usb_hub.h</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">2E521F42F432473872209E966F85F2A8</GeneratedChecksum>
-          <UserChecksum dnOrder="5">2E521F42F432473872209E966F85F2A8</UserChecksum>
+          <GeneratedChecksum dnOrder="4">3E3CC6BC9128194CB4D19F29C57E312B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3E3CC6BC9128194CB4D19F29C57E312B</UserChecksum>
         </File>
         <File dnOrder="114">
           <Type dnOrder="0">HEADER</Type>

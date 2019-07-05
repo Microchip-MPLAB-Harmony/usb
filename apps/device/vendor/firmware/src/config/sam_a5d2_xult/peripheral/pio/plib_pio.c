@@ -62,54 +62,54 @@ void PIO_Initialize ( void )
  /* Port A Peripheral function A configuration */
 	PIOA_REGS->PIO_MSKR = 0x0L;
 	PIOA_REGS->PIO_CFGR = 0x1;
-
+	
  /* Port A Peripheral function B configuration */
 	PIOA_REGS->PIO_MSKR = 0x0L;
 	PIOA_REGS->PIO_CFGR = 0x2;
-
+	
  /* Port A Peripheral function C configuration */
 	PIOA_REGS->PIO_MSKR = 0x0L;
 	PIOA_REGS->PIO_CFGR = 0x3;
-
+	
  /* Port A Peripheral function D configuration */
 	PIOA_REGS->PIO_MSKR = 0x0L;
 	PIOA_REGS->PIO_CFGR = 0x4;
-
+	
  /* Port A Peripheral function E configuration */
 	PIOA_REGS->PIO_MSKR = 0x0L;
 	PIOA_REGS->PIO_CFGR = 0x5;
-
+	
  /* Port A Peripheral function F configuration */
 	PIOA_REGS->PIO_MSKR = 0x0L;
 	PIOA_REGS->PIO_CFGR = 0x6;
-
+	
  /* Port A Peripheral function G configuration */
 	PIOA_REGS->PIO_MSKR = 0x0L;
 	PIOA_REGS->PIO_CFGR = 0x7;
-
+	
  /* Port A Pin 31 configuration */
 	PIOA_REGS->PIO_MSKR = 0x80000000L;
-	PIOA_REGS->PIO_CFGR |= 0x3000;
-
+	PIOA_REGS->PIO_CFGR = 0x3000;
+	
  /* Port B Pin 0 configuration */
 	PIOB_REGS->PIO_MSKR = 0x1;
 	PIOB_REGS->PIO_CFGR |= 0x100;
-
+	
  /* Port B Pin 5 configuration */
 	PIOB_REGS->PIO_MSKR = 0x20;
 	PIOB_REGS->PIO_CFGR |= 0x100;
-
+	
  /* Port B Pin 6 configuration */
 	PIOB_REGS->PIO_MSKR = 0x40;
 	PIOB_REGS->PIO_CFGR |= 0x100;
-
+	
  /* Port B Pin 9 configuration */
 	PIOB_REGS->PIO_MSKR = 0x200;
 	PIOB_REGS->PIO_CFGR = 0x3000;
-
+	
  /* Port B Latch configuration */
 	PIOB_REGS->PIO_SODR = 0x61;
-
+	
 }
 
 // *****************************************************************************
@@ -236,7 +236,7 @@ void PIO_PortToggle(PIO_PORT port, uint32_t mask)
 void PIO_PortInputEnable(PIO_PORT port, uint32_t mask)
 {
     ((pio_registers_t*)port)->PIO_MSKR = mask;
-    ((pio_registers_t*)port)->PIO_CFGR &= ~(1 << PIO_CFGR_DIR_Pos);
+    ((pio_registers_t*)port)->PIO_CFGR &= ~(1 << PIO_CFGR_DIR_Pos);	
 }
 
 // *****************************************************************************
