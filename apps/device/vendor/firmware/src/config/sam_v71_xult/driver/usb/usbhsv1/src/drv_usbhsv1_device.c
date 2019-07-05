@@ -47,7 +47,6 @@
 
 #include "driver/usb/usbhsv1/src/drv_usbhsv1_local.h"
 #include "driver/usb/usbhsv1/drv_usbhsv1.h"
-//#include "system/debug/sys_debug.h"
 
 /* Array of endpoint objects. Two objects per endpoint */
 DRV_USBHSV1_DEVICE_ENDPOINT_OBJ gDrvUSBControlEndpoints[DRV_USBHSV1_INSTANCES_NUMBER] [2];
@@ -753,6 +752,10 @@ USB_ERROR DRV_USBHSV1_DEVICE_EndpointEnable
                 ((direction & 0x01) << USBHS_DEVEPTCFG_EPDIR_Pos)
             );
 
+            if (endpointType == USB_TRANSFER_TYPE_ISOCHRONOUS)
+            {
+                usbID->USBHS_DEVEPTCFG[endpoint] |= USBHS_DEVEPTCFG_NBTRANS(1); 
+            }
             usbID->USBHS_DEVEPTIER[endpoint] = USBHS_DEVEPTIER_RSTDTS_Msk;
 
 			usbID->USBHS_DEVEPTIDR[endpoint] = USBHS_DEVEPTIDR_STALLRQC_Msk;

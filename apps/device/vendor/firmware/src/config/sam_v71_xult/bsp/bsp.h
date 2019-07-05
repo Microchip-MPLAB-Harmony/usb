@@ -68,10 +68,10 @@
 #define SWITCH_Get() ((PIOA_REGS->PIO_PDSR >> 9) & 0x1)
 #define SWITCH_STATE_PRESSED 0
 #define SWITCH_STATE_RELEASED 1
-/*** SWITCH Macros for SWITCH2 ***/
-#define SWITCH2_Get() ((PIOB_REGS->PIO_PDSR >> 12) & 0x1)
-#define SWITCH2_STATE_PRESSED 0
-#define SWITCH2_STATE_RELEASED 1
+/*** SWITCH Macros for SWITCH1 ***/
+#define SWITCH1_Get() ((PIOB_REGS->PIO_PDSR >> 12) & 0x1)
+#define SWITCH1_STATE_PRESSED 0
+#define SWITCH1_STATE_RELEASED 1
 /*** VBUS Macros for VBUS_HOST_EN ***/
 #define VBUS_HOST_EN_PowerEnable() (PIOC_REGS->PIO_CODR = (1<<16))
 #define VBUS_HOST_EN_PowerDisable() (PIOC_REGS->PIO_SODR = (1<<16))

@@ -310,7 +310,7 @@ const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =
     &deviceDescriptor,                                      // High speed device descriptor
     1,                                                      // Total number of high speed configurations available
     highSpeedConfigDescSet,                                 // Pointer to array of high speed configurations descriptors
-    3,                                                      // Total number of string descriptors available.
+    3,														// Total number of string descriptors available.
     stringDescriptors,                                      // Pointer to array of string descriptors.
     &deviceQualifierDescriptor1,                            // Pointer to full speed dev qualifier.
     &deviceQualifierDescriptor1                             // Pointer to high speed dev qualifier.
@@ -340,11 +340,11 @@ const USB_DEVICE_INIT usbDevInitData =
 
     /* Pointer to the USB Driver Functions. */
     .usbDriverInterface = DRV_USBHSV1_DEVICE_INTERFACE,
-    
-    /* Specify queue size for vendor endpoint read */
-    .queueSizeEndpointRead = 1,
+	
+	/* Specify queue size for vendor endpoint read */
+    .queueSizeEndpointRead = 2,
     
     /* Specify queue size for vendor endpoint write */
-    .queueSizeEndpointWrite= 1,
+    .queueSizeEndpointWrite= 2,
 };
 // </editor-fold>
