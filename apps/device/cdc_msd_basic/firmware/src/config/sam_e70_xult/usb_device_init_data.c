@@ -154,7 +154,7 @@ const USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[2] =
     {
         .configurationValue = 1,                            // Configuration value
         .interfaceNumber = 1,                               // First interfaceNumber of this function
-        .speed = USB_SPEED_HIGH|USB_SPEED_FULL,                            // Function Speed
+        .speed = USB_SPEED_HIGH|USB_SPEED_FULL,             // Function Speed
         .numberOfInterfaces = 2,                            // Number of interfaces
         .funcDriverIndex = 0,                               // Index of CDC Function Driver
         .driver = (void*)USB_DEVICE_CDC_FUNCTION_DRIVER,    // USB CDC function data exposed to device layer
@@ -216,7 +216,7 @@ const uint8_t highSpeedConfigurationDescriptor[]=
 
     0x09,                                                   // Size of this descriptor in bytes
     USB_DESCRIPTOR_CONFIGURATION,                           // Descriptor Type
-    USB_DEVICE_16bitTo8bitArrange(106),                      //(106 Bytes)Size of the Configuration descriptor
+    USB_DEVICE_16bitTo8bitArrange(98),                      //(98 Bytes)Size of the Configuration descriptor
     3,                                                      // Number of interfaces in this configuration
     0x01,                                               // Index value of this configuration
     0x00,                                               // Configuration string index
@@ -364,7 +364,7 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
 
     0x09,                                                   // Size of this descriptor in bytes
     USB_DESCRIPTOR_CONFIGURATION,                           // Descriptor Type
-    USB_DEVICE_16bitTo8bitArrange(106),                      //(106 Bytes)Size of the Configuration descriptor
+    USB_DEVICE_16bitTo8bitArrange(98),                      //(98 Bytes)Size of the Configuration descriptor
     3,                                                      // Number of interfaces in this configuration
     0x01,                                                   // Index value of this configuration
     0x00,                                                   // Configuration string index
@@ -582,7 +582,7 @@ sd003 =
     (const uint8_t *const)&sd000,
     (const uint8_t *const)&sd001,
     (const uint8_t *const)&sd002,
-	(const uint8_t *const)&sd003
+    (const uint8_t *const)&sd003
 };
 
 /*******************************************

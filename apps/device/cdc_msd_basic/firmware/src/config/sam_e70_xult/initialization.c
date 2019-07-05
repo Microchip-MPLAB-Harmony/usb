@@ -147,7 +147,7 @@ const DRV_USBHSV1_INIT drvUSBInit =
     /* Identifies peripheral (PLIB-level) ID */
     .usbID = USBHS_REGS,
 	
-    /* Function to check for VBus */
+    /* Function to check for VBUS */
     .vbusComparator = DRV_USBHSV1_VBUS_Comparator
 };
 
