@@ -147,7 +147,7 @@ const DRV_USBHSV1_INIT drvUSBInit =
     /* Identifies peripheral (PLIB-level) ID */
     .usbID = USBHS_REGS,
 	
-    /* Function to check for VBus */
+    /* Function to check for VBUS */
     .vbusComparator = DRV_USBHSV1_VBUS_Comparator
 };
 
@@ -159,6 +159,25 @@ const DRV_USBHSV1_INIT drvUSBInit =
 // Section: System Initialization
 // *****************************************************************************
 // *****************************************************************************
+// <editor-fold defaultstate="collapsed" desc="SYS_TIME Initialization Data">
+
+const SYS_TIME_PLIB_INTERFACE sysTimePlibAPI = {
+    .timerCallbackSet = (SYS_TIME_PLIB_CALLBACK_REGISTER)TC0_CH0_TimerCallbackRegister,
+    .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)TC0_CH0_TimerCounterGet,
+    .timerPeriodSet = (SYS_TIME_PLIB_PERIOD_SET)TC0_CH0_TimerPeriodSet,
+    .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)TC0_CH0_TimerFrequencyGet,
+    .timerCompareSet = (SYS_TIME_PLIB_COMPARE_SET)TC0_CH0_TimerCompareSet,
+    .timerStart = (SYS_TIME_PLIB_START)TC0_CH0_TimerStart,
+    .timerStop = (SYS_TIME_PLIB_STOP)TC0_CH0_TimerStop 
+};
+
+const SYS_TIME_INIT sysTimeInitData =
+{
+    .timePlib = &sysTimePlibAPI,
+    .hwTimerIntNum = TC0_CH0_IRQn,
+};
+
+// </editor-fold>
 
 
 
@@ -184,11 +203,18 @@ void SYS_Initialize ( void* data )
 
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
 
+  
+
+ 
+    TC0_CH0_TimerInitialize(); 
+     
+    
 	BSP_Initialize();
 
     sysObj.drvMemory0 = DRV_MEMORY_Initialize((SYS_MODULE_INDEX)DRV_MEMORY_INDEX_0, (SYS_MODULE_INIT *)&drvMemory0InitData);
 
 
+    sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);
 
 
 	 /* Initialize the USB device layer */

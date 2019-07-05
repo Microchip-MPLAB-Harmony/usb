@@ -523,7 +523,7 @@ sd003 =
     (const uint8_t *const)&sd000,
     (const uint8_t *const)&sd001,
     (const uint8_t *const)&sd002,
-	(const uint8_t *const)&sd003
+    (const uint8_t *const)&sd003
 };
 
 /*******************************************

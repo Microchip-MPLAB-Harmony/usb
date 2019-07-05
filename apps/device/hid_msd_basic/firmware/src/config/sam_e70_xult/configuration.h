@@ -79,6 +79,15 @@ extern "C" {
 // Section: System Service Configuration
 // *****************************************************************************
 // *****************************************************************************
+/* TIME System Service Configuration Options */
+#define SYS_TIME_INDEX_0                     0
+#define SYS_TIME_MAX_TIMERS                  5
+#define SYS_TIME_HW_COUNTER_WIDTH            16
+#define SYS_TIME_HW_COUNTER_PERIOD           65535U
+#define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
+#define SYS_TIME_CPU_CLOCK_FREQUENCY         300000000
+#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (900)
+
 
 
 // *****************************************************************************
@@ -145,7 +154,7 @@ extern "C" {
 /* HID Transfer Queue Size for both read and
    write. Applicable to all instances of the
    function driver */
-#define USB_DEVICE_HID_QUEUE_DEPTH_COMBINED 5
+#define USB_DEVICE_HID_QUEUE_DEPTH_COMBINED 2
 
 /* Maximum instances of MSD function driver */
 #define USB_DEVICE_MSD_INSTANCES_NUMBER     1 
