@@ -108,7 +108,7 @@ SYS_MODULE_OBJ USB_DEVICE_Initialize
     deviceInit = (USB_DEVICE_INIT *)initData;
     
     /* Make sure the index is with in range. */
-    if(( index < 0 ) || ( index >= USB_DEVICE_INSTANCES_NUMBER ))
+    if(index >= USB_DEVICE_INSTANCES_NUMBER)
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB Device Layer: Invalid index value");
         return (SYS_MODULE_OBJ_INVALID);
@@ -359,7 +359,7 @@ USB_DEVICE_RESULT USB_DEVICE_EndpointEnable
     else
     {
         /* Enable the endpoint */
-        result = usbClientHandle->driverInterface->deviceEndpointEnable(usbClientHandle->usbCDHandle, endpoint, transferType, size); 
+        result = (USB_DEVICE_RESULT)usbClientHandle->driverInterface->deviceEndpointEnable(usbClientHandle->usbCDHandle, endpoint, transferType, size);
     }
     
     return result; 
@@ -412,7 +412,7 @@ USB_DEVICE_RESULT USB_DEVICE_EndpointDisable
     else
     {
         /* Disable the Endpoint */
-        result = usbClientHandle->driverInterface->deviceEndpointDisable(usbClientHandle->usbCDHandle, endpoint); 
+        result = (USB_DEVICE_RESULT)usbClientHandle->driverInterface->deviceEndpointDisable(usbClientHandle->usbCDHandle, endpoint);
     }
     
     return result; 
@@ -786,7 +786,7 @@ void USB_DEVICE_Tasks( SYS_MODULE_OBJ devLayerObj )
 
             /* Try to open the driver handle. This could fail if the driver is
              * not ready to be opened. */
-            usbDeviceThisInstance->usbCDHandle = usbDeviceThisInstance->driverInterface->open( usbDeviceThisInstance->driverIndex, DRV_IO_INTENT_EXCLUSIVE|DRV_IO_INTENT_NONBLOCKING|DRV_IO_INTENT_READWRITE); 
+            usbDeviceThisInstance->usbCDHandle = usbDeviceThisInstance->driverInterface->open( usbDeviceThisInstance->driverIndex, (DRV_IO_INTENT)(DRV_IO_INTENT_EXCLUSIVE|DRV_IO_INTENT_NONBLOCKING|DRV_IO_INTENT_READWRITE));
 
             /* Check if the driver was opened */
             if(usbDeviceThisInstance->usbCDHandle != DRV_HANDLE_INVALID)
@@ -882,7 +882,7 @@ USB_DEVICE_HANDLE USB_DEVICE_Open
     USB_DEVICE_OBJ * usbDeviceThisClient;
 
     /* Make sure the index is with in range. */
-    if((index < 0) || (index >= USB_DEVICE_INSTANCES_NUMBER))
+    if(index >= USB_DEVICE_INSTANCES_NUMBER)
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB Device Layer: Index is invalid");
         return(USB_DEVICE_HANDLE_INVALID);
@@ -948,7 +948,7 @@ void USB_DEVICE_Close(USB_DEVICE_HANDLE hClient )
     }
     
     /* Close this client */
-    usbClientHandle->clientState = DRV_CLIENT_STATUS_CLOSED;
+    usbClientHandle->clientState = (USB_DEVICE_CLIENT_STATUS)DRV_CLIENT_STATUS_CLOSED;
     usbClientHandle->inUse = false;
 }    
 
@@ -1615,7 +1615,7 @@ void _USB_DEVICE_Ep0ReceiveCompleteCallback( USB_DEVICE_IRP * handle )
 {
     USB_DEVICE_IRP * irpHandle = (USB_DEVICE_IRP *)handle;
     USB_DEVICE_OBJ * usbDeviceThisInstance;  
-    USB_DEVICE_EVENT controlEvent = 0;
+    USB_DEVICE_EVENT controlEvent = USB_DEVICE_EVENT_ERROR;
     USB_DEVICE_CONTROL_TRANSFER_STRUCT * controlTransfer;
     void * eventData = NULL;
 
@@ -1641,7 +1641,7 @@ void _USB_DEVICE_Ep0ReceiveCompleteCallback( USB_DEVICE_IRP * handle )
             /* Abort any previous transfer */
             if ( controlTransfer->handler != NULL)
             {
-                if (controlTransfer->handler == (void*)usbDeviceThisInstance->callBackFunc)
+                if (controlTransfer->handler == (void (*)(unsigned short, USB_DEVICE_EVENT, void *))usbDeviceThisInstance->callBackFunc)
                 {
                     /* If the Control transfer handler is Application callback
                      * for USB Device layer, then invoke the application
@@ -1714,7 +1714,7 @@ void _USB_DEVICE_Ep0ReceiveCompleteCallback( USB_DEVICE_IRP * handle )
          * or handshake stage, then entity that was responsible for completing
          * the control transfer handles the events. */
 
-        if (controlTransfer->handler == (void*)usbDeviceThisInstance->callBackFunc)
+        if (controlTransfer->handler == (void (*)(unsigned short, USB_DEVICE_EVENT, void *))usbDeviceThisInstance->callBackFunc)
         {
             /* If the Control transfer handler is Application callback for USB Device layer,
              * then invoke the application callback function.  */
@@ -1782,7 +1782,7 @@ void _USB_DEVICE_Ep0TransmitCompleteCallback(USB_DEVICE_IRP * handle)
     {
         /* Set the flag to false and enter test mode */
         usbDeviceThisInstance->usbDeviceStatusStruct.testModePending = false;
-        usbDeviceThisInstance->driverInterface->deviceTestModeEnter(usbDeviceThisInstance->usbCDHandle, usbDeviceThisInstance->usbDeviceStatusStruct.testSelector );
+        usbDeviceThisInstance->driverInterface->deviceTestModeEnter(usbDeviceThisInstance->usbCDHandle, (USB_TEST_MODE_SELECTORS)usbDeviceThisInstance->usbDeviceStatusStruct.testSelector );
     }
 
     if(irpHandle->status == USB_DEVICE_IRP_STATUS_COMPLETED)
@@ -1974,7 +1974,7 @@ void _USB_DEVICE_EventHandler
             eventType = _USB_DEVICE_SOFEventEnable(); 
             if (eventType)
             {
-                eventType = USB_DEVICE_EVENT_SOF;
+                eventType = (DRV_USB_EVENT)USB_DEVICE_EVENT_SOF;
                 /* Get the frame number */
                 SOFFrameNumber.frameNumber = usbDeviceThisInstance->driverInterface->deviceSOFNumberGet(usbDeviceThisInstance->usbCDHandle);
                 eventData = &SOFFrameNumber;
@@ -1996,7 +1996,7 @@ void _USB_DEVICE_EventHandler
 
         default:
             // Nothing to do for all other cases.
-            eventType = 0;
+
             break;
     }
 
@@ -2007,7 +2007,7 @@ void _USB_DEVICE_EventHandler
         {
             /* This means this client is valid and is a client of this device
              * layer instance. Pass event to application */
-            usbDeviceThisInstance->callBackFunc(eventType, eventData, usbDeviceThisInstance->context);
+            usbDeviceThisInstance->callBackFunc((USB_DEVICE_EVENT)eventType, eventData, usbDeviceThisInstance->context);
         }
     }
 }    
@@ -2227,7 +2227,8 @@ void _USB_DEVICE_ForwardControlXfrToFunction
                  * control transfer stage must be handled by the function driver
                  * control transfer handler.*/
 
-                controlTransfer->handler = (void *)driver->controlTransferNotification;
+                controlTransfer->handler = (void (*)(unsigned short, USB_DEVICE_EVENT, void *))driver->controlTransferNotification;
+
                 controlTransfer->handlerIndex = lFuncDriverRegTable->funcDriverIndex;
 
                 /* Forward the SETUP packet to the function driver */
@@ -2913,7 +2914,8 @@ void _USB_DEVICE_RedirectControlXfrToClient
     USB_DEVICE_CONTROL_TRANSFER_STRUCT * controlTransfer = &usbDeviceThisInstance->controlTransfer;
     
     /* This control transfer will be handled by the client */
-    controlTransfer->handler = (void *)usbDeviceThisInstance->callBackFunc;
+    controlTransfer->handler = (void (*)(unsigned short, USB_DEVICE_EVENT, void *))usbDeviceThisInstance->callBackFunc;
+
     controlTransfer->handlerIndex = usbDeviceThisInstance->usbDevLayerIndex ;
 
     /* Let app clients handle the SETUP packet. */
