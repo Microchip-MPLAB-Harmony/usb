@@ -65,6 +65,7 @@
 #include "driver/usb/drv_usb.h"
 #include "system/system_module.h"
 #include "usb/usb_hub.h"
+#include "driver/usb/uhp/src/drv_usb_uhp_ohci_registers.h"
 
 // *****************************************************************************
 // *****************************************************************************

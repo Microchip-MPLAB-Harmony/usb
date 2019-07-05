@@ -243,6 +243,36 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1HeaderFile.setType("HEADER")
 	drvUsbHsV1HeaderFile.setOverwrite(True)
 	
+	# EHCI Header file 
+	drvUsbUhpEHCIHeaderFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_HEADER_FILE_EHCI", None)
+	drvUsbUhpEHCIHeaderFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_ehci_host.h")
+	drvUsbUhpEHCIHeaderFile.setOutputName("drv_usb_uhp_ehci_host.h")
+	drvUsbUhpEHCIHeaderFile.setDestPath(usbDriverProjectPath + "uhp/src")
+	drvUsbUhpEHCIHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src/")
+	drvUsbUhpEHCIHeaderFile.setType("HEADER")
+	drvUsbUhpEHCIHeaderFile.setOverwrite(True)
+	drvUsbUhpEHCIHeaderFile.setEnabled(True)
+	
+	# OHCI Header file 
+	drvUsbUhpOHCIHeaderFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_HEADER_FILE_OHCI", None)
+	drvUsbUhpOHCIHeaderFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_ohci_host.h")
+	drvUsbUhpOHCIHeaderFile.setOutputName("drv_usb_uhp_ohci_host.h")
+	drvUsbUhpOHCIHeaderFile.setDestPath(usbDriverProjectPath + "uhp/src")
+	drvUsbUhpOHCIHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src/")
+	drvUsbUhpOHCIHeaderFile.setType("HEADER")
+	drvUsbUhpOHCIHeaderFile.setOverwrite(True)
+	drvUsbUhpOHCIHeaderFile.setEnabled(True)
+	
+	# OHCI SFR Header file 
+	drvUsbUhpOHCISFRHeaderFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_HEADER_FILE_OHCI_SFR", None)
+	drvUsbUhpOHCISFRHeaderFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_ohci_registers.h")
+	drvUsbUhpOHCISFRHeaderFile.setOutputName("drv_usb_uhp_ohci_registers.h")
+	drvUsbUhpOHCISFRHeaderFile.setDestPath(usbDriverProjectPath + "uhp/src")
+	drvUsbUhpOHCISFRHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src/")
+	drvUsbUhpOHCISFRHeaderFile.setType("HEADER")
+	drvUsbUhpOHCISFRHeaderFile.setOverwrite(True)
+	drvUsbUhpOHCISFRHeaderFile.setEnabled(True)
+	
 	# Add drv_usb_uhp_ehci_variant_mapping.h file 
 	drvUsbHsV1VarMapHeaderFile = usbDriverComponent.createFileSymbol(None, None)
 	drvUsbHsV1VarMapHeaderFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_variant_mapping.h")
