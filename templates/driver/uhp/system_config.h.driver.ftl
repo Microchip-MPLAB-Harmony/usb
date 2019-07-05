@@ -62,6 +62,10 @@
 /* Reset duration in milli Seconds */ 
 #define DRV_USB_UHP_RESET_DURATION                     ${USB_DRV_HOST_RESET_DUARTION}
 
+/* Alignment for buffers that are submitted to USB Driver*/ 
+#ifndef USB_ALIGN
+#define USB_ALIGN __ALIGNED(4096)
+#endif 
 <#--
 /*******************************************************************************
  End of File

@@ -75,6 +75,9 @@
 /* Reset duration in milli Seconds */ 
 #define DRV_USBHSV1_HOST_RESET_DURATION                     ${USB_DRV_HOST_RESET_DUARTION}
 </#if>
+
+/* Alignment for buffers that are submitted to USB Driver*/ 
+#define USB_ALIGN  CACHE_ALIGN
 <#--
 /*******************************************************************************
  End of File

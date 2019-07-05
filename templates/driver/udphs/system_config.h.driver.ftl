@@ -47,6 +47,9 @@
 /* Maximum USB driver instances */
 #define DRV_USB_UDPHS_INSTANCES_NUMBER                        1
 
+#ifndef USB_ALIGN
+#define USB_ALIGN __ALIGNED(4096)
+#endif 
 <#--
 /*******************************************************************************
  End of File
