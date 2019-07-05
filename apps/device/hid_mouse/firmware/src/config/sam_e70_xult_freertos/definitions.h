@@ -48,8 +48,8 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "driver/usb/usbhsv1/drv_usbhsv1.h"
 #include "bsp/bsp.h"
+#include "driver/usb/usbhsv1/drv_usbhsv1.h"
 #include "usb/usb_device_hid.h"
 #include "usb/usb_hid.h"
 #include "peripheral/clk/plib_clk.h"
@@ -57,6 +57,7 @@
 #include "peripheral/nvic/plib_nvic.h"
 #include "usb/usb_chapter_9.h"
 #include "usb/usb_device.h"
+#include "peripheral/efc/plib_efc.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "system/int/sys_int.h"
