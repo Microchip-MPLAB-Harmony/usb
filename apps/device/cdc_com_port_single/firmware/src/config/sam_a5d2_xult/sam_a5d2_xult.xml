@@ -1682,15 +1682,7 @@
       </Symbols>
     </UniqueComponent>
     <UniqueComponent dnOrder="3" id="dfp"/>
-    <UniqueComponent dnOrder="4" id="drv_usb_udphs">
-      <Symbols dnOrder="0">
-        <Combo dnOrder="0" id="USB_SPEED">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="High Speed"/>
-          </Values>
-        </Combo>
-      </Symbols>
-    </UniqueComponent>
+    <UniqueComponent dnOrder="4" id="drv_usb_udphs"/>
     <UniqueComponent dnOrder="5" id="HarmonyCore">
       <Symbols dnOrder="0">
         <File dnOrder="0" id="APP0_C">
@@ -1980,12 +1972,12 @@
   <UserData>
     <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="BSP_SAM_A5D2_Xplained_Ultra" x="440" y="15"/>
+        <ElementPosition dnOrder="0" id="BSP_SAM_A5D2_Xplained_Ultra" x="24" y="235"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="21" y="65"/>
         <ElementPosition dnOrder="2" id="cmsis" x="337" y="25"/>
         <ElementPosition dnOrder="3" id="core" x="240" y="20"/>
         <ElementPosition dnOrder="4" id="dfp" x="20" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_usb_udphs" x="210" y="59"/>
+        <ElementPosition dnOrder="5" id="drv_usb_udphs" x="210" y="60"/>
         <ElementPosition dnOrder="6" id="usb_device" x="210" y="140"/>
         <ElementPosition dnOrder="7" id="usb_device_cdc" x="390" y="140"/>
       </ElementPositions>
