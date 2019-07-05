@@ -131,10 +131,11 @@ const DRV_USBFS_INIT drvUSBFSInit =
 {
 	 /* Assign the endpoint table */
     .endpointTable= endPointTable1,
-	
+
+
 	/* Interrupt Source for USB module */
 	.interruptSource = INT_SOURCE_USB,
-	    
+    
     /* USB Controller to operate as USB Device */
     .operationMode = DRV_USBFS_OPMODE_DEVICE,
 	

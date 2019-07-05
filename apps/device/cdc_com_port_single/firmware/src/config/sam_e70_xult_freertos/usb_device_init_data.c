@@ -69,7 +69,7 @@ const USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[1] =
     {
         .configurationValue = 1,                            // Configuration value
         .interfaceNumber = 0,                               // First interfaceNumber of this function
-        .speed = USB_SPEED_HIGH|USB_SPEED_FULL,                            // Function Speed
+        .speed = USB_SPEED_HIGH|USB_SPEED_FULL,             // Function Speed
         .numberOfInterfaces = 2,                            // Number of interfaces
         .funcDriverIndex = 0,                               // Index of CDC Function Driver
         .driver = (void*)USB_DEVICE_CDC_FUNCTION_DRIVER,    // USB CDC function data exposed to device layer
@@ -283,7 +283,7 @@ const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =
 	NULL, 
 	0,
 	NULL,
-    3,                                                      // Total number of string descriptors available.
+    3,														// Total number of string descriptors available.
     stringDescriptors,                                      // Pointer to array of string descriptors.
 	NULL, 
 	NULL

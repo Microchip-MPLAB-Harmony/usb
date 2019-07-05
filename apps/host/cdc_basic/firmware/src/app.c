@@ -79,7 +79,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 APP_DATA CACHE_ALIGN appData;
 
 /* This is the string that will written to the file */
-const CACHE_ALIGN uint8_t prompt[8]  = "\r\nLED : ";
+ CACHE_ALIGN uint8_t prompt[8]  = "\r\nLED : ";
 
 // *****************************************************************************
 // *****************************************************************************

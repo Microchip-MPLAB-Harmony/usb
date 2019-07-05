@@ -51,6 +51,7 @@
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/nvic/plib_nvic.h"
+#include "peripheral/efc/plib_efc.h"
 #include "peripheral/tc/plib_tc0.h"
 #include "system/time/sys_time.h"
 #include "driver/usb/usbhsv1/drv_usbhsv1.h"
@@ -188,8 +189,8 @@ void SYS_Tasks ( void );
 
 typedef struct
 {
-    SYS_MODULE_OBJ  drvUsart0;
     SYS_MODULE_OBJ  sysTime;
+    SYS_MODULE_OBJ  drvUsart0;
 	SYS_MODULE_OBJ  drvUSBHSV1Object;
 
 	SYS_MODULE_OBJ  usbHostObject0;

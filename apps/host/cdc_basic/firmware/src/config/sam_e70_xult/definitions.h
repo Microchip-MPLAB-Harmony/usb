@@ -57,6 +57,7 @@
 #include "peripheral/nvic/plib_nvic.h"
 #include "usb/usb_host_cdc.h"
 #include "usb/usb_cdc.h"
+#include "peripheral/efc/plib_efc.h"
 #include "peripheral/tc/plib_tc0.h"
 #include "system/int/sys_int.h"
 #include "system/cache/sys_cache.h"

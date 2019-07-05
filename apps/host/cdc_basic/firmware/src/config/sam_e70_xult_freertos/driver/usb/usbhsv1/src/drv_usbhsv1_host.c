@@ -1086,9 +1086,6 @@ void _DRV_USBHSV1_HOST_ControlTransferProcess(DRV_USBHSV1_OBJ * hDriver)
 
         endIRP = true;
         irp->status = USB_HOST_IRP_STATUS_ABORTED;
-        /* Reset Pipe*/
-        Set_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (0)));
-        Clr_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (0)));
     }
     else if(USBHS_HSTPIPISR_RXSTALLDI_Msk == (USBHS_HSTPIPISR_RXSTALLDI_Msk & usbMod->USBHS_HSTPIPISR[0]))
     {
@@ -1101,9 +1098,7 @@ void _DRV_USBHSV1_HOST_ControlTransferProcess(DRV_USBHSV1_OBJ * hDriver)
         usbMod->USBHS_HSTPIPICR[0] = USBHS_HSTPIPICR_RXSTALLDIC_Msk;
         /* Reset DATA Toggle */
         usbMod->USBHS_HSTPIPIER[0] = USBHS_HSTPIPIER_RSTDTS_Msk;
-        /* Reset Pipe*/
-        Set_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (0)));
-        Clr_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (0)));
+        
     }
     else if(USBHS_HSTPIPISR_PERRI_Msk == (USBHS_HSTPIPISR_PERRI_Msk & usbMod->USBHS_HSTPIPISR[0]))
     {
@@ -1114,9 +1109,6 @@ void _DRV_USBHSV1_HOST_ControlTransferProcess(DRV_USBHSV1_OBJ * hDriver)
         irp->status = USB_HOST_IRP_STATUS_ERROR_DATA;
         /* Ack all errors */
         usbMod->USBHS_HSTPIPERR[0] = 0;
-        /* Reset Pipe */
-        Set_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (0)));
-        Clr_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (0)));
     }
     else
     {
@@ -1504,9 +1496,6 @@ void _DRV_USBHSV1_HOST_NonControlTransferProcess
         usbMod->USBHS_HSTPIPICR[hostPipe] = USBHS_HSTPIPICR_RXSTALLDIC_Msk;
         /* Reset DATA Toggle */
         usbMod->USBHS_HSTPIPIER[hostPipe] = USBHS_HSTPIPIER_RSTDTS_Msk;
-        /* Reset Pipe*/
-        Set_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (hostPipe)));
-        Clr_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (hostPipe)));
     }
     else if(USBHS_HSTPIPISR_PERRI_Msk == (USBHS_HSTPIPISR_PERRI_Msk & usbMod->USBHS_HSTPIPISR[hostPipe]))
     {
@@ -1517,9 +1506,7 @@ void _DRV_USBHSV1_HOST_NonControlTransferProcess
         irp->status = USB_HOST_IRP_STATUS_ERROR_DATA;
         /* Ack all errors */
         usbMod->USBHS_HSTPIPERR[hostPipe] = 0;
-        /* Reset Pipe*/
-        Set_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (hostPipe)));
-        Clr_bits(hDriver->usbID->USBHS_HSTPIP, ((1 << 16) << (hostPipe)));
+       
     }
     else if(USBHS_HSTPIPISR_TXOUTI_Msk == (USBHS_HSTPIPISR_TXOUTI_Msk & usbMod->USBHS_HSTPIPISR[hostPipe]))
     {

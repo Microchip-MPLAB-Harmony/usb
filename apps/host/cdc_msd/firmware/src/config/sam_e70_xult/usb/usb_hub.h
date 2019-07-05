@@ -138,18 +138,18 @@ typedef struct __attribute__ ((packed))
     {
          struct __attribute__ ((packed))
          {
-            unsigned currentConnectStatus :1 ; 
-            unsigned portEnabledDisabled :1 ;
-            unsigned suspend :1 ;
-            unsigned overCurrent :1 ;
-            unsigned reset :1 ;
-            unsigned reserved :3 ;
-            unsigned portPower :1 ;
-            unsigned lowSpeedDeviceAttached :1 ;
-            unsigned highSpeedDeviceAttached :1 ;
-            unsigned portTestMode :1 ;
-            unsigned portIndicatorControl :1 ;
-            unsigned reserved1:3;
+            uint16_t currentConnectStatus :1 ; 
+            uint16_t portEnabledDisabled :1 ;
+            uint16_t suspend :1 ;
+            uint16_t overCurrent :1 ;
+            uint16_t reset :1 ;
+            uint16_t reserved :3 ;
+            uint16_t portPower :1 ;
+            uint16_t lowSpeedDeviceAttached :1 ;
+            uint16_t highSpeedDeviceAttached :1 ;
+            uint16_t portTestMode :1 ;
+            uint16_t portIndicatorControl :1 ;
+            uint16_t reserved1:3;
          };
          uint16_t    wPortStatus;
     };
@@ -158,11 +158,11 @@ typedef struct __attribute__ ((packed))
     {
          struct __attribute__ ((packed))
          {
-            unsigned connectStatusChange:1 ; 
-            unsigned portEnableDisableChange:1 ;
-            unsigned suspendChange :1 ;
-            unsigned overCurrentIndicatorChange:1 ;
-            unsigned resetChange:1 ;
+            uint16_t connectStatusChange:1 ; 
+            uint16_t portEnableDisableChange:1 ;
+            uint16_t suspendChange :1 ;
+            uint16_t overCurrentIndicatorChange:1 ;
+            uint16_t resetChange:1 ;
       
          };
          uint16_t    wPortChange;
@@ -190,8 +190,8 @@ typedef struct __attribute__ ((packed))
     {
          struct __attribute__ ((packed))
          {
-            unsigned localPowerSource :1 ; 
-            unsigned overCurrent :1 ;
+            uint16_t localPowerSource :1 ; 
+            uint16_t overCurrent :1 ;
          };
          uint16_t    wHubStatus;
     };
@@ -200,8 +200,8 @@ typedef struct __attribute__ ((packed))
     {
          struct __attribute__ ((packed))
          {
-             unsigned localPowerStatusChange:1 ; 
-             unsigned overCurrentChange:1 ;
+             uint16_t localPowerStatusChange:1 ; 
+             uint16_t overCurrentChange:1 ;
          };
          uint16_t    wHubChange;
     };

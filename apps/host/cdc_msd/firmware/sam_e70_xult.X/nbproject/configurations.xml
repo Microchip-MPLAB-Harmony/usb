@@ -6,10 +6,10 @@
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_e70_xult" projectFiles="true">
-          <logicalFolder name="f3" displayName="bsp" projectFiles="true">
+          <logicalFolder name="f5" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_e70_xult/bsp/bsp.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f1" displayName="driver" projectFiles="true">
+          <logicalFolder name="f4" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="usb" projectFiles="true">
               <logicalFolder name="f1" displayName="usbhsv1" projectFiles="true">
                 <logicalFolder name="f1" displayName="src" projectFiles="true">
@@ -24,9 +24,12 @@
             <itemPath>../src/config/sam_e70_xult/driver/driver.h</itemPath>
             <itemPath>../src/config/sam_e70_xult/driver/driver_common.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f5" displayName="peripheral" projectFiles="true">
+          <logicalFolder name="f2" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/peripheral/clk/plib_clk.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="efc" projectFiles="true">
+              <itemPath>../src/config/sam_e70_xult/peripheral/efc/plib_efc.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/peripheral/nvic/plib_nvic.h</itemPath>
@@ -34,16 +37,16 @@
             <logicalFolder name="f2" displayName="pio" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/peripheral/pio/plib_pio.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="tc" projectFiles="true">
+            <logicalFolder name="f5" displayName="tc" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/peripheral/tc/plib_tc0.h</itemPath>
               <itemPath>../src/config/sam_e70_xult/peripheral/tc/plib_tc_common.h</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f4" displayName="system" projectFiles="true">
-            <logicalFolder name="f3" displayName="cache" projectFiles="true">
+          <logicalFolder name="f3" displayName="system" projectFiles="true">
+            <logicalFolder name="f4" displayName="cache" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/system/cache/sys_cache.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="fs" projectFiles="true">
+            <logicalFolder name="f2" displayName="fs" projectFiles="true">
               <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
                 <logicalFolder name="f1" displayName="file_system" projectFiles="true">
                   <itemPath>../src/config/sam_e70_xult/system/fs/fat_fs/src/file_system/ff.h</itemPath>
@@ -62,11 +65,11 @@
               <itemPath>../src/config/sam_e70_xult/system/fs/sys_fs_media_manager.h</itemPath>
               <itemPath>../src/config/sam_e70_xult/system/fs/src/sys_fs_media_manager_local.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="int" projectFiles="true">
+            <logicalFolder name="f3" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/system/int/sys_int.h</itemPath>
               <itemPath>../src/config/sam_e70_xult/system/int/sys_int_mapping.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="time" projectFiles="true">
+            <logicalFolder name="f1" displayName="time" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/system/time/sys_time.h</itemPath>
               <itemPath>../src/config/sam_e70_xult/system/time/sys_time_definitions.h</itemPath>
               <itemPath>../src/config/sam_e70_xult/system/time/src/sys_time_local.h</itemPath>
@@ -76,27 +79,27 @@
             <itemPath>../src/config/sam_e70_xult/system/system_module.h</itemPath>
             <itemPath>../src/config/sam_e70_xult/system/system_media.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="usb" projectFiles="true">
+          <logicalFolder name="f1" displayName="usb" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
-              <itemPath>../src/config/sam_e70_xult/usb/src/usb_host_local.h</itemPath>
-              <itemPath>../src/config/sam_e70_xult/usb/src/usb_host_hub_mapping.h</itemPath>
-              <itemPath>../src/config/sam_e70_xult/usb/src/usb_external_dependencies.h</itemPath>
               <itemPath>../src/config/sam_e70_xult/usb/src/usb_host_msd_local.h</itemPath>
               <itemPath>../src/config/sam_e70_xult/usb/src/usb_host_scsi_local.h</itemPath>
               <itemPath>../src/config/sam_e70_xult/usb/src/usb_host_cdc_local.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/usb/src/usb_host_local.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/usb/src/usb_host_hub_mapping.h</itemPath>
+              <itemPath>../src/config/sam_e70_xult/usb/src/usb_external_dependencies.h</itemPath>
             </logicalFolder>
-            <itemPath>../src/config/sam_e70_xult/usb/usb_host_client_driver.h</itemPath>
-            <itemPath>../src/config/sam_e70_xult/usb/usb_host_hub_interface.h</itemPath>
-            <itemPath>../src/config/sam_e70_xult/usb/usb_host.h</itemPath>
-            <itemPath>../src/config/sam_e70_xult/usb/usb_hub.h</itemPath>
-            <itemPath>../src/config/sam_e70_xult/usb/usb_common.h</itemPath>
-            <itemPath>../src/config/sam_e70_xult/usb/usb_chapter_9.h</itemPath>
             <itemPath>../src/config/sam_e70_xult/usb/usb_host_msd.h</itemPath>
             <itemPath>../src/config/sam_e70_xult/usb/usb_host_scsi.h</itemPath>
             <itemPath>../src/config/sam_e70_xult/usb/usb_msd.h</itemPath>
             <itemPath>../src/config/sam_e70_xult/usb/scsi.h</itemPath>
             <itemPath>../src/config/sam_e70_xult/usb/usb_host_cdc.h</itemPath>
             <itemPath>../src/config/sam_e70_xult/usb/usb_cdc.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/usb/usb_host_client_driver.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/usb/usb_host_hub_interface.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/usb/usb_host.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/usb/usb_hub.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/usb/usb_common.h</itemPath>
+            <itemPath>../src/config/sam_e70_xult/usb/usb_chapter_9.h</itemPath>
           </logicalFolder>
           <itemPath>../src/config/sam_e70_xult/device_cache.h</itemPath>
           <itemPath>../src/config/sam_e70_xult/toolchain_specifics.h</itemPath>
@@ -190,10 +193,10 @@
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_e70_xult" projectFiles="true">
-          <logicalFolder name="f3" displayName="bsp" projectFiles="true">
+          <logicalFolder name="f6" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_e70_xult/bsp/bsp.c</itemPath>
           </logicalFolder>
-          <logicalFolder name="f1" displayName="driver" projectFiles="true">
+          <logicalFolder name="f5" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="usb" projectFiles="true">
               <logicalFolder name="f1" displayName="usbhsv1" projectFiles="true">
                 <logicalFolder name="f1" displayName="src" projectFiles="true">
@@ -203,9 +206,12 @@
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f6" displayName="peripheral" projectFiles="true">
+          <logicalFolder name="f3" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f1" displayName="clk" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/peripheral/clk/plib_clk.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="efc" projectFiles="true">
+              <itemPath>../src/config/sam_e70_xult/peripheral/efc/plib_efc.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/peripheral/nvic/plib_nvic.c</itemPath>
@@ -213,18 +219,18 @@
             <logicalFolder name="f2" displayName="pio" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/peripheral/pio/plib_pio.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="tc" projectFiles="true">
+            <logicalFolder name="f5" displayName="tc" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/peripheral/tc/plib_tc0.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f5" displayName="stdio" projectFiles="true">
+          <logicalFolder name="f2" displayName="stdio" projectFiles="true">
             <itemPath>../src/config/sam_e70_xult/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
-            <logicalFolder name="f3" displayName="cache" projectFiles="true">
+            <logicalFolder name="f4" displayName="cache" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/system/cache/sys_cache.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="fs" projectFiles="true">
+            <logicalFolder name="f2" displayName="fs" projectFiles="true">
               <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
                 <itemPath>../src/config/sam_e70_xult/system/fs/fat_fs/src/ff.c</itemPath>
                 <itemPath>../src/config/sam_e70_xult/system/fs/fat_fs/src/diskio.c</itemPath>
@@ -235,28 +241,28 @@
               <itemPath>../src/config/sam_e70_xult/system/fs/src/sys_fs.c</itemPath>
               <itemPath>../src/config/sam_e70_xult/system/fs/src/sys_fs_media_manager.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="int" projectFiles="true">
+            <logicalFolder name="f3" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="time" projectFiles="true">
+            <logicalFolder name="f1" displayName="time" projectFiles="true">
               <itemPath>../src/config/sam_e70_xult/system/time/src/sys_time.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="usb" projectFiles="true">
+          <logicalFolder name="f1" displayName="usb" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
-              <itemPath>../src/config/sam_e70_xult/usb/src/usb_host.c</itemPath>
               <itemPath>../src/config/sam_e70_xult/usb/src/usb_host_msd.c</itemPath>
               <itemPath>../src/config/sam_e70_xult/usb/src/usb_host_scsi.c</itemPath>
               <itemPath>../src/config/sam_e70_xult/usb/src/usb_host_cdc.c</itemPath>
               <itemPath>../src/config/sam_e70_xult/usb/src/usb_host_cdc_acm.c</itemPath>
+              <itemPath>../src/config/sam_e70_xult/usb/src/usb_host.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <itemPath>../src/config/sam_e70_xult/usb_host_init_data.c</itemPath>
           <itemPath>../src/config/sam_e70_xult/initialization.c</itemPath>
           <itemPath>../src/config/sam_e70_xult/interrupts.c</itemPath>
           <itemPath>../src/config/sam_e70_xult/exceptions.c</itemPath>
           <itemPath>../src/config/sam_e70_xult/startup_xc32.c</itemPath>
           <itemPath>../src/config/sam_e70_xult/libc_syscalls.c</itemPath>
+          <itemPath>../src/config/sam_e70_xult/usb_host_init_data.c</itemPath>
           <itemPath>../src/config/sam_e70_xult/tasks.c</itemPath>
         </logicalFolder>
       </logicalFolder>
@@ -282,12 +288,12 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.15</languageToolchainVersion>
+        <languageToolchainVersion>2.20</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
         <pack name="SAME70_DFP" vendor="Microchip" version="3.0.10"/>
+        <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -346,7 +352,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/sam_e70_xult;../src/packs/ATSAMV71Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm;../src/packs/ATSAME70Q21B_DFP"/>
+                  value="../src/packs/ATSAMV71Q21B_DFP;../src;../src/config/sam_e70_xult;../src/packs/ATSAME70Q21B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -467,6 +473,37 @@
         <property key="save-temps" value="false"/>
         <property key="wpo-lto" value="false"/>
       </C32Global>
+      <EdbgTool>
+        <property key="AutoSelectMemRanges" value="auto"/>
+        <property key="communication.interface" value="jtag"/>
+        <property key="communication.speed" value="${communication.speed.default}"/>
+        <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="memories.aux" value="false"/>
+        <property key="memories.bootflash" value="true"/>
+        <property key="memories.configurationmemory" value="true"/>
+        <property key="memories.configurationmemory2" value="true"/>
+        <property key="memories.dataflash" value="true"/>
+        <property key="memories.eeprom" value="true"/>
+        <property key="memories.exclude.configurationmemory" value="true"/>
+        <property key="memories.flashdata" value="true"/>
+        <property key="memories.id" value="true"/>
+        <property key="memories.instruction.ram.ranges"
+                  value="${memories.instruction.ram.ranges}"/>
+        <property key="memories.programmemory" value="true"/>
+        <property key="memories.programmemory.ranges" value="400000-5fffff"/>
+        <property key="poweroptions.powerenable" value="false"/>
+        <property key="programoptions.eraseb4program" value="true"/>
+        <property key="programoptions.preservedataflash" value="false"/>
+        <property key="programoptions.preservedataflash.ranges"
+                  value="${memories.dataflash.default}"/>
+        <property key="programoptions.preserveeeprom" value="false"/>
+        <property key="programoptions.preserveeeprom.ranges" value=""/>
+        <property key="programoptions.preserveprogram.ranges" value="0-2045ffff"/>
+        <property key="programoptions.preserveprogramrange" value="false"/>
+        <property key="programoptions.preserveuserid" value="false"/>
+        <property key="programoptions.programuserotp" value="false"/>
+        <property key="voltagevalue" value=""/>
+      </EdbgTool>
       <ICD4Tool>
         <property key="AutoSelectMemRanges" value="auto"/>
         <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>

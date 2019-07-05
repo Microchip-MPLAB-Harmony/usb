@@ -165,7 +165,6 @@ const DeviceVectors exception_table=
     /* Configure Initial Stack Pointer, using linker-generated symbols */
     .pvStack = (void*) (&_stack),
 
-
     .pfnReset_Handler              = ( void * ) Reset_Handler,
     .pfnNonMaskableInt_Handler     = ( void * ) NonMaskableInt_Handler,
     .pfnHardFault_Handler          = ( void * ) HardFault_Handler,
@@ -247,6 +246,7 @@ const DeviceVectors exception_table=
     .pfnGMAC_Q3_Handler            = ( void * ) GMAC_Q3_Handler,
     .pfnGMAC_Q4_Handler            = ( void * ) GMAC_Q4_Handler,
     .pfnGMAC_Q5_Handler            = ( void * ) GMAC_Q5_Handler,
+
 
 
 };

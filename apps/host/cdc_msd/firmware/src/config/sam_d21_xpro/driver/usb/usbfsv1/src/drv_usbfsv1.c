@@ -127,13 +127,12 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
         usbInit = (DRV_USBFSV1_INIT *) init;
         drvObj = &gDrvUSBObj[drvIndex];
 
-        /* Create the global mutex and proceed if successful. */   
+        /* Create the global mutex and proceed if successful. */
         if(OSAL_RESULT_TRUE == OSAL_MUTEX_Create((OSAL_MUTEX_HANDLE_TYPE *)&drvObj->mutexID))
-        {            
+        {
             /* Populate the driver instance object with required data */
             drvObj->inUse = true;
             drvObj->status = SYS_STATUS_BUSY;
-            drvObj->state = DRV_USBFSV1_TASK_STATE_INITIALIZE_OPERATION_MODE;
             drvObj->usbID = usbInit->usbID;
             drvObj->operationMode = usbInit->operationMode;
             drvObj->isOpened = false;
@@ -148,37 +147,40 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
             drvObj->interruptSource1  = usbInit->interruptSource1;
             drvObj->interruptSource2  = usbInit->interruptSource2;
             drvObj->interruptSource3  = usbInit->interruptSource3;
-            drvObj->isInInterruptContext = 0;
+            drvObj->isInInterruptContext = false;
 
             /* Assign the endpoint table */
             drvObj->endpoint0BufferPtr[0] = gDrvEP0BufferBank0;
             drvObj->endpoint0BufferPtr[1] = gDrvEP0BufferBank1;
 
             /* Set the configuration */
-            
+
 			drvObj->usbID->HOST.USB_CTRLA = USB_CTRLA_SWRST_Msk;
-            
+
 			while (drvObj->usbID->HOST.USB_SYNCBUSY & USB_SYNCBUSY_SWRST_Msk);
-            
+
             if(usbInit->runInStandby == true)
             {
                 drvObj->usbID->HOST.USB_CTRLA |= USB_CTRLA_RUNSTDBY_Msk;
             }
-            
+
             if(drvObj->operationMode == DRV_USBFSV1_OPMODE_HOST)
             {
-                /* The root hub information is applicable for host mode operation. */    
+                /* The root hub information is applicable for host mode operation. */
                 drvObj->rootHubInfo.rootHubAvailableCurrent = usbInit->rootHubAvailableCurrent;
                 drvObj->rootHubInfo.portIndication = usbInit->portIndication;
                 drvObj->rootHubInfo.portOverCurrentDetect = usbInit->portOverCurrentDetect;
                 drvObj->rootHubInfo.portPowerEnable = usbInit->portPowerEnable;
-                
+
                 drvObj->usbID->HOST.USB_CTRLA |= USB_CTRLA_MODE_HOST;
 
-                /* Prior to device detection the software must set the VBUS is OK 
+                /* Prior to device detection the software must set the VBUS is OK
                  * bit in CTRLB (CTRLB.VBUSOK) register when the VBUS is available. */
                 /* The USB module is notified that the VBUS on the USB line is powered. */
-                drvObj->usbID->HOST.USB_CTRLB |= USB_HOST_CTRLB_VBUSOK_Msk;                
+                drvObj->usbID->HOST.USB_CTRLB |= USB_HOST_CTRLB_VBUSOK_Msk;
+
+                /* Host mode specific driver initialization */
+                _DRV_USBFSV1_HOST_INIT(drvObj, drvIndex);
             }
             else if(drvObj->operationMode == DRV_USBFSV1_OPMODE_DEVICE)
             {
@@ -191,23 +193,20 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
                 else if(USB_SPEED_LOW == usbInit->operationSpeed)
                 {
                     drvObj->usbID->DEVICE.USB_CTRLB = USB_DEVICE_CTRLB_SPDCONF(USB_DEVICE_CTRLB_SPDCONF_LS_Val);
-                }                
+                }
+
+                /* Device mode specific driver initialization */
+                _DRV_USBFSV1_DEVICE_INIT(drvObj, drvIndex);
+
             }
 
-            /* Enable the USB device by clearing the . This function
-             * also enables the D+ pull up resistor.  */
+            /* Enable the USB device mode operation. */
             drvObj->usbID->HOST.USB_CTRLA |= USB_CTRLA_ENABLE_Msk;
 
             while ((drvObj->usbID->HOST.USB_SYNCBUSY & USB_SYNCBUSY_ENABLE_Msk) == USB_SYNCBUSY_ENABLE_Msk);
 
-            /* Enable interrupts for this USB module */
-            _DRV_USBFSV1_SYS_INT_SourceEnable(
-                    drvObj->interruptSource, 
-                    drvObj->interruptSource1, 
-                    drvObj->interruptSource2, 
-                    drvObj->interruptSource3 );
-
             drvObj->status = SYS_STATUS_READY;
+
             retVal = drvIndex;
         }
         else
@@ -256,122 +255,57 @@ void DRV_USBFSV1_Tasks
     }
     else
     {
-        /* Check the tasks state and maintain */
-        switch(hDriver->state)
+        /* We check for the VBUS level and generate events if a client
+         * event handler is registered. */
+
+        if(hDriver->pEventCallBack != NULL && hDriver->operationMode == DRV_USBFSV1_OPMODE_DEVICE)
         {
-            case DRV_USBFSV1_TASK_STATE_INITIALIZE_OPERATION_MODE:
+            /* We have a valid client call back function. Check if
+             * VBUS level has changed */
 
-                /* Setup the USB Module based on the selected
-                * mode */
+            if( hDriver->vbusComparator != NULL)
+            {
+                vbusLevel = hDriver->vbusComparator();
+            }
+            else
+            {
+                vbusLevel = DRV_USB_VBUS_LEVEL_VALID;
+            }
 
-                switch(hDriver->operationMode)
+            if(hDriver->vbusLevel != vbusLevel)
+            {
+                /* This means there was a change in the level */
+                if(vbusLevel == DRV_USB_VBUS_LEVEL_VALID)
                 {
-                    case DRV_USBFSV1_OPMODE_DEVICE:
+                    /* We have a valid VBUS level */
+                    hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBFSV1_EVENT_DEVICE_SESSION_VALID, NULL);
 
-                        /* Device mode specific driver initialization */
-                        _DRV_USBFSV1_DEVICE_INIT(hDriver, object);
+                    /* We should be ready for send session invalid event
+                     * to the application when they happen.*/
+                    hDriver->sessionInvalidEventSent = false;
 
-                    break;
-
-                    case DRV_USBFSV1_OPMODE_HOST:
-
-                        /* Host mode specific driver initialization */
-                        _DRV_USBFSV1_HOST_INIT(hDriver, object);
-
-                    break;
-
-                    case DRV_USBFSV1_OPMODE_OTG:
-
-                    break;
-
-                    default:
-
-                        SYS_DEBUG(SYS_ERROR_INFO, "\r\nDRV USB USBFSV1: Unsupported driver operation mode in DRV_USBFSV1_Tasks().");
-
-                    break;
                 }
-
-                /* Clear and enable the interrupts */
-                _DRV_USBFSV1_SYS_INT_SourceStatusClear(
-                        hDriver->interruptSource,
-                        hDriver->interruptSource1,
-                        hDriver->interruptSource2,
-                        hDriver->interruptSource3 );
-                        
-                _DRV_USBFSV1_SYS_INT_SourceEnable(
-                        hDriver->interruptSource,
-                        hDriver->interruptSource1,
-                        hDriver->interruptSource2,
-                        hDriver->interruptSource3 );
-                                
-                /* Indicate that the object is ready
-                 * and change the state to running */
-
-                hDriver->status = SYS_STATUS_READY;
-                hDriver->state = DRV_USBFSV1_TASK_STATE_RUNNING;
-
-                break;
-
-            case DRV_USBFSV1_TASK_STATE_RUNNING:
-
-                /* The module is in a running state. We check
-                 * for the VBUS level and generate events if a client
-                 * event handler is registered. */
-
-                if(hDriver->pEventCallBack != NULL && hDriver->operationMode == DRV_USBFSV1_OPMODE_DEVICE)
+                else
                 {
-                    /* We have a valid client call back function. Check if
-                     * VBUS level has changed */
-
-                    if( hDriver->vbusComparator != NULL)
+                    /* Any thing other than valid is considered invalid.
+                     * This event may occur multiple times, but we send
+                     * it only once. */
+                    if(!hDriver->sessionInvalidEventSent)
                     {
-                        vbusLevel = hDriver->vbusComparator();
-                    }
-                    else
-                    {
-                        vbusLevel = DRV_USB_VBUS_LEVEL_VALID;
-                    }
-
-                    if(hDriver->vbusLevel != vbusLevel)
-                    {
-                        /* This means there was a change in the level */
-                        if(vbusLevel == DRV_USB_VBUS_LEVEL_VALID)
-                        {
-                            /* We have a valid VBUS level */
-                            hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBFSV1_EVENT_DEVICE_SESSION_VALID, NULL);
-
-                            /* We should be ready for send session invalid event
-                             * to the application when they happen.*/
-                            hDriver->sessionInvalidEventSent = false;
-
-                        }
-                        else
-                        {
-                            /* Any thing other than valid is considered invalid.
-                             * This event may occur multiple times, but we send
-                             * it only once. */
-                            if(!hDriver->sessionInvalidEventSent)
-                            {
-                                hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBFSV1_EVENT_DEVICE_SESSION_INVALID, NULL);
-                                hDriver->sessionInvalidEventSent = true;
-                            }
-                        }
-
-                        hDriver->vbusLevel = vbusLevel;
+                        hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBFSV1_EVENT_DEVICE_SESSION_INVALID, NULL);
+                        hDriver->sessionInvalidEventSent = true;
                     }
                 }
-                else if(hDriver->operationMode == DRV_USBFSV1_OPMODE_HOST)
-                {
-                    /* Host mode specific polled 
-                     * task routines can be called here */ 
-                    
-                     _DRV_USBFSV1_HOST_ATTACH_DETACH_STATE_MACHINE(hDriver);            
-                }
 
-                break;
+                hDriver->vbusLevel = vbusLevel;
+            }
+        }
+        else if(hDriver->operationMode == DRV_USBFSV1_OPMODE_HOST)
+        {
+            /* Host mode specific polled
+             * task routines can be called here */
 
-            default:
-                break;
+             _DRV_USBFSV1_HOST_ATTACH_DETACH_STATE_MACHINE(hDriver);
         }
     }
 }/* end of DRV_USBFSV1_Tasks() */
@@ -410,7 +344,7 @@ void DRV_USBFSV1_Deinitialize
     {
         /* Cannot de-initialize an object that is not in use. */
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO,"\r\nUSB USBFSV1 Driver: Driver not initialized in DRV_USBFSV1_Deinitialize()");
-    }            
+    }
     else
     {
         hDriver = &gDrvUSBObj[object];
@@ -435,7 +369,7 @@ void DRV_USBFSV1_Deinitialize
                 hDriver->interruptSource1,
                 hDriver->interruptSource2,
                 hDriver->interruptSource3 );
-        
+
         _DRV_USBFSV1_SYS_INT_SourceStatusClear(
                 hDriver->interruptSource,
                 hDriver->interruptSource1,
@@ -492,7 +426,7 @@ DRV_HANDLE DRV_USBFSV1_Open
         if(drvObj->status != SYS_STATUS_READY)
         {
             /* The driver status not ready */
-            SYS_DEBUG(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Driver: Driver status not ready in DRV_USBFSV1_Open().");            
+            SYS_DEBUG(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Driver: Driver status not ready in DRV_USBFSV1_Open().");
         }
         else if(ioIntent != (DRV_IO_INTENT_EXCLUSIVE | DRV_IO_INTENT_NONBLOCKING | DRV_IO_INTENT_READWRITE))
         {
@@ -508,15 +442,15 @@ DRV_HANDLE DRV_USBFSV1_Open
         {
             /* Open the Driver Object */
             drvObj->isOpened = true;
-            
+
             /* Clear prior value */
             drvObj->pEventCallBack = NULL;
-            
+
             /* Handle is the pointer to the client object */
             retVal = ((DRV_HANDLE) drvObj);
-        }        
+        }
     }
-    
+
     /* Return handle */
     return (retVal);
 }
@@ -552,7 +486,7 @@ SYS_STATUS DRV_USBFSV1_Status
     {
         retVal = gDrvUSBObj[object].status;
     }
-       
+
     /* Return the status of the driver object */
     return (retVal);
 
@@ -577,9 +511,9 @@ void DRV_USBFSV1_Close
 (
     DRV_HANDLE handle
 )
-{    
+{
     DRV_USBFSV1_OBJ * hDriver;
-    
+
     if(handle == DRV_HANDLE_INVALID)
     {
         SYS_DEBUG(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Driver: Invalid driver handle in DRV_USBFSV1_Close().");
@@ -588,12 +522,12 @@ void DRV_USBFSV1_Close
     {
         /* Reset the relevant parameters */
         hDriver = (DRV_USBFSV1_OBJ *)handle;
-    
+
         if(false == hDriver->isOpened)
         {
             /* Cannot close a driver handle that is not open */
             SYS_DEBUG(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Driver: Driver handle not opened in DRV_USBFSV1_Close().");
-        }        
+        }
         else
         {
             /* Release the client handle */
@@ -624,7 +558,6 @@ void DRV_USBFSV1_Tasks_ISR
 )
 {
     DRV_USBFSV1_OBJ * drvObj;
-    bool sysInterruptStatus;
 
     if(object == SYS_MODULE_OBJ_INVALID)
     {
@@ -635,52 +568,54 @@ void DRV_USBFSV1_Tasks_ISR
     {
         drvObj = &gDrvUSBObj[object];
 
-        /* Save current interrupt state and disable them */
-        sysInterruptStatus = SYS_INT_Disable();
-
-        /* Clear the interrupt */        
-        _DRV_USBFSV1_SYS_INT_SourceStatusClear(
-                drvObj->interruptSource,
-                drvObj->interruptSource1,
-                drvObj->interruptSource2,
-                drvObj->interruptSource3 );
-
-        /* We are entering an interrupt context */
-        drvObj->isInInterruptContext = true;
-
-        switch(drvObj->operationMode)
+        if(drvObj->status != SYS_STATUS_READY)
         {
-            case DRV_USBFSV1_OPMODE_DEVICE:
-
-                /* Driver is running in Device Mode */
-                _DRV_USBFSV1_DEVICE_TASKS_ISR(drvObj);
-                break;
-
-            case DRV_USBFSV1_OPMODE_HOST:
-
-                /* Driver is running in Host Mode */
-                _DRV_USBFSV1_HOST_TASKS_ISR(drvObj);
-                break;
-
-            case DRV_USBFSV1_OPMODE_OTG:
-                /* OTG mode is not supported yet */
-                break;
-
-            case DRV_USBFSV1_OPMODE_DUAL_ROLE:
-                /* Dual mode is not supported yet */
-                break;
-
-            default:
-                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBFSV1 Driver: What mode are you trying?");
-                break;
+            /* Invalid object */
+            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO,"\r\nUSB USBFSV1 Driver: Invalid System Status in DRV_USBFSV1_Tasks_ISR()");
         }
+        else
+        {
 
-        /* We are exiting an interrupt context */
-        drvObj->isInInterruptContext = false;
+            /* Clear the interrupt */
+            _DRV_USBFSV1_SYS_INT_SourceStatusClear(
+                    drvObj->interruptSource,
+                    drvObj->interruptSource1,
+                    drvObj->interruptSource2,
+                    drvObj->interruptSource3 );
 
-        /* Restore the interrupt state */
-        SYS_INT_Restore(sysInterruptStatus);
-        
+            /* We are entering an interrupt context */
+            drvObj->isInInterruptContext = true;
+
+            switch(drvObj->operationMode)
+            {
+                case DRV_USBFSV1_OPMODE_DEVICE:
+
+                    /* Driver is running in Device Mode */
+                    _DRV_USBFSV1_DEVICE_TASKS_ISR(drvObj);
+                    break;
+
+                case DRV_USBFSV1_OPMODE_HOST:
+
+                    /* Driver is running in Host Mode */
+                    _DRV_USBFSV1_HOST_TASKS_ISR(drvObj);
+                    break;
+
+                case DRV_USBFSV1_OPMODE_OTG:
+                    /* OTG mode is not supported yet */
+                    break;
+
+                case DRV_USBFSV1_OPMODE_DUAL_ROLE:
+                    /* Dual mode is not supported yet */
+                    break;
+
+                default:
+                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBFSV1 Driver: What mode are you trying?");
+                    break;
+            }
+
+            /* We are exiting an interrupt context */
+            drvObj->isInInterruptContext = false;
+        }
     }
 
 }/* end of DRV_USBFSV1_Tasks_ISR() */
@@ -692,7 +627,7 @@ void DRV_USBFSV1_Tasks_ISR
 
   Summary:
     USB interrupt handler.
-    
+
   Description:
     USB interrupt handler.
 
@@ -753,7 +688,7 @@ bool DRV_USBFSV1_HOST_Resume
 {
     DRV_USBFSV1_OBJ * pusbdrvObj;
     bool retVal = false;
-    
+
     /* Check if the handle is valid */
     if(handle == DRV_HANDLE_INVALID)
     {
@@ -762,7 +697,7 @@ bool DRV_USBFSV1_HOST_Resume
     else
     {
         pusbdrvObj = (DRV_USBFSV1_OBJ *)handle;
-        
+
         /* Resume the bus */
         pusbdrvObj->usbID->HOST.USB_CTRLB |= USB_HOST_CTRLB_SOFE_Msk;
         retVal = true;
@@ -807,7 +742,7 @@ bool DRV_USBFSV1_HOST_Suspend
 
         /* Suspend the bus */
         pusbdrvObj->usbID->HOST.USB_CTRLB &= ~USB_HOST_CTRLB_SOFE_Msk;
-        
+
         retVal = true;
     }
 
@@ -841,14 +776,14 @@ bool DRV_USBFSV1_HOST_Suspend
 */
 
 void DRV_USBFSV1_ClientEventCallBackSet
-( 
+(
     DRV_HANDLE   handle,
     uintptr_t    hReferenceData,
-    DRV_USB_EVENT_CALLBACK eventCallBack 
+    DRV_USB_EVENT_CALLBACK eventCallBack
 )
 {
     DRV_USBFSV1_OBJ * pusbDrvObj;
-    
+
     if(handle == DRV_HANDLE_INVALID)
     {
         SYS_DEBUG(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Driver: Invalid client handle in DRV_USBFSV1_ClientEventCallBackSet().");
@@ -856,7 +791,7 @@ void DRV_USBFSV1_ClientEventCallBackSet
     else
     {
         pusbDrvObj = (DRV_USBFSV1_OBJ *) handle;
-    
+
         if(false == pusbDrvObj->isOpened)
         {
             SYS_DEBUG(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Driver: Invalid client handle in DRV_USBFSV1_ClientEventCallBackSet().");
@@ -868,5 +803,5 @@ void DRV_USBFSV1_ClientEventCallBackSet
             pusbDrvObj->pEventCallBack = eventCallBack;
         }
     }
-        
+
 }/* end of DRV_USBFSV1_ClientEventCallBackSet() */

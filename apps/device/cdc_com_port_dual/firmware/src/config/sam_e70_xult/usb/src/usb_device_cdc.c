@@ -314,7 +314,7 @@ void _USB_DEVICE_CDC_Initialization
                 USB_DEVICE_EndpointEnable ( deviceHandle ,
                         0,
                         epAddress ,
-                        pEPDesc->transferType ,
+                        (USB_TRANSFER_TYPE)pEPDesc->transferType ,
                         maxPacketSize );
 
                 /* Indicate that the endpoint is configured */
@@ -899,7 +899,7 @@ USB_DEVICE_CDC_RESULT USB_DEVICE_CDC_Read
                 return (USB_DEVICE_CDC_RESULT_ERROR);
             }
             
-            return(irpError);
+            return((USB_DEVICE_CDC_RESULT)irpError);
         }
     }
     
@@ -957,7 +957,7 @@ USB_DEVICE_CDC_RESULT USB_DEVICE_CDC_Write
     unsigned int cnt;
     unsigned int remainder;
     USB_DEVICE_IRP * irp;
-    USB_DEVICE_IRP_FLAG irpFlag = 0;
+    USB_DEVICE_IRP_FLAG irpFlag = USB_DEVICE_IRP_FLAG_NONE;
     USB_DEVICE_CDC_INSTANCE * thisCDCDevice;
     USB_DEVICE_CDC_ENDPOINT * endpoint;
     OSAL_RESULT osalError;
@@ -1079,7 +1079,7 @@ USB_DEVICE_CDC_RESULT USB_DEVICE_CDC_Write
                 return (USB_DEVICE_CDC_RESULT_ERROR);
             }
 
-            return(irpError);
+            return((USB_DEVICE_CDC_RESULT)irpError);
         }
     }
     
@@ -1310,7 +1310,7 @@ USB_DEVICE_CDC_RESULT USB_DEVICE_CDC_SerialStateNotificationSend
                 return (USB_DEVICE_CDC_RESULT_ERROR);
             }
             
-            return(irpError);
+            return((USB_DEVICE_CDC_RESULT)irpError);
         }
     }
     

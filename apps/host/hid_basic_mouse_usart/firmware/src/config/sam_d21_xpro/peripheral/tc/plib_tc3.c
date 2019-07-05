@@ -86,8 +86,8 @@ void TC3_TimerInitialize( void )
     TC3_REGS->COUNT16.TC_CTRLA = TC_CTRLA_MODE_COUNT16 | TC_CTRLA_PRESCALER_DIV1 | TC_CTRLA_WAVEGEN_MPWM ;
 
     /* Configure timer period */
-    TC3_REGS->COUNT16.TC_CC[0U] = 8000U;
-    
+    TC3_REGS->COUNT16.TC_CC[0U] = 48005U;
+
     /* Clear all interrupt flags */
     TC3_REGS->COUNT16.TC_INTFLAG = TC_INTFLAG_Msk;
 
@@ -124,7 +124,7 @@ void TC3_TimerStop( void )
 
 uint32_t TC3_TimerFrequencyGet( void )
 {
-    return (uint32_t)(8000000UL);
+    return (uint32_t)(48005120UL);
 }
 
 /* Get the current timer counter value */
@@ -206,7 +206,4 @@ void TC3_TimerInterruptHandler( void )
         TC3_CallbackObject.callback(status, TC3_CallbackObject.context);
     }
 }
-
-
-
 

@@ -51,8 +51,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">65BBDF7C4842E252D70394857B48C6CE</GeneratedChecksum>
-          <UserChecksum dnOrder="5">65BBDF7C4842E252D70394857B48C6CE</UserChecksum>
+          <GeneratedChecksum dnOrder="4">3B16F9F48E9D44A01467C36B00BB5D36</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3B16F9F48E9D44A01467C36B00BB5D36</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -331,8 +331,8 @@
           <Name dnOrder="1">plib_usbhs_header.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/driver/usb/usbhs/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9FF9B7B04347720686935A890B17699A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9FF9B7B04347720686935A890B17699A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">696059AC9F4DC7CE9282F22900F397C2</GeneratedChecksum>
+          <UserChecksum dnOrder="5">696059AC9F4DC7CE9282F22900F397C2</UserChecksum>
         </File>
         <File dnOrder="41">
           <Type dnOrder="0">HEADER</Type>
@@ -419,16 +419,16 @@
           <Name dnOrder="1">usb_chapter_9.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">12305C07373D4BA81E64624A692ECA17</GeneratedChecksum>
-          <UserChecksum dnOrder="5">12305C07373D4BA81E64624A692ECA17</UserChecksum>
+          <GeneratedChecksum dnOrder="4">39659CDE2CC726544BD68544FB7EF4B2</GeneratedChecksum>
+          <UserChecksum dnOrder="5">39659CDE2CC726544BD68544FB7EF4B2</UserChecksum>
         </File>
         <File dnOrder="52">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_common.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">E7A10AF4199961E4A1B62C664A81F911</GeneratedChecksum>
-          <UserChecksum dnOrder="5">E7A10AF4199961E4A1B62C664A81F911</UserChecksum>
+          <GeneratedChecksum dnOrder="4">ACC8AF90F98B09095480B6B1F07082A0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">ACC8AF90F98B09095480B6B1F07082A0</UserChecksum>
         </File>
         <File dnOrder="53">
           <Type dnOrder="0">HEADER</Type>
@@ -443,8 +443,8 @@
           <Name dnOrder="1">usb_host.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A4B832998D00C49BD4F9A3FC6A6CFC7D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A4B832998D00C49BD4F9A3FC6A6CFC7D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F127C67A3E33E5788C0F057F648EE57C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F127C67A3E33E5788C0F057F648EE57C</UserChecksum>
         </File>
         <File dnOrder="55">
           <Type dnOrder="0">HEADER</Type>
@@ -499,8 +499,8 @@
           <Name dnOrder="1">usb_hub.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">2E521F42F432473872209E966F85F2A8</GeneratedChecksum>
-          <UserChecksum dnOrder="5">2E521F42F432473872209E966F85F2A8</UserChecksum>
+          <GeneratedChecksum dnOrder="4">3E3CC6BC9128194CB4D19F29C57E312B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3E3CC6BC9128194CB4D19F29C57E312B</UserChecksum>
         </File>
         <File dnOrder="62">
           <Type dnOrder="0">HEADER</Type>
@@ -539,8 +539,8 @@
           <Name dnOrder="1">usbhs_EndpointFIFO_Default.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/driver/usb/usbhs/src/templates</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhs/src/templates/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0F5AC11163C0D177BD408A50A58EF6F1</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0F5AC11163C0D177BD408A50A58EF6F1</UserChecksum>
+          <GeneratedChecksum dnOrder="4">D1DA501EF7BAB24A2CEADE3CBD29AEB6</GeneratedChecksum>
+          <UserChecksum dnOrder="5">D1DA501EF7BAB24A2CEADE3CBD29AEB6</UserChecksum>
         </File>
         <File dnOrder="67">
           <Type dnOrder="0">HEADER</Type>
@@ -712,7 +712,7 @@
     </Manifest>
     <Settings dnOrder="4">
       <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.5.1"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ_EF_DFP\1.0.28\atdf\PIC32MZ2048EFH144.atdf"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ_EF_DFP\1.0.29\atdf\PIC32MZ2048EFH144.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>

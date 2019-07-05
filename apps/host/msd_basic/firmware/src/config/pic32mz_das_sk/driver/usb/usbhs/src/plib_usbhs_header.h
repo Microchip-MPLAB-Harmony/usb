@@ -24,21 +24,19 @@
 /* Created by plibgen $Revision: 1.31 $ */
 
 
-/* Section 1 - Enumerate instances, define constants, VREGs */
+//* Section 1 - Enumerate instances, define constants, VREGs */
 
 #include <xc.h>
 #include <stdbool.h>
 
-// TODO #include "peripheral/peripheral_common_32bit.h"
-
 /* Default definition used for all API dispatch functions */
 #ifndef PLIB_INLINE_API
-    #define PLIB_INLINE_API extern inline
+     #define PLIB_INLINE_API static inline 
 #endif
 
 /* Default definition used for all other functions */
 #ifndef PLIB_INLINE
-    #define PLIB_INLINE extern inline
+    #define PLIB_INLINE static inline 
 #endif
 
 #ifndef _PLIB_UNSUPPORTED
@@ -48,6 +46,7 @@
 #ifndef PLIB_ASSERT
     #define PLIB_ASSERT
 #endif 
+
 
 typedef enum {
 

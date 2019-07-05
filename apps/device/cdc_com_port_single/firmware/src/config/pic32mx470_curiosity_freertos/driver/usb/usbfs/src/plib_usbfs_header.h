@@ -13,12 +13,12 @@
 
 /* Default definition used for all API dispatch functions */
 #ifndef PLIB_INLINE_API
-    #define PLIB_INLINE_API extern inline
+     #define PLIB_INLINE_API static inline 
 #endif
 
 /* Default definition used for all other functions */
 #ifndef PLIB_INLINE
-    #define PLIB_INLINE extern inline
+     #define PLIB_INLINE static inline 
 #endif
 
 #ifndef _PLIB_UNSUPPORTED

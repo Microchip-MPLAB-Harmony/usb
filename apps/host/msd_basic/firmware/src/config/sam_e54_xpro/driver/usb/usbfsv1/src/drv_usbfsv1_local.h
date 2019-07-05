@@ -88,7 +88,7 @@
  * This object is used by the driver as IRP place
  * holder along with queuing feature.
  ***************************************************/
-typedef struct _USB_DEVICE_IRP_LOCAL 
+typedef struct _USB_DEVICE_IRP_LOCAL
 {
     /* Pointer to the data buffer */
     void * data;
@@ -140,7 +140,7 @@ DRV_USBFSV1_DEVICE_ENDPOINT_STATE;
 
 typedef struct
 {
-    /* This is the IRP queue for 
+    /* This is the IRP queue for
      * the endpoint */
     USB_DEVICE_IRP_LOCAL * irpQueue;
 
@@ -162,7 +162,7 @@ DRV_USBFSV1_DEVICE_ENDPOINT_OBJ;
  * is not the same as the public IRP status
  *********************************************/
 typedef enum
-{   
+{
     DRV_USBFSV1_HOST_IRP_STATE_SETUP_STAGE,
     DRV_USBFSV1_HOST_IRP_STATE_SETUP_TOKEN_SENT,
     DRV_USBFSV1_HOST_IRP_STATE_DATA_STAGE,
@@ -172,7 +172,7 @@ typedef enum
     DRV_USBFSV1_HOST_IRP_STATE_COMPLETE,
     DRV_USBFSV1_HOST_IRP_STATE_ABORTED
 }
-DRV_USBFSV1_HOST_IRP_STATE; 
+DRV_USBFSV1_HOST_IRP_STATE;
 
 /*********************************************
  * This is the local USB Host IRP object
@@ -180,18 +180,18 @@ DRV_USBFSV1_HOST_IRP_STATE;
 typedef struct _USB_HOST_IRP_LOCAL
 {
     /* Points to the 8 byte setup command
-     * packet in case this is a IRP is 
+     * packet in case this is a IRP is
      * scheduled on a CONTROL pipe. Should
      * be NULL otherwise */
     void * setup;
 
     /* Pointer to data buffer */
     void * data;
-    
+
     /* Size of the data buffer */
     unsigned int size;
-    
-    /* Status of the IRP */ 
+
+    /* Status of the IRP */
     USB_HOST_IRP_STATUS status;
 
     /* Request specific flags */
@@ -201,7 +201,7 @@ typedef struct _USB_HOST_IRP_LOCAL
     uintptr_t userData;
 
     /* Pointer to function to be called
-     * when IRP is terminated. Can be 
+     * when IRP is terminated. Can be
      * NULL, in which case the function
      * will not be called. */
     void (*callback)(struct _USB_HOST_IRP * irp);
@@ -231,10 +231,10 @@ typedef struct _DRV_USBFSV1_HOST_PIPE_OBJ
 
     /* Client that owns this pipe */
     DRV_HANDLE hClient;
-    
+
     /* USB endpoint and direction */
     USB_ENDPOINT endpointAndDirection;
-    
+
     /* USB Endpoint type */
     USB_TRANSFER_TYPE pipeType;
 
@@ -246,7 +246,7 @@ typedef struct _DRV_USBFSV1_HOST_PIPE_OBJ
 
     /* The NAK counter for the IRP
      * being served on the pipe */
-    
+
     uint32_t nakCounter;
 
     /* Pipe endpoint size*/
@@ -287,7 +287,7 @@ DRV_USBFSV1_HOST_PIPE_OBJ;
 
 /***********************************************
  * Possible states for the 1 millisecond timer
- * interrupt task. 
+ * interrupt task.
  ***********************************************/
 typedef enum
 {
@@ -324,10 +324,10 @@ DRV_USBFSV1_HOST_SW_EP;
 
 typedef struct _DRV_USBFSV1_HOST_TRANSFER_GROUP
 {
-    /* The first pipe in this transfer 
+    /* The first pipe in this transfer
      * group */
     DRV_USBFSV1_HOST_PIPE_OBJ * pipe;
-    
+
     /* The current pipe being serviced
      * in this transfer group */
     DRV_USBFSV1_HOST_PIPE_OBJ * currentPipe;
@@ -361,7 +361,7 @@ typedef enum
 DRV_USBFSV1_TRANSACTION_RESULT;
 
 /***********************************************
- * USB Driver flags. Binary flags needed to 
+ * USB Driver flags. Binary flags needed to
  * track different states of the USB driver.
  ***********************************************/
 typedef enum
@@ -370,7 +370,7 @@ typedef enum
     /* Driver Host Mode operation has been enabled */
     DRV_USBFSV1_FLAG_HOST_MODE_ENABLED = /*DOM-IGNORE-BEGIN*/0x10/*DOM-IGNORE-END*/,
 
-  
+
 } DRV_USBFSV1_FLAGS;
 
 /**************************************
@@ -417,21 +417,6 @@ typedef struct
 
 
 /*********************************************
- * Driver NON ISR Tasks routine states.
- *********************************************/
-
-typedef enum
-{
-    /* Driver initializes the required operation mode  */
-    DRV_USBFSV1_TASK_STATE_INITIALIZE_OPERATION_MODE = 1,
-
-    /* Driver has complete initialization and can be opened */
-    DRV_USBFSV1_TASK_STATE_RUNNING
-
-} DRV_USBFSV1_TASK_STATE;
-
-
-/*********************************************
  * Host Mode Device Attach Detach State
  ********************************************/
 typedef enum
@@ -472,26 +457,26 @@ typedef enum
 {
     DRV_USBFSV1_DEVICE_EP0_STATE_EXPECTING_SETUP_FROM_HOST,
     DRV_USBFSV1_DEVICE_EP0_STATE_WAITING_FOR_SETUP_IRP_FROM_CLIENT,
-	
+
     DRV_USBFSV1_DEVICE_EP0_STATE_EXPECTING_RX_DATA_STAGE_FROM_HOST,
 	DRV_USBFSV1_DEVICE_EP0_STATE_WAITING_FOR_RX_DATA_IRP_FROM_CLIENT,
     DRV_USBFSV1_DEVICE_EP0_STATE_WAITING_FOR_RX_STATUS_IRP_FROM_CLIENT,
     DRV_USBFSV1_DEVICE_EP0_STATE_WAITING_FOR_RX_STATUS_COMPLETE,
-	
+
     DRV_USBFSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_DATA_IRP_FROM_CLIENT,
     DRV_USBFSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_IRP_FROM_CLIENT,
 	DRV_USBFSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_COMPLETE,
 	DRV_USBFSV1_DEVICE_EP0_STATE_TX_DATA_STAGE_IN_PROGRESS
 }
-DRV_USBFSV1_DEVICE_EP0_STATE;	
-	
+DRV_USBFSV1_DEVICE_EP0_STATE;
+
 /***********************************************
  * Driver object structure. One object per
  * hardware instance
  **********************************************/
 
 typedef struct _DRV_USBFSV1_OBJ_STRUCT
-{	
+{
     /* Indicates this object is in use */
     bool inUse;
 
@@ -500,7 +485,7 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
 
     /* Set if device if D+ pull up is enabled. */
     bool deviceAttached;
-    
+
     /* The object is current in an interrupt context */
     bool isInInterruptContext;
 
@@ -539,7 +524,7 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
 
     /* Pointer to the endpoint 0 Buffers */
     uint8_t * endpoint0BufferPtr[DEVICE_DESC_BANK_NUMBER];
-	
+
     /* Next Ping Pong state */
     uint32_t rxEndpointsNextPingPong;
     uint32_t txEndpointsNextPingPong;
@@ -550,22 +535,19 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
     /* Contains the EPO state */
     DRV_USBFSV1_DEVICE_EP0_STATE endpoint0State;
 
-    /* The USB peripheral associated with 
+    /* The USB peripheral associated with
      * the object */
     usb_registers_t * usbID;
 
     /* Attach state of the device */
     DRV_USBFSV1_HOST_ATTACH_STATE attachState;
-    
+
     /* Pointer to the endpoint table */
     DRV_USBFSV1_HOST_ENDPOINT_OBJ hostEndpointTable[DRV_USBFSV1_HOST_MAXIMUM_ENDPOINTS_NUMBER];
 
     /* Root Hub Port 0 attached device speed in host mode
      * In device mode, the speed at which the device attached */
     USB_SPEED deviceSpeed;
-
-    /* Non ISR Task Routine state */
-    DRV_USBFSV1_TASK_STATE state;
 
     /* Client data that will be returned at callback */
     uintptr_t  hClientArg;
@@ -578,7 +560,7 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
 
     /* Callback to determine the Vbus level */
     DRV_USBFSV1_VBUS_COMPARATOR vbusComparator;
-    
+
     /* This is array of device endpoint objects pointers */
     DRV_USBFSV1_DEVICE_ENDPOINT_OBJ * deviceEndpointObj[DRV_USBFSV1_ENDPOINTS_NUMBER];
 
@@ -607,7 +589,7 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
     _DRV_USBFSV1_FOR_HOST(uint8_t, globalBWConsumed);
 
     /* Variable used SW Endpoint objects that is used by this HW instances for
-     * USB transfer scheduling */     
+     * USB transfer scheduling */
     _DRV_USBFSV1_FOR_HOST(DRV_USBFSV1_HOST_SW_EP, drvUSBHostSWEp[_DRV_USBFSV1_SW_EP_NUMBER]);
 
     /* This is needed to track if the host is generating reset signal */
@@ -615,26 +597,26 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
 
     /* This counts the attach detach debounce interval*/
     _DRV_USBFSV1_FOR_HOST(uint32_t, attachDebounceCounter);
-    
+
     /* This is the post detach delay counter */
     _DRV_USBFSV1_FOR_HOST(uint32_t, detachDebounceCounter);
-    
+
     /* This flag is true if an attach de-bounce count is in progress */
     _DRV_USBFSV1_FOR_HOST(bool, isAttachDebouncing);
-    
+
     /* This flag is true if an detach de-bounce count is in progress */
     _DRV_USBFSV1_FOR_HOST(bool, isDetachDebouncing);
-    
+
     /* This flag is true if an detach event has come and device de-enumeration
      * operation is in progress  */
     _DRV_USBFSV1_FOR_HOST(bool, isDeviceDeenumerating);
-    
+
     /* This is the pointer to host Pipe descriptor table */
     _DRV_USBFSV1_FOR_HOST(usb_descriptor_host_registers_t *, hostEndpointTablePtr);
 
     /* The parent UHD assigned by the host */
     _DRV_USBFSV1_FOR_HOST(USB_HOST_DEVICE_OBJ_HANDLE, usbHostDeviceInfo);
-    
+
     /* The UHD of the device attached to port assigned by the host */
     _DRV_USBFSV1_FOR_HOST(USB_HOST_DEVICE_OBJ_HANDLE, attachedDeviceObjHandle);
 
@@ -657,9 +639,9 @@ void _DRV_USBFSV1_HOST_AttachDetachStateMachine (DRV_USBFSV1_OBJ * hDriver);
 
 bool _DRV_USBFSV1_HOST_TransferSchedule
 (
-    DRV_USBFSV1_OBJ * pusbdrvObj, 
-    DRV_USBFSV1_TRANSACTION_RESULT lastResult, 
-    unsigned int transactionSize, 
+    DRV_USBFSV1_OBJ * pusbdrvObj,
+    DRV_USBFSV1_TRANSACTION_RESULT lastResult,
+    unsigned int transactionSize,
     bool frameExpiry
 );
 

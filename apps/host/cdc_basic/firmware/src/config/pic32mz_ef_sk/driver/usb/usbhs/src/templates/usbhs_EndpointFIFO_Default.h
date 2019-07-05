@@ -62,7 +62,7 @@
     PLIB_USBHS_EndpointFIFOLoad function.
 */
 
-PLIB_TEMPLATE void USBHS_EndpointFIFOLoad_Default
+void PLIB_TEMPLATE USBHS_EndpointFIFOLoad_Default
 ( 
     USBHS_MODULE_ID index , 
     uint8_t endpoint , 
@@ -108,7 +108,7 @@ PLIB_TEMPLATE void USBHS_EndpointFIFOLoad_Default
     PLIB_USBHS_DeviceEPFIFOLoad function.
 */
 
-PLIB_TEMPLATE void USBHS_DeviceEPFIFOLoad_Default
+void PLIB_TEMPLATE USBHS_DeviceEPFIFOLoad_Default
 ( 
     USBHS_MODULE_ID index , 
     uint8_t endpoint, 
@@ -143,7 +143,7 @@ PLIB_TEMPLATE void USBHS_DeviceEPFIFOLoad_Default
     PLIB_USBHS_EndpointFIFOUnload function.
 */
 
-PLIB_TEMPLATE int USBHS_EndpointFIFOUnload_Default
+int PLIB_TEMPLATE USBHS_EndpointFIFOUnload_Default
 ( 
     USBHS_MODULE_ID index, 
     uint8_t endpoint, 
@@ -201,7 +201,7 @@ PLIB_TEMPLATE int USBHS_EndpointFIFOUnload_Default
     PLIB_USBHS_DeviceEPFIFOUnload function.
 */
 
-PLIB_TEMPLATE int USBHS_DeviceEPFIFOUnload_Default
+int PLIB_TEMPLATE USBHS_DeviceEPFIFOUnload_Default
 ( 
     USBHS_MODULE_ID index, 
     uint8_t endpoint, 
@@ -247,7 +247,7 @@ PLIB_TEMPLATE int USBHS_DeviceEPFIFOUnload_Default
     PLIB_USBHS_Endpoint0SetupPacketLoad function.
 */
 
-PLIB_TEMPLATE void USBHS_Endpoint0SetupPacketLoad_Default
+void PLIB_TEMPLATE USBHS_Endpoint0SetupPacketLoad_Default
 ( 
     USBHS_MODULE_ID index, 
     void * setupPacket, 
@@ -296,7 +296,7 @@ PLIB_TEMPLATE void USBHS_Endpoint0SetupPacketLoad_Default
     PLIB_USBHS_Endpoint0SetupPacketUnload function.
 */
 
-PLIB_TEMPLATE void USBHS_Endpoint0SetupPacketUnload_Default
+void PLIB_TEMPLATE USBHS_Endpoint0SetupPacketUnload_Default
 ( 
     USBHS_MODULE_ID index, 
     void * dest 
@@ -326,7 +326,7 @@ PLIB_TEMPLATE void USBHS_Endpoint0SetupPacketUnload_Default
     PLIB_USBHS_Endpoint0FIFOFlush function.
 */
 
-PLIB_TEMPLATE void USBHS_Endpoint0FIFOFlush_Default( USBHS_MODULE_ID index )
+void PLIB_TEMPLATE USBHS_Endpoint0FIFOFlush_Default( USBHS_MODULE_ID index )
 {
     /* This function flushes the EP0 FIFO. The FIFO can be flushed only if it
      * contains data. Hence the check for TXPKTRDY or RXPKTRDY */
@@ -353,7 +353,7 @@ PLIB_TEMPLATE void USBHS_Endpoint0FIFOFlush_Default( USBHS_MODULE_ID index )
     PLIB_USBHS_EndpointTxFIFOFlush function.
 */
 
-PLIB_TEMPLATE void USBHS_EndpointTxFIFOFlush_Default
+void PLIB_TEMPLATE USBHS_EndpointTxFIFOFlush_Default
 ( 
     USBHS_MODULE_ID index, 
     uint8_t endpoint 
@@ -379,7 +379,7 @@ PLIB_TEMPLATE void USBHS_EndpointTxFIFOFlush_Default
     PLIB_USBHS_EndpointRxFIFOFlush function.
 */
 
-PLIB_TEMPLATE void USBHS_EndpointRxFIFOFlush_Default
+void PLIB_TEMPLATE USBHS_EndpointRxFIFOFlush_Default
 ( 
     USBHS_MODULE_ID index, 
     uint8_t endpoint 
@@ -406,7 +406,7 @@ PLIB_TEMPLATE void USBHS_EndpointRxFIFOFlush_Default
 */
 
 #define PLIB_USBHS_ExistsEndpointFIFO PLIB_USBHS_ExistsEndpointFIFO
-PLIB_TEMPLATE bool USBHS_ExistsEndpointFIFO_Default( USBHS_MODULE_ID index )
+bool PLIB_TEMPLATE USBHS_ExistsEndpointFIFO_Default( USBHS_MODULE_ID index )
 {
     return true;
 }

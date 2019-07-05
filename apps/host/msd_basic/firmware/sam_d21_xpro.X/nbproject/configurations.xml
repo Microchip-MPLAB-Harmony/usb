@@ -6,7 +6,7 @@
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_d21_xpro" projectFiles="true">
-          <logicalFolder name="f2" displayName="bsp" projectFiles="true">
+          <logicalFolder name="f4" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_d21_xpro/bsp/bsp.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f5" displayName="driver" projectFiles="true">
@@ -24,26 +24,29 @@
             <itemPath>../src/config/sam_d21_xpro/driver/driver.h</itemPath>
             <itemPath>../src/config/sam_d21_xpro/driver/driver_common.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f3" displayName="clock" projectFiles="true">
+          <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
+            <logicalFolder name="f4" displayName="clock" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/peripheral/clock/plib_clock.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="evsys" projectFiles="true">
+            <logicalFolder name="f2" displayName="evsys" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/peripheral/evsys/plib_evsys.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="nvic" projectFiles="true">
+            <logicalFolder name="f5" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/peripheral/nvic/plib_nvic.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="port" projectFiles="true">
+            <logicalFolder name="f1" displayName="nvmctrl" projectFiles="true">
+              <itemPath>../src/config/sam_d21_xpro/peripheral/nvmctrl/plib_nvmctrl.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="port" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/peripheral/port/plib_port.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="tc" projectFiles="true">
+            <logicalFolder name="f6" displayName="tc" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/peripheral/tc/plib_tc_common.h</itemPath>
               <itemPath>../src/config/sam_d21_xpro/peripheral/tc/plib_tc3.h</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f4" displayName="system" projectFiles="true">
-            <logicalFolder name="f1" displayName="fs" projectFiles="true">
+          <logicalFolder name="f3" displayName="system" projectFiles="true">
+            <logicalFolder name="f2" displayName="fs" projectFiles="true">
               <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
                 <logicalFolder name="f1" displayName="file_system" projectFiles="true">
                   <itemPath>../src/config/sam_d21_xpro/system/fs/fat_fs/src/file_system/ff.h</itemPath>
@@ -62,11 +65,11 @@
               <itemPath>../src/config/sam_d21_xpro/system/fs/sys_fs_media_manager.h</itemPath>
               <itemPath>../src/config/sam_d21_xpro/system/fs/src/sys_fs_media_manager_local.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="int" projectFiles="true">
+            <logicalFolder name="f3" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/system/int/sys_int.h</itemPath>
               <itemPath>../src/config/sam_d21_xpro/system/int/sys_int_mapping.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="time" projectFiles="true">
+            <logicalFolder name="f1" displayName="time" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/system/time/sys_time.h</itemPath>
               <itemPath>../src/config/sam_d21_xpro/system/time/sys_time_definitions.h</itemPath>
               <itemPath>../src/config/sam_d21_xpro/system/time/src/sys_time_local.h</itemPath>
@@ -76,29 +79,29 @@
             <itemPath>../src/config/sam_d21_xpro/system/system_module.h</itemPath>
             <itemPath>../src/config/sam_d21_xpro/system/system_media.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f1" displayName="usb" projectFiles="true">
+          <logicalFolder name="f2" displayName="usb" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
+              <itemPath>../src/config/sam_d21_xpro/usb/src/usb_host_msd_local.h</itemPath>
+              <itemPath>../src/config/sam_d21_xpro/usb/src/usb_host_scsi_local.h</itemPath>
               <itemPath>../src/config/sam_d21_xpro/usb/src/usb_host_local.h</itemPath>
               <itemPath>../src/config/sam_d21_xpro/usb/src/usb_host_hub_mapping.h</itemPath>
               <itemPath>../src/config/sam_d21_xpro/usb/src/usb_external_dependencies.h</itemPath>
-              <itemPath>../src/config/sam_d21_xpro/usb/src/usb_host_msd_local.h</itemPath>
-              <itemPath>../src/config/sam_d21_xpro/usb/src/usb_host_scsi_local.h</itemPath>
             </logicalFolder>
-            <itemPath>../src/config/sam_d21_xpro/usb/usb_host.h</itemPath>
-            <itemPath>../src/config/sam_d21_xpro/usb/usb_common.h</itemPath>
-            <itemPath>../src/config/sam_d21_xpro/usb/usb_chapter_9.h</itemPath>
             <itemPath>../src/config/sam_d21_xpro/usb/usb_host_msd.h</itemPath>
             <itemPath>../src/config/sam_d21_xpro/usb/usb_host_scsi.h</itemPath>
             <itemPath>../src/config/sam_d21_xpro/usb/usb_msd.h</itemPath>
             <itemPath>../src/config/sam_d21_xpro/usb/scsi.h</itemPath>
+            <itemPath>../src/config/sam_d21_xpro/usb/usb_host.h</itemPath>
+            <itemPath>../src/config/sam_d21_xpro/usb/usb_common.h</itemPath>
+            <itemPath>../src/config/sam_d21_xpro/usb/usb_chapter_9.h</itemPath>
             <itemPath>../src/config/sam_d21_xpro/usb/usb_host_client_driver.h</itemPath>
             <itemPath>../src/config/sam_d21_xpro/usb/usb_host_hub_interface.h</itemPath>
             <itemPath>../src/config/sam_d21_xpro/usb/usb_hub.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/config/sam_d21_xpro/user.h</itemPath>
           <itemPath>../src/config/sam_d21_xpro/device_cache.h</itemPath>
           <itemPath>../src/config/sam_d21_xpro/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_d21_xpro/definitions.h</itemPath>
+          <itemPath>../src/config/sam_d21_xpro/user.h</itemPath>
           <itemPath>../src/config/sam_d21_xpro/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
@@ -174,7 +177,7 @@
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="sam_d21_xpro" projectFiles="true">
-          <logicalFolder name="f2" displayName="bsp" projectFiles="true">
+          <logicalFolder name="f5" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/sam_d21_xpro/bsp/bsp.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f6" displayName="driver" projectFiles="true">
@@ -187,28 +190,31 @@
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f3" displayName="clock" projectFiles="true">
+          <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
+            <logicalFolder name="f4" displayName="clock" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/peripheral/clock/plib_clock.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="evsys" projectFiles="true">
+            <logicalFolder name="f2" displayName="evsys" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/peripheral/evsys/plib_evsys.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="nvic" projectFiles="true">
+            <logicalFolder name="f5" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/peripheral/nvic/plib_nvic.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="port" projectFiles="true">
+            <logicalFolder name="f1" displayName="nvmctrl" projectFiles="true">
+              <itemPath>../src/config/sam_d21_xpro/peripheral/nvmctrl/plib_nvmctrl.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="port" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/peripheral/port/plib_port.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="tc" projectFiles="true">
+            <logicalFolder name="f6" displayName="tc" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/peripheral/tc/plib_tc3.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f5" displayName="stdio" projectFiles="true">
+          <logicalFolder name="f3" displayName="stdio" projectFiles="true">
             <itemPath>../src/config/sam_d21_xpro/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
-            <logicalFolder name="f1" displayName="fs" projectFiles="true">
+            <logicalFolder name="f2" displayName="fs" projectFiles="true">
               <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
                 <itemPath>../src/config/sam_d21_xpro/system/fs/fat_fs/src/ff.c</itemPath>
                 <itemPath>../src/config/sam_d21_xpro/system/fs/fat_fs/src/diskio.c</itemPath>
@@ -219,26 +225,26 @@
               <itemPath>../src/config/sam_d21_xpro/system/fs/src/sys_fs.c</itemPath>
               <itemPath>../src/config/sam_d21_xpro/system/fs/src/sys_fs_media_manager.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="int" projectFiles="true">
+            <logicalFolder name="f3" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="time" projectFiles="true">
+            <logicalFolder name="f1" displayName="time" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/system/time/src/sys_time.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f1" displayName="usb" projectFiles="true">
+          <logicalFolder name="f2" displayName="usb" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
-              <itemPath>../src/config/sam_d21_xpro/usb/src/usb_host.c</itemPath>
               <itemPath>../src/config/sam_d21_xpro/usb/src/usb_host_msd.c</itemPath>
               <itemPath>../src/config/sam_d21_xpro/usb/src/usb_host_scsi.c</itemPath>
+              <itemPath>../src/config/sam_d21_xpro/usb/src/usb_host.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <itemPath>../src/config/sam_d21_xpro/usb_host_init_data.c</itemPath>
           <itemPath>../src/config/sam_d21_xpro/initialization.c</itemPath>
           <itemPath>../src/config/sam_d21_xpro/interrupts.c</itemPath>
           <itemPath>../src/config/sam_d21_xpro/exceptions.c</itemPath>
           <itemPath>../src/config/sam_d21_xpro/startup_xc32.c</itemPath>
           <itemPath>../src/config/sam_d21_xpro/libc_syscalls.c</itemPath>
+          <itemPath>../src/config/sam_d21_xpro/usb_host_init_data.c</itemPath>
           <itemPath>../src/config/sam_d21_xpro/tasks.c</itemPath>
         </logicalFolder>
       </logicalFolder>
@@ -264,7 +270,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.15</languageToolchainVersion>
+        <languageToolchainVersion>2.20</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
@@ -467,12 +473,18 @@
                   value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-3ffff"/>
+        <property key="poweroptions.powerenable" value="false"/>
+        <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
+        <property key="programoptions.preservedataflash.ranges"
+                  value="${memories.dataflash.default}"/>
         <property key="programoptions.preserveeeprom" value="false"/>
         <property key="programoptions.preserveeeprom.ranges" value=""/>
         <property key="programoptions.preserveprogram.ranges" value=""/>
         <property key="programoptions.preserveprogramrange" value="false"/>
         <property key="programoptions.preserveuserid" value="false"/>
+        <property key="programoptions.programuserotp" value="false"/>
+        <property key="voltagevalue" value=""/>
       </EdbgTool>
       <PICkit3PlatformTool>
         <property key="ADC 1" value="true"/>

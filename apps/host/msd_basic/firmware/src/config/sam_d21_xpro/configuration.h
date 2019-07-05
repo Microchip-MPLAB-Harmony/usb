@@ -79,6 +79,15 @@ extern "C" {
 // Section: System Service Configuration
 // *****************************************************************************
 // *****************************************************************************
+/* TIME System Service Configuration Options */
+#define SYS_TIME_INDEX_0                     0
+#define SYS_TIME_MAX_TIMERS                  5
+#define SYS_TIME_HW_COUNTER_WIDTH            16
+#define SYS_TIME_HW_COUNTER_PERIOD           0xFFFFU
+#define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
+#define SYS_TIME_CPU_CLOCK_FREQUENCY         48005120
+#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (200)
+
 
 /* File System Service Configuration */
 
@@ -105,15 +114,6 @@ extern "C" {
 #define SYS_FS_MEDIA_IDX0_DEVICE_NAME_VOLUME_IDX0			"/dev/sda1"
 								
 
-/* TIME System Service Configuration Options */
-#define SYS_TIME_INDEX_0                     0
-#define SYS_TIME_MAX_TIMERS                  5
-#define SYS_TIME_HW_COUNTER_WIDTH            16
-#define SYS_TIME_HW_COUNTER_PERIOD           0xFFFFU
-#define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
-#define SYS_TIME_CPU_CLOCK_FREQUENCY         8000000
-#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (200)
-
 
 
 // *****************************************************************************
@@ -128,6 +128,14 @@ extern "C" {
 // Section: Middleware & Other Library Configuration
 // *****************************************************************************
 // *****************************************************************************
+/* Number of MSD Function driver instances in the application */
+#define USB_HOST_MSD_INSTANCES_NUMBER         1
+
+/* Number of Logical Units */
+#define USB_HOST_SCSI_INSTANCES_NUMBER        1
+#define USB_HOST_MSD_LUN_NUMBERS              1
+
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: USB Host Layer Configuration
@@ -137,7 +145,6 @@ extern "C" {
 /* Number of Endpoints used */
 #define DRV_USBFSV1_ENDPOINTS_NUMBER                        1
 
-/* Total number of devices to be supported */
 #define USB_HOST_DEVICES_NUMBER                             1
 
 /* Size of Endpoint 0 buffer */
@@ -158,14 +165,6 @@ extern "C" {
 
 /* Number of Host Layer Clients */
 #define USB_HOST_CLIENTS_NUMBER                             1   
-
-/* Number of MSD Function driver instances in the application */
-#define USB_HOST_MSD_INSTANCES_NUMBER         1
-
-/* Number of Logical Units */
-#define USB_HOST_SCSI_INSTANCES_NUMBER        1
-#define USB_HOST_MSD_LUN_NUMBERS              1
-
 
 /*** USB Driver Configuration ***/
 

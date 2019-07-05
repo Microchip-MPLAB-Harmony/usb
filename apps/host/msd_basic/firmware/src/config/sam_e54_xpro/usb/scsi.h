@@ -288,26 +288,26 @@ typedef union __attribute__((packed))
     struct __attribute__((packed))
     {
         /* b6-b0 is Response Code Fixed or descriptor format */
-        unsigned ResponseCode:7;            
+        uint8_t ResponseCode:7;            
         
         /* Set to 1 to indicate information field is a valid value */
-        unsigned VALID:1;                    
+        uint8_t VALID:1;                    
 
         uint8_t Obsolete;
 
         /* Refer SPC-3 Section 4.5.6 */
-        unsigned SenseKey:4;                
+        uint8_t SenseKey:4;                
         
-        unsigned Resv:1;
+        uint8_t Resv:1;
 
         /* Incorrect Length Indicator */
-        unsigned ILI:1;                        
+        uint8_t ILI:1;                        
         
         /* End of Medium */
-        unsigned EOM:1;                        
+        uint8_t EOM:1;                        
         
         /* for READ and SPACE commands */
-        unsigned FILEMARK:1;                 
+        uint8_t FILEMARK:1;                 
         
         /* Device type or command specific (SPC-33.1.18) */
         uint8_t InformationB0;                

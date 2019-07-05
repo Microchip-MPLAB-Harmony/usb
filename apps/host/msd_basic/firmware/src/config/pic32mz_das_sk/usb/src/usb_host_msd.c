@@ -47,6 +47,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
+#include <stdio.h>
 #include "usb/usb_host_msd.h"
 #include "usb/src/usb_host_msd_local.h"
 #include "usb/usb_host_client_driver.h"
@@ -298,6 +299,7 @@ void _USB_HOST_MSD_TransferTasks
                              * This is done in the transfer error tasks routine. */
                             msdInstanceInfo->transferState = USB_HOST_MSD_TRANSFER_STATE_ERROR;
                             msdInstanceInfo->transferErrorTaskState = USB_HOST_MSD_TRANSFER_ERROR_STATE_RESET_RECOVERY;
+                            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r Problem CSW");
                             msdInstanceInfo->cswPhaseError = true;
                             _USB_HOST_MSD_ERROR_CALLBACK(msdInstanceIndex, USB_HOST_MSD_ERROR_CODE_CSW_PHASE_ERROR);
                         }
@@ -313,6 +315,7 @@ void _USB_HOST_MSD_TransferTasks
                             msdInstanceInfo->msdErrorCode = USB_HOST_MSD_ERROR_CODE_FAILED_BOT_TRANSFER;
                             msdInstanceInfo->msdState = USB_HOST_MSD_STATE_ERROR;
                             transferIsDone = true;
+                            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r Error in CSW phase");
                             processedBytes = 0;
                             msdResult = USB_HOST_MSD_RESULT_FAILURE;
                         }
@@ -323,6 +326,11 @@ void _USB_HOST_MSD_TransferTasks
                          * performed. See Figure 2 - Status transport flow in
                          * the BOT specification. */
 
+                        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r Problem CSW");
+                        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r Sig = 0x53425355 = 0x%X", msdCSW->dCSWSignature);
+                        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r Tag = 0xDD1331DD = 0x%X", msdCSW->dCSWTag);
+                        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r size(13) = %d", size);
+                        
                         msdInstanceInfo->transferState = USB_HOST_MSD_TRANSFER_STATE_ERROR;
                         msdInstanceInfo->transferErrorTaskState = USB_HOST_MSD_TRANSFER_ERROR_STATE_RESET_RECOVERY;
                     }
@@ -334,6 +342,7 @@ void _USB_HOST_MSD_TransferTasks
                      * machine is in a CSW retry state, then we know that this
                      * is the second time. */
 
+                    SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r CSW Stalled");
                     msdInstanceInfo->transferState = USB_HOST_MSD_TRANSFER_STATE_ERROR;
                     if(msdInstanceInfo->transferErrorTaskState == USB_HOST_MSD_TRANSFER_ERROR_STATE_CSW_RETRY)
                     {
@@ -1713,7 +1722,7 @@ USB_HOST_MSD_RESULT USB_HOST_MSD_Transfer
                 else
                 {
                     /* Un-commenting this line could result in too many messages on the console */
-                    /*SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host MSD: MSD Instance %d is busy. Cannot schedule BOT.", msdInstanceIndex);*/
+                    SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host MSD: MSD Instance %d is busy. Cannot schedule BOT.", msdInstanceIndex);
                     OSAL_MUTEX_Unlock(&(msdInstanceInfo->mutexMSDInstanceObject));
                     _USB_HOST_MSD_ERROR_CALLBACK(msdInstanceIndex, USB_HOST_MSD_ERROR_CODE_TRANSFER_BUSY);
                     result = USB_HOST_MSD_RESULT_BUSY;

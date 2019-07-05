@@ -156,8 +156,8 @@ typedef struct __attribute__((packed))
         uint8_t value;
         struct __attribute__((packed))
         {
-            unsigned            :7;
-            unsigned direction  :1;
+            uint8_t            :7;
+            uint8_t direction  :1;
         }bits;
     } bmCBWFlags;
 

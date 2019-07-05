@@ -54,7 +54,6 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
-
 #pragma config BOD33_DIS = SET
 #pragma config BOD33USERLEVEL = 0x1c
 #pragma config BOD33_ACTION = RESET
@@ -205,18 +204,19 @@ const SYS_TIME_INIT sysTimeInitData =
 
 void SYS_Initialize ( void* data )
 {
+    NVMCTRL_Initialize( );
+
   
     PORT_Initialize();
 
     CLOCK_Initialize();
 
 
-
-	BSP_Initialize();
     EVSYS_Initialize();
 
     TC0_TimerInitialize();
 
+	BSP_Initialize();
 
 
     sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);

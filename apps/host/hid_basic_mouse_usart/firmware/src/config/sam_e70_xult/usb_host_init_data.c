@@ -45,7 +45,7 @@ USB_HOST_HID_USAGE_DRIVER_INTERFACE usageDriverInterfaceMouse =
   .usageDriverEventHandler = _USB_HOST_HID_MOUSE_EventHandler,
   .usageDriverTask = _USB_HOST_HID_MOUSE_Task
 };
-USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY usageDriverTableEntry[1] =
+USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY usageDriverTableEntry[2] =
 {
 	{
         .usage = (USB_HID_USAGE_PAGE_GENERIC_DESKTOP_CONTROLS << 16) | USB_HID_USAGE_MOUSE,
@@ -57,7 +57,7 @@ USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY usageDriverTableEntry[1] =
 
 USB_HOST_HID_INIT hidInitData =
 {
-    .nUsageDriver = 1,
+    .nUsageDriver = 2,
     .usageDriverTable = usageDriverTableEntry
 };
 

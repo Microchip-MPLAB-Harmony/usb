@@ -617,12 +617,12 @@ typedef struct
     struct
     {
         /* selected via TPL_FLAG_VID_PID or TPL_FLAG_CLASS_SUBCLASS_PROTOCOL. */
-        unsigned driverType :1;
-        unsigned ignoreClass :1;
-        unsigned ignoreSubClass :1;
-        unsigned ignoreProtocol :1;
-        unsigned pidMasked :1;
-        unsigned ignoreVIDPID :1;
+        uint8_t driverType :1;
+        uint8_t ignoreClass :1;
+        uint8_t ignoreSubClass :1;
+        uint8_t ignoreProtocol :1;
+        uint8_t pidMasked :1;
+        uint8_t ignoreVIDPID :1;
     } tplFlags;
 
     /* Initialization data to be passed to the client driver */
