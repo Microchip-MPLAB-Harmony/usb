@@ -1356,15 +1356,7 @@
       </Symbols>
     </UniqueComponent>
     <UniqueComponent dnOrder="3" id="dfp"/>
-    <UniqueComponent dnOrder="4" id="drv_usb_udphs">
-      <Symbols dnOrder="0">
-        <Combo dnOrder="0" id="USB_SPEED">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="High Speed"/>
-          </Values>
-        </Combo>
-      </Symbols>
-    </UniqueComponent>
+    <UniqueComponent dnOrder="4" id="drv_usb_udphs"/>
     <UniqueComponent dnOrder="5" id="HarmonyCore">
       <Symbols dnOrder="0">
         <File dnOrder="0" id="APP0_C">
@@ -1647,8 +1639,8 @@
         <ElementPosition dnOrder="2" id="cmsis" x="340" y="20"/>
         <ElementPosition dnOrder="3" id="core" x="240" y="19"/>
         <ElementPosition dnOrder="4" id="dfp" x="20" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_usb_udphs" x="480" y="20"/>
-        <ElementPosition dnOrder="6" id="usb_device" x="700" y="20"/>
+        <ElementPosition dnOrder="5" id="drv_usb_udphs" x="199" y="89"/>
+        <ElementPosition dnOrder="6" id="usb_device" x="42" y="199"/>
         <ElementPosition dnOrder="7" id="usb_device_hid" x="880" y="20"/>
       </ElementPositions>
     </ComponentGraph>
