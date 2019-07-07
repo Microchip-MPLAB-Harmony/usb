@@ -52,7 +52,6 @@
 #include <xc.h>
 #include "ISR_Support.h"
 
-
     .extern  CORE_TIMER_Handler
 
     .section   .vector_0,code, keep
@@ -71,8 +70,6 @@ IntVectorCORE_TIMER_Handler:
     nop
     portRESTORE_CONTEXT
     .end   IntVectorCORE_TIMER_Handler
-
-
     .extern  USB_Handler
 
     .section   .vector_132,code, keep
@@ -91,8 +88,6 @@ IntVectorUSB_Handler:
     nop
     portRESTORE_CONTEXT
     .end   IntVectorUSB_Handler
-
-
     .extern  USB_DMA_Handler
 
     .section   .vector_133,code, keep
@@ -111,8 +106,6 @@ IntVectorUSB_DMA_Handler:
     nop
     portRESTORE_CONTEXT
     .end   IntVectorUSB_DMA_Handler
-
-
     .extern  FLASH_CONTROL_Handler
 
     .section   .vector_167,code, keep
@@ -131,5 +124,4 @@ IntVectorFLASH_CONTROL_Handler:
     nop
     portRESTORE_CONTEXT
     .end   IntVectorFLASH_CONTROL_Handler
-
 

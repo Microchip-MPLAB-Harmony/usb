@@ -104,8 +104,8 @@ extern "C" {
 #define DRV_MEMORY_BUFFER_QUEUE_SIZE_IDX0    1
 #define DRV_MEMORY_DEVICE_START_ADDRESS      0x9d100000
 #define DRV_MEMORY_DEVICE_MEDIA_SIZE         32UL
-#define DRV_MEMORY_DEVICE_PROGRAM_SIZE       0x800
-#define DRV_MEMORY_DEVICE_ERASE_SIZE         0x4000
+#define DRV_MEMORY_DEVICE_PROGRAM_SIZE       2048
+#define DRV_MEMORY_DEVICE_ERASE_SIZE         16384
 
 /* Memory Driver Instance 0 RTOS Configurations*/
 #define DRV_MEMORY_STACK_SIZE_IDX0           1024
@@ -154,7 +154,7 @@ extern "C" {
 
 
 /* Maximum instances of MSD function driver */
-#define USB_DEVICE_MSD_INSTANCES_NUMBER     1
+#define USB_DEVICE_MSD_INSTANCES_NUMBER     1 
 
 #define USB_DEVICE_MSD_NUM_SECTOR_BUFFERS 1
 
