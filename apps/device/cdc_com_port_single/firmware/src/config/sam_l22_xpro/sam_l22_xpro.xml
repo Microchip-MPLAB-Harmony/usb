@@ -813,14 +813,7 @@
       </Symbols>
     </UniqueComponent>
     <GeneratorComponent dnOrder="10" id="usb_device_cdc">
-      <Symbols dnOrder="0">
-        <Integer dnOrder="0" id="CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="usb_device_cdc" value="6"/>
-          </Values>
-        </Integer>
-      </Symbols>
-      <Instances dnOrder="1">
+      <Instances dnOrder="0">
         <InstanceComponent dnOrder="0" id="usb_device_cdc" instance="0">
           <Symbols dnOrder="0">
             <Integer dnOrder="0" id="CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER">
@@ -862,7 +855,7 @@
         <ElementPosition dnOrder="7" id="nvmctrl" x="20" y="20"/>
         <ElementPosition dnOrder="8" id="pm" x="288" y="24"/>
         <ElementPosition dnOrder="9" id="usb_device" x="174" y="130"/>
-        <ElementPosition dnOrder="10" id="usb_device_cdc" x="315" y="137"/>
+        <ElementPosition dnOrder="10" id="usb_device_cdc" x="311" y="125"/>
       </ElementPositions>
     </ComponentGraph>
   </UserData>

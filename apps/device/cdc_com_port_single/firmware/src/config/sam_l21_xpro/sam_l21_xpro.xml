@@ -764,14 +764,7 @@
       </Symbols>
     </UniqueComponent>
     <GeneratorComponent dnOrder="10" id="usb_device_cdc">
-      <Symbols dnOrder="0">
-        <Integer dnOrder="0" id="CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="usb_device_cdc" value="6"/>
-          </Values>
-        </Integer>
-      </Symbols>
-      <Instances dnOrder="1">
+      <Instances dnOrder="0">
         <InstanceComponent dnOrder="0" id="usb_device_cdc" instance="0">
           <Symbols dnOrder="0">
             <Integer dnOrder="0" id="CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER">
@@ -802,17 +795,17 @@
   <UserData>
     <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="BSP_SAM_L21_Xplained_Pro" x="820" y="20"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="710" y="60"/>
-        <ElementPosition dnOrder="2" id="cmsis" x="330" y="60"/>
-        <ElementPosition dnOrder="3" id="core" x="721" y="20"/>
-        <ElementPosition dnOrder="4" id="dfp" x="340" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_usbfs_v1" x="470" y="77"/>
-        <ElementPosition dnOrder="6" id="evsys" x="180" y="20"/>
+        <ElementPosition dnOrder="0" id="BSP_SAM_L21_Xplained_Pro" x="182" y="253"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="18" y="197"/>
+        <ElementPosition dnOrder="2" id="cmsis" x="165" y="71"/>
+        <ElementPosition dnOrder="3" id="core" x="420" y="49"/>
+        <ElementPosition dnOrder="4" id="dfp" x="287" y="20"/>
+        <ElementPosition dnOrder="5" id="drv_usbfs_v1" x="11" y="108"/>
+        <ElementPosition dnOrder="6" id="evsys" x="165" y="21"/>
         <ElementPosition dnOrder="7" id="nvmctrl" x="20" y="20"/>
-        <ElementPosition dnOrder="8" id="pm" x="560" y="20"/>
-        <ElementPosition dnOrder="9" id="usb_device" x="30" y="100"/>
-        <ElementPosition dnOrder="10" id="usb_device_cdc" x="210" y="100"/>
+        <ElementPosition dnOrder="8" id="pm" x="291" y="47"/>
+        <ElementPosition dnOrder="9" id="usb_device" x="167" y="109"/>
+        <ElementPosition dnOrder="10" id="usb_device_cdc" x="304" y="109"/>
       </ElementPositions>
     </ComponentGraph>
     <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
