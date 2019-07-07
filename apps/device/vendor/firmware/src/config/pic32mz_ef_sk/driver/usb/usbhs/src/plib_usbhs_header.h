@@ -1,21 +1,42 @@
+/*******************************************************************************
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
+*
+* Subject to your compliance with these terms, you may use Microchip software
+* and any derivatives exclusively with Microchip products. It is your
+* responsibility to comply with third party license terms applicable to your
+* use of third party software (including open source software) that may
+* accompany Microchip software.
+*
+* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+* EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+* WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+* PARTICULAR PURPOSE.
+*
+* IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+* INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+* WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+* BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
+* FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
+* ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+*******************************************************************************/
+
 /* Created by plibgen $Revision: 1.31 $ */
 
 
-/* Section 1 - Enumerate instances, define constants, VREGs */
+//* Section 1 - Enumerate instances, define constants, VREGs */
 
 #include <xc.h>
 #include <stdbool.h>
 
-// TODO #include "peripheral/peripheral_common_32bit.h"
-
 /* Default definition used for all API dispatch functions */
 #ifndef PLIB_INLINE_API
-    #define PLIB_INLINE_API extern inline
+     #define PLIB_INLINE_API static inline 
 #endif
 
 /* Default definition used for all other functions */
 #ifndef PLIB_INLINE
-    #define PLIB_INLINE extern inline
+    #define PLIB_INLINE static inline 
 #endif
 
 #ifndef _PLIB_UNSUPPORTED
@@ -25,6 +46,7 @@
 #ifndef PLIB_ASSERT
     #define PLIB_ASSERT
 #endif 
+
 
 typedef enum {
 
