@@ -5,113 +5,113 @@
                    displayName="Header Files"
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
-        <logicalFolder name="f1" displayName="default" projectFiles="true">
+        <logicalFolder name="f1" displayName="sam_l21_xpro" projectFiles="true">
           <logicalFolder name="f5" displayName="bsp" projectFiles="true">
-            <itemPath>../src/config/default/bsp/bsp.h</itemPath>
+            <itemPath>../src/config/sam_l21_xpro/bsp/bsp.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f4" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="usb" projectFiles="true">
               <logicalFolder name="f1" displayName="usbfsv1" projectFiles="true">
                 <logicalFolder name="f1" displayName="src" projectFiles="true">
-                  <itemPath>../src/config/default/driver/usb/usbfsv1/src/drv_usbfsv1_variant_mapping.h</itemPath>
-                  <itemPath>../src/config/default/driver/usb/usbfsv1/src/drv_usbfsv1_local.h</itemPath>
+                  <itemPath>../src/config/sam_l21_xpro/driver/usb/usbfsv1/src/drv_usbfsv1_variant_mapping.h</itemPath>
+                  <itemPath>../src/config/sam_l21_xpro/driver/usb/usbfsv1/src/drv_usbfsv1_local.h</itemPath>
                 </logicalFolder>
-                <itemPath>../src/config/default/driver/usb/usbfsv1/drv_usbfsv1.h</itemPath>
+                <itemPath>../src/config/sam_l21_xpro/driver/usb/usbfsv1/drv_usbfsv1.h</itemPath>
               </logicalFolder>
-              <itemPath>../src/config/default/driver/usb/drv_usb.h</itemPath>
-              <itemPath>../src/config/default/driver/usb/drv_usb_external_dependencies.h</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/driver/usb/drv_usb.h</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/driver/usb/drv_usb_external_dependencies.h</itemPath>
             </logicalFolder>
-            <itemPath>../src/config/default/driver/driver.h</itemPath>
-            <itemPath>../src/config/default/driver/driver_common.h</itemPath>
+            <itemPath>../src/config/sam_l21_xpro/driver/driver.h</itemPath>
+            <itemPath>../src/config/sam_l21_xpro/driver/driver_common.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f4" displayName="clock" projectFiles="true">
-              <itemPath>../src/config/default/peripheral/clock/plib_clock.h</itemPath>
+            <logicalFolder name="f5" displayName="clock" projectFiles="true">
+              <itemPath>../src/config/sam_l21_xpro/peripheral/clock/plib_clock.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="evsys" projectFiles="true">
-              <itemPath>../src/config/default/peripheral/evsys/plib_evsys.h</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/peripheral/evsys/plib_evsys.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="nvic" projectFiles="true">
-              <itemPath>../src/config/default/peripheral/nvic/plib_nvic.h</itemPath>
+            <logicalFolder name="f6" displayName="nvic" projectFiles="true">
+              <itemPath>../src/config/sam_l21_xpro/peripheral/nvic/plib_nvic.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="nvmctrl" projectFiles="true">
-              <itemPath>../src/config/default/peripheral/nvmctrl/plib_nvmctrl.h</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/peripheral/nvmctrl/plib_nvmctrl.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="pm" projectFiles="true">
-              <itemPath>../src/config/default/peripheral/pm/plib_pm.h</itemPath>
+            <logicalFolder name="f3" displayName="pm" projectFiles="true">
+              <itemPath>../src/config/sam_l21_xpro/peripheral/pm/plib_pm.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="port" projectFiles="true">
-              <itemPath>../src/config/default/peripheral/port/plib_port.h</itemPath>
+            <logicalFolder name="f4" displayName="port" projectFiles="true">
+              <itemPath>../src/config/sam_l21_xpro/peripheral/port/plib_port.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f7" displayName="tc" projectFiles="true">
-              <itemPath>../src/config/default/peripheral/tc/plib_tc_common.h</itemPath>
-              <itemPath>../src/config/default/peripheral/tc/plib_tc0.h</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/peripheral/tc/plib_tc_common.h</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/peripheral/tc/plib_tc0.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f3" displayName="system" projectFiles="true">
             <logicalFolder name="f2" displayName="fs" projectFiles="true">
               <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
                 <logicalFolder name="f1" displayName="file_system" projectFiles="true">
-                  <itemPath>../src/config/default/system/fs/fat_fs/src/file_system/ff.h</itemPath>
-                  <itemPath>../src/config/default/system/fs/fat_fs/src/file_system/ffconf.h</itemPath>
+                  <itemPath>../src/config/sam_l21_xpro/system/fs/fat_fs/src/file_system/ff.h</itemPath>
+                  <itemPath>../src/config/sam_l21_xpro/system/fs/fat_fs/src/file_system/ffconf.h</itemPath>
                 </logicalFolder>
                 <logicalFolder name="f2" displayName="hardware_access" projectFiles="true">
-                  <itemPath>../src/config/default/system/fs/fat_fs/src/hardware_access/diskio.h</itemPath>
+                  <itemPath>../src/config/sam_l21_xpro/system/fs/fat_fs/src/hardware_access/diskio.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
               <logicalFolder name="f2" displayName="mpfs" projectFiles="true">
-                <itemPath>../src/config/default/system/fs/mpfs/mpfs.h</itemPath>
-                <itemPath>../src/config/default/system/fs/mpfs/src/mpfs_local.h</itemPath>
+                <itemPath>../src/config/sam_l21_xpro/system/fs/mpfs/mpfs.h</itemPath>
+                <itemPath>../src/config/sam_l21_xpro/system/fs/mpfs/src/mpfs_local.h</itemPath>
               </logicalFolder>
-              <itemPath>../src/config/default/system/fs/sys_fs.h</itemPath>
-              <itemPath>../src/config/default/system/fs/src/sys_fs_local.h</itemPath>
-              <itemPath>../src/config/default/system/fs/sys_fs_media_manager.h</itemPath>
-              <itemPath>../src/config/default/system/fs/src/sys_fs_media_manager_local.h</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/system/fs/sys_fs.h</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/system/fs/src/sys_fs_local.h</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/system/fs/sys_fs_media_manager.h</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/system/fs/src/sys_fs_media_manager_local.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="int" projectFiles="true">
-              <itemPath>../src/config/default/system/int/sys_int.h</itemPath>
-              <itemPath>../src/config/default/system/int/sys_int_mapping.h</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/system/int/sys_int.h</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/system/int/sys_int_mapping.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="time" projectFiles="true">
-              <itemPath>../src/config/default/system/time/sys_time.h</itemPath>
-              <itemPath>../src/config/default/system/time/sys_time_definitions.h</itemPath>
-              <itemPath>../src/config/default/system/time/src/sys_time_local.h</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/system/time/sys_time.h</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/system/time/sys_time_definitions.h</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/system/time/src/sys_time_local.h</itemPath>
             </logicalFolder>
-            <itemPath>../src/config/default/system/system.h</itemPath>
-            <itemPath>../src/config/default/system/system_common.h</itemPath>
-            <itemPath>../src/config/default/system/system_module.h</itemPath>
-            <itemPath>../src/config/default/system/system_media.h</itemPath>
+            <itemPath>../src/config/sam_l21_xpro/system/system.h</itemPath>
+            <itemPath>../src/config/sam_l21_xpro/system/system_common.h</itemPath>
+            <itemPath>../src/config/sam_l21_xpro/system/system_module.h</itemPath>
+            <itemPath>../src/config/sam_l21_xpro/system/system_media.h</itemPath>
           </logicalFolder>
           <logicalFolder name="f2" displayName="usb" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
-              <itemPath>../src/config/default/usb/src/usb_host_msd_local.h</itemPath>
-              <itemPath>../src/config/default/usb/src/usb_host_scsi_local.h</itemPath>
-              <itemPath>../src/config/default/usb/src/usb_host_local.h</itemPath>
-              <itemPath>../src/config/default/usb/src/usb_host_hub_mapping.h</itemPath>
-              <itemPath>../src/config/default/usb/src/usb_external_dependencies.h</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/usb/src/usb_host_msd_local.h</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/usb/src/usb_host_scsi_local.h</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/usb/src/usb_host_local.h</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/usb/src/usb_host_hub_mapping.h</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/usb/src/usb_external_dependencies.h</itemPath>
             </logicalFolder>
-            <itemPath>../src/config/default/usb/usb_host_msd.h</itemPath>
-            <itemPath>../src/config/default/usb/usb_host_scsi.h</itemPath>
-            <itemPath>../src/config/default/usb/usb_msd.h</itemPath>
-            <itemPath>../src/config/default/usb/scsi.h</itemPath>
-            <itemPath>../src/config/default/usb/usb_host.h</itemPath>
-            <itemPath>../src/config/default/usb/usb_common.h</itemPath>
-            <itemPath>../src/config/default/usb/usb_chapter_9.h</itemPath>
-            <itemPath>../src/config/default/usb/usb_host_client_driver.h</itemPath>
-            <itemPath>../src/config/default/usb/usb_host_hub_interface.h</itemPath>
-            <itemPath>../src/config/default/usb/usb_hub.h</itemPath>
+            <itemPath>../src/config/sam_l21_xpro/usb/usb_host_msd.h</itemPath>
+            <itemPath>../src/config/sam_l21_xpro/usb/usb_host_scsi.h</itemPath>
+            <itemPath>../src/config/sam_l21_xpro/usb/usb_msd.h</itemPath>
+            <itemPath>../src/config/sam_l21_xpro/usb/scsi.h</itemPath>
+            <itemPath>../src/config/sam_l21_xpro/usb/usb_host.h</itemPath>
+            <itemPath>../src/config/sam_l21_xpro/usb/usb_common.h</itemPath>
+            <itemPath>../src/config/sam_l21_xpro/usb/usb_chapter_9.h</itemPath>
+            <itemPath>../src/config/sam_l21_xpro/usb/usb_host_client_driver.h</itemPath>
+            <itemPath>../src/config/sam_l21_xpro/usb/usb_host_hub_interface.h</itemPath>
+            <itemPath>../src/config/sam_l21_xpro/usb/usb_hub.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/config/default/device_cache.h</itemPath>
-          <itemPath>../src/config/default/toolchain_specifics.h</itemPath>
-          <itemPath>../src/config/default/definitions.h</itemPath>
-          <itemPath>../src/config/default/user.h</itemPath>
-          <itemPath>../src/config/default/configuration.h</itemPath>
+          <itemPath>../src/config/sam_l21_xpro/device_cache.h</itemPath>
+          <itemPath>../src/config/sam_l21_xpro/toolchain_specifics.h</itemPath>
+          <itemPath>../src/config/sam_l21_xpro/definitions.h</itemPath>
+          <itemPath>../src/config/sam_l21_xpro/user.h</itemPath>
+          <itemPath>../src/config/sam_l21_xpro/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="f3" displayName="osal" projectFiles="true">
-        <itemPath>../src/config/default/osal/osal.h</itemPath>
-        <itemPath>../src/config/default/osal/osal_definitions.h</itemPath>
-        <itemPath>../src/config/default/osal/osal_impl_basic.h</itemPath>
+        <itemPath>../src/config/sam_l21_xpro/osal/osal.h</itemPath>
+        <itemPath>../src/config/sam_l21_xpro/osal/osal_definitions.h</itemPath>
+        <itemPath>../src/config/sam_l21_xpro/osal/osal_impl_basic.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAML21J18B_DFP" projectFiles="true">
@@ -185,79 +185,79 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
-        <logicalFolder name="f1" displayName="default" projectFiles="true">
+        <logicalFolder name="f1" displayName="sam_l21_xpro" projectFiles="true">
           <logicalFolder name="f6" displayName="bsp" projectFiles="true">
-            <itemPath>../src/config/default/bsp/bsp.c</itemPath>
+            <itemPath>../src/config/sam_l21_xpro/bsp/bsp.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f5" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="usb" projectFiles="true">
               <logicalFolder name="f1" displayName="usbfsv1" projectFiles="true">
                 <logicalFolder name="f1" displayName="src" projectFiles="true">
-                  <itemPath>../src/config/default/driver/usb/usbfsv1/src/drv_usbfsv1.c</itemPath>
-                  <itemPath>../src/config/default/driver/usb/usbfsv1/src/drv_usbfsv1_host.c</itemPath>
+                  <itemPath>../src/config/sam_l21_xpro/driver/usb/usbfsv1/src/drv_usbfsv1.c</itemPath>
+                  <itemPath>../src/config/sam_l21_xpro/driver/usb/usbfsv1/src/drv_usbfsv1_host.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f4" displayName="clock" projectFiles="true">
-              <itemPath>../src/config/default/peripheral/clock/plib_clock.c</itemPath>
+            <logicalFolder name="f5" displayName="clock" projectFiles="true">
+              <itemPath>../src/config/sam_l21_xpro/peripheral/clock/plib_clock.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f2" displayName="evsys" projectFiles="true">
-              <itemPath>../src/config/default/peripheral/evsys/plib_evsys.c</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/peripheral/evsys/plib_evsys.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="nvic" projectFiles="true">
-              <itemPath>../src/config/default/peripheral/nvic/plib_nvic.c</itemPath>
+            <logicalFolder name="f6" displayName="nvic" projectFiles="true">
+              <itemPath>../src/config/sam_l21_xpro/peripheral/nvic/plib_nvic.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="nvmctrl" projectFiles="true">
-              <itemPath>../src/config/default/peripheral/nvmctrl/plib_nvmctrl.c</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/peripheral/nvmctrl/plib_nvmctrl.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="pm" projectFiles="true">
-              <itemPath>../src/config/default/peripheral/pm/plib_pm.c</itemPath>
+            <logicalFolder name="f3" displayName="pm" projectFiles="true">
+              <itemPath>../src/config/sam_l21_xpro/peripheral/pm/plib_pm.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="port" projectFiles="true">
-              <itemPath>../src/config/default/peripheral/port/plib_port.c</itemPath>
+            <logicalFolder name="f4" displayName="port" projectFiles="true">
+              <itemPath>../src/config/sam_l21_xpro/peripheral/port/plib_port.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f7" displayName="tc" projectFiles="true">
-              <itemPath>../src/config/default/peripheral/tc/plib_tc0.c</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/peripheral/tc/plib_tc0.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f3" displayName="stdio" projectFiles="true">
-            <itemPath>../src/config/default/stdio/xc32_monitor.c</itemPath>
+            <itemPath>../src/config/sam_l21_xpro/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
             <logicalFolder name="f2" displayName="fs" projectFiles="true">
               <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
-                <itemPath>../src/config/default/system/fs/fat_fs/src/ff.c</itemPath>
-                <itemPath>../src/config/default/system/fs/fat_fs/src/diskio.c</itemPath>
+                <itemPath>../src/config/sam_l21_xpro/system/fs/fat_fs/src/ff.c</itemPath>
+                <itemPath>../src/config/sam_l21_xpro/system/fs/fat_fs/src/diskio.c</itemPath>
               </logicalFolder>
               <logicalFolder name="f2" displayName="mpfs" projectFiles="true">
-                <itemPath>../src/config/default/system/fs/mpfs/src/mpfs.c</itemPath>
+                <itemPath>../src/config/sam_l21_xpro/system/fs/mpfs/src/mpfs.c</itemPath>
               </logicalFolder>
-              <itemPath>../src/config/default/system/fs/src/sys_fs.c</itemPath>
-              <itemPath>../src/config/default/system/fs/src/sys_fs_media_manager.c</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/system/fs/src/sys_fs.c</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/system/fs/src/sys_fs_media_manager.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="int" projectFiles="true">
-              <itemPath>../src/config/default/system/int/src/sys_int.c</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f1" displayName="time" projectFiles="true">
-              <itemPath>../src/config/default/system/time/src/sys_time.c</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/system/time/src/sys_time.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f2" displayName="usb" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
-              <itemPath>../src/config/default/usb/src/usb_host_msd.c</itemPath>
-              <itemPath>../src/config/default/usb/src/usb_host_scsi.c</itemPath>
-              <itemPath>../src/config/default/usb/src/usb_host.c</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/usb/src/usb_host_msd.c</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/usb/src/usb_host_scsi.c</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/usb/src/usb_host.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <itemPath>../src/config/default/initialization.c</itemPath>
-          <itemPath>../src/config/default/interrupts.c</itemPath>
-          <itemPath>../src/config/default/exceptions.c</itemPath>
-          <itemPath>../src/config/default/startup_xc32.c</itemPath>
-          <itemPath>../src/config/default/libc_syscalls.c</itemPath>
-          <itemPath>../src/config/default/usb_host_init_data.c</itemPath>
-          <itemPath>../src/config/default/tasks.c</itemPath>
+          <itemPath>../src/config/sam_l21_xpro/initialization.c</itemPath>
+          <itemPath>../src/config/sam_l21_xpro/interrupts.c</itemPath>
+          <itemPath>../src/config/sam_l21_xpro/exceptions.c</itemPath>
+          <itemPath>../src/config/sam_l21_xpro/startup_xc32.c</itemPath>
+          <itemPath>../src/config/sam_l21_xpro/libc_syscalls.c</itemPath>
+          <itemPath>../src/config/sam_l21_xpro/usb_host_init_data.c</itemPath>
+          <itemPath>../src/config/sam_l21_xpro/tasks.c</itemPath>
         </logicalFolder>
       </logicalFolder>
       <itemPath>../src/main.c</itemPath>
@@ -274,7 +274,7 @@
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
-    <conf name="default" type="2">
+    <conf name="sam_l21_xpro" type="2">
       <toolsSet>
         <developmentServer>localhost</developmentServer>
         <targetDevice>ATSAML21J18B</targetDevice>
@@ -346,7 +346,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/default;../src/packs/ATSAML21J18B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm"/>
+                  value="../src;../src/config/sam_l21_xpro;../src/packs/ATSAML21J18B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -407,7 +407,7 @@
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-cross-reference-file" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
-        <property key="heap-size" value="500"/>
+        <property key="heap-size" value="512"/>
         <property key="input-libraries" value=""/>
         <property key="kseg-length" value=""/>
         <property key="kseg-origin" value=""/>
