@@ -42,19 +42,6 @@
 /******************************************************
  * USB Driver Initialization
  ******************************************************/
-<#if (USB_OPERATION_MODE == "Device") && (USB_DEVICE_VBUS_SENSE == true)>
-static DRV_USB_VBUS_LEVEL DRV_USBHSV1_VBUS_Comparator(void)
-{
-    DRV_USB_VBUS_LEVEL retVal = DRV_USB_VBUS_LEVEL_INVALID;
-	<#if USB_DEVICE_VBUS_SENSE_PIN_NAME?has_content >
-    if(true == ${USB_DEVICE_VBUS_SENSE_PIN_NAME}_Get())
-    {
-        retVal = DRV_USB_VBUS_LEVEL_VALID;
-    }
-	</#if>
-	return (retVal);
-}
-</#if>
 <#if (USB_OPERATION_MODE == "Host") && (USB_HOST_VBUS_ENABLE == true)> 
 void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
 {
