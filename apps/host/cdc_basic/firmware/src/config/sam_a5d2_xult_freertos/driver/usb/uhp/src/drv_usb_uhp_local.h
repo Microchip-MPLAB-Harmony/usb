@@ -52,6 +52,9 @@
 #include "driver/usb/drv_usb_external_dependencies.h"
 #include "drv_usb_uhp_variant_mapping.h"
 
+#define NUMBER_OF_PORTS   (hDriver->usbIDOHCI->UHP_OHCI_HCRHDESCRIPTORA & UHP_OHCI_HCRHDESCRIPTORA_NDP_Msk)
+/* #define HSIC */
+
 #define DRV_USB_UHP_HOST_MAXIMUM_ENDPOINTS_NUMBER   USB_HOST_PIPES_NUMBER
 
 // *****************************************************************************

@@ -61,6 +61,15 @@
 extern __ALIGNED(4096) uint8_t USBBufferAligned[USB_HOST_TRANSFERS_NUMBER*64]; /* 4K page aligned, see Table 3-17. qTD Buffer Pointer(s) (DWords 3-7) */
 #define ID_UHPHS    (41)       /**< \brief USB High Speed Host Port (UHPHS) */
 
+/************************************
+ * Prototype
+ ***********************************/
+void DRV_USB_UHP_HOST_StartOfFrameControl(DRV_HANDLE client, bool control);
+USB_SPEED DRV_USB_UHP_HOST_DeviceCurrentSpeedGet(DRV_HANDLE client);
+void DRV_USB_UHP_Deinitialize(const SYS_MODULE_INDEX object);
+void UHPHS_Handler(void);
+bool DRV_USB_UHP_HOST_Resume(DRV_HANDLE handle);
+bool DRV_USB_UHP_HOST_Suspend(DRV_HANDLE handle);
 
 /************************************
  * Driver instance object
@@ -1544,7 +1553,7 @@ static void DRV_USB_UHP_HOST_ControlTransferProcess(DRV_USB_UHP_OBJ *hDriver)
 
   Remarks:
 */
-void DRV_USB_UHP_HOST_NonControlTransferProcess
+static void DRV_USB_UHP_HOST_NonControlTransferProcess
 (
     DRV_USB_UHP_OBJ * hDriver,
     uint8_t hostPipe
@@ -1665,7 +1674,7 @@ void DRV_USB_UHP_HOST_NonControlTransferProcess
    Remarks:
     See drv_uhp.h for usage information.
  */
-void DRV_USB_UHP_HOST_TransferProcess(DRV_USB_UHP_OBJ *hDriver)
+static void DRV_USB_UHP_HOST_TransferProcess(DRV_USB_UHP_OBJ *hDriver)
 {
     /* This function is called every time there is an endpoint 0
      * interrupt. This means that a stage of the current control IRP has been
