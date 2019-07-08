@@ -681,12 +681,12 @@
         </KeyValueSet>
         <String dnOrder="119" id="PIN_111_FUNCTION_TYPE">
           <Values dnOrder="0">
-            <User dnOrder="0" value="UART1_URXD1"/>
+            <User dnOrder="0" value=""/>
           </Values>
         </String>
         <String dnOrder="120" id="PIN_111_PERIPHERAL_FUNCTION">
           <Values dnOrder="0">
-            <User dnOrder="0" value="A"/>
+            <User dnOrder="0" value=""/>
           </Values>
         </String>
         <String dnOrder="121" id="PIN_144_PERIPHERAL_FUNCTION">
@@ -696,12 +696,12 @@
         </String>
         <String dnOrder="122" id="PIN_154_FUNCTION_TYPE">
           <Values dnOrder="0">
-            <User dnOrder="0" value="UART1_UTXD1"/>
+            <User dnOrder="0" value=""/>
           </Values>
         </String>
         <String dnOrder="123" id="PIN_154_PERIPHERAL_FUNCTION">
           <Values dnOrder="0">
-            <User dnOrder="0" value="A"/>
+            <User dnOrder="0" value=""/>
           </Values>
         </String>
         <String dnOrder="124" id="PIN_24_FUNCTION_NAME">
@@ -1081,7 +1081,7 @@
         </String>
         <String dnOrder="199" id="PORT_D_MSKR_ValueA">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0xc"/>
+            <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
         <String dnOrder="200" id="PORT_D_MSKR_ValueB">

@@ -38,6 +38,14 @@
             <path>\usb\usb_host_hub_interface.h</path>
             <path>\usb\usb_host.h</path>
             <path>\usb\usb_hub.h</path>
+            <path>\device_cache.h</path>
+            <path>\toolchain_specifics.h</path>
+            <path>\definitions.h</path>
+            <path>\peripheral\mmu\plib_mmu.h</path>
+            <path>\peripheral\matrix\plib_matrix.h</path>
+            <path>\peripheral\clk\plib_clk.h</path>
+            <path>\peripheral\pio\plib_pio.h</path>
+            <path>\peripheral\aic\plib_aic.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\device.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\component\acc.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\component\adc.h</path>
@@ -90,14 +98,6 @@
             <path>\..\..\packs\ATSAMA5D27_DFP\component\xdmac.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\atsama5d27.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\pio\sama5d27.h</path>
-            <path>\device_cache.h</path>
-            <path>\toolchain_specifics.h</path>
-            <path>\definitions.h</path>
-            <path>\peripheral\mmu\plib_mmu.h</path>
-            <path>\peripheral\matrix\plib_matrix.h</path>
-            <path>\peripheral\clk\plib_clk.h</path>
-            <path>\peripheral\pio\plib_pio.h</path>
-            <path>\peripheral\aic\plib_aic.h</path>
             <path>\usb\usb_device.h</path>
             <path>\usb\usb_common.h</path>
             <path>\usb\usb_chapter_9.h</path>

@@ -3712,7 +3712,15 @@
         </File>
       </Symbols>
     </UniqueComponent>
-    <UniqueComponent dnOrder="7" id="nvmctrl"/>
+    <UniqueComponent dnOrder="7" id="nvmctrl">
+      <Symbols dnOrder="0">
+        <Integer dnOrder="0" id="NVM_RWS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="nvmctrl" value="1"/>
+          </Values>
+        </Integer>
+      </Symbols>
+    </UniqueComponent>
     <UniqueComponent dnOrder="8" id="usb_device">
       <Symbols dnOrder="0">
         <Integer dnOrder="0" id="CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE">
@@ -3763,7 +3771,14 @@
       </Symbols>
     </UniqueComponent>
     <GeneratorComponent dnOrder="9" id="usb_device_cdc">
-      <Instances dnOrder="0">
+      <Symbols dnOrder="0">
+        <Integer dnOrder="0" id="CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="usb_device_cdc" value="6"/>
+          </Values>
+        </Integer>
+      </Symbols>
+      <Instances dnOrder="1">
         <InstanceComponent dnOrder="0" id="usb_device_cdc" instance="0">
           <Symbols dnOrder="0">
             <Integer dnOrder="0" id="CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER">
@@ -3792,8 +3807,7 @@
     </GeneratorComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
-    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_E54_Xplained_Pro" x="400" y="20"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="30" y="100"/>
@@ -3807,5 +3821,6 @@
         <ElementPosition dnOrder="9" id="usb_device_cdc" x="35" y="204"/>
       </ElementPositions>
     </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>

@@ -347,8 +347,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F36F1D5E3E5085F4259D5EC13A46128E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F36F1D5E3E5085F4259D5EC13A46128E</UserChecksum>
+          <GeneratedChecksum dnOrder="4">88EAD9E29AFD821709E7EE94639594F0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">88EAD9E29AFD821709E7EE94639594F0</UserChecksum>
         </File>
         <File dnOrder="43">
           <Type dnOrder="0">HEADER</Type>

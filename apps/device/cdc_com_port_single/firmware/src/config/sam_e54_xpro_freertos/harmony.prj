@@ -435,8 +435,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">7DC3917C6FC2EAD2BEC601B82EBCFA24</GeneratedChecksum>
-          <UserChecksum dnOrder="5">7DC3917C6FC2EAD2BEC601B82EBCFA24</UserChecksum>
+          <GeneratedChecksum dnOrder="4">207ABC79933145B14342785CD407F87F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">207ABC79933145B14342785CD407F87F</UserChecksum>
         </File>
         <File dnOrder="54">
           <Type dnOrder="0">HEADER</Type>

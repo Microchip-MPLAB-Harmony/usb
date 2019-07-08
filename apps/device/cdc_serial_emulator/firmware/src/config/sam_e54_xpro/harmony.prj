@@ -363,8 +363,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">02A3778EC0052CBA42859B088A3352D0</GeneratedChecksum>
-          <UserChecksum dnOrder="5">02A3778EC0052CBA42859B088A3352D0</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F9603D9D914AD9702750CC78007A4E09</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F9603D9D914AD9702750CC78007A4E09</UserChecksum>
         </File>
         <File dnOrder="45">
           <Type dnOrder="0">HEADER</Type>
@@ -387,8 +387,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8F46EF39E19EA8019F75DA6CD410F07B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8F46EF39E19EA8019F75DA6CD410F07B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">2F74573BDD383A1E5062A73C2DBBCA78</GeneratedChecksum>
+          <UserChecksum dnOrder="5">2F74573BDD383A1E5062A73C2DBBCA78</UserChecksum>
         </File>
         <File dnOrder="48">
           <Type dnOrder="0">HEADER</Type>

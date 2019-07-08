@@ -307,8 +307,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">E1A397F27978BB34BD7404E0033B0621</GeneratedChecksum>
-          <UserChecksum dnOrder="5">E1A397F27978BB34BD7404E0033B0621</UserChecksum>
+          <GeneratedChecksum dnOrder="4">A51E48916A253B2BBBAA2D3EF37F778E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">A51E48916A253B2BBBAA2D3EF37F778E</UserChecksum>
         </File>
         <File dnOrder="38">
           <Type dnOrder="0">HEADER</Type>
