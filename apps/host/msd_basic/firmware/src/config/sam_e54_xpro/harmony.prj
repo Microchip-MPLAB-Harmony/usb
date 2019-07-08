@@ -107,8 +107,8 @@
           <Name dnOrder="1">plib_clock.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/peripheral/clock/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clock/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B1489E604A701A771A0E4B9F9AE3985B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B1489E604A701A771A0E4B9F9AE3985B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">99C5E113E022AA7453A9E0B936781CD0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">99C5E113E022AA7453A9E0B936781CD0</UserChecksum>
         </File>
         <File dnOrder="13">
           <Type dnOrder="0">SOURCE</Type>
@@ -155,8 +155,8 @@
           <Name dnOrder="1">plib_tc0.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/peripheral/tc/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/tc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F5D8D2386FC84425596C09C2831C53ED</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F5D8D2386FC84425596C09C2831C53ED</UserChecksum>
+          <GeneratedChecksum dnOrder="4">58780DAF9034D532D5B50296A0EDC308</GeneratedChecksum>
+          <UserChecksum dnOrder="5">CD44A13C40AC11FC452FE03DC22865E1</UserChecksum>
         </File>
         <File dnOrder="19">
           <Type dnOrder="0">SOURCE</Type>
@@ -411,8 +411,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0AEA414017163325E75B9CE8F6A452F5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0AEA414017163325E75B9CE8F6A452F5</UserChecksum>
+          <GeneratedChecksum dnOrder="4">2A061016DB7963C183EBA8E2B65D7DE0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">2A061016DB7963C183EBA8E2B65D7DE0</UserChecksum>
         </File>
         <File dnOrder="51">
           <Type dnOrder="0">HEADER</Type>

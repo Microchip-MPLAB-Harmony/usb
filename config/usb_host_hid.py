@@ -41,6 +41,8 @@ usbHostHidKeyboardLocalHeaderFile  = None
 usbHostHidMouseSourceFile  = None
 usbHostHidMouseHeaderFile  = None
 usbHostHidMouseLocalHeaderFile  = None
+usbHostHidClientDriverMouseSaveStatus = None 
+usbHostHidClientDriverKeyboardSaveStatus = None 
 
 
 def onAttachmentConnected(source, target):
@@ -86,12 +88,25 @@ def setVisible (symbol, event):
 		symbol.setVisible(False)
 
 def updateUsageDriverInstanceNumber (symbol, event):
-	if (event["value"] == True):
-		usageDriverInstances = symbol.getValue()
-		symbol.setValue(usageDriverInstances + 1, 2)
-	else:
-		usageDriverInstances = symbol.getValue()
-		symbol.setValue(usageDriverInstances - 1, 2)
+	global usbHostHidClientDriverMouseSaveStatus
+	global usbHostHidClientDriverKeyboardSaveStatus
+	if (event["id"] == "CONFIG_USB_HOST_USE_MOUSE"):
+		if (event["value"] == True) and usbHostHidClientDriverMouseSaveStatus.getValue() == False:
+			usageDriverInstances = symbol.getValue()
+			symbol.setValue(usageDriverInstances + 1, 2)
+		elif (event["value"] == False) and usbHostHidClientDriverMouseSaveStatus.getValue() == True: 
+			usageDriverInstances = symbol.getValue()
+			symbol.setValue(usageDriverInstances - 1, 2)
+		usbHostHidClientDriverMouseSaveStatus.setValue(event["value"])
+	elif (event["id"] == "CONFIG_USB_HOST_USE_KEYBOARD"):
+		if (event["value"] == True) and usbHostHidClientDriverKeyboardSaveStatus.getValue() == False:
+			usageDriverInstances = symbol.getValue()
+			symbol.setValue(usageDriverInstances + 1, 2)
+		elif (event["value"] == False) and usbHostHidClientDriverKeyboardSaveStatus.getValue() == True: 
+			usageDriverInstances = symbol.getValue()
+			symbol.setValue(usageDriverInstances - 1, 2)
+		usbHostHidClientDriverKeyboardSaveStatus.setValue(event["value"])
+		
 		
 def instantiateComponent(usbHostHidComponent):
 	
@@ -116,6 +131,8 @@ def instantiateComponent(usbHostHidComponent):
 	global usbHostHidMouseSourceFile 
 	global usbHostHidMouseHeaderFile 
 	global usbHostHidMouseLocalHeaderFile  
+	global usbHostHidClientDriverMouseSaveStatus
+	global usbHostHidClientDriverKeyboardSaveStatus
 
 	res = Database.activateComponents(["usb_host"])
 
@@ -155,12 +172,24 @@ def instantiateComponent(usbHostHidComponent):
 	usbHostHidClientDriverMouseButtonsNumber.setDefaultValue(5)
 	usbHostHidClientDriverMouseButtonsNumber.setDependencies(setVisible, ["CONFIG_USB_HOST_USE_MOUSE"])
 	
+	# USB Host HID Client driver Mouse save status 
+	usbHostHidClientDriverMouseSaveStatus = usbHostHidComponent.createBooleanSymbol("CONFIG_USB_HOST_USE_MOUSE_SAVE_STATUS", usbHostHidClientDriverMouse)
+	usbHostHidClientDriverMouseSaveStatus.setLabel("Number of Mouse Save Status")
+	usbHostHidClientDriverMouseSaveStatus.setVisible(False)
+	usbHostHidClientDriverMouseSaveStatus.setDefaultValue(False)
+	
 	# USB Host HID Client driver Keyboard 
 	usbHostHidClientDriverKeyboard = usbHostHidComponent.createBooleanSymbol("CONFIG_USB_HOST_USE_KEYBOARD", None)
 	usbHostHidClientDriverKeyboard.setLabel("Use Keyboard Driver")
 	usbHostHidClientDriverKeyboard.setDescription("Selecting this will include HID Host Keyboard Usage Driver into the project.")
 	usbHostHidClientDriverKeyboard.setVisible(True)
 	usbHostHidClientDriverKeyboard.setDefaultValue(False)
+	
+	# USB Host HID Client driver Keyboard save status 
+	usbHostHidClientDriverKeyboardSaveStatus = usbHostHidComponent.createBooleanSymbol("CONFIG_USB_HOST_USE_KEYBOARD_SAVE_STATUS", usbHostHidClientDriverKeyboard)
+	usbHostHidClientDriverKeyboardSaveStatus.setLabel("Number of Keyboard Save Status")
+	usbHostHidClientDriverKeyboardSaveStatus.setVisible(False)
+	usbHostHidClientDriverKeyboardSaveStatus.setDefaultValue(False)
 	
 	# USB Host HID Client driver Total Usage Driver instances 
 	usbHostHidClientDriverTotalUsageInst = usbHostHidComponent.createIntegerSymbol("CONFIG_USB_HID_TOTAL_USAGE_DRIVER_INSTANCES", None)

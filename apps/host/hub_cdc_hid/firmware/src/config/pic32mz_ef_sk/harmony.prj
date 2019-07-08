@@ -179,8 +179,8 @@
           <Name dnOrder="1">usb_host_init_data.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0C21107AE1BF54C0197901BD48EA9021</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0C21107AE1BF54C0197901BD48EA9021</UserChecksum>
+          <GeneratedChecksum dnOrder="4">939EC917E72ED919743F4257FE77124F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">939EC917E72ED919743F4257FE77124F</UserChecksum>
         </File>
         <File dnOrder="22">
           <Type dnOrder="0">SOURCE</Type>
@@ -211,8 +211,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">723A948FDBAB63A0E00781043AA32AD3</GeneratedChecksum>
-          <UserChecksum dnOrder="5">723A948FDBAB63A0E00781043AA32AD3</UserChecksum>
+          <GeneratedChecksum dnOrder="4">FE9FCBD5803E60933FF12DF48FC39D32</GeneratedChecksum>
+          <UserChecksum dnOrder="5">FE9FCBD5803E60933FF12DF48FC39D32</UserChecksum>
         </File>
         <File dnOrder="26">
           <Type dnOrder="0">HEADER</Type>

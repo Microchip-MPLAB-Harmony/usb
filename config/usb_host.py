@@ -22,6 +22,7 @@
 *****************************************************************************"""
 
 usbHostTplEntryNumber = None
+usbHostHubSaveValue = None 
 
 def setVisible(symbol, event):
 	if (event["value"] == True):
@@ -45,6 +46,7 @@ def handleMessage(messageID, args):
 
 def instantiateComponent(usbHostComponent):
 	global usbHostTplEntryNumber
+	global usbHostHubSaveValue
 	res = Database.activateComponents(["HarmonyCore"])
 	res = Database.activateComponents(["sys_time"])
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
@@ -128,6 +130,11 @@ def instantiateComponent(usbHostComponent):
 		usbHostHubsupport.setDefaultValue(False)
 		usbHostHubsupport.setDependencies(hubUpdateTPL, ["CONFIG_USB_HOST_HUB_SUPPORT"])
 		
+		usbHostHubSaveValue = usbHostComponent.createBooleanSymbol("CONFIG_USB_HOST_HUB_SUPPORT_SAVE_STATUS", None)
+		usbHostHubSaveValue.setLabel( "Hub support" )
+		usbHostHubSaveValue.setVisible( False)
+		usbHostHubSaveValue.setDefaultValue(False)
+		
 		
 		# USB Host Hub Client Driver instances
 		usbHostHubDriverInstance = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_HUB_NUMBER_OF_INSTANCES", usbHostHubsupport)
@@ -150,7 +157,7 @@ def instantiateComponent(usbHostComponent):
 	##############################################################
 	# TPL Entry for HUB client driver 
 	##############################################################
-		usbHostHubTplEntryFile = usbHostComponent.createFileSymbol(None, None)
+		usbHostHubTplEntryFile = usbHostComponent.createFileSymbol("FILE_USB_HOST_HUB_TPL", None)
 		usbHostHubTplEntryFile.setType("STRING")
 		usbHostHubTplEntryFile.setOutputName("usb_host.LIST_USB_HOST_TPL_ENTRY")
 		usbHostHubTplEntryFile.setSourcePath("templates/host/system_init_c_hub_tpl.ftl")
@@ -237,8 +244,8 @@ def instantiateComponent(usbHostComponent):
 	
 	# system_config.h file for USB Host Layer    
 	################################################
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX" , "SAMA5D2" ]):
-		usbHostHubConfigFile = usbHostComponent.createFileSymbol(None, None)
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX"]):
+		usbHostHubConfigFile = usbHostComponent.createFileSymbol("FILE_USB_HOST_HUB_CONFIG", None)
 		usbHostHubConfigFile.setType("STRING")
 		usbHostHubConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION")
 		usbHostHubConfigFile.setSourcePath("templates/host/system_config.h.host_hub.ftl")
@@ -309,13 +316,13 @@ def instantiateComponent(usbHostComponent):
 	# USB Host HUB Client driver Files 
 	################################################
 	
-	usbHostHubLocalHeaderFile = usbHostComponent.createFileSymbol(None, None)
+	usbHostHubLocalHeaderFile = usbHostComponent.createFileSymbol("FILE_USB_HOST_HUB_HEADER_LOCAL", None)
 	addFileName('usb_host_hub_local.h', usbHostComponent, usbHostHubLocalHeaderFile, "middleware/src/", "/usb/src", False, hubSupportSetEnable)
 	
-	usbHostHubSourceFile = usbHostComponent.createFileSymbol(None, None)
+	usbHostHubSourceFile = usbHostComponent.createFileSymbol("FILE_USB_HOST_HUB_SOURCE", None)
 	addFileName('usb_host_hub.c', usbHostComponent, usbHostHubSourceFile, "middleware/src/", "/usb/src", False, hubSupportSetEnable)
 			
-	usbHostHubHeaderFile = usbHostComponent.createFileSymbol(None, None)
+	usbHostHubHeaderFile = usbHostComponent.createFileSymbol("FILE_USB_HOST_HUB_HEADER", None)
 	addFileName('usb_host_hub.h', usbHostComponent, usbHostHubHeaderFile, "middleware/", "/usb/", False, hubSupportSetEnable)
 	
 def blUsbHostDeviceNumber(usbSymbolSource, event):
@@ -363,12 +370,7 @@ def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callbac
 	symbol.setEnabled(enabled)
 	if callback == hubSupportSetEnable:
 		symbol.setDependencies(callback, ["CONFIG_USB_HOST_HUB_SUPPORT"])
-		
-def onDependentComponentAdded(component, id, usart):
-	if id == "usb_driver_dependency" :
-		Database.clearSymbolValue("drv_usbhs_v1", "USB_OPERATION_MODE")
-		Database.setSymbolValue("drv_usbhs_v1", "USB_OPERATION_MODE", "Host" , 2)
-
+	
 def hubSupportSetVisible(usbSymbolSource, event):
 	if (event["value"] == True):		
 		usbSymbolSource.setVisible(True)
@@ -384,11 +386,14 @@ def hubSupportSetEnable(usbSymbolSource, event):
 			
 def hubUpdateTPL(usbSymbolSource, event):	
 	global usbHostTplEntryNumber
-	if (event["value"] == True):		
+	global usbHostHubSaveValue
+	if (event["value"] == True) and usbHostHubSaveValue.getValue() == False:		
 		readValue = usbHostTplEntryNumber.getValue()
 		if readValue != None:
 			usbHostTplEntryNumber.setValue(readValue + 1)
-	else:
+	elif (event["value"] == False) and usbHostHubSaveValue.getValue() == True:	
 		readValue = usbHostTplEntryNumber.getValue()
 		if readValue != None:
 			usbHostTplEntryNumber.setValue(readValue - 1)
+	usbHostHubSaveValue.setValue(event["value"])		
+	

@@ -1058,12 +1058,7 @@
           </Values>
         </Boolean>
         <Boolean dnOrder="3" id="CORE_TIMER_PERIODIC_INTERRUPT">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-          <Values dnOrder="1">
+          <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core_timer" value="false"/>
           </Values>
         </Boolean>
@@ -1148,7 +1143,7 @@
         </Boolean>
         <Combo dnOrder="7" id="USB_OPERATION_MODE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="usb_host" value="Host"/>
+            <Dynamic dnOrder="0" id="drv_usbhs_v1" value="Host"/>
           </Values>
         </Combo>
       </Symbols>
@@ -1169,155 +1164,50 @@
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="2" id="CONFIGURATION_H">
+        <File dnOrder="2" id="DRIVER_COMMON">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="3" id="DRIVER_COMMON">
+        <File dnOrder="3" id="DRIVER_ROOT">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="4" id="DRIVER_ROOT">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <Boolean dnOrder="5" id="ENABLE_APP_FILE">
+        <Boolean dnOrder="4" id="ENABLE_APP_FILE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="6" id="ENABLE_DRV_COMMON">
+        <Boolean dnOrder="5" id="ENABLE_DRV_COMMON">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbhs_v1" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="7" id="ENABLE_OSAL">
+        <Boolean dnOrder="6" id="ENABLE_OSAL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="8" id="ENABLE_SYS_CACHE">
+        <Boolean dnOrder="7" id="ENABLE_SYS_CACHE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="9" id="ENABLE_SYS_COMMON">
+        <Boolean dnOrder="8" id="ENABLE_SYS_COMMON">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sys_time" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="10" id="ENABLE_SYS_INT">
+        <Boolean dnOrder="9" id="ENABLE_SYS_INT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
           </Values>
         </Boolean>
-        <Menu dnOrder="11" id="GEN_APP_TASK_MENU">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Menu>
-        <File dnOrder="12" id="INT_DEF">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="13" id="INT_HEADER">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="14" id="INT_MAPPING">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="15" id="INT_SOURCE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="16" id="OSAL_DEFINITIONS_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="17" id="OSAL_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="18" id="OSAL_IMPL_BASIC_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="19" id="OSAL_SYSDEF_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="20" id="SYSTEM_COMMON">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="21" id="SYSTEM_MODULE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="22" id="SYSTEM_ROOT">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="23" id="TASKS_C">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
-        <File dnOrder="24" id="USER_H">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="enabled">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </File>
       </Symbols>
     </UniqueComponent>
     <UniqueComponent dnOrder="6" id="sys_time">
@@ -1349,9 +1239,6 @@
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
-          <Values dnOrder="1">
-            <User dnOrder="0" value="3"/>
-          </Values>
         </Integer>
         <Integer dnOrder="1" id="CONFIG_USB_HOST_HUB_NUMBER_OF_INSTANCES">
           <Attributes dnOrder="0">
@@ -1365,11 +1252,51 @@
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="3" id="CONFIG_USB_HOST_TPL_ENTRY_NUMBER">
+        <Boolean dnOrder="3" id="CONFIG_USB_HOST_HUB_SUPPORT_SAVE_STATUS">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="usb_host" value="4"/>
+            <Dynamic dnOrder="0" id="usb_host" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="4" id="CONFIG_USB_HOST_TPL_ENTRY_NUMBER">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="usb_host" value="3"/>
           </Values>
         </Integer>
+        <File dnOrder="5" id="FILE_USB_HOST_HUB_CONFIG">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="6" id="FILE_USB_HOST_HUB_HEADER">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="7" id="FILE_USB_HOST_HUB_HEADER_LOCAL">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="8" id="FILE_USB_HOST_HUB_SOURCE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="9" id="FILE_USB_HOST_HUB_TPL">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
       </Symbols>
     </UniqueComponent>
     <UniqueComponent dnOrder="8" id="usb_host_cdc"/>
@@ -1377,7 +1304,7 @@
       <Symbols dnOrder="0">
         <Integer dnOrder="0" id="CONFIG_USB_HID_TOTAL_USAGE_DRIVER_INSTANCES">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="usb_host_hid" value="3"/>
+            <Dynamic dnOrder="0" id="usb_host_hid" value="1"/>
           </Values>
         </Integer>
         <Integer dnOrder="1" id="CONFIG_USB_HOST_HID_MOUSE_BUTTONS_NUMBER">
@@ -1386,30 +1313,32 @@
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
-          <Values dnOrder="1">
-            <User dnOrder="0" value="3"/>
-          </Values>
         </Integer>
         <Boolean dnOrder="2" id="CONFIG_USB_HOST_USE_MOUSE">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <File dnOrder="3" id="USB_HOST_HID_MOUSE_HEADER">
+        <Boolean dnOrder="3" id="CONFIG_USB_HOST_USE_MOUSE_SAVE_STATUS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="usb_host_hid" value="true"/>
+          </Values>
+        </Boolean>
+        <File dnOrder="4" id="USB_HOST_HID_MOUSE_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="4" id="USB_HOST_HID_MOUSE_HEADER_LOCAL">
+        <File dnOrder="5" id="USB_HOST_HID_MOUSE_HEADER_LOCAL">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="5" id="USB_HOST_HID_MOUSE_SOURCE">
+        <File dnOrder="6" id="USB_HOST_HID_MOUSE_SOURCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
@@ -1423,16 +1352,16 @@
     <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
     <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="BSP_PIC32MZ_EF_Starter_Kit" x="30" y="60"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="209" y="113"/>
+        <ElementPosition dnOrder="0" id="BSP_PIC32MZ_EF_Starter_Kit" x="20" y="59"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="222" y="55"/>
         <ElementPosition dnOrder="2" id="core" x="239" y="19"/>
-        <ElementPosition dnOrder="3" id="core_timer" x="190" y="280"/>
+        <ElementPosition dnOrder="3" id="core_timer" x="25" y="305"/>
         <ElementPosition dnOrder="4" id="dfp" x="20" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_usbhs_v1" x="31" y="99"/>
-        <ElementPosition dnOrder="6" id="sys_time" x="326" y="223"/>
-        <ElementPosition dnOrder="7" id="usb_host" x="30" y="220"/>
-        <ElementPosition dnOrder="8" id="usb_host_cdc" x="270" y="60"/>
-        <ElementPosition dnOrder="9" id="usb_host_hid" x="190" y="220"/>
+        <ElementPosition dnOrder="5" id="drv_usbhs_v1" x="12" y="178"/>
+        <ElementPosition dnOrder="6" id="sys_time" x="190" y="288"/>
+        <ElementPosition dnOrder="7" id="usb_host" x="188" y="174"/>
+        <ElementPosition dnOrder="8" id="usb_host_cdc" x="331" y="177"/>
+        <ElementPosition dnOrder="9" id="usb_host_hid" x="333" y="225"/>
       </ElementPositions>
     </ComponentGraph>
   </UserData>
