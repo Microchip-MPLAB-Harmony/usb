@@ -75,10 +75,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     Application strings and buffers are be defined outside this structure.
 */
 
-APP_DATA appData CACHE_ALIGN;
+APP_DATA appData USB_ALIGN;
 
 /* This is the string that will written to the file */
- CACHE_ALIGN uint8_t writeData[12] = "Hello World ";
+USB_ALIGN uint8_t writeData[12] = "Hello World ";
 
 // *****************************************************************************
 // *****************************************************************************
