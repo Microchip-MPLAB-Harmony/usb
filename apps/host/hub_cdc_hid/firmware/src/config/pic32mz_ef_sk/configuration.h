@@ -138,7 +138,7 @@ extern "C" {
 /* Number of Endpoints used */
 #define DRV_USBHS_ENDPOINTS_NUMBER 							1
 
-#define USB_HOST_DEVICES_NUMBER                             1 
+#define USB_HOST_DEVICES_NUMBER                             3 
 
 /* Size of Endpoint 0 buffer */
 #define USB_DEVICE_EP0_BUFFER_SIZE                          64

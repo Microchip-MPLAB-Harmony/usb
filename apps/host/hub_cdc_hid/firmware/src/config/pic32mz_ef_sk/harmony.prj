@@ -211,8 +211,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">FE9FCBD5803E60933FF12DF48FC39D32</GeneratedChecksum>
-          <UserChecksum dnOrder="5">FE9FCBD5803E60933FF12DF48FC39D32</UserChecksum>
+          <GeneratedChecksum dnOrder="4">459BB48ADE826543B0437D2FAA7032CA</GeneratedChecksum>
+          <UserChecksum dnOrder="5">459BB48ADE826543B0437D2FAA7032CA</UserChecksum>
         </File>
         <File dnOrder="26">
           <Type dnOrder="0">HEADER</Type>

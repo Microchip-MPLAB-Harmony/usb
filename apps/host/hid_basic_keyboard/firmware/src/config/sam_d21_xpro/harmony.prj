@@ -123,8 +123,8 @@
           <Name dnOrder="1">plib_nvmctrl.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/peripheral/nvmctrl/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/nvmctrl/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8F9E56E635AA5CADBBB3D9A5600441EA</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8F9E56E635AA5CADBBB3D9A5600441EA</UserChecksum>
+          <GeneratedChecksum dnOrder="4">ACE0D4DC71618954B26EF174B547BCCF</GeneratedChecksum>
+          <UserChecksum dnOrder="5">ACE0D4DC71618954B26EF174B547BCCF</UserChecksum>
         </File>
         <File dnOrder="15">
           <Type dnOrder="0">SOURCE</Type>
@@ -219,8 +219,8 @@
           <Name dnOrder="1">usb_host_init_data.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">000104E69E2B5ADC67A289FE49632DB5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">000104E69E2B5ADC67A289FE49632DB5</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9C18F562BAC63176E5177C50B7E76643</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9C18F562BAC63176E5177C50B7E76643</UserChecksum>
         </File>
         <File dnOrder="27">
           <Type dnOrder="0">SOURCE</Type>

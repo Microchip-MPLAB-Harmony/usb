@@ -156,7 +156,7 @@
           <LogicalPath dnOrder="2">config/sam_e54_xpro/peripheral/tc/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/tc/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">58780DAF9034D532D5B50296A0EDC308</GeneratedChecksum>
-          <UserChecksum dnOrder="5">CD44A13C40AC11FC452FE03DC22865E1</UserChecksum>
+          <UserChecksum dnOrder="5">58780DAF9034D532D5B50296A0EDC308</UserChecksum>
         </File>
         <File dnOrder="19">
           <Type dnOrder="0">SOURCE</Type>
