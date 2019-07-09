@@ -57,6 +57,9 @@
             <path>\driver\usb\drv_usb.h</path>
             <path>\driver\usb\drv_usb_external_dependencies.h</path>
             <path>\driver\usb\uhp\drv_usb_uhp.h</path>
+            <path>\driver\usb\uhp\src\drv_usb_uhp_ehci_host.h</path>
+            <path>\driver\usb\uhp\src\drv_usb_uhp_ohci_host.h</path>
+            <path>\driver\usb\uhp\src\drv_usb_uhp_ohci_registers.h</path>
             <path>\driver\usb\uhp\src\drv_usb_uhp_variant_mapping.h</path>
             <path>\driver\usb\uhp\src\drv_usb_uhp_local.h</path>
             <path>\usb\usb_host_client_driver.h</path>
@@ -196,6 +199,7 @@
             <path>\system\time\src\sys_time.c</path>
             <path>\driver\usb\uhp\src\drv_usb_uhp.c</path>
             <path>\driver\usb\uhp\src\drv_usb_uhp_ehci_host.c</path>
+            <path>\driver\usb\uhp\src\drv_usb_uhp_ohci_host.c</path>
             <path>\usb_host_init_data.c</path>
             <path>\usb\src\usb_host.c</path>
             <path>\bsp\bsp.c</path>

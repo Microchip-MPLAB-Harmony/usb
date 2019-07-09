@@ -159,6 +159,10 @@ extern "C" {
 /* Reset duration in milli Seconds */ 
 #define DRV_USB_UHP_RESET_DURATION                     100
 
+/* Alignment for buffers that are submitted to USB Driver*/ 
+#ifndef USB_ALIGN
+#define USB_ALIGN __ALIGNED(4096)
+#endif 
 
 // *****************************************************************************
 // *****************************************************************************

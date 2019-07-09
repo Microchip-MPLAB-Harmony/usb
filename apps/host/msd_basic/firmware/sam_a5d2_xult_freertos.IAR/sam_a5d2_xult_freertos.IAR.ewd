@@ -88,7 +88,7 @@
                 </option>
                 <option>
                     <name>OCLastSavedByProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.32.3.20186</state>
                 </option>
                 <option>
                     <name>UseFlashLoader</name>
@@ -682,7 +682,7 @@
                 </option>
                 <option>
                     <name>IjetSelectedCPUBehaviour</name>
-                    <state>0</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>ICpuName</name>
@@ -826,7 +826,7 @@
                 </option>
                 <option>
                     <name>CCJLinkInterfaceRadio</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCJLinkResetList</name>
