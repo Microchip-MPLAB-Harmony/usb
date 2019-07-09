@@ -324,7 +324,7 @@
           <LogicalPath dnOrder="2">packs/ATSAMA5D27_DFP/</LogicalPath>
           <PhysicalPath dnOrder="3">/../../packs/ATSAMA5D27_DFP/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">F24A23F69AF921F2803FA3F748E385FC</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F24A23F69AF921F2803FA3F748E385FC</UserChecksum>
+          <UserChecksum dnOrder="5">B0B715F47113B3B580515453DF54A1F7</UserChecksum>
         </File>
         <File dnOrder="40">
           <Type dnOrder="0">HEADER</Type>
@@ -1246,7 +1246,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;usb;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>
