@@ -43,7 +43,7 @@ def dependencyStatus(symbol, event):
 		
 def blUSBDriverSpeedChanged(symbol, event):
 	Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED")
-	Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED", event["value"], 2)
+	Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED", event["value"])
 	
 def setVisible(symbol, event):
 	if (event["value"] == True):
@@ -157,68 +157,68 @@ def instantiateComponent(usbDriverComponent):
 
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAML21", "SAML22"]):
 		# Update USB General Interrupt Handler
-		Database.setSymbolValue("core", "USB_INTERRUPT_ENABLE", True, 1)
-		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER_LOCK", True, 1)
-		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER", "DRV_USBFSV1_USB_Handler", 1)
+		Database.setSymbolValue("core", "USB_INTERRUPT_ENABLE", True)
+		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER_LOCK", True)
+		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER", "DRV_USBFSV1_USB_Handler")
 		
-		Database.setSymbolValue("core", "USB_CLOCK_ENABLE", True, 1)
+		Database.setSymbolValue("core", "USB_CLOCK_ENABLE", True)
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX"]):
 		Database.clearSymbolValue("core", "USB_1_INTERRUPT_ENABLE")
 		Database.clearSymbolValue("core", "USB_1_INTERRUPT_HANDLER_LOCK")
 		Database.clearSymbolValue("core", "USB_1_INTERRUPT_HANDLER")
 	
 		# Update USB General Interrupt Handler
-		Database.setSymbolValue("core", "USB_1_INTERRUPT_ENABLE", True, 1)
-		Database.setSymbolValue("core", "USB_1_INTERRUPT_HANDLER_LOCK", True, 1)
-		Database.setSymbolValue("core", "USB_1_INTERRUPT_HANDLER", "DRV_USBFS_USB_Handler", 1)
+		Database.setSymbolValue("core", "USB_1_INTERRUPT_ENABLE", True)
+		Database.setSymbolValue("core", "USB_1_INTERRUPT_HANDLER_LOCK", True)
+		Database.setSymbolValue("core", "USB_1_INTERRUPT_HANDLER", "DRV_USBFS_USB_Handler")
 		
 		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK"]):	
-			Database.setSymbolValue("core", "USB1_CLOCK_ENABLE", True, 1)
+			Database.setSymbolValue("core", "USB1_CLOCK_ENABLE", True)
 		
 		if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MX"]):
-			Database.setSymbolValue("core", "USB_CLOCK_ENABLE", True, 1)
+			Database.setSymbolValue("core", "USB_CLOCK_ENABLE", True)
 	
 
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD5", "SAME5"]):
 
 		# Update USB General Interrupt Handler
-		Database.setSymbolValue("core", "USB_OTHER_INTERRUPT_ENABLE", True, 1)
-		Database.setSymbolValue("core", "USB_OTHER_INTERRUPT_HANDLER_LOCK", True, 1)
-		Database.setSymbolValue("core", "USB_OTHER_INTERRUPT_HANDLER", "DRV_USBFSV1_OTHER_Handler", 1)
+		Database.setSymbolValue("core", "USB_OTHER_INTERRUPT_ENABLE", True)
+		Database.setSymbolValue("core", "USB_OTHER_INTERRUPT_HANDLER_LOCK", True)
+		Database.setSymbolValue("core", "USB_OTHER_INTERRUPT_HANDLER", "DRV_USBFSV1_OTHER_Handler")
 
 		# Update USB General Interrupt Handler
-		Database.setSymbolValue("core", "USB_SOF_HSOF_INTERRUPT_ENABLE", True, 1)
-		Database.setSymbolValue("core", "USB_SOF_HSOF_INTERRUPT_HANDLER_LOCK", True, 1)
-		Database.setSymbolValue("core", "USB_SOF_HSOF_INTERRUPT_HANDLER", "DRV_USBFSV1_SOF_HSOF_Handler", 1)
+		Database.setSymbolValue("core", "USB_SOF_HSOF_INTERRUPT_ENABLE", True)
+		Database.setSymbolValue("core", "USB_SOF_HSOF_INTERRUPT_HANDLER_LOCK", True)
+		Database.setSymbolValue("core", "USB_SOF_HSOF_INTERRUPT_HANDLER", "DRV_USBFSV1_SOF_HSOF_Handler")
 
 		# Update USB General Interrupt Handler
-		Database.setSymbolValue("core", "USB_TRCPT0_INTERRUPT_ENABLE", True, 1)
-		Database.setSymbolValue("core", "USB_TRCPT0_INTERRUPT_HANDLER_LOCK", True, 1)
-		Database.setSymbolValue("core", "USB_TRCPT0_INTERRUPT_HANDLER", "DRV_USBFSV1_TRCPT0_Handler", 1)
+		Database.setSymbolValue("core", "USB_TRCPT0_INTERRUPT_ENABLE", True)
+		Database.setSymbolValue("core", "USB_TRCPT0_INTERRUPT_HANDLER_LOCK", True)
+		Database.setSymbolValue("core", "USB_TRCPT0_INTERRUPT_HANDLER", "DRV_USBFSV1_TRCPT0_Handler")
 
 		# Update USB General Interrupt Handler
-		Database.setSymbolValue("core", "USB_TRCPT1_INTERRUPT_ENABLE", True, 1)
-		Database.setSymbolValue("core", "USB_TRCPT1_INTERRUPT_HANDLER_LOCK", True, 1)
-		Database.setSymbolValue("core", "USB_TRCPT1_INTERRUPT_HANDLER", "DRV_USBFSV1_TRCPT1_Handler", 1)
+		Database.setSymbolValue("core", "USB_TRCPT1_INTERRUPT_ENABLE", True)
+		Database.setSymbolValue("core", "USB_TRCPT1_INTERRUPT_HANDLER_LOCK", True)
+		Database.setSymbolValue("core", "USB_TRCPT1_INTERRUPT_HANDLER", "DRV_USBFSV1_TRCPT1_Handler")
 		
-		Database.setSymbolValue("core", "USB_CLOCK_ENABLE", True, 1)
+		Database.setSymbolValue("core", "USB_CLOCK_ENABLE", True)
 
 
 	# Enable dependent Harmony core components
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False: 
-		Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
+		Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
 
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False:
-		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
+		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
 
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_INT") == False:
-		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_INT", True, 2)
+		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_INT", True)
 
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_OSAL") == False: 
-		Database.setSymbolValue("HarmonyCore", "ENABLE_OSAL", True, 2)
+		Database.setSymbolValue("HarmonyCore", "ENABLE_OSAL", True)
 	
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_APP_FILE") == False:
-		Database.setSymbolValue("HarmonyCore", "ENABLE_APP_FILE", True, 2)
+		Database.setSymbolValue("HarmonyCore", "ENABLE_APP_FILE", True)
 
 	configName = Variables.get("__CONFIGURATION_NAME")
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX"]):
@@ -834,9 +834,6 @@ def blUSBDriverOperationModeChanged(usbSymbolSource, event):
 		usbSymbolSource.setVisible(False)
 	else:
 		usbSymbolSource.setVisible(True)
-
-def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
-	print(ownerComponent, dependencyID, dependentComponent)
 
 def blUsbVbusPinName(usbSymbolSource, event):
 	if (event["value"] == True):

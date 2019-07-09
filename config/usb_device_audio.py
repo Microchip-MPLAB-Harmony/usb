@@ -173,7 +173,7 @@ def usbDeviceAudioBufferQueueSize(usbSymbolSource, event):
 		queueDepthCombined = queueDepthCombined - currentQSizeWrite  + event["value"]
 		currentQSizeWrite = event["value"]
 	Database.clearSymbolValue("usb_device_audio", "CONFIG_USB_DEVICE_AUDIO_QUEUE_DEPTH_COMBINED")
-	Database.setSymbolValue("usb_device_audio", "CONFIG_USB_DEVICE_AUDIO_QUEUE_DEPTH_COMBINED", queueDepthCombined, 2)
+	Database.setSymbolValue("usb_device_audio", "CONFIG_USB_DEVICE_AUDIO_QUEUE_DEPTH_COMBINED", queueDepthCombined)
 
 def usbDeviceAudioSpecVersionChanged(usbSymbolSource, event):
 	if event["value"] == "Audio v1":
@@ -441,11 +441,11 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 	res = Database.sendMessage("usb_device_audio", "UPDATE_AUDIO_QUEUE_DEPTH_COMBINED", args)
 	
 	Database.clearSymbolValue("usb_device_audio", "CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER_COMBINED")
-	Database.setSymbolValue("usb_device_audio", "CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER_COMBINED", 1, 2)
+	Database.setSymbolValue("usb_device_audio", "CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER_COMBINED", 1)
 	
 	
 	Database.clearSymbolValue("usb_device_audio", "CONFIG_USB_DEVICE_FUNCTION_AUDIO_MAX_ALTERNATE_SETTING_COMBINED")
-	Database.setSymbolValue("usb_device_audio", "CONFIG_USB_DEVICE_FUNCTION_AUDIO_MAX_ALTERNATE_SETTING_COMBINED", 2, 2)
+	Database.setSymbolValue("usb_device_audio", "CONFIG_USB_DEVICE_FUNCTION_AUDIO_MAX_ALTERNATE_SETTING_COMBINED", 2)
 	
 	##############################################################
 	# system_definitions.h file for USB Device Audio v1 Function driver   

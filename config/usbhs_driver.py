@@ -40,7 +40,7 @@ def handleMessage(messageID, args):
 
 def speedChanged(symbol, event):
 	Database.clearSymbolValue("core", "PMC_SCER_USBCLK")
-	Database.setSymbolValue("core", "PMC_SCER_USBCLK", True, 2)
+	Database.setSymbolValue("core", "PMC_SCER_USBCLK", True)
 
 def blUSBDriverOpModeChanged(symbol, event):
 	global addDrvUsbDeviceFile
@@ -60,7 +60,7 @@ def dependencyStatus(symbol, event):
 		
 def blUSBDriverSpeedChanged(symbol, event):
 	Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED")
-	Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED", event["value"], 2)
+	Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED", event["value"])
 	
 def setVisible(symbol, event):
 	if (event["value"] == True):
@@ -203,17 +203,17 @@ def instantiateComponent(usbDriverComponent):
     ############################################################################
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
 		# Update USB General Interrupt Handler 
-		Database.setSymbolValue("core", "USBHS_INTERRUPT_ENABLE", True, 1)
-		Database.setSymbolValue("core", "USBHS_INTERRUPT_HANDLER_LOCK", True, 1)
-		Database.setSymbolValue("core", "USBHS_INTERRUPT_HANDLER", "DRV_USBHSV1_USBHS_Handler", 1)
+		Database.setSymbolValue("core", "USBHS_INTERRUPT_ENABLE", True)
+		Database.setSymbolValue("core", "USBHS_INTERRUPT_HANDLER_LOCK", True)
+		Database.setSymbolValue("core", "USBHS_INTERRUPT_HANDLER", "DRV_USBHSV1_USBHS_Handler")
 
 		# Initial settings for CLK and NVIC
 		if Database.getSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN") == False:
-			Database.setSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN", True, 2)
+			Database.setSymbolValue("core", "PMC_CKGR_UCKR_UPLLEN", True)
 		if Database.getSymbolValue("core", "USBHS_CLOCK_ENABLE") == False:
-			Database.setSymbolValue("core", "USBHS_CLOCK_ENABLE", True, 2)
+			Database.setSymbolValue("core", "USBHS_CLOCK_ENABLE", True)
 		if Database.getSymbolValue("core", "PMC_SCER_USBCLK") == False:
-			Database.setSymbolValue("core", "PMC_SCER_USBCLK", True, 2)
+			Database.setSymbolValue("core", "PMC_SCER_USBCLK", True)
 	
 		
 		# Dependency Status
@@ -229,31 +229,31 @@ def instantiateComponent(usbDriverComponent):
 		
 	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
 		# Update USB General Interrupt Handler 
-		Database.setSymbolValue("core", "USB_INTERRUPT_ENABLE", True, 1)
-		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER_LOCK", True, 1)
-		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER", "DRV_USBHS_InterruptHandler", 1)
+		Database.setSymbolValue("core", "USB_INTERRUPT_ENABLE", True)
+		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER_LOCK", True)
+		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER", "DRV_USBHS_InterruptHandler")
 		
 		# Update USB DMA Interrupt Handler 
-		Database.setSymbolValue("core", "USB_DMA_INTERRUPT_ENABLE", True, 1)
-		Database.setSymbolValue("core", "USB_DMA_INTERRUPT_HANDLER_LOCK", True, 1)
-		Database.setSymbolValue("core", "USB_DMA_INTERRUPT_HANDLER", "DRV_USBHS_DMAInterruptHandler", 1)
+		Database.setSymbolValue("core", "USB_DMA_INTERRUPT_ENABLE", True)
+		Database.setSymbolValue("core", "USB_DMA_INTERRUPT_HANDLER_LOCK", True)
+		Database.setSymbolValue("core", "USB_DMA_INTERRUPT_HANDLER", "DRV_USBHS_DMAInterruptHandler")
 
 	
 	# Enable dependent Harmony core components
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False: 
-		Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
+		Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
 
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False: 
-		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
+		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
 
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_INT") == False: 
-		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_INT", True, 2)
+		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_INT", True)
 
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_OSAL") == False: 
-		Database.setSymbolValue("HarmonyCore", "ENABLE_OSAL", True, 2)
+		Database.setSymbolValue("HarmonyCore", "ENABLE_OSAL", True)
 	
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_APP_FILE") == False: 
-		Database.setSymbolValue("HarmonyCore", "ENABLE_APP_FILE", True, 2)
+		Database.setSymbolValue("HarmonyCore", "ENABLE_APP_FILE", True)
 	
 	configName = Variables.get("__CONFIGURATION_NAME")
 	

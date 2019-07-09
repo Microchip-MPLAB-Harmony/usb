@@ -61,7 +61,7 @@ static DRV_USB_VBUS_LEVEL DRV_USBHSV1_VBUS_Comparator(void)
 void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
 {
 	/* Note: When operating in Host mode, the application can specify a Root 
-	   hub port enable function. The USB Host Controller driver initi data 
+	   hub port enable function. The USB Host Controller driver init data 
 	   structure has a member for specifying the root hub enable function. 
 	   This parameter should point to Root hub port enable function. If this 
 	   parameter is NULL, it implies that the port is always enabled. 
