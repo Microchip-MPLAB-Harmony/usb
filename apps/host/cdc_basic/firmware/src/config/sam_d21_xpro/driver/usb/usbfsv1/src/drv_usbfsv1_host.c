@@ -408,6 +408,8 @@ void _DRV_USBFSV1_HOST_Initialize
     SYS_MODULE_INDEX index
 )
 {
+//   volatile usb_registers_t * usbID = drvObj->usbID;
+   
     /* No device attached */
     drvObj->deviceAttached = false;
     /* Initialize the device handle */
@@ -1232,8 +1234,6 @@ static void _DRV_USBFSV1_HOST_ControlTransferProcess(DRV_USBFSV1_OBJ * hDriver)
         SYS_DEBUG_MESSAGE(SYS_ERROR_ERROR, "\033[31m\r\nabort\033[39m");
         endIRP = true;
         irp->status = USB_HOST_IRP_STATUS_ABORTED;
-        /* Reset Pipe */
-        hDriver->usbID->HOST.HOST_PIPE[0].USB_PCFG = 0;
     }
     else if ( 0 != (usbID->HOST.HOST_PIPE[0].USB_PINTFLAG & USB_HOST_PINTFLAG_STALL_Msk))
     {
@@ -1247,8 +1247,6 @@ static void _DRV_USBFSV1_HOST_ControlTransferProcess(DRV_USBFSV1_OBJ * hDriver)
         hDriver->usbID->HOST.HOST_PIPE[0].USB_PINTFLAG = USB_HOST_PINTFLAG_STALL_Msk;
         /* Reset DATA Toggle */
         usbID->HOST.HOST_PIPE[0].USB_PSTATUSCLR = USB_HOST_PSTATUSCLR_DTGL_Msk;
-        /* Reset Pipe */
-        hDriver->usbID->HOST.HOST_PIPE[0].USB_PCFG = 0;
     }
     /* Pipe Error Interrupt Flag */
     else if(USB_HOST_PINTFLAG_PERR_Msk == (usbID->HOST.HOST_PIPE[0].USB_PINTFLAG & USB_HOST_PINTFLAG_PERR_Msk))
@@ -1260,8 +1258,6 @@ static void _DRV_USBFSV1_HOST_ControlTransferProcess(DRV_USBFSV1_OBJ * hDriver)
         irp->status = USB_HOST_IRP_STATUS_ERROR_DATA;
         /* Ack all errors */
         usbID->HOST.HOST_PIPE[0].USB_PINTFLAG = USB_HOST_PINTFLAG_PERR_Msk;
-        /* Reset Pipe */
-        hDriver->usbID->HOST.HOST_PIPE[0].USB_PCFG = 0;
     }
     else
     {
@@ -1681,8 +1677,6 @@ static void _DRV_USBFSV1_HOST_NonControlTransferProcess
 
     if(pipe->irpQueueHead == NULL)
     {
-        /* Reset Pipe */
-        hDriver->usbID->HOST.HOST_PIPE[hostPipe].USB_PCFG = 0;
         return;
     }
 
@@ -1712,9 +1706,6 @@ static void _DRV_USBFSV1_HOST_NonControlTransferProcess
 
         /* Reset DATA Toggle */
         usbID->HOST.HOST_PIPE[hostPipe].USB_PSTATUSCLR = USB_HOST_PSTATUSCLR_DTGL_Msk;
-
-        /* Reset Pipe */
-        hDriver->usbID->HOST.HOST_PIPE[hostPipe].USB_PCFG = 0;
     }
     else if(USB_HOST_PINTFLAG_PERR_Msk == (usbID->HOST.HOST_PIPE[hostPipe].USB_PINTFLAG & USB_HOST_PINTFLAG_PERR_Msk))
     {
@@ -1725,8 +1716,6 @@ static void _DRV_USBFSV1_HOST_NonControlTransferProcess
         irp->status = USB_HOST_IRP_STATUS_ERROR_DATA;
         /* Ack all errors */
         usbID->HOST.HOST_PIPE[hostPipe].USB_PINTFLAG = USB_HOST_PINTFLAG_PERR_Msk;
-        /* Reset Pipe */
-        hDriver->usbID->HOST.HOST_PIPE[hostPipe].USB_PCFG = 0;
     }
     else if ( USB_HOST_PINTFLAG_TXSTP_Msk == (usbID->HOST.HOST_PIPE[hostPipe].USB_PINTFLAG & USB_HOST_PINTFLAG_TXSTP_Msk))
     {

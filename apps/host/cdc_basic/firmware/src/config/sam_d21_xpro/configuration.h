@@ -111,7 +111,6 @@ extern "C" {
 /* Number of Endpoints used */
 #define DRV_USBFSV1_ENDPOINTS_NUMBER                        1
 
-/* Total number of devices to be supported */
 #define USB_HOST_DEVICES_NUMBER                             1
 
 /* Size of Endpoint 0 buffer */
