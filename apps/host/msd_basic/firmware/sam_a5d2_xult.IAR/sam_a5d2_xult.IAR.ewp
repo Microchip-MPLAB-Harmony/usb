@@ -2497,6 +2497,9 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\usb\uhp\src\drv_usb_uhp_ehci_host.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\usb\uhp\src\drv_usb_uhp_ohci_host.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\exceptions.c</name>
             </file>
             <file>
@@ -2578,9 +2581,6 @@
     </group>
     <file>
         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\ddr.icf</name>
-    </file>
-    <file>
-        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\usb\uhp\src\drv_usb_uhp_ohci_host.c</name>
     </file>
     <file>
         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\sam_a5d2_xult.ipcf</name>
