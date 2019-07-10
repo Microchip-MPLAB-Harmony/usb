@@ -2830,6 +2830,9 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\usb\uhp\src\drv_usb_uhp_ehci_host.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\usb\uhp\src\drv_usb_uhp_ohci_host.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\event_groups.c</name>
             </file>
             <file>
@@ -2950,9 +2953,6 @@
     </group>
     <file>
         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\ddr.icf</name>
-    </file>
-    <file>
-        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\usb\uhp\src\drv_usb_uhp_ohci_host.c</name>
     </file>
     <file>
         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\sam_a5d2_xult_freertos.ipcf</name>

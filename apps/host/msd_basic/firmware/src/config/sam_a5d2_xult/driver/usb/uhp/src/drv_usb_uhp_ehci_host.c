@@ -1063,6 +1063,7 @@ void _DRV_USB_UHP_HOST_Tasks_ISR_EHCI(DRV_USB_UHP_OBJ *hDriver)
                 if ((read_data & UHPHS_PORTSC_0_CSC_Msk) == UHPHS_PORTSC_0_CSC_Msk)
                 {
                     /* 1=Device is present on port. */
+                    usbIDEHCI->UHPHS_USBCMD &= ~UHPHS_USBCMD_ASE_Msk;
                     if (((*((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC_0) + i)) & UHPHS_PORTSC_0_CCS_Msk) == UHPHS_PORTSC_0_CCS_Msk)
                     {
                         hDriver->deviceAttached = true;
