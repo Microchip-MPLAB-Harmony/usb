@@ -2349,22 +2349,22 @@
     <UniqueComponent dnOrder="11" id="usb_host_cdc"/>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_A5D2_Xplained_Ultra" x="480" y="20"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="21" y="66"/>
         <ElementPosition dnOrder="2" id="cmsis" x="340" y="20"/>
         <ElementPosition dnOrder="3" id="core" x="242" y="21"/>
         <ElementPosition dnOrder="4" id="dfp" x="20" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_usbhs_v1" x="27" y="300"/>
-        <ElementPosition dnOrder="6" id="stdio" x="213" y="232"/>
-        <ElementPosition dnOrder="7" id="sys_time" x="508" y="117"/>
-        <ElementPosition dnOrder="8" id="tc0" x="325" y="85"/>
+        <ElementPosition dnOrder="5" id="drv_usbhs_v1" x="27" y="269"/>
+        <ElementPosition dnOrder="6" id="stdio" x="188" y="191"/>
+        <ElementPosition dnOrder="7" id="sys_time" x="352" y="86"/>
+        <ElementPosition dnOrder="8" id="tc0" x="211" y="81"/>
         <ElementPosition dnOrder="9" id="uart1" x="28" y="177"/>
-        <ElementPosition dnOrder="10" id="usb_host" x="353" y="281"/>
-        <ElementPosition dnOrder="11" id="usb_host_cdc" x="483" y="295"/>
+        <ElementPosition dnOrder="10" id="usb_host" x="210" y="268"/>
+        <ElementPosition dnOrder="11" id="usb_host_cdc" x="343" y="271"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
