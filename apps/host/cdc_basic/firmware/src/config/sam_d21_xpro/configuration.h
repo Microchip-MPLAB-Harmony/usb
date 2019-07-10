@@ -156,6 +156,9 @@ extern "C" {
 /* Reset duration in milli Seconds */ 
 #define DRV_USBFSV1_HOST_RESET_DURATION                     100
 
+/* Alignment for buffers that are submitted to USB Driver*/ 
+#define USB_ALIGN  CACHE_ALIGN
+
 /* Number of CDC Function driver instances in the application */
 #define USB_HOST_CDC_INSTANCES_NUMBER         1
 

@@ -76,10 +76,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     Application strings and buffers are be defined outside this structure.
 */
 
-APP_DATA CACHE_ALIGN appData;
+APP_DATA USB_ALIGN appData;
 
 /* This is the string that will written to the file */
- CACHE_ALIGN uint8_t prompt[8]  = "\r\nLED : ";
+ USB_ALIGN uint8_t prompt[8]  = "\r\nLED : ";
 
 // *****************************************************************************
 // *****************************************************************************
