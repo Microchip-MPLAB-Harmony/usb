@@ -83,8 +83,8 @@
           <Name dnOrder="1">plib_clock.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/peripheral/clock/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clock/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B1489E604A701A771A0E4B9F9AE3985B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B1489E604A701A771A0E4B9F9AE3985B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">99C5E113E022AA7453A9E0B936781CD0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">99C5E113E022AA7453A9E0B936781CD0</UserChecksum>
         </File>
         <File dnOrder="10">
           <Type dnOrder="0">SOURCE</Type>
@@ -131,8 +131,8 @@
           <Name dnOrder="1">plib_tc0.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/peripheral/tc/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/tc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F5D8D2386FC84425596C09C2831C53ED</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F5D8D2386FC84425596C09C2831C53ED</UserChecksum>
+          <GeneratedChecksum dnOrder="4">58780DAF9034D532D5B50296A0EDC308</GeneratedChecksum>
+          <UserChecksum dnOrder="5">58780DAF9034D532D5B50296A0EDC308</UserChecksum>
         </File>
         <File dnOrder="16">
           <Type dnOrder="0">SOURCE</Type>
@@ -347,8 +347,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">69B81D04B7BCD7C893960E4016048776</GeneratedChecksum>
-          <UserChecksum dnOrder="5">69B81D04B7BCD7C893960E4016048776</UserChecksum>
+          <GeneratedChecksum dnOrder="4">08569918DB8AC3699E1397E1BA046A29</GeneratedChecksum>
+          <UserChecksum dnOrder="5">08569918DB8AC3699E1397E1BA046A29</UserChecksum>
         </File>
         <File dnOrder="43">
           <Type dnOrder="0">HEADER</Type>
@@ -371,8 +371,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9BC2EF5FC7ABC738251E9055CDAD7BBA</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9BC2EF5FC7ABC738251E9055CDAD7BBA</UserChecksum>
+          <GeneratedChecksum dnOrder="4">07DAB6C46BB146F49D0E1CBE3DF5BD12</GeneratedChecksum>
+          <UserChecksum dnOrder="5">07DAB6C46BB146F49D0E1CBE3DF5BD12</UserChecksum>
         </File>
         <File dnOrder="46">
           <Type dnOrder="0">HEADER</Type>

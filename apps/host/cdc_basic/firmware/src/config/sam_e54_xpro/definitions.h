@@ -56,14 +56,14 @@
 #include "peripheral/port/plib_port.h"
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
+#include "driver/usb/usbfsv1/drv_usbfsv1.h"
 #include "usb/usb_host_cdc.h"
 #include "usb/usb_cdc.h"
-#include "driver/usb/usbfsv1/drv_usbfsv1.h"
 #include "peripheral/tc/plib_tc0.h"
-#include "system/time/sys_time.h"
 #include "system/int/sys_int.h"
 #include "system/cache/sys_cache.h"
 #include "osal/osal.h"
+#include "system/time/sys_time.h"
 #include "app.h"
 
 
