@@ -187,16 +187,16 @@
           <Name dnOrder="1">usb_host_msd.c</Name>
           <LogicalPath dnOrder="2">config/pic32mk_sk/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">58E7330E231318640AAA830A3D572556</GeneratedChecksum>
-          <UserChecksum dnOrder="5">58E7330E231318640AAA830A3D572556</UserChecksum>
+          <GeneratedChecksum dnOrder="4">60C3BDD7015E3E214FA91AB8D5E0B6A5</GeneratedChecksum>
+          <UserChecksum dnOrder="5">60C3BDD7015E3E214FA91AB8D5E0B6A5</UserChecksum>
         </File>
         <File dnOrder="23">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">usb_host_scsi.c</Name>
           <LogicalPath dnOrder="2">config/pic32mk_sk/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">02ACDC96E4593C7EB976507B8714CD81</GeneratedChecksum>
-          <UserChecksum dnOrder="5">02ACDC96E4593C7EB976507B8714CD81</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1F5AFB833FE824200B13A54291251AF8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1F5AFB833FE824200B13A54291251AF8</UserChecksum>
         </File>
         <File dnOrder="24">
           <Type dnOrder="0">SOURCE</Type>
@@ -227,8 +227,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/pic32mk_sk/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">E88D246378A61FF871F0866BA4371009</GeneratedChecksum>
-          <UserChecksum dnOrder="5">E88D246378A61FF871F0866BA4371009</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E64314B7C33165B15603B4DFA72C3581</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E64314B7C33165B15603B4DFA72C3581</UserChecksum>
         </File>
         <File dnOrder="28">
           <Type dnOrder="0">HEADER</Type>

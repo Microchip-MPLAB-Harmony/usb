@@ -60,7 +60,7 @@ USB_HOST_SCSI_INSTANCE_OBJ gUSBHostSCSIObj[USB_HOST_MSD_LUN_NUMBERS];
  * USB HOST MSD SCSI buffers needed for SCSI operation
  ******************************************************/
 
-uint8_t gUSBSCSIBuffer[USB_HOST_MSD_LUN_NUMBERS][256] CACHE_ALIGN;
+uint8_t gUSBSCSIBuffer[USB_HOST_MSD_LUN_NUMBERS][256] USB_ALIGN;
 
 /*****************************************************
  * USB HOST SCSI Attach Listeners.

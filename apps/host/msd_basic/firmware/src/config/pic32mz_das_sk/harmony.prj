@@ -3,7 +3,7 @@
   <Configurator>
     <Name dnOrder="0" value="pic32mz_das_sk"/>
     <Processor dnOrder="1" value="PIC32MZ2064DAS169"/>
-    <Harmony dnOrder="2" path="../../.."/>
+    <Harmony dnOrder="2" path="../../../.."/>
     <Manifest dnOrder="3">
       <Files dnOrder="0">
         <File dnOrder="0">
@@ -187,16 +187,16 @@
           <Name dnOrder="1">usb_host_msd.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">58E7330E231318640AAA830A3D572556</GeneratedChecksum>
-          <UserChecksum dnOrder="5">58E7330E231318640AAA830A3D572556</UserChecksum>
+          <GeneratedChecksum dnOrder="4">60C3BDD7015E3E214FA91AB8D5E0B6A5</GeneratedChecksum>
+          <UserChecksum dnOrder="5">60C3BDD7015E3E214FA91AB8D5E0B6A5</UserChecksum>
         </File>
         <File dnOrder="23">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">usb_host_scsi.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">02ACDC96E4593C7EB976507B8714CD81</GeneratedChecksum>
-          <UserChecksum dnOrder="5">02ACDC96E4593C7EB976507B8714CD81</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1F5AFB833FE824200B13A54291251AF8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1F5AFB833FE824200B13A54291251AF8</UserChecksum>
         </File>
         <File dnOrder="24">
           <Type dnOrder="0">SOURCE</Type>
@@ -227,8 +227,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_das_sk/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">25EF6E588041489EFE8A59F77F68216A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">25EF6E588041489EFE8A59F77F68216A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">6179FF17BC4417C1C2802793E2038385</GeneratedChecksum>
+          <UserChecksum dnOrder="5">6179FF17BC4417C1C2802793E2038385</UserChecksum>
         </File>
         <File dnOrder="28">
           <Type dnOrder="0">HEADER</Type>

@@ -315,8 +315,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">112E9EBEF987D8D549B8FE4754619B61</GeneratedChecksum>
-          <UserChecksum dnOrder="5">112E9EBEF987D8D549B8FE4754619B61</UserChecksum>
+          <GeneratedChecksum dnOrder="4">B236F135A74E95ACD44241116FD4694B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">B236F135A74E95ACD44241116FD4694B</UserChecksum>
         </File>
         <File dnOrder="39">
           <Type dnOrder="0">HEADER</Type>

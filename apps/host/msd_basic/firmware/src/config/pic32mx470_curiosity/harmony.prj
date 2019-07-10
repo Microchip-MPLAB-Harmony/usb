@@ -187,16 +187,16 @@
           <Name dnOrder="1">usb_host_msd.c</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">58E7330E231318640AAA830A3D572556</GeneratedChecksum>
-          <UserChecksum dnOrder="5">58E7330E231318640AAA830A3D572556</UserChecksum>
+          <GeneratedChecksum dnOrder="4">60C3BDD7015E3E214FA91AB8D5E0B6A5</GeneratedChecksum>
+          <UserChecksum dnOrder="5">60C3BDD7015E3E214FA91AB8D5E0B6A5</UserChecksum>
         </File>
         <File dnOrder="23">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">usb_host_scsi.c</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">02ACDC96E4593C7EB976507B8714CD81</GeneratedChecksum>
-          <UserChecksum dnOrder="5">02ACDC96E4593C7EB976507B8714CD81</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1F5AFB833FE824200B13A54291251AF8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1F5AFB833FE824200B13A54291251AF8</UserChecksum>
         </File>
         <File dnOrder="24">
           <Type dnOrder="0">SOURCE</Type>
@@ -227,8 +227,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">2D4FB12244F808C291117BC16F5D0035</GeneratedChecksum>
-          <UserChecksum dnOrder="5">2D4FB12244F808C291117BC16F5D0035</UserChecksum>
+          <GeneratedChecksum dnOrder="4">EEE89B6EF73E5E8B7A661EF1E3AD9F8E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">EEE89B6EF73E5E8B7A661EF1E3AD9F8E</UserChecksum>
         </File>
         <File dnOrder="28">
           <Type dnOrder="0">HEADER</Type>

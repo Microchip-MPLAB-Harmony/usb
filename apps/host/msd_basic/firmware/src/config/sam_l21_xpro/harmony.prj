@@ -227,16 +227,16 @@
           <Name dnOrder="1">usb_host_msd.c</Name>
           <LogicalPath dnOrder="2">config/sam_l21_xpro/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">58E7330E231318640AAA830A3D572556</GeneratedChecksum>
-          <UserChecksum dnOrder="5">58E7330E231318640AAA830A3D572556</UserChecksum>
+          <GeneratedChecksum dnOrder="4">60C3BDD7015E3E214FA91AB8D5E0B6A5</GeneratedChecksum>
+          <UserChecksum dnOrder="5">60C3BDD7015E3E214FA91AB8D5E0B6A5</UserChecksum>
         </File>
         <File dnOrder="28">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">usb_host_scsi.c</Name>
           <LogicalPath dnOrder="2">config/sam_l21_xpro/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">02ACDC96E4593C7EB976507B8714CD81</GeneratedChecksum>
-          <UserChecksum dnOrder="5">02ACDC96E4593C7EB976507B8714CD81</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1F5AFB833FE824200B13A54291251AF8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1F5AFB833FE824200B13A54291251AF8</UserChecksum>
         </File>
         <File dnOrder="29">
           <Type dnOrder="0">SOURCE</Type>
@@ -363,8 +363,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/sam_l21_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F6CA81280F65C8F0A8E3CA19D444F7C3</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F6CA81280F65C8F0A8E3CA19D444F7C3</UserChecksum>
+          <GeneratedChecksum dnOrder="4">A222C05C2EFB0A3C9271882D14163374</GeneratedChecksum>
+          <UserChecksum dnOrder="5">A222C05C2EFB0A3C9271882D14163374</UserChecksum>
         </File>
         <File dnOrder="45">
           <Type dnOrder="0">HEADER</Type>
@@ -387,8 +387,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_l21_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">E1DD239B2BD03080C4DAADA08F7ACE8C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">E1DD239B2BD03080C4DAADA08F7ACE8C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0E698F4E367CA4AD1908CED73803C191</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0E698F4E367CA4AD1908CED73803C191</UserChecksum>
         </File>
         <File dnOrder="48">
           <Type dnOrder="0">HEADER</Type>
@@ -1035,8 +1035,8 @@
           <Name dnOrder="1">user.h</Name>
           <LogicalPath dnOrder="2">config/sam_l21_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">4B3C3EF8A318908A22B78500515C3288</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4B3C3EF8A318908A22B78500515C3288</UserChecksum>
+          <GeneratedChecksum dnOrder="4"/>
+          <UserChecksum dnOrder="5"/>
         </File>
         <File dnOrder="129">
           <Type dnOrder="0">HEADER</Type>
@@ -1060,7 +1060,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="audio;bsp;bt;core;crypto;csp;net;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;crypto;csp;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>
