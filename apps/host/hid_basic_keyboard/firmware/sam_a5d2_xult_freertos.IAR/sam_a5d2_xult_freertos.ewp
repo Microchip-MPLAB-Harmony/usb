@@ -66,7 +66,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.32.3.20186</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -842,7 +842,7 @@
                 </option>
                 <option>
                     <name>IlinkProgramEntryLabel</name>
-                    <state></state>
+                    <state>__iar_program_start</state>
                 </option>
                 <option>
                     <name>DoFill</name>
@@ -1015,7 +1015,7 @@
                 </option>
                 <option>
                     <name>IlinkTrustzoneImportLibraryOut</name>
-                    <state>###Unitialized###</state>
+                    <state>sam_a5d2_xult_freertos_import_lib.o</state>
                 </option>
                 <option>
                     <name>OILinkExtraOption</name>
@@ -2200,7 +2200,16 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\usb\uhp\drv_usb_uhp.h</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\usb\uhp\src\drv_usb_uhp_ehci_host.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\usb\uhp\src\drv_usb_uhp_local.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\usb\uhp\src\drv_usb_uhp_ohci_host.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\usb\uhp\src\drv_usb_uhp_ohci_registers.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\driver\usb\uhp\src\drv_usb_uhp_variant_mapping.h</name>
@@ -2305,7 +2314,7 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\tc\plib_tc_common.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\uart\plib_uart1.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\uart\plib_uart2.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\uart\plib_uart_common.h</name>
@@ -2599,7 +2608,7 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\tc\plib_tc0.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\uart\plib_uart1.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\uart\plib_uart2.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\port.c</name>

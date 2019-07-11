@@ -45,7 +45,7 @@ USB_HOST_HID_USAGE_DRIVER_INTERFACE usageDriverInterfaceKeyboard =
   .usageDriverEventHandler = _USB_HOST_HID_KEYBOARD_EventHandler,
   .usageDriverTask = _USB_HOST_HID_KEYBOARD_Task
 };
-USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY usageDriverTableEntry[4] =
+USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY usageDriverTableEntry[1] =
 {
     {
         .usage = (USB_HID_USAGE_PAGE_GENERIC_DESKTOP_CONTROLS << 16) | USB_HID_GENERIC_DESKTOP_KEYBOARD,
@@ -57,7 +57,7 @@ USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY usageDriverTableEntry[4] =
 
 USB_HOST_HID_INIT hidInitData =
 {
-    .nUsageDriver = 4,
+    .nUsageDriver = 1,
     .usageDriverTable = usageDriverTableEntry
 };
 

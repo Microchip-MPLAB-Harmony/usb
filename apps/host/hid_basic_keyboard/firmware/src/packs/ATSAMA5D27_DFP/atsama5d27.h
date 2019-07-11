@@ -207,8 +207,6 @@ typedef enum IRQn
 #include "component/uart.h"
 #include "component/udphs.h"
 #include "component/uhphs.h"
-//#include "component/uhp_ehci.h"
-#include "component/uhp_ohci.h"
 #include "component/wdt.h"
 #include "component/xdmac.h"
 /** @}  end of Peripheral Software API */

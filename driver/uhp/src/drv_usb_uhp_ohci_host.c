@@ -957,8 +957,7 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
                 if( pipe->pipeType == USB_TRANSFER_TYPE_INTERRUPT ) 
                 {
                     /* PeriodicListEnable: enable the processing of the periodic list */
-                    usbIDOHCI->UHP_OHCI_HCCONTROL |= UHP_OHCI_HCCONTROL_PLE_Msk;
-                    
+                    usbIDOHCI->UHP_OHCI_HCCONTROL |= UHP_OHCI_HCCONTROL_CLE_Msk;
                     // HcPeriodicStart
                     // PeriodCurrentED
                     // HcPeriodicStart Register

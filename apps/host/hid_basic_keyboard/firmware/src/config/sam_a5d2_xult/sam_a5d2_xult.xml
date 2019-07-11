@@ -2537,9 +2537,9 @@
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="2" id="CONFIG_USB_HOST_USE_MOUSE">
+        <Boolean dnOrder="2" id="CONFIG_USB_HOST_USE_KEYBOARD_SAVE_STATUS">
           <Values dnOrder="0">
-            <User dnOrder="0" value="false"/>
+            <Dynamic dnOrder="0" id="usb_host_hid" value="true"/>
           </Values>
         </Boolean>
         <File dnOrder="3" id="USB_HOST_HID_KEYBOARD_HEADER">
@@ -2569,20 +2569,20 @@
   <UserData>
     <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="BSP_SAM_A5D2_Xplained_Ultra" x="38" y="69"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="308" y="68"/>
-        <ElementPosition dnOrder="2" id="cmsis" x="340" y="20"/>
-        <ElementPosition dnOrder="3" id="core" x="242" y="21"/>
-        <ElementPosition dnOrder="4" id="dfp" x="20" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_usart" x="494" y="71"/>
-        <ElementPosition dnOrder="6" id="drv_usbhs_v1" x="15" y="315"/>
+        <ElementPosition dnOrder="0" id="BSP_SAM_A5D2_Xplained_Ultra" x="0" y="52"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="215" y="47"/>
+        <ElementPosition dnOrder="2" id="cmsis" x="264" y="16"/>
+        <ElementPosition dnOrder="3" id="core" x="188" y="15"/>
+        <ElementPosition dnOrder="4" id="dfp" x="0" y="15"/>
+        <ElementPosition dnOrder="5" id="drv_usart" x="466" y="85"/>
+        <ElementPosition dnOrder="6" id="drv_usbhs_v1" x="14" y="305"/>
         <ElementPosition dnOrder="7" id="stdio" x="226" y="404"/>
-        <ElementPosition dnOrder="8" id="sys_time" x="162" y="167"/>
-        <ElementPosition dnOrder="9" id="tc0" x="13" y="164"/>
-        <ElementPosition dnOrder="10" id="uart1" x="56" y="397"/>
-        <ElementPosition dnOrder="11" id="uart2" x="342" y="196"/>
-        <ElementPosition dnOrder="12" id="usb_host" x="333" y="302"/>
-        <ElementPosition dnOrder="13" id="usb_host_hid" x="520" y="322"/>
+        <ElementPosition dnOrder="8" id="sys_time" x="162" y="159"/>
+        <ElementPosition dnOrder="9" id="tc0" x="16" y="195"/>
+        <ElementPosition dnOrder="10" id="uart1" x="56" y="392"/>
+        <ElementPosition dnOrder="11" id="uart2" x="307" y="149"/>
+        <ElementPosition dnOrder="12" id="usb_host" x="212" y="283"/>
+        <ElementPosition dnOrder="13" id="usb_host_hid" x="350" y="330"/>
       </ElementPositions>
     </ComponentGraph>
     <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>

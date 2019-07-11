@@ -66,24 +66,35 @@
 
 static DRV_USART_CLIENT_OBJ drvUSART0ClientObjPool[DRV_USART_CLIENTS_NUMBER_IDX0];
 
+/* USART transmit/receive transfer objects pool */
+static DRV_USART_BUFFER_OBJ drvUSART0BufferObjPool[DRV_USART_QUEUE_SIZE_IDX0];
 
 const DRV_USART_PLIB_INTERFACE drvUsart0PlibAPI = {
-    .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)UART1_ReadCallbackRegister,
-    .read = (DRV_USART_PLIB_READ)UART1_Read,
-    .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)UART1_ReadIsBusy,
-    .readCountGet = (DRV_USART_PLIB_READ_COUNT_GET)UART1_ReadCountGet,
-    .writeCallbackRegister = (DRV_USART_PLIB_WRITE_CALLBACK_REG)UART1_WriteCallbackRegister,
-    .write = (DRV_USART_PLIB_WRITE)UART1_Write,
-    .writeIsBusy = (DRV_USART_PLIB_WRITE_IS_BUSY)UART1_WriteIsBusy,
-    .writeCountGet = (DRV_USART_PLIB_WRITE_COUNT_GET)UART1_WriteCountGet,
-    .errorGet = (DRV_USART_PLIB_ERROR_GET)UART1_ErrorGet,
-    .serialSetup = (DRV_USART_PLIB_SERIAL_SETUP)UART1_SerialSetup
+    .readCallbackRegister = (DRV_USART_PLIB_READ_CALLBACK_REG)UART2_ReadCallbackRegister,
+    .read = (DRV_USART_PLIB_READ)UART2_Read,
+    .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)UART2_ReadIsBusy,
+    .readCountGet = (DRV_USART_PLIB_READ_COUNT_GET)UART2_ReadCountGet,
+    .writeCallbackRegister = (DRV_USART_PLIB_WRITE_CALLBACK_REG)UART2_WriteCallbackRegister,
+    .write = (DRV_USART_PLIB_WRITE)UART2_Write,
+    .writeIsBusy = (DRV_USART_PLIB_WRITE_IS_BUSY)UART2_WriteIsBusy,
+    .writeCountGet = (DRV_USART_PLIB_WRITE_COUNT_GET)UART2_WriteCountGet,
+    .errorGet = (DRV_USART_PLIB_ERROR_GET)UART2_ErrorGet,
+    .serialSetup = (DRV_USART_PLIB_SERIAL_SETUP)UART2_SerialSetup
 };
 
 const uint32_t drvUsart0remapDataWidth[] = { 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x0, 0xFFFFFFFF };
 const uint32_t drvUsart0remapParity[] = { 0x800, 0x0, 0x200, 0x600, 0x400, 0xFFFFFFFF };
 const uint32_t drvUsart0remapStopBits[] = { 0x0, 0xFFFFFFFF, 0xFFFFFFFF };
 const uint32_t drvUsart0remapError[] = { 0x20, 0x80, 0x40 };
+
+const DRV_USART_INTERRUPT_SOURCES drvUSART0InterruptSources =
+{
+    /* Peripheral has single interrupt vector */
+    .isSingleIntSrc                        = true,
+
+    /* Peripheral interrupt line */
+    .intSources.usartInterrupt             = UART2_IRQn,
+};
 
 const DRV_USART_INIT drvUsart0InitData =
 {
@@ -99,6 +110,13 @@ const DRV_USART_INIT drvUsart0InitData =
 
     .dmaChannelReceive = SYS_DMA_CHANNEL_NONE,
 
+    /* Combined size of transmit and receive buffer objects */
+    .bufferObjPoolSize = DRV_USART_QUEUE_SIZE_IDX0,
+
+    /* USART transmit and receive buffer buffer objects pool */
+    .bufferObjPool = (uintptr_t)&drvUSART0BufferObjPool[0],
+
+    .interruptSources = &drvUSART0InterruptSources,
 
     .remapDataWidth = drvUsart0remapDataWidth,
 
@@ -139,12 +157,12 @@ void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
     if (enable == true)
     {
         /* Enable the VBUS */
-        VBUS_AH_PB10_PowerEnable();
+        VBUS_AH_PowerEnable();
     }
     else
     {
         /* Disable the VBUS */
-        VBUS_AH_PB10_PowerDisable();
+        VBUS_AH_PowerDisable();
     }
 }
 
@@ -218,6 +236,8 @@ void SYS_Initialize ( void* data )
     MMU_Initialize();
     Matrix_Initialize();
 
+    PLIB_L2CC_Initialize();
+
     INT_Initialize();
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
 
@@ -228,7 +248,7 @@ void SYS_Initialize ( void* data )
      
     
 	BSP_Initialize();
-	UART1_Initialize();
+	UART2_Initialize();
 
 
     sysObj.drvUsart0 = DRV_USART_Initialize(DRV_USART_INDEX_0, (SYS_MODULE_INIT *)&drvUsart0InitData);

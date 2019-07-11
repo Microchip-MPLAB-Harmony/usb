@@ -98,6 +98,7 @@ extern "C" {
 /* USART Driver Instance 0 Configuration Options */
 #define DRV_USART_INDEX_0                  0
 #define DRV_USART_CLIENTS_NUMBER_IDX0      1
+#define DRV_USART_QUEUE_SIZE_IDX0          5
 
 /* USART Driver Global Configuration Options */
 #define DRV_USART_INSTANCES_NUMBER         1
@@ -128,6 +129,10 @@ extern "C" {
 /* Reset duration in milli Seconds */ 
 #define DRV_USB_UHP_RESET_DURATION                     100
 
+/* Alignment for buffers that are submitted to USB Driver*/ 
+#ifndef USB_ALIGN
+#define USB_ALIGN __ALIGNED(4096)
+#endif 
 
 // *****************************************************************************
 // *****************************************************************************
@@ -174,7 +179,6 @@ extern "C" {
 #define USB_HID_GLOBAL_PUSH_POP_STACK_SIZE 1
 
 
-#define LED1_On   LED_BLUE_On
 
 
 // *****************************************************************************

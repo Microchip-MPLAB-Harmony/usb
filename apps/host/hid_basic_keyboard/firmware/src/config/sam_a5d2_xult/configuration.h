@@ -129,6 +129,10 @@ extern "C" {
 /* Reset duration in milli Seconds */ 
 #define DRV_USB_UHP_RESET_DURATION                     100
 
+/* Alignment for buffers that are submitted to USB Driver*/ 
+#ifndef USB_ALIGN
+#define USB_ALIGN __ALIGNED(4096)
+#endif 
 
 // *****************************************************************************
 // *****************************************************************************
@@ -173,6 +177,9 @@ extern "C" {
 /* Maximum number PUSH items that can be saved in the Global item queue per field
  * per HID interface */
 #define USB_HID_GLOBAL_PUSH_POP_STACK_SIZE 1
+
+
+
 
 // *****************************************************************************
 // *****************************************************************************

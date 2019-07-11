@@ -121,24 +121,21 @@
  * Usage Page and Usage ID together in 32 bits.
  */
 #define USB_HOST_HID_USAGE_PAGE_SHIFT                          16
-
-
-#define USB_HOST_HID_GET_UNALIGNED(ptr)       (uint16_t)ptr               
-//        ({ __typeof__(*(ptr)) tmp;                      \
-//         memmove(&tmp, (ptr), sizeof(*(ptr)));          \
-//         tmp; })                                        \
-
-#if defined (__PIC32C__)
-#define HID_COHERENT_ATTRIBUTE
-#else
-#define HID_COHERENT_ATTRIBUTE __attribute__((coherent)) 
+ 
+#ifdef __ICCARM__
+   #define USB_HOST_HID_GET_UNALIGNED(ptr)       (uint16_t)ptr
+#else           
+  #define USB_HOST_HID_GET_UNALIGNED(ptr)                 \
+          ({ __typeof__(*(ptr)) tmp;                      \
+           memmove(&tmp, (ptr), sizeof(*(ptr)));          \
+           tmp; }) 
 #endif
 
 /***********************************************
  * Read\Write Data buffers needed by for the HID function driver instance.
  ***********************************************/
-volatile uint8_t gUSBHostHIDReadBuffer[USB_HOST_HID_INSTANCES_NUMBER][64] CACHE_ALIGN;
-volatile uint8_t gUSBHostHIDWriteBuffer[USB_HOST_HID_INSTANCES_NUMBER][64] CACHE_ALIGN;
+volatile uint8_t gUSBHostHIDReadBuffer[USB_HOST_HID_INSTANCES_NUMBER][64] USB_ALIGN;
+volatile uint8_t gUSBHostHIDWriteBuffer[USB_HOST_HID_INSTANCES_NUMBER][64] USB_ALIGN;
 
 // *****************************************************************************
 /* USB HOST HID command request object
