@@ -2287,9 +2287,6 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\uart\plib_uart1.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\uart\plib_uart2.h</name>
-            </file>
-            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\uart\plib_uart_common.h</name>
             </file>
             <file>
@@ -2525,9 +2522,6 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\uart\plib_uart1.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\peripheral\uart\plib_uart2.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\system\cache\sys_cache.c</name>

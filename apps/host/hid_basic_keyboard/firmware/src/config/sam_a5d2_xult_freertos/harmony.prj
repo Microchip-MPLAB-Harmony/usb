@@ -139,16 +139,16 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">77C710E2275854C2AE78D32E99D62018</GeneratedChecksum>
-          <UserChecksum dnOrder="5">77C710E2275854C2AE78D32E99D62018</UserChecksum>
+          <GeneratedChecksum dnOrder="4">05F4FD8381214A386CF80115B14A2789</GeneratedChecksum>
+          <UserChecksum dnOrder="5">05F4FD8381214A386CF80115B14A2789</UserChecksum>
         </File>
         <File dnOrder="17">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">interrupts.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A4D40536E56BB80A58540EE2011F8A57</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A4D40536E56BB80A58540EE2011F8A57</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BD89E4BA31513405677E864F3C2099B8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BD89E4BA31513405677E864F3C2099B8</UserChecksum>
         </File>
         <File dnOrder="18">
           <Type dnOrder="0">SOURCE</Type>
@@ -179,8 +179,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult_freertos/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8AE4D307814BA149EDE91CFD746772DC</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8AE4D307814BA149EDE91CFD746772DC</UserChecksum>
+          <GeneratedChecksum dnOrder="4">7B424DDC135071E0BB07DA8F76B97BDE</GeneratedChecksum>
+          <UserChecksum dnOrder="5">7B424DDC135071E0BB07DA8F76B97BDE</UserChecksum>
         </File>
         <File dnOrder="22">
           <Type dnOrder="0">SOURCE</Type>
@@ -232,11 +232,11 @@
         </File>
         <File dnOrder="28">
           <Type dnOrder="0">SOURCE</Type>
-          <Name dnOrder="1">plib_uart2.c</Name>
+          <Name dnOrder="1">plib_uart1.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult_freertos/peripheral/uart/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/uart/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">ED467AA20A869DC14A9C86E91E0B634C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">ED467AA20A869DC14A9C86E91E0B634C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">ED8FA25BF7ED5C89F7B3BE76725ED883</GeneratedChecksum>
+          <UserChecksum dnOrder="5">ED8FA25BF7ED5C89F7B3BE76725ED883</UserChecksum>
         </File>
         <File dnOrder="29">
           <Type dnOrder="0">SOURCE</Type>
@@ -531,8 +531,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">38859CB20A5A53A450A962166ED9DDEA</GeneratedChecksum>
-          <UserChecksum dnOrder="5">38859CB20A5A53A450A962166ED9DDEA</UserChecksum>
+          <GeneratedChecksum dnOrder="4">AC25DC89EA2F8CA2E2CEFD571478CB3D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AC25DC89EA2F8CA2E2CEFD571478CB3D</UserChecksum>
         </File>
         <File dnOrder="66">
           <Type dnOrder="0">HEADER</Type>
@@ -844,7 +844,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult_freertos/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">3176DF5386ABD348A93A3A6169F52E8B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">3176DF5386ABD348A93A3A6169F52E8B</UserChecksum>
+          <UserChecksum dnOrder="5">115B0136EFE9ED871D67D3B10CBEBDC8</UserChecksum>
         </File>
         <File dnOrder="105">
           <Type dnOrder="0">HEADER</Type>
@@ -904,11 +904,11 @@
         </File>
         <File dnOrder="112">
           <Type dnOrder="0">HEADER</Type>
-          <Name dnOrder="1">plib_uart2.h</Name>
+          <Name dnOrder="1">plib_uart1.h</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult_freertos/peripheral/uart/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/uart/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">59EEFDBD3B046FB1EF4C67356335F022</GeneratedChecksum>
-          <UserChecksum dnOrder="5">59EEFDBD3B046FB1EF4C67356335F022</UserChecksum>
+          <GeneratedChecksum dnOrder="4">6824EFCB3E75450182938D17D5C3222D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">6824EFCB3E75450182938D17D5C3222D</UserChecksum>
         </File>
         <File dnOrder="113">
           <Type dnOrder="0">HEADER</Type>

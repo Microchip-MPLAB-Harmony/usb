@@ -48,7 +48,6 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include <stdio.h>
 #include "peripheral/mmu/plib_mmu.h"
 #include "peripheral/matrix/plib_matrix.h"
 #include "peripheral/l2cc/plib_l2cc.h"
@@ -62,7 +61,6 @@
 #include "usb/usb_host.h"
 #include "bsp/bsp.h"
 #include "peripheral/uart/plib_uart1.h"
-#include "peripheral/uart/plib_uart2.h"
 #include "driver/usart/drv_usart.h"
 #include "usb/usb_host_hid.h"
 #include "usb/usb_hid.h"
@@ -193,8 +191,8 @@ void SYS_Tasks ( void );
 
 typedef struct
 {
-    SYS_MODULE_OBJ  sysTime;
     SYS_MODULE_OBJ  drvUsart0;
+    SYS_MODULE_OBJ  sysTime;
 	SYS_MODULE_OBJ  drvUSBObject;
 
 	SYS_MODULE_OBJ  usbHostObject0;

@@ -40,10 +40,10 @@
             <path>\peripheral\aic\plib_aic.h</path>
             <path>\peripheral\tc\plib_tc0.h</path>
             <path>\peripheral\tc\plib_tc_common.h</path>
+            <path>\driver\usart\drv_usart.h</path>
             <path>\system\time\sys_time.h</path>
             <path>\system\time\sys_time_definitions.h</path>
             <path>\system\time\src\sys_time_local.h</path>
-            <path>\driver\usart\drv_usart.h</path>
             <path>\driver\usb\drv_usb.h</path>
             <path>\driver\usb\drv_usb_external_dependencies.h</path>
             <path>\driver\usb\uhp\drv_usb_uhp.h</path>
@@ -64,7 +64,6 @@
             <path>\bsp\bsp.h</path>
             <path>\peripheral\uart\plib_uart_common.h</path>
             <path>\peripheral\uart\plib_uart1.h</path>
-            <path>\peripheral\uart\plib_uart2.h</path>
             <path>\driver\usart\drv_usart_definitions.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\device.h</path>
             <path>\..\..\packs\ATSAMA5D27_DFP\component\acc.h</path>
@@ -171,7 +170,6 @@
             <path>\usb\src\usb_host.c</path>
             <path>\bsp\bsp.c</path>
             <path>\peripheral\uart\plib_uart1.c</path>
-            <path>\peripheral\uart\plib_uart2.c</path>
             <path>\driver\usart\src\drv_usart.c</path>
             <path>\driver\usart\src\drv_usart_local.h</path>
             <path>\usb\src\usb_host_hid.c</path>

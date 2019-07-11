@@ -2584,7 +2584,7 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\tc\plib_tc_common.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\uart\plib_uart2.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\uart\plib_uart1.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\uart\plib_uart_common.h</name>
@@ -2878,7 +2878,7 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\tc\plib_tc0.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\uart\plib_uart2.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos\peripheral\uart\plib_uart1.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\CA5\port.c</name>
