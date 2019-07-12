@@ -275,6 +275,11 @@ def instantiateComponent(usbDeviceComponent):
 		speed = Database.getSymbolValue("drv_usb_udphs", "USB_SPEED")
 		driverIndex = "DRV_USB_UDPHS_INDEX_0"
 		driverInterface = "DRV_USB_UDPHS_DEVICE_INTERFACE"
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMG55"]):
+		res = Database.activateComponents(["drv_usbdp"])
+		speed = Database.getSymbolValue("drv_usbdp", "USB_SPEED")
+		driverIndex = "DRV_USBDP_INDEX_0"
+		driverInterface = "DRV_USBDP_INTERFACE"
 		
 	# USB Device Speed 
 	usbDeviceSpeed = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_SPEED", None)

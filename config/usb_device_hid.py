@@ -171,6 +171,9 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAME70", "SAMS70", "SAMV70", "SAMV71"]):
 		MaxIntEpNumber = 9
 		IntOutDefaultEpNumber = 2
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMG55"]):
+		MaxIntEpNumber = 5
+		IntOutDefaultEpNumber = 2
 	
 	# Index of this function 
 	indexFunction = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INDEX", None)

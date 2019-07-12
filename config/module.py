@@ -127,7 +127,23 @@ def loadModule():
         loadUSBHostMSD = True
         loadUSBHostHID = True
         loadUSBHostAudio = True 
-    
+		
+        # Create USB Device Port (UDP) Full Speed Driver Component for SAMG55
+        usbUdpDriverComponent =  Module.CreateComponent("drv_usbdp", "USB UDP Device Driver", "/Harmony/Drivers", "config/usbdp_driver.py")
+        usbUdpDriverComponent.addCapability("DRV_USBDP", "DRV_USBDP",True)
+
+        # Add Generic Dependency on Core Service
+        usbUdpDriverComponent.addDependency("usbdp_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
+
+        USBDeviceDriverCapabilityName = "DRV_USBDP"
+
+        # Load USB Device Layer Components
+        loadUSBDeviceLayer = True
+        loadUSBDeviceCDC = True
+        loadUSBDeviceHID = True
+        loadUSBDeviceMSD = True
+        loadUSBDeviceVendor = True
+        loadUSBDevicePrinter = True            
 
     elif any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32MZ"]):
         # Create USB High Speed Driver Component
