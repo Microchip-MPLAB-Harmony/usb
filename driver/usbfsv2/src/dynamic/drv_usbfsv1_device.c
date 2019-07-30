@@ -373,22 +373,66 @@ void DRV_USBFSV1_DEVICE_Detach
 
     usb_registers_t * usbID;                        /* USB instance pointer */
     DRV_USBFSV1_OBJ * hDriver;            /* USB driver object pointer */
+    USB_ERROR retVal = USB_ERROR_NONE;
+    _DRV_USBFSV1_DECLARE_BOOL_VARIABLE(interruptWasEnabled);
 
     /* Check if the handle is invalid, if so return without any action */
     if(DRV_HANDLE_INVALID == handle)
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Device Driver: Driver Handle is invalid in DRV_USBFSV1_DEVICE_Detach().");
     }
-    else
-    {
+    else if(true == ((DRV_USBFSV1_OBJ *)handle)->inUse)
+    { 
         hDriver = (DRV_USBFSV1_OBJ *) handle;
         usbID = hDriver->usbID;
+        
+        if(hDriver->isInInterruptContext == false)
+        {
+            if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+            {
+                /* Disable the interrupt as we will update the
+                 * endpoint IRP queue. We do not want a USB
+                 * interrupt to update this queue while we are
+                 * submitting an IRP. */
+                _DRV_USBFSV1_SYS_INT_SourceDisableSave(
+                        interruptWasEnabled, hDriver->interruptSource,
+                        interruptWasEnabled1, hDriver->interruptSource1,
+                        interruptWasEnabled2, hDriver->interruptSource2,
+                        interruptWasEnabled3, hDriver->interruptSource3 );
+            }
+            else
+            {
+                /* There was an error in getting the mutex */
+                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Device Driver: Mutex lock failed in DRV_USBFSV1_DEVICE_IRPSubmit()");
+                retVal = USB_ERROR_OSAL_FUNCTION;
+            }
+        }
+        if(retVal == USB_ERROR_NONE)
+        {
+            /* Update the driver flag indicating detach */
+            hDriver->isAttached = false;
+            
+            DRV_USBFSV1_DEVICE_EndpointDisable((DRV_HANDLE)hDriver, DRV_USB_DEVICE_ENDPOINT_ALL);
+            
+            usbID->USB_INTENCLR = USB_DEVICE_INTENCLR_Msk;
 
-        /* Update the driver flag indicating detach */
-        hDriver->isAttached = false;
+            /* Set and Enable the device address */
+            usbID->USB_DADD = 0;
 
-        /* Reset the operating mode */
+            /* Reset the operating mode */
         usbID->USB_CTRLB |= USB_DEVICE_CTRLB_DETACH_Msk;
+        }
+        if(hDriver->isInInterruptContext == false)
+        {
+            _DRV_USBFSV1_SYS_INT_SourceEnableRestore(
+                    interruptWasEnabled, hDriver->interruptSource,
+                    interruptWasEnabled1, hDriver->interruptSource1,
+                    interruptWasEnabled2, hDriver->interruptSource2,
+                    interruptWasEnabled3, hDriver->interruptSource3 );
+
+            /* Unlock the mutex */
+            OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
+        }
     }
 }
 

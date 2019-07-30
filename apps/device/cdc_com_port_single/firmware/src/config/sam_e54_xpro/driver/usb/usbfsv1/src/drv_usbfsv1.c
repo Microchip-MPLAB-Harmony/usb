@@ -110,6 +110,7 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
     DRV_USBFSV1_OBJ * drvObj = (DRV_USBFSV1_OBJ *)NULL;
     DRV_USBFSV1_INIT * usbInit = (DRV_USBFSV1_INIT *)NULL;
     SYS_MODULE_OBJ retVal = SYS_MODULE_OBJ_INVALID;
+    uint32_t regValue;
 
     if(drvIndex >= DRV_USBFSV1_INSTANCES_NUMBER)
     {
@@ -186,14 +187,19 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
             {
                 drvObj->usbID->DEVICE.USB_DESCADD = (uint32_t)(drvObj->endpointDescriptorTable);
 
+                regValue = drvObj->usbID->DEVICE.USB_CTRLB;
+                regValue &= ~USB_DEVICE_CTRLB_SPDCONF_Msk;                
+
                 if (USB_SPEED_FULL == usbInit->operationSpeed)
                 {
-                    drvObj->usbID->DEVICE.USB_CTRLB = USB_DEVICE_CTRLB_SPDCONF(USB_DEVICE_CTRLB_SPDCONF_FS_Val);
+                    regValue |= USB_DEVICE_CTRLB_SPDCONF(USB_DEVICE_CTRLB_SPDCONF_FS_Val);
                 }
                 else if(USB_SPEED_LOW == usbInit->operationSpeed)
                 {
-                    drvObj->usbID->DEVICE.USB_CTRLB = USB_DEVICE_CTRLB_SPDCONF(USB_DEVICE_CTRLB_SPDCONF_LS_Val);
+                    regValue |= USB_DEVICE_CTRLB_SPDCONF(USB_DEVICE_CTRLB_SPDCONF_LS_Val);
                 }
+                
+                drvObj->usbID->DEVICE.USB_CTRLB = regValue;
 
                 /* Device mode specific driver initialization */
                 _DRV_USBFSV1_DEVICE_INIT(drvObj, drvIndex);
