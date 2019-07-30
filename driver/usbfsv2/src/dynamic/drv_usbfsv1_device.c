@@ -2771,6 +2771,8 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                     if((irp->nPendingBytes < irp->size) && (byteCount >= endpointObj->maxPacketSize))
                     {
                         usbID->DEVICE_ENDPOINT[epIndex].USB_EPSTATUSCLR = USB_DEVICE_EPSTATUSCLR_BK0RDY_Msk;
+                        
+                        hDriver->endpointDescriptorTable[epIndex].DEVICE_DESC_BANK[0].USB_ADDR += byteCount;
                     }
                     else
                     {
