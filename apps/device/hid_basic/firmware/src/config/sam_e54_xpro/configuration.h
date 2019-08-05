@@ -116,6 +116,9 @@ extern "C" {
 /* Enable usage of Dual Bank */
 #define DRV_USBFSV1_DUAL_BANK_ENABLE                        false
 
+/* Alignment for buffers that are submitted to USB Driver*/ 
+#define USB_ALIGN  CACHE_ALIGN
+
 /* Number of Endpoints used */
 #define DRV_USBFSV1_ENDPOINTS_NUMBER                        2
 
@@ -128,8 +131,6 @@ extern "C" {
 /* EP0 size in bytes */
 #define USB_DEVICE_EP0_BUFFER_SIZE                          64
 
-/* Enable SOF Events */
-#define USB_DEVICE_SOF_EVENT_ENABLE
 
 
 

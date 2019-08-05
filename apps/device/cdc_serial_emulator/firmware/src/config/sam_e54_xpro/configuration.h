@@ -142,6 +142,9 @@ extern "C" {
 /* Enable usage of Dual Bank */
 #define DRV_USBFSV1_DUAL_BANK_ENABLE                        false
 
+/* Alignment for buffers that are submitted to USB Driver*/ 
+#define USB_ALIGN  CACHE_ALIGN
+
 
 
 // *****************************************************************************
