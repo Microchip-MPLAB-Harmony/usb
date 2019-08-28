@@ -172,4 +172,34 @@
 #define _DRV_USB_UHP_HOST_INIT(x, y)                      _DRV_USB_UHP_HOST_Initialize(x , y)
 #define _DRV_USB_UHP_HOST_RESET_STATE_MACHINE(x)          _DRV_USB_UHP_HOST_ResetStateMachine(x)
 
+#ifdef _SAMA5D27_H_
+    #define PMC_UCKR_UPLLEN()   PMC_REGS->CKGR_UCKR = CKGR_UCKR_UPLLCOUNT_Msk | CKGR_UCKR_UPLLEN_Msk
+    #define UHPHS_PORTSC UHPHS_PORTSC_0
+    #define UHPHS_PORTSC_PED_Msk UHPHS_PORTSC_0_PED_Msk
+    #define UHPHS_PORTSC_CCS_Msk    UHPHS_PORTSC_0_CCS_Msk
+    #define UHPHS_PORTSC_LS_Msk     UHPHS_PORTSC_0_LS_Msk
+    #define UHPHS_PORTSC_LS_Pos     UHPHS_PORTSC_0_LS_Pos
+    #define UHPHS_PORTSC_PO_Msk     UHPHS_PORTSC_0_PO_Msk
+    #define UHPHS_PORTSC_PR_Msk     UHPHS_PORTSC_0_PR_Msk
+    #define UHPHS_PORTSC_PED_Msk    UHPHS_PORTSC_0_PED_Msk
+    #define UHPHS_PORTSC_FPR_Msk    UHPHS_PORTSC_0_FPR_Msk
+    #define UHPHS_PORTSC_PP_Msk         UHPHS_PORTSC_0_PP_Msk
+    #define UHPHS_PORTSC_WKOC_E_Msk     UHPHS_PORTSC_0_WKOC_E_Msk 
+    #define UHPHS_PORTSC_WKDSCNNT_E_Msk UHPHS_PORTSC_0_WKDSCNNT_E_Msk
+    #define UHPHS_PORTSC_WKCNNT_E_Msk   UHPHS_PORTSC_0_WKCNNT_E_Msk
+    #define UHPHS_PORTSC_OCC_Msk        UHPHS_PORTSC_0_OCC_Msk
+    #define UHPHS_PORTSC_PEDC_Msk       UHPHS_PORTSC_0_PEDC_Msk
+    #define UHPHS_PORTSC_CSC_Msk        UHPHS_PORTSC_0_CSC_Msk
+    #define ID_UHPHS_EHCI   41
+    #define IS_LOCKU_ENABLE()  ((PMC_REGS->PMC_SR & PMC_SR_LOCKU_Msk) == PMC_SR_LOCKU_Msk)
+
+#elif defined(_SAM9X60_H_)
+    #define PMC_UCKR_UPLLEN() 
+    #define PMC_PCR_GCKCSS_UPLL_CLK  PMC_PCR_GCLKCSS(PMC_PCR_GCLKCSS_UPLL_Val) 
+    #define IS_LOCKU_ENABLE()  ((PMC_REGS->PMC_PLL_ISR0 & PMC_PLL_ISR0_LOCKU_Msk) == PMC_PLL_ISR0_LOCKU_Msk)
+
+#else
+    #error
+#endif
+
 #endif

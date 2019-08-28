@@ -64,5 +64,6 @@ extern void _DRV_USB_UHP_HOST_Tasks_ISR_EHCI(DRV_USB_UHP_OBJ *hDriver);
 extern void USB_UHP_ResetEnableEhci(DRV_USB_UHP_OBJ *hDriver);
 extern void _DRV_USB_UHP_HOST_EhciInit(DRV_USB_UHP_OBJ *drvObj);
 extern void _DRV_USB_UHP_HOST_DisableControlList_EHCI(DRV_USB_UHP_OBJ *hDriver);
+extern void ehci_received_size( uint32_t * BuffSize );
 
 #endif  // _DRV_USB_UHP_EHCI_H

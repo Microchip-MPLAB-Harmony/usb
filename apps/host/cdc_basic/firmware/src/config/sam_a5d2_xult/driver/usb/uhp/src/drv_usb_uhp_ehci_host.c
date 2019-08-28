@@ -84,16 +84,16 @@ typedef union __attribute__ ((packed))
 {
     struct
     {
-        uint32_t Status       : 8;
-        uint32_t PIDCode      : 2;
-        uint32_t ErrorCounter : 2;
-        uint32_t C_Page       : 3;
-        uint32_t IOC          : 1;
-        uint32_t TotalBytesTF : 15;
-        uint32_t DataToggle   : 1;
+        volatile uint32_t Status       : 8;
+        volatile uint32_t PIDCode      : 2;
+        volatile uint32_t ErrorCounter : 2;
+        volatile uint32_t C_Page       : 3;
+        volatile uint32_t IOC          : 1;
+        volatile uint32_t TotalBytesTF : 15;
+        volatile uint32_t DataToggle   : 1;
     };
 
-    uint32_t qtdtoken;
+    volatile uint32_t qtdtoken;
 }
 QTDToken;
 
@@ -116,13 +116,13 @@ typedef struct
     volatile uint8_t dummy[0xD0];               /* Aligned 208 */
 } EHCIQueueHeadDescriptor;
 
-#define QTD_NUM   2
-#define QHD_NUM   2
+#define DRV_USB_UHP_MAX_TRANSACTION   10
 #define NOT_CACHED __attribute__((__section__(".region_nocache")))
-__ALIGNED(32) EHCIQueueHeadDescriptor EHCI_QueueHead[5]; /* Queue Head: 0x30=48 length */
-__ALIGNED(32) EHCIQueueTDDescriptor EHCI_QueueTD[9][5];  /* Queue Element Transfer Descriptor: 1 qTD is 0x20=32 */
-extern __ALIGNED(4096) NOT_CACHED uint8_t USBBufferAligned[USB_HOST_TRANSFERS_NUMBER*64]; /* 4K page aligned, see Table 3-17. qTD Buffer Pointer(s) (DWords 3-7) */
-extern __ALIGNED(4096) NOT_CACHED volatile uint8_t setupPacket[8]; /* 32 bit aligned */
+__ALIGNED(32) NOT_CACHED EHCIQueueHeadDescriptor EHCI_QueueHead[DRV_USB_UHP_PIPES_NUMBER]; /* Queue Head: 0x30=48 length */
+__ALIGNED(32) NOT_CACHED EHCIQueueTDDescriptor EHCI_QueueTD[DRV_USB_UHP_PIPES_NUMBER][DRV_USB_UHP_MAX_TRANSACTION];  /* Queue Element Transfer Descriptor: 1 qTD is 0x20=32 */
+__ALIGNED(4096) NOT_CACHED uint32_t PeriodicFrameList[1024];
+extern __ALIGNED(4096) NOT_CACHED uint8_t USBBufferAligned[USB_HOST_TRANSFERS_NUMBER*64]; /* 4K page aligned */
+extern __ALIGNED(4096) NOT_CACHED volatile uint8_t setupPacket[8];
 
 /****************************************
 * The driver object
@@ -160,7 +160,7 @@ void USB_UHP_ResetEnableEhci(DRV_USB_UHP_OBJ *hDriver)
     }
 
     /* Port Disabled */
-    *((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC_0) + hDriver->portNumber) &= ~UHPHS_PORTSC_0_PED_Msk;
+    *((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC) + hDriver->portNumber) &= ~UHPHS_PORTSC_PED_Msk;
 
     /* Set HcInterruptEnable to have all interrupt enabled except SOF detect.*/
     hDriver->usbIDOHCI->UHP_OHCI_HCINTERRUPTDISABLE = UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_SO   | /*     SchedulingOverrun */
@@ -173,8 +173,7 @@ void USB_UHP_ResetEnableEhci(DRV_USB_UHP_OBJ *hDriver)
                                                       UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_OC   | /*       OwnershipChange */
                                                       UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_MIE;   /* MasterInterruptEnable */
 
-    /* Route all ports to OHCI in config flag
-     * Port routing control logic default-routes each port to an implementation-dependent classic host controller (default value). */
+    /* Port routing control logic default-routes all ports to this host controller. */
     usbIDEHCI->UHPHS_CONFIGFLAG = UHPHS_CONFIGFLAG_CF_Msk;
 }
 
@@ -195,66 +194,81 @@ static void _DRV_USB_UHP_HOST_EHCITESTTD(void)
 {
     uint32_t               ConditionCode = 0xFF;
     uint32_t               i;
+    uint32_t j;
+    uint32_t dummy;
     EHCIQueueTDDescriptor *qTD = (EHCIQueueTDDescriptor *)&EHCI_QueueTD[0];
 
-    DCACHE_INVALIDATE_BY_ADDR((uint32_t *)EHCI_QueueTD, sizeof(EHCI_QueueTD)); /* INVALIDATE should be called before reading */
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < DRV_USB_UHP_PIPES_NUMBER; i++)    // Host Pipe Number: queue head
     {
-        qTD = (EHCIQueueTDDescriptor *)&EHCI_QueueTD[i];
-
-        /* 3.5.3 qTD Token
-         * Table 3-16. qTD Token (DWord 2)
-         * Error Counter (CERR) */
-        if (((qTD->qTD_Token.qtdtoken>>10)&0x3) != 0)
+        for (j = 0; j < DRV_USB_UHP_MAX_TRANSACTION; j++)   // Transaction number
         {
-            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rqTD Token: CERR = 0x%04X, EHCI_QueueTD[%d]", (unsigned int)((qTD->qTD_Token.qtdtoken>>10)&0x3), i);
-        }
+            qTD = (EHCIQueueTDDescriptor *)&EHCI_QueueTD[i][j];
 
-        /* Table 3-16. qTD Token (DWord 2)
-         * This field contains the status of the last transaction
-         * performed on this qTD */
-        ConditionCode = qTD->qTD_Token.qtdtoken & 0x7E;
+            /* 3.5.3 qTD Token
+             * Table 3-16. qTD Token (DWord 2)
+             * Error Counter (CERR) */
+            if (((qTD->qTD_Token.qtdtoken>>10)&0x3) != 0)
+            {
+                SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rqTD Token: CERR = 0x%04X, EHCI_QueueTD[%d]", (unsigned int)((qTD->qTD_Token.qtdtoken>>10)&0x3), i);
+            }
 
-        if (ConditionCode != 0)
-        {
-            if ((ConditionCode & (1<<7)) == 0 )
+            /* Table 3-16. qTD Token (DWord 2)
+             * This field contains the status of the last transaction
+             * performed on this qTD */
+            ConditionCode = qTD->qTD_Token.qtdtoken & 0x7E;
+
+            if (ConditionCode != 0)
             {
-                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rNot Active\033[0m");
-            }
-            if (ConditionCode & (1<<6))
-            {
-                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rHalted\033[0m");
-                DCACHE_CLEAN_BY_ADDR((uint32_t *)EHCI_QueueTD, sizeof(EHCI_QueueTD));              /* CLEAN should be called before writing */
-                qTD->qTD_Token.qtdtoken &= ~(1<<6);
-                qTD->qTD_Token.qtdtoken |= (0x80 <<  0); /* Status Field Description: Active. */
-            }
-            else if (ConditionCode & (1<<5))
-            {
-                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rData Buffer Error\033[0m");
-            }
-            else if (ConditionCode & (1<<4))
-            {
-                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rBabble Detected\033[0m");
-            }
-            else if (ConditionCode & (1<<3))
-            {
-                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rTransaction Error (XactErr)\033[0m");
-            }
-            else if (ConditionCode & (1<<2))
-            {
-                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rMissed Micro-Frame\033[0m");
-            }
-            else if (ConditionCode & (1<<1))
-            {
-                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rSplit Transaction State (SplitXstate)\033[0m");
-            }
-            /* else if( ConditionCode & (1<<0) )
-             * {
-             *     SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rPing State (P)/ERR");
-             * } */
-            else
-            {
-                SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\033[31m\n\r_DRV_USB_UHP_HOST_EHCITESTTD ERR: ConditionCode = 0x%04X\033[0m", (unsigned int)ConditionCode);
+                if ((ConditionCode & (1<<7)) == 0 )
+                {
+                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rNot Active\033[0m");
+                }
+                if (ConditionCode & (1<<6))
+                {
+                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rHalted\033[0m");
+                    // 1. Set the Halted bit to a one, then
+                    qTD->qTD_Token.qtdtoken |= (1<<6);
+                    // 2. Set the I-bit to a zero, then
+                    EHCI_QueueHead[i].Endpoint_Characteristics &= ~(1<<7);
+
+                    EHCI_QueueHead[i].Transfer_Overlay[1] = 0;
+                    EHCI_QueueHead[i].Transfer_Overlay[2] = 0;
+                    EHCI_QueueHead[i].Transfer_Overlay[3] = 0;
+
+                    // 3. Set the Active bit to a one and the Halted bit to a zero in the same write.
+                    dummy = qTD->qTD_Token.qtdtoken;
+                    dummy &= ~(1<<6); // Halted bit 
+                    dummy |= (1<<7);  // Active bit
+                    qTD->qTD_Token.qtdtoken = dummy;
+                }
+                else if (ConditionCode & (1<<5))
+                {
+                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rData Buffer Error\033[0m");
+                }
+                else if (ConditionCode & (1<<4))
+                {
+                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rBabble Detected\033[0m");
+                }
+                else if (ConditionCode & (1<<3))
+                {
+                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rTransaction Error (XactErr)\033[0m");
+                }
+                else if (ConditionCode & (1<<2))
+                {
+                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rMissed Micro-Frame\033[0m");
+                }
+                else if (ConditionCode & (1<<1))
+                {
+                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rSplit Transaction State (SplitXstate)\033[0m");
+                }
+                /* else if( ConditionCode & (1<<0) )
+                 * {
+                 *     SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rPing State (P)/ERR");
+                 * } */
+                else
+                {
+                    SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\033[31m\n\r_DRV_USB_UHP_HOST_EHCITESTTD ERR: ConditionCode = 0x%04X\033[0m", (unsigned int)ConditionCode);
+                }
             }
         }
     }
@@ -310,10 +324,12 @@ static void ehci_create_queue_head(EHCIQueueHeadDescriptor *qh_base_addr,
         (0 << 28) |                      /* RL: Nak Count Reload */
         (0 << 27) |                      /* C: Control Endpoint Flag */
         (512 << 16) |                    /* Maximum Packet Length   1024 or 512 */
-        (1 << 15) |                      /* H: Head of Reclamation List Flag */
+        (1 << 15) |                      /* H: Head of Reclamation List Flag */  // This bit is set to mark the QH as the head of the asynchronous schedule.
+         //   This bit is cleared since this bit is not used for the periodic schedule.
         (dtc << 14) |                    /* DTC: Data Toggle Control: 1: from qTD, 0: from QH (automatic) */
         (2 << 12) |                      /* EPS: Endpoint Speed = 10b High-Speed (480 Mb/s) */
         (EP_number <<  8) |              /* Endpt: Endpoint Number */
+        (0 << 7) |                       /* I: Inactivate on Next Transaction (Periodic Schedule Full or Low-speed)*/ 
         (DeviceAddr <<  0);              /* Device Address */
 
     /* Table 3-20. Endpoint Capabilities: Queue Head DWord 2 */
@@ -321,13 +337,34 @@ static void ehci_create_queue_head(EHCIQueueHeadDescriptor *qh_base_addr,
         (mult << 30) |                     /* Mult: High-Bandwidth Pipe Multiplier = 3 transactions to
                                             * be issued for this endpoint per micro-frame */
         (hubPortAddress << 23) |           /* Port Number */
-        (hubAddress << 16) |               /* Hub Addr */
-        (0 <<  8) |                        /* µFrame C-Mask: Split Completion Mask */
+        (hubAddress << 16) |               /* Hub Addr (full or low-speed device) */
+        (0 <<  8) |                        /* µFrame C-Mask: Split Completion Mask (low- or full-speed device) */
         (smask <<  0);                     /* µFrame S-mask: Interrupt Schedule Mask */
 
     /* 3.6.3 Transfer Overlay */
-    QueueHead->Transfer_Overlay[0] = (uint32_t)next_qTD_pointer | /* Next qTD Pointer: DWord 4 */
-                                     (0 <<  0);                   /* Terminate */
+    QueueHead->Transfer_Overlay[0] = (uint32_t)next_qTD_pointer; /* Next qTD Pointer: DWord 4 */
+    // nothing   QueueHead->Transfer_Overlay[1] = 0x01; 
+}
+
+/* Function:
+    void ehci_received_size( uint32_t * BuffSize )
+
+   Summary:
+    Change the received size if needed
+
+   Description:
+    Change the received size if the requesting data number have not been sent
+
+   Remarks:
+    Refer to .h for usage information.
+ */
+void ehci_received_size( uint32_t * BuffSize )
+{
+    /* If Total Bytes to Transfer == 0, all data has been receive */
+    if( EHCI_QueueTD[0][1].qTD_Token.TotalBytesTF != 0 )
+    {
+        *BuffSize -= EHCI_QueueTD[0][1].qTD_Token.TotalBytesTF;
+    }
 }
 
 /* Function:
@@ -367,18 +404,17 @@ static void ehci_create_qTD(EHCIQueueTDDescriptor *qTD_base_addr,
 
     /* 3.5.2 Alternate Next qTD Pointer */
     /* Table 3-15. qTD Alternate Next Element Transfer Pointer (DWord 1) */
-    qTD->Alternate_Next_qTD_Pointer = (uint32_t)next_qTD_base_addr | /* Alternate Next Transfer Element Pointer. The host controller will always use */
-                                                                     /* this pointer when the current qTD is retired due to short packet. */
-                                      terminate;                     /* Terminate */
+    qTD->Alternate_Next_qTD_Pointer = 0x1; /* No Alternate, Terminate */
+
     /* 3.5.3 qTD Token */
     /* Table 3-16. qTD Token (DWord 2) */
     qTD->qTD_Token.qtdtoken = (data_toggle << 31) |     /* Data Toggle */
                               (nb_bytes << 16) |        /* Total Bytes to Transfer */
                               (int_on_complete << 15) | /* Interrupt On Complete (IOC) */
                               (0 << 12) |               /* Current Page (C_Page) */
-                              (0 << 10) |               /* Error Counter (CERR)   Allow 3 retry */
+                              (3 << 10) |               /* Error Counter (CERR)   Allow 3 retry */
                               (PID <<  8) |             /* PID Code (0: OUT, 1: IN 2: SETUP) */
-                              (0x80 <<  0);             /* Status Field Description: Active. */
+                              (1 << 7);                 /* Status Field Description: Active. */
 
     /* 3.5.4 qTD Buffer Page Pointer List */
     /* Table 3-17. qTD Buffer Pointer(s) (DWords 3-7) */
@@ -401,6 +437,17 @@ void _DRV_USB_UHP_HOST_EhciInit(DRV_USB_UHP_OBJ *drvObj)
 {
     volatile uhphs_registers_t *usbIDEHCI = drvObj->usbIDEHCI;
     uint32_t loop1 = 0;
+    uint32_t i;
+
+    /* Initialize FrameList with a dummy queueHead */
+    /* Create Queue Head for the command: */
+    for( i=0; i<(sizeof(PeriodicFrameList)/4); i++ )
+    {
+        PeriodicFrameList[i] = 0x01;  /* T-Bit = 1: host controller will never use the value of the frame list pointer */
+    }
+    
+    memset(EHCI_QueueHead, 0, sizeof(EHCI_QueueHead));
+    memset(EHCI_QueueTD, 0, sizeof(EHCI_QueueTD));
 
     /* Host Controller Reset (HCRESET) */
     /* When software writes a one to this bit, the Host Controller resets its internal pipelines,
@@ -418,11 +465,11 @@ void _DRV_USB_UHP_HOST_EhciInit(DRV_USB_UHP_OBJ *drvObj)
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "have ");
         for (loop1 = 0; loop1 < (usbIDEHCI->UHPHS_HCSPARAMS&0xF); loop1++)
         {
-            *((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC_0) + loop1)
-                = UHPHS_PORTSC_0_PP_Msk |          /* Host controller has port power control switches. */
-                  UHPHS_PORTSC_0_WKOC_E_Msk |      /* enables the port to be sensitive to over-current conditions as wake-up events. */
-                  UHPHS_PORTSC_0_WKDSCNNT_E_Msk |  /* enables the port to be sensitive to device disconnects as wake-up events */
-                  UHPHS_PORTSC_0_WKCNNT_E_Msk;     /* enables the port to be sensitive to device connects as wake-up events */
+            *((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC) + loop1)
+                = UHPHS_PORTSC_PP_Msk |          /* Host controller has port power control switches. */
+                  UHPHS_PORTSC_WKOC_E_Msk |      /* enables the port to be sensitive to over-current conditions as wake-up events. */
+                  UHPHS_PORTSC_WKDSCNNT_E_Msk |  /* enables the port to be sensitive to device disconnects as wake-up events */
+                  UHPHS_PORTSC_WKCNNT_E_Msk;     /* enables the port to be sensitive to device connects as wake-up events */
         }
     }
     else
@@ -436,7 +483,6 @@ void _DRV_USB_UHP_HOST_EhciInit(DRV_USB_UHP_OBJ *drvObj)
     /* Enable HSIC on PortC
      * (UHPHS_HSIC instead PORTSC.PP because the controller does not include Port Power Control) */
     usbIDEHCI->UHPHS_INSNREG08 = UHPHS_INSNREG08_HSIC_EN_Msk;
-#endif
 
     if ((usbIDEHCI->UHPHS_INSNREG08 & UHPHS_INSNREG08_HSIC_EN_Msk) == UHPHS_INSNREG08_HSIC_EN_Msk)
     {
@@ -446,6 +492,7 @@ void _DRV_USB_UHP_HOST_EhciInit(DRV_USB_UHP_OBJ *drvObj)
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rHSIC is disabled");
     }
+#endif
 
     /* Enable interrupts */
     usbIDEHCI->UHPHS_USBINTR = UHPHS_USBINTR_USBIE_Msk  /* (UHPHS_USBINTR) USB Interrupt Enable */
@@ -459,10 +506,13 @@ void _DRV_USB_UHP_HOST_EhciInit(DRV_USB_UHP_OBJ *drvObj)
     usbIDEHCI->UHPHS_USBCMD &= ~UHPHS_USBCMD_ITC_Msk;
     usbIDEHCI->UHPHS_USBCMD |= UHPHS_USBCMD_ITC(1);
 
+    /* Frame List Size: 00b = 1024 elements (4096 bytes) */
+    usbIDEHCI->UHPHS_USBCMD |= (((0x00) & UHPHS_USBCMD_FLS_Msk)<<UHPHS_USBCMD_FLS_Pos);
+
     /* and turn the host controller ON via setting the Run/Stop bit. */
     usbIDEHCI->UHPHS_USBCMD |= UHPHS_USBCMD_RS_Msk; /* Stop = 1 => RUN */
 
-    /* Write a 1 to CONFIGFLAG register to route all ports to the EHCI controller */
+    /* Port routing control logic default-routes all ports to this host controller. */
     usbIDEHCI->UHPHS_CONFIGFLAG = UHPHS_CONFIGFLAG_CF_Msk;
 
     /*  At this point, the host controller is up and running and the port registers will begin reporting device
@@ -514,9 +564,13 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitEhci
     uint8_t *point;
     uint8_t idx;
     uint8_t idx_plus;
+    uint8_t terminate;
+    uint8_t InitialDataToggle;
     uint8_t stop = 0;
+    uint8_t endpoint_int = 0;
     uint8_t DToggle = 0;
     uint8_t OnComplete;
+    uint8_t IntOnComplete;
     USB_ERROR returnValue = USB_ERROR_PARAMETER_INVALID;
     uint32_t i;
     volatile uhphs_registers_t *usbIDEHCI;
@@ -536,7 +590,6 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitEhci
         irp->pipe      = hPipe;
         irp->status    = USB_HOST_IRP_STATUS_PENDING;
         irp->tempState = DRV_USB_UHP_HOST_IRP_STATE_PROCESSING;
-        hDriver->hostPipeInUse = pipe->hostPipeN;
 
         /* We need to disable interrupts was the queue state
          * does not change asynchronously */
@@ -626,12 +679,10 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitEhci
                     idx = 0;
                     idx_plus = idx + 1;
 
-                    memset(&EHCI_QueueTD, 0, sizeof(EHCI_QueueTD));
-
                     /* Fill EHCI_QueueTD[0] With SETUP data */
                     /* SETUP packet PID */
-                    ehci_create_qTD(&EHCI_QueueTD[idx][QTD_NUM],       /* qTD address base */
-                                    &EHCI_QueueTD[idx_plus][QTD_NUM],  /* next qTD address base */
+                    ehci_create_qTD(&EHCI_QueueTD[pipe->hostEndpoint][idx],       /* qTD address base */
+                                    &EHCI_QueueTD[pipe->hostEndpoint][idx_plus],  /* next qTD address base */
                                     0,                        /* Terminate */
                                     2,                        /* PID: SETUP = 2 */
                                     DToggle,                  /* data toggle */
@@ -668,8 +719,8 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitEhci
                             /* Fill EHCI_QueueTD[1] With received data */
                             /* IN transaction */
                             /* Setup DATA IN packet */
-                            ehci_create_qTD(&EHCI_QueueTD[idx][QTD_NUM],      /* qTD address base */
-                                            &EHCI_QueueTD[idx_plus][QTD_NUM], /* next qTD address base */
+                            ehci_create_qTD(&EHCI_QueueTD[pipe->hostEndpoint][idx],      /* qTD address base */
+                                            &EHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* next qTD address base */
                                             0,                       /* Terminate */
                                             1,                       /* PID: IN = 1 */
                                             (++DToggle)&0x01,        /* data toggle */
@@ -693,7 +744,7 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitEhci
                         idx++;
                         idx_plus = idx + 1;
                         /* Setup STATUS OUT packet */
-                        ehci_create_qTD(&EHCI_QueueTD[idx][QTD_NUM], /* qTD address base */
+                        ehci_create_qTD(&EHCI_QueueTD[pipe->hostEndpoint][idx], /* qTD address base */
                                         NULL,               /* next qTD address base */
                                         1,                  /* Terminate */
                                         0,                  /* PID: OUT = 0 */
@@ -719,21 +770,20 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitEhci
                             }
 
                             /* Setup DATA OUT Packet */
-                            ehci_create_qTD(&EHCI_QueueTD[idx][QTD_NUM],      /* qTD address base */
-                                            &EHCI_QueueTD[idx_plus][QTD_NUM], /* next qTD address base */
+                            ehci_create_qTD(&EHCI_QueueTD[pipe->hostEndpoint][idx],      /* qTD address base */
+                                            &EHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* next qTD address base */
                                             0,                       /* Terminate */
                                             0,                       /* PID: OUT = 0 */
                                             1,                       /* data toggle */
                                             irp->size,               /* Total Bytes to transfer */
                                             0,                       /* Interrupt on Complete */
                                             (uint32_t *)USBBufferAligned);
-                            DCACHE_CLEAN_BY_ADDR((uint32_t *)&EHCI_QueueTD, sizeof(EHCI_QueueTD)); /* CLEAN should be called before writing */
                             DCACHE_CLEAN_BY_ADDR((uint32_t *)irp->data, irp->size);               /* CLEAN should be called before writing */
                         }
                         idx++;
                         idx_plus = idx + 1;
                         /* Setup STATUS IN Packet (ZLP) */
-                        ehci_create_qTD(&EHCI_QueueTD[idx][QTD_NUM], /* qTD address base */
+                        ehci_create_qTD(&EHCI_QueueTD[pipe->hostEndpoint][idx], /* qTD address base */
                                         NULL,               /* next qTD address base */
                                         1,                  /* Terminate */
                                         1,                  /* PID: IN = 1 */
@@ -742,23 +792,20 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitEhci
                                         1,                  /* Interrupt on Complete */
                                         NULL);
                     }
-                    DCACHE_CLEAN_BY_ADDR((uint32_t *)&EHCI_QueueTD, sizeof(EHCI_QueueTD)); /* CLEAN should be called before writing */
 
                     /* Create Queue Head for the command: */
-                    ehci_create_queue_head(&EHCI_QueueHead[QHD_NUM], /* Queue Head base address */
-                                           &EHCI_QueueHead[QHD_NUM], /* Queue Head Link Pointer */
-                                           1,                   /* Terminate */
+                    ehci_create_queue_head(&EHCI_QueueHead[pipe->hostEndpoint], /* Queue Head base address */
+                                           &EHCI_QueueHead[pipe->hostEndpoint], /* Queue Head Link Pointer */
+                                           0,                   /* Terminate */
                               pipe->endpointAndDirection & 0xF, /* EndPt: Endpoint number */
                                            pipe->deviceAddress, /* Device Address */
-                                           &EHCI_QueueTD[0][QTD_NUM],    /* Next qTD Pointer */
+                                           &EHCI_QueueTD[pipe->hostEndpoint][0],    /* Next qTD Pointer */
                                            1,                   /* Mult: High-Bandwidth Pipe Multiplier */
                                            0,                   /* µFrame S-mask: Interrupt Schedule Mask, A non-zero value in this field indicates an interrupt endpoint. */
                                            1,                   /* DTC: Initial data toggle comes from incoming qTD DT bit */
                                            1,                   /* Typ: 01b QH (queue head) */
                                            pipe->hubAddress,    /* Hub Addr */
                                            pipe->hubPort);      /* Port Number */
-
-                    DCACHE_CLEAN_BY_ADDR((uint32_t *)&EHCI_QueueHead, sizeof(EHCI_QueueHead));  /* CLEAN should be called before writing */
 
                 } /* End SETUP Transaction */
                 else
@@ -768,11 +815,9 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitEhci
                     idx = 0;
                     idx_plus = idx + 1;
 
-                    memset((void*)&EHCI_QueueTD, 0, sizeof(EHCI_QueueTD));
-
                     if( (pipe->endpointAndDirection & 0x80) == 0 )
                     {
-                        /* Host to Device: BULK OUT */
+                        /* Host to Device: OUT */
 
                         /* Data is moving from device to host
                          * We need to set the Rx Packet Request bit */
@@ -790,9 +835,9 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitEhci
                                 tosend = nbBytes;
                                 OnComplete = 1;
                             }
-                            /* Host to Device: BULK OUT */
-                            ehci_create_qTD(&EHCI_QueueTD[idx][QTD_NUM],            /* qTD address base */
-                                            &EHCI_QueueTD[idx_plus][QTD_NUM],       /* next qTD address base */
+                            /* Host to Device: OUT */
+                            ehci_create_qTD(&EHCI_QueueTD[pipe->hostEndpoint][idx],      /* qTD address base */
+                                            &EHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* next qTD address base */
                                             OnComplete,                    /* Terminate */
                                             0,                             /* PID: OUT = 0 */
                                             hDriver->staticDToggleOut&0x1, /* data toggle */
@@ -800,7 +845,6 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitEhci
                                             OnComplete,                    /* Interrupt on Complete */
                                             (uint32_t *)irp->data+irp->completedBytes); /* data buffer address base, 32-Byte align */
 
-                            DCACHE_CLEAN_BY_ADDR((uint32_t *)&EHCI_QueueTD, sizeof(EHCI_QueueTD)); /* CLEAN should be called before writing */
                             DCACHE_CLEAN_BY_ADDR((uint32_t *)irp->data, irp->size); /* CLEAN should be called before writing */
                             hDriver->staticDToggleOut++;
 
@@ -818,24 +862,31 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitEhci
                             }
                         } while (stop == 0);
 
+                        if( pipe->pipeType == USB_TRANSFER_TYPE_INTERRUPT )
+                        {
+                            endpoint_int = 1;
+                        }
+                        else
+                        {
+                            endpoint_int = 0;
+                        }
                         /* Create Queue Head for the command: */
-                        ehci_create_queue_head(&EHCI_QueueHead[QHD_NUM],     /* Queue Head base address */
-                                               &EHCI_QueueHead[QHD_NUM],     /* Queue Head Link Pointer */
-                                               1,                      /* Terminate */
+                        ehci_create_queue_head(&EHCI_QueueHead[pipe->hostEndpoint],     /* Queue Head base address */
+                                               &EHCI_QueueHead[pipe->hostEndpoint],     /* Queue Head Link Pointer */
+                                               0,                      /* Terminate */
                                        pipe->endpointAndDirection&0xF, /* EndPt: Endpoint number */
                                                pipe->deviceAddress,    /* Device Address */
-                                               &EHCI_QueueTD[0][QTD_NUM],       /* Next qTD Pointer */
+                                               &EHCI_QueueTD[pipe->hostEndpoint][0], /* Next qTD Pointer */
                                                1,                      /* Mult: High-Bandwidth Pipe Multiplier */
-                                               0,                      /* µFrame S-mask: Interrupt Schedule Mask, A non-zero value in this field indicates an interrupt endpoint. */
+                                               endpoint_int,           /* µFrame S-mask: Interrupt Schedule Mask, A non-zero value in this field indicates an interrupt endpoint. */
                                                1,                      /* DTC: Initial data toggle comes from incoming qTD DT bit */
                                                1,                      /* Typ: 01b QH (queue head) */
                                                pipe->hubAddress,       /* Hub Addr */
                                                pipe->hubPort);         /* Port Number */
-                        DCACHE_CLEAN_BY_ADDR((uint32_t *)&EHCI_QueueHead, sizeof(EHCI_QueueHead));  /* CLEAN should be called before writing */
                     }
                     else
                     {
-                        /* Device to Host: BULK IN */
+                        /* Device to Host: IN */
 
                         /* Data is moving from host to device. We
                          * need to copy data into the FIFO and
@@ -850,22 +901,28 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitEhci
                             {
                                 tosend = pipe->endpointSize;
                                 OnComplete = 0;
+                                IntOnComplete = 0;
                             }
                             else
                             {
                                 tosend = nbBytes;
                                 OnComplete = 1;
+                                IntOnComplete = 1;
+                                if( pipe->pipeType == USB_TRANSFER_TYPE_INTERRUPT )
+                                {
+                                    OnComplete = 0;
+                                    hDriver->staticDToggleIn = 1;
+                                } 
                             }
-                            /* BULK IN */
-                            ehci_create_qTD(&EHCI_QueueTD[idx][QTD_NUM],           /* qTD address base */
-                                            &EHCI_QueueTD[idx_plus][QTD_NUM],      /* next qTD address base */
+                            /* IN */
+                            ehci_create_qTD(&EHCI_QueueTD[pipe->hostEndpoint][idx],      /* qTD address base */
+                                            &EHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* next qTD address base */
                                             OnComplete,                   /* Terminate */
                                             1,                            /* PID: IN = 1 */
                                             hDriver->staticDToggleIn&0x1, /* data toggle */
                                             tosend,                       /* Total Bytes to transfer */
-                                            OnComplete,                   /* Interrupt on Complete */
+                                            IntOnComplete,                /* Interrupt on Complete */
                                             (uint32_t *)irp->data + irp->completedBytes); /* data buffer address base, 32-Byte align */
-                            DCACHE_CLEAN_BY_ADDR((uint32_t *)&EHCI_QueueTD, sizeof(EHCI_QueueTD)); /* CLEAN should be called before writing */
                             DCACHE_CLEAN_BY_ADDR((uint32_t *)irp->data, irp->size);               /* CLEAN should be called before writing */
 
                             hDriver->staticDToggleIn++;
@@ -883,20 +940,36 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitEhci
                             }
                         } while (stop == 0);
 
+                        if( pipe->pipeType == USB_TRANSFER_TYPE_INTERRUPT )
+                        {
+                            //endpoint_int = 1;
+                            endpoint_int = 0x1;    // A value of 0b00010001 gives you an interrupt on every fourth microframe (every 500us).
+ /* JCB: should be 1 */     terminate = 0;    /* No Interrupt transfer if set to 1. */
+                            // This bit is set indicating that the horizontal link pointer value is invalid. Since this QH goes into the periodic
+                            // schedule, it is not used in a circular linked list like QHs for the asynchronous schedule.
+                            
+                            InitialDataToggle = 0; /* Ignore DT bit from incoming qTD. Host controller preserves DT bit in the queue head. */
+                        }
+                        else
+                        {
+                            endpoint_int = 0;
+                            terminate = 1;  // JCB true ??? // This bit is ignored by the host controller when the queue head is in the Asynchronous schedule.
+                            InitialDataToggle = 1; /* DTC: Initial data toggle comes from incoming qTD DT bit */
+                        }
+
                         /* Create Queue Head for the command: */
-                        ehci_create_queue_head(&EHCI_QueueHead[QHD_NUM],     /* Queue Head base address */
-                                               &EHCI_QueueHead[QHD_NUM],     /* Queue Head Link Pointer */
-                                               1,                      /* Terminate */
+                        ehci_create_queue_head(&EHCI_QueueHead[pipe->hostEndpoint],     /* Queue Head base address */
+                                               &EHCI_QueueHead[pipe->hostEndpoint],     /* Queue Head Link Pointer */
+                                               terminate,                      /* Terminate */
                                        pipe->endpointAndDirection&0xF, /* EndPt: Endpoint number */
                                                pipe->deviceAddress,    /* Device Address */
-                                               &EHCI_QueueTD[0][QTD_NUM],       /* Next qTD Pointer */
+                                             &EHCI_QueueTD[pipe->hostEndpoint][0],       /* Next qTD Pointer */
                                                1,                      /* Mult: High-Bandwidth Pipe Multiplier */
-                                               0,                      /* µFrame S-mask: Interrupt Schedule Mask, A non-zero value in this field indicates an interrupt endpoint. */
-                                               1,                      /* DTC: Initial data toggle comes from incoming qTD DT bit */
+                                               endpoint_int,           /* µFrame S-mask: Interrupt Schedule Mask, A non-zero value in this field indicates an interrupt endpoint. */
+                                               InitialDataToggle,      /* DTC: Data Toggle Control: 1: from qTD, 0: from QH (automatic) */
                                                1,                      /* Typ: 01b QH (queue head) */
                                                pipe->hubAddress,       /* Hub Addr */
                                                pipe->hubPort);         /* Port Number */
-                        DCACHE_CLEAN_BY_ADDR((uint32_t *)&EHCI_QueueHead, sizeof(EHCI_QueueHead));  /* CLEAN should be called before writing */
                     }                                            
                 }
 
@@ -904,20 +977,71 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitEhci
 
                 if( pipe->pipeType == USB_TRANSFER_TYPE_INTERRUPT )
                 {
-                    usbIDEHCI->UHPHS_PERIODICLISTBASE = (uint32_t)&EHCI_QueueHead[QHD_NUM];
+                    hDriver->hostPipeInterrupt = pipe->hostEndpoint;
+
+//                    printf("\n\r SUB hostPipeInterrupt = %d", hDriver->hostPipeInterrupt);
+                    
+//                    printf("\n\r sizeof(PeriodicFrameList) = %d", sizeof(PeriodicFrameList));
+//                    printf("\n\r HCCPARAMS = 0x%X", usbIDEHCI->UHPHS_HCCPARAMS);
+//                    for( uint32_t i=0; i<sizeof(PeriodicFrameList)/4; i++ )  //  4096 bytes, 1024 elements
+//                    for( uint32_t i=0; i<1024; i++ )
+//                    {
+//                        /* Frame list size is 1024 */
+//                        if( (pipe->endpointAndDirection & 0x80) == 0 )
+//                        {
+//                            /* Host to Device: OUT */
+//                            PeriodicFrameList[i] = (uint32_t)&EHCI_QueueHead[pipe->hostEndpoint];
+//                        }
+//                        else
+//                        {
+//                            /* Host to Device: IN */
+                            PeriodicFrameList[0] = (uint32_t)EHCI_QueueHead[pipe->hostEndpoint].Horizontal_Link_Pointer;
+//                        }
+//                    }
+                    /* Periodic Frame List Base Address */
+                    usbIDEHCI->UHPHS_PERIODICLISTBASE = (uint32_t)&PeriodicFrameList[0];
+
+                    /* Periodic Schedule Enable: Use the PERIODICLISTBASE register to access the Periodic Schedule. */
+                    usbIDEHCI->UHPHS_USBCMD |= UHPHS_USBCMD_PSE_Msk;
+                }
+                else if( pipe->pipeType == USB_TRANSFER_TYPE_ISOCHRONOUS )
+                {
+//                    /* IsochronousEnable: enable/disable processing of isochronous EDs */
+//                    usbIDOHCI->UHP_OHCI_HCCONTROL |= UHP_OHCI_HCCONTROL_IE_Msk;
+//                    
+//                    // Change Format in Endpoint Descriptor
+//                    // IsochronousListEnable
+                }
+                else if( pipe->pipeType == USB_TRANSFER_TYPE_CONTROL )
+                {
+                    /* USB_TRANSFER_TYPE_CONTROL */
+                    hDriver->hostPipeInUse = pipe->hostEndpoint;
+
+                    /* Current Asynchronous List Address */
+                    usbIDEHCI->UHPHS_ASYNCLISTADDR = (uint32_t)&EHCI_QueueHead[pipe->hostEndpoint];
+
+                    /* USB Command is send here
+                     * In order to communicate with devices via the asynchronous schedule, system software must write the
+                     * ASYNDLISTADDR register with the address of a control or bulk queue head. Software must then enable
+                     * the asynchronous schedule by writing a one to the Asynchronous Schedule Enable bit in the USBCMD register. */
+                    /* ASE: Asynchronous Schedule Enable: Use the UHPHS_ASYNCLISTADDR register to access the Asynchronous Schedule. */
+                    usbIDEHCI->UHPHS_USBCMD |= UHPHS_USBCMD_ASE_Msk;
                 }
                 else
                 {
-                    /* async list addr */
-                    usbIDEHCI->UHPHS_ASYNCLISTADDR = (uint32_t)&EHCI_QueueHead[QHD_NUM];
-                }
+                    /* USB_TRANSFER_TYPE_BULK */
+                    hDriver->hostPipeInUse = pipe->hostEndpoint;
 
-                /* USB Command is send here
-                 * In order to communicate with devices via the asynchronous schedule, system software must write the
-                 * ASYNDLISTADDR register with the address of a control or bulk queue head. Software must then enable
-                 * the asynchronous schedule by writing a one to the Asynchronous Schedule Enable bit in the USBCMD register. */
-                usbIDEHCI->UHPHS_USBCMD |= UHPHS_USBCMD_ASE_Msk; /* | UHPHS_USBCMD_IAAD;   async enable = 1 */
-                /* ASE: Asynchronous Schedule Enable: Use the UHPHS_ASYNCLISTADDR register to access the Asynchronous Schedule. */
+                    /* Current Asynchronous List Address */
+                    usbIDEHCI->UHPHS_ASYNCLISTADDR = (uint32_t)&EHCI_QueueHead[pipe->hostEndpoint];
+
+                    /* USB Command is send here
+                     * In order to communicate with devices via the asynchronous schedule, system software must write the
+                     * ASYNDLISTADDR register with the address of a control or bulk queue head. Software must then enable
+                     * the asynchronous schedule by writing a one to the Asynchronous Schedule Enable bit in the USBCMD register. */
+                    /* ASE: Asynchronous Schedule Enable: Use the UHPHS_ASYNCLISTADDR register to access the Asynchronous Schedule. */
+                    usbIDEHCI->UHPHS_USBCMD |= UHPHS_USBCMD_ASE_Msk;
+                }
 
                 irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
                 returnValue = USB_ERROR_NONE;
@@ -981,9 +1105,11 @@ void _DRV_USB_UHP_HOST_DisableControlList_EHCI(DRV_USB_UHP_OBJ *hDriver)
 {
     volatile uhphs_registers_t *usbIDEHCI;
 
-    /* Disable async list */
     usbIDEHCI = hDriver->usbIDEHCI;
-    usbIDEHCI->UHPHS_USBCMD &= ~UHPHS_USBCMD_ASE_Msk; /* async enable = 0 */
+
+    /* Asynchronous Schedule Disable */
+    usbIDEHCI->UHPHS_USBCMD &= ~UHPHS_USBCMD_ASE_Msk;
+
 }
 
 
@@ -1011,8 +1137,10 @@ void _DRV_USB_UHP_HOST_Tasks_ISR_EHCI(DRV_USB_UHP_OBJ *hDriver)
     transferGroup = &hDriver->controlTransferGroup;
 
     /* EHCI interrupts */
-    isr_read_data = usbIDEHCI->UHPHS_USBINTR;
-    isr_read_data &= usbIDEHCI->UHPHS_USBSTS;
+    isr_read_data = (usbIDEHCI->UHPHS_USBINTR & usbIDEHCI->UHPHS_USBSTS & 0x3F);
+    isr_read_data |= (usbIDEHCI->UHPHS_USBSTS & 0xC000);
+//    isr_read_data = usbIDEHCI->UHPHS_USBINTR;
+//    isr_read_data &= usbIDEHCI->UHPHS_USBSTS;
 
     if (isr_read_data != 0)
     {
@@ -1029,7 +1157,12 @@ void _DRV_USB_UHP_HOST_Tasks_ISR_EHCI(DRV_USB_UHP_OBJ *hDriver)
         {
             SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rEHCI Host system error interrupt\033[0m");
             usbIDEHCI->UHPHS_USBSTS = UHPHS_USBSTS_HSE_Msk;
-            
+            /* - The Run/Stop bit in the USBCMD register is set to a zero.
+             * - The following bits in the USBSTS register are set:
+             *    - Host System Error bit is to a one.
+             *    - HCHalted bit is set to a one. */
+            /* After a Host System Error, Software must reset the host controller via 
+             * HCReset in the USBCMD register before re-initializing and restarting the host controller. */
         }
 
         /* Frame list Rollover */
@@ -1047,33 +1180,37 @@ void _DRV_USB_UHP_HOST_Tasks_ISR_EHCI(DRV_USB_UHP_OBJ *hDriver)
             SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rEHCI port change interrupt");
             for (i = 0; i < NUMBER_OF_PORTS; i++)
             {
-                /* read_data = usbIDEHCI->UHPHS_PORTSC_0; */
-                read_data = *((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC_0) + i);
+                /* read_data = usbIDEHCI->UHPHS_PORTSC; */
+                read_data = *((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC) + i);
                 /* Over-current Change */
-                if ((read_data & UHPHS_PORTSC_0_OCC_Msk) == UHPHS_PORTSC_0_OCC_Msk)
+                if ((read_data & UHPHS_PORTSC_OCC_Msk) == UHPHS_PORTSC_OCC_Msk)
                 {
                     SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rOver-current Change on port %d", (int)i);
                 }
                 /* Port Enable/Disable Change */
-                if ((read_data & UHPHS_PORTSC_0_PEDC_Msk) == UHPHS_PORTSC_0_PEDC_Msk)
+                if ((read_data & UHPHS_PORTSC_PEDC_Msk) == UHPHS_PORTSC_PEDC_Msk)
                 {
                     SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rPort Enable/Disable Change on port %d", (int)i);
                 }
                 /* Connect Status Change */
-                if ((read_data & UHPHS_PORTSC_0_CSC_Msk) == UHPHS_PORTSC_0_CSC_Msk)
+                if ((read_data & UHPHS_PORTSC_CSC_Msk) == UHPHS_PORTSC_CSC_Msk)
                 {
                     /* 1=Device is present on port. */
                     usbIDEHCI->UHPHS_USBCMD &= ~UHPHS_USBCMD_ASE_Msk;
-                    if (((*((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC_0) + i)) & UHPHS_PORTSC_0_CCS_Msk) == UHPHS_PORTSC_0_CCS_Msk)
+                    if (((*((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC) + i)) & UHPHS_PORTSC_CCS_Msk) == UHPHS_PORTSC_CCS_Msk)
                     {
+                        /* New connection */
                         hDriver->deviceAttached = true;
                         SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rConnect port %d", (int)i);
                         hDriver->portNumber = i;
+                        break;
                     }
                     else
                     {
+                        /* Disconnect */
                         SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rDisconnect occurred on port %d", (int)i);
 
+                        hDriver->portNumber = 0;
                         /* We go a detach interrupt. The detach interrupt could have occurred
                          * while the attach de-bouncing is in progress. We just set a flag saying
                          * the device is detached; */
@@ -1114,6 +1251,7 @@ void _DRV_USB_UHP_HOST_Tasks_ISR_EHCI(DRV_USB_UHP_OBJ *hDriver)
             /* Clear It */
             usbIDEHCI->UHPHS_USBSTS = UHPHS_USBSTS_USBERRINT_Msk;
             _DRV_USB_UHP_HOST_EHCITESTTD();
+            usbIDEHCI->UHPHS_USBCMD &= ~UHPHS_USBCMD_ASE_Msk;
             hDriver->intXfrQtdComplete = 0xFF;
             
             if( (hDriver->hostEndpointTable[hDriver->hostPipeInUse].endpoint.pipe->endpointAndDirection & 0x80) == 0 )
@@ -1190,7 +1328,7 @@ void DRV_USB_UHP_HOST_ROOT_HUB_OperationEnableEhci(DRV_HANDLE handle, bool enabl
             if(pUSBDrvObj->rootHubInfo.portPowerEnable != NULL)
             {
                 /* This USB module has only one port. So we call this function
-                 * once to enable the port power on port 0*/
+                 * once to enable the port power on port 0 */
                 pUSBDrvObj->rootHubInfo.portPowerEnable(0 /* Port 0 */, true);
             }
         }

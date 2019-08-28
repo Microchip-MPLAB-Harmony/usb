@@ -59,7 +59,6 @@
 #include "drv_usb_uhp_ehci_host.h"
 
 extern __ALIGNED(4096) uint8_t USBBufferAligned[USB_HOST_TRANSFERS_NUMBER*64]; /* 4K page aligned, see Table 3-17. qTD Buffer Pointer(s) (DWords 3-7) */
-#define ID_UHPHS    (41)       /**< \brief USB High Speed Host Port (UHPHS) */
 
 /************************************
  * Prototype
@@ -119,12 +118,12 @@ SYS_MODULE_OBJ DRV_USB_UHP_Initialize
     if (drvIndex >= DRV_USB_UHP_INSTANCES_NUMBER)
     {
         /* The driver module index specified does not exist in the system */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB USB_UHP: Invalid Driver Module Index in DRV_USB_UHP_Initialize().");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Invalid Driver Module Index in DRV_USB_UHP_Initialize().");
     }
     else if (gDrvUSBObj[drvIndex].inUse == true)
     {
         /* Cannot initialize an object that is already in use. */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB USB_UHP: Driver is already initialized in DRV_USB_UHP_Initialize().");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Driver is already initialized in DRV_USB_UHP_Initialize().");
     }
     else
     {
@@ -135,7 +134,7 @@ SYS_MODULE_OBJ DRV_USB_UHP_Initialize
         if (OSAL_RESULT_TRUE != OSAL_MUTEX_Create(&drvObj->mutexID))
         {
             /* Could not create the mutual exclusion */
-            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB Host Layer: Could not create Mutex in DRV_USB_UHP_Initialize().");
+            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB UHP: Could not create Mutex in DRV_USB_UHP_Initialize().");
         }
         else
         {
@@ -159,10 +158,10 @@ SYS_MODULE_OBJ DRV_USB_UHP_Initialize
 
             drvObj->sessionInvalidEventSent = false;
 
-            PMC_REGS->CKGR_UCKR = CKGR_UCKR_UPLLCOUNT_Msk | CKGR_UCKR_UPLLEN_Msk;  /* plib_clk.c */
+            PMC_UCKR_UPLLEN();
 
-            PMC_REGS->PMC_PCR = PMC_PCR_PID(ID_UHPHS);
-            PMC_REGS->PMC_PCR = PMC_PCR_PID(ID_UHPHS) | PMC_PCR_CMD_Msk | PMC_PCR_EN_Msk | PMC_PCR_GCKCSS_UPLL_CLK;
+            PMC_REGS->PMC_PCR = PMC_PCR_PID(drvObj->interruptSource);
+            PMC_REGS->PMC_PCR = PMC_PCR_PID(drvObj->interruptSource) | PMC_PCR_CMD_Msk | PMC_PCR_EN_Msk | PMC_PCR_GCKCSS_UPLL_CLK;
 
             /* Set the state to indicate that the delay will be started */
             drvObj->state = DRV_USB_UHP_TASK_STATE_WAIT_FOR_CLOCK_USABLE;
@@ -212,7 +211,7 @@ void _DRV_USB_UHP_HOST_ResetStateMachine(DRV_USB_UHP_OBJ *hDriver)
             }
             else
             {
-                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO,"\r\nDRV USBHSV1: Handle error ");
+                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO,"\r\nDRV USB_UHP: Handle error ");
             }
             break;
 
@@ -222,14 +221,14 @@ void _DRV_USB_UHP_HOST_ResetStateMachine(DRV_USB_UHP_OBJ *hDriver)
                 hDriver->deviceSpeed = USB_SPEED_ERROR;
                 /* Now that reset is complete, we can find out the speed of the attached device. */
                 /* This field is valid only when the port enable bit is zero and the current connect status bit is set to a one. */
-                if ((*((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC_0) + hDriver->portNumber) & UHPHS_PORTSC_0_PED_Msk) == 0 )
+                if ((*((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC) + hDriver->portNumber) & UHPHS_PORTSC_PED_Msk) == 0 )
                 {
-                    if ((*((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC_0) + hDriver->portNumber) & UHPHS_PORTSC_0_CCS_Msk) == UHPHS_PORTSC_0_CCS_Msk )
+                    if ((*((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC) + hDriver->portNumber) & UHPHS_PORTSC_CCS_Msk) == UHPHS_PORTSC_CCS_Msk )
                     {
                         /* Line Status */
-                        if ((*((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC_0) + hDriver->portNumber) & UHPHS_PORTSC_0_LS_Msk) == (0x01<<UHPHS_PORTSC_0_LS_Pos))
+                        if ((*((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC) + hDriver->portNumber) & UHPHS_PORTSC_LS_Msk) == (0x01<<UHPHS_PORTSC_LS_Pos))
                         {
-                            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rLS device connected");
+                            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rDRV USB_UHP: LS device connected");
                             hDriver->deviceSpeed = USB_SPEED_LOW;
                             gDrvUSBUHPHostInterface.hostIRPSubmit = DRV_USB_UHP_HOST_IRPSubmitOhci;
                             gDrvUSBUHPHostInterface.rootHubInterface.rootHubOperationEnable = DRV_USB_UHP_HOST_ROOT_HUB_OperationEnableOhci;
@@ -239,7 +238,7 @@ void _DRV_USB_UHP_HOST_ResetStateMachine(DRV_USB_UHP_OBJ *hDriver)
 
                             /* PortOwner: Software writes a one to this bit when the attached device is not a high-speed device. A one in
                              * this bit means that a companion host controller owns and controls the port. */
-                            *((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC_0) + hDriver->portNumber) |= UHPHS_PORTSC_0_PO_Msk;  /* Port Owner bit to 1 */
+                            *((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC) + hDriver->portNumber) |= UHPHS_PORTSC_PO_Msk;  /* Port Owner bit to 1 */
 
                             /* Route all ports to OHCI in config flag
                              * Port routing control logic default-routes each port to an implementation-dependent classic host controller (default value). */
@@ -255,7 +254,7 @@ void _DRV_USB_UHP_HOST_ResetStateMachine(DRV_USB_UHP_OBJ *hDriver)
                             }
                             else
                             {
-                                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO,"\r\nDRV USBHSV1: Handle error ");
+                                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO,"\r\nDRV USB_UHP: Handle error ");
                             }
                         }
                     }
@@ -264,8 +263,8 @@ void _DRV_USB_UHP_HOST_ResetStateMachine(DRV_USB_UHP_OBJ *hDriver)
                 if( hDriver->deviceSpeed == USB_SPEED_ERROR )
                 {
                     /* EHCI Set Port Reset: start bus reset sequence */
-                    *((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC_0) + hDriver->portNumber) |= UHPHS_PORTSC_0_PR_Msk;
-                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rEHCI Chirps begin");
+                    *((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC) + hDriver->portNumber) |= UHPHS_PORTSC_PR_Msk;
+                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\r DRV USB_UHP:EHCI Chirps begin");
 
                     /* Delta T5 = TDRST */
                     if (SYS_TIME_DelayMS( DRV_USB_UHP_RESET_DURATION /* Delta T5 */, &hDriver->timerHandle) == SYS_TIME_SUCCESS)
@@ -274,7 +273,7 @@ void _DRV_USB_UHP_HOST_ResetStateMachine(DRV_USB_UHP_OBJ *hDriver)
                     }
                     else
                     {
-                        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO,"\r\nDRV USBHSV1: Handle error ");
+                        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO,"\r\nDRV USB_UHP: Handle error ");
                     }
                 }
             }
@@ -284,11 +283,11 @@ void _DRV_USB_UHP_HOST_ResetStateMachine(DRV_USB_UHP_OBJ *hDriver)
             /* Reset should last 50ms */
             if (SYS_TIME_DelayIsComplete(hDriver->timerHandle) == true)
             {
-                if ((*((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC_0) + hDriver->portNumber) & UHPHS_PORTSC_0_PR_Msk) == UHPHS_PORTSC_0_PR_Msk)
+                if ((*((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC) + hDriver->portNumber) & UHPHS_PORTSC_PR_Msk) == UHPHS_PORTSC_PR_Msk)
                 {
                     /* Clear Port Reset */
                     /* Software writes a zero to this bit to terminate the bus reset sequence. */
-                    *((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC_0) + hDriver->portNumber) &= ~UHPHS_PORTSC_0_PR_Msk;
+                    *((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC) + hDriver->portNumber) &= ~UHPHS_PORTSC_PR_Msk;
                     /* CHIRPS sequence begin here */
                     hDriver->resetState = DRV_USB_UHP_HOST_RESET_STATE_COMPLETE;
                 }
@@ -298,13 +297,13 @@ void _DRV_USB_UHP_HOST_ResetStateMachine(DRV_USB_UHP_OBJ *hDriver)
         case DRV_USB_UHP_HOST_RESET_STATE_COMPLETE:
 
             /* 4.2.2 Port Routing Control via PortOwner and Disconnect Event */
-            if ((*((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC_0) + hDriver->portNumber) & UHPHS_PORTSC_0_PR_Msk) != UHPHS_PORTSC_0_PR_Msk)
+            if ((*((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC) + hDriver->portNumber) & UHPHS_PORTSC_PR_Msk) != UHPHS_PORTSC_PR_Msk)
             {
-                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rEHCI RESET end");
+                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rDRV USB_UHP: EHCI RESET end");
 
-                if ((*((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC_0) + hDriver->portNumber) & UHPHS_PORTSC_0_PED_Msk) == UHPHS_PORTSC_0_PED_Msk )
+                if ((*((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC) + hDriver->portNumber) & UHPHS_PORTSC_PED_Msk) == UHPHS_PORTSC_PED_Msk )
                 {
-                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rHS device connected");
+                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rDRV USB_UHP: HS device connected");
                     gDrvUSBUHPHostInterface.hostIRPSubmit = DRV_USB_UHP_HOST_IRPSubmitEhci;
                     gDrvUSBUHPHostInterface.rootHubInterface.rootHubOperationEnable = DRV_USB_UHP_HOST_ROOT_HUB_OperationEnableEhci;
 
@@ -315,7 +314,7 @@ void _DRV_USB_UHP_HOST_ResetStateMachine(DRV_USB_UHP_OBJ *hDriver)
                 }
                 else
                 {
-                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rFS device connected");
+                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rDRV USB_UHP: FS device connected");
                     hDriver->deviceSpeed = USB_SPEED_FULL;
 
                     gDrvUSBUHPHostInterface.hostIRPSubmit = DRV_USB_UHP_HOST_IRPSubmitOhci;
@@ -326,7 +325,7 @@ void _DRV_USB_UHP_HOST_ResetStateMachine(DRV_USB_UHP_OBJ *hDriver)
 
                     /* PortOwner: Software writes a one to this bit when the attached device is not a high-speed device. A one in
                      * this bit means that a companion host controller owns and controls the port. */
-                    *((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC_0) + hDriver->portNumber) |= UHPHS_PORTSC_0_PO_Msk;  /* Port Owner bit to 1 */
+                    *((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC) + hDriver->portNumber) |= UHPHS_PORTSC_PO_Msk;  /* Port Owner bit to 1 */
 
                     /* Route all ports to OHCI in config flag
                      * Port routing control logic default-routes each port to an implementation-dependent classic host controller (default value). */
@@ -453,7 +452,7 @@ void _DRV_USB_UHP_HOST_AttachDetachStateMachine(DRV_USB_UHP_OBJ *hDriver)
             }
             else
             {
-                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO,"\r\nDRV USBHSV1: Handle error ");
+                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO,"\r\nDRV USB_UHP: Handle error ");
             }
             break;
 
@@ -674,7 +673,7 @@ void DRV_USB_UHP_HOST_PipeClose
     /* Non control transfer pipes are not stored as groups.  We deallocate
      * the endpoint object that this pipe used */
 
-    endpointObj = &hDriver->hostEndpointTable[pipe->hostPipeN];
+    endpointObj = &hDriver->hostEndpointTable[pipe->hostEndpoint];
     endpointObj->endpoint.inUse = false;
     endpointObj->endpoint.pipe  = NULL;
 
@@ -873,7 +872,7 @@ DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_HOST_PipeSetup
     pipe->hClient              = client;
     pipe->endpointSize         = wMaxPacketSize;
     pipe->intervalCounter      = bInterval;
-    pipe->hostPipeN            = pipeIter;
+    pipe->hostEndpoint         = pipeIter;
     pipe->endpointAndDirection = endpointAndDirection;
 
     /* OSAL: Release Mutex */
@@ -1423,6 +1422,7 @@ static void DRV_USB_UHP_HOST_ControlTransferProcess(DRV_USB_UHP_OBJ *hDriver)
      || (pipe == (DRV_USB_UHP_HOST_PIPE_OBJ *)DRV_USB_UHP_HOST_PIPE_HANDLE_INVALID))
     {
         /* This means the pipe was closed. We don't do anything */
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rEHCI IRQ : USB error interrupt\033[0m");
         return;
     }
 
@@ -1471,6 +1471,15 @@ static void DRV_USB_UHP_HOST_ControlTransferProcess(DRV_USB_UHP_OBJ *hDriver)
             pResult = irp->data;
             if (irp->completedBytes != 0)
             {
+                /* Check the real bytes received */
+                if(hDriver->deviceSpeed == USB_SPEED_HIGH)
+                {
+                    ehci_received_size( &(irp->size) );
+                }
+                else
+                {
+                    ohci_received_size( &(irp->size) );
+                }
                 for (i = 0; i < irp->size; i++)
                 {
                     *(uint8_t *)(pResult + i) = USBBufferAligned[i];
@@ -1556,7 +1565,7 @@ static void DRV_USB_UHP_HOST_ControlTransferProcess(DRV_USB_UHP_OBJ *hDriver)
 static void DRV_USB_UHP_HOST_NonControlTransferProcess
 (
     DRV_USB_UHP_OBJ * hDriver,
-    uint8_t hostPipe
+    uint8_t endpoint
 )
 {
     /* This function processes non-zero endpoint transfers which
@@ -1568,7 +1577,7 @@ static void DRV_USB_UHP_HOST_NonControlTransferProcess
     bool     endIRP = false;
     bool endIRPOut = false;
 
-    endpointTable = &(hDriver->hostEndpointTable[hostPipe]);
+    endpointTable = &(hDriver->hostEndpointTable[endpoint]);
     pipe = endpointTable->endpoint.pipe; 
 
     if((endpointTable->endpoint.inUse == false)
@@ -1699,7 +1708,7 @@ static void DRV_USB_UHP_HOST_TransferProcess(DRV_USB_UHP_OBJ *hDriver)
     }
     else
     {
-        if(pipe->hostPipeN == 0)
+        if(hDriver->hostPipeInUse == 0)
         {
             DRV_USB_UHP_HOST_ControlTransferProcess(hDriver);
         }       
@@ -1744,7 +1753,7 @@ void DRV_USB_UHP_Tasks(SYS_MODULE_OBJ object)
             case DRV_USB_UHP_TASK_STATE_WAIT_FOR_CLOCK_USABLE:
 
                 /* Wait for PLLA,UPLL stabilization LOCK bit in PMC_SR     */
-                if((PMC_REGS->PMC_SR & PMC_SR_LOCKU_Msk) == PMC_SR_LOCKU_Msk)
+                if(IS_LOCKU_ENABLE())
                 {
                     /* The operation mode can be initialized */
                     hDriver->state = DRV_USB_UHP_TASK_STATE_INITIALIZE_OPERATION_MODE;
@@ -2076,8 +2085,8 @@ bool DRV_USB_UHP_HOST_Resume
         pusbdrvObj = (DRV_USB_UHP_OBJ *)handle;
         usbIDEHCI      = pusbdrvObj->usbIDEHCI;
         /* Function enables resume signaling */
-        *((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC_0) + (pusbdrvObj->hostEndpointTable[0].endpoint.pipe->hubPort))
-              |= UHPHS_PORTSC_0_FPR_Msk;  /* Force Port Resume */
+        *((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC) + (pusbdrvObj->hostEndpointTable[0].endpoint.pipe->hubPort))
+              |= UHPHS_PORTSC_FPR_Msk;  /* Force Port Resume */
         retVal = true;
     }
 

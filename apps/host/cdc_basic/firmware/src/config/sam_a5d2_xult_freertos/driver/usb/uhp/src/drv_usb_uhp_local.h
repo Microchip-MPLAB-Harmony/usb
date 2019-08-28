@@ -173,11 +173,8 @@ typedef struct _DRV_USB_UHP_HOST_PIPE_OBJ
     /* Hub Port*/
     uint8_t hubPort;
 
-    /* Host Pipe allocated*/
-    uint8_t hostPipeN;
-    
-    /* Host Pipe Queue Head used */
-//    uint32_t *HostPipeQueueHead;
+    /* Host endpoint */
+    uint8_t hostEndpoint;
 }
 DRV_USB_UHP_HOST_PIPE_OBJ;
 
@@ -380,6 +377,7 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
     /* True if the Host Controller sets this bit to 1 on the completion of a USB transaction */
     volatile uint8_t intXfrQtdComplete;
     volatile uint8_t hostPipeInUse;
+    volatile uint8_t hostPipeInterrupt;
     
     uint8_t staticDToggleIn;
     uint8_t staticDToggleOut;

@@ -275,12 +275,13 @@ def instantiateComponent(usbDriverComponent):
 	
 	# Add drv_usb_uhp_ehci_variant_mapping.h file 
 	drvUsbHsV1VarMapHeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbHsV1VarMapHeaderFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_variant_mapping.h")
+	drvUsbHsV1VarMapHeaderFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_variant_mapping.h.ftl")
 	drvUsbHsV1VarMapHeaderFile.setOutputName("drv_usb_uhp_variant_mapping.h")
 	drvUsbHsV1VarMapHeaderFile.setDestPath(usbDriverProjectPath + "uhp/src")
 	drvUsbHsV1VarMapHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src")
 	drvUsbHsV1VarMapHeaderFile.setType("HEADER")
 	drvUsbHsV1VarMapHeaderFile.setOverwrite(True)
+	drvUsbHsV1VarMapHeaderFile.setMarkup(True)
 
 	
 	# Add drv_usb_uhp_ehci_local.h file 

@@ -77,7 +77,7 @@ def instantiateComponent(usbHostComponent):
 		driverInterface = "DRV_USBFSV1_HOST_INTERFACE"
 		args = {"operationMode":"Host"}
 		Database.sendMessage("drv_usbfs_v1", "UPDATE_OPERATION_MODE", args)
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAM9X60"]):
 		res = Database.activateComponents(["drv_usbhs_v1"])
 		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
 		driverIndex = "DRV_USB_UHP_INDEX_0"
@@ -123,7 +123,7 @@ def instantiateComponent(usbHostComponent):
 	usbHostTransfersNumber.setDependencies(blUsbHostMaxInterfaceNumber, ["USB_OPERATION_MODE"])	
 	
 	# USB Host Hub Support
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX" , "SAMA5D2" ]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX" , "SAMA5D2", "SAM9X60" ]):
 		usbHostHubsupport = usbHostComponent.createBooleanSymbol("CONFIG_USB_HOST_HUB_SUPPORT", None)
 		usbHostHubsupport.setLabel( "Hub support" )
 		usbHostHubsupport.setVisible( True)

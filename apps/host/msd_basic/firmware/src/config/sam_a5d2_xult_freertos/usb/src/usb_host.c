@@ -5660,6 +5660,7 @@ USB_HOST_RESULT USB_HOST_DevicePipeHaltClear
                     }
                     else
                     {
+                        deviceObj->hcdInterface->endpointToggleClear(deviceObj->hcdHandle, pipeObj->endpointAddress);
                         result = USB_HOST_RESULT_SUCCESS;
                     }
                 }

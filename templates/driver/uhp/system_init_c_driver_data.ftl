@@ -65,8 +65,12 @@ void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
 
 DRV_USB_UHP_INIT drvUSBInit =
 {
+<#if core.DeviceFamily == "SAMA5D2">
 	/* Interrupt Source for USB module */
     .interruptSource = (INT_SOURCE)41,
+<#elseif core.DeviceFamily == "SAM9X60">
+	.interruptSource = (INT_SOURCE)ID_UHPHS_EHCI,
+</#if>
 	
 	/* Enable High Speed Operation */
     .operationSpeed = USB_SPEED_HIGH,

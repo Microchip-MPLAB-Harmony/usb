@@ -49,8 +49,6 @@
 #include "driver/usb/uhp/src/drv_usb_uhp_local.h"
 #include "driver/usb/uhp/src/drv_usb_uhp_ohci_host.h"
 
-void _DRV_USB_UHP_HOST_OhciInit(DRV_USB_UHP_OBJ *hDriver);
-
 /**********************************************************
  * This structure is a set of pointer to the USB OHCI driver
  * functions. It is provided to the host and device layer
@@ -171,7 +169,7 @@ typedef struct
 /*  The value of MAXIMUM_OVERHEAD below is 210 bit times. */
 #define MAXIMUM_OVERHEAD 210
 #define FSLARGESTDATAPACKET (((FRAMEINTERVAL-MAXIMUM_OVERHEAD) * 6) / 7)
-#define OHCI_FMINTERVAL ((FSLARGESTDATAPACKET << UHP_OHCI_HCFMINTERVAL_FSMPS_Pos) | FRAMEINTERVAL)
+#define OHCI_FMINTERVAL ((FSLARGESTDATAPACKET << UHP_OHCI_HCFMINTERVAL_FSMPS_Pos) | (FRAMEINTERVAL-1))
 
 /* 7.3.4 HcPeriodicStart Register
  * The HcPeriodicStart register has a 14-bit programmable value which 
@@ -195,12 +193,9 @@ typedef struct
 
 /* Global variables */
 #define NOT_CACHED __attribute__((__section__(".region_nocache")))
-#define QTD_NUM   2
-#define QHD_NUM      1
-#define QHDOUT_NUM   1
-#define QHDIN_NUM    1
-__ALIGNED(32) NOT_CACHED OHCIQueueHeadDescriptor OHCI_QueueHead[5];    /* Queue EndpointDescriptor: 0x30=48 length */
-__ALIGNED(32) NOT_CACHED OHCIQueueTDDescriptor   OHCI_QueueTD[9][5];   /* Queue Element Transfer Descriptor: 1 qTD is 0x20=32. Size 9 to reach 512 byte (8x64) + 1 NULL Packet transfer */
+#define DRV_USB_UHP_MAX_TRANSACTION   10
+__ALIGNED(32) NOT_CACHED OHCIQueueHeadDescriptor OHCI_QueueHead[DRV_USB_UHP_PIPES_NUMBER];    /* Queue EndpointDescriptor: 0x30=48 length */
+__ALIGNED(32) NOT_CACHED OHCIQueueTDDescriptor   OHCI_QueueTD[DRV_USB_UHP_PIPES_NUMBER][DRV_USB_UHP_MAX_TRANSACTION];   /* Queue Element Transfer Descriptor: 1 qTD is 0x20=32. Size 9 to reach 512 byte (8x64) + 1 NULL Packet transfer */
 __ALIGNED(256) NOT_CACHED OHCI_HCCA HCCA;
 __ALIGNED(4096) NOT_CACHED volatile uint8_t setupPacket[8]; /* 32 bit aligned */
 __ALIGNED(4096) NOT_CACHED uint8_t USBBufferAligned[USB_HOST_TRANSFERS_NUMBER*64]; /* 4K page aligned, see Table 3-17. qTD Buffer Pointer(s) (DWords 3-7) */
@@ -260,83 +255,83 @@ static void _DRV_USB_UHP_HOST_OHCITESTED( void )
 static void _DRV_USB_UHP_HOST_OHCITESTTD(void)
 {
     uint32_t ConditionCode = 0xFF;
-    uint32_t i;
-    OHCIQueueTDDescriptor *qTD = (OHCIQueueTDDescriptor *)&OHCI_QueueTD[0][QTD_NUM];
+    uint32_t i=0;
+    uint32_t j=0;
+    OHCIQueueTDDescriptor *qTD;
 
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < DRV_USB_UHP_PIPES_NUMBER; i++)
     {
-        /* ConditionCode : This field contains the status of the last attempted transaction.
-         * 4.3.3 Completion Codes
-         * Table 4-7: Completion Codes */
-        qTD = (OHCIQueueTDDescriptor *)&OHCI_QueueTD[i][QTD_NUM];
+        for (j = 0; j < DRV_USB_UHP_MAX_TRANSACTION; j++)
+        {
+            /* ConditionCode : This field contains the status of the last attempted transaction.
+             * 4.3.3 Completion Codes
+             * Table 4-7: Completion Codes */
+            qTD = (OHCIQueueTDDescriptor *)&OHCI_QueueTD[i][j];
 
-        ConditionCode = ((qTD->Control.td_control&((uint32_t)(0x3 << 26))>>26));
-        if( ConditionCode != 0 )
-        {
-            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r\033[31mEC: Error Code = %d\033[0m", ConditionCode);
-        }
-
-        ConditionCode = ((qTD->Control.td_control&((uint32_t)(0xF << 28))>>28));
-        if( ConditionCode == 0 )
-        {
-          /* SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rNoERROR"); */
-        }
-        else if( ConditionCode == 1 )
-        {
-          SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rCRC\033[0m");
-        }
-        else if( ConditionCode == 2 )
-        {
-          SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rBITSTUFFING\033[0m");
-        }
-        else if( ConditionCode == 3 )
-        {
-          SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rDATATOGGLEMISMATCH\033[0m");
-        }
-        else if( ConditionCode == 4 )
-        {
-          SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rSTALL\033[0m");
-        }
-        else if( ConditionCode == 5 )
-        {
-          SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rDEVICENOTRESPONDING\033[0m");
-        }
-        else if( ConditionCode == 6 )
-        {
-          SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rPIDCHECKFAILURE\033[0m");
-        }
-        else if( ConditionCode == 7 )
-        {
-          SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rUNEXPECTEDPID\033[0m");
-        }
-        else if( ConditionCode == 8 )
-        {
-          SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rDATAOVERRUN\033[0m");
-        }
-        else if( ConditionCode == 9 )
-        {
-          SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rDATAUNDERRUN\033[0m");
-          SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\033[31m\n\rCurrentBufferPointer = 0x%08X\n\r", qTD->CBP);
-        }
-        else if( ConditionCode == 10 )
-        {
-          SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rreserved10\033[0m");
-        }
-        else if( ConditionCode == 11 )
-        {
-          SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rreserved11\033[0m");
-        }
-        else if( ConditionCode == 12 )
-        {
-          SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rBUFFEROVERRUN\033[0m");
-        }
-        else if( ConditionCode == 13 )
-        {
-          SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rBUFFERUNDERRUN\033[0m");
-        }
-        else
-        {
-          SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rNOT ACCESSED\033[0m");
+            /* CC: Condition Code */
+            ConditionCode = ((qTD->Control.td_control&((uint32_t)(0xF << 28))>>28));
+            if( ConditionCode == 0 )
+            {
+              /* SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rNoERROR"); */
+              break;
+            }
+            else if( ConditionCode == 1 )
+            {
+              SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rCRC\033[0m");
+            }
+            else if( ConditionCode == 2 )
+            {
+              SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rBITSTUFFING\033[0m");
+            }
+            else if( ConditionCode == 3 )
+            {
+              SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rDATATOGGLEMISMATCH\033[0m");
+            }
+            else if( ConditionCode == 4 )
+            {
+              SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rSTALL\033[0m");
+            }
+            else if( ConditionCode == 5 )
+            {
+              SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rDEVICENOTRESPONDING\033[0m");
+            }
+            else if( ConditionCode == 6 )
+            {
+              SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rPIDCHECKFAILURE\033[0m");
+            }
+            else if( ConditionCode == 7 )
+            {
+              SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rUNEXPECTEDPID\033[0m");
+            }
+            else if( ConditionCode == 8 )
+            {
+              SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rDATAOVERRUN\033[0m");
+            }
+            else if( ConditionCode == 9 )
+            {
+              SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rDATAUNDERRUN\033[0m");
+              SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\033[31m\n\rCurrentBufferPointer = 0x%08X\n\r", qTD->CBP);
+            }
+            else if( ConditionCode == 10 )
+            {
+              SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rreserved10\033[0m");
+            }
+            else if( ConditionCode == 11 )
+            {
+              SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rreserved11\033[0m");
+            }
+            else if( ConditionCode == 12 )
+            {
+              SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rBUFFEROVERRUN\033[0m");
+            }
+            else if( ConditionCode == 13 )
+            {
+              SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\033[31m\n\rBUFFERUNDERRUN\033[0m");
+            }
+            else
+            {
+              SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\033[31m\n\rNOT ACCESSED = %d \033[0m", ConditionCode);
+            }
         }
     }
     _DRV_USB_UHP_HOST_OHCITESTED();
@@ -391,6 +386,26 @@ static void ohci_create_queue_head(OHCIQueueHeadDescriptor * EDAddr,
     pED->NextEd = ((uint32_t)NextED) & 0xFFFFFFF0;      /* NextED */
 }
 
+/* Function:
+    void ohci_received_size( uint32_t * BuffSize )
+
+   Summary:
+    Change the received size if needed
+
+   Description:
+    Change the received size if the requesting data number have not been sent
+
+   Remarks:
+    Refer to .h for usage information.
+ */
+void ohci_received_size( uint32_t * BuffSize )
+{
+    /* If CurrentBufferPointer == 0, all data has been receive */
+    if( OHCI_QueueTD[0][1].CBP != 0 )
+    {
+        *BuffSize = OHCI_QueueTD[0][1].BE - OHCI_QueueTD[0][1].CBP;
+    }
+}
 
 /* Function:
     static void ohci_create_qTD(OHCIQueueTDDescriptor * qTD_base_addr,
@@ -456,18 +471,28 @@ static void ohci_create_qTD(OHCIQueueTDDescriptor * qTD_base_addr,
    Remarks:
     Refer to .h for usage information.
  */
-/**************************************************************************/
 void _DRV_USB_UHP_HOST_OhciInit(DRV_USB_UHP_OBJ *hDriver)
 {
     volatile UhpOhci *usbIDOHCI = hDriver->usbIDOHCI;
     volatile uint32_t read_data;
+    uint32_t Interval;
+    for( uint8_t i=0; i<32; i++)
+    {
+        HCCA.UHP_HccaInterruptTable[i] = 0; 
+    }
 
     /* Set the HcHCCA to the physical address of the HCCA block. */
     usbIDOHCI->UHP_OHCI_HCHCCA = (uint32_t) &HCCA; 
 
-    /* HcFmInterval register is used to control the length of USB frames */
-    usbIDOHCI->UHP_OHCI_HCFMINTERVAL = OHCI_FMINTERVAL | UHP_OHCI_HCFMINTERVAL_FIT_Msk;
+    memset(OHCI_QueueHead, 0, sizeof(OHCI_QueueHead));
+    memset(OHCI_QueueTD, 0, sizeof(OHCI_QueueTD));
 
+    /* HcFmInterval register is used to control the length of USB frames */
+    Interval = (usbIDOHCI->UHP_OHCI_HCFMINTERVAL & 0x00003FFF);
+    Interval |= (((Interval - MAXIMUM_OVERHEAD) * 6) / 7) << 16;
+    Interval |= 0x80000000 & (0x80000000 ^ (usbIDOHCI->UHP_OHCI_HCFMREMAINING));
+    usbIDOHCI->UHP_OHCI_HCFMINTERVAL = Interval;
+    
     /* Set HcPeriodicStart to a value that is 90% of the value in FrameInterval field of the HcFmInterval register. */
     usbIDOHCI->UHP_OHCI_HCPERIODICSTART = OHCI_PRDSTRT;
 
@@ -574,7 +599,7 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
         irp->pipe      = hPipe;
         irp->status    = USB_HOST_IRP_STATUS_PENDING;
         irp->tempState = DRV_USB_UHP_HOST_IRP_STATE_PROCESSING;
-        hDriver->hostPipeInUse = pipe->hostPipeN;
+        hDriver->hostPipeInUse = pipe->hostEndpoint;
 
         /* We need to disable interrupts was the queue state
          * does not change asynchronously */
@@ -656,7 +681,6 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
                  * IRP size is greater than endpoint size then
                  * we must cut the packet */
 
-
                 if (irp->setup != NULL)
                 {
                     /* SETUP Transaction */
@@ -669,13 +693,10 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
                     idx = 0;
                     idx_plus = idx + 1;
 
-                    memset(OHCI_QueueTD[0], 0, sizeof(OHCI_QueueTD[0]));
-
-                    /* Fill OHCI_QueueTD[0] With SETUP data */
                     /* SETUP packet PID */
-                    ohci_create_qTD(&OHCI_QueueTD[idx][QTD_NUM],      /* Transfer Descriptor address */
-                                    &OHCI_QueueTD[idx_plus][QTD_NUM], /* NextTD */
-                                    DToggle | 0x2,                       /* T: DataToggle acquired from the toggleCarry field in the ED */
+                    ohci_create_qTD(&OHCI_QueueTD[pipe->hostEndpoint][idx],      /* Transfer Descriptor address */
+                                    &OHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* NextTD */
+                                    DToggle | 0x2,           /* T: DataToggle value is taken from the LSb of this field. */
                                     8,                       /* BE: BufferEnd: Total Bytes to transfer */
                                     0,                       /* DP: Direction/PID: SETUP=0 */
                                     0,                       /* R: bufferRounding: exactly fill the defined data buffer */
@@ -703,8 +724,8 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
                             /* Fill OHCI_QueueTD[1] With received data */
                             /* IN transaction */
                             /* Setup DATA IN packet */
-                            ohci_create_qTD(&OHCI_QueueTD[idx][QTD_NUM],      /* Transfer Descriptor address */
-                                            &OHCI_QueueTD[idx_plus][QTD_NUM], /* NextTD */
+                            ohci_create_qTD(&OHCI_QueueTD[pipe->hostEndpoint][idx],      /* Transfer Descriptor address */
+                                            &OHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* NextTD */
                                             (++DToggle)|0x02,        /* T: DataToggle value is taken from the LSb of this field. */
                                             tosend,                  /* BE: BufferEnd: Total Bytes to transfer */
                                             2,                       /* DP: Direction/PID: IN=2 */
@@ -727,8 +748,8 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
                         idx++;
                         idx_plus = idx + 1;
                         /* Setup STATUS OUT packet */
-                        ohci_create_qTD(&OHCI_QueueTD[idx][QTD_NUM],      /* Transfer Descriptor address */
-                                        &OHCI_QueueTD[idx_plus][QTD_NUM], /* NextTD */
+                        ohci_create_qTD(&OHCI_QueueTD[pipe->hostEndpoint][idx],      /* Transfer Descriptor address */
+                                        &OHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* NextTD */
                                         3,        /* T: DataToggle, STATUS is always DATA1 */
                                         0,        /* BE: BufferEnd: Total Bytes to transfer: ZLP */
                                         1,        /* DP: Direction/PID: OUT=1 */
@@ -745,27 +766,28 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
                             idx_plus = idx + 1;
 
                             point = (uint8_t *)irp->data;
-                            DCACHE_CLEAN_BY_ADDR((uint32_t *)irp->data, sizeof(irp->data)); 
+
                             for (i = 0; i < irp->size; i++)
                             {
                                 USBBufferAligned[i] = point[i];
                             }
 
                             /* Setup DATA OUT Packet */
-                            ohci_create_qTD(&OHCI_QueueTD[idx][QTD_NUM],      /* Transfer Descriptor address */
-                                            &OHCI_QueueTD[idx_plus][QTD_NUM], /* NextTD */
+                            ohci_create_qTD(&OHCI_QueueTD[pipe->hostEndpoint][idx],      /* Transfer Descriptor address */
+                                            &OHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* NextTD */
                                             3,          /* T: DataToggle value is taken from the LSb of this field. */
                                             irp->size,  /* BE: BufferEnd: Total Bytes to transfer */
                                             1,          /* DP: Direction/PID: OUT=1 */
                                             0,          /* R: bufferRounding: exactly fill the defined data buffer */
                                             (uint32_t *)USBBufferAligned); /* CBP: CurrentBufferPointer */
+                            DCACHE_CLEAN_BY_ADDR((uint32_t *)irp->data, sizeof(irp->data)); 
                         }
 
                         idx++;
                         idx_plus = idx + 1;
                         /* Setup STATUS IN Packet (ZLP) */
-                        ohci_create_qTD(&OHCI_QueueTD[idx][QTD_NUM],      /* Transfer Descriptor address */
-                                        &OHCI_QueueTD[idx_plus][QTD_NUM], /* NextTD */
+                        ohci_create_qTD(&OHCI_QueueTD[pipe->hostEndpoint][idx],      /* Transfer Descriptor address */
+                                        &OHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* NextTD */
                                         3,     /* T: DataToggle value is taken from the LSb of this field. */
                                         0,     /* BE: BufferEnd: Total Bytes to transfer: ZLP */
                                         2,     /* DP: Direction/PID: IN=2 */
@@ -775,7 +797,7 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
 
                     idx++;
                     /* NULL Packet */
-                    ohci_create_qTD(&OHCI_QueueTD[idx][QTD_NUM], /* Transfer Descriptor address */
+                    ohci_create_qTD(&OHCI_QueueTD[pipe->hostEndpoint][idx], /* Transfer Descriptor address */
                                     NULL,               /* NextTD */
                                     0,                  /* T: DataToggle acquired from the toggleCarry field in the ED */
                                     0,                  /* BE: BufferEnd: Total Bytes to transfer: ZLP */
@@ -784,7 +806,7 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
                                     NULL);              /* CBP: CurrentBufferPointer ZLP */
 
                      /* Create Queue Head for the command: */
-                    ohci_create_queue_head(&OHCI_QueueHead[QHD_NUM],        /* Endpoint Descriptor Addr */
+                    ohci_create_queue_head(&OHCI_QueueHead[pipe->hostEndpoint],        /* Endpoint Descriptor Addr */
                                            NULL,                   /* NextED */
                                            3,                      /* D: Direction: 1 OUT, 2 IN, 0 or 3 => def in TD */
                                    pipe->endpointAndDirection&0xF, /* EN: EndpointNumber */
@@ -793,13 +815,13 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
                                            0,                      /* K: sKip */
                                            low_speed,              /* S: Speed: 0 FS, 1 LS */
                                            pipe->deviceAddress,    /* FA: FunctionAddress */
-                                           &OHCI_QueueTD[0][QTD_NUM],       /* HeadP: TDQueueHeadPointer */
-                                           &OHCI_QueueTD[idx][QTD_NUM]);    /* TailP: TDQueueTailPointer */
+                                           &OHCI_QueueTD[pipe->hostEndpoint][0],       /* HeadP: TDQueueHeadPointer */
+                                           &OHCI_QueueTD[pipe->hostEndpoint][idx]);    /* TailP: TDQueueTailPointer */
 
                     /* The size of the data buffer  should not be larger than MaximumPacketSize
                      * from the Endpoint Descriptor (this is not checked by the Host Controller and 
                      * transmission problems occur if software violates this restriction). */
-                    QHToProceed = (uint32_t *)&OHCI_QueueHead[QHD_NUM];
+                    QHToProceed = (uint32_t *)&OHCI_QueueHead[pipe->hostEndpoint];
 
                 } /* End SETUP Transaction */
                 else
@@ -808,8 +830,6 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
                      * irp in the queue, then we can start the irp */
                     idx = 0;
                     idx_plus = idx + 1;
-
-                    memset((void*)OHCI_QueueTD[0], 0, sizeof(OHCI_QueueTD[0]));
 
                     if( (pipe->endpointAndDirection & 0x80) == 0 )
                     {
@@ -830,9 +850,9 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
                                 tosend = nbBytes;
                             }
 
-                            /* Host to Device: BULK OUT */
-                            ohci_create_qTD(&OHCI_QueueTD[idx][QTD_NUM],      /* Transfer Descriptor address */
-                                            &OHCI_QueueTD[idx_plus][QTD_NUM], /* NextTD */
+                            /* Host to Device: OUT */
+                            ohci_create_qTD(&OHCI_QueueTD[pipe->hostEndpoint][idx],      /* Transfer Descriptor address */
+                                            &OHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* NextTD */
                                             hDriver->staticDToggleOut|0x2,  /* T: DataToggle value is taken from the LSb of this field. */
                                             tosend,                  /* BE: BufferEnd: Total Bytes to transfer */
                                             1,                       /* DP: Direction/PID: OUT=1 */
@@ -857,7 +877,7 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
 
                         /* If TailP and HeadP are the same, then the list contains no TD that the HC can process. */
                         /* NULL Packet */
-                        ohci_create_qTD(&OHCI_QueueTD[idx][QTD_NUM], /* Transfer Descriptor address */
+                        ohci_create_qTD(&OHCI_QueueTD[pipe->hostEndpoint][idx], /* Transfer Descriptor address */
                                         NULL,               /* NextTD */
                                         0,                  /* T: DataToggle acquired from the toggleCarry field in the ED */
                                         0,                  /* BE: BufferEnd: Total Bytes to transfer: ZLP */
@@ -866,7 +886,7 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
                                         NULL);              /* CBP: CurrentBufferPointer ZLP */
 
                         /* Create Queue Head for the command: */
-                        ohci_create_queue_head(&OHCI_QueueHead[QHDOUT_NUM],     /* Endpoint Descriptor Addr */
+                        ohci_create_queue_head(&OHCI_QueueHead[pipe->hostEndpoint],     /* Endpoint Descriptor Addr */
                                                NULL,                   /* NextED */
                                                0,                      /* D: Direction: 1 OUT, 2 IN, 0 or 3 => def in TD */
                                        pipe->endpointAndDirection&0xF, /* EN: EndpointNumber */
@@ -875,13 +895,13 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
                                                0,                      /* K: sKip */
                                                low_speed,              /* S: Speed: 0 FS, 1 LS */
                                                pipe->deviceAddress,    /* FA: FunctionAddress */
-                                               &OHCI_QueueTD[0][QTD_NUM],       /* HeadP: TDQueueHeadPointer */
-                                               &OHCI_QueueTD[idx][QTD_NUM]);    /* TailP: TDQueueTailPointer */
-                        QHToProceed = (uint32_t *)&OHCI_QueueHead[QHDOUT_NUM];
+                                               &OHCI_QueueTD[pipe->hostEndpoint][0],       /* HeadP: TDQueueHeadPointer */
+                                               &OHCI_QueueTD[pipe->hostEndpoint][idx]);    /* TailP: TDQueueTailPointer */
+                        QHToProceed = (uint32_t *)&OHCI_QueueHead[pipe->hostEndpoint];
                     }
                     else
                     {
-                        /* Device to Host: BULK IN */
+                        /* Device to Host: IN */
                         /* Data is moving from host to device. We
                          * need to copy data into the FIFO and
                          * then and set the TX request bit. If the
@@ -899,9 +919,9 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
                             {
                                 tosend = nbBytes;
                             }
-                            /* BULK IN */
-                            ohci_create_qTD(&OHCI_QueueTD[idx][QTD_NUM],      /* Transfer Descriptor address */
-                                            &OHCI_QueueTD[idx_plus][QTD_NUM], /* NextTD */
+                            /* IN */
+                            ohci_create_qTD(&OHCI_QueueTD[pipe->hostEndpoint][idx],      /* Transfer Descriptor address */
+                                            &OHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* NextTD */
                                             hDriver->staticDToggleIn|0x2, /* T: DataToggle value is taken from the LSb of this field. */
                                             tosend,                  /* BE: BufferEnd: Total Bytes to transfer */
                                             2,                       /* DP: Direction/PID: IN=2 */
@@ -927,7 +947,7 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
 
                         /* If TailP and HeadP are the same, then the list contains no TD that the HC can process. */
                         /* NULL Packet */
-                        ohci_create_qTD(&OHCI_QueueTD[idx][QTD_NUM], /* Transfer Descriptor address */
+                        ohci_create_qTD(&OHCI_QueueTD[pipe->hostEndpoint][idx], /* Transfer Descriptor address */
                                         NULL,               /* NextTD */
                                         0,                  /* T: DataToggle acquired from the toggleCarry field in the ED */
                                         0,                  /* BE: BufferEnd: Total Bytes to transfer: ZLP */
@@ -936,7 +956,7 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
                                         NULL);              /* CBP: CurrentBufferPointer ZLP */
 
                         /* Create Queue Head for the command: */
-                        ohci_create_queue_head(&OHCI_QueueHead[QHDIN_NUM],      /* Endpoint Descriptor Addr */
+                        ohci_create_queue_head(&OHCI_QueueHead[pipe->hostEndpoint],      /* Endpoint Descriptor Addr */
                                                NULL,                   /* NextED */
                                                0,                      /* D: Direction: 1 OUT, 2 IN, 0 or 3 => def in TD */
                                        pipe->endpointAndDirection&0xF, /* EN: EndpointNumber */
@@ -945,9 +965,9 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
                                                0,                      /* K: sKip */
                                                low_speed,              /* S: Speed: 0 FS, 1 LS */
                                                pipe->deviceAddress,    /* FA: FunctionAddress */
-                                               &OHCI_QueueTD[0][QTD_NUM],       /* HeadP: TDQueueHeadPointer: Points to the next TD to be processed for this endpoint. */
-                                               &OHCI_QueueTD[idx][QTD_NUM]);    /* TailP: TDQueueTailPointer */
-                        QHToProceed = (uint32_t *)&OHCI_QueueHead[QHDIN_NUM];
+                                               &OHCI_QueueTD[pipe->hostEndpoint][0],       /* HeadP: TDQueueHeadPointer: Points to the next TD to be processed for this endpoint. */
+                                               &OHCI_QueueTD[pipe->hostEndpoint][idx]);    /* TailP: TDQueueTailPointer */
+                        QHToProceed = (uint32_t *)&OHCI_QueueHead[pipe->hostEndpoint];
                     }                                            
                 }
 
@@ -956,11 +976,19 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
 
                 if( pipe->pipeType == USB_TRANSFER_TYPE_INTERRUPT ) 
                 {
-                    /* PeriodicListEnable: enable the processing of the periodic list */
-                    usbIDOHCI->UHP_OHCI_HCCONTROL |= UHP_OHCI_HCCONTROL_CLE_Msk;
+                    /* programming of HccaInterruptTable */
+                    /* An ED that is in only one list has a polling rate of once every 32 ms. */
+                    for( uint8_t i=0; i<32; i++)
+                    {
+                        HCCA.UHP_HccaInterruptTable[i] = (uint32_t)QHToProceed; 
+                    }
                     // HcPeriodicStart
                     // PeriodCurrentED
                     // HcPeriodicStart Register
+                    /* programming of HcPeriodCurrentED */
+                    usbIDOHCI->UHP_OHCI_HCPERIODCURRENTED = (uint32_t)QHToProceed;
+                    /* PeriodicListEnable: enable the processing of the periodic list */
+                    usbIDOHCI->UHP_OHCI_HCCONTROL |= UHP_OHCI_HCCONTROL_PLE_Msk;
                 }
                 else if( pipe->pipeType == USB_TRANSFER_TYPE_ISOCHRONOUS )
                 {
@@ -970,22 +998,36 @@ USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
                     // Change Format in Endpoint Descriptor
                     // IsochronousListEnable
                 }
-                else
+                else if( pipe->pipeType == USB_TRANSFER_TYPE_BULK )
                 {
-                    /* USB_TRANSFER_TYPE_CONTROL || USB_TRANSFER_TYPE_BULK */
+                    /* BulkListFilled: programming HcCommandStatus Register */
+                    usbIDOHCI->UHP_OHCI_HCCOMMANDSTATUS |= UHP_OHCI_HCCOMMANDSTATUS_BLF_Msk;
 
-                    /* ControlListEnable: Enable the processing of the Control list in the next Frame */
-                    usbIDOHCI->UHP_OHCI_HCCONTROL |= UHP_OHCI_HCCONTROL_CLE_Msk;
+                    /* programming of BulkCurrentED */
+                    usbIDOHCI->UHP_OHCI_HCBULKCURRENTED = (uint32_t)QHToProceed;
+
+                    /* programming of HcBulkHeadED */
+                    usbIDOHCI->UHP_OHCI_HCBULKHEADED = (uint32_t)QHToProceed;
+
+                    /* BulkListEnable: Enable the processing of the Bulk list in the next Frame */
+                    usbIDOHCI->UHP_OHCI_HCCONTROL |= UHP_OHCI_HCCONTROL_BLE_Msk;
+                }
+                else 
+                {
+                    /* USB_TRANSFER_TYPE_CONTROL */
 
                     /* ControlListFilled: programming HcCommandStatus Register */
                     usbIDOHCI->UHP_OHCI_HCCOMMANDSTATUS |= UHP_OHCI_HCCOMMANDSTATUS_CLF_Msk;
+
+                    /* programming of HcControlCurrentED */
+                    usbIDOHCI->UHP_OHCI_HCCONTROLCURRENTED = (uint32_t)QHToProceed;
+
+                    /* programming of HcControlHeadED */
+                    usbIDOHCI->UHP_OHCI_HCCONTROLHEADED = (uint32_t)QHToProceed;
+
+                    /* ControlListEnable: Enable the processing of the Control list in the next Frame */
+                    usbIDOHCI->UHP_OHCI_HCCONTROL |= UHP_OHCI_HCCONTROL_CLE_Msk;
                 }
-
-                /* programming of BulkCurrentED */
-                usbIDOHCI->UHP_OHCI_HCCONTROLCURRENTED = (uint32_t)QHToProceed;
-
-                /* programming of HcControlHeadED */
-                usbIDOHCI->UHP_OHCI_HCCONTROLHEADED = (uint32_t)QHToProceed;
 
                 irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
                 returnValue = USB_ERROR_NONE;
@@ -1052,8 +1094,9 @@ void _DRV_USB_UHP_HOST_DisableControlList_OHCI(DRV_USB_UHP_OBJ *hDriver)
 {
     volatile UhpOhci *usbIDOHCI;
 
-    /* Disable async list */
     usbIDOHCI = hDriver->usbIDOHCI;
+
+    /* Disable Asynchronou list */
     usbIDOHCI->UHP_OHCI_HCCONTROL &= ~UHP_OHCI_HCCONTROL_CLE_Msk;
 }
 
@@ -1084,7 +1127,6 @@ void _DRV_USB_UHP_HOST_Tasks_ISR_OHCI(DRV_USB_UHP_OBJ *hDriver)
         /* Writeback Done Head */
         if ( (isr_read_data & UHP_OHCI_HCINTERRUPTSTATUS_WDH_Msk) == UHP_OHCI_HCINTERRUPTSTATUS_WDH_Msk )
         {
-            _DRV_USB_UHP_HOST_OHCITESTTD();
             usbIDOHCI->UHP_OHCI_HCINTERRUPTSTATUS = UHP_OHCI_HCINTERRUPTSTATUS_WDH_Msk; /* clear interrupt */
             hDriver->intXfrQtdComplete = 1;
         }
@@ -1119,9 +1161,7 @@ void _DRV_USB_UHP_HOST_Tasks_ISR_OHCI(DRV_USB_UHP_OBJ *hDriver)
                     /*  change in CurrentConnectStatus */
                     SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rOHCI IRQ : ConnectStatusChange, port: %d", i);
 
-                    memset(&OHCI_QueueHead[QHD_NUM], 0, sizeof(OHCI_QueueHead[QHD_NUM]));
-                    memset(&OHCI_QueueHead[QHDIN_NUM], 0, sizeof(OHCI_QueueHead[QHDIN_NUM]));
-                    memset(&OHCI_QueueHead[QHDOUT_NUM], 0, sizeof(OHCI_QueueHead[QHDOUT_NUM]));
+                    memset(OHCI_QueueHead, 0, sizeof(OHCI_QueueHead));
                     
                     /* CurrentConnectStatus */
                     if( (read_data & UHP_OHCI_HCRHPORTSTATUS0_CCS_Msk) == UHP_OHCI_HCRHPORTSTATUS0_CCS_Msk)
@@ -1217,7 +1257,6 @@ void _DRV_USB_UHP_HOST_Tasks_ISR_OHCI(DRV_USB_UHP_OBJ *hDriver)
         /* Scheduling Overrun */
         if ( (isr_read_data & UHP_OHCI_HCINTERRUPTSTATUS_SO_Msk) == UHP_OHCI_HCINTERRUPTSTATUS_SO_Msk )
         {
-            _DRV_USB_UHP_HOST_OHCITESTTD();
             SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rOHCI IRQ : Scheduling Overrun");
             usbIDOHCI->UHP_OHCI_HCINTERRUPTSTATUS = UHP_OHCI_HCINTERRUPTSTATUS_SO_Msk; /* clear interrupt */
         }
