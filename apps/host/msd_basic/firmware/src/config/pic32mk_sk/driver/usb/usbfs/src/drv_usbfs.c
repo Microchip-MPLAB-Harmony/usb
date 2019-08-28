@@ -537,7 +537,6 @@ void DRV_USBFS_ClientEventCallBackSet
         SYS_DEBUG(SYS_ERROR_INFO, "\r\nUSBFS Driver: Bad Client or client closed");
     }
 } 
-
 // *****************************************************************************
 /* Function:
     void DRV_USBFS_Tasks( SYS_MODULE_OBJ object )
@@ -565,29 +564,23 @@ void DRV_USBFS_Tasks(SYS_MODULE_OBJ object)
     _DRV_USBFS_Tasks_ISR(object);
 }
 
-void DRV_USBFS_Tasks_ISR_USBDMA( SYS_MODULE_OBJ object )
-{
-    /* This function is implemented to only maintain compatibility with the
-     * PIC32MZ High Speed USB Driver. This function does not do anything on the
-     * PIC32MX USB driver and is not required to be called in a PIC32MX USB
-     * applicaiton */
-}
-
-// *****************************************************************************
+	// *****************************************************************************
 /* Function:
-    void DRV_USBFS_USB_Handler(void)
+    void DRV_USBFS_USB1_Handler(void)
 
   Summary:
-    USBFS Interrupt Handler 
+    USBFS Peripheral 1 Interrupt Handler 
 	
   Description:
-    This is USBFS Interrupt Handler 
+    USBFS Peripheral 1 Interrupt Handler 
 
   Remarks:
 	None 
 */
 
-void DRV_USBFS_USB_Handler(void)
+void DRV_USBFS_USB1_Handler(void)
 {
-	DRV_USBFS_Tasks_ISR(sysObj.drvUSBFSObject); 
+	DRV_USBFS_Tasks_ISR(sysObj.drvUSBFSObject0); 
 }
+
+

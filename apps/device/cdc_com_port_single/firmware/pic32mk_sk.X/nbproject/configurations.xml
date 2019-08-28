@@ -9,7 +9,7 @@
           <logicalFolder name="f1" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/pic32mk_sk/bsp/bsp.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="driver" projectFiles="true">
+          <logicalFolder name="f4" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="usb" projectFiles="true">
               <logicalFolder name="f1" displayName="usbfs" projectFiles="true">
                 <logicalFolder name="f1" displayName="src" projectFiles="true">
@@ -128,7 +128,6 @@
                   <itemPath>../src/config/pic32mk_sk/driver/usb/usbfs/src/drv_usbfs_variant_mapping.h</itemPath>
                   <itemPath>../src/config/pic32mk_sk/driver/usb/usbfs/src/drv_usbfs_local.h</itemPath>
                   <itemPath>../src/config/pic32mk_sk/driver/usb/usbfs/src/plib_usbfs.h</itemPath>
-                  <itemPath>../src/config/pic32mk_sk/driver/usb/usbfs/src/plib_usbfs_header.h</itemPath>
                   <itemPath>../src/config/pic32mk_sk/driver/usb/usbfs/src/usbfs_registers.h</itemPath>
                 </logicalFolder>
                 <itemPath>../src/config/pic32mk_sk/driver/usb/usbfs/drv_usbfs.h</itemPath>
@@ -159,7 +158,7 @@
             <itemPath>../src/config/pic32mk_sk/system/system_common.h</itemPath>
             <itemPath>../src/config/pic32mk_sk/system/system_module.h</itemPath>
           </logicalFolder>
-          <logicalFolder name="f4" displayName="usb" projectFiles="true">
+          <logicalFolder name="f3" displayName="usb" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
               <itemPath>../src/config/pic32mk_sk/usb/src/usb_device_local.h</itemPath>
               <itemPath>../src/config/pic32mk_sk/usb/src/usb_device_mapping.h</itemPath>
@@ -167,13 +166,13 @@
               <itemPath>../src/config/pic32mk_sk/usb/src/usb_external_dependencies.h</itemPath>
               <itemPath>../src/config/pic32mk_sk/usb/src/usb_device_cdc_local.h</itemPath>
             </logicalFolder>
+            <itemPath>../src/config/pic32mk_sk/usb/usb_device.h</itemPath>
+            <itemPath>../src/config/pic32mk_sk/usb/usb_common.h</itemPath>
+            <itemPath>../src/config/pic32mk_sk/usb/usb_chapter_9.h</itemPath>
             <itemPath>../src/config/pic32mk_sk/usb/usb_host_client_driver.h</itemPath>
             <itemPath>../src/config/pic32mk_sk/usb/usb_host_hub_interface.h</itemPath>
             <itemPath>../src/config/pic32mk_sk/usb/usb_host.h</itemPath>
             <itemPath>../src/config/pic32mk_sk/usb/usb_hub.h</itemPath>
-            <itemPath>../src/config/pic32mk_sk/usb/usb_device.h</itemPath>
-            <itemPath>../src/config/pic32mk_sk/usb/usb_common.h</itemPath>
-            <itemPath>../src/config/pic32mk_sk/usb/usb_chapter_9.h</itemPath>
             <itemPath>../src/config/pic32mk_sk/usb/usb_device_cdc.h</itemPath>
             <itemPath>../src/config/pic32mk_sk/usb/usb_cdc.h</itemPath>
           </logicalFolder>
@@ -209,12 +208,13 @@
           <logicalFolder name="f1" displayName="bsp" projectFiles="true">
             <itemPath>../src/config/pic32mk_sk/bsp/bsp.c</itemPath>
           </logicalFolder>
-          <logicalFolder name="f4" displayName="driver" projectFiles="true">
+          <logicalFolder name="f5" displayName="driver" projectFiles="true">
             <logicalFolder name="f1" displayName="usb" projectFiles="true">
               <logicalFolder name="f1" displayName="usbfs" projectFiles="true">
                 <logicalFolder name="f1" displayName="src" projectFiles="true">
-                  <itemPath>../src/config/pic32mk_sk/driver/usb/usbfs/src/drv_usbfs.c</itemPath>
                   <itemPath>../src/config/pic32mk_sk/driver/usb/usbfs/src/drv_usbfs_device.c</itemPath>
+                  <itemPath>../src/config/pic32mk_sk/driver/usb/usbfs/src/plib_usbfs_header.h</itemPath>
+                  <itemPath>../src/config/pic32mk_sk/driver/usb/usbfs/src/drv_usbfs.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
@@ -238,7 +238,7 @@
               <itemPath>../src/config/pic32mk_sk/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f5" displayName="usb" projectFiles="true">
+          <logicalFolder name="f4" displayName="usb" projectFiles="true">
             <logicalFolder name="f1" displayName="src" projectFiles="true">
               <itemPath>../src/config/pic32mk_sk/usb/src/usb_device.c</itemPath>
               <itemPath>../src/config/pic32mk_sk/usb/src/usb_device_cdc.c</itemPath>
@@ -248,7 +248,7 @@
           <itemPath>../src/config/pic32mk_sk/initialization.c</itemPath>
           <itemPath>../src/config/pic32mk_sk/interrupts.c</itemPath>
           <itemPath>../src/config/pic32mk_sk/exceptions.c</itemPath>
-          <itemPath>../src/config/pic32mk_sk/usb_device_init_data.c</itemPath>
+          <itemPath>../src/config/pic32mk_sk/usb_device_init_data_0.c</itemPath>
           <itemPath>../src/config/pic32mk_sk/tasks.c</itemPath>
         </logicalFolder>
       </logicalFolder>

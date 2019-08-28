@@ -128,7 +128,6 @@
                   <itemPath>../src/config/pic32mk_sk/driver/usb/usbfs/src/drv_usbfs_variant_mapping.h</itemPath>
                   <itemPath>../src/config/pic32mk_sk/driver/usb/usbfs/src/drv_usbfs_local.h</itemPath>
                   <itemPath>../src/config/pic32mk_sk/driver/usb/usbfs/src/plib_usbfs.h</itemPath>
-                  <itemPath>../src/config/pic32mk_sk/driver/usb/usbfs/src/plib_usbfs_header.h</itemPath>
                   <itemPath>../src/config/pic32mk_sk/driver/usb/usbfs/src/usbfs_registers.h</itemPath>
                 </logicalFolder>
                 <itemPath>../src/config/pic32mk_sk/driver/usb/usbfs/drv_usbfs.h</itemPath>
@@ -242,8 +241,9 @@
             <logicalFolder name="f1" displayName="usb" projectFiles="true">
               <logicalFolder name="f1" displayName="usbfs" projectFiles="true">
                 <logicalFolder name="f1" displayName="src" projectFiles="true">
-                  <itemPath>../src/config/pic32mk_sk/driver/usb/usbfs/src/drv_usbfs.c</itemPath>
                   <itemPath>../src/config/pic32mk_sk/driver/usb/usbfs/src/drv_usbfs_host.c</itemPath>
+                  <itemPath>../src/config/pic32mk_sk/driver/usb/usbfs/src/plib_usbfs_header.h</itemPath>
+                  <itemPath>../src/config/pic32mk_sk/driver/usb/usbfs/src/drv_usbfs.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
@@ -320,7 +320,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>ICD3PlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.00</languageToolchainVersion>
+        <languageToolchainVersion>2.10</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>

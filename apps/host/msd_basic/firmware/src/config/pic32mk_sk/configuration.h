@@ -134,10 +134,10 @@ extern "C" {
 // *****************************************************************************
 // **************************************************************************
 
-/* Number of Endpoints used */
-#define DRV_USBFS_ENDPOINTS_NUMBER 							1
 
-#define USB_HOST_DEVICES_NUMBER                             1
+
+/* Total number of devices to be supported */
+#define USB_HOST_DEVICES_NUMBER                             1 
 
 /* Size of Endpoint 0 buffer */
 #define USB_DEVICE_EP0_BUFFER_SIZE                          64
@@ -146,9 +146,11 @@ extern "C" {
 #define  USB_HOST_TPL_ENTRIES                               1 
 
 /* Maximum number of configurations supported per device */
-#define USB_HOST_DEVICE_INTERFACES_NUMBER                   5    
+#define USB_HOST_DEVICE_INTERFACES_NUMBER                   5  
 
-#define USB_HOST_CONTROLLERS_NUMBER                         1
+#define USB_HOST_CONTROLLERS_NUMBER            				1  
+
+
 
 #define USB_HOST_TRANSFERS_NUMBER                           10
 
@@ -166,18 +168,20 @@ extern "C" {
 #define USB_HOST_MSD_LUN_NUMBERS              1
 
 
-/*** USB Driver Configuration ***/
 
-/* Maximum USB driver instances */
-#define DRV_USBFS_INSTANCES_NUMBER                        1
+#define DRV_USBFS_INSTANCES_NUMBER                       1
 
 /* Interrupt mode enabled */
 #define DRV_USBFS_INTERRUPT_MODE                          true
 
 
+ 
+
 /* Disable Device Support */
 #define DRV_USBFS_DEVICE_SUPPORT                          false
-	
+
+#define DRV_USBFS_ENDPOINTS_NUMBER                        5
+
 /* Enable Host Support */
 #define DRV_USBFS_HOST_SUPPORT                            true
 
@@ -193,9 +197,9 @@ extern "C" {
 /* Reset duration in milli Seconds */ 
 #define DRV_USBFS_HOST_RESET_DURATION                     100
 
-
 /* Alignment for buffers that are submitted to USB Driver*/ 
 #define USB_ALIGN  CACHE_ALIGN
+
 
 
 

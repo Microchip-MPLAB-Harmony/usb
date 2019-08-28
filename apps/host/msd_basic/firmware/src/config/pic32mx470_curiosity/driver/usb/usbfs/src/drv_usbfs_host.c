@@ -1316,8 +1316,7 @@ DRV_USBFS_HOST_PIPE_HANDLE DRV_USBFS_HOST_PipeSetup
                     pPipe->endpointSize = wMaxPacketSize;
                     pPipe->intervalCounter = bInterval;
                     pPipe->dataToggle = USB_BUFFER_DATA0;
-                    pPipe->retryCount = 0;
-
+					pPipe->retryCount = 0;
                     pPipe->endpointAndDirection = endpointAndDirection;
 
                     /* This pipe should now be added to the pipe bundle. The

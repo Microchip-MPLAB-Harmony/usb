@@ -169,9 +169,9 @@ const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
  ******************************************************/
  
 
-uint8_t __attribute__((aligned(512))) endPointTable1[DRV_USBFS_ENDPOINTS_NUMBER * 32];
+uint8_t __attribute__((aligned(512))) endPointTable0[DRV_USBFS_ENDPOINTS_NUMBER * 32];
 
-void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
+void DRV_USB_VBUSPowerEnable0(uint8_t port, bool enable)
 {
 	/* Note: USB Host applications should have a way for Enabling/Disabling the 
 	   VBUS. Applications can use a GPIO to turn VBUS on/off through a switch. 
@@ -191,15 +191,13 @@ void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
 	}
 }
 
-const DRV_USBFS_INIT drvUSBFSInit =
+const DRV_USBFS_INIT drvUSBFSInit0 =
 {
 	 /* Assign the endpoint table */
-    .endpointTable= endPointTable1,
-	
+    .endpointTable= endPointTable0,
 	/* Interrupt Source for USB module */
-	.interruptSource = INT_SOURCE_USB_1,
-
-    
+	.interruptSource = INT_SOURCE_USB_1 ,
+   
 	/* USB Controller to operate as USB Host */
     .operationMode = DRV_USBFS_OPMODE_HOST,
 	
@@ -210,12 +208,11 @@ const DRV_USBFS_INIT drvUSBFSInit =
 	
 	    /* Suspend in sleep */
     .suspendInSleep = false,
- 
     /* Identifies peripheral (PLIB-level) ID */
     .usbID = USB_ID_1,
 	
 	/* USB Host Power Enable. USB Driver uses this function to Enable the VBUS */ 
-	.portPowerEnable = DRV_USB_VBUSPowerEnable,
+	.portPowerEnable = DRV_USB_VBUSPowerEnable0,
 	
     /* Root hub available current in milliamperes */
     .rootHubAvailableCurrent = 500,
@@ -295,7 +292,7 @@ void SYS_Initialize ( void* data )
     SYS_FS_Initialize( (const void *) sysFSInit );
 
 	/* Initialize USB Driver */ 
-    sysObj.drvUSBFSObject = DRV_USBFS_Initialize(DRV_USBFS_INDEX_0, (SYS_MODULE_INIT *) &drvUSBFSInit);	
+    sysObj.drvUSBFSObject0 = DRV_USBFS_Initialize(DRV_USBFS_INDEX_0, (SYS_MODULE_INIT *) &drvUSBFSInit0);	
 
 
     APP_Initialize();

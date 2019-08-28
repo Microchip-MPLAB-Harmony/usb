@@ -54,9 +54,9 @@
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/gpio/plib_gpio.h"
 #include "peripheral/evic/plib_evic.h"
-#include "driver/usb/usbfs/drv_usbfs.h"
 #include "usb/usb_chapter_9.h"
 #include "usb/usb_device.h"
+#include "driver/usb/usbfs/drv_usbfs.h"
 #include "system/int/sys_int.h"
 #include "osal/osal.h"
 #include "app.h"
@@ -181,9 +181,11 @@ void SYS_Tasks ( void );
 
 typedef struct
 {
-	SYS_MODULE_OBJ  drvUSBFSObject;
-
 	SYS_MODULE_OBJ  usbDevObject0;
+
+
+	SYS_MODULE_OBJ  drvUSBFSObject0;
+
 
 
 } SYSTEM_OBJECTS;
@@ -195,7 +197,7 @@ typedef struct
 // *****************************************************************************
 // *****************************************************************************
 
-extern const USB_DEVICE_INIT usbDevInitData; 
+extern const USB_DEVICE_INIT usbDevInitData0; 
 
 
 

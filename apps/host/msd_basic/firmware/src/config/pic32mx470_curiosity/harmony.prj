@@ -43,8 +43,8 @@
           <Name dnOrder="1">drv_usbfs_host.c</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity/driver/usb/usbfs/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">561EE5C218F518C9D8BD8C862EEFACCA</GeneratedChecksum>
-          <UserChecksum dnOrder="5">561EE5C218F518C9D8BD8C862EEFACCA</UserChecksum>
+          <GeneratedChecksum dnOrder="4">89C487ED4FCC258AF681D043DFCDC871</GeneratedChecksum>
+          <UserChecksum dnOrder="5">89C487ED4FCC258AF681D043DFCDC871</UserChecksum>
         </File>
         <File dnOrder="5">
           <Type dnOrder="0">SOURCE</Type>
@@ -283,8 +283,8 @@
           <Name dnOrder="1">drv_usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">AC352A9B0E4A4B622674870B8738E826</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AC352A9B0E4A4B622674870B8738E826</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C07E5598C11AD6C2F25F92037919A988</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C07E5598C11AD6C2F25F92037919A988</UserChecksum>
         </File>
         <File dnOrder="35">
           <Type dnOrder="0">HEADER</Type>
@@ -299,8 +299,8 @@
           <Name dnOrder="1">drv_usbfs_local.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity/driver/usb/usbfs/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">54EE5002C0551B960E253288F60FF998</GeneratedChecksum>
-          <UserChecksum dnOrder="5">54EE5002C0551B960E253288F60FF998</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BA88E5162CA794A6A62D146A58458A43</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BA88E5162CA794A6A62D146A58458A43</UserChecksum>
         </File>
         <File dnOrder="37">
           <Type dnOrder="0">HEADER</Type>
@@ -1427,8 +1427,8 @@
           <Name dnOrder="1">usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">EC508303014905CAA66CE126A0FE7297</GeneratedChecksum>
-          <UserChecksum dnOrder="5">EC508303014905CAA66CE126A0FE7297</UserChecksum>
+          <GeneratedChecksum dnOrder="4">558E9741B623822D41730029B1C660B3</GeneratedChecksum>
+          <UserChecksum dnOrder="5">558E9741B623822D41730029B1C660B3</UserChecksum>
         </File>
         <File dnOrder="178">
           <Type dnOrder="0">HEADER</Type>

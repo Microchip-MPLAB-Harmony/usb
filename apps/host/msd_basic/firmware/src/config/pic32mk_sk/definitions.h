@@ -191,7 +191,9 @@ typedef struct
 {
 	SYS_MODULE_OBJ  usbHostObject0;
 
-	SYS_MODULE_OBJ  drvUSBFSObject;
+
+	SYS_MODULE_OBJ  drvUSBFSObject0;
+
 
     SYS_MODULE_OBJ  sysTime;
 
