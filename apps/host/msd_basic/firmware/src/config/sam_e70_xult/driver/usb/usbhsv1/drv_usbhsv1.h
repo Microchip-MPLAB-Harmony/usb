@@ -494,6 +494,13 @@ typedef struct
 	
 } DRV_USBHSV1_INIT;
 
+void DRV_USBHSV1_HOST_EndpointToggleClear
+(
+    DRV_HANDLE client,
+    USB_ENDPOINT endpointAndDirection
+);
+
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Interface Routines - System Level

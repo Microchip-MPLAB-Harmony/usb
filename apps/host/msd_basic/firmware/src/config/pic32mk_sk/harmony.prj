@@ -28,7 +28,7 @@
           <LogicalPath dnOrder="2">config/pic32mk_sk/system/fs/fat_fs/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/fs/fat_fs/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">80E88E0E2E63B3FCAED031C5F6949756</GeneratedChecksum>
-          <UserChecksum dnOrder="5">80E88E0E2E63B3FCAED031C5F6949756</UserChecksum>
+          <UserChecksum dnOrder="5">AB0562D0739473A163D9A9952DF060BB</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
@@ -43,8 +43,8 @@
           <Name dnOrder="1">drv_usbfs_host.c</Name>
           <LogicalPath dnOrder="2">config/pic32mk_sk/driver/usb/usbfs/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">146285B55C2F032FF7FD316076C5B4F5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">146285B55C2F032FF7FD316076C5B4F5</UserChecksum>
+          <GeneratedChecksum dnOrder="4">66BAE32071BA56FE81C5D271397DB55C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">66BAE32071BA56FE81C5D271397DB55C</UserChecksum>
         </File>
         <File dnOrder="5">
           <Type dnOrder="0">SOURCE</Type>
@@ -171,8 +171,8 @@
           <Name dnOrder="1">usb_host.c</Name>
           <LogicalPath dnOrder="2">config/pic32mk_sk/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A7DE3B75F6DBA4C6CA8F799D415FFC49</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A7DE3B75F6DBA4C6CA8F799D415FFC49</UserChecksum>
+          <GeneratedChecksum dnOrder="4">24D5A6720AED48CF5629FEC387CB3A3A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">24D5A6720AED48CF5629FEC387CB3A3A</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">SOURCE</Type>
@@ -252,7 +252,7 @@
           <LogicalPath dnOrder="2">config/pic32mk_sk/system/fs/fat_fs/hardware_access/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/fs/fat_fs/src/hardware_access/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">ACCDF258E795E441E4BEBF1AF2DE3C13</GeneratedChecksum>
-          <UserChecksum dnOrder="5">ACCDF258E795E441E4BEBF1AF2DE3C13</UserChecksum>
+          <UserChecksum dnOrder="5">5DF0A409F14F8CDF9EBA7790D927E7C8</UserChecksum>
         </File>
         <File dnOrder="31">
           <Type dnOrder="0">HEADER</Type>
@@ -275,8 +275,8 @@
           <Name dnOrder="1">drv_usb.h</Name>
           <LogicalPath dnOrder="2">config/pic32mk_sk/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">CFBD2D9BDB4D18C841A9A2F4E9870E0C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">CFBD2D9BDB4D18C841A9A2F4E9870E0C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">38148410A4C123F6D3C8D2A5684C2D2D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">38148410A4C123F6D3C8D2A5684C2D2D</UserChecksum>
         </File>
         <File dnOrder="34">
           <Type dnOrder="0">HEADER</Type>
@@ -324,7 +324,7 @@
           <LogicalPath dnOrder="2">config/pic32mk_sk/system/fs/fat_fs/file_system/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/fs/fat_fs/src/file_system/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">5781E2F52EEF18B611BDA8DFAED6B5C6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5781E2F52EEF18B611BDA8DFAED6B5C6</UserChecksum>
+          <UserChecksum dnOrder="5">6A1281E275223C608488176A86E82D5E</UserChecksum>
         </File>
         <File dnOrder="40">
           <Type dnOrder="0">HEADER</Type>
@@ -411,8 +411,8 @@
           <Name dnOrder="1">plib_usbfs_header.h</Name>
           <LogicalPath dnOrder="2">config/pic32mk_sk/driver/usb/usbfs/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">BB8577372A99246B8D52615652AB02E6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">BB8577372A99246B8D52615652AB02E6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">3822D4C43CB11882404ECB2B28DD61EA</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3822D4C43CB11882404ECB2B28DD61EA</UserChecksum>
         </File>
         <File dnOrder="51">
           <Type dnOrder="0">HEADER</Type>

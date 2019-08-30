@@ -43,8 +43,8 @@
           <Name dnOrder="1">drv_usbhs_host.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/driver/usb/usbhs/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">E2BCE840982A712E72EEB2E3307E902C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">E2BCE840982A712E72EEB2E3307E902C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">991A0B2FD96CDB5300206992E89FD3DD</GeneratedChecksum>
+          <UserChecksum dnOrder="5">991A0B2FD96CDB5300206992E89FD3DD</UserChecksum>
         </File>
         <File dnOrder="5">
           <Type dnOrder="0">SOURCE</Type>
@@ -171,8 +171,8 @@
           <Name dnOrder="1">usb_host.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A7DE3B75F6DBA4C6CA8F799D415FFC49</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A7DE3B75F6DBA4C6CA8F799D415FFC49</UserChecksum>
+          <GeneratedChecksum dnOrder="4">24D5A6720AED48CF5629FEC387CB3A3A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">24D5A6720AED48CF5629FEC387CB3A3A</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">SOURCE</Type>
@@ -275,8 +275,8 @@
           <Name dnOrder="1">drv_usb.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">CFBD2D9BDB4D18C841A9A2F4E9870E0C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">CFBD2D9BDB4D18C841A9A2F4E9870E0C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">38148410A4C123F6D3C8D2A5684C2D2D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">38148410A4C123F6D3C8D2A5684C2D2D</UserChecksum>
         </File>
         <File dnOrder="34">
           <Type dnOrder="0">HEADER</Type>
@@ -291,8 +291,8 @@
           <Name dnOrder="1">drv_usbhs.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/driver/usb/usbhs</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhs/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">06C61DD08D7A60EF3EEBF4168A957B44</GeneratedChecksum>
-          <UserChecksum dnOrder="5">06C61DD08D7A60EF3EEBF4168A957B44</UserChecksum>
+          <GeneratedChecksum dnOrder="4">8EA0874E170754B9792ED6EC2165DE5F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">8EA0874E170754B9792ED6EC2165DE5F</UserChecksum>
         </File>
         <File dnOrder="36">
           <Type dnOrder="0">HEADER</Type>

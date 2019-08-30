@@ -2985,6 +2985,11 @@ void DRV_USBFSV1_HOST_ROOT_HUB_Initialize
 );
 
 
+void DRV_USBFSV1_HOST_EndpointToggleClear
+(
+    DRV_HANDLE client,
+    USB_ENDPOINT endpointAndDirection
+);
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files (continued)
