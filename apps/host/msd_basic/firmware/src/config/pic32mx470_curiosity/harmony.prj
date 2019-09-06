@@ -28,7 +28,7 @@
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity/system/fs/fat_fs/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/fs/fat_fs/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">80E88E0E2E63B3FCAED031C5F6949756</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AB0562D0739473A163D9A9952DF060BB</UserChecksum>
+          <UserChecksum dnOrder="5">80E88E0E2E63B3FCAED031C5F6949756</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
@@ -43,8 +43,8 @@
           <Name dnOrder="1">drv_usbfs_host.c</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity/driver/usb/usbfs/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">66BAE32071BA56FE81C5D271397DB55C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">66BAE32071BA56FE81C5D271397DB55C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">561EE5C218F518C9D8BD8C862EEFACCA</GeneratedChecksum>
+          <UserChecksum dnOrder="5">561EE5C218F518C9D8BD8C862EEFACCA</UserChecksum>
         </File>
         <File dnOrder="5">
           <Type dnOrder="0">SOURCE</Type>
@@ -252,7 +252,7 @@
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity/system/fs/fat_fs/hardware_access/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/fs/fat_fs/src/hardware_access/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">ACCDF258E795E441E4BEBF1AF2DE3C13</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5DF0A409F14F8CDF9EBA7790D927E7C8</UserChecksum>
+          <UserChecksum dnOrder="5">ACCDF258E795E441E4BEBF1AF2DE3C13</UserChecksum>
         </File>
         <File dnOrder="31">
           <Type dnOrder="0">HEADER</Type>
@@ -291,16 +291,16 @@
           <Name dnOrder="1">drv_usbfs.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity/driver/usb/usbfs</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfs/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1839498D99FAFF43566983D63CD5D926</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1839498D99FAFF43566983D63CD5D926</UserChecksum>
+          <GeneratedChecksum dnOrder="4">6F0D6F59FCBE65208A7E18076207DC69</GeneratedChecksum>
+          <UserChecksum dnOrder="5">6F0D6F59FCBE65208A7E18076207DC69</UserChecksum>
         </File>
         <File dnOrder="36">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_usbfs_local.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity/driver/usb/usbfs/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1C62150F06513893B9198B6CFEDD1F9C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1C62150F06513893B9198B6CFEDD1F9C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">54EE5002C0551B960E253288F60FF998</GeneratedChecksum>
+          <UserChecksum dnOrder="5">54EE5002C0551B960E253288F60FF998</UserChecksum>
         </File>
         <File dnOrder="37">
           <Type dnOrder="0">HEADER</Type>
@@ -324,7 +324,7 @@
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity/system/fs/fat_fs/file_system/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/fs/fat_fs/src/file_system/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">5781E2F52EEF18B611BDA8DFAED6B5C6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">6A1281E275223C608488176A86E82D5E</UserChecksum>
+          <UserChecksum dnOrder="5">5781E2F52EEF18B611BDA8DFAED6B5C6</UserChecksum>
         </File>
         <File dnOrder="40">
           <Type dnOrder="0">HEADER</Type>

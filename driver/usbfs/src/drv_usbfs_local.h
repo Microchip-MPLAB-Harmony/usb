@@ -77,6 +77,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #define DRV_USBFS_POST_DETACH_DELAY 2000
 
+#define DRV_USBFS_TRANSACTION_RETRY_COUNT   30
+
 /**********************************************
  * Constants required for accessing the USB
  * module BDT table entries.
@@ -282,6 +284,9 @@ typedef struct _DRV_USBFS_HOST_PIPE_OBJ
      * being served on the pipe */
     
     uint32_t nakCounter;
+	
+	/* The Retry Count for the Transaction errors */
+    uint32_t retryCount;
 
     /* Pipe endpoint size*/
 
