@@ -68,7 +68,11 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 /*** Application Instance 0 Configuration ***/
 
 /* Macro defines Read Buffer Size used in the Application*/
+#if DRV_USBFSV1_DEVICE_SUPPORT == true
+#define APP_READ_BUFFER_SIZE                                64
+#else
 #define APP_READ_BUFFER_SIZE                                512
+#endif 
 
 /* Macro defines USB internal DMA Buffer criteria*/
 #define APP_MAKE_BUFFER_DMA_READY                           __attribute__((aligned(16)))    
