@@ -307,24 +307,40 @@ void _DRV_USBHS_HOST_ResetStateMachine
                 /* The reset has completed */
                 PLIB_USBHS_ResetDisable(hDriver->usbDrvCommonObj.usbID);
                 
-                /* Though we de assert Reset signaling above but isResetting
-                 * flag is not set to false here. In this way we make sure that
-                 * USB Host layer does not start submitting transfer requests
-                 * before USB module is not completely ready for enumeration.
-                 * The USB module is made to enter Suspend mode after Bus reset
-                 * de assert and is resumed after some time. In Suspend state
-                 * the USB lines are in forced idle state and therefore does not
-                 * detect any noise in line state lines from USB PHY.  By this
-                 * way we negate devices which have quick pull up on D+/D-
-                 * lines. */ 
-                
-                /* Enable Suspend */
-                PLIB_USBHS_SuspendEnable(hDriver->usbDrvCommonObj.usbID);
-                
-                hDriver->usbDrvCommonObj.timerHandle = SYS_TMR_CallbackSingle( 100,(uintptr_t ) hDriver, _DRV_USBHS_HOST_TimerCallback);
-                if(SYS_TMR_HANDLE_INVALID != hDriver->usbDrvCommonObj.timerHandle)
+                if(PLIB_USBHS_FullOrHighSpeedIsConnected(hDriver->usbDrvCommonObj.usbID))
                 {
-                    hDriver->usbDrvHostObj.resetState = DRV_USBHS_HOST_RESET_STATE_WAIT_FOR_SUSPEND_COMPLETE;
+                    hDriver->usbDrvHostObj.isResetting = false;
+                    hDriver->usbDrvHostObj.resetState = DRV_USBHS_HOST_RESET_STATE_NO_RESET;
+                    if(PLIB_USBHS_HighSpeedIsConnected(hDriver->usbDrvCommonObj.usbID))
+                    {
+                        hDriver->usbDrvCommonObj.deviceSpeed = USB_SPEED_HIGH;
+                    }
+                    else
+                    {
+                        hDriver->usbDrvCommonObj.deviceSpeed = USB_SPEED_FULL;
+                    }
+                }
+                else
+                {
+					/* For Low Speed devices, though we de assert Reset signaling above but isResetting
+					 * flag is not set to false here. In this way we make sure that
+					 * USB Host layer does not start submitting transfer requests
+					 * before USB module is not completely ready for enumeration.
+					 * The USB module is made to enter Suspend mode after Bus reset
+					 * de assert and is resumed after some time. In Suspend state
+					 * the USB lines are in forced idle state and therefore does not
+					 * detect any noise in line state lines from USB PHY.  By this
+					 * way we negate devices which have quick pull up on D+/D-
+					 * lines. */ 
+					
+					/* Enable Suspend */
+                    PLIB_USBHS_SuspendEnable(hDriver->usbDrvCommonObj.usbID);
+
+                    hDriver->usbDrvCommonObj.timerHandle = SYS_TMR_CallbackSingle( 100,(uintptr_t ) hDriver, _DRV_USBHS_HOST_TimerCallback);
+                    if(SYS_TMR_HANDLE_INVALID != hDriver->usbDrvCommonObj.timerHandle)
+                    {
+                        hDriver->usbDrvHostObj.resetState = DRV_USBHS_HOST_RESET_STATE_WAIT_FOR_SUSPEND_COMPLETE;
+                    }
                 }
             }
             
@@ -352,27 +368,15 @@ void _DRV_USBHS_HOST_ResetStateMachine
             {
                 hDriver->usbDrvHostObj.timerExpired = false;
                 
+                /* Disbale Resume Siganlling */ 
                 PLIB_USBHS_ResumeDisable(hDriver->usbDrvCommonObj.usbID);
                 hDriver->usbDrvHostObj.resetState = DRV_USBHS_HOST_RESET_STATE_NO_RESET;
 
                 /* Clear the flag */
                 hDriver->usbDrvHostObj.isResetting = false;
 
-                /* Now that reset is complete, we can find out the speed of the
-                 * attached device. */
-                if(PLIB_USBHS_HighSpeedIsConnected(hDriver->usbDrvCommonObj.usbID))
-                {
-                    /* This means the device attached at high speed */
-                    hDriver->usbDrvCommonObj.deviceSpeed = USB_SPEED_HIGH;
-                }
-                else if(PLIB_USBHS_FullOrHighSpeedIsConnected(hDriver->usbDrvCommonObj.usbID))
-                {
-                    hDriver->usbDrvCommonObj.deviceSpeed = USB_SPEED_FULL;
-                }
-                else
-                {
-                    hDriver->usbDrvCommonObj.deviceSpeed = USB_SPEED_LOW;
-                }
+               	/* This means the device attached at Low speed */
+                hDriver->usbDrvCommonObj.deviceSpeed = USB_SPEED_LOW;
             }
             break;
 
