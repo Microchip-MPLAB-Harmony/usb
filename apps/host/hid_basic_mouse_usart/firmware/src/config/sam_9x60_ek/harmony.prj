@@ -51,8 +51,8 @@
           <Name dnOrder="1">drv_usb_uhp_ehci_host.c</Name>
           <LogicalPath dnOrder="2">config/sam_9x60_ek/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">575075B4E902BF355316C01352E7DCC3</GeneratedChecksum>
-          <UserChecksum dnOrder="5">575075B4E902BF355316C01352E7DCC3</UserChecksum>
+          <GeneratedChecksum dnOrder="4">53B4EDA2D42EF0E48DE9CD45983112C6</GeneratedChecksum>
+          <UserChecksum dnOrder="5">53B4EDA2D42EF0E48DE9CD45983112C6</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -83,8 +83,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/sam_9x60_ek/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">748A63CBEB9351BDC4386EBAE9930795</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B6CF051EBF9B9C7D2CADF9C3F6DDD415</UserChecksum>
+          <GeneratedChecksum dnOrder="4">AFFB91F652680C291BDDD233E5360AD7</GeneratedChecksum>
+          <UserChecksum dnOrder="5">AFFB91F652680C291BDDD233E5360AD7</UserChecksum>
         </File>
         <File dnOrder="10">
           <Type dnOrder="0">SOURCE</Type>
@@ -307,8 +307,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_9x60_ek/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">C267C0680600CDD634205E11F2BC72F7</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C267C0680600CDD634205E11F2BC72F7</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4F86EBDDD6BAD7E6F60BDAFAE766A1EB</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4F86EBDDD6BAD7E6F60BDAFAE766A1EB</UserChecksum>
         </File>
         <File dnOrder="38">
           <Type dnOrder="0">HEADER</Type>
@@ -371,8 +371,8 @@
           <Name dnOrder="1">drv_usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/sam_9x60_ek/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">AC352A9B0E4A4B622674870B8738E826</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AC352A9B0E4A4B622674870B8738E826</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C07E5598C11AD6C2F25F92037919A988</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C07E5598C11AD6C2F25F92037919A988</UserChecksum>
         </File>
         <File dnOrder="46">
           <Type dnOrder="0">HEADER</Type>
@@ -387,8 +387,8 @@
           <Name dnOrder="1">drv_usb_uhp_ehci_host.h</Name>
           <LogicalPath dnOrder="2">config/sam_9x60_ek/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9F699713D2F59FBF0FFADA7EB73909A2</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9F699713D2F59FBF0FFADA7EB73909A2</UserChecksum>
+          <GeneratedChecksum dnOrder="4">EC800520085E8BBB7DDBA26673F26A3B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">EC800520085E8BBB7DDBA26673F26A3B</UserChecksum>
         </File>
         <File dnOrder="48">
           <Type dnOrder="0">HEADER</Type>
@@ -403,8 +403,8 @@
           <Name dnOrder="1">drv_usb_uhp_ohci_host.h</Name>
           <LogicalPath dnOrder="2">config/sam_9x60_ek/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8A5D7C91697B8B099BA1BBDFADE32E02</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8A5D7C91697B8B099BA1BBDFADE32E02</UserChecksum>
+          <GeneratedChecksum dnOrder="4">B712D3427F1146FC7C7AE676C248F0A7</GeneratedChecksum>
+          <UserChecksum dnOrder="5">B712D3427F1146FC7C7AE676C248F0A7</UserChecksum>
         </File>
         <File dnOrder="50">
           <Type dnOrder="0">HEADER</Type>
@@ -419,8 +419,8 @@
           <Name dnOrder="1">drv_usb_uhp_variant_mapping.h</Name>
           <LogicalPath dnOrder="2">config/sam_9x60_ek/driver/usb/uhp/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5D54A360EBE8B9270F3E2D37C2B3774C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5D54A360EBE8B9270F3E2D37C2B3774C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">B71978CEB3F5F65C21ECB1B6FB1C299A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">B71978CEB3F5F65C21ECB1B6FB1C299A</UserChecksum>
         </File>
         <File dnOrder="52">
           <Type dnOrder="0">HEADER</Type>
@@ -931,8 +931,8 @@
           <Name dnOrder="1">usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/sam_9x60_ek/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">EC508303014905CAA66CE126A0FE7297</GeneratedChecksum>
-          <UserChecksum dnOrder="5">EC508303014905CAA66CE126A0FE7297</UserChecksum>
+          <GeneratedChecksum dnOrder="4">558E9741B623822D41730029B1C660B3</GeneratedChecksum>
+          <UserChecksum dnOrder="5">558E9741B623822D41730029B1C660B3</UserChecksum>
         </File>
         <File dnOrder="116">
           <Type dnOrder="0">HEADER</Type>

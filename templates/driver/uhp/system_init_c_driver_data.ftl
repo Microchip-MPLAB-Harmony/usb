@@ -53,20 +53,32 @@ void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
     if (enable == true)
     {
         /* Enable the VBUS */
+<#if core.DeviceFamily == "SAMA5D2">
         VBUS_AH_PowerEnable();
+<#elseif core.DeviceFamily == "SAM9X60">
+        VBUS_AH_PD14_PowerEnable();
+        VBUS_AH_PD15_PowerEnable();
+        VBUS_AH_PD16_PowerEnable();
+</#if>
     }
     else
     {
         /* Disable the VBUS */
+<#if core.DeviceFamily == "SAMA5D2">
         VBUS_AH_PowerDisable();
+<#elseif core.DeviceFamily == "SAM9X60">
+        VBUS_AH_PD14_PowerDisable();
+        VBUS_AH_PD15_PowerDisable();
+        VBUS_AH_PD16_PowerDisable();
+</#if>
     }
 }
 
 
 DRV_USB_UHP_INIT drvUSBInit =
 {
-<#if core.DeviceFamily == "SAMA5D2">
 	/* Interrupt Source for USB module */
+<#if core.DeviceFamily == "SAMA5D2">
     .interruptSource = (INT_SOURCE)41,
 <#elseif core.DeviceFamily == "SAM9X60">
 	.interruptSource = (INT_SOURCE)ID_UHPHS_EHCI,

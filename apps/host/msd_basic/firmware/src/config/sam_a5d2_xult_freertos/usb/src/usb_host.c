@@ -6682,6 +6682,7 @@ USB_HOST_RESULT USB_HOST_DeviceConfigurationDescriptorGet
                             }
                             else
                             {
+								
                                 result = USB_HOST_RESULT_SUCCESS;
                             }
 

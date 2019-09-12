@@ -157,16 +157,16 @@ void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
     if (enable == true)
     {
         /* Enable the VBUS */
-        VBUS_AH_PD14_PowerEnable(); /* Do not overwrite this line with MHC */
-        VBUS_AH_PD15_PowerEnable(); /* Do not overwrite this line with MHC */
-        VBUS_AH_PD16_PowerEnable(); /* Do not overwrite this line with MHC */
+        VBUS_AH_PD14_PowerEnable();
+        VBUS_AH_PD15_PowerEnable();
+        VBUS_AH_PD16_PowerEnable();
     }
     else
     {
         /* Disable the VBUS */
-        VBUS_AH_PD14_PowerDisable(); /* Do not overwrite this line with MHC */
-        VBUS_AH_PD15_PowerDisable(); /* Do not overwrite this line with MHC */
-        VBUS_AH_PD16_PowerDisable(); /* Do not overwrite this line with MHC */
+        VBUS_AH_PD14_PowerDisable();
+        VBUS_AH_PD15_PowerDisable();
+        VBUS_AH_PD16_PowerDisable();
     }
 }
 
@@ -174,7 +174,7 @@ void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
 DRV_USB_UHP_INIT drvUSBInit =
 {
 	/* Interrupt Source for USB module */
-    .interruptSource = (INT_SOURCE)ID_UHPHS_EHCI, /* Do not overwrite this line with MHC */
+	.interruptSource = (INT_SOURCE)ID_UHPHS_EHCI,
 	
 	/* Enable High Speed Operation */
     .operationSpeed = USB_SPEED_HIGH,
@@ -244,12 +244,12 @@ void SYS_Initialize ( void* data )
     /* Disable WDT   */
     WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk;
 
+    DBGU_Initialize();
+
  
     TC0_CH0_TimerInitialize(); 
      
     
-    DBGU_Initialize();
-
 
     sysObj.drvUsart0 = DRV_USART_Initialize(DRV_USART_INDEX_0, (SYS_MODULE_INIT *)&drvUsart0InitData);
 
