@@ -187,8 +187,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/pic32mk_gp_db/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9607709B76DCEB0F34F83D694C371A06</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9607709B76DCEB0F34F83D694C371A06</UserChecksum>
+          <GeneratedChecksum dnOrder="4">32F5DC555C98A7E0974610881A703D78</GeneratedChecksum>
+          <UserChecksum dnOrder="5">32F5DC555C98A7E0974610881A703D78</UserChecksum>
         </File>
         <File dnOrder="23">
           <Type dnOrder="0">HEADER</Type>

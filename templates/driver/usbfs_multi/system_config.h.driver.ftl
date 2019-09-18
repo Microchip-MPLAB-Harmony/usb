@@ -57,9 +57,18 @@
 <#else>
 /* Disable Device Support */
 #define DRV_USBFS_DEVICE_SUPPORT                          false
+<#assign drv_usb_endpoint_number = 0>
+</#if>
+<#if (usb_device_0.CONFIG_USB_DEVICE_ENDPOINTS_NUMBER)?has_content == true>
+<#assign drv_usb_endpoint_number = usb_device_0.CONFIG_USB_DEVICE_ENDPOINTS_NUMBER>
+</#if>
+<#if (usb_device_1.CONFIG_USB_DEVICE_ENDPOINTS_NUMBER)?has_content == true>
+<#if usb_device_1.CONFIG_USB_DEVICE_ENDPOINTS_NUMBER gt drv_usb_endpoint_number>
+<#assign drv_usb_endpoint_number = usb_device_1.CONFIG_USB_DEVICE_ENDPOINTS_NUMBER>
+</#if>
 </#if>
 
-#define DRV_USBFS_ENDPOINTS_NUMBER                        5
+#define DRV_USBFS_ENDPOINTS_NUMBER                        ${drv_usb_endpoint_number + 1}
 
 <#if DRV_USBFS_MULTI_HOST_SUPPORT == true>
 /* Enable Host Support */

@@ -121,23 +121,19 @@ def instantiateComponent(usbPeripheralComponentCommon):
 	usbDriverSystemConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION")
 	usbDriverSystemConfigFile.setSourcePath(sourcePath + "system_config.h.driver.ftl")
 	usbDriverSystemConfigFile.setMarkup(True)
-	
-	#usbDriverSystemInitDataFile = usbPeripheralComponentCommon.createFileSymbol(None, None)
-	#usbDriverSystemInitDataFile.setType("STRING")
-	#usbDriverSystemInitDataFile.setOutputName("core.LIST_SYSTEM_INIT_C_LIBRARY_INITIALIZATION_DATA")
-	#usbDriverSystemInitDataFile.setSourcePath( sourcePath +"system_init_c_driver_data.ftl")
-	#usbDriverSystemInitDataFile.setMarkup(True)
-	
+	usbDriverSystemConfigFile.setOverwrite(True)
 	
 	usbPeripheralHostSupport = usbPeripheralComponentCommon.createBooleanSymbol("DRV_USBFS_MULTI_HOST_SUPPORT", None)
 	usbPeripheralHostSupport.setLabel("HOST")
 	usbPeripheralHostSupport.setDefaultValue(False)
-	usbPeripheralHostSupport.setVisible(True)
+	usbPeripheralHostSupport.setVisible(False)
+	usbPeripheralHostSupport.setReadOnly(True)
 	
 	usbPeripheralDeviceSupport= usbPeripheralComponentCommon.createBooleanSymbol("DRV_USBFS_MULTI_DEVICE_SUPPORT", None)
 	usbPeripheralDeviceSupport.setLabel("DEVICE")
 	usbPeripheralDeviceSupport.setDefaultValue(True)
 	usbPeripheralDeviceSupport.setVisible(True)
+	usbPeripheralDeviceSupport.setReadOnly(True)
 	
 	drvUsbHsV1HostSourceFile = usbPeripheralComponentCommon.createFileSymbol("DRV_USBFS_COMMON_C_SOURCE", None)
 	drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "usbfs/src/drv_usbfs.c.ftl")

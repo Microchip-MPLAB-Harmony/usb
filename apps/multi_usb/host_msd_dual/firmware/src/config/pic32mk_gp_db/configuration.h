@@ -154,7 +154,7 @@ extern "C" {
 /* Disable Device Support */
 #define DRV_USBFS_DEVICE_SUPPORT                          false
 
-#define DRV_USBFS_ENDPOINTS_NUMBER                        5
+#define DRV_USBFS_ENDPOINTS_NUMBER                        1
 
 /* Enable Host Support */
 #define DRV_USBFS_HOST_SUPPORT                            true
