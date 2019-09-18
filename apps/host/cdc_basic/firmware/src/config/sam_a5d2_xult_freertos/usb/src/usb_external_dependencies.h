@@ -45,7 +45,6 @@
 #include <string.h>
 #include "system/system_common.h"
 #include "configuration.h"
-#include "definitions.h"
 #include "system/system_module.h"
 
 #if defined (USB_HOST_DEVICES_NUMBER) &&  (USB_HOST_DEVICES_NUMBER > 0)
