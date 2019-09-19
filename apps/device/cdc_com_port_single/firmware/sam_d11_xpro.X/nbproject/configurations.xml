@@ -436,7 +436,7 @@
         <property key="memories.programmemory.ranges" value="0-3fff"/>
         <property key="poweroptions.powerenable" value="false"/>
         <property key="programmerToGoFilePath"
-                  value="C:/v3/usb/apps/device/cdc_com_port_single/firmware/sam_d11_xpro.X/debug/sam_d11_xpro/sam_d11_xpro_ptg"/>
+                  value="C:/microchip/harmony/Repo/H3GitHub/usb/apps/device/cdc_com_port_single/firmware/sam_d11_xpro.X/debug/sam_d11_xpro/sam_d11_xpro_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"

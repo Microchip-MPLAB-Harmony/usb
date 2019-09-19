@@ -189,13 +189,6 @@ void _DRV_USB_UDPHS_DEVICE_Initialize
 		UDPHS_CLRINT_MICRO_SOF_Msk |
 		UDPHS_CLRINT_DET_SUSPD_Msk;
 
-	uint32_t uckr = CKGR_UCKR_UPLLEN_Msk | CKGR_UCKR_UPLLCOUNT(0x3);
-	/* enable the 480MHz UTMI PLL  */
-	PMC_REGS->CKGR_UCKR = uckr;
-
-	/* wait until UPLL is locked */
-	while (!(PMC_REGS->PMC_SR & PMC_SR_LOCKU_Msk));
-
     /* In device mode endpoint 0 FIFO size is always 64.
      * So any FIFO allocation should start from 64. The
      * actual value stored in this variable is 64/8 */
@@ -714,11 +707,6 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_EndpointEnable
                 (
                     endpointObj, endpointSize, endpointType, USB_DATA_DIRECTION_DEVICE_TO_HOST
                 );
-            }
-            else
-            {
-                endpoint++;
-                endpoint -= 1;
             }
 
             /* Endpoint Size */

@@ -106,6 +106,9 @@ extern "C" {
 /* Maximum USB driver instances */
 #define DRV_USB_UDPHS_INSTANCES_NUMBER                        1
 
+#ifndef USB_ALIGN
+#define USB_ALIGN __ALIGNED(4096)
+#endif 
 
 /* Number of Endpoints used */
 #define DRV_USB_UDPHS_ENDPOINTS_NUMBER                    4

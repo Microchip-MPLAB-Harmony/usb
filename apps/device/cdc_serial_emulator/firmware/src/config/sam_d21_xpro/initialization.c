@@ -227,7 +227,7 @@ const DRV_USBFSV1_INIT drvUSBInit =
 
 void SYS_Initialize ( void* data )
 {
-    NVMCTRL_Initialize( );
+    NVMCTRL_REGS->NVMCTRL_CTRLB = NVMCTRL_CTRLB_RWS(3);
 
   
     PORT_Initialize();
@@ -236,6 +236,8 @@ void SYS_Initialize ( void* data )
 
 
     SERCOM3_USART_Initialize();
+
+    NVMCTRL_Initialize( );
 
     EVSYS_Initialize();
 

@@ -98,6 +98,9 @@ extern "C" {
 /* Maximum USB driver instances */
 #define DRV_USB_UDPHS_INSTANCES_NUMBER                        1
 
+#ifndef USB_ALIGN
+#define USB_ALIGN __ALIGNED(4096)
+#endif 
 
 /* Maximum instances of HID function driver */
 #define USB_DEVICE_HID_INSTANCES_NUMBER     1 

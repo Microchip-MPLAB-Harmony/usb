@@ -41,7 +41,6 @@
 #include "device.h"
 #include "peripheral/cmcc/plib_cmcc.h"
 
-
 void CMCC_Disable (void )
 {
     CMCC_REGS->CMCC_CTRL &=(~CMCC_CTRL_CEN_Msk);
@@ -51,7 +50,6 @@ void CMCC_Disable (void )
         /*Wait for the operation to complete*/
     }
 }
-
 
 void CMCC_EnableICache (void )
 {
@@ -106,3 +104,4 @@ void CMCC_InvalidateAll (void )
     }
     CMCC_REGS->CMCC_MAINT0 = CMCC_MAINT0_INVALL_Msk;
 }
+
