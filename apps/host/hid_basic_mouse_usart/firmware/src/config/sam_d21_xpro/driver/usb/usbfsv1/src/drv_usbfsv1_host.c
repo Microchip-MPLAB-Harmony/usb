@@ -91,6 +91,7 @@ DRV_USB_HOST_INTERFACE gDrvUSBFSV1HostInterface =
     .hostPipeSetup = DRV_USBFSV1_HOST_PipeSetup,
     .hostPipeClose = DRV_USBFSV1_HOST_PipeClose,
     .hostEventsDisable = DRV_USBFSV1_HOST_EventsDisable,
+	.endpointToggleClear = DRV_USBFSV1_HOST_EndpointToggleClear,
     .hostEventsEnable = DRV_USBFSV1_HOST_EventsEnable,
     .rootHubInterface.rootHubPortInterface.hubPortReset = DRV_USBFSV1_HOST_ROOT_HUB_PortReset,
     .rootHubInterface.rootHubPortInterface.hubPortSpeedGet = DRV_USBFSV1_HOST_ROOT_HUB_PortSpeedGet,
@@ -2612,3 +2613,63 @@ USB_SPEED DRV_USBFSV1_HOST_ROOT_HUB_PortSpeedGet(DRV_HANDLE handle, uint8_t port
     return(speed);
 }
 
+// ****************************************************************************
+/* Function:
+    void DRV_USBFSV1_HOST_EndpointToggleClear
+    (
+        DRV_HANDLE client,
+        USB_ENDPOINT endpointAndDirection
+    )
+
+  Summary:
+    Facilitates in resetting of endpoint data toggle to 0 for Non Control
+    endpoints.
+
+  Description:
+    Facilitates in resetting of endpoint data toggle to 0 for Non Control
+    endpoints.
+
+  Remarks:
+    Refer to drv_usbfsv1.h for usage information.
+*/
+
+void DRV_USBFSV1_HOST_EndpointToggleClear
+(
+    DRV_HANDLE client,
+    USB_ENDPOINT endpointAndDirection
+)
+{
+    /* Start of local variables */
+    DRV_USBFSV1_OBJ * hDriver;
+ 
+    uint8_t pipeCount = 0;
+    hDriver = (DRV_USBFSV1_OBJ *)client;
+   
+    /* End of local variables */
+
+    if((client == DRV_HANDLE_INVALID) || (((DRV_USBFSV1_OBJ *)client) == NULL))
+    {
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Invalid client handle");
+    }
+    else
+    {
+        for(pipeCount = 0; pipeCount < DRV_USBFSV1_HOST_PIPES_NUMBER; pipeCount++)
+        {
+            /* Check for free pipe object */
+            if((client == gDrvUSBHostPipeObj[pipeCount].hClient) && (true == gDrvUSBHostPipeObj[pipeCount].inUse) &&
+                    (gDrvUSBHostPipeObj[pipeCount].endpointAndDirection == endpointAndDirection))
+                
+            {
+                /* Found the pipe for this endpoint and direction */
+                /* Reset DATA Toggle */
+                hDriver->usbID->HOST.HOST_PIPE[pipeCount].USB_PSTATUSCLR = USB_HOST_PSTATUSCLR_DTGL_Msk;
+               
+                break;
+            }
+        }
+        if(DRV_USBFSV1_HOST_PIPES_NUMBER == pipeCount)
+        {
+            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "Invalid endpoint");
+        }
+    }
+} /* End of DRV_USBFSV1_HOST_EndpointToggleClear() */
