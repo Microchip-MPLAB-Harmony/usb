@@ -2630,7 +2630,7 @@ USB_SPEED DRV_USBFSV1_HOST_ROOT_HUB_PortSpeedGet(DRV_HANDLE handle, uint8_t port
     endpoints.
 
   Remarks:
-    Refer to drv_usbfs.h for usage information.
+    Refer to drv_usbfsv1.h for usage information.
 */
 
 void DRV_USBFSV1_HOST_EndpointToggleClear
@@ -2672,4 +2672,4 @@ void DRV_USBFSV1_HOST_EndpointToggleClear
             SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "Invalid endpoint");
         }
     }
-} /* End of DRV_USBFS_HOST_EndpointToggleClear() */
+} /* End of DRV_USBFSV1_HOST_EndpointToggleClear() */
