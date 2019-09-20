@@ -316,6 +316,9 @@ typedef struct
 
     /* This is a pointer to the host pipe close function */
     void (*hostPipeClose)(DRV_USB_HOST_PIPE_HANDLE pipeHandle);
+	
+	 /* This is a pointer to the host endpoint data toggle clear function */
+    void (*endpointToggleClear)(DRV_HANDLE client,USB_ENDPOINT endpointAndDirection);
 
     /* This is a pointer to the host Root Hub functions */
     DRV_USB_ROOT_HUB_INTERFACE rootHubInterface;

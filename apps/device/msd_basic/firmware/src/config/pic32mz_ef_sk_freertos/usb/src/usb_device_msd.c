@@ -54,7 +54,7 @@
  *************************************/
 static USB_DEVICE_MSD_INSTANCE gUSBDeviceMSDInstance [USB_DEVICE_INSTANCES_NUMBER];
 
-static SCSI_SENSE_DATA gUSBDeviceMSDSenseData[USB_DEVICE_MSD_LUNS_NUMBER] CACHE_ALIGN;
+static SCSI_SENSE_DATA gUSBDeviceMSDSenseData[USB_DEVICE_MSD_LUNS_NUMBER] USB_ALIGN;
 
 /***************************************
  * USB device MSD init objects.

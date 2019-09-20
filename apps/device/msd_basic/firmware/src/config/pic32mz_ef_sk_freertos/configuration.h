@@ -153,6 +153,9 @@ extern "C" {
 
 
 
+/* Alignment for buffers that are submitted to USB Driver*/ 
+#define USB_ALIGN  CACHE_ALIGN
+
 /* Maximum instances of MSD function driver */
 #define USB_DEVICE_MSD_INSTANCES_NUMBER     1 
 

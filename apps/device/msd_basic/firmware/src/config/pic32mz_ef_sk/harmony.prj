@@ -99,8 +99,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">91B42564B283475C0D7248BBB6F49C42</GeneratedChecksum>
-          <UserChecksum dnOrder="5">91B42564B283475C0D7248BBB6F49C42</UserChecksum>
+          <GeneratedChecksum dnOrder="4">793483C2A1B8AC180BF233F8EC8B0A96</GeneratedChecksum>
+          <UserChecksum dnOrder="5">793483C2A1B8AC180BF233F8EC8B0A96</UserChecksum>
         </File>
         <File dnOrder="12">
           <Type dnOrder="0">SOURCE</Type>
@@ -131,8 +131,8 @@
           <Name dnOrder="1">plib_nvm.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/peripheral/nvm/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/nvm/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">86983E5037598AB3B7DC03C947CE1249</GeneratedChecksum>
-          <UserChecksum dnOrder="5">86983E5037598AB3B7DC03C947CE1249</UserChecksum>
+          <GeneratedChecksum dnOrder="4">3353BF9FF553C01289CF39BC649527C9</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3353BF9FF553C01289CF39BC649527C9</UserChecksum>
         </File>
         <File dnOrder="16">
           <Type dnOrder="0">SOURCE</Type>
@@ -171,16 +171,16 @@
           <Name dnOrder="1">usb_device_init_data.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">AAF97CEAB49A35C9BA9BB253E14FBE95</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AAF97CEAB49A35C9BA9BB253E14FBE95</UserChecksum>
+          <GeneratedChecksum dnOrder="4">D83A3F7F590E69C341A77A2F4EA1D55C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">D83A3F7F590E69C341A77A2F4EA1D55C</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">usb_device_msd.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8E0799E1554E4233F3498472FDA09149</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8E0799E1554E4233F3498472FDA09149</UserChecksum>
+          <GeneratedChecksum dnOrder="4">B438EA4435CC3B6D99AACB8F7050ECE8</GeneratedChecksum>
+          <UserChecksum dnOrder="5">B438EA4435CC3B6D99AACB8F7050ECE8</UserChecksum>
         </File>
         <File dnOrder="22">
           <Type dnOrder="0">SOURCE</Type>
@@ -211,8 +211,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0D9DA220D87A5477D2AB3995471A7FC3</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0D9DA220D87A5477D2AB3995471A7FC3</UserChecksum>
+          <GeneratedChecksum dnOrder="4">82E04212A2924BADD17DB012BA30EE5F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">82E04212A2924BADD17DB012BA30EE5F</UserChecksum>
         </File>
         <File dnOrder="26">
           <Type dnOrder="0">HEADER</Type>
@@ -283,24 +283,24 @@
           <Name dnOrder="1">drv_usb.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">CFBD2D9BDB4D18C841A9A2F4E9870E0C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">CFBD2D9BDB4D18C841A9A2F4E9870E0C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">38148410A4C123F6D3C8D2A5684C2D2D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">38148410A4C123F6D3C8D2A5684C2D2D</UserChecksum>
         </File>
         <File dnOrder="35">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">AC352A9B0E4A4B622674870B8738E826</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AC352A9B0E4A4B622674870B8738E826</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C07E5598C11AD6C2F25F92037919A988</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C07E5598C11AD6C2F25F92037919A988</UserChecksum>
         </File>
         <File dnOrder="36">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_usbhs.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/driver/usb/usbhs</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhs/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">06C61DD08D7A60EF3EEBF4168A957B44</GeneratedChecksum>
-          <UserChecksum dnOrder="5">06C61DD08D7A60EF3EEBF4168A957B44</UserChecksum>
+          <GeneratedChecksum dnOrder="4">28999752D72713FD357EC84F99871D93</GeneratedChecksum>
+          <UserChecksum dnOrder="5">28999752D72713FD357EC84F99871D93</UserChecksum>
         </File>
         <File dnOrder="37">
           <Type dnOrder="0">HEADER</Type>
@@ -355,8 +355,8 @@
           <Name dnOrder="1">plib_coretimer.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/peripheral/coretimer/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/coretimer/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B56E73929AA8C9899F0BA761F7053A87</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B56E73929AA8C9899F0BA761F7053A87</UserChecksum>
+          <GeneratedChecksum dnOrder="4">77E2C83A700CD1F724CFD90ED3AA2B71</GeneratedChecksum>
+          <UserChecksum dnOrder="5">77E2C83A700CD1F724CFD90ED3AA2B71</UserChecksum>
         </File>
         <File dnOrder="44">
           <Type dnOrder="0">HEADER</Type>
@@ -379,8 +379,8 @@
           <Name dnOrder="1">plib_nvm.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/peripheral/nvm/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/nvm/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">AF906E8AE940B14FDD036A1D7FF58A53</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AF906E8AE940B14FDD036A1D7FF58A53</UserChecksum>
+          <GeneratedChecksum dnOrder="4">A9F454F7DCC362E6C24EDAE86127E945</GeneratedChecksum>
+          <UserChecksum dnOrder="5">A9F454F7DCC362E6C24EDAE86127E945</UserChecksum>
         </File>
         <File dnOrder="47">
           <Type dnOrder="0">HEADER</Type>
@@ -555,8 +555,8 @@
           <Name dnOrder="1">usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">EC508303014905CAA66CE126A0FE7297</GeneratedChecksum>
-          <UserChecksum dnOrder="5">EC508303014905CAA66CE126A0FE7297</UserChecksum>
+          <GeneratedChecksum dnOrder="4">5AAF69767C8CBB1A9952695AAF110C43</GeneratedChecksum>
+          <UserChecksum dnOrder="5">5AAF69767C8CBB1A9952695AAF110C43</UserChecksum>
         </File>
         <File dnOrder="69">
           <Type dnOrder="0">HEADER</Type>
@@ -795,8 +795,8 @@
           <Name dnOrder="1">user.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">4B3C3EF8A318908A22B78500515C3288</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4B3C3EF8A318908A22B78500515C3288</UserChecksum>
+          <GeneratedChecksum dnOrder="4"/>
+          <UserChecksum dnOrder="5"/>
         </File>
       </Files>
       <Settings dnOrder="1">
@@ -808,7 +808,7 @@
     </Manifest>
     <Settings dnOrder="4">
       <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.5.1"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ_EF_DFP\1.0.29\atdf\PIC32MZ2048EFH144.atdf"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ_EF_DFP\1.0.39\atdf\PIC32MZ2048EFH144.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
