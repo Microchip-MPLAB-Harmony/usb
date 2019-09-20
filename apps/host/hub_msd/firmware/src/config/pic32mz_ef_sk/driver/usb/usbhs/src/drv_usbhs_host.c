@@ -62,6 +62,7 @@ DRV_USB_HOST_INTERFACE gDrvUSBHSHostInterface =
     .hostIRPCancel = DRV_USBHS_HOST_IRPCancel,
     .hostPipeSetup = DRV_USBHS_HOST_PipeSetup,
     .hostPipeClose = DRV_USBHS_HOST_PipeClose,
+	.endpointToggleClear = DRV_USBHS_HOST_EndpointToggleClear,
     .hostEventsDisable = DRV_USBHS_HOST_EventsDisable,
     .hostEventsEnable = DRV_USBHS_HOST_EventsEnable,
     .rootHubInterface.rootHubPortInterface.hubPortReset = DRV_USBHS_HOST_ROOT_HUB_PortReset,
@@ -306,24 +307,40 @@ void _DRV_USBHS_HOST_ResetStateMachine
                 /* The reset has completed */
                 PLIB_USBHS_ResetDisable(hDriver->usbDrvCommonObj.usbID);
                 
-                /* Though we de assert Reset signaling above but isResetting
-                 * flag is not set to false here. In this way we make sure that
-                 * USB Host layer does not start submitting transfer requests
-                 * before USB module is not completely ready for enumeration.
-                 * The USB module is made to enter Suspend mode after Bus reset
-                 * de assert and is resumed after some time. In Suspend state
-                 * the USB lines are in forced idle state and therefore does not
-                 * detect any noise in line state lines from USB PHY.  By this
-                 * way we negate devices which have quick pull up on D+/D-
-                 * lines. */ 
-                
-                /* Enable Suspend */
-                PLIB_USBHS_SuspendEnable(hDriver->usbDrvCommonObj.usbID);
-                
-                hDriver->usbDrvCommonObj.timerHandle = SYS_TMR_CallbackSingle( 100,(uintptr_t ) hDriver, _DRV_USBHS_HOST_TimerCallback);
-                if(SYS_TMR_HANDLE_INVALID != hDriver->usbDrvCommonObj.timerHandle)
+                if(PLIB_USBHS_FullOrHighSpeedIsConnected(hDriver->usbDrvCommonObj.usbID))
                 {
-                    hDriver->usbDrvHostObj.resetState = DRV_USBHS_HOST_RESET_STATE_WAIT_FOR_SUSPEND_COMPLETE;
+                    hDriver->usbDrvHostObj.isResetting = false;
+                    hDriver->usbDrvHostObj.resetState = DRV_USBHS_HOST_RESET_STATE_NO_RESET;
+                    if(PLIB_USBHS_HighSpeedIsConnected(hDriver->usbDrvCommonObj.usbID))
+                    {
+                        hDriver->usbDrvCommonObj.deviceSpeed = USB_SPEED_HIGH;
+                    }
+                    else
+                    {
+                        hDriver->usbDrvCommonObj.deviceSpeed = USB_SPEED_FULL;
+                    }
+                }
+                else
+                {
+					/* For Low Speed devices, though we de assert Reset signaling above but isResetting
+					 * flag is not set to false here. In this way we make sure that
+					 * USB Host layer does not start submitting transfer requests
+					 * before USB module is not completely ready for enumeration.
+					 * The USB module is made to enter Suspend mode after Bus reset
+					 * de assert and is resumed after some time. In Suspend state
+					 * the USB lines are in forced idle state and therefore does not
+					 * detect any noise in line state lines from USB PHY.  By this
+					 * way we negate devices which have quick pull up on D+/D-
+					 * lines. */ 
+					
+					/* Enable Suspend */
+                    PLIB_USBHS_SuspendEnable(hDriver->usbDrvCommonObj.usbID);
+
+                    hDriver->usbDrvCommonObj.timerHandle = SYS_TMR_CallbackSingle( 100,(uintptr_t ) hDriver, _DRV_USBHS_HOST_TimerCallback);
+                    if(SYS_TMR_HANDLE_INVALID != hDriver->usbDrvCommonObj.timerHandle)
+                    {
+                        hDriver->usbDrvHostObj.resetState = DRV_USBHS_HOST_RESET_STATE_WAIT_FOR_SUSPEND_COMPLETE;
+                    }
                 }
             }
             
@@ -351,27 +368,15 @@ void _DRV_USBHS_HOST_ResetStateMachine
             {
                 hDriver->usbDrvHostObj.timerExpired = false;
                 
+                /* Disbale Resume Siganlling */ 
                 PLIB_USBHS_ResumeDisable(hDriver->usbDrvCommonObj.usbID);
                 hDriver->usbDrvHostObj.resetState = DRV_USBHS_HOST_RESET_STATE_NO_RESET;
 
                 /* Clear the flag */
                 hDriver->usbDrvHostObj.isResetting = false;
 
-                /* Now that reset is complete, we can find out the speed of the
-                 * attached device. */
-                if(PLIB_USBHS_HighSpeedIsConnected(hDriver->usbDrvCommonObj.usbID))
-                {
-                    /* This means the device attached at high speed */
-                    hDriver->usbDrvCommonObj.deviceSpeed = USB_SPEED_HIGH;
-                }
-                else if(PLIB_USBHS_FullOrHighSpeedIsConnected(hDriver->usbDrvCommonObj.usbID))
-                {
-                    hDriver->usbDrvCommonObj.deviceSpeed = USB_SPEED_FULL;
-                }
-                else
-                {
-                    hDriver->usbDrvCommonObj.deviceSpeed = USB_SPEED_LOW;
-                }
+               	/* This means the device attached at Low speed */
+                hDriver->usbDrvCommonObj.deviceSpeed = USB_SPEED_LOW;
             }
             break;
 
@@ -3248,4 +3253,88 @@ USB_SPEED DRV_USBHS_HOST_ROOT_HUB_PortSpeedGet
     return (speed);
 
 } /* End of DRV_USBHS_HOST_ROOT_HUB_PortSpeedGet() */
+
+// ****************************************************************************
+/* Function:
+    void DRV_USBHS_HOST_EndpointToggleClear
+    (
+        DRV_HANDLE client,
+        USB_ENDPOINT endpointAndDirection
+    )
+
+  Summary:
+    Facilitates in resetting of endpoint data toggle to 0 for Non Control
+    endpoints.
+
+  Description:
+    Facilitates in resetting of endpoint data toggle to 0 for Non Control
+    endpoints.
+
+  Remarks:
+    Refer to drv_usbhs.h for usage information.
+*/
+
+void DRV_USBHS_HOST_EndpointToggleClear
+(
+    DRV_HANDLE client,
+    USB_ENDPOINT endpointAndDirection
+)
+{
+    /* Start of local variables */
+    DRV_USBHS_OBJ * hDriver = NULL;
+    USBHS_MODULE_ID usbID = USBHS_ID_0;
+    uint8_t epIter = 0;
+    USB_DATA_DIRECTION  direction = USB_DATA_DIRECTION_DEVICE_TO_HOST;
+    /* End of local variables */
+
+    if((client == DRV_HANDLE_INVALID) || (((DRV_USBHS_OBJ *)client) == NULL))
+    {
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "Invalid client");
+    }
+    else
+    {
+        hDriver = ((DRV_USBHS_CLIENT_OBJ *)client)->hDriver;
+        usbID = hDriver->usbDrvCommonObj.usbID;
+        
+        direction = (endpointAndDirection & 0x80) >> 7;
+        
+        /* Now map the device endpoint to host endpoint. This is required to
+         * jump to the appropriate entry in the endpoint table */
+        for(epIter = 1; epIter < DRV_USBHS_HOST_MAXIMUM_ENDPOINTS_NUMBER; epIter++)
+        {
+            if(true == hDriver->usbDrvHostObj.hostEndpointTable[epIter].endpoints[direction].inUse)
+            {
+                /* Please not that for a single non control endpoint there cannot
+                 * be multiple pipes. Hence there should be only 1 pipe object
+                 * that can be linked to this "endpointAndDirection". */
+                if((hDriver->usbDrvHostObj.hostEndpointTable[epIter].endpoints[direction].pipe)->endpointAndDirection
+                        == endpointAndDirection)
+                {
+                    /* Got the entry in the host endpoint table. We can exit
+                     * from this loop now for further processing */
+                    break;
+                }
+            }
+        }
+        
+        if(DRV_USBHS_HOST_MAXIMUM_ENDPOINTS_NUMBER != epIter)
+        {
+            if(USB_DATA_DIRECTION_HOST_TO_DEVICE == direction)
+            {
+                /* Clear the Data Toggle for TX Endpoint */
+                PLIB_USBHS_HostTxEndpointDataToggleClear(usbID, epIter);
+            }
+            else
+            {
+                /* Clear the Data Toggle for RX Endpoint */
+                PLIB_USBHS_HostRxEndpointDataToggleClear(usbID, epIter);
+            }
+        }
+        else
+        {
+            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "Device endpoint not found");
+        }
+        
+    }
+} /* end of DRV_USBHS_HOST_EndpointToggleClear() */
 

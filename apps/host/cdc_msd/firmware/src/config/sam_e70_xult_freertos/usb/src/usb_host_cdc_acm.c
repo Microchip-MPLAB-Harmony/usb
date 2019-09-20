@@ -538,7 +538,7 @@ USB_HOST_CDC_RESULT USB_HOST_CDC_ACM_ControlLineStateSet
                         setupPacket = &cdcInstance->setupPacket;
                         setupPacket->bmRequestType = 0x21;
                         setupPacket->bRequest = USB_CDC_REQUEST_SET_CONTROL_LINE_STATE;
-                        setupPacket->wValue =  (( *(uint8_t *) controlLineState ) << 8 ); ;
+                        setupPacket->wValue =  (( *(uint8_t *) controlLineState ));
                         setupPacket->wIndex = cdcInstance->commInterfaceNumber;
                         setupPacket->wLength = 0;
 

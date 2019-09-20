@@ -129,6 +129,9 @@ extern "C" {
 /* Reset duration in milli Seconds */ 
 #define DRV_USBHS_HOST_RESET_DURATION                     100
 
+/* Alignment for buffers that are submitted to USB Driver*/ 
+#define USB_ALIGN  CACHE_ALIGN
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: USB Host Layer Configuration

@@ -65,6 +65,7 @@ DRV_USB_HOST_INTERFACE gDrvUSBHSV1HostInterface =
     .hostPipeSetup = DRV_USBHSV1_HOST_PipeSetup,
     .hostPipeClose = DRV_USBHSV1_HOST_PipeClose,
     .hostEventsDisable = DRV_USBHSV1_HOST_EventsDisable,
+	.endpointToggleClear = DRV_USBHSV1_HOST_EndpointToggleClear,
     .hostEventsEnable = DRV_USBHSV1_HOST_EventsEnable,
     .rootHubInterface.rootHubPortInterface.hubPortReset = DRV_USBHSV1_HOST_ROOT_HUB_PortReset,
     .rootHubInterface.rootHubPortInterface.hubPortSpeedGet = DRV_USBHSV1_HOST_ROOT_HUB_PortSpeedGet,
@@ -2299,3 +2300,67 @@ USB_SPEED DRV_USBHSV1_HOST_ROOT_HUB_PortSpeedGet(DRV_HANDLE handle, uint8_t port
 
     return(speed);
 }
+
+// ****************************************************************************
+/* Function:
+    void DRV_USBHSV1_HOST_EndpointToggleClear
+    (
+        DRV_HANDLE client,
+        USB_ENDPOINT endpointAndDirection
+    )
+
+  Summary:
+    Facilitates in resetting of endpoint data toggle to 0 for Non Control
+    endpoints.
+
+  Description:
+    Facilitates in resetting of endpoint data toggle to 0 for Non Control
+    endpoints.
+
+  Remarks:
+    Refer to drv_usbhsv1.h for usage information.
+*/
+
+void DRV_USBHSV1_HOST_EndpointToggleClear
+(
+    DRV_HANDLE client,
+    USB_ENDPOINT endpointAndDirection
+)
+{
+    /* Start of local variables */
+    DRV_USBHSV1_OBJ * hDriver = NULL;
+    uint8_t epIter = 0;
+    
+    /* End of local variables */
+    if((client == DRV_HANDLE_INVALID) || (((DRV_USBHSV1_OBJ *)client) == NULL))
+    {
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBHSV1: Invalid client handle");
+    }
+    else
+    {
+        hDriver = (DRV_USBHSV1_OBJ *)client;
+            
+        /* Now map the device endpoint to host endpoint. This is required to
+         * jump to the appropriate entry in the endpoint table */
+        for(epIter = 1; epIter < DRV_USBHSV1_HOST_MAXIMUM_ENDPOINTS_NUMBER; epIter++)
+        {
+            if(true == hDriver->hostEndpointTable[epIter].endpoint.inUse)
+            {
+                /* Please not that for a single non control endpoint there cannot
+                 * be multiple pipes. Hence there should be only 1 pipe object
+                 * that can be linked to this "endpointAndDirection". */
+                if((hDriver->hostEndpointTable[epIter].endpoint.pipe)->endpointAndDirection
+                        == endpointAndDirection)
+                {
+                    /* Got the entry in the host endpoint table. We can exit
+                     * from this loop now for further processing */
+                    hDriver->usbID->USBHS_HSTPIPIER[epIter] = USBHS_HSTPIPIER_RSTDTS_Msk;
+                }
+            }
+        }
+        
+       
+    }
+} /* end of DRV_USBHSV1_HOST_EndpointToggleClear() */
+
+

@@ -59,8 +59,8 @@
           <Name dnOrder="1">drv_usbfs_host.c</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/driver/usb/usbfs/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">146285B55C2F032FF7FD316076C5B4F5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">146285B55C2F032FF7FD316076C5B4F5</UserChecksum>
+          <GeneratedChecksum dnOrder="4">89C487ED4FCC258AF681D043DFCDC871</GeneratedChecksum>
+          <UserChecksum dnOrder="5">89C487ED4FCC258AF681D043DFCDC871</UserChecksum>
         </File>
         <File dnOrder="7">
           <Type dnOrder="0">SOURCE</Type>
@@ -163,8 +163,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A9E3D36057AE1426B8F44886D2B68BC6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A9E3D36057AE1426B8F44886D2B68BC6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">D93B4B8263EB2B7A169F28FE69F1D7BA</GeneratedChecksum>
+          <UserChecksum dnOrder="5">D93B4B8263EB2B7A169F28FE69F1D7BA</UserChecksum>
         </File>
         <File dnOrder="20">
           <Type dnOrder="0">SOURCE</Type>
@@ -275,8 +275,8 @@
           <Name dnOrder="1">usb_host.c</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A7DE3B75F6DBA4C6CA8F799D415FFC49</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A7DE3B75F6DBA4C6CA8F799D415FFC49</UserChecksum>
+          <GeneratedChecksum dnOrder="4">24D5A6720AED48CF5629FEC387CB3A3A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">24D5A6720AED48CF5629FEC387CB3A3A</UserChecksum>
         </File>
         <File dnOrder="34">
           <Type dnOrder="0">SOURCE</Type>
@@ -419,32 +419,32 @@
           <Name dnOrder="1">drv_usb.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">CFBD2D9BDB4D18C841A9A2F4E9870E0C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">CFBD2D9BDB4D18C841A9A2F4E9870E0C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">38148410A4C123F6D3C8D2A5684C2D2D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">38148410A4C123F6D3C8D2A5684C2D2D</UserChecksum>
         </File>
         <File dnOrder="52">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">AC352A9B0E4A4B622674870B8738E826</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AC352A9B0E4A4B622674870B8738E826</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C07E5598C11AD6C2F25F92037919A988</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C07E5598C11AD6C2F25F92037919A988</UserChecksum>
         </File>
         <File dnOrder="53">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_usbfs.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/driver/usb/usbfs</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfs/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1839498D99FAFF43566983D63CD5D926</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1839498D99FAFF43566983D63CD5D926</UserChecksum>
+          <GeneratedChecksum dnOrder="4">6F0D6F59FCBE65208A7E18076207DC69</GeneratedChecksum>
+          <UserChecksum dnOrder="5">6F0D6F59FCBE65208A7E18076207DC69</UserChecksum>
         </File>
         <File dnOrder="54">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_usbfs_local.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/driver/usb/usbfs/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1C62150F06513893B9198B6CFEDD1F9C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1C62150F06513893B9198B6CFEDD1F9C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BA88E5162CA794A6A62D146A58458A43</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BA88E5162CA794A6A62D146A58458A43</UserChecksum>
         </File>
         <File dnOrder="55">
           <Type dnOrder="0">HEADER</Type>
@@ -563,8 +563,8 @@
           <Name dnOrder="1">plib_coretimer.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/peripheral/coretimer/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/coretimer/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">703A4222E2EE7A178846266EB036CA45</GeneratedChecksum>
-          <UserChecksum dnOrder="5">703A4222E2EE7A178846266EB036CA45</UserChecksum>
+          <GeneratedChecksum dnOrder="4">84C4DBB98A34064F6199CAE65561FF20</GeneratedChecksum>
+          <UserChecksum dnOrder="5">84C4DBB98A34064F6199CAE65561FF20</UserChecksum>
         </File>
         <File dnOrder="70">
           <Type dnOrder="0">HEADER</Type>
@@ -595,8 +595,8 @@
           <Name dnOrder="1">plib_usbfs_header.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/driver/usb/usbfs/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">BB8577372A99246B8D52615652AB02E6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">BB8577372A99246B8D52615652AB02E6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">3822D4C43CB11882404ECB2B28DD61EA</GeneratedChecksum>
+          <UserChecksum dnOrder="5">3822D4C43CB11882404ECB2B28DD61EA</UserChecksum>
         </File>
         <File dnOrder="74">
           <Type dnOrder="0">HEADER</Type>
@@ -1683,8 +1683,8 @@
           <Name dnOrder="1">usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">EC508303014905CAA66CE126A0FE7297</GeneratedChecksum>
-          <UserChecksum dnOrder="5">EC508303014905CAA66CE126A0FE7297</UserChecksum>
+          <GeneratedChecksum dnOrder="4">5AAF69767C8CBB1A9952695AAF110C43</GeneratedChecksum>
+          <UserChecksum dnOrder="5">5AAF69767C8CBB1A9952695AAF110C43</UserChecksum>
         </File>
         <File dnOrder="210">
           <Type dnOrder="0">HEADER</Type>
@@ -1811,7 +1811,7 @@
     </Manifest>
     <Settings dnOrder="4">
       <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.5.1"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MX_DFP\1.0.50\atdf\PIC32MX470F512H.atdf"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MX_DFP\1.0.208\atdf\PIC32MX470F512H.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>

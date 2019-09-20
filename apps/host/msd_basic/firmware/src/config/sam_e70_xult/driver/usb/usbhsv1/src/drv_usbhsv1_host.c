@@ -2318,7 +2318,7 @@ USB_SPEED DRV_USBHSV1_HOST_ROOT_HUB_PortSpeedGet(DRV_HANDLE handle, uint8_t port
     endpoints.
 
   Remarks:
-    Refer to drv_usbhs.h for usage information.
+    Refer to drv_usbhsv1.h for usage information.
 */
 
 void DRV_USBHSV1_HOST_EndpointToggleClear

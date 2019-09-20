@@ -62,7 +62,7 @@ DRV_USB_HOST_INTERFACE gDrvUSBFSHostInterface =
     .hostIRPCancel = DRV_USBFS_HOST_IRPCancel,
     .hostPipeSetup = DRV_USBFS_HOST_PipeSetup,
     .hostPipeClose = DRV_USBFS_HOST_PipeClose,
-//    .endpointToggleClear = DRV_USBFS_HOST_EndpointToggleClear,
+    .endpointToggleClear = DRV_USBFS_HOST_EndpointToggleClear,
     .hostEventsDisable = DRV_USBFS_HOST_EventsDisable,
     .hostEventsEnable = DRV_USBFS_HOST_EventsEnable,
     .rootHubInterface.rootHubPortInterface.hubPortReset = DRV_USBFS_HOST_ROOT_HUB_PortReset,
@@ -650,6 +650,7 @@ bool _DRV_USBFS_HOST_ControlXferProcess
 
                 if(deviceResponse == USB_TRANSACTION_ACK)
                 {
+					pipe->retryCount = 0;
                     if((pIRP->data == NULL) || (pIRP->size == 0))
                     {
                         /* This means that this is a zero data stage transaction */
@@ -665,6 +666,37 @@ bool _DRV_USBFS_HOST_ControlXferProcess
                     pipe->dataToggle = USB_BUFFER_DATA1;
                     pipe->nakCounter = 0;
                     pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_DATA_STAGE;
+                }
+				else if(USB_TRANSACTION_BUS_TIME_OUT == deviceResponse)
+                {
+                    pipe->retryCount++;
+                    if ( pipe->retryCount < DRV_USBFS_TRANSACTION_RETRY_COUNT )
+                    {
+                        pIRP->tempState =  DRV_USBFS_HOST_IRP_STATE_SETUP_STAGE;
+                    }
+                    else
+                    {
+                        pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE; 
+                        pIRP->status = USB_HOST_IRP_STATUS_ERROR_BUS;
+                        endIRP = true;
+                    }
+                    break;
+                }
+                else if(USB_TRANSACTION_DATA_ERROR == deviceResponse)
+                {
+                    pipe->retryCount++;
+                    if ( pipe->retryCount < DRV_USBFS_TRANSACTION_RETRY_COUNT )
+                    {
+                        pIRP->tempState =  DRV_USBFS_HOST_IRP_STATE_SETUP_STAGE;
+                    }
+                    else
+                    {
+                        pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE; 
+                        pIRP->status = USB_HOST_IRP_STATUS_ERROR_DATA;
+                        endIRP = true;
+                    }
+                    break;
+
                 }
                 else
                 {
@@ -732,17 +764,44 @@ bool _DRV_USBFS_HOST_ControlXferProcess
                 }
                 else if (deviceResponse == USB_TRANSACTION_DATA_ERROR)
                 {
-                    /* The device response data error. We should end the control
-                     * transfer. */
-                    pipe->nakCounter = 0;
-                    pIRP->status = USB_HOST_IRP_STATUS_ERROR_DATA;
-                    pIRP->tempState =  DRV_USBFS_HOST_IRP_STATE_COMPLETE;
-                    endIRP = true;
+                     pipe->retryCount++;
+                    if ( pipe->retryCount < DRV_USBFS_TRANSACTION_RETRY_COUNT )
+                    {
+                        pIRP->tempState =  DRV_USBFS_HOST_IRP_STATE_DATA_STAGE;
+                    }
+                    else
+                    {
+                        /* The device response data error. We should end the control
+                         * transfer. */
+                        pipe->nakCounter = 0;
+                        pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE; 
+                        pIRP->status = USB_HOST_IRP_STATUS_ERROR_DATA;
+                        endIRP = true;
+                    }
                     break;
                 
                 }
+				 else if (deviceResponse == USB_TRANSACTION_BUS_TIME_OUT)
+                {
+                    pipe->retryCount++;
+                    if ( pipe->retryCount < DRV_USBFS_TRANSACTION_RETRY_COUNT )
+                    {
+                        pIRP->tempState =  DRV_USBFS_HOST_IRP_STATE_DATA_STAGE;
+                    }
+                    else
+                    {
+                        /* Turn around time error. We should end the control
+                         * transfer. */
+                        pipe->nakCounter = 0;
+                        pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE; 
+                        pIRP->status = USB_HOST_IRP_STATUS_ERROR_BUS;
+                        endIRP = true;
+                    }
+                    break;
+                }
                 else if ((deviceResponse == USB_TRANSACTION_DATA0 ) ||(deviceResponse == USB_TRANSACTION_DATA1) ||(deviceResponse == USB_TRANSACTION_ACK))
                 {
+					pipe->retryCount = 0;
                     /* The device has acknowledged the data stage. Update the IRP
                      * with the amount of data received */
                     pipe->nakCounter = 0;
@@ -878,7 +937,8 @@ bool _DRV_USBFS_HOST_ControlXferProcess
                 /* Check the response */
                 if((USB_TRANSACTION_ACK == deviceResponse) || (USB_TRANSACTION_DATA1 == deviceResponse))
                 {
-                    /* Transfer is complete */
+                    pipe->retryCount = 0;
+					/* Transfer is complete */
                     pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE;
                     pIRP->status = USB_HOST_IRP_STATUS_COMPLETED;
                     if(((pipe->endpointAndDirection & 0x80) != 0) && (pIRP->size > pIRP->completedBytes))
@@ -917,14 +977,41 @@ bool _DRV_USBFS_HOST_ControlXferProcess
                 }
                 else if(USB_TRANSACTION_DATA_ERROR == deviceResponse)
                 {
-                    /* A data error occurred. End the transfer with an error
-                     * code */
-                    pipe->nakCounter = 0;
-                    pIRP->status = USB_HOST_IRP_STATUS_ERROR_DATA;
-                    pIRP->tempState =  DRV_USBFS_HOST_IRP_STATE_COMPLETE;
-                    endIRP = true;
+                    pipe->retryCount++;
+                    if ( pipe->retryCount < DRV_USBFS_TRANSACTION_RETRY_COUNT )
+                    {
+                        pIRP->tempState =  DRV_USBFS_HOST_IRP_STATE_HANDSHAKE;
+                    }
+                    else
+                    {
+                        /* A data error occurred. End the transfer with an error
+                         * code */
+                        pipe->nakCounter = 0;
+                        pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE; 
+                        pIRP->status = USB_HOST_IRP_STATUS_ERROR_DATA;
+                        endIRP = true;
+                    }
                     break;
                 }
+				else if(USB_TRANSACTION_BUS_TIME_OUT == deviceResponse)
+                {
+                    pipe->retryCount++;
+                    if ( pipe->retryCount < DRV_USBFS_TRANSACTION_RETRY_COUNT )
+                    {
+                        pIRP->tempState =  DRV_USBFS_HOST_IRP_STATE_HANDSHAKE;
+                    }
+                    else
+                    {
+                        /* A Timeout error occurred. End the transfer with an error
+                         * code */
+                        pipe->nakCounter = 0;
+                        pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE; 
+                        pIRP->status = USB_HOST_IRP_STATUS_ERROR_BUS;
+                        endIRP = true;
+                    }
+                    break;
+                }
+                break; 
                     
 
             case DRV_USBFS_HOST_IRP_STATE_COMPLETE:
@@ -942,6 +1029,7 @@ bool _DRV_USBFS_HOST_ControlXferProcess
 
         if(endIRP == true)
         {
+			pipe->retryCount = 0;
             softwareEP = &pUSBDrvObj->drvUSBHostSWEp[pUSBDrvObj->numSWEpEntry];
             transferGroup = &pUSBDrvObj->transferGroup[USB_TRANSFER_TYPE_CONTROL];
             
@@ -1228,7 +1316,7 @@ DRV_USBFS_HOST_PIPE_HANDLE DRV_USBFS_HOST_PipeSetup
                     pPipe->endpointSize = wMaxPacketSize;
                     pPipe->intervalCounter = bInterval;
                     pPipe->dataToggle = USB_BUFFER_DATA0;
-
+					pPipe->retryCount = 0;
                     pPipe->endpointAndDirection = endpointAndDirection;
 
                     /* This pipe should now be added to the pipe bundle. The
@@ -1650,7 +1738,7 @@ bool _DRV_USBFS_HOST_NonControlIRPProcess
                     case USB_TRANSACTION_DATA0:
                         /* Fall through is intentional */
                     case USB_TRANSACTION_DATA1:    
-
+						pipe->retryCount = 0;
                         pIRP->completedBytes += lastTransactionsize;
                         pIRP->completedBytesInThisFrame += lastTransactionsize;
                         pipe->dataToggle ^= 0x1;
@@ -1702,8 +1790,29 @@ bool _DRV_USBFS_HOST_NonControlIRPProcess
                         break;
 
                     case USB_TRANSACTION_DATA_ERROR:
-                        pIRP->status = USB_HOST_IRP_STATUS_ERROR_DATA;
-                        endIRP = true;
+                        pipe->retryCount++;
+                        if ( pipe->retryCount < DRV_USBFS_TRANSACTION_RETRY_COUNT )
+                        {
+                            endIRP = false;
+                        }
+                        else
+                        {
+                            pIRP->status = USB_HOST_IRP_STATUS_ERROR_DATA;
+                            endIRP = true;
+                        }
+                        break;
+					case USB_TRANSACTION_BUS_TIME_OUT:
+                        
+                        pipe->retryCount++;
+                        if ( pipe->retryCount < DRV_USBFS_TRANSACTION_RETRY_COUNT )
+                        {
+                            endIRP = false;
+                        }
+                        else
+                        {
+                            pIRP->status = USB_HOST_IRP_STATUS_ERROR_BUS;
+                            endIRP = true;
+                        }
                         break;
 
 
@@ -1721,6 +1830,7 @@ bool _DRV_USBFS_HOST_NonControlIRPProcess
 
             if(endIRP == true)
             {
+				pipe->retryCount = 0;
                 /* Remove the irp from the from the SW EP object. */
                 softwareEP->tobeDone = false;
 

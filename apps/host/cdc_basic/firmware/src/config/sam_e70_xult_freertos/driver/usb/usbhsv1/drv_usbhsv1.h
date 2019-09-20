@@ -494,6 +494,55 @@ typedef struct
 	
 } DRV_USBHSV1_INIT;
 
+// ****************************************************************************
+/* Function:
+    void DRV_USBHSV1_HOST_EndpointToggleClear
+    (
+        DRV_HANDLE client,
+        USB_ENDPOINT endpointAndDirection
+    )
+
+  Summary:
+    Facilitates in resetting of endpoint data toggle to 0 for Non Control
+    endpoints.
+
+  Description:
+    Facilitates in resetting of endpoint data toggle to 0 for Non Control
+    endpoints.
+	
+  Precondition:
+    None.
+
+  Parameters:
+    handle - Handle to the driver.
+    USB_ENDPOINT - Endpoint number and direction.
+
+  Example:
+    <code>
+
+    // This code shows how the USB Host Layer calls the
+    // DRV_USBHSV1_HOST_EndpointToggleClear function. The Endpoint number
+    // and Direction of the endpoint is required to the clear the data
+	// toggle to the endpoint.
+
+    DRV_HANDLE drvHandle;
+    USB_ENDPOINT endpointAndDirection ;
+
+    DRV_USBHSV1_HOST_EndpointToggleClear(client, endpointAndDirection);
+
+    </code>
+
+  Remarks:
+    None.
+*/
+
+void DRV_USBHSV1_HOST_EndpointToggleClear
+(
+    DRV_HANDLE client,
+    USB_ENDPOINT endpointAndDirection
+);
+
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Interface Routines - System Level
