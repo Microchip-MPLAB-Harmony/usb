@@ -42,14 +42,11 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
 -->
-
+/* Number Full Speed USB Driver instances */ 
 #define DRV_USBFS_INSTANCES_NUMBER                       ${__INSTANCE_COUNT}
 
 /* Interrupt mode enabled */
 #define DRV_USBFS_INTERRUPT_MODE                          true
-
-
- 
 
 <#if DRV_USBFS_MULTI_DEVICE_SUPPORT == true>
 /* Enables Device Support */
@@ -57,8 +54,8 @@
 <#else>
 /* Disable Device Support */
 #define DRV_USBFS_DEVICE_SUPPORT                          false
-<#assign drv_usb_endpoint_number = 0>
 </#if>
+<#assign drv_usb_endpoint_number = 0>
 <#if (usb_device_0.CONFIG_USB_DEVICE_ENDPOINTS_NUMBER)?has_content == true>
 <#assign drv_usb_endpoint_number = usb_device_0.CONFIG_USB_DEVICE_ENDPOINTS_NUMBER>
 </#if>
@@ -92,7 +89,6 @@
 
 /* Alignment for buffers that are submitted to USB Driver*/ 
 #define USB_ALIGN  CACHE_ALIGN
-
 <#--
 /*******************************************************************************
  End of File

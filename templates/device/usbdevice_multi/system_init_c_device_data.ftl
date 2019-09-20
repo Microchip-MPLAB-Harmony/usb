@@ -211,7 +211,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet${INDEX?string}
  /*******************************************
  *  Language code string descriptor
  *******************************************/
- <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
+ <#if usb_device.CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
     const struct __attribute__ ((packed))
     {
         uint8_t stringIndex;                                //Index of the string descriptor
@@ -245,7 +245,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet${INDEX?string}
 /*******************************************
  *  Manufacturer string descriptor
  *******************************************/
- <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
+ <#if usb_device.CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
     const struct __attribute__ ((packed))
     {
         uint8_t stringIndex;                                //Index of the string descriptor
@@ -285,7 +285,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet${INDEX?string}
 /*******************************************
  *  Product string descriptor
  *******************************************/
-<#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
+<#if usb_device.CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
     const struct __attribute__ ((packed))
     {
         uint8_t stringIndex;                                //Index of the string descriptor

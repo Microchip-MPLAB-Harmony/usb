@@ -158,13 +158,11 @@ def destroyComponent(component):
 def updateConfigurationDescriptorSize(descriptorSizeOld):
 	global usbConfigSizeUpdated
 	if (usbConfigSizeUpdated == False):
-		print("I am at updateConfigurationDescriptorSize 1")
 		readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 		if (readValue != None):
 			args = {"nFunction":readValue + audioDescriptorSize}
 			res = Database.sendMessage(remoteID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 	else:
-		print("I am at updateConfigurationDescriptorSize 2")
 		readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 		if (readValue != None):
 			args = {"nFunction": readValue + audioDescriptorSize - descriptorSizeOld}
@@ -183,7 +181,6 @@ def updateNumberOfInterfaces(numberOfInterfacesOld, nInterfacesNew):
 		if (readValue != None):
 			args = {"nFunction":   readValue + nInterfacesNew - numberOfInterfacesOld}
 			res = Database.sendMessage(remoteID, "UPDATE_INTERFACES_NUMBER", args)
-			print(audioInterfacesNumber,numberOfInterfacesOld )
 	usbNumberOfInterfacesUpdated = True 
 
 def usbDeviceAudioBufferQueueSize(usbSymbolSource, event):
@@ -237,7 +234,6 @@ def usbDeviceAudioSpecVersionUpdate(usbSymbolSource, event):
 
 def usbDeviceAudioNumberOfInterfacesUpdate(usbSymbolSource, event):
 	nInterfaces = usbSymbolSource.getValue()
-	print(nInterfaces)
 	if (event["value"] == "Audio v2.0 USB Speaker"):	
 		usbSymbolSource.setValue(2,2)
 		nInterfacesNew = 2

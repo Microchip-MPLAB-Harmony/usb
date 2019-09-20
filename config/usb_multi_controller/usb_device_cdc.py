@@ -41,7 +41,6 @@ usbDeviceCdcFunRegTableFile = None
 usbDeviceCdcFunInitFile = None
 usbDeviceCdcDescriptorHsFile = None
 usbDeviceCdcDescriptorClassCodeFile = None
-remoteID = None
 
 def handleMessage(messageID, args):
 	global useIad
@@ -66,7 +65,6 @@ def onAttachmentConnected(source, target):
 	global currentQSizeSerialStateNotification
 	global usbDeviceCdcDescriptorFsFile
 	global usbDeviceCdcFunRegTableFile
-	global remoteID
 	global usbDeviceCdcFunInitFile
 	global usbDeviceCdcDescriptorHsFile
 	global usbDeviceCdcDescriptorClassCodeFile
@@ -75,9 +73,9 @@ def onAttachmentConnected(source, target):
 	
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
-	ownerComponent = source["component"]
 	remoteComponent = target["component"]
 	remoteID = remoteComponent.getID()
+	
 	# Read number of functions from USB Device Layer 
 	nFunctions = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 	#usbDeviceCdcFunInitFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_INIT_ENTRY")
@@ -169,8 +167,6 @@ def onAttachmentDisconnected(source, target):
 	global currentQSizeRead
 	global currentQSizeWrite
 	global currentQSizeSerialStateNotification
-	
-	global remoteID
 	
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
@@ -269,7 +265,6 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	global epNumberBulkOut
 	global epNumberBulkIn
 	global usbDeviceCdcFunRegTableFile
-	global remoteID
 	global devInstance
 	global usbDeviceCdcFunInitFile
 	global usbDeviceCdcDescriptorHsFile
@@ -412,7 +407,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	#############################################################
 	# Function Init Entry for CDC
 	#############################################################
-	usbDeviceCdcFunInitFile = usbDeviceCdcComponent.createFileSymbol(None, None)
+	usbDeviceCdcFunInitFile = usbDeviceCdcComponent.createFileSymbol("USB_DEVICE_CDC_FUN_INIT_TABLE_FILE", None)
 	usbDeviceCdcFunInitFile.setType("STRING")
 	#usbDeviceCdcFunInitFile.setOutputName("usb_device_1.LIST_USB_DEVICE_FUNCTION_INIT_ENTRY")
 	usbDeviceCdcFunInitFile.setSourcePath("templates/device/cdc/system_init_c_device_data_cdc_function_init.ftl")
@@ -422,7 +417,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	#############################################################
 	# Function Registration table for CDC
 	#############################################################
-	usbDeviceCdcFunRegTableFile = usbDeviceCdcComponent.createFileSymbol(None, None)
+	usbDeviceCdcFunRegTableFile = usbDeviceCdcComponent.createFileSymbol("USB_DEVICE_CDC_FUN_REG_TABLE_FILE", None)
 	usbDeviceCdcFunRegTableFile.setType("STRING")
 	#usbDeviceCdcFunRegTableFile.setOutputName("usb_device_1.LIST_USB_DEVICE_FUNCTION_ENTRY")
 	usbDeviceCdcFunRegTableFile.setSourcePath("templates/device/cdc/system_init_c_device_data_cdc_function.ftl")
@@ -431,7 +426,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	#############################################################
 	# HS Descriptors for CDC Function 
 	#############################################################
-	usbDeviceCdcDescriptorHsFile = usbDeviceCdcComponent.createFileSymbol(None, None)
+	usbDeviceCdcDescriptorHsFile = usbDeviceCdcComponent.createFileSymbol("USB_DEVICE_CDC_DESCRIPTOR_HS_FILE", None)
 	usbDeviceCdcDescriptorHsFile.setType("STRING")
 	#usbDeviceCdcDescriptorHsFile.setOutputName("usb_device_1.LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_HS_ENTRY")
 	usbDeviceCdcDescriptorHsFile.setSourcePath("templates/device/cdc/system_init_c_device_data_cdc_function_descrptr_hs.ftl")
@@ -440,7 +435,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	#############################################################
 	# FS Descriptors for CDC Function 
 	#############################################################
-	usbDeviceCdcDescriptorFsFile = usbDeviceCdcComponent.createFileSymbol(None, None)
+	usbDeviceCdcDescriptorFsFile = usbDeviceCdcComponent.createFileSymbol("USB_DEVICE_CDC_DESCRIPTOR_FS_FILE", None)
 	usbDeviceCdcDescriptorFsFile.setType("STRING")
 	#usbDeviceCdcDescriptorFsFile.setOutputName("usb_device_1.LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_FS_ENTRY")
 	usbDeviceCdcDescriptorFsFile.setSourcePath("templates/device/cdc/system_init_c_device_data_cdc_function_descrptr_fs.ftl")
@@ -450,7 +445,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	#############################################################
 	# Class code Entry for CDC Function 
 	#############################################################
-	usbDeviceCdcDescriptorClassCodeFile = usbDeviceCdcComponent.createFileSymbol(None, None)
+	usbDeviceCdcDescriptorClassCodeFile = usbDeviceCdcComponent.createFileSymbol("USB_DEVICE_CDC_DESCRIPTOR_CLASS_CODE_FILE", None)
 	usbDeviceCdcDescriptorClassCodeFile.setType("STRING")
 	#usbDeviceCdcDescriptorClassCodeFile.setOutputName("usb_device_1.LIST_USB_DEVICE_DESCRIPTOR_CLASS_CODE_ENTRY")
 	usbDeviceCdcDescriptorClassCodeFile.setSourcePath("templates/device/cdc/system_init_c_device_data_cdc_function_class_codes.ftl")
@@ -459,19 +454,19 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	################################################
 	# USB CDC Function driver Files 
 	################################################
-	usbDeviceCdcHeaderFile = usbDeviceCdcComponent.createFileSymbol(None, None)
+	usbDeviceCdcHeaderFile = usbDeviceCdcComponent.createFileSymbol("USB_DEVICE_CDC_HEADER_FILE", None)
 	addFileName('usb_device_cdc.h', usbDeviceCdcComponent, usbDeviceCdcHeaderFile, "middleware/", "/usb/", True, None)
 	
-	usbCdcHeaderFile = usbDeviceCdcComponent.createFileSymbol(None, None)
+	usbCdcHeaderFile = usbDeviceCdcComponent.createFileSymbol("USB_CDC_HEADER_FILE", None)
 	addFileName('usb_cdc.h', usbDeviceCdcComponent, usbCdcHeaderFile, "middleware/", "/usb/", True, None)
 	
-	usbDeviceCdcSourceFile = usbDeviceCdcComponent.createFileSymbol(None, None)
+	usbDeviceCdcSourceFile = usbDeviceCdcComponent.createFileSymbol("USB_DEVICE_CDC_SOURCE_FILE", None)
 	addFileName('usb_device_cdc.c', usbDeviceCdcComponent, usbDeviceCdcSourceFile, "middleware/src/", "/usb/src", True, None)
 	
-	usbDeviceCdcAcmSourceFile = usbDeviceCdcComponent.createFileSymbol(None, None)
+	usbDeviceCdcAcmSourceFile = usbDeviceCdcComponent.createFileSymbol("USB_DEVICE_CDC_ACM_SOURCE_FILE", None)
 	addFileName('usb_device_cdc_acm.c', usbDeviceCdcComponent, usbDeviceCdcAcmSourceFile, "middleware/src/", "/usb/src", True, None)
 	
-	usbDeviceCdcLocalHeaderFile = usbDeviceCdcComponent.createFileSymbol(None, None)
+	usbDeviceCdcLocalHeaderFile = usbDeviceCdcComponent.createFileSymbol("USB_DEVICE_CDC_LOCAL_HEADER_FILE", None)
 	addFileName('usb_device_cdc_local.h', usbDeviceCdcComponent, usbDeviceCdcLocalHeaderFile, "middleware/src/", "/usb/src", True, None)
 	
 	

@@ -69,11 +69,8 @@ def onAttachmentConnected(source, target):
 	ownerComponent = source["component"]
 	remoteComponent = target["component"]
 	remoteID = remoteComponent.getID()
-	connectID = source["id"]
 	targetID = target["id"]
-	ownerComponent = source["component"]
-	remoteComponent = target["component"]
-	remoteID = remoteComponent.getID()
+	
 	
 	if (dependencyID == "usb_device_dependency"):
 		readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
@@ -150,6 +147,9 @@ def onAttachmentDisconnected(source, target):
 	
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
+	remoteComponent = target["component"]
+	remoteID = remoteComponent.getID()
+	targetID = target["id"]
 	
 	if  dependencyID == "usb_device_dependency":
 		readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")

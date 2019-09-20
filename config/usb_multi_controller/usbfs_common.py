@@ -132,7 +132,7 @@ def instantiateComponent(usbPeripheralComponentCommon):
 	usbPeripheralDeviceSupport= usbPeripheralComponentCommon.createBooleanSymbol("DRV_USBFS_MULTI_DEVICE_SUPPORT", None)
 	usbPeripheralDeviceSupport.setLabel("DEVICE")
 	usbPeripheralDeviceSupport.setDefaultValue(True)
-	usbPeripheralDeviceSupport.setVisible(True)
+	usbPeripheralDeviceSupport.setVisible(False)
 	usbPeripheralDeviceSupport.setReadOnly(True)
 	
 	drvUsbHsV1HostSourceFile = usbPeripheralComponentCommon.createFileSymbol("DRV_USBFS_COMMON_C_SOURCE", None)

@@ -117,6 +117,9 @@ def onAttachmentDisconnected(source, target):
 	print ("HID Function Driver: Detached")
 	ownerComponent = source["component"]
 	dependencyID = source["id"]
+	remoteComponent = target["component"]
+	remoteID = remoteComponent.getID()
+	
 	if (dependencyID == "usb_device_dependency"):
 		readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 		if readValue != None: 

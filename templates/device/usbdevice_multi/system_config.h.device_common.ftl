@@ -42,9 +42,41 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
 -->
-
-
 #define USB_DEVICE_INSTANCES_NUMBER                         ${__INSTANCE_COUNT}
+
 /* EP0 size in bytes */
 #define USB_DEVICE_EP0_BUFFER_SIZE                          ${CONFIG_USB_DEVICE_EP0_BUFFER_SIZE}
 
+/* The USB Device Layer will not initialize the USB Driver */
+#define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT
+<#if CONFIG_USB_DEVICE_EVENT_ENABLE_SOF == true>
+
+/* Enable SOF Events */
+#define USB_DEVICE_SOF_EVENT_ENABLE
+</#if>
+<#if CONFIG_USB_DEVICE_EVENT_ENABLE_SET_DESCRIPTOR == true>
+
+/* Enable Set descriptor events */
+#define USB_DEVICE_SET_DESCRIPTOR_EVENT_ENABLE
+</#if>
+<#if CONFIG_USB_DEVICE_EVENT_ENABLE_SYNCH_FRAME == true>
+
+/* Enable Synch Frame Event */
+#define USB_DEVICE_SYNCH_FRAME_EVENT_ENABLE
+</#if>
+<#if CONFIG_USB_DEVICE_FEATURE_ENABLE_BOS_DESCRIPTOR == true>
+
+/* Enable BOS Descriptor */
+#define USB_DEVICE_BOS_DESCRIPTOR_SUPPORT_ENABLE
+</#if>
+<#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true>
+
+/* Enable Advanced String Descriptor table. This feature lets the user specify
+   String Index along with the String descriptor Structure  */
+#define USB_DEVICE_STRING_DESCRIPTOR_TABLE_ADVANCED_ENABLE
+<#if CONFIG_USB_DEVICE_FEATURE_ENABLE_MICROSOFT_OS_DESCRIPTOR == true>
+
+/* Enable Microsoft OS Descriptor support.  */
+#define USB_DEVICE_MICROSOFT_OS_DESCRIPTOR_SUPPORT_ENABLE
+</#if>
+</#if>

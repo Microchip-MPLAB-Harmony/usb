@@ -53,11 +53,13 @@ def handleMessage(messageID, args):
 			numEndpoints =  usbDeviceEndpointsNumber.getValue()	
 			usbDeviceEndpointsNumber.setValue( numEndpoints + args["nFunction"])
 			numEndpoints =  usbDeviceEndpointsNumber.getValue()
-			
-		
-			
 
-
+def blUSBDeviceFeatureEnableMicrosoftOsDescriptor(usbSymbolSource, event):
+	if (event["value"] == True):		
+		usbSymbolSource.setVisible(True)
+	else:
+		usbSymbolSource.setVisible(False)
+			
 def instantiateComponent(usbDeviceComponent):
 	global usbDeviceInstnces
 	global usbDeviceEp0BufferSize
@@ -66,14 +68,6 @@ def instantiateComponent(usbDeviceComponent):
 	configName = Variables.get("__CONFIGURATION_NAME")
 	
 	sourcePath = "templates/device/usbdevice_multi/"
-	
-	usbDeviceInstnces = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_LAYER_INSTANCES", None)
-	usbDeviceInstnces.setLabel("Number of Instances")
-	usbDeviceInstnces.setMin(1)
-	usbDeviceInstnces.setMax(2)
-	usbDeviceInstnces.setDefaultValue(1)
-	usbDeviceInstnces.setUseSingleDynamicValue(True)
-	usbDeviceInstnces.setVisible(True)
 	
 	# USB Device Endpoint Number 
 	usbDeviceEndpointsNumber = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", None)
@@ -91,24 +85,61 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceEp0BufferSize.setDescription("Select Endpoint 0 Buffer Size")
 	usbDeviceEp0BufferSize.setDefaultValue("64")
 	
+		# USB Device events enable 
+	usbDeviceEventsEnable = usbDeviceComponent.createMenuSymbol("USB_DEVICE_EVENTS", None)
+	usbDeviceEventsEnable.setLabel("Special Events")	
+	usbDeviceEventsEnable.setVisible(True)
 	
-	################################################
-	# system_definitions.h file for USB Device Layer    
-	################################################
-	#usbDeviceSystemDefFile = usbDeviceComponent.createFileSymbol(None, None)
-	#usbDeviceSystemDefFile.setType("STRING")
-	#usbDeviceSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
-	#usbDeviceSystemDefFile.setSourcePath( sourcePath + "system_definitions.h.device_includes.ftl")
-	#usbDeviceSystemDefFile.setMarkup(True)
+	#SOF Event Enable 
+	usbDeviceEventEnableSOF = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_EVENT_ENABLE_SOF", usbDeviceEventsEnable)
+	usbDeviceEventEnableSOF.setLabel("Enable SOF Events")	
+	usbDeviceEventEnableSOF.setVisible(True)	
+		
+	#Set Descriptor Event Enable 
+	usbDeviceEventEnableSetDescriptor = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_EVENT_ENABLE_SET_DESCRIPTOR", usbDeviceEventsEnable)
+	usbDeviceEventEnableSetDescriptor.setLabel("Enable Set Descriptor Events")	
+	usbDeviceEventEnableSetDescriptor.setVisible(True)	
+	
+	#Synch Frame Event Enable 
+	usbDeviceEventEnableSynchFrame = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_EVENT_ENABLE_SYNCH_FRAME", usbDeviceEventsEnable)
+	usbDeviceEventEnableSynchFrame.setLabel("Enable Synch Frame Events")	
+	usbDeviceEventEnableSynchFrame.setVisible(True)	
+	
+	# USB Device Features enable 
+	usbDeviceFeatureEnable = usbDeviceComponent.createMenuSymbol("USB_DEVICE_FEATURES", None)
+	usbDeviceFeatureEnable.setLabel("Special Features")	
+	usbDeviceFeatureEnable.setVisible(True)
+	
+	# Advanced string descriptor table enable 
+	usbDeviceFeatureEnableAdvancedStringDescriptorTable = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE", usbDeviceFeatureEnable)
+	usbDeviceFeatureEnableAdvancedStringDescriptorTable.setLabel("Enable advanced String Descriptor Table")
+	usbDeviceFeatureEnableAdvancedStringDescriptorTable.setVisible(True)
+	
+	#Microsoft OS descriptor support Enable 
+	usbDeviceFeatureEnableMicrosoftOsDescriptor = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FEATURE_ENABLE_MICROSOFT_OS_DESCRIPTOR", usbDeviceFeatureEnableAdvancedStringDescriptorTable)
+	usbDeviceFeatureEnableMicrosoftOsDescriptor.setLabel("Enable Microsoft OS Descriptor Support")	
+	usbDeviceFeatureEnableMicrosoftOsDescriptor.setVisible(True)	
+	usbDeviceFeatureEnableMicrosoftOsDescriptor.setDependencies(blUSBDeviceFeatureEnableMicrosoftOsDescriptor, ["CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE"])
+
+	#BOS descriptor support Enable 
+	usbDeviceFeatureEnableBosDescriptor = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FEATURE_ENABLE_BOS_DESCRIPTOR", usbDeviceFeatureEnable)
+	usbDeviceFeatureEnableBosDescriptor.setLabel("Enable BOS Descriptor Support")	
+	usbDeviceFeatureEnableBosDescriptor.setVisible(True)	
+	
+	# Enable Auto timed remote wakeup functions  
+	usbDeviceFeatureEnableAutioTimeRemoteWakeup = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FEATURE_ENABLE_AUTO_TIMED_REMOTE_WAKEUP_FUNCTIONS", usbDeviceFeatureEnable)
+	usbDeviceFeatureEnableAutioTimeRemoteWakeup.setLabel("Use Auto Timed Remote Wake up Functions")	
+	usbDeviceFeatureEnableAutioTimeRemoteWakeup.setVisible(False)
 	
 	################################################
 	# system_config.h file for USB Driver
 	################################################
-	usbDeviceSystemConfigFile = usbDeviceComponent.createFileSymbol(None, None)
+	usbDeviceSystemConfigFile = usbDeviceComponent.createFileSymbol("USB_DEVICE_SYSTEM_CONFIG_FILE", None)
 	usbDeviceSystemConfigFile.setType("STRING")
 	usbDeviceSystemConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION")
 	usbDeviceSystemConfigFile.setSourcePath( sourcePath + "system_config.h.device_common.ftl")
 	usbDeviceSystemConfigFile.setMarkup(True)
+	
 	
 
 	

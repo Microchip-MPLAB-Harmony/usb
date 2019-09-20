@@ -64,6 +64,8 @@ def onAttachmentConnected(source, target):
 	
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
+	remoteComponent = target["component"]
+	remoteID = remoteComponent.getID()
 	
 	# Read number of functions from USB Device Layer 
 	nFunctions = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
@@ -141,6 +143,8 @@ def onAttachmentDisconnected(source, target):
 	
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
+	remoteComponent = target["component"]
+	remoteID = remoteComponent.getID()
 	
 	nFunctions = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 	if nFunctions != None: 
@@ -178,7 +182,7 @@ def onAttachmentDisconnected(source, target):
 		
 	
 def destroyComponent(component):
-	print ("Vendor Function Driver: Destroyed")
+	print ("Vendor Function: Destroyed")
 			
 		
 	

@@ -159,23 +159,6 @@ def instantiateComponent(usbDriverComponent, index):
 	usbDeviceDriverInterface = usbDriverComponent.createStringSymbol("CONFIG_USB_DRIVER_INTERFACE", None)
 	usbDeviceDriverInterface.setVisible(False)
 	usbDeviceDriverInterface.setDefaultValue("DRV_USBFS_HOST_INTERFACE")
-	
-		
-
-	usbVbusSense = usbDriverComponent.createBooleanSymbol("USB_DEVICE_VBUS_SENSE", usbOpMode)
-	usbVbusSense.setLabel("Enable VBUS Sense")
-	usbVbusSense.setDescription("A Self Powered USB Device firmware must have some means to detect VBUS from Host. A GPIO pin can be configured as an Input and connected to VBUS (through a resistor), and can be used to detect when VBUS is high (host actively powering). This configuration instructs MHC to generate a VBUS SENSE function. The GPIO pin name must be configured as in the below ")
-	usbVbusSense.setVisible(True)
-	usbVbusSense.setDescription("Select USB Operation Mode")
-	usbVbusSense.setDefaultValue(True)
-	usbVbusSense.setUseSingleDynamicValue(True)
-	usbVbusSense.setDependencies(blUSBDriverOperationModeDevice, ["USB_OPERATION_MODE"])
-
-	usbVbusSenseFunctionName = usbDriverComponent.createStringSymbol("USB_DEVICE_VBUS_SENSE_PIN_NAME", usbVbusSense)
-	usbVbusSenseFunctionName.setLabel("VBUS SENSE Pin Name")
-	usbVbusSenseFunctionName.setDefaultValue("USB_VBUS_SENSE")
-	usbVbusSenseFunctionName.setVisible(True)
-	usbVbusSenseFunctionName.setDependencies(blUsbVbusPinName, ["USB_DEVICE_VBUS_SENSE"])
 
 	enable_rtos_settings = False
 
