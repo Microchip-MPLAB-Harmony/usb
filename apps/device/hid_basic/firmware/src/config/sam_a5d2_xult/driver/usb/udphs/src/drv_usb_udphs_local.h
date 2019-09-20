@@ -302,6 +302,9 @@ typedef struct _DRV_USB_UDPHS_OBJ_STRUCT
     /* True if device is attached */
     volatile bool deviceAttached;
 
+    /* Set if device if D+ pull up is enabled. */
+    bool isAttached;
+
 	/* This is array of device endpoint objects pointers */
 	DRV_USB_UDPHS_DEVICE_ENDPOINT_OBJ * deviceEndpointObj[DRV_USB_UDPHS_ENDPOINTS_NUMBER];
 

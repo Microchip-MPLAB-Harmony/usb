@@ -158,12 +158,9 @@ void _DRV_USB_UDPHS_DEVICE_Initialize
 	usbID->UDPHS_CTRL &= ~UDPHS_CTRL_EN_UDPHS_Msk;
 	usbID->UDPHS_CTRL |= UDPHS_CTRL_EN_UDPHS_Msk;
 
-
-
     /* Disable all endpoints */
 	for (count = 0; count < UDPHS_EPT_NUMBER; count++)
     {
-
 		usbID->UDPHS_EPT[count].UDPHS_EPTCFG &= ~UDPHS_EPTCFG_Msk;
 		usbID->UDPHS_EPT[count].UDPHS_EPTCTLDIS = UDPHS_EPTCTLDIS_Msk;
     }
@@ -181,19 +178,8 @@ void _DRV_USB_UDPHS_DEVICE_Initialize
 		usbID->UDPHS_DMA[count].UDPHS_DMASTATUS = usbID->UDPHS_DMA[count].UDPHS_DMASTATUS;
 	}
 
-	usbID->UDPHS_CLRINT = UDPHS_CLRINT_UPSTR_RES_Msk |
-		UDPHS_CLRINT_ENDOFRSM_Msk |
-		UDPHS_CLRINT_WAKE_UP_Msk |
-		UDPHS_CLRINT_ENDRESET_Msk |
-		UDPHS_CLRINT_INT_SOF_Msk |
-		UDPHS_CLRINT_MICRO_SOF_Msk |
-		UDPHS_CLRINT_DET_SUSPD_Msk;
+	usbID->UDPHS_CLRINT = UDPHS_CLRINT_Msk;
 
-    /* In device mode endpoint 0 FIFO size is always 64.
-     * So any FIFO allocation should start from 64. The
-     * actual value stored in this variable is 64/8 */
-
-    drvObj->consumedFIFOSize = 8;
     drvObj->status = SYS_STATUS_READY;
 
 }/* end of _DRV_USB_UDPHS_DEVICE_Initialize() */
@@ -434,22 +420,71 @@ void DRV_USB_UDPHS_DEVICE_Detach(DRV_HANDLE handle)
 
     udphs_registers_t * usbID;                  /* USB instance pointer */
     DRV_USB_UDPHS_OBJ * hDriver;                  /* USB driver object pointer */
-
+    USB_ERROR retVal = USB_ERROR_NONE;
+    bool interruptWasEnabled = false;       /* To track interrupt state */
+    uint8_t count;
 
     /* Check if the handle is invalid, if so return without any action */
     if(DRV_HANDLE_INVALID == handle)
     {
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB UDPHS Driver: Invalid Driver Handle in DRV_USB_UDPHS_DEVICE_Detach().");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB UDPHS Driver: Driver Handle is invalid in DRV_USB_UDPHS_DEVICE_Detach().");
     }
-    else
-	{
+    else if(true == ((DRV_USB_UDPHS_OBJ *) handle)->inUse)
+    {
         hDriver = (DRV_USB_UDPHS_OBJ *) handle;
         usbID = hDriver->usbID;
 
-        usbID->UDPHS_CTRL |= UDPHS_CTRL_DETACH_Msk;
-        usbID->UDPHS_CTRL &= ~UDPHS_CTRL_PULLD_DIS_Msk;
-    }
+        if(false == hDriver->isInInterruptContext)
+        {
+            if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+            {
+                /* Disable  the USB Interrupt as this is not called inside ISR */
+                interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptSource);                
+            }
+            else
+            {
+                /* There was an error in getting the mutex */
+                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB UDPHS Driver: Mutex lock failed in DRV_USB_UDPHS_DEVICE_Detach()");
+                retVal = USB_ERROR_OSAL_FUNCTION;
+            }
+        }
+        if(retVal == USB_ERROR_NONE)
+        {
+            /* Update the driver flag indicating detach */
+            hDriver->isAttached = false;
+            
+            DRV_USB_UDPHS_DEVICE_EndpointDisable((DRV_HANDLE)hDriver, DRV_USB_DEVICE_ENDPOINT_ALL);
+            
 
+		    /* Disable all endpoints */
+			for (count = 0; count < UDPHS_EPT_NUMBER; count++)
+		    {
+				usbID->UDPHS_EPT[count].UDPHS_EPTCFG &= ~UDPHS_EPTCFG_Msk;
+				usbID->UDPHS_EPT[count].UDPHS_EPTCTLDIS = UDPHS_EPTCTLDIS_Msk;
+		    }
+
+			/* Configure the pull-up on D+ and disconnect it */
+			usbID->UDPHS_CTRL |= UDPHS_CTRL_DETACH_Msk;
+			usbID->UDPHS_CTRL |= UDPHS_CTRL_PULLD_DIS_Msk;
+
+			/* Reset IP */
+			usbID->UDPHS_CTRL &= ~UDPHS_CTRL_EN_UDPHS_Msk;
+			usbID->UDPHS_CTRL |= UDPHS_CTRL_EN_UDPHS_Msk;
+			
+        }
+        if(false == hDriver->isInInterruptContext)
+        {
+            if(true == interruptWasEnabled)
+            {
+                /* IF the interrupt was enabled when entering the routine
+                 * re-enable it now */
+                SYS_INT_SourceEnable(hDriver->interruptSource);
+
+                /* Unlock the mutex */
+                OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
+            }
+        }
+    }
 }/* end of DRV_USB_UDPHS_DEVICE_Detach() */
 
 // *****************************************************************************
