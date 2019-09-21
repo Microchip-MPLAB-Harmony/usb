@@ -45,17 +45,91 @@
 /* Maximum instances of Audio function driver */
 #define USB_DEVICE_AUDIO_INSTANCES_NUMBER    ${__INSTANCE_COUNT} 
 
+<#assign queuedepthCombined = 0>
+<#list 1..4 as x>
+  <#if x == 1>
+  <#assign queuedepthCombined = usb_device_audio_0.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
+				                + usb_device_audio_0.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
+  </#if>
+  <#if x == 2>
+  <#assign queuedepthCombined = queuedepthCombined 
+					            + usb_device_audio_1.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
+								+ usb_device_audio_1.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
+  </#if>
+  <#if x == 3>
+  <#assign queuedepthCombined = queuedepthCombined 
+								+ usb_device_audio_2.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE
+								+ usb_device_audio_2.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
+  </#if>
+  <#if x == 4>
+  <#assign queuedepthCombined = queuedepthCombined 
+								+ usb_device_audio_3.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
+								+ usb_device_audio_3.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
+  </#if>
+  <#if x == __INSTANCE_COUNT>
+    <#break>
+  </#if>
+</#list>
 /* Audio Transfer Queue Size for both read and
    write. Applicable to all instances of the
    function driver */
-#define USB_DEVICE_AUDIO_QUEUE_DEPTH_COMBINED ${CONFIG_USB_DEVICE_AUDIO_QUEUE_DEPTH_COMBINED}
+#define USB_DEVICE_AUDIO_QUEUE_DEPTH_COMBINED ${queuedepthCombined}
 
-
+<#-- Find out max streaming interface -->
+<#assign maxStreamingInterface = 0>
+<#if (usb_device_audio_0.CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER)?has_content == true>
+	<#assign maxStreamingInterface = usb_device_audio_0.CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER >
+</#if>
+<#if (usb_device_audio_1.CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER)?has_content == true>
+	<#if usb_device_audio_1.CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER gt maxStreamingInterface >
+		<#assign maxStreamingInterface = usb_device_audio_1.CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER>
+	</#if>
+</#if>
+<#if (usb_device_audio_2.CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER)?has_content == true>
+	<#if usb_device_audio_2.CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER gt maxStreamingInterface >
+		<#assign maxStreamingInterface = usb_device_audio_2.CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER>
+	</#if>
+</#if>
+<#if (usb_device_audio_3.CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER)?has_content == true>
+	<#if usb_device_audio_3.CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER gt maxStreamingInterface >
+		<#assign maxStreamingInterface = usb_device_audio_3.CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER>
+	</#if>
+</#if>
+<#if (usb_device_audio_4.CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER)?has_content == true>
+	<#if usb_device_audio_4.CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER gt maxStreamingInterface >
+		<#assign maxStreamingInterface = usb_device_audio_4.CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER>
+	</#if>
+</#if>
 /* No of Audio streaming interfaces */
-#define USB_DEVICE_AUDIO_MAX_STREAMING_INTERFACES   ${CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER_COMBINED}
+#define USB_DEVICE_AUDIO_MAX_STREAMING_INTERFACES   ${maxStreamingInterface}
 
+<#-- Find out max alternate interface settings -->
+<#assign maxAlternateInterfaceSetting = 0>
+<#if (usb_device_audio_0.CONFIG_USB_DEVICE_FUNCTION_AUDIO_MAX_ALTERNATE_SETTING)?has_content == true>
+	<#assign maxAlternateInterfaceSetting = usb_device_audio_0.CONFIG_USB_DEVICE_FUNCTION_AUDIO_MAX_ALTERNATE_SETTING >
+</#if>
+<#if (usb_device_audio_1.CONFIG_USB_DEVICE_FUNCTION_AUDIO_MAX_ALTERNATE_SETTING)?has_content == true>
+	<#if usb_device_audio_1.CONFIG_USB_DEVICE_FUNCTION_AUDIO_MAX_ALTERNATE_SETTING gt maxAlternateInterfaceSetting >
+		<#assign maxAlternateInterfaceSetting = usb_device_audio_1.CONFIG_USB_DEVICE_FUNCTION_AUDIO_MAX_ALTERNATE_SETTING>
+	</#if>
+</#if>
+<#if (usb_device_audio_2.CONFIG_USB_DEVICE_FUNCTION_AUDIO_MAX_ALTERNATE_SETTING)?has_content == true>
+	<#if usb_device_audio_2.CONFIG_USB_DEVICE_FUNCTION_AUDIO_MAX_ALTERNATE_SETTING gt maxAlternateInterfaceSetting >
+		<#assign maxAlternateInterfaceSetting = usb_device_audio_2.CONFIG_USB_DEVICE_FUNCTION_AUDIO_MAX_ALTERNATE_SETTING>
+	</#if>
+</#if>
+<#if (usb_device_audio_3.CONFIG_USB_DEVICE_FUNCTION_AUDIO_MAX_ALTERNATE_SETTING)?has_content == true>
+	<#if usb_device_audio_3.CONFIG_USB_DEVICE_FUNCTION_AUDIO_MAX_ALTERNATE_SETTING gt maxAlternateInterfaceSetting >
+		<#assign maxAlternateInterfaceSetting = usb_device_audio_3.CONFIG_USB_DEVICE_FUNCTION_AUDIO_MAX_ALTERNATE_SETTING>
+	</#if>
+</#if>
+<#if (usb_device_audio_4.CONFIG_USB_DEVICE_FUNCTION_AUDIO_MAX_ALTERNATE_SETTING)?has_content == true>
+	<#if usb_device_audio_4.CONFIG_USB_DEVICE_FUNCTION_AUDIO_MAX_ALTERNATE_SETTING gt maxAlternateInterfaceSetting >
+		<#assign maxAlternateInterfaceSetting = usb_device_audio_4.CONFIG_USB_DEVICE_FUNCTION_AUDIO_MAX_ALTERNATE_SETTING>
+	</#if>
+</#if>
 /* No of alternate settings */
-#define USB_DEVICE_AUDIO_MAX_ALTERNATE_SETTING      ${CONFIG_USB_DEVICE_FUNCTION_AUDIO_MAX_ALTERNATE_SETTING_COMBINED}
+#define USB_DEVICE_AUDIO_MAX_ALTERNATE_SETTING      ${maxAlternateInterfaceSetting}
 
 <#--
 /*******************************************************************************

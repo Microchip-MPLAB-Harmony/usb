@@ -172,7 +172,7 @@
 
 
 <#elseif CONFIG_USB_DEVICE_FUNCTION_AUDIO_DEVICE_TYPE == "Audio v1.0 USB Microphone">
-	/* USB Speaker Standard Audio Control Interface Descriptor    */
+   /* USB Microphone Standard Audio Control Interface Descriptor    */
    0x09,                            // Size of this descriptor in bytes (bLength)
    USB_DESCRIPTOR_INTERFACE,        // INTERFACE descriptor type (bDescriptorType)
    USB_DEVICE_AUDIO_CONTROL_INTERFACE_ID,

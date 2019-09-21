@@ -1,4 +1,25 @@
-"""*****************************************************************************
+<#--
+/*******************************************************************************
+  USB Device Freemarker Template File
+
+  Company:
+    Microchip Technology Inc.
+
+  File Name:
+    system_config.h.device_audio.ftl
+
+  Summary:
+    USB Device Freemarker Template File
+
+  Description:
+    This file contains configurations necessary to run the system.  It
+    implements the "SYS_Initialize" function, configuration bits, and allocates
+    any necessary global system resources, such as the systemObjects structure
+    that contains the object handles to all the MPLAB Harmony module objects in
+    the system.
+*******************************************************************************/
+
+/*******************************************************************************
 * Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
@@ -19,14 +40,11 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
-*****************************************************************************"""
+ *******************************************************************************/
+-->
+<#--
+/*******************************************************************************
+ End of File
+*/
+-->
 
-def instantiateComponent(usbAudioComponentCommon):
-	################################################
-	# system_config.h file for USB Device stack    
-	################################################
-	usbDeviceAudioCommonSystemConfigFile = usbAudioComponentCommon.createFileSymbol("USB_DEVICE_AUDIO_COMMON_SYSTEM_CONFIG_FILE", None)
-	usbDeviceAudioCommonSystemConfigFile.setType("STRING")
-	usbDeviceAudioCommonSystemConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION")
-	usbDeviceAudioCommonSystemConfigFile.setSourcePath("templates/device/audio/system_config.h.device_audio_common.ftl")
-	usbDeviceAudioCommonSystemConfigFile.setMarkup(True)
