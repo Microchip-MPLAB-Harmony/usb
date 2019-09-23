@@ -1,13 +1,14 @@
 /**************************************************************************//**
  * @file     cmsis_iccarm.h
  * @brief    CMSIS compiler ICCARM (IAR Compiler for Arm) header file
- * @version  V5.0.8
- * @date     04. September 2018
+ * @version  V5.1.0
+ * @date     08. May 2019
  ******************************************************************************/
 
 //------------------------------------------------------------------------------
 //
-// Copyright (c) 2017-2018 IAR Systems
+// Copyright (c) 2017-2019 IAR Systems
+// Copyright (c) 2017-2019 Arm Limited. All rights reserved. 
 //
 // Licensed under the Apache License, Version 2.0 (the "License")
 // you may not use this file except in compliance with the License.
@@ -108,6 +109,10 @@
 
 #ifndef __ASM
   #define __ASM __asm
+#endif
+
+#ifndef   __COMPILER_BARRIER
+  #define __COMPILER_BARRIER() __ASM volatile("":::"memory")
 #endif
 
 #ifndef __INLINE

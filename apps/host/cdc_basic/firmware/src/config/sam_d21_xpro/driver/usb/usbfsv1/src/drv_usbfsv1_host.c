@@ -477,6 +477,7 @@ USB_ERROR DRV_USBFSV1_HOST_IRPSubmit
         /* Assign owner pipe */
         irp->pipe = hPipe;
         irp->status = USB_HOST_IRP_STATUS_PENDING;
+        irp->tempState = DRV_USBFSV1_HOST_IRP_STATE_SETUP_STAGE;
         hostPipe = pipe->hostPipeN;
         direction = (pipe->endpointAndDirection & 0x80) >> 7;
 

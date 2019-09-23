@@ -180,13 +180,15 @@ void SYS_Initialize ( void* data )
     CLOCK_Initialize();
 
 
-	BSP_Initialize();
+    SERCOM3_USART_Initialize();
+
     NVMCTRL_Initialize( );
 
     EVSYS_Initialize();
 
     TC3_TimerInitialize();
 
+	BSP_Initialize();
 
 
     sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);
