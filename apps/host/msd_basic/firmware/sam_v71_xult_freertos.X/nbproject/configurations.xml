@@ -43,6 +43,10 @@
               <itemPath>../src/config/sam_v71_xult_freertos/peripheral/tc/plib_tc0.h</itemPath>
               <itemPath>../src/config/sam_v71_xult_freertos/peripheral/tc/plib_tc_common.h</itemPath>
             </logicalFolder>
+            <logicalFolder name="f6" displayName="usart" projectFiles="true">
+              <itemPath>../src/config/sam_v71_xult_freertos/peripheral/usart/plib_usart_common.h</itemPath>
+              <itemPath>../src/config/sam_v71_xult_freertos/peripheral/usart/plib_usart1.h</itemPath>
+            </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f4" displayName="system" projectFiles="true">
             <logicalFolder name="f4" displayName="cache" projectFiles="true">
@@ -198,6 +202,9 @@
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armcc.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang.h</itemPath>
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm7.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
@@ -255,6 +262,9 @@
             </logicalFolder>
             <logicalFolder name="f5" displayName="tc" projectFiles="true">
               <itemPath>../src/config/sam_v71_xult_freertos/peripheral/tc/plib_tc0.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f6" displayName="usart" projectFiles="true">
+              <itemPath>../src/config/sam_v71_xult_freertos/peripheral/usart/plib_usart1.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f2" displayName="stdio" projectFiles="true">

@@ -194,6 +194,8 @@ void SYS_Initialize ( void* data )
      
     
 	BSP_Initialize();
+	USART1_Initialize();
+
 
 
     sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);

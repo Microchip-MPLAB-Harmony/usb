@@ -48,6 +48,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include "usb/usb_msd.h"
 #include "usb/usb_host_msd.h"
 #include "usb/usb_host_scsi.h"
@@ -68,6 +69,7 @@
 #include "system/fs/fat_fs/src/hardware_access/diskio.h"
 #include "FreeRTOS.h"
 #include "task.h"
+#include "peripheral/usart/plib_usart1.h"
 #include "system/int/sys_int.h"
 #include "system/cache/sys_cache.h"
 #include "osal/osal.h"

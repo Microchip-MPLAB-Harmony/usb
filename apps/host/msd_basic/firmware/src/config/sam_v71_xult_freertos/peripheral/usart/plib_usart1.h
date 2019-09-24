@@ -1,20 +1,20 @@
 /*******************************************************************************
-  USB stack external dependencies file
+  USART1 PLIB
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    drv_usb_external_dependencies.h
+    plib_usart1.h
 
   Summary:
-    USB Driver external dependencies file
+    USART1 PLIB Header File
 
   Description:
-    USB Driver external dependencies file. 
+    None
+
 *******************************************************************************/
 
-//DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -36,41 +36,56 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *******************************************************************************/
-//DOM-IGNORE-END
+*******************************************************************************/
 
-#ifndef _DRV_USB_EXTERNAL_DEPENDENCIES_H
-#define _DRV_USB_EXTERNAL_DEPENDENCIES_H
+#ifndef PLIB_USART1_H
+#define PLIB_USART1_H
 
-#include <string.h>
-#include "system/system_common.h"
-#include "configuration.h"
-#include "definitions.h"
-#include "system/system_module.h"
+#include "plib_usart_common.h"
 
-#if defined DRV_USBHS_INSTANCES_NUMBER
-#include "system/time/sys_time.h"
-#define SYS_TMR_HANDLE SYS_TIME_HANDLE
-#define SYS_TMR_HANDLE_INVALID SYS_TIME_HANDLE_INVALID
-#define SYS_TMR_CallbackSingle(delay,context,callback) SYS_TIME_CallbackRegisterMS(callback,context,delay, SYS_TIME_SINGLE)
-#define SYS_TMR_ObjectDelete SYS_TIME_TimerDestroy
-#endif 
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
 
-#if  !defined(SYS_DEBUG_ENABLE) 
+    extern "C" {
 
-    #if  !defined(SYS_DEBUG_PRINT)
-        #define SYS_DEBUG_PRINT(level, format, ...) 
-    #endif
+#endif
+// DOM-IGNORE-END
 
-    #if  !defined(SYS_DEBUG_MESSAGE)
-        #define SYS_DEBUG_MESSAGE(a,b, ...)   
-    #endif
+// *****************************************************************************
+// *****************************************************************************
+// Section: Interface
+// *****************************************************************************
+// *****************************************************************************
+#define USART1_FrequencyGet()    (uint32_t)(150000000UL)
 
-    #if  !defined(SYS_DEBUG)
-        #define SYS_DEBUG(a,b)
-    #endif 
-#endif 
-#endif /* End of #ifndef _DRV_USB_EXTERNAL_DEPENDENCIES_H */ 
-/*******************************************************************************
- End of File
-*/
+/****************************** USART1 API *********************************/
+
+void USART1_Initialize( void );
+
+USART_ERROR USART1_ErrorGet( void );
+
+bool USART1_SerialSetup( USART_SERIAL_SETUP *setup, uint32_t srcClkFreq );
+
+bool USART1_Write( void *buffer, const size_t size );
+
+bool USART1_Read( void *buffer, const size_t size );
+
+int USART1_ReadByte(void);
+
+void USART1_WriteByte(int data);
+
+bool USART1_TransmitterIsReady( void );
+
+bool USART1_TransmitComplete( void );
+
+bool USART1_ReceiverIsReady( void );
+
+
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
+
+    }
+
+#endif
+// DOM-IGNORE-END
+#endif // PLIB_USART1_H
