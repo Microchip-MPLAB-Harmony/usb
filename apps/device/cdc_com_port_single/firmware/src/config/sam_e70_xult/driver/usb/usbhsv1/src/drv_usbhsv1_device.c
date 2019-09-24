@@ -446,6 +446,8 @@ void DRV_USBHSV1_DEVICE_Detach(DRV_HANDLE handle)
     USB_ERROR retVal = USB_ERROR_NONE;
     bool interruptWasEnabled = false;       /* To track interrupt state */
 
+
+    /* Check if the handle is invalid, if so return without any action */
     if(DRV_HANDLE_INVALID == handle)
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBHSV1 Device Driver: Driver Handle is invalid in DRV_USBHSV1_DEVICE_Detach().");

@@ -443,20 +443,63 @@ void DRV_USBHSV1_DEVICE_Detach(DRV_HANDLE handle)
 
     usbhs_registers_t * usbID;                  /* USB instance pointer */
     DRV_USBHSV1_OBJ * hDriver;                  /* USB driver object pointer */
+    USB_ERROR retVal = USB_ERROR_NONE;
+    bool interruptWasEnabled = false;       /* To track interrupt state */
 
+
+    /* Check if the handle is invalid, if so return without any action */
     if(DRV_HANDLE_INVALID == handle)
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBHSV1 Device Driver: Driver Handle is invalid in DRV_USBHSV1_DEVICE_Detach().");
     }
-    else
+    else if(true == ((DRV_USBHSV1_OBJ *) handle)->inUse)
     {
         hDriver = (DRV_USBHSV1_OBJ *) handle;
         usbID = hDriver->usbID;
 
-        /* Detach the device */
-        usbID->USBHS_DEVCTRL |= USBHS_DEVCTRL_DETACH_Msk;
-    }
+        if(false == hDriver->isInInterruptContext)
+        {
+            if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+            {
+                /* Disable  the USB Interrupt as this is not called inside ISR */
+                interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptSource);                
+            }
+            else
+            {
+                /* There was an error in getting the mutex */
+                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBHSV1 Device Driver: Mutex lock failed in DRV_USBHSV1_DEVICE_Detach()");
+                retVal = USB_ERROR_OSAL_FUNCTION;
+            }
+        }
+        if(retVal == USB_ERROR_NONE)
+        {
+            /* Update the driver flag indicating detach */
+            hDriver->isAttached = false;
+            
+            DRV_USBHSV1_DEVICE_EndpointDisable((DRV_HANDLE)hDriver, DRV_USB_DEVICE_ENDPOINT_ALL);
 
+            /* Clear all the pending interrupts */
+            usbID->USBHS_DEVICR = USBHS_DEVICR_Msk;
+            
+            /* Disable all interrupts */
+            usbID->USBHS_DEVIDR = USBHS_DEVIDR_Msk;
+            
+            /* Detach the device */
+            usbID->USBHS_DEVCTRL |= USBHS_DEVCTRL_DETACH_Msk;
+        }
+        if(false == hDriver->isInInterruptContext)
+        {
+            if(true == interruptWasEnabled)
+            {
+                /* IF the interrupt was enabled when entering the routine
+                 * re-enable it now */
+                SYS_INT_SourceEnable(hDriver->interruptSource);
+
+                /* Unlock the mutex */
+                OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
+            }
+        }
+    }
 }/* end of DRV_USBHSV1_DEVICE_Detach() */
 
 // *****************************************************************************

@@ -128,6 +128,9 @@ extern "C" {
 
 
 
+/* Alignment for buffers that are submitted to USB Driver*/ 
+#define USB_ALIGN  CACHE_ALIGN
+
 /* Number of Endpoints used */
 #define DRV_USBHS_ENDPOINTS_NUMBER                        4
 

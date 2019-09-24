@@ -113,7 +113,7 @@ const DRV_USBHSV1_INIT drvUSBInit =
     /* Identifies peripheral (PLIB-level) ID */
     .usbID = USBHS_REGS,
 	
-    /* Function to check for VBus */
+    /* Function to check for VBUS */
     .vbusComparator = DRV_USBHSV1_VBUS_Comparator
 };
 
@@ -141,9 +141,8 @@ const DRV_USBHSV1_INIT drvUSBInit =
 void SYS_Initialize ( void* data )
 {
   
-    CLK_Initialize();
+    CLOCK_Initialize();
 	PIO_Initialize();
-
 
 	BSP_Initialize();
 	RSWDT_REGS->RSWDT_MR = RSWDT_MR_WDDIS_Msk;	// Disable RSWDT 

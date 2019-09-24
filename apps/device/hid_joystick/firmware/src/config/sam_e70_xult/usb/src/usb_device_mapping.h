@@ -163,7 +163,7 @@
 // *****************************************************************************
 // *****************************************************************************
 /* Following macros are needed to Support Other Speed Descriptor request */ 
-#if defined(DRV_USBHS_INSTANCES_NUMBER) || defined (DRV_USBHSV1_INSTANCES_NUMBER)
+#if defined(DRV_USBHS_INSTANCES_NUMBER) || defined (DRV_USBHSV1_INSTANCES_NUMBER) || defined (DRV_USB_UDPHS_INSTANCES_NUMBER)
     #define _USB_DEVICE_DECLARE_IRP(x) USB_DEVICE_IRP x 
     #define _USB_DEVICE_DECLARE_EP0_BUFFER(x) uint8_t x[USB_DEVICE_EP0_BUFFER_SIZE]
     #define _USB_DEVICE_OtherSpeedDescriptorRequestService(x,y) _USB_DEVICE_Other_Speed_Descriptor_Request(x,y)

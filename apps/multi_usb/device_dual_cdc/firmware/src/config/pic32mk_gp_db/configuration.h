@@ -94,48 +94,20 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 
-
-/* The USB Device Layer will not initialize the USB Driver */
-#define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT
-
-
-
-
-
-
-
-
-
-
-
-
 #define USB_DEVICE_INSTANCES_NUMBER                         2
+
 /* EP0 size in bytes */
 #define USB_DEVICE_EP0_BUFFER_SIZE                          64
 
-
-
-
 /* The USB Device Layer will not initialize the USB Driver */
 #define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT
 
 
-
-
-
-
-
-
-
-
-
+/* Number Full Speed USB Driver instances */ 
 #define DRV_USBFS_INSTANCES_NUMBER                       2
 
 /* Interrupt mode enabled */
 #define DRV_USBFS_INTERRUPT_MODE                          true
-
-
- 
 
 /* Enables Device Support */
 #define DRV_USBFS_DEVICE_SUPPORT                          true
@@ -147,7 +119,6 @@ extern "C" {
 
 /* Alignment for buffers that are submitted to USB Driver*/ 
 #define USB_ALIGN  CACHE_ALIGN
-
 
 /* Maximum instances of CDC function driver */
 #define USB_DEVICE_CDC_INSTANCES_NUMBER                     2

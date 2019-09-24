@@ -115,6 +115,9 @@ extern "C" {
 /* Disable Host Support */
 #define DRV_USBHSV1_HOST_SUPPORT                            false
 
+/* Alignment for buffers that are submitted to USB Driver*/ 
+#define USB_ALIGN  CACHE_ALIGN
+
 /* Number of Endpoints used */
 #define DRV_USBHSV1_ENDPOINTS_NUMBER                        7
 

@@ -219,7 +219,7 @@ const uint8_t highSpeedConfigurationDescriptor[]=
     USB_DESCRIPTOR_ENDPOINT,        // Endpoint Descriptor
     1 | USB_EP_DIRECTION_IN,    // EndpointAddress ( EP1 IN )
     USB_TRANSFER_TYPE_INTERRUPT,    // Attributes
-    0x00,0x02,                      // Size
+    0x40,0x00,                      // Size
     0x01,                           // Interval
 
     /* Endpoint Descriptor */
@@ -228,7 +228,7 @@ const uint8_t highSpeedConfigurationDescriptor[]=
     USB_DESCRIPTOR_ENDPOINT,        // Endpoint Descriptor
     2 | USB_EP_DIRECTION_OUT,   // EndpointAddress ( EP2 OUT )
     USB_TRANSFER_TYPE_INTERRUPT,    // Attributes
-    0x00,0x02,                      // size
+    0x40,0x00,                      // size
     0x01,                           // Interval
     
     
@@ -390,7 +390,7 @@ const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =
     &deviceDescriptor,                                      // High speed device descriptor
     1,                                                      // Total number of high speed configurations available
     highSpeedConfigDescSet,                                 // Pointer to array of high speed configurations descriptors
-    3,                                                      // Total number of string descriptors available.
+    3,														// Total number of string descriptors available.
     stringDescriptors,                                      // Pointer to array of string descriptors.
     &deviceQualifierDescriptor1,                            // Pointer to full speed dev qualifier.
     &deviceQualifierDescriptor1                             // Pointer to high speed dev qualifier.
