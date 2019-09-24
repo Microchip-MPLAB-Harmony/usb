@@ -102,6 +102,12 @@ extern "C" {
 // Section: Middleware & Other Library Configuration
 // *****************************************************************************
 // *****************************************************************************
+/* Number of CDC Function driver instances in the application */
+#define USB_HOST_CDC_INSTANCES_NUMBER         1
+
+/* Number of CDC Attach Listeners */ 
+#define USB_HOST_CDC_ATTACH_LISTENERS_NUMBER        1
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: USB Host Layer Configuration
@@ -158,12 +164,6 @@ extern "C" {
 
 /* Alignment for buffers that are submitted to USB Driver*/ 
 #define USB_ALIGN  CACHE_ALIGN
-
-/* Number of CDC Function driver instances in the application */
-#define USB_HOST_CDC_INSTANCES_NUMBER         1
-
-/* Number of CDC Attach Listeners */ 
-#define USB_HOST_CDC_ATTACH_LISTENERS_NUMBER        1
 
 
 

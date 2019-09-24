@@ -322,21 +322,6 @@
 #include "math.h"
 #include "float.h"
 
-/* evaluate ARM architecture */
-#if   defined (__ARM_ARCH_6M__)
-  #define ARM_MATH_CM0_FAMILY            1
-#elif defined (__ARM_ARCH_7M__)
-//#define ARM_MATH_CM0_FAMILY            0
-#elif defined (__ARM_ARCH_7EM__)
-//#define ARM_MATH_CM0_FAMILY            0
-#elif defined (__ARM_ARCH_8M_BASE__)
-  #define ARM_MATH_CM0_FAMILY            1
-#elif defined (__ARM_ARCH_8M_MAIN__)
-//#define ARM_MATH_CM0_FAMILY            0
-#else
-  #error "Unknown Arm Architecture!"
-#endif
-
 /* evaluate ARM DSP feature */
 #if (defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1))
   #define ARM_MATH_DSP                   1
@@ -345,7 +330,6 @@
 #if defined(__ARM_NEON)
 #include <arm_neon.h>
 #endif
-
 
 
 #ifdef   __cplusplus
@@ -447,7 +431,9 @@ extern "C"
 #elif defined ( __CSMC__ )
   #define __SIMD32_TYPE int32_t
 #elif defined ( __TASKING__ )
-  #define __SIMD32_TYPE __unaligned int32_t
+  #define __SIMD32_TYPE __un(aligned) int32_t
+#elif defined(_MSC_VER )
+  #define __SIMD32_TYPE int32_t
 #else
   #error Unknown compiler
 #endif
@@ -458,6 +444,7 @@ extern "C"
 #define __SIMD64(addr)        (*(      int64_t **) & (addr))
 
 /* SIMD replacement */
+
 
 /**
   @brief         Read 2 Q15 from Q15 pointer.
@@ -829,6 +816,45 @@ compiler file in Core or Core_A would not make sense.
     return (signBits + 1);
   }
 
+#if defined(ARM_MATH_NEON)
+
+static inline float32x4_t __arm_vec_sqrt_f32_neon(float32x4_t  x)
+{
+    float32x4_t x1 = vmaxq_f32(x, vdupq_n_f32(FLT_MIN));
+    float32x4_t e = vrsqrteq_f32(x1);
+    e = vmulq_f32(vrsqrtsq_f32(vmulq_f32(x1, e), e), e);
+    e = vmulq_f32(vrsqrtsq_f32(vmulq_f32(x1, e), e), e);
+    return vmulq_f32(x, e);
+}
+
+static inline int16x8_t __arm_vec_sqrt_q15_neon(int16x8_t vec)
+{
+    float32x4_t tempF;
+    int32x4_t tempHI,tempLO;
+
+    tempLO = vmovl_s16(vget_low_s16(vec));
+    tempF = vcvtq_n_f32_s32(tempLO,15);
+    tempF = __arm_vec_sqrt_f32_neon(tempF);
+    tempLO = vcvtq_n_s32_f32(tempF,15);
+
+    tempHI = vmovl_s16(vget_high_s16(vec));
+    tempF = vcvtq_n_f32_s32(tempHI,15);
+    tempF = __arm_vec_sqrt_f32_neon(tempF);
+    tempHI = vcvtq_n_s32_f32(tempF,15);
+
+    return(vcombine_s16(vqmovn_s32(tempLO),vqmovn_s32(tempHI)));
+}
+
+static inline int32x4_t __arm_vec_sqrt_q31_neon(int32x4_t vec)
+{
+  float32x4_t temp;
+
+  temp = vcvtq_n_f32_s32(vec,31);
+  temp = __arm_vec_sqrt_f32_neon(temp);
+  return(vcvtq_n_s32_f32(temp,31));
+}
+
+#endif
 
 /*
  * @brief C custom defined intrinsic functions
@@ -5878,6 +5904,29 @@ arm_status arm_sqrt_q31(
 arm_status arm_sqrt_q15(
   q15_t in,
   q15_t * pOut);
+
+  /**
+   * @brief  Vector Floating-point square root function.
+   * @param[in]  pIn   input vector.
+   * @param[out] pOut  vector of square roots of input elements.
+   * @param[in]  len   length of input vector.
+   * @return The function returns ARM_MATH_SUCCESS if input value is positive value or ARM_MATH_ARGUMENT_ERROR if
+   * <code>in</code> is negative value and returns zero output for negative values.
+   */
+  void arm_vsqrt_f32(
+  float32_t * pIn,
+  float32_t * pOut,
+  uint16_t len);
+
+  void arm_vsqrt_q31(
+  q31_t * pIn,
+  q31_t * pOut,
+  uint16_t len);
+
+  void arm_vsqrt_q15(
+  q15_t * pIn,
+  q15_t * pOut,
+  uint16_t len);
 
   /**
    * @} end of SQRT group

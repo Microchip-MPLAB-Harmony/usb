@@ -244,6 +244,25 @@ __packed struct  __iar_u32 { uint32_t v; };
   #endif
 #endif
 
+#ifndef __PROGRAM_START
+#define __PROGRAM_START           __iar_program_start
+#endif
+
+#ifndef __INITIAL_SP
+#define __INITIAL_SP              CSTACK$$Limit
+#endif
+
+#ifndef __STACK_LIMIT
+#define __STACK_LIMIT             CSTACK$$Base
+#endif
+
+#ifndef __VECTOR_TABLE
+#define __VECTOR_TABLE            __vector_table
+#endif
+
+#ifndef __VECTOR_TABLE_ATTRIBUTE
+#define __VECTOR_TABLE_ATTRIBUTE  @".intvec"
+#endif
 
 #ifndef __ICCARM_INTRINSICS_VERSION__
   #define __ICCARM_INTRINSICS_VERSION__  0

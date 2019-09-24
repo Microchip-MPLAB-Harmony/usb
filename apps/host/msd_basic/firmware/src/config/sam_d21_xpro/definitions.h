@@ -48,6 +48,8 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include <stdio.h>
+#include "peripheral/sercom/usart/plib_sercom3_usart.h"
 #include "peripheral/nvmctrl/plib_nvmctrl.h"
 #include "usb/usb_msd.h"
 #include "usb/usb_host_msd.h"

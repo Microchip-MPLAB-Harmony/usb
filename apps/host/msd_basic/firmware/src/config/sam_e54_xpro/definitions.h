@@ -48,7 +48,9 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include "peripheral/nvmctrl/plib_nvmctrl.h"
+#include "peripheral/sercom/usart/plib_sercom2_usart.h"
 #include "usb/usb_msd.h"
 #include "usb/usb_host_msd.h"
 #include "usb/usb_host_scsi.h"

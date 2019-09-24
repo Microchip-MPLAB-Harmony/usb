@@ -104,6 +104,13 @@ void CLOCK_Initialize (void)
     {
         /* Wait for synchronization */
     }
+    /* Selection of the Generator and write Lock for SERCOM2_CORE */
+    GCLK_REGS->GCLK_PCHCTRL[23] = GCLK_PCHCTRL_GEN(0x0)  | GCLK_PCHCTRL_CHEN_Msk;
+
+    while ((GCLK_REGS->GCLK_PCHCTRL[23] & GCLK_PCHCTRL_CHEN_Msk) != GCLK_PCHCTRL_CHEN_Msk)
+    {
+        /* Wait for synchronization */
+    }
 
     /* Configure the AHB Bridge Clocks */
     MCLK_REGS->MCLK_AHBMASK = 0xffffff;
@@ -112,7 +119,7 @@ void CLOCK_Initialize (void)
     MCLK_REGS->MCLK_APBAMASK = 0x47ff;
 
     /* Configure the APBB Bridge Clocks */
-    MCLK_REGS->MCLK_APBBMASK = 0x18057;
+    MCLK_REGS->MCLK_APBBMASK = 0x18257;
 
 
 }
