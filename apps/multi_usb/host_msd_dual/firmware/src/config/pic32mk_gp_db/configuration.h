@@ -180,7 +180,7 @@ extern "C" {
 
 
 /* Total number of devices to be supported */
-#define USB_HOST_DEVICES_NUMBER                             2 
+#define USB_HOST_DEVICES_NUMBER                             2
 
 /* Size of Endpoint 0 buffer */
 #define USB_DEVICE_EP0_BUFFER_SIZE                          64
