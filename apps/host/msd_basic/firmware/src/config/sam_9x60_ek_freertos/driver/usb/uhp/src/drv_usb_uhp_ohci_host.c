@@ -65,6 +65,7 @@ DRV_USB_HOST_INTERFACE gDrvUSBUHPHostInterfaceOhci =
     .hostPipeSetup     = DRV_USB_UHP_HOST_PipeSetup,
     .hostPipeClose     = DRV_USB_UHP_HOST_PipeClose,
     .hostEventsDisable = DRV_USB_UHP_HOST_EventsDisable,
+    .endpointToggleClear = DRV_USB_UHP_HOST_EndpointToggleClear,
     .hostEventsEnable  = DRV_USB_UHP_HOST_EventsEnable,
     .rootHubInterface.rootHubPortInterface.hubPortReset           = DRV_USB_UHP_HOST_ROOT_HUB_PortReset,
     .rootHubInterface.rootHubPortInterface.hubPortSpeedGet        = DRV_USB_UHP_HOST_ROOT_HUB_PortSpeedGet,

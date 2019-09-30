@@ -413,6 +413,74 @@ void _DRV_USB_UHP_HOST_Initialize
     drvObj->operationEnabled = false;
 }/* end of _DRV_USB_UHP_HOST_Initialize() */
 
+// ****************************************************************************
+/* Function:
+    void DRV_USB_UHP_HOST_EndpointToggleClear
+
+    (
+        DRV_HANDLE client,
+        USB_ENDPOINT endpointAndDirection
+    )
+
+  Summary:
+    Facilitates in resetting of endpoint data toggle to 0 for Non Control
+    endpoints.
+
+  Description:
+    Facilitates in resetting of endpoint data toggle to 0 for Non Control
+    endpoints.
+
+  Remarks:
+    Refer to drv_usb_uhp_host.h for usage information.
+*/
+void DRV_USB_UHP_HOST_EndpointToggleClear
+(
+    DRV_HANDLE client,
+    USB_ENDPOINT endpointAndDirection
+)
+{
+    /* Start of local variables */
+    DRV_USB_UHP_OBJ * hDriver = NULL;
+    uint8_t epIter = 0;
+    
+    /* End of local variables */
+    if((client == DRV_HANDLE_INVALID) || (((DRV_USB_UHP_OBJ *)client) == NULL))
+    {
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Invalid client handle");
+    }
+    else
+    {
+        hDriver = (DRV_USB_UHP_OBJ *)client;
+            
+        /* Now map the device endpoint to host endpoint. This is required to
+         * jump to the appropriate entry in the endpoint table */
+        for(epIter = 1; epIter < DRV_USB_UHP_HOST_MAXIMUM_ENDPOINTS_NUMBER; epIter++)
+        {
+            if(true == hDriver->hostEndpointTable[epIter].endpoint.inUse)
+            {
+                /* Please not that for a single non control endpoint there cannot
+                 * be multiple pipes. Hence there should be only 1 pipe object
+                 * that can be linked to this "endpointAndDirection". */
+                if((hDriver->hostEndpointTable[epIter].endpoint.pipe)->endpointAndDirection
+                        == endpointAndDirection)
+                {
+                    /* Got the entry in the host endpoint table. We can exit
+                     * from this loop now for further processing */
+                    if( (hDriver->hostEndpointTable[epIter].endpoint.pipe->endpointAndDirection & 0x80) == 0 )
+                    {
+                        /* Host to Device: OUT */
+                        hDriver->staticDToggleOut = 0;
+                    }
+                    else
+                    {
+                        /* IN */
+                        hDriver->staticDToggleIn = 0;
+                    }
+                }
+            }
+        }
+    }
+} /* end of DRV_USB_UHP_HOST_EndpointToggleClear() */
 
 /* Function:
     void _DRV_USB_UHP_HOST_AttachDetachStateMachine(DRV_USB_UHP_OBJ *hDriver)

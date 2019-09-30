@@ -65,6 +65,7 @@ DRV_USB_HOST_INTERFACE gDrvUSBUHPHostInterface =
     .hostPipeSetup     = DRV_USB_UHP_HOST_PipeSetup,
     .hostPipeClose     = DRV_USB_UHP_HOST_PipeClose,
     .hostEventsDisable = DRV_USB_UHP_HOST_EventsDisable,
+    .endpointToggleClear = DRV_USB_UHP_HOST_EndpointToggleClear,
     .hostEventsEnable  = DRV_USB_UHP_HOST_EventsEnable,
     .rootHubInterface.rootHubPortInterface.hubPortReset           = DRV_USB_UHP_HOST_ROOT_HUB_PortReset,
     .rootHubInterface.rootHubPortInterface.hubPortSpeedGet        = DRV_USB_UHP_HOST_ROOT_HUB_PortSpeedGet,
@@ -1253,17 +1254,6 @@ void _DRV_USB_UHP_HOST_Tasks_ISR_EHCI(DRV_USB_UHP_OBJ *hDriver)
             _DRV_USB_UHP_HOST_EHCITESTTD();
             usbIDEHCI->UHPHS_USBCMD &= ~UHPHS_USBCMD_ASE_Msk;
             hDriver->intXfrQtdComplete = 0xFF;
-            
-            if( (hDriver->hostEndpointTable[hDriver->hostPipeInUse].endpoint.pipe->endpointAndDirection & 0x80) == 0 )
-            {
-                /* Host to Device: OUT */
-                hDriver->staticDToggleOut = 0;
-            }
-            else
-            {
-                /* IN */
-                hDriver->staticDToggleIn = 0;
-            }
         }
     }
 }/* end of _DRV_USB_UHP_HOST_Tasks_ISR_EHCI() */
