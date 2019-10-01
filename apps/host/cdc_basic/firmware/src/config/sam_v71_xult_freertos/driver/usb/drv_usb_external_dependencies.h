@@ -56,18 +56,21 @@
 #define SYS_TMR_ObjectDelete SYS_TIME_TimerDestroy
 #endif 
 
-#ifndef SYS_DEBUG_PRINT
-	#define SYS_DEBUG_PRINT(level, format, ...) 
-#endif 
+#if  !defined(SYS_DEBUG_ENABLE) 
 
-#ifndef SYS_DEBUG_MESSAGE
-	#define SYS_DEBUG_MESSAGE(a,b, ...)
-#endif 
+    #if  !defined(SYS_DEBUG_PRINT)
+        #define SYS_DEBUG_PRINT(level, format, ...) 
+    #endif
 
-#ifndef SYS_DEBUG
-	#define SYS_DEBUG(a,b)
+    #if  !defined(SYS_DEBUG_MESSAGE)
+        #define SYS_DEBUG_MESSAGE(a,b, ...)   
+    #endif
+
+    #if  !defined(SYS_DEBUG)
+        #define SYS_DEBUG(a,b)
+    #endif 
 #endif 
-#endif 
+#endif /* End of #ifndef _DRV_USB_EXTERNAL_DEPENDENCIES_H */ 
 /*******************************************************************************
  End of File
 */
