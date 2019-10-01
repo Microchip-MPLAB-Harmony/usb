@@ -48,8 +48,8 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "driver/usb/usbhsv1/drv_usbhsv1.h"
 #include "bsp/bsp.h"
+#include "driver/usb/usbhsv1/drv_usbhsv1.h"
 #include "usb/usb_device_hid.h"
 #include "usb/usb_hid.h"
 #include "peripheral/clk/plib_clk.h"
