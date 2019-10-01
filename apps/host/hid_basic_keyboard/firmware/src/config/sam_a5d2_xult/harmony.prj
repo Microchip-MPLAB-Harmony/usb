@@ -43,24 +43,24 @@
           <Name dnOrder="1">drv_usb_uhp.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A14130E4A15D719867A4D71959FF984A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A14130E4A15D719867A4D71959FF984A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">CBB25938C95412E7B50418F405E82978</GeneratedChecksum>
+          <UserChecksum dnOrder="5">CBB25938C95412E7B50418F405E82978</UserChecksum>
         </File>
         <File dnOrder="5">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_usb_uhp_ehci_host.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">53B4EDA2D42EF0E48DE9CD45983112C6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">53B4EDA2D42EF0E48DE9CD45983112C6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E45292175657B681648A1DDDC55A25CD</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E45292175657B681648A1DDDC55A25CD</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_usb_uhp_ohci_host.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">4BEEC60D0E5F93490D5F0A62AABE7662</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4BEEC60D0E5F93490D5F0A62AABE7662</UserChecksum>
+          <GeneratedChecksum dnOrder="4">8C6E36521785B73450570CEC9CC2DE4E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">8C6E36521785B73450570CEC9CC2DE4E</UserChecksum>
         </File>
         <File dnOrder="7">
           <Type dnOrder="0">SOURCE</Type>
@@ -283,8 +283,8 @@
           <Name dnOrder="1">arm_common_tables.h</Name>
           <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/DSP/Include/</LogicalPath>
           <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/DSP/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">ECE7DC494F56CE01D96DE918E61B7C02</GeneratedChecksum>
-          <UserChecksum dnOrder="5">ECE7DC494F56CE01D96DE918E61B7C02</UserChecksum>
+          <GeneratedChecksum dnOrder="4">18A3522CBBBC362FC56ADF9367AB8B46</GeneratedChecksum>
+          <UserChecksum dnOrder="5">18A3522CBBBC362FC56ADF9367AB8B46</UserChecksum>
         </File>
         <File dnOrder="35">
           <Type dnOrder="0">HEADER</Type>
@@ -299,8 +299,8 @@
           <Name dnOrder="1">arm_math.h</Name>
           <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/DSP/Include/</LogicalPath>
           <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/DSP/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">4726F6E7A3CDEDAE6075A88F3D16F093</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4726F6E7A3CDEDAE6075A88F3D16F093</UserChecksum>
+          <GeneratedChecksum dnOrder="4">944C03F7472B879EED2AD711773D6600</GeneratedChecksum>
+          <UserChecksum dnOrder="5">944C03F7472B879EED2AD711773D6600</UserChecksum>
         </File>
         <File dnOrder="37">
           <Type dnOrder="0">HEADER</Type>
@@ -347,8 +347,8 @@
           <Name dnOrder="1">cmsis_compiler.h</Name>
           <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/Core_A/Include/</LogicalPath>
           <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/Core_A/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1A60177F0720FF6F1D979B798DF018C0</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1A60177F0720FF6F1D979B798DF018C0</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0A03866A98E64A8AF74F5786C64C529F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0A03866A98E64A8AF74F5786C64C529F</UserChecksum>
         </File>
         <File dnOrder="43">
           <Type dnOrder="0">HEADER</Type>
@@ -363,16 +363,16 @@
           <Name dnOrder="1">cmsis_gcc.h</Name>
           <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/Core_A/Include/</LogicalPath>
           <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/Core_A/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">25431DA0E64D60CDB443B02ABAC00FC8</GeneratedChecksum>
-          <UserChecksum dnOrder="5">25431DA0E64D60CDB443B02ABAC00FC8</UserChecksum>
+          <GeneratedChecksum dnOrder="4">99E691118C37648975EF62BCCAD98C7A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">99E691118C37648975EF62BCCAD98C7A</UserChecksum>
         </File>
         <File dnOrder="45">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">cmsis_iccarm.h</Name>
           <LogicalPath dnOrder="2">packs/CMSIS/CMSIS/Core_A/Include/</LogicalPath>
           <PhysicalPath dnOrder="3">/../../packs/CMSIS/CMSIS/Core_A/Include/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A194C342920D5CD34C03C2E40907D2E6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A194C342920D5CD34C03C2E40907D2E6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9856726CC7D811B5AE45F903F5727340</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9856726CC7D811B5AE45F903F5727340</UserChecksum>
         </File>
         <File dnOrder="46">
           <Type dnOrder="0">HEADER</Type>
@@ -459,8 +459,8 @@
           <Name dnOrder="1">drv_usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">C07E5598C11AD6C2F25F92037919A988</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C07E5598C11AD6C2F25F92037919A988</UserChecksum>
+          <GeneratedChecksum dnOrder="4">5E2621860496A1FD0821B43178B3C75A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">5E2621860496A1FD0821B43178B3C75A</UserChecksum>
         </File>
         <File dnOrder="57">
           <Type dnOrder="0">HEADER</Type>
@@ -483,8 +483,8 @@
           <Name dnOrder="1">drv_usb_uhp_local.h</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usb/uhp/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">AE7807AE2E860BC3DAB3445CFF0F14CF</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AE7807AE2E860BC3DAB3445CFF0F14CF</UserChecksum>
+          <GeneratedChecksum dnOrder="4">82DA8E87AD779FF267283B21D644FE48</GeneratedChecksum>
+          <UserChecksum dnOrder="5">82DA8E87AD779FF267283B21D644FE48</UserChecksum>
         </File>
         <File dnOrder="60">
           <Type dnOrder="0">HEADER</Type>
@@ -1169,7 +1169,7 @@
       </Files>
     </Manifest>
     <Settings dnOrder="4">
-      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.5.1"/>
+      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.6.0"/>
       <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAMA5D2_DFP\1.0.5\atdf\ATSAMA5D27.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>

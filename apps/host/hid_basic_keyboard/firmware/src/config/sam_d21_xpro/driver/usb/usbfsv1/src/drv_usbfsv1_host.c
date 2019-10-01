@@ -477,6 +477,7 @@ USB_ERROR DRV_USBFSV1_HOST_IRPSubmit
         /* Assign owner pipe */
         irp->pipe = hPipe;
         irp->status = USB_HOST_IRP_STATUS_PENDING;
+        irp->tempState = DRV_USBFSV1_HOST_IRP_STATE_PROCESSING;
         hostPipe = pipe->hostPipeN;
         direction = (pipe->endpointAndDirection & 0x80) >> 7;
 
@@ -857,11 +858,12 @@ void DRV_USBFSV1_HOST_PipeClose
                 endpointObj = &hDriver->hostEndpointTable[pipe->hostPipeN];
                 endpointObj->endpoint.inUse = false;
                 endpointObj->endpoint.pipe = NULL;
-
-                /* Clear the error status */
-                usbID->HOST.HOST_PIPE[pipe->hostPipeN].USB_PINTFLAG = USB_HOST_PINTFLAG_PERR_Msk;
-                usbID->HOST.HOST_PIPE[pipe->hostPipeN].USB_PINTENCLR = USB_HOST_PINTENCLR_PERR_Msk;
             }
+
+            /* Clear all Pipe Interrupt enable bits and flags  */
+            usbID->HOST.HOST_PIPE[pipe->hostPipeN].USB_PINTFLAG = USB_HOST_PINTFLAG_Msk;
+            usbID->HOST.HOST_PIPE[pipe->hostPipeN].USB_PINTENCLR = USB_HOST_PINTENCLR_Msk;
+            usbID->HOST.HOST_PIPE[pipe->hostPipeN].USB_PSTATUSCLR = USB_HOST_PSTATUSCLR_Msk;
 
             /* Now we invoke the call back for each IRP in this pipe and say that it is
              * aborted.  If the IRP is in progress, then that IRP will be actually
