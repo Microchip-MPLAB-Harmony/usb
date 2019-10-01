@@ -23,14 +23,14 @@
     <files relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_e54_xpro">
         <group name="Header Files" relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_e54_xpro">
             <path>\peripheral\nvmctrl\plib_nvmctrl.h</path>
+            <path>\peripheral\sercom\usart\plib_sercom2_usart.h</path>
+            <path>\peripheral\sercom\usart\plib_sercom_usart_common.h</path>
             <path>\usb\usb_host_msd.h</path>
             <path>\usb\usb_host_scsi.h</path>
             <path>\usb\usb_msd.h</path>
             <path>\usb\scsi.h</path>
             <path>\usb\src\usb_host_msd_local.h</path>
             <path>\usb\src\usb_host_scsi_local.h</path>
-            <path>\peripheral\sercom\usart\plib_sercom2_usart.h</path>
-            <path>\peripheral\sercom\usart\plib_sercom_usart_common.h</path>
             <path>\peripheral\evsys\plib_evsys.h</path>
             <path>\device_cache.h</path>
             <path>\toolchain_specifics.h</path>
@@ -138,9 +138,9 @@
         </group>
         <group name="Source Files" relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_e54_xpro">
             <path>\peripheral\nvmctrl\plib_nvmctrl.c</path>
+            <path>\peripheral\sercom\usart\plib_sercom2_usart.c</path>
             <path>\usb\src\usb_host_msd.c</path>
             <path>\usb\src\usb_host_scsi.c</path>
-            <path>\peripheral\sercom\usart\plib_sercom2_usart.c</path>
             <path>\peripheral\evsys\plib_evsys.c</path>
             <path>\..\..\main.c</path>
             <path>\initialization.c</path>
