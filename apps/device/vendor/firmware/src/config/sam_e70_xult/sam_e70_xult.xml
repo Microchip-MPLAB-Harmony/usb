@@ -1822,25 +1822,27 @@
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Hex>
-        <Boolean dnOrder="363" id="PMC_CKGR_MOR_MOSCSEL">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="drv_usbhs_v1" value="true"/>
-          </Values>
-        </Boolean>
-        <Boolean dnOrder="364" id="PMC_CKGR_MOR_MOSCXTBY">
+        <Boolean dnOrder="363" id="PMC_CKGR_MOR_MOSCXTBY">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="365" id="PMC_CKGR_MOR_MOSCXTEN">
+        <Boolean dnOrder="364" id="PMC_CKGR_MOR_MOSCXTEN">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="366" id="PMC_CKGR_UCKR_UPLLEN">
+        <Boolean dnOrder="365" id="PMC_CKGR_UCKR_UPLLEN">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbhs_v1" value="true"/>
           </Values>
+        </Boolean>
+        <Boolean dnOrder="366" id="PMC_MCKR_UPLLDIV2">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
         </Boolean>
         <Hex dnOrder="367" id="PMC_PCER0">
           <Values dnOrder="0">
@@ -2101,7 +2103,15 @@
     </UniqueComponent>
     <UniqueComponent dnOrder="3" id="dfp"/>
     <UniqueComponent dnOrder="4" id="drv_usbhs_v1"/>
-    <UniqueComponent dnOrder="5" id="efc"/>
+    <UniqueComponent dnOrder="5" id="efc">
+      <Symbols dnOrder="0">
+        <Integer dnOrder="0" id="NVM_RWS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="efc" value="6"/>
+          </Values>
+        </Integer>
+      </Symbols>
+    </UniqueComponent>
     <UniqueComponent dnOrder="6" id="HarmonyCore">
       <Symbols dnOrder="0">
         <File dnOrder="0" id="APP0_C">
@@ -2232,61 +2242,56 @@
             </Boolean>
           </Attributes>
         </File>
-        <Combo dnOrder="20" id="SELECT_RTOS">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="HarmonyCore" value="BareMetal"/>
-          </Values>
-        </Combo>
-        <File dnOrder="21" id="SYSTEM_COMMON">
+        <File dnOrder="20" id="SYSTEM_COMMON">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="22" id="SYSTEM_MODULE">
+        <File dnOrder="21" id="SYSTEM_MODULE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="23" id="SYSTEM_ROOT">
+        <File dnOrder="22" id="SYSTEM_ROOT">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="24" id="SYS_CACHE_DEF">
+        <File dnOrder="23" id="SYS_CACHE_DEF">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="25" id="SYS_CACHE_HEADER">
+        <File dnOrder="24" id="SYS_CACHE_HEADER">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="26" id="SYS_CACHE_SOURCE">
+        <File dnOrder="25" id="SYS_CACHE_SOURCE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="27" id="TASKS_C">
+        <File dnOrder="26" id="TASKS_C">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </File>
-        <File dnOrder="28" id="USER_H">
+        <File dnOrder="27" id="USER_H">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
@@ -2309,12 +2314,12 @@
         </Integer>
         <Integer dnOrder="2" id="CONFIG_USB_DEVICE_ENDPOINT_READ_QUEUE_SIZE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="usb_device" value="2"/>
+            <Dynamic dnOrder="0" id="usb_device" value="1"/>
           </Values>
         </Integer>
         <Integer dnOrder="3" id="CONFIG_USB_DEVICE_ENDPOINT_WRITE_QUEUE_SIZE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="usb_device" value="2"/>
+            <Dynamic dnOrder="0" id="usb_device" value="1"/>
           </Values>
         </Integer>
         <Boolean dnOrder="4" id="CONFIG_USB_DEVICE_EVENT_ENABLE_SOF">
@@ -2352,11 +2357,6 @@
             <Dynamic dnOrder="0" id="usb_device" value="Simple WinUSB Device Demo"/>
           </Values>
         </String>
-        <String dnOrder="11" id="CONFIG_USB_DEVICE_SPEED">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="drv_usbhs_v1" value="High Speed"/>
-          </Values>
-        </String>
       </Symbols>
     </UniqueComponent>
     <GeneratorComponent dnOrder="8" id="usb_device_vendor">
@@ -2384,19 +2384,19 @@
     </GeneratorComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
-    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_E70_Xplained_Ultra" x="194" y="104"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="30" y="60"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="24" y="50"/>
         <ElementPosition dnOrder="2" id="cmsis" x="202" y="60"/>
         <ElementPosition dnOrder="3" id="core" x="240" y="20"/>
         <ElementPosition dnOrder="4" id="dfp" x="20" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_usbhs_v1" x="31" y="172"/>
+        <ElementPosition dnOrder="5" id="drv_usbhs_v1" x="227" y="140"/>
         <ElementPosition dnOrder="6" id="efc" x="340" y="20"/>
-        <ElementPosition dnOrder="7" id="usb_device" x="212" y="173"/>
-        <ElementPosition dnOrder="8" id="usb_device_vendor" x="367" y="145"/>
+        <ElementPosition dnOrder="7" id="usb_device" x="233" y="217"/>
+        <ElementPosition dnOrder="8" id="usb_device_vendor" x="30" y="140"/>
       </ElementPositions>
     </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>

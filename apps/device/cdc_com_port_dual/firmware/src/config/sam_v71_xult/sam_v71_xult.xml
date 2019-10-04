@@ -3381,7 +3381,15 @@
     </UniqueComponent>
     <UniqueComponent dnOrder="3" id="dfp"/>
     <UniqueComponent dnOrder="4" id="drv_usbhs_v1"/>
-    <UniqueComponent dnOrder="5" id="efc"/>
+    <UniqueComponent dnOrder="5" id="efc">
+      <Symbols dnOrder="0">
+        <Integer dnOrder="0" id="NVM_RWS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="efc" value="6"/>
+          </Values>
+        </Integer>
+      </Symbols>
+    </UniqueComponent>
     <UniqueComponent dnOrder="6" id="HarmonyCore">
       <Symbols dnOrder="0">
         <File dnOrder="0" id="APP0_C">
@@ -3620,6 +3628,11 @@
         <String dnOrder="8" id="CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="usb_device" value="CDC Dual COM Port Demo"/>
+          </Values>
+        </String>
+        <String dnOrder="9" id="CONFIG_USB_DEVICE_SPEED">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="drv_usbhs_v1" value="High Speed"/>
           </Values>
         </String>
       </Symbols>

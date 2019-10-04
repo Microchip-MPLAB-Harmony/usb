@@ -3705,6 +3705,11 @@
             <Dynamic dnOrder="0" id="usb_device" value="CDC Dual COM Port Demo"/>
           </Values>
         </String>
+        <String dnOrder="9" id="CONFIG_USB_DEVICE_SPEED">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="drv_usbhs_v1" value="High Speed"/>
+          </Values>
+        </String>
       </Symbols>
     </UniqueComponent>
     <GeneratorComponent dnOrder="9" id="usb_device_cdc">
@@ -3783,7 +3788,8 @@
     </GeneratorComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_E70_Xplained_Ultra" x="330" y="66"/>
         <ElementPosition dnOrder="1" id="FreeRTOS" x="30" y="60"/>
@@ -3797,6 +3803,5 @@
         <ElementPosition dnOrder="9" id="usb_device_cdc" x="30" y="200"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>

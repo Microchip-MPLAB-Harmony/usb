@@ -761,10 +761,11 @@
     </GeneratorComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_D11_Xplained_Pro" x="330" y="60"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="800" y="20"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="35" y="208"/>
         <ElementPosition dnOrder="2" id="cmsis" x="660" y="20"/>
         <ElementPosition dnOrder="3" id="core" x="560" y="20"/>
         <ElementPosition dnOrder="4" id="dfp" x="340" y="20"/>
@@ -775,6 +776,5 @@
         <ElementPosition dnOrder="9" id="usb_device_hid" x="336" y="119"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>

@@ -2357,10 +2357,22 @@
             <Dynamic dnOrder="0" id="usb_device" value="Simple CDC Device Demo"/>
           </Values>
         </String>
+        <String dnOrder="9" id="CONFIG_USB_DEVICE_SPEED">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="drv_usbhs_v1" value="High Speed"/>
+          </Values>
+        </String>
       </Symbols>
     </UniqueComponent>
     <GeneratorComponent dnOrder="8" id="usb_device_cdc">
-      <Instances dnOrder="0">
+      <Symbols dnOrder="0">
+        <Integer dnOrder="0" id="CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="usb_device_cdc" value="6"/>
+          </Values>
+        </Integer>
+      </Symbols>
+      <Instances dnOrder="1">
         <InstanceComponent dnOrder="0" id="usb_device_cdc" instance="0">
           <Symbols dnOrder="0">
             <Integer dnOrder="0" id="CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER">

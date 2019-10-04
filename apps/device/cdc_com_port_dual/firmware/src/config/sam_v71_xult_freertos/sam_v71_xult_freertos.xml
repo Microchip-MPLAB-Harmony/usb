@@ -3441,7 +3441,15 @@
     </UniqueComponent>
     <UniqueComponent dnOrder="3" id="dfp"/>
     <UniqueComponent dnOrder="4" id="drv_usbhs_v1"/>
-    <UniqueComponent dnOrder="5" id="efc"/>
+    <UniqueComponent dnOrder="5" id="efc">
+      <Symbols dnOrder="0">
+        <Integer dnOrder="0" id="NVM_RWS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="efc" value="6"/>
+          </Values>
+        </Integer>
+      </Symbols>
+    </UniqueComponent>
     <UniqueComponent dnOrder="6" id="FreeRTOS">
       <Symbols dnOrder="0">
         <Integer dnOrder="0" id="FREERTOS_CPU_CLOCK_HZ">
@@ -3721,6 +3729,11 @@
             <Dynamic dnOrder="0" id="usb_device" value="CDC Dual COM Port Demo"/>
           </Values>
         </String>
+        <String dnOrder="9" id="CONFIG_USB_DEVICE_SPEED">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="drv_usbhs_v1" value="High Speed"/>
+          </Values>
+        </String>
       </Symbols>
     </UniqueComponent>
     <GeneratorComponent dnOrder="9" id="usb_device_cdc">
@@ -3801,16 +3814,16 @@
   <UserData>
     <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="BSP_SAM_V71_Xplained_Ultra" x="334" y="60"/>
+        <ElementPosition dnOrder="0" id="BSP_SAM_V71_Xplained_Ultra" x="356" y="58"/>
         <ElementPosition dnOrder="1" id="FreeRTOS" x="30" y="60"/>
-        <ElementPosition dnOrder="2" id="HarmonyCore" x="187" y="100"/>
+        <ElementPosition dnOrder="2" id="HarmonyCore" x="187" y="60"/>
         <ElementPosition dnOrder="3" id="cmsis" x="185" y="24"/>
         <ElementPosition dnOrder="4" id="core" x="33" y="21"/>
         <ElementPosition dnOrder="5" id="dfp" x="335" y="25"/>
-        <ElementPosition dnOrder="6" id="drv_usbhs_v1" x="370" y="100"/>
-        <ElementPosition dnOrder="7" id="efc" x="209" y="45"/>
-        <ElementPosition dnOrder="8" id="usb_device" x="370" y="161"/>
-        <ElementPosition dnOrder="9" id="usb_device_cdc" x="30" y="200"/>
+        <ElementPosition dnOrder="6" id="drv_usbhs_v1" x="192" y="229"/>
+        <ElementPosition dnOrder="7" id="efc" x="189" y="159"/>
+        <ElementPosition dnOrder="8" id="usb_device" x="353" y="92"/>
+        <ElementPosition dnOrder="9" id="usb_device_cdc" x="24" y="132"/>
       </ElementPositions>
     </ComponentGraph>
     <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>

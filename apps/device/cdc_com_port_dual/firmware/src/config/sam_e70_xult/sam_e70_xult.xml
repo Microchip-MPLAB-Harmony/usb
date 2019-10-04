@@ -3322,16 +3322,16 @@
       </Symbols>
     </UniqueComponent>
     <UniqueComponent dnOrder="3" id="dfp"/>
-    <UniqueComponent dnOrder="4" id="drv_usbhs_v1">
+    <UniqueComponent dnOrder="4" id="drv_usbhs_v1"/>
+    <UniqueComponent dnOrder="5" id="efc">
       <Symbols dnOrder="0">
-        <Combo dnOrder="0" id="USB_SPEED">
+        <Integer dnOrder="0" id="NVM_RWS">
           <Values dnOrder="0">
-            <User dnOrder="0" value="High Speed"/>
+            <Dynamic dnOrder="0" id="efc" value="6"/>
           </Values>
-        </Combo>
+        </Integer>
       </Symbols>
     </UniqueComponent>
-    <UniqueComponent dnOrder="5" id="efc"/>
     <UniqueComponent dnOrder="6" id="HarmonyCore">
       <Symbols dnOrder="0">
         <File dnOrder="0" id="APP0_C">

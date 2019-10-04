@@ -2262,12 +2262,7 @@
           </Values>
         </Boolean>
         <Integer dnOrder="11" id="GEN_APP_RTOS_TASK_0_DELAY">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-          <Values dnOrder="1">
+          <Values dnOrder="0">
             <User dnOrder="0" value="10"/>
           </Values>
         </Integer>
@@ -2524,8 +2519,7 @@
     </GeneratorComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
-    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_E70_Xplained_Ultra" x="194" y="104"/>
         <ElementPosition dnOrder="1" id="FreeRTOS" x="21" y="265"/>
@@ -2539,5 +2533,6 @@
         <ElementPosition dnOrder="9" id="usb_device_vendor" x="367" y="145"/>
       </ElementPositions>
     </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
