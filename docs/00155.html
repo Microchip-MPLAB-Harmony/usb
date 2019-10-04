@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Building the Library</title>
+<title>mask Enumeration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00169.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00155.html" target="topic">Building the Library</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00350.html" target="topic">USB Host Layer Library</a> &gt; <a href="00353.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00155.html" target="topic">mask Enumeration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00006.html" target="topic">Previous</a> | <a href="00169.html" target="topic">Up</a> | <a href="00165.html" target="topic">Next</a></div>
+<a href="00154.html" target="topic">Previous</a> | <a href="00353.html" target="topic">Up</a> | <a href="00156.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDDEV V2_0 Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: mask Topic Title: mask Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Building the Library</div>
+mask Enumeration</div>
 </div>
 </div>
 
@@ -49,90 +49,33 @@ Building the Library</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The following three tables list and describe the header (<span class="Element146">.h</span>) and source (<span class="Element146">.c</span>) files that implement this library. The parent folder for these files is <span class="Element146">&lt;install-dir&gt;/framework/usb</span><span style="color: #0000FF">.</span></p><div class="Element15">
-Interface File(s)</div>
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</p>
 <p class="Element10">
-This table lists and describes the header files that must be included (i.e., using <span class="Element146">#include</span>) by any code that uses this library. </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="25%">
-<div class="Element66">
-Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="75%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="25%">
-<div class="Element68">
-<span class="Element146"><a href="00594.html" target="topic">usb_device_audio_v2_0.h</a></span>&nbsp;</div></td><td class="Element67" valign="top" width="75%">
-<div class="Element68">
-This header file must be included in every source file that needs to invoke USB Audio 2.0 Device Driver APIs.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="25%">
-<div class="Element68">
-<span class="Element146">usb_audio_v2_0.h</span>&nbsp;</div></td><td class="Element67" valign="top" width="75%">
-<div class="Element68">
-This header file must be included when the audio 2.0 descriptor macros are used.&nbsp;</div></td></tr></table></div></div>
-<div class="Element15">
-Required File(s)</div>
-<div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table2">
-<tr>
-<td class="Element67" valign="top" width="10%" style="border:none;">
-<div class="Element68">
-<img src="MHC_Logo_Medium.png" border="0" alt="" title="">&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
-<div class="Element68">
-<span style="color: #008000"><strong><i>All of the required files listed in the following table are automatically added into the MPLAB X IDE project by the MHC when the library is selected for use.</i></strong></span>&nbsp;</div></td></tr></table></div></div>
+This enumeration defines the possible matching criteria flag that can be specified for a Host TPL table entry. The tplFlag member of the TPL table entry should be set to one or more of these flags. These flags define the criteria that the Host layer will use while matching the attached device to the TPL table entry. For example, if a device is specified by class, subclass and protocol specifying the TPL_FLAG_IGNORE_SUBCLASS flag will cause the Host layer to ignore the subclass while comparing the class, subclass and protocol of the attached device.&nbsp;</p>
 <p class="Element10">
-This table lists and describes the source and header files that must <i>always</i> be included in the MPLAB X IDE project to build this library. </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="27%">
-<div class="Element66">
-Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="73%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="27%">
-<div class="Element68">
-<span class="Element146">/src/dynamic/usb_device_audio_v2_0.c</span>&nbsp;</div></td><td class="Element67" valign="top" width="73%">
-<div class="Element68">
-This file contains all of functions, macros, definitions, variables, datatypes, etc., that are specific to the USB Audio v2.0 Specification implementation of the Audio 2.0 Function Driver.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="27%">
-<div class="Element68">
-<span class="Element146">/src/dynamic/usb_device_audio2_read_write.c</span>&nbsp;</div></td><td class="Element67" valign="top" width="73%">
-<div class="Element68">
-Contains implementation of the audio 2.0 function driver read and write functions.&nbsp;</div></td></tr></table></div></div>
-<div class="Element15">
-Optional File(s)</div>
+Multiple flags can be specified as a logically OR'ed combination. While combining multiple flags, VID and PID criteria flags cannot be combined with the Class, Subclass, Protocol flags. For example, the TPL_FLAG_VID_PID flag cannot be combined with TPL_FLAG_IGNORE_SUBCLASS.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
+  <strong><span style="color: #000000"><a href="00154.html" target="topic">initData</a></span></strong>,
+  <strong><span style="color: #000000"><a href="00124.html" target="topic">classCode</a></span></strong>,
+  <strong><span style="color: #000000"><a href="00158.html" target="topic">subClassCode</a></span></strong>,
+  <strong><span style="color: #000000">protocolCode</span></strong>
+} driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL), \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .hostClientDriverInitData = <a href="00154.html" target="topic">initData</a>, driver)\ {\ .id.cl_sc_p = { <a href="00124.html" target="topic">classCode</a>, <a href="00158.html" target="topic">subClassCode</a>, \ .hostClientDriverInitData = <a href="00154.html" target="topic">initData</a>, driver)\ {\ .id.cl_sc_p = { <a href="00124.html" target="topic">classCode</a>, <a href="00158.html" target="topic">subClassCode</a>, 0xFF }, driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL), \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .hostClientDriverInitData = <a href="00154.html" target="topic">initData</a>, driver)\ {\ .id.cl_sc_p = { <a href="00124.html" target="topic">classCode</a>, \ .hostClientDriverInitData = <a href="00154.html" target="topic">initData</a>, driver)\ {\ .id.cl_sc_p = { <a href="00124.html" target="topic">classCode</a>, 0xFF, 0xFF }, driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL), \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .hostClientDriverInitData = <a href="00154.html" target="topic">initData</a>, \ .hostClientDriverInitData = <a href="00154.html" target="topic">initData</a>, 0xFF, 0xFF, 0xFF }, driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL), \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .hostClientDriverInitData = <a href="00154.html" target="topic">initData</a>, driver)\ {\ .id.vid_pid = { <a href="01416.html" target="topic">vid</a>, <a href="00156.html" target="topic">pid</a>, \ .hostClientDriverInitData = <a href="00154.html" target="topic">initData</a>, driver)\ {\ .id.vid_pid = { <a href="01416.html" target="topic">vid</a>, <a href="00156.html" target="topic">pid</a> }, driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_VID_PID), \ .tplFlags.ignoreVIDPID = 0, \ .tplFlags.ignoreVIDPID = 0, \ .hostClientDriverInitData = <a href="00154.html" target="topic">initData</a>, driver)\ {\ .id.vid_pid = { <a href="01416.html" target="topic">vid</a>, <a href="00156.html" target="topic">pid</a>, \ .pidMask = mask, \ .hostClientDriverInitData = <a href="00154.html" target="topic">initData</a>, driver)\ {\ .id.vid_pid = { <a href="01416.html" target="topic">vid</a>, <a href="00156.html" target="topic">pid</a> }, \ .pidMask = mask, \ .tplFlags.driverType = (TPL_FLAG_VID_PID), \ .tplFlags.ignoreVIDPID = 1, \ .tplFlags.ignoreVIDPID = 0, \ .hostClientDriverInitData = <a href="00154.html" target="topic">initData</a>, \ .hostClientDriverInitData = <a href="00154.html" target="topic">initData</a>, driver)\ {\ .id.vid_pid = { 0xFFFF, 0xFFFF }, \ .pidMask = 0x0000, \ .tplFlags.driverType = (TPL_FLAG_VID_PID), \ .tplFlags.ignoreVIDPID = 1, \ .tplFlags.ignoreVIDPID = 1, \ .hostClientDriverInitData = <a href="00154.html" target="topic">initData</a>, \ .hostClientDriver = driver\ } <strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">struct</span></strong> { <strong><span style="color: #000080">union</span></strong> { uint32_t value; <strong><span style="color: #000080">struct</span></strong> { uint16_t <a href="01416.html" target="topic">vid</a>; uint16_t <a href="00156.html" target="topic">pid</a>; } vid_pid; <strong><span style="color: #000080">struct</span></strong> { uint8_t <a href="00124.html" target="topic">classCode</a>; uint8_t <a href="00158.html" target="topic">subClassCode</a>; uint8_t protocolCode; } cl_sc_p; } id; uint16_t pidMask; <strong><span style="color: #000080">struct</span></strong> { uint8_t driverType :1; uint8_t ignoreClass :1; uint8_t ignoreSubClass :1; uint8_t ignoreProtocol :1; uint8_t pidMasked :1; uint8_t ignoreVIDPID :1; } tplFlags; <strong><span style="color: #000080">void</span></strong> * hostClientDriverInitData; <strong><span style="color: #000080">void</span></strong> * hostClientDriver; } <a href="01398.html" target="topic">USB_HOST_TARGET_PERIPHERAL_LIST_ENTRY</a>, <a href="01400.html" target="topic">USB_HOST_TPL_ENTRY</a>;</pre></div></div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
 <p class="Element10">
-This table lists and describes the source and header files that may optionally be included if required for the desired implementation. </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="25%">
-<div class="Element66">
-Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="75%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="25%">
-<div class="Element68">
-N/A&nbsp;</div></td><td class="Element67" valign="top" width="75%">
-<div class="Element68">
-There are no optional files for this library.&nbsp;</div></td></tr></table></div></div>
-<div class="Element15">
-Module Dependencies</div>
-<p class="Element10">
-The USB Audio 2.0 Device Library depends on the following modules:</p>
-<ul class="Element630">
-<li class="Element600"><a href="00240.html" target="topic">USB Device Library</a></li>
-</ul></div>
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00169.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00155.html" target="topic">Building the Library</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00350.html" target="topic">USB Host Layer Library</a> &gt; <a href="00353.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00155.html" target="topic">mask Enumeration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -140,13 +83,13 @@ The USB Audio 2.0 Device Library depends on the following modules:</p>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00006.html" target="topic">Previous</a> | <a href="00169.html" target="topic">Up</a> | <a href="00165.html" target="topic">Next</a></div>
+<a href="00154.html" target="topic">Previous</a> | <a href="00353.html" target="topic">Up</a> | <a href="00156.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDDEV V2_0 Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: mask Topic Title: mask Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

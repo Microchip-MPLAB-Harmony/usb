@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>TPL Table Configuration for Audio v1.0 Devices</title>
+<title>USB Audio v1.0 Host Client Driver Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00330.html" target="topic">USB Host Libraries</a> &gt; <a href="00170.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00192.html" target="topic">Using the Library</a> &gt; <a href="00182.html" target="topic">How the Library Works</a> &gt; <a href="00191.html" target="topic">TPL Table Configuration for Audio v1.0 Devices</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00191.html" target="topic">USB Audio v1.0 Host Client Driver Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00182.html" target="topic">Previous</a> | <a href="00182.html" target="topic">Up</a> | <a href="00179.html" target="topic">Next</a></div>
+<a href="01266.html" target="topic">Previous</a> | <a href="00351.html" target="topic">Up</a> | <a href="00204.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST TPL Table Configuration for Audio v1.0 Devices Topic Title: TPL Table Configuration for Audio v1.0 Devices)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB Audio v1.0 Host Client Driver Library Topic Title: USB Audio v1.0 Host Client Driver Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-TPL Table Configuration for Audio v1.0 Devices</div>
+USB Audio v1.0 Host Client Driver Library</div>
 </div>
 </div>
 
@@ -46,20 +46,49 @@ TPL Table Configuration for Audio v1.0 Devices</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="4465736372697074696F6E"></a><div class="Element11">
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
 <div class="Element10">
-<p class="Element10">
-The Host Layer attaches the Audio v1.0 Host Client Driver to a device when the device class in the Interface descriptor matches the entry in the TPL table. When specifying the entry for the Audio v1.0 device, the entry for the Audio v1.0 device, the driver interface must be set to <a href="01008.html" target="topic">USB_HOST_AUDIO_V1_0_INTERFACE</a>. This will attach the Audio v1.0 Host Client Driver to the device when the USB Host matches the TPL entry to the device. The following code shows possible TPL table options for matching Audio v1.0 Devices. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of TPL table entries for supporting Audio v1.0
- * devices. Note the driver interface is set to USB_HOST_AUDIO_V1_0_INTERFACE. This
- * will load the Audio v1.0 Host Client Driver when there is TPL match */</span></i>
-
-<strong><span style="color: #000080">const</span></strong> USB_HOST_TPL_ENTRY USBTPList[1] =
-{
-    <i><span style="color: #008000">/* This entry looks for any Audio v1.0 device. The Audio v1.0 Host Client Driver will
-     * check if this is an Audio Streaming Device and will then load itself */</span></i>
-    TPL_INTERFACE_CLASS(USB_AUDIO_CLASS_CODE, NULL, USB_HOST_AUDIO_V1_0_INTERFACE),
-
-};</pre></div></div>
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00204.html" target="topic">Introduction</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Introduces the MPLAB Harmony USB Audio v1.0 Host Client Driver Library.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00213.html" target="topic">Using the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This topic describes the basic architecture of the USB Audio v1.0 Host Client Driver Library and provides information and examples on its use.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00198.html" target="topic">Configuring the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes how to configure the USB Audio v1.0 Host Client Driver.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00197.html" target="topic">Building the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes the files to be included in the project while using the USB Audio v1.0 Host Client Driver.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00206.html" target="topic">Library Interface</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the Application Programming Interface (API) functions of the USB Audio v1.0 Host Client Driver Library.<br>Refer to each section for a detailed description.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00202.html" target="topic">Files</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section lists the source and header files used by the library.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -67,7 +96,7 @@ The Host Layer attaches the Audio v1.0 Host Client Driver to a device when the d
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00330.html" target="topic">USB Host Libraries</a> &gt; <a href="00170.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00192.html" target="topic">Using the Library</a> &gt; <a href="00182.html" target="topic">How the Library Works</a> &gt; <a href="00191.html" target="topic">TPL Table Configuration for Audio v1.0 Devices</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00191.html" target="topic">USB Audio v1.0 Host Client Driver Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -75,13 +104,13 @@ The Host Layer attaches the Audio v1.0 Host Client Driver to a device when the d
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00182.html" target="topic">Previous</a> | <a href="00182.html" target="topic">Up</a> | <a href="00179.html" target="topic">Next</a></div>
+<a href="01266.html" target="topic">Previous</a> | <a href="00351.html" target="topic">Up</a> | <a href="00204.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST TPL Table Configuration for Audio v1.0 Devices Topic Title: TPL Table Configuration for Audio v1.0 Devices)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB Audio v1.0 Host Client Driver Library Topic Title: USB Audio v1.0 Host Client Driver Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

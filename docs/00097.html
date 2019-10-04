@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Running the Demonstration</title>
+<title>hid_basic_keyboard</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00213.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00081.html" target="topic">Host Demonstrations</a> &gt; <a href="00094.html" target="topic">msd_basic</a> &gt; <a href="00097.html" target="topic">Running the Demonstration</a></div>
+<a href="00234.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00096.html" target="topic">Host Demonstrations</a> &gt; <a href="00097.html" target="topic">hid_basic_keyboard</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00096.html" target="topic">Previous</a> | <a href="00094.html" target="topic">Up</a> | <a href="00086.html" target="topic">Next</a></div>
+<a href="00062.html" target="topic">Previous</a> | <a href="00096.html" target="topic">Up</a> | <a href="00098.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB msd_basic_host_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB HOST hid_basic_keyboard Topic Title: hid_basic_keyboard)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Running the Demonstration</div>
+hid_basic_keyboard</div>
 </div>
 </div>
 
@@ -49,24 +49,44 @@ Running the Demonstration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This application demonstrates the use of the MSD Host Class Driver to write a file to USB Flash drive. The application uses the USB Host<span style="color: #FFFFFF">_</span>layer, MSD class driver and the MPLAB Harmony File System Framework to enumerate a USB Flash drive and to write a file to it.</p>
-<ol class="Element630">
-<li value="1" class="Element600">Open<span style="color: #FFFFFF">_</span>the MPLAB X IDE project corresponding to the selected hardware. Refer to the Building the Application section for details.</li>
-<li value="2" class="Element600">Build the code and program the device.</li>
-<li value="3" class="Element600">With the code running, attach a USB Flash drive to the Host connector on the desired starter kit.</li>
-<li value="4" class="Element600">The demonstration application will then create a file named <span class="Element146">file.txt</span>. It will then write the text &quot;Hello World&quot; to this file, and then close the file.</li>
-<li value="5" class="Element600">The LED on the selected hardware will indicate the status of the operation. Refer to the Configuring the Hardware instruction for details.</li>
-<li value="6" class="Element600">The USB Flash drive can then be attached to a USB Host personal computer to verify the demonstration application operation.</li>
-<li value="7" class="Element600">Steps 3 through 6 can be repeated.</li>
-<li value="8" class="Element600">If the USB Flash drive already contains a file with the name <span class="Element146">file.txt</span>, the demonstration application will append the text &quot;Hello World&quot; to the end of the file contents.</li>
-</ol></div>
+This application demonstrates the use of the USB HID Host Client Driver to enumerate and operate a HID keyboard device. The application uses the USB Host layer, HID Client driver and HID Keyboard Usage driver to enumerates a USB keyboard and understand keyboard press release events. The keyboard events are displayed using a terminal emulator on a personal computer.</p></div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00098.html" target="topic">Building the Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section identifies the MPLAB X IDE projects contained in this demo application, the name and location of the projects and lists the target hardware development board for each project.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00099.html" target="topic">Configuring the Hardware</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00100.html" target="topic">Running the Demonstration</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Provides instructions on how to build and run the USB HID Basic Keyboard demonstration.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00213.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00081.html" target="topic">Host Demonstrations</a> &gt; <a href="00094.html" target="topic">msd_basic</a> &gt; <a href="00097.html" target="topic">Running the Demonstration</a></div>
+<a href="00234.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00096.html" target="topic">Host Demonstrations</a> &gt; <a href="00097.html" target="topic">hid_basic_keyboard</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -74,13 +94,13 @@ This application demonstrates the use of the MSD Host Class Driver to write a fi
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00096.html" target="topic">Previous</a> | <a href="00094.html" target="topic">Up</a> | <a href="00086.html" target="topic">Next</a></div>
+<a href="00062.html" target="topic">Previous</a> | <a href="00096.html" target="topic">Up</a> | <a href="00098.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB msd_basic_host_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB HOST hid_basic_keyboard Topic Title: hid_basic_keyboard)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

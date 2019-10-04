@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Library Interface</title>
+<title>USB HID Host Mouse Driver Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00284.html" target="topic">USB HID Device Library</a> &gt; <a href="00311.html" target="topic">Library Interface</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00311.html" target="topic">USB HID Host Mouse Driver Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00301.html" target="topic">Previous</a> | <a href="00284.html" target="topic">Up</a> | <a href="00815.html" target="topic">Next</a></div>
+<a href="01216.html" target="topic">Previous</a> | <a href="00351.html" target="topic">Up</a> | <a href="00315.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HIDDEV Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HID Host Mouse Driver Library Topic Title: USB HID Host Mouse Driver Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Library Interface</div>
+USB HID Host Mouse Driver Library</div>
 </div>
 </div>
 
@@ -46,248 +46,49 @@ Library Interface</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="4465736372697074696F6E"></a><div class="Element11">
-<div class="Element10">
-<p class="Element10">
-This section describes the Application Programming Interface (API) functions of the USB Device HID library.&nbsp;</p>
-<p class="Element10">
-Refer to each section for a detailed description.</p></div>
-</div>
-<a name="61292046756E6374696F6E73"></a><div class="Element14">
-a) Functions</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
 <div class="Element11">
 <div class="Element10">
 <div class="Element212">
 <div class="TableDiv">
 <table cellspacing="0" class="Table0">
 <tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<td class="Element200" valign="top" width="35%">
 <div class="Element201">
 Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
 <div class="Element205">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00815.html" target="topic">USB_DEVICE_HID_EventHandlerSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00315.html" target="topic">Introduction</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This function registers a event handler for the specified HID function driver instance.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+Introduces the MPLAB Harmony USB HID Host Mouse Driver Library.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00833.html" target="topic">USB_DEVICE_HID_ReportReceive</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00320.html" target="topic">Using the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This function submits the buffer to HID function driver library to receive a report from host to device.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+This topic describes the basic architecture of the USB HID Host Mouse Driver Library and provides information and examples on its use.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00834.html" target="topic">USB_DEVICE_HID_ReportSend</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00308.html" target="topic">Configuring the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This function submits the buffer to HID function driver library to send a report from device to host.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+Describes how to configure the USB HID Host Mouse Driver.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00844.html" target="topic">USB_DEVICE_HID_TransferCancel</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00307.html" target="topic">Building the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This function cancels a scheduled HID Device data transfer.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="6229204461746120547970657320616E6420436F6E7374616E7473"></a><div class="Element14">
-b) Data Types and Constants</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+Describes the files to be included in the project while using the USB HID Host Mouse Driver.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00777.html" target="topic">USB_DEVICE_HID_EVENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00317.html" target="topic">Library Interface</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-USB Device HID Function Driver Events&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+This section describes the Application Programming Interface (API) functions of the USB HID Host Mouse Driver Library.<br>The USB Mouse driver does not require explicit API call by the application to obtain Mouse data. The data in the appropriate format is sent to the application during an application event handler function call.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00789.html" target="topic">USB_DEVICE_HID_EVENT_DATA_GET_IDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00312.html" target="topic">Files</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-USB Device HID Get Idle Event Data Type.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00791.html" target="topic">USB_DEVICE_HID_EVENT_DATA_GET_REPORT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device HID Get Report Event Data Type.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00795.html" target="topic">USB_DEVICE_HID_EVENT_DATA_REPORT_RECEIVED</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device HID Report Received Event Data Type.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00799.html" target="topic">USB_DEVICE_HID_EVENT_DATA_REPORT_SENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device HID Report Sent Event Data Type.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00803.html" target="topic">USB_DEVICE_HID_EVENT_DATA_SET_IDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device HID Set Idle Event Data Type.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00808.html" target="topic">USB_DEVICE_HID_EVENT_DATA_SET_REPORT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device HID Set Report Event Data Type.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00806.html" target="topic">USB_DEVICE_HID_EVENT_DATA_SET_PROTOCOL</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device HID Set Protocol Event Data Type.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00817.html" target="topic">USB_DEVICE_HID_INDEX</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB device HID Function Driver Index.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00842.html" target="topic">USB_DEVICE_HID_TRANSFER_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device HID Function Driver Transfer Handle Definition.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00812.html" target="topic">USB_DEVICE_HID_EVENT_HANDLER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device HID Event Handler Function Pointer Type.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00813.html" target="topic">USB_DEVICE_HID_EVENT_RESPONSE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device HID Function Driver Event Callback Response Type&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00835.html" target="topic">USB_DEVICE_HID_RESULT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device HID Function Driver USB Device HID Result enumeration.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00814.html" target="topic">USB_DEVICE_HID_EVENT_RESPONSE_NONE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device HID Function Driver Event Handler Response Type None.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00843.html" target="topic">USB_DEVICE_HID_TRANSFER_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device HID Function Driver Invalid Transfer Handle Definition.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00826.html" target="topic">USB_DEVICE_HID_INIT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device HID Function Driver Initialization Data Structure&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00816.html" target="topic">USB_DEVICE_HID_FUNCTION_DRIVER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is a pointer to a group of HID Function Driver callback function pointers.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00818.html" target="topic">USB_DEVICE_HID_INDEX_0</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device HID Function Driver Index Constants&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00819.html" target="topic">USB_DEVICE_HID_INDEX_1</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro USB_DEVICE_HID_INDEX_1.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00820.html" target="topic">USB_DEVICE_HID_INDEX_2</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro USB_DEVICE_HID_INDEX_2.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00821.html" target="topic">USB_DEVICE_HID_INDEX_3</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro USB_DEVICE_HID_INDEX_3.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00822.html" target="topic">USB_DEVICE_HID_INDEX_4</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro USB_DEVICE_HID_INDEX_4.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00823.html" target="topic">USB_DEVICE_HID_INDEX_5</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro USB_DEVICE_HID_INDEX_5.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00824.html" target="topic">USB_DEVICE_HID_INDEX_6</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro USB_DEVICE_HID_INDEX_6.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00825.html" target="topic">USB_DEVICE_HID_INDEX_7</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro USB_DEVICE_HID_INDEX_7.&nbsp;</div></td></tr></table></div></div>
+This section lists the source and header files used by the library.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -295,7 +96,7 @@ This is macro USB_DEVICE_HID_INDEX_7.&nbsp;</div></td></tr></table></div></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00284.html" target="topic">USB HID Device Library</a> &gt; <a href="00311.html" target="topic">Library Interface</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00311.html" target="topic">USB HID Host Mouse Driver Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -303,13 +104,13 @@ This is macro USB_DEVICE_HID_INDEX_7.&nbsp;</div></td></tr></table></div></div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00301.html" target="topic">Previous</a> | <a href="00284.html" target="topic">Up</a> | <a href="00815.html" target="topic">Next</a></div>
+<a href="01216.html" target="topic">Previous</a> | <a href="00351.html" target="topic">Up</a> | <a href="00315.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HIDDEV Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HID Host Mouse Driver Library Topic Title: USB HID Host Mouse Driver Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

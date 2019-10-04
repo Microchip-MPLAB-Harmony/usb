@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Trademarks</title>
+<title>Driver Host USB Root Hub Port Interface</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00130.html" target="topic">Support</a> &gt; <a href="00118.html" target="topic">Using the Help</a> &gt; <a href="00132.html" target="topic">Trademarks</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="01013.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00126.html" target="topic">Common Interface</a> &gt; <a href="00130.html" target="topic">Driver Host Mode Client Functions</a> &gt; <a href="00132.html" target="topic">Driver Host USB Root Hub Port Interface</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00118.html" target="topic">Previous</a> | <a href="00118.html" target="topic">Up</a> | <a href="00121.html" target="topic">Next</a></div>
+<a href="00131.html" target="topic">Previous</a> | <a href="00130.html" target="topic">Up</a> | <a href="00128.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: HARMONY Trademarks Topic Title: Trademarks)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver Host USB Root Hub Port Interface Topic Title: Driver Host USB Root Hub Port Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Trademarks</div>
+Driver Host USB Root Hub Port Interface</div>
 </div>
 </div>
 
@@ -48,33 +48,59 @@ Trademarks</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<div class="Element15">
-Trademarks</div>
 <p class="Element10">
-The Microchip name and logo, the Microchip logo, AnyRate, AVR, AVR logo, AVR Freaks, BeaconThings, BitCloud, CryptoMemory, CryptoRF, dsPIC, FlashFlex, flexPWR, Heldo, JukeBlox, KeeLoq, KeeLoq logo, Kleer, LANCheck, LINK MD, maXStylus, maXTouch, MediaLB, megaAVR, MOST, MOST logo, MPLAB, OptoLyzer, PIC, picoPower, PICSTART, PIC32 logo, Prochip Designer, QTouch, RightTouch, SAM-BA, SpyNIC, SST, SST Logo, SuperFlash, tinyAVR, UNI/O, and XMEGA are registered trademarks of Microchip Technology Incorporated in the U.S.A. and other countries.&nbsp;</p>
+The <span class="Element146">rootHubPortInterface</span> member of the DRV_USB_ROOT_HUB_INTERFACE structure should point to the USB Driver Root Hub Port functions. The data type of this member is USB_HUB_INTERFACE. This data type is a structure containing function pointers pointing to the port control functions of the root hub. The USB Driver must assign the function pointers in this structure to the root hub port control functions. These same functions are also exported by a Hub Driver to the USB Host Stack, which allow the Host Stack to control a device regardless of whether it is connected to a root hub or an external hub. The port functions are valid only when a device is attached to the port. The behavior of these functions on a port to which no device is connected is not defined. Descriptions of the port control functions are provided, which include:</p>
+<ul class="Element630">
+<li class="Element600">Driver Host Hub Port Reset Function</li>
+<li class="Element600">Driver Host Hub Port Reset Completion Status Function</li>
+<li class="Element600">Driver Host Hub Port Suspend Function</li>
+<li class="Element600">Driver Host Hub Port Resume Function</li>
+<li class="Element600">Driver Host Hub Port Speed Get Function</li>
+</ul><div class="Element15">
+Driver Host Hub Port Reset Function</div>
 <p class="Element10">
-ClockWorks, The Embedded Control Solutions Company, EtherSynch, Hyper Speed Control, HyperLight Load, IntelliMOS, mTouch, Precision Edge, and Quiet-Wire are registered trademarks of Microchip Technology Incorporated in the U.S.A.&nbsp;</p>
+The <span class="Element146">hubPortReset</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Reset function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR (*hubPortReset)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
 <p class="Element10">
-Adjacent Key Suppression, AKS, Analog-for-the-Digital Age, Any Capacitor, AnyIn, AnyOut, BodyCom, chipKIT, chipKIT logo, CodeGuard, CryptoAuthentication, CryptoCompanion, CryptoController, dsPICDEM, dsPICDEM.net, Dynamic Average Matching, DAM, ECAN, EtherGREEN, In-Circuit Serial Programming, ICSP, Inter-Chip Connectivity, JitterBlocker, KleerNet, KleerNet logo, Mindi, MiWi, motorBench, MPASM, MPF, MPLAB Certified logo, MPLIB, MPLINK, MultiTRAK, NetDetach, Omniscient Code Generation, PICDEM, PICDEM.net, PICkit, PICtail, PureSilicon, QMatrix, RightTouch logo, REAL ICE, Ripple Blocker, SAM-ICE, Serial Quad I/O, SMART-I.S., SQI, SuperSwitcher, SuperSwitcher II, Total Endurance, TSHARC, USBCheck, VariSense, ViewSpan, WiperLock, Wireless DNA, and ZENA are trademarks of Microchip Technology Incorporated in the U.S.A. and other countries.&nbsp;</p>
+The USB Driver Root Hub Port Reset function must follow this signature. This function starts reset signaling on the port. If the device is connected to the root hub, the USB Host Stack will set the <span class="Element146">hubAddress</span> parameter to the driver handle obtained through the driver Open function. The USB Host Stack uses the parent identifier provided by the root hub driver when the USB_HOST_DeviceEnumerate function was called to query the driver handle that is linked to this root hub. If the device is connected to an external hub, the <span class="Element146">hubAddress</span> parameter is directly set to the parent identifier.&nbsp;</p>
 <p class="Element10">
-SQTP is a service mark of Microchip Technology Incorporated in the U.S.A.&nbsp;</p>
+For the PIC32MX and PIC32MZ USB Drivers, the <span class="Element146">port</span> parameter is ignored. For an external hub, this must be set to the port to which the device is connected. The function returns USB_ERROR_NONE if the function was successful. If the reset signaling is already in progress on the port, calling this function has no effect. The USB Driver will itself time duration of the reset signal. This does not require USB Host Stack intervention. The USB Host Stack will call the port reset completion status function to check if the reset signaling has completed. Calling this function on a port which exists on an external hub will cause the hub driver to issue a control transfer to start the port reset procedure.</p><div class="Element15">
+Driver Host Hub Port Reset Completion Status Function</div>
 <p class="Element10">
-Silicon Storage Technology is a registered trademark of Microchip Technology Inc. in other countries.&nbsp;</p>
+The <span class="Element146">hubPortResetIsComplete</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Reset Completion Status function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">bool</span></strong> (*hubPortResetIsComplete)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
 <p class="Element10">
-GestIC is a registered trademark of Microchip Technology Germany II GmbH &amp; Co. KG, a subsidiary of Microchip Technology Inc., in other countries.&nbsp;</p>
+The USB Driver Root Hub Port Reset Completion Status function must follow this signature. The USB Host Stack calls this function to check if the port reset sequence that was started on a port has completed. The function returns true if the reset signaling has completed. If the device is connected to the root hub, the USB Host Stack will set the <span class="Element146">hubAddress</span> parameter to the driver handle obtained through the driver Open function. If the device is connected to an external hub, the <span class="Element146">hubAddress</span> parameter is directly set to the parent identifier.&nbsp;</p>
 <p class="Element10">
-ARM and Cortex are registered trademarks of ARM Limited (or its subsidiaries) in the EU and other countries.&nbsp;</p>
+For the PIC32MX and PIC32MZ USB Drivers, the <span class="Element146">port</span> parameter is ignored. For an external hub, this parameter must be set to the port to which the device is connected.</p><div class="Element15">
+Driver Host Hub Port Suspend Function</div>
 <p class="Element10">
-All other trademarks mentioned herein are property of their respective companies.&nbsp;</p>
+The <span class="Element146">hubPortSuspend</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Suspend function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR(*hubPortSuspend)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
 <p class="Element10">
-© 2017, Microchip Technology Incorporated, All Rights Reserved.</p></div>
+The USB Driver Root Hub Port Suspend function must follow this signature. The USB Host Stack calls this function to suspend the port. If the device is connected to the root hub, the USB Host Stack will set the <span class="Element146">hubAddress</span> parameter to the driver handle obtained through the driver Open function. If the device is connected to an external hub, the <span class="Element146">hubAddress</span> parameter is directly set to the parent identifier.&nbsp;</p>
+<p class="Element10">
+For the PIC32MX and PIC32MZ USB Drivers, the <span class="Element146">port</span> parameter is ignored. For an external hub, this parameter must be set to the port to which the device is connected. The function returns USB_ERROR_NONE if the request was successful. Calling this function on a suspended port will not have any effect.</p><div class="Element15">
+Driver Host Hub Port Resume Function</div>
+<p class="Element10">
+The <span class="Element146">hubPortResume</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Resume function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR(*hubPortResume)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
+<p class="Element10">
+The USB Driver Root Hub Port Resume function must follow this signature. The USB Host Stack calls this function to resume a suspended port. If the device is connected to the root hub, the USB Host Stack will set the <span class="Element146">hubAddress</span> parameter to the driver handle obtained through the driver Open function. If the device is connected to an external hub, the <span class="Element146">hubAddress</span> parameter is directly set to the parent identifier.&nbsp;</p>
+<p class="Element10">
+For the PIC32MX and PIC32MZ USB Drivers, the <span class="Element146">port</span> parameter is ignored. For an external hub, this parameter must be set to the port to which the device is connected. The function returns USB_ERROR_NONE if the request was successful. Calling this function on a port that is not suspended will not have any effect.</p><div class="Element15">
+Driver Host Hub Port Speed Get Function</div>
+<p class="Element10">
+The <span class="Element146">hubPortSpeedGet</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Speed Get function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_SPEED(*hubPortSpeedGet)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
+<p class="Element10">
+The USB Driver Root Hub Port Speed Get function must follow this signature. The USB Host Stack calls this function to obtain the USB speed of the device that is attached to the port. The Host Stack calls this function only after it has completed reset of the port. If the device is connected to the root hub, the USB Host Stack will set the <span class="Element146">hubAddress</span> parameter to the driver handle obtained through the driver Open function. If the device is connected to an external hub, the <span class="Element146">hubAddress</span> parameter is directly set to the parent identifier.&nbsp;</p>
+<p class="Element10">
+For the PIC32MX and PIC32MZ USB Drivers, the <span class="Element146">port</span> parameter is ignored. For an external hub, this parameter must be set to the port to which the device is connected. The function returns USB_SPEED_ERROR if the request was not successful. It will return the functional USB speed otherwise.&nbsp;</p>
+<p class="Element10">
+This concludes the section describing the USB Driver Host mode Client Functions. The USB Driver Device Mode Client Functions are discussed in the next section.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00130.html" target="topic">Support</a> &gt; <a href="00118.html" target="topic">Using the Help</a> &gt; <a href="00132.html" target="topic">Trademarks</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="01013.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00126.html" target="topic">Common Interface</a> &gt; <a href="00130.html" target="topic">Driver Host Mode Client Functions</a> &gt; <a href="00132.html" target="topic">Driver Host USB Root Hub Port Interface</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -82,13 +108,13 @@ All other trademarks mentioned herein are property of their respective companies
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00118.html" target="topic">Previous</a> | <a href="00118.html" target="topic">Up</a> | <a href="00121.html" target="topic">Next</a></div>
+<a href="00131.html" target="topic">Previous</a> | <a href="00130.html" target="topic">Up</a> | <a href="00128.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: HARMONY Trademarks Topic Title: Trademarks)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver Host USB Root Hub Port Interface Topic Title: Driver Host USB Root Hub Port Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

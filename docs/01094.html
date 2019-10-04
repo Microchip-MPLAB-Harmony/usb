@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists Function</title>
+<title>USB_HOST_AUDIO_V1_0_StreamEventHandlerSet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00330.html" target="topic">USB Host Libraries</a> &gt; <a href="00170.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00185.html" target="topic">Library Interface</a> &gt; a) Audio Device Access Functions &gt; <a href="01094.html" target="topic">USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists Function</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00191.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00206.html" target="topic">Library Interface</a> &gt; b) Audio Stream Access Functions &gt; <a href="01094.html" target="topic">USB_HOST_AUDIO_V1_0_StreamEventHandlerSet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01090.html" target="topic">Previous</a> | <a href="00185.html" target="topic">Up</a> | <a href="01095.html" target="topic">Next</a></div>
+<a href="01093.html" target="topic">Previous</a> | <a href="00206.html" target="topic">Up</a> | <a href="01095.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists@USB_HOST_AUDIO_V1_OBJ@USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ@uint8_t Topic Title: USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_0_StreamEventHandlerSet@USB_HOST_AUDIO_V1_0_STREAM_HANDLE@USB_HOST_AUDIO_V1_0_STREAM_EVENT_HANDLER@uintptr_t Topic Title: USB_HOST_AUDIO_V1_0_StreamEventHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists Function</div>
+USB_HOST_AUDIO_V1_0_StreamEventHandlerSet Function</div>
 </div>
 </div>
 
@@ -49,11 +49,22 @@ USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function returns &quot;true&quot; if mute control exists on the specified channel of the feature unit. Channel 0 indicates Master mute control. This function is only applicable to a feature unit. Prior to calling this function the entity object should be obtained by calling <a href="01084.html" target="topic">USB_HOST_AUDIO_V1_ControlEntityGetFirst</a>, <a href="01085.html" target="topic">USB_HOST_AUDIO_V1_ControlEntityGetNext</a>, or <a href="01088.html" target="topic">USB_HOST_AUDIO_V1_EntityObjectGet</a>.</p></div>
+This function registers a client specific Audio v1.0 stream event handler. The Audio v1.0 Host Client Driver will call appAudioHandler function specified as 2nd argument with relevant event and associate event data, in response to audio stream data transfers that have been scheduled by the client.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists</span></strong>(<a href="01107.html" target="topic">USB_HOST_AUDIO_V1_OBJ</a> <strong><span style="color: #000000">audioObj</span></strong>, <a href="01083.html" target="topic">USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ</a> <strong><span style="color: #000000">entityObject</span></strong>, uint8_t <strong><span style="color: #000000">channel</span></strong>);</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01073.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_RESULT</a> <strong><span style="color: #000000">USB_HOST_AUDIO_V1_0_StreamEventHandlerSet</span></strong>(
+    <a href="01061.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <a href="01056.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_EVENT_HANDLER</a> <strong><span style="color: #000000">appAudioHandler</span></strong>, 
+    uintptr_t <strong><span style="color: #000000">context</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
 <div class="Element11">
@@ -69,19 +80,19 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-audioObj&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-USB Host Audio v1.0 Device object&nbsp;</div></td></tr><tr>
+A handle to the Audio v1.0 stream&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-entityObject&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+eventHandler&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Audio control entity object&nbsp;</div></td></tr><tr>
+A pointer to event handler function. If NULL, events will not be generated.&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-channel&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+context&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Channel number&nbsp;</div></td></tr></table></div></div>
+The application specific context that is returned in the event handler&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -90,8 +101,9 @@ Returns</div>
 <div class="Element10">
 
 <ul class="Element630">
-<li class="Element600">true - Mute control exists on the specified channel </li>
-<li class="Element600">false - Mute control does not exist on the specified channel </li>
+<li class="Element600">USB_HOST_AUDIO_V1_0_STREAM_RESULT_SUCCESS - The operation was successful</li>
+<li class="Element600">USB_HOST_AUDIO_V1_0_STREAM_RESULT_HANDLE_INVALID - The specified audio stream does not exist</li>
+<li class="Element600">USB_HOST_AUDIO_V1_0_STREAM_RESULT_FAILURE - An unknown failure occurred</li>
 </ul></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
@@ -106,7 +118,7 @@ None.</p></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00330.html" target="topic">USB Host Libraries</a> &gt; <a href="00170.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00185.html" target="topic">Library Interface</a> &gt; a) Audio Device Access Functions &gt; <a href="01094.html" target="topic">USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists Function</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00191.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00206.html" target="topic">Library Interface</a> &gt; b) Audio Stream Access Functions &gt; <a href="01094.html" target="topic">USB_HOST_AUDIO_V1_0_StreamEventHandlerSet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -114,13 +126,13 @@ None.</p></div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01090.html" target="topic">Previous</a> | <a href="00185.html" target="topic">Up</a> | <a href="01095.html" target="topic">Next</a></div>
+<a href="01093.html" target="topic">Previous</a> | <a href="00206.html" target="topic">Up</a> | <a href="01095.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists@USB_HOST_AUDIO_V1_OBJ@USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ@uint8_t Topic Title: USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_0_StreamEventHandlerSet@USB_HOST_AUDIO_V1_0_STREAM_HANDLE@USB_HOST_AUDIO_V1_0_STREAM_EVENT_HANDLER@uintptr_t Topic Title: USB_HOST_AUDIO_V1_0_StreamEventHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

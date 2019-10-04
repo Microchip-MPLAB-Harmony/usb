@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>CS_INTERFACE Macro</title>
+<title>Running the Demonstration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00237.html" target="topic">USB CDC Device Library</a> &gt; <a href="00233.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00104.html" target="topic">CS_INTERFACE Macro</a></div>
+<a href="00234.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00096.html" target="topic">Host Demonstrations</a> &gt; <a href="00101.html" target="topic">hid_basic_mouse_usart</a> &gt; <a href="00104.html" target="topic">Running the Demonstration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00514.html" target="topic">Previous</a> | <a href="00233.html" target="topic">Up</a> | <a href="00397.html" target="topic">Next</a></div>
+<a href="00103.html" target="topic">Previous</a> | <a href="00101.html" target="topic">Up</a> | <a href="00108.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: CS_INTERFACE Topic Title: CS_INTERFACE Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB Host hid_basic_mouse_usart_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-CS_INTERFACE Macro</div>
+Running the Demonstration</div>
 </div>
 </div>
 
@@ -48,18 +48,25 @@ CS_INTERFACE Macro</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10">
-This is macro CS_INTERFACE.</p></div>
+
+<ul class="Element630">
+<li class="Element600">Open the project in the IDE and select the project configuration. Refer to the <a href="00102.html" target="topic">Building the Application</a> section for details.</li>
+<li class="Element600">Build the code and program the device.</li>
+<li class="Element600">Launch a terminal emulator, such as Tera Term. Select the appropriate COM port and set the serial port settings to 115200-N-1.</li>
+<li class="Element600">If a USB mouse is not connected to the Host connector, the serial terminal emulator window will show the &quot;Connect Mouse&quot; prompt.</li>
+<li class="Element600">Attach a USB mouse to the Host connector of the target hardware. Refer to the <a href="00103.html" target="topic">Configuring the Hardware</a> section for any converter requirements. The message, &quot;Mouse Connected&quot;, will display in the serial terminal emulator window.</li>
+<li class="Element600">Begin moving the mouse and the appropriate relative coordinate changes for X,Y, and Z axes should be displayed in the serial terminal window.</li>
+<li class="Element600">Click the mouse button to toggle LEDs on the board. Refer to the <a href="00103.html" target="topic">Configuring the Hardware</a> section for details on the relevant LED.</li>
+<li class="Element600">Disconnecting the mouse will result in the message, &quot;Connect Mouse&quot;, to reappear on the serial console.</li>
+</ul><p class="Element10" style="text-align: center;">
+<img src="usb_host_hid_mouse.png" border="0" alt="" title=""></p></div>
 </div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">CS_INTERFACE</span></strong> 0x24</pre></div></div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00237.html" target="topic">USB CDC Device Library</a> &gt; <a href="00233.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00104.html" target="topic">CS_INTERFACE Macro</a></div>
+<a href="00234.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00096.html" target="topic">Host Demonstrations</a> &gt; <a href="00101.html" target="topic">hid_basic_mouse_usart</a> &gt; <a href="00104.html" target="topic">Running the Demonstration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -67,13 +74,13 @@ C</div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00514.html" target="topic">Previous</a> | <a href="00233.html" target="topic">Up</a> | <a href="00397.html" target="topic">Next</a></div>
+<a href="00103.html" target="topic">Previous</a> | <a href="00101.html" target="topic">Up</a> | <a href="00108.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: CS_INTERFACE Topic Title: CS_INTERFACE Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB Host hid_basic_mouse_usart_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

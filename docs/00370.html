@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Building the Library</title>
+<title>Creating Your Own USB Device</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00354.html" target="topic">USB MSD Device Library</a> &gt; <a href="00370.html" target="topic">Building the Library</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00261.html" target="topic">USB Device Library - Getting Started</a> &gt; <a href="00370.html" target="topic">Creating Your Own USB Device</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00012.html" target="topic">Previous</a> | <a href="00354.html" target="topic">Up</a> | <a href="00377.html" target="topic">Next</a></div>
+<a href="00372.html" target="topic">Previous</a> | <a href="00261.html" target="topic">Up</a> | <a href="00259.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSDDEV Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MID Creating Your Own USB Device Topic Title: Creating Your Own USB Device)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Building the Library</div>
+Creating Your Own USB Device</div>
 </div>
 </div>
 
@@ -49,77 +49,14 @@ Building the Library</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The following three tables list and describe the header (<span class="Element146">.h</span>) and source (<span class="Element146">.c</span>) files that implement this library. The parent folder for these files is <span class="Element146">&lt;install-dir&gt;/framework/usb</span><span style="color: #0000FF">.</span></p><div class="Element15">
-Interface File(s)</div>
+The first step in creating a USB device is identifying whether the desired device function fits into any of the standard USB device class functions. Using standard USB classes may be advantageous as major operating systems feature Host driver support for standard USB devices. However, the application may not want to tolerate the overhead associated with standard USB device class protocols, in which case, a Vendor USB device can be implemented. A Vendor USB device can be implemented by using the USB Device Layer Endpoint functions; however, these devices will require custom USB host drivers for their operation. Having identified the device class to be used, the recommended approach is to use the available demonstration applications as a starting point for the application.</p><div class="Element15">
+Use the Available Library Demonstration Applications</div>
 <p class="Element10">
-This table lists and describes the header files that must be included (i.e., using <span class="Element146">#include</span>) by any code that uses this library. </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="24%">
-<div class="Element66">
-Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="76%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="24%">
-<div class="Element68">
-<span class="Element146"><a href="00883.html" target="topic">usb_device_msd.h</a></span>&nbsp;</div></td><td class="Element67" valign="top" width="76%">
-<div class="Element68">
-This header file should be included in any <span class="Element146">.c</span> file that accesses the USB Device MSD Function Driver API.&nbsp;</div></td></tr></table></div></div>
-<div class="Element15">
-Required File(s)</div>
-<div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table2">
-<tr>
-<td class="Element67" valign="top" width="10%" style="border:none;">
-<div class="Element68">
-<img src="MHC_Logo_Medium.png" border="0" alt="" title="">&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
-<div class="Element68">
-<span style="color: #008000"><strong><i>All of the required files listed in the following table are automatically added into the MPLAB X IDE project by the MHC when the library is selected for use.</i></strong></span>&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-This table lists and describes the source and header files that must <i>always</i> be included in the MPLAB X IDE project to build this library. </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="26%">
-<div class="Element66">
-Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="74%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="26%">
-<div class="Element68">
-<span class="Element146">/src/dynamic/usb_device_msd.c</span>&nbsp;</div></td><td class="Element67" valign="top" width="74%">
-<div class="Element68">
-This file implements the MSD Function driver interface and should be included in the project if the MSD Device function is desired.&nbsp;</div></td></tr></table></div></div>
-<div class="Element15">
-Optional File(s)</div>
-<p class="Element10">
-This table lists and describes the source and header files that may optionally be included if required for the desired implementation. </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="25%">
-<div class="Element66">
-Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="75%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="25%">
-<div class="Element68">
-N/A&nbsp;</div></td><td class="Element67" valign="top" width="75%">
-<div class="Element68">
-There are no optional files for this library.&nbsp;</div></td></tr></table></div></div>
-<div class="Element15">
-Module Dependencies</div>
-<p class="Element10">
-The USB CDC Device Library depends on the following modules:</p>
+The USB Device Library release package contains a set of demonstration applications that are representative of common USB devices. These can be modified easily to include application specific initialization and application logic. The application logic must be non-blocking and could be implemented as a state machine. Note that the function names and file names referred to in the following section are the those used in the USB Device Library demonstration applications.</p>
 <ul class="Element630">
-<li class="Element600"><a href="00238.html" target="topic">USB Device Layer Library</a></li>
-</ul><p class="Element10">
-Based on application needs, the library may depend on the related storage media libraries, such as:</p>
-<ul class="Element630">
-<li class="Element600"><span class="Element145">Secure Digital (SD) Card Driver Library</span></li>
-<li class="Element600"><span class="Element145">NVM Driver Library</span></li>
+<li class="Element600">The application specific initialization can be called in the APP_Initialize function (in the <span class="Element146">app.c</span> file). The APP_Initialize function is called from the SYS_Initialize function, which in turn is called when the device comes out of Power-on Reset (POR).</li>
+<li class="Element600">The application logic is implemented as a state machine in the APP_Tasks function (in the <span class="Element146">app.c</span> file). The application logic can interact with the function driver and the Device<span style="color: #FFFFFF">_</span>layer by using available API calls.</li>
+<li class="Element600">The application logic can track device events by processing the events in the application USB device event handler function (APP_USBDeviceEventHandler function in <span class="Element146">app.c</span>).</li>
 </ul></div>
 </div>
 </div>
@@ -127,7 +64,7 @@ Based on application needs, the library may depend on the related storage media 
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00354.html" target="topic">USB MSD Device Library</a> &gt; <a href="00370.html" target="topic">Building the Library</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00261.html" target="topic">USB Device Library - Getting Started</a> &gt; <a href="00370.html" target="topic">Creating Your Own USB Device</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -135,13 +72,13 @@ Based on application needs, the library may depend on the related storage media 
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00012.html" target="topic">Previous</a> | <a href="00354.html" target="topic">Up</a> | <a href="00377.html" target="topic">Next</a></div>
+<a href="00372.html" target="topic">Previous</a> | <a href="00261.html" target="topic">Up</a> | <a href="00259.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSDDEV Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MID Creating Your Own USB Device Topic Title: Creating Your Own USB Device)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

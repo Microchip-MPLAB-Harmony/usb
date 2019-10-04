@@ -1,0 +1,318 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>USB_DEVICE_HID_EVENT Enumeration</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00798.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00305.html" target="topic">USB HID Device Library</a> &gt; <a href="00332.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00798.html" target="topic">USB_DEVICE_HID_EVENT Enumeration</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00865.html" target="topic">Previous</a> | <a href="00332.html" target="topic">Up</a> | <a href="00810.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_HID_EVENT Topic Title: USB_DEVICE_HID_EVENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+USB_DEVICE_HID_EVENT Enumeration</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+USB Device HID Function Driver Events&nbsp;</p>
+<p class="Element10">
+These events are specific to the USB Device HID Function Driver instance. Each event description contains details about the parameters passed with event. The contents of pData depends on the generated event.&nbsp;</p>
+<p class="Element10">
+Events that are associated with the HID Function Driver Specific Control Transfers require application response. The application should respond to these events by using the <a href="00738.html" target="topic">USB_DEVICE_ControlReceive</a>, <a href="00739.html" target="topic">USB_DEVICE_ControlSend</a> and <a href="00740.html" target="topic">USB_DEVICE_ControlStatus</a> functions.&nbsp;</p>
+<p class="Element10">
+Calling the <a href="00740.html" target="topic">USB_DEVICE_ControlStatus</a> function with a USB_DEVICE_CONTROL_STATUS_ERROR will stall the control transfer request. The application would do this if the control transfer request is not supported. Calling the <a href="00740.html" target="topic">USB_DEVICE_ControlStatus</a> function with a USB_DEVICE_CONTROL_STATUS_OK will complete the status stage of the control transfer request. The application would do this if the control transfer request is supported&nbsp;</p>
+<p class="Element10">
+The following code snippet shows an example of a possible event handling scheme.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">
+<i><span style="color: #008000">// This code example shows all HID Function Driver events and a possible</span></i>
+<i><span style="color: #008000">// scheme for handling these events. In this example event responses are not</span></i>
+<i><span style="color: #008000">// deferred.</span></i>
+
+<a href="00834.html" target="topic">USB_DEVICE_HID_EVENT_RESPONSE</a> USB_AppHIDEventHandler
+(
+    <a href="00838.html" target="topic">USB_DEVICE_HID_INDEX</a> instanceIndex, 
+    USB_DEVICE_HID_EVENT event, 
+    <strong><span style="color: #000080">void</span></strong> * pData,
+    uintptr_t userData
+)
+{
+    uint8_t currentIdleRate;
+    uint8_t someHIDReport[128];
+    uint8_t someHIDDescriptor[128];
+    <a href="00794.html" target="topic">USB_DEVICE_HANDLE</a>       usbDeviceHandle;
+    USB_HID_PROTOCOL_CODE  currentProtocol;
+    <a href="00812.html" target="topic">USB_DEVICE_HID_EVENT_DATA_GET_REPORT</a>        * getReportEventData;
+    <a href="00824.html" target="topic">USB_DEVICE_HID_EVENT_DATA_SET_IDLE</a>          * setIdleEventData;
+    USB_DEVICE_HID_EVENT_DATA_SET_DESCRIPTOR    * setDescriptorEventData;
+    <a href="00829.html" target="topic">USB_DEVICE_HID_EVENT_DATA_SET_REPORT</a>        * setReportEventData;
+
+    <strong><span style="color: #000080">switch</span></strong>(event)
+    {
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_HID_EVENT_GET_REPORT:
+
+            <i><span style="color: #008000">// In this case, pData should be interpreted as a</span></i>
+            <i><span style="color: #008000">// USB_DEVICE_HID_EVENT_DATA_GET_REPORT pointer. The application</span></i>
+            <i><span style="color: #008000">// must send the requested report by using the</span></i>
+            <i><span style="color: #008000">// USB_DEVICE_ControlSend() function. </span></i>
+
+            getReportEventData = (<a href="00812.html" target="topic">USB_DEVICE_HID_EVENT_DATA_GET_REPORT</a> *)pData;
+            <a href="00739.html" target="topic">USB_DEVICE_ControlSend</a>(usbDeviceHandle, someHIDReport, getReportEventData-&gt;reportLength);
+
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_HID_EVENT_GET_PROTOCOL:
+
+            <i><span style="color: #008000">// In this case, pData will be NULL. The application</span></i>
+            <i><span style="color: #008000">// must send the current protocol to the host by using</span></i>
+            <i><span style="color: #008000">// the USB_DEVICE_ControlSend() function.</span></i>
+
+           <a href="00739.html" target="topic">USB_DEVICE_ControlSend</a>(usbDeviceHandle, &amp;currentProtocol, <strong><span style="color: #000080">sizeof</span></strong>(USB_HID_PROTOCOL_CODE)); 
+           <strong><span style="color: #000080">break</span></strong>;
+            
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_HID_EVENT_GET_IDLE:
+
+            <i><span style="color: #008000">// In this case, pData will be a</span></i>
+            <i><span style="color: #008000">// USB_DEVICE_HID_EVENT_DATA_GET_IDLE pointer type containing the</span></i>
+            <i><span style="color: #008000">// ID of the report for which the idle rate is being requested.</span></i>
+            <i><span style="color: #008000">// The application must send the current idle rate to the host</span></i>
+            <i><span style="color: #008000">// by using the USB_DEVICE_ControlSend() function.</span></i>
+
+           <a href="00739.html" target="topic">USB_DEVICE_ControlSend</a>(usbDeviceHandle, &amp;currentIdleRate, 1); 
+           <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_HID_EVENT_SET_REPORT:
+            
+            <i><span style="color: #008000">// In this case, pData should be interpreted as a</span></i>
+            <i><span style="color: #008000">// USB_DEVICE_HID_EVENT_DATA_SET_REPORT type pointer. The</span></i>
+            <i><span style="color: #008000">// application can analyze the request and then obtain the</span></i>
+            <i><span style="color: #008000">// report by using the USB_DEVICE_ControlReceive() function.</span></i>
+
+            setReportEventData = (<a href="00829.html" target="topic">USB_DEVICE_HID_EVENT_DATA_SET_REPORT</a> *)pData;
+            <a href="00738.html" target="topic">USB_DEVICE_ControlReceive</a>(deviceHandle, someHIDReport, setReportEventData-&gt;reportLength);
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_HID_EVENT_SET_PROTOCOL:
+
+            <i><span style="color: #008000">// In this case, pData should be interpreted as a </span></i>
+            <i><span style="color: #008000">// USB_DEVICE_HID_EVENT_DATA_SET_PROTOCOL type pointer. The application can</span></i>
+            <i><span style="color: #008000">// analyze the data and decide to stall or accept the setting.</span></i>
+            <i><span style="color: #008000">// This shows an example of accepting the protocol setting.</span></i>
+
+            <a href="00740.html" target="topic">USB_DEVICE_ControlStatus</a>(deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
+            <strong><span style="color: #000080">break</span></strong>;
+        
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_HID_EVENT_SET_IDLE:
+        
+            <i><span style="color: #008000">// In this case, pData should be interpreted as a </span></i>
+            <i><span style="color: #008000">// USB_DEVICE_HID_EVENT_DATA_SET_IDLE type pointer. The</span></i>
+            <i><span style="color: #008000">// application can analyze the data and decide to stall</span></i>
+            <i><span style="color: #008000">// or accept the setting. This shows an example of accepting</span></i>
+            <i><span style="color: #008000">// the protocol setting.</span></i>
+
+            setIdleEventData = (<a href="00824.html" target="topic">USB_DEVICE_HID_EVENT_DATA_SET_IDLE</a> *)pData;
+            <a href="00740.html" target="topic">USB_DEVICE_ControlStatus</a>(deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
+
+            <i><span style="color: #008000">// In this case, control transfer data was received. The </span></i>
+            <i><span style="color: #008000">// application can inspect that data and then stall the</span></i>
+            <i><span style="color: #008000">// handshake stage of the control transfer or accept it</span></i>
+            <i><span style="color: #008000">// (as shown here).</span></i>
+            
+            <a href="00740.html" target="topic">USB_DEVICE_ControlStatus</a>(deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_DATA_SENT:
+            
+            <i><span style="color: #008000">// This means that control transfer data was sent. The</span></i>
+            <i><span style="color: #008000">// application would typically acknowledge the handshake</span></i>
+            <i><span style="color: #008000">// stage of the control transfer.</span></i>
+
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_ABORTED:
+
+            <i><span style="color: #008000">// This is an indication only event. The application must</span></i>
+            <i><span style="color: #008000">// reset any HID control transfer related tasks when it receives</span></i>
+            <i><span style="color: #008000">// this event.</span></i>
+
+        <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_HID_EVENT_REPORT_RECEIVED:
+            
+            <i><span style="color: #008000">// This means a HID report receive request has completed.</span></i>
+            <i><span style="color: #008000">// The pData member should be interpreted as a </span></i>
+            <i><span style="color: #008000">// USB_DEVICE_HID_EVENT_DATA_REPORT_RECEIVED pointer type. </span></i>
+            
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_HID_EVENT_REPORT_SENT:
+            
+            <i><span style="color: #008000">// This means a HID report send request has completed.</span></i>
+            <i><span style="color: #008000">// The pData member should be interpreted as a </span></i>
+            <i><span style="color: #008000">// USB_DEVICE_HID_EVENT_DATA_REPORT_SENT pointer type. </span></i>
+            
+            <strong><span style="color: #000080">break</span></strong>;
+    }
+
+    <strong><span style="color: #000080">return</span></strong>(<a href="00835.html" target="topic">USB_DEVICE_HID_EVENT_RESPONSE_NONE</a>);
+}</pre></div></div>
+</div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
+  <strong><span style="color: #000000">USB_DEVICE_HID_EVENT_GET_REPORT</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_HID_EVENT_GET_IDLE</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_HID_EVENT_GET_PROTOCOL</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_HID_EVENT_SET_REPORT</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_HID_EVENT_SET_IDLE</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_HID_EVENT_SET_PROTOCOL</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_HID_EVENT_REPORT_SENT</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_HID_EVENT_REPORT_RECEIVED</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_DATA_RECEIVED</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_DATA_SENT</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_ABORTED</span></strong>
+} USB_DEVICE_HID_EVENT;</pre></div></div>
+<a name="4D656D62657273"></a><div class="Element14">
+Members</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element272">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element260" valign="top" width="35%">
+<div class="Element261">
+Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
+<div class="Element265">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_HID_EVENT_GET_REPORT&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the host issues a GET REPORT command. This is a HID class specific control transfer related event. The application must interpret the pData parameter as <a href="00812.html" target="topic">USB_DEVICE_HID_EVENT_DATA_GET_REPORT</a> pointer type. If the report request is supported, the application must send the report to the host by using the <a href="00739.html" target="topic">USB_DEVICE_ControlSend</a> function either in the event handler or after the event handler routine has returned. The application can track the completion of the request by using the USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_DATA_SENT event. If the report request is not supported, the application must stall the request by calling the <a href="00740.html" target="topic">USB_DEVICE_ControlStatus</a> function with a USB_DEVICE_CONTROL_STATUS_ERROR flag.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_HID_EVENT_GET_IDLE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the host issues a GET IDLE command. This is a HID class specific control transfer related event. The pData parameter will be a <a href="00810.html" target="topic">USB_DEVICE_HID_EVENT_DATA_GET_IDLE</a> pointer type containing the ID of the report for which the idle parameter is requested. If the request is supported, the application must send the idle rate to the host by calling the <a href="00739.html" target="topic">USB_DEVICE_ControlSend</a> function. This function can be called either in the event handler or after the event handler routine has returned. The application can track the completion of the request by using the USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_DATA_SENT event. If the request is not supported, the application must stall the request by calling the <a href="00740.html" target="topic">USB_DEVICE_ControlStatus</a> function with a USB_DEVICE_CONTROL_STATUS_ERROR flag.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_HID_EVENT_GET_PROTOCOL&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the host issues a GET PROTOCOL command. This is a HID class specific control transfer related event. The pData parameter will be NULL. If the request is supported, the application must send a USB_HID_PROTOCOL_CODE data type object, containing the current protocol, to the host by calling the <a href="00739.html" target="topic">USB_DEVICE_ControlSend</a> function. This function can be called either in the event handler or after the event handler routine has returned. The application can track the completion of the request by using the USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_DATA_SENT event. If the request is not supported, the application must stall the request by calling the <a href="00740.html" target="topic">USB_DEVICE_ControlStatus</a> function with a USB_DEVICE_CONTROL_STATUS_ERROR flag.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_HID_EVENT_SET_REPORT&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the host issues a SET REPORT command. This is a HID class specific control transfer related event. The application must interpret the pData parameter as a <a href="00829.html" target="topic">USB_DEVICE_HID_EVENT_DATA_SET_REPORT</a> pointer type. If the report request is supported, the application must provide a buffer, to receive the report, to the host by calling the <a href="00738.html" target="topic">USB_DEVICE_ControlReceive</a> function either in the event handler or after the event handler routine has returned. The application can track the completion of the request by using the USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_DATA_RECEIVED event. If the report request is not supported, the application must stall the request by calling the <a href="00740.html" target="topic">USB_DEVICE_ControlStatus</a> function with a USB_DEVICE_CONTROL_STATUS_ERROR flag.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_HID_EVENT_SET_IDLE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the host issues a SET IDLE command. This is a HID class specific control transfer related event. The pData parameter will be <a href="00824.html" target="topic">USB_DEVICE_HID_EVENT_DATA_SET_IDLE</a> pointer type. The application can analyze the idle duration and acknowledge or reject the setting by calling the <a href="00740.html" target="topic">USB_DEVICE_ControlStatus</a> function. This function can be called in the event handler or after the event handler exits. If application can reject the request by calling the <a href="00740.html" target="topic">USB_DEVICE_ControlStatus</a> function with a USB_DEVICE_CONTROL_STATUS_ERROR flag. It can accept the request by calling this function with USB_DEVICE_CONTROL_STATUS_OK flag.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_HID_EVENT_SET_PROTOCOL&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the host issues a SET PROTOCOL command. This is a HID class specific control transfer related event. The pData parameter will be a pointer to a <a href="00827.html" target="topic">USB_DEVICE_HID_EVENT_DATA_SET_PROTOCOL</a> data type. If the request is supported, the application must acknowledge the request by calling the <a href="00740.html" target="topic">USB_DEVICE_ControlStatus</a> function with a USB_DEVICE_CONTROL_STATUS_OK flag. If the request is not supported, the application must stall the request by calling the <a href="00740.html" target="topic">USB_DEVICE_ControlStatus</a> function with a USB_DEVICE_CONTROL_STATUS_ERROR flag.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_HID_EVENT_REPORT_SENT&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event indicates that <a href="00855.html" target="topic">USB_DEVICE_HID_ReportSend</a> function completed a report transfer on interrupt endpoint from host to device. The pData parameter will be a <a href="00820.html" target="topic">USB_DEVICE_HID_EVENT_DATA_REPORT_SENT</a> type.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_HID_EVENT_REPORT_RECEIVED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event indicates that <a href="00854.html" target="topic">USB_DEVICE_HID_ReportReceive</a> function completed a report transfer on interrupt endpoint from device to host. The pData parameter will be a <a href="00816.html" target="topic">USB_DEVICE_HID_EVENT_DATA_REPORT_RECEIVED</a> type&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_DATA_RECEIVED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the data stage of a control write transfer has completed. This happens after the application uses the <a href="00738.html" target="topic">USB_DEVICE_ControlReceive</a> function to respond to a HID Function Driver Control Transfer Event that requires data to be received from the host. The pData parameter will be NULL. The application should call the <a href="00740.html" target="topic">USB_DEVICE_ControlStatus</a> function with the USB_DEVICE_CONTROL_STATUS_OK flag if the received data is acceptable or should call this function with USB_DEVICE_CONTROL_STATUS_ERROR flag if the received data needs to be rejected.&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_DATA_SENT&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when the data stage of a control read transfer has completed. This happens after the application uses the <a href="00739.html" target="topic">USB_DEVICE_ControlSend</a> function to respond to a HID Function Driver Control Transfer Event that requires data to be sent to the host. The pData parameter will be NULL&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_ABORTED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This event occurs when an ongoing control transfer was aborted. The application must stop any pending control transfer related activities.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+Some of the events allow the application to defer responses. This allows the application some time to obtain the response data rather than having to respond to the event immediately. Note that a USB host will typically wait for event response for a finite time duration before timing out and canceling the event and associated transactions. Even when deferring response, the application must respond promptly if such timeouts have to be avoided.</p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00305.html" target="topic">USB HID Device Library</a> &gt; <a href="00332.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00798.html" target="topic">USB_DEVICE_HID_EVENT Enumeration</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00865.html" target="topic">Previous</a> | <a href="00332.html" target="topic">Up</a> | <a href="00810.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_HID_EVENT Topic Title: USB_DEVICE_HID_EVENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Configuring the Hardware</title>
+<title>Running the Demonstration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00213.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00081.html" target="topic">Host Demonstrations</a> &gt; <a href="00044.html" target="topic">cdc_msd</a> &gt; <a href="00046.html" target="topic">Configuring the Hardware</a></div>
+<a href="00234.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00096.html" target="topic">Host Demonstrations</a> &gt; <a href="00107.html" target="topic">hub_cdc_hid</a> &gt; <a href="00046.html" target="topic">Running the Demonstration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00045.html" target="topic">Previous</a> | <a href="00044.html" target="topic">Up</a> | <a href="00047.html" target="topic">Next</a></div>
+<a href="00045.html" target="topic">Previous</a> | <a href="00107.html" target="topic">Up</a> | <a href="00119.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB cdc_msd_configure Topic Title: Configuring the Hardware)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS hub_cdc_hid_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Configuring the Hardware</div>
+Running the Demonstration</div>
 </div>
 </div>
 
@@ -49,28 +49,32 @@ Configuring the Hardware</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/DM320113');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAME70 Xplained Ultra</a></p>
-<ul class="Element630">
-<li class="Element600">Jumper J204 must be shorted between PB08 and LED 1(positions 1 and 2).</li>
-<li class="Element600">LED2 indicates a Device Connection. (Attached device has been successfully enumerated and configured).</li>
-<li class="Element600">Use TARGET USB J202 connector on the board to connect the USB Device to the the USB Host. A USB micro AB to type A USB Host receptacle converter will be needed to connect the device.</li>
-<li class="Element600">LED1 on the board is controlled by the attached USB CDC device when a CDC device is attached. When a Mass Storage Device is attached, it indicates file write completion.</li>
-</ul><p class="Element10">
+ &nbsp;</p>
+<p class="Element10">
+This application demonstrates the capability of the USB Host Stack to access and manage multiple USB Devices through a Hub. The demonstration application enumerates a HID mouse and CDC emulator device via an external hub. The host will demonstrate the communication from the CDC emulator device and the HID mouse.&nbsp;</p>
+<p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/ATSAMD21-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAMD21 Xplained PRO</a></p>
-<ul class="Element630">
-<li class="Element600">Jumper titled &quot;PA03 SELECT&quot; must be shorted between PA03 and USB_ID(positions 2 and 3)</li>
-<li class="Element600">Use &quot;TARGET USB&quot; connector on the board to connect the USB Device to the the USB Host PC. A USB micro AB to type A USB Host receptacle converter will be needed to connect the device.</li>
-<li class="Element600">LED0 on the board is controlled by the attached USB CDC device when a CDC device is attached. When a Mass Storage Device is attached, it indicates file write completion.</li>
-</ul></div>
+Open the project in MPLAB X IDE and select the desired project configuration.&nbsp;</p>
+<p class="Element10">
+1) Build the code and program the device.&nbsp;</p>
+<p class="Element10">
+2) Connect a hub to the Type A Host connector(J5) on the desired board.&nbsp;</p>
+<p class="Element10">
+3) Connect a mouse to a spare port on the hub.&nbsp;</p>
+<p class="Element10">
+4) Connect the CDC emulator device to another spare port on the hub.&nbsp;</p>
+<p class="Element10">
+5) Click the mouse to toggle LEDs on the starter kit.&nbsp;</p>
+<p class="Element10">
+6) On the personal computer, open a terminal emulator. At the prompt, (LED:), enter 1, 2, or 3 to toggle the LEDs on the starter kit.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00213.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00081.html" target="topic">Host Demonstrations</a> &gt; <a href="00044.html" target="topic">cdc_msd</a> &gt; <a href="00046.html" target="topic">Configuring the Hardware</a></div>
+<a href="00234.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00096.html" target="topic">Host Demonstrations</a> &gt; <a href="00107.html" target="topic">hub_cdc_hid</a> &gt; <a href="00046.html" target="topic">Running the Demonstration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -78,13 +82,13 @@ Configuring the Hardware</div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00045.html" target="topic">Previous</a> | <a href="00044.html" target="topic">Up</a> | <a href="00047.html" target="topic">Next</a></div>
+<a href="00045.html" target="topic">Previous</a> | <a href="00107.html" target="topic">Up</a> | <a href="00119.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB cdc_msd_configure Topic Title: Configuring the Hardware)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS hub_cdc_hid_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

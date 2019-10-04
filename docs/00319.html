@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Event Handling</title>
+<title>Mouse Data Event Handling</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00330.html" target="topic">USB Host Libraries</a> &gt; <a href="00329.html" target="topic">USB Host Layer Library</a> &gt; <a href="00334.html" target="topic">Using the Library</a> &gt; <a href="00327.html" target="topic">How the Library Works</a> &gt; <a href="00319.html" target="topic">Event Handling</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00311.html" target="topic">USB HID Host Mouse Driver Library</a> &gt; <a href="00320.html" target="topic">Using the Library</a> &gt; <a href="00314.html" target="topic">How the Library Works</a> &gt; <a href="00319.html" target="topic">Mouse Data Event Handling</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00325.html" target="topic">Previous</a> | <a href="00327.html" target="topic">Up</a> | <a href="00317.html" target="topic">Next</a></div>
+<a href="00310.html" target="topic">Previous</a> | <a href="00314.html" target="topic">Up</a> | <a href="00308.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST Event Handling Topic Title: Event Handling)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HID HOST MOUSE Mouse Data Event Handling Topic Title: Mouse Data Event Handling)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Event Handling</div>
+Mouse Data Event Handling</div>
 </div>
 </div>
 
@@ -49,14 +49,79 @@ Event Handling</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The USB Host Layer provides general device related events to the application. The application must register an event handling function by using the <a href="01277.html" target="topic">USB_HOST_EventHandlerSet</a> function. A context specified at the time of calling this function, is returned in the event handler. The event handler must be registered before the bus is enabled. Refer to the description of USB_HOST_DEVICE_EVENT events for details on the available events.</p></div>
+No extra event handler is required to be registered to receive mouse data. A call to function <a href="01318.html" target="topic">USB_HOST_HID_MOUSE_EventHandlerSet</a> once is adequate to receive mouse data as well.&nbsp;</p>
+<p class="Element10">
+The mouse button state along with the X, Y, and Z relative coordinate positions are provided by the USB Host HID Mouse Driver. The data type is <a href="01307.html" target="topic">USB_HOST_HID_MOUSE_DATA</a> and is defined in <span class="Element146"><a href="01305.html" target="topic">usb_host_hid_mouse.h</a></span>. The following code shows an event handler example.&nbsp;</p>
+<p class="Element10">
+<strong>Example:</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of HID Mouse Event Handler */</span></i>
+
+<strong><span style="color: #000080">void</span></strong> APP_USBHostHIDMouseEventHandler
+(
+    USB_HOST_HID_MOUSE_HANDLE handle,
+    USB_HOST_HID_MOUSE_EVENT event,
+    <strong><span style="color: #000080">void</span></strong> * pData
+)
+{
+    <i><span style="color: #008000">/* This function gets called in the following scenarios:
+    1. USB Mouse is Attached
+    2. USB Mouse is detached
+    3. USB Mouse data has been obtained.
+    */</span></i>
+
+    <strong><span style="color: #000080">switch</span></strong> ( event)
+    {
+        <strong><span style="color: #000080">case</span></strong> USB_HOST_HID_MOUSE_EVENT_ATTACH:
+            <i><span style="color: #008000">/* Mouse Attached */</span></i>
+            appData.state =  APP_STATE_DEVICE_ATTACHED;
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> USB_HOST_HID_MOUSE_EVENT_DETACH:
+            <i><span style="color: #008000">/* Mouse Detached */</span></i>
+            appData.state = APP_STATE_DEVICE_DETACHED;
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> USB_HOST_HID_MOUSE_EVENT_REPORT_RECEIVED:
+            <i><span style="color: #008000">/* Mouse data event */</span></i>
+            appData.state = APP_STATE_READ_HID;
+            <i><span style="color: #008000">/* Mouse Data from device */</span></i>
+            memcpy(&amp;appData.data, pData, <strong><span style="color: #000080">sizeof</span></strong>(appData.data));
+
+            <i><span style="color: #008000">/* Now the Mouse data has been obtained. This is a parsed data
+            in a simple format defined by USB_HOST_HID_MOUSE_DATA type.
+            */</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+    }
+
+}
+
+<strong><span style="color: #000080">void</span></strong> APP_Tasks(<strong><span style="color: #000080">void</span></strong>)
+{
+    <strong><span style="color: #000080">switch</span></strong> (appData.state)
+    {
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_BUS_ENABLE:
+
+            <i><span style="color: #008000">/* In this state the application enables the USB Host Bus. Note
+             * how the USB Mouse event handler is registered before the bus
+             * is enabled. */</span></i>
+
+            USB_HOST_HID_MOUSE_EventHandlerSet(APP_USBHostHIDMouseEventHandler);
+            USB_HOST_BusEnable(0);
+            appData.state = APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE;
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE:
+            <i><span style="color: #008000">/* Here we wait for the bus enable operation to complete. */</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+    }
+}</pre></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00330.html" target="topic">USB Host Libraries</a> &gt; <a href="00329.html" target="topic">USB Host Layer Library</a> &gt; <a href="00334.html" target="topic">Using the Library</a> &gt; <a href="00327.html" target="topic">How the Library Works</a> &gt; <a href="00319.html" target="topic">Event Handling</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00311.html" target="topic">USB HID Host Mouse Driver Library</a> &gt; <a href="00320.html" target="topic">Using the Library</a> &gt; <a href="00314.html" target="topic">How the Library Works</a> &gt; <a href="00319.html" target="topic">Mouse Data Event Handling</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -64,13 +129,13 @@ The USB Host Layer provides general device related events to the application. Th
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00325.html" target="topic">Previous</a> | <a href="00327.html" target="topic">Up</a> | <a href="00317.html" target="topic">Next</a></div>
+<a href="00310.html" target="topic">Previous</a> | <a href="00314.html" target="topic">Up</a> | <a href="00308.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST Event Handling Topic Title: Event Handling)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HID HOST MOUSE Mouse Data Event Handling Topic Title: Mouse Data Event Handling)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

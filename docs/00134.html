@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>mask Enumeration</title>
+<title>Opening the Driver</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00330.html" target="topic">USB Host Libraries</a> &gt; <a href="00329.html" target="topic">USB Host Layer Library</a> &gt; <a href="00332.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00134.html" target="topic">mask Enumeration</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="01013.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00126.html" target="topic">Common Interface</a> &gt; <a href="00134.html" target="topic">Opening the Driver</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00133.html" target="topic">Previous</a> | <a href="00332.html" target="topic">Up</a> | <a href="00135.html" target="topic">Next</a></div>
+<a href="00129.html" target="topic">Previous</a> | <a href="00126.html" target="topic">Up</a> | <a href="00137.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: mask Topic Title: mask Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Opening the Driver Topic Title: Opening the Driver)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-mask Enumeration</div>
+Opening the Driver</div>
 </div>
 </div>
 
@@ -49,33 +49,77 @@ mask Enumeration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</p>
+The USB Host Stack and the USB Device Stack must obtain a handle to the USB Driver to access the functionality of the driver. This handle is obtained through the USB Driver Open function. The DRV_USB_DEVICE_INTERFACE structure and DRV_USB_DEVICE_HOST_INTERFACE structure provide access to the USB Driver Open function through the <span class="Element146">open</span> member of these structures. Calling the Open function may not return a valid driver handle the first time the function is called. In fact, the USB Driver will return an invalid driver handle until the driver is ready to be opened. The Host and the Device Stack call the Open function repetitively in a state machine, until the function returns a valid handle.&nbsp;</p>
 <p class="Element10">
-This enumeration defines the possible matching criteria flag that can be specified for a Host TPL table entry. The tplFlag member of the TPL table entry should be set to one or more of these flags. These flags define the criteria that the Host layer will use while matching the attached device to the TPL table entry. For example, if a device is specified by class, subclass and protocol specifying the TPL_FLAG_IGNORE_SUBCLASS flag will cause the Host layer to ignore the subclass while comparing the class, subclass and protocol of the attached device.&nbsp;</p>
+The USB Host Stack can open the USB Driver but can call its Host mode functions only if the USB Driver was initialized for Host mode or Dual Role operation. The USB Host Stack accesses the driver functions through the DRV_USB_HOST_INTERFACE pointer that was provided to the Host Layer through the Host Stack initialization. The USB Device Stack can open the USB Driver but can call its Device mode functions only if the USB Driver was initialized for Device mode or Dual Role operation. The USB Device Stack accesses the driver functions through the DRV_USB_HOST_INTERFACE pointer that was provided to the Host Layer through the Host Stack initialization&nbsp;</p>
 <p class="Element10">
-Multiple flags can be specified as a logically OR'ed combination. While combining multiple flags, VID and PID criteria flags cannot be combined with the Class, Subclass, Protocol flags. For example, the TPL_FLAG_VID_PID flag cannot be combined with TPL_FLAG_IGNORE_SUBCLASS.</p></div>
+The following code example shows how the USB Host Layer opens the USB Driver. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code example shows how the Host Layer open the HCD via the hcdInterface.
+ * The driver handle is stored in hcdHandle member of the busObj data structure.
+ * The busObj data structure Host Layer local data structure. The Host Layer
+ * opens the HCD when the bus is enabled. This operation takes place in the
+ * USB_HOST_BUS_STATE_ENABLING state. */</span></i>
+
+<i><span style="color: #008000">/* Note the Host Layer calls the Open function by accessing the open member of
+ * the hcdInterface which is of the type DRV_USB_HOST_INTERFACE. Also note how
+ * the function is called repetitively until the Open function returns a valid
+ * handle. */</span></i>
+
+<strong><span style="color: #000080">case</span></strong> USB_HOST_BUS_STATE_ENABLING:
+
+    <i><span style="color: #008000">/* The bus is being enabled. Try opening the HCD */</span></i>
+    busObj-&gt;hcdHandle = busObj-&gt;hcdInterface-&gt;open(busObj-&gt;hcdIndex, DRV_IO_INTENT_EXCLUSIVE |
+            DRV_IO_INTENT_NONBLOCKING | DRV_IO_INTENT_READWRITE );
+
+    <i><span style="color: #008000">/* Validate the Open function status */</span></i>
+    <strong><span style="color: #000080">if</span></strong> (DRV_HANDLE_INVALID == busObj-&gt;hcdHandle )
+    {
+        <i><span style="color: #008000">/* The driver may not open the first time. This is okay. We
+         * should try opening it again. The state of bus is not
+         * changed. */</span></i>
+    }</pre></div></div>
+<p class="Element10">
+The following code example shows how the USB Device Layer opens the USB Driver. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code example shows how the USB Device Layer calls the USBCD open
+ * function to open the USBCD. The Device Layer accesses the USBCD Open function
+ * through the driverInterface member of the usbDeviceInstanceState object. The
+ * driverInterface member is a DRV_USB_DEVICE_INTERFACE type. The
+ * usbDeviceInstanceState is a USB Device Layer local object. */</span></i>
+
+<i><span style="color: #008000">/* The Device Layer attempts to open the USBCD when it is initializing. Note how
+ * the Device Layer advances to the next state only when the USBCD returns a
+ * valid handle.   */</span></i>
+
+<strong><span style="color: #000080">switch</span></strong>(usbDeviceThisInstance-&gt;taskState)
+{
+    <strong><span style="color: #000080">case</span></strong> USB_DEVICE_TASK_STATE_OPENING_USBCD:
+
+        <i><span style="color: #008000">/* Try to open the driver handle. This could fail if the driver is
+         * not ready to be opened. */</span></i>
+        usbDeviceThisInstance-&gt;usbCDHandle =
+           usbDeviceThisInstance-&gt;driverInterface-&gt;open( usbDeviceThisInstance-&gt;driverIndex,
+           DRV_IO_INTENT_EXCLUSIVE|DRV_IO_INTENT_NONBLOCKING|DRV_IO_INTENT_READWRITE);
+
+        <i><span style="color: #008000">/* Check if the driver was opened */</span></i>
+        <strong><span style="color: #000080">if</span></strong>(usbDeviceThisInstance-&gt;usbCDHandle != DRV_HANDLE_INVALID)
+        {
+            <i><span style="color: #008000">/* Yes the driver could be opened. */</span></i>
+
+            <i><span style="color: #008000">/* Advance the state to the next state */</span></i>
+            usbDeviceThisInstance-&gt;taskState = USB_DEVICE_TASK_STATE_RUNNING;
+
+            <i><span style="color: #008000">/* Update the USB Device Layer state to indicate that it can be
+             * opened */</span></i>
+            usbDeviceThisInstance-&gt;usbDeviceInstanceState = SYS_STATUS_READY;
+        }
+
+        <strong><span style="color: #000080">break</span></strong>;</pre></div></div>
 </div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
-  <strong><span style="color: #000000"><a href="00133.html" target="topic">initData</a></span></strong>,
-  <strong><span style="color: #000000"><a href="00103.html" target="topic">classCode</a></span></strong>,
-  <strong><span style="color: #000000"><a href="00137.html" target="topic">subClassCode</a></span></strong>,
-  <strong><span style="color: #000000">protocolCode</span></strong>
-} driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL), \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .hostClientDriverInitData = <a href="00133.html" target="topic">initData</a>, driver)\ {\ .id.cl_sc_p = { <a href="00103.html" target="topic">classCode</a>, <a href="00137.html" target="topic">subClassCode</a>, \ .hostClientDriverInitData = <a href="00133.html" target="topic">initData</a>, driver)\ {\ .id.cl_sc_p = { <a href="00103.html" target="topic">classCode</a>, <a href="00137.html" target="topic">subClassCode</a>, 0xFF }, driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL), \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .hostClientDriverInitData = <a href="00133.html" target="topic">initData</a>, driver)\ {\ .id.cl_sc_p = { <a href="00103.html" target="topic">classCode</a>, \ .hostClientDriverInitData = <a href="00133.html" target="topic">initData</a>, driver)\ {\ .id.cl_sc_p = { <a href="00103.html" target="topic">classCode</a>, 0xFF, 0xFF }, driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL), \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .hostClientDriverInitData = <a href="00133.html" target="topic">initData</a>, \ .hostClientDriverInitData = <a href="00133.html" target="topic">initData</a>, 0xFF, 0xFF, 0xFF }, driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL), \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .hostClientDriverInitData = <a href="00133.html" target="topic">initData</a>, driver)\ {\ .id.vid_pid = { <a href="01395.html" target="topic">vid</a>, <a href="00135.html" target="topic">pid</a>, \ .hostClientDriverInitData = <a href="00133.html" target="topic">initData</a>, driver)\ {\ .id.vid_pid = { <a href="01395.html" target="topic">vid</a>, <a href="00135.html" target="topic">pid</a> }, driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_VID_PID), \ .tplFlags.ignoreVIDPID = 0, \ .tplFlags.ignoreVIDPID = 0, \ .hostClientDriverInitData = <a href="00133.html" target="topic">initData</a>, driver)\ {\ .id.vid_pid = { <a href="01395.html" target="topic">vid</a>, <a href="00135.html" target="topic">pid</a>, \ .pidMask = mask, \ .hostClientDriverInitData = <a href="00133.html" target="topic">initData</a>, driver)\ {\ .id.vid_pid = { <a href="01395.html" target="topic">vid</a>, <a href="00135.html" target="topic">pid</a> }, \ .pidMask = mask, \ .tplFlags.driverType = (TPL_FLAG_VID_PID), \ .tplFlags.ignoreVIDPID = 1, \ .tplFlags.ignoreVIDPID = 0, \ .hostClientDriverInitData = <a href="00133.html" target="topic">initData</a>, \ .hostClientDriverInitData = <a href="00133.html" target="topic">initData</a>, driver)\ {\ .id.vid_pid = { 0xFFFF, 0xFFFF }, \ .pidMask = 0x0000, \ .tplFlags.driverType = (TPL_FLAG_VID_PID), \ .tplFlags.ignoreVIDPID = 1, \ .tplFlags.ignoreVIDPID = 1, \ .hostClientDriverInitData = <a href="00133.html" target="topic">initData</a>, \ .hostClientDriver = driver\ } <strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">struct</span></strong> { <strong><span style="color: #000080">union</span></strong> { uint32_t value; <strong><span style="color: #000080">struct</span></strong> { uint16_t <a href="01395.html" target="topic">vid</a>; uint16_t <a href="00135.html" target="topic">pid</a>; } vid_pid; <strong><span style="color: #000080">struct</span></strong> { uint8_t <a href="00103.html" target="topic">classCode</a>; uint8_t <a href="00137.html" target="topic">subClassCode</a>; uint8_t protocolCode; } cl_sc_p; } id; uint16_t pidMask; <strong><span style="color: #000080">struct</span></strong> { uint8_t driverType :1; uint8_t ignoreClass :1; uint8_t ignoreSubClass :1; uint8_t ignoreProtocol :1; uint8_t pidMasked :1; uint8_t ignoreVIDPID :1; } tplFlags; <strong><span style="color: #000080">void</span></strong> * hostClientDriverInitData; <strong><span style="color: #000080">void</span></strong> * hostClientDriver; } <a href="01377.html" target="topic">USB_HOST_TARGET_PERIPHERAL_LIST_ENTRY</a>, <a href="01379.html" target="topic">USB_HOST_TPL_ENTRY</a>;</pre></div></div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00330.html" target="topic">USB Host Libraries</a> &gt; <a href="00329.html" target="topic">USB Host Layer Library</a> &gt; <a href="00332.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00134.html" target="topic">mask Enumeration</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="01013.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00126.html" target="topic">Common Interface</a> &gt; <a href="00134.html" target="topic">Opening the Driver</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -83,13 +127,13 @@ None.</p></div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00133.html" target="topic">Previous</a> | <a href="00332.html" target="topic">Up</a> | <a href="00135.html" target="topic">Next</a></div>
+<a href="00129.html" target="topic">Previous</a> | <a href="00126.html" target="topic">Up</a> | <a href="00137.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: mask Topic Title: mask Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Opening the Driver Topic Title: Opening the Driver)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

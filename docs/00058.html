@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Building the Application</title>
+<title>Running the Demonstration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00213.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00052.html" target="topic">Device Demonstrations</a> &gt; <a href="00057.html" target="topic">hid_joystick</a> &gt; <a href="00058.html" target="topic">Building the Application</a></div>
+<a href="00234.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00067.html" target="topic">Device Demonstrations</a> &gt; <a href="00055.html" target="topic">cdc_com_port_single</a> &gt; <a href="00058.html" target="topic">Running the Demonstration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00057.html" target="topic">Previous</a> | <a href="00057.html" target="topic">Up</a> | <a href="00059.html" target="topic">Next</a></div>
+<a href="00057.html" target="topic">Previous</a> | <a href="00055.html" target="topic">Up</a> | <a href="00068.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB Device hid_joystick_build Topic Title: Building the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB cdc_com_port_single_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Building the Application</div>
+Running the Demonstration</div>
 </div>
 </div>
 
@@ -49,52 +49,43 @@ Building the Application</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
- &nbsp;</p>
-<p class="Element10">
-The following table lists the MPLAB X Projects contained in &lt;<span class="Element146">install-dir&gt;/usb/apps/device/hid_joystick/firmware</span> folder and provides a description of each project. All projects listed in this table implement the same functionality.&nbsp;</p>
-<p class="Element10">
-<strong>MPLAB X IDE Projects</strong>&nbsp;</p>
-<p class="Element10">
-This table lists the name and location of the MPLAB X IDE project folder for the demonstration. </p><div class="Element63">
+This demonstration creates a USB device that enumerates as a serial (COM) port on the host. Do the following to run this demonstration:</p>
+<ol class="Element630">
+<li value="1" class="Element600">First compile and program the target device. While compiling, select the appropriate MPLAB X IDE project based on the demonstration board. Refer to <a href="00056.html" target="topic">Building the Application</a> for details.</li>
+<li value="2" class="Element600">Attach the device to the host. If the host is a personal computer and this is the first time you have plugged this device into the computer, you may be prompted for a <span class="Element146">.inf</span> file.</li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="found_new_hardware.png" border="0" alt="" title=""></p>
+<ol class="Element630">
+<li value="3" class="Element600">Select the &quot;Install from a list or specific location (Advanced)&quot; option. Specify the <span class="Element146">&lt;install-dir&gt;/usb/apps/device/cdc_com_port_single/inf</span> directory.</li>
+</ol><p class="Element10" style="text-align: center;">
+<img src="cdc_com_port_single figure_1.png" border="0" alt="" title=""></p>
+<ol class="Element630">
+<li value="4" class="Element600">Once the device is successfully installed, open up a terminal program, such as HyperTerminal and select the appropriate COM port. On most machines this will be COM5 or higher. Set the communication properties to 9600 baud, 1 Stop bit and No parity, with Flow Control set to None.</li>
+<li value="5" class="Element600">The LEDs on the demonstration board will indicate the USB state of the device, as described in the Configuring the Hardware section.</li>
+<li value="6" class="Element600">Once connected to the device, there are two ways to run this example project:
+<ul class="Element631">
+<li class="Element601">a) Typing a key in the terminal window will result in the attached device echoing the next letter. Therefore, if the letter 'b' is pressed, the device will echo 'c'.</li>
+<li class="Element601">b) If the push button is pressed, the device will echo &quot;PUSH BUTTON PRESSED&quot; to the terminal window. Refer to the Configuring the Hardware section to identify the switch to pressed for the selected target board.</li>
+</ul></li>
+</ol><p class="Element10">
+&nbsp;</p>
+<div class="Element63">
 <div class="TableDiv">
-<table cellspacing="0" class="Table1">
+<table cellspacing="0" class="Table2">
 <tr>
-<td class="Element65" valign="top" width="17%">
-<div class="Element66">
-Project Name&nbsp;</div></td><td class="Element65" valign="top" width="10%">
-<div class="Element66">
-Target Device&nbsp;</div></td><td class="Element65" valign="top" width="16%">
-<div class="Element66">
-Target Board&nbsp;</div></td><td class="Element65" valign="top" width="57%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="17%">
+<td class="Element67" valign="top" width="10%" style="border:none;">
 <div class="Element68">
-<span class="Element146">sam_e70_xult_freertos.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="10%">
+<img src="Note Icon.png" border="0" alt="" title=""> <strong>Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
 <div class="Element68">
-ATSAME70Q21B&nbsp;</div></td><td class="Element67" valign="top" width="16%">
-<div class="Element68">
-SAME70 Xplained Ultra&nbsp;</div></td><td class="Element67" valign="top" width="57%">
-<div class="Element68">
-This project implements a USB HID Mouse Device application with freeRTOS on ATSAME70Q21B device.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="17%">
-<div class="Element68">
-<span class="Element146">sam_e70_xult.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="10%">
-<div class="Element68">
-ATSAME70Q21B&nbsp;</div></td><td class="Element67" valign="top" width="16%">
-<div class="Element68">
-SAME70 Xplained Ultra&nbsp;</div></td><td class="Element67" valign="top" width="57%">
-<div class="Element68">
-This project implements a bare-metal (no RTOS) UBS HID Mouse Device application on the ATSAME70Q21B device.&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-Identify the project for the target device and hardware and open this project in MPLAB X IDE. Build the project using the available Menu or Tool Bar options.</p></div>
+Some terminal programs, like HyperTerminal, require users to click the disconnect button before removing the device from the computer. Failing to do so may result in having to close and open the program again to reconnect to the device.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00213.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00052.html" target="topic">Device Demonstrations</a> &gt; <a href="00057.html" target="topic">hid_joystick</a> &gt; <a href="00058.html" target="topic">Building the Application</a></div>
+<a href="00234.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00067.html" target="topic">Device Demonstrations</a> &gt; <a href="00055.html" target="topic">cdc_com_port_single</a> &gt; <a href="00058.html" target="topic">Running the Demonstration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -102,13 +93,13 @@ Identify the project for the target device and hardware and open this project in
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00057.html" target="topic">Previous</a> | <a href="00057.html" target="topic">Up</a> | <a href="00059.html" target="topic">Next</a></div>
+<a href="00057.html" target="topic">Previous</a> | <a href="00055.html" target="topic">Up</a> | <a href="00068.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB Device hid_joystick_build Topic Title: Building the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB cdc_com_port_single_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

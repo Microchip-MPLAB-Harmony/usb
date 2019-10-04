@@ -1,0 +1,362 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>USB_DEVICE_CDC_EventHandlerSet Function</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00690.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00258.html" target="topic">USB CDC Device Library</a> &gt; <a href="00254.html" target="topic">Library Interface</a> &gt; a) Functions &gt; <a href="00690.html" target="topic">USB_DEVICE_CDC_EventHandlerSet Function</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00254.html" target="topic">Previous</a> | <a href="00254.html" target="topic">Up</a> | <a href="00707.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_CDC_EventHandlerSet@USB_DEVICE_CDC_INDEX@USB_DEVICE_CDC_EVENT_HANDLER@uintptr_t Topic Title: USB_DEVICE_CDC_EventHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+USB_DEVICE_CDC_EventHandlerSet Function</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This function registers a event handler for the specified CDC function driver instance. This function should be called by the client when it receives a SET CONFIGURATION event from the device layer. A event handler must be registered for function driver to respond to function driver specific commands. If the event handler is not registered, the device layer will stall function driver specific commands and the USB device may not function.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00708.html" target="topic">USB_DEVICE_CDC_RESULT</a> <strong><span style="color: #000000">USB_DEVICE_CDC_EventHandlerSet</span></strong>(
+    <a href="00692.html" target="topic">USB_DEVICE_CDC_INDEX</a> <strong><span style="color: #000000">instanceIndex</span></strong>, 
+    <a href="00687.html" target="topic">USB_DEVICE_CDC_EVENT_HANDLER</a> <strong><span style="color: #000000">eventHandler</span></strong>, 
+    uintptr_t <strong><span style="color: #000000">context</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This function should be called when the function driver has been initialized as a result of a set configuration.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+instance&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Instance of the CDC Function Driver.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+eventHandler&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+A pointer to event handler function.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+context&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Application specific context that is returned in the event handler.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+USB_DEVICE_CDC_RESULT_OK - The operation was successful USB_DEVICE_CDC_RESULT_ERROR_INSTANCE_INVALID - The specified instance does not exist USB_DEVICE_CDC_RESULT_ERROR_PARAMETER_INVALID - The eventHandler parameter is NULL</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// This code snippet shows an example registering an event handler. Here</span></i>
+<i><span style="color: #008000">// the application specifies the context parameter as a pointer to an</span></i>
+<i><span style="color: #008000">// application object (appObject) that should be associated with this </span></i>
+<i><span style="color: #008000">// instance of the CDC function driver.</span></i>
+
+<i><span style="color: #008000">// Application states</span></i>
+<strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong>
+{
+    <i><span style="color: #008000">//Application's state machine's initial state.</span></i>
+    APP_STATE_INIT=0,
+    APP_STATE_SERVICE_TASKS,
+    APP_STATE_WAIT_FOR_CONFIGURATION, 
+} APP_STATES;
+
+<a href="00794.html" target="topic">USB_DEVICE_HANDLE</a> usbDeviceHandle;
+
+APP_STATES appState; 
+
+<i><span style="color: #008000">// Get Line Coding Data </span></i>
+USB_CDC_LINE_CODING getLineCodingData;
+
+<i><span style="color: #008000">// Control Line State </span></i>
+USB_CDC_CONTROL_LINE_STATE controlLineStateData;
+
+<i><span style="color: #008000">// Set Line Coding Data </span></i>
+USB_CDC_LINE_CODING setLineCodingData;
+
+<a href="00708.html" target="topic">USB_DEVICE_CDC_RESULT</a> result;
+
+<a href="00688.html" target="topic">USB_DEVICE_CDC_EVENT_RESPONSE</a> APP_USBDeviceCDCEventHandler 
+(
+    <a href="00692.html" target="topic">USB_DEVICE_CDC_INDEX</a> instanceIndex ,
+    <a href="00668.html" target="topic">USB_DEVICE_CDC_EVENT</a> event ,
+    <strong><span style="color: #000080">void</span></strong>* pData, 
+    uintptr_t context 
+)
+{
+    <i><span style="color: #008000">// Event Handling comes here</span></i>
+    
+    <strong><span style="color: #000080">switch</span></strong>(event) 
+    {
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CDC_EVENT_GET_LINE_CODING:
+                <i><span style="color: #008000">// This means the host wants to know the current line</span></i>
+                <i><span style="color: #008000">// coding. This is a control transfer request. Use the</span></i>
+                <i><span style="color: #008000">// USB_DEVICE_ControlSend() function to send the data to</span></i>
+                <i><span style="color: #008000">// host.  </span></i>
+
+                <a href="00739.html" target="topic">USB_DEVICE_ControlSend</a>(usbDeviceHandle,
+                    &amp;getLineCodingData, <strong><span style="color: #000080">sizeof</span></strong>(USB_CDC_LINE_CODING));
+
+        <strong><span style="color: #000080">break</span></strong>;
+        
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CDC_EVENT_SET_LINE_CODING:
+
+            <i><span style="color: #008000">// This means the host wants to set the line coding.</span></i>
+            <i><span style="color: #008000">// This is a control transfer request. Use the</span></i>
+            <i><span style="color: #008000">// USB_DEVICE_ControlReceive() function to receive the</span></i>
+            <i><span style="color: #008000">// data from the host </span></i>
+
+            <a href="00738.html" target="topic">USB_DEVICE_ControlReceive</a>(usbDeviceHandle,
+                    &amp;setLineCodingData, <strong><span style="color: #000080">sizeof</span></strong>(USB_CDC_LINE_CODING));
+
+        <strong><span style="color: #000080">break</span></strong>;
+        
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CDC_EVENT_SET_CONTROL_LINE_STATE:
+
+            <i><span style="color: #008000">// This means the host is setting the control line state.</span></i>
+            <i><span style="color: #008000">// Read the control line state. We will accept this request</span></i>
+            <i><span style="color: #008000">// for now.</span></i>
+            controlLineStateData.dtr = ((USB_CDC_CONTROL_LINE_STATE *)pData)-&gt;dtr; 
+            controlLineStateData.carrier = ((USB_CDC_CONTROL_LINE_STATE *)pData)-&gt;carrier; 
+            <a href="00740.html" target="topic">USB_DEVICE_ControlStatus</a>(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
+
+        <strong><span style="color: #000080">break</span></strong>;
+        
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
+
+            <i><span style="color: #008000">// The data stage of the last control transfer is</span></i>
+            <i><span style="color: #008000">// complete. For now we accept all the data </span></i>
+
+            <a href="00740.html" target="topic">USB_DEVICE_ControlStatus</a>(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
+            
+        <strong><span style="color: #000080">break</span></strong>;
+        
+            <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_SENT:
+
+            <i><span style="color: #008000">// This means the GET LINE CODING function data is valid. We dont</span></i>
+            <i><span style="color: #008000">// do much with this data in this demo. </span></i>
+        <strong><span style="color: #000080">break</span></strong>;
+        
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CDC_EVENT_SEND_BREAK:
+
+            <i><span style="color: #008000">// This means that the host is requesting that a break of the</span></i>
+            <i><span style="color: #008000">// specified duration be sent. </span></i>
+            <a href="00740.html" target="topic">USB_DEVICE_ControlStatus</a>(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);    
+        
+        <strong><span style="color: #000080">break</span></strong>;
+      
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CDC_EVENT_READ_COMPLETE:
+            <i><span style="color: #008000">// This means that the host has sent some data</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+            
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CDC_EVENT_WRITE_COMPLETE:
+            <i><span style="color: #008000">// This means that the host has sent some data </span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+        
+        <strong><span style="color: #000080">default</span></strong>:
+            <strong><span style="color: #000080">break</span></strong>; 
+    }
+
+    <strong><span style="color: #000080">return</span></strong> <a href="00689.html" target="topic">USB_DEVICE_CDC_EVENT_RESPONSE_NONE</a>;
+}
+
+<i><span style="color: #008000">// This is the application device layer event handler function.</span></i>
+
+<a href="00783.html" target="topic">USB_DEVICE_EVENT_RESPONSE</a> APP_USBDeviceEventHandler
+(
+    <a href="00755.html" target="topic">USB_DEVICE_EVENT</a> event,
+    <strong><span style="color: #000080">void</span></strong> * pData, 
+    uintptr_t context
+)
+{
+    USB_SETUP_PACKET * setupPacket;
+    <strong><span style="color: #000080">switch</span></strong>(event)
+    {
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_POWER_DETECTED:
+            <i><span style="color: #008000">// This event in generated when VBUS is detected. Attach the device </span></i>
+            <a href="00539.html" target="topic">USB_DEVICE_Attach</a>(usbDeviceHandle);
+            <strong><span style="color: #000080">break</span></strong>;
+            
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_POWER_REMOVED:
+            <i><span style="color: #008000">// This event is generated when VBUS is removed. Detach the device</span></i>
+            <a href="00742.html" target="topic">USB_DEVICE_Detach</a> (usbDeviceHandle);
+            <strong><span style="color: #000080">break</span></strong>; 
+            
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_CONFIGURED:
+            <i><span style="color: #008000">// This event indicates that Host has set Configuration in the Device. </span></i>
+            <i><span style="color: #008000">// Register CDC Function driver Event Handler.  </span></i>
+            USB_DEVICE_CDC_EventHandlerSet(<a href="00693.html" target="topic">USB_DEVICE_CDC_INDEX_0</a>, APP_USBDeviceCDCEventHandler, (uintptr_t)0);
+            <strong><span style="color: #000080">break</span></strong>;
+            
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST:
+            <i><span style="color: #008000">// This event indicates a Control transfer setup stage has been completed. </span></i>
+            setupPacket = (USB_SETUP_PACKET *)pData;
+            
+            <i><span style="color: #008000">// Parse the setup packet and respond with a USB_DEVICE_ControlSend(), </span></i>
+            <i><span style="color: #008000">// USB_DEVICE_ControlReceive or USB_DEVICE_ControlStatus(). </span></i>
+            
+            <strong><span style="color: #000080">break</span></strong>; 
+            
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_SENT:
+            <i><span style="color: #008000">// This event indicates that a Control transfer Data has been sent to Host.   </span></i>
+            <strong><span style="color: #000080">break</span></strong>; 
+            
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
+            <i><span style="color: #008000">// This event indicates that a Control transfer Data has been received from Host.</span></i>
+            <strong><span style="color: #000080">break</span></strong>; 
+            
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_CONTROL_TRANSFER_ABORTED:
+            <i><span style="color: #008000">// This event indicates a control transfer was aborted. </span></i>
+            <strong><span style="color: #000080">break</span></strong>; 
+            
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_SUSPENDED:
+            <strong><span style="color: #000080">break</span></strong>;
+            
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_RESUMED:
+            <strong><span style="color: #000080">break</span></strong>;
+            
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_ERROR:
+            <strong><span style="color: #000080">break</span></strong>;
+            
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_RESET:
+            <strong><span style="color: #000080">break</span></strong>;
+            
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_SOF:
+            <i><span style="color: #008000">// This event indicates an SOF is detected on the bus. The  USB_DEVICE_SOF_EVENT_ENABLE</span></i>
+            <i><span style="color: #008000">// macro should be defined to get this event. </span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+        <strong><span style="color: #000080">default</span></strong>:
+            <strong><span style="color: #000080">break</span></strong>;
+    }
+}
+
+
+<strong><span style="color: #000080">void</span></strong> APP_Tasks ( <strong><span style="color: #000080">void</span></strong> )
+{
+    <i><span style="color: #008000">// Check the application's current state.</span></i>
+    <strong><span style="color: #000080">switch</span></strong> ( appState )
+    {
+        <i><span style="color: #008000">// Application's initial state. </span></i>
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_INIT:
+            <i><span style="color: #008000">// Open the device layer </span></i>
+            usbDeviceHandle = <a href="00932.html" target="topic">USB_DEVICE_Open</a>( <a href="00866.html" target="topic">USB_DEVICE_INDEX_0</a>,
+                DRV_IO_INTENT_READWRITE );
+
+            <strong><span style="color: #000080">if</span></strong>(usbDeviceHandle != <a href="00795.html" target="topic">USB_DEVICE_HANDLE_INVALID</a>)
+            {
+                <i><span style="color: #008000">// Register a callback with device layer to get event notification </span></i>
+                <a href="00785.html" target="topic">USB_DEVICE_EventHandlerSet</a>(usbDeviceHandle,
+                    APP_USBDeviceEventHandler, 0);
+                appState = APP_STATE_WAIT_FOR_CONFIGURATION;
+            }
+            <strong><span style="color: #000080">else</span></strong>
+            {
+                <i><span style="color: #008000">// The Device Layer is not ready to be opened. We should try</span></i>
+                <i><span style="color: #008000">// gain later. </span></i>
+            }
+            <strong><span style="color: #000080">break</span></strong>; 
+
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_SERVICE_TASKS:
+            <strong><span style="color: #000080">break</span></strong>; 
+
+            <i><span style="color: #008000">// The default state should never be executed. </span></i>
+        <strong><span style="color: #000080">default</span></strong>:
+            <strong><span style="color: #000080">break</span></strong>; 
+    }
+}</pre></div></div>
+</div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00258.html" target="topic">USB CDC Device Library</a> &gt; <a href="00254.html" target="topic">Library Interface</a> &gt; a) Functions &gt; <a href="00690.html" target="topic">USB_DEVICE_CDC_EventHandlerSet Function</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00254.html" target="topic">Previous</a> | <a href="00254.html" target="topic">Up</a> | <a href="00707.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_CDC_EventHandlerSet@USB_DEVICE_CDC_INDEX@USB_DEVICE_CDC_EVENT_HANDLER@uintptr_t Topic Title: USB_DEVICE_CDC_EventHandlerSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

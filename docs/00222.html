@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Abstraction Model</title>
+<title>Event Handling</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00237.html" target="topic">USB CDC Device Library</a> &gt; <a href="00236.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">Abstraction Model</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00226.html" target="topic">USB CDC Host Library</a> &gt; <a href="00233.html" target="topic">Using the Library</a> &gt; <a href="00224.html" target="topic">How the Library Works</a> &gt; <a href="00222.html" target="topic">Event Handling</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00236.html" target="topic">Previous</a> | <a href="00236.html" target="topic">Up</a> | <a href="00221.html" target="topic">Next</a></div>
+<a href="00230.html" target="topic">Previous</a> | <a href="00224.html" target="topic">Up</a> | <a href="00218.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVCDC Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Event Handling Topic Title: Event Handling)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Abstraction Model</div>
+Event Handling</div>
 </div>
 </div>
 
@@ -49,28 +49,118 @@ Abstraction Model</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The CDC Function Driver offers services to a USB CDC Device to communicate with the host by abstracting the USB specification details. It must be used along with the USB Device Layer and USB controller to communicate with the USB Host. Figure 1 shows a block diagram of the MPLAB Harmony USB Architecture and where the CDC Function Driver is placed. </p><p class="Element10" style="text-align: center;">
-<strong>Figure 1: CDC Function Driver</strong>&nbsp;</p>
-<p class="Element10">
-As shown in Figure 1, the USB Controller Driver takes the responsibility of managing the USB peripheral on the device. The USB Device Layer handles the device enumeration, etc. The USB Device<span style="color: #FFFFFF">_</span>layer forwards all USB CDC specific control transfers to the CDC Function Driver. The CDC Function Driver ACM sub-layer interprets the control transfers and requests application's intervention through event handlers and well defined set of API. The application must register a event handler with the CDC Function Driver in the Device Layer Set Configuration Event. The application should respond to CDC ACM events. Response to CDC ACM event that require control transfer response can be deferred by responding to the event after returning from the event handler. The application interacts directly with the CDC Function Driver to send/receive data and to send serial state notifications.&nbsp;</p>
-<p class="Element10">
-<span style="color: #000000">As per the CDC specification,a USB CDC Device is a collection of the following interfaces:</span>&nbsp;</p>
+The CDC Host Client Driver presents an event driven interface to the application. The CDC Host Client Driver requires the application client to set two event handlers for meaningful operation:</p>
 <ul class="Element630">
-<li class="Element600"><span style="color: #000000">Communication Interface (Device Management) on Endpoint 0</span></li>
-<li class="Element600">Optional <span style="color: #000000">Communication Interface (Notification) on an interrupt endpoint</span></li>
-<li class="Element600"><span style="color: #000000">Optional Data Interface (either a bulk or isochronous endpoint)</span></li>
-</ul><p class="Element10" style="text-align: center;">
-&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<span style="color: #000000"><strong>Figure 2: CDC Function Driver Architecture</strong></span></p><p class="Element10">
-<span style="color: #000000">Figure 2 shows the architecture of the CDC Function Driver. The device management on Endpoint 0 is handled by the device library(class specific requests are routed to the CDC Function Driver by the USB Device Layer). An instance of the CDC Function Driver actually consists of a data interface and a notification interface. The library is implemented in two <span class="Element146">.c</span> files. The <span class="Element146">usb_device_cdc.c</span> file implements the CDC data and serial state notification, while the <span class="Element146">usb_device_cdc_acm.c</span> file implements the control transfer interpretation and event generation. The application must respond to control transfer related CDC ACM events by directly calling the Device Layer control transfer routines.</span></p></div>
+<li class="Element600">The Attach event handler is not client specific and is registered before the <a href="01204.html" target="topic">USB_HOST_BusEnable</a> function is called. This event handler and the attach event is discussed in the Detecting Device Attach section.</li>
+<li class="Element600">The client specific command, data transfer and detach events. The CDC Class specific command request events are discussed in the Sending Class Specific Control Transfers section. The data transfer related events are discussed in the Reading and Writing Data section. Some general points about these events are discussed below.</li>
+</ul><p class="Element10">
+A request to send a command or transfer data typically completes after the command request or transfer function has exited. The application must then use the CDC Host Client Driver event to track the completion of this command or data transfer request. In a case where multiple data transfers are queued, the transfer handles can be used to identify the transfer requests.&nbsp;</p>
+<p class="Element10">
+The application must use the <a href="01243.html" target="topic">USB_HOST_CDC_EventHandlerSet</a> function to register a client specific event handler. This event handler will be called when a command, data transfer or detach event has occurred and should be registered before the client request for command or a data transfer. The following code shows an example of registering an event handler.&nbsp;</p>
+<p class="Element10">
+<strong>Example:</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of setting an event handler and an example
+ * event handler. For the full set of events that the CDC Host Client generates,
+ * refer to USB_HOST_CDC_EVENT enumeration description */</span></i>
+
+USB_HOST_CDC_EVENT_RESPONSE APP_USBHostCDCEventHandler
+(
+    USB_HOST_CDC_HANDLE cdcHandle,
+    USB_HOST_CDC_EVENT event,
+    <strong><span style="color: #000080">void</span></strong> * eventData,
+    uintptr_t context
+)
+{
+    <i><span style="color: #008000">/* This function is called when a CDC Host event has occurred. A pointer to
+     * this function is registered after opening the device. See the call to
+     * USB_HOST_CDC_EventHandlerSet() function. */</span></i>
+
+    USB_HOST_CDC_EVENT_ACM_SET_LINE_CODING_COMPLETE_DATA * setLineCodingEventData;
+    USB_HOST_CDC_EVENT_ACM_SET_CONTROL_LINE_STATE_COMPLETE_DATA * setControlLineStateEventData;
+    USB_HOST_CDC_EVENT_WRITE_COMPLETE_DATA * writeCompleteEventData;
+    USB_HOST_CDC_EVENT_READ_COMPLETE_DATA * readCompleteEventData;
+
+    <strong><span style="color: #000080">switch</span></strong>(event)
+    {
+        <strong><span style="color: #000080">case</span></strong> USB_HOST_CDC_EVENT_ACM_SET_LINE_CODING_COMPLETE:
+
+            <i><span style="color: #008000">/* This means the application requested Set Line Coding request is
+             * complete. */</span></i>
+            setLineCodingEventData = (USB_HOST_CDC_EVENT_ACM_SET_LINE_CODING_COMPLETE_DATA *)(eventData);
+            appData.controlRequestDone = <strong><span style="color: #000080">true</span></strong>;
+            appData.controlRequestResult = setLineCodingEventData-&gt;result;
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> USB_HOST_CDC_EVENT_ACM_SET_CONTROL_LINE_STATE_COMPLETE:
+
+            <i><span style="color: #008000">/* This means the application requested Set Control Line State
+             * request has completed. */</span></i>
+            setControlLineStateEventData = (USB_HOST_CDC_EVENT_ACM_SET_CONTROL_LINE_STATE_COMPLETE_DATA *)(eventData);
+            appData.controlRequestDone = <strong><span style="color: #000080">true</span></strong>;
+            appData.controlRequestResult = setControlLineStateEventData-&gt;result;
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> USB_HOST_CDC_EVENT_WRITE_COMPLETE:
+
+            <i><span style="color: #008000">/* This means an application requested write has completed */</span></i>
+            appData.writeTransferDone = <strong><span style="color: #000080">true</span></strong>;
+            writeCompleteEventData = (USB_HOST_CDC_EVENT_WRITE_COMPLETE_DATA *)(eventData);
+            appData.writeTransferResult = writeCompleteEventData-&gt;result;
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> USB_HOST_CDC_EVENT_READ_COMPLETE:
+
+            <i><span style="color: #008000">/* This means an application requested write has completed */</span></i>
+            appData.readTransferDone = <strong><span style="color: #000080">true</span></strong>;
+            readCompleteEventData = (USB_HOST_CDC_EVENT_READ_COMPLETE_DATA *)(eventData);
+            appData.readTransferResult = readCompleteEventData-&gt;result;
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> USB_HOST_CDC_EVENT_DEVICE_DETACHED:
+
+            <i><span style="color: #008000">/* The device was detached */</span></i>
+            appData.deviceWasDetached = <strong><span style="color: #000080">true</span></strong>;
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">default</span></strong>:
+            <strong><span style="color: #000080">break</span></strong>;
+    }
+
+    <strong><span style="color: #000080">return</span></strong>(USB_HOST_CDC_EVENT_RESPONE_NONE);
+}
+
+
+<strong><span style="color: #000080">void</span></strong> APP_Tasks(<strong><span style="color: #000080">void</span></strong>)
+{
+    <strong><span style="color: #000080">switch</span></strong>(appData.state)
+    {
+        <i><span style="color: #008000">/* The application states that enable the bus and wait for device attach
+         * are not shown here for brevity */</span></i>
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_OPEN_DEVICE:
+
+            <i><span style="color: #008000">/* In this state the application opens the attached device */</span></i>
+            appData.cdcHostHandle = USB_HOST_CDC_Open(appData.cdcObj);
+            <strong><span style="color: #000080">if</span></strong>(appData.cdcHostHandle != USB_HOST_CDC_HANDLE_INVALID)
+            {
+                <i><span style="color: #008000">/* The driver was opened successfully. Set the event handler
+                 * and then go to the next state. */</span></i>
+                USB_HOST_CDC_EventHandlerSet(appData.cdcHostHandle, APP_USBHostCDCEventHandler, (uintptr_t)0);
+                appData.state = APP_STATE_SET_LINE_CODING;
+            }
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">default</span></strong>:
+            <strong><span style="color: #000080">break</span></strong>;
+
+    }
+}</pre></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00237.html" target="topic">USB CDC Device Library</a> &gt; <a href="00236.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">Abstraction Model</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00226.html" target="topic">USB CDC Host Library</a> &gt; <a href="00233.html" target="topic">Using the Library</a> &gt; <a href="00224.html" target="topic">How the Library Works</a> &gt; <a href="00222.html" target="topic">Event Handling</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -78,13 +168,13 @@ As shown in Figure 1, the USB Controller Driver takes the responsibility of mana
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00236.html" target="topic">Previous</a> | <a href="00236.html" target="topic">Up</a> | <a href="00221.html" target="topic">Next</a></div>
+<a href="00230.html" target="topic">Previous</a> | <a href="00224.html" target="topic">Up</a> | <a href="00218.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVCDC Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Event Handling Topic Title: Event Handling)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

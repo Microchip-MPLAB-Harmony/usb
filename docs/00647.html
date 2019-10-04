@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_DEVICE_CDC_EVENT Enumeration</title>
+<title>USB_DEVICE_AUDIO_V2_QUEUE_DEPTH_COMBINED Macro</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00237.html" target="topic">USB CDC Device Library</a> &gt; <a href="00233.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00647.html" target="topic">USB_DEVICE_CDC_EVENT Enumeration</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00190.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00177.html" target="topic">Configuring the Library</a> &gt; <a href="00647.html" target="topic">USB_DEVICE_AUDIO_V2_QUEUE_DEPTH_COMBINED Macro</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00659.html" target="topic">Previous</a> | <a href="00233.html" target="topic">Up</a> | <a href="00666.html" target="topic">Next</a></div>
+<a href="00646.html" target="topic">Previous</a> | <a href="00177.html" target="topic">Up</a> | <a href="00006.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_CDC_EVENT Topic Title: USB_DEVICE_CDC_EVENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_AUDIO_V2_QUEUE_DEPTH_COMBINED Topic Title: USB_DEVICE_AUDIO_V2_QUEUE_DEPTH_COMBINED Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_DEVICE_CDC_EVENT Enumeration</div>
+USB_DEVICE_AUDIO_V2_QUEUE_DEPTH_COMBINED Macro</div>
 </div>
 </div>
 
@@ -49,236 +49,26 @@ USB_DEVICE_CDC_EVENT Enumeration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-USB Device CDC Function Driver Events&nbsp;</p>
+USB device Audio 2.0 Combined Queue Size&nbsp;</p>
 <p class="Element10">
-These events are specific to the USB Device CDC Function Driver instance. Each event description contains details about the parameters passed with event. The contents of pData depends on the generated event.&nbsp;</p>
-<p class="Element10">
-Events associated with the CDC Function Driver Specific Control Transfers require application response. The application should respond to these events by using the <a href="00717.html" target="topic">USB_DEVICE_ControlReceive</a>, <a href="00718.html" target="topic">USB_DEVICE_ControlSend</a> and <a href="00719.html" target="topic">USB_DEVICE_ControlStatus</a> functions.&nbsp;</p>
-<p class="Element10">
-Calling the <a href="00719.html" target="topic">USB_DEVICE_ControlStatus</a> function with a USB_DEVICE_CONTROL_STATUS_ERROR will stall the control transfer request. The application would do this if the control transfer request is not supported. Calling the <a href="00719.html" target="topic">USB_DEVICE_ControlStatus</a> function with a USB_DEVICE_CONTROL_STATUS_OK will complete the status stage of the control transfer request. The application would do this if the control transfer request is supported&nbsp;</p>
-<p class="Element10">
-The following code snippet shows an example of a possible event handling scheme.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">
-<i><span style="color: #008000">// This code example shows all CDC Function Driver events </span></i>
-<i><span style="color: #008000">// and a possible scheme for handling these events. In this example</span></i>
-<i><span style="color: #008000">// event responses are not deferred. usbDeviceHandle is obtained while</span></i>
-<i><span style="color: #008000">// opening the USB Device Layer through the USB_DEVICE_Open function.</span></i>
-
-uint16_t * breakData;
-<a href="00773.html" target="topic">USB_DEVICE_HANDLE</a>    usbDeviceHandle;
-USB_CDC_LINE_CODING  lineCoding;
-USB_CDC_CONTROL_LINE_STATE * controlLineStateData;
-
-<a href="00667.html" target="topic">USB_DEVICE_CDC_EVENT_RESPONSE</a> USBDeviceCDCEventHandler
-(
-    <a href="00671.html" target="topic">USB_DEVICE_CDC_INDEX</a> instanceIndex, 
-    USB_DEVICE_CDC_EVENT event, 
-    <strong><span style="color: #000080">void</span></strong> * pData,
-    uintptr_t userData
-)
-{
-    <strong><span style="color: #000080">switch</span></strong>(event)
-    {
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CDC_EVENT_SET_LINE_CODING:
-
-            <i><span style="color: #008000">// In this case, the application should read the line coding</span></i>
-            <i><span style="color: #008000">// data that is sent by the host. The application must use the</span></i>
-            <i><span style="color: #008000">// USB_DEVICE_ControlReceive function to receive the </span></i>
-            <i><span style="color: #008000">// USB_CDC_LINE_CODING type of data.</span></i>
-            
-            <a href="00717.html" target="topic">USB_DEVICE_ControlReceive</a>(usbDeviceHandle, &amp;lineCoding, <strong><span style="color: #000080">sizeof</span></strong>(USB_CDC_LINE_CODING));
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CDC_EVENT_GET_LINE_CODING:
-
-            <i><span style="color: #008000">// In this case, the application should send the line coding</span></i>
-            <i><span style="color: #008000">// data to the host. The application must send the </span></i>
-            <i><span style="color: #008000">// USB_DEVICE_ControlSend function to send the data. </span></i>
-
-            <a href="00718.html" target="topic">USB_DEVICE_ControlSend</a>(usbDeviceHandle, &amp;lineCoding, <strong><span style="color: #000080">sizeof</span></strong>(USB_CDC_LINE_CODING));
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CDC_EVENT_SET_CONTROL_LINE_STATE:
-            
-            <i><span style="color: #008000">// In this case, pData should be interpreted as a</span></i>
-            <i><span style="color: #008000">// USB_CDC_CONTROL_LINE_STATE pointer type.  The application</span></i>
-            <i><span style="color: #008000">// acknowledges the parameters by calling the</span></i>
-            <i><span style="color: #008000">// USB_DEVICE_ControlStatus function with the</span></i>
-            <i><span style="color: #008000">// USB_DEVICE_CONTROL_STATUS_OK option.</span></i>
-         
-            controlLineStateData = (USB_CDC_CONTROL_LINE_STATE *)pData;
-            <a href="00719.html" target="topic">USB_DEVICE_ControlStatus</a>(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);   
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CDC_EVENT_SEND_BREAK:
-           
-            <i><span style="color: #008000">// In this case, pData should be interpreted as a uint16_t</span></i>
-            <i><span style="color: #008000">// pointer type to the break duration. The application</span></i>
-            <i><span style="color: #008000">// acknowledges the parameters by calling the</span></i>
-            <i><span style="color: #008000">// USB_DEVICE_ControlStatus() function with the</span></i>
-            <i><span style="color: #008000">// USB_DEVICE_CONTROL_STATUS_OK option.</span></i>
-            
-            breakDuration = (uint16_t *)pData; 
-            <a href="00719.html" target="topic">USB_DEVICE_ControlStatus</a>(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_SENT:
-
-            <i><span style="color: #008000">// This event indicates the data send request associated with</span></i>
-            <i><span style="color: #008000">// the latest USB_DEVICE_ControlSend function was</span></i>
-            <i><span style="color: #008000">// completed.  The application could use this event to track</span></i>
-            <i><span style="color: #008000">// the completion of the USB_DEVICE_CDC_EVENT_GET_LINE_CODING</span></i>
-            <i><span style="color: #008000">// request. </span></i>
-
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
-
-            <i><span style="color: #008000">// This event indicates the data that was requested using the</span></i>
-            <i><span style="color: #008000">// USB_DEVICE_ControlReceive function is available for the</span></i>
-            <i><span style="color: #008000">// application to peruse. The application could use this event</span></i>
-            <i><span style="color: #008000">// to track the completion of the</span></i>
-            <i><span style="color: #008000">// USB_DEVICE_CDC_EVENT_SET_LINE_CODING_EVENT event. The</span></i>
-            <i><span style="color: #008000">// application can then either accept the line coding data (as</span></i>
-            <i><span style="color: #008000">// shown here) or decline it by using the</span></i>
-            <i><span style="color: #008000">// USB_DEVICE_CONTROL_STATUS_ERROR flag in the</span></i>
-            <i><span style="color: #008000">// USB_DEVICE_ControlStatus function.</span></i>
-            
-            <a href="00719.html" target="topic">USB_DEVICE_ControlStatus</a>(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
-            <strong><span style="color: #000080">break</span></strong>;
-        
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CDC_EVENT_WRITE_COMPLETE:
-            
-            <i><span style="color: #008000">// This event indicates that a CDC Write Transfer request has</span></i>
-            <i><span style="color: #008000">// completed.  pData should be interpreted as a </span></i>
-            <i><span style="color: #008000">// USB_DEVICE_CDC_EVENT_DATA_WRITE_COMPLETE pointer type. This</span></i>
-            <i><span style="color: #008000">// contains the transfer handle of the write transfer that</span></i>
-            <i><span style="color: #008000">// completed and amount of data that was written.</span></i>
-
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CDC_EVENT_READ_COMPLETE:
-            
-            <i><span style="color: #008000">// This event indicates that a CDC Read Transfer request has</span></i>
-            <i><span style="color: #008000">// completed.  pData should be interpreted as a </span></i>
-            <i><span style="color: #008000">// USB_DEVICE_CDC_EVENT_DATA_READ_COMPLETE pointer type. This</span></i>
-            <i><span style="color: #008000">// contains the transfer handle of the read transfer that</span></i>
-            <i><span style="color: #008000">// completed and amount of data that was written.</span></i>
-       
-            <strong><span style="color: #000080">break</span></strong>;
-        
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CDC_EVENT_SERIAL_STATE_NOTIFICATION_COMPLETE:
-
-            <i><span style="color: #008000">// This event indicates that a CDC Serial State Notification</span></i>
-            <i><span style="color: #008000">// Send request has completed. pData should be interpreted as a</span></i>
-            <i><span style="color: #008000">// USB_DEVICE_CDC_EVENT_DATA_SERIAL_STATE_NOTIFICATION_COMPLETE</span></i>
-            <i><span style="color: #008000">// pointer type. This will contain the transfer handle</span></i>
-            <i><span style="color: #008000">// associated with the send request and the amount of data that</span></i>
-            <i><span style="color: #008000">// was sent.     </span></i>
-
-        <strong><span style="color: #000080">break</span></strong>
-
-         <strong><span style="color: #000080">default</span></strong>:
-            <strong><span style="color: #000080">break</span></strong>;
-     }
-
-    <strong><span style="color: #000080">return</span></strong>(<a href="00668.html" target="topic">USB_DEVICE_CDC_EVENT_RESPONSE_NONE</a>);
-}</pre></div></div>
-</div>
+This macro defines the number of entries in all queues in all instances of the Audio 2.0 function driver. This value can be obtained by adding up the read and write queue sizes of each Audio Function driver instance. In a simple single instance USB Audio 2.0 device application, that does not require buffer queuing, the <a href="00595.html" target="topic">USB_DEVICE_AUDIO_QUEUE_DEPTH_COMBINED</a> macro can be set to 2. Consider a case of a Audio 2.0 function driver instances, with has a read queue size of 2 and write queue size of 3, this macro should be set to 5 (2 + 3).</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
-  <strong><span style="color: #000000">USB_DEVICE_CDC_EVENT_SET_LINE_CODING</span></strong>,
-  <strong><span style="color: #000000">USB_DEVICE_CDC_EVENT_GET_LINE_CODING</span></strong>,
-  <strong><span style="color: #000000">USB_DEVICE_CDC_EVENT_SET_CONTROL_LINE_STATE</span></strong>,
-  <strong><span style="color: #000000">USB_DEVICE_CDC_EVENT_SEND_BREAK</span></strong>,
-  <strong><span style="color: #000000">USB_DEVICE_CDC_EVENT_WRITE_COMPLETE</span></strong>,
-  <strong><span style="color: #000000">USB_DEVICE_CDC_EVENT_READ_COMPLETE</span></strong>,
-  <strong><span style="color: #000000">USB_DEVICE_CDC_EVENT_SERIAL_STATE_NOTIFICATION_COMPLETE</span></strong>,
-  <strong><span style="color: #000000">USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_SENT</span></strong>,
-  <strong><span style="color: #000000">USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_RECEIVED</span></strong>,
-  <strong><span style="color: #000000">USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_ABORTED</span></strong>
-} USB_DEVICE_CDC_EVENT;</pre></div></div>
-<a name="4D656D62657273"></a><div class="Element14">
-Members</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element272">
-<div class="TableDiv">
-<table cellspacing="0" class="Table4">
-<tr>
-<td class="Element260" valign="top" width="35%">
-<div class="Element261">
-Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
-<div class="Element265">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_DEVICE_CDC_EVENT_SET_LINE_CODING&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This event occurs when the host issues a SET LINE CODING command. The application must provide a USB_CDC_LINE_CODING data structure to the device layer to receive the line coding data that the host will provide. The application must provide the buffer by calling the <a href="00717.html" target="topic">USB_DEVICE_ControlReceive</a> function either in the event handler or in the application, after returning from the event handler function. The pData parameter will be NULL. The application can use the USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_RECEIVED event to track completion of the command.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_DEVICE_CDC_EVENT_GET_LINE_CODING&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This event occurs when the host issues a GET LINE CODING command. The application must provide a USB_CDC_LINE_CODING data structure to the device layer that contains the line coding data to be provided to the host. The application must provide the buffer by calling the <a href="00718.html" target="topic">USB_DEVICE_ControlSend</a> function either in the event handler or in the application, after returning from the event handler function. The application can use the USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_SENT event to track completion of the command.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_DEVICE_CDC_EVENT_SET_CONTROL_LINE_STATE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This event occurs when the host issues a SET CONTROL LINE STATE command. The application must interpret the pData parameter as USB_CDC_CONTROL_LINE_STATE pointer type. This data structure contains the control line state data. The application can then use the <a href="00719.html" target="topic">USB_DEVICE_ControlStatus</a> function to indicate acceptance or rejection of the command. The <a href="00719.html" target="topic">USB_DEVICE_ControlStatus</a> function can be called from the event handler or in the application, after returning from the event handler.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_DEVICE_CDC_EVENT_SEND_BREAK&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This event occurs when the host issues a SEND BREAK command. The application must interpret the pData parameter as a <a href="00659.html" target="topic">USB_DEVICE_CDC_EVENT_DATA_SEND_BREAK</a> pointer type. This data structure contains the break duration data. The application can then use the <a href="00719.html" target="topic">USB_DEVICE_ControlStatus</a> function to indicate acceptance of rejection of the command. The <a href="00719.html" target="topic">USB_DEVICE_ControlStatus</a> function can be called from the event handler or in the application, after returning from the event handler.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_DEVICE_CDC_EVENT_WRITE_COMPLETE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This event occurs when a write operation scheduled by calling the <a href="00703.html" target="topic">USB_DEVICE_CDC_Write</a> function has completed. The pData parameter should be interpreted as a <a href="00662.html" target="topic">USB_DEVICE_CDC_EVENT_DATA_WRITE_COMPLETE</a> pointer type. This will contain the transfer handle associated with the completed write transfer and the amount of data written.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_DEVICE_CDC_EVENT_READ_COMPLETE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This event occurs when a read operation scheduled by calling the <a href="00686.html" target="topic">USB_DEVICE_CDC_Read</a> function has completed. The pData parameter should be interpreted as a <a href="00658.html" target="topic">USB_DEVICE_CDC_EVENT_DATA_READ_COMPLETE</a> pointer type. This will contain the transfer handle associated with the completed read transfer and the amount of data read.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_DEVICE_CDC_EVENT_SERIAL_STATE_NOTIFICATION_COMPLETE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This event occurs when a serial state notification scheduled using the <a href="00697.html" target="topic">USB_DEVICE_CDC_SerialStateNotificationSend</a> function, was sent to the host. The pData parameter should be interpreted as a <a href="00661.html" target="topic">USB_DEVICE_CDC_EVENT_DATA_SERIAL_STATE_NOTIFICATION_COMPLETE</a> pointer type and will contain the transfer handle associated with the completed send transfer and the amount of data sent.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_SENT&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This event occurs when the data stage of a control read transfer has completed. This event would occur after the application uses the <a href="00718.html" target="topic">USB_DEVICE_ControlSend</a> function to respond to the USB_DEVICE_CDC_EVENT_GET_LINE_CODING event.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_RECEIVED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This event occurs when the data stage of a control write transfer has completed. This would occur after the application would respond with a <a href="00717.html" target="topic">USB_DEVICE_ControlReceive</a> function to the USB_DEVICE_CDC_EVENT_SET_LINE_CODING_EVENT and the data has been received. The application should respond to this event by calling the <a href="00719.html" target="topic">USB_DEVICE_ControlStatus</a> function with the USB_DEVICE_CONTROL_STATUS_OK flag to acknowledge the received data or the USB_DEVICE_CONTROL_STATUS_ERROR flag to reject it and stall the control transfer&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_ABORTED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This event occurs when a control transfer that this instance of CDC function driver responded to was aborted by the host. The application can use this event to reset its CDC function driver related control transfer state machine&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">USB_DEVICE_AUDIO_V2_QUEUE_DEPTH_COMBINED</span></strong> </pre></div></div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The USB Device CDC control transfer related events allow the application to defer responses. This allows the application some time to obtain the response data rather than having to respond to the event immediately. Note that a USB host will typically wait for event response for a finite time duration before timing out and canceling the event and associated transactions. Even when deferring response, the application must respond promptly if such time outs have to be avoided.</p></div>
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00237.html" target="topic">USB CDC Device Library</a> &gt; <a href="00233.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00647.html" target="topic">USB_DEVICE_CDC_EVENT Enumeration</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00190.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00177.html" target="topic">Configuring the Library</a> &gt; <a href="00647.html" target="topic">USB_DEVICE_AUDIO_V2_QUEUE_DEPTH_COMBINED Macro</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -286,13 +76,13 @@ The USB Device CDC control transfer related events allow the application to defe
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00659.html" target="topic">Previous</a> | <a href="00233.html" target="topic">Up</a> | <a href="00666.html" target="topic">Next</a></div>
+<a href="00646.html" target="topic">Previous</a> | <a href="00177.html" target="topic">Up</a> | <a href="00006.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_CDC_EVENT Topic Title: USB_DEVICE_CDC_EVENT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_AUDIO_V2_QUEUE_DEPTH_COMBINED Topic Title: USB_DEVICE_AUDIO_V2_QUEUE_DEPTH_COMBINED Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

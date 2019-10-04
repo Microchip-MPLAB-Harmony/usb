@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_DEVICE_CDC_EVENT_HANDLER Type</title>
+<title>usb_device_cdc.h</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00237.html" target="topic">USB CDC Device Library</a> &gt; <a href="00233.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00666.html" target="topic">USB_DEVICE_CDC_EVENT_HANDLER Type</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00258.html" target="topic">USB CDC Device Library</a> &gt; <a href="00248.html" target="topic">Files</a> &gt; <a href="00666.html" target="topic">usb_device_cdc.h</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00647.html" target="topic">Previous</a> | <a href="00233.html" target="topic">Up</a> | <a href="00667.html" target="topic">Next</a></div>
+<a href="00248.html" target="topic">Previous</a> | <a href="00248.html" target="topic">Up</a> | <a href="00417.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_CDC_EVENT_HANDLER Topic Title: USB_DEVICE_CDC_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_device_cdc.h Topic Title: usb_device_cdc.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_DEVICE_CDC_EVENT_HANDLER Type</div>
+usb_device_cdc.h</div>
 </div>
 </div>
 
@@ -46,37 +46,314 @@ USB_DEVICE_CDC_EVENT_HANDLER Type</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="4465736372697074696F6E"></a><div class="Element11">
+<a name="436F6D70616E79"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-USB Device CDC Event Handler Function Pointer Type.&nbsp;</p>
-<p class="Element10">
-This data type defines the required function signature of the USB Device CDC Function Driver event handling callback function. The application must register a pointer to a CDC Function Driver events handling function whose function signature (parameter and return value types) match the types specified by this function pointer in order to receive event call backs from the CDC Function Driver. The function driver will invoke this function with event relevant parameters. The description of the event handler function parameters is given here.&nbsp;</p>
-<p class="Element10">
-instanceIndex - Instance index of the CDC Function Driver that generated the event.&nbsp;</p>
-<p class="Element10">
-event - Type of event generated.&nbsp;</p>
-<p class="Element10">
-pData - This parameter should be type cast to an event specific pointer type based on the event that has occurred. Refer to the <a href="00647.html" target="topic">USB_DEVICE_CDC_EVENT</a> enumeration description for more details.&nbsp;</p>
-<p class="Element10">
-context - Value identifying the context of the application that was registered along with the event handling function.</p></div>
+Microchip Technology Inc.</p></div>
 </div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <a href="00667.html" target="topic">USB_DEVICE_CDC_EVENT_RESPONSE</a> (* <strong><span style="color: #000000">USB_DEVICE_CDC_EVENT_HANDLER</span></strong>)(<a href="00671.html" target="topic">USB_DEVICE_CDC_INDEX</a> instanceIndex, <a href="00647.html" target="topic">USB_DEVICE_CDC_EVENT</a> event, <strong><span style="color: #000080">void</span></strong> * pData, uintptr_t context);</pre></div></div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
+<a name="46696C65204E616D65"></a><div class="Element14">
+File Name</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The event handler function executes in the USB interrupt context when the USB Device Stack is configured for interrupt based operation. It is not advisable to call blocking functions or computationally intensive functions in the event handler. Where the response to a control transfer related event requires extended processing, the response to the control transfer should be deferred and the event handler should be allowed to complete execution.</p></div>
+usb_device_cdc.h</p></div>
+</div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+USB Device CDC Function Driver Interface&nbsp;</p>
+<p class="Element10">
+This file describes the USB Device CDC Function Driver interface. The application should include this file if it needs to use the CDC Function Driver API.</p></div>
+</div>
+<a name="456E756D65726174696F6E73"></a><div class="Element14">
+Enumerations</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00668.html" target="topic">USB_DEVICE_CDC_EVENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Events&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00708.html" target="topic">USB_DEVICE_CDC_RESULT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver USB Device CDC Result enumeration.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00719.html" target="topic">USB_DEVICE_CDC_TRANSFER_FLAGS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Transfer Flags&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="46756E6374696F6E73"></a><div class="Element14">
+Functions</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00690.html" target="topic">USB_DEVICE_CDC_EventHandlerSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function registers a event handler for the specified CDC function driver instance.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00707.html" target="topic">USB_DEVICE_CDC_Read</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function requests a data read from the USB Device CDC Function Driver Layer.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00718.html" target="topic">USB_DEVICE_CDC_SerialStateNotificationSend</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function schedules a request to send serial state notification to the host.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00724.html" target="topic">USB_DEVICE_CDC_Write</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function requests a data write to the USB Device CDC Function Driver Layer.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="4D6163726F73"></a><div class="Element14">
+Macros</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00009.html" target="topic">_USB_DEVICE_CDC_H</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is macro _USB_DEVICE_CDC_H.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00689.html" target="topic">USB_DEVICE_CDC_EVENT_RESPONSE_NONE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Event Handler Response Type None.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00691.html" target="topic">USB_DEVICE_CDC_FUNCTION_DRIVER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Function pointer&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00693.html" target="topic">USB_DEVICE_CDC_INDEX_0</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Use this to specify CDC Function Driver Instance 0&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00694.html" target="topic">USB_DEVICE_CDC_INDEX_1</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Use this to specify CDC Function Driver Instance 1&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00695.html" target="topic">USB_DEVICE_CDC_INDEX_2</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Use this to specify CDC Function Driver Instance 2&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00696.html" target="topic">USB_DEVICE_CDC_INDEX_3</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Use this to specify CDC Function Driver Instance 3&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00697.html" target="topic">USB_DEVICE_CDC_INDEX_4</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Use this to specify CDC Function Driver Instance 4&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00698.html" target="topic">USB_DEVICE_CDC_INDEX_5</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Use this to specify CDC Function Driver Instance 5&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00699.html" target="topic">USB_DEVICE_CDC_INDEX_6</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Use this to specify CDC Function Driver Instance 6&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00700.html" target="topic">USB_DEVICE_CDC_INDEX_7</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Use this to specify CDC Function Driver Instance 7&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00723.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Invalid Transfer Handle Definition.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="53747275637475726573"></a><div class="Element14">
+Structures</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00679.html" target="topic">USB_DEVICE_CDC_EVENT_DATA_READ_COMPLETE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Read and Write Complete Event Data.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00680.html" target="topic">USB_DEVICE_CDC_EVENT_DATA_SEND_BREAK</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Send Break Event Data&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00682.html" target="topic">USB_DEVICE_CDC_EVENT_DATA_SERIAL_STATE_NOTIFICATION_COMPLETE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Read and Write Complete Event Data.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00683.html" target="topic">USB_DEVICE_CDC_EVENT_DATA_WRITE_COMPLETE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Read and Write Complete Event Data.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00701.html" target="topic">USB_DEVICE_CDC_INIT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Initialization Data Structure&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="5479706573"></a><div class="Element14">
+Types</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00687.html" target="topic">USB_DEVICE_CDC_EVENT_HANDLER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Event Handler Function Pointer Type.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00688.html" target="topic">USB_DEVICE_CDC_EVENT_RESPONSE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Event Callback Response Type&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00692.html" target="topic">USB_DEVICE_CDC_INDEX</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Index&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00722.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Transfer Handle Definition.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00239.html" target="topic">USB Device Libraries</a> &gt; <a href="00237.html" target="topic">USB CDC Device Library</a> &gt; <a href="00233.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00666.html" target="topic">USB_DEVICE_CDC_EVENT_HANDLER Type</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00258.html" target="topic">USB CDC Device Library</a> &gt; <a href="00248.html" target="topic">Files</a> &gt; <a href="00666.html" target="topic">usb_device_cdc.h</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -84,13 +361,13 @@ The event handler function executes in the USB interrupt context when the USB De
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00647.html" target="topic">Previous</a> | <a href="00233.html" target="topic">Up</a> | <a href="00667.html" target="topic">Next</a></div>
+<a href="00248.html" target="topic">Previous</a> | <a href="00248.html" target="topic">Up</a> | <a href="00417.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_CDC_EVENT_HANDLER Topic Title: USB_DEVICE_CDC_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_device_cdc.h Topic Title: usb_device_cdc.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

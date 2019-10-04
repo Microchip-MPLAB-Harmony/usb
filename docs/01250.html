@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>USB_HOST_CDC_Read Function</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '01250.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00226.html" target="topic">USB CDC Host Library</a> &gt; <a href="00227.html" target="topic">Library Interface</a> &gt; b) Data Transfer Functions &gt; <a href="01250.html" target="topic">USB_HOST_CDC_Read Function</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="01217.html" target="topic">Previous</a> | <a href="00227.html" target="topic">Up</a> | <a href="01265.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_Read@USB_HOST_CDC_HANDLE@USB_HOST_CDC_TRANSFER_HANDLE *@void *@size_t Topic Title: USB_HOST_CDC_Read Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+USB_HOST_CDC_Read Function</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This function will read data from the attached CDC device. The function will try to read size amount of bytes but will stop reading when the device terminates the USB transfer (sends a short packet or a ZLP). If the request was accepted, transferHandle will contain a valid transfer handle, else it will contain <a href="01264.html" target="topic">USB_HOST_CDC_TRANSFER_HANDLE_INVALID</a>. The completion of the request will be indicated by the USB_HOST_CDC_EVENT_READ_COMPLETE event. The transfer handle will be returned in the event.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01253.html" target="topic">USB_HOST_CDC_RESULT</a> <strong><span style="color: #000000">USB_HOST_CDC_Read</span></strong>(
+    <a href="01244.html" target="topic">USB_HOST_CDC_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <a href="01263.html" target="topic">USB_HOST_CDC_TRANSFER_HANDLE</a> * <strong><span style="color: #000000">transferHandle</span></strong>, 
+    <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">data</span></strong>, 
+    size_t <strong><span style="color: #000000">size</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The client handle should be valid.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+handle to the CDC device instance to which the request should be sent.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+transferHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to <a href="01263.html" target="topic">USB_HOST_CDC_TRANSFER_HANDLE</a> type of a variable. This will contain a valid transfer handle if the request was successful.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+data&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+pointer to the buffer where the received data will be stored. The contents of the buffer will be valid only when the USB_HOST_CDC_EVENT_READ_COMPLETE event has occurred.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+size&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+size of the data buffer. Only these many bytes or less will be read.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+USB_HOST_CDC_RESULT_SUCCESS - The operation was successful.&nbsp;</p>
+<p class="Element10">
+USB_HOST_CDC_RESULT_DEVICE_UNKNOWN - The device that this request was targeted to does not exist in the system.&nbsp;</p>
+<p class="Element10">
+USB_HOST_CDC_RESULT_BUSY - The request could not be scheduled at this time. The client should try again.&nbsp;</p>
+<p class="Element10">
+USB_HOST_CDC_RESULT_INVALID_PARAMETER - An input parameter was NULL.&nbsp;</p>
+<p class="Element10">
+USB_HOST_CDC_RESULT_FAILURE - An unknown failure occurred.&nbsp;</p>
+<p class="Element10">
+USB_HOST_CDC_RESULT_HANDLE_INVALID - The client handle is not valid.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"></pre></div></div>
+</div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00226.html" target="topic">USB CDC Host Library</a> &gt; <a href="00227.html" target="topic">Library Interface</a> &gt; b) Data Transfer Functions &gt; <a href="01250.html" target="topic">USB_HOST_CDC_Read Function</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="01217.html" target="topic">Previous</a> | <a href="00227.html" target="topic">Up</a> | <a href="01265.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_Read@USB_HOST_CDC_HANDLE@USB_HOST_CDC_TRANSFER_HANDLE *@void *@size_t Topic Title: USB_HOST_CDC_Read Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Introduction</title>
+<title>Initializing the Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00330.html" target="topic">USB Host Libraries</a> &gt; <a href="00170.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00183.html" target="topic">Introduction</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00190.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00182.html" target="topic">How the Library Works</a> &gt; <a href="00183.html" target="topic">Initializing the Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00170.html" target="topic">Previous</a> | <a href="00170.html" target="topic">Up</a> | <a href="00192.html" target="topic">Next</a></div>
+<a href="00182.html" target="topic">Previous</a> | <a href="00182.html" target="topic">Up</a> | <a href="00179.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDDEV V2_0 Initializing the Library Topic Title: Initializing the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Introduction</div>
+Initializing the Library</div>
 </div>
 </div>
 
@@ -49,21 +49,51 @@ Introduction</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The USB Audio v1.0 Host Client Driver in the MPLAB Harmony USB Host Stack allows USB Host applications to support and interact with Audio v1.0 USB devices. The USB Audio v1.0 Host Client Driver has the following features:</p>
-<ul class="Element630">
-<li class="Element600">Supports Audio v1.0 device with multiple streaming interfaces</li>
-<li class="Element600">Designed to support multi-client operation</li>
-<li class="Element600">RTOS ready</li>
-<li class="Element600">Features an event driver non-clocking application interaction model</li>
-<li class="Element600">Supports queuing of read and write data transfers</li>
-</ul></div>
+The Audio 2.0 Function Driver instance for a USB device configuration is initialized by the Device Layer when the configuration is set by the host. This process does not require application intervention. Each instance of the Audio 2.0 Function Driver should be registered with the Device<span style="color: #FFFFFF">_</span>layer through the Device Layer Function Driver Registration Table. The <span style="color: #000000">Audio 2.0 Function Driver</span> requires a initialization data structure to be specified. This is a USB_DEVICE_AUDIO_2_0_INIT data type that specifies the size of the read and write queues. The funcDriverInit member of the function driver registration table entry of the <span style="color: #000000">Audio 2.0 Function Driver</span> instance should point to this initialization data structure. The USB_DEVICE_AUDIO_2_0_FUNCTION_DRIVER object is a global object provided by the Audio 2.0 Function Driver and provides the Device Layer with an entry point into the <span style="color: #000000">Audio 2.0 Function Driver</span>. The following code shows an example of how the Audio 2.0 Function Driver can be registered with the Device Layer. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of how an Audio 2.0 function driver instances
+ * can be registered with the Device Layer via the Device Layer Function Driver
+ * Registration Table.  In this case Device Configuration 1 consists of one
+ * Audio 2.0 function driver instance. */</span></i>
+
+<i><span style="color: #008000">/* The Audio 2.0 Function Driver requires an initialization data structure that
+ * specifies the read and write buffer queue sizes. Note that these settings are
+ * also affected by the USB_DEVICE_AUDIO_QUEUE_DEPTH_COMBINED configuration
+ * macro. */</span></i>
+
+<strong><span style="color: #000080">const</span></strong> USB_DEVICE_AUDIO_2_0_INIT audioDeviceInit =
+{
+    .queueSizeRead = 1,
+    .queueSizeWrite = 1
+};
+
+<strong><span style="color: #000080">const</span></strong> USB_DEVICE_FUNC_REGISTRATION_TABLE funcRegistrationTable[1] =
+{
+    {
+        .speed = USB_SPEED_FULL,                        <i><span style="color: #008000">// Supported speed</span></i>
+        .configurationValue = 1,                        <i><span style="color: #008000">// To be initialized for Configuration 1</span></i>
+        .interfaceNumber = 0,                           <i><span style="color: #008000">// Starting interface number.</span></i>
+        .numberOfInterfaces = 2,                        <i><span style="color: #008000">// Number of interfaces in this instance</span></i>
+        .funcDriverIndex = 0,                           <i><span style="color: #008000">// Function Driver instance index is 0</span></i>
+        .funcDriverInit = &amp;audioDeviceInit,             <i><span style="color: #008000">// Function Driver does not need initialization data structure</span></i>
+        .driver = USB_DEVICE_AUDIO_2_0_FUNCTION_DRIVER  <i><span style="color: #008000">// Pointer to Function Driver - Device Layer interface functions</span></i>
+    },
+};</pre></div></div>
+<p class="Element10">
+The following figure illustrates the typical sequence that is followed in the application when using the <span style="color: #000000">Audio 2.0 Function Driver</span>. </p><p class="Element10" style="text-align: center;">
+<strong>Typical USB Audio 2.0 Device Sequence</strong>&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="USB_Device_v2_0 Audio_Initialization_Image_1.png" border="0" alt="" title=""></p>
+<ol class="Element630">
+<li value="1" class="Element600">Call set of APIs to initialize USB Device Layer (refer to the <a href="00259.html" target="topic">USB Device Layer Library</a> section for details about these APIs).</li>
+<li value="2" class="Element600">The Device Layer provides a callback to the application for any USB Device events like attached, powered, configured, etc. The application should receive a callback with an event USB_DEVICE_EVENT_CONFIGURED to proceed.</li>
+<li value="3" class="Element600">Once the Device Layer is configured, the application needs to register a callback function with the <span style="color: #000000">Audio 2.0 Function Driver</span> to receive Audio 2.0 Control transfers, and also other Audio 2.0 Function Driver events. Now the application can use Audio 2.0 Function Driver APIs to communicate with the USB Host.</li>
+</ol></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00348.html" target="topic">USB Libraries Help</a> &gt; <a href="00330.html" target="topic">USB Host Libraries</a> &gt; <a href="00170.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00183.html" target="topic">Introduction</a></div>
+<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00190.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00182.html" target="topic">How the Library Works</a> &gt; <a href="00183.html" target="topic">Initializing the Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -71,13 +101,13 @@ The USB Audio v1.0 Host Client Driver in the MPLAB Harmony USB Host Stack allows
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00213.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00170.html" target="topic">Previous</a> | <a href="00170.html" target="topic">Up</a> | <a href="00192.html" target="topic">Next</a></div>
+<a href="00182.html" target="topic">Previous</a> | <a href="00182.html" target="topic">Up</a> | <a href="00179.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDDEV V2_0 Initializing the Library Topic Title: Initializing the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
