@@ -96,7 +96,7 @@ extern "C" {
 #define SYS_FS_VOLUME_NUMBER              (1 + 1)
 
 #define SYS_FS_AUTOMOUNT_ENABLE           true
-#define SYS_FS_CLIENT_NUMBER              2
+#define SYS_FS_CLIENT_NUMBER              1
 #define SYS_FS_MAX_FILES                  2
 #define SYS_FS_MAX_FILE_SYSTEM_TYPE       1
 #define SYS_FS_MEDIA_MAX_BLOCK_SIZE       512
@@ -151,7 +151,7 @@ extern "C" {
 /* Disable Device Support */
 #define DRV_USBFS_DEVICE_SUPPORT                          false
 
-#define DRV_USBFS_ENDPOINTS_NUMBER                        5
+#define DRV_USBFS_ENDPOINTS_NUMBER                        1
 
 /* Enable Host Support */
 #define DRV_USBFS_HOST_SUPPORT                            true
