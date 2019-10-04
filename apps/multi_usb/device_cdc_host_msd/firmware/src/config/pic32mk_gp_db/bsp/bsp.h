@@ -65,20 +65,20 @@
 #define LED3_Get() ((PORTG >> 14) & 0x1)
 #define LED3_On() (LATGSET = (1<<14))
 #define LED3_Off() (LATGCLR = (1<<14))
-/*** LED Macros for LED ***/
-#define LED_Toggle() (LATGINV = (1<<12))
-#define LED_Get() ((PORTG >> 12) & 0x1)
-#define LED_On() (LATGSET = (1<<12))
-#define LED_Off() (LATGCLR = (1<<12))
+/*** LED Macros for LED1 ***/
+#define LED1_Toggle() (LATGINV = (1<<12))
+#define LED1_Get() ((PORTG >> 12) & 0x1)
+#define LED1_On() (LATGSET = (1<<12))
+#define LED1_Off() (LATGCLR = (1<<12))
 /*** LED Macros for LED2 ***/
 #define LED2_Toggle() (LATGINV = (1<<13))
 #define LED2_Get() ((PORTG >> 13) & 0x1)
 #define LED2_On() (LATGSET = (1<<13))
 #define LED2_Off() (LATGCLR = (1<<13))
-/*** SWITCH Macros for SWITCH ***/
-#define SWITCH_Get() ((PORTG >> 11) & 0x1)
-#define SWITCH_STATE_PRESSED 0
-#define SWITCH_STATE_RELEASED 1
+/*** SWITCH Macros for SWITCH1 ***/
+#define SWITCH1_Get() ((PORTG >> 11) & 0x1)
+#define SWITCH1_STATE_PRESSED 0
+#define SWITCH1_STATE_RELEASED 1
 /*** SWITCH Macros for SWITCH2 ***/
 #define SWITCH2_Get() ((PORTF >> 13) & 0x1)
 #define SWITCH2_STATE_PRESSED 0

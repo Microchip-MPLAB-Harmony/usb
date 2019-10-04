@@ -62,6 +62,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 #define APP_READ_BUFFER_SIZE 64
+#define APP_USB_SWITCH_DEBOUNCE_COUNT_FS                    200
+#define APP_USB_SWITCH_DEBOUNCE_COUNT_HS                    1280
 uint8_t __attribute__((aligned(16))) switchPromptUSB[] = "\r\nPUSH BUTTON PRESSED";
 
 uint8_t CACHE_ALIGN readBuffer[2][APP_READ_BUFFER_SIZE];
@@ -219,11 +221,11 @@ void APP_USBDeviceEventHandler ( USB_DEVICE_EVENT event, void * eventData, uintp
             if (appUsbDeviceObject->comObject.cdcInstance == 0)
             {                   
                 /* Update LED to show configured state */
-                LED3_On ( );
+                LED1_Off();
             }
             else 
             {
-                LED3_Off();
+                LED2_Off();
             }
             appUsbDeviceObject->isConfigured = false; 
 
@@ -247,22 +249,13 @@ void APP_USBDeviceEventHandler ( USB_DEVICE_EVENT event, void * eventData, uintp
                 if (appUsbDeviceObject->comObject.cdcInstance == 0)
                 {                   
                     /* Update LED to show configured state */
-                     LED1_On (  );
-                     LED2_Off(  );
-                     LED3_Off (  );
-                   
+                     LED1_On();       
                 }
                 else if (appUsbDeviceObject->comObject.cdcInstance == 1)
                 {
                     /* Update LED to show configured state */
-              
-                     LED1_Off (  );
-                     LED2_On(  );
-                     LED3_Off (  );
+                     LED2_On();
                 }
-
-               
-
             }
             break;
 
@@ -279,32 +272,20 @@ void APP_USBDeviceEventHandler ( USB_DEVICE_EVENT event, void * eventData, uintp
             if (appUsbDeviceObject->comObject.cdcInstance == 0)
             {                   
                 /* Update LED to show configured state */
-                 LED1_Off(  );
-               
+                LED1_Off(  );
             }
             else 
             {
-                LED2_Off(  );
-                
+                LED2_Off(  ); 
             }
             break;
 
         case USB_DEVICE_EVENT_SUSPENDED:
-
-            
-//            /* Switch LED to show suspended state */
-            LED1_Off(  );
-            LED2_Off(  );
-            LED3_Off(  );
-
             break;
 
         case USB_DEVICE_EVENT_RESUMED:
-            /* Switch LED to show suspended state */
-                LED1_On(  );
-                LED2_On(  );
-                LED3_On(  );
-                break;
+            break;
+            
         case USB_DEVICE_EVENT_ERROR:
         default:
             break;
@@ -317,7 +298,65 @@ void APP_USBDeviceEventHandler ( USB_DEVICE_EVENT event, void * eventData, uintp
 // *****************************************************************************
 // *****************************************************************************
 
+void APP_ProcessSwitchPress(APP_USB_DEVICE_OBJECT* deviceObject)
+{
+    /* This function checks if the switch is pressed and then
+     * debounces the switch press*/
+    bool switchPressed;
+    
+    if (deviceObject->comObject.cdcInstance == 0)
+    {
+        switchPressed = ( SWITCH_STATE_PRESSED == SWITCH_Get() ? true : false ) ;
+    }
+    else
+    {
+        switchPressed = ( SWITCH_STATE_PRESSED == SWITCH2_Get() ? true : false ) ;
+    }
+    if(switchPressed)
+    {
+        if(deviceObject->ignoreSwitchPress)
+        {
+            /* This means the key press is in progress */
+            if(deviceObject->sofEventHasOccurred)
+            {
+                /* A timer event has occurred. Update the debounce timer */
+                deviceObject->switchDebounceTimer ++;
+                deviceObject->sofEventHasOccurred = false;
+                if (USB_DEVICE_ActiveSpeedGet(deviceObject->deviceHandle) == USB_SPEED_FULL)
+                {
+                    deviceObject->debounceCount = APP_USB_SWITCH_DEBOUNCE_COUNT_FS;
+                }
+                else if (USB_DEVICE_ActiveSpeedGet(deviceObject->deviceHandle) == USB_SPEED_HIGH)
+                {
+                    deviceObject->debounceCount = APP_USB_SWITCH_DEBOUNCE_COUNT_HS;
+                }
+                if(deviceObject->switchDebounceTimer == deviceObject->debounceCount)
+                {
+                    /* Indicate that we have valid switch press. The switch is
+                     * pressed flag will be cleared by the application tasks
+                     * routine. We should be ready for the next key press.*/
+                    deviceObject->isSwitchPressed = true;
+                    deviceObject->switchDebounceTimer = 0;
+                    deviceObject->ignoreSwitchPress = false;
+                }
+            }
+        }
+        else
+        {
+            /* We have a fresh key press */
+            deviceObject->ignoreSwitchPress = true;
+            deviceObject->switchDebounceTimer = 0;
+        }
+    }
+    else
+    {
+        /* No key press. Reset all the indicators. */
+        deviceObject->ignoreSwitchPress = false;
+        deviceObject->switchDebounceTimer = 0;
+        deviceObject->sofEventHasOccurred = false;
+    }
 
+}
 /*****************************************************
  * This function is called in every step of the
  * application state machine.
@@ -518,7 +557,7 @@ void _AppTaskUsbDevice(APP_USB_DEVICE_OBJECT* deviceObject)
                 break;
             }
 
-            
+            APP_ProcessSwitchPress(deviceObject);
 
             /* Check if a character was received or a switch was pressed.
              * The isReadComplete flag gets updated in the CDC event handler. */

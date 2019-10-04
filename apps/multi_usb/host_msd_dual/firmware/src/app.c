@@ -124,10 +124,6 @@ void APP_Initialize ( void )
     /* Place the App state machine in its initial state. */
     appData.state = APP_STATE_BUS_ENABLE;
     appData.deviceIsConnected = false;
-    
-    /* TODO: Initialize your application's state machine and other
-     * parameters.
-     */
 }
 
 USB_HOST_EVENT_RESPONSE APP_USBHostEventHandler (USB_HOST_EVENT event, void * eventData, uintptr_t context)
@@ -364,8 +360,6 @@ void APP_Tasks ( void )
 
             /* The application comes here when the demo
              * has failed. Provide LED indication .*/
-
-           // BSP_LEDOn( APP_USB_LED_1 );
             if(SYS_FS_Unmount("/mnt/myDrive") != 0)
             {
                 /* The disk could not be un mounted. Try

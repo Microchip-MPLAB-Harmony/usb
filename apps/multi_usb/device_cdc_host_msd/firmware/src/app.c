@@ -230,7 +230,7 @@ void APP_USBDeviceEventHandler
         case USB_DEVICE_EVENT_RESET:
 
             /* Update LED to show reset state */
-            LED_Off();
+            LED1_Off();
 
             appData.isConfigured = false;
 
@@ -244,7 +244,7 @@ void APP_USBDeviceEventHandler
             if ( configuredEventData->configurationValue == 1)
             {
                 /* Update LED to show configured state */
-                LED_On();
+                LED1_On();
                 
                 /* Register the CDC Device application event handler here.
                  * Note how the appData object pointer is passed as the
@@ -270,15 +270,11 @@ void APP_USBDeviceEventHandler
             /* VBUS is not available any more. Detach the device. */
             USB_DEVICE_Detach(appData.deviceHandle);
             
-            LED_Off();
+            LED1_Off();
             
             break;
 
-        case USB_DEVICE_EVENT_SUSPENDED:
-
-            /* Switch LED to show suspended state */
-            LED_Off();
-            
+        case USB_DEVICE_EVENT_SUSPENDED:          
             break;
 
         case USB_DEVICE_EVENT_RESUMED:
@@ -299,8 +295,7 @@ void APP_ProcessSwitchPress(void)
 {
     /* This function checks if the switch is pressed and then
      * debounces the switch press*/
-#if 0  
-    if(SWITCH_STATE_PRESSED == (SWITCH_Get()))
+    if(SWITCH1_STATE_PRESSED == (SWITCH1_Get()))
     {
         if(appData.ignoreSwitchPress)
         {
@@ -344,7 +339,7 @@ void APP_ProcessSwitchPress(void)
         appData.switchDebounceTimer = 0;
         appData.sofEventHasOccurred = false;
     }
-#endif 
+
 }
 
 /*****************************************************
@@ -482,7 +477,7 @@ void APP_SYSFSEventHandler(SYS_FS_EVENT event, void * eventData, uintptr_t conte
             
         case SYS_FS_EVENT_UNMOUNT:
             appHostData.deviceIsConnected = false;
-            LED_Off();
+            LED2_Off();
             break;
             
         default:
@@ -580,7 +575,7 @@ void APP_Host_Tasks ( void )
             SYS_FS_FileClose(appHostData.fileHandle);
             
             /* Indicate User that File operation has been completed */
-            LED_On(); 
+            LED2_On(); 
             /* The test was successful. Lets idle. */
             appHostData.state = APP_HOST_STATE_IDLE;
             break;

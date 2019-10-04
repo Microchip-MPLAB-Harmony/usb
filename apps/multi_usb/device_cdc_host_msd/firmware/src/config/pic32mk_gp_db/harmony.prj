@@ -19,8 +19,8 @@
           <Name dnOrder="1">bsp.c</Name>
           <LogicalPath dnOrder="2">config/pic32mk_gp_db/bsp/</LogicalPath>
           <PhysicalPath dnOrder="3">/bsp/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">EEAD544C886B263011E546450F7E0200</GeneratedChecksum>
-          <UserChecksum dnOrder="5">EEAD544C886B263011E546450F7E0200</UserChecksum>
+          <GeneratedChecksum dnOrder="4">DE56F78C7554B3DAB01B60F9D25F3BC7</GeneratedChecksum>
+          <UserChecksum dnOrder="5">DE56F78C7554B3DAB01B60F9D25F3BC7</UserChecksum>
         </File>
         <File dnOrder="2">
           <Type dnOrder="0">SOURCE</Type>
@@ -267,16 +267,16 @@
           <Name dnOrder="1">bsp.h</Name>
           <LogicalPath dnOrder="2">config/pic32mk_gp_db/bsp/</LogicalPath>
           <PhysicalPath dnOrder="3">/bsp/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">A2159EB5EB0F39E50AF9663A37495531</GeneratedChecksum>
-          <UserChecksum dnOrder="5">A2159EB5EB0F39E50AF9663A37495531</UserChecksum>
+          <GeneratedChecksum dnOrder="4">95EC8558033ED7F47FC9E5266E46B2F2</GeneratedChecksum>
+          <UserChecksum dnOrder="5">95EC8558033ED7F47FC9E5266E46B2F2</UserChecksum>
         </File>
         <File dnOrder="33">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/pic32mk_gp_db/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">BE537DA5DE8952CA4A50C55FD722763A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">BE537DA5DE8952CA4A50C55FD722763A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F5A117BBB7BAF40DAD1BE0E23AFACD1E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F5A117BBB7BAF40DAD1BE0E23AFACD1E</UserChecksum>
         </File>
         <File dnOrder="34">
           <Type dnOrder="0">HEADER</Type>

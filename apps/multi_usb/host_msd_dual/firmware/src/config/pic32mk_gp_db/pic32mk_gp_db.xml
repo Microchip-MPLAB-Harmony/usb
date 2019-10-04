@@ -1418,22 +1418,22 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
-    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_PIC32MK_GP_Development_Kit" x="18" y="51"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="340" y="20"/>
-        <ElementPosition dnOrder="2" id="core" x="240" y="20"/>
-        <ElementPosition dnOrder="3" id="core_timer" x="30" y="300"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="321" y="14"/>
+        <ElementPosition dnOrder="2" id="core" x="206" y="20"/>
+        <ElementPosition dnOrder="3" id="core_timer" x="21" y="325"/>
         <ElementPosition dnOrder="4" id="dfp" x="20" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_usbfs_index" x="270" y="120"/>
-        <ElementPosition dnOrder="6" id="peripheral_usb_1" x="175" y="157"/>
-        <ElementPosition dnOrder="7" id="peripheral_usb_2" x="175" y="230"/>
-        <ElementPosition dnOrder="8" id="sys_fs" x="187" y="280"/>
-        <ElementPosition dnOrder="9" id="sys_time" x="30" y="99"/>
-        <ElementPosition dnOrder="10" id="usb_host" x="455" y="113"/>
-        <ElementPosition dnOrder="11" id="usb_host_msd" x="30" y="220"/>
+        <ElementPosition dnOrder="5" id="drv_usbfs_index" x="120" y="92"/>
+        <ElementPosition dnOrder="6" id="peripheral_usb_1" x="26" y="134"/>
+        <ElementPosition dnOrder="7" id="peripheral_usb_2" x="24" y="198"/>
+        <ElementPosition dnOrder="8" id="sys_fs" x="623" y="149"/>
+        <ElementPosition dnOrder="9" id="sys_time" x="155" y="279"/>
+        <ElementPosition dnOrder="10" id="usb_host" x="320" y="140"/>
+        <ElementPosition dnOrder="11" id="usb_host_msd" x="466" y="163"/>
       </ElementPositions>
     </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
