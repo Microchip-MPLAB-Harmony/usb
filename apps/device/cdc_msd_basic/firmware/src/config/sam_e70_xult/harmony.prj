@@ -59,8 +59,8 @@
           <Name dnOrder="1">drv_usbhsv1_device.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/driver/usb/usbhsv1/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">D3E3D7E3943759D09A71145DB7E06ECF</GeneratedChecksum>
-          <UserChecksum dnOrder="5">D3E3D7E3943759D09A71145DB7E06ECF</UserChecksum>
+          <GeneratedChecksum dnOrder="4">63F9C2F0D1FB8CB02D12D7C36827435D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">63F9C2F0D1FB8CB02D12D7C36827435D</UserChecksum>
         </File>
         <File dnOrder="7">
           <Type dnOrder="0">SOURCE</Type>
@@ -203,8 +203,8 @@
           <Name dnOrder="1">usb_device_init_data.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">174766893AEDA64FA7E2866600CD2BDD</GeneratedChecksum>
-          <UserChecksum dnOrder="5">174766893AEDA64FA7E2866600CD2BDD</UserChecksum>
+          <GeneratedChecksum dnOrder="4">6CA276B618E9615FF013C85B389EDD77</GeneratedChecksum>
+          <UserChecksum dnOrder="5">6CA276B618E9615FF013C85B389EDD77</UserChecksum>
         </File>
         <File dnOrder="25">
           <Type dnOrder="0">SOURCE</Type>
@@ -451,8 +451,8 @@
           <Name dnOrder="1">drv_usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">C07E5598C11AD6C2F25F92037919A988</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C07E5598C11AD6C2F25F92037919A988</UserChecksum>
+          <GeneratedChecksum dnOrder="4">5E2621860496A1FD0821B43178B3C75A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">5E2621860496A1FD0821B43178B3C75A</UserChecksum>
         </File>
         <File dnOrder="56">
           <Type dnOrder="0">HEADER</Type>
@@ -467,8 +467,8 @@
           <Name dnOrder="1">drv_usbhsv1_local.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/driver/usb/usbhsv1/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">4FCBA01881C06AED53ACB3FA36576D8F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4FCBA01881C06AED53ACB3FA36576D8F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">D3F42C3DD229ED6BD5AA9BE9E94548E2</GeneratedChecksum>
+          <UserChecksum dnOrder="5">D3F42C3DD229ED6BD5AA9BE9E94548E2</UserChecksum>
         </File>
         <File dnOrder="58">
           <Type dnOrder="0">HEADER</Type>

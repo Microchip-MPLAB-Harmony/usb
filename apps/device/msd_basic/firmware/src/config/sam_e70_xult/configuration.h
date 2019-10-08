@@ -154,6 +154,7 @@ extern "C" {
 
 #define USB_DEVICE_MSD_NUM_SECTOR_BUFFERS 1
 
+
 /* Number of Logical Units */
 #define USB_DEVICE_MSD_LUNS_NUMBER      1
 

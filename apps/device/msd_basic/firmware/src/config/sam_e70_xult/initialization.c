@@ -81,7 +81,7 @@ const DRV_MEMORY_DEVICE_INTERFACE drvMemory0DeviceAPI = {
     .SectorErase        = DRV_EFC_SectorErase,
     .Read               = DRV_EFC_Read,
     .PageWrite          = DRV_EFC_PageWrite,
-    .EventHandlerSet    = NULL,
+    .EventHandlerSet    = (DRV_MEMORY_DEVICE_EVENT_HANDLER_SET)DRV_EFC_EventHandlerSet,
     .GeometryGet        = (DRV_MEMORY_DEVICE_GEOMETRY_GET)DRV_EFC_GeometryGet,
     .TransferStatusGet  = (DRV_MEMORY_DEVICE_TRANSFER_STATUS_GET)DRV_EFC_TransferStatusGet
 };
@@ -90,7 +90,7 @@ const DRV_MEMORY_INIT drvMemory0InitData =
 {
     .memDevIndex                = 0,
     .memoryDevice               = &drvMemory0DeviceAPI,
-    .isMemDevInterruptEnabled   = false,
+    .isMemDevInterruptEnabled   = true,
     .isFsEnabled                = false,
     .ewBuffer                   = &gDrvMemory0EraseBuffer[0],
     .clientObjPool              = (uintptr_t)&gDrvMemory0ClientObject[0],

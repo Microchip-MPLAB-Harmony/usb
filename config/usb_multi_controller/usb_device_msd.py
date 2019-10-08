@@ -29,6 +29,10 @@ usbDeviceMSDLunCount = 0
 msdEndpointsPic32 = 1
 msdEndpointsSAM = 2
 
+mediaTypes =  ["MEDIA_TYPE_NVM",
+				"MEDIA_TYPE_SD_CARD_SPI",
+				"MEDIA_TYPE_SD_CARD_MMC",
+				"MEDIA_TYPE_SPIFLASH"]
 
 indexFunction = None
 configValue = None
@@ -107,22 +111,7 @@ def onAttachmentConnected(source, target):
 		usbDeviceMsdFunRegTableFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_ENTRY")
 		usbDeviceMsdDescriptorHsFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_HS_ENTRY")
 		usbDeviceMsdDescriptorFsFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_FS_ENTRY")
-		usbDeviceMsdDescriptorClassCodeFile.setOutputName(remoteID + ".LIST_USB_DEVICE_DESCRIPTOR_CLASS_CODE_ENTRY")
-					
-	if (dependencyID == "usb_device_msd_media_dependency"):
-		global usbDeviceMSDLunCount
-		usbDeviceMSDLunCount = usbDeviceMSDLunCount + 1 
-		lunNoSymbol = ownerComponent.getSymbolByID("CONFIG_USB_DEVICE_FUNCTION_MSD_LUN")
-		readValue = lunNoSymbol.getValue()
-		readValue = readValue + 1
-		lunNoSymbol.setValue(readValue, 2)
-		
-		# update media 
-		symbolID = ownerComponent.getSymbolByID("CONFIG_USB_DEVICE_FUNCTION_MSD_LUN_0")
-		symbolID.setVisible(True)
-		symbolID = ownerComponent.getSymbolByID("USB_DEVICE_FUNCTION_MSD_LUN_MEDIA_TYPE_0")
-		symbolID.setVisible(True)
-		symbolID.setValue(remoteID.upper(), 1) 
+		usbDeviceMsdDescriptorClassCodeFile.setOutputName(remoteID + ".LIST_USB_DEVICE_DESCRIPTOR_CLASS_CODE_ENTRY") 
 		
 		
 def onAttachmentDisconnected(source, target):
@@ -179,25 +168,6 @@ def onAttachmentDisconnected(source, target):
 				args = {"nFunction":readValue - msdEndpointsSAM  }
 				res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
 			
-	if  dependencyID == "usb_device_msd_media_dependency":
-		lunNoSymbol = ownerComponent.getSymbolByID("CONFIG_USB_DEVICE_FUNCTION_MSD_LUN")
-		readValue = lunNoSymbol.getValue()
-		readValue = readValue - 1
-		lunNoSymbol.setValue(readValue, 2)
-		
-	if (dependencyID == "usb_device_msd_media_dependency"):
-		global usbDeviceMSDLunCount
-		usbDeviceMSDLunCount = usbDeviceMSDLunCount - 1 
-		lunNoSymbol = ownerComponent.getSymbolByID("CONFIG_USB_DEVICE_FUNCTION_MSD_LUN")
-		readValue = lunNoSymbol.getValue()
-		readValue = readValue - 1
-		lunNoSymbol.setValue(readValue, 2)
-		
-		# update media 
-		symbolID = ownerComponent.getSymbolByID("CONFIG_USB_DEVICE_FUNCTION_MSD_LUN_0")
-		symbolID.setVisible(False)
-		symbolID = ownerComponent.getSymbolByID("USB_DEVICE_FUNCTION_MSD_LUN_MEDIA_TYPE_0")
-		symbolID.setVisible(False)
 
 	
 def destroyComponent(component):
@@ -237,9 +207,11 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 		BulkInDefaultEpNumber = 1
 	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX", "PIC32MK"]):
 		BulkInDefaultEpNumber = 1
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMD11"]):
 		BulkInDefaultEpNumber = 1
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAME70", "SAMS70", "SAMV70", "SAMV71"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAM9X60"]):
+		BulkInDefaultEpNumber = 2
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAME70", "SAMS70", "SAMV70", "SAMV71"]):
 		BulkInDefaultEpNumber = 2
 	
 	#Index of this function 
@@ -276,18 +248,26 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 	usbDeviceMsdNumberOfLogicalUnits = usbDeviceMsdComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_MSD_LUN", None)
 	usbDeviceMsdNumberOfLogicalUnits.setLabel("Number of Logical Units")
 	usbDeviceMsdNumberOfLogicalUnits.setVisible(True)
-	usbDeviceMsdNumberOfLogicalUnits.setMin(0)
+	usbDeviceMsdNumberOfLogicalUnits.setMin(1)
+	usbDeviceMsdNumberOfLogicalUnits.setMax(4)
 	usbDeviceMsdNumberOfLogicalUnits.setUseSingleDynamicValue(True)
-	usbDeviceMsdNumberOfLogicalUnits.setDefaultValue(0)
+	usbDeviceMsdNumberOfLogicalUnits.setDefaultValue(1)
 	
-	usbDeviceMSDLun_0= usbDeviceMsdComponent.createMenuSymbol("CONFIG_USB_DEVICE_FUNCTION_MSD_LUN_0", usbDeviceMsdNumberOfLogicalUnits)
-	usbDeviceMSDLun_0.setVisible(False)
-	usbDeviceMSDLun_0.setLabel("LUN_1")
+	usbDeviceMSDLun = []
+	usbDeviceMSDLunMediaType = []
+	for i in range(0,4):
+		usbDeviceMSDLun.append(i)
+		usbDeviceMSDLun[i] = usbDeviceMsdComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FUNCTION_MSD_LUN_IDX" + str(i), usbDeviceMsdNumberOfLogicalUnits)
+		usbDeviceMSDLun[i].setLabel("LUN" + str(i))
+		usbDeviceMSDLun[i].setVisible(i == 0)
+		usbDeviceMSDLun[i].setDefaultValue(i == 0)
+		usbDeviceMSDLun[i].setReadOnly(True)
+		usbDeviceMSDLun[i].setDependencies(showMedia, ["CONFIG_USB_DEVICE_FUNCTION_MSD_LUN"])
 		
-	usbDeviceMSDLunMedia_0 = usbDeviceMsdComponent.createStringSymbol("USB_DEVICE_FUNCTION_MSD_LUN_MEDIA_TYPE_0", usbDeviceMSDLun_0)
-	usbDeviceMSDLunMedia_0.setLabel("Media Driver")
-	usbDeviceMSDLunMedia_0.setReadOnly(True)
-	usbDeviceMSDLunMedia_0.setVisible(False)
+		usbDeviceMSDLunMediaType.append(i)
+		usbDeviceMSDLunMediaType[i] = usbDeviceMsdComponent.createComboSymbol("CONFIG_USB_DEVICE_FUNCTION_MSD_LUN_MEDIA_TYPE_IDX" + str(i), usbDeviceMSDLun[i], mediaTypes)
+		usbDeviceMSDLunMediaType[i].setLabel("Media Type")
+		usbDeviceMSDLunMediaType[i].setDefaultValue("MEDIA_TYPE_SD_CARD_SPI")
 	
 	# MSD Function driver Bulk Out Endpoint Number 
 	usbDeviceMsdEPNumberBulkOut = usbDeviceMsdComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_BULK_OUT_ENDPOINT_NUMBER", None)		
@@ -302,31 +282,16 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 	usbDeviceMsdEPNumberBulkIn.setVisible(True)
 	usbDeviceMsdEPNumberBulkIn.setMin(1)
 	usbDeviceMsdEPNumberBulkIn.setDefaultValue(BulkInDefaultEpNumber)
-		
-		
-	############################################################################
-	#### Dependency ####
-	############################################################################
-	# USB DEVICE MSD Common Dependency
-	
-	numInstances  = Database.getSymbolValue("usb_device_msd", "CONFIG_USB_DEVICE_MSD_INSTANCES")
-	if (numInstances == None):
-		numInstances = 0
-	
-	#if numInstances < (index+1):
-	args = {"msdInstanceCount": index+1}
-	res = Database.sendMessage("usb_device_msd", "UPDATE_MSD_INSTANCES", args)
 			
 	##############################################################
 	# system_definitions.h file for USB Device MSD Function driver   
 	##############################################################
-	usbDeviceMsdSystemDefFile = usbDeviceMsdComponent.createFileSymbol("USB_DEVICE_MSD_SYSTEM_DEF_FILE", None)
+	usbDeviceMsdSystemDefFile = usbDeviceMsdComponent.createFileSymbol("USB_DEVICE_MSD_SYS_DEF_FILE", None)
 	usbDeviceMsdSystemDefFile.setType("STRING")
 	usbDeviceMsdSystemDefFile.setOutputName("core.LIST_SYSTEM_DEFINITIONS_H_INCLUDES")
 	usbDeviceMsdSystemDefFile.setSourcePath("templates/device/msd/system_definitions.h.device_msd_includes.ftl")
 	usbDeviceMsdSystemDefFile.setMarkup(True)
-	
-	
+		
 	#############################################################
 	# Function Init Entry for MSD 
 	#############################################################
@@ -364,7 +329,7 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 	#############################################################
 	# Class code Entry for MSD Function 
 	#############################################################
-	usbDeviceMsdDescriptorClassCodeFile = usbDeviceMsdComponent.createFileSymbol("USB_DEVICE_MSD_DESCRIPTOR_CLASS_CODE_FILE", None)
+	usbDeviceMsdDescriptorClassCodeFile = usbDeviceMsdComponent.createFileSymbol("USB_DEVICE_MSD_DESCRIPTOR_CLAS_CODE_FILE", None)
 	usbDeviceMsdDescriptorClassCodeFile.setType("STRING")
 	usbDeviceMsdDescriptorClassCodeFile.setSourcePath("templates/device/msd/system_init_c_device_data_msd_function_class_codes.ftl")
 	usbDeviceMsdDescriptorClassCodeFile.setMarkup(True)
@@ -400,3 +365,9 @@ def addFileName(fileName, symbol, srcPath, destPath, enabled, callback):
 	else:
 		symbol.setType("SOURCE")
 	symbol.setEnabled(enabled)
+	
+def showMedia(symbol, event):
+	component = symbol.getComponent()
+	for i in range(0,4):
+		component.getSymbolByID("CONFIG_USB_DEVICE_FUNCTION_MSD_LUN_IDX" + str(i)).setVisible(event["value"] >= i + 1)
+		component.getSymbolByID("CONFIG_USB_DEVICE_FUNCTION_MSD_LUN_IDX" + str(i)).setValue(event["value"] >= i + 1)

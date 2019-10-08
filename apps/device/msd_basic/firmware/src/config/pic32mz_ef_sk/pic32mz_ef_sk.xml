@@ -2423,22 +2423,22 @@
       <Symbols dnOrder="0">
         <Integer dnOrder="0" id="CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="usb_device_msd_0" value="32"/>
+            <Dynamic dnOrder="0" id="usb_device" value="32"/>
           </Values>
         </Integer>
         <Integer dnOrder="1" id="CONFIG_USB_DEVICE_ENDPOINTS_NUMBER">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="usb_device_msd_0" value="1"/>
+            <Dynamic dnOrder="0" id="usb_device" value="1"/>
           </Values>
         </Integer>
         <Integer dnOrder="2" id="CONFIG_USB_DEVICE_FUNCTIONS_NUMBER">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="usb_device_msd_0" value="1"/>
+            <Dynamic dnOrder="0" id="usb_device" value="1"/>
           </Values>
         </Integer>
         <Integer dnOrder="3" id="CONFIG_USB_DEVICE_INTERFACES_NUMBER">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="usb_device_msd_0" value="1"/>
+            <Dynamic dnOrder="0" id="usb_device" value="1"/>
           </Values>
         </Integer>
         <Boolean dnOrder="4" id="CONFIG_USB_DEVICE_MSD_DISK_IMAGE">
@@ -2476,14 +2476,7 @@
       </Symbols>
     </UniqueComponent>
     <GeneratorComponent dnOrder="10" id="usb_device_msd">
-      <Symbols dnOrder="0">
-        <Integer dnOrder="0" id="CONFIG_USB_DEVICE_MSD_INSTANCES">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="usb_device_msd_0" value="1"/>
-          </Values>
-        </Integer>
-      </Symbols>
-      <Instances dnOrder="1">
+      <Instances dnOrder="0">
         <InstanceComponent dnOrder="0" id="usb_device_msd" instance="0">
           <Symbols dnOrder="0">
             <Integer dnOrder="0" id="CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER">
@@ -2501,61 +2494,59 @@
                 <Dynamic dnOrder="0" id="usb_device_msd_0" value="0"/>
               </Values>
             </Integer>
-            <Integer dnOrder="3" id="CONFIG_USB_DEVICE_FUNCTION_MSD_LUN">
+            <Boolean dnOrder="3" id="CONFIG_USB_DEVICE_FUNCTION_MSD_LUN_IDX0">
               <Values dnOrder="0">
-                <Dynamic dnOrder="0" id="usb_device_msd_0" value="1"/>
+                <Dynamic dnOrder="0" id="usb_device_msd_0" value="true"/>
               </Values>
-            </Integer>
-            <Menu dnOrder="4" id="CONFIG_USB_DEVICE_FUNCTION_MSD_LUN_0">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="visible">
-                  <Value dnOrder="0">true</Value>
-                </Boolean>
-              </Attributes>
-            </Menu>
-            <String dnOrder="5" id="USB_DEVICE_FUNCTION_MSD_LUN_MEDIA_TYPE_0">
-              <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="visible">
-                  <Value dnOrder="0">true</Value>
-                </Boolean>
-              </Attributes>
-              <Values dnOrder="1">
-                <Dynamic dnOrder="0" id="usb_device_msd_0" value="DRV_MEMORY_0"/>
+            </Boolean>
+            <Boolean dnOrder="4" id="CONFIG_USB_DEVICE_FUNCTION_MSD_LUN_IDX1">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="usb_device_msd_0" value="false"/>
               </Values>
-            </String>
+            </Boolean>
+            <Boolean dnOrder="5" id="CONFIG_USB_DEVICE_FUNCTION_MSD_LUN_IDX2">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="usb_device_msd_0" value="false"/>
+              </Values>
+            </Boolean>
+            <Boolean dnOrder="6" id="CONFIG_USB_DEVICE_FUNCTION_MSD_LUN_IDX3">
+              <Values dnOrder="0">
+                <Dynamic dnOrder="0" id="usb_device_msd_0" value="false"/>
+              </Values>
+            </Boolean>
+            <Combo dnOrder="7" id="CONFIG_USB_DEVICE_FUNCTION_MSD_LUN_MEDIA_TYPE_IDX0">
+              <Values dnOrder="0">
+                <User dnOrder="0" value="MEDIA_TYPE_NVM"/>
+              </Values>
+            </Combo>
           </Symbols>
           <Attachments dnOrder="1">
-            <DirectDependency dnOrder="0" id="usb_device_msd_media_dependency">
-              <Attributes dnOrder="0">
-                <String dnOrder="0" id="targetComponentID">
-                  <Value dnOrder="0">drv_memory_0</Value>
-                </String>
-                <String dnOrder="1" id="targetAttachmentID">
-                  <Value dnOrder="0">drv_media</Value>
-                </String>
-              </Attributes>
-            </DirectDependency>
+            <MultiCapability dnOrder="0" id="usb_device_msd_media_dependency">
+              <TargetAttachments dnOrder="0">
+                <TargetAttachment dnOrder="0" targetAttachmentID="drv_media" targetComponentID="drv_memory_0"/>
+              </TargetAttachments>
+            </MultiCapability>
           </Attachments>
         </InstanceComponent>
       </Instances>
     </GeneratorComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
-    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="BSP_PIC32MZ_EF_Starter_Kit" x="340" y="20"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="34" y="49"/>
-        <ElementPosition dnOrder="2" id="core" x="240" y="20"/>
-        <ElementPosition dnOrder="3" id="core_timer" x="4" y="286"/>
-        <ElementPosition dnOrder="4" id="dfp" x="20" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_memory" x="296" y="152"/>
-        <ElementPosition dnOrder="6" id="drv_usbhs_v1" x="12" y="151"/>
-        <ElementPosition dnOrder="7" id="nvm" x="175" y="169"/>
-        <ElementPosition dnOrder="8" id="sys_time" x="138" y="243"/>
-        <ElementPosition dnOrder="9" id="usb_device" x="298" y="61"/>
-        <ElementPosition dnOrder="10" id="usb_device_msd" x="432" y="153"/>
+        <ElementPosition dnOrder="0" id="BSP_PIC32MZ_EF_Starter_Kit" x="278" y="10"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="1" y="44"/>
+        <ElementPosition dnOrder="2" id="core" x="194" y="11"/>
+        <ElementPosition dnOrder="3" id="core_timer" x="161" y="57"/>
+        <ElementPosition dnOrder="4" id="dfp" x="1" y="10"/>
+        <ElementPosition dnOrder="5" id="drv_memory" x="182" y="258"/>
+        <ElementPosition dnOrder="6" id="drv_usbhs_v1" x="4" y="165"/>
+        <ElementPosition dnOrder="7" id="nvm" x="16" y="309"/>
+        <ElementPosition dnOrder="8" id="sys_time" x="312" y="36"/>
+        <ElementPosition dnOrder="9" id="usb_device" x="185" y="168"/>
+        <ElementPosition dnOrder="10" id="usb_device_msd" x="355" y="179"/>
       </ElementPositions>
     </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>

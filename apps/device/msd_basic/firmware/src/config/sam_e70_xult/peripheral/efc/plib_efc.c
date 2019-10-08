@@ -46,6 +46,7 @@ It allows user to Program, Erase and lock the on-chip FLASH memory.
 
 static uint32_t status = 0;
 
+EFC_OBJECT efc;
 
 void EFC_Initialize(void)
 {
@@ -68,6 +69,7 @@ bool EFC_SectorErase( uint32_t address )
 
     status = 0;
 
+    EFC_REGS->EEFC_FMR |= EEFC_FMR_FRDY_Msk;
 
     return true;
 }
@@ -92,6 +94,7 @@ bool EFC_PageWrite( uint32_t *data, uint32_t address )
 
     status = 0;
 
+    EFC_REGS->EEFC_FMR |= EEFC_FMR_FRDY_Msk;
 
     return true;
 }
@@ -112,6 +115,7 @@ bool EFC_QuadWordWrite( uint32_t *data, uint32_t address )
 
     status = 0;
 
+    EFC_REGS->EEFC_FMR |= EEFC_FMR_FRDY_Msk;
 
     return true;
 }
@@ -126,6 +130,7 @@ void EFC_RegionLock(uint32_t address)
 
     status = 0;
 
+    EFC_REGS->EEFC_FMR |= EEFC_FMR_FRDY_Msk;
 }
 
 void EFC_RegionUnlock(uint32_t address)
@@ -138,6 +143,7 @@ void EFC_RegionUnlock(uint32_t address)
 
     status = 0;
 
+    EFC_REGS->EEFC_FMR |= EEFC_FMR_FRDY_Msk;
 }
 
 bool EFC_IsBusy(void)
@@ -152,4 +158,18 @@ EFC_ERROR EFC_ErrorGet( void )
     return (EFC_ERROR)status;
 }
 
+void EFC_CallbackRegister( EFC_CALLBACK callback, uintptr_t context )
+{
+    efc.callback = callback;
+    efc.context = context;
+}
 
+void EFC_InterruptHandler( void )
+{
+    uint32_t ul_fmr = EFC_REGS->EEFC_FMR;
+    EFC_REGS->EEFC_FMR = ( ul_fmr & (~EEFC_FMR_FRDY_Msk));
+    if(efc.callback != NULL)
+        {
+            efc.callback(efc.context);
+        }
+}

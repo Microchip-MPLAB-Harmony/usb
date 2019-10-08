@@ -61,27 +61,29 @@ uint8_t sectorBuffer[512 * USB_DEVICE_MSD_NUM_SECTOR_BUFFERS] USB_ALIGN;
 USB_MSD_CBW msdCBW0 USB_ALIGN;
 USB_MSD_CSW msdCSW0 USB_ALIGN;
 
+
 /*******************************************
  * MSD Function Driver initialization
  *******************************************/
 USB_DEVICE_MSD_MEDIA_INIT_DATA USB_ALIGN  msdMediaInit0[1] =
 {
+    /* LUN 0 */ 
     {
         DRV_MEMORY_INDEX_0,
         512,
         sectorBuffer,
         NULL,
-        NULL,
+        0,
         {
             0x00,    // peripheral device is connected, direct access block device
-            0x80,    // removable
+            0x80,   // removable
             0x04,    // version = 00=> does not conform to any standard, 4=> SPC-2
             0x02,    // response is in format specified by SPC-2
             0x1F,    // additional length
             0x00,    // sccs etc.
-            0x00,    // bque=1 and cmdque=0,indicates simple queuing 00 is obsolete,
+            0x00,    // bque=1 and cmdque=0,indicates simple queueing 00 is obsolete,
                      // but as in case of other device, we are just using 00
-            0x00,    // 00 obsolete, 0x80 for basic task queuing
+            0x00,    // 00 obsolete, 0x80 for basic task queueing
             {
                 'M','i','c','r','o','c','h','p'
             },
@@ -104,12 +106,8 @@ USB_DEVICE_MSD_MEDIA_INIT_DATA USB_ALIGN  msdMediaInit0[1] =
             NULL
         }
     },
-    
-    
-    
 };
-
-    
+  
 /**************************************************
  * USB Device Function Driver Init Data
  **************************************************/

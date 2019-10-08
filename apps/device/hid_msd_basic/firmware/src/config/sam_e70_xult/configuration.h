@@ -127,8 +127,6 @@ extern "C" {
 /* EP0 size in bytes */
 #define USB_DEVICE_EP0_BUFFER_SIZE                          64
 
-/* Enable SOF Events */
-#define USB_DEVICE_SOF_EVENT_ENABLE
 
 
 
@@ -163,6 +161,7 @@ extern "C" {
 #define USB_DEVICE_MSD_INSTANCES_NUMBER     1 
 
 #define USB_DEVICE_MSD_NUM_SECTOR_BUFFERS 1
+
 
 /* Number of Logical Units */
 #define USB_DEVICE_MSD_LUNS_NUMBER      1
