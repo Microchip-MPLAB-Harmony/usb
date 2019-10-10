@@ -13,4 +13,3 @@
 **/*.IAR/settings
 **/*.IAR/*.dep
 **/*.IAR/*.custom_argvars
-**/*third_party/rtos/MicriumOSIII/
