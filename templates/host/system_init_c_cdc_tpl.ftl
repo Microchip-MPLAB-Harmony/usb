@@ -23,7 +23,7 @@
  *******************************************************************************/
  -->
 <#if (CONFIG_USB_HOST_CDC_NUMBER_OF_INSTANCES?has_content == true)  
-		&& (CONFIG_USB_HOST_CDC_NUMBER_OF_INSTANCES?number == 1)>
+		&& (CONFIG_USB_HOST_CDC_NUMBER_OF_INSTANCES?number >= 1)>
 	TPL_INTERFACE_CLASS(0x02, NULL,  USB_HOST_CDC_INTERFACE),
 </#if>
 <#--

@@ -23,7 +23,7 @@
  *******************************************************************************/
  -->
 <#if (CONFIG_USB_HOST_HID_NUMBER_OF_INSTANCES?has_content == true)  
-		&& (CONFIG_USB_HOST_HID_NUMBER_OF_INSTANCES?number == 1)>
+		&& (CONFIG_USB_HOST_HID_NUMBER_OF_INSTANCES?number >= 1)>
 	<#if CONFIG_USB_HOST_USE_KEYBOARD == true>
 	TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL(0x03, 0x01, 0x01, &hidInitData,  USB_HOST_HID_INTERFACE),
 	</#if>
