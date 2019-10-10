@@ -22,8 +22,8 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
  -->
-<#if (CONFIG_USB_HOST_AUDIO_V1_NUMBER_OF_INSTANCES?has_content == true)  
-		&& (CONFIG_USB_HOST_AUDIO_V1_NUMBER_OF_INSTANCES?number == 1)>
+<#if (CONFIG_USB_HOST_AUDIO_NUMBER_OF_INSTANCES?has_content == true)  
+		&& (CONFIG_USB_HOST_AUDIO_NUMBER_OF_INSTANCES?number == 1)>
 	TPL_INTERFACE_CLASS(USB_AUDIO_CLASS_CODE, NULL, (void*)USB_HOST_AUDIO_V1_INTERFACE),
 </#if>
 <#--

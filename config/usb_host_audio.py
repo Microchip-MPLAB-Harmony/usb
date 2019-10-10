@@ -22,7 +22,7 @@
 *****************************************************************************"""
 def onAttachmentConnected(source, target):
 	ownerComponent = source["component"]
-	print("USB Host Layer Connected")
+	print("USB HOST Audio Client Driver: USB Host Layer Connected")
 	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
 	if readValue != None:
 		args = {"nTpl":readValue + 1 }
@@ -30,18 +30,15 @@ def onAttachmentConnected(source, target):
 	
 def onAttachmentDisconnected(source, target):
 	ownerComponent = source["component"]
-	print("USB Host Layer Disconnected")
+	print("USB HOST Audio Client Driver: USB Host Layer Disconnected")
 	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
 	if readValue != None:
 		args = {"nTpl":readValue - 1 }
 		res = Database.sendMessage("usb_host", "UPDATE_TPL_ENTRY_NUMBER", args)
 		
 def destroyComponent(component):	
-	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
-	if readValue != None:
-		args = {"nTpl":readValue - 1 }
-		res = Database.sendMessage("usb_host", "UPDATE_TPL_ENTRY_NUMBER", args)
-		
+	print("USB HOST Audio Client Driver: Destroyed")
+	
 def instantiateComponent(usbHostAudioComponent):
 
 	res = Database.activateComponents(["usb_host"])
@@ -105,7 +102,7 @@ def instantiateComponent(usbHostAudioComponent):
 	addFileName('usb_host_audio_local.h', usbHostAudioComponent, usbHostAudioLocalHeaderFile, "middleware/src/", "/usb/src", True, None)
 	
 	usbHostAudioLocalHeaderFile = usbHostAudioComponent.createFileSymbol(None, None)
-	addFileName('usb_host_audio_v1_mapping', usbHostAudioComponent, usbHostAudioLocalHeaderFile, "middleware/src/", "/usb/src", True, None)
+	addFileName('usb_host_audio_v1_mapping.h', usbHostAudioComponent, usbHostAudioLocalHeaderFile, "middleware/src/", "/usb/src", True, None)
 	
 	
 	# all files go into src/

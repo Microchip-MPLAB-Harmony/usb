@@ -52,7 +52,6 @@
 #include "usb/src/usb_host_audio_local.h"
 #include "usb/usb_audio_v1_0.h"
 #include "usb/usb_host_audio_v1_0.h"
-#include "system/debug/sys_debug.h"
 
 // *****************************************************************************
 // *****************************************************************************
