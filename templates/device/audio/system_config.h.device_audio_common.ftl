@@ -43,7 +43,11 @@
  *******************************************************************************/
 -->
 /* Maximum instances of Audio function driver */
+<#if usb_device_audio_0.CONFIG_USB_DEVICE_FUNCTION_AUDIO_VERSION == "Audio v1">
 #define USB_DEVICE_AUDIO_INSTANCES_NUMBER    ${__INSTANCE_COUNT} 
+<#elseif usb_device_audio_0.CONFIG_USB_DEVICE_FUNCTION_AUDIO_VERSION == "Audio v2">
+#define USB_DEVICE_AUDIO_V2_INSTANCES_NUMBER    ${__INSTANCE_COUNT} 
+</#if>
 
 <#assign queuedepthCombined = 0>
 <#list 1..4 as x>
@@ -70,10 +74,15 @@
     <#break>
   </#if>
 </#list>
+
 /* Audio Transfer Queue Size for both read and
    write. Applicable to all instances of the
    function driver */
+<#if usb_device_audio_0.CONFIG_USB_DEVICE_FUNCTION_AUDIO_VERSION == "Audio v1">
 #define USB_DEVICE_AUDIO_QUEUE_DEPTH_COMBINED ${queuedepthCombined}
+<#elseif usb_device_audio_0.CONFIG_USB_DEVICE_FUNCTION_AUDIO_VERSION == "Audio v2">
+#define  USB_DEVICE_AUDIO_V2_QUEUE_DEPTH_COMBINED ${queuedepthCombined}
+</#if>
 
 <#-- Find out max streaming interface -->
 <#assign maxStreamingInterface = 0>
@@ -101,7 +110,11 @@
 	</#if>
 </#if>
 /* No of Audio streaming interfaces */
+<#if usb_device_audio_0.CONFIG_USB_DEVICE_FUNCTION_AUDIO_VERSION == "Audio v1">
 #define USB_DEVICE_AUDIO_MAX_STREAMING_INTERFACES   ${maxStreamingInterface}
+<#elseif usb_device_audio_0.CONFIG_USB_DEVICE_FUNCTION_AUDIO_VERSION == "Audio v2">
+#define USB_DEVICE_AUDIO_V2_MAX_STREAMING_INTERFACES   ${maxStreamingInterface}
+</#if>
 
 <#-- Find out max alternate interface settings -->
 <#assign maxAlternateInterfaceSetting = 0>
@@ -129,7 +142,11 @@
 	</#if>
 </#if>
 /* No of alternate settings */
+<#if usb_device_audio_0.CONFIG_USB_DEVICE_FUNCTION_AUDIO_VERSION == "Audio v1">
 #define USB_DEVICE_AUDIO_MAX_ALTERNATE_SETTING      ${maxAlternateInterfaceSetting}
+<#elseif usb_device_audio_0.CONFIG_USB_DEVICE_FUNCTION_AUDIO_VERSION == "Audio v2">
+#define USB_DEVICE_AUDIO_V2_MAX_ALTERNATE_SETTING      ${maxAlternateInterfaceSetting}
+</#if>
 
 <#--
 /*******************************************************************************

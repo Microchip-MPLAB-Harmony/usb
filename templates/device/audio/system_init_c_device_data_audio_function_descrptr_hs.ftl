@@ -307,25 +307,24 @@
 
 /* Descriptor for Function 1 - Audio     */ 
     
-               /* USB Headset Standard Audio Control Interface Descriptor          */
-               0x09,                            // Size of this descriptor in bytes (bLength)
-               USB_DESCRIPTOR_INTERFACE,        // INTERFACE descriptor type (bDescriptorType)
-               0,
-               0x00,                            // Alternate Setting Number (bAlternateSetting)
-               0x00,                            // Number of endpoints in this intf (bNumEndpoints)
-               USB_AUDIO_CLASS_CODE,                                         // Class code  (bInterfaceClass)
-                                     
-               USB_AUDIO_AUDIOCONTROL,          // Subclass code (bInterfaceSubclass)
-               USB_AUDIO_PR_PROTOCOL_UNDEFINED, // Protocol code  (bInterfaceProtocol)
-               0x00,                            // Interface string index (iInterface)
+    /* USB Headset Standard Audio Control Interface Descriptor          */
+    0x09,                            // Size of this descriptor in bytes (bLength)
+    USB_DESCRIPTOR_INTERFACE,        // INTERFACE descriptor type (bDescriptorType)
+    0,
+    0x00,                            // Alternate Setting Number (bAlternateSetting)
+    0x00,                            // Number of endpoints in this intf (bNumEndpoints)
+    USB_AUDIO_CLASS_CODE,            // Class code  (bInterfaceClass)				 
+    USB_AUDIO_AUDIOCONTROL,          // Subclass code (bInterfaceSubclass)
+    USB_AUDIO_PR_PROTOCOL_UNDEFINED, // Protocol code  (bInterfaceProtocol)
+    0x00,                            // Interface string index (iInterface)
 
-               /* USB Headset Class-specific AC Interface Descriptor  */
+    /* USB Headset Class-specific AC Interface Descriptor  */
     0x0A,                           // Size of this descriptor in bytes (bLength)
     USB_AUDIO_CS_INTERFACE,         // CS_INTERFACE Descriptor Type (bDescriptorType)
     USB_AUDIO_HEADER,               // HEADER descriptor subtype      (bDescriptorSubtype)
-   0x00,0x01,                      /* Audio Device compliant to the USB Audio
+    0x00,0x01,                      /* Audio Device compliant to the USB Audio
                                      * specification version 1.00 (bcdADC) */
-
+									 
     0x64,0x00,                      /* Total number of bytes returned for the
                                      * class-specific AudioControl interface
                                      * descriptor. (wTotalLength). Includes the
@@ -337,16 +336,16 @@
                                      * this AudioControl interface belongs
                                      * (bInCollection) */
 
-    1,                           /* AudioStreaming interface 1 belongs to this
+    1,                              /* AudioStreaming interface 1 belongs to this
                                      * AudioControl interface. (baInterfaceNr(1))*/
-    2,                           /* AudioStreaming interface 2 belongs to this
+    2,                              /* AudioStreaming interface 2 belongs to this
                                      * AudioControl interface. (baInterfaceNr(2))*/
 
     /* USB Headset Input Terminal Descriptor */
     0x0C,                           // Size of the descriptor, in bytes (bLength)
-    USB_AUDIO_CS_INTERFACE,    // CS_INTERFACE Descriptor Type (bDescriptorType)
+    USB_AUDIO_CS_INTERFACE,         // CS_INTERFACE Descriptor Type (bDescriptorType)
     USB_AUDIO_INPUT_TERMINAL,                // INPUT_TERMINAL descriptor subtype (bDescriptorSubtype)
-    APP_ID_INPUT_TERMINAL,          // ID of this Terminal.(bTerminalID)
+    USB_DEVICE_AUDIO_IDX${CONFIG_USB_DEVICE_FUNCTION_INDEX}_DESCRIPTOR_INPUT_TERMINAL_ID,          // ID of this Terminal.(bTerminalID)
     0x01,0x01,                      // (wTerminalType)
     0x00,                           // No association (bAssocTerminal)
     0x02,                           // Two Channels (bNrChannels)
@@ -356,9 +355,9 @@
     
     /* USB Headset Microphone Input Terminal Descriptor */
     0x0C,                           // Size of the descriptor, in bytes (bLength)
-    USB_AUDIO_CS_INTERFACE,    // CS_INTERFACE Descriptor Type (bDescriptorType)
+    USB_AUDIO_CS_INTERFACE,         // CS_INTERFACE Descriptor Type (bDescriptorType)
     USB_AUDIO_INPUT_TERMINAL,                // INPUT_TERMINAL descriptor subtype (bDescriptorSubtype)
-    APP_ID_INPUT_TERMINAL_MICROPHONE,          // ID of this Terminal.(bTerminalID)
+    USB_DEVICE_AUDIO_IDX${CONFIG_USB_DEVICE_FUNCTION_INDEX}_DESCRIPTOR_INPUT_TERMINAL_MICROPHONE_ID,          // ID of this Terminal.(bTerminalID)
     0x01,0x02,                      // (wTerminalType)
     0x00,                           // No association (bAssocTerminal)
     0x01,                           // Two Channels (bNrChannels)
@@ -370,8 +369,8 @@
     0x0D,                               // Size of the descriptor, in bytes (bLength)
     USB_AUDIO_CS_INTERFACE,             // CS_INTERFACE Descriptor Type (bDescriptorType)
     USB_AUDIO_FEATURE_UNIT,             // FEATURE_UNIT  descriptor subtype (bDescriptorSubtype)
-    APP_ID_FEATURE_UNIT,                // ID of this Unit ( bUnitID  ).
-    APP_ID_MIXER_UNIT,                  // Input terminal is connected to this unit(bSourceID)
+    USB_DEVICE_AUDIO_IDX${CONFIG_USB_DEVICE_FUNCTION_INDEX}_DESCRIPTOR_FEATURE_UNIT_ID,                // ID of this Unit ( bUnitID  ).
+    USB_DEVICE_AUDIO_IDX${CONFIG_USB_DEVICE_FUNCTION_INDEX}_DESCRIPTOR_MIXER_UNIT_ID,                  // Input terminal is connected to this unit(bSourceID)
     0x02,                               // (bControlSize) //was 0x03
     0x01,0x00,                          // (bmaControls(0)) Controls for Master Channel
     0x00,0x00,                          // (bmaControls(1)) Controls for Channel 1
@@ -382,8 +381,8 @@
     0x0B,                               // Size of the descriptor, in bytes (bLength)
     USB_AUDIO_CS_INTERFACE,             // CS_INTERFACE Descriptor Type (bDescriptorType)
     USB_AUDIO_FEATURE_UNIT,             // FEATURE_UNIT  descriptor subtype (bDescriptorSubtype)
-    APP_ID_FEATURE_UNIT_MICROPHONE,     // ID of this Unit ( bUnitID  ).
-    APP_ID_INPUT_TERMINAL_MICROPHONE,   // Input terminal is connected to this unit(bSourceID)
+    USB_DEVICE_AUDIO_IDX${CONFIG_USB_DEVICE_FUNCTION_INDEX}_DESCRIPTOR_FEATURE_UNIT_MICROPHONE_ID,     // ID of this Unit ( bUnitID  ).
+    USB_DEVICE_AUDIO_IDX${CONFIG_USB_DEVICE_FUNCTION_INDEX}_DESCRIPTOR_INPUT_TERMINAL_MICROPHONE_ID,   // Input terminal is connected to this unit(bSourceID)
     0x02,                               // (bControlSize) //was 0x03
     0x01,0x00,                          // (bmaControls(0)) Controls for Master Channel
     0x00,0x00,                          // (bmaControls(1)) Controls for Channel 1
@@ -393,8 +392,8 @@
     0x0B,                               // Size of the descriptor, in bytes (bLength)
     USB_AUDIO_CS_INTERFACE,             // CS_INTERFACE Descriptor Type (bDescriptorType)
     USB_AUDIO_FEATURE_UNIT,             // FEATURE_UNIT  descriptor subtype (bDescriptorSubtype)
-    APP_ID_FEATURE_UNIT_SIDE_TONING,    // ID of this Unit ( bUnitID  ).
-    APP_ID_INPUT_TERMINAL_MICROPHONE,   // Input terminal is connected to this unit(bSourceID)
+    USB_DEVICE_AUDIO_IDX${CONFIG_USB_DEVICE_FUNCTION_INDEX}_DESCRIPTOR_FEATURE_UNIT_SIDE_TONING_ID,    // ID of this Unit ( bUnitID  ).
+    USB_DEVICE_AUDIO_IDX${CONFIG_USB_DEVICE_FUNCTION_INDEX}_DESCRIPTOR_INPUT_TERMINAL_MICROPHONE_ID,   // Input terminal is connected to this unit(bSourceID)
     0x02,                               // (bControlSize) //was 0x03
     0x01,0x00,                          // (bmaControls(0)) Controls for Master Channel
     0x00,0x00,                          // (bmaControls(1)) Controls for Channel 1
@@ -404,10 +403,10 @@
     0x0D,                               // Size of the descriptor, in bytes (bLength)
     USB_AUDIO_CS_INTERFACE,             // CS_INTERFACE Descriptor Type (bDescriptorType)
     USB_AUDIO_MIXER_UNIT,               // FEATURE_UNIT  descriptor subtype (bDescriptorSubtype)
-    APP_ID_MIXER_UNIT,                  // ID of this Unit ( bUnitID  ).
+    USB_DEVICE_AUDIO_IDX${CONFIG_USB_DEVICE_FUNCTION_INDEX}_DESCRIPTOR_MIXER_UNIT_ID,                  // ID of this Unit ( bUnitID  ).
     2,                                  // Number of input pins
-    APP_ID_INPUT_TERMINAL,              // sourceID 1
-    APP_ID_FEATURE_UNIT_SIDE_TONING,    // sourceID 2
+    USB_DEVICE_AUDIO_IDX${CONFIG_USB_DEVICE_FUNCTION_INDEX}_DESCRIPTOR_INPUT_TERMINAL_ID,              // sourceID 1
+    USB_DEVICE_AUDIO_IDX${CONFIG_USB_DEVICE_FUNCTION_INDEX}_DESCRIPTOR_FEATURE_UNIT_SIDE_TONING_ID,    // sourceID 2
     0x02,                               // number of channels
     0x03,0x00,                          // channel config
     0x00,                               // iChannelNames
@@ -417,21 +416,21 @@
     /* USB Headset Output Terminal Descriptor */
     0x09,                               // Size of the descriptor, in bytes (bLength)
     USB_AUDIO_CS_INTERFACE,             // CS_INTERFACE Descriptor Type (bDescriptorType)
-   USB_AUDIO_OUTPUT_TERMINAL,          // OUTPUT_TERMINAL  descriptor subtype (bDescriptorSubtype)
-    APP_ID_OUTPUT_TERMINAL,             // ID of this Terminal.(bTerminalID)
+    USB_AUDIO_OUTPUT_TERMINAL,          // OUTPUT_TERMINAL  descriptor subtype (bDescriptorSubtype)
+    USB_DEVICE_AUDIO_IDX${CONFIG_USB_DEVICE_FUNCTION_INDEX}_DESCRIPTOR_OUTPUT_TERMINAL_ID,             // ID of this Terminal.(bTerminalID)
     0x02,0x03,                          // (wTerminalType)See USB Audio Terminal Types.
     0x00,                               // No association (bAssocTerminal)
-    APP_ID_FEATURE_UNIT,                // (bSourceID)
+    USB_DEVICE_AUDIO_IDX${CONFIG_USB_DEVICE_FUNCTION_INDEX}_DESCRIPTOR_FEATURE_UNIT_ID,                // (bSourceID)
     0x00,                               // Unused. (iTerminal)
 
     /* USB Headset Output Terminal Microphone Descriptor */
     0x09,                           // Size of the descriptor, in bytes (bLength)
     USB_AUDIO_CS_INTERFACE,    // CS_INTERFACE Descriptor Type (bDescriptorType)
     USB_AUDIO_OUTPUT_TERMINAL,      // OUTPUT_TERMINAL  descriptor subtype (bDescriptorSubtype)
-    APP_ID_OUTPUT_TERMINAL_MICROPHONE,          // ID of this Terminal.(bTerminalID)
+    USB_DEVICE_AUDIO_IDX${CONFIG_USB_DEVICE_FUNCTION_INDEX}_DESCRIPTOR_OUTPUT_TERMINAL_MICROPHONE_ID,          // ID of this Terminal.(bTerminalID)
     0x01,0x01,                       // (wTerminalType)See USB Audio Terminal Types.
     0x00,                            // No association (bAssocTerminal)
-    APP_ID_FEATURE_UNIT_MICROPHONE,             // (bSourceID)
+    USB_DEVICE_AUDIO_IDX${CONFIG_USB_DEVICE_FUNCTION_INDEX}_DESCRIPTOR_FEATURE_UNIT_MICROPHONE_ID,             // (bSourceID)
     0x00,                            // Unused. (iTerminal)
 
     /* USB Headset Standard AS Interface Descriptor (Alt. Set. 0) */
@@ -460,7 +459,7 @@
     0x07,                            // Size of the descriptor, in bytes (bLength)
     USB_AUDIO_CS_INTERFACE,     // CS_INTERFACE Descriptor Type (bDescriptorType)
     USB_AUDIO_AS_GENERAL,    // GENERAL subtype (bDescriptorSubtype)
-    APP_ID_INPUT_TERMINAL,           // Unit ID of the Output Terminal.(bTerminalLink)
+    USB_DEVICE_AUDIO_IDX${CONFIG_USB_DEVICE_FUNCTION_INDEX}_DESCRIPTOR_INPUT_TERMINAL_ID,           // Unit ID of the Output Terminal.(bTerminalLink)
     0x01,                            // Interface delay. (bDelay)
     0x01,0x00,                       // PCM Format (wFormatTag)
 
@@ -527,7 +526,7 @@
     0x07,                               // Size of the descriptor, in bytes (bLength)
     USB_AUDIO_CS_INTERFACE,                  // CS_INTERFACE Descriptor Type (bDescriptorType)
     USB_AUDIO_AS_GENERAL,                     // GENERAL subtype (bDescriptorSubtype)
-    APP_ID_OUTPUT_TERMINAL_MICROPHONE,           // Unit ID of the Output Terminal.(bTerminalLink)
+    USB_DEVICE_AUDIO_IDX${CONFIG_USB_DEVICE_FUNCTION_INDEX}_DESCRIPTOR_OUTPUT_TERMINAL_MICROPHONE_ID,           // Unit ID of the Output Terminal.(bTerminalLink)
     0x00,                            // Interface delay. (bDelay)
     0x01,0x00,                       // PCM Format (wFormatTag)
 
@@ -566,7 +565,7 @@
     0x00,                            // Unused. (bLockDelayUnits)
     0x00,0x00,                        // Unused. (wLockDelay)
 	
-<#elseif CONFIG_USB_DEVICE_FUNCTION_AUDIO_DEVICE_TYPE == "Audio v1.0 USB Headset Multiple Sampling rate">	
+<#elseif CONFIG_USB_DEVICE_FUNCTION_AUDIO_DEVICE_TYPE == "Audio v1.0 USB Headset Multi Sampling rates">	
 	/* USB Speaker Standard Audio Control Interface Descriptor	*/
 	0x09,                            // Size of this descriptor in bytes (bLength)
 	USB_DESCRIPTOR_INTERFACE,        // INTERFACE descriptor type (bDescriptorType)
@@ -865,7 +864,7 @@
     0x81,									// bEndpointAddress   (IN Endpoint)
     0x11,									// bmAttributes	(Transfer: Isochronous / Synch: None / Usage: Feedback)
     0x04, 0x00,								// Endpoint Size
-    0x04,									// bInterval
+    0x04,									// bInterval	
 </#if>
 <#--
 /*******************************************************************************

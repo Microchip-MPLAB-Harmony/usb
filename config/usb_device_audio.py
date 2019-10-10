@@ -37,7 +37,6 @@ audioDeviceTypes = [
 "Audio v1.0 USB Speaker",
 "Audio v1.0 USB Microphone",
 "Audio v1.0 USB Headset",
-"Audio v1.0 USB Headset Multi Sampling rates",
 "Audio v2.0 USB Speaker" 
 ]
 

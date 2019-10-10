@@ -52,7 +52,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "usb/src/usb_external_dependencies"
+#include "usb/src/usb_external_dependencies.h"
 #include "usb/usb_common.h"
 #include "usb/usb_chapter_9.h"
 #include "usb/usb_device.h"
