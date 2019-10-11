@@ -2320,7 +2320,15 @@
         </File>
       </Symbols>
     </UniqueComponent>
-    <UniqueComponent dnOrder="7" id="nvmctrl"/>
+    <UniqueComponent dnOrder="7" id="nvmctrl">
+      <Symbols dnOrder="0">
+        <Integer dnOrder="0" id="NVM_RWS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="nvmctrl" value="1"/>
+          </Values>
+        </Integer>
+      </Symbols>
+    </UniqueComponent>
     <UniqueComponent dnOrder="8" id="usb_device">
       <Symbols dnOrder="0">
         <Integer dnOrder="0" id="CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE">
@@ -2400,7 +2408,8 @@
     </GeneratorComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_D21_Xplained_Pro" x="230" y="60"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="38" y="167"/>
@@ -2409,11 +2418,10 @@
         <ElementPosition dnOrder="4" id="dfp" x="180" y="20"/>
         <ElementPosition dnOrder="5" id="drv_usbfs_v1" x="30" y="80"/>
         <ElementPosition dnOrder="6" id="evsys" x="20" y="20"/>
-        <ElementPosition dnOrder="7" id="nvmctrl" x="640" y="20"/>
+        <ElementPosition dnOrder="7" id="nvmctrl" x="240" y="247"/>
         <ElementPosition dnOrder="8" id="usb_device" x="450" y="60"/>
         <ElementPosition dnOrder="9" id="usb_device_hid" x="230" y="100"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>

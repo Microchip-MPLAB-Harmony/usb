@@ -435,8 +435,8 @@
           <Name dnOrder="1">drv_usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">C07E5598C11AD6C2F25F92037919A988</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C07E5598C11AD6C2F25F92037919A988</UserChecksum>
+          <GeneratedChecksum dnOrder="4">5E2621860496A1FD0821B43178B3C75A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">5E2621860496A1FD0821B43178B3C75A</UserChecksum>
         </File>
         <File dnOrder="54">
           <Type dnOrder="0">HEADER</Type>
@@ -451,8 +451,8 @@
           <Name dnOrder="1">drv_usbfsv1_local.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/driver/usb/usbfsv1/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">AD124EC4592C35C48B287ABF6D408690</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AD124EC4592C35C48B287ABF6D408690</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9433B6CA2E9EE8DEEA6C63B4FCB14AD2</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9433B6CA2E9EE8DEEA6C63B4FCB14AD2</UserChecksum>
         </File>
         <File dnOrder="56">
           <Type dnOrder="0">HEADER</Type>
@@ -795,8 +795,8 @@
           <Name dnOrder="1">usb_common.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">ACC8AF90F98B09095480B6B1F07082A0</GeneratedChecksum>
-          <UserChecksum dnOrder="5">ACC8AF90F98B09095480B6B1F07082A0</UserChecksum>
+          <GeneratedChecksum dnOrder="4">2AAF1AB3341FB7F74004B6C7EFF8929C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">2AAF1AB3341FB7F74004B6C7EFF8929C</UserChecksum>
         </File>
         <File dnOrder="99">
           <Type dnOrder="0">HEADER</Type>

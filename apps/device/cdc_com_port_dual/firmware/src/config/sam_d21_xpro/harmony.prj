@@ -715,8 +715,8 @@
           <Name dnOrder="1">usb_common.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">ACC8AF90F98B09095480B6B1F07082A0</GeneratedChecksum>
-          <UserChecksum dnOrder="5">ACC8AF90F98B09095480B6B1F07082A0</UserChecksum>
+          <GeneratedChecksum dnOrder="4">2AAF1AB3341FB7F74004B6C7EFF8929C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">2AAF1AB3341FB7F74004B6C7EFF8929C</UserChecksum>
         </File>
         <File dnOrder="89">
           <Type dnOrder="0">HEADER</Type>

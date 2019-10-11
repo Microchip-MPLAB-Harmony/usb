@@ -104,7 +104,6 @@
             <itemPath>../src/config/sam_d21_xpro/usb/usb_host_hub_interface.h</itemPath>
             <itemPath>../src/config/sam_d21_xpro/usb/usb_hub.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/config/sam_d21_xpro/user.h</itemPath>
           <itemPath>../src/config/sam_d21_xpro/device_cache.h</itemPath>
           <itemPath>../src/config/sam_d21_xpro/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_d21_xpro/definitions.h</itemPath>
@@ -176,7 +175,6 @@
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
-      <itemPath>../src/app.h</itemPath>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -286,12 +284,12 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.20</languageToolchainVersion>
+        <languageToolchainVersion>2.30</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
         <pack name="SAMD21_DFP" vendor="Microchip" version="3.0.23"/>
-        <pack name="CMSIS" vendor="ARM" version="5.0.1"/>
+        <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
       </packs>
       <compileType>
         <linkerTool>
