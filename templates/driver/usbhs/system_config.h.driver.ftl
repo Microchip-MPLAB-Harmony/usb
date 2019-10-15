@@ -81,6 +81,30 @@
 
 /* Reset duration in milli Seconds */ 
 #define DRV_USBHS_HOST_RESET_DURATION                     ${USB_DRV_HOST_RESET_DUARTION}
+
+
+<#elseif (USB_OPERATION_MODE?has_content)
+	  && (USB_OPERATION_MODE == "DualRole")>
+	  
+/* Enables Device Support */
+#define DRV_USBHS_DEVICE_SUPPORT                          true	
+
+/* Enable Host Support */
+#define DRV_USBHS_HOST_SUPPORT                            true
+
+/* Number of NAKs to wait before returning transfer failure */ 
+#define DRV_USBHS_HOST_NAK_LIMIT                          2000 
+
+/* Maximum Number of pipes */
+#define DRV_USBHS_HOST_PIPES_NUMBER                       10 
+
+/* Attach Debounce duration in milli Seconds */ 
+#define DRV_USBHS_HOST_ATTACH_DEBOUNCE_DURATION           ${USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION}
+
+/* Reset duration in milli Seconds */ 
+#define DRV_USBHS_HOST_RESET_DURATION                     ${USB_DRV_HOST_RESET_DUARTION}
+  
+	  
 </#if>
 
 /* Alignment for buffers that are submitted to USB Driver*/ 

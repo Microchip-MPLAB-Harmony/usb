@@ -23,7 +23,7 @@
 # Global definitions  
 listUsbSpeed = ["High Speed", "Full Speed"]
 #listUsbSpeed = ["DRV_USBHSV1_DEVICE_SPEEDCONF_NORMAL", "DRV_USBHSV1_DEVICE_SPEEDCONF_LOW_POWER"]
-listUsbOperationMode = ["Device", "Host", "Dual Role"]
+listUsbOperationMode = ["Device", "Host", "DualRole"]
 usbDebugLogs = 1 
 usbDriverPath = "driver/"
 usbDriverProjectPath = "/driver/usb/"
@@ -50,6 +50,9 @@ def blUSBDriverOpModeChanged(symbol, event):
 		addDrvUsbHostFile.setValue(False)
 	elif (event["value"] == "Host"):
 		addDrvUsbDeviceFile.setValue(False)
+		addDrvUsbHostFile.setValue(True)
+	elif (event["value"] == "DualRole"):
+		addDrvUsbDeviceFile.setValue(True)
 		addDrvUsbHostFile.setValue(True)
 		
 def dependencyStatus(symbol, event):
@@ -101,7 +104,7 @@ def instantiateComponent(usbDriverComponent):
 	usbOpMode.setVisible(True)
 	usbOpMode.setDescription("Select USB Operation Mode")
 	usbOpMode.setDefaultValue("Device")
-	usbOpMode.setReadOnly(True)
+	usbOpMode.setReadOnly(False)
 	usbOpMode.setUseSingleDynamicValue(True)
 	usbOpMode.setDependencies(blUSBDriverOpModeChanged, ["USB_OPERATION_MODE"])
 	

@@ -57,7 +57,9 @@
 <#if CONFIG_USB_DRIVER_INTERFACE == "DRV_USBHSV1_HOST_INTERFACE">
 #define DRV_USBHSV1_ENDPOINTS_NUMBER                        1
 <#elseif CONFIG_USB_DRIVER_INTERFACE == "DRV_USBHS_HOST_INTERFACE">
+<#if drv_usbhs_v1.USB_OPERATION_MODE == "Host">
 #define DRV_USBHS_ENDPOINTS_NUMBER 							1
+</#if>
 <#elseif CONFIG_USB_DRIVER_INTERFACE == "DRV_USBFSV1_HOST_INTERFACE">
 #define DRV_USBFSV1_ENDPOINTS_NUMBER                        1
 <#elseif CONFIG_USB_DRIVER_INTERFACE == "DRV_USB_UHP_HOST_INTERFACE">
@@ -74,9 +76,6 @@
 <#else>
 #define USB_HOST_DEVICES_NUMBER                             ${CONFIG_USB_HOST_DEVICE_NUMNBER} 
 </#if>
-
-/* Size of Endpoint 0 buffer */
-#define USB_DEVICE_EP0_BUFFER_SIZE                          64
 
 /* Target peripheral list entries */
 #define  USB_HOST_TPL_ENTRIES                               ${CONFIG_USB_HOST_TPL_ENTRY_NUMBER} 

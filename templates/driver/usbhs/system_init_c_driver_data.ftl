@@ -42,7 +42,9 @@
 /******************************************************
  * USB Driver Initialization
  ******************************************************/
-<#if (USB_OPERATION_MODE == "Host") && (USB_HOST_VBUS_ENABLE == true)> 
+<#if (USB_OPERATION_MODE == "DualRole") && (USB_HOST_VBUS_ENABLE == true) ||
+	  (USB_OPERATION_MODE == "Host") && (USB_HOST_VBUS_ENABLE == true)>
+
 void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
 {
 	/* Note: When operating in Host mode, the application can specify a Root 
@@ -86,6 +88,9 @@ const DRV_USBHS_INIT drvUSBInit =
 <#elseif (USB_OPERATION_MODE == "Host")>
 	/* USB Controller to operate as USB Host */
     .operationMode = DRV_USBHS_OPMODE_HOST,
+<#elseif (USB_OPERATION_MODE == "DualRole")>
+		/* USB Controller to operate as USB Host and Device */
+    .operationMode = DRV_USB_OPMODE_DUAL_ROLE,
 </#if>
 
 <#if (USB_SPEED == "High Speed")>
@@ -105,7 +110,7 @@ const DRV_USBHS_INIT drvUSBInit =
     /* Identifies peripheral (PLIB-level) ID */
     .usbID = USBHS_ID_0,
 	
-<#if (USB_OPERATION_MODE == "Host")> 
+<#if (USB_OPERATION_MODE == "Host") ||  (USB_OPERATION_MODE == "DualRole")> 
 	<#if (USB_HOST_VBUS_ENABLE == true)> 
 	/* USB Host Power Enable. USB Driver uses this function to Enable the VBUS */ 
 	.portPowerEnable = DRV_USB_VBUSPowerEnable,
