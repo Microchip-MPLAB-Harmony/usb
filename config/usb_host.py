@@ -70,7 +70,7 @@ def instantiateComponent(usbHostComponent):
 		driverInterface = "DRV_USBFS_HOST_INTERFACE"
 		args = {"operationMode":"Host"}
 		Database.sendMessage("drv_usbfs_v1", "UPDATE_OPERATION_MODE", args)
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMD5", "SAME5", "SAML21"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMDA1", "SAMD5", "SAME5", "SAML21"]):
 		res = Database.activateComponents(["drv_usbfs_v1"])
 		speed = Database.getSymbolValue("drv_usbfs_v1", "USB_SPEED")
 		driverIndex = "DRV_USBFSV1_INDEX_0"
