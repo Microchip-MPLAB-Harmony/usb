@@ -63,6 +63,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
+
 /*********************************************
  * These IRP states are used internally by the
  * HCD to track completion of a host IRP. This
@@ -82,10 +83,8 @@ DRV_USB_UHP_HOST_IRP_STATE;
  ********************************************/
 typedef struct _USB_HOST_IRP_LOCAL
 {
-    /* Points to the 8 byte setup command
-     * packet in case this is a IRP is 
-     * scheduled on a CONTROL pipe. Should
-     * be NULL otherwise */
+    /* Points to the 8 byte setup command packet in case this is a IRP is
+     * scheduled on a CONTROL pipe. Should be NULL otherwise */
     void * setup;
 
     /* Pointer to data buffer */
@@ -103,10 +102,8 @@ typedef struct _USB_HOST_IRP_LOCAL
     /* User data */
     uint32_t userData;
 
-    /* Pointer to function to be called
-     * when IRP is terminated. Can be 
-     * NULL, in which case the function
-     * will not be called. */
+    /* Pointer to function to be called when IRP is terminated. Can be NULL, in
+     * which case the function will not be called. */
     void (*callback)(struct _USB_HOST_IRP * irp);
 
     /****************************************
@@ -114,12 +111,12 @@ typedef struct _USB_HOST_IRP_LOCAL
      * modified by client
      ****************************************/
     DRV_USB_UHP_HOST_IRP_STATE tempState;
+    uint32_t completedBytes;
     struct _USB_HOST_IRP_LOCAL * next;
     struct _USB_HOST_IRP_LOCAL * previous;
     DRV_USB_UHP_HOST_PIPE_HANDLE  pipe;
-    uint32_t completedBytes;
-}
-USB_HOST_IRP_LOCAL;
+
+} USB_HOST_IRP_LOCAL;
 
 /************************************************
  * This is the Host Pipe Object.
@@ -132,9 +129,7 @@ typedef struct _DRV_USB_UHP_HOST_PIPE_OBJ
     /* The device address */
     uint8_t deviceAddress;
 
-    /* Interval in case this
-     * is a Isochronous or
-     * an interrupt pipe */
+    /* Interval in case this is a Isochronous or an interrupt pipe */
     uint8_t bInterval;
 
     /* Client that owns this pipe */
@@ -149,13 +144,11 @@ typedef struct _DRV_USB_UHP_HOST_PIPE_OBJ
     /* The IRP queue on this pipe */
     USB_HOST_IRP_LOCAL * irpQueueHead;
 
-    /* The NAK counter for the IRP
-     * being served on the pipe */
-    
+    /* The NAK counter for the IRP being served on the pipe */
 //    uint32_t nakCounter;
 
     /* Pipe endpoint size*/
-    unsigned int endpointSize;
+    uint32_t endpointSize;
 
     /* The next and previous pipe */
     struct _DRV_USB_UHP_HOST_PIPE_OBJ * next;
@@ -186,6 +179,10 @@ DRV_USB_UHP_HOST_PIPE_OBJ;
 
 typedef struct _DRV_USB_UHP_HOST_TRANSFER_GROUP
 {
+    /* The first pipe in this transfer 
+     * group */
+    DRV_USB_UHP_HOST_PIPE_OBJ * pipe;
+
     /* The current pipe being serviced
      * in this transfer group */
     DRV_USB_UHP_HOST_PIPE_OBJ * currentPipe;
@@ -273,7 +270,7 @@ typedef enum
     /* No Reset in progress */
     DRV_USB_UHP_HOST_RESET_STATE_NO_RESET = 0,
 
-    /* Start the reset signalling */
+    /* Start the reset signaling */
     DRV_USB_UHP_HOST_RESET_STATE_START,
     DRV_USB_UHP_HOST_RESET_STATE_START_DELAYED,
 
@@ -324,9 +321,9 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
     SYS_STATUS status;     
 
     /* The USB peripheral associated with the object */
+<#if core.DeviceFamily == "SAMA5D2" || core.DeviceFamily == "SAM9X60">
     volatile uhphs_registers_t * usbIDEHCI;
-
-    /* The USB peripheral associated with the object */
+</#if>
     volatile UhpOhci * usbIDOHCI;
 
     /* Interrupt source for USB module */
@@ -377,7 +374,7 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
     /* True if the Host Controller sets this bit to 1 on the completion of a USB transaction */
     volatile uint8_t intXfrQtdComplete;
     volatile uint8_t hostPipeInUse;
-    volatile uint8_t hostPipeInterrupt;
+    volatile uint8_t blockPipe;
     
     uint8_t staticDToggleIn;
     uint8_t staticDToggleOut;

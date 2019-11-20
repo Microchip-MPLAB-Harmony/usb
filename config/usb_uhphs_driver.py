@@ -21,7 +21,7 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 # Global definitions  
-listUsbSpeed = ["Full Speed"]
+listUsbSpeed = ["High Speed", "Full Speed"]
 #listUsbSpeed = ["DRV_USBHSV1_DEVICE_SPEEDCONF_NORMAL", "DRV_USBHSV1_DEVICE_SPEEDCONF_LOW_POWER"]
 listUsbOperationMode = ["Device", "Host", "Dual Role"]
 usbDebugLogs = 1 
@@ -39,9 +39,9 @@ def dependencyStatus(symbol, event):
 	else :
 		symbol.setVisible(False)
 		
-#def blUSBDriverSpeedChanged(symbol, event):
-#	Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED")
-#	Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED", event["value"], 2)
+def blUSBDriverSpeedChanged(symbol, event):
+	Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED")
+	Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED", event["value"], 2)
 
 def setVisible(symbol, event):
 	if (event["value"] == True):
@@ -65,8 +65,8 @@ def instantiateComponent(usbDriverComponent):
 	usbSpeed.setLabel("USB Speed Selection")
 	usbSpeed.setVisible(False)
 	usbSpeed.setDescription("Select USB Operation Speed")
-	usbSpeed.setDefaultValue("Full Speed")
-#	usbSpeed.setDependencies(blUSBDriverSpeedChanged, ["USB_SPEED"])	
+	usbSpeed.setDefaultValue("High Speed")
+	usbSpeed.setDependencies(blUSBDriverSpeedChanged, ["USB_SPEED"])	
 	
 	# USB Driver Host mode Attach de-bounce duration 
 	usbDriverHostAttachDebounce = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION", None)
@@ -124,9 +124,9 @@ def instantiateComponent(usbDriverComponent):
 	#### Dependency ####
 	############################################################################
 	# Update USB General Interrupt Handler 
-	Database.setSymbolValue("core", "UHP_INTERRUPT_ENABLE", True, 1)
-	Database.setSymbolValue("core", "UHP_INTERRUPT_HANDLER_LOCK", True, 1)
-	Database.setSymbolValue("core", "UHP_INTERRUPT_HANDLER", "UHP_Handler", 1)
+	Database.setSymbolValue("core", "UHPHS_INTERRUPT_ENABLE", True, 1)
+	Database.setSymbolValue("core", "UHPHS_INTERRUPT_HANDLER_LOCK", True, 1)
+	Database.setSymbolValue("core", "UHPHS_INTERRUPT_HANDLER", "UHPHS_Handler", 1)
 	
 	# Enable dependent Harmony core components
 	if Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False: 
@@ -233,7 +233,7 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbExternalDependenciesFile.setProjectPath("config/" + configName + usbDriverProjectPath)
 	drvUsbExternalDependenciesFile.setType("HEADER")
 	drvUsbExternalDependenciesFile.setOverwrite(True)
-
+	
 	# Add drv_usb_uhp.h file
 	drvUsbHsV1VarHeaderFile = usbDriverComponent.createFileSymbol(None, None)
 	drvUsbHsV1VarHeaderFile.setSourcePath(usbDriverPath + "uhp/drv_usb_uhp.h.ftl")
@@ -244,15 +244,15 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1VarHeaderFile.setOverwrite(True)
 	drvUsbHsV1VarHeaderFile.setMarkup(True)
 
-#	# EHCI Header file 
-#	drvUsbUhpEHCIHeaderFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_HEADER_FILE_EHCI", None)
-#	drvUsbUhpEHCIHeaderFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_ehci_host.h")
-#	drvUsbUhpEHCIHeaderFile.setOutputName("drv_usb_uhp_ehci_host.h")
-#	drvUsbUhpEHCIHeaderFile.setDestPath(usbDriverProjectPath + "uhp/src")
-#	drvUsbUhpEHCIHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src/")
-#	drvUsbUhpEHCIHeaderFile.setType("HEADER")
-#	drvUsbUhpEHCIHeaderFile.setOverwrite(True)
-#	drvUsbUhpEHCIHeaderFile.setEnabled(True)
+	# EHCI Header file 
+	drvUsbUhpEHCIHeaderFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_HEADER_FILE_EHCI", None)
+	drvUsbUhpEHCIHeaderFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_ehci_host.h")
+	drvUsbUhpEHCIHeaderFile.setOutputName("drv_usb_uhp_ehci_host.h")
+	drvUsbUhpEHCIHeaderFile.setDestPath(usbDriverProjectPath + "uhp/src")
+	drvUsbUhpEHCIHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src/")
+	drvUsbUhpEHCIHeaderFile.setType("HEADER")
+	drvUsbUhpEHCIHeaderFile.setOverwrite(True)
+	drvUsbUhpEHCIHeaderFile.setEnabled(True)
 	
 	# OHCI Header file 
 	drvUsbUhpOHCIHeaderFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_HEADER_FILE_OHCI", None)
@@ -274,7 +274,7 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbUhpOHCISFRHeaderFile.setOverwrite(True)
 	drvUsbUhpOHCISFRHeaderFile.setEnabled(True)
 	
-    # Add drv_usb_uhp_variant_mapping.h file 
+	# Add drv_usb_uhp_variant_mapping.h file 
 	drvUsbHsV1VarMapHeaderFile = usbDriverComponent.createFileSymbol(None, None)
 	drvUsbHsV1VarMapHeaderFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_variant_mapping.h.ftl")
 	drvUsbHsV1VarMapHeaderFile.setOutputName("drv_usb_uhp_variant_mapping.h")
@@ -310,21 +310,21 @@ def instantiateComponent(usbDriverComponent):
 	# USB Driver Source files  
 	################################################
 	drvUsbHsV1SourceFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_SOURCE_FILE_COMMON", None)
-	drvUsbHsV1SourceFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_ohci.c")
+	drvUsbHsV1SourceFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_ehci.c")
 	drvUsbHsV1SourceFile.setOutputName("drv_usb_uhp.c")
 	drvUsbHsV1SourceFile.setDestPath(usbDriverProjectPath + "uhp/src")
 	drvUsbHsV1SourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src/")
 	drvUsbHsV1SourceFile.setType("SOURCE")
 	drvUsbHsV1SourceFile.setOverwrite(True)
 	
-#	drvUsbHsV1HostSourceFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_SOURCE_FILE_EHCI", None)
-#	drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_ehci_host.c")
-#	drvUsbHsV1HostSourceFile.setOutputName("drv_usb_uhp_ehci_host.c")
-#	drvUsbHsV1HostSourceFile.setDestPath(usbDriverProjectPath + "uhp/src")
-#	drvUsbHsV1HostSourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src/")
-#	drvUsbHsV1HostSourceFile.setType("SOURCE")
-#	drvUsbHsV1HostSourceFile.setOverwrite(True)
-#	drvUsbHsV1HostSourceFile.setEnabled(True)
+	drvUsbHsV1HostSourceFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_SOURCE_FILE_EHCI", None)
+	drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_ehci_host.c")
+	drvUsbHsV1HostSourceFile.setOutputName("drv_usb_uhp_ehci_host.c")
+	drvUsbHsV1HostSourceFile.setDestPath(usbDriverProjectPath + "uhp/src")
+	drvUsbHsV1HostSourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src/")
+	drvUsbHsV1HostSourceFile.setType("SOURCE")
+	drvUsbHsV1HostSourceFile.setOverwrite(True)
+	drvUsbHsV1HostSourceFile.setEnabled(True)
 	
 	drvUsbHsV1HostSourceFileOhci = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_SOURCE_FILE_OHCI", None)
 	drvUsbHsV1HostSourceFileOhci.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_ohci_host.c")

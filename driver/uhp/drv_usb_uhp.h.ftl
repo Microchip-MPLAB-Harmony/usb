@@ -66,6 +66,7 @@
 #include "system/system_module.h"
 #include "usb/usb_hub.h"
 #include "driver/usb/uhp/src/drv_usb_uhp_ohci_registers.h"
+#include "driver/usb/uhp/src/drv_usb_uhp_variant_mapping.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -314,9 +315,10 @@ typedef void(* DRV_USB_UHP_ROOT_HUB_PORT_INDICATION)
 
 typedef struct
 {    
-    /* Identifies the USB peripheral to be used. This should be the USB PLIB
-       module instance identifier. */
+    /* Identifies the USB peripheral to be used. */   
+<#if core.DeviceFamily == "SAMA5D2" || core.DeviceFamily == "SAM9X60">
     uhphs_registers_t * usbIDEHCI;
+</#if>
     UhpOhci * usbIDOHCI;
 
     /* Specify the interrupt source for the USB module. This should be the 
@@ -949,6 +951,7 @@ void DRV_USB_UHP_DEVICE_RemoteWakeupStart(DRV_HANDLE handle);
 
 void DRV_USB_UHP_DEVICE_RemoteWakeupStop(DRV_HANDLE handle);
 
+<#if core.DeviceFamily == "SAMA5D2" || core.DeviceFamily == "SAM9X60">
 // ****************************************************************************
 /* Function:
     USB_ERROR DRV_USB_UHP_DEVICE_TestModeEnter
@@ -1058,6 +1061,7 @@ USB_ERROR DRV_USB_UHP_DEVICE_TestModeExit
     DRV_HANDLE handle, 
     USB_TEST_MODE_SELECTORS testMode
 );
+</#if>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -1276,13 +1280,13 @@ void DRV_USB_UHP_HOST_PipeClose
   Remarks:
     An IRP can also be submitted in an IRP callback function.                                                                  
 */
-
+<#if core.DeviceFamily == "SAMA5D2" || core.DeviceFamily == "SAM9X60">
 USB_ERROR DRV_USB_UHP_HOST_IRPSubmitEhci
 (
     DRV_USB_UHP_HOST_PIPE_HANDLE  hPipe,
     USB_HOST_IRP * pinputIRP
 );
-
+</#if>
 USB_ERROR DRV_USB_UHP_HOST_IRPSubmitOhci
 (
     DRV_USB_UHP_HOST_PIPE_HANDLE  hPipe,
@@ -1611,7 +1615,9 @@ USB_ERROR DRV_USB_UHP_HOST_ROOT_HUB_PortSuspend(DRV_HANDLE handle, uint8_t port)
     * USB_SPEED_ERROR - This value is returned  if the driver handle is not
       or if the speed information is not available or if the specified port is
       not valid.
+<#if core.DeviceFamily == "SAMA5D2" || core.DeviceFamily == "SAM9X60">
     * USB_SPEED_HIGH - A High Speed device has been connected to the port.
+</#if>
     * USB_SPEED_FULL - A Full Speed device has been connected to the port.
     * USB_SPEED_LOW - A Low Speed device has been connected to the port.
 	
@@ -1653,8 +1659,10 @@ USB_SPEED DRV_USB_UHP_HOST_ROOT_HUB_PortSpeedGet(DRV_HANDLE handle, uint8_t port
     handle - Handle to the driver (returned from DRV_USB_UHP_Open function).
 
   Returns:
+<#if core.DeviceFamily == "SAMA5D2" || core.DeviceFamily == "SAM9X60">
     * USB_SPEED_HIGH - The Root hub is connected to a bus that is operating at
       High Speed.
+</#if>
     * USB_SPEED_FULL - The Root hub is connected to a bus that is operating at
       Full Speed.
 	
@@ -1808,7 +1816,9 @@ uint8_t DRV_USB_UHP_HOST_ROOT_HUB_PortNumbersGet(DRV_HANDLE handle);
     None.
 */
 
+<#if core.DeviceFamily == "SAMA5D2" || core.DeviceFamily == "SAM9X60">
 void DRV_USB_UHP_HOST_ROOT_HUB_OperationEnableEhci(DRV_HANDLE handle, bool enable);
+</#if>
 void DRV_USB_UHP_HOST_ROOT_HUB_OperationEnableOhci(DRV_HANDLE handle, bool enable);
 
 // ****************************************************************************

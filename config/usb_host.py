@@ -78,11 +78,16 @@ def instantiateComponent(usbHostComponent):
 		driverInterface = "DRV_USBFSV1_HOST_INTERFACE"
 		args = {"operationMode":"Host"}
 		Database.sendMessage("drv_usbfs_v1", "UPDATE_OPERATION_MODE", args)
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAM9X60"]):
-		res = Database.activateComponents(["drv_usbhs_v1"])
-		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAM9X60", "SAMG55"]):
+		res = Database.activateComponents(["drv_uhphs"])
+		speed = Database.getSymbolValue("drv_uhphs", "USB_SPEED")
 		driverIndex = "DRV_USB_UHP_INDEX_0"
 		driverInterface = "DRV_USB_UHP_HOST_INTERFACE"
+#	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMG55"]):
+#		res = Database.activateComponents(["drv_uhp"])
+#		speed = Database.getSymbolValue("drv_uhp", "USB_SPEED")
+#		driverIndex = "DRV_USB_UHP_INDEX_0"
+#		driverInterface = "DRV_USB_UHP_HOST_INTERFACE"
 	
 	
 	# USB Driver Index - This symbol actually should get set from a Driver dependency connected callback. 

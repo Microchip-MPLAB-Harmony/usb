@@ -5,7 +5,7 @@
     Microchip Technology Inc.
 
   File Name:
-    drv_usb_uhp_ehci_host.h
+    drv_usb_uhp_ohci_host.h
 
   Summary:
     USB driver OHCI declarations and definitions
