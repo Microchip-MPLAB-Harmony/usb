@@ -131,12 +131,11 @@
             <path>\initialization.c</path>
             <path>\interrupts.c</path>
             <path>\exceptions.c</path>
-            <path>\stdio\xc32_monitor.c</path>
+            <path>\stdio\iar_monitor.c</path>
             <path>\peripheral\port\plib_port.c</path>
             <path>\peripheral\clock\plib_clock.c</path>
             <path>\peripheral\nvic\plib_nvic.c</path>
-            <path>\startup_xc32.c</path>
-            <path>\libc_syscalls.c</path>
+            <path>\startup_iar.c</path>
             <path>\peripheral\tc\plib_tc3.c</path>
             <path>\system\time\src\sys_time.c</path>
             <path>\usb_host_init_data.c</path>
