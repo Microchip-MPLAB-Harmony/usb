@@ -89,7 +89,12 @@ const USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[${CONFIG_USB_
 /*******************************************
  *  USB Device Descriptor 
  *******************************************/
+
+<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+USB_DEVICE_DESCRIPTOR USB_ALIGN deviceDescriptor =
+<#else>
 const USB_DEVICE_DESCRIPTOR deviceDescriptor =
+</#if>
 {
     0x12,                                                   // Size of this descriptor in bytes
     USB_DESCRIPTOR_DEVICE,                                  // DEVICE descriptor type
@@ -178,7 +183,11 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE highSpeedConfigDescSet[1] =
 /*******************************************
  *  USB Full Speed Configuration Descriptor
  *******************************************/
+<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+uint8_t USB_ALIGN fullSpeedConfigurationDescriptor[]=
+<#else>
 const uint8_t fullSpeedConfigurationDescriptor[]=
+</#if>
 {
 	/* Configuration Descriptor */
 
@@ -212,7 +221,11 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
  *  Language code string descriptor
  *******************************************/
  <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
-    const struct __attribute__ ((packed))
+    <#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+	struct __attribute__ ((packed)) USB_ALIGN
+	<#else>
+	const struct __attribute__ ((packed))
+	</#if>
     {
         uint8_t stringIndex;                                //Index of the string descriptor
         uint16_t languageID ;                               // Language ID of this string.
@@ -229,7 +242,11 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
         {0x0409}                                            // Language ID
     };  
 <#else>
+	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+	struct USB_ALIGN
+	<#else>
     const struct
+	</#if>
     {
         uint8_t bLength;
         uint8_t bDscType;
@@ -246,7 +263,11 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
  *  Manufacturer string descriptor
  *******************************************/
  <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
+	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+	struct __attribute__ ((packed)) USB_ALIGN
+	<#else>
     const struct __attribute__ ((packed))
+	</#if>
     {
         uint8_t stringIndex;                                //Index of the string descriptor
         uint16_t languageID ;                               // Language ID of this string.
@@ -265,7 +286,11 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
 		</#if>
     };
 <#else>
+	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+	struct USB_ALIGN
+	<#else>
     const struct
+	</#if>
     {
         uint8_t bLength;                                    // Size of this descriptor in bytes
         uint8_t bDscType;                                   // STRING descriptor type
@@ -286,7 +311,11 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
  *  Product string descriptor
  *******************************************/
 <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
-    const struct __attribute__ ((packed))
+	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+	struct __attribute__ ((packed)) USB_ALIGN
+	<#else>
+	const struct __attribute__ ((packed))
+	</#if>
     {
         uint8_t stringIndex;                                //Index of the string descriptor
         uint16_t languageID ;                               // Language ID of this string.
@@ -305,7 +334,11 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
 		</#if>
     }; 
 <#else>
-    const struct
+	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+    struct USB_ALIGN
+	<#else>
+	const struct
+	</#if>
     {
         uint8_t bLength;                                    // Size of this descriptor in bytes
         uint8_t bDscType;                                   // STRING descriptor type
@@ -331,7 +364,11 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
  * through "F".
  ******************************************************************************/
  <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
-const struct __attribute__ ((packed))
+	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+	struct __attribute__ ((packed)) USB_ALIGN
+	<#else>
+	const struct __attribute__ ((packed))
+	</#if>
     {
         uint8_t stringIndex;                                //Index of the string descriptor
         uint16_t languageID ;                               // Language ID of this string.
@@ -348,7 +385,11 @@ const struct __attribute__ ((packed))
 		{'1','2','3','4','5','6','7','8','9','9','9','9'}
     };
 <#else>
+<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+ struct USB_ALIGN
+<#else>
 const struct
+</#if>
 {
     uint8_t bLength;
     uint8_t bDscType;
@@ -398,7 +439,12 @@ USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[3]=
 /*******************************************
  * USB Device Layer Master Descriptor Table 
  *******************************************/
+ 
+<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+USB_DEVICE_MASTER_DESCRIPTOR USB_ALIGN usbMasterDescriptor =
+<#else>
 const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =
+</#if>
 {
     &deviceDescriptor,                                      // Full speed descriptor
     1,                                                      // Total number of full speed configurations available
@@ -432,6 +478,7 @@ const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =
  * USB Device Layer Initialization Data
  ****************************************************/
 <#-- Instance 0 -->
+
 const USB_DEVICE_INIT usbDevInitData =
 {
     /* Number of function drivers registered to this instance of the

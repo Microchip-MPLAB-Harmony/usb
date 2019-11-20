@@ -56,6 +56,13 @@ def instantiateComponent(usbHostComponent):
 		driverInterface = "DRV_USBHSV1_HOST_INTERFACE"
 		args = {"operationMode":"Host"}
 		Database.sendMessage("drv_usbhs_v1", "UPDATE_OPERATION_MODE", args)
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX" ,"PIC32MZ1025W"]):
+		res = Database.activateComponents(["drv_usbfs_v1"])
+		speed = Database.getSymbolValue("drv_usbfs_v1", "USB_SPEED")
+		driverIndex = "DRV_USBFS_INDEX_0"
+		driverInterface = "DRV_USBFS_HOST_INTERFACE"
+		args = {"operationMode":"Host"}
+		Database.sendMessage("drv_usbfs_v1", "UPDATE_OPERATION_MODE", args)
 	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
 		res = Database.activateComponents(["drv_usbhs_v1"])
 		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
@@ -63,13 +70,7 @@ def instantiateComponent(usbHostComponent):
 		driverInterface = "DRV_USBHS_HOST_INTERFACE"
 		args = {"operationMode":"Host"}
 		Database.sendMessage("drv_usbhs_v1", "UPDATE_OPERATION_MODE", args)
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX"]):
-		res = Database.activateComponents(["drv_usbfs_v1"])
-		speed = Database.getSymbolValue("drv_usbfs_v1", "USB_SPEED")
-		driverIndex = "DRV_USBFS_INDEX_0"
-		driverInterface = "DRV_USBFS_HOST_INTERFACE"
-		args = {"operationMode":"Host"}
-		Database.sendMessage("drv_usbfs_v1", "UPDATE_OPERATION_MODE", args)
+	
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMDA1", "SAMD5", "SAME5", "SAML21"]):
 		res = Database.activateComponents(["drv_usbfs_v1"])
 		speed = Database.getSymbolValue("drv_usbfs_v1", "USB_SPEED")
@@ -295,11 +296,16 @@ def instantiateComponent(usbHostComponent):
 	addFileName('usb_host.h', usbHostComponent, usbHostHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbHostSourceFile = usbHostComponent.createFileSymbol(None, None)
-	addFileName('usb_host.c', usbHostComponent, usbHostSourceFile, "middleware/src/", "/usb/src", True, None)
-
-	usbHostLocalHeaderFile = usbHostComponent.createFileSymbol(None, None)
-	addFileName('usb_host_local.h', usbHostComponent, usbHostLocalHeaderFile, "middleware/src/", "/usb/src", True, None)
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ1025W"]):
+		addFileName('usb_host.c', usbHostComponent, usbHostSourceFile, "templates/host/", "/usb/src", True, None)
+	else :
+		addFileName('usb_host.c', usbHostComponent, usbHostSourceFile, "middleware/src/", "/usb/src", True, None)
 	
+	usbHostLocalHeaderFile = usbHostComponent.createFileSymbol(None, None)
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ1025W"]):
+		addFileName('usb_host_local.h', usbHostComponent, usbHostLocalHeaderFile, "templates/host/", "/usb/src", True, None)
+	else :
+		addFileName('usb_host_local.h', usbHostComponent, usbHostLocalHeaderFile, "middleware/src/", "/usb/src", True, None)
 	usbCommonFile = usbHostComponent.createFileSymbol(None, None)
 	addFileName('usb_common.h', usbHostComponent, usbCommonFile, "middleware/", "/usb/", True, None)
 	

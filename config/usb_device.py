@@ -246,17 +246,20 @@ def instantiateComponent(usbDeviceComponent):
 		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
 		driverIndex = "DRV_USBHSV1_INDEX_0"
 		driverInterface = "DRV_USBHSV1_DEVICE_INTERFACE"
+		
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX" , "PIC32MZ1025W"]):
+		res = Database.activateComponents(["drv_usbfs_v1"])
+		speed = Database.getSymbolValue("drv_usbfs_v1", "USB_SPEED")
+		driverIndex = "DRV_USBFS_INDEX_0"
+		driverInterface = "DRV_USBFS_DEVICE_INTERFACE"
+		
 	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
 		res = Database.activateComponents(["drv_usbhs_v1"])
 		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
 		driverIndex = "DRV_USBHS_INDEX_0"
 		driverInterface = "DRV_USBHS_DEVICE_INTERFACE"
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX"]):
-		res = Database.activateComponents(["drv_usbfs_v1"])
-		speed = Database.getSymbolValue("drv_usbfs_v1", "USB_SPEED")
-		driverIndex = "DRV_USBFS_INDEX_0"
-		driverInterface = "DRV_USBFS_DEVICE_INTERFACE"
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21","SAMDA1", "SAMD5", "SAME5", "SAML21", "SAML22", "SAMD11"]):
+	
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMDA1","SAMD5", "SAME5", "SAML21", "SAML22", "SAMD11"]):
 		res = Database.activateComponents(["drv_usbfs_v1"])
 		speed = Database.getSymbolValue("drv_usbfs_v1", "USB_SPEED")
 		driverIndex = "DRV_USBFSV1_INDEX_0"
@@ -569,7 +572,10 @@ def instantiateComponent(usbDeviceComponent):
 	addFileName('usb_chapter_9.h', usbDeviceComponent, usbDeviceChapter9HeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbDeviceLocalHeaderFile = usbDeviceComponent.createFileSymbol(None, None)
-	addFileName('usb_device_local.h', usbDeviceComponent, usbDeviceLocalHeaderFile, "middleware/src/", "/usb/src", True, None)
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ1025W"]):
+		addFileName('usb_device_local.h', usbDeviceComponent, usbDeviceLocalHeaderFile, "templates/device/", "/usb/src", True, None)
+	else:	
+		addFileName('usb_device_local.h', usbDeviceComponent, usbDeviceLocalHeaderFile, "middleware/src/", "/usb/src", True, None)
 	
 	usbDeviceMappingHeaderFile = usbDeviceComponent.createFileSymbol(None, None)
 	addFileName('usb_device_mapping.h', usbDeviceComponent, usbDeviceMappingHeaderFile, "middleware/src/", "/usb/src", True, None)
@@ -578,8 +584,10 @@ def instantiateComponent(usbDeviceComponent):
 	addFileName('usb_device_function_driver.h', usbDeviceComponent, usbDeviceFunctionDriverHeaderFile, "middleware/src/", "/usb/src", True, None)
 
 	usbDeviceSourceFile = usbDeviceComponent.createFileSymbol(None, None)
-	addFileName('usb_device.c', usbDeviceComponent, usbDeviceSourceFile, "middleware/src/", "/usb/src", True, None)
-	
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ1025W"]):
+		addFileName('usb_device.c', usbDeviceComponent, usbDeviceSourceFile, "templates/device/", "/usb/src", True, None)
+	else:
+		addFileName('usb_device.c', usbDeviceComponent, usbDeviceSourceFile, "middleware/src/", "/usb/src", True, None)	
 	usbExternalDependenciesFile = usbDeviceComponent.createFileSymbol(None, None)
 	addFileName('usb_external_dependencies.h', usbDeviceComponent, usbExternalDependenciesFile, "middleware/src/", "/usb/src", True, None)
 	
