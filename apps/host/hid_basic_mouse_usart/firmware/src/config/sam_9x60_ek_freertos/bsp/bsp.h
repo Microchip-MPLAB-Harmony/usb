@@ -60,14 +60,14 @@
 // Section: BSP Macros
 // *****************************************************************************
 // *****************************************************************************
+/*** LED Macros for LED_BLUE ***/
+#define LED_BLUE_Toggle() (PIOB_REGS->PIO_ODSR ^= (1<<13))
+#define LED_BLUE_On() (PIOB_REGS->PIO_SODR = (1<<13))
+#define LED_BLUE_Off() (PIOB_REGS->PIO_CODR = (1<<13))
 /*** LED Macros for LED1 ***/
-#define LED1_Toggle() (PIOB_REGS->PIO_ODSR ^= (1<<13))
-#define LED1_On() (PIOB_REGS->PIO_SODR = (1<<13))
-#define LED1_Off() (PIOB_REGS->PIO_CODR = (1<<13))
-/*** LED Macros for LED_GREEN ***/
-#define LED_GREEN_Toggle() (PIOB_REGS->PIO_ODSR ^= (1<<12))
-#define LED_GREEN_On() (PIOB_REGS->PIO_SODR = (1<<12))
-#define LED_GREEN_Off() (PIOB_REGS->PIO_CODR = (1<<12))
+#define LED1_Toggle() (PIOB_REGS->PIO_ODSR ^= (1<<12))
+#define LED1_On() (PIOB_REGS->PIO_SODR = (1<<12))
+#define LED1_Off() (PIOB_REGS->PIO_CODR = (1<<12))
 /*** LED Macros for LED_RED ***/
 #define LED_RED_Toggle() (PIOB_REGS->PIO_ODSR ^= (1<<11))
 #define LED_RED_On() (PIOB_REGS->PIO_SODR = (1<<11))

@@ -819,71 +819,71 @@
             <User dnOrder="0" value="SWITCH_AL"/>
           </Values>
         </String>
-        <Boolean dnOrder="147" id="PIOA_CLOCK_ENABLE">
+        <String dnOrder="147" id="PIOA_INTERRUPT_MAP_TYPE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="RedirectedToNonSecure"/>
+          </Values>
+        </String>
+        <KeyValueSet dnOrder="148" id="PIOA_INTERRUPT_PRIORITY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="7"/>
+          </Values>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="149" id="PIOA_INTERRUPT_SRC_TYPE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0"/>
+          </Values>
+        </KeyValueSet>
+        <String dnOrder="150" id="PIOB_INTERRUPT_MAP_TYPE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="RedirectedToNonSecure"/>
+          </Values>
+        </String>
+        <KeyValueSet dnOrder="151" id="PIOB_INTERRUPT_PRIORITY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="7"/>
+          </Values>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="152" id="PIOB_INTERRUPT_SRC_TYPE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0"/>
+          </Values>
+        </KeyValueSet>
+        <String dnOrder="153" id="PIOC_INTERRUPT_MAP_TYPE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="RedirectedToNonSecure"/>
+          </Values>
+        </String>
+        <KeyValueSet dnOrder="154" id="PIOC_INTERRUPT_PRIORITY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="7"/>
+          </Values>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="155" id="PIOC_INTERRUPT_SRC_TYPE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0"/>
+          </Values>
+        </KeyValueSet>
+        <String dnOrder="156" id="PIOD_INTERRUPT_MAP_TYPE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="RedirectedToNonSecure"/>
+          </Values>
+        </String>
+        <KeyValueSet dnOrder="157" id="PIOD_INTERRUPT_PRIORITY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="7"/>
+          </Values>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="158" id="PIOD_INTERRUPT_SRC_TYPE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0"/>
+          </Values>
+        </KeyValueSet>
+        <Boolean dnOrder="159" id="PIO_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="148" id="PIOA_INTERRUPT_MAP_TYPE">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="RedirectedToNonSecure"/>
-          </Values>
-        </String>
-        <KeyValueSet dnOrder="149" id="PIOA_INTERRUPT_PRIORITY">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="7"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="150" id="PIOA_INTERRUPT_SRC_TYPE">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0"/>
-          </Values>
-        </KeyValueSet>
-        <String dnOrder="151" id="PIOB_INTERRUPT_MAP_TYPE">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="RedirectedToNonSecure"/>
-          </Values>
-        </String>
-        <KeyValueSet dnOrder="152" id="PIOB_INTERRUPT_PRIORITY">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="7"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="153" id="PIOB_INTERRUPT_SRC_TYPE">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0"/>
-          </Values>
-        </KeyValueSet>
-        <String dnOrder="154" id="PIOC_INTERRUPT_MAP_TYPE">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="RedirectedToNonSecure"/>
-          </Values>
-        </String>
-        <KeyValueSet dnOrder="155" id="PIOC_INTERRUPT_PRIORITY">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="7"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="156" id="PIOC_INTERRUPT_SRC_TYPE">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0"/>
-          </Values>
-        </KeyValueSet>
-        <String dnOrder="157" id="PIOD_INTERRUPT_MAP_TYPE">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="RedirectedToNonSecure"/>
-          </Values>
-        </String>
-        <KeyValueSet dnOrder="158" id="PIOD_INTERRUPT_PRIORITY">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="7"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="159" id="PIOD_INTERRUPT_SRC_TYPE">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0"/>
-          </Values>
-        </KeyValueSet>
         <Boolean dnOrder="160" id="PIT_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="pit" value="true"/>
@@ -1535,12 +1535,7 @@
           </Values>
         </Integer>
         <Boolean dnOrder="289" id="TC0_INTERRUPT_ENABLE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="readOnly">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-          <Values dnOrder="1">
+          <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
@@ -1665,12 +1660,7 @@
           </Values>
         </Integer>
         <Boolean dnOrder="314" id="UART1_INTERRUPT_ENABLE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="readOnly">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-          <Values dnOrder="1">
+          <Values dnOrder="0">
             <Dynamic dnOrder="0" id="uart1" value="false"/>
           </Values>
         </Boolean>
@@ -1760,12 +1750,7 @@
           </Values>
         </Integer>
         <Boolean dnOrder="332" id="UHPHS_INTERRUPT_ENABLE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="readOnly">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-          <Values dnOrder="1">
+          <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
@@ -1796,11 +1781,9 @@
           </Values>
         </Boolean>
         <Boolean dnOrder="338" id="WDT_INTERRUPT_ENABLE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="readOnly">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="false"/>
+          </Values>
         </Boolean>
         <String dnOrder="339" id="WDT_INTERRUPT_HANDLER">
           <Values dnOrder="0">
@@ -2391,7 +2374,12 @@
           </Values>
         </String>
         <KeyValueSet dnOrder="6" id="SYS_TIME_TC_CHANNEL">
-          <Values dnOrder="0">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
             <Dynamic dnOrder="0" id="tc0" value="0"/>
           </Values>
         </KeyValueSet>
@@ -2451,7 +2439,12 @@
           </Values>
         </Boolean>
         <Boolean dnOrder="18" id="TC0_IER_CPAS">
-          <Values dnOrder="0">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
             <Dynamic dnOrder="0" id="tc0" value="true"/>
           </Values>
         </Boolean>
@@ -2489,6 +2482,9 @@
             <Float dnOrder="0" id="max">
               <Value dnOrder="0">51746.594</Value>
             </Float>
+            <Boolean dnOrder="1" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
           </Attributes>
         </Float>
         <Boolean dnOrder="25" id="TC1_ENABLE">
@@ -2648,25 +2644,25 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="BSP_SAM_A5D2_Xplained_Ultra" x="480" y="20"/>
-        <ElementPosition dnOrder="1" id="FreeRTOS" x="670" y="100"/>
-        <ElementPosition dnOrder="2" id="HarmonyCore" x="21" y="66"/>
-        <ElementPosition dnOrder="3" id="cmsis" x="340" y="20"/>
+        <ElementPosition dnOrder="0" id="BSP_SAM_A5D2_Xplained_Ultra" x="21" y="48"/>
+        <ElementPosition dnOrder="1" id="FreeRTOS" x="23" y="77"/>
+        <ElementPosition dnOrder="2" id="HarmonyCore" x="23" y="149"/>
+        <ElementPosition dnOrder="3" id="cmsis" x="241" y="47"/>
         <ElementPosition dnOrder="4" id="core" x="242" y="21"/>
         <ElementPosition dnOrder="5" id="dfp" x="20" y="20"/>
-        <ElementPosition dnOrder="6" id="drv_usbhs_v1" x="31" y="295"/>
-        <ElementPosition dnOrder="7" id="pit" x="720" y="20"/>
-        <ElementPosition dnOrder="8" id="stdio" x="213" y="232"/>
-        <ElementPosition dnOrder="9" id="sys_fs" x="707" y="252"/>
-        <ElementPosition dnOrder="10" id="sys_time" x="508" y="117"/>
-        <ElementPosition dnOrder="11" id="tc0" x="325" y="85"/>
-        <ElementPosition dnOrder="12" id="uart1" x="28" y="177"/>
-        <ElementPosition dnOrder="13" id="usb_host" x="362" y="280"/>
-        <ElementPosition dnOrder="14" id="usb_host_msd" x="524" y="281"/>
+        <ElementPosition dnOrder="6" id="drv_usbhs_v1" x="31" y="402"/>
+        <ElementPosition dnOrder="7" id="pit" x="349" y="17"/>
+        <ElementPosition dnOrder="8" id="stdio" x="200" y="338"/>
+        <ElementPosition dnOrder="9" id="sys_fs" x="494" y="405"/>
+        <ElementPosition dnOrder="10" id="sys_time" x="191" y="204"/>
+        <ElementPosition dnOrder="11" id="tc0" x="24" y="249"/>
+        <ElementPosition dnOrder="12" id="uart1" x="27" y="326"/>
+        <ElementPosition dnOrder="13" id="usb_host" x="210" y="404"/>
+        <ElementPosition dnOrder="14" id="usb_host_msd" x="343" y="407"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>

@@ -55,9 +55,9 @@
 
 #ifndef SYS_DEBUG_ENABLE
 
-	#define SYS_DEBUG_PRINT(level, format, ...) 
-	#define SYS_DEBUG_MESSAGE(a,b, ...)     
-	#define SYS_DEBUG(a,b)
+    #define SYS_DEBUG_PRINT(level, format, ...)     printf(format, ##__VA_ARGS__)
+    #define SYS_DEBUG_MESSAGE(a,b, ...)         printf(b)
+    #define SYS_DEBUG(a,b)        printf(b)
 
 #endif 
 #endif 

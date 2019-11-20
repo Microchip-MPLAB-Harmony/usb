@@ -63,7 +63,7 @@ static void GCLK0_Initialize(void)
 {
     
     /* selection of the CPU clock Division */
-    MCLK_REGS->MCLK_CPUDIV = MCLK_CPUDIV_DIV(0x01);
+    MCLK_REGS->MCLK_CPUDIV = MCLK_CPUDIV_DIV(0x10);
 
     while((MCLK_REGS->MCLK_INTFLAG & MCLK_INTFLAG_CKRDY_Msk) != MCLK_INTFLAG_CKRDY_Msk)
     {

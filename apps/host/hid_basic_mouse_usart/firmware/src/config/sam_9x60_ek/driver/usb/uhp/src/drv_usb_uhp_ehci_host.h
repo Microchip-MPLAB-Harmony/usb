@@ -59,11 +59,12 @@
 // *****************************************************************************
 // *****************************************************************************
 
-extern void _DRV_USB_UHP_HOST_Tasks_ISR_EHCI(DRV_USB_UHP_OBJ *hDriver);
-
-extern void USB_UHP_ResetEnableEhci(DRV_USB_UHP_OBJ *hDriver);
-extern void _DRV_USB_UHP_HOST_EhciInit(DRV_USB_UHP_OBJ *drvObj);
-extern void _DRV_USB_UHP_HOST_DisableControlList_EHCI(DRV_USB_UHP_OBJ *hDriver);
-extern void ehci_received_size( uint32_t * BuffSize );
+extern void DRV_USB_UHP_EHCI_HOST_ResetOverlay(uint32_t PipeInUse);
+extern void DRV_USB_UHP_EHCI_HOST_ResetEnable(DRV_USB_UHP_OBJ *hDriver);
+extern void DRV_USB_UHP_EHCI_HOST_ReceivedSize( uint32_t * BuffSize );
+extern void DRV_USB_UHP_EHCI_HOST_Init(DRV_USB_UHP_OBJ *drvObj);
+extern void DRV_USB_UHP_EHCI_HOST_DisableAsynchronousList(DRV_USB_UHP_OBJ *hDriver);
+extern void DRV_USB_UHP_EHCI_HOST_ResetOverlay(uint32_t PipeInUse);
+extern void DRV_USB_UHP_EHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver);
 
 #endif  // _DRV_USB_UHP_EHCI_H

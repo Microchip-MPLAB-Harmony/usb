@@ -170,9 +170,8 @@
  * based on selected support.
  *********************************************/
 
-#define _DRV_USB_UHP_HOST_INIT(x, y)                      _DRV_USB_UHP_HOST_Initialize(x , y)
-
-#define _DRV_USB_UHP_HOST_RESET_STATE_MACHINE(x)          _DRV_USB_UHP_HOST_ResetStateMachine(x)
+#define _DRV_USB_UHP_HOST_INIT(x, y)                      DRV_USB_UHP_HostInitialize(x , y)
+#define _DRV_USB_UHP_HOST_RESET_STATE_MACHINE(x)          DRV_USB_UHP_ResetStateMachine(x)
 
 #define PMC_UCKR_UPLLEN()   \
     PMC_REGS->PMC_USB = 1; \
@@ -181,7 +180,6 @@
     MATRIX_REGS->CCFG_SYSIO &= ~(CCFG_SYSIO_SYSIO10_Msk   \
                                | CCFG_SYSIO_SYSIO11_Msk); \
     MATRIX_REGS->CCFG_USBMR &= ~CCFG_USBMR_USBMODE_Msk
-
 
 #define PMC_PCR_GCKCSS_UPLL_CLK  0
 #define IS_LOCKU_ENABLE()        1 //((PMC_REGS->PMC_PLL_ISR & PMC_PLL_ISR_LOCKU_Msk) == PMC_PLL_ISR_LOCKU_Msk)

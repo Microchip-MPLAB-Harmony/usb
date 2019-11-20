@@ -137,6 +137,7 @@ SYSTEM_OBJECTS sysObj;
 /******************************************************
  * USB Driver Initialization
  ******************************************************/
+
 void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
 {
 	/* Note: When operating in Host mode, the application can specify a Root 
@@ -278,6 +279,8 @@ void SYS_Initialize ( void* data )
 
 
     CORETIMER_Initialize();
+	UART2_Initialize();
+
 	BSP_Initialize();
 
 

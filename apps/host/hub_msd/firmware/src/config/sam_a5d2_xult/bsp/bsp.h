@@ -83,6 +83,10 @@
 #define LED_BLUE_Get() ((PIOB_REGS->PIO_PDSR >> 0) & 0x1)
 #define LED_BLUE_On() (PIOB_REGS->PIO_CODR = (1<<0))
 #define LED_BLUE_Off() (PIOB_REGS->PIO_SODR = (1<<0))
+/*** SWITCH Macros for PB_USER ***/
+#define PB_USER_Get() ((PIOB_REGS->PIO_PDSR >> 9) & 0x1)
+#define PB_USER_STATE_PRESSED 0
+#define PB_USER_STATE_RELEASED 1
 /*** VBUS Macros for VBUS_AH ***/
 #define VBUS_AH_PowerEnable() (PIOB_REGS->PIO_SODR = (1<<10))
 #define VBUS_AH_PowerDisable() (PIOB_REGS->PIO_CODR = (1<<10))

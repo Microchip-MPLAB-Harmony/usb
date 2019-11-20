@@ -125,7 +125,7 @@ static void CLK_USBClockInitialize ( void )
 
 
     /* Enable Full-Speed USB Clock Output */
-    PMC_REGS->PMC_SCER = PMC_SCER_UHP_Msk;
+    PMC_REGS->PMC_SCER = 0   | PMC_SCER_UHP_Msk;
 }
 
 

@@ -2,7 +2,7 @@
   USB Host Initialization File
 
   File Name:
-    usb_host_intit_data.c
+    usb_host_init_data.c
 
   Summary:
     This file contains source code necessary to initialize USB Host Stack.

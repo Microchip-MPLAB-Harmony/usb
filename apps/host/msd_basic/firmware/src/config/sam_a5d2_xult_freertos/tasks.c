@@ -63,7 +63,7 @@ void _DRV_USB_UHP_Tasks(  void *pvParameters  )
 {
     while(1)
     {
-				 /* USB HS Driver Task Routine */
+                 /* USB HS Driver Task Routine */
         DRV_USB_UHP_Tasks(sysObj.drvUSBObject);
         vTaskDelay(1 / portTICK_PERIOD_MS);
     }
@@ -135,7 +135,7 @@ void SYS_Tasks ( void )
     
 
     /* Maintain Middleware & Other Libraries */
-    	/* Create OS Thread for USB Driver Tasks. */
+        /* Create OS Thread for USB Driver Tasks. */
     xTaskCreate( _DRV_USB_UHP_Tasks,
         "DRV_USB_UHP_TASKS",
         1024,

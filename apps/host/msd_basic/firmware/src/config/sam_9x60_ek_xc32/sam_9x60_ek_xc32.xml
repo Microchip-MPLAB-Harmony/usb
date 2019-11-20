@@ -1499,11 +1499,6 @@
             <Dynamic dnOrder="0" id="sys_time" value="TC0"/>
           </Values>
         </String>
-        <String dnOrder="1" id="SYS_TIME_REMOTE_COMPONENT_ID">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="sys_time" value="tc0"/>
-          </Values>
-        </String>
       </Symbols>
       <Attachments dnOrder="1">
         <DirectDependency dnOrder="0" id="sys_time_TMR_dependency">
@@ -1621,7 +1616,12 @@
           </Values>
         </Boolean>
         <Boolean dnOrder="20" id="TC0_IER_CPAS">
-          <Values dnOrder="0">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
             <Dynamic dnOrder="0" id="tc0" value="true"/>
           </Values>
         </Boolean>
@@ -1655,7 +1655,12 @@
           </Values>
         </Long>
         <Float dnOrder="26" id="TC0_TIMER_PERIOD_MS">
-          <Values dnOrder="0">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">false</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
             <Dynamic dnOrder="0" id="tc0" value="0.0"/>
           </Values>
         </Float>

@@ -79,8 +79,8 @@ void BSP_Initialize(void )
 		VBUS_AH_PD15_PowerDisable(); 
 
     /* Switch off LEDs */
+		LED_BLUE_Off(); 
 		LED1_Off(); 
-		LED_GREEN_Off(); 
 		LED_RED_Off(); 
 
 

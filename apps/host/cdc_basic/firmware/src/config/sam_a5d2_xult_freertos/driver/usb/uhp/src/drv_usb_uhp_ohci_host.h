@@ -5,7 +5,7 @@
     Microchip Technology Inc.
 
   File Name:
-    drv_usb_uhp_ehci_host.h
+    drv_usb_uhp_ohci_host.h
 
   Summary:
     USB driver OHCI declarations and definitions
@@ -73,9 +73,10 @@ typedef enum
 // *****************************************************************************
 // *****************************************************************************
 
-extern void _DRV_USB_UHP_HOST_Tasks_ISR_OHCI(DRV_USB_UHP_OBJ *hDriver);
-extern void _DRV_USB_UHP_HOST_OhciInit(DRV_USB_UHP_OBJ *drvObj);
-extern void _DRV_USB_UHP_HOST_DisableControlList_OHCI(DRV_USB_UHP_OBJ *hDriver);
-extern void ohci_received_size( uint32_t * BuffSize );
+extern void DRV_USB_UHP_OHCI_HOST_ReceivedSize( uint32_t * BuffSize );
+extern void DRV_USB_UHP_OHCI_HOST_Init(DRV_USB_UHP_OBJ *drvObj);
+extern void DRV_USB_UHP_OHCI_HOST_DisableControlList(DRV_USB_UHP_OBJ *hDriver);
+extern void DRV_USB_UHP_OHCI_HOST_DisableBulkList(DRV_USB_UHP_OBJ *hDriver);
+extern void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver);
 
 #endif  /* _DRV_USB_UHP_OHCI_H */

@@ -77,13 +77,13 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     Application strings and buffers are be defined outside this structure.
 */
 
-APP_DATA appData;
+APP_DATA appData USB_ALIGN;
 
  bool gUSBFirstDeviceConnected = false;
  bool gUSBSecondDeviceConnected = false;
 
 /* This is the string that will written to the file */
- const uint8_t writeData[12]  __attribute__((aligned(16))) = "Hello World ";
+USB_ALIGN uint8_t writeData[12] = "Hello World ";
 
 // *****************************************************************************
 // *****************************************************************************
@@ -198,7 +198,7 @@ void APP_Tasks ( void )
         case APP_STATE_BUS_ENABLE:
                       
            /* Set the event handler and enable the bus */
-            SYS_FS_EventHandlerSet( APP_SYSFSEventHandler, (uintptr_t) NULL);
+            SYS_FS_EventHandlerSet((void *)APP_SYSFSEventHandler, (uintptr_t)NULL);
             USB_HOST_EventHandlerSet(APP_USBHostEventHandler, 0);
             USB_HOST_BusEnable(0);
             appData.state = APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE;

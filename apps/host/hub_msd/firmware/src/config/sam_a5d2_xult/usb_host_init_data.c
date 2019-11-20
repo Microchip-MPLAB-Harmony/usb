@@ -39,7 +39,7 @@
 #include "definitions.h" 
 
 
-const USB_HOST_TPL_ENTRY USBTPList[2] =     /* JCB Where to change ? */
+const USB_HOST_TPL_ENTRY USBTPList[2] = 
 {
 	TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL(0x08, 0x06, 0x50, NULL,  USB_HOST_MSD_INTERFACE) ,
 
@@ -59,7 +59,7 @@ const USB_HOST_HCD hcdTable =
 
 const USB_HOST_INIT usbHostInitData = 
 {
-    .nTPLEntries = 2 ,                      /* JCB Where to change ? */
+    .nTPLEntries = 2 ,
     .tplList = (USB_HOST_TPL_ENTRY *)USBTPList,
     .hostControllerDrivers = (USB_HOST_HCD *)&hcdTable    
 };

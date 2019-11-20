@@ -103,21 +103,19 @@ void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
 
 DRV_USB_UHP_INIT drvUSBInit =
 {
-	/* Interrupt Source for USB module */
+    /* Interrupt Source for USB module */
     .interruptSource = (INT_SOURCE)41,
-	
-	/* Enable High Speed Operation */
+    /* Enable High Speed Operation */
     .operationSpeed = USB_SPEED_HIGH,
-	
-	/* USB Host Power Enable. USB Driver uses this function to Enable the VBUS */ 
-    .portPowerEnable = DRV_USB_VBUSPowerEnable,
-	
-	/* Root hub available current in milliamperes */	
-    .rootHubAvailableCurrent = 500,
-	
-	/* USB base address */
+    /* USB base address */
     .usbIDEHCI = ((uhphs_registers_t*)UHPHS_EHCI_ADDR),
     .usbIDOHCI = ((UhpOhci*)UHPHS_OHCI_ADDR),
+    
+    /* USB Host Power Enable. USB Driver uses this function to Enable the VBUS */ 
+    .portPowerEnable = DRV_USB_VBUSPowerEnable,
+    
+    /* Root hub available current in milliamperes */    
+    .rootHubAvailableCurrent = 500
 };
 
 
@@ -131,12 +129,12 @@ DRV_USB_UHP_INIT drvUSBInit =
 
 const SYS_TIME_PLIB_INTERFACE sysTimePlibAPI = {
     .timerCallbackSet = (SYS_TIME_PLIB_CALLBACK_REGISTER)TC0_CH0_TimerCallbackRegister,
-    .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)TC0_CH0_TimerCounterGet,
-    .timerPeriodSet = (SYS_TIME_PLIB_PERIOD_SET)TC0_CH0_TimerPeriodSet,
-    .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)TC0_CH0_TimerFrequencyGet,
-    .timerCompareSet = (SYS_TIME_PLIB_COMPARE_SET)TC0_CH0_TimerCompareSet,
     .timerStart = (SYS_TIME_PLIB_START)TC0_CH0_TimerStart,
-    .timerStop = (SYS_TIME_PLIB_STOP)TC0_CH0_TimerStop 
+    .timerStop = (SYS_TIME_PLIB_STOP)TC0_CH0_TimerStop ,
+    .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)TC0_CH0_TimerFrequencyGet,
+    .timerPeriodSet = (SYS_TIME_PLIB_PERIOD_SET)TC0_CH0_TimerPeriodSet,
+    .timerCompareSet = (SYS_TIME_PLIB_COMPARE_SET)TC0_CH0_TimerCompareSet,
+    .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)TC0_CH0_TimerCounterGet,
 };
 
 const SYS_TIME_INIT sysTimeInitData =
@@ -165,6 +163,8 @@ void SYS_Initialize ( void* data )
     CLK_Initialize();
 	PIO_Initialize();
 
+
+
 	BSP_Initialize();
 	UART1_Initialize();
 
@@ -187,8 +187,8 @@ void SYS_Initialize ( void* data )
 
     sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);
 
-	/* Initialize USB Driver */ 
-    sysObj.drvUSBObject = DRV_USB_UHP_Initialize (DRV_USB_UHP_INDEX_0, (SYS_MODULE_INIT *) &drvUSBInit);	
+    /* Initialize USB Driver */ 
+    sysObj.drvUSBObject = DRV_USB_UHP_Initialize (DRV_USB_UHP_INDEX_0, (SYS_MODULE_INIT *) &drvUSBInit);
 
 	/* Initialize the USB Host layer */
     sysObj.usbHostObject0 = USB_HOST_Initialize (( SYS_MODULE_INIT *)& usbHostInitData );	

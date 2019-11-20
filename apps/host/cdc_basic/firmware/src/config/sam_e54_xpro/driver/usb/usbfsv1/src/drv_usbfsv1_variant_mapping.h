@@ -175,6 +175,19 @@
     #define min(x, y) ((x) > (y) ? (y) : (x))
     #if (defined __GNUC__) || (defined __CC_ARM)
         #define clz(u) __builtin_clz(u)
+    #else
+        static __INLINE uint32_t clz(uint32_t data)
+        {
+            uint32_t count = 0;
+            uint32_t mask = 0x80000000;
+
+            while((data & mask) == 0)
+            {
+                count += 1u;
+                mask = mask >> 1u;
+            }
+            return (count);
+        }
     #endif
 
 #elif (DRV_USBFSV1_HOST_SUPPORT == false)

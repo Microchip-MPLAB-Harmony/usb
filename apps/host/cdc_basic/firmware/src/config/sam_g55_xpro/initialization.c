@@ -166,6 +166,8 @@ void SYS_Initialize ( void* data )
 
     CLOCK_Initialize();
 
+
+
     FLEXCOM7_USART_Initialize();
 
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 

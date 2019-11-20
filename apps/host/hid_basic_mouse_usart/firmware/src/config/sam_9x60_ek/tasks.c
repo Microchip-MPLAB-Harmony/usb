@@ -77,7 +77,7 @@ void SYS_Tasks ( void )
     
 
     /* Maintain Middleware & Other Libraries */
-    	/* USB UHP Driver Task Routine */ 
+        /* USB UHP Driver Task Routine */ 
     DRV_USB_UHP_Tasks(sysObj.drvUSBObject);
 
 	/* USB Host Task Routine */ 

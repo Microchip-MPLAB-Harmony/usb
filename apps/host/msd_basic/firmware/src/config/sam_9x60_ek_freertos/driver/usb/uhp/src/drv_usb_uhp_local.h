@@ -63,6 +63,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
+
 /*********************************************
  * These IRP states are used internally by the
  * HCD to track completion of a host IRP. This
@@ -82,10 +83,8 @@ DRV_USB_UHP_HOST_IRP_STATE;
  ********************************************/
 typedef struct _USB_HOST_IRP_LOCAL
 {
-    /* Points to the 8 byte setup command
-     * packet in case this is a IRP is 
-     * scheduled on a CONTROL pipe. Should
-     * be NULL otherwise */
+    /* Points to the 8 byte setup command packet in case this is a IRP is
+     * scheduled on a CONTROL pipe. Should be NULL otherwise */
     void * setup;
 
     /* Pointer to data buffer */
@@ -103,10 +102,8 @@ typedef struct _USB_HOST_IRP_LOCAL
     /* User data */
     uint32_t userData;
 
-    /* Pointer to function to be called
-     * when IRP is terminated. Can be 
-     * NULL, in which case the function
-     * will not be called. */
+    /* Pointer to function to be called when IRP is terminated. Can be NULL, in
+     * which case the function will not be called. */
     void (*callback)(struct _USB_HOST_IRP * irp);
 
     /****************************************
@@ -114,12 +111,12 @@ typedef struct _USB_HOST_IRP_LOCAL
      * modified by client
      ****************************************/
     DRV_USB_UHP_HOST_IRP_STATE tempState;
+    uint32_t completedBytes;
     struct _USB_HOST_IRP_LOCAL * next;
     struct _USB_HOST_IRP_LOCAL * previous;
     DRV_USB_UHP_HOST_PIPE_HANDLE  pipe;
-    uint32_t completedBytes;
-}
-USB_HOST_IRP_LOCAL;
+
+} USB_HOST_IRP_LOCAL;
 
 /************************************************
  * This is the Host Pipe Object.
@@ -132,9 +129,7 @@ typedef struct _DRV_USB_UHP_HOST_PIPE_OBJ
     /* The device address */
     uint8_t deviceAddress;
 
-    /* Interval in case this
-     * is a Isochronous or
-     * an interrupt pipe */
+    /* Interval in case this is a Isochronous or an interrupt pipe */
     uint8_t bInterval;
 
     /* Client that owns this pipe */
@@ -149,13 +144,11 @@ typedef struct _DRV_USB_UHP_HOST_PIPE_OBJ
     /* The IRP queue on this pipe */
     USB_HOST_IRP_LOCAL * irpQueueHead;
 
-    /* The NAK counter for the IRP
-     * being served on the pipe */
-    
+    /* The NAK counter for the IRP being served on the pipe */
 //    uint32_t nakCounter;
 
     /* Pipe endpoint size*/
-    unsigned int endpointSize;
+    uint32_t endpointSize;
 
     /* The next and previous pipe */
     struct _DRV_USB_UHP_HOST_PIPE_OBJ * next;
@@ -186,6 +179,10 @@ DRV_USB_UHP_HOST_PIPE_OBJ;
 
 typedef struct _DRV_USB_UHP_HOST_TRANSFER_GROUP
 {
+    /* The first pipe in this transfer 
+     * group */
+    DRV_USB_UHP_HOST_PIPE_OBJ * pipe;
+
     /* The current pipe being serviced
      * in this transfer group */
     DRV_USB_UHP_HOST_PIPE_OBJ * currentPipe;
@@ -198,9 +195,6 @@ typedef struct _DRV_USB_UHP_HOST_TRANSFER_GROUP
      * transfer group */
     uint32_t nPipes;
 
-    /* Transfer management */
-    uint32_t int_on_async_advance;
-    
     /* Are the interrupt enable or not during transfer ? */
     uint32_t interruptWasEnabled;
 }
@@ -215,6 +209,7 @@ typedef struct
 {
     /* Indicates this endpoint is in use */
     bool inUse;
+    uint8_t intXfrQtdComplete;
     DRV_USB_UHP_HOST_PIPE_OBJ * pipe;
 
 }_DRV_USB_UHP_HOST_ENDPOINT;
@@ -273,7 +268,7 @@ typedef enum
     /* No Reset in progress */
     DRV_USB_UHP_HOST_RESET_STATE_NO_RESET = 0,
 
-    /* Start the reset signalling */
+    /* Start the reset signaling */
     DRV_USB_UHP_HOST_RESET_STATE_START,
     DRV_USB_UHP_HOST_RESET_STATE_START_DELAYED,
 
@@ -325,8 +320,6 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
 
     /* The USB peripheral associated with the object */
     volatile uhphs_registers_t * usbIDEHCI;
-
-    /* The USB peripheral associated with the object */
     volatile UhpOhci * usbIDOHCI;
 
     /* Interrupt source for USB module */
@@ -377,7 +370,7 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
     /* True if the Host Controller sets this bit to 1 on the completion of a USB transaction */
     volatile uint8_t intXfrQtdComplete;
     volatile uint8_t hostPipeInUse;
-    volatile uint8_t hostPipeInterrupt;
+    volatile uint8_t blockPipe;
     
     uint8_t staticDToggleIn;
     uint8_t staticDToggleOut;
@@ -407,7 +400,7 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
 
 // ****************************************************************************
 /* Function:
-    void DRV_USB_UHP_HOST_EndpointToggleClear
+    void DRV_USB_UHP_EndpointToggleClear
     (
         DRV_HANDLE client,
         USB_ENDPOINT endpointAndDirection
@@ -432,14 +425,14 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
     <code>
 
     // This code shows how the USB Host Layer calls the
-    // DRV_USB_UHP_HOST_EndpointToggleClear function. 
+    // DRV_USB_UHP_EndpointToggleClear function. 
     // The Endpoint number and Direction of the endpoint is required to clear 
     // the data toggle to the endpoint.
 
     DRV_HANDLE drvHandle;
     USB_ENDPOINT endpointAndDirection ;
 
-    DRV_USB_UHP_HOST_EndpointToggleClearOhci(client, endpointAndDirection);
+    DRV_USB_UHP_EndpointToggleClear(client, endpointAndDirection);
 
     </code>
 
@@ -447,15 +440,20 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
     None.
 */
 
-extern void DRV_USB_UHP_HOST_EndpointToggleClear
+extern void DRV_USB_UHP_EndpointToggleClear
 (
     DRV_HANDLE client,
     USB_ENDPOINT endpointAndDirection
 );
 
-extern void _DRV_USB_UHP_HOST_AttachDetachStateMachine (DRV_USB_UHP_OBJ * hDriver);
-extern void _DRV_USB_UHP_HOST_ResetStateMachine(DRV_USB_UHP_OBJ * hDriver);
-extern void _DRV_USB_UHP_HOST_Initialize(DRV_USB_UHP_OBJ * drvObj, SYS_MODULE_INDEX index);
-extern void _DRV_USB_UHP_HOST_Tasks_ISR(DRV_USB_UHP_OBJ * hDriver);
+extern void DRV_USB_UHP_AttachDetachStateMachine (DRV_USB_UHP_OBJ * hDriver);
+extern void DRV_USB_UHP_ResetStateMachine(DRV_USB_UHP_OBJ * hDriver);
+extern void DRV_USB_UHP_HostInitialize(DRV_USB_UHP_OBJ * drvObj, SYS_MODULE_INDEX index);
+extern void DRV_USB_UHP_TransferProcess(DRV_USB_UHP_OBJ *hDriver);
+extern USB_SPEED DRV_USB_UHP_DeviceCurrentSpeedGet(DRV_HANDLE client);
+
+
+extern uint8_t USBBufferAligned[USB_HOST_TRANSFERS_NUMBER*64]; /* 4K page aligned */
+extern uint8_t USBSetupAligned[8];
 
 #endif  // _DRV_USB_UHP_LOCAL_H

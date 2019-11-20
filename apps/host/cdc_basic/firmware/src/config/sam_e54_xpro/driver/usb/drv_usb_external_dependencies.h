@@ -48,7 +48,7 @@
 #include "definitions.h"
 #include "system/system_module.h"
 
-#if defined DRV_USBHS_INSTANCES_NUMBER
+#if (defined(DRV_USBHS_INSTANCES_NUMBER) || defined(DRV_USB_UHP_INSTANCES_NUMBER))
 #include "system/time/sys_time.h"
 #define SYS_TMR_HANDLE SYS_TIME_HANDLE
 #define SYS_TMR_HANDLE_INVALID SYS_TIME_HANDLE_INVALID
@@ -59,15 +59,15 @@
 #if  !defined(SYS_DEBUG_ENABLE) 
 
     #if  !defined(SYS_DEBUG_PRINT)
-        #define SYS_DEBUG_PRINT(level, format, ...) 
+        #define SYS_DEBUG_PRINT(level, format, ...)     printf(format, ##__VA_ARGS__)
     #endif
 
     #if  !defined(SYS_DEBUG_MESSAGE)
-        #define SYS_DEBUG_MESSAGE(a,b, ...)   
+        #define SYS_DEBUG_MESSAGE(a,b, ...)         printf(b)
     #endif
 
     #if  !defined(SYS_DEBUG)
-        #define SYS_DEBUG(a,b)
+        #define SYS_DEBUG(a,b)        printf(b)
     #endif 
 #endif 
 #endif /* End of #ifndef _DRV_USB_EXTERNAL_DEPENDENCIES_H */ 

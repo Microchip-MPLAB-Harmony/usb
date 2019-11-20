@@ -191,7 +191,7 @@ void SYS_Tasks ( void );
 typedef struct
 {
     SYS_MODULE_OBJ  sysTime;
-	SYS_MODULE_OBJ  drvUSBObject;
+    SYS_MODULE_OBJ  drvUSBObject;
 
 	SYS_MODULE_OBJ  usbHostObject0;
 

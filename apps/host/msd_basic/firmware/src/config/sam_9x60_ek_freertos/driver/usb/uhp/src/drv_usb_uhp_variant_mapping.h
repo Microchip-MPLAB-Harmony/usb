@@ -5,7 +5,7 @@
     Microchip Technology Inc.
 
   File Name:
-    drv_usb_uhp_ehci_variant_mapping.h
+    drv_usb_uhp_variant_mapping.h
 
   Summary:
     USB Driver Feature Variant Implementations
@@ -49,6 +49,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
+#include "configuration.h"
 #include "definitions.h"
 
 /**********************************************
@@ -58,7 +59,7 @@
 /* With v1.04 the USB Driver implementation has been been split such
  * multiple USB Driver can be included in the same application. But to
  * continue support for application developed before v1.04, we should
- * map the DRV_USB configuration macros to DRV_USBHS macros */
+ * map the DRV_USB configuration macros to DRV USB_UHP macros */
 
 #if (!defined(DRV_USB_UHP_INSTANCES_NUMBER))
 	#error "DRV_USB_UHP_INSTANCES_NUMBER must be defined"
@@ -169,11 +170,14 @@
  * based on selected support.
  *********************************************/
 
-#define _DRV_USB_UHP_HOST_INIT(x, y)                      _DRV_USB_UHP_HOST_Initialize(x , y)
-#define _DRV_USB_UHP_HOST_RESET_STATE_MACHINE(x)          _DRV_USB_UHP_HOST_ResetStateMachine(x)
+#define _DRV_USB_UHP_HOST_INIT(x, y)                      DRV_USB_UHP_HostInitialize(x , y)
+#define _DRV_USB_UHP_HOST_RESET_STATE_MACHINE(x)          DRV_USB_UHP_ResetStateMachine(x)
 
-#define PMC_UCKR_UPLLEN() 
+#define PMC_UCKR_UPLLEN()   \
+    PMC_REGS->PMC_PCR = PMC_PCR_PID(drvObj->interruptSource);\
+    PMC_REGS->PMC_PCR = PMC_PCR_PID(drvObj->interruptSource) | PMC_PCR_CMD_Msk | PMC_PCR_EN_Msk | PMC_PCR_GCKCSS_UPLL_CLK
 #define PMC_PCR_GCKCSS_UPLL_CLK  PMC_PCR_GCLKCSS(PMC_PCR_GCLKCSS_UPLL_Val) 
 #define IS_LOCKU_ENABLE()  ((PMC_REGS->PMC_PLL_ISR0 & PMC_PLL_ISR0_LOCKU_Msk) == PMC_PLL_ISR0_LOCKU_Msk)
+#define gDrvUSBUHPHostInterface gDrvUSBUHPHostInterfaceEhci
 
 #endif

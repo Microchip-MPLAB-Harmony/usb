@@ -56,16 +56,18 @@
 #include "driver/usb/uhp/drv_usb_uhp.h"
 #include "driver/usb/uhp/src/drv_usb_uhp_local.h"
 #include "drv_usb_uhp_ohci_host.h"
-extern __ALIGNED(4096) uint8_t USBBufferAligned[USB_HOST_TRANSFERS_NUMBER*64]; /* 4K page aligned, see Table 3-17. qTD Buffer Pointer(s) (DWords 3-7) */
+
+#define NOT_CACHED __attribute__((__section__(".region_nocache")))
+__ALIGNED(4096) NOT_CACHED uint8_t USBBufferAligned[USB_HOST_TRANSFERS_NUMBER*64]; /* 4K page aligned, see Table 3-17. qTD Buffer Pointer(s) (DWords 3-7) */
+__ALIGNED(4096) NOT_CACHED uint8_t USBSetupAligned[8];
 
 /************************************
  * Prototype
  ***********************************/
-void DRV_USB_UHP_HOST_StartOfFrameControl(DRV_HANDLE client, bool control);
-USB_SPEED DRV_USB_UHP_HOST_DeviceCurrentSpeedGet(DRV_HANDLE client);
-void DRV_USB_UHP_Deinitialize(const SYS_MODULE_INDEX object);
-bool DRV_USB_UHP_HOST_Resume(DRV_HANDLE handle);
-bool DRV_USB_UHP_HOST_Suspend(DRV_HANDLE handle);
+extern void UHP_Handler(void);
+void DRV_USB_UHP_StartOfFrameControl(DRV_HANDLE client, bool control);// remove warning was declared but never referenced
+bool DRV_USB_UHP_Resume(DRV_HANDLE handle);  // remove warning was declared but never referenced
+bool DRV_USB_UHP_Suspend(DRV_HANDLE handle); // remove warning was declared but never referenced
 
 /************************************
  * Driver instance object
@@ -78,6 +80,304 @@ DRV_USB_UHP_OBJ gDrvUSBObj[DRV_USB_UHP_INSTANCES_NUMBER];
 * all driver instances.
 *****************************************/
 DRV_USB_UHP_HOST_PIPE_OBJ gDrvUSBHostPipeObj[DRV_USB_UHP_PIPES_NUMBER];
+
+// ****************************************************************************
+// ****************************************************************************
+// Local Functions
+// ****************************************************************************
+// ****************************************************************************
+
+// *****************************************************************************
+/* Function:
+    static void DRV_USB_UHP_ControlTransferProcess
+    (
+        DRV_USB_UHP_OBJ * hDriver
+    )
+
+  Summary:
+    Control Transfer Process.
+    
+  Description:
+    This function is called every time there is an endpoint 0 interrupt.
+    This means that a stage of the current control IRP has been completed.
+    This function is called from an interrupt context
+
+  Remarks:
+   
+*/
+static void _DRV_USB_UHP_ControlTransferProcess(DRV_USB_UHP_OBJ *hDriver)
+{
+    USB_HOST_IRP_LOCAL * irp;
+    DRV_USB_UHP_HOST_PIPE_OBJ *pipe, *iterPipe;
+    DRV_USB_UHP_HOST_TRANSFER_GROUP *transferGroup;
+    bool endIRP = false;
+    bool foundIRP = false;
+    uint8_t *pResult;
+    uint32_t i;
+
+    transferGroup = &hDriver->controlTransferGroup;
+
+    /* First check if the IRP was aborted */
+    irp  = transferGroup->currentIRP;
+    pipe = transferGroup->currentPipe;
+
+    /* If current IRP is null, or current pipe is null then we have unknown
+     * failure. We just quit.  Nothing we can do.*/
+
+    if((irp != NULL) && (pipe != NULL) && (pipe != (DRV_USB_UHP_HOST_PIPE_OBJ *)DRV_USB_UHP_HOST_PIPE_HANDLE_INVALID))
+    {
+
+        /* We should check the current state of the IRP and then proceed accordingly */
+        /* If here means, we have a valid IRP and pipe.  Check the status register.
+         * The IRP could have been aborted. This would be known in the temp state.
+         */
+
+        if ( hDriver->hostEndpointTable[hDriver->hostPipeInUse].endpoint.intXfrQtdComplete == 0xFF )
+        {
+            /* This means the packet was stalled. */
+            endIRP = true;
+            irp->status = USB_HOST_IRP_STATUS_ERROR_STALL;
+            irp->tempState = DRV_USB_UHP_HOST_IRP_STATE_PROCESSING;
+            hDriver->hostEndpointTable[hDriver->hostPipeInUse].endpoint.intXfrQtdComplete = 0;
+            hDriver->controlTransferGroup.currentIRP = NULL;
+        }
+        else if (irp->tempState == DRV_USB_UHP_HOST_IRP_STATE_ABORTED)
+        {
+            /* This means the application has aborted this IRP. */
+            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rIRP state aborted");
+            endIRP = true;
+            irp->status = USB_HOST_IRP_STATUS_ABORTED;
+        }
+        else if (irp->tempState == DRV_USB_UHP_HOST_IRP_STATE_PROCESSING)
+        {
+            if (hDriver->hostEndpointTable[hDriver->hostPipeInUse].endpoint.intXfrQtdComplete == 1)
+            {
+                hDriver->hostEndpointTable[hDriver->hostPipeInUse].endpoint.intXfrQtdComplete = 0;
+                irp->status = USB_HOST_IRP_STATUS_COMPLETED;
+                endIRP = true;
+
+                DRV_USB_UHP_OHCI_HOST_DisableControlList(hDriver);
+            }
+        }
+
+        if(endIRP == true)
+        {
+            if( (irp->flags & 0x80) == 0x80 )
+            {
+                /* Device to Host: IN */
+                pResult = irp->data;
+                if (irp->completedBytes != 0)
+                {
+                    /* Check the real bytes received */
+                    DRV_USB_UHP_OHCI_HOST_ReceivedSize( &(irp->size) );
+                    for (i = 0; i < irp->size; i++)
+                    {
+                        *(uint8_t *)(pResult + i) = USBBufferAligned[i];
+                    }
+                }
+            }
+            /* This means this IRP needs to be terminated and new one started. */
+
+            if(irp->callback != NULL)
+            {
+                /* Invoke the call back*/
+                irp->callback((USB_HOST_IRP *)irp);
+            }
+
+            /* Expire the IRP */
+
+            pipe->irpQueueHead = irp->next;
+
+            /* Now we need to check if any more IRPs are in this group are pending.
+             * We start searching from the current pipe onwards. If we dont find
+             * another pipe with an IRP, we should land back on the current pipe and
+             * check if we have a IRP to process */
+
+            iterPipe = transferGroup->currentPipe->next;
+            for(i = 0; i < transferGroup->nPipes; i ++)
+            {
+                if(iterPipe == NULL)
+                {
+                    /* We have reached the end of the pipe group. Rewind the pipe
+                     * iterator to the start of the pipe group. */
+
+                    iterPipe = transferGroup->pipe;
+                }
+
+                /* This means that we have a valid pipe.  Now check if there is irp
+                 * to be processed. */
+
+                if(iterPipe->irpQueueHead != NULL)
+                {
+                    foundIRP = true;
+                    transferGroup->currentPipe = iterPipe;
+                    transferGroup->currentIRP  = iterPipe->irpQueueHead;
+                    break;
+                }
+
+                iterPipe = iterPipe->next;
+            }
+
+            if(foundIRP)
+            {
+                /* This means we have found another IRP to process. We must load the
+                 * endpoint. */
+                
+                irp = transferGroup->currentIRP;
+                pipe = transferGroup->currentPipe;
+                irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
+                irp->tempState = DRV_USB_UHP_HOST_IRP_STATE_PROCESSING;
+            }
+            else
+            {
+                /* This means we dont have an IRP. Set the current IRP and current
+                 * pipe to NULL to indicate that we dont have any active IRP */
+
+                transferGroup->currentPipe = NULL;
+                transferGroup->currentIRP  = NULL;
+            }
+        }
+    }
+    else
+    {
+        /* This means the pipe was closed. We don't do anything */
+        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\033[31m\n\rError ControlTransferProcess: %d \033[0m", (int)hDriver->hostPipeInUse);
+    }
+}/* end of _DRV_USB_UHP_ControlTransferProcess() */
+
+
+// *****************************************************************************
+/* Function:
+    void _DRV_USB_UHP_NonControlTransferProcess
+    (
+        DRV_USB_UHP_OBJ * hDriver
+        uint8_t hostPipe
+   )
+
+  Summary:
+    Non Control Transfer Process.
+	
+  Description:
+    This function processes non-zero endpoint transfers which
+    could be any of bulk, interrupt and isochronous transfers
+
+  Remarks:
+*/
+static void _DRV_USB_UHP_NonControlTransferProcess
+(
+    DRV_USB_UHP_OBJ * hDriver,
+    uint8_t hostPipe
+)
+{
+    /* This function processes non-zero endpoint transfers which
+     * could be any of bulk, interrupt and isochronous transfers */
+
+    DRV_USB_UHP_HOST_ENDPOINT_OBJ * endpointTable;
+    DRV_USB_UHP_HOST_PIPE_OBJ * pipe;
+    USB_HOST_IRP_LOCAL * irp;
+    bool endIRP = false;
+    bool endIRPOut = false;
+
+    endpointTable = &(hDriver->hostEndpointTable[hostPipe]);
+    pipe = endpointTable->endpoint.pipe; 
+
+    if((endpointTable->endpoint.inUse == false)
+    || (pipe == NULL)
+    || (pipe == (DRV_USB_UHP_HOST_PIPE_OBJ *)DRV_USB_UHP_HOST_PIPE_HANDLE_INVALID)
+    || (pipe->irpQueueHead == NULL))
+    {
+        /* This means the pipe was closed. We don't do anything */
+        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\033[31m\n\rError NonControlTransferProcess: %d \033[0m", (int)hDriver->hostPipeInUse);
+    }
+    else
+    {
+        irp = pipe->irpQueueHead;
+       
+        /* We should check the current state of the IRP and then proceed accordingly */
+        if ( hDriver->hostEndpointTable[hDriver->hostPipeInUse].endpoint.intXfrQtdComplete == 0xFF )
+        {
+            /* This means the packet was stalled */
+            endIRP = true;
+            irp->status = USB_HOST_IRP_STATUS_ERROR_STALL;
+
+            irp->tempState = DRV_USB_UHP_HOST_IRP_STATE_PROCESSING;
+            hDriver->hostEndpointTable[hDriver->hostPipeInUse].endpoint.intXfrQtdComplete = 0;
+            hDriver->controlTransferGroup.currentIRP = NULL;
+        }
+        else if ( irp->tempState == DRV_USB_UHP_HOST_IRP_STATE_ABORTED )
+        {
+            /* This means the application has aborted this IRP.*/
+            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rIRP state aborted");
+            endIRP = true;
+            irp->status = USB_HOST_IRP_STATUS_ABORTED;
+        }
+        else if ( irp->tempState == DRV_USB_UHP_HOST_IRP_STATE_PROCESSING )
+        {
+            if (hDriver->hostEndpointTable[hDriver->hostPipeInUse].endpoint.intXfrQtdComplete == 1)
+            {
+                hDriver->hostEndpointTable[hDriver->hostPipeInUse].endpoint.intXfrQtdComplete = 0;
+
+                if(irp->completedBytes >= irp->size)
+                {
+                    endIRP = true;
+                    endIRPOut = true;
+                    irp->status = USB_HOST_IRP_STATUS_COMPLETED;
+                }
+                else
+                {
+                    /* This means we have more data to send */
+                    endIRP = false;
+                }
+
+                DRV_USB_UHP_OHCI_HOST_DisableBulkList(hDriver);
+            }
+        }
+
+        if(endIRP)
+        {
+            DCACHE_INVALIDATE_BY_ADDR((uint32_t *)irp->data, irp->size);
+
+            /* Useful for debug:
+             * for( uint8_t i=0; i<irp->size; i++)
+             * {
+             *    printf("d=0x%X ", *(unsigned int*)((int)(irp->data)+(int)i));
+             * }
+             */
+
+            /* This means we need to end the IRP */
+            pipe->irpQueueHead = irp->next;
+            if (irp->callback != NULL)
+            {
+                /* Invoke the call back*/
+                irp->callback((USB_HOST_IRP *)(uint32_t)irp);
+            }
+            irp = pipe->irpQueueHead;
+            if((irp != NULL) && (!(irp->status == USB_HOST_IRP_STATUS_IN_PROGRESS)) && (endIRPOut != false) )
+            {
+                /* We do have another IRP to process. */
+                irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
+            }
+
+            /* A IRP could have been submitted in the callback. If that is the
+             * case and the IRP status would indicate that it already in
+             * progress. If the IRP in the queue head is not in progress then we
+             * should initiate the transaction */
+
+            if((irp != NULL) && (!(irp->status == USB_HOST_IRP_STATUS_IN_PROGRESS)) && (endIRPOut == false) )
+            {
+                irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;  
+            }
+        }
+    }
+}/* end of _DRV_USB_UHP_NonControlTransferProcess() */
+
+
+
+// ****************************************************************************
+// ****************************************************************************
+// External Functions
+// ****************************************************************************
+// ****************************************************************************
 
 // *****************************************************************************
 /* Function:
@@ -167,7 +467,7 @@ SYS_MODULE_OBJ DRV_USB_UHP_Initialize
 
 // *****************************************************************************
 /* Function:
-    void _DRV_USB_UHP_HOST_Initialize
+    void DRV_USB_UHP_HostInitialize
     (
         DRV_USB_UHP_OBJ * const pUSBDrvObj,
         const SYS_MODULE_INDEX index
@@ -188,7 +488,7 @@ SYS_MODULE_OBJ DRV_USB_UHP_Initialize
     This is a local function and should not be called directly by the
     application.
 */
-void _DRV_USB_UHP_HOST_Initialize
+void DRV_USB_UHP_HostInitialize
 (
     DRV_USB_UHP_OBJ * drvObj,
     SYS_MODULE_INDEX  index
@@ -198,22 +498,21 @@ void _DRV_USB_UHP_HOST_Initialize
     drvObj->deviceAttached = false;
     /* Initialize the device handle */
     drvObj->attachedDeviceObjHandle = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
-    drvObj->intXfrQtdComplete = 0;
     drvObj->blockPipe = 0;
     drvObj->staticDToggleIn = 0;
     drvObj->staticDToggleOut = 0;
     drvObj->portNumber = 0xFF;
 
-    _DRV_USB_UHP_HOST_OhciInit(drvObj);
+    DRV_USB_UHP_OHCI_HOST_Init(drvObj);
     /* Initialize the host specific members in the driver object */
     drvObj->isResetting = false;
     drvObj->usbHostDeviceInfo = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
     drvObj->operationEnabled = false;
-}/* end of _DRV_USB_UHP_HOST_Initialize() */
+}/* end of DRV_USB_UHP_HostInitialize() */
 
 
 /* Function:
-    void _DRV_USB_UHP_HOST_ResetStateMachine(DRV_USB_UHP_OBJ *hDriver)
+    void DRV_USB_UHP_ResetStateMachine(DRV_USB_UHP_OBJ *hDriver)
 
    Summary:
     Reset State Machine
@@ -224,7 +523,7 @@ void _DRV_USB_UHP_HOST_Initialize
    Remarks:
     Refer to .h for usage information.
  */
-void _DRV_USB_UHP_HOST_ResetStateMachine(DRV_USB_UHP_OBJ *hDriver)
+void DRV_USB_UHP_ResetStateMachine(DRV_USB_UHP_OBJ *hDriver)
 {
     volatile UhpOhci *usbIDOHCI = hDriver->usbIDOHCI;
 
@@ -293,11 +592,11 @@ void _DRV_USB_UHP_HOST_ResetStateMachine(DRV_USB_UHP_OBJ *hDriver)
         default:
             break;
     }
-}
+} /* End of DRV_USB_UHP_ResetStateMachine */
 
 
 /* Function:
-    void _DRV_USB_UHP_HOST_AttachDetachStateMachine(DRV_USB_UHP_OBJ *hDriver)
+    void DRV_USB_UHP_AttachDetachStateMachine(DRV_USB_UHP_OBJ *hDriver)
 
    Summary:
     Initiate the USB reset on the current port number
@@ -308,7 +607,7 @@ void _DRV_USB_UHP_HOST_ResetStateMachine(DRV_USB_UHP_OBJ *hDriver)
    Remarks:
     Refer to .h for usage information.
  */
-void _DRV_USB_UHP_HOST_AttachDetachStateMachine(DRV_USB_UHP_OBJ *hDriver)
+void DRV_USB_UHP_AttachDetachStateMachine(DRV_USB_UHP_OBJ *hDriver)
 {
     /* In the host mode, we perform attach de-bouncing */
     bool interruptWasEnabled;
@@ -383,17 +682,17 @@ void _DRV_USB_UHP_HOST_AttachDetachStateMachine(DRV_USB_UHP_OBJ *hDriver)
         default:
             break;
     }
-}
+} /* End of DRV_USB_UHP_AttachDetachStateMachine */
 
 // *****************************************************************************
 /* Function:
-    void UHPHS_Handler( void )
+    void UHP_Handler( void )
 
    Summary:
-    Dynamic implementation of UHPHS_Handler client interface function.
+    Dynamic implementation of UHP_Handler client interface function.
 
    Description:
-    This is the dynamic implementation of UHPHS_Handler client interface
+    This is the dynamic implementation of UHP_Handler client interface
     function.
 
    Remarks:
@@ -406,7 +705,7 @@ void UHP_Handler(void)
 
 // *****************************************************************************
 /* Function:
-    void DRV_USB_UHP_HOST_IRPCancel(USB_HOST_IRP * pinputIRP)
+    void DRV_USB_UHP_IRPCancel(USB_HOST_IRP * pinputIRP)
 
   Summary:
     Cancels the specified IRP.
@@ -419,7 +718,7 @@ void UHP_Handler(void)
   Remarks:
     See .h for usage information.
 */
-void DRV_USB_UHP_HOST_IRPCancel
+void DRV_USB_UHP_IRPCancel
 (
     USB_HOST_IRP * inputIRP
 )
@@ -574,7 +873,7 @@ void DRV_USB_UHP_Tasks(SYS_MODULE_OBJ object)
 
                 /* Host mode specific polled
                  * task routines can be called here */
-                _DRV_USB_UHP_HOST_AttachDetachStateMachine(hDriver);
+                DRV_USB_UHP_AttachDetachStateMachine(hDriver);
 
                 /* Polled mode driver tasks routines are really the same as the
                  * the ISR task routines called in the driver task routine */
@@ -582,7 +881,7 @@ void DRV_USB_UHP_Tasks(SYS_MODULE_OBJ object)
                 break;
 
             default:
-                SYS_DEBUG(SYS_ERROR_INFO, "\r\nDRV USB USB_UHP: Unsupported driver operation mode in DRV_USB_UHP_Tasks().");
+                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB USB_UHP: Unsupported driver operation mode in DRV_USB_UHP_Tasks().");
                 break;
         }
     }
@@ -590,7 +889,7 @@ void DRV_USB_UHP_Tasks(SYS_MODULE_OBJ object)
 
 // *****************************************************************************
 /* Function:
-     void DRV_USB_UHP_HOST_PipeClose(DRV_USB_UHP_HOST_PIPE_HANDLE pipeHandle)
+     void DRV_USB_UHP_PipeClose(DRV_USB_UHP_HOST_PIPE_HANDLE pipeHandle)
 
   Summary:
     Closes an open pipe.
@@ -604,7 +903,7 @@ void DRV_USB_UHP_Tasks(SYS_MODULE_OBJ object)
   Remarks:
     See .h for usage information.
 */
-void DRV_USB_UHP_HOST_PipeClose
+void DRV_USB_UHP_PipeClose
 (
     DRV_USB_UHP_HOST_PIPE_HANDLE pipeHandle
 )
@@ -704,7 +1003,7 @@ void DRV_USB_UHP_HOST_PipeClose
                 if(irp->status == USB_HOST_IRP_STATUS_IN_PROGRESS)
                 {
                     /* If the IRP is in progress, then we set the temp IRP state. This
-                     * will be caught in the DRV_USB_UHP_HOST_NonControlTransferProcess() and
+                     * will be caught in the _DRV_USB_UHP_NonControlTransferProcess() and
                      * _DRV_USB_UHP_HOST_ControlXferProcess() functions */
 
                     irp->status = USB_HOST_IRP_STATUS_ABORTED;
@@ -746,12 +1045,12 @@ void DRV_USB_UHP_HOST_PipeClose
             }
         }
     }
-}/* end of DRV_USB_UHP_HOST_PipeClose() */
+}/* end of DRV_USB_UHP_PipeClose() */
 
 
 // *****************************************************************************
 /* Function:
-    DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_HOST_PipeSetup
+    DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_PipeSetup
     (
         DRV_HANDLE handle,
         uint8_t deviceAddress,
@@ -776,7 +1075,7 @@ void DRV_USB_UHP_HOST_PipeClose
   Remarks:
     See drv_xxx.h for usage information.
 */
-DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_HOST_PipeSetup
+DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_PipeSetup
 (
     DRV_HANDLE        client,
     uint8_t           deviceAddress,
@@ -984,12 +1283,12 @@ DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_HOST_PipeSetup
     }
     
     return (pipeHandle);
-}/* end of DRV_USB_UHP_HOST_PipeSetup() */
+}/* end of DRV_USB_UHP_PipeSetup() */
 
 
 // *****************************************************************************
 /* Function:
-    void DRV_USB_UHP_HOST_StartOfFrameControl(DRV_HANDLE client, bool control)
+    void DRV_USB_UHP_StartOfFrameControl(DRV_HANDLE client, bool control)
 
   Summary:
     SOF
@@ -1000,16 +1299,16 @@ DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_HOST_PipeSetup
   Remarks:
     See drv_xxx.h for usage information.
 */
-void DRV_USB_UHP_HOST_StartOfFrameControl(DRV_HANDLE client, bool control)
+void DRV_USB_UHP_StartOfFrameControl(DRV_HANDLE client, bool control)
 {
     /* At the point this function does not do any thing.
      * The Start of frame signaling in this HCD is controlled
      * automatically by the module. */
-}/* end of DRV_USB_UHP_HOST_StartOfFrameControl() */
+}/* end of DRV_USB_UHP_StartOfFrameControl() */
 
 // *****************************************************************************
 /* Function:
-    USB_SPEED DRV_USB_UHP_HOST_DeviceCurrentSpeedGet(DRV_HANDLE client)
+    USB_SPEED DRV_USB_UHP_DeviceCurrentSpeedGet(DRV_HANDLE client)
 
   Summary:
     Current speed
@@ -1020,7 +1319,7 @@ void DRV_USB_UHP_HOST_StartOfFrameControl(DRV_HANDLE client, bool control)
   Remarks:
     See drv_xxx.h for usage information.
 */
-USB_SPEED DRV_USB_UHP_HOST_DeviceCurrentSpeedGet(DRV_HANDLE client)
+USB_SPEED DRV_USB_UHP_DeviceCurrentSpeedGet(DRV_HANDLE client)
 {
     /* This function returns the current device speed */
     DRV_USB_UHP_OBJ *hDriver;
@@ -1032,291 +1331,13 @@ USB_SPEED DRV_USB_UHP_HOST_DeviceCurrentSpeedGet(DRV_HANDLE client)
 
     hDriver = (DRV_USB_UHP_OBJ *)client;
     return(hDriver->deviceSpeed);
-}/* end of DRV_USB_UHP_HOST_DeviceCurrentSpeedGet() */
+}/* end of DRV_USB_UHP_DeviceCurrentSpeedGet() */
 
-
-// *****************************************************************************
-/* Function:
-    void DRV_USB_UHP_HOST_ControlTransferProcess
-    (
-        DRV_USB_UHP_OBJ * hDriver
-    )
-
-  Summary:
-    Control Transfer Process.
-    
-  Description:
-    This function is called every time there is an endpoint 0 interrupt.
-    This means that a stage of the current control IRP has been completed.
-    This function is called from an interrupt context
-
-  Remarks:
-   
-*/
-static void DRV_USB_UHP_HOST_ControlTransferProcess(DRV_USB_UHP_OBJ *hDriver)
-{
-    USB_HOST_IRP_LOCAL * irp;
-    DRV_USB_UHP_HOST_PIPE_OBJ *pipe, *iterPipe;
-    DRV_USB_UHP_HOST_TRANSFER_GROUP *transferGroup;
-    bool endIRP = false;
-    bool foundIRP = false;
-    uint8_t *pResult;
-    uint32_t i;
-
-    transferGroup = &hDriver->controlTransferGroup;
-
-    /* First check if the IRP was aborted */
-    irp  = transferGroup->currentIRP;
-    pipe = transferGroup->currentPipe;
-
-    /* If current IRP is null, or current pipe is null then we have unknown
-     * failure. We just quit.  Nothing we can do.*/
-
-    if((irp != NULL) && (pipe != NULL) && (pipe != (DRV_USB_UHP_HOST_PIPE_OBJ *)DRV_USB_UHP_HOST_PIPE_HANDLE_INVALID))
-    {
-
-        /* We should check the current state of the IRP and then proceed accordingly */
-        /* If here means, we have a valid IRP and pipe.  Check the status register.
-         * The IRP could have been aborted. This would be known in the temp state.
-         */
-
-        if ( hDriver->intXfrQtdComplete == 0xFF )
-        {
-            /* This means the packet was stalled. */
-            endIRP = true;
-            irp->status = USB_HOST_IRP_STATUS_ERROR_STALL;
-            irp->tempState = DRV_USB_UHP_HOST_IRP_STATE_PROCESSING;
-            hDriver->intXfrQtdComplete = 0;
-            hDriver->controlTransferGroup.currentIRP = NULL;
-        }
-        else if (irp->tempState == DRV_USB_UHP_HOST_IRP_STATE_ABORTED)
-        {
-            /* This means the application has aborted this IRP. */
-            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rIRP state aborted");
-            endIRP = true;
-            irp->status = USB_HOST_IRP_STATUS_ABORTED;
-        }
-        else if (irp->tempState == DRV_USB_UHP_HOST_IRP_STATE_PROCESSING)
-        {
-            if (hDriver->intXfrQtdComplete == 1)
-            {
-                hDriver->intXfrQtdComplete = 0;
-                irp->status = USB_HOST_IRP_STATUS_COMPLETED;
-                endIRP = true;
-
-                _DRV_USB_UHP_HOST_DisableControlList_OHCI(hDriver);
-            }
-        }
-
-        if(endIRP == true)
-        {
-            if( (irp->flags & 0x80) == 0x80 )
-            {
-                /* Device to Host: IN */
-                pResult = irp->data;
-                if (irp->completedBytes != 0)
-                {
-                    /* Check the real bytes received */
-                    ohci_received_size( &(irp->size) );
-                    for (i = 0; i < irp->size; i++)
-                    {
-                        *(uint8_t *)(pResult + i) = USBBufferAligned[i];
-                    }
-                }
-            }
-            /* This means this IRP needs to be terminated and new one started. */
-
-            if(irp->callback != NULL)
-            {
-                /* Invoke the call back*/
-               // irp->callback((USB_HOST_IRP *)(uint32_t)irp);
-                irp->callback((USB_HOST_IRP *)irp);
-            }
-
-            /* Expire the IRP */
-
-            pipe->irpQueueHead = irp->next;
-
-            /* Now we need to check if any more IRPs are in this group are pending.
-             * We start searching from the current pipe onwards. If we dont find
-             * another pipe with an IRP, we should land back on the current pipe and
-             * check if we have a IRP to process */
-
-            iterPipe = transferGroup->currentPipe->next;
-            for(i = 0; i < transferGroup->nPipes; i ++)
-            {
-                if(iterPipe == NULL)
-                {
-                    /* We have reached the end of the pipe group. Rewind the pipe
-                     * iterator to the start of the pipe group. */
-
-                    iterPipe = transferGroup->pipe;
-                }
-
-                /* This means that we have a valid pipe.  Now check if there is irp
-                 * to be processed. */
-
-                if(iterPipe->irpQueueHead != NULL)
-                {
-                    foundIRP = true;
-                    transferGroup->currentPipe = iterPipe;
-                    transferGroup->currentIRP  = iterPipe->irpQueueHead;
-                    break;
-                }
-
-                iterPipe = iterPipe->next;
-            }
-
-            if(foundIRP)
-            {
-                /* This means we have found another IRP to process. We must load the
-                 * endpoint. */
-                
-                irp = transferGroup->currentIRP;
-                pipe = transferGroup->currentPipe;
-                irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
-                irp->tempState = DRV_USB_UHP_HOST_IRP_STATE_PROCESSING;
-            }
-            else
-            {
-                /* This means we dont have an IRP. Set the current IRP and current
-                 * pipe to NULL to indicate that we dont have any active IRP */
-
-                transferGroup->currentPipe = NULL;
-                transferGroup->currentIRP  = NULL;
-            }
-        }
-    }
-    else
-    {
-        /* This means the pipe was closed. We don't do anything */
-        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\033[31m\n\rError ControlTransferProcess: %d \033[0m", (int)hDriver->hostPipeInUse);
-    }
-}/* end of DRV_USB_UHP_HOST_ControlTransferProcess() */
 
 
 // *****************************************************************************
 /* Function:
-    void DRV_USB_UHP_HOST_NonControlTransferProcess
-    (
-        DRV_USB_UHP_OBJ * hDriver
-        uint8_t hostPipe
-   )
-
-  Summary:
-    Non Control Transfer Process.
-	
-  Description:
-    This function processes non-zero endpoint transfers which
-    could be any of bulk, interrupt and isochronous transfers
-
-  Remarks:
-*/
-static void DRV_USB_UHP_HOST_NonControlTransferProcess
-(
-    DRV_USB_UHP_OBJ * hDriver,
-    uint8_t hostPipe
-)
-{
-    /* This function processes non-zero endpoint transfers which
-     * could be any of bulk, interrupt and isochronous transfers */
-
-    DRV_USB_UHP_HOST_ENDPOINT_OBJ * endpointTable;
-    DRV_USB_UHP_HOST_PIPE_OBJ * pipe;
-    USB_HOST_IRP_LOCAL * irp;
-    bool endIRP = false;
-    bool endIRPOut = false;
-
-    endpointTable = &(hDriver->hostEndpointTable[hostPipe]);
-    pipe = endpointTable->endpoint.pipe; 
-
-    if((endpointTable->endpoint.inUse == false)
-    || (pipe == NULL)
-    || (pipe == (DRV_USB_UHP_HOST_PIPE_OBJ *)DRV_USB_UHP_HOST_PIPE_HANDLE_INVALID)
-    || (pipe->irpQueueHead == NULL))
-    {
-        /* This means the pipe was closed. We don't do anything */
-        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\033[31m\n\rError NonControlTransferProcess: %d \033[0m", (int)hDriver->hostPipeInUse);
-    }
-    else
-    {
-        irp = pipe->irpQueueHead;
-       
-        /* We should check the current state of the IRP and then proceed accordingly */
-        if ( hDriver->intXfrQtdComplete == 0xFF )
-        {
-            /* This means the packet was stalled */
-            endIRP = true;
-            irp->status = USB_HOST_IRP_STATUS_ERROR_STALL;
-
-            irp->tempState = DRV_USB_UHP_HOST_IRP_STATE_PROCESSING;
-            hDriver->intXfrQtdComplete = 0;
-            hDriver->controlTransferGroup.currentIRP = NULL;
-        }
-        else if ( irp->tempState == DRV_USB_UHP_HOST_IRP_STATE_ABORTED )
-        {
-            /* This means the application has aborted this IRP.*/
-            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rIRP state aborted");
-            endIRP      = true;
-            irp->status = USB_HOST_IRP_STATUS_ABORTED;
-        }
-        else if ( irp->tempState == DRV_USB_UHP_HOST_IRP_STATE_PROCESSING )
-        {
-            if (hDriver->intXfrQtdComplete == 1)
-            {
-                hDriver->intXfrQtdComplete = 0;
-
-                if(irp->completedBytes >= irp->size)
-                {
-                    endIRP = true;
-                    endIRPOut = true;
-                    irp->status = USB_HOST_IRP_STATUS_COMPLETED;
-                }
-                else
-                {
-                    /* This means we have more data to send */
-                    endIRP = false;
-                }
-
-                _DRV_USB_UHP_HOST_DisableControlList_OHCI(hDriver);
-            }
-        }
-
-        if(endIRP)
-        {
-            DCACHE_INVALIDATE_BY_ADDR((uint32_t *)irp->data, irp->size);
-
-            /* This means we need to end the IRP */
-            pipe->irpQueueHead = irp->next;
-            if (irp->callback != NULL)
-            {
-                /* Invoke the call back*/
-                irp->callback((USB_HOST_IRP *)(uint32_t)irp);
-            }
-            irp = pipe->irpQueueHead;
-            if((irp != NULL) && (!(irp->status == USB_HOST_IRP_STATUS_IN_PROGRESS)) && (endIRPOut != false) )
-            {
-                /* We do have another IRP to process. */
-                irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
-            }
-
-            /* A IRP could have been submitted in the callback. If that is the
-             * case and the IRP status would indicate that it already in
-             * progress. If the IRP in the queue head is not in progress then we
-             * should initiate the transaction */
-
-            if((irp != NULL) && (!(irp->status == USB_HOST_IRP_STATUS_IN_PROGRESS)) && (endIRPOut == false) )
-            {
-                irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;  
-            }
-        }
-    }
-}/* end of DRV_USB_UHP_HOST_NonControlTransferProcess() */
-
-
-// *****************************************************************************
-/* Function:
-    void DRV_USB_UHP_HOST_TransferProcess(DRV_USB_UHP_OBJ *hDriver)
+    void DRV_USB_UHP_TransferProcess(DRV_USB_UHP_OBJ *hDriver)
 
    Summary:
     Dynamic implementation of USB HOST Transfer Process system interface function.
@@ -1328,7 +1349,7 @@ static void DRV_USB_UHP_HOST_NonControlTransferProcess
    Remarks:
     See drv_uhp.h for usage information.
  */
-static void DRV_USB_UHP_HOST_TransferProcess(DRV_USB_UHP_OBJ *hDriver)
+void DRV_USB_UHP_TransferProcess(DRV_USB_UHP_OBJ *hDriver)
 {
     /* This function is called every time there is an endpoint 0
      * interrupt. This means that a stage of the current control IRP has been
@@ -1336,18 +1357,18 @@ static void DRV_USB_UHP_HOST_TransferProcess(DRV_USB_UHP_OBJ *hDriver)
 
     if(hDriver->hostPipeInUse == 0)
     {
-        DRV_USB_UHP_HOST_ControlTransferProcess(hDriver);
+        _DRV_USB_UHP_ControlTransferProcess(hDriver);
     }       
     else
     {
-        DRV_USB_UHP_HOST_NonControlTransferProcess(hDriver, hDriver->hostPipeInUse);
+        _DRV_USB_UHP_NonControlTransferProcess(hDriver, hDriver->hostPipeInUse);
     }
 }
 
 
 /* **************************************************************************** */
 /* Function:
-    bool DRV_USB_UHP_HOST_EventDisable
+    bool DRV_USB_UHP_EventsDisable
     (
         DRV_HANDLE handle
     );
@@ -1363,7 +1384,7 @@ static void DRV_USB_UHP_HOST_TransferProcess(DRV_USB_UHP_OBJ *hDriver)
     Refer to .h for usage information.
  */
 
-bool DRV_USB_UHP_HOST_EventsDisable
+bool DRV_USB_UHP_EventsDisable
 (
     DRV_HANDLE handle
 )
@@ -1382,7 +1403,7 @@ bool DRV_USB_UHP_HOST_EventsDisable
 
 /* **************************************************************************** */
 /* Function:
-    void DRV_USB_UHP_HOST_EventsEnable
+    void DRV_USB_UHP_EventsEnable
     (
         DRV_HANDLE handle
         bool eventRestoreContext
@@ -1394,13 +1415,13 @@ bool DRV_USB_UHP_HOST_EventsDisable
    Description:
     This function will restore the enable disable state of the events.
     eventRestoreContext should be equal to the value returned by the
-    DRV_USB_UHP_HOST_EventsDisable() function.
+    DRV_USB_UHP_EventsDisable() function.
 
    Remarks:
     Refer to .h for usage information.
  */
 
-void DRV_USB_UHP_HOST_EventsEnable
+void DRV_USB_UHP_EventsEnable
 (
     DRV_HANDLE handle, 
     bool eventContext
@@ -1491,40 +1512,6 @@ void DRV_USB_UHP_Deinitialize
     }
 } /* end of DRV_USB_UHP_Deinitialize() */
 
-// *****************************************************************************
-// *****************************************************************************
-// Root Hub Driver Routines
-// *****************************************************************************
-// *****************************************************************************
-
-
-/* **************************************************************************** */
-/* Function:
-    bool DRV_USB_UHP_HOST_ROOT_HUB_OperationIsEnabled(DRV_HANDLE hClient)
-
-   Summary:
-    Root hub enable
-
-   Description:
-    return true if the HUB is operational and enabled.
-
-   Remarks:
-    Refer to .h for usage information.
- */
-bool DRV_USB_UHP_HOST_ROOT_HUB_OperationIsEnabled(DRV_HANDLE hClient)
-{
-    DRV_USB_UHP_OBJ *hDriver;
-
-    if ((hClient == DRV_HANDLE_INVALID) || (((DRV_USB_UHP_OBJ *)hClient) == NULL))
-    {
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Invalid client");
-    }
-
-    hDriver = (DRV_USB_UHP_OBJ *)hClient;
-    return(hDriver->operationEnabled);
-}/* end of DRV_USB_UHP_ROOT_HUB_OperationIsEnabled() */
-
-
 
 // *****************************************************************************
 /* Function:
@@ -1554,50 +1541,6 @@ SYS_STATUS DRV_USB_UHP_Status(SYS_MODULE_OBJ object)
     return(retVal);
 }/* end of DRV_USB_UHP_Status() */
 
-/* **************************************************************************** */
-/* Function:
-    void DRV_USB_UHP_HOST_ROOT_HUB_Initialize
-    (
-        DRV_HANDLE handle,
-        USB_HOST_DEVICE_OBJ_HANDLE usbHostDeviceInfo,
-    )
-
-   Summary:
-    This function instantiates the root hub driver.
-
-   Description:
-    This function initializes the root hub driver. It is called by the host
-    layer at the time of processing root hub devices. The host layer assigns a
-    USB_HOST_DEVICE_OBJ_HANDLE reference to this root hub driver. This
-    identifies the relationship between the root hub and the host layer.
-
-   Remarks:
-    None.
-*/
-
-void DRV_USB_UHP_HOST_ROOT_HUB_Initialize
-(
-    DRV_HANDLE handle,
-    USB_HOST_DEVICE_OBJ_HANDLE usbHostDeviceInfo
-)
-{
-    DRV_USB_UHP_OBJ *pUSBDrvObj = (DRV_USB_UHP_OBJ *)handle;
-
-    if(DRV_HANDLE_INVALID == handle)
-    {
-        /* Driver handle is not valid */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
-    }
-    else if(!(pUSBDrvObj->isOpened))
-    {
-        /* Driver has not been opened. Handle could be stale */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
-    }
-    else
-    {
-        pUSBDrvObj->usbHostDeviceInfo = usbHostDeviceInfo;
-    }
-}
 
 // *****************************************************************************
 /* Function:
@@ -1635,14 +1578,14 @@ DRV_HANDLE DRV_USB_UHP_Open
             if(ioIntent != (DRV_IO_INTENT_EXCLUSIVE|DRV_IO_INTENT_NONBLOCKING | DRV_IO_INTENT_READWRITE))
             {
                 /* The driver only supports this mode */
-                SYS_DEBUG(SYS_ERROR_DEBUG, "\r\nUSB USB_UHP Driver: Unsupported IO Intent in DRV_USB_USB_UHP_Open().");
+                SYS_DEBUG_MESSAGE(SYS_ERROR_DEBUG, "\r\nUSB USB_UHP Driver: Unsupported IO Intent in DRV_USB_USB_UHP_Open().");
             }
             else
             {
                 if(drvObj->isOpened)
                 {
                     /* Driver supports exclusive open only */
-                    SYS_DEBUG(SYS_ERROR_DEBUG, "\r\nUSB USB_UHP Driver: Driver can be opened only once. Multiple calls to DRV_USB_USB_UHP_Open().");
+                    SYS_DEBUG_MESSAGE(SYS_ERROR_DEBUG, "\r\nUSB USB_UHP Driver: Driver can be opened only once. Multiple calls to DRV_USB_USB_UHP_Open().");
                 }
                 else
                 {
@@ -1653,20 +1596,21 @@ DRV_HANDLE DRV_USB_UHP_Open
                      * the number of clients*/
                     drvObj->isOpened = true;
                     handle = ((DRV_HANDLE)drvObj);
-                    SYS_DEBUG(SYS_ERROR_INFO, "\r\nUSB USB_UHP Driver: Driver opened successfully in DRV_USB_UHP_Open().");
+                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USB_UHP Driver: Driver opened successfully in DRV_USB_UHP_Open().");
                 }
             }
         }
     }
     else
     {
-        SYS_DEBUG(SYS_ERROR_DEBUG, "\r\nUSB USB_UHP Driver: Bad Driver Index in DRV_USB_USB_UHP_Open().");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_DEBUG, "\r\nUSB USB_UHP Driver: Bad Driver Index in DRV_USB_USB_UHP_Open().");
     }
 
     /* Return the client object */
 
     return (handle);
 }/* end of DRV_USB_UHP_Open() */
+
 
 // *****************************************************************************
 /* Function:
@@ -1692,7 +1636,7 @@ void DRV_USB_UHP_Close
 
     if(client == DRV_HANDLE_INVALID)
     {
-        SYS_DEBUG(SYS_ERROR_INFO, "\r\nUSB USB_UHP Driver: Bad Client Handle in DRV_USB_UHP_Close().");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USB_UHP Driver: Bad Client Handle in DRV_USB_UHP_Close().");
     }
     else
     {
@@ -1700,7 +1644,7 @@ void DRV_USB_UHP_Close
     
         if(!(hDriver->isOpened))
         {
-            SYS_DEBUG(SYS_ERROR_INFO, "\r\nUSB USB_UHP Driver: Invalid client handle in DRV_USB_UHP_Close().");
+            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USB_UHP Driver: Invalid client handle in DRV_USB_UHP_Close().");
         }
         else
         {
@@ -1711,169 +1655,6 @@ void DRV_USB_UHP_Close
     }
 
 }/* end of DRV_USB_USB_UHP_Close() */
-
-
-/* **************************************************************************** */
-/* Function:
-    uint8_t DRV_USB_UHP_ROOT_HUB_PortNumbersGet(DRV_HANDLE handle);
-
-   Summary:
-    Returns the number of ports this root hub contains.
-
-   Description:
-    This function returns the number of ports that this root hub contains.
-
-   Remarks:
-    None.
- */
-
-uint8_t DRV_USB_UHP_HOST_ROOT_HUB_PortNumbersGet(DRV_HANDLE handle)
-{
-    DRV_USB_UHP_OBJ *pUSBDrvObj = (DRV_USB_UHP_OBJ *)handle;
-    uint8_t result = 0;
-
-    if(DRV_HANDLE_INVALID == handle)
-    {
-        /* Driver handle is not valid */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
-    }
-    else if(!(pUSBDrvObj->isOpened))
-    {
-        /* Driver has not been opened. Handle could be stale */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
-    }
-    else
-    {
-        result = 1;
-    }
-
-    return(result);
-}
-
-/* **************************************************************************** */
-/* Function:
-    uint32_t DRV_USB_UHP_ROOT_HUB_MaximumCurrentGet(DRV_HANDLE);
-
-   Summary:
-    Returns the maximum amount of current that this root hub can provide on the
-    bus.
-
-   Description:
-    This function returns the maximum amount of current that this root hubn can
-    provide on the bus.
-
-   Remarks:
-    Refer to .h for usage information.
- */
-
-uint32_t DRV_USB_UHP_HOST_ROOT_HUB_MaximumCurrentGet(DRV_HANDLE handle)
-{
-    DRV_USB_UHP_OBJ *pUSBDrvObj = (DRV_USB_UHP_OBJ *)handle;
-    uint32_t result = 0;
-
-    if(DRV_HANDLE_INVALID == handle)
-    {
-        /* Driver handle is not valid */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
-    }
-    else if(!(pUSBDrvObj->isOpened))
-    {
-        /* Driver has not been opened. Handle could be stale */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
-    }
-    else
-    {
-        result = pUSBDrvObj->rootHubInfo.rootHubAvailableCurrent;
-    }
-
-    return(result);
-}
-
-/* **************************************************************************** */
-/* Function:
-    USB_SPEED DRV_USB_UHP_ROOT_HUB_BusSpeedGet(DRV_HANDLE handle);
-
-  Summary:
-    Returns the speed at which the bus to which this root hub is connected is
-    operating.
-
-  Description:
-    This function returns the speed at which the bus to which this root hub is
-    connected is operating.
-
- Remarks:
-    None.
-*/
-
-USB_SPEED DRV_USB_UHP_HOST_ROOT_HUB_BusSpeedGet(DRV_HANDLE handle)
-{
-    DRV_USB_UHP_OBJ *pUSBDrvObj = (DRV_USB_UHP_OBJ *)handle;
-    USB_SPEED speed = USB_SPEED_ERROR;
-
-    if(DRV_HANDLE_INVALID == handle)
-    {
-        /* Driver handle is not valid */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
-
-    }
-    else if(!(pUSBDrvObj->isOpened))
-    {
-        /* Driver has not been opened. Handle could be stale */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
-    }
-    else
-    {
-        /* Return the bus speed. This is speed at which the root hub is
-         * operating. */
-        speed = pUSBDrvObj->deviceSpeed;
-    }
-
-    return(speed);
-}
-
-
-
-/* **************************************************************************** */
-/* Function:
-    void DRV_USB_UHP_ROOT_HUB_PortResume(DRV_HANDLE handle, uint8_t port );
-
-  Summary:
-    Resumes the specified root hub port.
-
-  Description:
-    This function resumes the root hub. The resume duration is defined by
-    DRV_USB_UHP_ROOT_HUB_RESUME_DURATION. The status of the resume signalling can
-    be checked using the DRV_USB_UHP_ROOT_HUB_PortResumeIsComplete() function.
-
-  Remarks:
-    The root hub on this particular hardware only contains one port - port 0.
-*/
-
-USB_ERROR DRV_USB_UHP_HOST_ROOT_HUB_PortResume(DRV_HANDLE handle, uint8_t port)
-{
-    /* The functionality is yet to be implemented. */
-    return(USB_ERROR_NONE);
-}
-
-/* **************************************************************************** */
-/* Function:
-    void DRV_USB_UHP_ROOT_HUB_PortSuspend(DRV_HANDLE handle, uint8_t port );
-
-   Summary:
-    Suspends the specified root hub port.
-
-   Description:
-    This function suspends the root hub port.
-
-   Remarks:
-    The root hub on this particular hardware only contains one port - port 0.
- */
-
-USB_ERROR DRV_USB_UHP_HOST_ROOT_HUB_PortSuspend(DRV_HANDLE handle, uint8_t port)
-{
-    /* The functionality is yet to be implemented. */
-    return (USB_ERROR_NONE);
-}
 
 
 // *****************************************************************************
@@ -1898,175 +1679,29 @@ void DRV_USB_UHP_Tasks_ISR(SYS_MODULE_OBJ object)
 
     hDriver->isInInterruptContext = true;
 
-    _DRV_USB_UHP_HOST_Tasks_ISR_OHCI(hDriver);
-
-    DRV_USB_UHP_HOST_TransferProcess(hDriver);
+    DRV_USB_UHP_OHCI_HOST_Tasks_ISR(hDriver);
 
     hDriver->isInInterruptContext = false;
 }/* end of DRV_USB_UHP_Tasks_ISR() */
 
-/* **************************************************************************** */
-/* Function:
-    void DRV_USB_UHP_ROOT_HUB_PortResetIsComplete
-    (
-        DRV_HANDLE handle,
-        uint8_t port
-    );
-
-   Summary:
-    Returns true if the root hub has completed the port reset operation.
-
-   Description:
-    This function returns true if the port reset operation has completed. It
-    should be called after the DRV_USB_HOST_ROOT_HUB_PortReset() function to
-    check if the reset operation has completed.
-
-   Remarks:
-    Refer to .h for usage information.
- */
-
-bool DRV_USB_UHP_HOST_ROOT_HUB_PortResetIsComplete
-(
-    DRV_HANDLE handle,
-    uint8_t port
-)
-{
-    DRV_USB_UHP_OBJ *pUSBDrvObj = (DRV_USB_UHP_OBJ *)handle;
-    bool result = true;
-
-    if(DRV_HANDLE_INVALID == handle)
-    {
-        /* Driver handle is not valid */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
-    }
-    else if(!(pUSBDrvObj->isOpened))
-    {
-        /* Driver has not been opened. Handle could be stale */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
-    }
-    else
-    {
-        _DRV_USB_UHP_HOST_RESET_STATE_MACHINE((DRV_USB_UHP_OBJ *)handle);
-        /* Return false if the driver is still resetting*/
-        result = (pUSBDrvObj->isResetting) ? false : true;
-    }
-
-    return(result);
-}
-
-/* **************************************************************************** */
-/* Function:
-    void DRV_USB_UHP_ROOT_HUB_PortReset(DRV_HANDLE handle, uint8_t port );
-
-   Summary:
-    Resets the specified root hub port.
-
-   Description:
-    This function resets the root hub port. The reset duration is defined by
-    DRV_USB_UHP_ROOT_HUB_RESET_DURATION. The status of the reset signalling can be
-    checked using the DRV_USB_UHP_ROOT_HUB_PortResetIsComplete() function.
-
-   Remarks:
-    Refer to .h for usage information.
- */
-
-USB_ERROR DRV_USB_UHP_HOST_ROOT_HUB_PortReset(DRV_HANDLE handle, uint8_t port)
-{
-    DRV_USB_UHP_OBJ *pUSBDrvObj = (DRV_USB_UHP_OBJ *)handle;
-    USB_ERROR result = USB_ERROR_NONE;
-
-    if(DRV_HANDLE_INVALID == handle)
-    {
-        /* Driver handle is not valid */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
-        result = USB_ERROR_PARAMETER_INVALID;
-
-    }
-    else if(!(pUSBDrvObj->isOpened))
-    {
-        /* Driver has not been opened. Handle could be stale */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
-        result = USB_ERROR_PARAMETER_INVALID;
-    }
-    else if(pUSBDrvObj->isResetting)
-    {
-        /* This means a reset is already in progress. Lets not do anything. */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Reset already in progress");
-    }
-    else
-    {
-        /* Start the reset signal. Set the driver flag to indicate the reset
-         * signal is in progress. Start generating the reset signal.
-         */
-        
-        pUSBDrvObj->isResetting = true;
-        pUSBDrvObj->resetState  = DRV_USB_UHP_HOST_RESET_STATE_START;
-    }
-
-    return(result);
-}
-
-/* **************************************************************************** */
-/* Function:
-    USB_SPEED DRV_USB_UHP_HOST_ROOT_HUB_PortSpeedGet
-    (
-        DRV_HANDLE handle,
-        uint8_t port
-    );
-
-   Summary:
-    Returns the speed of at which the port is operating.
-
-   Description:
-    This function returns the speed at which the port is operating.
-
-   Remarks:
-    Refer to drv_usb_uhp.h for usage information.
-*/
-
-USB_SPEED DRV_USB_UHP_HOST_ROOT_HUB_PortSpeedGet(DRV_HANDLE handle, uint8_t port)
-{
-    DRV_USB_UHP_OBJ *pUSBDrvObj = (DRV_USB_UHP_OBJ *)handle;
-    USB_SPEED speed = USB_SPEED_ERROR;
-
-    if(DRV_HANDLE_INVALID == handle)
-    {
-        /* Driver handle is not valid */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
-    }
-    else if(!(pUSBDrvObj->isOpened))
-    {
-        /* Driver has not been opened. Handle could be stale */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
-    }
-    else
-    {
-        /* The driver will not check if a device is connected. It is assumed
-         * that the client has issued a port reset before calling this function
-         */
-        speed = pUSBDrvObj->deviceSpeed;
-    }
-
-    return(speed);
-}
 
 
 // *****************************************************************************
 /* Function:
-    bool DRV_USB_UHP_HOST_Resume(DRV_HANDLE handle)
+    bool DRV_USB_UHP_Resume(DRV_HANDLE handle)
 
    Summary:
-    Dynamic implementation of DRV_USB_UHP_HOST_Resume
+    Dynamic implementation of DRV_USB_UHP_Resume
     client interface function.
 
    Description:
-    This is the dynamic implementation of DRV_USB_UHP_HOST_Resume client
+    This is the dynamic implementation of DRV_USB_UHP_Resume client
     interface function. Function resumes a suspended BUS.
 
    Remarks:
     See drv_uhp.h for usage information.
  */
-bool DRV_USB_UHP_HOST_Resume
+bool DRV_USB_UHP_Resume
 (
     DRV_HANDLE handle
 )
@@ -2078,7 +1713,7 @@ bool DRV_USB_UHP_HOST_Resume
     /* Check if the handle is valid */
     if ((handle == DRV_HANDLE_INVALID))
     {
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USB_UHP Driver: Bad Client or client closed in DRV_USB_UHP_HOST_Resume().");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USB_UHP Driver: Bad Client or client closed in DRV_USB_UHP_Resume().");
     }
     else
     {
@@ -2091,25 +1726,25 @@ bool DRV_USB_UHP_HOST_Resume
     }
 
     return retVal;
-}/* end of DRV_USB_UHP_HOST_Resume() */
+}/* end of DRV_USB_UHP_Resume() */
+
 
 // *****************************************************************************
-
 /* Function:
-    bool DRV_USB_UHP_HOST_Suspend(DRV_HANDLE handle)
+    bool DRV_USB_UHP_Suspend(DRV_HANDLE handle)
 
    Summary:
-    Dynamic implementation of DRV_USB_UHP_HOST_Suspend
+    Dynamic implementation of DRV_USB_UHP_Suspend
     client interface function.
 
    Description:
-    This is the dynamic implementation of DRV_USB_UHP_HOST_Suspend client
+    This is the dynamic implementation of DRV_USB_UHP_Suspend client
     interface function. Function suspends USB BUS.
 
    Remarks:
     See drv_uhp.h for usage information.
  */
-bool DRV_USB_UHP_HOST_Suspend
+bool DRV_USB_UHP_Suspend
 (
     DRV_HANDLE handle
 )
@@ -2121,7 +1756,7 @@ bool DRV_USB_UHP_HOST_Suspend
     /* Check if the handle is valid */
     if ((handle == DRV_HANDLE_INVALID))
     {
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USB_UHP Driver: Bad Client or client closed in DRV_USB_UHP_HOST_Suspend().");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USB_UHP Driver: Bad Client or client closed in DRV_USB_UHP_Suspend().");
     }
     else
     {
@@ -2139,10 +1774,10 @@ bool DRV_USB_UHP_HOST_Suspend
         retVal = true;
     }
     return(retVal);
-}/* end of DRV_USB_UHP_HOST_Suspend() */
+}/* end of DRV_USB_UHP_Suspend() */
+
 
 // *****************************************************************************
-
 /* Function:
     void DRV_USB_USB_UHP_ClientEventCallBackSet
     (
@@ -2178,7 +1813,7 @@ void DRV_USB_UHP_ClientEventCallBackSet
 
     if (client == DRV_HANDLE_INVALID)
     {
-        SYS_DEBUG(SYS_ERROR_INFO, "\r\nUSB USB_UHP Driver: Bad Client Handle in DRV_USB_UHP_ClientEventCallBackSet().");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USB_UHP Driver: Bad Client Handle in DRV_USB_UHP_ClientEventCallBackSet().");
     }
     else
     {
@@ -2186,7 +1821,7 @@ void DRV_USB_UHP_ClientEventCallBackSet
 
         if (!pusbDrvObj->isOpened)
         {
-            SYS_DEBUG(SYS_ERROR_INFO, "\r\nUSB USB_UHP Driver: Invalid client handle in DRV_USB_UHP_ClientEventCallBackSet().");
+            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USB_UHP Driver: Invalid client handle in DRV_USB_UHP_ClientEventCallBackSet().");
         }
         else
         {
@@ -2196,11 +1831,12 @@ void DRV_USB_UHP_ClientEventCallBackSet
         }
     }
         
-}/* end of DRV_USB_USB_UHP_ClientEventCallBackSet() */
+}/* end of DRV_USB_UHP_ClientEventCallBackSet() */
+
 
 // ****************************************************************************
 /* Function:
-    void DRV_USB_UHP_HOST_EndpointToggleClear
+    void DRV_USB_UHP_EndpointToggleClear
     (
         DRV_HANDLE client,
         USB_ENDPOINT endpointAndDirection
@@ -2218,7 +1854,7 @@ void DRV_USB_UHP_ClientEventCallBackSet
     Refer to drv_usb_uhp_host.h for usage information.
 */
 
-void DRV_USB_UHP_HOST_EndpointToggleClear
+void DRV_USB_UHP_EndpointToggleClear
 (
     DRV_HANDLE client,
     USB_ENDPOINT endpointAndDirection
@@ -2265,4 +1901,392 @@ void DRV_USB_UHP_HOST_EndpointToggleClear
             }
         }
     }
-} /* end of DRV_USB_UHP_HOST_EndpointToggleClear() */
+} /* end of DRV_USB_UHP_EndpointToggleClear() */
+
+
+// *****************************************************************************
+// *****************************************************************************
+// Root Hub Driver Routines
+// *****************************************************************************
+// *****************************************************************************
+
+
+/* **************************************************************************** */
+/* Function:
+    bool DRV_USB_UHP_ROOT_HUB_OperationIsEnabled(DRV_HANDLE hClient)
+
+   Summary:
+    Root hub enable
+
+   Description:
+    return true if the HUB is operational and enabled.
+
+   Remarks:
+    Refer to .h for usage information.
+ */
+bool DRV_USB_UHP_ROOT_HUB_OperationIsEnabled(DRV_HANDLE hClient)
+{
+    DRV_USB_UHP_OBJ *hDriver;
+
+    if ((hClient == DRV_HANDLE_INVALID) || (((DRV_USB_UHP_OBJ *)hClient) == NULL))
+    {
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Invalid client");
+    }
+
+    hDriver = (DRV_USB_UHP_OBJ *)hClient;
+    return(hDriver->operationEnabled);
+}/* end of DRV_USB_UHP_ROOT_HUB_OperationIsEnabled() */
+
+
+/* **************************************************************************** */
+/* Function:
+    void DRV_USB_UHP_ROOT_HUB_Initialize
+    (
+        DRV_HANDLE handle,
+        USB_HOST_DEVICE_OBJ_HANDLE usbHostDeviceInfo,
+    )
+
+   Summary:
+    This function instantiates the root hub driver.
+
+   Description:
+    This function initializes the root hub driver. It is called by the host
+    layer at the time of processing root hub devices. The host layer assigns a
+    USB_HOST_DEVICE_OBJ_HANDLE reference to this root hub driver. This
+    identifies the relationship between the root hub and the host layer.
+
+   Remarks:
+    None.
+*/
+
+void DRV_USB_UHP_ROOT_HUB_Initialize
+(
+    DRV_HANDLE handle,
+    USB_HOST_DEVICE_OBJ_HANDLE usbHostDeviceInfo
+)
+{
+    DRV_USB_UHP_OBJ *pUSBDrvObj = (DRV_USB_UHP_OBJ *)handle;
+
+    if(DRV_HANDLE_INVALID == handle)
+    {
+        /* Driver handle is not valid */
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
+    }
+    else if(!(pUSBDrvObj->isOpened))
+    {
+        /* Driver has not been opened. Handle could be stale */
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
+    }
+    else
+    {
+        pUSBDrvObj->usbHostDeviceInfo = usbHostDeviceInfo;
+    }
+}
+
+/* **************************************************************************** */
+/* Function:
+    uint8_t DRV_USB_UHP_ROOT_HUB_PortNumbersGet(DRV_HANDLE handle);
+
+   Summary:
+    Returns the number of ports this root hub contains.
+
+   Description:
+    This function returns the number of ports that this root hub contains.
+
+   Remarks:
+    None.
+ */
+
+uint8_t DRV_USB_UHP_ROOT_HUB_PortNumbersGet(DRV_HANDLE handle)
+{
+    DRV_USB_UHP_OBJ *pUSBDrvObj = (DRV_USB_UHP_OBJ *)handle;
+    uint8_t result = 0;
+
+    if(DRV_HANDLE_INVALID == handle)
+    {
+        /* Driver handle is not valid */
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
+    }
+    else if(!(pUSBDrvObj->isOpened))
+    {
+        /* Driver has not been opened. Handle could be stale */
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
+    }
+    else
+    {
+        result = 1;
+    }
+
+    return(result);
+}
+
+/* **************************************************************************** */
+/* Function:
+    uint32_t DRV_USB_UHP_ROOT_HUB_MaximumCurrentGet(DRV_HANDLE);
+
+   Summary:
+    Returns the maximum amount of current that this root hub can provide on the
+    bus.
+
+   Description:
+    This function returns the maximum amount of current that this root hubn can
+    provide on the bus.
+
+   Remarks:
+    Refer to .h for usage information.
+ */
+
+uint32_t DRV_USB_UHP_ROOT_HUB_MaximumCurrentGet(DRV_HANDLE handle)
+{
+    DRV_USB_UHP_OBJ *pUSBDrvObj = (DRV_USB_UHP_OBJ *)handle;
+    uint32_t result = 0;
+
+    if(DRV_HANDLE_INVALID == handle)
+    {
+        /* Driver handle is not valid */
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
+    }
+    else if(!(pUSBDrvObj->isOpened))
+    {
+        /* Driver has not been opened. Handle could be stale */
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
+    }
+    else
+    {
+        result = pUSBDrvObj->rootHubInfo.rootHubAvailableCurrent;
+    }
+
+    return(result);
+}
+
+/* **************************************************************************** */
+/* Function:
+    USB_SPEED DRV_USB_UHP_ROOT_HUB_BusSpeedGet(DRV_HANDLE handle);
+
+  Summary:
+    Returns the speed at which the bus to which this root hub is connected is
+    operating.
+
+  Description:
+    This function returns the speed at which the bus to which this root hub is
+    connected is operating.
+
+ Remarks:
+    None.
+*/
+
+USB_SPEED DRV_USB_UHP_ROOT_HUB_BusSpeedGet(DRV_HANDLE handle)
+{
+    DRV_USB_UHP_OBJ *pUSBDrvObj = (DRV_USB_UHP_OBJ *)handle;
+    USB_SPEED speed = USB_SPEED_ERROR;
+
+    if(DRV_HANDLE_INVALID == handle)
+    {
+        /* Driver handle is not valid */
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
+
+    }
+    else if(!(pUSBDrvObj->isOpened))
+    {
+        /* Driver has not been opened. Handle could be stale */
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
+    }
+    else
+    {
+        /* Return the bus speed. This is speed at which the root hub is
+         * operating. */
+        speed = pUSBDrvObj->deviceSpeed;
+    }
+
+    return(speed);
+}
+
+
+/* **************************************************************************** */
+/* Function:
+    void DRV_USB_UHP_ROOT_HUB_PortResume(DRV_HANDLE handle, uint8_t port );
+
+  Summary:
+    Resumes the specified root hub port.
+
+  Description:
+    This function resumes the root hub. The resume duration is defined by
+    DRV_USB_UHP_ROOT_HUB_RESUME_DURATION. The status of the resume signalling can
+    be checked using the DRV_USB_UHP_ROOT_HUB_PortResumeIsComplete() function.
+
+  Remarks:
+    The root hub on this particular hardware only contains one port - port 0.
+*/
+
+USB_ERROR DRV_USB_UHP_ROOT_HUB_PortResume(DRV_HANDLE handle, uint8_t port)
+{
+    /* The functionality is yet to be implemented. */
+    return(USB_ERROR_NONE);
+}
+
+/* **************************************************************************** */
+/* Function:
+    void DRV_USB_UHP_ROOT_HUB_PortSuspend(DRV_HANDLE handle, uint8_t port );
+
+   Summary:
+    Suspends the specified root hub port.
+
+   Description:
+    This function suspends the root hub port.
+
+   Remarks:
+    The root hub on this particular hardware only contains one port - port 0.
+ */
+
+USB_ERROR DRV_USB_UHP_ROOT_HUB_PortSuspend(DRV_HANDLE handle, uint8_t port)
+{
+    /* The functionality is yet to be implemented. */
+    return (USB_ERROR_NONE);
+}
+
+
+/* **************************************************************************** */
+/* Function:
+    void DRV_USB_UHP_ROOT_HUB_PortResetIsComplete
+    (
+        DRV_HANDLE handle,
+        uint8_t port
+    );
+
+   Summary:
+    Returns true if the root hub has completed the port reset operation.
+
+   Description:
+    This function returns true if the port reset operation has completed. It
+    should be called after the DRV_USB_HOST_ROOT_HUB_PortReset() function to
+    check if the reset operation has completed.
+
+   Remarks:
+    Refer to .h for usage information.
+ */
+
+bool DRV_USB_UHP_ROOT_HUB_PortResetIsComplete
+(
+    DRV_HANDLE handle,
+    uint8_t port
+)
+{
+    DRV_USB_UHP_OBJ *pUSBDrvObj = (DRV_USB_UHP_OBJ *)handle;
+    bool result = true;
+
+    if(DRV_HANDLE_INVALID == handle)
+    {
+        /* Driver handle is not valid */
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
+    }
+    else if(!(pUSBDrvObj->isOpened))
+    {
+        /* Driver has not been opened. Handle could be stale */
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
+    }
+    else
+    {
+        _DRV_USB_UHP_HOST_RESET_STATE_MACHINE((DRV_USB_UHP_OBJ *)handle);
+        /* Return false if the driver is still resetting*/
+        result = (pUSBDrvObj->isResetting) ? false : true;
+    }
+
+    return(result);
+}
+
+/* **************************************************************************** */
+/* Function:
+    void DRV_USB_UHP_ROOT_HUB_PortReset(DRV_HANDLE handle, uint8_t port );
+
+   Summary:
+    Resets the specified root hub port.
+
+   Description:
+    This function resets the root hub port. The reset duration is defined by
+    DRV_USB_UHP_ROOT_HUB_RESET_DURATION. The status of the reset signalling can be
+    checked using the DRV_USB_UHP_ROOT_HUB_PortResetIsComplete() function.
+
+   Remarks:
+    Refer to .h for usage information.
+ */
+
+USB_ERROR DRV_USB_UHP_ROOT_HUB_PortReset(DRV_HANDLE handle, uint8_t port)
+{
+    DRV_USB_UHP_OBJ *pUSBDrvObj = (DRV_USB_UHP_OBJ *)handle;
+    USB_ERROR result = USB_ERROR_NONE;
+
+    if(DRV_HANDLE_INVALID == handle)
+    {
+        /* Driver handle is not valid */
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
+        result = USB_ERROR_PARAMETER_INVALID;
+
+    }
+    else if(!(pUSBDrvObj->isOpened))
+    {
+        /* Driver has not been opened. Handle could be stale */
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
+        result = USB_ERROR_PARAMETER_INVALID;
+    }
+    else if(pUSBDrvObj->isResetting)
+    {
+        /* This means a reset is already in progress. Lets not do anything. */
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Reset already in progress");
+    }
+    else
+    {
+        /* Start the reset signal. Set the driver flag to indicate the reset
+         * signal is in progress. Start generating the reset signal.
+         */
+        
+        pUSBDrvObj->isResetting = true;
+        pUSBDrvObj->resetState  = DRV_USB_UHP_HOST_RESET_STATE_START;
+    }
+
+    return(result);
+}
+
+/* **************************************************************************** */
+/* Function:
+    USB_SPEED DRV_USB_UHP_ROOT_HUB_PortSpeedGet
+    (
+        DRV_HANDLE handle,
+        uint8_t port
+    );
+
+   Summary:
+    Returns the speed of at which the port is operating.
+
+   Description:
+    This function returns the speed at which the port is operating.
+
+   Remarks:
+    Refer to drv_usb_uhp.h for usage information.
+*/
+
+USB_SPEED DRV_USB_UHP_ROOT_HUB_PortSpeedGet(DRV_HANDLE handle, uint8_t port)
+{
+    DRV_USB_UHP_OBJ *pUSBDrvObj = (DRV_USB_UHP_OBJ *)handle;
+    USB_SPEED speed = USB_SPEED_ERROR;
+
+    if(DRV_HANDLE_INVALID == handle)
+    {
+        /* Driver handle is not valid */
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
+    }
+    else if(!(pUSBDrvObj->isOpened))
+    {
+        /* Driver has not been opened. Handle could be stale */
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Bad Client or client closed");
+    }
+    else
+    {
+        /* The driver will not check if a device is connected. It is assumed
+         * that the client has issued a port reset before calling this function
+         */
+        speed = pUSBDrvObj->deviceSpeed;
+    }
+
+    return(speed);
+}
+

@@ -162,7 +162,7 @@ void SYSC_SharedHandler( void )
 /* data for irq register initialization */
 IrqData irqData[] = {
     { 35,  (uint32_t) AIC_REGS,    TC0_InterruptHandler,       AIC_SMR_SRCTYPE_INT_LEVEL_SENSITIVE_Val,  0x0 },
-    { 41,  (uint32_t) AIC_REGS,    UHPHS_Handler,              AIC_SMR_SRCTYPE_INT_LEVEL_SENSITIVE_Val,  0x5 },
+    { 41,  (uint32_t) AIC_REGS,    UHPHS_Handler,              AIC_SMR_SRCTYPE_INT_LEVEL_SENSITIVE_Val,  0x0 },
 };
 
 uint32_t irqDataEntryCount = sizeof( irqData ) / sizeof( irqData[ 0 ]);

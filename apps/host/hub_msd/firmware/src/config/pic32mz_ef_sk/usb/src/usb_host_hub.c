@@ -58,8 +58,8 @@
  * Global array of HUB Instance Objects. Each for
  * one HUB device attached.
  ***************************************************/
-
-USB_HOST_HUB_INSTANCE_OBJ gUSBHostHubObj[USB_HOST_HUB_INSTANCES_NUMBER];
+//USB_HOST_HUB_INSTANCE_OBJ gUSBHostHubObj[USB_HOST_HUB_INSTANCES_NUMBER];
+__ALIGNED(4096) USB_HOST_HUB_INSTANCE_OBJ gUSBHostHubObj[USB_HOST_HUB_INSTANCES_NUMBER];
 
 /*************************************************
  * Driver interface that is provide to the
@@ -68,8 +68,8 @@ USB_HOST_HUB_INSTANCE_OBJ gUSBHostHubObj[USB_HOST_HUB_INSTANCES_NUMBER];
 
 USB_HOST_CLIENT_DRIVER  gUSBHostHUBClientDriver =
 {
-    .initialize         = _USB_HOST_HUB_Initialize ,
-    .deinitialize       = _USB_HOST_HUB_Deinitialize ,
+    .initialize         = _USB_HOST_HUB_Initialize,
+    .deinitialize       = _USB_HOST_HUB_Deinitialize,
     .reinitialize       = _USB_HOST_HUB_Reinitialize,
     .deviceAssign       = _USB_HOST_HUB_DeviceAssign,
     .deviceRelease      = _USB_HOST_HUB_DeviceRelease,
@@ -158,7 +158,7 @@ void _USB_HOST_HUB_Initialize(void * hubInitData )
 
 void _USB_HOST_HUB_Deinitialize(void)
 {
-    /* This function is not implemented in this release  */
+    /* This function is not implemented in this release */
 }
 
 // *****************************************************************************
@@ -178,7 +178,7 @@ void _USB_HOST_HUB_Deinitialize(void)
 
 void _USB_HOST_HUB_Reinitialize(void * hubInitData)
 {
-    /* This function is not implemented in this release  */
+    /* This function is not implemented in this release */
 }
 
 // *****************************************************************************
@@ -228,7 +228,7 @@ int _USB_HOST_HUB_DeviceHandleToInstance
     (
         USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle,,
         USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
-        USB_DEVICE_DESCRIPTOR * deviceDescriptor ,
+        USB_DEVICE_DESCRIPTOR * deviceDescriptor,
     )
 
   Summary:
@@ -254,7 +254,7 @@ void _USB_HOST_HUB_DeviceAssign
     int iterator;
     USB_HOST_HUB_INSTANCE_OBJ * hubInstanceObj = NULL;
 	uint8_t portIndex;
-    USB_HOST_HUB_PORT_INFO  *portInfo = NULL ;
+    USB_HOST_HUB_PORT_INFO  *portInfo = NULL;
 
     /* If this function is being called, this means that a device class subclass
      * protocol match was obtained.  Look for a free instance */
@@ -296,16 +296,16 @@ void _USB_HOST_HUB_DeviceAssign
         
         /* Set the initial task states for the hub device task and the hub task
          * */
-        hubInstanceObj->hubInstanceState = USB_HOST_HUB_STATE_DEVICE_STATUS_GET ;
+        hubInstanceObj->hubInstanceState = USB_HOST_HUB_STATE_DEVICE_STATUS_GET;
         hubInstanceObj->hubTaskState = USB_HOST_HUB_TASK_STATE_HUB_STATUS_GET;
        
         /* Intialize all the port objects. Set the device handle to invalid.
          * Initialize the port task state and set the timer handle to invalid. */
-        for( portIndex = 0 ; portIndex < USB_HOST_HUB_PORTS_NUMBER ; portIndex++ )
+        for( portIndex = 0; portIndex < USB_HOST_HUB_PORTS_NUMBER; portIndex++ )
         {
             portInfo = & (hubInstanceObj->portInfo[portIndex]);
-            portInfo->deviceObjHandle = USB_HOST_DEVICE_OBJ_HANDLE_INVALID ;
-            portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_POWER_ENABLE ;
+            portInfo->deviceObjHandle = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
+            portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_POWER_ENABLE;
             portInfo->timerHandle = SYS_TMR_HANDLE_INVALID;
         }
 
@@ -399,7 +399,7 @@ void _USB_HOST_HUB_InterfaceAssign
     }
     else
     {
-        /* Get the instance object  */
+        /* Get the instance object */
         hubInstanceObj = &gUSBHostHubObj[hubInstanceIndex];
         
         /* Get the interface descriptor pointer */
@@ -413,7 +413,7 @@ void _USB_HOST_HUB_InterfaceAssign
 
         endpointQuery.transferType = USB_TRANSFER_TYPE_INTERRUPT;
         endpointQuery.direction = USB_DATA_DIRECTION_DEVICE_TO_HOST;
-        endpointQuery.flags = USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE | USB_HOST_ENDPOINT_QUERY_BY_DIRECTION ;
+        endpointQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)(USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE | USB_HOST_ENDPOINT_QUERY_BY_DIRECTION);
 
         /* Now find the endpoint */
         interruptEndpointDescriptor =  USB_HOST_DeviceEndpointDescriptorQuery(interfaceDescriptor, &endpointQuery);
@@ -424,14 +424,14 @@ void _USB_HOST_HUB_InterfaceAssign
              * interface cannot be processed. */
             USB_HOST_DeviceInterfaceRelease(interfaceHandle);
 
-            /* Assert on invalid interrupt endpoint descriptor  */
-            SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB Hub Driver: Could not find Interrupt IN endpoint" );
+            /* Assert on invalid interrupt endpoint descriptor */
+            SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB Hub Driver: Could not find Interrupt IN endpoint" );
         }
         else
         {
             /* We have found the IN interrupt endpoint. Try opening a pipe on this
              * endpoint */
-            hubInstanceObj->interruptInPipeHandle = USB_HOST_DevicePipeOpen ( interfaceHandle , 
+            hubInstanceObj->interruptInPipeHandle = USB_HOST_DevicePipeOpen ( interfaceHandle, 
                         interruptEndpointDescriptor->bEndpointAddress );
 
             if (  USB_HOST_PIPE_HANDLE_INVALID == hubInstanceObj->interruptInPipeHandle  )
@@ -442,7 +442,7 @@ void _USB_HOST_HUB_InterfaceAssign
                 USB_HOST_DeviceInterfaceRelease(interfaceHandle);
                 
                 /* Assert on invalid PipeHandle */
-                SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB Hub Driver: Could not open Interrupt IN pipe");
+                SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB Hub Driver: Could not open Interrupt IN pipe");
             }
         }
     }
@@ -486,7 +486,7 @@ void _USB_HOST_HUB_DeviceRelease
         hubInstance = &gUSBHostHubObj[index];
 
         /* Denumerate any device that is attached to the hub port */
-        for ( portNumber = 1 ; portNumber <= hubInstance->hubDescriptor.bNbrPorts ; portNumber++ )
+        for ( portNumber = 1; portNumber <= hubInstance->hubDescriptor.bNbrPorts; portNumber++ )
         {
             portIndex = portNumber - 1;
             portInfo = & ( hubInstance->portInfo[portIndex] );
@@ -537,7 +537,7 @@ void _USB_HOST_HUB_DeviceTasks
     USB_HOST_DEVICE_CLIENT_HANDLE hubDeviceHandle
 )
 {
-    int hubInstanceIndex ;
+    int hubInstanceIndex;
     USB_HOST_HUB_INSTANCE_OBJ * hubInstance;
     USB_HOST_RESULT             result;
     USB_HOST_TRANSFER_HANDLE    transferHandle;
@@ -579,8 +579,8 @@ void _USB_HOST_HUB_DeviceTasks
                     {
                         /* The control transfer could not be scheduled */
                         _USB_HOST_HUB_DeviceRelease( hubDeviceHandle );
-                        hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
-                        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB Hub Driver: Could not get Hub Device Status" );
+                        hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
+                        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB Hub Driver: Could not get Hub Device Status" );
                     }
                     break;
 
@@ -597,7 +597,7 @@ void _USB_HOST_HUB_DeviceTasks
                              * Next we set the configuration */
 
                             hubInstance->hubInstanceState = USB_HOST_HUB_STATE_CONFIGURATION_SET;
-                            SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB Hub Driver: Setting Hub Configuration" );
+                            SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB Hub Driver: Setting Hub Configuration" );
                         }
                         else
                         {
@@ -605,7 +605,7 @@ void _USB_HOST_HUB_DeviceTasks
                              * instance state to error */
                             _USB_HOST_HUB_DeviceRelease( hubDeviceHandle );
                             hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
-                            SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB Hub Driver: Could not set Device Configuration" );
+                            SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB Hub Driver: Could not set Device Configuration" );
                         }
                     }
                     break;
@@ -621,9 +621,9 @@ void _USB_HOST_HUB_DeviceTasks
                      * try to set the first configuration. */
 
                     hubInstance->controlRequestDone = false;
-                    result = USB_HOST_DeviceConfigurationSet(hubInstance->hubObjHandle ,
+                    result = USB_HOST_DeviceConfigurationSet(hubInstance->hubObjHandle,
                             &( hubInstance->controlTransferHandle), 
-                            0 , hubInstanceIndex );
+                            0, hubInstanceIndex );
 
                     if(result == USB_HOST_RESULT_SUCCESS)
                     {
@@ -641,8 +641,8 @@ void _USB_HOST_HUB_DeviceTasks
                     {
                         /* The Configuration Set request failed. */
                         _USB_HOST_HUB_DeviceRelease( hubDeviceHandle );
-                        hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
-                        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB Hub Driver: Could not set Device Configuration" );
+                        hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
+                        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB Hub Driver: Could not set Device Configuration" );
                     }
                     break;
 
@@ -656,7 +656,7 @@ void _USB_HOST_HUB_DeviceTasks
                              * hub events */
 
                             hubInstance->hubInstanceState = USB_HOST_HUB_STATE_WAIT_FOR_INTERFACE_READY;
-                            SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB Hub Driver: Waiting for Interface Ready" );
+                            SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB Hub Driver: Waiting for Interface Ready" );
                         }
                         else
                         {
@@ -664,7 +664,7 @@ void _USB_HOST_HUB_DeviceTasks
                              * instance state to error */
                             _USB_HOST_HUB_DeviceRelease( hubDeviceHandle );
                             hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
-                            SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB Hub Driver: Could not set Device Configuration" );
+                            SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB Hub Driver: Could not set Device Configuration" );
                         }
                     }
                     break;
@@ -677,8 +677,8 @@ void _USB_HOST_HUB_DeviceTasks
 
                     if( hubInstance->interruptInPipeHandle != USB_HOST_PIPE_HANDLE_INVALID) 
                     {
-                        SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\nUSB Hub Driver: Getting Hub Descriptor" );
-                        hubInstance->hubInstanceState = USB_HOST_HUB_STATE_HUB_DESCRIPTOR_GET ;
+                        SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\nUSB Hub Driver: Getting Hub Descriptor" );
+                        hubInstance->hubInstanceState = USB_HOST_HUB_STATE_HUB_DESCRIPTOR_GET;
                     }
                     break;
 
@@ -691,14 +691,14 @@ void _USB_HOST_HUB_DeviceTasks
                     result =  _USB_HOST_HUB_HubDescriptorGet( hubInstanceIndex );
                     if ( result == USB_HOST_RESULT_SUCCESS )
                     {
-                        SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\nUSB Hub Driver: Waiting for Hub Descriptor Get" );
+                        SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\nUSB Hub Driver: Waiting for Hub Descriptor Get" );
                         hubInstance->hubInstanceState = USB_HOST_HUB_STATE_WAIT_FOR_HUB_DESCRIPTOR_GET;
                     }
                     else if ( result !=  USB_HOST_RESULT_REQUEST_BUSY )
                     {
                         _USB_HOST_HUB_DeviceRelease( hubDeviceHandle );
-                        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB Hub Driver: Could not get Hub descriptor" );
-                        hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
+                        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB Hub Driver: Could not get Hub descriptor" );
+                        hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
                     }
                     break;
 
@@ -708,15 +708,16 @@ void _USB_HOST_HUB_DeviceTasks
                         if( hubInstance->controlRequestResult == USB_HOST_RESULT_SUCCESS)
                         {
                             /* Hub descriptor having the information about 
-                               No of ports , logical power switching , over
-                               current protection mode , port indicator support
-                               , power on 2 power goods values */
-                            SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\nUSB Hub Driver: Hub is in a running state" );
+                               Nb of ports, logical power switching, over
+                               current protection mode, port indicator support,
+                               power on 2 power goods values */
+                            SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\nUSB Hub Driver: Hub is in a running state" );
                             hubInstance->hubInstanceState = USB_HOST_HUB_STATE_RUNNING;
                         
-                            /* Ready for launch interrupt transfer  */
+/*JCB*/                     SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\nUSB Hub Driver: Ready for launch interrupt transfer" );
+                            /* Ready for launch interrupt transfer */
                             USB_HOST_DeviceTransfer( hubInstance->interruptInPipeHandle,
-                                    &transferHandle,&( hubInstance->changeStatus ), 1 , hubInstanceIndex );
+                                    &transferHandle,&( hubInstance->changeStatus ), 1, hubInstanceIndex );
                         }
                         else
                         {
@@ -735,7 +736,7 @@ void _USB_HOST_HUB_DeviceTasks
                      * there is no interrupt transfer in progress. */
                     if(( hubInstance->changeStatus == 0) && (hubInstance->interruptTransferDone == true))
                     {
-                        hubInstance->interruptTransferDone = false ;
+                        hubInstance->interruptTransferDone = false;
 
                         /* All the change status bits have been handled by the
                          * port and hub tasks. We can now re-launch the
@@ -743,20 +744,22 @@ void _USB_HOST_HUB_DeviceTasks
 
                         USB_HOST_DeviceTransfer( hubInstance->interruptInPipeHandle,
                                 &hubInstance->interruptTransferHandle,
-                                &( hubInstance->changeStatus ), 1 , hubInstanceIndex );
+                                &( hubInstance->changeStatus ), 1, hubInstanceIndex );
                     }
                     
                     /* Hub task handles the hub level change bits */
                     _USB_HOST_HUB_HubTasks( hubInstanceIndex );
 
                     /* Port Tasks handles the port level change bits */
-                    for ( portNumber = 1 ; portNumber <= hubInstance->hubDescriptor.bNbrPorts ; portNumber++ )
+                    for ( portNumber = 1; portNumber <= hubInstance->hubDescriptor.bNbrPorts; portNumber++ )
                     {
-                        _USB_HOST_HUB_PortTasks( hubInstanceIndex , portNumber );
+                        _USB_HOST_HUB_PortTasks( hubInstanceIndex, portNumber );
                     }
                     break;
 
                 case USB_HOST_HUB_STATE_ERROR:
+/* JCB */                    SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\nUSB Hub Driver: Hub State Error" );
+while(1);
                     break;
 
                 default:
@@ -813,12 +816,12 @@ void _USB_HOST_HUB_HubTasks( uint32_t hubInstanceIndex )
                 if(result == USB_HOST_RESULT_SUCCESS)
                 {
                     /* Wait for the hub status get request to complete */
-                    hubInstance->hubTaskState = USB_HOST_HUB_TASK_STATE_WAIT_FOR_HUB_STATUS_GET ;
+                    hubInstance->hubTaskState = USB_HOST_HUB_TASK_STATE_WAIT_FOR_HUB_STATUS_GET;
                 }
                 else if( result != USB_HOST_RESULT_REQUEST_BUSY )
                 {
-                    SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB Hub Driver: Could not get hub status" );
-                    hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
+                    SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB Hub Driver: Could not get hub status" );
+                    hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
                 }
                 break;
 
@@ -836,19 +839,19 @@ void _USB_HOST_HUB_HubTasks( uint32_t hubInstanceIndex )
                              * in wHubStatus and then clear the change bit. */
 
                             hubInstance->isBusPowered = hubInstance->hubStatus.localPowerSource;
-                            hubInstance->hubTaskState = USB_HOST_HUB_TASK_STATE_LPS_CHANGE_CLEAR ;
+                            hubInstance->hubTaskState = USB_HOST_HUB_TASK_STATE_LPS_CHANGE_CLEAR;
                         }
                         else
                         {
                             /* There was no change in the local power status.
                              * Check any for current status */
-                            hubInstance->hubTaskState = USB_HOST_HUB_TASK_STATE_CHECK_OC_STATUS ;
+                            hubInstance->hubTaskState = USB_HOST_HUB_TASK_STATE_CHECK_OC_STATUS;
                         }
                     }
                     else
                     {
-                        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB Hub Driver: Could not get hub status" );
-                        hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
+                        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB Hub Driver: Could not get hub status" );
+                        hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
                     }
                 }
 
@@ -858,18 +861,18 @@ void _USB_HOST_HUB_HubTasks( uint32_t hubInstanceIndex )
 
                 /* Send a control transfer to clear the C_HUB_LOCAL_POWER bit */
                 hubInstance->controlRequestDone = false;
-                result = _USB_HOST_HUB_FeatureRequest ( hubInstanceIndex, 0 , USB_HUB_CLASS_FEATURE_C_HUB_LOCAL_POWER, 
+                result = _USB_HOST_HUB_FeatureRequest ( hubInstanceIndex, 0, USB_HUB_CLASS_FEATURE_C_HUB_LOCAL_POWER, 
                         USB_HUB_CLASS_REQUEST_CLEAR_FEATURE, USB_HOST_HUB_REQUEST );
 
                 if(result == USB_HOST_RESULT_SUCCESS)
                 {
                     /* Wait for the control transfer to complete */
-                    hubInstance->hubTaskState = USB_HOST_HUB_TASK_STATE_WAIT_FOR_LPS_CHANGE_CLEAR ;
+                    hubInstance->hubTaskState = USB_HOST_HUB_TASK_STATE_WAIT_FOR_LPS_CHANGE_CLEAR;
                 }
                 else if( result != USB_HOST_RESULT_REQUEST_BUSY )
                 {
-                    SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB Hub Driver: Could not clear C_HUB_LOCAL_POWER" );
-                    hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
+                    SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB Hub Driver: Could not clear C_HUB_LOCAL_POWER" );
+                    hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
                 }
                 break;
 
@@ -880,12 +883,12 @@ void _USB_HOST_HUB_HubTasks( uint32_t hubInstanceIndex )
                     {
                         /* We have clear the C_HUB_LOCAL_POWER bit. Check if a
                          * Hub Level OC event has occurred. */
-                        hubInstance->hubTaskState = USB_HOST_HUB_TASK_STATE_CHECK_OC_STATUS ;
+                        hubInstance->hubTaskState = USB_HOST_HUB_TASK_STATE_CHECK_OC_STATUS;
                     }
                     else
                     {
-                        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB Hub Driver: Could not clear C_HUB_LOCAL_POWER" );
-                        hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
+                        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB Hub Driver: Could not clear C_HUB_LOCAL_POWER" );
+                        hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
                     }
                 }
                 break;
@@ -897,7 +900,7 @@ void _USB_HOST_HUB_HubTasks( uint32_t hubInstanceIndex )
                     /* This means an hub level over current event has occurred.
                      * We should clear the C_HUB_OVER_CURRENT bit. */
 
-                    hubInstance->hubTaskState = USB_HOST_HUB_TASK_STATE_OC_CHANGE_CLEAR_SEND ;
+                    hubInstance->hubTaskState = USB_HOST_HUB_TASK_STATE_OC_CHANGE_CLEAR_SEND;
                     
                     /* Validate any over current status */
                     if ( hubInstance->hubStatus.overCurrent == 1 )
@@ -907,7 +910,7 @@ void _USB_HOST_HUB_HubTasks( uint32_t hubInstanceIndex )
                          * denumerate each attached device and then place the
                          * port in a overcurrent state. */
 
-                        for ( portNumber = 1 ; portNumber <= hubInstance->hubDescriptor.bNbrPorts ; portNumber++ )
+                        for ( portNumber = 1; portNumber <= hubInstance->hubDescriptor.bNbrPorts; portNumber++ )
                         {
                             portIndex = portNumber - 1;
                             portInfo = & ( hubInstance->portInfo[portIndex]);
@@ -918,7 +921,7 @@ void _USB_HOST_HUB_HubTasks( uint32_t hubInstanceIndex )
                                 portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_OVERCURRENT;
                             }
                         }
-                        hubInstance->isOverCurrent = true ;
+                        hubInstance->isOverCurrent = true;
                     }
                 }
                 else
@@ -928,7 +931,7 @@ void _USB_HOST_HUB_HubTasks( uint32_t hubInstanceIndex )
                      * and wait for new status. */
 
                     hubInstance->changeStatus = ( hubInstance->changeStatus & ~0x01 );
-                    hubInstance->hubTaskState = USB_HOST_HUB_TASK_STATE_HUB_STATUS_GET ;
+                    hubInstance->hubTaskState = USB_HOST_HUB_TASK_STATE_HUB_STATUS_GET;
                 }
                 break;
 
@@ -938,7 +941,7 @@ void _USB_HOST_HUB_HubTasks( uint32_t hubInstanceIndex )
 
                 /* Send a control transfer to clear the C_HUB_OVER_CURRENT bit.
                  * */
-                result = _USB_HOST_HUB_FeatureRequest ( hubInstanceIndex, 0 , USB_HUB_CLASS_FEATURE_C_HUB_OVER_CURRENT, 
+                result = _USB_HOST_HUB_FeatureRequest ( hubInstanceIndex, 0, USB_HUB_CLASS_FEATURE_C_HUB_OVER_CURRENT, 
                         USB_HUB_CLASS_REQUEST_CLEAR_FEATURE, USB_HOST_HUB_REQUEST );
 
                 if(result == USB_HOST_RESULT_SUCCESS)
@@ -948,8 +951,8 @@ void _USB_HOST_HUB_HubTasks( uint32_t hubInstanceIndex )
                 }
                 else if( result != USB_HOST_RESULT_REQUEST_BUSY )
                 {
-                    SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB Hub Driver: Could not clear C_HUB_OVER_CURRENT" );
-                    hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
+                    SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB Hub Driver: Could not clear C_HUB_OVER_CURRENT" );
+                    hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
                 }
 
                 break;
@@ -973,7 +976,7 @@ void _USB_HOST_HUB_HubTasks( uint32_t hubInstanceIndex )
                              * the _USB_HOST_HUB_PortTasks() function */
 
                             hubInstance->isOverCurrent = false;
-                            for ( portNumber = 1 ; portNumber <= hubInstance->hubDescriptor.bNbrPorts ; portNumber++ )
+                            for ( portNumber = 1; portNumber <= hubInstance->hubDescriptor.bNbrPorts; portNumber++ )
                             {
                                 portIndex = portNumber - 1;
                                 portInfo = &(hubInstance->portInfo[portIndex]);
@@ -984,12 +987,12 @@ void _USB_HOST_HUB_HubTasks( uint32_t hubInstanceIndex )
                         /* Clear the hub change status bit and get ready for the
                          * next change status. */
                         hubInstance->changeStatus = ( hubInstance->changeStatus & ~0x01 );
-                        hubInstance->hubTaskState = USB_HOST_HUB_TASK_STATE_HUB_STATUS_GET ;
+                        hubInstance->hubTaskState = USB_HOST_HUB_TASK_STATE_HUB_STATUS_GET;
                     }
                     else
                     {
-                        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB Hub Driver: Could not clear C_HUB_OVER_CURRENT" );
-                        hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
+                        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB Hub Driver: Could not clear C_HUB_OVER_CURRENT" );
+                        hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
                     }
                 }
 
@@ -1029,6 +1032,8 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
     USB_HOST_HUB_INSTANCE_OBJ * hubInstance;
 
     /* Get a pointer to the instance */
+    printf("\n\r portNumber = %d", portNumber);
+    
     portIndex = portNumber - 1;
     hubInstance = &gUSBHostHubObj[hubInstanceIndex];
     portInfo = &( hubInstance->portInfo[portIndex] );
@@ -1038,28 +1043,39 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
         case USB_HOST_HUB_PORT_TASK_STATE_POWER_ENABLE:
 
             /* First the power to the port needs to be enabled */
+        printf("->controlRequestDone = false 1");
             portInfo->controlRequestDone = false;
 
+/*jcb*/  printf("\n\r Set Feature (Port Power): %d", portNumber);
             /* Send a control transfer to Set Feature (Port Power). */
-            result = _USB_HOST_HUB_FeatureRequest( hubInstanceIndex , portNumber , USB_HUB_CLASS_FEATURE_PORT_POWER , 
-                    USB_HUB_CLASS_REQUEST_SET_FEATURE , USB_HOST_HUB_PORT_REQUEST );
+            result = _USB_HOST_HUB_FeatureRequest( hubInstanceIndex, portNumber, USB_HUB_CLASS_FEATURE_PORT_POWER, 
+                    USB_HUB_CLASS_REQUEST_SET_FEATURE, USB_HOST_HUB_PORT_REQUEST );
 
             if(result == USB_HOST_RESULT_SUCCESS)
             {
                 /* Wait for the port power to be enabled */
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_POWER_ENABLE ;
+/*JCB*/           printf("\n\r success ");
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_POWER_ENABLE;
             }
             else if( result != USB_HOST_RESULT_REQUEST_BUSY )
             {
-                SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB Hub Driver: Could not enable port power" );
-                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
+/*JCB*/         printf("\n\r busy ");
+                SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB Hub Driver: Could not enable port power" );
+                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
             }
+/*JCB*/      else
+/*JCB*/      {
+/*JCB*/          printf("\n\r result = %d ", result);
+//while(1);
+/*JCB*/      }
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_POWER_ENABLE:
 
+/*jcb*/  printf("\033[31m \n\r JCB WAIT_FOR_POWER_ENABLE \033[0m");
             if( portInfo->controlRequestDone == true) 
             {
+/*JCB*/         printf("\n\r controlRequestDone = true ");
                 if( portInfo->controlRequestResult == USB_HOST_RESULT_SUCCESS)
                 {
                     if( hubInstance->hubDescriptor.bPwrOn2PwrGood > 0 )
@@ -1078,7 +1094,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                 }
                 else
                 {
-                    SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB Hub Driver: Could not enable port power" );
+                    SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB Hub Driver: Could not enable port power" );
                     hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
                 }
             }
@@ -1089,7 +1105,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
             /* Start a delay of defined by the bPwrOn2PwrGood field in the hub
              * descriptor. */
 
-            SYS_TIME_DelayMS(2 * hubInstance->hubDescriptor.bPwrOn2PwrGood , &portInfo->timerHandle  );
+            SYS_TIME_DelayMS(2 * hubInstance->hubDescriptor.bPwrOn2PwrGood, &portInfo->timerHandle  );
             if( SYS_TMR_HANDLE_INVALID != portInfo->timerHandle )
             {
                 /* The delay could be started. Wait for the delay to complete */
@@ -1102,7 +1118,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
 
             if(SYS_TIME_DelayIsComplete( portInfo->timerHandle))
             {
-                SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\nUSB Hub Driver: Port is powered up ");
+                SYS_DEBUG_PRINT( SYS_ERROR_DEBUG, "\r\nUSB Hub Driver: Port is powered up: %d", portNumber);
                 portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CHECK_CHANGE_STATUS;
             }
 
@@ -1123,45 +1139,52 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
              * This is known by checking the corresponding port bit in the
              * changeStatus bitmap. */
 
-            mask = 1;
+// /*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_CHECK_CHANGE_STATUS");
+/* to change*/ mask = 1;
             mask = mask << portNumber;
+printf("\n\r hubInstance->changeStatus  = 0x%X", hubInstance->changeStatus );
+printf("\n\r mask  = 0x%X", mask );
             if ((hubInstance->changeStatus & mask ) )
             {
                 /* There is a change. Find out what the change is. */
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_PORT_STATUS_GET ;
+printf("\n\r There is a change. Find out what the change is");
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_PORT_STATUS_GET;
             }
             else
             {
                 /* There is no change. Check if any command has to be executed
                  * on the port. */
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CHECK_COMMAND ;
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CHECK_COMMAND;
             }
 
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_PORT_STATUS_GET:
 
+/*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_PORT_STATUS_GET");
+        printf("->controlRequestDone = false 2");
             portInfo->controlRequestDone = false;
 
             /* Send a request to read the port status. */
             result = _USB_HOST_HUB_StatusRequest( hubInstanceIndex, &(portInfo->portStatus),
-                    portNumber ,USB_HOST_HUB_PORT_REQUEST );
+                    portNumber,USB_HOST_HUB_PORT_REQUEST );
 
             if(result == USB_HOST_RESULT_SUCCESS)
             {
                 /* Wait till we get the port status. */
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_PORT_STATUS_GET ;
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_PORT_STATUS_GET;
             }
             else if( result != USB_HOST_RESULT_REQUEST_BUSY )
             {
-                SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\nUSB Hub Driver: Could not read port status for port");
-                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
+                SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\nUSB Hub Driver: Could not read port status for port");
+                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
             }
 
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_PORT_STATUS_GET:
 
+/*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_PORT_STATUS_GET");
             if( portInfo->controlRequestDone == true) 
             {
                 if( portInfo->controlRequestResult == USB_HOST_RESULT_SUCCESS)
@@ -1180,7 +1203,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                             {
                                 /* This means this is a fresh attach. There was
                                  * no device attached to this port. */
-                                portInfo->deviceObjHandle = USB_HOST_DeviceEnumerate( hubInstance->hubObjHandle, portNumber) ;
+                                portInfo->deviceObjHandle = USB_HOST_DeviceEnumerate( hubInstance->hubObjHandle, portNumber);
                             }
                             else
                             {
@@ -1198,7 +1221,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                                 USB_HOST_DeviceDenumerate(portInfo->deviceObjHandle );
                                 portInfo->deviceObjHandle = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
                                 
-                                portInfo->deviceObjHandle = USB_HOST_DeviceEnumerate( hubInstance->hubObjHandle, portNumber) ;
+                                portInfo->deviceObjHandle = USB_HOST_DeviceEnumerate( hubInstance->hubObjHandle, portNumber);
                             }
                         }
                         else
@@ -1213,7 +1236,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                         }
 
                         /* Clear the C_PORT_CONNECT bit */
-                        portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CLEAR_FEATURE_PORT_CONNECT ; 
+                        portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CLEAR_FEATURE_PORT_CONNECT; 
                     }
                     else
                     {
@@ -1225,7 +1248,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                 }
                 else
                 {
-                    SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\nUSB Hub Driver: Could not read port status for port");
+                    SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\nUSB Hub Driver: Could not read port status for port");
                     hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
                 }
             }
@@ -1233,6 +1256,8 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
 
         case USB_HOST_HUB_PORT_TASK_STATE_CLEAR_FEATURE_PORT_CONNECT:
 
+/*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_CLEAR_FEATURE_PORT_CONNECT");
+        printf("->controlRequestDone = false 3");
             portInfo->controlRequestDone = false;
                    
             /* Send a control transfer to clear the C_PORT_CONNECT bit */
@@ -1244,17 +1269,18 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
             {
                 /* Wait for the Clear Feature C_PORT_CONNECT request to complete
                  * */
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_CLEAR_FEATURE_PORT_CONNECT ;
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_CLEAR_FEATURE_PORT_CONNECT;
             }
             else if( result != USB_HOST_RESULT_REQUEST_BUSY )
             {
-                SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\nUSB Hub Driver: Could not clear feature C_PORT_CONNECT for port");
-                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
+                SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\nUSB Hub Driver: Could not clear feature C_PORT_CONNECT for port");
+                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
             }
 
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_WAIT_CLEAR_FEATURE_PORT_CONNECT:
+/*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_WAIT_CLEAR_FEATURE_PORT_CONNECT");
 
             if(  portInfo->controlRequestDone == true) 
             {
@@ -1263,27 +1289,29 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                     /* We sent a control transfer to clear the port connect
                      * change status bit. Check if this has been cleared */
 
-                    portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_POST_PORT_CONNECT_STATUS_GET ;
+                    portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_POST_PORT_CONNECT_STATUS_GET;
                 }
                 else
                 {
-                    SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\nUSB Hub Driver: Could not clear feature C_PORT_CONNECT for port");
+                    SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\nUSB Hub Driver: Could not clear feature C_PORT_CONNECT for port");
                     hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
                 }
             }
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_POST_PORT_CONNECT_STATUS_GET:
+/*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_POST_PORT_CONNECT_STATUS_GET");
 
             /* After the clear feature port connect control trasnfer has
              * completed, we get the port status to make sure that the bit has
              * cleared. */
 
+        printf("->controlRequestDone = false 4");
             portInfo->controlRequestDone = false;
 
             /* Send a request to read the port status. */
             result = _USB_HOST_HUB_StatusRequest( hubInstanceIndex, &(portInfo->portStatus),
-                    portNumber ,USB_HOST_HUB_PORT_REQUEST );
+                    portNumber,USB_HOST_HUB_PORT_REQUEST );
 
             if(result == USB_HOST_RESULT_SUCCESS)
             {
@@ -1292,13 +1320,14 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
             }
             else if( result != USB_HOST_RESULT_REQUEST_BUSY )
             {
-                SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\nUSB Hub Driver: Could not read port status for port");
-                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
+                SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\nUSB Hub Driver: Could not read port status for port");
+                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
             }
 
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_WAIT_POST_PORT_CONNECT_STATUS_GET:
+/*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_WAIT_POST_PORT_CONNECT_STATUS_GET");
 
             /* Here we are waiting for the post clear feature port connect port
              * status get control transfer to complete. If the change bit has
@@ -1325,13 +1354,14 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                 }
                 else
                 {
-                    SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\nUSB Hub Driver: Could not read port status for port");
+                    SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\nUSB Hub Driver: Could not read port status for port");
                     hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
                 }
             }
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_CHECK_PORT_ENABLE_CHANGE:
+/*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_CHECK_PORT_ENABLE_CHANGE");
 
             if( portInfo->portStatus.portEnableDisableChange == 1 )
             {
@@ -1340,7 +1370,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                  * clear the enable change status. */
 
                 portInfo->isEnabled = portInfo->portStatus.portEnabledDisabled; 
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CLEAR_FEATURE_PORT_ENABLE_CHANGE ;
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CLEAR_FEATURE_PORT_ENABLE_CHANGE;
             }
             else
             {
@@ -1352,27 +1382,30 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_CLEAR_FEATURE_PORT_ENABLE_CHANGE:
+/*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_CLEAR_FEATURE_PORT_ENABLE_CHANGE");
 
+        printf("->controlRequestDone = false 5");
             portInfo->controlRequestDone = false;
 
             /* Send a control transfer to clear port feature C_PORT_ENABLE */
-            result =_USB_HOST_HUB_FeatureRequest( hubInstanceIndex , portNumber , USB_HUB_CLASS_FEATURE_C_PORT_ENABLE , 
-                    USB_HUB_CLASS_REQUEST_CLEAR_FEATURE , USB_HOST_HUB_PORT_REQUEST );
+            result =_USB_HOST_HUB_FeatureRequest( hubInstanceIndex, portNumber, USB_HUB_CLASS_FEATURE_C_PORT_ENABLE, 
+                    USB_HUB_CLASS_REQUEST_CLEAR_FEATURE, USB_HOST_HUB_PORT_REQUEST );
 
             if(result == USB_HOST_RESULT_SUCCESS)
             {
                 /* Wait for the control transfer to complete. */
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_CLEAR_FEATURE_PORT_ENABLE_CHANGE ;
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_CLEAR_FEATURE_PORT_ENABLE_CHANGE;
             }
             else if( result != USB_HOST_RESULT_REQUEST_BUSY )
             {
-                SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\nUSB Hub Driver: Could not clear feature C_PORT_ENABLE for port");
-                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
+                SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\nUSB Hub Driver: Could not clear feature C_PORT_ENABLE for port");
+                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
             }
 
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_CLEAR_FEATURE_PORT_ENABLE_CHANGE:
+/*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_CLEAR_FEATURE_PORT_ENABLE_CHANGE");
 
             if(  portInfo->controlRequestDone == true) 
             {
@@ -1380,11 +1413,11 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                 {
                     /* We have checked port connct and port enable. Now check
                      * port suspend */
-                    portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CHECK_SUSPEND_CHANGE ;
+                    portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CHECK_SUSPEND_CHANGE;
                 }
                 else
                 {
-                    SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\nUSB Hub Driver: Could not clear feature C_PORT_ENABLE for port");
+                    SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\nUSB Hub Driver: Could not clear feature C_PORT_ENABLE for port");
                     hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
                 }
             }
@@ -1392,6 +1425,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_CHECK_SUSPEND_CHANGE:
+/*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_CHECK_SUSPEND_CHANGE");
 
             if( portInfo->portStatus.suspendChange == 1 )
             {
@@ -1400,39 +1434,41 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
 
                 portInfo->isResumed = true;
                 portInfo->isSuspended = false; 
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CLEAR_FEATURE_PORT_SUSPEND_CHANGE ;
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CLEAR_FEATURE_PORT_SUSPEND_CHANGE;
             }
             else
             {
                 /* There was no suspend change. Check if there was an over
                  * current change */
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CHECK_OC_CHANGE ;
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CHECK_OC_CHANGE;
             }
 
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_CLEAR_FEATURE_PORT_SUSPEND_CHANGE:
+/*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_CLEAR_FEATURE_PORT_SUSPEND_CHANGE");
 
             portInfo->controlRequestDone = false;
 
             /* Send a control transfer to clear feature C_PORT_SUSPEND */ 
-            result =_USB_HOST_HUB_FeatureRequest( hubInstanceIndex , portNumber, USB_HUB_CLASS_FEATURE_C_PORT_SUSPEND, 
+            result =_USB_HOST_HUB_FeatureRequest( hubInstanceIndex, portNumber, USB_HUB_CLASS_FEATURE_C_PORT_SUSPEND, 
                     USB_HUB_CLASS_REQUEST_CLEAR_FEATURE, USB_HOST_HUB_PORT_REQUEST );
 
             if(result == USB_HOST_RESULT_SUCCESS)
             {
                 /* Wait for the control transfer to complete */
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_CLEAR_FEATURE_PORT_SUSPEND_CHANGE ;
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_CLEAR_FEATURE_PORT_SUSPEND_CHANGE;
             }
             else if( result != USB_HOST_RESULT_REQUEST_BUSY )
             {
-                SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\nUSB Hub Driver: Could not clear feature C_PORT_SUSPEND for port");
-                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
+                SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\nUSB Hub Driver: Could not clear feature C_PORT_SUSPEND for port");
+                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
             }
 
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_CLEAR_FEATURE_PORT_SUSPEND_CHANGE:
+/*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_CLEAR_FEATURE_PORT_SUSPEND_CHANGE");
 
             if(  portInfo->controlRequestDone == true) 
             {
@@ -1440,11 +1476,11 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                 {
                     /* We have checked for port connect, enable, suspend change.
                      * We should now check for OC change. */
-                    portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CHECK_OC_CHANGE ;
+                    portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CHECK_OC_CHANGE;
                 }
                 else
                 {
-                    SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\nUSB Hub Driver: Could not clear feature C_PORT_SUSPEND for port");
+                    SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\nUSB Hub Driver: Could not clear feature C_PORT_SUSPEND for port");
                     hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
                 }
             }
@@ -1452,16 +1488,17 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_CHECK_OC_CHANGE:
+/*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_CHECK_OC_CHANGE");
 
             if ( portInfo->portStatus.overCurrentIndicatorChange == 1 )
             {
                 /* This means an over current condition has changed on this
                  * port. The OC change status should be cleared. */
 
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CLEAR_FEATURE_PORT_OC_CHANGE ;
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CLEAR_FEATURE_PORT_OC_CHANGE;
                 if( portInfo->portStatus.overCurrent == 1  )
                 {
-                    portInfo->overCurrent = true ;
+                    portInfo->overCurrent = true;
 
                     /* If OC change bit is set and OC status bit is set, then
                      * this is port is in an OC state. The set overCurrent field
@@ -1474,7 +1511,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                          * switched off because of over current. */
                         USB_HOST_DeviceDenumerate(portInfo->deviceObjHandle );
                         portInfo->deviceObjHandle = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
-                        portInfo->isOCPoweredOff = true ;
+                        portInfo->isOCPoweredOff = true;
                     }
                 }
                 else 
@@ -1488,7 +1525,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                         {
                             USB_HOST_DeviceDenumerate(portInfo->deviceObjHandle );
                             portInfo->deviceObjHandle = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
-                            portInfo->isOCPoweredOff = true ;
+                            portInfo->isOCPoweredOff = true;
                         }
                     }
                 }
@@ -1497,32 +1534,34 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
             {
                 /* If there was no over current situation, then check if reset
                  * has complete. */
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CHECK_PORT_RESET_CHANGE ;
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CHECK_PORT_RESET_CHANGE;
             }
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_CLEAR_FEATURE_PORT_OC_CHANGE:
+/*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_CLEAR_FEATURE_PORT_OC_CHANGE");
 
             /* Send a control tranfer to clear the OC change status */
             portInfo->controlRequestDone = false;
-            result =_USB_HOST_HUB_FeatureRequest( hubInstanceIndex ,
-                    portNumber , USB_HUB_CLASS_FEATURE_C_PORT_OVER_CURRENT , 
-                    USB_HUB_CLASS_REQUEST_CLEAR_FEATURE , 
+            result =_USB_HOST_HUB_FeatureRequest( hubInstanceIndex,
+                    portNumber, USB_HUB_CLASS_FEATURE_C_PORT_OVER_CURRENT, 
+                    USB_HUB_CLASS_REQUEST_CLEAR_FEATURE, 
                     USB_HOST_HUB_PORT_REQUEST );
 
             if(result == USB_HOST_RESULT_SUCCESS)
             {
                 /* Wait for the control transfer to complete */
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_CLEAR_FEATURE_PORT_OC_CHANGE ;
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_CLEAR_FEATURE_PORT_OC_CHANGE;
             }
             else if( result != USB_HOST_RESULT_REQUEST_BUSY )
             {
-                SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\n_USB_HOST_HUB_PortTasks: Could not clear feature C_PORT_OVER_CURRENT for port");
-                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
+                SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\n_USB_HOST_HUB_PortTasks: Could not clear feature C_PORT_OVER_CURRENT for port");
+                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
             }
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_CLEAR_FEATURE_PORT_OC_CHANGE:
+/*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_CLEAR_FEATURE_PORT_OC_CHANGE");
 
             if(  portInfo->controlRequestDone == true) 
             {
@@ -1535,14 +1574,14 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                          * means the over current condition on this port has
                          * cleared. We must power up any ports that have been
                          * powered off due to over current. */
-                        for ( tempPortNumber = 1 ; tempPortNumber <= hubInstance->hubDescriptor.bNbrPorts ; tempPortNumber++ )
+                        for ( tempPortNumber = 1; tempPortNumber <= hubInstance->hubDescriptor.bNbrPorts; tempPortNumber++ )
                         {
                             tempPortIndex = tempPortNumber - 1;
                             if ( hubInstance->portInfo[tempPortIndex].isOCPoweredOff == true )
                             {
                                 /* Enable the power */
                                 hubInstance->portInfo[tempPortIndex].portTaskState = USB_HOST_HUB_PORT_TASK_STATE_POWER_ENABLE;
-                                hubInstance->portInfo[tempPortIndex].isOCPoweredOff = false ;
+                                hubInstance->portInfo[tempPortIndex].isOCPoweredOff = false;
                             }
                         }
                     }
@@ -1552,7 +1591,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                 }
                 else
                 {
-                    SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\nUSB Hub Driver: Could not clear feature C_PORT_OVER_CURRENT for port");
+                    SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\nUSB Hub Driver: Could not clear feature C_PORT_OVER_CURRENT for port");
                     hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
                 }
             }
@@ -1560,6 +1599,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_CHECK_PORT_RESET_CHANGE:
+/*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_CHECK_PORT_RESET_CHANGE");
 
             if( portInfo->portStatus.resetChange == 1 )
             {
@@ -1580,7 +1620,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                 }
 
                 /* Clear the reset change bit */
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CLEAR_FEATURE_PORT_RESET_CHANGE  ;
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CLEAR_FEATURE_PORT_RESET_CHANGE;
             }
             else
             {
@@ -1589,37 +1629,39 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                  * clear the bit and now check if there are any port commands
                  * to be processed. */
 
-                mask = 1 ;
+                mask = 1;
                 mask = mask << portNumber;
-                hubInstance->changeStatus = hubInstance->changeStatus & ~mask ;
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CHECK_COMMAND  ;
+                hubInstance->changeStatus = hubInstance->changeStatus & ~mask;
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CHECK_COMMAND;
             }
 
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_CLEAR_FEATURE_PORT_RESET_CHANGE:    
+/*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_CLEAR_FEATURE_PORT_RESET_CHANGE");
 
             /* Send a control transfer to clear the rest change bit */
             portInfo->controlRequestDone = false;
-            result =_USB_HOST_HUB_FeatureRequest( hubInstanceIndex ,
-                    portNumber , USB_HUB_CLASS_FEATURE_C_PORT_RESET , 
-                    USB_HUB_CLASS_REQUEST_CLEAR_FEATURE , 
+            result =_USB_HOST_HUB_FeatureRequest( hubInstanceIndex,
+                    portNumber, USB_HUB_CLASS_FEATURE_C_PORT_RESET, 
+                    USB_HUB_CLASS_REQUEST_CLEAR_FEATURE, 
                     USB_HOST_HUB_PORT_REQUEST );
 
             if(result == USB_HOST_RESULT_SUCCESS)
             {
                 /* Wait for the control transfer to complete */
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_CLEAR_FEATURE_PORT_RESET_CHANGE  ;
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_CLEAR_FEATURE_PORT_RESET_CHANGE;
             }
             else if( result != USB_HOST_RESULT_REQUEST_BUSY )
             {
-                SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\n_USB_HOST_HUB_PortTasks: Could not clear feature C_PORT_RESET for port");
-                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
+                SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\n_USB_HOST_HUB_PortTasks: Could not clear feature C_PORT_RESET for port");
+                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
             }
 
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_CLEAR_FEATURE_PORT_RESET_CHANGE:
+/*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_CLEAR_FEATURE_PORT_RESET_CHANGE");
 
             if(  portInfo->controlRequestDone == true) 
             {
@@ -1630,14 +1672,14 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                      * clear the bit and now check if there are any port commands
                      * to be processed. */
 
-                    mask = 1 ;
+                    mask = 1;
                     mask = mask << portNumber;
-                    hubInstance->changeStatus = hubInstance->changeStatus & ~mask ;
+                    hubInstance->changeStatus = hubInstance->changeStatus & ~mask;
                     portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_POST_RESET_COMPLETE_STATUS_GET;
                 }
                 else
                 {
-                    SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\n_USB_HOST_HUB_PortTasks: Could not clear feature C_PORT_RESET for port");
+                    SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\n_USB_HOST_HUB_PortTasks: Could not clear feature C_PORT_RESET for port");
                     hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
                 }
             }
@@ -1645,6 +1687,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_POST_RESET_COMPLETE_STATUS_GET:
+/*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_POST_RESET_COMPLETE_STATUS_GET");
 
             /* The clear feature port reset would have completed now. We get the
              * port status and make sure that this bit has been cleared. */
@@ -1652,7 +1695,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
 
             /* Send a request to read the port status. */
             result = _USB_HOST_HUB_StatusRequest( hubInstanceIndex, &(portInfo->portStatus),
-                    portNumber ,USB_HOST_HUB_PORT_REQUEST );
+                    portNumber,USB_HOST_HUB_PORT_REQUEST );
 
             if(result == USB_HOST_RESULT_SUCCESS)
             {
@@ -1661,14 +1704,15 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
             }
             else if( result != USB_HOST_RESULT_REQUEST_BUSY )
             {
-                SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\n_USB_HOST_HUB_PortTasks: Could not read port status for port");
-                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
+                SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\n_USB_HOST_HUB_PortTasks: Could not read port status for port");
+                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
             }
 
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_WAIT_POST_RESET_COMPLETE_STATUS_GET:
-             
+ /*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_WAIT_POST_RESET_COMPLETE_STATUS_GET");
+
             /* Here we are waiting for the post clear feature port reset port
              * status get control transfer to complete. If the change bit has
              * not cleared, then we should wait till that happens */
@@ -1696,13 +1740,14 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                 }
                 else
                 {
-                    SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\n_USB_HOST_HUB_PortTasks: Could not read port status for port");
+                    SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\n_USB_HOST_HUB_PortTasks: Could not read port status for port");
                     hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
                 }
             }
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_CLEAR_TT_BUFFER:
+ /*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_CLEAR_TT_BUFFER");
 
             /* In this state, the Hub Driver will send the clear TT command to
              * the hub. Single TT is assumed. */
@@ -1712,17 +1757,18 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
             if(result == USB_HOST_RESULT_SUCCESS)
             {
                 /* Wait for the control transfer to complete */
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_CLEAR_TT_BUFFER  ;
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_CLEAR_TT_BUFFER;
             }
             else if( result != USB_HOST_RESULT_REQUEST_BUSY )
             {
-                SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\n_USB_HOST_HUB_PortTasks: Could not clear port TT buffer");
-                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
+                SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\n_USB_HOST_HUB_PortTasks: Could not clear port TT buffer");
+                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
             }
 
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_CLEAR_TT_BUFFER:
+ /*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_CLEAR_TT_BUFFER");
 
             /* In this state, the Hub Driver will wait for the clear TT command
              * to complete */
@@ -1731,11 +1777,11 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                 if( portInfo->controlRequestResult == USB_HOST_RESULT_SUCCESS)
                 {
                     portInfo->isResetComplete = true;
-                    portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CHECK_COMMAND  ;
+                    portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CHECK_COMMAND;
                 }
                 else
                 {
-                    SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG , "\r\n_USB_HOST_HUB_PortTasks: Could not clear port TT buffer");
+                    SYS_DEBUG_MESSAGE ( SYS_ERROR_DEBUG, "\r\n_USB_HOST_HUB_PortTasks: Could not clear port TT buffer");
                     hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
                 }
             }
@@ -1743,25 +1789,30 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_CHECK_COMMAND:
+// /*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_CHECK_COMMAND");
 
             /* In this state, we check if any port command has been requested.
              * The port task routine will reach this state only if all change
              * sources have been cleared. */
+ /*jcb*/  printf("\n\r portInfo->portCommand = 0x%X ", portInfo->portCommand );
 
+// while(1);
+ 
+ 
             if ((portInfo->portCommand & USB_HOST_PORT_COMMAND_RESET) == 1)
             {
                 /* The port needs to be reset */
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_PORT_RESET  ;
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_PORT_RESET;
             }
             else if ((portInfo->portCommand & USB_HOST_PORT_COMMAND_SUSPEND) == 1)
             {
                 /* The port needs to be suspended */
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_PORT_SUSPEND  ;
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_PORT_SUSPEND;
             }
             else if ((portInfo->portCommand & USB_HOST_PORT_COMMAND_RESUME) == 1)
             {
                 /* The port needs to be resumed */
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_PORT_RESUME  ;
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_PORT_RESUME;
             }
             else 
             {
@@ -1773,34 +1824,36 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_PORT_RESET:
+ /*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_PORT_RESET");
 
             /* This state will issue a port reset. Start by clearing the reset
              * bit in port command*/
 
-            portInfo->portCommand = ( portInfo->portCommand & ~USB_HOST_PORT_COMMAND_RESET);
+            portInfo->portCommand = (USB_HOST_HUB_PORT_COMMAND)( portInfo->portCommand & ~USB_HOST_PORT_COMMAND_RESET);
             portInfo->isResetComplete = false;
             portInfo->controlRequestDone = false;
 
             /* Send the port reset control tranfer */
-            result =_USB_HOST_HUB_FeatureRequest( hubInstanceIndex ,
-                    portNumber , USB_HUB_CLASS_FEATURE_PORT_RESET , 
-                    USB_HUB_CLASS_REQUEST_SET_FEATURE , 
+            result =_USB_HOST_HUB_FeatureRequest( hubInstanceIndex,
+                    portNumber, USB_HUB_CLASS_FEATURE_PORT_RESET, 
+                    USB_HUB_CLASS_REQUEST_SET_FEATURE, 
                     USB_HOST_HUB_PORT_REQUEST );
 
             if(result == USB_HOST_RESULT_SUCCESS)
             {
                 /* Wait for the control transfer to complete */
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_PORT_RESET_COMMAND  ;
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_PORT_RESET_COMMAND;
             }
             else if( result != USB_HOST_RESULT_REQUEST_BUSY )
             {
                 SYS_DEBUG_MESSAGE (SYS_ERROR_DEBUG, "\r\n_USB_HOST_HUB_PortTasks: Could not Set Feature PORT_RESET for port");
-                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
+                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
             }
 
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_PORT_RESET_COMMAND:
+ /*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_PORT_RESET_COMMAND");
 
             if(  portInfo->controlRequestDone == true) 
             {
@@ -1810,7 +1863,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                      * sequence completes when the C_PORT_RESET condition is
                      * set. This is handled in the change status states */
 
-                    portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CHECK_CHANGE_STATUS ;
+                    portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CHECK_CHANGE_STATUS;
                 }
                 else
                 {
@@ -1821,32 +1874,34 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_PORT_SUSPEND:
+ /*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_PORT_SUSPEND");
 
             /* This state will suspend the port. */
 
-            portInfo->portCommand  = ( portInfo->portCommand & ~USB_HOST_PORT_COMMAND_SUSPEND);
+            portInfo->portCommand  = (USB_HOST_HUB_PORT_COMMAND)( portInfo->portCommand & ~USB_HOST_PORT_COMMAND_SUSPEND);
             portInfo->controlRequestDone = false;
 
             /* Send a control transfer to  suspend the port */
-            result =_USB_HOST_HUB_FeatureRequest( hubInstanceIndex ,
-                    portNumber , USB_HUB_CLASS_FEATURE_C_PORT_SUSPEND , 
-                    USB_HUB_CLASS_REQUEST_SET_FEATURE , 
+            result =_USB_HOST_HUB_FeatureRequest( hubInstanceIndex,
+                    portNumber, USB_HUB_CLASS_FEATURE_C_PORT_SUSPEND, 
+                    USB_HUB_CLASS_REQUEST_SET_FEATURE, 
                     USB_HOST_HUB_PORT_REQUEST );
 
             if(result == USB_HOST_RESULT_SUCCESS)
             {
                 /* Wait for the contorl transfer to complete */
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_PORT_SUSPEND_COMMAND  ;
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_PORT_SUSPEND_COMMAND;
             }
             else if( result != USB_HOST_RESULT_REQUEST_BUSY )
             {
                 SYS_DEBUG_MESSAGE (SYS_ERROR_DEBUG, "\r\n_USB_HOST_HUB_PortTasks: Could not Set Feature PORT_SUSPEND for port");
-                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
+                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
             }
 
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_PORT_SUSPEND_COMMAND:
+ /*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_PORT_SUSPEND_COMMAND");
 
             if(  portInfo->controlRequestDone == true) 
             {
@@ -1854,7 +1909,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                 {
                     /* The command completed successfully. Continue to check the
                      * change status */
-                    portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CHECK_CHANGE_STATUS ;
+                    portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CHECK_CHANGE_STATUS;
                 }
                 else
                 {
@@ -1865,32 +1920,34 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_PORT_RESUME:
+ /*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_PORT_RESUME");
 
             /* This state starts the port resume sequence. Start by clear the
              * resume bit in port command*/
 
-            portInfo->portCommand  = ( portInfo->portCommand & ~USB_HOST_PORT_COMMAND_RESUME);
+            portInfo->portCommand  = (USB_HOST_HUB_PORT_COMMAND)( portInfo->portCommand & ~USB_HOST_PORT_COMMAND_RESUME);
 
             /* Send a control tranfer to resume the port */
-            result =_USB_HOST_HUB_FeatureRequest( hubInstanceIndex ,
-                    portNumber , USB_HUB_CLASS_FEATURE_C_PORT_SUSPEND , 
-                    USB_HUB_CLASS_REQUEST_CLEAR_FEATURE , 
+            result =_USB_HOST_HUB_FeatureRequest( hubInstanceIndex,
+                    portNumber, USB_HUB_CLASS_FEATURE_C_PORT_SUSPEND, 
+                    USB_HUB_CLASS_REQUEST_CLEAR_FEATURE, 
                     USB_HOST_HUB_PORT_REQUEST );
 
             if(result == USB_HOST_RESULT_SUCCESS)
             {
                 /* Wait for the control transfer to complete */
-                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_PORT_RESUME_COMMAND  ;
+                portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_PORT_RESUME_COMMAND;
             }
             else if( result != USB_HOST_RESULT_REQUEST_BUSY )
             {
                 SYS_DEBUG_MESSAGE (SYS_ERROR_DEBUG, "\r\n_USB_HOST_HUB_PortTasks: Could not Set Feature PORT_RESUME for port");
-                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR ;
+                hubInstance->hubInstanceState = USB_HOST_HUB_STATE_ERROR;
             }
 
             break;
 
         case USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_PORT_RESUME_COMMAND:
+ /*jcb*/  printf("\n\r USB_HOST_HUB_PORT_TASK_STATE_WAIT_FOR_PORT_RESUME_COMMAND");
 
             if( portInfo->controlRequestDone == true) 
             {
@@ -1898,7 +1955,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
                 {
                     /* The resume command was send. We can now continue to check
                      * the change status */
-                    portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CHECK_CHANGE_STATUS ;
+                    portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_CHECK_CHANGE_STATUS;
                 }
                 else
                 {
@@ -1910,6 +1967,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
             break;
 
         default:
+ /*jcb*/  printf("\n\r USB_HOST_HUB_ DEFAULT");
             break;
     }
 }
@@ -2102,7 +2160,7 @@ USB_ERROR USB_HOST_HUB_PortReset  ( uintptr_t hubDeviceHandle, uint8_t portNumbe
     if ( index <= -1 )
     {
         /* Assert on invalid HUB index */
-        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB_HOST_HUB_PortReset: Invalid HUB instance number " );
+        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB_HOST_HUB_PortReset: Invalid HUB instance number " );
         result =  USB_ERROR_HOST_DEVICE_INSTANCE_INVALID;
     }
     else
@@ -2113,7 +2171,7 @@ USB_ERROR USB_HOST_HUB_PortReset  ( uintptr_t hubDeviceHandle, uint8_t portNumbe
         /* Validate hub entered any error conditions */
         if (  hubInstance->hubInstanceState == USB_HOST_HUB_STATE_ERROR )
         {
-            SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB_HOST_HUB_PortReset: Hub is in an error state" );
+            SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB_HOST_HUB_PortReset: Hub is in an error state" );
             result = USB_ERROR_HOST_DRIVER_NOT_READY;
         }
         else
@@ -2121,17 +2179,17 @@ USB_ERROR USB_HOST_HUB_PortReset  ( uintptr_t hubDeviceHandle, uint8_t portNumbe
             /* Is port valid ?*/
             if( portNumber < 1 || portNumber >  hubInstance->hubDescriptor.bNbrPorts )
             {
-                SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB_HOST_HUB_PortReset: Port is not valid" );
+                SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB_HOST_HUB_PortReset: Port is not valid" );
                 result = USB_ERROR_HOST_ARGUMENTS_INVALID;
             }
             else
             {
                 portInfo = & ( hubInstance->portInfo[portIndex] );
 
-                /* Validate any overCurrent  */
+                /* Validate any overCurrent */
                 if( portInfo->overCurrent == true )
                 {
-                    SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB_HOST_HUB_PortReset: Port is in an over current state" );
+                    SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB_HOST_HUB_PortReset: Port is in an over current state" );
                     result = USB_ERROR_HOST_DRIVER_NOT_READY;
                 }
                 else
@@ -2139,7 +2197,7 @@ USB_ERROR USB_HOST_HUB_PortReset  ( uintptr_t hubDeviceHandle, uint8_t portNumbe
                     /* Set the Reset command flag in the port command  field.
                      * The command will be completed by the
                      * _USB_HOST_HUB_PortTasks() function. */
-                    portInfo->portCommand |= USB_HOST_PORT_COMMAND_RESET ;
+                    portInfo->portCommand |= USB_HOST_PORT_COMMAND_RESET;
                     result = USB_ERROR_NONE;
                 }
             }
@@ -2188,7 +2246,7 @@ bool USB_HOST_HUB_PortResetComplete
     if ( index <= -1 )
     {
         /* Assert on invalid HUB index */
-        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB_HOST_HUB_PortResetComplete: Invalid HUB instance number " );
+        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB_HOST_HUB_PortResetComplete: Invalid HUB instance number " );
         result = false;
     }
     else
@@ -2198,18 +2256,18 @@ bool USB_HOST_HUB_PortResetComplete
         /* Is port number is valid ? */
         if( portNumber < 1 || portNumber >  hubInstance->hubDescriptor.bNbrPorts )
         {
-            SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB_HOST_HUB_PortResetComplete: Port Number is not valid " );
+            SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB_HOST_HUB_PortResetComplete: Port Number is not valid " );
             result = false;
         }
         else
         {
             /* Return the reset status of the port */
             portInfo = & ( hubInstance->portInfo[portIndex] );
-            result = portInfo->isResetComplete ;
+            result = portInfo->isResetComplete;
         }
     }
 
-    return result ;
+    return result;
 }
  
 // ****************************************************************************
@@ -2250,7 +2308,7 @@ USB_ERROR USB_HOST_HUB_PortSuspend
     if ( index <= -1 )
     {
         /* Assert on invalid HUB index */
-        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB_HOST_HUB_PortSuspend: Invalid HUB instance number " );
+        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB_HOST_HUB_PortSuspend: Invalid HUB instance number " );
         result =  USB_ERROR_HOST_DEVICE_INSTANCE_INVALID;
     }
     else
@@ -2261,7 +2319,7 @@ USB_ERROR USB_HOST_HUB_PortSuspend
         /* Validate hub entered any error conditions */
         if (  hubInstance->hubInstanceState == USB_HOST_HUB_STATE_ERROR )
         {
-            SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB_HOST_HUB_PortSuspend: Hub is in an error state" );
+            SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB_HOST_HUB_PortSuspend: Hub is in an error state" );
             result = USB_ERROR_HOST_DRIVER_NOT_READY;
         }
         else
@@ -2269,17 +2327,17 @@ USB_ERROR USB_HOST_HUB_PortSuspend
             /* Is port valid ?*/
             if( portNumber < 1 || portNumber >  hubInstance->hubDescriptor.bNbrPorts )
             {
-                SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB_HOST_HUB_PortSuspend: Port is not valid" );
+                SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB_HOST_HUB_PortSuspend: Port is not valid" );
                 result = USB_ERROR_HOST_ARGUMENTS_INVALID;
             }
             else
             {
                 portInfo = & ( hubInstance->portInfo[portIndex] );
 
-                /* Validate any overCurrent  */
+                /* Validate any overCurrent */
                 if( portInfo->overCurrent == true )
                 {
-                    SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB_HOST_HUB_PortSuspend: Port is in an over current state" );
+                    SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB_HOST_HUB_PortSuspend: Port is in an over current state" );
                     result = USB_ERROR_HOST_DRIVER_NOT_READY;
                 }
                 else
@@ -2287,7 +2345,7 @@ USB_ERROR USB_HOST_HUB_PortSuspend
                     /* Set the Suspen command flag in the port command  field.
                      * The command will be completed by the
                      * _USB_HOST_HUB_PortTasks() function. */
-                    portInfo->portCommand |= USB_HOST_PORT_COMMAND_SUSPEND ;
+                    portInfo->portCommand |= USB_HOST_PORT_COMMAND_SUSPEND;
                     result = USB_ERROR_NONE;
                 }
             }
@@ -2335,7 +2393,7 @@ USB_ERROR USB_HOST_HUB_PortResume
     if ( index <= -1 )
     {
         /* Assert on invalid HUB index */
-        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB_HOST_HUB_PortResume: Invalid HUB instance number " );
+        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB_HOST_HUB_PortResume: Invalid HUB instance number " );
         result =  USB_ERROR_HOST_DEVICE_INSTANCE_INVALID;
     }
     else
@@ -2346,25 +2404,25 @@ USB_ERROR USB_HOST_HUB_PortResume
         /* Validate hub entered any error conditions */
         if (  hubInstance->hubInstanceState == USB_HOST_HUB_STATE_ERROR )
         {
-            SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB_HOST_HUB_PortResume: Hub is in an error state" );
+            SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB_HOST_HUB_PortResume: Hub is in an error state" );
             result = USB_ERROR_HOST_DRIVER_NOT_READY;
         }
         else
         {
-            /* Is port valid ?*/
+            /* Is port valid ? */
             if( portNumber < 1 || portNumber >  hubInstance->hubDescriptor.bNbrPorts )
             {
-                SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB_HOST_HUB_PortResume: Port is not valid" );
+                SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB_HOST_HUB_PortResume: Port is not valid" );
                 result = USB_ERROR_HOST_ARGUMENTS_INVALID;
             }
             else
             {
                 portInfo = & ( hubInstance->portInfo[portIndex] );
             
-                /* Validate any overCurrent  */
+                /* Validate any overCurrent */
                 if( portInfo->overCurrent == true )
                 {
-                    SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB_HOST_HUB_PortResume: Port is in an over current state" );
+                    SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB_HOST_HUB_PortResume: Port is in an over current state" );
                     result = USB_ERROR_HOST_DRIVER_NOT_READY;
                 }
                 else
@@ -2372,7 +2430,7 @@ USB_ERROR USB_HOST_HUB_PortResume
                     /* Set the Resume command flag in the port command  field.
                      * The command will be completed by the
                      * _USB_HOST_HUB_PortTasks() function. */
-                    portInfo->portCommand |= USB_HOST_PORT_COMMAND_RESUME ;
+                    portInfo->portCommand |= USB_HOST_PORT_COMMAND_RESUME;
                     result = USB_ERROR_NONE;
                 }
             }
@@ -2422,7 +2480,7 @@ USB_SPEED  USB_HOST_HUB_PortSpeedGet
     /* Validate the index */
     if ( index <= -1 )
     {
-        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB_HOST_HUB_PortSpeedGet: Invalid HUB instance number " );
+        SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB_HOST_HUB_PortSpeedGet: Invalid HUB instance number " );
         portSpeed = USB_SPEED_ERROR;
     }
     {
@@ -2433,7 +2491,7 @@ USB_SPEED  USB_HOST_HUB_PortSpeedGet
         /* Validate hub entered any error conditions */
         if (  hubInstance->hubInstanceState == USB_HOST_HUB_STATE_ERROR )
         {
-            SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB_HOST_HUB_PortSpeedGet: Hub is in an error state" );
+            SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB_HOST_HUB_PortSpeedGet: Hub is in an error state" );
             portSpeed = USB_SPEED_ERROR;
         }
         else
@@ -2441,15 +2499,15 @@ USB_SPEED  USB_HOST_HUB_PortSpeedGet
             /* Is port valid ?*/
             if( portNumber < 1 || portNumber >  hubInstance->hubDescriptor.bNbrPorts )
             {
-                SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB_HOST_HUB_PortSpeedGet: Invalid port number" );
+                SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB_HOST_HUB_PortSpeedGet: Invalid port number" );
                 portSpeed = USB_SPEED_ERROR;
             }
             else
             {
-                /* Validate any overCurrent situation  */
+                /* Validate any overCurrent situation */
                 if( portInfo->overCurrent == true )
                 {
-                    SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO , "\r\nUSB_HOST_HUB_PortSpeedGet: Port is in an overcurrent state" );
+                    SYS_DEBUG_MESSAGE ( SYS_ERROR_INFO, "\r\nUSB_HOST_HUB_PortSpeedGet: Port is in an overcurrent state" );
                     portSpeed = USB_SPEED_ERROR;
                 }
                 else
@@ -2498,7 +2556,7 @@ void  _USB_HOST_HUB_ControlTransferComplete
 )
 {
     uint32_t hubIndex;
-    uint32_t portIndex ;
+    uint32_t portIndex;
     uint32_t portNumber;
     USB_HOST_HUB_PORT_INFO * portInfo;
     USB_HOST_HUB_INSTANCE_OBJ * hubInstance;
@@ -2507,25 +2565,33 @@ void  _USB_HOST_HUB_ControlTransferComplete
      * 31-16) and the hub instance index (bits 15-0). If the port number is 0,
      * then this control transfer was targetted at the hub */
 
-    portNumber =  ( context & PORT_INDEX_MASK ) >> 16 ;
+    portNumber =  ( context & PORT_INDEX_MASK ) >> 16;
     hubIndex =   ( context & HUB_INDEX_MASK );
 
     /* Get a pointer to the instance */
     hubInstance = &gUSBHostHubObj[hubIndex];
 
-    portIndex = portNumber - 1;
+    if(portNumber > 1 )
+    {
+        portIndex = portNumber - 1;
+    }
+    else
+    {
+        portIndex = 0;
+    }
     portInfo = &( hubInstance->portInfo[portIndex] );
 
     if ( portNumber == 0x0 )
     { 
         /* This was a hub request */
-        hubInstance->controlRequestDone = true ;
+        hubInstance->controlRequestDone = true;
         hubInstance->controlRequestResult = result;
     }
     else 
     {
         /* This was a port request */
-        portInfo->controlRequestDone = true ;
+        printf("->controlRequestDone 3 = true");
+        portInfo->controlRequestDone = true;
         portInfo->controlRequestResult = result;
     }
 }
@@ -2564,7 +2630,7 @@ USB_HOST_RESULT _USB_HOST_HUB_HubDescriptorGet (int hubInstanceIndex )
     /* Fill setup packet */
     setupPacket->bRequest = USB_HUB_CLASS_REQUEST_GET_DESCRIPTOR;
     setupPacket->bmRequestType = USB_HUB_CLASS_STANDARD_HUB_REQUEST;
-    setupPacket->wLength = 0x09 ; 
+    setupPacket->wLength = 0x09; 
     setupPacket->wIndex = 0x00;
     setupPacket->wValue = ( USB_HUB_DESCRIPTOR_TYPE << 8 );
 
@@ -2612,7 +2678,7 @@ USB_HOST_RESULT _USB_HOST_HUB_HubDeviceStatusGet (int hubInstanceIndex )
     setupPacket->bRequest = USB_REQUEST_GET_STATUS;
     setupPacket->wValue = 0;
     setupPacket->wIndex = 0x00;
-    setupPacket->wLength = 0x02 ; 
+    setupPacket->wLength = 0x02; 
 
     data = & ( hubInstance->deviceStatus );
     pipeHandle = hubInstance->controlPipeHandle;
@@ -2627,8 +2693,8 @@ USB_HOST_RESULT _USB_HOST_HUB_HubDeviceStatusGet (int hubInstanceIndex )
     USB_HOST_RESULT USB_HOST_HUB_StatusRequest 
     ( 
         USB_HOST_HUB_DRIVER_INFO *hubDriverInstnceInfo, 
-        USB_HOST_HUB_STATUS  *hubStatus ,
-        uint8_t portNumber , 
+        USB_HOST_HUB_STATUS  *hubStatus,
+        uint8_t portNumber, 
         uint8_t requestType 
     )
  
@@ -2647,8 +2713,8 @@ USB_HOST_RESULT _USB_HOST_HUB_HubDeviceStatusGet (int hubInstanceIndex )
 USB_HOST_RESULT _USB_HOST_HUB_StatusRequest 
 ( 
     int hubInstanceIndex,
-    void * status ,
-    uint8_t portNumber , 
+    void * status,
+    uint8_t portNumber, 
     uint8_t requestType 
 )
 {
@@ -2679,13 +2745,13 @@ USB_HOST_RESULT _USB_HOST_HUB_StatusRequest
     }
     
     setupPacket->bRequest = USB_HUB_CLASS_REQUEST_GET_STATUS;
-    setupPacket->wLength = 0x04 ;
+    setupPacket->wLength = 0x04;
     setupPacket->wIndex = portNumber;
     setupPacket->wValue = 0x00;
 
     /* Place the control transfer request. The context is a combination of the
      * port number (bits 31-16) and the hub instance index (bits 15-0) */
-    context = (portNumber << 16) + hubInstanceIndex ;
+    context = (portNumber << 16) + hubInstanceIndex;
     pipeHandle = hubInstance->controlPipeHandle;
     
     /* Try to launch the control transfer. Note that we are ignoring the
@@ -2748,13 +2814,13 @@ USB_HOST_RESULT _USB_HOST_HUB_PortTTBufferClear
 
     setupPacket->bmRequestType = 0x23;
     setupPacket->bRequest = USB_HUB_CLASS_REQUEST_CLEAR_TT_BUFFER;
-    setupPacket->wLength = 0x00 ;
+    setupPacket->wLength = 0x00;
     setupPacket->wIndex = ttPortNumber;
     setupPacket->wValue = 0x00;
 
     /* Place the control transfer request. The context is a combination of the
      * port number (bits 31-16) and the hub instance index (bits 15-0) */
-    context = (portNumber << 16) + hubInstanceIndex ;
+    context = (portNumber << 16) + hubInstanceIndex;
     pipeHandle = hubInstance->controlPipeHandle;
 
     /* Try to launch the control transfer. Note that we are ignoring the
@@ -2769,9 +2835,9 @@ USB_HOST_RESULT _USB_HOST_HUB_PortTTBufferClear
     USB_HOST_RESULT  _USB_HOST_HUB_FeatureRequest 
     (
         USB_HOST_HUB_DRIVER_INFO *hubDriverInstanceInfo,
-        uint32_t portNumber ,
+        uint32_t portNumber,
         uint8_t Feature, 
-        uint8_t hubCommand ,
+        uint8_t hubCommand,
         uint8_t requestType
     )
  
@@ -2789,9 +2855,9 @@ USB_HOST_RESULT _USB_HOST_HUB_PortTTBufferClear
 USB_HOST_RESULT  _USB_HOST_HUB_FeatureRequest 
 (
     uint32_t hubInstanceIndex,
-    uint32_t portNumber ,
+    uint32_t portNumber,
     uint8_t feature, 
-    uint8_t hubCommand ,
+    uint8_t hubCommand,
     uint8_t requestType
 )
 {
@@ -2829,9 +2895,9 @@ USB_HOST_RESULT  _USB_HOST_HUB_FeatureRequest
     /* Place the control transfer request. The context is a combination of the
      * port number (bits 31-16) and the hub instance index (bits 15-0) */
     callback = _USB_HOST_HUB_ControlTransferComplete;
-    context = (portNumber << 16) + hubInstanceIndex ;
+    context = (portNumber << 16) + hubInstanceIndex;
     pipeHandle = hubInstance->controlPipeHandle;
-    result =  USB_HOST_DeviceControlTransfer ( pipeHandle , &transferHandle , setupPacket, data , callback , context );
+    result =  USB_HOST_DeviceControlTransfer ( pipeHandle, &transferHandle, setupPacket, data, callback, context );
     return result;
 }
 

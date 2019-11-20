@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-08-22T13:04:25Z */
+/* file generated from device description version 2019-09-09T16:15:12Z */
 #ifndef _SAM9X60_H_
 #define _SAM9X60_H_
 
@@ -68,13 +68,12 @@
 /** @}  end of Atmel Global Defines */
 
 /* ************************************************************************** */
-/*   CMSIS DEFINITIONS FOR SAM9X60                                            */
+/*   INTERRUPTS DEFINITIONS FOR SAM9X60                                       */
 /* ************************************************************************** */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 /** Interrupt Number Definition */
 typedef enum IRQn
 {
-/******  ARM926EJS Processor Exceptions Numbers ******************************/
 /******  SAM9X60 specific Interrupt Numbers ***********************************/
   EXT_FIQ_IRQn              =   0, /**< 0   Advanced Interrupt Controller (AIC) */
   PMC_IRQn                  =   1, /**< 1   Shared between PMC RSTC RTT PIT WDT RTC (PMC) */
@@ -138,168 +137,19 @@ typedef enum IRQn
 } IRQn_Type;
 #endif /* !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__)) */
 
-#if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
-typedef struct _DeviceVectors
-{
-  /* Stack pointer */
-  void* pvStack;
-  /* Cortex-M handlers */
-  void* pvReservedC15;
-  void* pvReservedC14;
-  void* pvReservedC13;
-  void* pvReservedC12;
-  void* pvReservedC11;
-  void* pvReservedC10;
-  void* pvReservedC9;
-  void* pvReservedC8;
-  void* pvReservedC7;
-  void* pvReservedC6;
-  void* pvReservedC5;
-  void* pvReservedC4;
-  void* pvReservedC3;
-  void* pvReservedC2;
-  void* pvReservedC1;
-
-  /* Peripheral handlers */
-  void* pfnEXT_FIQ_Handler;                      /*   0 Advanced Interrupt Controller (AIC) */
-  void* pfnSYSC_Handler;                         /*   1 System Controller Interrupt (PMC RSTC RTT PIT WDT RTC) */
-  void* pfnPIOA_Handler;                         /*   2 Parallel Input/Output Controller (PIOA) */
-  void* pfnPIOB_Handler;                         /*   3 Parallel Input/Output Controller (PIOB) */
-  void* pfnPIOC_Handler;                         /*   4 Parallel Input/Output Controller (PIOC) */
-  void* pfnFLEXCOM0_Handler;                     /*   5 Flexible Serial Communication (FLEXCOM0) */
-  void* pfnFLEXCOM1_Handler;                     /*   6 Flexible Serial Communication (FLEXCOM1) */
-  void* pfnFLEXCOM2_Handler;                     /*   7 Flexible Serial Communication (FLEXCOM2) */
-  void* pfnFLEXCOM3_Handler;                     /*   8 Flexible Serial Communication (FLEXCOM3) */
-  void* pfnFLEXCOM6_Handler;                     /*   9 Flexible Serial Communication (FLEXCOM6) */
-  void* pfnFLEXCOM7_Handler;                     /*  10 Flexible Serial Communication (FLEXCOM7) */
-  void* pfnFLEXCOM8_Handler;                     /*  11 Flexible Serial Communication (FLEXCOM8) */
-  void* pfnSDMMC0_Handler;                       /*  12 Secure Digital MultiMedia Card Controller (SDMMC0) */
-  void* pfnFLEXCOM4_Handler;                     /*  13 Flexible Serial Communication (FLEXCOM4) */
-  void* pfnFLEXCOM5_Handler;                     /*  14 Flexible Serial Communication (FLEXCOM5) */
-  void* pfnFLEXCOM9_Handler;                     /*  15 Flexible Serial Communication (FLEXCOM9) */
-  void* pfnFLEXCOM10_Handler;                    /*  16 Flexible Serial Communication (FLEXCOM10) */
-  void* pfnTC0_Handler;                          /*  17 Timer Counter (TC0) */
-  void* pfnPWM_Handler;                          /*  18 Pulse Width Modulation Controller (PWM) */
-  void* pfnADC_Handler;                          /*  19 Analog-to-Digital Converter (ADC) */
-  void* pfnXDMAC_Handler;                        /*  20 Extensible DMA Controller (XDMAC) */
-  void* pfnMATRIX_Handler;                       /*  21 AHB Bus Matrix (MATRIX) */
-  void* pvReserved22;
-  void* pfnUDPHS_Handler;                        /*  23 USB High Speed Device Port (UDPHS) */
-  void* pfnEMAC0_Handler;                        /*  24 Ethernet MAC 10/100 (EMAC0) */
-  void* pfnLCDC_Handler;                         /*  25 LCD Controller (LCDC) */
-  void* pfnSDMMC1_Handler;                       /*  26 Secure Digital MultiMedia Card Controller (SDMMC1) */
-  void* pfnEMAC1_Handler;                        /*  27 Ethernet MAC 10/100 (EMAC1) */
-  void* pfnSSC_Handler;                          /*  28 Synchronous Serial Controller (SSC) */
-  void* pfnCAN0_Handler;                         /*  29 Controller Area Network (CAN0) */
-  void* pfnCAN1_Handler;                         /*  30 Controller Area Network (CAN1) */
-  void* pfnEXT_IRQ_Handler;                      /*  31 Advanced Interrupt Controller (AIC) */
-  void* pfnFLEXCOM11_Handler;                    /*  32 Flexible Serial Communication (FLEXCOM11) */
-  void* pfnFLEXCOM12_Handler;                    /*  33 Flexible Serial Communication (FLEXCOM12) */
-  void* pfnI2SMCC_Handler;                       /*  34 Inter-IC Sound Multi Channel Controller (I2SMCC) */
-  void* pfnQSPI_Handler;                         /*  35 Quad Serial Peripheral Interface (QSPI) */
-  void* pfnGFX2D_Handler;                        /*  36 2D Graphics Engine (GFX2D) */
-  void* pfnPIT64B_Handler;                       /*  37 Periodic Interval Timer 64-bit (PIT64B) */
-  void* pfnTRNG_Handler;                         /*  38 True Random Number Generator (TRNG) */
-  void* pfnAES_Handler;                          /*  39 Advanced Encryption Standard (AES) */
-  void* pfnTDES_Handler;                         /*  40 Triple Data Encryption Standard (TDES) */
-  void* pfnSHA_Handler;                          /*  41 Secure Hash Algorithm (SHA) */
-  void* pfnCLASSD_Handler;                       /*  42 Audio Class D Amplifier (CLASSD) */
-  void* pfnISI_Handler;                          /*  43 Image Sensor Interface (ISI) */
-  void* pfnPIOD_Handler;                         /*  44 Parallel Input/Output Controller (PIOD) */
-  void* pfnTC1_Handler;                          /*  45 Timer Counter (TC1) */
-  void* pfnOTPC_Handler;                         /*  46 OTP Memory Controller (OTPC) */
-  void* pfnDBGU_Handler;                         /*  47 Debug Unit (DBGU) */
-  void* pfnECC_Handler;                          /*  48 ECC Controller (PMECC PMERRLOC) */
-  void* pfnMC_Handler;                           /*  49 Memory Controller (SDRAMC MPDDRC SMC) */
-} DeviceVectors;
-
-/* Defines for Deprecated Interrupt and Exceptions handler names */
-#define pfnMemManage_Handler      pfnMemoryManagement_Handler     /**< \deprecated  Backward compatibility for ASF*/
-#define pfnDebugMon_Handler       pfnDebugMonitor_Handler         /**< \deprecated  Backward compatibility for ASF*/
-#define pfnNMI_Handler            pfnNonMaskableInt_Handler       /**< \deprecated  Backward compatibility for ASF*/
-#define pfnSVC_Handler            pfnSVCall_Handler               /**< \deprecated  Backward compatibility for ASF*/
-
-#endif /* !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__)) */
-
-#if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
-#if !defined DONT_USE_PREDEFINED_CORE_HANDLERS
-/* ARM926EJS exception handlers */
-#endif /* DONT_USE_PREDEFINED_CORE_HANDLERS */
-
-#if !defined DONT_USE_PREDEFINED_PERIPHERALS_HANDLERS
-/* Peripherals interrupt handlers */
-void EXT_FIQ_Handler               ( void );
-void SYSC_Handler                  ( void );
-void PIOA_Handler                  ( void );
-void PIOB_Handler                  ( void );
-void PIOC_Handler                  ( void );
-void FLEXCOM0_Handler              ( void );
-void FLEXCOM1_Handler              ( void );
-void FLEXCOM2_Handler              ( void );
-void FLEXCOM3_Handler              ( void );
-void FLEXCOM6_Handler              ( void );
-void FLEXCOM7_Handler              ( void );
-void FLEXCOM8_Handler              ( void );
-void SDMMC0_Handler                ( void );
-void FLEXCOM4_Handler              ( void );
-void FLEXCOM5_Handler              ( void );
-void FLEXCOM9_Handler              ( void );
-void FLEXCOM10_Handler             ( void );
-void TC0_Handler                   ( void );
-void PWM_Handler                   ( void );
-void ADC_Handler                   ( void );
-void XDMAC_Handler                 ( void );
-void MATRIX_Handler                ( void );
-void UDPHS_Handler                 ( void );
-void EMAC0_Handler                 ( void );
-void LCDC_Handler                  ( void );
-void SDMMC1_Handler                ( void );
-void EMAC1_Handler                 ( void );
-void SSC_Handler                   ( void );
-void CAN0_Handler                  ( void );
-void CAN1_Handler                  ( void );
-void EXT_IRQ_Handler               ( void );
-void FLEXCOM11_Handler             ( void );
-void FLEXCOM12_Handler             ( void );
-void I2SMCC_Handler                ( void );
-void QSPI_Handler                  ( void );
-void GFX2D_Handler                 ( void );
-void PIT64B_Handler                ( void );
-void TRNG_Handler                  ( void );
-void AES_Handler                   ( void );
-void TDES_Handler                  ( void );
-void SHA_Handler                   ( void );
-void CLASSD_Handler                ( void );
-void ISI_Handler                   ( void );
-void PIOD_Handler                  ( void );
-void TC1_Handler                   ( void );
-void OTPC_Handler                  ( void );
-void DBGU_Handler                  ( void );
-void ECC_Handler                   ( void );
-void MC_Handler                    ( void );
-#endif /* DONT_USE_PREDEFINED_PERIPHERALS_HANDLERS */
-/* Defines for Deprecated Interrupt and Exceptions handler names */
-#define MemManage_Handler         MemoryManagement_Handler        /**< \deprecated  Backward compatibility*/
-#define DebugMon_Handler          DebugMonitor_Handler            /**< \deprecated  Backward compatibility*/
-#define NMI_Handler               NonMaskableInt_Handler          /**< \deprecated  Backward compatibility*/
-#define SVC_Handler               SVCall_Handler                  /**< \deprecated  Backward compatibility*/
-
-#endif /* !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__)) */
-
-/*
- * \brief Configuration of the ARM926EJS Processor and Core Peripherals
- */
-
 /*
  * \brief CMSIS includes
  */
-#ifdef __cplusplus
-  #define __I  volatile       /**< Defines 'read-only'  permissions */
-#else
-  #define __I  volatile const /**< Defines 'read-only'  permissions */
-#endif
-#define   __O  volatile       /**< Defines 'write-only' permissions */
-#define   __IO volatile       /**< Defines 'read/write' permissions */
+#if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
+   /* IO definitions (access restrictions to peripheral registers) */
+   #ifdef __cplusplus
+     #define __I  volatile       /**< Defines 'read-only'  permissions */
+   #else
+     #define __I  volatile const /**< Defines 'read-only'  permissions */
+   #endif
+   #define   __O  volatile       /**< Defines 'write-only' permissions */
+   #define   __IO volatile       /**< Defines 'read/write' permissions */
+#endif /* !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__)) */
 
 /** \defgroup SAM9X60_api Peripheral Software API
  *  @{
@@ -619,7 +469,7 @@ void MC_Handler                    ( void );
 /**  DEVICE SIGNATURES FOR SAM9X60                                            */
 /* ************************************************************************** */
 #define CHIP_JTAGID                    _UL_(0X05B4403F)
-#define CHIP_CIDR                      _UL_(0X819B81A0)
+#define CHIP_CIDR                      _UL_(0X819B3540)
 #define CHIP_EXID                      _UL_(0X00000002)
 
 /* ************************************************************************** */

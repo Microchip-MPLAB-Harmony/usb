@@ -84,20 +84,20 @@ extern "C" {
 #define SYS_TIME_MAX_TIMERS                  5
 #define SYS_TIME_HW_COUNTER_WIDTH            32
 #define SYS_TIME_HW_COUNTER_PERIOD           4294967295U
-#define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
+#define SYS_TIME_HW_COUNTER_HALF_PERIOD	     (SYS_TIME_HW_COUNTER_PERIOD>>1)
 #define SYS_TIME_CPU_CLOCK_FREQUENCY         498000000
 #define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (2200)
 
 
 /* File System Service Configuration */
 
-#define SYS_FS_MEDIA_NUMBER               2
+#define SYS_FS_MEDIA_NUMBER               1
 
-#define SYS_FS_VOLUME_NUMBER              (1 + 1)
+#define SYS_FS_VOLUME_NUMBER              (1)
 
 #define SYS_FS_AUTOMOUNT_ENABLE           true
-#define SYS_FS_CLIENT_NUMBER              2
-#define SYS_FS_MAX_FILES                  2
+#define SYS_FS_CLIENT_NUMBER              1
+#define SYS_FS_MAX_FILES                  1
 #define SYS_FS_MAX_FILE_SYSTEM_TYPE       1
 #define SYS_FS_MEDIA_MAX_BLOCK_SIZE       512
 #define SYS_FS_MEDIA_MANAGER_BUFFER_SIZE  2048
@@ -112,12 +112,6 @@ extern "C" {
 					
 #define SYS_FS_MEDIA_IDX0_MOUNT_NAME_VOLUME_IDX0 			"/mnt/myDrive1"
 #define SYS_FS_MEDIA_IDX0_DEVICE_NAME_VOLUME_IDX0			"/dev/sda1"
-								
-#define SYS_FS_MEDIA_TYPE_IDX1 				SYS_FS_MEDIA_TYPE_MSD
-#define SYS_FS_TYPE_IDX1 					FAT
-					
-#define SYS_FS_MEDIA_IDX1_MOUNT_NAME_VOLUME_IDX0 			"/mnt/myDrive2"
-#define SYS_FS_MEDIA_IDX1_DEVICE_NAME_VOLUME_IDX0			"/dev/sdb1"
 								
 
 
@@ -135,11 +129,11 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 /* Number of MSD Function driver instances in the application */
-#define USB_HOST_MSD_INSTANCES_NUMBER         2
+#define USB_HOST_MSD_INSTANCES_NUMBER         1
 
 /* Number of Logical Units */
-#define USB_HOST_SCSI_INSTANCES_NUMBER        2
-#define USB_HOST_MSD_LUN_NUMBERS              2
+#define USB_HOST_SCSI_INSTANCES_NUMBER        1
+#define USB_HOST_MSD_LUN_NUMBERS              1
 
 
 /*** USB Driver Configuration ***/
@@ -176,13 +170,13 @@ extern "C" {
 /* Number of Endpoints used */
 #define DRV_USB_UHP_ENDPOINTS_NUMBER                        1
 
-#define USB_HOST_DEVICES_NUMBER                             3 
+#define USB_HOST_DEVICES_NUMBER                             1 
 
 /* Size of Endpoint 0 buffer */
 #define USB_DEVICE_EP0_BUFFER_SIZE                          64
 
 /* Target peripheral list entries */
-#define  USB_HOST_TPL_ENTRIES                               2   // JCB where to change ?
+#define  USB_HOST_TPL_ENTRIES                               2 
 
 /* Maximum number of configurations supported per device */
 #define USB_HOST_DEVICE_INTERFACES_NUMBER                   5    
