@@ -70,7 +70,7 @@ ${LIST_USB_HOST_TPL_ENTRY}
 
 const USB_HOST_HCD hcdTable = 
 {
-	/* Index of the USB Driver used by the Host Layer */
+    /* Index of the USB Driver used by the Host Layer */
     .drvIndex = ${CONFIG_USB_DRIVER_INDEX},
 
     /* Pointer to the USB Driver Functions. */

@@ -77,25 +77,36 @@ void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
 
 DRV_USB_UHP_INIT drvUSBInit =
 {
-	/* Interrupt Source for USB module */
 <#if core.DeviceFamily == "SAMA5D2">
+    /* Interrupt Source for USB module */
     .interruptSource = (INT_SOURCE)41,
-<#elseif core.DeviceFamily == "SAM9X60">
-	.interruptSource = (INT_SOURCE)ID_UHPHS_EHCI,
-</#if>
-	
-	/* Enable High Speed Operation */
+    /* Enable High Speed Operation */
     .operationSpeed = USB_SPEED_HIGH,
-	
-	/* USB Host Power Enable. USB Driver uses this function to Enable the VBUS */ 
-    .portPowerEnable = DRV_USB_VBUSPowerEnable,
-	
-	/* Root hub available current in milliamperes */	
-    .rootHubAvailableCurrent = 500,
-	
-	/* USB base address */
+    /* USB base address */
     .usbIDEHCI = ((uhphs_registers_t*)UHPHS_EHCI_ADDR),
     .usbIDOHCI = ((UhpOhci*)UHPHS_OHCI_ADDR),
+<#elseif core.DeviceFamily == "SAM9X60">
+    /* Interrupt Source for USB module */
+    .interruptSource = (INT_SOURCE)ID_UHPHS_EHCI,
+    /* Enable High Speed Operation */
+    .operationSpeed = USB_SPEED_HIGH,
+    /* USB base address */
+    .usbIDEHCI = ((uhphs_registers_t*)UHPHS_EHCI_ADDR),
+    .usbIDOHCI = ((UhpOhci*)UHPHS_OHCI_ADDR),
+<#elseif core.DeviceFamily == "SAM_G55">
+    /* Interrupt Source for USB module */
+    .interruptSource = (INT_SOURCE)UHP_IRQn,
+    /* Enable Full Speed Operation */
+    .operationSpeed = USB_SPEED_FULL,
+    /* USB base address */
+    .usbIDOHCI = ((UhpOhci*)0x20400000),
+</#if>
+    
+    /* USB Host Power Enable. USB Driver uses this function to Enable the VBUS */ 
+    .portPowerEnable = DRV_USB_VBUSPowerEnable,
+    
+    /* Root hub available current in milliamperes */    
+    .rootHubAvailableCurrent = 500
 };
 <#--
 /*******************************************************************************

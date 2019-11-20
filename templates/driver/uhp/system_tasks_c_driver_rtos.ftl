@@ -47,7 +47,7 @@
     <#lt>{
     <#lt>    while(1)
     <#lt>    {
-				 /* USB HS Driver Task Routine */
+                 /* USB HS Driver Task Routine */
     <#lt>        DRV_USB_UHP_Tasks(sysObj.drvUSBObject);
              <#if USB_DRIVER_RTOS_USE_DELAY >
     <#lt>        vTaskDelay(${USB_DRIVER_RTOS_DELAY} / portTICK_PERIOD_MS);
