@@ -27,16 +27,16 @@
           <Name dnOrder="1">drv_usbfsv1.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/driver/usb/usbfsv1/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">7CD92AF3F328CB37DB0F9F0F22A0456B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">7CD92AF3F328CB37DB0F9F0F22A0456B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">1DCA3D1756EFD888A1D170554AD4F4D7</GeneratedChecksum>
+          <UserChecksum dnOrder="5">1DCA3D1756EFD888A1D170554AD4F4D7</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_usbfsv1_device.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/driver/usb/usbfsv1/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">3B202840510EBED08008242E91384CF0</GeneratedChecksum>
-          <UserChecksum dnOrder="5">3B202840510EBED08008242E91384CF0</UserChecksum>
+          <GeneratedChecksum dnOrder="4">246F6873C0F776119B030A4A57EF7A69</GeneratedChecksum>
+          <UserChecksum dnOrder="5">246F6873C0F776119B030A4A57EF7A69</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -835,8 +835,8 @@
       <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAMD21_DFP\3.0.35\samd21a\atdf\ATSAMD21J18A.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
-      <Setting dnOrder="4" key="MERGE_STRATEGY" value="OVERWRITE"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;"/>
+      <Setting dnOrder="4" key="MERGE_STRATEGY" value="ALL"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>

@@ -61,7 +61,10 @@ const USB_SPEED gDrvUSBFSV1DeviceSpeedMap[4] =
     USB_SPEED_ERROR
 };
 
-/* Array of endpoint types. To map the endpoint type as per bit values */
+/******************************************************
+ * Array of endpoint types. To map the endpoint type as 
+ * per bit values
+ ******************************************************/
 const uint8_t gDrvUSBFSV1DeviceEndpointTypeMap[4][2] =
 {
 	{(uint8_t)USB_DEVICE_EPCFG_EPTYPE0(1), (uint8_t)USB_DEVICE_EPCFG_EPTYPE1(1)},
@@ -69,6 +72,13 @@ const uint8_t gDrvUSBFSV1DeviceEndpointTypeMap[4][2] =
 	{(uint8_t)USB_DEVICE_EPCFG_EPTYPE0(3), (uint8_t)USB_DEVICE_EPCFG_EPTYPE1(3)},
 	{(uint8_t)USB_DEVICE_EPCFG_EPTYPE0(4), (uint8_t)USB_DEVICE_EPCFG_EPTYPE1(4)}
 };
+
+/******************************************************
+ * Control Endpoint IN/OUT buffers needed by the USB
+ * controller
+ ******************************************************/
+COMPILER_WORD_ALIGNED uint8_t gDrvEP0BufferBank0[USB_DEVICE_EP0_BUFFER_SIZE];
+COMPILER_WORD_ALIGNED uint8_t gDrvEP0BufferBank1[USB_DEVICE_EP0_BUFFER_SIZE];
 
 /*****************************************************
  * This structure is a pointer to a set of USB Driver
@@ -133,6 +143,10 @@ void _DRV_USBFSV1_DEVICE_Initialize
     {
         drvObj->deviceEndpointObj[loopIndex] = &gDrvUSBEndpointObjects[index][loopIndex][0];
     }
+
+    /* Assign the endpoint table */
+    drvObj->endpoint0BufferPtr[0] = gDrvEP0BufferBank0;
+    drvObj->endpoint0BufferPtr[1] = gDrvEP0BufferBank1;
 
     /* Initialize device specific flags */
     drvObj->isAttached = false;
@@ -337,7 +351,7 @@ void DRV_USBFSV1_DEVICE_Attach
          * on getting SUSPEND */
         usbID->DEVICE.USB_INTFLAG = USB_DEVICE_INTFLAG_Msk;
 
-        usbID->DEVICE.USB_INTENSET |= (USB_DEVICE_INTENSET_EORSM_Msk | USB_DEVICE_INTENSET_SUSPEND_Msk | USB_DEVICE_INTENSET_SOF_Msk | USB_DEVICE_INTENSET_EORST_Msk | USB_DEVICE_INTENSET_WAKEUP_Msk);
+        usbID->DEVICE.USB_INTENSET |= (USB_DEVICE_INTENSET_SUSPEND_Msk | USB_DEVICE_INTENSET_SOF_Msk | USB_DEVICE_INTENSET_EORST_Msk | USB_DEVICE_INTENSET_WAKEUP_Msk);
 
         /* Enable the USB device by clearing the . This function
          * also enables the D+ pull up resistor.  */
@@ -2296,41 +2310,105 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
     {
         usbID = hDriver->usbID;
 
-        if(((usbID->DEVICE.USB_INTFLAG & USB_DEVICE_INTFLAG_SOF_Msk) == USB_DEVICE_INTFLAG_SOF_Msk) &&
-           ((usbID->DEVICE.USB_INTENSET & USB_DEVICE_INTENSET_SOF_Msk) == USB_DEVICE_INTENSET_SOF_Msk))
+        if(((usbID->DEVICE.USB_INTFLAG & USB_DEVICE_INTFLAG_LPMSUSP_Msk) == USB_DEVICE_INTFLAG_LPMSUSP_Msk) &&
+           ((usbID->DEVICE.USB_INTENSET & USB_DEVICE_INTENSET_LPMSUSP_Msk) == USB_DEVICE_INTENSET_LPMSUSP_Msk))
         {
-            usbID->DEVICE.USB_INTFLAG |= USB_DEVICE_INTFLAG_SOF_Msk;
-
-            hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBFSV1_EVENT_SOF_DETECT, NULL);
-
+            /* This is not supported yet. Just clear the flag and exit */
+            usbID->DEVICE.USB_INTFLAG |= USB_DEVICE_INTFLAG_LPMSUSP_Msk;
         }
 
-        if(((usbID->DEVICE.USB_INTFLAG & USB_DEVICE_INTFLAG_WAKEUP_Msk) == USB_DEVICE_INTFLAG_WAKEUP_Msk) &&
-           ((usbID->DEVICE.USB_INTENSET & USB_DEVICE_INTENSET_WAKEUP_Msk) == USB_DEVICE_INTENSET_WAKEUP_Msk))
+        if(((usbID->DEVICE.USB_INTFLAG & USB_DEVICE_INTFLAG_LPMNYET_Msk) == USB_DEVICE_INTFLAG_LPMNYET_Msk) &&
+           ((usbID->DEVICE.USB_INTENSET & USB_DEVICE_INTENSET_LPMNYET_Msk) == USB_DEVICE_INTENSET_LPMNYET_Msk))
         {
-            usbID->DEVICE.USB_INTFLAG |= USB_DEVICE_INTFLAG_WAKEUP_Msk;
-        }
-
-        if(((usbID->DEVICE.USB_INTFLAG & USB_DEVICE_INTFLAG_SUSPEND_Msk) == USB_DEVICE_INTFLAG_SUSPEND_Msk) &&
-           ((usbID->DEVICE.USB_INTENSET & USB_DEVICE_INTENSET_SUSPEND_Msk) == USB_DEVICE_INTENSET_SUSPEND_Msk))
-        {
-            usbID->DEVICE.USB_INTFLAG |= USB_DEVICE_INTFLAG_SUSPEND_Msk;
+            /* This is not supported yet. Just clear the flag and exit */
+            usbID->DEVICE.USB_INTFLAG |= USB_DEVICE_INTFLAG_LPMNYET_Msk;
         }
 
         if(((usbID->DEVICE.USB_INTFLAG & USB_DEVICE_INTFLAG_RAMACER_Msk) == USB_DEVICE_INTFLAG_RAMACER_Msk) &&
            ((usbID->DEVICE.USB_INTENSET & USB_DEVICE_INTENSET_RAMACER_Msk) == USB_DEVICE_INTENSET_RAMACER_Msk))
         {
+            /* This is not supported yet. Just clear the flag and exit */
             usbID->DEVICE.USB_INTFLAG |= USB_DEVICE_INTFLAG_RAMACER_Msk;
+        }
+
+        if(((usbID->DEVICE.USB_INTFLAG & USB_DEVICE_INTFLAG_UPRSM_Msk) == USB_DEVICE_INTFLAG_UPRSM_Msk) &&
+           ((usbID->DEVICE.USB_INTENSET & USB_DEVICE_INTENSET_UPRSM_Msk) == USB_DEVICE_INTENSET_UPRSM_Msk))
+        {
+            /* This is not supported yet. Just clear the flag and exit */
+            usbID->DEVICE.USB_INTFLAG |= USB_DEVICE_INTFLAG_UPRSM_Msk;
+        }
+
+        if(((usbID->DEVICE.USB_INTFLAG & USB_DEVICE_INTFLAG_EORSM_Msk) == USB_DEVICE_INTFLAG_EORSM_Msk) &&
+           ((usbID->DEVICE.USB_INTENSET & USB_DEVICE_INTENSET_EORSM_Msk) == USB_DEVICE_INTENSET_EORSM_Msk))
+        {
+            /* This is not supported yet. Just clear the flag and exit */
+            usbID->DEVICE.USB_INTFLAG |= USB_DEVICE_INTFLAG_EORSM_Msk;
+        }
+
+        if(((usbID->DEVICE.USB_INTFLAG & USB_DEVICE_INTFLAG_WAKEUP_Msk) == USB_DEVICE_INTFLAG_WAKEUP_Msk) &&
+           ((usbID->DEVICE.USB_INTENSET & USB_DEVICE_INTENSET_WAKEUP_Msk) == USB_DEVICE_INTENSET_WAKEUP_Msk))
+        {
+            /* We have received a WAKEUP interrupt - clear the flag and send 
+             * the event to client */
+            
+            /* If the application goes to Sleep mode when USB receives a 
+             * Suspend interrupt, then when the device wakes up, it has to 
+             * ensure that the clocks are ready for functioning. This is 
+             * currently not handled by Controller driver. It has to be handled
+             * by the application. */
+            
+            usbID->DEVICE.USB_INTFLAG |= USB_DEVICE_INTFLAG_WAKEUP_Msk;
+            
+            usbID->DEVICE.USB_INTENCLR = USB_DEVICE_INTENCLR_WAKEUP_Msk;
+            
+            usbID->DEVICE.USB_INTENSET = USB_DEVICE_INTENSET_SUSPEND_Msk;
+
+            hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBFSV1_EVENT_RESUME_DETECT, NULL);
+        }
+
+        if(((usbID->DEVICE.USB_INTFLAG & USB_DEVICE_INTFLAG_SUSPEND_Msk) == USB_DEVICE_INTFLAG_SUSPEND_Msk) &&
+           ((usbID->DEVICE.USB_INTENSET & USB_DEVICE_INTENSET_SUSPEND_Msk) == USB_DEVICE_INTENSET_SUSPEND_Msk))
+        {
+            /* We have received a SUSPEND interrupt - clear the flag and send 
+             * the event to client */
+            
+            /* If the application goes to Sleep mode when USB receives a 
+             * Suspend interrupt, then when the device wakes up, it has to 
+             * ensure that the clocks are ready for functioning. This is 
+             * currently not handled by Controller driver. It has to be handled
+             * by the application. */
+            
+            usbID->DEVICE.USB_INTFLAG |= USB_DEVICE_INTFLAG_SUSPEND_Msk;
+            
+            usbID->DEVICE.USB_INTENCLR = USB_DEVICE_INTENCLR_SUSPEND_Msk;
+            
+            usbID->DEVICE.USB_INTENSET = USB_DEVICE_INTENSET_WAKEUP_Msk;
+            
+            hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBFSV1_EVENT_IDLE_DETECT, NULL);
+        }
+
+        if(((usbID->DEVICE.USB_INTFLAG & USB_DEVICE_INTFLAG_SOF_Msk) == USB_DEVICE_INTFLAG_SOF_Msk) &&
+           ((usbID->DEVICE.USB_INTENSET & USB_DEVICE_INTENSET_SOF_Msk) == USB_DEVICE_INTENSET_SOF_Msk))
+        {
+            /* We have received a SOF interrupt - clear the flag and send the 
+             * event to client */
+            
+            usbID->DEVICE.USB_INTFLAG |= USB_DEVICE_INTFLAG_SOF_Msk;
+
+            hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBFSV1_EVENT_SOF_DETECT, NULL);
         }
 
         if(((usbID->DEVICE.USB_INTFLAG & USB_DEVICE_INTFLAG_EORST_Msk) == USB_DEVICE_INTFLAG_EORST_Msk) &&
             ((usbID->DEVICE.USB_INTENSET & USB_DEVICE_INTENSET_EORST_Msk) == USB_DEVICE_INTENSET_EORST_Msk))
         {
 
+            /* USB Controller is now ready to receive SETUP packet from host */
             hDriver->endpoint0State = DRV_USBFSV1_DEVICE_EP0_STATE_EXPECTING_SETUP_FROM_HOST;
 
+            /* Read the Device connection speed and updated the USB device object */
             hDriver->deviceSpeed = gDrvUSBFSV1DeviceSpeedMap[(usbID->DEVICE.USB_STATUS & USB_DEVICE_STATUS_SPEED_Msk) >> USB_DEVICE_STATUS_SPEED_Pos];
 
+            /* Reset the Endpoint Descriptor Table Parameters */
             hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[0].USB_ADDR = 0x00000000;
             hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[1].USB_ADDR = 0x00000000;
 
@@ -2348,9 +2426,14 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                 /* Send this event to the client */
                 hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBFSV1_EVENT_RESET_DETECT, NULL);
             }
+            
+            /* Enable the address with 0 to start accepting packets from host */
             usbID->DEVICE.USB_DADD = USB_DEVICE_DADD_ADDEN_Msk;
+            
+            /* We have received a EORST interrupt - clear the flag and send 
+             * the event to client */
 
-            usbID->DEVICE.USB_INTFLAG |= (USB_DEVICE_INTFLAG_EORST_Msk | USB_DEVICE_INTFLAG_WAKEUP_Msk | USB_DEVICE_INTFLAG_SUSPEND_Msk);
+            usbID->DEVICE.USB_INTFLAG |= USB_DEVICE_INTFLAG_EORST_Msk;
         }
 
         if(((usbID->DEVICE.DEVICE_ENDPOINT[0].USB_EPINTFLAG & USB_DEVICE_EPINTFLAG_RXSTP_Msk) == USB_DEVICE_EPINTFLAG_RXSTP_Msk) &&

@@ -65,13 +65,6 @@
  ******************************************************/
 DRV_USBFSV1_OBJ gDrvUSBObj [DRV_USBFSV1_INSTANCES_NUMBER];
 
-/******************************************************
- * Control Endpoint IN/OUT buffers needed by the USB
- * controller
- ******************************************************/
-COMPILER_WORD_ALIGNED uint8_t gDrvEP0BufferBank0[USB_DEVICE_EP0_BUFFER_SIZE];
-COMPILER_WORD_ALIGNED uint8_t gDrvEP0BufferBank1[USB_DEVICE_EP0_BUFFER_SIZE];
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: USB Controller Driver Interface Implementations
@@ -139,20 +132,12 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
             drvObj->isOpened = false;
             drvObj->pEventCallBack = NULL;
 
-            /* Set the starting VBUS level. */
-            drvObj->vbusLevel = DRV_USB_VBUS_LEVEL_INVALID;
-            drvObj->vbusComparator = usbInit->vbusComparator;
-
             drvObj->sessionInvalidEventSent = false;
             drvObj->interruptSource  = usbInit->interruptSource;
             drvObj->interruptSource1  = usbInit->interruptSource1;
             drvObj->interruptSource2  = usbInit->interruptSource2;
             drvObj->interruptSource3  = usbInit->interruptSource3;
             drvObj->isInInterruptContext = false;
-
-            /* Assign the endpoint table */
-            drvObj->endpoint0BufferPtr[0] = gDrvEP0BufferBank0;
-            drvObj->endpoint0BufferPtr[1] = gDrvEP0BufferBank1;
 
             /* Set the configuration */
 
@@ -186,6 +171,10 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
             else if(drvObj->operationMode == DRV_USBFSV1_OPMODE_DEVICE)
             {
                 drvObj->usbID->DEVICE.USB_DESCADD = (uint32_t)(drvObj->endpointDescriptorTable);
+
+                /* Set the starting VBUS level. */
+                drvObj->vbusLevel = DRV_USB_VBUS_LEVEL_INVALID;
+                drvObj->vbusComparator = usbInit->vbusComparator;
 
                 regValue = drvObj->usbID->DEVICE.USB_CTRLB;
                 regValue &= ~USB_DEVICE_CTRLB_SPDCONF_Msk;                
