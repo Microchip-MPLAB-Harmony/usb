@@ -170,11 +170,10 @@
  * based on selected support.
  *********************************************/
 
-#define _DRV_USB_UHP_HOST_INIT(x, y)                      _DRV_USB_UHP_HOST_Initialize(x , y)
+#define _DRV_USB_UHP_HOST_INIT(x, y)                      DRV_USB_UHP_HostInitialize(x , y)
+#define _DRV_USB_UHP_HOST_RESET_STATE_MACHINE(x)          DRV_USB_UHP_ResetStateMachine(x)
 
 <#if core.DeviceFamily == "SAMA5D2">
-#define _DRV_USB_UHP_HOST_RESET_STATE_MACHINE(x)          _DRV_USB_UHP_HOST_ResetStateMachine(x)
-
 #define PMC_UCKR_UPLLEN()   \
     PMC_REGS->CKGR_UCKR = CKGR_UCKR_UPLLCOUNT_Msk | CKGR_UCKR_UPLLEN_Msk;\
     PMC_REGS->PMC_PCR = PMC_PCR_PID(drvObj->interruptSource);\
@@ -200,8 +199,6 @@
 #define IS_LOCKU_ENABLE()  ((PMC_REGS->PMC_SR & PMC_SR_LOCKU_Msk) == PMC_SR_LOCKU_Msk)
 #define gDrvUSBUHPHostInterface gDrvUSBUHPHostInterfaceEhci
 <#elseif core.DeviceFamily == "SAM9X60">
-#define _DRV_USB_UHP_HOST_RESET_STATE_MACHINE(x)          _DRV_USB_UHP_HOST_ResetStateMachine(x)
-
 #define PMC_UCKR_UPLLEN()   \
     PMC_REGS->PMC_PCR = PMC_PCR_PID(drvObj->interruptSource);\
     PMC_REGS->PMC_PCR = PMC_PCR_PID(drvObj->interruptSource) | PMC_PCR_CMD_Msk | PMC_PCR_EN_Msk | PMC_PCR_GCKCSS_UPLL_CLK
@@ -209,8 +206,6 @@
 #define IS_LOCKU_ENABLE()  ((PMC_REGS->PMC_PLL_ISR0 & PMC_PLL_ISR0_LOCKU_Msk) == PMC_PLL_ISR0_LOCKU_Msk)
 #define gDrvUSBUHPHostInterface gDrvUSBUHPHostInterfaceEhci
 <#elseif core.DeviceFamily == "SAM_G55">
-#define _DRV_USB_UHP_HOST_RESET_STATE_MACHINE(x)          _DRV_USB_UHP_HOST_ResetStateMachine(x)
-
 #define PMC_UCKR_UPLLEN()   \
     PMC_REGS->PMC_USB = 1; \
     PMC_REGS->PMC_PCR = PMC_PCR_PID(drvObj->interruptSource); \
@@ -218,7 +213,6 @@
     MATRIX_REGS->CCFG_SYSIO &= ~(CCFG_SYSIO_SYSIO10_Msk   \
                                | CCFG_SYSIO_SYSIO11_Msk); \
     MATRIX_REGS->CCFG_USBMR &= ~CCFG_USBMR_USBMODE_Msk
-
 
 #define PMC_PCR_GCKCSS_UPLL_CLK  0
 #define IS_LOCKU_ENABLE()        1 //((PMC_REGS->PMC_PLL_ISR & PMC_PLL_ISR_LOCKU_Msk) == PMC_PLL_ISR_LOCKU_Msk)

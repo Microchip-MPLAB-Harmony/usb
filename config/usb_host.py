@@ -83,6 +83,8 @@ def instantiateComponent(usbHostComponent):
 		speed = Database.getSymbolValue("drv_uhphs", "USB_SPEED")
 		driverIndex = "DRV_USB_UHP_INDEX_0"
 		driverInterface = "DRV_USB_UHP_HOST_INTERFACE"
+		args = {"operationMode":"Host"}
+		Database.sendMessage("drv_uhphs", "UPDATE_OPERATION_MODE", args)
 #	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMG55"]):
 #		res = Database.activateComponents(["drv_uhp"])
 #		speed = Database.getSymbolValue("drv_uhp", "USB_SPEED")
@@ -250,7 +252,7 @@ def instantiateComponent(usbHostComponent):
 	
 	# system_config.h file for USB Host Layer    
 	################################################
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX", "SAMA5D2", "SAM9X60"]):
 		usbHostHubConfigFile = usbHostComponent.createFileSymbol("FILE_USB_HOST_HUB_CONFIG", None)
 		usbHostHubConfigFile.setType("STRING")
 		usbHostHubConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION")

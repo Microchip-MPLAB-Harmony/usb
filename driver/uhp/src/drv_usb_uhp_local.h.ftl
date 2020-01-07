@@ -195,9 +195,6 @@ typedef struct _DRV_USB_UHP_HOST_TRANSFER_GROUP
      * transfer group */
     uint32_t nPipes;
 
-    /* Transfer management */
-    uint32_t int_on_async_advance;
-    
     /* Are the interrupt enable or not during transfer ? */
     uint32_t interruptWasEnabled;
 }
@@ -212,6 +209,7 @@ typedef struct
 {
     /* Indicates this endpoint is in use */
     bool inUse;
+    uint8_t intXfrQtdComplete;
     DRV_USB_UHP_HOST_PIPE_OBJ * pipe;
 
 }_DRV_USB_UHP_HOST_ENDPOINT;
@@ -404,7 +402,7 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
 
 // ****************************************************************************
 /* Function:
-    void DRV_USB_UHP_HOST_EndpointToggleClear
+    void DRV_USB_UHP_EndpointToggleClear
     (
         DRV_HANDLE client,
         USB_ENDPOINT endpointAndDirection
@@ -429,14 +427,14 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
     <code>
 
     // This code shows how the USB Host Layer calls the
-    // DRV_USB_UHP_HOST_EndpointToggleClear function. 
+    // DRV_USB_UHP_EndpointToggleClear function. 
     // The Endpoint number and Direction of the endpoint is required to clear 
     // the data toggle to the endpoint.
 
     DRV_HANDLE drvHandle;
     USB_ENDPOINT endpointAndDirection ;
 
-    DRV_USB_UHP_HOST_EndpointToggleClearOhci(client, endpointAndDirection);
+    DRV_USB_UHP_EndpointToggleClear(client, endpointAndDirection);
 
     </code>
 
@@ -444,15 +442,20 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
     None.
 */
 
-extern void DRV_USB_UHP_HOST_EndpointToggleClear
+extern void DRV_USB_UHP_EndpointToggleClear
 (
     DRV_HANDLE client,
     USB_ENDPOINT endpointAndDirection
 );
 
-extern void _DRV_USB_UHP_HOST_AttachDetachStateMachine (DRV_USB_UHP_OBJ * hDriver);
-extern void _DRV_USB_UHP_HOST_ResetStateMachine(DRV_USB_UHP_OBJ * hDriver);
-extern void _DRV_USB_UHP_HOST_Initialize(DRV_USB_UHP_OBJ * drvObj, SYS_MODULE_INDEX index);
-extern void _DRV_USB_UHP_HOST_Tasks_ISR(DRV_USB_UHP_OBJ * hDriver);
+extern void DRV_USB_UHP_AttachDetachStateMachine (DRV_USB_UHP_OBJ * hDriver);
+extern void DRV_USB_UHP_ResetStateMachine(DRV_USB_UHP_OBJ * hDriver);
+extern void DRV_USB_UHP_HostInitialize(DRV_USB_UHP_OBJ * drvObj, SYS_MODULE_INDEX index);
+extern void DRV_USB_UHP_TransferProcess(DRV_USB_UHP_OBJ *hDriver);
+extern USB_SPEED DRV_USB_UHP_DeviceCurrentSpeedGet(DRV_HANDLE client);
+
+
+extern uint8_t USBBufferAligned[USB_HOST_TRANSFERS_NUMBER*64]; /* 4K page aligned */
+extern uint8_t USBSetupAligned[8];
 
 #endif  // _DRV_USB_UHP_LOCAL_H
