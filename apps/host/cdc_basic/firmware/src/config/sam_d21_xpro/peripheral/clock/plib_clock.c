@@ -74,7 +74,7 @@ static void DFLL_Initialize(void)
 
     SYSCTRL_REGS->SYSCTRL_DFLLVAL = SYSCTRL_DFLLVAL_COARSE(calibCoarse) | SYSCTRL_DFLLVAL_FINE(calibFine);
 
-    GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_GEN(0x3)  | GCLK_CLKCTRL_CLKEN_Msk | GCLK_CLKCTRL_ID(0);
+    GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_GEN(0x1)  | GCLK_CLKCTRL_CLKEN_Msk | GCLK_CLKCTRL_ID(0);
 
     SYSCTRL_REGS->SYSCTRL_DFLLMUL = SYSCTRL_DFLLMUL_MUL(1465) | SYSCTRL_DFLLMUL_FSTEP(1) | SYSCTRL_DFLLMUL_CSTEP(1);
 
@@ -103,22 +103,11 @@ static void GCLK0_Initialize(void)
 
 static void GCLK1_Initialize(void)
 {
-    GCLK_REGS->GCLK_GENCTRL = GCLK_GENCTRL_SRC(7) | GCLK_GENCTRL_GENEN_Msk | GCLK_GENCTRL_ID(1);
+    GCLK_REGS->GCLK_GENCTRL = GCLK_GENCTRL_SRC(5) | GCLK_GENCTRL_GENEN_Msk | GCLK_GENCTRL_ID(1);
 
     while((GCLK_REGS->GCLK_STATUS & GCLK_STATUS_SYNCBUSY_Msk) == GCLK_STATUS_SYNCBUSY_Msk)
     {
         /* wait for the Generator 1 synchronization */
-    }
-}
-
-
-static void GCLK3_Initialize(void)
-{
-    GCLK_REGS->GCLK_GENCTRL = GCLK_GENCTRL_SRC(5) | GCLK_GENCTRL_GENEN_Msk | GCLK_GENCTRL_ID(3);
-
-    while((GCLK_REGS->GCLK_STATUS & GCLK_STATUS_SYNCBUSY_Msk) == GCLK_STATUS_SYNCBUSY_Msk)
-    {
-        /* wait for the Generator 3 synchronization */
     }
 }
 
@@ -127,14 +116,13 @@ void CLOCK_Initialize (void)
     /* Function to Initialize the Oscillators */
     SYSCTRL_Initialize();
 
-    GCLK3_Initialize();
+    GCLK1_Initialize();
     DFLL_Initialize();
     GCLK0_Initialize();
-    GCLK1_Initialize();
 
 
     /* Selection of the Generator and write Lock for USB */
-    GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(6) | GCLK_CLKCTRL_GEN(0x1)  | GCLK_CLKCTRL_CLKEN_Msk;
+    GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(6) | GCLK_CLKCTRL_GEN(0x0)  | GCLK_CLKCTRL_CLKEN_Msk;
     /* Selection of the Generator and write Lock for SERCOM3_CORE */
     GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(23) | GCLK_CLKCTRL_GEN(0x0)  | GCLK_CLKCTRL_CLKEN_Msk;
     /* Selection of the Generator and write Lock for TC3 TCC2 */

@@ -32,6 +32,7 @@
 #include <stdint.h>
 #define __inline__                      inline
 
+#define CACHE_LINE_SIZE                 (4u)
 #define CACHE_ALIGN
 
 // ************************************************************************

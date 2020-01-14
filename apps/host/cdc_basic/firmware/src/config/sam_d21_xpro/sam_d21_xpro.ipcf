@@ -81,19 +81,15 @@
             <path>\usb\usb_host_client_driver.h</path>
             <path>\usb\usb_host_hub_interface.h</path>
             <path>\usb\usb_hub.h</path>
+            <path>\..\..\packs\CMSIS\CMSIS\Core\Include\cmsis_version.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\Core\Include\cmsis_compiler.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\Core\Include\cmsis_iccarm.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\Core\Include\cmsis_gcc.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\Core\Include\cmsis_armcc.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\Core\Include\cmsis_armclang.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\Core\Include\cmsis_armclang_ltm.h</path>
-            <path>\..\..\packs\CMSIS\CMSIS\Core\Include\tz_context.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\Core\Include\core_cm0plus.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\Core\Include\mpu_armv7.h</path>
-            <path>\..\..\packs\CMSIS\CMSIS\Core\Include\cmsis_version.h</path>
-            <path>\..\..\packs\CMSIS\CMSIS\DSP\Include\arm_common_tables.h</path>
-            <path>\..\..\packs\CMSIS\CMSIS\DSP\Include\arm_const_structs.h</path>
-            <path>\..\..\packs\CMSIS\CMSIS\DSP\Include\arm_math.h</path>
             <path>\driver\driver.h</path>
             <path>\driver\driver_common.h</path>
             <path>\system\system.h</path>

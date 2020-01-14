@@ -140,12 +140,12 @@
         </KeyValueSet>
         <Integer dnOrder="26" id="GCLK_1_FREQ">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="48005120"/>
+            <Dynamic dnOrder="0" id="core" value="32768"/>
           </Values>
         </Integer>
         <KeyValueSet dnOrder="27" id="GCLK_1_SRC">
           <Values dnOrder="0">
-            <User dnOrder="0" value="6"/>
+            <User dnOrder="0" value="4"/>
           </Values>
         </KeyValueSet>
         <Integer dnOrder="28" id="GCLK_2_FREQ">
@@ -165,7 +165,7 @@
         </Integer>
         <Integer dnOrder="31" id="GCLK_3_FREQ">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="32768"/>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
         <KeyValueSet dnOrder="32" id="GCLK_3_SRC">
@@ -202,10 +202,9 @@
           <Attributes dnOrder="0">
             <StringArray dnOrder="0" id="values">
               <Values dnOrder="0">
-                <Value dnOrder="0">&amp;#160;&amp;#160;&amp;#160;&amp;#160;GCLK3_Initialize();</Value>
+                <Value dnOrder="0">&amp;#160;&amp;#160;&amp;#160;&amp;#160;GCLK1_Initialize();</Value>
                 <Value dnOrder="1">&amp;#160;&amp;#160;&amp;#160;&amp;#160;DFLL_Initialize();</Value>
                 <Value dnOrder="2">&amp;#160;&amp;#160;&amp;#160;&amp;#160;GCLK0_Initialize();</Value>
-                <Value dnOrder="3">&amp;#160;&amp;#160;&amp;#160;&amp;#160;GCLK1_Initialize();</Value>
               </Values>
             </StringArray>
           </Attributes>
@@ -227,7 +226,7 @@
         </Integer>
         <KeyValueSet dnOrder="42" id="GCLK_ID_0_GENSEL">
           <Values dnOrder="0">
-            <User dnOrder="0" value="3"/>
+            <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
         <Boolean dnOrder="43" id="GCLK_ID_1_CHEN">
@@ -288,7 +287,7 @@
         </Integer>
         <KeyValueSet dnOrder="54" id="GCLK_ID_6_GENSEL">
           <Values dnOrder="0">
-            <User dnOrder="0" value="1"/>
+            <User dnOrder="0" value="0"/>
           </Values>
         </KeyValueSet>
         <Boolean dnOrder="55" id="GCLK_INST_NUM1">
@@ -298,7 +297,7 @@
         </Boolean>
         <Boolean dnOrder="56" id="GCLK_INST_NUM3">
           <Values dnOrder="0">
-            <User dnOrder="0" value="true"/>
+            <User dnOrder="0" value="false"/>
           </Values>
         </Boolean>
         <Integer dnOrder="57" id="GCLK_IO_0_FREQ">
@@ -696,161 +695,166 @@
             <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
-        <Boolean dnOrder="136" id="PendSV_INTERRUPT_ENABLE_UPDATE">
+        <String dnOrder="136" id="PORT_REG_NAME">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="PORT"/>
+          </Values>
+        </String>
+        <Boolean dnOrder="137" id="PendSV_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="137" id="SERCOM0_CORE_CLOCK_FREQUENCY">
+        <Integer dnOrder="138" id="SERCOM0_CORE_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="138" id="SERCOM0_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="139" id="SERCOM0_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="139" id="SERCOM3_CORE_CLOCK_ENABLE">
+        <Boolean dnOrder="140" id="SERCOM3_CORE_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom3" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="140" id="SERCOM3_CORE_CLOCK_FREQUENCY">
+        <Integer dnOrder="141" id="SERCOM3_CORE_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="48005120"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="141" id="SERCOM3_INTERRUPT_ENABLE">
+        <Boolean dnOrder="142" id="SERCOM3_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom3" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="142" id="SERCOM3_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="143" id="SERCOM3_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="143" id="SERCOM3_INTERRUPT_HANDLER">
+        <String dnOrder="144" id="SERCOM3_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom3" value="SERCOM3_USART_InterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="144" id="SERCOM3_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="145" id="SERCOM3_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom3" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="145" id="SVCall_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="146" id="SVCall_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="146" id="SYSTICK_PERIOD">
+        <String dnOrder="147" id="SYSTICK_PERIOD">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0xbb85"/>
           </Values>
         </String>
-        <Float dnOrder="147" id="SYSTICK_PERIOD_MS">
+        <Float dnOrder="148" id="SYSTICK_PERIOD_MS">
           <Attributes dnOrder="0">
             <Float dnOrder="0" id="max">
               <Value dnOrder="0">349.48804</Value>
             </Float>
           </Attributes>
         </Float>
-        <Integer dnOrder="148" id="SYSTICK_PERIOD_US">
+        <Integer dnOrder="149" id="SYSTICK_PERIOD_US">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="1000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="149" id="SysTick_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="150" id="SysTick_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="150" id="TC3_CLOCK_ENABLE">
+        <Boolean dnOrder="151" id="TC3_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc3" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="151" id="TC3_CLOCK_FREQUENCY">
+        <Integer dnOrder="152" id="TC3_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="48005120"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="152" id="TC3_INTERRUPT_ENABLE">
+        <Boolean dnOrder="153" id="TC3_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc3" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="153" id="TC3_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="154" id="TC3_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="154" id="TC3_INTERRUPT_HANDLER">
+        <String dnOrder="155" id="TC3_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc3" value="TC3_TimerInterruptHandler"/>
           </Values>
         </String>
-        <Boolean dnOrder="155" id="TC3_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="156" id="TC3_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc3" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="156" id="USB_CLOCK_ENABLE">
+        <Boolean dnOrder="157" id="USB_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="157" id="USB_CLOCK_FREQUENCY">
+        <Integer dnOrder="158" id="USB_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="48005120"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="158" id="USB_INTERRUPT_ENABLE">
+        <Boolean dnOrder="159" id="USB_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="159" id="USB_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="160" id="USB_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="160" id="USB_INTERRUPT_HANDLER">
+        <String dnOrder="161" id="USB_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbfs_v1" value="DRV_USBFSV1_USB_Handler"/>
           </Values>
         </String>
-        <Boolean dnOrder="161" id="USB_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="162" id="USB_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
           </Values>
         </Boolean>
-        <Setting dnOrder="162" id="XC32_HEAP">
+        <Setting dnOrder="163" id="XC32_HEAP">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="value">
               <Value dnOrder="0">1000</Value>
             </String>
           </Attributes>
         </Setting>
-        <Integer dnOrder="163" id="XC32_HEAP_SIZE">
+        <Integer dnOrder="164" id="XC32_HEAP_SIZE">
           <Values dnOrder="0">
             <User dnOrder="0" value="1000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="164" id="XOSC32K_EN32K">
+        <Boolean dnOrder="165" id="XOSC32K_EN32K">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="165" id="XOSC32K_FREQ">
+        <Integer dnOrder="166" id="XOSC32K_FREQ">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="32768"/>
           </Values>
         </Integer>
-        <KeyValueSet dnOrder="166" id="XOSC32K_OSCILLATOR_MODE">
+        <KeyValueSet dnOrder="167" id="XOSC32K_OSCILLATOR_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
@@ -1204,7 +1208,15 @@
         </File>
       </Symbols>
     </UniqueComponent>
-    <UniqueComponent dnOrder="8" id="nvmctrl"/>
+    <UniqueComponent dnOrder="8" id="nvmctrl">
+      <Symbols dnOrder="0">
+        <Integer dnOrder="0" id="NVM_RWS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="nvmctrl" value="0"/>
+          </Values>
+        </Integer>
+      </Symbols>
+    </UniqueComponent>
     <UniqueComponent dnOrder="9" id="sercom3">
       <Symbols dnOrder="0">
         <Integer dnOrder="0" id="I2CM_BAUD">
@@ -1327,7 +1339,7 @@
         <Comment dnOrder="0" id="TC_COMPARE_PERIOD_COMMENT">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="text">
-              <Value dnOrder="0">****&amp;#160;Timer&amp;#160;Period&amp;#160;is&amp;#160;0.99989334471&amp;#160;us&amp;#160;****</Value>
+              <Value dnOrder="0">****&amp;#160;Compare&amp;#160;Period&amp;#160;is&amp;#160;0.499946672355&amp;#160;us&amp;#160;****</Value>
             </String>
           </Attributes>
         </Comment>
@@ -1446,20 +1458,20 @@
     <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
     <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="BSP_SAM_D21_Xplained_Pro" x="163" y="54"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="9" y="57"/>
-        <ElementPosition dnOrder="2" id="cmsis" x="91" y="21"/>
-        <ElementPosition dnOrder="3" id="core" x="8" y="19"/>
-        <ElementPosition dnOrder="4" id="dfp" x="203" y="23"/>
-        <ElementPosition dnOrder="5" id="drv_usart" x="534" y="30"/>
-        <ElementPosition dnOrder="6" id="drv_usbfs_v1" x="17" y="165"/>
-        <ElementPosition dnOrder="7" id="evsys" x="394" y="22"/>
-        <ElementPosition dnOrder="8" id="nvmctrl" x="163" y="81"/>
-        <ElementPosition dnOrder="9" id="sercom3" x="348" y="76"/>
-        <ElementPosition dnOrder="10" id="sys_time" x="227" y="315"/>
-        <ElementPosition dnOrder="11" id="tc3" x="29" y="333"/>
-        <ElementPosition dnOrder="12" id="usb_host" x="186" y="154"/>
-        <ElementPosition dnOrder="13" id="usb_host_hid" x="314" y="180"/>
+        <ElementPosition dnOrder="0" id="BSP_SAM_D21_Xplained_Pro" x="1" y="46"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="6" y="76"/>
+        <ElementPosition dnOrder="2" id="cmsis" x="206" y="43"/>
+        <ElementPosition dnOrder="3" id="core" x="207" y="15"/>
+        <ElementPosition dnOrder="4" id="dfp" x="2" y="15"/>
+        <ElementPosition dnOrder="5" id="drv_usart" x="157" y="256"/>
+        <ElementPosition dnOrder="6" id="drv_usbfs_v1" x="18" y="427"/>
+        <ElementPosition dnOrder="7" id="evsys" x="316" y="17"/>
+        <ElementPosition dnOrder="8" id="nvmctrl" x="450" y="11"/>
+        <ElementPosition dnOrder="9" id="sercom3" x="12" y="299"/>
+        <ElementPosition dnOrder="10" id="sys_time" x="159" y="138"/>
+        <ElementPosition dnOrder="11" id="tc3" x="10" y="178"/>
+        <ElementPosition dnOrder="12" id="usb_host" x="183" y="428"/>
+        <ElementPosition dnOrder="13" id="usb_host_hid" x="317" y="428"/>
       </ElementPositions>
     </ComponentGraph>
   </UserData>
