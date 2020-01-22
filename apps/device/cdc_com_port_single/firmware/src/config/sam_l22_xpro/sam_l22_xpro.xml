@@ -438,89 +438,94 @@
             <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
-        <Boolean dnOrder="84" id="PendSV_INTERRUPT_ENABLE_UPDATE">
+        <String dnOrder="84" id="PORT_REG_NAME">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="PORT"/>
+          </Values>
+        </String>
+        <Boolean dnOrder="85" id="PendSV_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="85" id="RTC_CLOCK_FREQUENCY">
+        <Integer dnOrder="86" id="RTC_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="1024"/>
           </Values>
         </Integer>
-        <Integer dnOrder="86" id="SLCD_CLOCK_FREQUENCY">
+        <Integer dnOrder="87" id="SLCD_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="32768"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="87" id="SVCall_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="88" id="SVCall_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="88" id="SYSTICK_PERIOD">
+        <String dnOrder="89" id="SYSTICK_PERIOD">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x7d00"/>
           </Values>
         </String>
-        <Float dnOrder="89" id="SYSTICK_PERIOD_MS">
+        <Float dnOrder="90" id="SYSTICK_PERIOD_MS">
           <Attributes dnOrder="0">
             <Float dnOrder="0" id="max">
               <Value dnOrder="0">524.28796</Value>
             </Float>
           </Attributes>
         </Float>
-        <Integer dnOrder="90" id="SYSTICK_PERIOD_US">
+        <Integer dnOrder="91" id="SYSTICK_PERIOD_US">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="1000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="91" id="SysTick_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="92" id="SysTick_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="92" id="USB_CLOCK_ENABLE">
+        <Boolean dnOrder="93" id="USB_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="93" id="USB_CLOCK_FREQUENCY">
+        <Integer dnOrder="94" id="USB_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="48000000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="94" id="USB_INTERRUPT_ENABLE">
+        <Boolean dnOrder="95" id="USB_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="95" id="USB_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="96" id="USB_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="96" id="USB_INTERRUPT_HANDLER">
+        <String dnOrder="97" id="USB_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbfs_v1" value="DRV_USBFSV1_USB_Handler"/>
           </Values>
         </String>
-        <Boolean dnOrder="97" id="USB_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="98" id="USB_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="98" id="XOSC1K_FREQ">
+        <Integer dnOrder="99" id="XOSC1K_FREQ">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="99" id="XOSC32K_EN32K">
+        <Boolean dnOrder="100" id="XOSC32K_EN32K">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="100" id="XOSC32K_FREQ">
+        <Integer dnOrder="101" id="XOSC32K_FREQ">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="32768"/>
           </Values>
@@ -853,9 +858,9 @@
     <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_L22_Xplained_Pro" x="209" y="89"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="420" y="21"/>
-        <ElementPosition dnOrder="2" id="cmsis" x="479" y="158"/>
-        <ElementPosition dnOrder="3" id="core" x="490" y="122"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="174" y="211"/>
+        <ElementPosition dnOrder="2" id="cmsis" x="318" y="162"/>
+        <ElementPosition dnOrder="3" id="core" x="319" y="131"/>
         <ElementPosition dnOrder="4" id="dfp" x="18" y="89"/>
         <ElementPosition dnOrder="5" id="drv_usbfs_v1" x="14" y="126"/>
         <ElementPosition dnOrder="6" id="evsys" x="152" y="24"/>

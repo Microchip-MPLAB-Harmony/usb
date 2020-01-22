@@ -396,67 +396,72 @@
             <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
-        <Integer dnOrder="76" id="RTC_CLOCK_FREQUENCY">
+        <String dnOrder="76" id="PORT_REG_NAME">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="PORT"/>
+          </Values>
+        </String>
+        <Integer dnOrder="77" id="RTC_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="1024"/>
           </Values>
         </Integer>
-        <String dnOrder="77" id="SYSTICK_PERIOD">
+        <String dnOrder="78" id="SYSTICK_PERIOD">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0xbb80"/>
           </Values>
         </String>
-        <Integer dnOrder="78" id="SYSTICK_PERIOD_US">
+        <Integer dnOrder="79" id="SYSTICK_PERIOD_US">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="1000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="79" id="USB_CLOCK_ENABLE">
+        <Boolean dnOrder="80" id="USB_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="80" id="USB_CLOCK_FREQUENCY">
+        <Integer dnOrder="81" id="USB_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="48000000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="81" id="USB_INTERRUPT_ENABLE">
+        <Boolean dnOrder="82" id="USB_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="82" id="USB_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="83" id="USB_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="83" id="USB_INTERRUPT_HANDLER">
+        <String dnOrder="84" id="USB_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbfs_v1" value="DRV_USBFSV1_USB_Handler"/>
           </Values>
         </String>
-        <Boolean dnOrder="84" id="USB_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="85" id="USB_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="85" id="XOSC1K_FREQ">
+        <Integer dnOrder="86" id="XOSC1K_FREQ">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="86" id="XOSC32K_EN32K">
+        <Boolean dnOrder="87" id="XOSC32K_EN32K">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="87" id="XOSC32K_FREQ">
+        <Integer dnOrder="88" id="XOSC32K_FREQ">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="32768"/>
           </Values>
         </Integer>
-        <KeyValueSet dnOrder="88" id="XOSC_OSCILLATOR_MODE">
+        <KeyValueSet dnOrder="89" id="XOSC_OSCILLATOR_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
@@ -800,21 +805,21 @@
     </GeneratorComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="BSP_SAM_L21_Xplained_Pro" x="182" y="253"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="18" y="197"/>
-        <ElementPosition dnOrder="2" id="cmsis" x="165" y="71"/>
-        <ElementPosition dnOrder="3" id="core" x="420" y="49"/>
-        <ElementPosition dnOrder="4" id="dfp" x="287" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_usbfs_v1" x="11" y="108"/>
-        <ElementPosition dnOrder="6" id="evsys" x="165" y="21"/>
-        <ElementPosition dnOrder="7" id="nvmctrl" x="19" y="20"/>
-        <ElementPosition dnOrder="8" id="pm" x="291" y="47"/>
-        <ElementPosition dnOrder="9" id="usb_device" x="167" y="109"/>
-        <ElementPosition dnOrder="10" id="usb_device_cdc" x="304" y="109"/>
+        <ElementPosition dnOrder="0" id="BSP_SAM_L21_Xplained_Pro" x="120" y="38"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="159" y="158"/>
+        <ElementPosition dnOrder="2" id="cmsis" x="303" y="7"/>
+        <ElementPosition dnOrder="3" id="core" x="312" y="35"/>
+        <ElementPosition dnOrder="4" id="dfp" x="121" y="8"/>
+        <ElementPosition dnOrder="5" id="drv_usbfs_v1" x="0" y="75"/>
+        <ElementPosition dnOrder="6" id="evsys" x="161" y="116"/>
+        <ElementPosition dnOrder="7" id="nvmctrl" x="0" y="8"/>
+        <ElementPosition dnOrder="8" id="pm" x="158" y="75"/>
+        <ElementPosition dnOrder="9" id="usb_device" x="4" y="264"/>
+        <ElementPosition dnOrder="10" id="usb_device_cdc" x="0" y="146"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>

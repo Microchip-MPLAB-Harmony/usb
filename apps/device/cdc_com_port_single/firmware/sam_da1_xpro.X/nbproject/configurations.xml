@@ -222,8 +222,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
+        <pack name="SAMDA1_DFP" vendor="Microchip" version="2.1.35"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
-        <pack name="SAMDA1_DFP" vendor="Microchip" version="2.0.14"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -429,6 +429,8 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-ffff"/>
         <property key="poweroptions.powerenable" value="false"/>
+        <property key="programmerToGoFilePath"
+                  value="C:/Repos/H3/usb/apps/device/cdc_com_port_single/firmware/sam_da1_xpro.X/debug/sam_da1_xpro/sam_da1_xpro_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"

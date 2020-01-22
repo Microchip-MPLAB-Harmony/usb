@@ -104,6 +104,8 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
     DRV_USBFSV1_INIT * usbInit = (DRV_USBFSV1_INIT *)NULL;
     SYS_MODULE_OBJ retVal = SYS_MODULE_OBJ_INVALID;
     uint32_t regValue;
+    volatile uint32_t usbCalibValue;
+    uint16_t usbPadValue;
 
     if(drvIndex >= DRV_USBFSV1_INSTANCES_NUMBER)
     {
@@ -140,10 +142,35 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
             drvObj->isInInterruptContext = false;
 
             /* Set the configuration */
-
 			drvObj->usbID->HOST.USB_CTRLA = USB_CTRLA_SWRST_Msk;
-
 			while (drvObj->usbID->HOST.USB_SYNCBUSY & USB_SYNCBUSY_SWRST_Msk);
+            
+            /* Change QOS values to have the best performance and correct USB behaviour */
+            drvObj->usbID->DEVICE.USB_QOSCTRL = (USB_QOSCTRL_DQOS(2) | USB_QOSCTRL_CQOS(2));
+            
+            /* Write linearity calibration in BIASREFBUF and bias calibration in BIASCOMP */     
+            usbCalibValue = DRV_USBFSV1_READ_PADCAL_VALUE;   
+            
+            usbPadValue = (usbCalibValue & 0x001F);
+            if(usbPadValue == 0x001F)
+            {
+                usbPadValue = 5;
+            }
+            drvObj->usbID->DEVICE.USB_PADCAL |= USB_PADCAL_TRANSN(usbPadValue);
+            
+            usbPadValue = ((usbCalibValue >> 5) & 0x001F);
+            if(usbPadValue == 0x001F)
+            {
+                usbPadValue = 29;
+            }
+            drvObj->usbID->DEVICE.USB_PADCAL |= USB_PADCAL_TRANSP(usbPadValue);
+            
+            usbPadValue = ((usbCalibValue >> 10) & 0x0007);
+            if(usbPadValue == 0x0007)
+            {
+                usbPadValue = 3;
+            }
+            drvObj->usbID->DEVICE.USB_PADCAL |= USB_PADCAL_TRIM(usbPadValue);
 
             if(usbInit->runInStandby == true)
             {
@@ -445,7 +472,7 @@ DRV_HANDLE DRV_USBFSV1_Open
             retVal = ((DRV_HANDLE) drvObj);
         }
     }
-
+    
     /* Return handle */
     return (retVal);
 }

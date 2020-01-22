@@ -57,6 +57,9 @@
  * Macro Mapping
  **********************************************/
 
+/* ATSAMD11D14AM Devices have USB PADCAL values in OTP4_ADDR */ 
+#define DRV_USBFSV1_READ_PADCAL_VALUE (*((uint32_t *) OTP4_ADDR + 1) >> 13)
+
   
 #if (DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE == true)
     #define _DRV_USBFSV1_SYS_INT_SourceEnable(a, b, c, d);          \
