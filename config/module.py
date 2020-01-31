@@ -21,7 +21,7 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 def loadModule():
-	# Initially Set all USB Library modules to False. We will enable each
+    # Initially Set all USB Library modules to False. We will enable each
     # Library Module depending on the MCU/MPU selected.  
     loadUSBHostLayer = False
     loadUSBHostCDC = False
@@ -42,23 +42,23 @@ def loadModule():
     USBHostDriverCapabilityName = "DRV_USB" 
     availablePeripherals = []
     if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK" , "PIC32MX"]):
-		modules = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals").getChildren()
-		for module in range(len(modules)):
-			instances = modules[module].getChildren()
-			for instance in range(len(instances)):
-				if str(instances[instance].getAttribute("name")) == "USB":
-					usbRegGroup = ATDF.getNode('/avr-tools-device-file/modules/module@[name="USB"]/register-group@[name="USB"]').getChildren()
-					usbIndex = 1
-					usbControllersNumber = 0
-					for register in usbRegGroup:
-						regName = str(register.getAttribute("name"))
-						usbInstance = "U" + str(usbIndex) + "CON"
-						if regName == usbInstance:
-							availablePeripherals.append("USB" + str(usbIndex))
-							usbIndex += 1
-							usbControllersNumber += 1
-				else:
-					availablePeripherals.append(str(instances[instance].getAttribute("name")))
+        modules = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals").getChildren()
+        for module in range(len(modules)):
+            instances = modules[module].getChildren()
+            for instance in range(len(instances)):
+                if str(instances[instance].getAttribute("name")) == "USB":
+                    usbRegGroup = ATDF.getNode('/avr-tools-device-file/modules/module@[name="USB"]/register-group@[name="USB"]').getChildren()
+                    usbIndex = 1
+                    usbControllersNumber = 0
+                    for register in usbRegGroup:
+                        regName = str(register.getAttribute("name"))
+                        usbInstance = "U" + str(usbIndex) + "CON"
+                        if regName == usbInstance:
+                            availablePeripherals.append("USB" + str(usbIndex))
+                            usbIndex += 1
+                            usbControllersNumber += 1
+                else:
+                    availablePeripherals.append(str(instances[instance].getAttribute("name")))
     if any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAM9X60"]):
         # Create USB High Speed Host Port Driver Component for SAMA5D2 & SAM9X60
         usbUhpHsDriverComponent =  Module.CreateComponent("drv_usbhs_v1", "USB UHPHS Host Driver", "/Harmony/Drivers", "config/usb_uhphs_driver.py")
@@ -90,26 +90,26 @@ def loadModule():
         loadUSBDeviceMSD = True
         loadUSBDeviceVendor = True 
         loadUSBDevicePrinter = True 
-   	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21","SAMDA1", "SAMD5", "SAME5", "SAML21", "PIC32MX2", "PIC32MX3", "PIC32MX4", "PIC32MX5", "PIC32MX6", "PIC32MX7", "PIC32MZ1025W"]):
-		# Create USB Full Speed Driver Component
-		usbDriverComponent =  Module.CreateComponent("drv_usbfs_v1", "USB Full Speed Driver", "/Harmony/Drivers", "config/usbfs_v1_driver.py")
-		usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
-		usbDriverComponent.addDependency("drv_usb_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
-		
-		# Enable USB Library modules 
-		loadUSBHostLayer = True
-		loadUSBHostCDC = True
-		loadUSBHostMSD = True
-		loadUSBHostHID = True
-		loadUSBHostAudio = True 
-	
-		loadUSBDeviceLayer = True
-		loadUSBDeviceCDC = True
-		loadUSBDeviceHID = True
-		loadUSBDeviceAudio = True
-		loadUSBDeviceMSD = True
-		loadUSBDeviceVendor = True
-		loadUSBDevicePrinter = True 
+    elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21","SAMDA1", "SAMD5", "SAME5", "SAML21", "PIC32MX2", "PIC32MX3", "PIC32MX4", "PIC32MX5", "PIC32MX6", "PIC32MX7", "PIC32MZ1025W"]):
+        # Create USB Full Speed Driver Component
+        usbDriverComponent =  Module.CreateComponent("drv_usbfs_v1", "USB Full Speed Driver", "/Harmony/Drivers", "config/usbfs_v1_driver.py")
+        usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
+        usbDriverComponent.addDependency("drv_usb_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
+        
+        # Enable USB Library modules 
+        loadUSBHostLayer = True
+        loadUSBHostCDC = True
+        loadUSBHostMSD = True
+        loadUSBHostHID = True
+        loadUSBHostAudio = True 
+    
+        loadUSBDeviceLayer = True
+        loadUSBDeviceCDC = True
+        loadUSBDeviceHID = True
+        loadUSBDeviceAudio = True
+        loadUSBDeviceMSD = True
+        loadUSBDeviceVendor = True
+        loadUSBDevicePrinter = True 
 
     elif any(x in Variables.get("__PROCESSOR") for x in ["SAMG55"]):
         # Create USB High Speed Host Port Driver Component for SAMG55
@@ -161,9 +161,9 @@ def loadModule():
         loadUSBDevicePrinter = True 
     
 
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32MZ"]):
-		# Create USB High Speed Driver Component
-		usbDriverComponent =  Module.CreateComponent("drv_usbhs_v1", "USB High Speed Driver", "/Harmony/Drivers", "config/usbhs_driver.py")
+    elif any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32MZ"]):
+        # Create USB High Speed Driver Component
+        usbDriverComponent =  Module.CreateComponent("drv_usbhs_v1", "USB High Speed Driver", "/Harmony/Drivers", "config/usbhs_driver.py")
         usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
         usbDriverComponent.addDependency("drv_usb_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
         
@@ -184,36 +184,36 @@ def loadModule():
 
 
     elif any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK"]):
-		if usbControllersNumber != None and usbControllersNumber > 0:
-			# Create USB Peripheral 1 Component 
-			usbPeripheralComponent1 =  Module.CreateComponent("peripheral_usb_1", "USB1", "/Peripherals/USB", "config/usb_multi_controller/usb_peripheral.py")
-			usbPeripheralComponent1.addCapability("USB_1", "USB")
-			
-			if usbControllersNumber != None and usbControllersNumber > 1:
-				# Create USB Peripheral 2 Component
-				usbPeripheralComponent2 =  Module.CreateComponent("peripheral_usb_2", "USB2", "/Peripherals/USB", "config/usb_multi_controller/usb_peripheral.py")
-				usbPeripheralComponent2.addCapability("USB_2", "USB")
+        if usbControllersNumber != None and usbControllersNumber > 0:
+            # Create USB Peripheral 1 Component 
+            usbPeripheralComponent1 =  Module.CreateComponent("peripheral_usb_1", "USB1", "/Peripherals/USB", "config/usb_multi_controller/usb_peripheral.py")
+            usbPeripheralComponent1.addCapability("USB_1", "USB")
+            
+            if usbControllersNumber != None and usbControllersNumber > 1:
+                # Create USB Peripheral 2 Component
+                usbPeripheralComponent2 =  Module.CreateComponent("peripheral_usb_2", "USB2", "/Peripherals/USB", "config/usb_multi_controller/usb_peripheral.py")
+                usbPeripheralComponent2.addCapability("USB_2", "USB")
         
-			# Create USB Full Speed Driver Component
-			usbDriverComponent =  Module.CreateGeneratorComponent("drv_usbfs_index", "USB Full Speed Driver", "/Harmony/Drivers", "config/usb_multi_controller/usbfs_common.py", "config/usb_multi_controller/usbfs_driver.py")
-			usbDriverComponent.addCapability("DRV_USB", "DRV_USB")
-			usbDriverComponent.addDependency("usb_peripheral_dependency", "USB", False, True)
+            # Create USB Full Speed Driver Component
+            usbDriverComponent =  Module.CreateGeneratorComponent("drv_usbfs_index", "USB Full Speed Driver", "/Harmony/Drivers", "config/usb_multi_controller/usbfs_common.py", "config/usb_multi_controller/usbfs_driver.py")
+            usbDriverComponent.addCapability("DRV_USB", "DRV_USB")
+            usbDriverComponent.addDependency("usb_peripheral_dependency", "USB", False, True)
         
-			# Enable USB Library modules 
-			loadUSBHostLayer = True
-			loadUSBHostCDC = True
-			loadUSBHostMSD = True
-			loadUSBHostHID = True
-			loadUSBHostAudio = True 
-		
-			loadUSBDeviceLayer = True
-			loadUSBDeviceCDC = True
-			loadUSBDeviceHID = True
-			loadUSBDeviceAudio = True
-			loadUSBDeviceMSD = True
-			loadUSBDeviceVendor = True
-			loadUSBDevicePrinter = True
-			
+            # Enable USB Library modules 
+            loadUSBHostLayer = True
+            loadUSBHostCDC = True
+            loadUSBHostMSD = True
+            loadUSBHostHID = True
+            loadUSBHostAudio = True 
+        
+            loadUSBDeviceLayer = True
+            loadUSBDeviceCDC = True
+            loadUSBDeviceHID = True
+            loadUSBDeviceAudio = True
+            loadUSBDeviceMSD = True
+            loadUSBDeviceVendor = True
+            loadUSBDevicePrinter = True
+            
     elif any(x in Variables.get("__PROCESSOR") for x in ["SAML22", "SAMD11"]):
         # Create USB Full Speed Driver Component
         usbDriverComponent =  Module.CreateComponent("drv_usbfs_v1", "USB Full Speed Driver", "/Harmony/Drivers", "config/usbfs_v1_driver.py")
