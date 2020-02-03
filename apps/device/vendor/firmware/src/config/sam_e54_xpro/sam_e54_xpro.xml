@@ -3879,20 +3879,20 @@
     </GeneratorComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="BSP_SAM_E54_Xplained_Pro" x="9" y="337"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="31" y="100"/>
-        <ElementPosition dnOrder="2" id="cmsis" x="270" y="60"/>
-        <ElementPosition dnOrder="3" id="core" x="170" y="60"/>
-        <ElementPosition dnOrder="4" id="dfp" x="180" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_usbfs_v1" x="244" y="292"/>
-        <ElementPosition dnOrder="6" id="evsys" x="20" y="20"/>
-        <ElementPosition dnOrder="7" id="nvmctrl" x="227" y="187"/>
-        <ElementPosition dnOrder="8" id="usb_device" x="188" y="104"/>
-        <ElementPosition dnOrder="9" id="usb_device_vendor" x="30" y="200"/>
+        <ElementPosition dnOrder="0" id="BSP_SAM_E54_Xplained_Pro" x="123" y="37"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="0" y="63"/>
+        <ElementPosition dnOrder="2" id="cmsis" x="303" y="11"/>
+        <ElementPosition dnOrder="3" id="core" x="311" y="36"/>
+        <ElementPosition dnOrder="4" id="dfp" x="124" y="10"/>
+        <ElementPosition dnOrder="5" id="drv_usbfs_v1" x="187" y="198"/>
+        <ElementPosition dnOrder="6" id="evsys" x="0" y="10"/>
+        <ElementPosition dnOrder="7" id="nvmctrl" x="150" y="63"/>
+        <ElementPosition dnOrder="8" id="usb_device" x="185" y="128"/>
+        <ElementPosition dnOrder="9" id="usb_device_vendor" x="0" y="153"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
