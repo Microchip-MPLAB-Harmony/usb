@@ -222,7 +222,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAMD21_DFP" vendor="Microchip" version="3.0.23"/>
+        <pack name="SAMD21_DFP" vendor="Microchip" version="3.1.71"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
       </packs>
       <compileType>
