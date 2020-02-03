@@ -71,7 +71,6 @@
             <itemPath>../src/config/sam_e54_xpro/usb/usb_device_cdc.h</itemPath>
             <itemPath>../src/config/sam_e54_xpro/usb/usb_cdc.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/config/sam_e54_xpro/user.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro/device_cache.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro/definitions.h</itemPath>
@@ -151,7 +150,6 @@
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
-      <itemPath>../src/app.h</itemPath>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
