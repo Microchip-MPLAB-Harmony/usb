@@ -250,8 +250,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
         <pack name="SAME54_DFP" vendor="Microchip" version="3.1.43"/>
+        <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
       </packs>
       <compileType>
         <linkerTool>
