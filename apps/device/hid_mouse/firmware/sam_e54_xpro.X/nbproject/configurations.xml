@@ -153,8 +153,8 @@
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
-      <itemPath>../src/app.h</itemPath>
       <itemPath>../src/mouse.h</itemPath>
+      <itemPath>../src/app.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -224,9 +224,9 @@
           <itemPath>../src/config/sam_e54_xpro/tasks.c</itemPath>
         </logicalFolder>
       </logicalFolder>
+      <itemPath>../src/mouse.c</itemPath>
       <itemPath>../src/main.c</itemPath>
       <itemPath>../src/app.c</itemPath>
-      <itemPath>../src/mouse.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
