@@ -115,6 +115,7 @@ USB_DEVICE_CDC_EVENT_RESPONSE APP_USBDeviceCDCEventHandler
     appDataObject = (APP_DATA *)userData;
     USB_CDC_CONTROL_LINE_STATE * controlLineStateData;
     uint16_t * breakData;
+    USB_DEVICE_CDC_EVENT_DATA_READ_COMPLETE *eventDataRead; 
 
     switch ( event )
     {
@@ -171,10 +172,11 @@ USB_DEVICE_CDC_EVENT_RESPONSE APP_USBDeviceCDCEventHandler
         case USB_DEVICE_CDC_EVENT_READ_COMPLETE:
 
             /* This means that the host has sent some data*/
-            appDataObject->appCOMPortObjects[index].isReadComplete = true;
-
+            eventDataRead =  (USB_DEVICE_CDC_EVENT_DATA_READ_COMPLETE *)pData; 
+            appDataObject->appCOMPortObjects[index].readDataLength = eventDataRead->length; 
             
-            /*let processing USB Task know USB if configured..*/
+            appDataObject->appCOMPortObjects[index].isReadComplete = true;
+            
             break;
 
         case USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
@@ -324,11 +326,13 @@ void APP_Initialize ( void )
     appData.appCOMPortObjects[COM1].writeTransferHandle = USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID;
     appData.appCOMPortObjects[COM1].isReadComplete = true;
     appData.appCOMPortObjects[COM1].isWriteComplete = false;
-
+    appData.appCOMPortObjects[COM1].readDataLength = 1;
+    
     appData.appCOMPortObjects[COM2].readTransferHandle = USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID;
     appData.appCOMPortObjects[COM2].writeTransferHandle = USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID;
     appData.appCOMPortObjects[COM2].isReadComplete = true;
     appData.appCOMPortObjects[COM2].isWriteComplete = false;
+    appData.appCOMPortObjects[COM2].readDataLength = 1;
 }
 
 
@@ -419,7 +423,7 @@ void APP_Tasks ( void )
 
                 USB_DEVICE_CDC_Write(COM2,
                         &appData.appCOMPortObjects[COM2].writeTransferHandle,
-                        com1ReadBuffer, 1,
+                        com1ReadBuffer, appData.appCOMPortObjects[COM2].readDataLength,
                         USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE);
 
             }
@@ -433,7 +437,7 @@ void APP_Tasks ( void )
 
                 USB_DEVICE_CDC_Write(COM1,
                         &appData.appCOMPortObjects[COM1].writeTransferHandle,
-                        com2ReadBuffer, 1,
+                        com2ReadBuffer, appData.appCOMPortObjects[COM1].readDataLength,
                         USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE);
 
             }

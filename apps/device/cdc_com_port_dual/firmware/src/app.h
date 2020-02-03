@@ -165,6 +165,10 @@ typedef struct
 
     /* True if a character was written*/
     bool isWriteComplete;
+    
+    /* This variable saves number of bytes of data received from the Host. 
+     * Application uses this variable to send back same amount of data to Host.*/
+    uint32_t readDataLength;
 
 }APP_COM_PORT_OBJECT;
 
