@@ -249,7 +249,7 @@
       </toolsSet>
       <packs>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
-        <pack name="SAMD21_DFP" vendor="Microchip" version="3.0.23"/>
+        <pack name="SAMD21_DFP" vendor="Microchip" version="3.1.71"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -456,7 +456,7 @@
         <property key="memories.programmemory.ranges" value="0-3ffff"/>
         <property key="poweroptions.powerenable" value="false"/>
         <property key="programmerToGoFilePath"
-                  value="C:/microchip/harmony/Repo/H3GitHub/usb/apps/device/cdc_serial_emulator/firmware/sam_d21_xpro.X/debug/sam_d21_xpro/sam_d21_xpro_ptg"/>
+                  value="C:/Repos/H3/usb/apps/device/cdc_serial_emulator/firmware/sam_d21_xpro.X/debug/sam_d21_xpro/sam_d21_xpro_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
