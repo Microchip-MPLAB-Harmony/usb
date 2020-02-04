@@ -27,8 +27,8 @@
           <Name dnOrder="1">drv_usbfsv1.c</Name>
           <LogicalPath dnOrder="2">config/sam_l21_xpro/driver/usb/usbfsv1/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">36DC57184A5DE2E7D6D4A16A3A09FFF5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">36DC57184A5DE2E7D6D4A16A3A09FFF5</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BFA06465728C80414F183336C887094D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BFA06465728C80414F183336C887094D</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
@@ -387,8 +387,8 @@
           <Name dnOrder="1">drv_usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/sam_l21_xpro/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5E2621860496A1FD0821B43178B3C75A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5E2621860496A1FD0821B43178B3C75A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">520DC1C088A41A16C28DCB58C92BDEC1</GeneratedChecksum>
+          <UserChecksum dnOrder="5">520DC1C088A41A16C28DCB58C92BDEC1</UserChecksum>
         </File>
         <File dnOrder="48">
           <Type dnOrder="0">HEADER</Type>
@@ -411,8 +411,8 @@
           <Name dnOrder="1">drv_usbfsv1_variant_mapping.h</Name>
           <LogicalPath dnOrder="2">config/sam_l21_xpro/driver/usb/usbfsv1/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">933C3A921E7EA52D69B1CEF727DC4264</GeneratedChecksum>
-          <UserChecksum dnOrder="5">933C3A921E7EA52D69B1CEF727DC4264</UserChecksum>
+          <GeneratedChecksum dnOrder="4">B340871ED74D40F2CAF9222677F9C0A3</GeneratedChecksum>
+          <UserChecksum dnOrder="5">B340871ED74D40F2CAF9222677F9C0A3</UserChecksum>
         </File>
         <File dnOrder="51">
           <Type dnOrder="0">HEADER</Type>
