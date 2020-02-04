@@ -363,8 +363,8 @@
           <Name dnOrder="1">drv_usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/sam_d11_xpro/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5E2621860496A1FD0821B43178B3C75A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5E2621860496A1FD0821B43178B3C75A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">520DC1C088A41A16C28DCB58C92BDEC1</GeneratedChecksum>
+          <UserChecksum dnOrder="5">520DC1C088A41A16C28DCB58C92BDEC1</UserChecksum>
         </File>
         <File dnOrder="45">
           <Type dnOrder="0">HEADER</Type>
@@ -387,8 +387,8 @@
           <Name dnOrder="1">drv_usbfsv1_variant_mapping.h</Name>
           <LogicalPath dnOrder="2">config/sam_d11_xpro/driver/usb/usbfsv1/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B6496D437AA630C92EA996C5B12D011E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B6496D437AA630C92EA996C5B12D011E</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C1B84A3EEEB4F1FA980C419070F0435B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C1B84A3EEEB4F1FA980C419070F0435B</UserChecksum>
         </File>
         <File dnOrder="48">
           <Type dnOrder="0">HEADER</Type>
