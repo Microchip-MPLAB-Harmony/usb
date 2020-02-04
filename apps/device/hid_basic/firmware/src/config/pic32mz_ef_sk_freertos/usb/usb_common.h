@@ -519,7 +519,7 @@ typedef enum
 	USB_SPEED_ERROR = 0,         // Error in obtaining USB module speed
     USB_SPEED_HIGH = 1,        	// USB module is at high speed				
     USB_SPEED_FULL = 2, 		// USB module is at full speed
-    USB_SPEED_LOW  = 4, 		// USB module is at low speed		
+    USB_SPEED_LOW  = 3, 		// USB module is at low speed		
 	
 } USB_SPEED;
 
