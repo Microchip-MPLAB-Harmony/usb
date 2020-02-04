@@ -116,7 +116,7 @@ extern "C" {
 #define SYS_TIME_MAX_TIMERS                  5
 #define SYS_TIME_HW_COUNTER_WIDTH            32
 #define SYS_TIME_HW_COUNTER_PERIOD           4294967295U
-#define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
+#define SYS_TIME_HW_COUNTER_HALF_PERIOD	     (SYS_TIME_HW_COUNTER_PERIOD>>1)
 #define SYS_TIME_CPU_CLOCK_FREQUENCY         200000000
 #define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (620)
 
@@ -176,6 +176,9 @@ extern "C" {
 #define DRV_USBHS_ENDPOINTS_NUMBER 							1
 
 #define USB_HOST_DEVICES_NUMBER                             3 
+
+/* Size of Endpoint 0 buffer */
+#define USB_DEVICE_EP0_BUFFER_SIZE                          64
 
 /* Target peripheral list entries */
 #define  USB_HOST_TPL_ENTRIES                               2 
