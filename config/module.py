@@ -120,30 +120,6 @@ def loadModule():
         # Use different name for UHPHS Driver 
         USBHostDriverCapabilityName = "DRV_UHP"
         
-        # Load USB Host Layer Components  
-        loadUSBHostLayer = True 
-        loadUSBHostCDC = True
-        loadUSBHostMSD = True
-        loadUSBHostHID = True 
-        
-        # Create USB Device Port High Speed (UDPHS) Driver Component for SAMG55
-        usbDevicePortHighSpeedDriverComponent =  Module.CreateComponent("drv_usb_udphs", "USB UDPHS Device Driver", "/Harmony/Drivers", "config/usb_udphs_driver.py")
-        usbDevicePortHighSpeedDriverComponent.addCapability("DRV_UDPHS", "DRV_UDPHS",True)
-        
-        # Add Generic Dependency on Core Service
-        usbDevicePortHighSpeedDriverComponent.addDependency("usb_udphs_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
-
-        USBDeviceDriverCapabilityName = "DRV_UDPHS"
-            
-        # Load USB Device Layer Components 
-        loadUSBDeviceLayer = True
-        loadUSBDeviceCDC = True
-        loadUSBDeviceHID = True
-        loadUSBDeviceMSD = True
-        loadUSBDeviceVendor = True 
-        loadUSBDevicePrinter = True 
-        usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
-        usbDriverComponent.addDependency("drv_usb_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
         
         # Enable USB Library modules 
         loadUSBHostLayer = True
@@ -151,14 +127,6 @@ def loadModule():
         loadUSBHostMSD = True
         loadUSBHostHID = True
         loadUSBHostAudio = True 
-    
-        loadUSBDeviceLayer = True
-        loadUSBDeviceCDC = True
-        loadUSBDeviceHID = True
-        loadUSBDeviceAudio = True
-        loadUSBDeviceMSD = True
-        loadUSBDeviceVendor = True 
-        loadUSBDevicePrinter = True 
     
 
     elif any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32MZ"]):
