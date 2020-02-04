@@ -57,6 +57,9 @@
  * Macro Mapping
  **********************************************/
 
+/* ATSAML21J18B Devices have USB PADCAL values in OTP4_ADDR */ 
+#define DRV_USBFSV1_READ_PADCAL_VALUE (*((uint32_t *) OTP4_ADDR) >> 13)
+
 /* ATSAML21J18B Devices has one interrupt vector for USB module */ 
 #define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE false
   
@@ -175,6 +178,19 @@
     #define min(x, y) ((x) > (y) ? (y) : (x))
     #if (defined __GNUC__) || (defined __CC_ARM)
         #define clz(u) __builtin_clz(u)
+    #else
+        static __INLINE uint32_t clz(uint32_t data)
+        {
+            uint32_t count = 0;
+            uint32_t mask = 0x80000000;
+
+            while((data & mask) == 0)
+            {
+                count += 1u;
+                mask = mask >> 1u;
+            }
+            return (count);
+        }
     #endif
 
 #elif (DRV_USBFSV1_HOST_SUPPORT == false)

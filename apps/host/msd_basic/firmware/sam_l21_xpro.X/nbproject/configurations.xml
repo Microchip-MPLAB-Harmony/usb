@@ -59,10 +59,6 @@
                   <itemPath>../src/config/sam_l21_xpro/system/fs/fat_fs/src/hardware_access/diskio.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
-              <logicalFolder name="f2" displayName="mpfs" projectFiles="true">
-                <itemPath>../src/config/sam_l21_xpro/system/fs/mpfs/mpfs.h</itemPath>
-                <itemPath>../src/config/sam_l21_xpro/system/fs/mpfs/src/mpfs_local.h</itemPath>
-              </logicalFolder>
               <itemPath>../src/config/sam_l21_xpro/system/fs/sys_fs.h</itemPath>
               <itemPath>../src/config/sam_l21_xpro/system/fs/src/sys_fs_local.h</itemPath>
               <itemPath>../src/config/sam_l21_xpro/system/fs/sys_fs_media_manager.h</itemPath>
@@ -101,6 +97,7 @@
             <itemPath>../src/config/sam_l21_xpro/usb/usb_host_hub_interface.h</itemPath>
             <itemPath>../src/config/sam_l21_xpro/usb/usb_hub.h</itemPath>
           </logicalFolder>
+          <itemPath>../src/config/sam_l21_xpro/user.h</itemPath>
           <itemPath>../src/config/sam_l21_xpro/device_cache.h</itemPath>
           <itemPath>../src/config/sam_l21_xpro/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_l21_xpro/definitions.h</itemPath>
@@ -156,28 +153,21 @@
           <logicalFolder name="f1" displayName="CMSIS" projectFiles="true">
             <logicalFolder name="f1" displayName="Core" projectFiles="true">
               <logicalFolder name="f1" displayName="Include" projectFiles="true">
+                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armcc.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/tz_context.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm0plus.h</itemPath>
                 <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
-              </logicalFolder>
-            </logicalFolder>
-            <logicalFolder name="f2" displayName="DSP" projectFiles="true">
-              <logicalFolder name="f1" displayName="Include" projectFiles="true">
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_common_tables.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_const_structs.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/DSP/Include/arm_math.h</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
+      <itemPath>../src/app.h</itemPath>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -234,9 +224,6 @@
                 <itemPath>../src/config/sam_l21_xpro/system/fs/fat_fs/src/ff.c</itemPath>
                 <itemPath>../src/config/sam_l21_xpro/system/fs/fat_fs/src/diskio.c</itemPath>
               </logicalFolder>
-              <logicalFolder name="f2" displayName="mpfs" projectFiles="true">
-                <itemPath>../src/config/sam_l21_xpro/system/fs/mpfs/src/mpfs.c</itemPath>
-              </logicalFolder>
               <itemPath>../src/config/sam_l21_xpro/system/fs/src/sys_fs.c</itemPath>
               <itemPath>../src/config/sam_l21_xpro/system/fs/src/sys_fs_media_manager.c</itemPath>
             </logicalFolder>
@@ -283,13 +270,13 @@
         <targetDevice>ATSAML21J18B</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>EdbgTool</platformTool>
+        <platformTool>mEdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.30</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAML21_DFP" vendor="Microchip" version="3.0.26"/>
+        <pack name="SAML21_DFP" vendor="Microchip" version="3.1.43"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -993,6 +980,41 @@
                   value=""/>
         <property key="warningmessagebreakoptions.warningmessages" value="holdstate"/>
       </Simulator>
+      <mEdbgTool>
+        <property key="AutoSelectMemRanges" value="auto"/>
+        <property key="communication.activationmode" value="nohv"/>
+        <property key="communication.interface" value="swd"/>
+        <property key="communication.speed" value="2.000"/>
+        <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="firmware.path"
+                  value="Press to browse for a specific firmware version"/>
+        <property key="firmware.update.action" value="firmware.update.use.latest"/>
+        <property key="memories.aux" value="false"/>
+        <property key="memories.bootflash" value="true"/>
+        <property key="memories.configurationmemory" value="true"/>
+        <property key="memories.configurationmemory2" value="true"/>
+        <property key="memories.dataflash" value="true"/>
+        <property key="memories.eeprom" value="true"/>
+        <property key="memories.exclude.configurationmemory" value="true"/>
+        <property key="memories.flashdata" value="true"/>
+        <property key="memories.id" value="true"/>
+        <property key="memories.instruction.ram.ranges"
+                  value="${memories.instruction.ram.ranges}"/>
+        <property key="memories.programmemory" value="true"/>
+        <property key="memories.programmemory.ranges" value="0-3ffff"/>
+        <property key="poweroptions.powerenable" value="false"/>
+        <property key="programoptions.eraseb4program" value="true"/>
+        <property key="programoptions.preservedataflash" value="false"/>
+        <property key="programoptions.preservedataflash.ranges"
+                  value="${memories.dataflash.default}"/>
+        <property key="programoptions.preserveeeprom" value="false"/>
+        <property key="programoptions.preserveeeprom.ranges" value=""/>
+        <property key="programoptions.preserveprogram.ranges" value="0-30001fff"/>
+        <property key="programoptions.preserveprogramrange" value="false"/>
+        <property key="programoptions.preserveuserid" value="false"/>
+        <property key="programoptions.programuserotp" value="false"/>
+        <property key="voltagevalue" value=""/>
+      </mEdbgTool>
     </conf>
   </confs>
 </configurationDescriptor>

@@ -143,7 +143,7 @@ void _DRV_USBFSV1_HOST_AttachDetachStateMachine (DRV_USBFSV1_OBJ * hDriver)
         case DRV_USBFSV1_HOST_ATTACH_STATE_DETECTED:
             /* Disable the driver interrupt as
              * we do not want this section to be interrupted. */
-            interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptSource);
+            interruptWasEnabled = SYS_INT_SourceDisable((INT_SOURCE)hDriver->interruptSource);
 
             if(hDriver->deviceAttached)
             {
@@ -164,7 +164,7 @@ void _DRV_USBFSV1_HOST_AttachDetachStateMachine (DRV_USBFSV1_OBJ * hDriver)
             {
                 /* Re-enable the interrupt if it was originally
                  * enabled. */
-                SYS_INT_SourceEnable(hDriver->interruptSource);
+                SYS_INT_SourceEnable((INT_SOURCE)hDriver->interruptSource);
             }
             break;
 
@@ -493,7 +493,7 @@ USB_ERROR DRV_USBFSV1_HOST_IRPSubmit
             }
             else
             {
-                interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptSource);
+                interruptWasEnabled = SYS_INT_SourceDisable((INT_SOURCE)hDriver->interruptSource);
             }
         }
 
@@ -632,7 +632,7 @@ USB_ERROR DRV_USBFSV1_HOST_IRPSubmit
             {
                 if(interruptWasEnabled)
                 {
-                    SYS_INT_SourceEnable(hDriver->interruptSource);
+                    SYS_INT_SourceEnable((INT_SOURCE)hDriver->interruptSource);
                 }
 
                 if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
@@ -695,7 +695,7 @@ void DRV_USBFSV1_HOST_IRPCancel
             {
                 SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBFSV1: Mutex lock failed");
             }
-            interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptSource);
+            interruptWasEnabled = SYS_INT_SourceDisable((INT_SOURCE)hDriver->interruptSource);
         }
 
         if(irp->previous == NULL)
@@ -744,7 +744,7 @@ void DRV_USBFSV1_HOST_IRPCancel
         {
             if(interruptWasEnabled)
             {
-                SYS_INT_SourceEnable(hDriver->interruptSource);
+                SYS_INT_SourceEnable((INT_SOURCE)hDriver->interruptSource);
             }
 
             if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
@@ -814,7 +814,7 @@ void DRV_USBFSV1_HOST_PipeClose
                 {
                     SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USBFSV1: Mutex lock failed");
                 }
-                interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptSource);
+                interruptWasEnabled = SYS_INT_SourceDisable((INT_SOURCE)hDriver->interruptSource);
             }
 
             if(USB_TRANSFER_TYPE_CONTROL == pipe->pipeType)
@@ -910,7 +910,7 @@ void DRV_USBFSV1_HOST_PipeClose
             {
                 if(interruptWasEnabled)
                 {
-                    SYS_INT_SourceEnable(hDriver->interruptSource);
+                    SYS_INT_SourceEnable((INT_SOURCE)hDriver->interruptSource);
                 }
 
                 if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
@@ -2132,7 +2132,7 @@ bool DRV_USBFSV1_HOST_EventsDisable
     if((DRV_HANDLE_INVALID != handle) && (0 != handle))
     {
         pUSBDrvObj = (DRV_USBFSV1_OBJ *)(handle);
-        result = SYS_INT_SourceDisable(pUSBDrvObj->interruptSource);
+        result = SYS_INT_SourceDisable((INT_SOURCE)pUSBDrvObj->interruptSource);
     }
 
     return(result);
@@ -2170,11 +2170,11 @@ void DRV_USBFSV1_HOST_EventsEnable
         pUSBDrvObj = (DRV_USBFSV1_OBJ *)(handle);
         if(false == eventContext)
         {
-            SYS_INT_SourceDisable(pUSBDrvObj->interruptSource);
+            SYS_INT_SourceDisable((INT_SOURCE)pUSBDrvObj->interruptSource);
         }
         else
         {
-            SYS_INT_SourceEnable(pUSBDrvObj->interruptSource);
+            SYS_INT_SourceEnable((INT_SOURCE)pUSBDrvObj->interruptSource);
         }
     }
 }
@@ -2216,7 +2216,7 @@ void DRV_USBFSV1_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enable)
              /* If the root hub operation is disable, we disable detach and
              * attached event and switch off the port power. */
 
-            SYS_INT_SourceStatusClear(pUSBDrvObj->interruptSource);
+            SYS_INT_SourceStatusClear((INT_SOURCE)pUSBDrvObj->interruptSource);
             pUSBDrvObj->operationEnabled = false;
 
         }

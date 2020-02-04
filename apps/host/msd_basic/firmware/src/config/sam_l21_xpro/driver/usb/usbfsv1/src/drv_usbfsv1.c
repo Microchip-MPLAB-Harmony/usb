@@ -65,13 +65,6 @@
  ******************************************************/
 DRV_USBFSV1_OBJ gDrvUSBObj [DRV_USBFSV1_INSTANCES_NUMBER];
 
-/******************************************************
- * Control Endpoint IN/OUT buffers needed by the USB
- * controller
- ******************************************************/
-COMPILER_WORD_ALIGNED uint8_t gDrvEP0BufferBank0[USB_DEVICE_EP0_BUFFER_SIZE];
-COMPILER_WORD_ALIGNED uint8_t gDrvEP0BufferBank1[USB_DEVICE_EP0_BUFFER_SIZE];
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: USB Controller Driver Interface Implementations
@@ -111,6 +104,8 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
     DRV_USBFSV1_INIT * usbInit = (DRV_USBFSV1_INIT *)NULL;
     SYS_MODULE_OBJ retVal = SYS_MODULE_OBJ_INVALID;
     uint32_t regValue;
+    volatile uint32_t usbCalibValue;
+    uint16_t usbPadValue;
 
     if(drvIndex >= DRV_USBFSV1_INSTANCES_NUMBER)
     {
@@ -139,10 +134,6 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
             drvObj->isOpened = false;
             drvObj->pEventCallBack = NULL;
 
-            /* Set the starting VBUS level. */
-            drvObj->vbusLevel = DRV_USB_VBUS_LEVEL_INVALID;
-            drvObj->vbusComparator = usbInit->vbusComparator;
-
             drvObj->sessionInvalidEventSent = false;
             drvObj->interruptSource  = usbInit->interruptSource;
             drvObj->interruptSource1  = usbInit->interruptSource1;
@@ -150,15 +141,36 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
             drvObj->interruptSource3  = usbInit->interruptSource3;
             drvObj->isInInterruptContext = false;
 
-            /* Assign the endpoint table */
-            drvObj->endpoint0BufferPtr[0] = gDrvEP0BufferBank0;
-            drvObj->endpoint0BufferPtr[1] = gDrvEP0BufferBank1;
-
             /* Set the configuration */
-
 			drvObj->usbID->HOST.USB_CTRLA = USB_CTRLA_SWRST_Msk;
-
 			while (drvObj->usbID->HOST.USB_SYNCBUSY & USB_SYNCBUSY_SWRST_Msk);
+            
+            /* Change QOS values to have the best performance and correct USB behaviour */
+            drvObj->usbID->DEVICE.USB_QOSCTRL = (USB_QOSCTRL_DQOS(2) | USB_QOSCTRL_CQOS(2));
+            
+            /* Write linearity calibration in BIASREFBUF and bias calibration in BIASCOMP */     
+            usbCalibValue = DRV_USBFSV1_READ_PADCAL_VALUE;   
+            
+            usbPadValue = (usbCalibValue & 0x001F);
+            if(usbPadValue == 0x001F)
+            {
+                usbPadValue = 5;
+            }
+            drvObj->usbID->DEVICE.USB_PADCAL |= USB_PADCAL_TRANSN(usbPadValue);
+            
+            usbPadValue = ((usbCalibValue >> 5) & 0x001F);
+            if(usbPadValue == 0x001F)
+            {
+                usbPadValue = 29;
+            }
+            drvObj->usbID->DEVICE.USB_PADCAL |= USB_PADCAL_TRANSP(usbPadValue);
+            
+            usbPadValue = ((usbCalibValue >> 10) & 0x0007);
+            if(usbPadValue == 0x0007)
+            {
+                usbPadValue = 3;
+            }
+            drvObj->usbID->DEVICE.USB_PADCAL |= USB_PADCAL_TRIM(usbPadValue);
 
             if(usbInit->runInStandby == true)
             {
@@ -186,6 +198,10 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
             else if(drvObj->operationMode == DRV_USBFSV1_OPMODE_DEVICE)
             {
                 drvObj->usbID->DEVICE.USB_DESCADD = (uint32_t)(drvObj->endpointDescriptorTable);
+
+                /* Set the starting VBUS level. */
+                drvObj->vbusLevel = DRV_USB_VBUS_LEVEL_INVALID;
+                drvObj->vbusComparator = usbInit->vbusComparator;
 
                 regValue = drvObj->usbID->DEVICE.USB_CTRLB;
                 regValue &= ~USB_DEVICE_CTRLB_SPDCONF_Msk;                
@@ -284,7 +300,7 @@ void DRV_USBFSV1_Tasks
                 if(vbusLevel == DRV_USB_VBUS_LEVEL_VALID)
                 {
                     /* We have a valid VBUS level */
-                    hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBFSV1_EVENT_DEVICE_SESSION_VALID, NULL);
+                    hDriver->pEventCallBack(hDriver->hClientArg, (DRV_USB_EVENT)DRV_USBFSV1_EVENT_DEVICE_SESSION_VALID, NULL);
 
                     /* We should be ready for send session invalid event
                      * to the application when they happen.*/
@@ -298,7 +314,7 @@ void DRV_USBFSV1_Tasks
                      * it only once. */
                     if(!hDriver->sessionInvalidEventSent)
                     {
-                        hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBFSV1_EVENT_DEVICE_SESSION_INVALID, NULL);
+                        hDriver->pEventCallBack(hDriver->hClientArg, (DRV_USB_EVENT)DRV_USBFSV1_EVENT_DEVICE_SESSION_INVALID, NULL);
                         hDriver->sessionInvalidEventSent = true;
                     }
                 }
@@ -371,16 +387,16 @@ void DRV_USBFSV1_Deinitialize
 
         /* Clear and disable the interrupts */
         _DRV_USBFSV1_SYS_INT_SourceDisable(
-                hDriver->interruptSource,
-                hDriver->interruptSource1,
-                hDriver->interruptSource2,
-                hDriver->interruptSource3 );
+                (INT_SOURCE)hDriver->interruptSource,
+                (INT_SOURCE)hDriver->interruptSource1,
+                (INT_SOURCE)hDriver->interruptSource2,
+                (INT_SOURCE)hDriver->interruptSource3 );
 
         _DRV_USBFSV1_SYS_INT_SourceStatusClear(
-                hDriver->interruptSource,
-                hDriver->interruptSource1,
-                hDriver->interruptSource2,
-                hDriver->interruptSource3 );
+                (INT_SOURCE)hDriver->interruptSource,
+                (INT_SOURCE)hDriver->interruptSource1,
+                (INT_SOURCE)hDriver->interruptSource2,
+                (INT_SOURCE)hDriver->interruptSource3 );
 
         hDriver->usbID->DEVICE.USB_CTRLA &= ~USB_CTRLA_ENABLE_Msk;
 
@@ -456,7 +472,7 @@ DRV_HANDLE DRV_USBFSV1_Open
             retVal = ((DRV_HANDLE) drvObj);
         }
     }
-
+    
     /* Return handle */
     return (retVal);
 }
@@ -584,10 +600,10 @@ void DRV_USBFSV1_Tasks_ISR
 
             /* Clear the interrupt */
             _DRV_USBFSV1_SYS_INT_SourceStatusClear(
-                    drvObj->interruptSource,
-                    drvObj->interruptSource1,
-                    drvObj->interruptSource2,
-                    drvObj->interruptSource3 );
+                    (INT_SOURCE)drvObj->interruptSource,
+                    (INT_SOURCE)drvObj->interruptSource1,
+                    (INT_SOURCE)drvObj->interruptSource2,
+                    (INT_SOURCE)drvObj->interruptSource3 );
 
             /* We are entering an interrupt context */
             drvObj->isInInterruptContext = true;
