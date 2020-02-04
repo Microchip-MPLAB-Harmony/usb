@@ -391,7 +391,7 @@ void APP_Initialize ( void )
     
 }
 
-
+int8_t dir_table[] ={-4,-4,-4, 0, 4, 4, 4, 0};
 /******************************************************************************
   Function:
     void APP_Tasks ( void )
@@ -406,8 +406,6 @@ void APP_Tasks ( void )
     static uint8_t  movement_length = 0;
     static bool     sent_dont_move = false;
 
-    int8_t dir_table[] ={-4,-4,-4, 0, 4, 4, 4, 0};
-	
     if(appData.state > APP_STATE_INIT)
     {
         APP_ProcessSwitchPress();
