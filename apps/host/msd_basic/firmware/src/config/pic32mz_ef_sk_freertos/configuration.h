@@ -113,7 +113,7 @@ extern "C" {
 #define SYS_TIME_MAX_TIMERS                  5
 #define SYS_TIME_HW_COUNTER_WIDTH            32
 #define SYS_TIME_HW_COUNTER_PERIOD           4294967295U
-#define SYS_TIME_HW_COUNTER_HALF_PERIOD		 (SYS_TIME_HW_COUNTER_PERIOD>>1)
+#define SYS_TIME_HW_COUNTER_HALF_PERIOD	     (SYS_TIME_HW_COUNTER_PERIOD>>1)
 #define SYS_TIME_CPU_CLOCK_FREQUENCY         200000000
 #define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (620)
 
@@ -157,6 +157,8 @@ extern "C" {
 
 /* Reset duration in milli Seconds */ 
 #define DRV_USBHS_HOST_RESET_DURATION                     100
+
+
 
 /* Alignment for buffers that are submitted to USB Driver*/ 
 #define USB_ALIGN  CACHE_ALIGN
