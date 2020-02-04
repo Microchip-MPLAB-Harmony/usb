@@ -65,13 +65,6 @@
  ******************************************************/
 DRV_USBFSV1_OBJ gDrvUSBObj [DRV_USBFSV1_INSTANCES_NUMBER];
 
-/******************************************************
- * Control Endpoint IN/OUT buffers needed by the USB
- * controller
- ******************************************************/
-COMPILER_WORD_ALIGNED uint8_t gDrvEP0BufferBank0[USB_DEVICE_EP0_BUFFER_SIZE];
-COMPILER_WORD_ALIGNED uint8_t gDrvEP0BufferBank1[USB_DEVICE_EP0_BUFFER_SIZE];
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: USB Controller Driver Interface Implementations
@@ -111,6 +104,8 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
     DRV_USBFSV1_INIT * usbInit = (DRV_USBFSV1_INIT *)NULL;
     SYS_MODULE_OBJ retVal = SYS_MODULE_OBJ_INVALID;
     uint32_t regValue;
+    volatile uint32_t usbCalibValue;
+    uint16_t usbPadValue;
 
     if(drvIndex >= DRV_USBFSV1_INSTANCES_NUMBER)
     {
@@ -139,10 +134,6 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
             drvObj->isOpened = false;
             drvObj->pEventCallBack = NULL;
 
-            /* Set the starting VBUS level. */
-            drvObj->vbusLevel = DRV_USB_VBUS_LEVEL_INVALID;
-            drvObj->vbusComparator = usbInit->vbusComparator;
-
             drvObj->sessionInvalidEventSent = false;
             drvObj->interruptSource  = usbInit->interruptSource;
             drvObj->interruptSource1  = usbInit->interruptSource1;
@@ -150,15 +141,36 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
             drvObj->interruptSource3  = usbInit->interruptSource3;
             drvObj->isInInterruptContext = false;
 
-            /* Assign the endpoint table */
-            drvObj->endpoint0BufferPtr[0] = gDrvEP0BufferBank0;
-            drvObj->endpoint0BufferPtr[1] = gDrvEP0BufferBank1;
-
             /* Set the configuration */
-
 			drvObj->usbID->USB_CTRLA = USB_CTRLA_SWRST_Msk;
-
 			while (drvObj->usbID->USB_SYNCBUSY & USB_SYNCBUSY_SWRST_Msk);
+            
+            /* Change QOS values to have the best performance and correct USB behaviour */
+            drvObj->usbID->USB_QOSCTRL = (USB_QOSCTRL_DQOS(2) | USB_QOSCTRL_CQOS(2));
+            
+            /* Write linearity calibration in BIASREFBUF and bias calibration in BIASCOMP */     
+            usbCalibValue = DRV_USBFSV1_READ_PADCAL_VALUE;   
+            
+            usbPadValue = (usbCalibValue & 0x001F);
+            if(usbPadValue == 0x001F)
+            {
+                usbPadValue = 5;
+            }
+            drvObj->usbID->USB_PADCAL |= USB_PADCAL_TRANSN(usbPadValue);
+            
+            usbPadValue = ((usbCalibValue >> 5) & 0x001F);
+            if(usbPadValue == 0x001F)
+            {
+                usbPadValue = 29;
+            }
+            drvObj->usbID->USB_PADCAL |= USB_PADCAL_TRANSP(usbPadValue);
+            
+            usbPadValue = ((usbCalibValue >> 10) & 0x0007);
+            if(usbPadValue == 0x0007)
+            {
+                usbPadValue = 3;
+            }
+            drvObj->usbID->USB_PADCAL |= USB_PADCAL_TRIM(usbPadValue);
 
             if(usbInit->runInStandby == true)
             {
@@ -168,6 +180,10 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
             if(drvObj->operationMode == DRV_USBFSV1_OPMODE_DEVICE)
             {
                 drvObj->usbID->USB_DESCADD = (uint32_t)(drvObj->endpointDescriptorTable);
+
+                /* Set the starting VBUS level. */
+                drvObj->vbusLevel = DRV_USB_VBUS_LEVEL_INVALID;
+                drvObj->vbusComparator = usbInit->vbusComparator;
 
                 regValue = drvObj->usbID->USB_CTRLB;
                 regValue &= ~USB_DEVICE_CTRLB_SPDCONF_Msk;                
