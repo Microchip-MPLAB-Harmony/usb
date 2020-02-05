@@ -164,10 +164,6 @@
                   <itemPath>../src/config/pic32mx470_curiosity/system/fs/fat_fs/src/hardware_access/diskio.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
-              <logicalFolder name="f2" displayName="mpfs" projectFiles="true">
-                <itemPath>../src/config/pic32mx470_curiosity/system/fs/mpfs/mpfs.h</itemPath>
-                <itemPath>../src/config/pic32mx470_curiosity/system/fs/mpfs/src/mpfs_local.h</itemPath>
-              </logicalFolder>
               <itemPath>../src/config/pic32mx470_curiosity/system/fs/sys_fs.h</itemPath>
               <itemPath>../src/config/pic32mx470_curiosity/system/fs/src/sys_fs_local.h</itemPath>
               <itemPath>../src/config/pic32mx470_curiosity/system/fs/sys_fs_media_manager.h</itemPath>
@@ -269,9 +265,6 @@
                 <itemPath>../src/config/pic32mx470_curiosity/system/fs/fat_fs/src/ff.c</itemPath>
                 <itemPath>../src/config/pic32mx470_curiosity/system/fs/fat_fs/src/diskio.c</itemPath>
               </logicalFolder>
-              <logicalFolder name="f2" displayName="mpfs" projectFiles="true">
-                <itemPath>../src/config/pic32mx470_curiosity/system/fs/mpfs/src/mpfs.c</itemPath>
-              </logicalFolder>
               <itemPath>../src/config/pic32mx470_curiosity/system/fs/src/sys_fs.c</itemPath>
               <itemPath>../src/config/pic32mx470_curiosity/system/fs/src/sys_fs_media_manager.c</itemPath>
             </logicalFolder>
@@ -322,7 +315,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC32MX_DFP" vendor="Microchip" version="1.0.53"/>
+        <pack name="PIC32MX_DFP" vendor="Microchip" version="1.1.215"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -357,7 +350,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/pic32mx470_curiosity;../src/packs/PIC32MX470F512H_DFP;;../src/mips"/>
+                  value="../src;../src/config/pic32mx470_curiosity;../src/packs/PIC32MX470F512H_DFP;../src/mips"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -548,7 +541,6 @@
         <property key="ToolFirmwareFilePath"
                   value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
-        <property key="firmware.download.all" value="false"/>
         <property key="memories.configurationmemory" value="true"/>
         <property key="memories.dataflash" value="true"/>
         <property key="memories.eeprom" value="true"/>
