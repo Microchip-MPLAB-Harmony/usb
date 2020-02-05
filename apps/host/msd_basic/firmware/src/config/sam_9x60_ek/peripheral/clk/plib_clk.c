@@ -115,7 +115,6 @@ static void initPeriphClk(void)
         { ID_PIOB, 1, 0, 0, 0},
         { ID_PIOC, 1, 0, 0, 0},
         { ID_TC0, 1, 0, 0, 0},
-        { ID_UHPHS_EHCI, 1, 0, 0, 0},
         { ID_PIOD, 1, 0, 0, 0},
         { ID_DBGU, 1, 0, 0, 0},
         { ID_PERIPH_MAX + 1, 0, 0, 0, 0}//end of list marker
@@ -151,6 +150,14 @@ static void initUSBClk ( void )
     PMC_REGS->PMC_SCER |= PMC_SCER_UHP_Msk;
 }
 
+/*********************************************************************************
+Initialize QSPI Clock
+*********************************************************************************/
+static void initQSPIClk(void)
+{
+    PMC_REGS->PMC_SCER |= PMC_SCER_QSPICLK_Msk;
+}
+
 
 /*********************************************************************************
 Clock Initialize
@@ -166,6 +173,9 @@ void CLK_Initialize( void )
 
     /* Initialize Peripheral clock */
     initPeriphClk();
+
+    /* Initialize QSPI Clock */
+    initQSPIClk();
 
     /* Initialize USB Clock */
     initUSBClk();
