@@ -77,10 +77,6 @@
                   <itemPath>../src/config/pic32mz_das_sk/system/fs/fat_fs/src/hardware_access/diskio.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
-              <logicalFolder name="f2" displayName="mpfs" projectFiles="true">
-                <itemPath>../src/config/pic32mz_das_sk/system/fs/mpfs/mpfs.h</itemPath>
-                <itemPath>../src/config/pic32mz_das_sk/system/fs/mpfs/src/mpfs_local.h</itemPath>
-              </logicalFolder>
               <itemPath>../src/config/pic32mz_das_sk/system/fs/sys_fs.h</itemPath>
               <itemPath>../src/config/pic32mz_das_sk/system/fs/src/sys_fs_local.h</itemPath>
               <itemPath>../src/config/pic32mz_das_sk/system/fs/sys_fs_media_manager.h</itemPath>
@@ -184,9 +180,6 @@
                 <itemPath>../src/config/pic32mz_das_sk/system/fs/fat_fs/src/ff.c</itemPath>
                 <itemPath>../src/config/pic32mz_das_sk/system/fs/fat_fs/src/diskio.c</itemPath>
               </logicalFolder>
-              <logicalFolder name="f2" displayName="mpfs" projectFiles="true">
-                <itemPath>../src/config/pic32mz_das_sk/system/fs/mpfs/src/mpfs.c</itemPath>
-              </logicalFolder>
               <itemPath>../src/config/pic32mz_das_sk/system/fs/src/sys_fs.c</itemPath>
               <itemPath>../src/config/pic32mz_das_sk/system/fs/src/sys_fs_media_manager.c</itemPath>
             </logicalFolder>
@@ -237,7 +230,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC32MZ-DA_DFP" vendor="Microchip" version="1.0.69"/>
+        <pack name="PIC32MZ-DA_DFP" vendor="Microchip" version="1.1.98"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -624,7 +617,6 @@
         <property key="ToolFirmwareFilePath"
                   value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
-        <property key="firmware.download.all" value="false"/>
         <property key="memories.configurationmemory" value="true"/>
         <property key="memories.dataflash" value="true"/>
         <property key="memories.eeprom" value="true"/>
