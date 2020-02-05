@@ -1495,15 +1495,15 @@
   <UserData>
     <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="BSP_PIC32MK_GP_Development_Kit" x="30" y="60"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="340" y="20"/>
-        <ElementPosition dnOrder="2" id="core" x="239" y="20"/>
+        <ElementPosition dnOrder="0" id="BSP_PIC32MK_GP_Development_Kit" x="21" y="60"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="286" y="20"/>
+        <ElementPosition dnOrder="2" id="core" x="203" y="20"/>
         <ElementPosition dnOrder="3" id="dfp" x="20" y="20"/>
         <ElementPosition dnOrder="4" id="drv_usbfs_index" x="84" y="152"/>
-        <ElementPosition dnOrder="5" id="peripheral_usb_1" x="8" y="180"/>
-        <ElementPosition dnOrder="6" id="peripheral_usb_2" x="4" y="230"/>
-        <ElementPosition dnOrder="7" id="usb_device" x="279" y="132"/>
-        <ElementPosition dnOrder="8" id="usb_device_cdc" x="433" y="113"/>
+        <ElementPosition dnOrder="5" id="peripheral_usb_1" x="0" y="194"/>
+        <ElementPosition dnOrder="6" id="peripheral_usb_2" x="1" y="258"/>
+        <ElementPosition dnOrder="7" id="usb_device" x="254" y="152"/>
+        <ElementPosition dnOrder="8" id="usb_device_cdc" x="393" y="154"/>
       </ElementPositions>
     </ComponentGraph>
     <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
