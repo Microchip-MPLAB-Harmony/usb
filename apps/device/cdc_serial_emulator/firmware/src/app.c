@@ -296,6 +296,8 @@ void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, void * eventData, uintptr
 
             /* VBUS is removed. Detach the device */
             USB_DEVICE_Detach (appData.usbDevHandle);
+
+            LED_Off();            
             break;
 
         /* These events are not used in this demo. */
@@ -337,6 +339,8 @@ bool APP_StateReset(void)
 
         appData.isSetLineCodingCommandInProgress = false;
         appData.isBaudrateDataReceived = false;
+
+        LED_Off();
     }
     else
     {
@@ -499,8 +503,6 @@ void APP_Tasks ( void )
 
                     /* Application waits for device configuration. */
                     appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
-
-                    LED_Off();
                 }
                 else
                 {
@@ -525,6 +527,8 @@ void APP_Tasks ( void )
                 appData.state = APP_STATE_CHECK_CDC_READ;                
                 appData.isCDCReadComplete = false;
                 
+                LED_On();
+                
                 USB_DEVICE_CDC_Read (appData.cdcInstance, &(appData.readTransferHandle),
                         appData.readBuffer, APP_READ_BUFFER_SIZE);
             }
@@ -546,8 +550,6 @@ void APP_Tasks ( void )
                 if (appData.bufferHandler != DRV_USART_BUFFER_HANDLE_INVALID)
                 {
 					appData.isCDCReadComplete = false;
-
-                    LED_Toggle();
 
                     /* This means we have sent all the data. We schedule the next CDC Read. */
                     USB_DEVICE_CDC_Read (appData.cdcInstance, &appData.readTransferHandle,
@@ -574,8 +576,6 @@ void APP_Tasks ( void )
             /* Check if a character was received on the UART */
             if(appData.isUSARTReadInProgress == false)
             {
-                LED_Toggle();
-
                 USB_DEVICE_CDC_Write(0, &appData.writeTransferHandle,
                         &appData.uartReceivedData, 1,
                         USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE);
