@@ -43,16 +43,16 @@
           <Name dnOrder="1">drv_usbhs.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/usb/usbhs/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">61FD4E5A1D63F33B9D3CE91856FFC2F8</GeneratedChecksum>
-          <UserChecksum dnOrder="5">61FD4E5A1D63F33B9D3CE91856FFC2F8</UserChecksum>
+          <GeneratedChecksum dnOrder="4">8048089AA9DA0663AE185F78DF90D645</GeneratedChecksum>
+          <UserChecksum dnOrder="5">8048089AA9DA0663AE185F78DF90D645</UserChecksum>
         </File>
         <File dnOrder="5">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_usbhs_host.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/usb/usbhs/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">CB6B35415F68F77B7FE177DF78A1797D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">CB6B35415F68F77B7FE177DF78A1797D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">FAEC89A2526957B1A50422D0908B5ECE</GeneratedChecksum>
+          <UserChecksum dnOrder="5">FAEC89A2526957B1A50422D0908B5ECE</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -91,8 +91,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">3B16F9F48E9D44A01467C36B00BB5D36</GeneratedChecksum>
-          <UserChecksum dnOrder="5">3B16F9F48E9D44A01467C36B00BB5D36</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F6D2EADE1282D6A064C143666B23BAAF</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F6D2EADE1282D6A064C143666B23BAAF</UserChecksum>
         </File>
         <File dnOrder="11">
           <Type dnOrder="0">SOURCE</Type>
@@ -211,8 +211,8 @@
           <Name dnOrder="1">sys_time.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/time/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/time/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">70DAE413C209782D51F61D7C896593FB</GeneratedChecksum>
-          <UserChecksum dnOrder="5">70DAE413C209782D51F61D7C896593FB</UserChecksum>
+          <GeneratedChecksum dnOrder="4">28C868D3255F7D85CF4B31AA2A050AF6</GeneratedChecksum>
+          <UserChecksum dnOrder="5">28C868D3255F7D85CF4B31AA2A050AF6</UserChecksum>
         </File>
         <File dnOrder="26">
           <Type dnOrder="0">SOURCE</Type>
@@ -259,8 +259,8 @@
           <Name dnOrder="1">usb_host_init_data.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">97C330C9D26EAB7E5682AEE2C6CFD93F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">97C330C9D26EAB7E5682AEE2C6CFD93F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">43DF0CB60D159F6B578B01C2A3F50AF0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">43DF0CB60D159F6B578B01C2A3F50AF0</UserChecksum>
         </File>
         <File dnOrder="32">
           <Type dnOrder="0">SOURCE</Type>
@@ -379,8 +379,8 @@
           <Name dnOrder="1">drv_usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">C07E5598C11AD6C2F25F92037919A988</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C07E5598C11AD6C2F25F92037919A988</UserChecksum>
+          <GeneratedChecksum dnOrder="4">520DC1C088A41A16C28DCB58C92BDEC1</GeneratedChecksum>
+          <UserChecksum dnOrder="5">520DC1C088A41A16C28DCB58C92BDEC1</UserChecksum>
         </File>
         <File dnOrder="47">
           <Type dnOrder="0">HEADER</Type>
@@ -403,8 +403,8 @@
           <Name dnOrder="1">drv_usbhs_variant_mapping.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/driver/usb/usbhs/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">9E342EE43594612EE8D5ED88AB99353D</GeneratedChecksum>
-          <UserChecksum dnOrder="5">9E342EE43594612EE8D5ED88AB99353D</UserChecksum>
+          <GeneratedChecksum dnOrder="4">5B375CF6C397852741ACFCAA92674989</GeneratedChecksum>
+          <UserChecksum dnOrder="5">5B375CF6C397852741ACFCAA92674989</UserChecksum>
         </File>
         <File dnOrder="50">
           <Type dnOrder="0">HEADER</Type>
@@ -595,16 +595,16 @@
           <Name dnOrder="1">sys_time.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/time/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/time/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5B1C0201624F17531B457421E59F38CD</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5B1C0201624F17531B457421E59F38CD</UserChecksum>
+          <GeneratedChecksum dnOrder="4">466D676839280C0E7FC2CC6F78BA6EE9</GeneratedChecksum>
+          <UserChecksum dnOrder="5">466D676839280C0E7FC2CC6F78BA6EE9</UserChecksum>
         </File>
         <File dnOrder="74">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_time_definitions.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/system/time/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/time/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F8165EAB8A02643100386E92CD7EB3C6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F8165EAB8A02643100386E92CD7EB3C6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">82C87C4CF49EE4D859363C15E9073333</GeneratedChecksum>
+          <UserChecksum dnOrder="5">82C87C4CF49EE4D859363C15E9073333</UserChecksum>
         </File>
         <File dnOrder="75">
           <Type dnOrder="0">HEADER</Type>
@@ -659,8 +659,8 @@
           <Name dnOrder="1">toolchain_specifics.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F7924D60AC5CC08996AB2DAEC62D3C54</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F7924D60AC5CC08996AB2DAEC62D3C54</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9D344CAF1743381AA0EA1641ABCDE373</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9D344CAF1743381AA0EA1641ABCDE373</UserChecksum>
         </File>
         <File dnOrder="82">
           <Type dnOrder="0">HEADER</Type>
@@ -683,8 +683,8 @@
           <Name dnOrder="1">usb_common.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_ef_sk_freertos/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">ACC8AF90F98B09095480B6B1F07082A0</GeneratedChecksum>
-          <UserChecksum dnOrder="5">ACC8AF90F98B09095480B6B1F07082A0</UserChecksum>
+          <GeneratedChecksum dnOrder="4">2AAF1AB3341FB7F74004B6C7EFF8929C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">2AAF1AB3341FB7F74004B6C7EFF8929C</UserChecksum>
         </File>
         <File dnOrder="85">
           <Type dnOrder="0">HEADER</Type>
@@ -966,16 +966,16 @@
         <Setting append="true" category="C32-AS" delimiter=";" dnOrder="3" key="extra-include-directories-for-preprocessor" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MZ;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mz_ef_sk_freertos;"/>
         <Setting category="C32-LD" dnOrder="4" key="heap-size" value="1000"/>
         <Setting category="C32-LD" dnOrder="5" key="no-device-startup-code" value="true"/>
-        <Setting category="C32-LD" dnOrder="6" key="preprocessor-macros" value=""/>
+        <Setting append="true" category="C32-LD" delimiter=";" dnOrder="6" key="preprocessor-macros" value=""/>
       </Settings>
     </Manifest>
     <Settings dnOrder="4">
-      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.5.1"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ_EF_DFP\1.0.39\atdf\PIC32MZ2048EFH144.atdf"/>
+      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.6.0"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ_EF_DFP\1.1.45\atdf\PIC32MZ2048EFH144.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;crypto;csp;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>
