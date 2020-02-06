@@ -87,7 +87,7 @@ typedef enum
     /* A resume command was requested on the port */
     USB_HOST_PORT_COMMAND_RESUME = 4,
    
-} USB_HOST_HUB_PORT_COMMAND;
+} USB_HOST_HUB_PORT_COMMAND ;
 
 /****************************************************
  * Defines the possible states the Hub Device Task
@@ -273,9 +273,6 @@ typedef struct
 
 typedef struct _USB_HOST_HUB_INSTANCE_OBJ_
 {
-    /* Change status obtained from the hub over the interrupt pipe */
-    uint32_t changeStatus;
-
     /* True if this object is allocated */
     bool inUse;
 
@@ -321,6 +318,9 @@ typedef struct _USB_HOST_HUB_INSTANCE_OBJ_
     /* Control Transfer Handle */
     USB_HOST_TRANSFER_HANDLE controlTransferHandle;
     
+    /* Change status obtained from the hub over the interrupt pipe */
+    uint32_t changeStatus;
+
     /* True if the control request is done */
     bool controlRequestDone;
 

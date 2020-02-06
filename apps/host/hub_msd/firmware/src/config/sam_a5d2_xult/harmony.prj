@@ -35,8 +35,8 @@
           <Name dnOrder="1">drv_usb_uhp.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8143B6F61BB79AB0A98E80EA127F53F5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8143B6F61BB79AB0A98E80EA127F53F5</UserChecksum>
+          <GeneratedChecksum dnOrder="4">FF3D23BE50BD02ADA7F065C52E174DFC</GeneratedChecksum>
+          <UserChecksum dnOrder="5">FF3D23BE50BD02ADA7F065C52E174DFC</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -219,8 +219,8 @@
           <Name dnOrder="1">usb_host_hub.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5471116A0DA4339E07DC0B33903DF18A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5471116A0DA4339E07DC0B33903DF18A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E02BC60127D9278730D6A48A6F95F58C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E02BC60127D9278730D6A48A6F95F58C</UserChecksum>
         </File>
         <File dnOrder="27">
           <Type dnOrder="0">SOURCE</Type>
@@ -1115,8 +1115,8 @@
           <Name dnOrder="1">usb_host_hub_local.h</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8AD88CC4D47AAB5085B07DD1D95DC242</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8AD88CC4D47AAB5085B07DD1D95DC242</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BEE80701D38216EF0E0D5C574FA3DE75</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BEE80701D38216EF0E0D5C574FA3DE75</UserChecksum>
         </File>
         <File dnOrder="139">
           <Type dnOrder="0">HEADER</Type>
@@ -1213,8 +1213,8 @@
       <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAMA5D2_DFP\1.2.16\atdf\ATSAMA5D27.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
-      <Setting dnOrder="4" key="MERGE_STRATEGY" value="OVERWRITE"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;csp;usb;"/>
+      <Setting dnOrder="4" key="MERGE_STRATEGY" value="ALL"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;csp;usb;usb;usb;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>
