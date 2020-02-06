@@ -66,7 +66,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.40.2.22864</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -697,7 +697,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -1016,6 +1016,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -1742,7 +1758,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
@@ -2062,6 +2078,22 @@
                     <name>OILinkExtraOption</name>
                     <state>1</state>
                 </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
+                </option>
             </data>
         </settings>
         <settings>
@@ -2103,15 +2135,6 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\app.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\DSP\Include\arm_common_tables.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\DSP\Include\arm_const_structs.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\DSP\Include\arm_math.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMD21J18A_DFP\atsamd21j18a.h</name>
@@ -2208,12 +2231,6 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMD21J18A_DFP\component\i2s.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_d21_xpro\system\fs\mpfs\mpfs.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_d21_xpro\system\fs\mpfs\src\mpfs_local.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core\Include\mpu_armv7.h</name>
@@ -2336,9 +2353,6 @@
                 <name>$PROJ_DIR$\..\src\config\sam_d21_xpro\toolchain_specifics.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core\Include\tz_context.h</name>
-            </file>
-            <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMD21J18A_DFP\component\usb.h</name>
             </file>
             <file>
@@ -2424,9 +2438,6 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\main.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_d21_xpro\system\fs\mpfs\src\mpfs.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_d21_xpro\peripheral\clock\plib_clock.c</name>

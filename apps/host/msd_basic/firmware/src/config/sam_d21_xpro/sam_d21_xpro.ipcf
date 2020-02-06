@@ -57,8 +57,6 @@
             <path>\system\fs\fat_fs\src\file_system\ff.h</path>
             <path>\system\fs\fat_fs\src\file_system\ffconf.h</path>
             <path>\system\fs\fat_fs\src\hardware_access\diskio.h</path>
-            <path>\system\fs\mpfs\mpfs.h</path>
-            <path>\system\fs\mpfs\src\mpfs_local.h</path>
             <path>\..\..\packs\ATSAMD21J18A_DFP\device.h</path>
             <path>\..\..\packs\ATSAMD21J18A_DFP\component\ac.h</path>
             <path>\..\..\packs\ATSAMD21J18A_DFP\component\adc.h</path>
@@ -141,7 +139,6 @@
             <path>\system\fs\src\sys_fs_media_manager.c</path>
             <path>\system\fs\fat_fs\src\ff.c</path>
             <path>\system\fs\fat_fs\src\diskio.c</path>
-            <path>\system\fs\mpfs\src\mpfs.c</path>
             <path>\driver\usb\usbfsv1\src\drv_usbfsv1.c</path>
             <path>\driver\usb\usbfsv1\src\drv_usbfsv1_host.c</path>
             <path>\system\int\src\sys_int.c</path>
