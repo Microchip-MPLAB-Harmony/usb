@@ -1499,6 +1499,11 @@
             <Dynamic dnOrder="0" id="sys_time" value="TC0"/>
           </Values>
         </String>
+        <String dnOrder="1" id="SYS_TIME_REMOTE_COMPONENT_ID">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="sys_time" value="tc0"/>
+          </Values>
+        </String>
       </Symbols>
       <Attachments dnOrder="1">
         <DirectDependency dnOrder="0" id="sys_time_TMR_dependency">
