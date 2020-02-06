@@ -27,24 +27,24 @@
           <Name dnOrder="1">drv_usart.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usart/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usart/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">477C40A1C9F70EB0508904452AF43108</GeneratedChecksum>
-          <UserChecksum dnOrder="5">477C40A1C9F70EB0508904452AF43108</UserChecksum>
+          <GeneratedChecksum dnOrder="4">49150C2D7CE55AA6304F4DB3AC46217A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">49150C2D7CE55AA6304F4DB3AC46217A</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_usart_local.h</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usart/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usart/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">DEB1735C6500FAA96262050264574EC0</GeneratedChecksum>
-          <UserChecksum dnOrder="5">DEB1735C6500FAA96262050264574EC0</UserChecksum>
+          <GeneratedChecksum dnOrder="4">D9B10E135BC5EDCEA73969EFB0E04D36</GeneratedChecksum>
+          <UserChecksum dnOrder="5">D9B10E135BC5EDCEA73969EFB0E04D36</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_usb_uhp.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8143B6F61BB79AB0A98E80EA127F53F5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8143B6F61BB79AB0A98E80EA127F53F5</UserChecksum>
+          <GeneratedChecksum dnOrder="4">FF3D23BE50BD02ADA7F065C52E174DFC</GeneratedChecksum>
+          <UserChecksum dnOrder="5">FF3D23BE50BD02ADA7F065C52E174DFC</UserChecksum>
         </File>
         <File dnOrder="5">
           <Type dnOrder="0">SOURCE</Type>
@@ -83,8 +83,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">7BEB9F80712B0E8D85C7B3D75190F3FE</GeneratedChecksum>
-          <UserChecksum dnOrder="5">7BEB9F80712B0E8D85C7B3D75190F3FE</UserChecksum>
+          <GeneratedChecksum dnOrder="4">7DAB67EEC4BF083856C0D375F2579F4E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">7DAB67EEC4BF083856C0D375F2579F4E</UserChecksum>
         </File>
         <File dnOrder="10">
           <Type dnOrder="0">SOURCE</Type>
@@ -139,8 +139,8 @@
           <Name dnOrder="1">plib_tc0.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/peripheral/tc/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/tc/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">6E9384D0C5DC3F5702E55C47B6C82358</GeneratedChecksum>
-          <UserChecksum dnOrder="5">6E9384D0C5DC3F5702E55C47B6C82358</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E9E58E9A48515B6A29649B39B02EF7A2</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E9E58E9A48515B6A29649B39B02EF7A2</UserChecksum>
         </File>
         <File dnOrder="17">
           <Type dnOrder="0">SOURCE</Type>
@@ -171,16 +171,16 @@
           <Name dnOrder="1">sys_int.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/system/int/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/int/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">0128FD5EAC2B910A9EA7090F32CFE236</GeneratedChecksum>
-          <UserChecksum dnOrder="5">0128FD5EAC2B910A9EA7090F32CFE236</UserChecksum>
+          <GeneratedChecksum dnOrder="4">EB792180B2A9DB27A1F3E8B62BC2AE01</GeneratedChecksum>
+          <UserChecksum dnOrder="5">EB792180B2A9DB27A1F3E8B62BC2AE01</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">sys_time.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/system/time/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/time/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">70DAE413C209782D51F61D7C896593FB</GeneratedChecksum>
-          <UserChecksum dnOrder="5">70DAE413C209782D51F61D7C896593FB</UserChecksum>
+          <GeneratedChecksum dnOrder="4">28C868D3255F7D85CF4B31AA2A050AF6</GeneratedChecksum>
+          <UserChecksum dnOrder="5">28C868D3255F7D85CF4B31AA2A050AF6</UserChecksum>
         </File>
         <File dnOrder="22">
           <Type dnOrder="0">SOURCE</Type>
@@ -395,8 +395,8 @@
           <Name dnOrder="1">drv_usart.h</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usart/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usart/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">51C7B4F72276D0DF26BB9BF5CE4082D7</GeneratedChecksum>
-          <UserChecksum dnOrder="5">51C7B4F72276D0DF26BB9BF5CE4082D7</UserChecksum>
+          <GeneratedChecksum dnOrder="4">343C1CF11AA3CAEFC2F0AF07386CDAD0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">343C1CF11AA3CAEFC2F0AF07386CDAD0</UserChecksum>
         </File>
         <File dnOrder="49">
           <Type dnOrder="0">HEADER</Type>
@@ -875,16 +875,16 @@
           <Name dnOrder="1">sys_time.h</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/system/time/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/time/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5B1C0201624F17531B457421E59F38CD</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5B1C0201624F17531B457421E59F38CD</UserChecksum>
+          <GeneratedChecksum dnOrder="4">466D676839280C0E7FC2CC6F78BA6EE9</GeneratedChecksum>
+          <UserChecksum dnOrder="5">466D676839280C0E7FC2CC6F78BA6EE9</UserChecksum>
         </File>
         <File dnOrder="109">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_time_definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/system/time/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/time/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F8165EAB8A02643100386E92CD7EB3C6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F8165EAB8A02643100386E92CD7EB3C6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">82C87C4CF49EE4D859363C15E9073333</GeneratedChecksum>
+          <UserChecksum dnOrder="5">82C87C4CF49EE4D859363C15E9073333</UserChecksum>
         </File>
         <File dnOrder="110">
           <Type dnOrder="0">HEADER</Type>
@@ -1126,7 +1126,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="OVERWRITE"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;csp;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;csp;usb;usb;usb;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>
