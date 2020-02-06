@@ -25,7 +25,7 @@
         <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\include</path>
     </asmIncludePath>
     <defines>
-        <defines>__FPU_PRESENT=1</defines>
+        <define>__FPU_PRESENT=1</define>
     </defines>
     <linkerFile>
         <override>true</override>

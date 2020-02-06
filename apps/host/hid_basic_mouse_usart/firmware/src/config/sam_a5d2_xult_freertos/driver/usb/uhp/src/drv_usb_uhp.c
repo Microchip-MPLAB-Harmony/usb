@@ -706,6 +706,7 @@ void DRV_USB_UHP_ResetStateMachine(DRV_USB_UHP_OBJ *hDriver)
              * and then exits this state to either the USBRESUME or the USBRESET state. */
             if (SYS_TIME_DelayIsComplete(hDriver->timerHandle) == true)
             {
+                usbIDOHCI->UHP_OHCI_HCCONTROL = UHP_OHCI_HCCONTROL_HCFS( DRV_USB_UHP_HOST_OHCI_STATE_USBRESET );
                 /* This means the device attached at low speed */
                 hDriver->resetState = DRV_USB_UHP_HOST_RESET_STATE_OHCI_WAIT_FOR_COMPLETE;
             }
