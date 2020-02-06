@@ -993,6 +993,11 @@
             <Dynamic dnOrder="0" id="sys_time" value="TC0"/>
           </Values>
         </String>
+        <String dnOrder="1" id="SYS_TIME_REMOTE_COMPONENT_ID">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="sys_time" value="tc0"/>
+          </Values>
+        </String>
       </Symbols>
       <Attachments dnOrder="1">
         <DirectDependency dnOrder="0" id="sys_time_TMR_dependency">
@@ -1039,7 +1044,17 @@
             <Dynamic dnOrder="0" id="tc0" value="TC0_CH0_TimerPeriodSet"/>
           </Values>
         </String>
-        <KeyValueSet dnOrder="6" id="SYS_TIME_TC_CHANNEL">
+        <String dnOrder="6" id="SYS_TIME_COMPONENT_ID">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="tc0" value="sys_time"/>
+          </Values>
+        </String>
+        <String dnOrder="7" id="SYS_TIME_PLIB_OPERATION_MODE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="tc0" value="SYS_TIME_PLIB_MODE_COMPARE"/>
+          </Values>
+        </String>
+        <KeyValueSet dnOrder="8" id="SYS_TIME_TC_CHANNEL">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -1049,17 +1064,17 @@
             <Dynamic dnOrder="0" id="tc0" value="0"/>
           </Values>
         </KeyValueSet>
-        <Integer dnOrder="7" id="TC0_CLOCK_FREQ">
+        <Integer dnOrder="9" id="TC0_CLOCK_FREQ">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="59998208"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="8" id="TC0_ENABLE">
+        <Boolean dnOrder="10" id="TC0_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="9" id="TC0_IER_CPAS">
+        <Boolean dnOrder="11" id="TC0_IER_CPAS">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -1069,36 +1084,36 @@
             <Dynamic dnOrder="0" id="tc0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="10" id="TC0_IER_CPCS">
+        <Boolean dnOrder="12" id="TC0_IER_CPCS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="false"/>
           </Values>
         </Boolean>
-        <Comment dnOrder="11" id="TC0_Resolution">
+        <Comment dnOrder="13" id="TC0_Resolution">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="text">
               <Value dnOrder="0">****Clock&amp;#160;resolution&amp;#160;is&amp;#160;16.6671644593&amp;#160;nS****</Value>
             </String>
           </Attributes>
         </Comment>
-        <Boolean dnOrder="12" id="TC0_SYS_TIME_CONNECTED">
+        <Boolean dnOrder="14" id="TC0_SYS_TIME_CONNECTED">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="true"/>
           </Values>
         </Boolean>
-        <Comment dnOrder="13" id="TC0_TIMER_PERIOD_CMT">
+        <Comment dnOrder="15" id="TC0_TIMER_PERIOD_CMT">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="text">
-              <Value dnOrder="0">****Period&amp;#160;Count&amp;#160;is&amp;#160;23999****</Value>
+              <Value dnOrder="0">****Period&amp;#160;Count&amp;#160;is&amp;#160;0****</Value>
             </String>
           </Attributes>
         </Comment>
-        <Long dnOrder="14" id="TC0_TIMER_PERIOD_COUNT">
+        <Long dnOrder="16" id="TC0_TIMER_PERIOD_COUNT">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="tc0" value="23999"/>
+            <Dynamic dnOrder="0" id="tc0" value="0"/>
           </Values>
         </Long>
-        <Float dnOrder="15" id="TC0_TIMER_PERIOD_MS">
+        <Float dnOrder="17" id="TC0_TIMER_PERIOD_MS">
           <Attributes dnOrder="0">
             <Float dnOrder="0" id="max">
               <Value dnOrder="0">1.0922827</Value>
@@ -1107,69 +1122,102 @@
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
+          <Values dnOrder="1">
+            <Dynamic dnOrder="0" id="tc0" value="0.0"/>
+          </Values>
         </Float>
-        <Comment dnOrder="16" id="TC0_Zero_Freq">
+        <Comment dnOrder="18" id="TC0_Zero_Freq">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">false</Value>
             </Boolean>
           </Attributes>
         </Comment>
-        <Boolean dnOrder="17" id="TC1_ENABLE">
+        <Boolean dnOrder="19" id="TC1_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="18" id="TC1_SYS_TIME_CONNECTED">
+        <Boolean dnOrder="20" id="TC1_IER_CPAS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="false"/>
           </Values>
         </Boolean>
-        <Comment dnOrder="19" id="TC1_TIMER_PERIOD_CMT">
+        <Boolean dnOrder="21" id="TC1_IER_CPCS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="tc0" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="22" id="TC1_SYS_TIME_CONNECTED">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="tc0" value="false"/>
+          </Values>
+        </Boolean>
+        <Comment dnOrder="23" id="TC1_TIMER_PERIOD_CMT">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="text">
               <Value dnOrder="0">****Period&amp;#160;Count&amp;#160;is&amp;#160;0****</Value>
             </String>
           </Attributes>
         </Comment>
-        <Long dnOrder="20" id="TC1_TIMER_PERIOD_COUNT">
+        <Long dnOrder="24" id="TC1_TIMER_PERIOD_COUNT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="0"/>
           </Values>
         </Long>
-        <Boolean dnOrder="21" id="TC2_ENABLE">
+        <Float dnOrder="25" id="TC1_TIMER_PERIOD_MS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="tc0" value="0.0"/>
+          </Values>
+        </Float>
+        <Boolean dnOrder="26" id="TC2_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="22" id="TC2_SYS_TIME_CONNECTED">
+        <Boolean dnOrder="27" id="TC2_IER_CPAS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="false"/>
           </Values>
         </Boolean>
-        <Comment dnOrder="23" id="TC2_TIMER_PERIOD_CMT">
+        <Boolean dnOrder="28" id="TC2_IER_CPCS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="tc0" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="29" id="TC2_SYS_TIME_CONNECTED">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="tc0" value="false"/>
+          </Values>
+        </Boolean>
+        <Comment dnOrder="30" id="TC2_TIMER_PERIOD_CMT">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="text">
               <Value dnOrder="0">****Period&amp;#160;Count&amp;#160;is&amp;#160;0****</Value>
             </String>
           </Attributes>
         </Comment>
-        <Long dnOrder="24" id="TC2_TIMER_PERIOD_COUNT">
+        <Long dnOrder="31" id="TC2_TIMER_PERIOD_COUNT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="0"/>
           </Values>
         </Long>
-        <Boolean dnOrder="25" id="TC_QDEC_PRESENT">
+        <Float dnOrder="32" id="TC2_TIMER_PERIOD_MS">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="tc0" value="0.0"/>
+          </Values>
+        </Float>
+        <Boolean dnOrder="33" id="TC_QDEC_PRESENT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="26" id="TIMER_START_API_NAME">
+        <String dnOrder="34" id="TIMER_START_API_NAME">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="TC0_CH0_TimerStart"/>
           </Values>
         </String>
-        <String dnOrder="27" id="TIMER_STOP_API_NAME">
+        <String dnOrder="35" id="TIMER_STOP_API_NAME">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="tc0" value="TC0_CH0_TimerStop "/>
           </Values>
@@ -1239,8 +1287,7 @@
     </UniqueComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
-    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_G55_Xplained_Pro" x="21" y="50"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="28" y="80"/>
@@ -1257,5 +1304,6 @@
         <ElementPosition dnOrder="12" id="usb_host_hid" x="317" y="406"/>
       </ElementPositions>
     </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
