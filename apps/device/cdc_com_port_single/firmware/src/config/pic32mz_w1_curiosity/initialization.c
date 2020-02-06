@@ -101,7 +101,7 @@
 #pragma config USBIDIO =         ON
 #pragma config VBUSIO =         ON
 #pragma config HSSPIEN =         OFF
-#pragma config SMCLR =      MCLR_POR
+#pragma config SMCLR =      MCLR_NORM
 #pragma config USBDMTRIM =      0
 #pragma config USBDPTRIM =      0
 #pragma config HSUARTEN =    ON
@@ -227,10 +227,12 @@ void SYS_Initialize ( void* data )
   
     SYS_PMU_MLDO_TRIM();
     CLK_Initialize();
-	GPIO_Initialize();
     /* Configure Wait States */
     PRECONbits.PFMWS = 1;
 
+
+
+	GPIO_Initialize();
 
 	BSP_Initialize();
 
