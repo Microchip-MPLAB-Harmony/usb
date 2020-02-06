@@ -19,24 +19,24 @@
           <Name dnOrder="1">drv_usart.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/driver/usart/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usart/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">38357A9154A90558116A37E9C7241A2E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">38357A9154A90558116A37E9C7241A2E</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0A240F70BDE8E93C9EE118D7A3E96D41</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0A240F70BDE8E93C9EE118D7A3E96D41</UserChecksum>
         </File>
         <File dnOrder="2">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_usart_local.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/driver/usart/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usart/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">DEB1735C6500FAA96262050264574EC0</GeneratedChecksum>
-          <UserChecksum dnOrder="5">DEB1735C6500FAA96262050264574EC0</UserChecksum>
+          <GeneratedChecksum dnOrder="4">D9B10E135BC5EDCEA73969EFB0E04D36</GeneratedChecksum>
+          <UserChecksum dnOrder="5">D9B10E135BC5EDCEA73969EFB0E04D36</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_usbfsv1.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/driver/usb/usbfsv1/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">00A4222E35BFB3E97B93EFC9FFE8BB97</GeneratedChecksum>
-          <UserChecksum dnOrder="5">00A4222E35BFB3E97B93EFC9FFE8BB97</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BFA06465728C80414F183336C887094D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BFA06465728C80414F183336C887094D</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -59,8 +59,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">94339D3E8EB21EACFEFA1AE7FF7B2DFD</GeneratedChecksum>
-          <UserChecksum dnOrder="5">94339D3E8EB21EACFEFA1AE7FF7B2DFD</UserChecksum>
+          <GeneratedChecksum dnOrder="4">7E1FA1D2F568835D4D76CBE5656F0DC3</GeneratedChecksum>
+          <UserChecksum dnOrder="5">7E1FA1D2F568835D4D76CBE5656F0DC3</UserChecksum>
         </File>
         <File dnOrder="7">
           <Type dnOrder="0">SOURCE</Type>
@@ -163,8 +163,8 @@
           <Name dnOrder="1">sys_time.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/system/time/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/time/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">70DAE413C209782D51F61D7C896593FB</GeneratedChecksum>
-          <UserChecksum dnOrder="5">70DAE413C209782D51F61D7C896593FB</UserChecksum>
+          <GeneratedChecksum dnOrder="4">28C868D3255F7D85CF4B31AA2A050AF6</GeneratedChecksum>
+          <UserChecksum dnOrder="5">28C868D3255F7D85CF4B31AA2A050AF6</UserChecksum>
         </File>
         <File dnOrder="20">
           <Type dnOrder="0">SOURCE</Type>
@@ -379,8 +379,8 @@
           <Name dnOrder="1">drv_usart.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/driver/usart/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usart/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">51C7B4F72276D0DF26BB9BF5CE4082D7</GeneratedChecksum>
-          <UserChecksum dnOrder="5">51C7B4F72276D0DF26BB9BF5CE4082D7</UserChecksum>
+          <GeneratedChecksum dnOrder="4">343C1CF11AA3CAEFC2F0AF07386CDAD0</GeneratedChecksum>
+          <UserChecksum dnOrder="5">343C1CF11AA3CAEFC2F0AF07386CDAD0</UserChecksum>
         </File>
         <File dnOrder="47">
           <Type dnOrder="0">HEADER</Type>
@@ -427,8 +427,8 @@
           <Name dnOrder="1">drv_usbfsv1_variant_mapping.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/driver/usb/usbfsv1/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">D546E412D2E2320DF0D80B086E40E645</GeneratedChecksum>
-          <UserChecksum dnOrder="5">D546E412D2E2320DF0D80B086E40E645</UserChecksum>
+          <GeneratedChecksum dnOrder="4">7F2089A3BD81A16A4050AA486E0F5C0E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">7F2089A3BD81A16A4050AA486E0F5C0E</UserChecksum>
         </File>
         <File dnOrder="53">
           <Type dnOrder="0">HEADER</Type>
@@ -691,16 +691,16 @@
           <Name dnOrder="1">sys_time.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/system/time/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/time/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5B1C0201624F17531B457421E59F38CD</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5B1C0201624F17531B457421E59F38CD</UserChecksum>
+          <GeneratedChecksum dnOrder="4">466D676839280C0E7FC2CC6F78BA6EE9</GeneratedChecksum>
+          <UserChecksum dnOrder="5">466D676839280C0E7FC2CC6F78BA6EE9</UserChecksum>
         </File>
         <File dnOrder="86">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_time_definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/system/time/</LogicalPath>
           <PhysicalPath dnOrder="3">/system/time/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F8165EAB8A02643100386E92CD7EB3C6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F8165EAB8A02643100386E92CD7EB3C6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">82C87C4CF49EE4D859363C15E9073333</GeneratedChecksum>
+          <UserChecksum dnOrder="5">82C87C4CF49EE4D859363C15E9073333</UserChecksum>
         </File>
         <File dnOrder="87">
           <Type dnOrder="0">HEADER</Type>
@@ -907,8 +907,8 @@
       <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAMD21_DFP\3.2.84\samd21a\atdf\ATSAMD21J18A.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
-      <Setting dnOrder="4" key="MERGE_STRATEGY" value="ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;csp;usb;"/>
+      <Setting dnOrder="4" key="MERGE_STRATEGY" value="OVERWRITE"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;csp;usb;usb;usb;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>
