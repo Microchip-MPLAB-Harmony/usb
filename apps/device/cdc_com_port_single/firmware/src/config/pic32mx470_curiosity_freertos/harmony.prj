@@ -91,8 +91,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">DC70EF84A02F7F66A4C506495C24344E</GeneratedChecksum>
-          <UserChecksum dnOrder="5">DC70EF84A02F7F66A4C506495C24344E</UserChecksum>
+          <GeneratedChecksum dnOrder="4">18FEF7045CD7639F26ECEC8C47F18741</GeneratedChecksum>
+          <UserChecksum dnOrder="5">18FEF7045CD7639F26ECEC8C47F18741</UserChecksum>
         </File>
         <File dnOrder="11">
           <Type dnOrder="0">SOURCE</Type>
@@ -139,8 +139,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">D93B4B8263EB2B7A169F28FE69F1D7BA</GeneratedChecksum>
-          <UserChecksum dnOrder="5">D93B4B8263EB2B7A169F28FE69F1D7BA</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BAE373E8F32E5B4089B3D39318950FCD</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BAE373E8F32E5B4089B3D39318950FCD</UserChecksum>
         </File>
         <File dnOrder="17">
           <Type dnOrder="0">SOURCE</Type>
@@ -363,8 +363,8 @@
           <Name dnOrder="1">drv_usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">C07E5598C11AD6C2F25F92037919A988</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C07E5598C11AD6C2F25F92037919A988</UserChecksum>
+          <GeneratedChecksum dnOrder="4">520DC1C088A41A16C28DCB58C92BDEC1</GeneratedChecksum>
+          <UserChecksum dnOrder="5">520DC1C088A41A16C28DCB58C92BDEC1</UserChecksum>
         </File>
         <File dnOrder="45">
           <Type dnOrder="0">HEADER</Type>
@@ -611,8 +611,8 @@
           <Name dnOrder="1">toolchain_specifics.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5F0B87C955FBF569CBD67F4861B6B7AD</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5F0B87C955FBF569CBD67F4861B6B7AD</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9A7344615980CB9443B6436E41E2155A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9A7344615980CB9443B6436E41E2155A</UserChecksum>
         </File>
         <File dnOrder="76">
           <Type dnOrder="0">HEADER</Type>
@@ -1507,8 +1507,8 @@
           <Name dnOrder="1">usb_common.h</Name>
           <LogicalPath dnOrder="2">config/pic32mx470_curiosity_freertos/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">ACC8AF90F98B09095480B6B1F07082A0</GeneratedChecksum>
-          <UserChecksum dnOrder="5">ACC8AF90F98B09095480B6B1F07082A0</UserChecksum>
+          <GeneratedChecksum dnOrder="4">2AAF1AB3341FB7F74004B6C7EFF8929C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">2AAF1AB3341FB7F74004B6C7EFF8929C</UserChecksum>
         </File>
         <File dnOrder="188">
           <Type dnOrder="0">HEADER</Type>
@@ -1630,16 +1630,16 @@
         <Setting append="true" category="C32-AS" delimiter=";" dnOrder="3" key="extra-include-directories-for-preprocessor" value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx470_curiosity_freertos;"/>
         <Setting category="C32-LD" dnOrder="4" key="heap-size" value="512"/>
         <Setting category="C32-LD" dnOrder="5" key="no-device-startup-code" value="true"/>
-        <Setting category="C32-LD" dnOrder="6" key="preprocessor-macros" value=""/>
+        <Setting append="true" category="C32-LD" delimiter=";" dnOrder="6" key="preprocessor-macros" value=""/>
       </Settings>
     </Manifest>
     <Settings dnOrder="4">
-      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.5.1"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MX_DFP\1.0.208\atdf\PIC32MX470F512H.atdf"/>
+      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.6.0"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MX_DFP\1.1.215\atdf\PIC32MX470F512H.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;crypto;csp;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>

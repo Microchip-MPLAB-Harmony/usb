@@ -332,13 +332,13 @@
         <targetDevice>PIC32MX470F512H</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>pkob4hybrid</platformTool>
+        <platformTool>PKOBSKDEPlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.20</languageToolchainVersion>
+        <languageToolchainVersion>2.30</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC32MX_DFP" vendor="Microchip" version="1.0.53"/>
+        <pack name="PIC32MX_DFP" vendor="Microchip" version="1.1.215"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -373,7 +373,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/pic32mx470_curiosity_freertos;../src/packs/PIC32MX470F512H_DFP;;../src/mips;../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include"/>
+                  value="../src;../src/config/pic32mx470_curiosity_freertos;../src/packs/PIC32MX470F512H_DFP;../src/mips;../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -400,9 +400,9 @@
         <property key="exclude-floating-point-library" value="false"/>
         <property key="expand-macros" value="false"/>
         <property key="extra-include-directories-for-assembler"
-                  value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx470_curiosity_freertos;"/>
+                  value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx470_curiosity_freertos"/>
         <property key="extra-include-directories-for-preprocessor"
-                  value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx470_curiosity_freertos;"/>
+                  value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx470_curiosity_freertos"/>
         <property key="false-conditionals" value="false"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
@@ -416,6 +416,9 @@
         <property key="preprocessor-macros" value=""/>
         <property key="warning-level" value=""/>
       </C32-AS>
+      <C32-CO>
+        <property key="coverage-enable" value=""/>
+      </C32-CO>
       <C32-LD>
         <property key="additional-options-use-response-files" value="false"/>
         <property key="additional-options-write-sla" value="false"/>
@@ -563,7 +566,6 @@
         <property key="ToolFirmwareFilePath"
                   value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
-        <property key="firmware.download.all" value="false"/>
         <property key="memories.configurationmemory" value="true"/>
         <property key="memories.dataflash" value="true"/>
         <property key="memories.eeprom" value="true"/>
@@ -583,6 +585,78 @@
         <property key="programoptions.usehighvoltageonmclr" value="false"/>
         <property key="programoptions.uselvpprogramming" value="true"/>
       </PKOBSKDEPlatformTool>
+      <pkob4hybrid>
+        <property key="ADC 1" value="true"/>
+        <property key="AutoSelectMemRanges" value="auto"/>
+        <property key="CHANGE NOTICE" value="true"/>
+        <property key="COMPARATOR" value="true"/>
+        <property key="CTMU" value="true"/>
+        <property key="DMA" value="true"/>
+        <property key="Freeze All Other Peripherals" value="true"/>
+        <property key="I2C1" value="true"/>
+        <property key="I2C2" value="true"/>
+        <property key="INPUT CAPTURE 1" value="true"/>
+        <property key="INPUT CAPTURE 2" value="true"/>
+        <property key="INPUT CAPTURE 3" value="true"/>
+        <property key="INPUT CAPTURE 4" value="true"/>
+        <property key="INPUT CAPTURE 5" value="true"/>
+        <property key="INTERRUPT CONTROL" value="true"/>
+        <property key="OUTPUT COMPARE 1" value="true"/>
+        <property key="OUTPUT COMPARE 2" value="true"/>
+        <property key="OUTPUT COMPARE 3" value="true"/>
+        <property key="OUTPUT COMPARE 4" value="true"/>
+        <property key="OUTPUT COMPARE 5" value="true"/>
+        <property key="PARALLEL MASTER/SLAVE PORT" value="true"/>
+        <property key="REAL TIME CLOCK" value="true"/>
+        <property key="SPI/I2S 1" value="true"/>
+        <property key="SPI/I2S 2" value="true"/>
+        <property key="TIMER1" value="true"/>
+        <property key="TIMER2" value="true"/>
+        <property key="TIMER3" value="true"/>
+        <property key="TIMER4" value="true"/>
+        <property key="TIMER5" value="true"/>
+        <property key="ToolFirmwareFilePath"
+                  value="Press to browse for a specific firmware version"/>
+        <property key="ToolFirmwareOption.UpdateOptions"
+                  value="ToolFirmwareOption.UseLatest"/>
+        <property key="UART1" value="true"/>
+        <property key="UART2" value="true"/>
+        <property key="UART3" value="true"/>
+        <property key="UART4" value="true"/>
+        <property key="USB" value="true"/>
+        <property key="communication.interface" value=""/>
+        <property key="communication.interface.jtag" value="2wire"/>
+        <property key="communication.speed" value="${communication.speed.default}"/>
+        <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="memories.aux" value="false"/>
+        <property key="memories.bootflash" value="true"/>
+        <property key="memories.configurationmemory" value="true"/>
+        <property key="memories.configurationmemory2" value="true"/>
+        <property key="memories.dataflash" value="true"/>
+        <property key="memories.eeprom" value="true"/>
+        <property key="memories.exclude.configurationmemory" value="true"/>
+        <property key="memories.flashdata" value="true"/>
+        <property key="memories.id" value="true"/>
+        <property key="memories.instruction.ram.ranges"
+                  value="${memories.instruction.ram.ranges}"/>
+        <property key="memories.programmemory" value="true"/>
+        <property key="memories.programmemory.ranges" value="1d000000-1d07ffff"/>
+        <property key="programoptions.donoteraseauxmem" value="false"/>
+        <property key="programoptions.eraseb4program" value="true"/>
+        <property key="programoptions.pgmentry.voltage" value="low"/>
+        <property key="programoptions.pgmspeed" value="Med"/>
+        <property key="programoptions.preservedataflash" value="false"/>
+        <property key="programoptions.preservedataflash.ranges"
+                  value="${memories.dataflash.default}"/>
+        <property key="programoptions.preserveeeprom" value="false"/>
+        <property key="programoptions.preserveeeprom.ranges" value=""/>
+        <property key="programoptions.preserveprogram.ranges" value="1d000000-1d07ffff"/>
+        <property key="programoptions.preserveprogramrange" value="false"/>
+        <property key="programoptions.preserveuserid" value="false"/>
+        <property key="programoptions.programcalmem" value="false"/>
+        <property key="programoptions.programuserotp" value="false"/>
+        <property key="programoptions.testmodeentrymethod" value="VDDFirst"/>
+      </pkob4hybrid>
     </conf>
   </confs>
 </configurationDescriptor>
