@@ -12,7 +12,7 @@
         <path>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS</path>
         <path>$PROJ_DIR$\..\..\firmware\src\arm</path>
         <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\ARM926</path>
-        <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\Include</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\include</path>
     </includePath>
     <asmIncludePath>
         <path>$PROJ_DIR$\..\..\firmware\src</path>
@@ -22,7 +22,7 @@
         <path>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS</path>
         <path>$PROJ_DIR$\..\..\firmware\src\arm</path>
         <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\portable\IAR\SAM\ARM926</path>
-        <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\Include</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\third_party\rtos\FreeRTOS\Source\include</path>
     </asmIncludePath>
     <linkerFile>
         <override>true</override>
