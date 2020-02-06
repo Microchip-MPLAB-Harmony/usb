@@ -809,12 +809,12 @@
     <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_PIC32MX470_Curiosity_Development_Board" x="19" y="51"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="17" y="84"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="352" y="8"/>
         <ElementPosition dnOrder="2" id="core" x="242" y="19"/>
         <ElementPosition dnOrder="3" id="dfp" x="20" y="20"/>
-        <ElementPosition dnOrder="4" id="drv_usbfs_v1" x="184" y="79"/>
-        <ElementPosition dnOrder="5" id="usb_device" x="347" y="104"/>
-        <ElementPosition dnOrder="6" id="usb_device_cdc" x="179" y="144"/>
+        <ElementPosition dnOrder="4" id="drv_usbfs_v1" x="22" y="122"/>
+        <ElementPosition dnOrder="5" id="usb_device" x="197" y="122"/>
+        <ElementPosition dnOrder="6" id="usb_device_cdc" x="348" y="120"/>
       </ElementPositions>
     </ComponentGraph>
     <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>

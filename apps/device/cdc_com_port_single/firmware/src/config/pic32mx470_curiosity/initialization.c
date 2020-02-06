@@ -120,7 +120,6 @@ SYSTEM_OBJECTS sysObj;
  * USB Driver Initialization
  ******************************************************/
  
-
 uint8_t __attribute__((aligned(512))) endPointTable1[DRV_USBFS_ENDPOINTS_NUMBER * 32];
 
 
@@ -132,6 +131,7 @@ const DRV_USBFS_INIT drvUSBFSInit =
 
 	/* Interrupt Source for USB module */
 	.interruptSource = INT_SOURCE_USB,
+
     
     /* USB Controller to operate as USB Device */
     .operationMode = DRV_USBFS_OPMODE_DEVICE,
@@ -182,7 +182,6 @@ void SYS_Initialize ( void* data )
 
   
     CLK_Initialize();
-	GPIO_Initialize();
 
     /* Configure KSEG0 as cacheable memory. This is needed for Prefetch Buffer */
     __builtin_mtc0(16, 0,(__builtin_mfc0(16, 0) | 0x3));
@@ -196,6 +195,9 @@ void SYS_Initialize ( void* data )
 
 
 
+
+
+	GPIO_Initialize();
 
 	BSP_Initialize();
 
