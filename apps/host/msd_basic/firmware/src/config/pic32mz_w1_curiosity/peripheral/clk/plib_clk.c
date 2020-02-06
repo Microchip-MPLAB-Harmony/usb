@@ -112,7 +112,7 @@ void CLK_Initialize( void )
     SPLLCON = 0x414045;
 
     /* Configure UPLL */
-    /* UPLLBSWSEL   = 7 */
+    /* UPLLBSWSEL   = 5 */
     /* UPLLPWDN     = PLL_ON */
     /* UPLLPOSTDIV1 = 10 */
     /* UPLLFLOCK    = NOFORCE_LOCK */
