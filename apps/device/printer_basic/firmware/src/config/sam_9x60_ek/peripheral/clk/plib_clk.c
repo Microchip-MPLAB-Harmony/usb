@@ -95,11 +95,11 @@ static void initProgrammableClk(void)
     PMC_REGS->PMC_PCK[0] = PMC_PCK_CSS_PLLA |\
                                 PMC_PCK_PRES(0);
     PMC_REGS->PMC_SCER |= PMC_SCDR_PCK0_Msk;
-    while (PMC_REGS->PMC_SR & PMC_SR_PCKRDY0_Msk != PMC_SR_PCKRDY0_Msk);
+    while ((PMC_REGS->PMC_SR & PMC_SR_PCKRDY0_Msk) != PMC_SR_PCKRDY0_Msk);
     PMC_REGS->PMC_PCK[1] = PMC_PCK_CSS_UPLL |\
                                 PMC_PCK_PRES(0);
     PMC_REGS->PMC_SCER |= PMC_SCDR_PCK1_Msk;
-    while (PMC_REGS->PMC_SR & PMC_SR_PCKRDY1_Msk != PMC_SR_PCKRDY1_Msk);
+    while ((PMC_REGS->PMC_SR & PMC_SR_PCKRDY1_Msk) != PMC_SR_PCKRDY1_Msk);
 }
 
 /*********************************************************************************
