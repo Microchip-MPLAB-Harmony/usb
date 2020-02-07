@@ -31,6 +31,12 @@
             <path>\usb\usb_host_hub_interface.h</path>
             <path>\usb\usb_host.h</path>
             <path>\usb\usb_hub.h</path>
+            <path>\device_cache.h</path>
+            <path>\toolchain_specifics.h</path>
+            <path>\definitions.h</path>
+            <path>\peripheral\clk\plib_clk.h</path>
+            <path>\peripheral\pio\plib_pio.h</path>
+            <path>\peripheral\nvic\plib_nvic.h</path>
             <path>\..\..\packs\ATSAME70Q21B_DFP\device.h</path>
             <path>\..\..\packs\ATSAME70Q21B_DFP\component\acc.h</path>
             <path>\..\..\packs\ATSAME70Q21B_DFP\component\aes.h</path>
@@ -70,12 +76,6 @@
             <path>\..\..\packs\ATSAME70Q21B_DFP\component\xdmac.h</path>
             <path>\..\..\packs\ATSAME70Q21B_DFP\atsame70q21b.h</path>
             <path>\..\..\packs\ATSAME70Q21B_DFP\pio\same70q21b.h</path>
-            <path>\device_cache.h</path>
-            <path>\toolchain_specifics.h</path>
-            <path>\definitions.h</path>
-            <path>\peripheral\clk\plib_clk.h</path>
-            <path>\peripheral\pio\plib_pio.h</path>
-            <path>\peripheral\nvic\plib_nvic.h</path>
             <path>\usb\usb_device.h</path>
             <path>\usb\usb_common.h</path>
             <path>\usb\usb_chapter_9.h</path>

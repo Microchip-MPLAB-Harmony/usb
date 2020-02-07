@@ -69,10 +69,10 @@ const USB_SPEED gDrvUSBHSV1DeviceSpeedMap[4] =
 
 const USB_TRANSFER_TYPE gDrvUSBHSV1DeviceTransferTypeMap[4] =
 {
-    (USB_TRANSFER_TYPE)USBHS_DEVEPTCFG_EPTYPE_CTRL_Val,
-    (USB_TRANSFER_TYPE)USBHS_DEVEPTCFG_EPTYPE_ISO_Val,
-    (USB_TRANSFER_TYPE)USBHS_DEVEPTCFG_EPTYPE_BLK_Val,
-    (USB_TRANSFER_TYPE)USBHS_DEVEPTCFG_EPTYPE_INTRPT_Val
+    USBHS_DEVEPTCFG_EPTYPE_CTRL_Val,
+    USBHS_DEVEPTCFG_EPTYPE_ISO_Val,
+    USBHS_DEVEPTCFG_EPTYPE_BLK_Val,
+    USBHS_DEVEPTCFG_EPTYPE_INTRPT_Val
 
 };
 
@@ -316,7 +316,7 @@ void DRV_USBHSV1_DEVICE_RemoteWakeupStart(DRV_HANDLE handle)
     }
     else
     {
-        /* Commented till PLIB implementation is completed */
+        /* This is not yet implemented. Do nothing as of now */
     }
 
 }/* end of DRV_USBHSV1_DEVICE_RemoteWakeupStart() */
@@ -346,7 +346,7 @@ void DRV_USBHSV1_DEVICE_RemoteWakeupStop(DRV_HANDLE handle)
     }
     else
     {
-        /* Commented till PLIB implementation is completed */
+        /* This is not yet implemented. Do nothing as of now */
     }
 
 }/* end of DRV_USBHSV1_DEVICE_RemoteWakeupStop() */
@@ -444,6 +444,7 @@ void DRV_USBHSV1_DEVICE_Detach(DRV_HANDLE handle)
     usbhs_registers_t * usbID;                  /* USB instance pointer */
     DRV_USBHSV1_OBJ * hDriver;                  /* USB driver object pointer */
     USB_ERROR retVal = USB_ERROR_NONE;
+    uint32_t regUSBHS_DEVCTRL;
     bool interruptWasEnabled = false;       /* To track interrupt state */
 
 
@@ -486,17 +487,28 @@ void DRV_USBHSV1_DEVICE_Detach(DRV_HANDLE handle)
             
             /* Detach the device */
             usbID->USBHS_DEVCTRL |= USBHS_DEVCTRL_DETACH_Msk;
-        }
-        if(false == hDriver->isInInterruptContext)
-        {
-            if(true == interruptWasEnabled)
-            {
-                /* IF the interrupt was enabled when entering the routine
-                 * re-enable it now */
-                SYS_INT_SourceEnable(hDriver->interruptSource);
 
-                /* Unlock the mutex */
-                OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
+            /* Disable the device address */
+            regUSBHS_DEVCTRL = usbID->USBHS_DEVCTRL;
+
+            regUSBHS_DEVCTRL &= ~USBHS_DEVCTRL_ADDEN_Msk;
+
+            regUSBHS_DEVCTRL &= ~(USBHS_DEVCTRL_UADD_Msk & ((0) << USBHS_DEVCTRL_UADD_Pos));
+
+            /* Clear existing address and address enable bit */
+            usbID->USBHS_DEVCTRL = regUSBHS_DEVCTRL;
+            
+            if(false == hDriver->isInInterruptContext)
+            {
+                if(true == interruptWasEnabled)
+                {
+                    /* IF the interrupt was enabled when entering the routine
+                     * re-enable it now */
+                    SYS_INT_SourceEnable(hDriver->interruptSource);
+
+                    /* Unlock the mutex */
+                    OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
+                }
             }
         }
     }
@@ -675,7 +687,6 @@ USB_ERROR DRV_USBHSV1_DEVICE_EndpointEnable
     uint8_t endpoint;                           /* Endpoint Number */
     uint8_t fifoSize = 0;                       /* FIFO size */
     uint16_t defaultEndpointSize = 8;           /* Default size of Endpoint */
-    bool mutexLock = false;                     /* OSAL: for mutex lock */
     USB_ERROR retVal = USB_ERROR_NONE;          /* Return value */
 
     /* Endpoint object pointer */
@@ -778,7 +789,7 @@ USB_ERROR DRV_USBHSV1_DEVICE_EndpointEnable
         {
             /* Enable the non-zero endpoint object */
 
-            _DRV_USBHSV1_DEVICE_EndpointObjectEnable(endpointObj, endpointSize, endpointType, (USB_DATA_DIRECTION)direction);
+            _DRV_USBHSV1_DEVICE_EndpointObjectEnable(endpointObj, endpointSize, endpointType, direction);
 
             /* Enable the endpoint */
             usbID->USBHS_DEVEPT |= ((0x01 << endpoint) << USBHS_DEVEPT_EPEN0_Pos);
@@ -819,15 +830,6 @@ USB_ERROR DRV_USBHSV1_DEVICE_EndpointEnable
             {
                 /* Endpoint configuration is not successful */
                 retVal = USB_ERROR_ENDPOINT_NOT_CONFIGURED;
-            }
-
-            if(mutexLock == true)
-            {
-                /* OSAL: Return mutex */
-                if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
-                {
-                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBHSV1 Device Driver: Mutex unlock failed in DRV_USBHSV1_DEVICE_EndpointEnable().");
-                }
             }
         }
     }
@@ -875,7 +877,6 @@ USB_ERROR DRV_USBHSV1_DEVICE_EndpointDisable
     uint8_t endpoint;                           /* Endpoint Number */
     uint8_t count;                              /* Loop Counter */
     bool interruptWasEnabled = false;           /* To track interrupt state */
-    bool mutexLock = false;                     /* OSAL: for mutex lock */
     USB_ERROR retVal = USB_ERROR_NONE;          /* Return value */
 
     /* Endpoint object pointer */
@@ -911,44 +912,32 @@ USB_ERROR DRV_USBHSV1_DEVICE_EndpointDisable
         hDriver = (DRV_USBHSV1_OBJ *) handle;
         usbID = hDriver->usbID;
 
-        if(hDriver->isInInterruptContext == false)
+        if(false == hDriver->isInInterruptContext)
         {
-            interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptSource);
-        }
-
-        /* If the endpointAndDirection is _DRV_USBHSV1_DEVICE_ENDPOINT_ALL
-         * then this means that the DRV_USBHSV1_DEVICE_EndpointDisableAll()
-         * function was called */
-
-        if(endpointAndDirection == DRV_USBHSV1_DEVICE_ENDPOINT_ALL)
-        {
-            /* Disable all endpoints */
-
-            usbID->USBHS_DEVEPT &= ~(0x3FF << USBHS_DEVEPT_EPEN0_Pos);
-
-            endpointObj = hDriver->deviceEndpointObj[0];
-
-            endpointObj->endpointState &= ~DRV_USBHSV1_DEVICE_ENDPOINT_STATE_ENABLED;
-
-            endpointObj++;
-
-            endpointObj->endpointState &= ~DRV_USBHSV1_DEVICE_ENDPOINT_STATE_ENABLED;
-
-            endpointObj = hDriver->deviceEndpointObj[1];
-
-            for(count = 1; count < DRV_USBHSV1_ENDPOINTS_NUMBER ; count++)
+            if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
             {
-                endpointObj->endpointState &= ~DRV_USBHSV1_DEVICE_ENDPOINT_STATE_ENABLED;
-
-                endpointObj++;
+                /* Disable  the USB Interrupt as this is not called inside ISR */
+                interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptSource);                
+            }
+            else
+            {
+                /* There was an error in getting the mutex */
+                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBHSV1 Device Driver: Mutex lock failed in DRV_USBHSV1_DEVICE_EndpointDisable()");
+                retVal = USB_ERROR_OSAL_FUNCTION;
             }
         }
-        else
+        if(retVal == USB_ERROR_NONE)
         {
-            if(endpoint == 0)
+
+            /* If the endpointAndDirection is _DRV_USBHSV1_DEVICE_ENDPOINT_ALL
+             * then this means that the DRV_USBHSV1_DEVICE_EndpointDisableAll()
+             * function was called */
+
+            if(endpointAndDirection == DRV_USBHSV1_DEVICE_ENDPOINT_ALL)
             {
-                /* Disable a control endpoint and update the
-                 * endpoint database. */
+                /* Disable all endpoints */
+
+                usbID->USBHS_DEVEPT &= ~(0x3FF << USBHS_DEVEPT_EPEN0_Pos);
 
                 endpointObj = hDriver->deviceEndpointObj[0];
 
@@ -958,40 +947,59 @@ USB_ERROR DRV_USBHSV1_DEVICE_EndpointDisable
 
                 endpointObj->endpointState &= ~DRV_USBHSV1_DEVICE_ENDPOINT_STATE_ENABLED;
 
-                /* Disable the Control Endpoint */
-                usbID->USBHS_DEVEPT &= ~USBHS_DEVEPT_EPEN0_Msk;
+                endpointObj = hDriver->deviceEndpointObj[1];
+
+                for(count = 1; count < DRV_USBHSV1_ENDPOINTS_NUMBER ; count++)
+                {
+                    endpointObj->endpointState &= ~DRV_USBHSV1_DEVICE_ENDPOINT_STATE_ENABLED;
+
+                    endpointObj++;
+                }
             }
             else
             {
-                /* Disable a specific endpoint direction for non
-                 * control endpoints. */
-                endpointObj = hDriver->deviceEndpointObj[endpoint];
+                if(endpoint == 0)
+                {
+                    /* Disable a control endpoint and update the
+                     * endpoint database. */
 
-                endpointObj->endpointState &= ~DRV_USBHSV1_DEVICE_ENDPOINT_STATE_ENABLED;
+                    endpointObj = hDriver->deviceEndpointObj[0];
 
-                /* Disable the respective Endpoint  */
-                usbID->USBHS_DEVEPT &= ~((0x01 << endpoint) << USBHS_DEVEPT_EPEN0_Pos);
+                    endpointObj->endpointState &= ~DRV_USBHSV1_DEVICE_ENDPOINT_STATE_ENABLED;
+
+                    endpointObj++;
+
+                    endpointObj->endpointState &= ~DRV_USBHSV1_DEVICE_ENDPOINT_STATE_ENABLED;
+
+                    /* Disable the Control Endpoint */
+                    usbID->USBHS_DEVEPT &= ~USBHS_DEVEPT_EPEN0_Msk;
+                }
+                else
+                {
+                    /* Disable a specific endpoint direction for non
+                     * control endpoints. */
+                    endpointObj = hDriver->deviceEndpointObj[endpoint];
+
+                    endpointObj->endpointState &= ~DRV_USBHSV1_DEVICE_ENDPOINT_STATE_ENABLED;
+
+                    /* Disable the respective Endpoint  */
+                    usbID->USBHS_DEVEPT &= ~((0x01 << endpoint) << USBHS_DEVEPT_EPEN0_Pos);
+                }
             }
-        }
-
-        /* Release interrupts and mutex */
-        if(hDriver->isInInterruptContext == false)
-        {
-            if(interruptWasEnabled)
+            
+            if(false == hDriver->isInInterruptContext)
             {
-                /* IF the interrupt was enabled when entering the routine
-                 * re-enable it now */
-                SYS_INT_SourceEnable(hDriver->interruptSource);
+                if(true == interruptWasEnabled)
+                {
+                    /* IF the interrupt was enabled when entering the routine
+                     * re-enable it now */
+                    SYS_INT_SourceEnable(hDriver->interruptSource);
+
+                    /* Unlock the mutex */
+                    OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
+                }
             }
-        }
-        if(mutexLock == true)
-        {
-            /* OSAL: Return mutex */
-            if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
-            {
-                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBHSV1 Device Driver: Mutex unlock failed in DRV_USBHSV1_DEVICE_EndpointDisable().");
-            }
-        }
+        }        
     }
     return (retVal);
 }/* end of DRV_USBHSV1_DEVICE_EndpointDisable() */
@@ -1107,7 +1115,6 @@ USB_ERROR DRV_USBHSV1_DEVICE_EndpointStall
     DRV_USBHSV1_OBJ * hDriver;                  /* USB driver object pointer */
     uint8_t endpoint;                           /* Endpoint Number */
     bool interruptWasEnabled = false;           /* To track interrupt state */
-    bool mutexLock = false;                     /* OSAL: for mutex lock */
     USB_ERROR retVal = USB_ERROR_NONE;          /* Return value */
 
     /* Endpoint object pointer */
@@ -1140,50 +1147,58 @@ USB_ERROR DRV_USBHSV1_DEVICE_EndpointStall
         /* Get the endpoint object */
         endpointObj = hDriver->deviceEndpointObj[endpoint];
 
-        if(hDriver->isInInterruptContext == false)
+        if(false == hDriver->isInInterruptContext)
         {
-            interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptSource);
-        }
-
-        /* Stall the endpoint 0 */
-        usbID->USBHS_DEVEPTIER[endpoint] = USBHS_DEVEPTIER_STALLRQS_Msk;
-
-        if(endpoint == 0)
-        {
-
-            /* While stalling endpoint 0 we stall both directions */
-            endpointObj->endpointState |= DRV_USBHSV1_DEVICE_ENDPOINT_STATE_STALLED;
-
-            _DRV_USBHSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_ABORTED_ENDPOINT_HALT);
-
-            endpointObj++;
-
-            endpointObj->endpointState |= DRV_USBHSV1_DEVICE_ENDPOINT_STATE_STALLED;
-
-            _DRV_USBHSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_ABORTED_ENDPOINT_HALT);
-        }
-        else
-        {
-            /* Stalling a non zero endpoint object */
-            endpointObj->endpointState |= DRV_USBHSV1_DEVICE_ENDPOINT_STATE_STALLED;
-
-            _DRV_USBHSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_ABORTED_ENDPOINT_HALT);
-        }
-
-        if(hDriver->isInInterruptContext == false)
-        {
-            if(interruptWasEnabled)
+            if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
             {
-                /* Enable the interrupt only if it was disabled */
-                SYS_INT_SourceEnable(hDriver->interruptSource);
+                /* Disable  the USB Interrupt as this is not called inside ISR */
+                interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptSource);                
+            }
+            else
+            {
+                /* There was an error in getting the mutex */
+                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBHSV1 Device Driver: Mutex lock failed in DRV_USBHSV1_DEVICE_EndpointStall()");
+                retVal = USB_ERROR_OSAL_FUNCTION;
             }
         }
-        if(mutexLock == true)
+        if(retVal == USB_ERROR_NONE)
         {
-            /* OSAL: Return mutex */
-            if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
+            /* Stall the endpoint 0 */
+            usbID->USBHS_DEVEPTIER[endpoint] = USBHS_DEVEPTIER_STALLRQS_Msk;
+
+            if(endpoint == 0)
             {
-                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBHSV1 Device Driver: Mutex unlock failed in DRV_USBHSV1_DEVICE_EndpointStall().");
+
+                /* While stalling endpoint 0 we stall both directions */
+                endpointObj->endpointState |= DRV_USBHSV1_DEVICE_ENDPOINT_STATE_STALLED;
+
+                _DRV_USBHSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_ABORTED_ENDPOINT_HALT);
+
+                endpointObj++;
+
+                endpointObj->endpointState |= DRV_USBHSV1_DEVICE_ENDPOINT_STATE_STALLED;
+
+                _DRV_USBHSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_ABORTED_ENDPOINT_HALT);
+            }
+            else
+            {
+                /* Stalling a non zero endpoint object */
+                endpointObj->endpointState |= DRV_USBHSV1_DEVICE_ENDPOINT_STATE_STALLED;
+
+                _DRV_USBHSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_ABORTED_ENDPOINT_HALT);
+            }
+            
+            if(false == hDriver->isInInterruptContext)
+            {
+                if(true == interruptWasEnabled)
+                {
+                    /* IF the interrupt was enabled when entering the routine
+                     * re-enable it now */
+                    SYS_INT_SourceEnable(hDriver->interruptSource);
+
+                    /* Unlock the mutex */
+                    OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
+                }
             }
         }
     }
@@ -1227,7 +1242,6 @@ USB_ERROR DRV_USBHSV1_DEVICE_EndpointStallClear
     DRV_USBHSV1_OBJ * hDriver;                  /* USB driver object pointer */
     uint8_t endpoint;                           /* Endpoint Number */
     bool interruptWasEnabled = false;           /* To track interrupt state */
-    bool mutexLock = false;                     /* OSAL: for mutex lock */
     USB_ERROR retVal = USB_ERROR_NONE;          /* Return value */
 
     /* Endpoint object pointer */
@@ -1264,48 +1278,56 @@ USB_ERROR DRV_USBHSV1_DEVICE_EndpointStallClear
 
         usbID->USBHS_DEVEPTIER[endpoint] = USBHS_HSTPIPIER_RSTDTS_Msk;
 
-        if(hDriver->isInInterruptContext == false)
+        if(false == hDriver->isInInterruptContext)
         {
-            interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptSource);
-        }
-
-        if(endpoint == 0)
-        {
-            /* Update the endpoint object with stall Clear for endpoint 0 */
-            endpointObj->endpointState &= ~DRV_USBHSV1_DEVICE_ENDPOINT_STATE_STALLED;
-
-            _DRV_USBHSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_TERMINATED_BY_HOST);
-
-            endpointObj++;
-
-            endpointObj->endpointState &= ~DRV_USBHSV1_DEVICE_ENDPOINT_STATE_STALLED;
-
-            _DRV_USBHSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_TERMINATED_BY_HOST);
-
-        }
-        else
-        {
-
-            /* Update the objects with stall Clear for non-zero endpoint */
-            endpointObj->endpointState &= ~DRV_USBHSV1_DEVICE_ENDPOINT_STATE_STALLED;
-
-            _DRV_USBHSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_TERMINATED_BY_HOST);
-        }
-
-        if(hDriver->isInInterruptContext == false)
-        {
-            if(interruptWasEnabled)
+            if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
             {
-                /* Enable the interrupt only if it was disabled */
-                SYS_INT_SourceEnable(hDriver->interruptSource);
+                /* Disable  the USB Interrupt as this is not called inside ISR */
+                interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptSource);                
+            }
+            else
+            {
+                /* There was an error in getting the mutex */
+                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBHSV1 Device Driver: Mutex lock failed in DRV_USBHSV1_DEVICE_EndpointStallClear()");
+                retVal = USB_ERROR_OSAL_FUNCTION;
             }
         }
-        if(mutexLock == true)
+        if(retVal == USB_ERROR_NONE)
         {
-            /* OSAL: Return mutex */
-            if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
+            if(endpoint == 0)
             {
-                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBHSV1 Device Driver: Mutex unlock failed in DRV_USBHSV1_DEVICE_EndpointStallClear().");
+                /* Update the endpoint object with stall Clear for endpoint 0 */
+                endpointObj->endpointState &= ~DRV_USBHSV1_DEVICE_ENDPOINT_STATE_STALLED;
+
+                _DRV_USBHSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_TERMINATED_BY_HOST);
+
+                endpointObj++;
+
+                endpointObj->endpointState &= ~DRV_USBHSV1_DEVICE_ENDPOINT_STATE_STALLED;
+
+                _DRV_USBHSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_TERMINATED_BY_HOST);
+
+            }
+            else
+            {
+
+                /* Update the objects with stall Clear for non-zero endpoint */
+                endpointObj->endpointState &= ~DRV_USBHSV1_DEVICE_ENDPOINT_STATE_STALLED;
+
+                _DRV_USBHSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_TERMINATED_BY_HOST);
+            }
+
+            if(false == hDriver->isInInterruptContext)
+            {
+                if(true == interruptWasEnabled)
+                {
+                    /* IF the interrupt was enabled when entering the routine
+                     * re-enable it now */
+                    SYS_INT_SourceEnable(hDriver->interruptSource);
+
+                    /* Unlock the mutex */
+                    OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
+                }
             }
         }
     }
@@ -1519,222 +1541,206 @@ USB_ERROR DRV_USBHSV1_DEVICE_IRPSubmit
              * interrupt context, we, then we would disable the interrupt. In which case
              * we would get the mutex and then disable the interrupt */
 
-            if(hDriver->isInInterruptContext == false)
+            if(false == hDriver->isInInterruptContext)
             {
-                /* Disable  the USB Interrupt as this is not called inside ISR */
-                interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptSource);
-
-            }
-            irp->next = NULL;
-
-            /* Mark the IRP status as pending */
-            irp->status = USB_DEVICE_IRP_STATUS_PENDING;
-
-            /* If the data is moving from device to host then pending bytes is data
-             * remaining to be sent to the host. If the data is moving from host to
-             * device, nPendingBytes tracks the amount of data received so far */
-
-            if(USB_DATA_DIRECTION_DEVICE_TO_HOST == direction)
-            {
-                irp->nPendingBytes = irp->size;
-            }
-            else
-            {
-                irp->nPendingBytes = 0;
-            }
-
-            /* Get the last object in the endpoint object IRP Queue */
-            if(endpointObj->irpQueue == NULL)
-            {
-                /* Queue is empty */
-                endpointObj->irpQueue = irp;
-                irp->previous = NULL;
-
-                /* Because this is the first IRP in the queue then we we must arm the
-                 * endpoint entry in the BDT. */
-
-                irp->status = USB_DEVICE_IRP_STATUS_IN_PROGRESS;
-
-                if(endpoint == 0)
+                if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
                 {
-                    if(direction == USB_DATA_DIRECTION_HOST_TO_DEVICE)
+                    /* Disable  the USB Interrupt as this is not called inside ISR */
+                    interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptSource);                
+                }
+                else
+                {
+                    /* There was an error in getting the mutex */
+                    SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBHSV1 Device Driver: Mutex lock failed in DRV_USBHSV1_DEVICE_IRPSubmit()");
+                    retVal = USB_ERROR_OSAL_FUNCTION;
+                }
+            }
+            if(retVal == USB_ERROR_NONE)
+            {
+		
+                irp->next = NULL;
+
+                /* Mark the IRP status as pending */
+                irp->status = USB_DEVICE_IRP_STATUS_PENDING;
+
+                /* If the data is moving from device to host then pending bytes is data
+                 * remaining to be sent to the host. If the data is moving from host to
+                 * device, nPendingBytes tracks the amount of data received so far */
+
+                if(USB_DATA_DIRECTION_DEVICE_TO_HOST == direction)
+                {
+                    irp->nPendingBytes = irp->size;
+                }
+                else
+                {
+                    irp->nPendingBytes = 0;
+                }
+
+                /* Get the last object in the endpoint object IRP Queue */
+                if(endpointObj->irpQueue == NULL)
+                {
+                    /* Queue is empty */
+                    endpointObj->irpQueue = irp;
+                    irp->previous = NULL;
+
+                    /* Because this is the first IRP in the queue then we we must arm the
+                     * endpoint entry in the BDT. */
+
+                    irp->status = USB_DEVICE_IRP_STATUS_IN_PROGRESS;
+
+                    if(endpoint == 0)
                     {
-                        switch(hDriver->endpoint0State)
+                        if(direction == USB_DATA_DIRECTION_HOST_TO_DEVICE)
                         {
-                            case DRV_USBHSV1_DEVICE_EP0_STATE_EXPECTING_SETUP_FROM_HOST:
+                            switch(hDriver->endpoint0State)
+                            {
+                                case DRV_USBHSV1_DEVICE_EP0_STATE_EXPECTING_SETUP_FROM_HOST:
 
-                                /* This is the default initialization value of Endpoint
-                                 * 0.  In this state EPO is waiting for the setup packet
-                                 * from the host. The IRP is already added to the queue.
-                                 * When the host send the Setup packet, this IRP will be
-                                 * processed in the interrupt. This means we dont have
-                                 * to do anything in this state. */
-                                break;
+                                    /* This is the default initialization value of Endpoint
+                                     * 0.  In this state EPO is waiting for the setup packet
+                                     * from the host. The IRP is already added to the queue.
+                                     * When the host send the Setup packet, this IRP will be
+                                     * processed in the interrupt. This means we dont have
+                                     * to do anything in this state. */
+                                    break;
 
-                            case DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_SETUP_IRP_FROM_CLIENT:
-                                /* In this state, the driver has received the Setup
-                                 * packet from the host, but was waiting for an IRP from
-                                 * the client. The driver now has the IRP. We can unload
-                                 * the setup packet into the IRP */
+                                case DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_SETUP_IRP_FROM_CLIENT:
+                                    /* In this state, the driver has received the Setup
+                                     * packet from the host, but was waiting for an IRP from
+                                     * the client. The driver now has the IRP. We can unload
+                                     * the setup packet into the IRP */
 
-                                /* Get 8-bit access to endpoint 0 FIFO from USB RAM address
-                                 * and copy the data into the IRP data buffer */
+                                    /* Get 8-bit access to endpoint 0 FIFO from USB RAM address
+                                     * and copy the data into the IRP data buffer */
 
-                                ptr = (uint8_t *) & ((volatile uint8_t (*)[0x8000])USBHSV1_RAM_ADDR)[0];
+                                    ptr = (uint8_t *) & ((volatile uint8_t (*)[0x8000])USBHSV1_RAM_ADDR)[0];
 
-                                data = (uint8_t *)irp->data;
+                                    data = (uint8_t *)irp->data;
 
-                                SCB_InvalidateDCache_by_Addr((uint32_t *) ptr, 8);
+                                    SCB_InvalidateDCache_by_Addr((uint32_t *) ptr, 8);
 
-                                for(count = 0; count < 8; count++)
-                                {
-                                    *((uint8_t *)(data + count)) = *ptr++;
-                                }
-
-                                irp->nPendingBytes += count;
-
-                                /* Clear the Setup Interrupt flag and also re-enable the
-                                 * setup interrupt. */
-
-                                usbID->USBHS_DEVEPTICR[0] = USBHS_DEVEPTICR_RXSTPIC_Msk;
-                                usbID->USBHS_DEVEPTIER[0] = USBHS_DEVEPTIER_RXSTPES_Msk;
-
-                                /* Analyze the setup packet. We need to check if the
-                                 * control transfer contains a data stage and if so,
-                                 * what is its direction. */
-
-                                endpoint0DataStageSize = *((unsigned short int *) (data + 6));
-                                endpoint0DataStageDirection = ((data[0] & 0x80) != 0);
-
-                                if(endpoint0DataStageSize == 0)
-                                {
-                                    /* This means there is no data stage. We wait for
-                                     * the client to submit the status IRP. */
-                                    hDriver->endpoint0State = DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_IRP_FROM_CLIENT;
-                                }
-                                else
-                                {
-                                    /* This means there is a data stage. Analyze the
-                                     * direction. */
-
-                                    if(endpoint0DataStageDirection == USB_DATA_DIRECTION_DEVICE_TO_HOST)
-                                    {
-                                        /* If data is moving from device to host, then
-                                         * we wait for the client to submit an transmit
-                                         * IRP */
-
-                                        hDriver->endpoint0State = DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_DATA_IRP_FROM_CLIENT;
-                                    }
-                                    else
-                                    {
-                                        /* Data is moving from host to device. We wait
-                                         * for the host to send the data. */
-                                        hDriver->endpoint0State = DRV_USBHSV1_DEVICE_EP0_STATE_EXPECTING_RX_DATA_STAGE_FROM_HOST;
-                                    }
-                                }
-
-                                /* Update the IRP queue so that the client can submit an
-                                 * IRP in the IRP callback. */
-                                endpointObj->irpQueue = irp->next;
-
-                                irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
-
-                                /* IRP callback */
-                                if(irp->callback != NULL)
-                                {
-                                    irp->callback((USB_DEVICE_IRP *)irp);
-                                }
-
-                                break;
-
-                            case DRV_USBHSV1_DEVICE_EP0_STATE_EXPECTING_RX_DATA_STAGE_FROM_HOST:
-                            case DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_RX_STATUS_COMPLETE:
-
-                                /* In both of these states, an IRP has been submitted,
-                                 * and the driver is now waiting for data from the host.
-                                 * When the data arrives, the IRPs will be processed in
-                                 * the interrupts. */
-
-                                break;
-
-                            case DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_RX_DATA_IRP_FROM_CLIENT:
-
-                                /* In this state, the host sent a data stage packet, an
-                                    * interrupt occurred but there was no RX data stage
-                                    * IRP. The RX IRP is now being submitted. We should
-                                    * unload the fifo. */
-
-                                byteCount = (usbID->USBHS_DEVEPTISR[0] & USBHS_DEVEPTISR_BYCT_Msk) >> USBHS_DEVEPTISR_BYCT_Pos;
-
-                                data = (uint8_t *) irp->data;
-
-                                /* Get 8-bit access to endpoint 0 FIFO from USB RAM address */
-                                ptr = (uint8_t *) & ((volatile uint8_t (*)[0x8000])USBHSV1_RAM_ADDR)[0];
-
-                                data = (uint8_t *)&data[irp->nPendingBytes];
-
-                                if((irp->nPendingBytes + byteCount) > irp->size)
-                                {
-                                    /* This is not acceptable as it may corrupt the ram location */
-                                    byteCount = irp->size - irp->nPendingBytes;
-                                }
-                                else
-                                {
-
-                                    SCB_InvalidateDCache_by_Addr((uint32_t *) ptr, byteCount);
-
-                                    for(count = 0; count < byteCount; count++)
+                                    for(count = 0; count < 8; count++)
                                     {
                                         *((uint8_t *)(data + count)) = *ptr++;
                                     }
 
-                                    /* Update the pending byte count */
-                                    irp->nPendingBytes += byteCount;
+                                    irp->nPendingBytes += count;
 
-                                    if(irp->nPendingBytes >= irp->size)
+                                    /* Clear the Setup Interrupt flag and also re-enable the
+                                     * setup interrupt. */
+
+                                    usbID->USBHS_DEVEPTICR[0] = USBHS_DEVEPTICR_RXSTPIC_Msk;
+                                    usbID->USBHS_DEVEPTIER[0] = USBHS_DEVEPTIER_RXSTPES_Msk;
+
+                                    /* Analyze the setup packet. We need to check if the
+                                     * control transfer contains a data stage and if so,
+                                     * what is its direction. */
+
+                                    endpoint0DataStageSize = *((unsigned short int *) (data + 6));
+                                    endpoint0DataStageDirection = ((data[0] & 0x80) != 0);
+
+                                    if(endpoint0DataStageSize == 0)
                                     {
-                                        /* This means we have received all the data that
-                                         * we were supposed to receive */
-                                        irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
-
-                                        /* Change endpoint state to waiting to the
-                                         * status stage */
-                                        hDriver->endpoint0State = DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_COMPLETE;
-
-                                        /* Clear and re-enable the interrupt */
-                                        usbID->USBHS_DEVEPTICR[0] = USBHS_DEVEPTICR_RXOUTIC_Msk;
-
-                                        usbID->USBHS_DEVEPTIER[0] = USBHS_DEVEPTIER_RXOUTES_Msk;
-
-                                        /* Update the queue, update irp-size to indicate
-                                         * how much data was received from the host. */
-                                        irp->size = irp->nPendingBytes;
-
-                                        endpointObj->irpQueue = irp->next;
-
-                                        if(irp->callback != NULL)
-                                        {
-                                            irp->callback((USB_DEVICE_IRP *)irp);
-                                        }
+                                        /* This means there is no data stage. We wait for
+                                         * the client to submit the status IRP. */
+                                        hDriver->endpoint0State = DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_IRP_FROM_CLIENT;
                                     }
                                     else
                                     {
-                                        //Chk state alone is different - others same as top.
-                                        if(byteCount < endpointObj->maxPacketSize)
-                                        {
-                                            /* This means we received a short packet. We
-                                             * should end the transfer. */
-                                            irp->status = USB_DEVICE_IRP_STATUS_COMPLETED_SHORT;
+                                        /* This means there is a data stage. Analyze the
+                                         * direction. */
 
-                                            /* The data stage is complete. We now wait
-                                             * for the status stage. */
+                                        if(endpoint0DataStageDirection == USB_DATA_DIRECTION_DEVICE_TO_HOST)
+                                        {
+                                            /* If data is moving from device to host, then
+                                             * we wait for the client to submit an transmit
+                                             * IRP */
+
+                                            hDriver->endpoint0State = DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_DATA_IRP_FROM_CLIENT;
+                                        }
+                                        else
+                                        {
+                                            /* Data is moving from host to device. We wait
+                                             * for the host to send the data. */
+                                            hDriver->endpoint0State = DRV_USBHSV1_DEVICE_EP0_STATE_EXPECTING_RX_DATA_STAGE_FROM_HOST;
+                                        }
+                                    }
+
+                                    /* Update the IRP queue so that the client can submit an
+                                     * IRP in the IRP callback. */
+                                    endpointObj->irpQueue = irp->next;
+
+                                    irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
+
+                                    /* IRP callback */
+                                    if(irp->callback != NULL)
+                                    {
+                                        irp->callback((USB_DEVICE_IRP *)irp);
+                                    }
+
+                                    break;
+
+                                case DRV_USBHSV1_DEVICE_EP0_STATE_EXPECTING_RX_DATA_STAGE_FROM_HOST:
+                                case DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_RX_STATUS_COMPLETE:
+
+                                    /* In both of these states, an IRP has been submitted,
+                                     * and the driver is now waiting for data from the host.
+                                     * When the data arrives, the IRPs will be processed in
+                                     * the interrupts. */
+
+                                    break;
+
+                                case DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_RX_DATA_IRP_FROM_CLIENT:
+
+                                    /* In this state, the host sent a data stage packet, an
+                                        * interrupt occurred but there was no RX data stage
+                                        * IRP. The RX IRP is now being submitted. We should
+                                        * unload the fifo. */
+
+                                    byteCount = (usbID->USBHS_DEVEPTISR[0] & USBHS_DEVEPTISR_BYCT_Msk) >> USBHS_DEVEPTISR_BYCT_Pos;
+
+                                    data = (uint8_t *) irp->data;
+
+                                    /* Get 8-bit access to endpoint 0 FIFO from USB RAM address */
+                                    ptr = (uint8_t *) & ((volatile uint8_t (*)[0x8000])USBHSV1_RAM_ADDR)[0];
+
+                                    data = (uint8_t *)&data[irp->nPendingBytes];
+
+                                    if((irp->nPendingBytes + byteCount) > irp->size)
+                                    {
+                                        /* This is not acceptable as it may corrupt the ram location */
+                                        byteCount = irp->size - irp->nPendingBytes;
+                                    }
+                                    else
+                                    {
+
+                                        SCB_InvalidateDCache_by_Addr((uint32_t *) ptr, byteCount);
+
+                                        for(count = 0; count < byteCount; count++)
+                                        {
+                                            *((uint8_t *)(data + count)) = *ptr++;
+                                        }
+
+                                        /* Update the pending byte count */
+                                        irp->nPendingBytes += byteCount;
+
+                                        if(irp->nPendingBytes >= irp->size)
+                                        {
+                                            /* This means we have received all the data that
+                                             * we were supposed to receive */
+                                            irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
+
+                                            /* Change endpoint state to waiting to the
+                                             * status stage */
                                             hDriver->endpoint0State = DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_COMPLETE;
 
-                                            /* Clear and enable the interrupt. */
+                                            /* Clear and re-enable the interrupt */
                                             usbID->USBHS_DEVEPTICR[0] = USBHS_DEVEPTICR_RXOUTIC_Msk;
 
                                             usbID->USBHS_DEVEPTIER[0] = USBHS_DEVEPTIER_RXOUTES_Msk;
 
+                                            /* Update the queue, update irp-size to indicate
+                                             * how much data was received from the host. */
                                             irp->size = irp->nPendingBytes;
 
                                             endpointObj->irpQueue = irp->next;
@@ -1746,248 +1752,280 @@ USB_ERROR DRV_USBHSV1_DEVICE_IRPSubmit
                                         }
                                         else
                                         {
-                                            usbID->USBHS_DEVEPTICR[0] = USBHS_DEVEPTICR_RXOUTIC_Msk;
+                                            //Chk state alone is different - others same as top.
+                                            if(byteCount < endpointObj->maxPacketSize)
+                                            {
+                                                /* This means we received a short packet. We
+                                                 * should end the transfer. */
+                                                irp->status = USB_DEVICE_IRP_STATUS_COMPLETED_SHORT;
 
-								            usbID->USBHS_DEVEPTIER[0] = USBHS_DEVEPTIER_RXOUTES_Msk;
+                                                /* The data stage is complete. We now wait
+                                                 * for the status stage. */
+                                                hDriver->endpoint0State = DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_COMPLETE;
+
+                                                /* Clear and enable the interrupt. */
+                                                usbID->USBHS_DEVEPTICR[0] = USBHS_DEVEPTICR_RXOUTIC_Msk;
+
+                                                usbID->USBHS_DEVEPTIER[0] = USBHS_DEVEPTIER_RXOUTES_Msk;
+
+                                                irp->size = irp->nPendingBytes;
+
+                                                endpointObj->irpQueue = irp->next;
+
+                                                if(irp->callback != NULL)
+                                                {
+                                                    irp->callback((USB_DEVICE_IRP *)irp);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                usbID->USBHS_DEVEPTICR[0] = USBHS_DEVEPTICR_RXOUTIC_Msk;
+
+                                                usbID->USBHS_DEVEPTIER[0] = USBHS_DEVEPTIER_RXOUTES_Msk;
+                                            }
+
                                         }
-
                                     }
-                                }
-                                break;
+                                    break;
 
-                            case DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_RX_STATUS_IRP_FROM_CLIENT:
+                                case DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_RX_STATUS_IRP_FROM_CLIENT:
 
-                                /* This means the host has already sent an RX status
-                                 * stage but there was not IRP to receive this. We have
-                                 * the IRP now. We change the EP0 state to waiting for
-                                 * the next setup from the host. */
+                                    /* This means the host has already sent an RX status
+                                     * stage but there was not IRP to receive this. We have
+                                     * the IRP now. We change the EP0 state to waiting for
+                                     * the next setup from the host. */
 
-                                hDriver->endpoint0State = DRV_USBHSV1_DEVICE_EP0_STATE_EXPECTING_SETUP_FROM_HOST;
+                                    hDriver->endpoint0State = DRV_USBHSV1_DEVICE_EP0_STATE_EXPECTING_SETUP_FROM_HOST;
 
-                                irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
+                                    irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
 
-                                usbID->USBHS_DEVEPTICR[0] = USBHS_DEVEPTICR_RXOUTIC_Msk;
+                                    usbID->USBHS_DEVEPTICR[0] = USBHS_DEVEPTICR_RXOUTIC_Msk;
 
-                                usbID->USBHS_DEVEPTIER[0] = USBHS_DEVEPTIER_RXOUTES_Msk;
+                                    usbID->USBHS_DEVEPTIER[0] = USBHS_DEVEPTIER_RXOUTES_Msk;
 
-                                endpointObj->irpQueue = irp->next;
+                                    endpointObj->irpQueue = irp->next;
 
-                                if(irp->callback != NULL)
-                                {
-                                    irp->callback((USB_DEVICE_IRP *)irp);
-                                }
+                                    if(irp->callback != NULL)
+                                    {
+                                        irp->callback((USB_DEVICE_IRP *)irp);
+                                    }
 
-                                break;
+                                    break;
 
-                            default:
+                                default:
 
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        /* This means data is moving device to host. */
-                        switch(hDriver->endpoint0State)
-                        {
-                            case DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_DATA_IRP_FROM_CLIENT:
-
-                                /* Driver is waiting for an IRP from the client and has
-                                 * received it. Determine the transaction size. */
-
-                                if(irp->nPendingBytes < endpointObj->maxPacketSize)
-                                {
-                                    /* This is the last transaction in the transfer. */
-                                    byteCount = irp->nPendingBytes;
-                                }
-                                else
-                                {
-                                    /* This is first or a continuing transaction in the
-                                     * transfer and the transaction size must be
-                                     * maxPacketSize */
-
-                                    byteCount = endpointObj->maxPacketSize;
-                                }
-
-                                /* Copy data to the FIFO */
-                                ptr = (uint8_t *) & ((volatile uint8_t (*)[0x8000])USBHSV1_RAM_ADDR)[0];
-
-                                data = (uint8_t *)irp->data;
-
-                                for(count = 0; count < byteCount; count++)
-                                {
-                                    *ptr++ = *((uint8_t *)(data + count));
-                                }
-
-                                ptr = (uint8_t *) & ((volatile uint8_t (*)[0x8000])USBHSV1_RAM_ADDR)[0];
-
-                                SCB_CleanDCache_by_Addr((uint32_t *) ptr, byteCount);
-
-                                irp->nPendingBytes -= byteCount;
-
-                                hDriver->endpoint0State = DRV_USBHSV1_DEVICE_EP0_STATE_TX_DATA_STAGE_IN_PROGRESS;
-
-                                /* Clear the flag and enable the interrupt. The rest of
-                                 * the IRP should really get processed in the ISR.
-                                 * */
-                                usbID->USBHS_DEVEPTICR[0] = USBHS_DEVEPTICR_TXINIC_Msk;
-
-                                usbID->USBHS_DEVEPTIDR[0] = USBHS_DEVEPTIDR_FIFOCONC_Msk;
-
-                                usbID->USBHS_DEVEPTIER[0] = USBHS_DEVEPTIER_TXINES_Msk;
-
-                                break;
-
-                            case DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_IRP_FROM_CLIENT:
-
-                                /* This means the driver is expecting the client to
-                                 * submit a TX status stage IRP. */
-                                hDriver->endpoint0State = DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_COMPLETE;
-
-                                usbID->USBHS_DEVEPTICR[0] = USBHS_DEVEPTICR_TXINIC_Msk;
-
-                                usbID->USBHS_DEVEPTIER[0] = USBHS_DEVEPTIER_TXINES_Msk;
-
-                                break;
-
-                            default:
-
-                                break;
-
-                        }
-                    }
-                }
-                else
-                {
-                    /* Non zero endpoint irp */
-
-                    if(direction == USB_DATA_DIRECTION_DEVICE_TO_HOST)
-                    {
-                        usbID->USBHS_DEVEPTICR[endpoint] = USBHS_DEVEPTICR_TXINIC_Msk;
-
-                        /* Sending from Device to Host */
-                        if(irp->nPendingBytes < endpointObj->maxPacketSize)
-                        {
-                            byteCount = irp->nPendingBytes;
+                                    break;
+                            }
                         }
                         else
                         {
-                            byteCount = endpointObj->maxPacketSize;
+                            /* This means data is moving device to host. */
+                            switch(hDriver->endpoint0State)
+                            {
+                                case DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_DATA_IRP_FROM_CLIENT:
+
+                                    /* Driver is waiting for an IRP from the client and has
+                                     * received it. Determine the transaction size. */
+
+                                    if(irp->nPendingBytes < endpointObj->maxPacketSize)
+                                    {
+                                        /* This is the last transaction in the transfer. */
+                                        byteCount = irp->nPendingBytes;
+                                    }
+                                    else
+                                    {
+                                        /* This is first or a continuing transaction in the
+                                         * transfer and the transaction size must be
+                                         * maxPacketSize */
+
+                                        byteCount = endpointObj->maxPacketSize;
+                                    }
+
+                                    /* Copy data to the FIFO */
+                                    ptr = (uint8_t *) & ((volatile uint8_t (*)[0x8000])USBHSV1_RAM_ADDR)[0];
+
+                                    data = (uint8_t *)irp->data;
+
+                                    for(count = 0; count < byteCount; count++)
+                                    {
+                                        *ptr++ = *((uint8_t *)(data + count));
+                                    }
+
+                                    ptr = (uint8_t *) & ((volatile uint8_t (*)[0x8000])USBHSV1_RAM_ADDR)[0];
+
+                                    SCB_CleanDCache_by_Addr((uint32_t *) ptr, byteCount);
+
+                                    irp->nPendingBytes -= byteCount;
+
+                                    hDriver->endpoint0State = DRV_USBHSV1_DEVICE_EP0_STATE_TX_DATA_STAGE_IN_PROGRESS;
+
+                                    /* Clear the flag and enable the interrupt. The rest of
+                                     * the IRP should really get processed in the ISR.
+                                     * */
+                                    usbID->USBHS_DEVEPTICR[0] = USBHS_DEVEPTICR_TXINIC_Msk;
+
+                                    usbID->USBHS_DEVEPTIDR[0] = USBHS_DEVEPTIDR_FIFOCONC_Msk;
+
+                                    usbID->USBHS_DEVEPTIER[0] = USBHS_DEVEPTIER_TXINES_Msk;
+
+                                    break;
+
+                                case DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_IRP_FROM_CLIENT:
+
+                                    /* This means the driver is expecting the client to
+                                     * submit a TX status stage IRP. */
+                                    hDriver->endpoint0State = DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_COMPLETE;
+
+                                    usbID->USBHS_DEVEPTICR[0] = USBHS_DEVEPTICR_TXINIC_Msk;
+
+                                    usbID->USBHS_DEVEPTIER[0] = USBHS_DEVEPTIER_TXINES_Msk;
+
+                                    break;
+
+                                default:
+
+                                    break;
+
+                            }
                         }
-
-                        /* Copy data to the FIFO */
-                        ptr = (uint8_t *) & ((volatile uint8_t (*)[0x8000])USBHSV1_RAM_ADDR)[endpoint];
-
-                        data = (uint8_t *)irp->data;
-
-                        for(count = 0; count < byteCount; count++)
-                        {
-                            *ptr++ = *((uint8_t *)(data + count));
-                        }
-
-                        ptr = (uint8_t *) & ((volatile uint8_t (*)[0x8000])USBHSV1_RAM_ADDR)[endpoint];
-
-                        SCB_CleanDCache_by_Addr((uint32_t *) ptr, byteCount);
-
-                        irp->nPendingBytes -= byteCount;
-
-                        /* Enable the TXINI interrupt and clear the interrupt flag
-                         * to initiate a Tx the packet */
-
-                        usbID->USBHS_DEVEPTIDR[endpoint] = USBHS_DEVEPTIDR_FIFOCONC_Msk;
-
-                        usbID->USBHS_DEVEPTIER[endpoint] = USBHS_DEVEPTIER_TXINES_Msk;
-
-                        /* The rest of the IRP processing takes place in ISR */
                     }
                     else
                     {
-                        /* direction is Host to Device */
-                        if((USBHS_DEVEPTISR_RXOUTI_Msk == (USBHS_DEVEPTISR_RXOUTI_Msk & usbID->USBHS_DEVEPTISR[endpoint])) & (USBHS_DEVEPTIMR_RXOUTE_Msk == (USBHS_DEVEPTIMR_RXOUTE_Msk & usbID->USBHS_DEVEPTIMR[endpoint])))
+                        /* Non zero endpoint irp */
+
+                        if(direction == USB_DATA_DIRECTION_DEVICE_TO_HOST)
                         {
-                            /* Data is already available in the FIFO */
-                            byteCount = (usbID->USBHS_DEVEPTISR[endpoint] & USBHS_DEVEPTISR_BYCT_Msk) >> USBHS_DEVEPTISR_BYCT_Pos;
+                            usbID->USBHS_DEVEPTICR[endpoint] = USBHS_DEVEPTICR_TXINIC_Msk;
 
-                            /* Get FIFO Address */
-                            ptr = (uint8_t *) & ((volatile uint8_t (*)[0x8000])USBHSV1_RAM_ADDR)[endpoint];
-
-                            if((irp->nPendingBytes + byteCount) > irp->size)
+                            /* Sending from Device to Host */
+                            if(irp->nPendingBytes < endpointObj->maxPacketSize)
                             {
-                                /* This is not acceptable as it may corrupt the ram location */
-                                byteCount = irp->size - irp->nPendingBytes;
+                                byteCount = irp->nPendingBytes;
                             }
+                            else
+                            {
+                                byteCount = endpointObj->maxPacketSize;
+                            }
+
+                            /* Copy data to the FIFO */
+                            ptr = (uint8_t *) & ((volatile uint8_t (*)[0x8000])USBHSV1_RAM_ADDR)[endpoint];
 
                             data = (uint8_t *)irp->data;
 
-                            SCB_InvalidateDCache_by_Addr((uint32_t *) ptr, byteCount);
-
                             for(count = 0; count < byteCount; count++)
                             {
-                                *((uint8_t *)(data + count)) = *ptr++;
+                                *ptr++ = *((uint8_t *)(data + count));
                             }
 
-                            /* Update the pending byte count */
-                            irp->nPendingBytes += byteCount;
+                            ptr = (uint8_t *) & ((volatile uint8_t (*)[0x8000])USBHSV1_RAM_ADDR)[endpoint];
 
-                            if((irp->nPendingBytes >= irp->size) || (byteCount < endpointObj->maxPacketSize))
-                            {
-                                if(byteCount < endpointObj->maxPacketSize)
-                                {
-                                    /* This means we have received a short packet */
-                                    irp->status = USB_DEVICE_IRP_STATUS_COMPLETED_SHORT;
-                                }
-                                else
-                                {
-                                    /* This means we have received all the data that
-                                    * we were supposed to receive */
-                                    irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
-                                }
-                                /* Update the queue, update irp-size to indicate
-                                    * how much data was received from the host. */
-                                irp->size = irp->nPendingBytes;
+                            SCB_CleanDCache_by_Addr((uint32_t *) ptr, byteCount);
 
-                                endpointObj->irpQueue = irp->next;
+                            irp->nPendingBytes -= byteCount;
 
-                                if(irp->callback != NULL)
-                                {
-                                    irp->callback((USB_DEVICE_IRP *)irp);
-                                }
-                            }
-                            /* Clear and re-enable the interrupt */
-                            usbID->USBHS_DEVEPTICR[endpoint] = USBHS_DEVEPTICR_RXOUTIC_Msk;
-
-                            usbID->USBHS_DEVEPTIER[endpoint] = USBHS_DEVEPTIER_RXOUTES_Msk;
+                            /* Enable the TXINI interrupt and clear the interrupt flag
+                             * to initiate a Tx the packet */
 
                             usbID->USBHS_DEVEPTIDR[endpoint] = USBHS_DEVEPTIDR_FIFOCONC_Msk;
+
+                            usbID->USBHS_DEVEPTIER[endpoint] = USBHS_DEVEPTIER_TXINES_Msk;
+
+                            /* The rest of the IRP processing takes place in ISR */
                         }
                         else
                         {
-                            /* Host has not sent any data and IRP is already added
-                             * to the queue. IRP will be processed in the ISR */
-                        }
-                    }/* End of non zero RX IRP submit */
-                }/* End of non zero IRP submit */
-            }
-            else
-            {
-                /* This means we should surf the linked list to get to the last entry . */
+                            /* direction is Host to Device */
+                            if((USBHS_DEVEPTISR_RXOUTI_Msk == (USBHS_DEVEPTISR_RXOUTI_Msk & usbID->USBHS_DEVEPTISR[endpoint])) & (USBHS_DEVEPTIMR_RXOUTE_Msk == (USBHS_DEVEPTIMR_RXOUTE_Msk & usbID->USBHS_DEVEPTIMR[endpoint])))
+                            {
+                                /* Data is already available in the FIFO */
+                                byteCount = (usbID->USBHS_DEVEPTISR[endpoint] & USBHS_DEVEPTISR_BYCT_Msk) >> USBHS_DEVEPTISR_BYCT_Pos;
 
-                USB_DEVICE_IRP_LOCAL * iterator;
-                iterator = endpointObj->irpQueue;
-                while (iterator->next != NULL)
-                {
-                    iterator = iterator->next;
+                                /* Get FIFO Address */
+                                ptr = (uint8_t *) & ((volatile uint8_t (*)[0x8000])USBHSV1_RAM_ADDR)[endpoint];
+
+                                if((irp->nPendingBytes + byteCount) > irp->size)
+                                {
+                                    /* This is not acceptable as it may corrupt the ram location */
+                                    byteCount = irp->size - irp->nPendingBytes;
+                                }
+
+                                data = (uint8_t *)irp->data;
+
+                                SCB_InvalidateDCache_by_Addr((uint32_t *) ptr, byteCount);
+
+                                for(count = 0; count < byteCount; count++)
+                                {
+                                    *((uint8_t *)(data + count)) = *ptr++;
+                                }
+
+                                /* Update the pending byte count */
+                                irp->nPendingBytes += byteCount;
+
+                                if((irp->nPendingBytes >= irp->size) || (byteCount < endpointObj->maxPacketSize))
+                                {
+                                    if(byteCount < endpointObj->maxPacketSize)
+                                    {
+                                        /* This means we have received a short packet */
+                                        irp->status = USB_DEVICE_IRP_STATUS_COMPLETED_SHORT;
+                                    }
+                                    else
+                                    {
+                                        /* This means we have received all the data that
+                                        * we were supposed to receive */
+                                        irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
+                                    }
+                                    /* Update the queue, update irp-size to indicate
+                                        * how much data was received from the host. */
+                                    irp->size = irp->nPendingBytes;
+
+                                    endpointObj->irpQueue = irp->next;
+
+                                    if(irp->callback != NULL)
+                                    {
+                                        irp->callback((USB_DEVICE_IRP *)irp);
+                                    }
+                                }
+                                /* Clear and re-enable the interrupt */
+                                usbID->USBHS_DEVEPTICR[endpoint] = USBHS_DEVEPTICR_RXOUTIC_Msk;
+
+                                usbID->USBHS_DEVEPTIER[endpoint] = USBHS_DEVEPTIER_RXOUTES_Msk;
+
+                                usbID->USBHS_DEVEPTIDR[endpoint] = USBHS_DEVEPTIDR_FIFOCONC_Msk;
+                            }
+                            else
+                            {
+                                /* Host has not sent any data and IRP is already added
+                                 * to the queue. IRP will be processed in the ISR */
+                            }
+                        }/* End of non zero RX IRP submit */
+                    }/* End of non zero IRP submit */
                 }
-                iterator->next = irp;
-                irp->previous = iterator;
-                irp->status = USB_DEVICE_IRP_STATUS_PENDING;
-            }
-
-            if(hDriver->isInInterruptContext == false)
-            {
-                if(interruptWasEnabled)
+                else
                 {
-                    /* Enable the interrupt only if it was disabled */
-                    SYS_INT_SourceEnable(hDriver->interruptSource);
+                    /* This means we should surf the linked list to get to the last entry . */
+
+                    USB_DEVICE_IRP_LOCAL * iterator;
+                    iterator = endpointObj->irpQueue;
+                    while (iterator->next != NULL)
+                    {
+                        iterator = iterator->next;
+                    }
+                    iterator->next = irp;
+                    irp->previous = iterator;
+                    irp->status = USB_DEVICE_IRP_STATUS_PENDING;
+                }
+
+                if(false == hDriver->isInInterruptContext)
+                {
+                    if(true == interruptWasEnabled)
+                    {
+                        /* IF the interrupt was enabled when entering the routine
+                         * re-enable it now */
+                        SYS_INT_SourceEnable(hDriver->interruptSource);
+
+                        /* Unlock the mutex */
+                        OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
+                    }
                 }
             }
         }
@@ -2030,7 +2068,6 @@ USB_ERROR DRV_USBHSV1_DEVICE_IRPCancelAll
 
     DRV_USBHSV1_OBJ * hDriver;              /* USB driver object pointer */
     USB_ERROR retVal = USB_ERROR_NONE;      /* Return value */
-    bool mutexLock = false;                 /* OSAL: for mutex lock */
     bool interruptWasEnabled = false;       /* To track interrupt state */
     uint8_t endpoint;                       /* Endpoint Number */
 
@@ -2063,32 +2100,41 @@ USB_ERROR DRV_USBHSV1_DEVICE_IRPCancelAll
         /* Get the endpoint object */
         endpointObj = hDriver->deviceEndpointObj[endpoint];
 
-        if(hDriver->isInInterruptContext == false)
+        if(false == hDriver->isInInterruptContext)
         {
-            interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptSource);
-        }
-
-        /* Flush the endpoint */
-        _DRV_USBHSV1_DEVICE_IRPQueueFlush
-        (
-            endpointObj,
-            USB_DEVICE_IRP_STATUS_ABORTED
-        );
-
-        if(hDriver->isInInterruptContext == false)
-        {
-            if(interruptWasEnabled)
+            if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
             {
-                /* Enable the interrupt only if it was disabled */
-                SYS_INT_SourceEnable(hDriver->interruptSource);
+                /* Disable  the USB Interrupt as this is not called inside ISR */
+                interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptSource);                
+            }
+            else
+            {
+                /* There was an error in getting the mutex */
+                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBHSV1 Device Driver: Mutex lock failed in DRV_USBHSV1_DEVICE_IRPCancelAll()");
+                retVal = USB_ERROR_OSAL_FUNCTION;
             }
         }
-        if(mutexLock == true)
-        {
-            /* OSAL: Return mutex */
-            if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
+        if(retVal == USB_ERROR_NONE)
+        {	
+
+            /* Flush the endpoint */
+            _DRV_USBHSV1_DEVICE_IRPQueueFlush
+            (
+                endpointObj,
+                USB_DEVICE_IRP_STATUS_ABORTED
+            );
+            
+            if(false == hDriver->isInInterruptContext)
             {
-                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBHSV1 Device Driver: Mutex unlock failed in DRV_USBHSV1_DEVICE_IRPCancelAll().");
+                if(true == interruptWasEnabled)
+                {
+                    /* IF the interrupt was enabled when entering the routine
+                     * re-enable it now */
+                    SYS_INT_SourceEnable(hDriver->interruptSource);
+
+                    /* Unlock the mutex */
+                    OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
+                }
             }
         }
     }
@@ -2139,7 +2185,6 @@ USB_ERROR DRV_USBHSV1_DEVICE_IRPCancel
     DRV_USBHSV1_OBJ * hDriver;          /* USB driver object pointer */
     USB_DEVICE_IRP_LOCAL * irpToCancel;     /* Pointer to irp data structure */
     bool interruptWasEnabled = false;       /* To track interrupt state */
-    bool mutexLock = false;                 /* OSAL: for mutex lock */
     USB_ERROR retVal = USB_ERROR_NONE;      /* Return value */
 
 
@@ -2164,72 +2209,80 @@ USB_ERROR DRV_USBHSV1_DEVICE_IRPCancel
     {
         hDriver = ((DRV_USBHSV1_OBJ *) client);
 
-        if(hDriver->isInInterruptContext == false)
+        if(false == hDriver->isInInterruptContext)
         {
-            interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptSource);
-        }
-
-        if(irpToCancel->status <= USB_DEVICE_IRP_STATUS_COMPLETED_SHORT)
-        {
-            /* This IRP has either completed or has been aborted.*/
-            retVal = USB_ERROR_PARAMETER_INVALID;
-        }
-        else
-        {
-            /* The code will come here both when the IRP is NOT the 1st
-                * in queue as well as when it is at the HEAD. We will change
-                * the IRP status for either scenario but will give the callback
-                * only if it is NOT at the HEAD of the queue.
-                *
-                * What it means for HEAD IRP case is it will be caught in USB
-                * ISR and will be further processed in ISR. This is done to
-                * make sure that the user cannot release the IRP buffer before
-                * ABORT callback*/
-
-            /* Mark the IRP status as aborted */
-            irpToCancel->status = USB_DEVICE_IRP_STATUS_ABORTED;
-
-            /* No data for this IRP was sent or received */
-            irpToCancel->size = 0;
-
-            if(irpToCancel->previous != NULL)
+            if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
             {
-                /* This means this is not the HEAD IRP in the IRP queue.
-                    Can be removed from the endpoint object queue safely.*/
-                irpToCancel->previous->next = irpToCancel->next;
-
-                if(irpToCancel->next != NULL)
-                {
-                    /* If this is not the last IRP in the queue then update
-                        the previous link connection for the next IRP */
-                    irpToCancel->next->previous = irpToCancel->previous;
-                }
-
-                irpToCancel->previous = NULL;
-                irpToCancel->next = NULL;
-
-                if(irpToCancel->callback != NULL)
-                {
-                    irpToCancel->callback((USB_DEVICE_IRP *) irpToCancel);
-                }
+                /* Disable  the USB Interrupt as this is not called inside ISR */
+                interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptSource);                
+            }
+            else
+            {
+                /* There was an error in getting the mutex */
+                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBHSV1 Device Driver: Mutex lock failed in DRV_USBHSV1_DEVICE_IRPCancel()");
+                retVal = USB_ERROR_OSAL_FUNCTION;
             }
         }
-
-        if(hDriver->isInInterruptContext == false)
+        
+        if(retVal == USB_ERROR_NONE)
         {
-            if(interruptWasEnabled)
+            if(irpToCancel->status <= USB_DEVICE_IRP_STATUS_COMPLETED_SHORT)
             {
-                /* Enable the interrupt only if it was disabled */
-                SYS_INT_SourceEnable(hDriver->interruptSource);
+                /* This IRP has either completed or has been aborted.*/
+                retVal = USB_ERROR_PARAMETER_INVALID;
             }
-        }
-
-        if(mutexLock == true)
-        {
-            /* OSAL: Return mutex */
-            if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
+            else
             {
-                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBHSV1 Device Driver: Mutex unlock failed in DRV_USBHSV1_DEVICE_IRPCancel().");
+                /* The code will come here both when the IRP is NOT the 1st
+                    * in queue as well as when it is at the HEAD. We will change
+                    * the IRP status for either scenario but will give the callback
+                    * only if it is NOT at the HEAD of the queue.
+                    *
+                    * What it means for HEAD IRP case is it will be caught in USB
+                    * ISR and will be further processed in ISR. This is done to
+                    * make sure that the user cannot release the IRP buffer before
+                    * ABORT callback*/
+
+                /* Mark the IRP status as aborted */
+                irpToCancel->status = USB_DEVICE_IRP_STATUS_ABORTED;
+
+                /* No data for this IRP was sent or received */
+                irpToCancel->size = 0;
+
+                if(irpToCancel->previous != NULL)
+                {
+                    /* This means this is not the HEAD IRP in the IRP queue.
+                        Can be removed from the endpoint object queue safely.*/
+                    irpToCancel->previous->next = irpToCancel->next;
+
+                    if(irpToCancel->next != NULL)
+                    {
+                        /* If this is not the last IRP in the queue then update
+                            the previous link connection for the next IRP */
+                        irpToCancel->next->previous = irpToCancel->previous;
+                    }
+
+                    irpToCancel->previous = NULL;
+                    irpToCancel->next = NULL;
+
+                    if(irpToCancel->callback != NULL)
+                    {
+                        irpToCancel->callback((USB_DEVICE_IRP *) irpToCancel);
+                    }
+                }
+            }
+            
+            if(false == hDriver->isInInterruptContext)
+            {
+                if(true == interruptWasEnabled)
+                {
+                    /* IF the interrupt was enabled when entering the routine
+                     * re-enable it now */
+                    SYS_INT_SourceEnable(hDriver->interruptSource);
+
+                    /* Unlock the mutex */
+                    OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
+                }
             }
         }
     }
@@ -2301,7 +2354,7 @@ void _DRV_USBHSV1_DEVICE_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
         /* This means that there was a SOF. */
         usbID->USBHS_DEVICR = USBHS_DEVICR_SOFC_Msk;
 
-        hDriver->pEventCallBack(hDriver->hClientArg, (DRV_USB_EVENT)DRV_USBHSV1_EVENT_SOF_DETECT, NULL);
+        hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBHSV1_EVENT_SOF_DETECT, NULL);
 
     }
 
@@ -2317,7 +2370,7 @@ void _DRV_USBHSV1_DEVICE_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
     if((USBHS_DEVISR_SUSP_Msk == (USBHS_DEVISR_SUSP_Msk & usbID->USBHS_DEVISR)) && (USBHS_DEVIMR_SUSPE_Msk == (USBHS_DEVIMR_SUSPE_Msk & usbID->USBHS_DEVIMR)))
     {
         /* This means that the bus was SUSPENDED. */
-        hDriver->pEventCallBack(hDriver->hClientArg, (DRV_USB_EVENT)DRV_USBHSV1_EVENT_IDLE_DETECT, NULL);
+        hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBHSV1_EVENT_IDLE_DETECT, NULL);
 
         /* Unfreeze USB clock */
         usbID->USBHS_CTRL &= ~USBHS_CTRL_FRZCLK_Msk;
@@ -2365,7 +2418,7 @@ void _DRV_USBHSV1_DEVICE_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
 
         hDriver->deviceSpeed = gDrvUSBHSV1DeviceSpeedMap[(USBHS_SR_SPEED_Msk & usbID->USBHS_SR) >> USBHS_SR_SPEED_Pos];
 
-        hDriver->pEventCallBack(hDriver->hClientArg, (DRV_USB_EVENT)DRV_USBHSV1_EVENT_RESET_DETECT, NULL);
+        hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBHSV1_EVENT_RESET_DETECT, NULL);
 
         /* Acknowledge the End of Resume interrupt */
         usbID->USBHS_DEVICR = USBHS_DEVICR_EORSTC_Msk;
@@ -2918,47 +2971,6 @@ void _DRV_USBHSV1_DEVICE_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
         }
     }
 }
-
-// *****************************************************************************
-
-/* Function:
-      void _DRV_USBHSV1_DEVICE_Get_FreeDMAChannel(DRV_USBHSV1_OBJ * hDriver,
-                                                bool endpointDir,
-                                                uint8_t iEndpoint)
-
-  Summary:
-      Get a free DMA channel and use it, if available.
-
-  Returns:
-      Return dma channel, if available;
-      otherwise return 0
- */
-uint8_t _DRV_USBHSV1_DEVICE_Get_FreeDMAChannel
-(
-    DRV_USBHSV1_OBJ * hDriver,
-    bool endpointDir,
-    uint8_t iEndpoint
-)
-
-{
-    uint8_t dmaChannel = 0;
-    uint8_t channelCount = 0;
-
-    for (channelCount = 1; channelCount < 9; channelCount++)
-    {
-        if((hDriver->gDrvUSBDMAPool[channelCount]).inUse == false)
-        {
-            /* Found Not used DMA Channel - Use this channel */
-            dmaChannel = channelCount;
-            hDriver->gDrvUSBDMAPool[dmaChannel].inUse = true;
-            hDriver->gDrvUSBDMAPool[dmaChannel].endpointDir = endpointDir;
-            hDriver->gDrvUSBDMAPool[dmaChannel].iEndpoint = iEndpoint;
-            break;
-        }
-    }
-
-    return dmaChannel;
-}/* end of _DRV_USBHSV1_DEVICE_Get_FreeDMAChannel() */
 
 // *****************************************************************************
 

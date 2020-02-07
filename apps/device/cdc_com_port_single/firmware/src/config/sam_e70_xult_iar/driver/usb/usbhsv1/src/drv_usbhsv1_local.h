@@ -692,6 +692,9 @@ typedef struct _DRV_USBHSV1_OBJ_STRUCT
      */
     #define clz(u)              ((u) ? __builtin_clz(u) : 32)
 #else
+
+#define clz(u) __iar_builtin_CLZ(u)
+
 static __INLINE uint8_t ctz8(uint8_t x)
 {
     uint8_t bit = 0;
