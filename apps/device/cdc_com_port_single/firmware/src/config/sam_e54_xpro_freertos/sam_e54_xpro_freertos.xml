@@ -4075,21 +4075,21 @@
     </GeneratorComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
-    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="BSP_SAM_E54_Xplained_Pro" x="121" y="39"/>
-        <ElementPosition dnOrder="1" id="FreeRTOS" x="267" y="66"/>
-        <ElementPosition dnOrder="2" id="HarmonyCore" x="0" y="65"/>
-        <ElementPosition dnOrder="3" id="cmsis" x="306" y="14"/>
-        <ElementPosition dnOrder="4" id="core" x="320" y="40"/>
-        <ElementPosition dnOrder="5" id="dfp" x="122" y="13"/>
-        <ElementPosition dnOrder="6" id="drv_usbfs_v1" x="159" y="133"/>
-        <ElementPosition dnOrder="7" id="evsys" x="0" y="20"/>
-        <ElementPosition dnOrder="8" id="nvmctrl" x="146" y="66"/>
-        <ElementPosition dnOrder="9" id="usb_device" x="159" y="202"/>
-        <ElementPosition dnOrder="10" id="usb_device_cdc" x="0" y="156"/>
+        <ElementPosition dnOrder="0" id="BSP_SAM_E54_Xplained_Pro" x="147" y="39"/>
+        <ElementPosition dnOrder="1" id="FreeRTOS" x="149" y="96"/>
+        <ElementPosition dnOrder="2" id="HarmonyCore" x="0" y="8"/>
+        <ElementPosition dnOrder="3" id="cmsis" x="222" y="66"/>
+        <ElementPosition dnOrder="4" id="core" x="149" y="64"/>
+        <ElementPosition dnOrder="5" id="dfp" x="147" y="12"/>
+        <ElementPosition dnOrder="6" id="drv_usbfs_v1" x="0" y="251"/>
+        <ElementPosition dnOrder="7" id="evsys" x="0" y="98"/>
+        <ElementPosition dnOrder="8" id="nvmctrl" x="0" y="141"/>
+        <ElementPosition dnOrder="9" id="usb_device" x="161" y="253"/>
+        <ElementPosition dnOrder="10" id="usb_device_cdc" x="303" y="252"/>
       </ElementPositions>
     </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
