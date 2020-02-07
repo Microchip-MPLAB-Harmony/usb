@@ -67,15 +67,5 @@ void CLK_Initialize( void )
 	/* Initialize Peripheral Clock */
 	CLK_PeripheralClockInitialize();
 
-
-/***********Do not remove this section while regenerating **********************/
-	uint32_t uckr = CKGR_UCKR_UPLLEN_Msk | CKGR_UCKR_UPLLCOUNT(0x3);
-	/* enable the 480MHz UTMI PLL  */
-	PMC_REGS->CKGR_UCKR = uckr;
-
-	/* wait until UPLL is locked */
-	while (!(PMC_REGS->PMC_SR & PMC_SR_LOCKU_Msk));
-/***********Do not remove this section while regenerating **********************/
-
 }
 

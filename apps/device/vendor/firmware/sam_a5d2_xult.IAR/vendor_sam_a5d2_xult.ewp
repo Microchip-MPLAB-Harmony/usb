@@ -66,7 +66,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.40.2.22864</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -220,7 +220,7 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state></state>
+                    <state>__FPU_PRESENT=1</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -697,7 +697,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -1017,6 +1017,22 @@
                     <name>OILinkExtraOption</name>
                     <state>1</state>
                 </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
+                </option>
             </data>
         </settings>
         <settings>
@@ -1266,6 +1282,7 @@
                 <option>
                     <name>CCDefines</name>
                     <state>NDEBUG</state>
+                    <state>__FPU_PRESENT=1</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -1742,7 +1759,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
@@ -2062,6 +2079,22 @@
                     <name>OILinkExtraOption</name>
                     <state>1</state>
                 </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
+                </option>
             </data>
         </settings>
         <settings>
@@ -2112,15 +2145,6 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\app.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\DSP\Include\arm_common_tables.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\DSP\Include\arm_const_structs.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\DSP\Include\arm_math.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\atsama5d27.h</name>
@@ -2406,9 +2430,6 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\usb\udphs\src\drv_usb_udphs_device.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\exceptions.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\fault_handlers.c</name>
