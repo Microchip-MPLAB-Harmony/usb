@@ -675,22 +675,69 @@ typedef struct _DRV_USBHSV1_OBJ_STRUCT
  */
 #define max(a, b)   (((a) > (b)) ?  (a) : (b))
 
-/*! \brief Counts the trailing zero bits of the given value considered as a 32-bit integer.
- *
- * \param u Value of which to count the trailing zero bits.
- *
- * \return The count of trailing zero bits in \a u.
- */
-#   define ctz(u)              ((u) ? __builtin_ctz(u) : 32)
+#if (defined __GNUC__) || (defined __CC_ARM)
+    /*! \brief Counts the trailing zero bits of the given value considered as a 32-bit integer.
+     *
+     * \param u Value of which to count the trailing zero bits.
+     *
+     * \return The count of trailing zero bits in \a u.
+     */
+    #define ctz(u)              ((u) ? __builtin_ctz(u) : 32)
 
-/*! \brief Counts the leading zero bits of the given value considered as a 32-bit integer.
- *
- * \param u Value of which to count the leading zero bits.
- *
- * \return The count of leading zero bits in \a u.
- */
-#   define clz(u)              ((u) ? __builtin_clz(u) : 32)
+    /*! \brief Counts the leading zero bits of the given value considered as a 32-bit integer.
+     *
+     * \param u Value of which to count the leading zero bits.
+     *
+     * \return The count of leading zero bits in \a u.
+     */
+    #define clz(u)              ((u) ? __builtin_clz(u) : 32)
+#else
 
+#define clz(u) __iar_builtin_CLZ(u)
+
+static __INLINE uint8_t ctz8(uint8_t x)
+{
+    uint8_t bit = 0;
+
+    if (!(x & 0x0f)) {
+        bit += 4;
+        x >>= 4;
+    }
+    if (!(x & 0x03)) {
+        bit += 2;
+        x >>= 2;
+    }
+    if (!(x & 0x01))
+        bit++;
+
+    return bit;
+}
+
+static __INLINE uint8_t ctz16(uint16_t x)
+{
+    uint8_t bit = 0;
+
+    if (!(x & 0x00ff)) {
+        bit += 8;
+        x >>= 8;
+    }
+
+    return bit + ctz8(x);
+}
+
+static __INLINE uint8_t ctz(uint32_t x)
+{
+    uint8_t bit = 0;
+
+    if (!(x & 0x0000ffff)) {
+        bit += 16;
+        x >>= 16;
+    }
+
+    return bit + ctz16(x);
+}
+
+#endif
 
 void _DRV_USBHSV1_HOST_AttachDetachStateMachine (DRV_USBHSV1_OBJ * hDriver);
 void _DRV_USBHSV1_HOST_ResetStateMachine(DRV_USBHSV1_OBJ * hDriver);
