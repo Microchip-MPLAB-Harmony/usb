@@ -60,6 +60,7 @@
 // Section: BSP Macros
 // *****************************************************************************
 // *****************************************************************************
+
 /*** LED Macros for LED1 ***/
 #define LED1_Toggle() (PORT_REGS->GROUP[2].PORT_OUTTGL = 1 << 18)
 #define LED1_On() (PORT_REGS->GROUP[2].PORT_OUTCLR = 1 << 18)

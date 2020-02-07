@@ -55,6 +55,7 @@
 #include "peripheral/port/plib_port.h"
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
+#include "peripheral/cmcc/plib_cmcc.h"
 #include "usb/usb_host_cdc.h"
 #include "usb/usb_cdc.h"
 #include "peripheral/tc/plib_tc0.h"
