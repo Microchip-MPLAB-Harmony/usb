@@ -57,6 +57,9 @@
  * Macro Mapping
  **********************************************/
 
+/* ATSAMD21J18A Devices have USB PADCAL values in OTP4_ADDR */ 
+#define DRV_USBFSV1_READ_PADCAL_VALUE (*((uint32_t *) OTP4_ADDR + 1) >> 13)
+
 /* ATSAMD21J18A Devices has one interrupt vector for USB module */ 
 #define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE false
   
@@ -169,7 +172,7 @@
     #define _DRV_USBFSV1_HOST_INIT(x, y)    _DRV_USBFSV1_HOST_Initialize(x , y)
     #define _DRV_USBFSV1_HOST_TASKS_ISR(x)  _DRV_USBFSV1_HOST_Tasks_ISR(x)
     #define _DRV_USBFSV1_HOST_ATTACH_DETACH_STATE_MACHINE(x)  _DRV_USBFSV1_HOST_AttachDetachStateMachine(x)
-    #define _DRV_USBFSV1_FOR_HOST(x, y)     x y;  /* Add ";" to remove warnings */
+    #define _DRV_USBFSV1_FOR_HOST(x, y)     x y
 
     #define max(x, y) ((x) > (y) ? (x) : (y))
     #define min(x, y) ((x) > (y) ? (y) : (x))
