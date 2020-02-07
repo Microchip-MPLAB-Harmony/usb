@@ -328,10 +328,10 @@ typedef struct
     SYS_MODULE_INDEX driverIndex;
     
     /* EP0 tx buffer. This is for handling other speed request */ 
-    _USB_DEVICE_DECLARE_EP0_BUFFER(ep0TxBuffer)
+    _USB_DEVICE_DECLARE_EP0_BUFFER(ep0TxBuffer);
     
     /* Tx IRP for handling Other Speed request */ 
-    _USB_DEVICE_DECLARE_IRP(irpEp0TxOtherSpeedDescriptor)
+    _USB_DEVICE_DECLARE_IRP(irpEp0TxOtherSpeedDescriptor);
 
 } USB_DEVICE_OBJ;
 

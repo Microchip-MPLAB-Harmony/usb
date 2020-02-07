@@ -19,16 +19,16 @@
           <Name dnOrder="1">drv_usbfsv1.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_iar/driver/usb/usbfsv1/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">7F25DDE368E29C82856F5591F2BF8C2A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">7F25DDE368E29C82856F5591F2BF8C2A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BFA06465728C80414F183336C887094D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BFA06465728C80414F183336C887094D</UserChecksum>
         </File>
         <File dnOrder="2">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_usbfsv1_device.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_iar/driver/usb/usbfsv1/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">872DFDFB11EEA6B3BFB66DA292FFC66A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">872DFDFB11EEA6B3BFB66DA292FFC66A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">2354B1E40819A7A3FA7016E9E4D0135A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">2354B1E40819A7A3FA7016E9E4D0135A</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
@@ -171,8 +171,8 @@
           <Name dnOrder="1">usb_device_init_data.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_iar/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">EA4C3808B5CBD46B0F39E159EAA1CAB4</GeneratedChecksum>
-          <UserChecksum dnOrder="5">EA4C3808B5CBD46B0F39E159EAA1CAB4</UserChecksum>
+          <GeneratedChecksum dnOrder="4">449E9A7790B34D2B395CBA19A19E7B32</GeneratedChecksum>
+          <UserChecksum dnOrder="5">449E9A7790B34D2B395CBA19A19E7B32</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">HEADER</Type>
@@ -379,8 +379,8 @@
           <Name dnOrder="1">drv_usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_iar/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5E2621860496A1FD0821B43178B3C75A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5E2621860496A1FD0821B43178B3C75A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">520DC1C088A41A16C28DCB58C92BDEC1</GeneratedChecksum>
+          <UserChecksum dnOrder="5">520DC1C088A41A16C28DCB58C92BDEC1</UserChecksum>
         </File>
         <File dnOrder="47">
           <Type dnOrder="0">HEADER</Type>
@@ -395,16 +395,16 @@
           <Name dnOrder="1">drv_usbfsv1_local.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_iar/driver/usb/usbfsv1/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B51C88198B1B5B3EB410E0A5533830C8</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B51C88198B1B5B3EB410E0A5533830C8</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9433B6CA2E9EE8DEEA6C63B4FCB14AD2</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9433B6CA2E9EE8DEEA6C63B4FCB14AD2</UserChecksum>
         </File>
         <File dnOrder="49">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_usbfsv1_variant_mapping.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_iar/driver/usb/usbfsv1/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">2888983B8190C1011DC00F8BFB54504A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">2888983B8190C1011DC00F8BFB54504A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">7D675F90BF6E7EAB7711B4B025AB0D4D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">7D675F90BF6E7EAB7711B4B025AB0D4D</UserChecksum>
         </File>
         <File dnOrder="50">
           <Type dnOrder="0">HEADER</Type>
@@ -851,16 +851,16 @@
           <Name dnOrder="1">usb_device_local.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_iar/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">46E12545B82092F35E64AF99A08E7F7A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">46E12545B82092F35E64AF99A08E7F7A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">9B727D396CAEBD5FCB12F1F8264C4FD9</GeneratedChecksum>
+          <UserChecksum dnOrder="5">9B727D396CAEBD5FCB12F1F8264C4FD9</UserChecksum>
         </File>
         <File dnOrder="106">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_device_mapping.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_iar/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">7DDBD53A260097A379BE72B3AC62C490</GeneratedChecksum>
-          <UserChecksum dnOrder="5">7DDBD53A260097A379BE72B3AC62C490</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C8D4A1D9092FD842506F565CE9B8C265</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C8D4A1D9092FD842506F565CE9B8C265</UserChecksum>
         </File>
         <File dnOrder="107">
           <Type dnOrder="0">HEADER</Type>
@@ -918,7 +918,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="OVERWRITE"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;csp;usb;usb;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;csp;usb;usb;usb;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>

@@ -581,45 +581,45 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
     DRV_USBFSV1_HOST_ROOT_HUB_INFO rootHubInfo;
 
     /* This counts the reset signal duration */
-    _DRV_USBFSV1_FOR_HOST(uint32_t, resetDuration)
+    _DRV_USBFSV1_FOR_HOST(uint32_t, resetDuration);
 
     /* The SWEPBuffer index */
-    _DRV_USBFSV1_FOR_HOST(uint8_t, numSWEpEntry)
+    _DRV_USBFSV1_FOR_HOST(uint8_t, numSWEpEntry);
 
     /* Placeholder for bandwidth consumed in frame */
-    _DRV_USBFSV1_FOR_HOST(uint8_t, globalBWConsumed)
+    _DRV_USBFSV1_FOR_HOST(uint8_t, globalBWConsumed);
 
     /* Variable used SW Endpoint objects that is used by this HW instances for
      * USB transfer scheduling */
-    _DRV_USBFSV1_FOR_HOST(DRV_USBFSV1_HOST_SW_EP, drvUSBHostSWEp[_DRV_USBFSV1_SW_EP_NUMBER])
+    _DRV_USBFSV1_FOR_HOST(DRV_USBFSV1_HOST_SW_EP, drvUSBHostSWEp[_DRV_USBFSV1_SW_EP_NUMBER]);
 
     /* This is needed to track if the host is generating reset signal */
-    _DRV_USBFSV1_FOR_HOST(bool, isResetting)
+    _DRV_USBFSV1_FOR_HOST(bool, isResetting);
 
     /* This counts the attach detach debounce interval*/
-    _DRV_USBFSV1_FOR_HOST(uint32_t, attachDebounceCounter)
+    _DRV_USBFSV1_FOR_HOST(uint32_t, attachDebounceCounter);
 
     /* This is the post detach delay counter */
-    _DRV_USBFSV1_FOR_HOST(uint32_t, detachDebounceCounter)
+    _DRV_USBFSV1_FOR_HOST(uint32_t, detachDebounceCounter);
 
     /* This flag is true if an attach de-bounce count is in progress */
-    _DRV_USBFSV1_FOR_HOST(bool, isAttachDebouncing)
+    _DRV_USBFSV1_FOR_HOST(bool, isAttachDebouncing);
 
     /* This flag is true if an detach de-bounce count is in progress */
-    _DRV_USBFSV1_FOR_HOST(bool, isDetachDebouncing)
+    _DRV_USBFSV1_FOR_HOST(bool, isDetachDebouncing);
 
     /* This flag is true if an detach event has come and device de-enumeration
      * operation is in progress  */
-    _DRV_USBFSV1_FOR_HOST(bool, isDeviceDeenumerating)
+    _DRV_USBFSV1_FOR_HOST(bool, isDeviceDeenumerating);
 
     /* This is the pointer to host Pipe descriptor table */
-    _DRV_USBFSV1_FOR_HOST(usb_descriptor_host_registers_t *, hostEndpointTablePtr)
+    _DRV_USBFSV1_FOR_HOST(usb_descriptor_host_registers_t *, hostEndpointTablePtr);
 
     /* The parent UHD assigned by the host */
-    _DRV_USBFSV1_FOR_HOST(USB_HOST_DEVICE_OBJ_HANDLE, usbHostDeviceInfo)
+    _DRV_USBFSV1_FOR_HOST(USB_HOST_DEVICE_OBJ_HANDLE, usbHostDeviceInfo);
 
     /* The UHD of the device attached to port assigned by the host */
-    _DRV_USBFSV1_FOR_HOST(USB_HOST_DEVICE_OBJ_HANDLE, attachedDeviceObjHandle)
+    _DRV_USBFSV1_FOR_HOST(USB_HOST_DEVICE_OBJ_HANDLE, attachedDeviceObjHandle);
 
 } DRV_USBFSV1_OBJ;
 
