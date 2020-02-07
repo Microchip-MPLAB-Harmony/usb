@@ -66,7 +66,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.40.2.22864</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -697,7 +697,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
@@ -1016,6 +1016,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -1742,7 +1758,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
@@ -2062,6 +2078,22 @@
                     <name>OILinkExtraOption</name>
                     <state>1</state>
                 </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
+                </option>
             </data>
         </settings>
         <settings>
@@ -2106,15 +2138,6 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\app.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\DSP\Include\arm_common_tables.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\DSP\Include\arm_const_structs.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\DSP\Include\arm_math.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAME70Q21B_DFP\atsame70q21b.h</name>
@@ -2222,12 +2245,6 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAME70Q21B_DFP\component\mcan.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e70_xult\system\fs\mpfs\mpfs.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e70_xult\system\fs\mpfs\src\mpfs_local.h</name>
-            </file>
-            <file>
                 <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core\Include\mpu_armv7.h</name>
             </file>
             <file>
@@ -2259,6 +2276,12 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_e70_xult\peripheral\tc\plib_tc_common.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_e70_xult\peripheral\usart\plib_usart1.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_e70_xult\peripheral\usart\plib_usart_common.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAME70Q21B_DFP\component\pmc.h</name>
@@ -2355,9 +2378,6 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAME70Q21B_DFP\component\twihs.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core\Include\tz_context.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAME70Q21B_DFP\component\uart.h</name>
@@ -2459,9 +2479,6 @@
                 <name>$PROJ_DIR$\..\src\main.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e70_xult\system\fs\mpfs\src\mpfs.c</name>
-            </file>
-            <file>
                 <name>$PROJ_DIR$\..\src\config\sam_e70_xult\peripheral\clk\plib_clk.c</name>
             </file>
             <file>
@@ -2475,6 +2492,9 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_e70_xult\peripheral\tc\plib_tc0.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_e70_xult\peripheral\usart\plib_usart1.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_e70_xult\startup_iar.c</name>

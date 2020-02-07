@@ -62,8 +62,6 @@
             <path>\system\fs\fat_fs\src\file_system\ff.h</path>
             <path>\system\fs\fat_fs\src\file_system\ffconf.h</path>
             <path>\system\fs\fat_fs\src\hardware_access\diskio.h</path>
-            <path>\system\fs\mpfs\mpfs.h</path>
-            <path>\system\fs\mpfs\src\mpfs_local.h</path>
             <path>\..\..\packs\ATSAME70Q21B_DFP\device.h</path>
             <path>\..\..\packs\ATSAME70Q21B_DFP\component\acc.h</path>
             <path>\..\..\packs\ATSAME70Q21B_DFP\component\aes.h</path>
@@ -103,19 +101,15 @@
             <path>\..\..\packs\ATSAME70Q21B_DFP\component\xdmac.h</path>
             <path>\..\..\packs\ATSAME70Q21B_DFP\atsame70q21b.h</path>
             <path>\..\..\packs\ATSAME70Q21B_DFP\pio\same70q21b.h</path>
+            <path>\..\..\packs\CMSIS\CMSIS\Core\Include\cmsis_version.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\Core\Include\cmsis_compiler.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\Core\Include\cmsis_iccarm.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\Core\Include\cmsis_gcc.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\Core\Include\cmsis_armcc.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\Core\Include\cmsis_armclang.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\Core\Include\cmsis_armclang_ltm.h</path>
-            <path>\..\..\packs\CMSIS\CMSIS\Core\Include\tz_context.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\Core\Include\core_cm7.h</path>
             <path>\..\..\packs\CMSIS\CMSIS\Core\Include\mpu_armv7.h</path>
-            <path>\..\..\packs\CMSIS\CMSIS\Core\Include\cmsis_version.h</path>
-            <path>\..\..\packs\CMSIS\CMSIS\DSP\Include\arm_common_tables.h</path>
-            <path>\..\..\packs\CMSIS\CMSIS\DSP\Include\arm_const_structs.h</path>
-            <path>\..\..\packs\CMSIS\CMSIS\DSP\Include\arm_math.h</path>
             <path>\peripheral\usart\plib_usart_common.h</path>
             <path>\peripheral\usart\plib_usart1.h</path>
             <path>\driver\driver.h</path>
@@ -158,7 +152,6 @@
             <path>\system\fs\src\sys_fs_media_manager.c</path>
             <path>\system\fs\fat_fs\src\ff.c</path>
             <path>\system\fs\fat_fs\src\diskio.c</path>
-            <path>\system\fs\mpfs\src\mpfs.c</path>
             <path>\peripheral\usart\plib_usart1.c</path>
             <path>\system\int\src\sys_int.c</path>
             <path>\system\cache\sys_cache.c</path>
