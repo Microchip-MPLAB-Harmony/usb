@@ -27,16 +27,16 @@
           <Name dnOrder="1">drv_usbhsv1.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/driver/usb/usbhsv1/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">06C481D798CBDEB1752EFC3ADABE11F0</GeneratedChecksum>
-          <UserChecksum dnOrder="5">06C481D798CBDEB1752EFC3ADABE11F0</UserChecksum>
+          <GeneratedChecksum dnOrder="4">680300EC1B71F449C4265A35B9ECA1BF</GeneratedChecksum>
+          <UserChecksum dnOrder="5">680300EC1B71F449C4265A35B9ECA1BF</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_usbhsv1_device.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/driver/usb/usbhsv1/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F7EF96E6232C3CAC9E5119C06647C64C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F7EF96E6232C3CAC9E5119C06647C64C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">4A8775C040F09E53775021FFA21B1FF4</GeneratedChecksum>
+          <UserChecksum dnOrder="5">4A8775C040F09E53775021FFA21B1FF4</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -299,8 +299,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">4B9F6082D53EFB102F69EEF13091E4D3</GeneratedChecksum>
-          <UserChecksum dnOrder="5">4B9F6082D53EFB102F69EEF13091E4D3</UserChecksum>
+          <GeneratedChecksum dnOrder="4">75AE93FBFE3511488B8FD4975891C043</GeneratedChecksum>
+          <UserChecksum dnOrder="5">75AE93FBFE3511488B8FD4975891C043</UserChecksum>
         </File>
         <File dnOrder="37">
           <Type dnOrder="0">HEADER</Type>
@@ -323,8 +323,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">D8CE978B64273831A518B9EBBFDEAC6B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">D8CE978B64273831A518B9EBBFDEAC6B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">8B1FB58914A52A80F15CAFD7DFEFBC48</GeneratedChecksum>
+          <UserChecksum dnOrder="5">8B1FB58914A52A80F15CAFD7DFEFBC48</UserChecksum>
         </File>
         <File dnOrder="40">
           <Type dnOrder="0">HEADER</Type>
@@ -371,8 +371,8 @@
           <Name dnOrder="1">drv_usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5E2621860496A1FD0821B43178B3C75A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5E2621860496A1FD0821B43178B3C75A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">520DC1C088A41A16C28DCB58C92BDEC1</GeneratedChecksum>
+          <UserChecksum dnOrder="5">520DC1C088A41A16C28DCB58C92BDEC1</UserChecksum>
         </File>
         <File dnOrder="46">
           <Type dnOrder="0">HEADER</Type>
@@ -387,8 +387,8 @@
           <Name dnOrder="1">drv_usbhsv1_local.h</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult/driver/usb/usbhsv1/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbhsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">D3F42C3DD229ED6BD5AA9BE9E94548E2</GeneratedChecksum>
-          <UserChecksum dnOrder="5">D3F42C3DD229ED6BD5AA9BE9E94548E2</UserChecksum>
+          <GeneratedChecksum dnOrder="4">2CDE0E6FF0A0FF3E14F743D08E064584</GeneratedChecksum>
+          <UserChecksum dnOrder="5">2CDE0E6FF0A0FF3E14F743D08E064584</UserChecksum>
         </File>
         <File dnOrder="48">
           <Type dnOrder="0">HEADER</Type>
@@ -910,8 +910,8 @@
       <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAME70_DFP\4.2.56\same70b\atdf\ATSAME70Q21B.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
-      <Setting dnOrder="4" key="MERGE_STRATEGY" value="OVERWRITE"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;"/>
+      <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bootloader;bsp;core;csp;micrium_ucos3;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>
