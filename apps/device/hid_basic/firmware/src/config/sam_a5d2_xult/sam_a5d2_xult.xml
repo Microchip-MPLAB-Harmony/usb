@@ -540,51 +540,51 @@
             <User dnOrder="0" value="SWITCH_AL"/>
           </Values>
         </String>
-        <Boolean dnOrder="104" id="PIOA_CLOCK_ENABLE">
+        <KeyValueSet dnOrder="104" id="PIOA_INTERRUPT_PRIORITY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0"/>
+          </Values>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="105" id="PIOA_INTERRUPT_SRC_TYPE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0"/>
+          </Values>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="106" id="PIOB_INTERRUPT_PRIORITY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0"/>
+          </Values>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="107" id="PIOB_INTERRUPT_SRC_TYPE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0"/>
+          </Values>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="108" id="PIOC_INTERRUPT_PRIORITY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0"/>
+          </Values>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="109" id="PIOC_INTERRUPT_SRC_TYPE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0"/>
+          </Values>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="110" id="PIOD_INTERRUPT_PRIORITY">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0"/>
+          </Values>
+        </KeyValueSet>
+        <KeyValueSet dnOrder="111" id="PIOD_INTERRUPT_SRC_TYPE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="0"/>
+          </Values>
+        </KeyValueSet>
+        <Boolean dnOrder="112" id="PIO_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <KeyValueSet dnOrder="105" id="PIOA_INTERRUPT_PRIORITY">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="106" id="PIOA_INTERRUPT_SRC_TYPE">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="107" id="PIOB_INTERRUPT_PRIORITY">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="108" id="PIOB_INTERRUPT_SRC_TYPE">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="109" id="PIOC_INTERRUPT_PRIORITY">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="110" id="PIOC_INTERRUPT_SRC_TYPE">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="111" id="PIOD_INTERRUPT_PRIORITY">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0"/>
-          </Values>
-        </KeyValueSet>
-        <KeyValueSet dnOrder="112" id="PIOD_INTERRUPT_SRC_TYPE">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0"/>
-          </Values>
-        </KeyValueSet>
         <KeyValueSet dnOrder="113" id="PIT_INTERRUPT_PRIORITY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
@@ -1282,12 +1282,7 @@
           </Values>
         </Boolean>
         <Boolean dnOrder="251" id="UDPHS_INTERRUPT_ENABLE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="readOnly">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-          <Values dnOrder="1">
+          <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usb_udphs" value="true"/>
           </Values>
         </Boolean>
@@ -1322,11 +1317,9 @@
           </Values>
         </KeyValueSet>
         <Boolean dnOrder="258" id="WDT_INTERRUPT_ENABLE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="readOnly">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="core" value="false"/>
+          </Values>
         </Boolean>
         <String dnOrder="259" id="WDT_INTERRUPT_HANDLER">
           <Values dnOrder="0">
@@ -1649,11 +1642,11 @@
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_A5D2_Xplained_Ultra" x="19" y="53"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="20" y="85"/>
-        <ElementPosition dnOrder="2" id="cmsis" x="340" y="20"/>
+        <ElementPosition dnOrder="2" id="cmsis" x="239" y="52"/>
         <ElementPosition dnOrder="3" id="core" x="240" y="19"/>
         <ElementPosition dnOrder="4" id="dfp" x="20" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_usb_udphs" x="199" y="89"/>
-        <ElementPosition dnOrder="6" id="usb_device" x="42" y="199"/>
+        <ElementPosition dnOrder="5" id="drv_usb_udphs" x="176" y="190"/>
+        <ElementPosition dnOrder="6" id="usb_device" x="25" y="188"/>
         <ElementPosition dnOrder="7" id="usb_device_hid" x="880" y="20"/>
       </ElementPositions>
     </ComponentGraph>
