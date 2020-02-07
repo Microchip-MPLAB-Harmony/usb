@@ -399,6 +399,8 @@ void DRV_USBFSV1_DEVICE_Detach
     { 
         hDriver = (DRV_USBFSV1_OBJ *) handle;
         usbID = hDriver->usbID;
+            
+		DRV_USBFSV1_DEVICE_EndpointDisable((DRV_HANDLE)hDriver, DRV_USB_DEVICE_ENDPOINT_ALL);
         
         if(hDriver->isInInterruptContext == false)
         {
@@ -426,8 +428,6 @@ void DRV_USBFSV1_DEVICE_Detach
         {
             /* Update the driver flag indicating detach */
             hDriver->isAttached = false;
-            
-            DRV_USBFSV1_DEVICE_EndpointDisable((DRV_HANDLE)hDriver, DRV_USB_DEVICE_ENDPOINT_ALL);
             
             usbID->DEVICE.USB_INTENCLR = USB_DEVICE_INTENCLR_Msk;
 
