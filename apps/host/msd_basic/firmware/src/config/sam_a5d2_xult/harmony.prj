@@ -11,8 +11,8 @@
           <Name dnOrder="1">bsp.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/bsp/</LogicalPath>
           <PhysicalPath dnOrder="3">/bsp/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">7B3BEF897B886D165F36C8EC1F747281</GeneratedChecksum>
-          <UserChecksum dnOrder="5">7B3BEF897B886D165F36C8EC1F747281</UserChecksum>
+          <GeneratedChecksum dnOrder="4">CB2FB18EF6760C0F9A7101698FCDD96E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">CB2FB18EF6760C0F9A7101698FCDD96E</UserChecksum>
         </File>
         <File dnOrder="1">
           <Type dnOrder="0">SOURCE</Type>
@@ -36,7 +36,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">FF3D23BE50BD02ADA7F065C52E174DFC</GeneratedChecksum>
-          <UserChecksum dnOrder="5">FF3D23BE50BD02ADA7F065C52E174DFC</UserChecksum>
+          <UserChecksum dnOrder="5">FB6E4199D5CB8A92DBB54D66D32F46BE</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -44,7 +44,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">CC713CFCA0091C9272D35DE246426462</GeneratedChecksum>
-          <UserChecksum dnOrder="5">CC713CFCA0091C9272D35DE246426462</UserChecksum>
+          <UserChecksum dnOrder="5">81273AFD3E2759E6737786A40AD73FF0</UserChecksum>
         </File>
         <File dnOrder="5">
           <Type dnOrder="0">SOURCE</Type>
@@ -52,7 +52,7 @@
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">07C094D3A00B04A247C1FC00C37945B5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">07C094D3A00B04A247C1FC00C37945B5</UserChecksum>
+          <UserChecksum dnOrder="5">39761613DFBD4D32E12FEDC7202C288C</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -139,8 +139,8 @@
           <Name dnOrder="1">plib_pio.c</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/peripheral/pio/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/pio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">07C5810027239D5C9D59236794307E1A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">07C5810027239D5C9D59236794307E1A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C204A21E75F1CCBE299D66E52220FB90</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C204A21E75F1CCBE299D66E52220FB90</UserChecksum>
         </File>
         <File dnOrder="17">
           <Type dnOrder="0">SOURCE</Type>
@@ -299,8 +299,8 @@
           <Name dnOrder="1">bsp.h</Name>
           <LogicalPath dnOrder="2">config/sam_a5d2_xult/bsp/</LogicalPath>
           <PhysicalPath dnOrder="3">/bsp/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">EFC936A279390C245BC997D39781F596</GeneratedChecksum>
-          <UserChecksum dnOrder="5">EFC936A279390C245BC997D39781F596</UserChecksum>
+          <GeneratedChecksum dnOrder="4">CB5816E6CF9E63D5C19808D89D56EE1A</GeneratedChecksum>
+          <UserChecksum dnOrder="5">CB5816E6CF9E63D5C19808D89D56EE1A</UserChecksum>
         </File>
         <File dnOrder="37">
           <Type dnOrder="0">HEADER</Type>

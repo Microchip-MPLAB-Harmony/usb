@@ -562,6 +562,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
     uint8_t low_speed = 0;
     USB_ERROR returnValue = USB_ERROR_PARAMETER_INVALID;
     uint32_t i;
+    uint32_t watchdog = 0;
     uint32_t *QHToProceed = NULL;
 
     if((pipe == NULL) || (hPipe == (DRV_USB_UHP_HOST_PIPE_HANDLE_INVALID)))
@@ -578,10 +579,10 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
         /* Low speed is too slow, HID keyboard not working */
         if(hDriver->deviceSpeed == USB_SPEED_LOW)
         {
-            while(hDriver->blockPipe == 1)
+            while((hDriver->blockPipe == 1)&&(watchdog++<50))
             {
             }
-        }        
+        }
         hDriver->blockPipe = 1;
 
         /* Assign owner pipe */
@@ -1140,7 +1141,7 @@ void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver)
     uint32_t read_data;
     uint32_t i;
     uint32_t td;
-    uint32_t endpoint = 0xFF;
+    uint32_t endpoint = 0;
     uint32_t ContextInfo;
 
     if ((uint32_t)HCCA.UHP_HccaDoneHead != 0 )
@@ -1228,20 +1229,17 @@ void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver)
                 if( (uint32_t)td < OHCI_QueueHead[i].TailP)
                 {
                     endpoint = i;
-                    break;
+                    hDriver->hostPipeInUse = endpoint;
+                    hDriver->hostEndpointTable[i].endpoint.intXfrQtdComplete = 1;
+                    hDriver->blockPipe = 0;
+                    if( _DRV_USB_UHP_OHCI_HOST_TestTD() == 4)
+                    {
+                        /* Stall detected */
+                        hDriver->hostEndpointTable[i].endpoint.intXfrQtdComplete = 0xFF;
+                    }
+                    DRV_USB_UHP_TransferProcess(hDriver);
+//                    break;
                 }
-            }
-
-            hDriver->hostPipeInUse = endpoint;
-            hDriver->hostEndpointTable[i].endpoint.intXfrQtdComplete = 1;
-            hDriver->blockPipe = 0;
-            
-            DRV_USB_UHP_TransferProcess(hDriver);
-            
-            if( _DRV_USB_UHP_OHCI_HOST_TestTD() == 4)
-            {
-                /* Stall detected */
-                hDriver->hostEndpointTable[i].endpoint.intXfrQtdComplete = 0xFF;
             }
         }
         /*
@@ -1282,6 +1280,7 @@ void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver)
             {
                 /*  Change in CurrentConnectStatus */
                 SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rOHCI IRQ : ConnectStatusChange, port: %d", (int)i);
+                hDriver->portNumber = i;
                 memset(OHCI_QueueHead, 0, sizeof(OHCI_QueueHead));
 
                 /* CurrentConnectStatus */
@@ -1290,7 +1289,6 @@ void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver)
                     SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rOHCI IRQ : Device connected: %d", (int)i);
                     /* New connection */
                     hDriver->deviceAttached = true;
-                    hDriver->portNumber = i;
                     /* SetPortEnable */
                     *((uint32_t *)&(usbIDOHCI->UHP_OHCI_HCRHPORTSTATUS0) + hDriver->portNumber) = UHP_OHCI_HCRHPORTSTATUS0_PES_Msk;
                 }
@@ -1299,6 +1297,7 @@ void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver)
                     /* Disconnect */
                     SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rOHCI IRQ : Device Disconnected: %d", (int)i);
 
+                    hDriver->portNumber = 0;
                     /* ClearPortEnable */
                     *((uint32_t *)&(usbIDOHCI->UHP_OHCI_HCRHPORTSTATUS0) + hDriver->portNumber) = UHP_OHCI_HCRHPORTSTATUS0_CCS_Msk;
                     /* We go a detach interrupt. The detach interrupt could have occurred
@@ -1317,9 +1316,7 @@ void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver)
                     hDriver->hostPipeInUse = 0;
                     hDriver->staticDToggleOut = 0;
                     hDriver->staticDToggleIn = 0;
-                    hDriver->portNumber = 0;
                 }
-                *((uint32_t *)&(usbIDOHCI->UHP_OHCI_HCRHPORTSTATUS0) + hDriver->portNumber) = UHP_OHCI_HCRHPORTSTATUS0_CSC_Msk;
             }
             /* PortEnableStatusChange (bit 17) */
             if ( (read_data & UHP_OHCI_HCRHPORTSTATUS0_PESC_Msk) == UHP_OHCI_HCRHPORTSTATUS0_PESC_Msk )
