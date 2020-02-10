@@ -84,7 +84,7 @@
                 </option>
                 <option>
                     <name>OCDynDriverList</name>
-                    <state>ARMSIM_ID</state>
+                    <state>JLINK_ID</state>
                 </option>
                 <option>
                     <name>OCLastSavedByProductVersion</name>
@@ -112,7 +112,7 @@
                 </option>
                 <option>
                     <name>FlashLoadersV3</name>
-                    <state>$TOOLKIT_DIR$\config\flashloader\</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>OCImagesSuppressCheck1</name>
