@@ -344,8 +344,8 @@ void DRV_USBHSV1_Tasks(SYS_MODULE_OBJ object)
                         if(vbusLevel == DRV_USB_VBUS_LEVEL_VALID)
                         {
                             /* We have a valid VBUS level */
-                            hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBHSV1_EVENT_DEVICE_SESSION_VALID, NULL);
-                        
+                            hDriver->pEventCallBack(hDriver->hClientArg, (DRV_USB_EVENT)DRV_USBHSV1_EVENT_DEVICE_SESSION_VALID, NULL);
+
                             /* We should be ready for send session invalid event
                              * to the application when they happen.*/
                             hDriver->sessionInvalidEventSent = false;
@@ -358,7 +358,7 @@ void DRV_USBHSV1_Tasks(SYS_MODULE_OBJ object)
                              * it only once. */
                             if(!hDriver->sessionInvalidEventSent)
                             {
-                                hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBHSV1_EVENT_DEVICE_SESSION_INVALID, NULL);
+                                hDriver->pEventCallBack(hDriver->hClientArg, (DRV_USB_EVENT)DRV_USBHSV1_EVENT_DEVICE_SESSION_INVALID, NULL);
                                 hDriver->sessionInvalidEventSent = true;
                             }
                         }

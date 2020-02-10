@@ -2104,7 +2104,7 @@ USB_SPEED DRV_USBHSV1_HOST_ROOT_HUB_BusSpeedGet(DRV_HANDLE handle)
     {
         /* Return the bus speed. This is speed at which the root hub is
          * operating. */
-        speed = pUSBDrvObj->operationSpeed;
+        speed = (USB_SPEED)pUSBDrvObj->operationSpeed;
     }
 
     return(speed);
