@@ -91,8 +91,8 @@
           <Name dnOrder="1">plib_nvmctrl.c</Name>
           <LogicalPath dnOrder="2">config/sam_d21_xpro/peripheral/nvmctrl/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/nvmctrl/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B753B3A596E55DF618DCE7A3C5B9DF0C</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B753B3A596E55DF618DCE7A3C5B9DF0C</UserChecksum>
+          <GeneratedChecksum dnOrder="4">12BB5180FB5A5EF3F5A1310030E4E6C5</GeneratedChecksum>
+          <UserChecksum dnOrder="5">12BB5180FB5A5EF3F5A1310030E4E6C5</UserChecksum>
         </File>
         <File dnOrder="11">
           <Type dnOrder="0">SOURCE</Type>
@@ -835,7 +835,7 @@
       <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAMD21_DFP\3.2.84\samd21a\atdf\ATSAMD21J18A.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
-      <Setting dnOrder="4" key="MERGE_STRATEGY" value="OVERWRITE"/>
+      <Setting dnOrder="4" key="MERGE_STRATEGY" value="ALL"/>
       <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;csp;usb;usb;usb;usb;"/>
     </Settings>
   </Configurator>
