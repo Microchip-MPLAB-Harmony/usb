@@ -1161,7 +1161,7 @@ void DRV_USB_UHP_EHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver)
     uint32_t read_data;
     uint32_t i;
     uint32_t pipeError;
-    uint32_t endpoint = 0xFF;
+    uint32_t endpoint = 0x00;
 
     /* EHCI interrupts */
     isr_read_data = usbIDEHCI->UHPHS_USBINTR & usbIDEHCI->UHPHS_USBSTS & 0x3F;
