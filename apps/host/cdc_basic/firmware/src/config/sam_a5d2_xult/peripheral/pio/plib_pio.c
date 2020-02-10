@@ -77,15 +77,15 @@ void PIO_Initialize ( void )
 	PIOB_REGS->PIO_CFGR = (PIOB_REGS->PIO_CFGR & (PIO_CFGR_FUNC_Msk)) | 0x100;
 	
  /* Port B Pin 9 configuration */
-	PIOB_REGS->PIO_MSKR = 0x200;
-	PIOB_REGS->PIO_CFGR = (PIOB_REGS->PIO_CFGR & (PIO_CFGR_FUNC_Msk)) | 0x200;
+//	PIOB_REGS->PIO_MSKR = 0x200;
+//	PIOB_REGS->PIO_CFGR = (PIOB_REGS->PIO_CFGR & (PIO_CFGR_FUNC_Msk)) | 0x200;
 	
  /* Port B Pin 10 configuration */
 	PIOB_REGS->PIO_MSKR = 0x400;
 	PIOB_REGS->PIO_CFGR = (PIOB_REGS->PIO_CFGR & (PIO_CFGR_FUNC_Msk)) | 0x100;
 	
  /* Port B Latch configuration */
-	PIOB_REGS->PIO_SODR = 0x61;
+//	PIOB_REGS->PIO_SODR = 0x61;
 	
 
 
