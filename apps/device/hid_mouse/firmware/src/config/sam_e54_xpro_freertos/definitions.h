@@ -48,6 +48,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include "peripheral/nvmctrl/plib_nvmctrl.h"
 #include "bsp/bsp.h"
 #include "usb/usb_device_hid.h"
 #include "usb/usb_hid.h"
