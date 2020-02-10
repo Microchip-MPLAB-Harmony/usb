@@ -105,6 +105,7 @@ const USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[2] =
 /*******************************************
  *  USB Device Descriptor 
  *******************************************/
+
 const USB_DEVICE_DESCRIPTOR deviceDescriptor =
 {
     0x12,                                                   // Size of this descriptor in bytes
@@ -366,7 +367,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
 /*******************************************
  *  Product string descriptor
  *******************************************/
-    const struct
+	const struct
     {
         uint8_t bLength;                                    // Size of this descriptor in bytes
         uint8_t bDscType;                                   // STRING descriptor type
@@ -391,6 +392,7 @@ USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[3]=
 /*******************************************
  * USB Device Layer Master Descriptor Table 
  *******************************************/
+ 
 const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =
 {
     &deviceDescriptor,                                      // Full speed descriptor
@@ -409,6 +411,7 @@ const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =
 /****************************************************
  * USB Device Layer Initialization Data
  ****************************************************/
+
 const USB_DEVICE_INIT usbDevInitData =
 {
     /* Number of function drivers registered to this instance of the
