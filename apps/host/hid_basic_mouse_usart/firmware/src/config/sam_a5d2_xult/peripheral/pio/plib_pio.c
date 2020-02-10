@@ -55,13 +55,9 @@
 */
 void PIO_Initialize ( void )
 {
- /* Port A Peripheral function GPIO configuration */
-	PIOA_REGS->PIO_MSKR = 0x80000000L;
-	PIOA_REGS->PIO_CFGR = 0x0;
-	
 
  /* Port B Peripheral function GPIO configuration */
-	PIOB_REGS->PIO_MSKR = 0x461;
+	PIOB_REGS->PIO_MSKR = 0x661;
 	PIOB_REGS->PIO_CFGR = 0x0;
 	
  /* Port B Pin 0 configuration */

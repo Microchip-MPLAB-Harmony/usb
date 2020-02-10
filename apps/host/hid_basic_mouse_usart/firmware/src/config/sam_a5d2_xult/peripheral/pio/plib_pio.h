@@ -71,45 +71,25 @@
 
 
 
-/*** Macros for VBUS_LEVEL_GPIO_PD23 pin ***/
-#define VBUS_LEVEL_GPIO_PD23_Set()               (PIOD_REGS->PIO_SODR = (1<<23))
-#define VBUS_LEVEL_GPIO_PD23_Clear()             (PIOD_REGS->PIO_CODR = (1<<23))
-#define VBUS_LEVEL_GPIO_PD23_Toggle()            do {\
+/*** Macros for GPIO pin ***/
+#define GPIO_Set()               (PIOD_REGS->PIO_SODR = (1<<23))
+#define GPIO_Clear()             (PIOD_REGS->PIO_CODR = (1<<23))
+#define GPIO_Toggle()            do {\
                                             PIOD_REGS->PIO_MSKR = (1<<23); \
                                             PIOD_REGS->PIO_ODSR ^= (1<<23);\
                                         } while (0)
-#define VBUS_LEVEL_GPIO_PD23_Get()               ((PIOD_REGS->PIO_PDSR >> 23) & 0x1)
-#define VBUS_LEVEL_GPIO_PD23_OutputEnable()      do {\
+#define GPIO_Get()               ((PIOD_REGS->PIO_PDSR >> 23) & 0x1)
+#define GPIO_OutputEnable()      do {\
                                             PIOD_REGS->PIO_MSKR = (1<<23); \
 										     PIOD_REGS->PIO_CFGR |=(1 << PIO_CFGR_DIR_Pos);\
                                         }while(0)
-#define VBUS_LEVEL_GPIO_PD23_InputEnable()       do { \
+#define GPIO_InputEnable()       do { \
                                             PIOD_REGS->PIO_MSKR = (1<<23); \
 										     PIOD_REGS->PIO_CFGR &= ~(1 << PIO_CFGR_DIR_Pos);\
                                         } while (0)
-#define VBUS_LEVEL_GPIO_PD23_InterruptEnable()   (PIOD_REGS->PIO_IER = (1<<23))
-#define VBUS_LEVEL_GPIO_PD23_InterruptDisable()  (PIOD_REGS->PIO_IDR = (1<<23))
-#define VBUS_LEVEL_GPIO_PD23_PIN                  PIO_PIN_PD23
-
-/*** Macros for USBA_VBUS_5V_PA31 pin ***/
-#define USBA_VBUS_5V_PA31_Set()               (PIOA_REGS->PIO_SODR = (1<<31))
-#define USBA_VBUS_5V_PA31_Clear()             (PIOA_REGS->PIO_CODR = (1<<31))
-#define USBA_VBUS_5V_PA31_Toggle()            do {\
-                                            PIOA_REGS->PIO_MSKR = (1<<31); \
-                                            PIOA_REGS->PIO_ODSR ^= (1<<31);\
-                                        } while (0)
-#define USBA_VBUS_5V_PA31_Get()               ((PIOA_REGS->PIO_PDSR >> 31) & 0x1)
-#define USBA_VBUS_5V_PA31_OutputEnable()      do {\
-                                            PIOA_REGS->PIO_MSKR = (1<<31); \
-										     PIOA_REGS->PIO_CFGR |=(1 << PIO_CFGR_DIR_Pos);\
-                                        }while(0)
-#define USBA_VBUS_5V_PA31_InputEnable()       do { \
-                                            PIOA_REGS->PIO_MSKR = (1<<31); \
-										     PIOA_REGS->PIO_CFGR &= ~(1 << PIO_CFGR_DIR_Pos);\
-                                        } while (0)
-#define USBA_VBUS_5V_PA31_InterruptEnable()   (PIOA_REGS->PIO_IER = (1<<31))
-#define USBA_VBUS_5V_PA31_InterruptDisable()  (PIOA_REGS->PIO_IDR = (1<<31))
-#define USBA_VBUS_5V_PA31_PIN                  PIO_PIN_PA31
+#define GPIO_InterruptEnable()   (PIOD_REGS->PIO_IER = (1<<23))
+#define GPIO_InterruptDisable()  (PIOD_REGS->PIO_IDR = (1<<23))
+#define GPIO_PIN                  PIO_PIN_PD23
 
 
 // *****************************************************************************
