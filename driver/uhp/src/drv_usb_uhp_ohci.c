@@ -458,7 +458,7 @@ SYS_MODULE_OBJ DRV_USB_UHP_Initialize
 
             /* Set the state to indicate that the delay will be started */
             drvObj->state = DRV_USB_UHP_TASK_STATE_WAIT_FOR_CLOCK_USABLE;
-            retVal        = (SYS_MODULE_OBJ)drvIndex;
+            retVal = (SYS_MODULE_OBJ)drvIndex;
         }
         _DRV_USB_UHP_InterruptSourceEnable(drvObj->interruptSource);
     }
@@ -740,8 +740,8 @@ void DRV_USB_UHP_IRPCancel
     }
     else
     {
-    pipe    = (DRV_USB_UHP_HOST_PIPE_OBJ *)irp->pipe;
-    hDriver = (DRV_USB_UHP_OBJ *)pipe->hClient;
+        pipe    = (DRV_USB_UHP_HOST_PIPE_OBJ *)irp->pipe;
+        hDriver = (DRV_USB_UHP_OBJ *)pipe->hClient;
 
         if(!hDriver->isInInterruptContext)
         {
@@ -769,13 +769,13 @@ void DRV_USB_UHP_IRPCancel
             irp->previous->next = irp->next;
 
             if(irp->next != NULL)
-        {
-            /* This applies if this is not the last
-             * irp in the linked list */
-            irp->next->previous = irp->previous;
+            {
+                /* This applies if this is not the last
+                 * irp in the linked list */
+                irp->next->previous = irp->previous;
+            }
         }
-    }
-
+    
         if(irp->status == USB_HOST_IRP_STATUS_IN_PROGRESS)
         {
             /* If the irp is already in progress then
