@@ -67,7 +67,6 @@
             <itemPath>../src/config/sam_e70_xult_freertos/usb/usb_common.h</itemPath>
             <itemPath>../src/config/sam_e70_xult_freertos/usb/usb_chapter_9.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/config/sam_e70_xult_freertos/user.h</itemPath>
           <itemPath>../src/config/sam_e70_xult_freertos/device_cache.h</itemPath>
           <itemPath>../src/config/sam_e70_xult_freertos/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_e70_xult_freertos/definitions.h</itemPath>
@@ -176,7 +175,6 @@
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
-      <itemPath>../src/app.h</itemPath>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -296,8 +294,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAME70_DFP" vendor="Microchip" version="4.0.40"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
+        <pack name="SAME70_DFP" vendor="Microchip" version="4.1.50"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -503,6 +501,8 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="400000-5fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
+        <property key="programmerToGoFilePath"
+                  value="D:/v3_new/usb/apps/device/vendor/firmware/sam_e70_xult_freertos.X/debug/sam_e70_xult_freertos/sam_e70_xult_freertos_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
