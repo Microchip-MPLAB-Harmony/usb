@@ -175,7 +175,7 @@ void _DRV_USBFSV1_HOST_AttachDetachStateMachine (DRV_USBFSV1_OBJ * hDriver)
                     
                     _DRV_USBFSV1_SYS_INT_SourceDisableSave(interruptState, hDriver->interruptSource,
                             interruptState1, hDriver->interruptSource1,interruptState2, hDriver->interruptSource2,
-                            interruptState3, hDriver->interruptSource3);
+                            interruptState3, hDriver->interruptSource3)
                     
                     /* Enumerate from root hub port 0 */
                     hDriver->attachedDeviceObjHandle = USB_HOST_DeviceEnumerate(hDriver->usbHostDeviceInfo, 0);
@@ -187,7 +187,7 @@ void _DRV_USBFSV1_HOST_AttachDetachStateMachine (DRV_USBFSV1_OBJ * hDriver)
                     /* Enable the global USB Interrupt */
                     _DRV_USBFSV1_SYS_INT_SourceEnableRestore(interruptState, hDriver->interruptSource,
                             interruptState1, hDriver->interruptSource1,interruptState2, hDriver->interruptSource2,
-                            interruptState2, hDriver->interruptSource3);
+                            interruptState3, hDriver->interruptSource3);
                     
                     hDriver->attachState = DRV_USBFSV1_HOST_ATTACH_STATE_IDLE;
                 }
@@ -3064,19 +3064,22 @@ bool DRV_USBFSV1_HOST_EventsDisable
 )
 {
     DRV_USBFSV1_OBJ * hDriver = (DRV_USBFSV1_OBJ *)handle;
-    _DRV_USBFSV1_DECLARE_BOOL_VARIABLE(interruptState);
+    bool interruptState = false;
 
     if((DRV_HANDLE_INVALID != handle) && (0 != handle) && (hDriver->inUse == true))
     {
         /* The ATSAMD21 controller has 1 USB interrupt while the SAME54 has 4
          * interrupts. The function signature allows us to only return the
          * context of one interrupt. So we will return the context of only
-         * interrupt. This is okay because we will always enable to and disable
+         * interrupt. This is okay because we will always enable  and disable
          * all interrupts together. */
 
-        _DRV_USBFSV1_SYS_INT_SourceDisableSave(interruptState, hDriver->interruptSource,
-                interruptState1, hDriver->interruptSource1, interruptState2, hDriver->interruptSource2,
-                interruptState3, hDriver->interruptSource3);
+        interruptState = SYS_INT_SourceDisable(hDriver->interruptSource); 
+#if (DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE == true)
+        SYS_INT_SourceDisable(hDriver->interruptSource1);
+        SYS_INT_SourceDisable(hDriver->interruptSource2);
+        SYS_INT_SourceDisable(hDriver->interruptSource3);
+#endif
     }
     else
     {
