@@ -841,14 +841,7 @@
       </Symbols>
     </UniqueComponent>
     <GeneratorComponent dnOrder="9" id="usb_device_cdc">
-      <Symbols dnOrder="0">
-        <Integer dnOrder="0" id="CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED">
-          <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="usb_device_cdc" value="6"/>
-          </Values>
-        </Integer>
-      </Symbols>
-      <Instances dnOrder="1">
+      <Instances dnOrder="0">
         <InstanceComponent dnOrder="0" id="usb_device_cdc" instance="0">
           <Symbols dnOrder="0">
             <Integer dnOrder="0" id="CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER">
@@ -877,7 +870,8 @@
     </GeneratorComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_DA1_Xplained_Pro" x="21" y="24"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="151" y="87"/>
@@ -886,11 +880,10 @@
         <ElementPosition dnOrder="4" id="dfp" x="21" y="55"/>
         <ElementPosition dnOrder="5" id="drv_usbfs_v1" x="23" y="188"/>
         <ElementPosition dnOrder="6" id="evsys" x="210" y="26"/>
-        <ElementPosition dnOrder="7" id="nvmctrl" x="23" y="89"/>
+        <ElementPosition dnOrder="7" id="nvmctrl" x="24" y="89"/>
         <ElementPosition dnOrder="8" id="usb_device" x="183" y="188"/>
-        <ElementPosition dnOrder="9" id="usb_device_cdc" x="18" y="261"/>
+        <ElementPosition dnOrder="9" id="usb_device_cdc" x="332" y="185"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>

@@ -222,7 +222,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAMDA1_DFP" vendor="Microchip" version="2.1.35"/>
+        <pack name="SAMDA1_DFP" vendor="Microchip" version="2.0.14"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
       </packs>
       <compileType>
@@ -430,14 +430,14 @@
         <property key="memories.programmemory.ranges" value="0-ffff"/>
         <property key="poweroptions.powerenable" value="false"/>
         <property key="programmerToGoFilePath"
-                  value="C:/Repos/H3/usb/apps/device/cdc_com_port_single/firmware/sam_da1_xpro.X/debug/sam_da1_xpro/sam_da1_xpro_ptg"/>
+                  value="D:/v3_new/usb/apps/device/cdc_com_port_single/firmware/sam_da1_xpro.X/debug/sam_da1_xpro/sam_da1_xpro_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
                   value="${memories.dataflash.default}"/>
         <property key="programoptions.preserveeeprom" value="false"/>
         <property key="programoptions.preserveeeprom.ranges" value=""/>
-        <property key="programoptions.preserveprogram.ranges" value="0-20001fff"/>
+        <property key="programoptions.preserveprogram.ranges" value=""/>
         <property key="programoptions.preserveprogramrange" value="false"/>
         <property key="programoptions.preserveuserid" value="false"/>
         <property key="programoptions.programuserotp" value="false"/>

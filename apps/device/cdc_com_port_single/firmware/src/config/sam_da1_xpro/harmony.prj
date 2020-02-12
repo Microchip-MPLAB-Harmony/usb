@@ -27,16 +27,16 @@
           <Name dnOrder="1">drv_usbfsv1.c</Name>
           <LogicalPath dnOrder="2">config/sam_da1_xpro/driver/usb/usbfsv1/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">36DC57184A5DE2E7D6D4A16A3A09FFF5</GeneratedChecksum>
-          <UserChecksum dnOrder="5">36DC57184A5DE2E7D6D4A16A3A09FFF5</UserChecksum>
+          <GeneratedChecksum dnOrder="4">BFA06465728C80414F183336C887094D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">BFA06465728C80414F183336C887094D</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_usbfsv1_device.c</Name>
           <LogicalPath dnOrder="2">config/sam_da1_xpro/driver/usb/usbfsv1/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">2354B1E40819A7A3FA7016E9E4D0135A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">2354B1E40819A7A3FA7016E9E4D0135A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">5F871FCAB67D48E613C50713A130F620</GeneratedChecksum>
+          <UserChecksum dnOrder="5">5F871FCAB67D48E613C50713A130F620</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -283,8 +283,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/sam_da1_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">F90F5526660524AE983B930C9D84347B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">F90F5526660524AE983B930C9D84347B</UserChecksum>
+          <GeneratedChecksum dnOrder="4">E5C53980FE8633C03CB9B64B7A18A83D</GeneratedChecksum>
+          <UserChecksum dnOrder="5">E5C53980FE8633C03CB9B64B7A18A83D</UserChecksum>
         </File>
         <File dnOrder="35">
           <Type dnOrder="0">HEADER</Type>
@@ -363,8 +363,8 @@
           <Name dnOrder="1">drv_usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/sam_da1_xpro/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5E2621860496A1FD0821B43178B3C75A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5E2621860496A1FD0821B43178B3C75A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">520DC1C088A41A16C28DCB58C92BDEC1</GeneratedChecksum>
+          <UserChecksum dnOrder="5">520DC1C088A41A16C28DCB58C92BDEC1</UserChecksum>
         </File>
         <File dnOrder="45">
           <Type dnOrder="0">HEADER</Type>
@@ -387,8 +387,8 @@
           <Name dnOrder="1">drv_usbfsv1_variant_mapping.h</Name>
           <LogicalPath dnOrder="2">config/sam_da1_xpro/driver/usb/usbfsv1/src</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1BCBA65D0770F1F0EAC0178BED6F1B29</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1BCBA65D0770F1F0EAC0178BED6F1B29</UserChecksum>
+          <GeneratedChecksum dnOrder="4">34FD378AC3B68689916F7FD6FB85096C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">34FD378AC3B68689916F7FD6FB85096C</UserChecksum>
         </File>
         <File dnOrder="48">
           <Type dnOrder="0">HEADER</Type>
@@ -803,8 +803,8 @@
       <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAMDA1_DFP\2.2.43\atdf\ATSAMDA1J16B.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
-      <Setting dnOrder="4" key="MERGE_STRATEGY" value="OVERWRITE"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;"/>
+      <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bootloader;bsp;core;csp;micrium_ucos3;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>

@@ -300,7 +300,7 @@ void DRV_USBFSV1_Tasks
                 if(vbusLevel == DRV_USB_VBUS_LEVEL_VALID)
                 {
                     /* We have a valid VBUS level */
-                    hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBFSV1_EVENT_DEVICE_SESSION_VALID, NULL);
+                    hDriver->pEventCallBack(hDriver->hClientArg, (DRV_USB_EVENT)DRV_USBFSV1_EVENT_DEVICE_SESSION_VALID, NULL);
 
                     /* We should be ready for send session invalid event
                      * to the application when they happen.*/
@@ -314,7 +314,7 @@ void DRV_USBFSV1_Tasks
                      * it only once. */
                     if(!hDriver->sessionInvalidEventSent)
                     {
-                        hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBFSV1_EVENT_DEVICE_SESSION_INVALID, NULL);
+                        hDriver->pEventCallBack(hDriver->hClientArg, (DRV_USB_EVENT)DRV_USBFSV1_EVENT_DEVICE_SESSION_INVALID, NULL);
                         hDriver->sessionInvalidEventSent = true;
                     }
                 }
@@ -387,16 +387,16 @@ void DRV_USBFSV1_Deinitialize
 
         /* Clear and disable the interrupts */
         _DRV_USBFSV1_SYS_INT_SourceDisable(
-                hDriver->interruptSource,
-                hDriver->interruptSource1,
-                hDriver->interruptSource2,
-                hDriver->interruptSource3 );
+                (INT_SOURCE)hDriver->interruptSource,
+                (INT_SOURCE)hDriver->interruptSource1,
+                (INT_SOURCE)hDriver->interruptSource2,
+                (INT_SOURCE)hDriver->interruptSource3 );
 
         _DRV_USBFSV1_SYS_INT_SourceStatusClear(
-                hDriver->interruptSource,
-                hDriver->interruptSource1,
-                hDriver->interruptSource2,
-                hDriver->interruptSource3 );
+                (INT_SOURCE)hDriver->interruptSource,
+                (INT_SOURCE)hDriver->interruptSource1,
+                (INT_SOURCE)hDriver->interruptSource2,
+                (INT_SOURCE)hDriver->interruptSource3 );
 
         hDriver->usbID->DEVICE.USB_CTRLA &= ~USB_CTRLA_ENABLE_Msk;
 
@@ -600,10 +600,10 @@ void DRV_USBFSV1_Tasks_ISR
 
             /* Clear the interrupt */
             _DRV_USBFSV1_SYS_INT_SourceStatusClear(
-                    drvObj->interruptSource,
-                    drvObj->interruptSource1,
-                    drvObj->interruptSource2,
-                    drvObj->interruptSource3 );
+                    (INT_SOURCE)drvObj->interruptSource,
+                    (INT_SOURCE)drvObj->interruptSource1,
+                    (INT_SOURCE)drvObj->interruptSource2,
+                    (INT_SOURCE)drvObj->interruptSource3 );
 
             /* We are entering an interrupt context */
             drvObj->isInInterruptContext = true;
