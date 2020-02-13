@@ -121,6 +121,7 @@ void APP_USBHostHIDMouseEventHandler(USB_HOST_HID_MOUSE_HANDLE handle,
             memset(&appData.string, 0, sizeof(appData.string));
             appData.stringSize = 0;
             appData.isMouseAttached = true;
+			LED1_On();
             break;
 
         case USB_HOST_HID_MOUSE_EVENT_DETACH:
@@ -130,6 +131,7 @@ void APP_USBHostHIDMouseEventHandler(USB_HOST_HID_MOUSE_HANDLE handle,
             memset(&appData.string, 0, sizeof(appData.string));
             appData.stringSize = 0;
             appData.isMouseAttached = false;
+			LED1_Off();
             break;
 
         case USB_HOST_HID_MOUSE_EVENT_REPORT_RECEIVED:
@@ -147,9 +149,9 @@ void APP_USBHostHIDMouseEventHandler(USB_HOST_HID_MOUSE_HANDLE handle,
                 }
                 if((appData.data.buttonState[loop]) &&
                         (USB_HID_USAGE_ID_BUTTON2 == appData.data.buttonID[loop]))
-                {
+                {LED1_Off();
                     /* BUTTON2 pressed */
-                   LED1_Off();
+                   
                 }
             }
         default:
