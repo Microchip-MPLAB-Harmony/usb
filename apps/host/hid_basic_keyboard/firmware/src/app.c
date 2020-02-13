@@ -202,6 +202,7 @@ void APP_USBHostHIDKeyboardEventHandler(USB_HOST_HID_KEYBOARD_HANDLE handle,
             appData.scrollLockPressed = false;
             appData.numLockPressed = false;
             appData.outputReport = 0;
+			LED1_On();
             break;
 
         case USB_HOST_HID_KEYBOARD_EVENT_DETACH:
@@ -217,6 +218,7 @@ void APP_USBHostHIDKeyboardEventHandler(USB_HOST_HID_KEYBOARD_HANDLE handle,
             appData.scrollLockPressed = false;
             appData.numLockPressed = false;
             appData.outputReport = 0;
+			LED1_Off();
             break;
 
         case USB_HOST_HID_KEYBOARD_EVENT_REPORT_RECEIVED:
@@ -528,7 +530,7 @@ void APP_Tasks ( void )
             /* The application comes here when the demo
              * has failed. Provide LED indication .*/
 
-            LED1_On();
+            
             break;
 
         default:
