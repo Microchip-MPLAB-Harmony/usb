@@ -242,6 +242,8 @@ void APP_USBDeviceEventHandler
             /* VBUS is not available any more. Detach the device. */
             USB_DEVICE_Detach(appData.deviceHandle);
             
+            appData.isConfigured = false;
+            
             LED_Off();
             
             break;
@@ -366,24 +368,6 @@ void APP_Initialize(void)
     /* Write Transfer Handle */
     appData.writeTransferHandle = USB_DEVICE_PRINTER_TRANSFER_HANDLE_INVALID;
 
-    /* Initialize the read complete flag */
-    appData.isReadComplete = true;
-
-    /*Initialize the write complete flag*/
-    appData.isWriteComplete = true;
-
-    /* Initialize Ignore switch flag */
-    appData.ignoreSwitchPress = false;
-
-    /* Reset the switch debounce counter */
-    appData.switchDebounceTimer = 0;
-
-    /* Reset other flags */
-    appData.sofEventHasOccurred = false;
-    
-    /* To know status of Switch */
-    appData.isSwitchPressed = false;
-
     /* Set up the read buffer */
     appData.prntrReadBuffer = &printerReadBuffer[0];
 
@@ -391,8 +375,6 @@ void APP_Initialize(void)
     appData.prntrWriteBuffer = &printerWriteBuffer[0]; 
     
     appData.usartHandle = DRV_HANDLE_INVALID;
-    appData.isUSARTWriteInProgress = false;
-    appData.usarterrorStatus = false;
 }
 
 
@@ -440,6 +422,27 @@ void APP_Tasks(void)
             /* Check if the device was configured */
             if(appData.isConfigured)
             {
+                /* Initialize the read complete flag */
+                appData.isReadComplete = true;
+
+                /*Initialize the write complete flag*/
+                appData.isWriteComplete = true;
+
+                /* Initialize Ignore switch flag */
+                appData.ignoreSwitchPress = false;
+
+                /* Reset the switch debounce counter */
+                appData.switchDebounceTimer = 0;
+
+                /* Reset other flags */
+                appData.sofEventHasOccurred = false;
+
+                /* To know status of Switch */
+                appData.isSwitchPressed = false;
+                
+                appData.isUSARTWriteInProgress = false;
+                appData.usarterrorStatus = false;
+                
                 /* If the device is configured then lets start reading */
                 appData.state = APP_STATE_SCHEDULE_READ;
             }
@@ -447,13 +450,19 @@ void APP_Tasks(void)
             break;
 
         case APP_STATE_SCHEDULE_READ:
+            
+            if(appData.isConfigured == false)
+            {
+                appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
+                break;
+            }
 
             /* If a read is complete, then schedule a read
              * else wait for the current read to complete */
             
-            /* Block by waiting for UARD write 
+            /* Block by waiting for UART write 
              * completion status. This is useful if the data receiver is a 
-             * slow performing system*/
+             * slow performing system */
 
             if(appData.isReadComplete == true && appData.isUSARTWriteInProgress == false)
             {
@@ -476,6 +485,12 @@ void APP_Tasks(void)
             break;
 
         case APP_STATE_WAIT_FOR_READ_COMPLETE:
+            
+            if(appData.isConfigured == false)
+            {
+                appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
+                break;
+            }
             
             if(appData.isReadComplete == true)
             {
@@ -513,6 +528,12 @@ void APP_Tasks(void)
         case APP_STATE_CHECK_SWITCH_PRESSED:
 
             APP_ProcessSwitchPress();
+            
+            if(appData.isConfigured == false)
+            {
+                appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
+                break;
+            }
 
             /* Check if the switch was pressed. */
 
