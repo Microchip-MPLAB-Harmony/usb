@@ -400,7 +400,7 @@ void DRV_USBFSV1_DEVICE_Detach
         hDriver = (DRV_USBFSV1_OBJ *) handle;
         usbID = hDriver->usbID;
             
-		DRV_USBFSV1_DEVICE_EndpointDisable((DRV_HANDLE)hDriver, DRV_USB_DEVICE_ENDPOINT_ALL);
+        DRV_USBFSV1_DEVICE_EndpointDisable((DRV_HANDLE)hDriver, DRV_USB_DEVICE_ENDPOINT_ALL);
         
         if(hDriver->isInInterruptContext == false)
         {
