@@ -99,8 +99,8 @@
           <Name dnOrder="1">plib_clk.c</Name>
           <LogicalPath dnOrder="2">config/sam_e70_xult_xc32/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="3">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">E84A5F4CE03A27C23E71435F8F47A02A</GeneratedChecksum>
-          <UserChecksum dnOrder="5">E84A5F4CE03A27C23E71435F8F47A02A</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F4F52F9CCFD6AA89FE3DC891F13459F9</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F4F52F9CCFD6AA89FE3DC891F13459F9</UserChecksum>
         </File>
         <File dnOrder="12">
           <Type dnOrder="0">SOURCE</Type>
@@ -1094,7 +1094,7 @@
       <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAME70_DFP\4.2.56\same70b\atdf\ATSAME70Q21B.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
-      <Setting dnOrder="4" key="MERGE_STRATEGY" value="OVERWRITE"/>
+      <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
       <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;"/>
     </Settings>
   </Configurator>
