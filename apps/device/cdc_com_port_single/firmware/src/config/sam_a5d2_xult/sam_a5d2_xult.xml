@@ -1980,18 +1980,18 @@
     </GeneratorComponent>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
-    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="BSP_SAM_A5D2_Xplained_Ultra" x="14" y="14"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="18" y="72"/>
-        <ElementPosition dnOrder="2" id="cmsis" x="228" y="43"/>
-        <ElementPosition dnOrder="3" id="core" x="230" y="13"/>
-        <ElementPosition dnOrder="4" id="dfp" x="16" y="43"/>
-        <ElementPosition dnOrder="5" id="drv_usb_udphs" x="17" y="177"/>
-        <ElementPosition dnOrder="6" id="usb_device" x="206" y="178"/>
-        <ElementPosition dnOrder="7" id="usb_device_cdc" x="353" y="177"/>
+        <ElementPosition dnOrder="0" id="BSP_SAM_A5D2_Xplained_Ultra" x="148" y="40"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="0" y="10"/>
+        <ElementPosition dnOrder="2" id="cmsis" x="224" y="67"/>
+        <ElementPosition dnOrder="3" id="core" x="149" y="67"/>
+        <ElementPosition dnOrder="4" id="dfp" x="148" y="14"/>
+        <ElementPosition dnOrder="5" id="drv_usb_udphs" x="0" y="241"/>
+        <ElementPosition dnOrder="6" id="usb_device" x="180" y="241"/>
+        <ElementPosition dnOrder="7" id="usb_device_cdc" x="318" y="242"/>
       </ElementPositions>
     </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
