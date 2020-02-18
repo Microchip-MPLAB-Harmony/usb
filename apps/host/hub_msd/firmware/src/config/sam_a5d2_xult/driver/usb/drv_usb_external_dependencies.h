@@ -59,11 +59,11 @@
 #if  !defined(SYS_DEBUG_ENABLE) 
 
     #if  !defined(SYS_DEBUG_PRINT)
-        #define SYS_DEBUG_PRINT(level, format, ...)  printf(format,  ##__VA_ARGS__)
+        #define SYS_DEBUG_PRINT(level, format, ...) 
     #endif
 
     #if  !defined(SYS_DEBUG_MESSAGE)
-        #define SYS_DEBUG_MESSAGE(a,b, ...)    printf(b)
+        #define SYS_DEBUG_MESSAGE(a,b, ...)   
     #endif
 
     #if  !defined(SYS_DEBUG)
