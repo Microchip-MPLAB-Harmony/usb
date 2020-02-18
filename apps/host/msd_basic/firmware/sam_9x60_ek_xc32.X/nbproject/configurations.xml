@@ -181,6 +181,10 @@
         </logicalFolder>
       </logicalFolder>
     </logicalFolder>
+    <logicalFolder name="ScriptFiles"
+                   displayName="Script Files"
+                   projectFiles="true">
+    </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
