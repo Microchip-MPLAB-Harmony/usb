@@ -482,7 +482,7 @@ void DRV_USB_UHP_OHCI_HOST_Init(DRV_USB_UHP_OBJ *hDriver)
     usbIDOHCI->UHP_OHCI_HCPERIODICSTART = OHCI_PRDSTRT;
 
     usbIDOHCI->UHP_OHCI_HCCONTROL = (usbIDOHCI->UHP_OHCI_HCCONTROL & ~UHP_OHCI_HCCONTROL_HCFS_Msk) | UHP_OHCI_HCCONTROL_HCFS( DRV_USB_UHP_HOST_OHCI_STATE_USBRESUME );
-    
+
     /* ClearPortEnable: clear the PortEnableStatus bit: 0 = port is disabled */
     *((uint32_t *)&(usbIDOHCI->UHP_OHCI_HCRHPORTSTATUS0) + hDriver->portNumber) = UHP_OHCI_HCRHPORTSTATUS0_CCS_Msk;
     
@@ -579,7 +579,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
             while(( hDriver->blockPipe == 1 ) & ( watchdog++ < 900000 ))
             {
             }
-        }
+        }        
         hDriver->blockPipe = 1;
 
         /* Assign owner pipe */

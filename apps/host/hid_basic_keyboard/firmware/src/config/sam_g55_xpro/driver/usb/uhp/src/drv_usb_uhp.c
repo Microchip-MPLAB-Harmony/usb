@@ -775,7 +775,7 @@ void DRV_USB_UHP_IRPCancel
                 irp->next->previous = irp->previous;
             }
         }
-
+    
         if(irp->status == USB_HOST_IRP_STATUS_IN_PROGRESS)
         {
             /* If the irp is already in progress then

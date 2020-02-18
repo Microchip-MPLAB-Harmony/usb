@@ -36,15 +36,15 @@
           <LogicalPath dnOrder="2">config/sam_g55_xpro/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
           <GeneratedChecksum dnOrder="4">503CD9AC0F57CA2D5C67AB1F2BF79593</GeneratedChecksum>
-          <UserChecksum dnOrder="5">B2B56A6A11B85C9A7DF094448AC92209</UserChecksum>
+          <UserChecksum dnOrder="5">503CD9AC0F57CA2D5C67AB1F2BF79593</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">drv_usb_uhp_ohci_host.c</Name>
           <LogicalPath dnOrder="2">config/sam_g55_xpro/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/uhp/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">B00FE54CDD8C532FDAA88567185E406B</GeneratedChecksum>
-          <UserChecksum dnOrder="5">749C693C773FFEC7DA07F781AA889D44</UserChecksum>
+          <GeneratedChecksum dnOrder="4">C2F9F849CA3D6578130385B2DC23F10B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">C2F9F849CA3D6578130385B2DC23F10B</UserChecksum>
         </File>
         <File dnOrder="5">
           <Type dnOrder="0">SOURCE</Type>
@@ -934,7 +934,7 @@
       <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAMG_DFP\3.2.35\samg55\atdf\ATSAMG55J19.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
-      <Setting dnOrder="4" key="MERGE_STRATEGY" value="ALL"/>
+      <Setting dnOrder="4" key="MERGE_STRATEGY" value="OVERWRITE"/>
       <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;csp;usb;usb;usb;usb;"/>
     </Settings>
   </Configurator>
