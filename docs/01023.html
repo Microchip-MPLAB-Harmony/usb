@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_HOST_AUDIO_V1_0_DeviceObjHandleGet Macro</title>
+<title>USB_HOST_AUDIO_V1_0_ATTACH_EVENT_HANDLER Type</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00191.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00206.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01023.html" target="topic">USB_HOST_AUDIO_V1_0_DeviceObjHandleGet Macro</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a> &gt; <a href="00196.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00211.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01023.html" target="topic">USB_HOST_AUDIO_V1_0_ATTACH_EVENT_HANDLER Type</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01019.html" target="topic">Previous</a> | <a href="00206.html" target="topic">Up</a> | <a href="01024.html" target="topic">Next</a></div>
+<a href="01203.html" target="topic">Previous</a> | <a href="00211.html" target="topic">Up</a> | <a href="01026.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_0_DeviceObjHandleGet Topic Title: USB_HOST_AUDIO_V1_0_DeviceObjHandleGet Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_0_ATTACH_EVENT_HANDLER Topic Title: USB_HOST_AUDIO_V1_0_ATTACH_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_HOST_AUDIO_V1_0_DeviceObjHandleGet Macro</div>
+USB_HOST_AUDIO_V1_0_ATTACH_EVENT_HANDLER Type</div>
 </div>
 </div>
 
@@ -49,45 +49,18 @@ USB_HOST_AUDIO_V1_0_DeviceObjHandleGet Macro</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function returns the device object handle for this Audio v1.0 Device. This returned device object handle can be used by the application to perform device-level operations such as getting the string descriptors.</p></div>
+USB Host Audio v1.0 Client Driver Attach Event Handler Function Pointer Type.&nbsp;</p>
+<p class="Element10">
+This data type defines the required function signature of the USB Host Audio v1.0 Client Driver attach event handling callback function. The application must register a pointer to a Audio v1.0 Client Driver attach events handling function whose function signature (parameter and return value types) match the types specified by this function pointer in order to receive attach and detach events call backs from the Audio v1.0 Client Driver. The client driver will invoke this function with event relevant parameters. The descriptions of the event handler function parameters are as follows:</p>
+<ul class="Element630">
+<li class="Element600">audioObj - Handle of the client to which this event is directed</li>
+<li class="Element600">event - Event indicates if it is an attach or detach </li>
+<li class="Element600">context - Value identifying the context of the application that was registered with the event handling function</li>
+</ul></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">USB_HOST_AUDIO_V1_0_DeviceObjHandleGet</span></strong> <a href="01107.html" target="topic">USB_HOST_AUDIO_V1_DeviceObjHandleGet</a></pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-None.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
-<div class="TableDiv">
-<table cellspacing="0" class="Table3">
-<tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-audioDeviceObj&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Audio V1.0 device object handle returned in the <a href="01018.html" target="topic">USB_HOST_AUDIO_V1_0_ATTACH_EVENT_HANDLER</a> function.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-This function will return a valid device object handle if the device is still connected to the system. Otherwise, <a href="01275.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE_INVALID</a> is returned.</p></div>
-</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">void</span></strong> (* <strong><span style="color: #000000">USB_HOST_AUDIO_V1_0_ATTACH_EVENT_HANDLER</span></strong>)(<a href="01036.html" target="topic">USB_HOST_AUDIO_V1_0_OBJ</a> audioObj, <a href="01031.html" target="topic">USB_HOST_AUDIO_V1_0_EVENT</a> event, uintptr_t context);</pre></div></div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
@@ -100,7 +73,7 @@ None.</p></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00191.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00206.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01023.html" target="topic">USB_HOST_AUDIO_V1_0_DeviceObjHandleGet Macro</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a> &gt; <a href="00196.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00211.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01023.html" target="topic">USB_HOST_AUDIO_V1_0_ATTACH_EVENT_HANDLER Type</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -108,13 +81,13 @@ None.</p></div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01019.html" target="topic">Previous</a> | <a href="00206.html" target="topic">Up</a> | <a href="01024.html" target="topic">Next</a></div>
+<a href="01203.html" target="topic">Previous</a> | <a href="00211.html" target="topic">Up</a> | <a href="01026.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_0_DeviceObjHandleGet Topic Title: USB_HOST_AUDIO_V1_0_DeviceObjHandleGet Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_0_ATTACH_EVENT_HANDLER Topic Title: USB_HOST_AUDIO_V1_0_ATTACH_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

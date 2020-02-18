@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Building the Library</title>
+<title>USB Device Library - Application Interaction</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00385.html" target="topic">USB MSD Host Client Driver Library</a> &gt; <a href="00377.html" target="topic">Building the Library</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00266.html" target="topic">USB Device Library - Getting Started</a> &gt; <a href="00377.html" target="topic">USB Device Library - Application Interaction</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00022.html" target="topic">Previous</a> | <a href="00385.html" target="topic">Up</a> | <a href="00387.html" target="topic">Next</a></div>
+<a href="00378.html" target="topic">Previous</a> | <a href="00266.html" target="topic">Up</a> | <a href="00375.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSD HOST Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MID USB Device Library - Application Interaction Topic Title: USB Device Library - Application Interaction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Building the Library</div>
+USB Device Library - Application Interaction</div>
 </div>
 </div>
 
@@ -48,81 +48,58 @@ Building the Library</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10">
-The following three tables list and describe the header (<span class="Element146">.h</span>) and source (<span class="Element146">.c</span>) files that implement this library. The parent folder for these files is <span class="Element146">&lt;install-dir&gt;/framework/usb</span><span style="color: #0000FF">.</span></p><div class="Element15">
-Interface File(s)</div>
-<p class="Element10">
-This table lists and describes the header files that must be included (i.e., using <span class="Element146">#include</span>) by any code that uses this library. </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="23%">
-<div class="Element66">
-Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="77%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="23%">
-<div class="Element68">
-<span class="Element146"><a href="01339.html" target="topic">usb_host_msd.h</a></span>&nbsp;</div></td><td class="Element67" valign="top" width="77%">
-<div class="Element68">
-This header file should be included in any <span class="Element146">.c</span> file that accesses the USB Host MSD Client Driver API.&nbsp;</div></td></tr></table></div></div>
-<div class="Element15">
-Required File(s)</div>
 <div class="Element63">
 <div class="TableDiv">
 <table cellspacing="0" class="Table2">
 <tr>
 <td class="Element67" valign="top" width="10%" style="border:none;">
 <div class="Element68">
-<img src="MHC_Logo_Medium.png" border="0" alt="" title="">&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<img src="Note Icon.png" border="0" alt="" title=""> <strong>Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
 <div class="Element68">
-<span style="color: #008000"><strong><i>All of the required files listed in the following table are automatically added into the MPLAB X IDE project by the MHC when the library is selected for use.</i></strong></span>&nbsp;</div></td></tr></table></div></div>
+Additional information on USB demonstration application projects is available in the <a href="00239.html" target="topic">USB Demonstrations</a> section.&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
-This table lists and describes the source and header files that must <i>always</i> be included in the MPLAB X IDE project to build this library. </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="23%">
-<div class="Element66">
-Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="77%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="23%">
-<div class="Element68">
-<span class="Element146">/src/dynamic/usb_host_msd.c</span>&nbsp;</div></td><td class="Element67" valign="top" width="77%">
-<div class="Element68">
-This file implements the USB Host MSD Client Driver interface and should be included in the project if USB Host MSD Client Driver operation is desired.&nbsp;</div></td></tr></table></div></div>
-<div class="Element15">
-Optional File(s)</div>
-<p class="Element10">
-This table lists and describes the source and header files that may optionally be included if required for the desired implementation. </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="25%">
-<div class="Element66">
-Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="75%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="25%">
-<div class="Element68">
-N/A&nbsp;</div></td><td class="Element67" valign="top" width="75%">
-<div class="Element68">
-There are no optional files for this library.&nbsp;</div></td></tr></table></div></div>
-<div class="Element15">
-Module Dependencies</div>
-<p class="Element10">
-The USB MSD Host Library depends on the following modules:</p>
+The following figure highlights the steps that the application must follow to use the USB Device Library. </p><p class="Element10" style="text-align: center;">
+<strong>Application Interaction with Device Layer</strong>&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="USB OVERVIEW figure_2.png" border="0" alt="" title=""></p><p class="Element10">
+The application must first initialize the Device Layer. As a part of the Device Layer initialization process, the Device Layer initialization structure must be defined which in turn requires the following data structures to be designed</p>
 <ul class="Element630">
-<li class="Element600"><a href="00350.html" target="topic">USB Host Layer Library</a></li>
-</ul></div>
+<li class="Element600">The master descriptor table</li>
+<li class="Element600">The function driver registration table</li>
+</ul><p class="Element10">
+The following figure shows a pictorial representation of the data that forms the Device Layer initialization structure. Additional information on Device Layer initialization is available in the Device Layer Help File. </p><p class="Element10" style="text-align: center;">
+<strong>Device Layer Initialization</strong>&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="USB OVERVIEW figure_3.png" border="0" alt="" title=""></p><p class="Element10">
+After successful initialization of the Device<span style="color: #FFFFFF">_</span>layer, the application can open the Device<span style="color: #FFFFFF">_</span>layer and register a Device<span style="color: #FFFFFF">_</span>layer event handler. The Device<span style="color: #FFFFFF">_</span>layer event handler receives device level events such as device configured, device deconfigured, device reset and device suspended. The device configured event and deconfigured event are important. The application can use the device deconfigured event to reinitialize its internal state machine. When the application receives a device configured event, it must register event handlers for each function driver that is relevant to the configuration that was set. The function driver event handler registration must be done in the device configured event context because the Device<span style="color: #FFFFFF">_</span>layer acknowledges the set configuration request from the host when it exits the device configured event handler context. The application at this point should be ready to respond to function driver events. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element67" valign="top" width="10%" style="border:none;">
+<div class="Element68">
+<img src="Note Icon.png" border="0" alt="" title=""> <strong>Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<div class="Element68">
+Not registering the function driver event handler in the Device<span style="color: #FFFFFF">_</span>layer configured event could cause the device to not respond to the host requests and therefore, be non-compliant.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+Once configured, the device is now ready to serve its intended function on the USB. The application interacts with the Device<span style="color: #FFFFFF">_</span>layer and function drivers through API function and event handlers. The application must be aware of function driver events which require application response. For example, the USB_DEVICE_CDC_EVENT_SET_LINE_CODING event from the USB CDC Function Driver requires the application to respond with a USB_DEVICE_ControlRead function. This function provides the buffer to receive the line coding parameters that the Host sends in the data stage of the Set Line Coding control transfer.&nbsp;</p>
+<p class="Element10">
+The following figure shows the application interaction with Device<span style="color: #FFFFFF">_</span>layer and function driver after the device has been configured. </p><p class="Element10" style="text-align: center;">
+<strong>Application - Device Layer Interaction after device configuration</strong>&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="USB OVERVIEW figure_4.png" border="0" alt="" title="">&nbsp;</p><p class="Element10">
+In the previous figure, the application should have registered the Device<span style="color: #FFFFFF">_</span>layer event handler before attaching the device on the bus. It should have registered the function driver event handler before exiting the device configured - Device<span style="color: #FFFFFF">_</span>layer event. The application will then receive function driver instance specific events via the function driver event handlers.</p><div class="Element15">
+Deferring Control Transfer Responses</div>
+<p class="Element10">
+Class-specific control transfer related function driver events require the application to complete the data stage and/or the status of the control transfer. The application does this by using the Device Layer Control Transfer API to complete the Control Read/Write transfers. The application may typically be able the complete required data processing, and to continue (or end) the control transfer within the function driver event handler context. However, there could be cases where the required control transfer data processing may require hardware access or extended computation. Performing extended processing or waiting for external hardware within the function driver event handler context is not recommended as the USB 2.0 Specification places restrictions on the control transfer response time.&nbsp;</p>
+<p class="Element10">
+In cases where the application is not ready to respond to control transfer requests within the function driver event handler context, the USB Device Library provides the option of deferring the response to the control transfer event. The application can respond to the control transfer request after exiting the handler function. The application must still observe the USB 2.0 Specification control transfer timing requirements while responding to the control transfer. Deferring the response in such a manner provides the application with flexibility to analyze the control transfer without degrading the performance of the device on the USB.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00385.html" target="topic">USB MSD Host Client Driver Library</a> &gt; <a href="00377.html" target="topic">Building the Library</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00266.html" target="topic">USB Device Library - Getting Started</a> &gt; <a href="00377.html" target="topic">USB Device Library - Application Interaction</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -130,13 +107,13 @@ The USB MSD Host Library depends on the following modules:</p>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00022.html" target="topic">Previous</a> | <a href="00385.html" target="topic">Up</a> | <a href="00387.html" target="topic">Next</a></div>
+<a href="00378.html" target="topic">Previous</a> | <a href="00266.html" target="topic">Up</a> | <a href="00375.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSD HOST Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MID USB Device Library - Application Interaction Topic Title: USB Device Library - Application Interaction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Library Initialization</title>
+<title>Files</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00258.html" target="topic">USB CDC Device Library</a> &gt; <a href="00257.html" target="topic">Using the Library</a> &gt; <a href="00250.html" target="topic">How the Library Works</a> &gt; <a href="00253.html" target="topic">Library Initialization</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00263.html" target="topic">USB CDC Device Library</a> &gt; <a href="00253.html" target="topic">Files</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00250.html" target="topic">Previous</a> | <a href="00250.html" target="topic">Up</a> | <a href="00247.html" target="topic">Next</a></div>
+<a href="00705.html" target="topic">Previous</a> | <a href="00263.html" target="topic">Up</a> | <a href="00671.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVCDC Library Initialization Topic Title: Library Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVCDC Files Topic Title: Files)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Library Initialization</div>
+Files</div>
 </div>
 </div>
 
@@ -49,44 +49,36 @@ Library Initialization</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The CDC Function Driver instance for a USB device configuration is initialized by the Device Layer when the configuration is set by the host. This process does not require application intervention. Each instance of the CDC Function Driver should be registered with the Device<span style="color: #FFFFFF">_</span>layer through the <a href="00277.html" target="topic">Device Layer Function Driver Registration Table</a>. The CDC Function Driver does require a initialization data structure to be defined for each instance of the function driver. This initialization data structure should be of the type <a href="00701.html" target="topic">USB_DEVICE_CDC_INIT</a>. This data structure specifies the read and write queue sizes. The funcDriverInit member of the function driver registration table entry for the CDC Function Driver instance should be set to point to the corresponding initialization data structure. The <a href="00691.html" target="topic">USB_DEVICE_CDC_FUNCTION_DRIVER</a> object is a global object provided by the CDC Function Driver and points to the CDC Function Driver - Device Layer interface functions, which are required by the Device Layer. The following code an example of how multiple instances of CDC Function Driver can registered with the Device Layer. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of how two CDC function
- * driver instances can be registered with the Device Layer
- * via the Device Layer Function Driver Registration Table.
- * In this case Device Configuration 1 consists of two CDC
- * function driver instances. */</span></i>
-
-<i><span style="color: #008000">/* Define the CDC initialization data structure for CDC instance 0.
- * Set read queue size to 2 and write queue size to 3 */</span></i>
-
-<strong><span style="color: #000080">const</span></strong> USB_DEVICE_CDC_INIT cdcInit0 = {.queueSizeRead = 2, .queueSizeWrite = 3};
-
-<i><span style="color: #008000">/* Define the CDC initialization data structure for CDC instance 1.
- * Set read queue size to 4 and write queue size to 1 */</span></i>
-
-<strong><span style="color: #000080">const</span></strong> USB_DEVICE_CDC_INIT cdcInit1 = {.queueSizeRead = 4, .queueSizeWrite = 1};
-<strong><span style="color: #000080">const</span></strong> USB_DEVICE_FUNC_REGISTRATION_TABLE funcRegistrationTable[2] =
-{
-    <i><span style="color: #008000">/* This is the first instance of the CDC Function Driver */</span></i>
-    {
-       .speed = USB_SPEED_FULL|USB_SPEED_HIGH,     <i><span style="color: #008000">// Supported speed</span></i>
-       .configurationValue = 1,                    <i><span style="color: #008000">// To be initialized for Configuration 1</span></i>
-       .interfaceNumber = 0,                       <i><span style="color: #008000">// Starting interface number.</span></i>
-       .numberOfInterfaces = 2,                    <i><span style="color: #008000">// Number of interfaces in this instance</span></i>
-       .funcDriverIndex = 0,                       <i><span style="color: #008000">// Function Driver instance index is 0</span></i>
-       .funcDriverInit = &amp;cdcInit0,                <i><span style="color: #008000">// Function Driver initialization data structure</span></i>
-       .driver = USB_DEVICE_CDC_FUNCTION_DRIVER    <i><span style="color: #008000">// Pointer to Function Driver - Device Layer interface functions</span></i>
-    },
-    <i><span style="color: #008000">/* This is the second instance of the CDC Function Driver */</span></i>
-    {
-       .speed = USB_SPEED_FULL|USB_SPEED_HIGH,     <i><span style="color: #008000">// Supported speed</span></i>
-       .configurationValue = 1,                    <i><span style="color: #008000">// To be initialized for Configuration 1</span></i>
-       .interfaceNumber = 2,                       <i><span style="color: #008000">// Starting interface number.</span></i>
-       .numberOfInterfaces = 2,                    <i><span style="color: #008000">// Number of interfaces in this instance</span></i>
-       .funcDriverIndex = 1,                       <i><span style="color: #008000">// Function Driver instance index is 1</span></i>
-       .funcDriverInit = &amp;cdcInit1,                <i><span style="color: #008000">// Function Driver initialization data structure</span></i>
-       .driver = USB_DEVICE_CDC_FUNCTION_DRIVER    <i><span style="color: #008000">// Pointer to Function Driver - Device Layer interface functions</span></i>
-    },
-};</pre></div></div>
+This section lists the source and header files used by the library.</p></div>
+</div>
+<a name="46696C6573"></a><div class="Element14">
+Files</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00671.html" target="topic">usb_device_cdc.h</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Interface&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00422.html" target="topic">usb_cdc.h</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB CDC class definitions&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00672.html" target="topic">usb_device_cdc_config_template.h</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB device CDC Class configuration definitions template&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -94,7 +86,7 @@ The CDC Function Driver instance for a USB device configuration is initialized b
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00258.html" target="topic">USB CDC Device Library</a> &gt; <a href="00257.html" target="topic">Using the Library</a> &gt; <a href="00250.html" target="topic">How the Library Works</a> &gt; <a href="00253.html" target="topic">Library Initialization</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00263.html" target="topic">USB CDC Device Library</a> &gt; <a href="00253.html" target="topic">Files</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -102,13 +94,13 @@ The CDC Function Driver instance for a USB device configuration is initialized b
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00250.html" target="topic">Previous</a> | <a href="00250.html" target="topic">Up</a> | <a href="00247.html" target="topic">Next</a></div>
+<a href="00705.html" target="topic">Previous</a> | <a href="00263.html" target="topic">Up</a> | <a href="00671.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVCDC Library Initialization Topic Title: Library Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVCDC Files Topic Title: Files)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

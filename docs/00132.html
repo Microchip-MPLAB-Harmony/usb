@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Driver Host USB Root Hub Port Interface</title>
+<title>Device Endpoint Operations</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="01013.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00126.html" target="topic">Common Interface</a> &gt; <a href="00130.html" target="topic">Driver Host Mode Client Functions</a> &gt; <a href="00132.html" target="topic">Driver Host USB Root Hub Port Interface</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="01018.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00131.html" target="topic">Common Interface</a> &gt; <a href="00141.html" target="topic">USB Driver Device Mode Operation</a> &gt; <a href="00132.html" target="topic">Device Endpoint Operations</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00131.html" target="topic">Previous</a> | <a href="00130.html" target="topic">Up</a> | <a href="00128.html" target="topic">Next</a></div>
+<a href="00138.html" target="topic">Previous</a> | <a href="00141.html" target="topic">Up</a> | <a href="00140.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver Host USB Root Hub Port Interface Topic Title: Driver Host USB Root Hub Port Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Device Endpoint Operations Topic Title: Device Endpoint Operations)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Driver Host USB Root Hub Port Interface</div>
+Device Endpoint Operations</div>
 </div>
 </div>
 
@@ -49,58 +49,123 @@ Driver Host USB Root Hub Port Interface</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <span class="Element146">rootHubPortInterface</span> member of the DRV_USB_ROOT_HUB_INTERFACE structure should point to the USB Driver Root Hub Port functions. The data type of this member is USB_HUB_INTERFACE. This data type is a structure containing function pointers pointing to the port control functions of the root hub. The USB Driver must assign the function pointers in this structure to the root hub port control functions. These same functions are also exported by a Hub Driver to the USB Host Stack, which allow the Host Stack to control a device regardless of whether it is connected to a root hub or an external hub. The port functions are valid only when a device is attached to the port. The behavior of these functions on a port to which no device is connected is not defined. Descriptions of the port control functions are provided, which include:</p>
-<ul class="Element630">
-<li class="Element600">Driver Host Hub Port Reset Function</li>
-<li class="Element600">Driver Host Hub Port Reset Completion Status Function</li>
-<li class="Element600">Driver Host Hub Port Suspend Function</li>
-<li class="Element600">Driver Host Hub Port Resume Function</li>
-<li class="Element600">Driver Host Hub Port Speed Get Function</li>
-</ul><div class="Element15">
-Driver Host Hub Port Reset Function</div>
+The UBSCD Endpoint functions allow the Driver Client to enable, disable, stall and clear the stall condition on an endpoint. The client submits requests to transmit and receive data from the USB Host on an endpoint.</p><div class="Element15">
+Endpoint Enable and Disable functions</div>
 <p class="Element10">
-The <span class="Element146">hubPortReset</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Reset function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR (*hubPortReset)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
+The USBCD client must enable an endpoint it must use the endpoint for communicating with the USB Host. The client will call the USBCD deviceEndpointEnable function to enable the endpoint. While calling this function, the client must specify the endpoint address, the transfer type to be processed on this endpoint and the maximum size of a transaction on this endpoint. This function is thread-safe when called in an RTOS application. The USBCD allows an endpoint to be accessed by one thread only. The USB Device Layer and the device function drivers will enable the endpoint when the Host sets the device configuration. The USBCD deviceEndpointIsEnabled function is available to check if an endpoint is enabled. The following code example shows how the USB Device Layer enables the device endpoint. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The following code example shows the USB Device Layer enables Endpoint 0 to
+ * prepare for the enumeration process after it has received reset signaling
+ * from the Host. The Device Layer calls the deviceEndpointEnable function to
+ * to enable the endpoint. The driverInterface member of the
+ * usbDeviceThisInstance structure points to the USB Device Mode Driver Common
+ * Interface. */</span></i>
+
+<strong><span style="color: #000080">void</span></strong> _USB_DEVICE_EventHandler
+(
+    uintptr_t referenceHandle,
+    DRV_USB_EVENT eventType,
+    <strong><span style="color: #000080">void</span></strong> * eventData
+)
+{
+    <i><span style="color: #008000">/* Code not shown due to space constraints */</span></i>
+
+    <strong><span style="color: #000080">switch</span></strong>(eventType)
+    {
+        <strong><span style="color: #000080">case</span></strong> DRV_USB_EVENT_RESET_DETECT:
+
+            <i><span style="color: #008000">/* Clear the suspended state */</span></i>
+            usbDeviceThisInstance-&gt;usbDeviceStatusStruct.isSuspended = <strong><span style="color: #000080">false</span></strong>;
+
+            <i><span style="color: #008000">/* Cancel any IRP already submitted in the RX direction. */</span></i>
+            DRV_USB_DEVICE_IRPCancelAll( usbDeviceThisInstance-&gt;usbCDHandle,
+                    controlEndpointRx );
+
+            <i><span style="color: #008000">/* Cancel any IRP already submitted in the TX direction. */</span></i>
+            DRV_USB_DEVICE_IRPCancelAll( usbDeviceThisInstance-&gt;usbCDHandle,
+                    controlEndpointTx );
+
+            <i><span style="color: #008000">/* Deinitialize all function drivers.*/</span></i>
+            _USB_DEVICE_DeInitializeAllFunctionDrivers ( usbDeviceThisInstance );
+
+            <i><span style="color: #008000">/* Disable all endpoints except for EP0.*/</span></i>
+            DRV_USB_DEVICE_EndpointDisableAll(usbDeviceThisInstance-&gt;usbCDHandle);
+
+            <i><span style="color: #008000">/* Enable EP0 endpoint in RX direction */</span></i>
+            (<strong><span style="color: #000080">void</span></strong>)usbDeviceThisInstance-&gt;driverInterface-&gt;deviceEndpointEnable
+                  (usbDeviceThisInstance-&gt;usbCDHandle,
+                    controlEndpointTx, USB_TRANSFER_TYPE_CONTROL, USB_DEVICE_EP0_BUFFER_SIZE);
+
+            <i><span style="color: #008000">/* Code not shown due to space constraints */</span></i>
+
+            <strong><span style="color: #000080">break</span></strong>;
+    }
+}</pre></div></div>
 <p class="Element10">
-The USB Driver Root Hub Port Reset function must follow this signature. This function starts reset signaling on the port. If the device is connected to the root hub, the USB Host Stack will set the <span class="Element146">hubAddress</span> parameter to the driver handle obtained through the driver Open function. The USB Host Stack uses the parent identifier provided by the root hub driver when the USB_HOST_DeviceEnumerate function was called to query the driver handle that is linked to this root hub. If the device is connected to an external hub, the <span class="Element146">hubAddress</span> parameter is directly set to the parent identifier.&nbsp;</p>
+The USB Device Layer and the Function drivers will disable an endpoint when the Host sets a zero-device configuration or when the Host resets the device. The USBCD deviceEndpointDisable function disables an endpoint. When an endpoint is disabled, it does not accept requests for Host communication. Disabling an endpoint does not cancel any communication requests that that have been submitted on the endpoint. These requests must be canceled explicitly.</p><div class="Element15">
+Device Endpoint Stall and Stall Clear</div>
 <p class="Element10">
-For the PIC32MX and PIC32MZ USB Drivers, the <span class="Element146">port</span> parameter is ignored. For an external hub, this must be set to the port to which the device is connected. The function returns USB_ERROR_NONE if the function was successful. If the reset signaling is already in progress on the port, calling this function has no effect. The USB Driver will itself time duration of the reset signal. This does not require USB Host Stack intervention. The USB Host Stack will call the port reset completion status function to check if the reset signaling has completed. Calling this function on a port which exists on an external hub will cause the hub driver to issue a control transfer to start the port reset procedure.</p><div class="Element15">
-Driver Host Hub Port Reset Completion Status Function</div>
-<p class="Element10">
-The <span class="Element146">hubPortResetIsComplete</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Reset Completion Status function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">bool</span></strong> (*hubPortResetIsComplete)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
-<p class="Element10">
-The USB Driver Root Hub Port Reset Completion Status function must follow this signature. The USB Host Stack calls this function to check if the port reset sequence that was started on a port has completed. The function returns true if the reset signaling has completed. If the device is connected to the root hub, the USB Host Stack will set the <span class="Element146">hubAddress</span> parameter to the driver handle obtained through the driver Open function. If the device is connected to an external hub, the <span class="Element146">hubAddress</span> parameter is directly set to the parent identifier.&nbsp;</p>
-<p class="Element10">
-For the PIC32MX and PIC32MZ USB Drivers, the <span class="Element146">port</span> parameter is ignored. For an external hub, this parameter must be set to the port to which the device is connected.</p><div class="Element15">
-Driver Host Hub Port Suspend Function</div>
-<p class="Element10">
-The <span class="Element146">hubPortSuspend</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Suspend function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR(*hubPortSuspend)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
-<p class="Element10">
-The USB Driver Root Hub Port Suspend function must follow this signature. The USB Host Stack calls this function to suspend the port. If the device is connected to the root hub, the USB Host Stack will set the <span class="Element146">hubAddress</span> parameter to the driver handle obtained through the driver Open function. If the device is connected to an external hub, the <span class="Element146">hubAddress</span> parameter is directly set to the parent identifier.&nbsp;</p>
-<p class="Element10">
-For the PIC32MX and PIC32MZ USB Drivers, the <span class="Element146">port</span> parameter is ignored. For an external hub, this parameter must be set to the port to which the device is connected. The function returns USB_ERROR_NONE if the request was successful. Calling this function on a suspended port will not have any effect.</p><div class="Element15">
-Driver Host Hub Port Resume Function</div>
-<p class="Element10">
-The <span class="Element146">hubPortResume</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Resume function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR(*hubPortResume)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
-<p class="Element10">
-The USB Driver Root Hub Port Resume function must follow this signature. The USB Host Stack calls this function to resume a suspended port. If the device is connected to the root hub, the USB Host Stack will set the <span class="Element146">hubAddress</span> parameter to the driver handle obtained through the driver Open function. If the device is connected to an external hub, the <span class="Element146">hubAddress</span> parameter is directly set to the parent identifier.&nbsp;</p>
-<p class="Element10">
-For the PIC32MX and PIC32MZ USB Drivers, the <span class="Element146">port</span> parameter is ignored. For an external hub, this parameter must be set to the port to which the device is connected. The function returns USB_ERROR_NONE if the request was successful. Calling this function on a port that is not suspended will not have any effect.</p><div class="Element15">
-Driver Host Hub Port Speed Get Function</div>
-<p class="Element10">
-The <span class="Element146">hubPortSpeedGet</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Speed Get function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_SPEED(*hubPortSpeedGet)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
-<p class="Element10">
-The USB Driver Root Hub Port Speed Get function must follow this signature. The USB Host Stack calls this function to obtain the USB speed of the device that is attached to the port. The Host Stack calls this function only after it has completed reset of the port. If the device is connected to the root hub, the USB Host Stack will set the <span class="Element146">hubAddress</span> parameter to the driver handle obtained through the driver Open function. If the device is connected to an external hub, the <span class="Element146">hubAddress</span> parameter is directly set to the parent identifier.&nbsp;</p>
-<p class="Element10">
-For the PIC32MX and PIC32MZ USB Drivers, the <span class="Element146">port</span> parameter is ignored. For an external hub, this parameter must be set to the port to which the device is connected. The function returns USB_SPEED_ERROR if the request was not successful. It will return the functional USB speed otherwise.&nbsp;</p>
-<p class="Element10">
-This concludes the section describing the USB Driver Host mode Client Functions. The USB Driver Device Mode Client Functions are discussed in the next section.</p></div>
+The USBCD client can call the deviceEndpointStall and deviceEndpointStallClear functions to stall and cleat the stall on an endpoint respectively. The USB Device Layer and function driver may stall endpoint to indicate error or to indicate a protocol state. The endpoint stall condition may be cleared in response to a USB Host Clear Feature request. Stalling or clearing the stall on an endpoint will cause all communication requests on the endpoint to be canceled. The function calls are thread safe and interrupt safe. The deviceEndpointIsStalled function is also available to check if an endpoint is in a stalled state. The following code example shows how the USB Device Layer calls these functions to stall and clear the stall on an endpoint. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The following code example shows how the USB Device Layer calls the driver
+ * endpoint stall function (deviceEndpointStall) to stall an endpoint when the a
+ * Host send a Set Feature request with feature selector set to endpoint halt.
+ * The endpoint to be halted is identified in the setup packet and is identified
+ * in this code example as usbEndpoint. Also shown is how the stall clear
+ * (deviceEndpointStallClear) and stall status check (deviceEndpointIsStalled)
+ * functions are called. */</span></i>
+
+<i><span style="color: #008000">/* The driverInterface member of the usbDeviceThisInstance structure is a
+ * pointer to the USB Driver Common Interface. */</span></i>
+
+<strong><span style="color: #000080">void</span></strong> _USB_DEVICE_ProcessStandardEndpointRequest
+(
+    USB_DEVICE_OBJ * usbDeviceThisInstance,
+    uint8_t interfaceNumber,
+    USB_SETUP_PACKET * setupPkt
+)
+{
+    USB_ENDPOINT usbEndpoint;
+    usbEndpoint = setupPkt-&gt;bEPID;
+
+    <strong><span style="color: #000080">if</span></strong>( setupPkt-&gt;bRequest == USB_REQUEST_GET_STATUS )
+    {
+        usbDeviceThisInstance-&gt;getStatusResponse.status = 0x00;
+        usbDeviceThisInstance-&gt;getStatusResponse.endPointHalt
+            =  usbDeviceThisInstance-&gt;driverInterface-&gt;deviceEndpointIsStalled
+               (usbDeviceThisInstance-&gt;usbCDHandle, usbEndpoint );
+
+        USB_DEVICE_ControlSend( (USB_DEVICE_HANDLE)usbDeviceThisInstance,
+                (uint8_t *)&amp;usbDeviceThisInstance-&gt;getStatusResponse, 2 );
+    }
+    <strong><span style="color: #000080">else</span></strong> <strong><span style="color: #000080">if</span></strong>( setupPkt-&gt;bRequest == USB_REQUEST_CLEAR_FEATURE )
+    {
+        <strong><span style="color: #000080">if</span></strong>( setupPkt-&gt;wValue == USB_FEATURE_SELECTOR_ENDPOINT_HALT )
+        {
+            usbDeviceThisInstance-&gt;driverInterface-&gt;deviceEndpointStallClear
+            (usbDeviceThisInstance-&gt;usbCDHandle, usbEndpoint );
+            USB_DEVICE_ControlStatus((USB_DEVICE_HANDLE)usbDeviceThisInstance,
+                                      USB_DEVICE_CONTROL_STATUS_OK );
+        }
+    }
+    <strong><span style="color: #000080">else</span></strong> <strong><span style="color: #000080">if</span></strong> (setupPkt-&gt;bRequest == USB_REQUEST_SET_FEATURE )
+    {
+        <strong><span style="color: #000080">if</span></strong>( setupPkt-&gt;wValue == USB_FEATURE_SELECTOR_ENDPOINT_HALT )
+        {
+            usbEndpoint = setupPkt-&gt;bEPID;
+            usbDeviceThisInstance-&gt;driverInterface-&gt;deviceEndpointStall
+                                  (usbDeviceThisInstance-&gt;usbCDHandle, usbEndpoint );
+            USB_DEVICE_ControlStatus((USB_DEVICE_HANDLE)usbDeviceThisInstance,
+                                      USB_DEVICE_CONTROL_STATUS_OK );
+        }
+    }
+
+    <i><span style="color: #008000">/* Additional code is not shown due to space constraints */</span></i>
+}</pre></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="01013.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00126.html" target="topic">Common Interface</a> &gt; <a href="00130.html" target="topic">Driver Host Mode Client Functions</a> &gt; <a href="00132.html" target="topic">Driver Host USB Root Hub Port Interface</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="01018.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00131.html" target="topic">Common Interface</a> &gt; <a href="00141.html" target="topic">USB Driver Device Mode Operation</a> &gt; <a href="00132.html" target="topic">Device Endpoint Operations</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -108,13 +173,13 @@ This concludes the section describing the USB Driver Host mode Client Functions.
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00131.html" target="topic">Previous</a> | <a href="00130.html" target="topic">Up</a> | <a href="00128.html" target="topic">Next</a></div>
+<a href="00138.html" target="topic">Previous</a> | <a href="00141.html" target="topic">Up</a> | <a href="00140.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver Host USB Root Hub Port Interface Topic Title: Driver Host USB Root Hub Port Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Device Endpoint Operations Topic Title: Device Endpoint Operations)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

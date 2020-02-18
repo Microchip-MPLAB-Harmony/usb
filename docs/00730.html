@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>usb_device_config_template.h</title>
+<title>USB_DEVICE_CLIENT_STATUS Enumeration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00259.html" target="topic">USB Device Layer Library</a> &gt; <a href="00276.html" target="topic">Files</a> &gt; <a href="00730.html" target="topic">usb_device_config_template.h</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00264.html" target="topic">USB Device Layer Library</a> &gt; <a href="00288.html" target="topic">Library Interface</a> &gt; g) Data Types and Constants &gt; <a href="00730.html" target="topic">USB_DEVICE_CLIENT_STATUS Enumeration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00536.html" target="topic">Previous</a> | <a href="00276.html" target="topic">Up</a> | <a href="00189.html" target="topic">Next</a></div>
+<a href="00876.html" target="topic">Previous</a> | <a href="00288.html" target="topic">Up</a> | <a href="00736.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_device_config_template.h Topic Title: usb_device_config_template.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_CLIENT_STATUS Topic Title: USB_DEVICE_CLIENT_STATUS Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-usb_device_config_template.h</div>
+USB_DEVICE_CLIENT_STATUS Enumeration</div>
 </div>
 </div>
 
@@ -46,127 +46,57 @@ usb_device_config_template.h</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="436F6D70616E79"></a><div class="Element11">
+<a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Microchip Technology Inc.</p></div>
+USB Device Layer Client Status&nbsp;</p>
+<p class="Element10">
+This enumeration defines the possible status of the USB Device Layer Client. It is returned by the <a href="00733.html" target="topic">USB_DEVICE_ClientStatusGet</a> function.</p></div>
 </div>
-<a name="46696C65204E616D65"></a><div class="Element14">
-File Name</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
+  <strong><span style="color: #000000">USB_DEVICE_CLIENT_STATUS_CLOSED</span></strong>,
+  <strong><span style="color: #000000">USB_DEVICE_CLIENT_STATUS_READY</span></strong>
+} USB_DEVICE_CLIENT_STATUS;</pre></div></div>
+<a name="4D656D62657273"></a><div class="Element14">
+Members</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-usb_device_config_template.h</p></div>
-</div>
-<a name="4465736372697074696F6E"></a><div class="Element14">
-Description</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-USB Device Layer Compile Time Options&nbsp;</p>
-<p class="Element10">
-This file contains USB device layer compile time options (macros) that are to be configured by the user. This file is a template file and must be used as an example only. This file must not be directly included in the project.</p></div>
-</div>
-<a name="4D6163726F73"></a><div class="Element14">
-Macros</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
+<div class="Element272">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table4">
 <tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
+<td class="Element260" valign="top" width="35%">
+<div class="Element261">
+Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
+<div class="Element265">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00010.html" target="topic">_USB_DEVICE_CONFIG_TEMPLATE_H_</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro _USB_DEVICE_CONFIG_TEMPLATE_H_.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00665.html" target="topic">USB_DEVICE_BOS_DESCRIPTOR_SUPPORT_ENABLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Specifies if the Device Layer should process a Host request for a BOS descriptor.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00743.html" target="topic">USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Specifies if the USB Controller Driver must be initialized explicitly as opposed to being initialized by the Device Layer.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00744.html" target="topic">USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Specifies the combined endpoint queue depth in case of a vendor USB device implementation.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00754.html" target="topic">USB_DEVICE_EP0_BUFFER_SIZE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Buffer Size in Bytes for Endpoint 0.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00889.html" target="topic">USB_DEVICE_INSTANCES_NUMBER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Number of Device Layer instances to provisioned in the application.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00903.html" target="topic">USB_DEVICE_MICROSOFT_OS_DESCRIPTOR_SUPPORT_ENABLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Specifies if the USB Device stack should support Microsoft OS Descriptor.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01000.html" target="topic">USB_DEVICE_SET_DESCRIPTOR_EVENT_ENABLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Enables the Device Layer Set Descriptor Event.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01001.html" target="topic">USB_DEVICE_SOF_EVENT_ENABLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Enables the Device Layer SOF event.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01004.html" target="topic">USB_DEVICE_STRING_DESCRIPTOR_TABLE_ADVANCED_ENABLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Specifying this macro enables the Advanced String Descriptor Table Entry Format.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01006.html" target="topic">USB_DEVICE_SYNCH_FRAME_EVENT_ENABLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Enables the Device Layer Synch Frame Event.&nbsp;</div></td></tr></table></div></div>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_CLIENT_STATUS_CLOSED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Client is closed or the specified handle is invalid&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_DEVICE_CLIENT_STATUS_READY&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Client is ready&nbsp;</div></td></tr></table></div></div>
 </div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00259.html" target="topic">USB Device Layer Library</a> &gt; <a href="00276.html" target="topic">Files</a> &gt; <a href="00730.html" target="topic">usb_device_config_template.h</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00264.html" target="topic">USB Device Layer Library</a> &gt; <a href="00288.html" target="topic">Library Interface</a> &gt; g) Data Types and Constants &gt; <a href="00730.html" target="topic">USB_DEVICE_CLIENT_STATUS Enumeration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -174,13 +104,13 @@ Enables the Device Layer Synch Frame Event.&nbsp;</div></td></tr></table></div><
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00536.html" target="topic">Previous</a> | <a href="00276.html" target="topic">Up</a> | <a href="00189.html" target="topic">Next</a></div>
+<a href="00876.html" target="topic">Previous</a> | <a href="00288.html" target="topic">Up</a> | <a href="00736.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_device_config_template.h Topic Title: usb_device_config_template.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_CLIENT_STATUS Topic Title: USB_DEVICE_CLIENT_STATUS Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

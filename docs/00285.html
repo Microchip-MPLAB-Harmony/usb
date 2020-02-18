@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Master Descriptor Table</title>
+<title>Library Initialization</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00259.html" target="topic">USB Device Layer Library</a> &gt; <a href="00288.html" target="topic">Using the Library</a> &gt; <a href="00278.html" target="topic">How the Library Works</a> &gt; <a href="00280.html" target="topic">Library Initialization</a> &gt; <a href="00285.html" target="topic">Master Descriptor Table</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00264.html" target="topic">USB Device Layer Library</a> &gt; <a href="00293.html" target="topic">Using the Library</a> &gt; <a href="00283.html" target="topic">How the Library Works</a> &gt; <a href="00285.html" target="topic">Library Initialization</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00280.html" target="topic">Previous</a> | <a href="00280.html" target="topic">Up</a> | <a href="00277.html" target="topic">Next</a></div>
+<a href="00283.html" target="topic">Previous</a> | <a href="00283.html" target="topic">Up</a> | <a href="00290.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Master Descriptor Table Topic Title: Master Descriptor Table)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Initializing the library Topic Title: Library Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Master Descriptor Table</div>
+Library Initialization</div>
 </div>
 </div>
 
@@ -49,67 +49,55 @@ Master Descriptor Table</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<img src="USB Device Master Descriptor.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10">
-As seen in the figure, the Device Master Descriptor Table (specified by the <a href="00891.html" target="topic">USB_DEVICE_MASTER_DESCRIPTOR</a> data type) is a container for all descriptor related information that is needed by the Device Layer for its operation. This table contains the following information:</p>
+The Device Layer initialization process requires the following components:</p>
 <ul class="Element630">
-<li class="Element600">Pointer to the Full-Speed and High-Speed Device Descriptor</li>
-<li class="Element600">Number of Full-Speed and High-Speed Configurations</li>
-<li class="Element600">Pointers to Table of Full-Speed and High-Speed Configuration Descriptors</li>
-<li class="Element600">Number of String Descriptors</li>
-<li class="Element600">Pointer to a Table of String Descriptors</li>
-<li class="Element600">Pointers to Full-Speed and High-Speed Device Qualifier</li>
+<li class="Element600">USB Standard Descriptors that define the device functionality. The definitions of these descriptors are defined by the USB 2.0 and Device Class specification.</li>
+<li class="Element600">Device Master Descriptor Table</li>
+<li class="Element600">Function Driver Registration Table</li>
 </ul><p class="Element10">
-In a case where a particular item in the Device Master Descriptor Table is not applicable, that entry can be either set to '0' or NULL as applicable. For example for a Full-Speed-only device, the number of High Speed Configuration should be set to '0' and the pointer to the table of High-Speed Configuration Descriptors should be set to NULL.&nbsp;</p>
-<p class="Element10">
-The following code shows an example of a USB Device Master Descriptor design for a Full-Speed USB HID Keyboard. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/**************************************************
- * USB Device Layer Master Descriptor Table
- **************************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =
-{
-    &amp;fullSpeedDeviceDescriptor,     <i><span style="color: #008000">/* Full-speed descriptor */</span></i>
-    1,                              <i><span style="color: #008000">/* Total number of full-speed configurations available */</span></i>
-    &amp;fullSpeedConfigDescSet[0],     <i><span style="color: #008000">/* Pointer to array of full-speed configurations descriptors*/</span></i>
-
-    NULL,                           <i><span style="color: #008000">/* High-speed device descriptor is not supported*/</span></i>
-    0,                              <i><span style="color: #008000">/* Total number of high-speed configurations available */</span></i>
-    NULL,                           <i><span style="color: #008000">/* Pointer to array of high-speed configurations descriptors. Not supported*/</span></i>
-
-    3,                              <i><span style="color: #008000">/* Total number of string descriptors available */</span></i>
-    stringDescriptors,              <i><span style="color: #008000">/* Pointer to array of string descriptors */</span></i>
-
-    NULL,                           <i><span style="color: #008000">/* Pointer to full-speed device qualifier. Not supported */</span></i>
-    NULL,                           <i><span style="color: #008000">/* Pointer to high-speed device qualifier. Not supported */</span></i>
-};</pre></div></div>
-<p class="Element10">
-The following code shows an example of a USB Device Master Descriptor design for a Full Speed/High Speed USB HID Keyboard. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/**************************************************
- * USB Device Layer Master Descriptor Table
- **************************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =
-{
-    &amp;fullSpeedDeviceDescriptor,     <i><span style="color: #008000">/* Full-speed descriptor */</span></i>
-    1,                              <i><span style="color: #008000">/* Total number of full-speed configurations available */</span></i>
-    &amp;fullSpeedConfigDescSet[0],     <i><span style="color: #008000">/* Pointer to array of full-speed configurations descriptors*/</span></i>
-
-    &amp;highSpeedDeviceDescriptor,     <i><span style="color: #008000">/* High-speed descriptor */</span></i>
-    1,                              <i><span style="color: #008000">/* Total number of high-speed configurations available */</span></i>
-    &amp;highSpeedConfigDescSet[0],     <i><span style="color: #008000">/* Pointer to array of high-speed configurations descriptors*/</span></i>
-
-    3,                              <i><span style="color: #008000">/* Total number of string descriptors available */</span></i>
-    stringDescriptors,              <i><span style="color: #008000">/* Pointer to array of string descriptors */</span></i>
-
-    &amp;deviceQualifierDescriptor1,    <i><span style="color: #008000">/* Pointer to full-speed device qualifier. */</span></i>
-    NULL,                           <i><span style="color: #008000">/* Pointer to high-speed device qualifier. Not supported */</span></i>
-};</pre></div></div>
-<p class="Element10">
-The USB Device Layer Master Descriptor table can be placed in the data or program memory of the microcontroller. The contents of this table should not be modified while the application is running. Doing this will affect the operation of the Device Stack. A typical USB device application will not need to change the contents of this table while the application is running.</p></div>
+The USB Standard Descriptors that define the device functionality are discussed in detail in the USB 2.0 and Device Class Specifications. The reader is encouraged to refer to these specifications for a detailed understanding of this topic. The Device Layer does not impose any additional requirements on Device descriptors.</p></div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00290.html" target="topic">Master Descriptor Table</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes the USB Device Layer Master Descriptor Table.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00282.html" target="topic">Function Driver Registration Table</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section explains how function drivers can be registered with the USB Device Layer using the Function Registration Table.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00284.html" target="topic">Initializing the Device Layer</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the USB Device Layer initialization.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00276.html" target="topic">Device Layer Task Routines</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes the Device Layer task routines.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00259.html" target="topic">USB Device Layer Library</a> &gt; <a href="00288.html" target="topic">Using the Library</a> &gt; <a href="00278.html" target="topic">How the Library Works</a> &gt; <a href="00280.html" target="topic">Library Initialization</a> &gt; <a href="00285.html" target="topic">Master Descriptor Table</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00264.html" target="topic">USB Device Layer Library</a> &gt; <a href="00293.html" target="topic">Using the Library</a> &gt; <a href="00283.html" target="topic">How the Library Works</a> &gt; <a href="00285.html" target="topic">Library Initialization</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -117,13 +105,13 @@ The USB Device Layer Master Descriptor table can be placed in the data or progra
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00280.html" target="topic">Previous</a> | <a href="00280.html" target="topic">Up</a> | <a href="00277.html" target="topic">Next</a></div>
+<a href="00283.html" target="topic">Previous</a> | <a href="00283.html" target="topic">Up</a> | <a href="00290.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Master Descriptor Table Topic Title: Master Descriptor Table)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Initializing the library Topic Title: Library Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

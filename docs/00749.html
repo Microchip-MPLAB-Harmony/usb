@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_DEVICE_EndpointRead Function</title>
+<title>USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED Macro</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00259.html" target="topic">USB Device Layer Library</a> &gt; <a href="00283.html" target="topic">Library Interface</a> &gt; e) Endpoint Management Functions &gt; <a href="00749.html" target="topic">USB_DEVICE_EndpointRead Function</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00264.html" target="topic">USB Device Layer Library</a> &gt; <a href="00287.html" target="topic">Configuring the Library</a> &gt; <a href="00749.html" target="topic">USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED Macro</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00747.html" target="topic">Previous</a> | <a href="00283.html" target="topic">Up</a> | <a href="00752.html" target="topic">Next</a></div>
+<a href="00894.html" target="topic">Previous</a> | <a href="00287.html" target="topic">Up</a> | <a href="01005.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_EndpointRead@USB_DEVICE_HANDLE@USB_DEVICE_TRANSFER_HANDLE *@USB_ENDPOINT_ADDRESS@void *@size_t Topic Title: USB_DEVICE_EndpointRead Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED Topic Title: USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_DEVICE_EndpointRead Function</div>
+USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED Macro</div>
 </div>
 </div>
 
@@ -49,125 +49,28 @@ USB_DEVICE_EndpointRead Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function requests a endpoint data read from the USB Device Layer. The function places a requests with driver, the request will get serviced as data is made available by the USB Host. A handle to the request is returned in the transferHandle parameter. The termination of the request is indicated by the USB_DEVICE_EVENT_ENDPOINT_READ_COMPLETE event. The amount of data read and the transfer handle associated with the request is returned along with the event in the pData parameter of the event handler. The transfer handle expires when event handler for the USB_DEVICE_EVENT_ENDPOINT_READ_COMPLETE exits. If the read request could not be accepted, the function returns an error code and transferHandle will contain the value <a href="01012.html" target="topic">USB_DEVICE_TRANSFER_HANDLE_INVALID</a>.&nbsp;</p>
+USB Device Layer Combined Endpoint Queue Depth&nbsp;</p>
 <p class="Element10">
-If the size parameter is not a multiple of maxPacketSize or is 0, the function returns <a href="01012.html" target="topic">USB_DEVICE_TRANSFER_HANDLE_INVALID</a> in transferHandle and returns an error code as a return value. If the size parameter is a multiple of maxPacketSize and the host sends less than maxPacketSize data in any transaction, the transfer completes and the function driver will issue a USB_DEVICE_EVENT_ENDPOINT_READ_COMPLETE event along with the USB_DEVICE_EVENT_DATA_ENDPOINT_READ_COMPLETE_DATA data structure. If the size parameter is a multiple of maxPacketSize and the host sends maxPacketSize amount of data, and total data received does not exceed size, then the function driver will wait for the next packet.</p></div>
+This configuration constant specifies the combined endpoint queue depth in a case where the endpoint read and endpoint write functions are used to implement a vendor USB device. This constant should be used in conjunction with the usb_device_endpoint_functions.c file.&nbsp;</p>
+<p class="Element10">
+This macro defines the number of entries in all IN and OUT endpoint queues in all instances of the USB Device Layer. This value can be obtained by adding up the endpoint read and write queue sizes of each USB Device Layer instance . In a simple single instance USB Device Layer, that requires only one read and one write endpoint with one buffer each, the USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED macro can be set to 2. Consider a case with one Device Layer instance using 2 IN and 2 OUT endpoints, each requiring 2 buffers, this macro should be set to 8 (2 + 2 + 2 + 2).</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00990.html" target="topic">USB_DEVICE_RESULT</a> <strong><span style="color: #000000">USB_DEVICE_EndpointRead</span></strong>(
-    <a href="00794.html" target="topic">USB_DEVICE_HANDLE</a> <strong><span style="color: #000000">usbDeviceHandle</span></strong>, 
-    <a href="01011.html" target="topic">USB_DEVICE_TRANSFER_HANDLE</a> * <strong><span style="color: #000000">transferHandle</span></strong>, 
-    USB_ENDPOINT_ADDRESS <strong><span style="color: #000000">endpoint</span></strong>, 
-    <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">buffer</span></strong>, 
-    size_t <strong><span style="color: #000000">bufferSize</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-The device should have been configured.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
-<div class="TableDiv">
-<table cellspacing="0" class="Table3">
-<tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-usbDeviceHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-USB Device Layer Handle.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-transferHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Pointer to a <a href="01011.html" target="topic">USB_DEVICE_TRANSFER_HANDLE</a> type of variable. This variable will contain the transfer handle in case the read request was successful.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-endpoint&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Endpoint from which the data should be read.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-data&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-pointer to the data buffer where read data will be stored.<br>&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-size&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Size of the data buffer. Refer to the description section for more details on how the size affects the transfer.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-USB_DEVICE_RESULT_OK - The read request was successful. transferHandle contains a valid transfer handle.&nbsp;</p>
-<p class="Element10">
-USB_DEVICE_RESULT_ERROR_TRANSFER_QUEUE_FULL - internal request queue is full. The write request could not be added.&nbsp;</p>
-<p class="Element10">
-USB_DEVICE_RESULT_ERROR_TRANSFER_SIZE_INVALID - The specified transfer size was not a multiple of endpoint size or is 0.&nbsp;</p>
-<p class="Element10">
-USB_DEVICE_RESULT_ERROR_ENDPOINT_NOT_CONFIGURED - The specified endpoint is not configured yet and is not ready for data transfers.&nbsp;</p>
-<p class="Element10">
-USB_DEVICE_RESULT_ERROR_ENDPOINT_INVALID - The specified instance was not provisioned in the application and is invalid.</p></div>
-</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED</span></strong> 2</pre></div></div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-While the using the device layer with PIC32MZ USB module, the receive buffer provided to the USB_DEVICE_EndpointRead should be placed in coherent memory and aligned at a 16 byte boundary. This can be done by declaring the buffer using the __attribute__((coherent, aligned(16))) attribute. An example is shown here&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">uint8_t data[256] __attribute__((coherent, aligned(16)));</pre></div></div>
-</div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">
-<i><span style="color: #008000">// Shows an example of how to read. This assumes that</span></i>
-<i><span style="color: #008000">// driver was opened successfully. Note how the endpoint </span></i>
-<i><span style="color: #008000">// is specified. The most significant bit is cleared while</span></i>
-<i><span style="color: #008000">// the lower nibble specifies the endpoint (which is 1).</span></i>
-
-<a href="01011.html" target="topic">USB_DEVICE_TRANSFER_HANDLE</a> transferHandle;
-<a href="00990.html" target="topic">USB_DEVICE_RESULT</a> readRequestResult;
-<a href="00794.html" target="topic">USB_DEVICE_HANDLE</a> usbDeviceHandle;
-USB_ENDPOINT_ADDRESS endpoint = 0x01;
-
-readRequestResult = USB_DEVICE_EndpointRead(usbDeviceHandle,
-                        &amp;transferHandle, endpoint, data, 128);
-
-<strong><span style="color: #000080">if</span></strong>(USB_DEVICE_RESULT_OK != readRequestResult)
-{
-    <i><span style="color: #008000">//Do Error handling here</span></i>
-}
-
-<i><span style="color: #008000">// The completion of the read request will be indicated by the </span></i>
-<i><span style="color: #008000">// USB_DEVICE_EVENT_ENDPOINT_READ_COMPLETE event.</span></i>
-</pre></div></div>
-</div>
+This constant needs to be specified only if a Vendor USB Device is to be implemented and the usb_device_endpoint_functions.c file is included in the project. This constant does not have any effect on queues of other standard function drivers that are included in the USB device implementation.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00259.html" target="topic">USB Device Layer Library</a> &gt; <a href="00283.html" target="topic">Library Interface</a> &gt; e) Endpoint Management Functions &gt; <a href="00749.html" target="topic">USB_DEVICE_EndpointRead Function</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00264.html" target="topic">USB Device Layer Library</a> &gt; <a href="00287.html" target="topic">Configuring the Library</a> &gt; <a href="00749.html" target="topic">USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED Macro</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -175,13 +78,13 @@ readRequestResult = USB_DEVICE_EndpointRead(usbDeviceHandle,
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00747.html" target="topic">Previous</a> | <a href="00283.html" target="topic">Up</a> | <a href="00752.html" target="topic">Next</a></div>
+<a href="00894.html" target="topic">Previous</a> | <a href="00287.html" target="topic">Up</a> | <a href="01005.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_EndpointRead@USB_DEVICE_HANDLE@USB_DEVICE_TRANSFER_HANDLE *@USB_ENDPOINT_ADDRESS@void *@size_t Topic Title: USB_DEVICE_EndpointRead Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED Topic Title: USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

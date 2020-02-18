@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Transferring Data to the Host</title>
+<title>Driver Host Mode Client Functions</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="01013.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00126.html" target="topic">Common Interface</a> &gt; <a href="00136.html" target="topic">USB Driver Device Mode Operation</a> &gt; <a href="00135.html" target="topic">Transferring Data to the Host</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="01018.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00131.html" target="topic">Common Interface</a> &gt; <a href="00135.html" target="topic">Driver Host Mode Client Functions</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00127.html" target="topic">Previous</a> | <a href="00136.html" target="topic">Up</a> | <a href="00236.html" target="topic">Next</a></div>
+<a href="00131.html" target="topic">Previous</a> | <a href="00131.html" target="topic">Up</a> | <a href="00136.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Transferring Data to the Host Topic Title: Transferring Data to the Host)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver Host Mode Client Functions Topic Title: Driver Host Mode Client Functions)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Transferring Data to the Host</div>
+Driver Host Mode Client Functions</div>
 </div>
 </div>
 
@@ -49,239 +49,92 @@ Transferring Data to the Host</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The USB Device Layer, the USBCD client, needs to transfer data to the Host in response to enumeration requests for general operation on the device. The USB uses a concept of Input Output Request Packet (IRP) to transfer data to and from the Host. IRPs are transported over endpoints which are enabled by calling the USBCD Endpoint Enable function.&nbsp;</p>
+The DRV_USB_HOST_INTERFACE structure contains pointers to the USB Driver’s Host mode Client functions. These functions are only applicable when the USB module is operating as a USB Host. Along with the function pointers to the driver’s Host mode specific functions, the DRV_USB_HOST_INTERFACE structure also contains another structure of function pointers of the type DRV_USB_ROOT_HUB_INTERFACE. This structure contains function pointers to the USB Driver’s Root Hub functions. A USB Driver must implement these functions and ensure that the Host Stack can access these functions through the driver’s DRV_USB_HOST_INTERFACE structure. The Driver Host mode Client functions in the DRV_USB_HOST_INTERFACE structure are:</p>
+<ul class="Element630">
+<li class="Element600">Driver Host Pipe Setup Function</li>
+<li class="Element600">Driver Host Pipe Close Function</li>
+<li class="Element600">Driver Host Events Disable Function</li>
+<li class="Element600">Driver Host Events Enable Function</li>
+<li class="Element600">Driver Host IRP Submit Function</li>
+<li class="Element600">Driver Host IRP Cancel Function</li>
+</ul><div class="Element15">
+Driver Host Pipe Setup Function</div>
 <p class="Element10">
-A Device IRP is a USB_DEVICE_IRP type data structure. The IRP is created by the Device Layer and submitted to the USBCD for processing through the deviceIRPSubmit function. At the time of submitting the IRP, the endpoint over which the IRP must be transported is specified. The data request in the IRP is transported using the attributes of the endpoint. When an IRP is submitted to the USBCD, it is owned by the USBCD and cannot be modified by the Device Layer until the USBCD issues an IRP callback. The USBCD will issue the IRP callback when it has completed or terminated processing of the IRP.&nbsp;</p>
+The <span class="Element146">hostPipeSetup</span> member of the DRV_USB_HOST_INTERFACE structure should point to the USB Driver Host Pipe Setup function. The signature of the Host Pipe Setup function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">DRV_USB_HOST_PIPE_HANDLE (*hostPipeSetup)  ( DRV_HANDLE client,  uint8_t deviceAddress,
+                           USB_ENDPOINT endpointAndDirection, uint8_t hubAddress,
+                           uint8_t hubPort, USB_TRANSFER_TYPE pipeType, uint8_t bInterval,
+                           uint16_t wMaxPacketSize, USB_SPEED speed);</pre></div></div>
 <p class="Element10">
-An IRP does not have its own transfer type. It inherits the properties of the endpoint to which it is submitted. Hence an IRP becomes a control transfer IRP it was submitted to a control endpoint. An endpoint allows multiple IRPs to be queued. This allows the Device Layer to submit IRPs to an endpoint even while an IRP is being processed on the endpoint. The USBCD will process an IRP in the order that it was received. The following code example shows the USB_DEVICE_IRP data structure: </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code example shows the USB_DEVICE_IPR structure. The Device Layer
- * uses such a structure to transfer data through the driver. A structure of
- * this type is allocated by the Device Layer and the other function drivers and
- * passed to the deviceIRPSubmit function. */</span></i>
-
-<strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">struct</span></strong> _USB_DEVICE_IRP
-{
-    <i><span style="color: #008000">/* Pointer to the data buffer */</span></i>
-    <strong><span style="color: #000080">void</span></strong> * data;
-
-    <i><span style="color: #008000">/* Size of the data buffer */</span></i>
-    <strong><span style="color: #000080">unsigned</span></strong> <strong><span style="color: #000080">int</span></strong> size;
-
-    <i><span style="color: #008000">/* Status of the IRP */</span></i>
-    USB_DEVICE_IRP_STATUS status;
-
-    <i><span style="color: #008000">/* IRP Callback. If this is NULL, then there is no callback generated */</span></i>
-    <strong><span style="color: #000080">void</span></strong> (*callback)(<strong><span style="color: #000080">struct</span></strong> _USB_DEVICE_IRP * irp);
-
-    <i><span style="color: #008000">/* Request specific flags */</span></i>
-    USB_DEVICE_IRP_FLAG flags;
-
-    <i><span style="color: #008000">/* User data */</span></i>
-    uintptr_t userData;
-
-    <i><span style="color: #008000">/***********************************
-     * The following members should not
-     * be modified by the client
-     ***********************************/</span></i>
-    uint32_t privateData[3];
-
-} USB_DEVICE_IRP;</pre></div></div>
+The USB Driver Host mode Pipe Setup function must match this signature. The USB Host Stack calls this function to create a communication pipe to the attached device. The function parameters define the property of this communication pipe. The <span class="Element146">driverHandle</span> parameter is the handle to the driver obtained through the driver Open function. The <span class="Element146">deviceAddress</span> and the <span class="Element146">endpointAddress</span> parameters specify the address of the USB device and the endpoint on this device to which this pipe must connect.&nbsp;</p>
 <p class="Element10">
-The <span class="Element146">data</span> member of the USB_DEVICE_IRP structure points to a data buffer. This data buffer will contain the data that needs to be sent to the Host for the data stage of an IN transfer. For an OUT transfer, it will contain the data that was received from the Host. Any hardware specific cache coherency and address alignment requirements must be considered while allocating this data buffer. The Driver Client should not modify or examine the contents of the IRP after the IRP has been submitted and is being processed. It can be examined after the driver has released the IRP.&nbsp;</p>
+If the device is connected to the Host though a hub, <span class="Element146">hubAddress</span> and <span class="Element146">hubPort</span> must specify the address of the hub and port to which the device is connected. The USB Driver will use these parameters to schedule split transactions if the target device is a Low-Speed or Full-Speed device and is connected to the Host through a high-speed hub. If the device is connected directly to the Host, these parameters should be set to zero ('<span class="Element146">0</span>').&nbsp;</p>
 <p class="Element10">
-The <span class="Element146">size</span> member of the USB_DEVICE_IRP structure specifies the size of the data buffer. The transfer will end when the device has sent or received size number of bytes. While sending data to the Host, the IRP size can exceed the size of the transaction (which is equal to the size of the endpoint). The USBCD in such a case will split up the transfer into transactions. This process does not require external intervention. The driver uses receive and transmit IRPs to process control transfers. When the driver receives a Setup packet, the IRP completion status would be USB_DEVICE_IRP_STATUS. The Driver Client should then use additional receive and transmit IRPs to complete the control transfer.&nbsp;</p>
+The <span class="Element146">pipeType</span> parameter specifies the type of USB transfers that this pipe would support. The <span class="Element146">bInterval</span> parameter is interpreted as per the USB 2.0 Specification based on the transfer type and the speed of the pipe. The <span class="Element146">wMaxPacketSize</span> parameter defines the maximum size of a transaction that the driver should use while transporting a transfer on the pipe. The Host layer will use the information obtained from the USB device descriptors of the attached device to decide the <span class="Element146">wMaxPacketSize</span> parameter.&nbsp;</p>
 <p class="Element10">
-For interrupt and isochronous transfers, the size of transfer specified in the IRP cannot exceed the size of the transaction. If size is specified as 0, then the driver will send or expect a zero length packet. The <span class="Element146">size</span> parameter of the IRP is updated by the driver when IRP processing is completed. This will contain the size of the completed transfer.&nbsp;</p>
+The Driver Host Pipe Setup function should be thread-safe, but does not have to be event safe. The Host layer (or the Host Client Drivers) will not, and should not attempt to create a pipe in an interrupt, and therefore, an event context. The function should return DRV_USB_PIPE_HANDLE_INVALID if the driver could not open the pipe. The driver may not be able to open a pipe due to incorrect function parameters or due to lack of resources.</p><div class="Element15">
+Driver Host Pipe Close Function</div>
 <p class="Element10">
-The <span class="Element146">status</span> member of the IRP provides the completion status of the IRP and should be checked only when the IRP processing has completed. This is indicated by the driver calling the IRP callback function. The IRP status is a USB_DEVICE_IRP_STATUS type. The following code example shows the different possible values of the <span class="Element146">status</span> member and example usage of IRPs to transfer data between the device and the Host. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The followoing code shows example usage of the device IRP. The submit status
- * of the IRP is available when IRP submit function returns. The completion
- * status of the IRP is available when the IRP has terminated and the IRP
- * callback function is invoked. The IRP callback
- * function shown in this example shows the possible complete status of the IRP.
- * The end application may or may not handle all the cases. Multiple IRPs can be
- * queued on an endpoint. */</span></i>
-
-<strong><span style="color: #000080">void</span></strong> IRP_Callback(USB_DEVICE_IRP * irp)
-{
-    <i><span style="color: #008000">/* irp is pointing to the IRP for which the callback has occurred. In most
-     * cases this function will execute in an interrupt context. The application
-     * should not perform any hardware access or interrupt unsafe operations in
-     * this function. */</span></i>
-
-    <strong><span style="color: #000080">switch</span></strong>(irp-&gt;status)
-    {
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_IRP_STATUS_TERMINATED_BY_HOST:
-            <i><span style="color: #008000">/* The IRP was aborted because the Host cleared the stall on the
-             * endpoint */</span></i>
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_IRP_STATUS_ABORTED_ENDPOINT_HALT:
-            <i><span style="color: #008000">/* IRP was aborted because the endpoint halted */</span></i>
-            <strong><span style="color: #000080">break</span></strong>;
-
-
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_IRP_STATUS_ABORTED:
-            <i><span style="color: #008000">/* USB Device IRP was aborted by the function driver */</span></i>
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_IRP_STATUS_ERROR:
-            <i><span style="color: #008000">/* An error occurred on the bus when the IRP was being processed */</span></i>
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_IRP_STATUS_COMPLETED:
-            <i><span style="color: #008000">/* The IRP was completed */</span></i>
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_IRP_STATUS_COMPLETED_SHORT:
-            <i><span style="color: #008000">/* The IRP was completed but the amount of data received was less
-             * than the requested size */</span></i>
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">default</span></strong>:
-            <strong><span style="color: #000080">break</span></strong>;
-
-    }
-}
-
-<i><span style="color: #008000">/* In the following example, the IRP is submitted to Endpoint 0x84. This is
- * interpreted as an IN direction endpoint (MSB of 0x84 is 1) and Endpoint 4.
- * The data contained in source will be sent to the USB Host. Assuming
- * the endpoint size is 64, the 130 bytes of data in this case will be sent to
- * the Host in three transaction of 64, 64 and 2 bytes. A transaction completes
- * when the Host polls (sends an IN token) the device.  The callback function
- * will then called indicating the completion status of the IRP. The application
- * should not modify the privateData field of the IRP. If the IRP was submitted
- * successfully, the buffer will be owned by the driver until the IRP callback
- * function has been called. Because the size of the transfer is not a multiple
- * of the endpoint size, the IRP flag must be set
- * USB_DEVICE_IRP_FLAG_DATA_COMPLETE. This directs the driver to not perform any
- * explicit signaling to the Host to indicate end of transfer. The last packet
- * in this case is a short packet and this signals the end of the transfer. */</span></i>
-
-USB_DEVICE_IRP irp;
-USB_ERROR result;
-uint8_t source[130];
-
-irp.data = source;
-irp.size = 130;
-irp.called = IRP_Callback;
-flags = USB_DEVICE_IRP_FLAG_DATA_COMPLETE;
-userData = &amp;someApplicationObject;
-
-result = DRV_USBFS_DEVICE_IRPSubmit(driverHandle, 0x84, &amp;irp);
-
-<strong><span style="color: #000080">switch</span></strong>(result)
-{
-    <strong><span style="color: #000080">case</span></strong> USB_ERROR_PARAMETER_INVALID:
-        <i><span style="color: #008000">/* This can happen if the driverHandle is invalid */</span></i>
-        <strong><span style="color: #000080">break</span></strong>;
-
-    <strong><span style="color: #000080">case</span></strong> USB_ERROR_DEVICE_IRP_IN_USE:
-        <i><span style="color: #008000">/* This can happen if the IRP is being resubmitted while it is still in
-         * process (it was submitted before but processing has not completed */</span></i>
-        <strong><span style="color: #000080">break</span></strong>;
-
-    <strong><span style="color: #000080">case</span></strong> USB_ERROR_DEVICE_ENDPOINT_INVALID;
-        <i><span style="color: #008000">/* The endpoint to which this IRP is being submitted is not provisioned
-         * in the system. This is controller by DRV_USBFS_ENDPOINTS_NUMBER
-         * configuration parameter. */</span></i>
-        <strong><span style="color: #000080">break</span></strong>;
-
-    <strong><span style="color: #000080">case</span></strong> USB_ERROR_ENDPOINT_NOT_CONFIGURED:
-        <i><span style="color: #008000">/* The endpoint to which this IRP is being submitted is not enabled. It
-         * must be enabled by calling the DRV_USBFS_DEVICE_EndpointEnable()
-         * function. */</span></i>
-        <strong><span style="color: #000080">break</span></strong>;
-
-    <strong><span style="color: #000080">case</span></strong> USB_ERROR_PARAMETER_INVALID:
-        <i><span style="color: #008000">/* The USB_DEVICE_IRP_FLAG_DATA_PENDING flag was specified but the
-         * transfer size is not a multiple of the endpoint size. If the IRP was
-         * submitted to a receive endpoint, this error can occur if the size is
-         * not a multiple of the endpoint size. */</span></i>
-        <strong><span style="color: #000080">break</span></strong>;
-
-    <strong><span style="color: #000080">case</span></strong> USB_ERROR_OSAL_FUNCTION:
-        <i><span style="color: #008000">/* An error occurred while trying to grab a mutex. This is applicable
-         * when the driver is running with a RTOS. */</span></i>
-        <strong><span style="color: #000080">break</span></strong>;
-
-    <strong><span style="color: #000080">case</span></strong> USB_ERROR_NONE:
-        <i><span style="color: #008000">/* The IRP was submitted successfully. */</span></i>
-        <strong><span style="color: #000080">break</span></strong>;
-
-    <strong><span style="color: #000080">default</span></strong>:
-        <strong><span style="color: #000080">break</span></strong>;
-}
-
-<i><span style="color: #008000">/* The following code example shows how an IRP is submitted to an OUT endpoint.
- * In this case data will be pointing to a buffer where the received data will
- * be stored. Note that the size of the IRP should be a multiple of the endpoint
- * size. The flags parameter is ignored in the data receive case. The IRP
- * terminates when the specified size of bytes has been received (the Host sends
- * OUT packets) or when a short packet has been received. */</span></i>
-
-USB_DEVICE_IRP irp;
-USB_ERROR result;
-uint8_t destination[128];
-
-irp.data = destination;
-irp.size = 128;
-irp.called = IRP_Callback;
-userData = &amp;someApplicationObject;
-
-result = DRV_USBFS_DEVICE_IRPSubmit(driverHandle, 0x04, &amp;irp);</pre></div></div>
+The <span class="Element146">hostPipeClose</span> member of the DRV_USB_HOST_INTERFACE structure should point to the USB Driver Host Pipe Close function. The signature of the Host Pipe Close function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> (*hostPipeClose)(DRV_USB_HOST_PIPE_HANDLE pipeHandle);</pre></div></div>
 <p class="Element10">
-For IRPs submitted to an Interrupt or Isochronous endpoints, the driver will always send either the less than or equal to the maximum endpoint packet size worth of bytes in a transaction. The application could either submit an IRP per Interrupt/Isochronous polling interval or it could submit one IRP for multiple polling intervals.&nbsp;</p>
+The USB Driver Host mode Pipe Close function must match this signature. The USB Host Stack calls this function to close communication pipes. The <span class="Element146">pipeHandle</span> parameter is the pipe handle obtained from the Pipe Setup function. The Host Client Driver typically closes pipes when a device detach was detected. The Client Driver may also close pipes when a device configuration needs to change or when the Client Driver is being unloaded by the Host. The Pipe Close function has no side effect if the pipe handle is invalid. Closing the pipe will abort all I/O Request Packets (IRP) that are scheduled on the pipe. Any transaction in progress will complete. The IRP callback functions for each IRP scheduled in the pipe will be called with a USB_HOST_IRP_STATUS_ABORTED status.&nbsp;</p>
 <p class="Element10">
-The <span class="Element146">flags</span> member of the USB_DEVICE_IRP structure specifies flags which affect the behavior of the IRP. The USB_DEVICE_IRP_FLAG enumeration specifies the available option. The USB_DEVICE_IRP_FLAG_DATA_COMPLETE causes the driver to add a Zero Length Packet (ZLP) to the data stage of the IN transfer when the transfer size is an exact multiple of the endpoint size. If the transfer size is not a multiple of the endpoint size, no ZLP will be sent. The USB_DEVICE_IRP_FLAG_PENDING flag will cause the driver to not send a ZLP in a case where the size of the IN transfer is an exact multiple of the endpoint size. The following code example demonstrates this. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* In the following code example, the IRP is submitted to an IN endpoint whose size
- * is 64. The transfer size is 128, which is an exact multiple of the endpoint
- * size. The flag is set to USB_DEVICE_IRP_FLAG_DATA_COMPLETE. The driver
- * will send two transactions of 64 bytes each and will then automatically send a
- * Zero Length Packet (ZLP), thus completing the transfer. The IRP callback will
- * be invoked when the ZLP transaction has completed. */</span></i>
-
-USB_DEVICE_IRP irp;
-USB_ERROR result;
-uint8_t source[128];
-
-irp.data = source;
-irp.size = 128;
-irp.called = IRP_Callback;
-flags = USB_DEVICE_IRP_FLAG_DATA_COMPLETE;
-userData = &amp;someApplicationObject;
-
-result = DRV_USBFS_DEVICE_IRPSubmit(driverHandle, 0x84, &amp;irp);
-
-<i><span style="color: #008000">/* In the following code example, the IRP is submitted to an IN endpoint whose size
- * is 64. The transfer size is 128, which is an exact multiple of the endpoint
- * size. The flag is set to to USB_DEVICE_IRP_FLAG_DATA_PENDING. The driver will
- * send two transactions of 64 bytes each but will not send a ZLP. The USB Host
- * can then consider that there is more data pending in the transfer. The IRP
- * callback will be invoked when the two transactions have completed. */</span></i>
-
-USB_DEVICE_IRP irp;
-USB_ERROR result;
-uint8_t source[128];
-
-irp.data = source;
-irp.size = 128;
-irp.called = IRP_Callback;
-flags = USB_DEVICE_IRP_FLAG_DATA_COMPLETE;
-userData = &amp;someApplicationObject;
-
-result = DRV_USBFS_DEVICE_IRPSubmit(driverHandle, 0x84, &amp;irp);</pre></div></div>
+The USB Driver Pipe Close function must be thread-safe and event-safe. The latter requirement allows the Pipe Close function to be called in the context of the device detach Interrupt Service Routine.</p><div class="Element15">
+Driver Host Event Disable Function</div>
 <p class="Element10">
-The <span class="Element146">callback</span> member of the USB_DEVICE_IRP structure points to a function which the driver calls when the IRP processing is completed. The Driver Client must implement this function and assign the pointer to this function to the <span class="Element146">callback</span> member of the IRP. Every IRP can have its own callback function or one common callback function could be used. The callback function will execute in an interrupt context. The Driver Client should not execute interrupt unsafe, blocking or computationally intensive operations in the callback function. The client can call deviceIRPSubmit function in the IRP callback function to submit another IRP or resubmit the same IRP. The client can check the status and size of the IRP in the callback function.&nbsp;</p>
+The <span class="Element146">hostEventsDisable</span> member of the DRV_USB_HOST_INTERFACE structure should point to the USB Driver Host mode Driver Events Disable function. The signature of the Events Disable function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">bool</span></strong> (*hostEventsDisable)(DRV_HANDLE handle);</pre></div></div>
 <p class="Element10">
-The <span class="Element146">userData</span> member of the USB_DEVICE_IRP structure can be used by the client to associate a client specific context with the Host. This context can then be used by the client, in the IRP callback function to identify the context in which the IRP was submitted. This member is particularly useful if the client wants to implement one callback function for all IRPs.&nbsp;</p>
+The USB Driver Host mode Driver Events Disable function must match this signature. The Host Stack will call this function when it wants to execute a section of code that should not be interrupted by the USB Driver. Calling this function should disable USB Driver event generation. The <span class="Element146">handle</span> parameter is set to the driver handle obtained via the driver Open function. The function will return the present state of the event generation, whether it is enabled or disabled. The Host Stack will pass this value to the USB Driver Host mode Driver Events Enable function when it needs to enable the driver events.</p><div class="Element15">
+Driver Host Events Enable Function</div>
 <p class="Element10">
-The <span class="Element146">privateData</span> member of the IRP is used by the driver and should not be accessed or manipulated by the Driver Client.</p></div>
+The <span class="Element146">hostEventsEnable</span> member of the DRV_USB_HOST_INTERFACE structure should point to the USB Driver Host mode Driver Events Enable function. The signature of the events enable function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> (*hostEventsEnable)(DRV_HANDLE handle, <strong><span style="color: #000080">bool</span></strong> eventContext);</pre></div></div>
+<p class="Element10">
+The USB Driver Host mode Driver Events Enable function must match this signature. The USB Host Stack calls this function to re-enable the USB Driver Host mode Events (if they were enabled) after it called the USB Driver Host mode Events Disable function to disable driver events. The <span class="Element146">handle</span> parameter is set to the driver handle obtained via the driver Open function. The <span class="Element146">eventContext</span> parameter is set to the value returned by the Host mode Driver Events Disable function. The USB Driver will use the <span class="Element146">eventContext</span> parameter to restore the event generation status (enabled or disabled) to what it was when the USB Driver Host mode Driver Events Disable function was called.</p><div class="Element15">
+Driver Host IRP Submit Function</div>
+<p class="Element10">
+The <span class="Element146">hostIRPSubmit</span> member of the DRV_USB_HOST_INTERFACE structure should point to the USB Driver Host IRP Submit function. The signature of the IRP Submit function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR (*hostIRPSubmit)(DRV_USB_HOST_PIPE_HANDLE pipeHandle, USB_HOST_IRP * irp);</pre></div></div>
+<p class="Element10">
+The USB Driver Host IRP Submit function must match this signature. The Host Stack calls this function to submit an IRP to the USB Driver. The USB Driver provides this mechanism to transfer data between the Host Stack and the attached device. The <span class="Element146">pipeHandle</span> parameter should be set to the pipe handle obtained by the Pipe Setup function. The pipe handle specifies the pipe, and therefore, the target device, endpoint, speed and transfer type, on which the I/O must be processed. The <span class="Element146">irp</span> parameter should point to the IRP data structure. The IRP data structure will transport an entire transfer over the pipe. The USB Driver will split up the transfer into transactions based on the parameters specified at the time of pipe creation. This process does not require Host Stack intervention.&nbsp;</p>
+<p class="Element10">
+The function will return USB_ERROR_HOST_PIPE_INVALID if the pipe handle is not valid. It will return USB_ERROR_OSAL_FUNCTION if an error occurred while performing a RTOS-related operation. It will return USB_ERROR_NONE if the IRP was submitted successfully.&nbsp;</p>
+<p class="Element10">
+The USB Driver will queue the IRP if there is already an IRP being processed on the pipe. The completion of the IRP processing is indicated by the USB Driver calling the IRP Callback function specified within the IRP. The Host IRP Submit function must be thread-safe and IRP callback-safe. The Host Stack may resubmit the IRP within the IRP Callback function. The IRP Callback function itself executes within an interrupt context. The completion status of the IRP will be available in the <span class="Element146">status</span> member of the IRP when the IRP callback function is invoked.</p><div class="Element15">
+Driver Host IRP Cancel Function</div>
+<p class="Element10">
+The <span class="Element146">hostIRPCancel</span> member of the DRV_USB_HOST_INTERFACE structure should point to the USB Driver Host IRP Cancel function. The signature of the IRP Cancel function is as follows </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> (*hostIRPCancel)(USB_HOST_IRP * irp);</pre></div></div>
+<p class="Element10">
+The USB Driver Host IRP Cancel function must match this signature. The Host Stack and Host Client Drivers will call this function to cancel an IRP that was submitted. The IRP will be aborted successfully if it is not in progress. If the IRP processing has begun, the on-going transaction will complete and pending transactions in the transfer will be aborted. In either case, the IRP Callback function will be called with the IRP status as USB_HOST_IRP_STATUS_ABORTED.</p></div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00136.html" target="topic">Driver Host Root Hub Interface</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Provides information on the Root Hub interface for the USB Host Driver.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00137.html" target="topic">Driver Host USB Root Hub Port Interface</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Provides information on the Root Hub Port interface of the USB Host Driver.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="01013.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00126.html" target="topic">Common Interface</a> &gt; <a href="00136.html" target="topic">USB Driver Device Mode Operation</a> &gt; <a href="00135.html" target="topic">Transferring Data to the Host</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="01018.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00131.html" target="topic">Common Interface</a> &gt; <a href="00135.html" target="topic">Driver Host Mode Client Functions</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -289,13 +142,13 @@ The <span class="Element146">privateData</span> member of the IRP is used by the
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00127.html" target="topic">Previous</a> | <a href="00136.html" target="topic">Up</a> | <a href="00236.html" target="topic">Next</a></div>
+<a href="00131.html" target="topic">Previous</a> | <a href="00131.html" target="topic">Up</a> | <a href="00136.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Transferring Data to the Host Topic Title: Transferring Data to the Host)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver Host Mode Client Functions Topic Title: Driver Host Mode Client Functions)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

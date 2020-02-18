@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>String Descriptor Table</title>
+<title>Introduction</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00259.html" target="topic">USB Device Layer Library</a> &gt; <a href="00288.html" target="topic">Using the Library</a> &gt; <a href="00278.html" target="topic">How the Library Works</a> &gt; <a href="00286.html" target="topic">String Descriptor Table</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00264.html" target="topic">USB Device Layer Library</a> &gt; <a href="00286.html" target="topic">Introduction</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00270.html" target="topic">Previous</a> | <a href="00278.html" target="topic">Up</a> | <a href="00265.html" target="topic">Next</a></div>
+<a href="00264.html" target="topic">Previous</a> | <a href="00264.html" target="topic">Up</a> | <a href="00293.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER String Descriptor Table Topic Title: String Descriptor Table)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-String Descriptor Table</div>
+Introduction</div>
 </div>
 </div>
 
@@ -49,269 +49,33 @@ String Descriptor Table</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The Device Layer allows the application to specify string descriptors via a String Descriptor Table. When the USB Host requests for a string by its index and language ID, the Device Layer looks for the corresponding string descriptor in the String Descriptor Table. There are two possible methods of specifying this String Descriptor Table, Basic and Advanced. These methods are discussed here.</p><div class="Element15">
-Basic String Descriptor Table</div>
+<span style="color: #000000">The MPLAB Harmony 3 USB Device Layer Library (also referred to as the Device Layer) is part of the MPLAB Harmony 3 USB Device Stack. Within the USB Device Stack, the Device Layer implementation is independent of the USB Controller Hardware. It responds to enumeration requests from the Hosts. It receives control transfers from the Host and responds to these control transfers in case of standard device requests. It dispatches all other control transfers to function drivers and the application. It provides the application and function drivers with API routines that allow them to respond and complete a control transfer, with a facility to defer the responses to a control transfer. The Device Layer also provides the application with events and functions that allow the application to track the state of the device.</span>&nbsp;</p>
 <p class="Element10">
-The Basic String Descriptor Table should be used when the USB Device Application has equal number of string descriptors for each language string and the String Descriptor Indexes are continuous. This is the default method of specifying the String Descriptor Table. Each entry in the table contains the following information</p>
+<span style="color: #000000">The Device Layer plays the role of a system in the MPLAB Harmony USB Device Stack. It initializes USB device function drivers which contained in the active configuration. The state machines of these function drivers is maintained by the Device Layer i.e. the Device Layer invokes the function driver tasks routines from within its own task routine. The Device Layer thus treats the function drivers as sub modules.</span>&nbsp;</p>
+<p class="Element10">
+The device<span style="color: #FFFFFF">_</span>layer features the following:</p>
 <ul class="Element630">
-<li class="Element600">The size of the entry</li>
-<li class="Element600">The descriptor type, which is always set to USB_DESCRIPTOR_STRING</li>
-<li class="Element600">The array containing the string</li>
-</ul><p class="Element10">
-The first entry in the String Descriptor Table, at index 0 of the table, will always contain the Lang ID string. This string specifies the one language ID of the String Descriptor that this application intends to support. The subsequent entries in the String Descriptor Table contain the actual string descriptor. Each language must have an equal set of the string descriptors. The Device layer will associate each set of string descriptors with language ID specified in the language ID string descriptor. The following code shows an example of a Basic String Descriptor table.&nbsp;</p>
-<p class="Element10">
-<strong>Example:</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of a Basic String Descriptor Table. In
- * this example, the table contains five entries. The first entry is the
- * language ID string. The second entry in the manufacturer string and the third
- * entry is the product string for language ID 0x0409. The fourth and the fifth
- * entry is the manufacture and product string, respectively for the language ID
- * 0x040C. */</span></i>
-
-<i><span style="color: #008000">/**************************************************************************
-*  Language ID string descriptor. Note that this contains two Language IDs.
-**************************************************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">struct</span></strong>
-{
-    uint8_t bLength;
-    uint8_t bDscType;
-    uint16_t string[1];
-}
-sd000 =
-{
-    <strong><span style="color: #000080">sizeof</span></strong>(sd000),          <i><span style="color: #008000">// Size of this descriptor in bytes</span></i>
-    USB_DESCRIPTOR_STRING,  <i><span style="color: #008000">// STRING descriptor type</span></i>
-    {0x0409, 0x040C}        <i><span style="color: #008000">// Language ID</span></i>
-};
-
-<i><span style="color: #008000">/*******************************************
- *  Manufacturer string descriptor
- *******************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">struct</span></strong>
-{
-    uint8_t bLength;        <i><span style="color: #008000">// Size of this descriptor in bytes</span></i>
-    uint8_t bDscType;       <i><span style="color: #008000">// STRING descriptor type</span></i>
-    uint16_t string[25];    <i><span style="color: #008000">// String</span></i>
-}
-sd001 =
-{
-    <strong><span style="color: #000080">sizeof</span></strong>(sd001),
-    USB_DESCRIPTOR_STRING,
-    {'M','i','c','r','o','c','h','i','p',' ',
-     'T','e','c','h','n','o','l','o','g','y',' ','I','n','c','.'}
-};
-
-<i><span style="color: #008000">/*******************************************
- *  Product string descriptor
- *******************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">struct</span></strong>
-{
-    uint8_t bLength;        <i><span style="color: #008000">// Size of this descriptor in bytes</span></i>
-    uint8_t bDscType;       <i><span style="color: #008000">// STRING descriptor type</span></i>
-    uint16_t string[22];    <i><span style="color: #008000">// String</span></i>
-}
-sd002 =
-{
-    <strong><span style="color: #000080">sizeof</span></strong>(sd002),
-    USB_DESCRIPTOR_STRING,
-    {'S','i','m','p','l','e',' ','C','D','C',' ','D','e','v','i','c','e',' ','D','e','m','o' }
-};
-
-<i><span style="color: #008000">/*******************************************
- *  Manufacturer string descriptor
- *******************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">struct</span></strong>
-{
-    uint8_t bLength;        <i><span style="color: #008000">// Size of this descriptor in bytes</span></i>
-    uint8_t bDscType;       <i><span style="color: #008000">// STRING descriptor type</span></i>
-    uint16_t string[25];    <i><span style="color: #008000">// String</span></i>
-}
-sd003 =
-{
-    <strong><span style="color: #000080">sizeof</span></strong>(sd003),
-    USB_DESCRIPTOR_STRING,
-    {'M','i','c','r','o','c','h','i','p',' ',
-     'T','e','c','h','n','o','l','o','g','y',' ','I','n','c','.'}
-};
-
-<i><span style="color: #008000">/*******************************************
- *  Product string descriptor
- *******************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">struct</span></strong>
-{
-    uint8_t bLength;        <i><span style="color: #008000">// Size of this descriptor in bytes</span></i>
-    uint8_t bDscType;       <i><span style="color: #008000">// STRING descriptor type</span></i>
-    uint16_t string[22];    <i><span style="color: #008000">// String</span></i>
-}
-sd004 =
-{
-    <strong><span style="color: #000080">sizeof</span></strong>(sd004),
-    USB_DESCRIPTOR_STRING,
-    {'S','i','m','p','l','e',' ','C','D','C',' ','D','e','v','i','c','e',' ','D','e','m','o' }
-};
-
-<i><span style="color: #008000">/***************************************
- * Array of string descriptors
- ***************************************/</span></i>
-USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[3]=
-{
-    <i><span style="color: #008000">/* This is the language ID string */</span></i>
-    (<strong><span style="color: #000080">const</span></strong> uint8_t *<strong><span style="color: #000080">const</span></strong>)&amp;sd000,
-
-    <i><span style="color: #008000">/* This string descriptor at index 1 will be returned when the host request
-     * for a string descriptor with index 1 and language ID 0x0409. */</span></i>
-    (<strong><span style="color: #000080">const</span></strong> uint8_t *<strong><span style="color: #000080">const</span></strong>)&amp;sd001,
-
-    <i><span style="color: #008000">/* This string descriptor at index 2 will be returned when the host request
-     * for a string descriptor with index 2 and language ID 0x0409. */</span></i>
-    (<strong><span style="color: #000080">const</span></strong> uint8_t *<strong><span style="color: #000080">const</span></strong>)&amp;sd002,
-
-    <i><span style="color: #008000">/* This string descriptor at index 3 will be returned when the host request
-     * for a string descriptor with index 1 and language ID 0x040C. */</span></i>
-    (<strong><span style="color: #000080">const</span></strong> uint8_t *<strong><span style="color: #000080">const</span></strong>)&amp;sd003,
-
-    <i><span style="color: #008000">/* This string descriptor at index 4 will be returned when the host request
-     * for a string descriptor with index 2 and language ID 0x040C. */</span></i>
-    (<strong><span style="color: #000080">const</span></strong> uint8_t *<strong><span style="color: #000080">const</span></strong>)&amp;sd004
-};</pre></div></div>
-<div class="Element15">
-Advanced String Descriptor Table</div>
-<p class="Element10">
-The Advanced String Descriptor Table should be used when the application needs to specify string descriptors with string indexes that are not continuous. One such example is the Microsoft OS String Descriptor. The index of this string descriptor is 0xEE. If the application were to use the Basic String Descriptor Table , this would require the String Descriptor Table to have at least 0xED entries (valid or invalid) before the entry for the Microsoft OS String Descriptor. This arrangement may not be optimal. Using the Ad Advanced String Descriptor Table mitigates this problem. The Advanced String Descriptor Table format is enabled only when <a href="01004.html" target="topic">USB_DEVICE_STRING_DESCRIPTOR_TABLE_ADVANCED_ENABLE</a> configuration option is specified in the <span class="Element146">system_config.h</span>. Each entry in the Advanced String Descriptor Table contains the following information:</p>
-<ul class="Element630">
-<li class="Element600">The index of the string descriptor</li>
-<li class="Element600">The language ID of the string descriptor</li>
-<li class="Element600">The size of the entry, which is two more than the length of the string</li>
-<li class="Element600">The descriptor type, which is always set to USB_DESCRIPTOR_STRING</li>
-<li class="Element600">The array containing the string</li>
-</ul><p class="Element10">
-The first such entry in the Advanced String Descriptor Table specifies the language ID string. The string index and the language ID of this entry should be zero. This first entry is then followed by the actual string descriptors. Unlike the Basic String Descriptor Table, the position of the string descriptor in the Advanced String Descriptor Table does not define the String Descriptor Index that the host must to use to identify the string.Instead, the index of the string is specified by the stringIndex member of the Advanced String Descriptor Table table entry. The following code shows an example of the Advanced String Descriptor table.&nbsp;</p>
-<p class="Element10">
-<strong>Example:</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of an Advanced String Descriptor Table.
- * The Advanced String Descriptor table should be used when multiple languages
- * are needed to be supported. In this example, two languages are supported*/</span></i>
-
-<i><span style="color: #008000">/**********************************************************
- * Language ID string descriptor. Note that stringIndex and
- * language ID are always 0 for this descriptor.
- ***********************************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">struct</span></strong> __attribute__ ((packed))
-{
-    uint8_t stringIndex;    <i><span style="color: #008000">// Index of the string descriptor</span></i>
-    uint16_t languageID ;   <i><span style="color: #008000">// Language ID of this string.</span></i>
-    uint8_t bLength;        <i><span style="color: #008000">// Size of this descriptor in bytes</span></i>
-    uint8_t bDscType;       <i><span style="color: #008000">// STRING descriptor type</span></i>
-    uint16_t string[2];     <i><span style="color: #008000">// String</span></i>
-}
-sd000 =
-{
-    0,                      <i><span style="color: #008000">// Index of this string is 0</span></i>
-    0,                      <i><span style="color: #008000">// This field is always blank for String Index 0</span></i>
-    <strong><span style="color: #000080">sizeof</span></strong>(sd000)- 3,       <i><span style="color: #008000">// Should always be set to this.</span></i>
-    USB_DESCRIPTOR_STRING,
-    {0x0409, 0x040C}        <i><span style="color: #008000">// Language ID</span></i>
-};
-
-<i><span style="color: #008000">/******************************************************
- *  Manufacturer string descriptor for language 0x0409
- ******************************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">struct</span></strong> __attribute__ ((packed))
-{
-    uint8_t stringIndex;    <i><span style="color: #008000">// Index of the string descriptor</span></i>
-    uint16_t languageID ;   <i><span style="color: #008000">// Language ID of this string.</span></i>
-    uint8_t bLength;        <i><span style="color: #008000">// Size of this descriptor in bytes</span></i>
-    uint8_t bDscType;       <i><span style="color: #008000">// STRING descriptor type</span></i>
-    uint16_t string[25];    <i><span style="color: #008000">// String</span></i>
-}
-sd001 =
-{
-    1,      <i><span style="color: #008000">// Index of this string descriptor is 1.</span></i>
-    0x0409, <i><span style="color: #008000">// Language ID of this string descriptor is 0x0409 (English)</span></i>
-    <strong><span style="color: #000080">sizeof</span></strong>(sd001) - 3,
-    USB_DESCRIPTOR_STRING,
-    {'M','i','c','r','o','c','h','i','p',' ',
-    'T','e','c','h','n','o','l','o','g','y',' ','I','n','c','.'}
-};
-
-<i><span style="color: #008000">/******************************************************
- *  Manufacturer string descriptor for language 0x040C
- ******************************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">struct</span></strong> __attribute__ ((packed))
-{
-    uint8_t stringIndex;    <i><span style="color: #008000">// Index of the string descriptor</span></i>
-    uint16_t languageID ;   <i><span style="color: #008000">// Language ID of this string.</span></i>
-    uint8_t bLength;        <i><span style="color: #008000">// Size of this descriptor in bytes</span></i>
-    uint8_t bDscType;       <i><span style="color: #008000">// STRING descriptor type</span></i>
-    uint16_t string[25];    <i><span style="color: #008000">// String</span></i>
-}
-sd002 =
-{
-    1,      <i><span style="color: #008000">// Index of this string descriptor is 1.</span></i>
-    0x040C, <i><span style="color: #008000">// Language ID of this string descriptor is 0x040C (French)</span></i>
-    <strong><span style="color: #000080">sizeof</span></strong>(sd001) - 3,
-    USB_DESCRIPTOR_STRING,
-    {'M','i','c','r','o','c','h','i','p',' ',
-    'T','e','c','h','n','o','l','o','g','y',' ','I','n','c','.'}
-};
-
-<i><span style="color: #008000">/************************************************
- *  Product string descriptor for language 0x409
- ************************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">struct</span></strong> __attribute__ ((packed))
-{
-    uint8_t stringIndex;    <i><span style="color: #008000">// Index of the string descriptor</span></i>
-    uint16_t languageID ;   <i><span style="color: #008000">// Language ID of this string.</span></i>
-    uint8_t bLength;        <i><span style="color: #008000">// Size of this descriptor in bytes</span></i>
-    uint8_t bDscType;       <i><span style="color: #008000">// STRING descriptor type</span></i>
-    uint16_t string[22];    <i><span style="color: #008000">// String</span></i>
-}
-sd003 =
-{
-    2,       <i><span style="color: #008000">// Index of this string descriptor is 2.</span></i>
-    0x0409,  <i><span style="color: #008000">// Language ID of this string descriptor is 0x0409 (English)</span></i>
-    <strong><span style="color: #000080">sizeof</span></strong>(sd002) - 3,
-    USB_DESCRIPTOR_STRING,
-    {'S','i','m','p','l','e',' ','C','D','C',' ','D','e','v','i','c','e',' ','D','e','m','o' }
-};
-
-<i><span style="color: #008000">/************************************************
- *  Product string descriptor for language 0x40C
- ************************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">struct</span></strong> __attribute__ ((packed))
-{
-    uint8_t stringIndex;    <i><span style="color: #008000">// Index of the string descriptor</span></i>
-    uint16_t languageID ;   <i><span style="color: #008000">// Language ID of this string.</span></i>
-    uint8_t bLength;        <i><span style="color: #008000">// Size of this descriptor in bytes</span></i>
-    uint8_t bDscType;       <i><span style="color: #008000">// STRING descriptor type</span></i>
-    uint16_t string[22];    <i><span style="color: #008000">// String</span></i>
-}
-sd004 =
-{
-    2,       <i><span style="color: #008000">// Index of this string descriptor is 2.</span></i>
-    0x0409,  <i><span style="color: #008000">// Language ID of this string descriptor is 0x040C (French)</span></i>
-    <strong><span style="color: #000080">sizeof</span></strong>(sd002) - 3,
-    USB_DESCRIPTOR_STRING,
-    {'S','i','m','p','l','e',' ','C','D','C',' ','D','e','v','i','c','e',' ','D','e','m','o' }
-};
-
-<i><span style="color: #008000">/***************************************************************
- * Array of string descriptors. The entry order does not matter.
- ***************************************************************/</span></i>
-USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[5]=
-{
-    (<strong><span style="color: #000080">const</span></strong> uint8_t *<strong><span style="color: #000080">const</span></strong>)&amp;sd000,
-    (<strong><span style="color: #000080">const</span></strong> uint8_t *<strong><span style="color: #000080">const</span></strong>)&amp;sd001,   <i><span style="color: #008000">// Manufacturer string for language 0x0409</span></i>
-    (<strong><span style="color: #000080">const</span></strong> uint8_t *<strong><span style="color: #000080">const</span></strong>)&amp;sd002,   <i><span style="color: #008000">// Manufacturer string for language 0x040C</span></i>
-    (<strong><span style="color: #000080">const</span></strong> uint8_t *<strong><span style="color: #000080">const</span></strong>)&amp;sd003,   <i><span style="color: #008000">// Product string for language 0x0409</span></i>
-    (<strong><span style="color: #000080">const</span></strong> uint8_t *<strong><span style="color: #000080">const</span></strong>)&amp;sd004,   <i><span style="color: #008000">// Product string for language 0x040C</span></i>
-};</pre></div></div>
-</div>
+<li class="Element600">Supports both USB Full-Speed and Hi-Speed operation.</li>
+<li class="Element600">Based on a modular and event-driven architecture.</li>
+<li class="Element600">Hardware independent architecture. API does not change across microcontrollers.</li>
+<li class="Element600">Supports the SAME7x and SAMD2x families of microcontrollers.</li>
+<li class="Element600">Supports composite USB devices.</li>
+<li class="Element600">Supports CDC, HID, MSD, Printer, Audio v1.0. Audio v2.0 and Generic/Vendor Devices.</li>
+<li class="Element600">All functions are non-blocking.</li>
+<li class="Element600">Operates readily with a RTOS.</li>
+<li class="Element600">Designed to integrate readily with other MPLAB Harmony middleware.</li>
+<li class="Element600">Completely interrupt driven.</li>
+<li class="Element600">Requires minimal application intervention while maintaining the USB Device state.</li>
+<li class="Element600">Allows implementation of a multi-configuration USB device.</li>
+<li class="Element600">In case of multiple UBS controllers, allows itself to be instantiated more than once.</li>
+</ul></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00259.html" target="topic">USB Device Layer Library</a> &gt; <a href="00288.html" target="topic">Using the Library</a> &gt; <a href="00278.html" target="topic">How the Library Works</a> &gt; <a href="00286.html" target="topic">String Descriptor Table</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00264.html" target="topic">USB Device Layer Library</a> &gt; <a href="00286.html" target="topic">Introduction</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -319,13 +83,13 @@ USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[5]=
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00270.html" target="topic">Previous</a> | <a href="00278.html" target="topic">Up</a> | <a href="00265.html" target="topic">Next</a></div>
+<a href="00264.html" target="topic">Previous</a> | <a href="00264.html" target="topic">Up</a> | <a href="00293.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER String Descriptor Table Topic Title: String Descriptor Table)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

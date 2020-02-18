@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>What are &quot;Signed&quot; Drivers?</title>
+<title>Library Interface</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00236.html" target="topic">Driver Signing and Windows 8 (for v1.08)</a> &gt; <a href="00304.html" target="topic">What are &quot;Signed&quot; Drivers?</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00267.html" target="topic">USB Device Printer Library</a> &gt; <a href="00304.html" target="topic">Library Interface</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00236.html" target="topic">Previous</a> | <a href="00236.html" target="topic">Up</a> | <a href="00237.html" target="topic">Next</a></div>
+<a href="00295.html" target="topic">Previous</a> | <a href="00267.html" target="topic">Up</a> | <a href="00956.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DRV DEV WIN 8 What are %22Signed%22 Drivers Topic Title: What are %22Signed%22 Drivers?)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVPrinter Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-What are &quot;Signed&quot; Drivers?</div>
+Library Interface</div>
 </div>
 </div>
 
@@ -48,39 +48,215 @@ What are &quot;Signed&quot; Drivers?</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10">
-Most USB drivers operate in what is known as &quot;Kernel mode&quot; on Windows-based personal computers (PC). Kernel mode drivers have low-level access to the PC and its resources. This low-level access to the PC is normally necessary to implement the kind of functionality that the driver is intended to provide to top-level applications.&nbsp;</p>
-<p class="Element10">
-Malicious software developers would want their software to operate, since it provides the greatest control and access to the PC. Therefore, in the interest of protecting Windows security, Windows operating systems place restrictions on what code is allowed to be operated in Kernel mode.&nbsp;</p>
-<p class="Element10">
-Windows &quot;trusts&quot; drivers and executable programs that have been signed, more so than software that is unsigned. Signing a driver package is analogous to placing an embossed wax seal on an envelope. The signature/wax seal does not effect or alter the contents of the package, but it provides proof that the contents have not been modified or tampered with, since the time that the signature/wax seal was first applied.&nbsp;</p>
-<p class="Element10">
-There are three types of USB driver signatures:</p>
+</div>
+</div>
+<a name="61292046756E6374696F6E73"></a><div class="Element14">
+a) Functions</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00956.html" target="topic">USB_DEVICE_PRINTER_EventHandlerSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function registers a event handler for the specified PRINTER function driver instance.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00971.html" target="topic">USB_DEVICE_PRINTER_Read</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function requests a data read from the USB Device Printer Function Driver Layer.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00987.html" target="topic">USB_DEVICE_PRINTER_Write</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function requests a data write to the USB Device PRINTER Function Driver Layer.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="6229204461746120547970657320616E6420436F6E7374616E7473"></a><div class="Element14">
+b) Data Types and Constants</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00944.html" target="topic">USB_DEVICE_PRINTER_EVENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Printer Function Driver Events&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00948.html" target="topic">USB_DEVICE_PRINTER_EVENT_DATA_READ_COMPLETE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Printer Function Driver Read and Write Complete Event Data.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00952.html" target="topic">USB_DEVICE_PRINTER_EVENT_DATA_WRITE_COMPLETE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Printer Function Driver Read and Write Complete Event Data.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00953.html" target="topic">USB_DEVICE_PRINTER_EVENT_HANDLER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Printer Event Handler Function Pointer Type.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00954.html" target="topic">USB_DEVICE_PRINTER_EVENT_RESPONSE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Printer Function Driver Event Callback Response Type&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00958.html" target="topic">USB_DEVICE_PRINTER_INDEX</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Printer Function Driver Index&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00960.html" target="topic">USB_DEVICE_PRINTER_INIT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This structure contains required parameters for Printer function driver initialization.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00966.html" target="topic">USB_DEVICE_PRINTER_PORT_STATUS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Printer status required by class-specific request.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00972.html" target="topic">USB_DEVICE_PRINTER_RESULT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Printer Function Driver USB Device Printer Result enumeration.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00982.html" target="topic">USB_DEVICE_PRINTER_TRANSFER_FLAGS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Printer Function Driver Transfer Flags&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00985.html" target="topic">USB_DEVICE_PRINTER_TRANSFER_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Printer Function Driver Transfer Handle Definition.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01413.html" target="topic">USB_PRINTER_COMMAND</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Identified the USB Printer Commands used by the stack.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01417.html" target="topic">USB_PRINTER_INTERFACE_CLASS_CODE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Base class for printers Do not modify this value&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01418.html" target="topic">USB_PRINTER_INTERFACE_PROTOCOL</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Printer Interface Type<br>&nbsp;</p>
 <ul class="Element630">
-<li class="Element600">Embedded digital signatures</li>
-<li class="Element600">Full driver package (digital signature - Microsoft Authenticode)</li>
-<li class="Element600">Full driver package (digital signature - WHQL</li>
-</ul><div class="Element15">
-Embedded Digital Signatures</div>
-<p class="Element10">
-This type of signature resides inside of driver <span class="Element146">.sys</span> files (Kernel mode driver binary files). No additional/external files are associated with this type of signature. These types of signatures only protect against tampering with the <span class="Element146">.sys</span> file itself, and do not include other files that may be a part of the driver package (i.e., <span class="Element146">.inf</span> and <span class="Element146">.dll</span> files). All driver <span class="Element146">.sys</span> files provided by Microsoft operating systems, as well as most third-party Kernel mode drivers will contain at least this level of signature.</p><div class="Element15">
-&quot;Full Driver Package” Digital Signature – Microsoft Authenticode</div>
-<p class="Element10">
-This type of signature can be thought of as a &quot;wrapper&quot; over the entire driver package content files. A driver package can be as simple as a single <span class="Element146">.inf</span> file (a plain text installation instruction file that Windows uses when installing new drivers), or may encompass additional files (such as <span class="Element146">.dll</span> and/or <span class="Element146">.sys</span> files). The full driver package signature comes in the form of a properly created security catalog file (<span class="Element146">.cat</span>), which will be part of the driver package distribution. A driver package signed with an Authenticode signature is relatively easy to create; however, it less trustworthy to that of a WHQL digital signature.</p><div class="Element15">
-“Full Driver Package” Digital Signature – WHQL</div>
-<p class="Element10">
-This type of signature is the most trusted by Windows, and is very similar to the full driver package Microsoft Authenticode signature, but is more expensive and harder to obtain. To obtain a Windows Hardware Quality Labs (WHQL) signature, a driver package must undergo extensive testing, and passing log files and submission fees must be supplied to Microsoft. If a driver package has already previously been tested and WHQL-certified, but has since been modified, in some cases it is possible to get the driver recertified through a simpler and less expensive &quot;Driver Update Acceptable&quot; process with Microsoft.&nbsp;</p>
-<p class="Element10">
-Any modifications to a driver package once the signature has been applied, including adding or deleting a single character of whitespace in the driver <span class="Element146">.inf</span> file, will invalidate a full driver package signature. However, a driver package can have two simultaneous signatures, one covering the full driver package, and one embedded inside the driver binary file(s). Modifications to a <span class="Element146">.inf</span> file do not invalidate an embedded digital signature inside of a driver binary file.&nbsp;</p>
-<p class="Element10">
-Once a signature has been invalidated, Windows will no longer trust the driver package as much, and will place restrictions on its installation (or outright prevent its installation on some operating systems). The driver package can however be resigned, to restore the trustworthiness of the driver to Windows.</p></div>
+<li class="Element600">0x01 - Unidirectional interface</li>
+<li class="Element600">0x02 - Bi-directional interface</li>
+<li class="Element600">0x03 - 1284.4 compatible bi-directional interface</li>
+</ul><p class="Element207">
+&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01419.html" target="topic">USB_PRINTER_INTERFACE_SUBCLASS_CODE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Subclass codes for Printer devices Do not modify this value&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01420.html" target="topic">USB_PRINTER_REQUEST_CLASS_SPECIFIC</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+bmRequestType for Printer class specific request&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00955.html" target="topic">USB_DEVICE_PRINTER_EVENT_RESPONSE_NONE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Printer Function Driver Event Handler Response Type None.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00957.html" target="topic">USB_DEVICE_PRINTER_FUNCTION_DRIVER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Printer Function Driver Function pointer&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00959.html" target="topic">USB_DEVICE_PRINTER_INDEX_0</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Use this to specify Printer Function Driver Instance 0&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00986.html" target="topic">USB_DEVICE_PRINTER_TRANSFER_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Printer Function Driver Invalid Transfer Handle Definition.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00236.html" target="topic">Driver Signing and Windows 8 (for v1.08)</a> &gt; <a href="00304.html" target="topic">What are &quot;Signed&quot; Drivers?</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00267.html" target="topic">USB Device Printer Library</a> &gt; <a href="00304.html" target="topic">Library Interface</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -88,13 +264,13 @@ Once a signature has been invalidated, Windows will no longer trust the driver p
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00236.html" target="topic">Previous</a> | <a href="00236.html" target="topic">Up</a> | <a href="00237.html" target="topic">Next</a></div>
+<a href="00295.html" target="topic">Previous</a> | <a href="00267.html" target="topic">Up</a> | <a href="00956.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DRV DEV WIN 8 What are %22Signed%22 Drivers Topic Title: What are %22Signed%22 Drivers?)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVPrinter Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

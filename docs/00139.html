@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Using the Help</title>
+<title>Opening the Driver</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00151.html" target="topic">Support</a> &gt; <a href="00139.html" target="topic">Using the Help</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="01018.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00131.html" target="topic">Common Interface</a> &gt; <a href="00139.html" target="topic">Opening the Driver</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00151.html" target="topic">Previous</a> | <a href="00151.html" target="topic">Up</a> | <a href="00153.html" target="topic">Next</a></div>
+<a href="00134.html" target="topic">Previous</a> | <a href="00131.html" target="topic">Up</a> | <a href="00142.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: HARMONY About This Help File Topic Title: Using the Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Opening the Driver Topic Title: Opening the Driver)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Using the Help</div>
+Opening the Driver</div>
 </div>
 </div>
 
@@ -49,79 +49,69 @@ Using the Help</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<strong>Help Formats</strong>&nbsp;</p>
+The USB Host Stack and the USB Device Stack must obtain a handle to the USB Driver to access the functionality of the driver. This handle is obtained through the USB Driver Open function. The DRV_USB_DEVICE_INTERFACE structure and DRV_USB_DEVICE_HOST_INTERFACE structure provide access to the USB Driver Open function through the <span class="Element146">open</span> member of these structures. Calling the Open function may not return a valid driver handle the first time the function is called. In fact, the USB Driver will return an invalid driver handle until the driver is ready to be opened. The Host and the Device Stack call the Open function repetitively in a state machine, until the function returns a valid handle.&nbsp;</p>
 <p class="Element10">
-MPLAB Harmony Help is provided in three formats:</p>
-<ul class="Element630">
-<li class="Element600">Stand-alone HyperText Markup Language (HTML)</li>
-<li class="Element600">Microsoft Compiled HTML Help (CHM)</li>
-<li class="Element600">Adobe® Portable Document Format (PDF)</li>
-</ul><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table2">
-<tr>
-<td class="Element67" valign="top" width="10%" style="border:none;">
-<div class="Element68">
-<img src="Tip Bulb.png" border="0" alt="" title=""><strong> TIP!</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
-<div class="Element68">
-When using the MPLAB Harmony Help PDF, be sure to open the &quot;bookmarks&quot; if they are not already visible to assist in document navigation. See Using the Help for additional information.&nbsp;</div></td></tr></table></div></div>
+The USB Host Stack can open the USB Driver but can call its Host mode functions only if the USB Driver was initialized for Host mode or Dual Role operation. The USB Host Stack accesses the driver functions through the DRV_USB_HOST_INTERFACE pointer that was provided to the Host Layer through the Host Stack initialization. The USB Device Stack can open the USB Driver but can call its Device mode functions only if the USB Driver was initialized for Device mode or Dual Role operation. The USB Device Stack accesses the driver functions through the DRV_USB_HOST_INTERFACE pointer that was provided to the Host Layer through the Host Stack initialization&nbsp;</p>
 <p class="Element10">
-<strong>Help File Locations</strong>&nbsp;</p>
+The following code example shows how the USB Host Layer opens the USB Driver. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code example shows how the Host Layer open the HCD via the hcdInterface.
+ * The driver handle is stored in hcdHandle member of the busObj data structure.
+ * The busObj data structure Host Layer local data structure. The Host Layer
+ * opens the HCD when the bus is enabled. This operation takes place in the
+ * USB_HOST_BUS_STATE_ENABLING state. */</span></i>
+
+<i><span style="color: #008000">/* Note the Host Layer calls the Open function by accessing the open member of
+ * the hcdInterface which is of the type DRV_USB_HOST_INTERFACE. Also note how
+ * the function is called repetitively until the Open function returns a valid
+ * handle. */</span></i>
+
+<strong><span style="color: #000080">case</span></strong> USB_HOST_BUS_STATE_ENABLING:
+
+    <i><span style="color: #008000">/* The bus is being enabled. Try opening the HCD */</span></i>
+    busObj-&gt;hcdHandle = busObj-&gt;hcdInterface-&gt;open(busObj-&gt;hcdIndex, DRV_IO_INTENT_EXCLUSIVE |
+            DRV_IO_INTENT_NONBLOCKING | DRV_IO_INTENT_READWRITE );
+
+    <i><span style="color: #008000">/* Validate the Open function status */</span></i>
+    <strong><span style="color: #000080">if</span></strong> (DRV_HANDLE_INVALID == busObj-&gt;hcdHandle )
+    {
+        <i><span style="color: #008000">/* The driver may not open the first time. This is okay. We
+         * should try opening it again. The state of bus is not
+         * changed. */</span></i>
+    }</pre></div></div>
 <p class="Element10">
-Each of these help files are included in the installation of MPLAB Harmony in the following locations:</p>
-<ul class="Element630">
-<li class="Element600">HTML - <span class="Element146">&lt;install-dir&gt;/doc/html/index.html</span></li>
-<li class="Element600">CHM - <span class="Element146">&lt;install-dir&gt;/doc/help_harmony.chm</span></li>
-<li class="Element600">PDF - <span class="Element146">&lt;install-dir&gt;/doc/help_harmony.pdf</span></li>
-</ul><p class="Element10">
-Refer to <a href="00146.html" target="topic">Help Features</a> for more information on using each output format.</p><div class="Element15">
-Where to Begin With the Help</div>
-<p class="Element10">
-The help documentation provides a comprehensive source of information on how to use and understand MPLAB Harmony. However, it is not required to read the entire document before starting to work with MPLAB Harmony.&nbsp;</p>
-<p class="Element10">
-Prior to using MPLAB Harmony, it is recommended to review the <span class="Element145">Release Notes</span> for any known issues. A PDF copy of the release notes is provided in the <span class="Element146">&lt;install-dir&gt;/doc</span> folder of your installation.&nbsp;</p>
-<p class="Element10">
-<strong>New Users</strong>&nbsp;</p>
-<p class="Element10">
-For new users to MPLAB Harmony, it is best to follow the <span class="Element145">Guided Tour</span> provided in <i>Volume I: Getting Started With MPLAB Harmony</i>.&nbsp;</p>
-<p class="Element10">
-<strong>Experienced Users</strong>&nbsp;</p>
-<p class="Element10">
-For experienced users already somewhat familiar with the MPLAB Harmony installation and online resources and, looking to jump right into a specific topic, follow the links provided in the table in <i>Volume 1: Getting Started With MPLAB Harmony Libraries and Applications &gt; <span class="Element145">Guided Tour</span></i>.</p></div>
-</div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00153.html" target="topic">Trademarks</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Provides information on trademarks used in this documentation.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00142.html" target="topic">Typographic Conventions</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This topic describes the typographic conventions used in the MPLAB Harmony Help.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00150.html" target="topic">Recommended Reading</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-The following Microchip documents are available and recommended as supplemental reference resources.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00144.html" target="topic">Documentation Feedback</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This topic includes information on how to provide feedback on this documentation.&nbsp;</div></td></tr></table></div></div>
+The following code example shows how the USB Device Layer opens the USB Driver. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code example shows how the USB Device Layer calls the USBCD open
+ * function to open the USBCD. The Device Layer accesses the USBCD Open function
+ * through the driverInterface member of the usbDeviceInstanceState object. The
+ * driverInterface member is a DRV_USB_DEVICE_INTERFACE type. The
+ * usbDeviceInstanceState is a USB Device Layer local object. */</span></i>
+
+<i><span style="color: #008000">/* The Device Layer attempts to open the USBCD when it is initializing. Note how
+ * the Device Layer advances to the next state only when the USBCD returns a
+ * valid handle.   */</span></i>
+
+<strong><span style="color: #000080">switch</span></strong>(usbDeviceThisInstance-&gt;taskState)
+{
+    <strong><span style="color: #000080">case</span></strong> USB_DEVICE_TASK_STATE_OPENING_USBCD:
+
+        <i><span style="color: #008000">/* Try to open the driver handle. This could fail if the driver is
+         * not ready to be opened. */</span></i>
+        usbDeviceThisInstance-&gt;usbCDHandle =
+           usbDeviceThisInstance-&gt;driverInterface-&gt;open( usbDeviceThisInstance-&gt;driverIndex,
+           DRV_IO_INTENT_EXCLUSIVE|DRV_IO_INTENT_NONBLOCKING|DRV_IO_INTENT_READWRITE);
+
+        <i><span style="color: #008000">/* Check if the driver was opened */</span></i>
+        <strong><span style="color: #000080">if</span></strong>(usbDeviceThisInstance-&gt;usbCDHandle != DRV_HANDLE_INVALID)
+        {
+            <i><span style="color: #008000">/* Yes the driver could be opened. */</span></i>
+
+            <i><span style="color: #008000">/* Advance the state to the next state */</span></i>
+            usbDeviceThisInstance-&gt;taskState = USB_DEVICE_TASK_STATE_RUNNING;
+
+            <i><span style="color: #008000">/* Update the USB Device Layer state to indicate that it can be
+             * opened */</span></i>
+            usbDeviceThisInstance-&gt;usbDeviceInstanceState = SYS_STATUS_READY;
+        }
+
+        <strong><span style="color: #000080">break</span></strong>;</pre></div></div>
 </div>
 </div>
 </div>
@@ -129,7 +119,7 @@ This topic includes information on how to provide feedback on this documentation
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00151.html" target="topic">Support</a> &gt; <a href="00139.html" target="topic">Using the Help</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="01018.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00131.html" target="topic">Common Interface</a> &gt; <a href="00139.html" target="topic">Opening the Driver</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -137,13 +127,13 @@ This topic includes information on how to provide feedback on this documentation
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00151.html" target="topic">Previous</a> | <a href="00151.html" target="topic">Up</a> | <a href="00153.html" target="topic">Next</a></div>
+<a href="00134.html" target="topic">Previous</a> | <a href="00131.html" target="topic">Up</a> | <a href="00142.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: HARMONY About This Help File Topic Title: Using the Help)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Opening the Driver Topic Title: Opening the Driver)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>TPL Table Configuration for Audio v1.0 Devices</title>
+<title>Obtaining an Audio Stream</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00191.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00213.html" target="topic">Using the Library</a> &gt; <a href="00203.html" target="topic">How the Library Works</a> &gt; <a href="00212.html" target="topic">TPL Table Configuration for Audio v1.0 Devices</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a> &gt; <a href="00196.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00218.html" target="topic">Using the Library</a> &gt; <a href="00208.html" target="topic">How the Library Works</a> &gt; <a href="00212.html" target="topic">Obtaining an Audio Stream</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00203.html" target="topic">Previous</a> | <a href="00203.html" target="topic">Up</a> | <a href="00200.html" target="topic">Next</a></div>
+<a href="00213.html" target="topic">Previous</a> | <a href="00208.html" target="topic">Up</a> | <a href="00201.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST TPL Table Configuration for Audio v1.0 Devices Topic Title: TPL Table Configuration for Audio v1.0 Devices)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Obtaining an Audio Stream Topic Title: Obtaining an Audio Stream)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-TPL Table Configuration for Audio v1.0 Devices</div>
+Obtaining an Audio Stream</div>
 </div>
 </div>
 
@@ -49,17 +49,173 @@ TPL Table Configuration for Audio v1.0 Devices</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The Host Layer attaches the Audio v1.0 Host Client Driver to a device when the device class in the Interface descriptor matches the entry in the TPL table. When specifying the entry for the Audio v1.0 device, the entry for the Audio v1.0 device, the driver interface must be set to <a href="01029.html" target="topic">USB_HOST_AUDIO_V1_0_INTERFACE</a>. This will attach the Audio v1.0 Host Client Driver to the device when the USB Host matches the TPL entry to the device. The following code shows possible TPL table options for matching Audio v1.0 Devices. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of TPL table entries for supporting Audio v1.0
- * devices. Note the driver interface is set to USB_HOST_AUDIO_V1_0_INTERFACE. This
- * will load the Audio v1.0 Host Client Driver when there is TPL match */</span></i>
+Once application has identified which audio stream to use, application must open that audio stream by using <a href="01102.html" target="topic">USB_HOST_AUDIO_V1_0_StreamOpen</a> function. This function takes audio stream object <a href="01077.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_OBJ</a> as an argument which obtained by <a href="01100.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetFirst</a> and <a href="01101.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetNext</a> functions and returns audio stream handle <a href="01066.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_HANDLE</a>. If the open function fails, it returns an invalid handle (<a href="01066.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_HANDLE</a> _INVALID). Once opened successfully, a valid handle tracks the relationship between the client and the Audio Stream. This handle should be used with other Audio Stream functions.&nbsp;</p>
+<p class="Element10">
+An audio stream can be opened multiple times by different application clients. In an RTOS based application each client could running its own thread. Multiple clients can read write data to the one Audio stream. In such a case, the read and write requests are queued. The following code shows an example of how an Audio Stream is opened. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of opening an audio stream */</span></i>
 
-<strong><span style="color: #000080">const</span></strong> USB_HOST_TPL_ENTRY USBTPList[1] =
+<i><span style="color: #008000">/* Specify the Audio Stream format details that this application supports */</span></i>
+<strong><span style="color: #000080">const</span></strong> APP_USB_HOST_AUDIO_STREAM_FORTMAT audioSpeakerStreamFormat =
 {
-    <i><span style="color: #008000">/* This entry looks for any Audio v1.0 device. The Audio v1.0 Host Client Driver will
-     * check if this is an Audio Streaming Device and will then load itself */</span></i>
-    TPL_INTERFACE_CLASS(USB_AUDIO_CLASS_CODE, NULL, USB_HOST_AUDIO_V1_0_INTERFACE),
 
-};</pre></div></div>
+    .streamDirection = USB_HOST_AUDIO_V1_0_DIRECTION_OUT,
+    .format = USB_AUDIO_FORMAT_PCM,
+    .nChannels = 2,
+    .bitResolution = 16,
+    .subFrameSize = 2,
+    .samplingRate = 48000
+};
+
+<strong><span style="color: #000080">bool</span></strong> isAudioDeviceAttached = <strong><span style="color: #000080">false</span></strong>;
+USB_HOST_AUDIO_V1_0_OBJ audioDeviceObj;
+
+<i><span style="color: #008000">/*************************************************************/</span></i>
+<i><span style="color: #008000">/* Function to search for a specific Audio Stream */</span></i>
+<i><span style="color: #008000">/************************************************************/</span></i>
+USB_HOST_AUDIO_V1_0_STREAM_OBJ App_USBHostAudioSpeakerStreamFind
+(
+    USB_HOST_AUDIO_V1_0_OBJ audioDeviceObj,
+    APP_USB_HOST_AUDIO_STREAM_FORTMAT audioStream,
+    uint8_t* numberofStreamGroups
+)
+{
+    USB_HOST_AUDIO_V1_0_RESULT result;
+    USB_HOST_AUDIO_V1_0_STREAM_INFO streamInfo;
+
+    <i><span style="color: #008000">/* Get Number of Stream Groups */</span></i>
+    *numberofStreamGroups = USB_HOST_AUDIO_V1_0_NumberOfStreamGroupsGet(audioDeviceObj);
+    <strong><span style="color: #000080">if</span></strong> (*numberofStreamGroups == 0)
+    {
+        <strong><span style="color: #000080">return</span></strong> (USB_HOST_AUDIO_V1_0_STREAM_OBJ)0;
+    }
+    <i><span style="color: #008000">/* Get the First Stream Information in the Stream Group */</span></i>
+    result = USB_HOST_AUDIO_V1_0_StreamGetFirst(appData.audioDeviceObj, 0, &amp;streamInfo);
+    <strong><span style="color: #000080">if</span></strong> (result == USB_HOST_AUDIO_V1_0_RESULT_SUCCESS)
+    {
+         <i><span style="color: #008000">/* Compare Audio Stream info */</span></i>
+        <strong><span style="color: #000080">if</span></strong> ((streamInfo.format == audioStream.format)
+            &amp;&amp; (streamInfo.streamDirection == audioStream.streamDirection)
+                    &amp;&amp; (streamInfo.nChannels == audioStream.nChannels)
+                    &amp;&amp; (streamInfo.bitResolution == audioStream.bitResolution)
+                    &amp;&amp; (streamInfo.subFrameSize == audioStream.subFrameSize))
+        {
+            <strong><span style="color: #000080">return</span></strong> streamInfo.streamObj;
+        }
+    }
+    <strong><span style="color: #000080">return</span></strong> (USB_HOST_AUDIO_V1_0_STREAM_OBJ)0;
+}
+
+<i><span style="color: #008000">/*************************************************************/</span></i>
+<i><span style="color: #008000">/* Audio attach event listener function */</span></i>
+<i><span style="color: #008000">/************************************************************/</span></i>
+<strong><span style="color: #000080">void</span></strong> APP_USBHostAudioAttachEventListener
+(
+    USB_HOST_AUDIO_V1_0_OBJ audioObj,
+    USB_HOST_AUDIO_V1_0_EVENT event,
+    uintptr_t context
+)
+{
+    <i><span style="color: #008000">/* This function gets called when the Audio v1.0 device is attached/detached. In this
+     * example we let the application know that a device is attached and we
+     * store the Audio v1.0 device object. This object will be required to open the
+     * device. */</span></i>
+    <strong><span style="color: #000080">switch</span></strong> (event)
+    {
+        <strong><span style="color: #000080">case</span></strong> USB_HOST_AUDIO_V1_0_EVENT_ATTACH:
+            <strong><span style="color: #000080">if</span></strong> (isAudioDeviceAttached == <strong><span style="color: #000080">false</span></strong>)
+            {
+                isAudioDeviceAttached = <strong><span style="color: #000080">true</span></strong>;
+                audioDeviceObj = audioObj;
+            }
+            <strong><span style="color: #000080">else</span></strong>
+            {
+                <i><span style="color: #008000">/* This application supports only one Audio Device . Handle Error Here.*/</span></i>
+            }
+        <strong><span style="color: #000080">break</span></strong>;
+        <strong><span style="color: #000080">case</span></strong> USB_HOST_AUDIO_V1_0_EVENT_DETACH:
+            <strong><span style="color: #000080">if</span></strong> (isAudioDeviceAttached == <strong><span style="color: #000080">true</span></strong>)
+            {
+                <i><span style="color: #008000">/* This means the device was detached. There is no event data
+                 * associated with this event.*/</span></i>
+                isAudioDeviceAttached = <strong><span style="color: #000080">false</span></strong>;
+                <strong><span style="color: #000080">break</span></strong>;
+            }
+        <strong><span style="color: #000080">break</span></strong>;
+    }
+}
+
+<i><span style="color: #008000">/*************************************************************/</span></i>
+<i><span style="color: #008000">/* Audio Tasks function */</span></i>
+<i><span style="color: #008000">/************************************************************/</span></i>
+<strong><span style="color: #000080">void</span></strong> APP_Tasks ( <strong><span style="color: #000080">void</span></strong> )
+{
+    USB_HOST_AUDIO_V1_0_RESULT audioResult;
+    USB_HOST_AUDIO_V1_0_STREAM_RESULT streamResult;
+
+    <i><span style="color: #008000">/* Check the application's current state. */</span></i>
+    <strong><span style="color: #000080">switch</span></strong> ( appData.state )
+    {
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_BUS_ENABLE:
+
+            <i><span style="color: #008000">/* Register a callback for Audio Device Attach. */</span></i>
+            audioResult = USB_HOST_AUDIO_V1_0_AttachEventHandlerSet
+                          (
+                              &amp;APP_USBHostAudioAttachEventListener,
+                              (uintptr_t)0
+                          );
+
+            <strong><span style="color: #000080">if</span></strong> (audioResult == USB_HOST_AUDIO_V1_0_RESULT_SUCCESS )
+            {
+                <i><span style="color: #008000">/* Set Host Event Handler */</span></i>
+                USB_HOST_EventHandlerSet(APP_USBHostEventHandler, 0);
+                USB_HOST_BusEnable(0);
+                <i><span style="color: #008000">/* Advance application state */</span></i>
+                appData.state = APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE;
+            }
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE:
+            <strong><span style="color: #000080">if</span></strong>(USB_HOST_BusIsEnabled(0))
+            {
+                appData.state = APP_STATE_WAIT_FOR_DEVICE_ATTACH;
+            }
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_WAIT_FOR_DEVICE_ATTACH:
+            <i><span style="color: #008000">/* Check if an Audio Device has been attached  */</span></i>
+            <strong><span style="color: #000080">if</span></strong>(appData.isAudioDeviceAttached == <strong><span style="color: #000080">true</span></strong>)
+            {
+                appData.nAudioStreamGroups = 0;
+                <i><span style="color: #008000">/* Find an Audio Stream matching to our requirement */</span></i>
+                appData.ouStreamObj = App_USBHostAudioSpeakerStreamFind
+                                      (
+                                          appData.audioDeviceObj,
+                                          audioSpeakerStreamFormat,
+                                          &amp;appData.nAudioStreamGroups
+                                      );
+                <strong><span style="color: #000080">if</span></strong> (appData.nAudioStreamGroups == 0)
+                {
+                    appData.state = APP_STATE_ERROR;
+                    <strong><span style="color: #000080">break</span></strong>;
+                }
+
+                <i><span style="color: #008000">/* Open Audio Stream */</span></i>
+                appData.outStreamHandle = USB_HOST_AUDIO_V1_0_StreamOpen
+                                          (
+                                              appData.ouStreamObj
+                                          );
+
+                <strong><span style="color: #000080">if</span></strong> (appData.outStreamHandle == USB_HOST_AUDIO_V1_0_STREAM_HANDLE_INVALID)
+                {
+                    appData.state = APP_STATE_ERROR;
+                    <strong><span style="color: #000080">break</span></strong>;
+                }
+            }
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">default</span></strong>:
+            <strong><span style="color: #000080">break</span></strong>;
+    }
+} </pre></div></div>
 </div>
 </div>
 </div>
@@ -67,7 +223,7 @@ The Host Layer attaches the Audio v1.0 Host Client Driver to a device when the d
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00191.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00213.html" target="topic">Using the Library</a> &gt; <a href="00203.html" target="topic">How the Library Works</a> &gt; <a href="00212.html" target="topic">TPL Table Configuration for Audio v1.0 Devices</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a> &gt; <a href="00196.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00218.html" target="topic">Using the Library</a> &gt; <a href="00208.html" target="topic">How the Library Works</a> &gt; <a href="00212.html" target="topic">Obtaining an Audio Stream</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -75,13 +231,13 @@ The Host Layer attaches the Audio v1.0 Host Client Driver to a device when the d
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00203.html" target="topic">Previous</a> | <a href="00203.html" target="topic">Up</a> | <a href="00200.html" target="topic">Next</a></div>
+<a href="00213.html" target="topic">Previous</a> | <a href="00208.html" target="topic">Up</a> | <a href="00201.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST TPL Table Configuration for Audio v1.0 Devices Topic Title: TPL Table Configuration for Audio v1.0 Devices)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Obtaining an Audio Stream Topic Title: Obtaining an Audio Stream)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

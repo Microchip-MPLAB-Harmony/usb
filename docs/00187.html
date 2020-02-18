@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Transferring Data</title>
+<title>How the Library Works</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00190.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00182.html" target="topic">How the Library Works</a> &gt; <a href="00187.html" target="topic">Transferring Data</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00195.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00187.html" target="topic">How the Library Works</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00179.html" target="topic">Previous</a> | <a href="00182.html" target="topic">Up</a> | <a href="00177.html" target="topic">Next</a></div>
+<a href="00190.html" target="topic">Previous</a> | <a href="00195.html" target="topic">Up</a> | <a href="00188.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDDEV V2_0 Transferring Data Topic Title: Transferring Data)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDDEV V2_0 How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Transferring Data</div>
+How the Library Works</div>
 </div>
 </div>
 
@@ -48,25 +48,44 @@ Transferring Data</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<p class="Element10">
-The USB Audio 2.0 Device Driver provides functions to send and receive data.</p><div class="Element15">
-Receiving Data</div>
-<p class="Element10">
-The <a href="00648.html" target="topic">USB_DEVICE_AUDIO_V2_Read</a> function schedules a data read. When the host transfers data to the device, the <span style="color: #000000">Audio 2.0 Function Driver</span> receives the data and invokes the USB_DEVICE_AUDIO_V2_EVENT_READ_COMPLETE event. This event indicates that audio data is now available in the application specified buffer.&nbsp;</p>
-<p class="Element10">
-The <span style="color: #000000">Audio 2.0 Function Driver</span> supports buffer queuing. The application can schedule multiple read requests. Each request is assigned a unique buffer handle, which is returned with the USB_DEVICE_AUDIO_V2_EVENT_READ_COMPLETE event. The application can use the buffer handle to track completion to queued requests. Using this feature allows the application to implement audio buffering schemes such as ping-pong buffering.</p><div class="Element15">
-Sending Data</div>
-<p class="Element10">
-The <a href="00663.html" target="topic">USB_DEVICE_AUDIO_V2_Write</a> schedules a data write. When the host sends a request for the data, the <span style="color: #000000">Audio 2.0 Function Driver</span> transfers the data and invokes the USB_DEVICE_AUDIO_V2_EVENT_WRITE_COMPLETE event.&nbsp;</p>
-<p class="Element10">
-The <span style="color: #000000">Audio 2.0 Function Driver</span> supports buffer queuing. The application can schedule multiple write requests. Each request is assigned a unique buffer handle, which is returned with the USB_DEVICE_AUDIO_V2_EVENT_WRITE_COMPLETE event. The application can use the buffer handle to track completion to queued requests. Using this feature allows the application to implement audio buffering schemes such as ping-pong buffering.</p></div>
+</div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00188.html" target="topic">Initializing the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes how the USB Audio 2.0 Device driver is initialized.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00184.html" target="topic">Event Handling</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes Audio 2.0 Function Driver event handler registration and event handling.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00192.html" target="topic">Transferring Data</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes how to send/receive data to/from USB Host using this USB Audio 2.0 Device Driver.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00190.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00182.html" target="topic">How the Library Works</a> &gt; <a href="00187.html" target="topic">Transferring Data</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00195.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00187.html" target="topic">How the Library Works</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -74,13 +93,13 @@ The <span style="color: #000000">Audio 2.0 Function Driver</span> supports buffe
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00179.html" target="topic">Previous</a> | <a href="00182.html" target="topic">Up</a> | <a href="00177.html" target="topic">Next</a></div>
+<a href="00190.html" target="topic">Previous</a> | <a href="00195.html" target="topic">Up</a> | <a href="00188.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDDEV V2_0 Transferring Data Topic Title: Transferring Data)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDDEV V2_0 How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

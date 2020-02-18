@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Sending Class-specific Control Transfers</title>
+<title>USB CDC Host Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00226.html" target="topic">USB CDC Host Library</a> &gt; <a href="00233.html" target="topic">Using the Library</a> &gt; <a href="00224.html" target="topic">How the Library Works</a> &gt; <a href="00231.html" target="topic">Sending Class-specific Control Transfers</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a> &gt; <a href="00231.html" target="topic">USB CDC Host Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00229.html" target="topic">Previous</a> | <a href="00224.html" target="topic">Up</a> | <a href="00230.html" target="topic">Next</a></div>
+<a href="01025.html" target="topic">Previous</a> | <a href="00356.html" target="topic">Up</a> | <a href="00230.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Sending Class-specific Control Transfers Topic Title: Sending Class-specific Control Transfers)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC Host Library Topic Title: USB CDC Host Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Sending Class-specific Control Transfers</div>
+USB CDC Host Library</div>
 </div>
 </div>
 
@@ -46,240 +46,49 @@ Sending Class-specific Control Transfers</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="4465736372697074696F6E"></a><div class="Element11">
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
 <div class="Element10">
-<p class="Element10">
-The CDC Host Client Driver allows the application client to send CDC Class specific commands to the connected device. These commands allows the application client to:</p>
-<ul class="Element630">
-<li class="Element600">Set the device line coding (USB_HOST_CDC_LineCodingSet)</li>
-<li class="Element600">Retrieve the device line coding (USB_HOST_CDC_LineCodingGet)</li>
-<li class="Element600">Set the device control line state (USB_HOST_CDC_ControlLineStateSet)</li>
-<li class="Element600">Ask the device to send a break signal (USB_HOST_CDC_BreakSend)</li>
-</ul><p class="Element10">
-These functions are non-blocking. The functions will return before the actual command execution is complete. The return value indicates if the command was scheduled successfully, or if the driver is busy and cannot accept commands, or if the command failed due to an unknown reason. If the command failed because the driver was busy, it can be retried. If scheduled successfully, the function will return a valid request handle. This request handle is unique and tracks the requested command.&nbsp;</p>
-<p class="Element10">
-When the command related control transfer has completed, the CDC Host Client Driver generates a command specific completion event. This event is accompanied by a data structure that contains information about the completion of the command. The request handler generated at the time of calling the command request function is also returned along with the event. The request handle expires after the event handler exits. The following tables show the command functions, along with the respective events and the type of the event related data.&nbsp;</p>
-<p class="Element10">
-<strong>Table 1: Set Line Coding</strong> &nbsp;</p><div class="Element63">
+<div class="Element212">
 <div class="TableDiv">
-<table cellspacing="0" class="Table1">
+<table cellspacing="0" class="Table0">
 <tr>
-<td class="Element67" valign="top" width="20%">
-<div class="Element68">
-Function&nbsp;</div></td><td class="Element67" valign="top" width="80%">
-<div class="Element68">
-<a href="01211.html" target="topic">USB_HOST_CDC_ACM_LineCodingSet</a>&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="20%">
-<div class="Element68">
-Event&nbsp;</div></td><td class="Element67" valign="top" width="80%">
-<div class="Element68">
-USB_HOST_CDC_EVENT_ACM_SET_LINE_CODING_COMPLETE&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="20%">
-<div class="Element68">
-Event Data Type&nbsp;</div></td><td class="Element67" valign="top" width="80%">
-<div class="Element68">
-<a href="01233.html" target="topic">USB_HOST_CDC_EVENT_ACM_SET_LINE_CODING_COMPLETE_DATA</a>&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-<strong>Table 2: Get Line Coding</strong> </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element67" valign="top" width="20%">
-<div class="Element68">
-Function&nbsp;</div></td><td class="Element67" valign="top" width="80%">
-<div class="Element68">
-USB_HOST_CDC_ACM_LineCodingGet&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="20%">
-<div class="Element68">
-Event&nbsp;</div></td><td class="Element67" valign="top" width="80%">
-<div class="Element68">
-USB_HOST_CDC_EVENT_ACM_GET_LINE_CODING_COMPLETE&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="20%">
-<div class="Element68">
-Event Data Type&nbsp;</div></td><td class="Element67" valign="top" width="80%">
-<div class="Element68">
-<a href="01227.html" target="topic">USB_HOST_CDC_EVENT_ACM_GET_LINE_CODING_COMPLETE_DATA</a>&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-<strong>Table 3: Set Control Line State</strong> </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element67" valign="top" width="20%">
-<div class="Element68">
-Function&nbsp;</div></td><td class="Element67" valign="top" width="80%">
-<div class="Element68">
-<a href="01210.html" target="topic">USB_HOST_CDC_ACM_ControlLineStateSet</a>&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="20%">
-<div class="Element68">
-Event&nbsp;</div></td><td class="Element67" valign="top" width="80%">
-<div class="Element68">
-USB_HOST_CDC_EVENT_ACM_CONTROL_LINE_STATE_SET_COMPLETE&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="20%">
-<div class="Element68">
-Event Data Type&nbsp;</div></td><td class="Element67" valign="top" width="80%">
-<div class="Element68">
-USB_HOST_CDC_EVENT_ACM_CONTROL_LINE_STATE_SET_COMPLETE _DATA&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-<strong>Table 4: Send Break</strong> </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element67" valign="top" width="20%">
-<div class="Element68">
-Function&nbsp;</div></td><td class="Element67" valign="top" width="80%">
-<div class="Element68">
-USB_HOST_CDC_ACM_SendBreak&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="20%">
-<div class="Element68">
-Event&nbsp;</div></td><td class="Element67" valign="top" width="80%">
-<div class="Element68">
-USB_HOST_CDC_EVENT_ACM_SEND_BREAK_COMPLETE&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="20%">
-<div class="Element68">
-Event Data Type&nbsp;</div></td><td class="Element67" valign="top" width="80%">
-<div class="Element68">
-USB_HOST_CDC_EVENT_ACM_SEND_BREAK_COMPLETE _DATA&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-The following code shows an example of sending a CDC class specific commands. Refer to the <a href="00222.html" target="topic">Event Handling</a> section for details on setting the event handler function.&nbsp;</p>
-<p class="Element10">
-<strong>Example:</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of how to send CDC Class specific command
- * requests. The event handling related to each command is also shown. */</span></i>
-
-USB_HOST_CDC_EVENT_RESPONSE APP_USBHostCDCEventHandler
-(
-    USB_HOST_CDC_HANDLE cdcHandle,
-    USB_HOST_CDC_EVENT event,
-    <strong><span style="color: #000080">void</span></strong> * eventData,
-    uintptr_t context
-)
-{
-    <i><span style="color: #008000">/* This function is called when a CDC Host event has occurred. A pointer to
-     * this function is registered after opening the device. See the call to
-     * USB_HOST_CDC_EventHandlerSet() function. */</span></i>
-
-    USB_HOST_CDC_EVENT_ACM_SET_LINE_CODING_COMPLETE_DATA * setLineCodingEventData;
-    USB_HOST_CDC_EVENT_ACM_SET_CONTROL_LINE_STATE_COMPLETE_DATA * setControlLineStateEventData;
-    USB_HOST_CDC_EVENT_WRITE_COMPLETE_DATA * writeCompleteEventData;
-    USB_HOST_CDC_EVENT_READ_COMPLETE_DATA * readCompleteEventData;
-
-    <strong><span style="color: #000080">switch</span></strong>(event)
-    {
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_CDC_EVENT_ACM_SET_LINE_CODING_COMPLETE:
-
-            <i><span style="color: #008000">/* This means the application requested Set Line Coding request is
-             * complete. */</span></i>
-            setLineCodingEventData = (USB_HOST_CDC_EVENT_ACM_SET_LINE_CODING_COMPLETE_DATA *)(eventData);
-            appData.controlRequestDone = <strong><span style="color: #000080">true</span></strong>;
-            appData.controlRequestResult = setLineCodingEventData-&gt;result;
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_CDC_EVENT_ACM_SET_CONTROL_LINE_STATE_COMPLETE:
-
-            <i><span style="color: #008000">/* This means the application requested Set Control Line State
-             * request has completed. */</span></i>
-            setControlLineStateEventData = (USB_HOST_CDC_EVENT_ACM_SET_CONTROL_LINE_STATE_COMPLETE_DATA *)(eventData);
-            appData.controlRequestDone = <strong><span style="color: #000080">true</span></strong>;
-            appData.controlRequestResult = setControlLineStateEventData-&gt;result;
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">default</span></strong>:
-            <strong><span style="color: #000080">break</span></strong>;
-
-    }
-}
-
-<strong><span style="color: #000080">void</span></strong> APP_Tasks(<strong><span style="color: #000080">void</span></strong>)
-{
-
-    <strong><span style="color: #000080">switch</span></strong>(appData.state)
-    {
-        <i><span style="color: #008000">/* The application states that enable the bus and wait for device attach are
-         * not shown here for brevity */</span></i>
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_OPEN_DEVICE:
-
-            <i><span style="color: #008000">/* In this state the application opens the attached device */</span></i>
-            appData.cdcHostHandle = USB_HOST_CDC_Open(appData.cdcObj);
-            <strong><span style="color: #000080">if</span></strong>(appData.cdcHostHandle != USB_HOST_CDC_HANDLE_INVALID)
-            {
-                <i><span style="color: #008000">/* The driver was opened successfully. Set the event handler
-                 * and then go to the next state. */</span></i>
-                USB_HOST_CDC_EventHandlerSet(appData.cdcHostHandle, APP_USBHostCDCEventHandler, (uintptr_t)0);
-                appData.state = APP_STATE_SET_LINE_CODING;
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_SET_LINE_CODING:
-
-            <i><span style="color: #008000">/* Here we set the Line coding. The control request done flag will
-             * be set to true when the control request has completed. */</span></i>
-
-            appData.controlRequestDone = <strong><span style="color: #000080">false</span></strong>;
-            result = USB_HOST_CDC_ACM_LineCodingSet(appData.cdcHostHandle, NULL, &amp;appData.cdcHostLineCoding);
-
-            <strong><span style="color: #000080">if</span></strong>(result == USB_HOST_CDC_RESULT_SUCCESS)
-            {
-                <i><span style="color: #008000">/* We wait for the set line coding to complete */</span></i>
-                appData.state = APP_STATE_WAIT_FOR_SET_LINE_CODING;
-            }
-
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_WAIT_FOR_SET_LINE_CODING:
-
-            <strong><span style="color: #000080">if</span></strong>(appData.controlRequestDone)
-            {
-                <strong><span style="color: #000080">if</span></strong>(appData.controlRequestResult != USB_HOST_CDC_RESULT_SUCCESS)
-                {
-                    <i><span style="color: #008000">/* The control request was not successful. */</span></i>
-                    appData.state = APP_STATE_ERROR;
-                }
-                <strong><span style="color: #000080">else</span></strong>
-                {
-                    <i><span style="color: #008000">/* Next we set the Control Line State */</span></i>
-                    appData.state = APP_STATE_SEND_SET_CONTROL_LINE_STATE;
-                }
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_SEND_SET_CONTROL_LINE_STATE:
-
-            <i><span style="color: #008000">/* Here we set the control line state */</span></i>
-            appData.controlRequestDone = <strong><span style="color: #000080">false</span></strong>;
-            result = USB_HOST_CDC_ACM_ControlLineStateSet(appData.cdcHostHandle, NULL,
-                    &amp;appData.controlLineState);
-
-            <strong><span style="color: #000080">if</span></strong>(result == USB_HOST_CDC_RESULT_SUCCESS)
-            {
-                <i><span style="color: #008000">/* We wait for the set line coding to complete */</span></i>
-                appData.state = APP_STATE_WAIT_FOR_SET_CONTROL_LINE_STATE;
-            }
-
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_WAIT_FOR_SET_CONTROL_LINE_STATE:
-
-            <i><span style="color: #008000">/* Here we wait for the control line state set request to complete */</span></i>
-            <strong><span style="color: #000080">if</span></strong>(appData.controlRequestDone)
-            {
-                <strong><span style="color: #000080">if</span></strong>(appData.controlRequestResult != USB_HOST_CDC_RESULT_SUCCESS)
-                {
-                    <i><span style="color: #008000">/* The control request was not successful. */</span></i>
-                    appData.state = APP_STATE_ERROR;
-                }
-                <strong><span style="color: #000080">else</span></strong>
-                {
-                    <i><span style="color: #008000">/* Next we set the Control Line State */</span></i>
-                    appData.state = APP_STATE_SEND_PROMPT_TO_DEVICE;
-                }
-            }
-
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">default</span></strong>:
-            <strong><span style="color: #000080">break</span></strong>;
-    }
-}</pre></div></div>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00230.html" target="topic">Introduction</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Introduces the MPLAB Harmony USB CDC Host Library.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00238.html" target="topic">Using the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This topic describes the basic architecture of the USB CDC Host Client Driver Library and provides information and examples on its use.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00223.html" target="topic">Configuring the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes how to configure the USB CDC Host Library.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00220.html" target="topic">Building the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes the files to be included in the project while using the USB CDC Host Client Driver.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00232.html" target="topic">Library Interface</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+ &nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00228.html" target="topic">Files</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+ &nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -287,7 +96,7 @@ USB_HOST_CDC_EVENT_RESPONSE APP_USBHostCDCEventHandler
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00226.html" target="topic">USB CDC Host Library</a> &gt; <a href="00233.html" target="topic">Using the Library</a> &gt; <a href="00224.html" target="topic">How the Library Works</a> &gt; <a href="00231.html" target="topic">Sending Class-specific Control Transfers</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a> &gt; <a href="00231.html" target="topic">USB CDC Host Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -295,13 +104,13 @@ USB_HOST_CDC_EVENT_RESPONSE APP_USBHostCDCEventHandler
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00229.html" target="topic">Previous</a> | <a href="00224.html" target="topic">Up</a> | <a href="00230.html" target="topic">Next</a></div>
+<a href="01025.html" target="topic">Previous</a> | <a href="00356.html" target="topic">Up</a> | <a href="00230.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Sending Class-specific Control Transfers Topic Title: Sending Class-specific Control Transfers)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC Host Library Topic Title: USB CDC Host Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

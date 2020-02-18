@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>msd_basic</title>
+<title>Running the Demonstration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00234.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00067.html" target="topic">Device Demonstrations</a> &gt; <a href="00111.html" target="topic">msd_basic</a></div>
+<a href="00239.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00101.html" target="topic">Host Demonstrations</a> &gt; <a href="00113.html" target="topic">hub_msd</a> &gt; <a href="00111.html" target="topic">Running the Demonstration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00079.html" target="topic">Previous</a> | <a href="00067.html" target="topic">Up</a> | <a href="00112.html" target="topic">Next</a></div>
+<a href="00110.html" target="topic">Previous</a> | <a href="00113.html" target="topic">Up</a> | <a href="00112.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB msd_basic Topic Title: msd_basic)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB Host hub_msd_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-msd_basic</div>
+Running the Demonstration</div>
 </div>
 </div>
 
@@ -49,44 +49,34 @@ msd_basic</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This demonstration application creates a USB Pen drive using the Mass Storage Device Class.</p></div>
-</div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00112.html" target="topic">Building the Application</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section identifies the MPLAB X IDE projects contained in this demo application, the name and location of the projects and lists the target hardware development board for each project.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00113.html" target="topic">Configuring the Hardware</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Describes how to configure the supported hardware.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00118.html" target="topic">Running the Demonstration</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Provides instructions on how to build and run the USB MSD Basic demonstration.&nbsp;</div></td></tr></table></div></div>
-</div>
+ &nbsp;</p>
+<p class="Element10">
+This application demonstrates the capability of the USB Host Stack to access andmanage multiple USB Devices through a Hub. The demonstration application copies a file from one USB pen drive (i.e.,a USB Flash storage device) to another USB pen drive, where these pen drives are attached to a hub.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+1) Open the project in MPLAB X IDE.&nbsp;</p>
+<p class="Element10">
+2) Build the code and program the device.&nbsp;</p>
+<p class="Element10">
+3) Connect a hub to the Type A Host connector(J5) on the desired board.&nbsp;</p>
+<p class="Element10">
+4) Connect a USB Pen drive containing an arbitrary file named file.txt to a spare port on the hub.&nbsp;</p>
+<p class="Element10">
+5) Connect another USB pen drive to another spare port on the hub.&nbsp;</p>
+<p class="Element10">
+6) The application will copy the file file.txt from the drive containing this file to the other drive. The copied file will be renamed as newfile.txt. LED 2 on the demonstration board will illuminate to indicate completion of the file transfer.&nbsp;</p>
+<p class="Element10">
+7) Disconnect the drives and confirm demonstration success by inserting them into a personal computer and verifying the file transfer completed as expected.&nbsp;</p>
+<p class="Element10">
+8) The demonstration application will always be in state where it waits for two pen drives to be connected to the hub and at least one of these pen drives contains a file named file.txt.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00234.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00067.html" target="topic">Device Demonstrations</a> &gt; <a href="00111.html" target="topic">msd_basic</a></div>
+<a href="00239.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00101.html" target="topic">Host Demonstrations</a> &gt; <a href="00113.html" target="topic">hub_msd</a> &gt; <a href="00111.html" target="topic">Running the Demonstration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -94,13 +84,13 @@ Provides instructions on how to build and run the USB MSD Basic demonstration.&n
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00079.html" target="topic">Previous</a> | <a href="00067.html" target="topic">Up</a> | <a href="00112.html" target="topic">Next</a></div>
+<a href="00110.html" target="topic">Previous</a> | <a href="00113.html" target="topic">Up</a> | <a href="00112.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB msd_basic Topic Title: msd_basic)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB Host hub_msd_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

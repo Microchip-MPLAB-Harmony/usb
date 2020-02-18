@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_HOST_BusEnable Function</title>
+<title>USB_HOST_AUDIO_V1_TerminalInputChannelNumbersGet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00350.html" target="topic">USB Host Layer Library</a> &gt; <a href="00353.html" target="topic">Library Interface</a> &gt; a) Functions &gt; <a href="01204.html" target="topic">USB_HOST_BusEnable Function</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a> &gt; <a href="00196.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00211.html" target="topic">Library Interface</a> &gt; a) Audio Device Access Functions &gt; <a href="01204.html" target="topic">USB_HOST_AUDIO_V1_TerminalInputChannelNumbersGet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01399.html" target="topic">Previous</a> | <a href="00353.html" target="topic">Up</a> | <a href="01205.html" target="topic">Next</a></div>
+<a href="01202.html" target="topic">Previous</a> | <a href="00211.html" target="topic">Up</a> | <a href="01205.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_BusEnable@USB_HOST_BUS Topic Title: USB_HOST_BusEnable Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_TerminalInputChannelNumbersGet@USB_HOST_AUDIO_V1_OBJ@USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ Topic Title: USB_HOST_AUDIO_V1_TerminalInputChannelNumbersGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_HOST_BusEnable Function</div>
+USB_HOST_AUDIO_V1_TerminalInputChannelNumbersGet Function</div>
 </div>
 </div>
 
@@ -49,20 +49,14 @@ USB_HOST_BusEnable Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The function starts the operation of the USB Host Bus. It enables the root hub associated with specified bus and starts the process of detecting attached devices and enumerating them. The <a href="01298.html" target="topic">USB_HOST_EventHandlerSet</a>() function should have been called to register an application host layer event handler before the bus is enabled (before the USB_HOST_BusEnable() function is called). This will ensure that the application does not miss any events.</p></div>
+This function returns the number of logical output channels in the terminal's output audio channel cluster. This function is only applicable to an input terminal. Prior to calling this function the entity object should be obtained by calling <a href="01110.html" target="topic">USB_HOST_AUDIO_V1_ControlEntityGetFirst</a>, <a href="01111.html" target="topic">USB_HOST_AUDIO_V1_ControlEntityGetNext</a>, or <a href="01114.html" target="topic">USB_HOST_AUDIO_V1_EntityObjectGet</a>.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01378.html" target="topic">USB_HOST_RESULT</a> <strong><span style="color: #000000">USB_HOST_BusEnable</span></strong>(
-    <a href="01202.html" target="topic">USB_HOST_BUS</a> <strong><span style="color: #000000">bus</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100">uint8_t <strong><span style="color: #000000">USB_HOST_AUDIO_V1_TerminalInputChannelNumbersGet</span></strong>(
+    <a href="01133.html" target="topic">USB_HOST_AUDIO_V1_OBJ</a> <strong><span style="color: #000000">audioObj</span></strong>, 
+    <a href="01109.html" target="topic">USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ</a> <strong><span style="color: #000000">entityObject</span></strong>
 );</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-The <a href="01338.html" target="topic">USB_HOST_Initialize</a>() function should have been called before calling this function.</p></div>
-</div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
 <div class="Element11">
@@ -78,9 +72,14 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-bus&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+audioObj&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-the bus to be enabled. If this is set to <a href="01203.html" target="topic">USB_HOST_BUS_ALL</a>, all buses will be enabled.&nbsp;</div></td></tr></table></div></div>
+USB Host Audio v1.0 device object.&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+entityObject&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Audio control entity object&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -88,28 +87,21 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-USB_HOST_RESULT_SUCCESS if the request was accepted. USB_HOST_RESULT_BUS_UNKNOWN if the specified bus is invalid (it does not exist in the system). USB_HOST_RESULT_FAILURE if an unknown failure occurred.</p></div>
+The number of logical output channels in the terminal's output audio channel cluster.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The Host Layer may generate events after the USB_HOST_BusEnable() function is called. The application should have registered an event handler using the <a href="01298.html" target="topic">USB_HOST_EventHandlerSet</a>() function to handle these events. The <a href="01298.html" target="topic">USB_HOST_EventHandlerSet</a>() function should have been called before the USB_HOST_BusEnable() function is called.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12">TBD.</pre></div></div>
-</div>
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00350.html" target="topic">USB Host Layer Library</a> &gt; <a href="00353.html" target="topic">Library Interface</a> &gt; a) Functions &gt; <a href="01204.html" target="topic">USB_HOST_BusEnable Function</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a> &gt; <a href="00196.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00211.html" target="topic">Library Interface</a> &gt; a) Audio Device Access Functions &gt; <a href="01204.html" target="topic">USB_HOST_AUDIO_V1_TerminalInputChannelNumbersGet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -117,13 +109,13 @@ Example</div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01399.html" target="topic">Previous</a> | <a href="00353.html" target="topic">Up</a> | <a href="01205.html" target="topic">Next</a></div>
+<a href="01202.html" target="topic">Previous</a> | <a href="00211.html" target="topic">Up</a> | <a href="01205.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_BusEnable@USB_HOST_BUS Topic Title: USB_HOST_BusEnable Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_TerminalInputChannelNumbersGet@USB_HOST_AUDIO_V1_OBJ@USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ Topic Title: USB_HOST_AUDIO_V1_TerminalInputChannelNumbersGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

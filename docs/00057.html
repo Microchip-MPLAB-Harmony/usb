@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Configuring the Hardware</title>
+<title>Building the Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00234.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00067.html" target="topic">Device Demonstrations</a> &gt; <a href="00055.html" target="topic">cdc_com_port_single</a> &gt; <a href="00057.html" target="topic">Configuring the Hardware</a></div>
+<a href="00239.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00068.html" target="topic">Device Demonstrations</a> &gt; <a href="00056.html" target="topic">cdc_com_port_single</a> &gt; <a href="00057.html" target="topic">Building the Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00056.html" target="topic">Previous</a> | <a href="00055.html" target="topic">Up</a> | <a href="00058.html" target="topic">Next</a></div>
+<a href="00056.html" target="topic">Previous</a> | <a href="00056.html" target="topic">Up</a> | <a href="00058.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB cdc_com_port_single_configure Topic Title: Configuring the Hardware)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB cdc_com_port_single_build Topic Title: Building the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Configuring the Hardware</div>
+Building the Application</div>
 </div>
 </div>
 
@@ -49,143 +49,265 @@ Configuring the Hardware</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/DM320113');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAME70 Xplained Ultra</a></p>
-<ul class="Element630">
-<li class="Element600">Jumper J204 must be shorted between PB08 and VBUS (positions 2 and 3).</li>
-<li class="Element600">LED1 indicates USB Device Configuration Set Complete event (the USB device functionality has been activated by the USB Host).</li>
-<li class="Element600">Press SW1 to trigger communication from the USB Device to the USB Host.</li>
-<li class="Element600">Use TARGET USB J202 connector on the board to connect the USB Device to the the USB Host PC.</li>
-</ul><p class="Element10">
+The following table lists the MPLAB X Projects contained in <span class="Element146">&lt;install-dir&gt;/usb/apps/device/cdc_com_port_single/firmware</span> folder and provides a description of each project. All projects listed in this table implement the same functionality.&nbsp;</p>
+<p class="Element10">
+<strong>MPLAB X IDE Projects</strong>&nbsp;</p>
+<p class="Element10">
+This table lists the name and location of the MPLAB X IDE project folder for the demonstration. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="13%">
+<div class="Element66">
+Project Name&nbsp;</div></td><td class="Element65" valign="top" width="8%">
+<div class="Element66">
+Target Device&nbsp;</div></td><td class="Element65" valign="top" width="19%">
+<div class="Element66">
+Target Board&nbsp;</div></td><td class="Element65" valign="top" width="60%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="13%">
+<div class="Element68">
+<span class="Element146">sam_e70_xult_freertos.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+ATSAME70Q21B&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+SAME70 Xplained Ultra&nbsp;</div></td><td class="Element67" valign="top" width="60%">
+<div class="Element68">
+This project implements a Single COM Port CDC USB Device application with freeRTOS on ATSAME70Q21B device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="13%">
+<div class="Element68">
+<span class="Element146">sam_e70_xult.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+ATSAME70Q21B&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+SAME70 Xplained Ultra&nbsp;</div></td><td class="Element67" valign="top" width="60%">
+<div class="Element68">
+This project implements a bare-metal (no RTOS) Single COM Port CDC USB Device application on the ATSAME70Q21B device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="13%">
+<div class="Element68">
+<span class="Element146">sam_d21_xpro.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+ATSAMD21J18A&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+SAMD21 Xplained PRO&nbsp;</div></td><td class="Element67" valign="top" width="60%">
+<div class="Element68">
+This project implements a bare-metal (no RTOS) Single COM Port CDC USB Device application on the ATSAMD21J18A device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="13%">
+<div class="Element68">
+<span class="Element146">sam_da1_xpro.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+ATSAMDA1J16B&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+SAMDA1 Xplained PRO&nbsp;</div></td><td class="Element67" valign="top" width="60%">
+<div class="Element68">
+This project implements a bare-metal (no RTOS) Single COM Port CDC USB Device application on the ATSAMDA1J16B device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="13%">
+<div class="Element68">
+<span class="Element146">sam_e54_xpro.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+ATSAME54P20A&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+SAM E54 Xplained Pro&nbsp;</div></td><td class="Element67" valign="top" width="60%">
+<div class="Element68">
+This project implements a bare-metal(non RTOS) Dual COM Port CDC USB Device application on a ATSAME54P20A device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="13%">
+<div class="Element68">
+<span class="Element146">sam_e54_xpro_freertos.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+ATSAME54P20A&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+SAM E54 Xplained Pro&nbsp;</div></td><td class="Element67" valign="top" width="60%">
+<div class="Element68">
+This project implements a Single COM Port CDC USB Device application with freeRTOS on ATSAME54P20A device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="13%">
+<div class="Element68">
+<span class="Element146">pic32mz_ef_sk.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+PIC32MZ2048EFH144&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+PIC32MZ EF Starter Kit&nbsp;</div></td><td class="Element67" valign="top" width="60%">
+<div class="Element68">
+This project implements a bare-metal (no RTOS) Single COM Port CDC USB Device application on the PIC32MZ2048EFH144 device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="13%">
+<div class="Element68">
+<span class="Element146">pic32mz_ef_sk_freertos.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+PIC32MZ2048EFH144&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+PIC32MZ Embedded Connectivity with FPU (EF) Starter Kit&nbsp;</div></td><td class="Element67" valign="top" width="60%">
+<div class="Element68">
+This project implements a Single COM Port CDC USB Device application with freeRTOS on PIC32MZ2048EFH144 device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="13%">
+<div class="Element68">
+<span class="Element146">pic32mz_das_sk.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+PIC32MZ2064DAS169&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+PIC32MZ Embedded Graphics with Stacked DRAM (DA) Starter Kit (Crypto)&nbsp;</div></td><td class="Element67" valign="top" width="60%">
+<div class="Element68">
+This project implements a bare-metal (no RTOS) Single COM Port CDC USB Device application on the PIC32MZ2064DAS169 device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="13%">
+<div class="Element68">
+<span class="Element146">pic32mk_gp_db.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+PIC32MK1024GPE100&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+PIC32MK General Purpose (GP) Development Board&nbsp;</div></td><td class="Element67" valign="top" width="60%">
+<div class="Element68">
+This project implements a bare-metal (no RTOS) Single COM Port CDC USB Device application on the PIC32MK1024GPE100 device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="13%">
+<div class="Element68">
+<span class="Element146">pic32mk_gp_db_freertos.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+PIC32MK1024GPE100&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+PIC32MK General Purpose (GP) Development Board&nbsp;</div></td><td class="Element67" valign="top" width="60%">
+<div class="Element68">
+This project implements a Single COM Port CDC USB Device application with freeRTOS on PIC32MK1024GPE100 device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="13%">
+<div class="Element68">
+<span class="Element146">pic32mx470_curiosity.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+PIC32MX470F512H&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+PIC32MX Curiosity Development Board&nbsp;</div></td><td class="Element67" valign="top" width="60%">
+<div class="Element68">
+This project implements a bare-metal (no RTOS) Single COM Port CDC USB Device application on the PIC32MX470F512H device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="13%">
+<div class="Element68">
+<span class="Element146">pic32mx470_curiosity_freertos.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+PIC32MX470F512H&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+PIC32MX Curiosity Development Board&nbsp;</div></td><td class="Element67" valign="top" width="60%">
+<div class="Element68">
+This project implements a Single COM Port CDC USB Device application with freeRTOS on PIC32MX470F512H device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="13%">
+<div class="Element68">
+<span class="Element146">sam_l21_xpro.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+ATSAML21J18B&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+SAM L21 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="60%">
+<div class="Element68">
+This project implements a bare-metal (no RTOS) Single COM Port CDC USB Device application on the ATSAML21J18B device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="13%">
+<div class="Element68">
+<span class="Element146">sam_l22_xpro.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+ATSAML22N18A&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+SAM L22 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="60%">
+<div class="Element68">
+This project implements a bare-metal (no RTOS) Single COM Port CDC USB Device application on the ATSAML22N18A device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="13%">
+<div class="Element68">
+<span class="Element146">sam_d11_xpro.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+ATSAMD11D14A&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+SAM D11 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="60%">
+<div class="Element68">
+This project implements a bare-metal (no RTOS) Single COM Port CDC USB Device application on the ATSAMD11D14A device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="13%">
+<div class="Element68">
+<span class="Element146">pic32mz_ef_sk_freertos.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+PIC32MZ2048EFM144&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+Curiosity PIC32MZ EF 2.0 Development Board&nbsp;</div></td><td class="Element67" valign="top" width="60%">
+<div class="Element68">
+This project implements a bare-metal (no RTOS) Single COM Port CDC USB Device application on the PIC32MZ2048EFM144 device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="13%">
+<div class="Element68">
+<span class="Element146">pic32mz_w1_curiosity.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="8%">
+<div class="Element68">
+PIC32MZ1025W104132&nbsp;</div></td><td class="Element67" valign="top" width="19%">
+<div class="Element68">
+Curiosity PIC32MZ W1 Board&nbsp;</div></td><td class="Element67" valign="top" width="60%">
+<div class="Element68">
+This project implements a bare-metal (no RTOS) Single COM Port CDC USB Device application on the PIC32MZ1025W104132 device.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+Identify the project for the target device and hardware and open this project in MPLAB X IDE. Build the project using the available Menu or Tool Bar options.&nbsp;</p>
+<p class="Element10">
 &nbsp;</p>
 <p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/ATSAMD21-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAMD21 Xplained PRO</a></p>
-<ul class="Element630">
-<li class="Element600">LED0 indicates USB Device Configuration Set Complete event (the USB device functionality has been activated by the USB Host).</li>
-<li class="Element600">Press SW0 to trigger communication from the USB Device to the USB Host.</li>
-<li class="Element600">Use TARGET USB connector on the board to connect the USB Device to the the USB Host PC.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/ATSAMDA1-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAMDA1 Xplained PRO</a></p>
-<ul class="Element630">
-<li class="Element600">LED0 indicates USB Device Configuration Set Complete event (the USB device functionality has been activated by the USB Host).</li>
-<li class="Element600">Press SW0 to trigger communication from the USB Device to the USB Host.</li>
-<li class="Element600">Use TARGET USB connector on the board to connect the USB Device to the the USB Host PC.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATSAME54-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAME54 Xplained PRO</a></p>
-<ul class="Element630">
-<li class="Element600">LED0 indicates USB Device Configuration Set Complete event (the USB device functionality has been activated by the USB Host).</li>
-<li class="Element600">Press SW0 to trigger communication from the USB Device to the USB Host.</li>
-<li class="Element600">Use TARGET USB connector on the board to connect the USB Device to the the USB Host PC.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/Developmenttools/ProductDetails/DM320007');"><img src="indicator_external_link.gif" border="0" alt="" title="">PIC32MZ Embedded Connectivity with FPU (EF) Starter Kit</a></p>
-<ul class="Element630">
-<li class="Element600">LED1 indicates USB Device Configuration Set Complete event (the USB device functionality has been activated by the USB Host).</li>
-<li class="Element600">Press SW1 to trigger communication from the USB Device to the USB Host.</li>
-<li class="Element600">Use the micro-A/B port J4 (which is located on the bottom side of the board) to connect the USB Device to the the USB Host PC.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/DM320010-C');"><img src="indicator_external_link.gif" border="0" alt="" title="">PIC32MZ Embedded Graphics with Stacked DRAM (DA) Starter Kit</a></p>
-<ul class="Element630">
-<li class="Element600">LED1 indicates USB Device Configuration Set Complete event (the USB device functionality has been activated by the USB Host).</li>
-<li class="Element600">Press SW1 to trigger communication from the USB Device to the USB Host.</li>
-<li class="Element600">Use the micro-A/B port J6 (which is located on the bottom side of the board) to connect the USB Device to the the USB Host PC.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('http://ww1.microchip.com/downloads/en/DeviceDoc/SAMA5D2C-XULT-Users-Guide-DS50002691C.pdf');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAMA5D2 Xplained Ultra evaluation kit</a></p>
-<ul class="Element630">
-<li class="Element600">Setup the SD card
-<ul class="Element631">
-<li class="Element601">Download harmony MPU bootstrap loader from this <a href="#" onclick="openExternalLink('https://github.com/Microchip-MPLAB-Harmony/at91bootstrap/blob/master/boot.bin');"><img src="indicator_external_link.gif" border="0" alt="" title="">location</a></li>
-<li class="Element601">Copy the downloaded boot loader binary( boot.bin) and generated application binary (harmony.bin)into the SD card</li>
-<li class="Element601">Insert the SD card into the SDMMC1 slot on the board</li>
-</ul></li>
-<li class="Element600">Short jumper JP2(DEBUG_DIS)</li>
-<li class="Element600">Connect the Debug USB port on the board to the computer using a micro USB cable</li>
-<li class="Element600">Use &quot;A5-USB-A&quot; connector(J23 - Micro A/B connector) on the board to connect the USB Device to the the USB Host.</li>
-<li class="Element600">RGB LED turning to Green indicates USB Device Configuration Set Complete event (the USB device functionality has been activated by the USB Host).</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/dm320106');"><img src="indicator_external_link.gif" border="0" alt="" title="">PIC32MK General Purpose (GP) Development Board</a></p>
-<ul class="Element630">
-<li class="Element600">LED1 indicates USB Device Configuration Set Complete event (the USB device functionality has been activated by the USB Host).</li>
-<li class="Element600">Press S1 to trigger communication from the USB Device to the USB Host.</li>
-<li class="Element600">Use the USB micro-B port J13 (which is located on the bottom side of the board) to connect the USB Device to the the USB Host PC.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/Developmenttools/ProductDetails/dm320103');"><img src="indicator_external_link.gif" border="0" alt="" title="">PIC32MX Curiosity Development Board</a></p>
-<ul class="Element630">
-<li class="Element600">LED1 indicates USB Device Configuration Set Complete event (the USB device functionality has been activated by the USB Host).</li>
-<li class="Element600">Press S1 to trigger communication from the USB Device to the USB Host.</li>
-<li class="Element600">Use the USB micro-B port J12 to connect the USB Device to the the USB Host PC.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATSAML21-XPRO-B');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM L21 Xplained Pro Evaluation Kit</a></p>
-<ul class="Element630">
-<li class="Element600">LED0 indicates USB Device Configuration Set Complete event (the USB device functionality has been activated by the USB Host).</li>
-<li class="Element600">Press SW0 to trigger communication from the USB Device to the USB Host.</li>
-<li class="Element600">Use TARGET USB connector on the board to connect the USB Device to the the USB Host PC.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('SAM L22 Xplained Pro Evaluation Kit');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM L22 Xplained Pro Evaluation Kit</a></p>
-<ul class="Element630">
-<li class="Element600">LED0 indicates USB Device Configuration Set Complete event (the USB device functionality has been activated by the USB Host).</li>
-<li class="Element600">Press SW0 to trigger communication from the USB Device to the USB Host.</li>
-<li class="Element600">Use TARGET USB connector on the board to connect the USB Device to the the USB Host PC.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/atsamd11-xpro');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAMD11 Xplained PRO</a></p>
-<ul class="Element630">
-<li class="Element600">LED0 indicates USB Device Configuration Set Complete event (the USB device functionality has been activated by the USB Host).</li>
-<li class="Element600">Press SW0 to trigger communication from the USB Device to the USB Host.</li>
-<li class="Element600">Use TARGET USB connector on the board to connect the USB Device to the the USB Host PC.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/Developmenttools/ProductDetails/DM320209');"><img src="indicator_external_link.gif" border="0" alt="" title="">Curiosity PIC32MZ EF 2.0 Development Board</a></p>
-<ul class="Element630">
-<li class="Element600">LED1 indicates USB Device Configuration Set Complete event (the USB device functionality has been activated by the USB Host).</li>
-<li class="Element600">Press SW1 to trigger communication from the USB Device to the USB Host.</li>
-<li class="Element600">Use the USB micro-B port J201 to connect the USB Device to the the USB Host PC.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>SAM9X60 Evaluation Kit</strong></p>
-<ul class="Element630">
-<li class="Element600">Setup the SD card
-<ul class="Element631">
-<li class="Element601">Download harmony MPU bootstrap loader from this <a href="#" onclick="openExternalLink('https://github.com/Microchip-MPLAB-Harmony/at91bootstrap/blob/sam9x60ek/boot.bin');"><img src="indicator_external_link.gif" border="0" alt="" title="">location</a></li>
-<li class="Element601">Copy the downloaded boot loader binary( boot.bin) and generated application binary (harmony.bin)into the SD card</li>
-<li class="Element601">Insert the SD card into the SDMMC connector J5 on the board</li>
-</ul></li>
-<li class="Element600">Connect the Debug USB port(J22) on the board to the computer using a micro USB cable</li>
-<li class="Element600">Jumpers J2 and J3 must be shorted.</li>
-<li class="Element600">Jumpers J20, J21 and J14 must be open.</li>
-<li class="Element600">Jumpers J4 and J12 must be shorted between 2 and 3</li>
-<li class="Element600">Use USB Micro B connector (J8) on the board to connect the USB Device to the the USB Host PC.</li>
-<li class="Element600">LED D7 indicates USB Device Configuration Set Complete event (the USB device functionality has been activated by the USB Host).</li>
-<li class="Element600">Press SW1 to trigger communication from the USB Device to the USB Host.</li>
-<li class="Element600">Note: Reset push button on SAM9X60 EK is labeled as SW3</li>
-</ul><p class="Element10">
-<img src="usb_demo_sam9x6_config.png" border="0" alt="" title=""></p></div>
+<strong>IAR Embedded Workbench Projects</strong> &nbsp;</p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="14%">
+<div class="Element66">
+Project Name&nbsp;</div></td><td class="Element65" valign="top" width="7%">
+<div class="Element66">
+Target Device&nbsp;</div></td><td class="Element65" valign="top" width="16%">
+<div class="Element66">
+Target Board&nbsp;</div></td><td class="Element65" valign="top" width="63%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="14%">
+<div class="Element68">
+<span class="Element146">sam_a5d2_xult.IAR</span>&nbsp;</div></td><td class="Element67" valign="top" width="7%">
+<div class="Element68">
+ATSAMA5D27C&nbsp;</div></td><td class="Element67" valign="top" width="16%">
+<div class="Element68">
+SAMA5D2 Xplained Ultra evaluation kit&nbsp;</div></td><td class="Element67" valign="top" width="63%">
+<div class="Element68">
+This project implements a bare-metal (no RTOS) Single COM Port CDC USB Device application on the ATSAMA5D27C device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="14%">
+<div class="Element68">
+<span class="Element146">sam_9x60_ek.IAR</span>&nbsp;</div></td><td class="Element67" valign="top" width="7%">
+<div class="Element68">
+SAM9X60&nbsp;</div></td><td class="Element67" valign="top" width="16%">
+<div class="Element68">
+SAM9X60 Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="63%">
+<div class="Element68">
+This project implements a bare-metal(non RTOS) Single COM Port CDC USB Device application on a SAM9X60 device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="14%">
+<div class="Element68">
+<span class="Element146">sam_d11_xpro.IAR</span>&nbsp;</div></td><td class="Element67" valign="top" width="7%">
+<div class="Element68">
+ATSAMD11D14A&nbsp;</div></td><td class="Element67" valign="top" width="16%">
+<div class="Element68">
+SAM D11 Xplained Pro Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="63%">
+<div class="Element68">
+This project implements a bare-metal (no RTOS) Single COM Port CDC USB Device application on the ATSAMD11D14A device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="14%">
+<div class="Element68">
+<span class="Element146">sam_d21_xpro.IAR</span>&nbsp;</div></td><td class="Element67" valign="top" width="7%">
+<div class="Element68">
+ATSAMDA1J16B&nbsp;</div></td><td class="Element67" valign="top" width="16%">
+<div class="Element68">
+SAMD21 Xplained PRO&nbsp;</div></td><td class="Element67" valign="top" width="63%">
+<div class="Element68">
+This project implements a bare-metal (no RTOS) Single COM Port CDC USB Device application on the ATSAMD21J18A device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="14%">
+<div class="Element68">
+<span class="Element146">sam_e54_xpro.IAR</span>&nbsp;</div></td><td class="Element67" valign="top" width="7%">
+<div class="Element68">
+ATSAME54P20A&nbsp;</div></td><td class="Element67" valign="top" width="16%">
+<div class="Element68">
+SAM E54 Xplained Pro&nbsp;</div></td><td class="Element67" valign="top" width="63%">
+<div class="Element68">
+This project implements a Single COM Port CDC USB Device application with freeRTOS on ATSAME54P20A device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="14%">
+<div class="Element68">
+<span class="Element146">sam_e70_xult.IAR</span>&nbsp;</div></td><td class="Element67" valign="top" width="7%">
+<div class="Element68">
+ATSAME70Q21B&nbsp;</div></td><td class="Element67" valign="top" width="16%">
+<div class="Element68">
+SAME70 Xplained Ultra&nbsp;</div></td><td class="Element67" valign="top" width="63%">
+<div class="Element68">
+This project implements a Single COM Port CDC USB Device application with freeRTOS on ATSAME70Q21B device.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00234.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00067.html" target="topic">Device Demonstrations</a> &gt; <a href="00055.html" target="topic">cdc_com_port_single</a> &gt; <a href="00057.html" target="topic">Configuring the Hardware</a></div>
+<a href="00239.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00068.html" target="topic">Device Demonstrations</a> &gt; <a href="00056.html" target="topic">cdc_com_port_single</a> &gt; <a href="00057.html" target="topic">Building the Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -193,13 +315,13 @@ Configuring the Hardware</div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00056.html" target="topic">Previous</a> | <a href="00055.html" target="topic">Up</a> | <a href="00058.html" target="topic">Next</a></div>
+<a href="00056.html" target="topic">Previous</a> | <a href="00056.html" target="topic">Up</a> | <a href="00058.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB cdc_com_port_single_configure Topic Title: Configuring the Hardware)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB cdc_com_port_single_build Topic Title: Building the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

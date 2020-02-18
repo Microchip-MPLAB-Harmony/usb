@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Using the Library</title>
+<title>Introduction</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00385.html" target="topic">USB MSD Host Client Driver Library</a> &gt; <a href="00389.html" target="topic">Using the Library</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a> &gt; <a href="00390.html" target="topic">USB MSD Host Client Driver Library</a> &gt; <a href="00389.html" target="topic">Introduction</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00384.html" target="topic">Previous</a> | <a href="00385.html" target="topic">Up</a> | <a href="00376.html" target="topic">Next</a></div>
+<a href="00390.html" target="topic">Previous</a> | <a href="00390.html" target="topic">Up</a> | <a href="00394.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSD HOST Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSD HOST Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Using the Library</div>
+Introduction</div>
 </div>
 </div>
 
@@ -49,44 +49,23 @@ Using the Library</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This topic describes the basic architecture of the USB MSD Host Client Drier Library and provides information and examples on its use.</p></div>
-</div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00376.html" target="topic">Abstraction Model</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Describes the Abstraction Model of the USB MSD Host Client Driver Library.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00386.html" target="topic">Library Overview</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Provides an overview of the USB Host MSD Library.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00383.html" target="topic">How the Library Works</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Describes how the library works and how it should be used.&nbsp;</div></td></tr></table></div></div>
-</div>
+The USB MSD Host Client Driver in the MPLAB Harmony USB Host Stack allows USB Host Applications to support and interact with Mass Storage Class (MSC) USB devices. Examples of such devices are USB Pen Drives and USB Card readers. The USB MSD Host Client Driver along with the SCSI Block Storage Driver Library implement a multi-layer solution to reading and writing to mass storage USB device that implement the SCSI command protocol. The USB MSD Host Client Driver has the following features:</p>
+<ul class="Element630">
+<li class="Element600">Implements the Bulk Only Transport (BOT) protocol in the USB MSD specification</li>
+<li class="Element600">Supports multiple instances, which allows the application to interact with multiple storage devices</li>
+<li class="Element600">Supports multi-LUN devices such as USB Card Reader</li>
+<li class="Element600">Automatically (without application intervention) attaches the SCSI Block Driver to an identified device</li>
+<li class="Element600">Implements automatic clearing of endpoint stall conditions</li>
+<li class="Element600">Implements all three stages of a BOT transfer and provide a simple event driver transfer interface to the top-level application (which is typically a block storage driver library such as the SCSI Block Storage Driver Library)</li>
+<li class="Element600">Typically operates without application intervention. The BOT transfers are typically invoked by the SCSI Block Storage Driver Library.</li>
+</ul></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00351.html" target="topic">USB Host Libraries</a> &gt; <a href="00385.html" target="topic">USB MSD Host Client Driver Library</a> &gt; <a href="00389.html" target="topic">Using the Library</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a> &gt; <a href="00390.html" target="topic">USB MSD Host Client Driver Library</a> &gt; <a href="00389.html" target="topic">Introduction</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -94,13 +73,13 @@ Describes how the library works and how it should be used.&nbsp;</div></td></tr>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00384.html" target="topic">Previous</a> | <a href="00385.html" target="topic">Up</a> | <a href="00376.html" target="topic">Next</a></div>
+<a href="00390.html" target="topic">Previous</a> | <a href="00390.html" target="topic">Up</a> | <a href="00394.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSD HOST Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSD HOST Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

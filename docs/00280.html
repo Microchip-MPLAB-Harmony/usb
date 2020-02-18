@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Library Initialization</title>
+<title>Event Handling</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00259.html" target="topic">USB Device Layer Library</a> &gt; <a href="00288.html" target="topic">Using the Library</a> &gt; <a href="00278.html" target="topic">How the Library Works</a> &gt; <a href="00280.html" target="topic">Library Initialization</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00264.html" target="topic">USB Device Layer Library</a> &gt; <a href="00293.html" target="topic">Using the Library</a> &gt; <a href="00283.html" target="topic">How the Library Works</a> &gt; <a href="00280.html" target="topic">Event Handling</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00278.html" target="topic">Previous</a> | <a href="00278.html" target="topic">Up</a> | <a href="00285.html" target="topic">Next</a></div>
+<a href="00269.html" target="topic">Previous</a> | <a href="00283.html" target="topic">Up</a> | <a href="00275.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Initializing the library Topic Title: Library Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Event Handling Topic Title: Event Handling)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Library Initialization</div>
+Event Handling</div>
 </div>
 </div>
 
@@ -49,13 +49,245 @@ Library Initialization</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The Device Layer initialization process requires the following components:</p>
-<ul class="Element630">
-<li class="Element600">USB Standard Descriptors that define the device functionality. The definitions of these descriptors are defined by the USB 2.0 and Device Class specification.</li>
-<li class="Element600">Device Master Descriptor Table</li>
-<li class="Element600">Function Driver Registration Table</li>
-</ul><p class="Element10">
-The USB Standard Descriptors that define the device functionality are discussed in detail in the USB 2.0 and Device Class Specifications. The reader is encouraged to refer to these specifications for a detailed understanding of this topic. The Device Layer does not impose any additional requirements on Device descriptors.</p></div>
+The Device Layer generates events to let the application client know about the state of the bus. Some of these events require the application to respond in a specific manner. Not doing so, could cause the USB device to malfunction and become non-compliant. Code inside the event handler executes in an interrupt context when the Device Layer (unless otherwise noted). The application must avoid calling computationally intensive functions or blocking functions in the event handler. The application can call interrupt safe functions in the event handler.&nbsp;</p>
+<p class="Element10">
+The following table shows a summary of the events that the Device Layer generates and the required application client response. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="33%">
+<div class="Element66">
+Event&nbsp;</div></td><td class="Element65" valign="top" width="67%">
+<div class="Element66">
+Required Application Response&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="33%">
+<div class="Element68">
+USB_DEVICE_EVENT_POWER_DETECTED&nbsp;</div></td><td class="Element67" valign="top" width="67%">
+<div class="Element68">
+Attach the device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="33%">
+<div class="Element68">
+USB_DEVICE_EVENT_POWER_REMOVED&nbsp;</div></td><td class="Element67" valign="top" width="67%">
+<div class="Element68">
+Detach the device.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="33%">
+<div class="Element68">
+USB_DEVICE_EVENT_RESET&nbsp;</div></td><td class="Element67" valign="top" width="67%">
+<div class="Element68">
+No response required.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="33%">
+<div class="Element68">
+USB_DEVICE_EVENT_SUSPENDED&nbsp;</div></td><td class="Element67" valign="top" width="67%">
+<div class="Element68">
+No response required.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="33%">
+<div class="Element68">
+USB_DEVICE_EVENT_RESUMED&nbsp;</div></td><td class="Element67" valign="top" width="67%">
+<div class="Element68">
+No response required.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="33%">
+<div class="Element68">
+USB_DEVICE_EVENT_ERROR&nbsp;</div></td><td class="Element67" valign="top" width="67%">
+<div class="Element68">
+The application can try detaching the device and reattaching. This should be done after exiting from the event handler.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="33%">
+<div class="Element68">
+USB_DEVICE_EVENT_SOF&nbsp;</div></td><td class="Element67" valign="top" width="67%">
+<div class="Element68">
+No response required.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="33%">
+<div class="Element68">
+USB_DEVICE_EVENT_CONFIGURED&nbsp;</div></td><td class="Element67" valign="top" width="67%">
+<div class="Element68">
+The application must check the configuration that was activated and register event handlers with all function drivers that are contained in the activated configuration.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="33%">
+<div class="Element68">
+USB_DEVICE_EVENT_DECONFIGURED&nbsp;</div></td><td class="Element67" valign="top" width="67%">
+<div class="Element68">
+No response required.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="33%">
+<div class="Element68">
+USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST&nbsp;</div></td><td class="Element67" valign="top" width="67%">
+<div class="Element68">
+Application must either respond with a <a href="00744.html" target="topic">USB_DEVICE_ControlSend</a>() to send data, <a href="00743.html" target="topic">USB_DEVICE_ControlReceive</a>() to receive data or stall or acknowledge the control request by calling the <a href="00745.html" target="topic">USB_DEVICE_ControlStatus</a>() function.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="33%">
+<div class="Element68">
+USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_SENT&nbsp;</div></td><td class="Element67" valign="top" width="67%">
+<div class="Element68">
+No response required.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="33%">
+<div class="Element68">
+USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED&nbsp;</div></td><td class="Element67" valign="top" width="67%">
+<div class="Element68">
+Application must either or stall or acknowledge the control request by calling the <a href="00745.html" target="topic">USB_DEVICE_ControlStatus</a>() function.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="33%">
+<div class="Element68">
+USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_ABORTED&nbsp;</div></td><td class="Element67" valign="top" width="67%">
+<div class="Element68">
+No response required.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+The Device Layer generates events with event specific data. The pData parameter in the event handler functions points to this event specific data. The application can access this data by type casting the pData parameter of the event handler function to a event specific data type. The following table shows a summary of the USB Device Layer events and the event data generated along with the event. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="73%">
+<div class="Element66">
+Event&nbsp;</div></td><td class="Element65" valign="top" width="27%">
+<div class="Element66">
+Related pData Type&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="73%">
+<div class="Element68">
+USB_DEVICE_EVENT_POWER_DETECTED&nbsp;</div></td><td class="Element67" valign="top" width="27%">
+<div class="Element68">
+NULL&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="73%">
+<div class="Element68">
+USB_DEVICE_EVENT_POWER_REMOVED&nbsp;</div></td><td class="Element67" valign="top" width="27%">
+<div class="Element68">
+NULL&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="73%">
+<div class="Element68">
+USB_DEVICE_EVENT_RESET&nbsp;</div></td><td class="Element67" valign="top" width="27%">
+<div class="Element68">
+NULL&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="73%">
+<div class="Element68">
+USB_DEVICE_EVENT_SUSPENDED&nbsp;</div></td><td class="Element67" valign="top" width="27%">
+<div class="Element68">
+NULL&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="73%">
+<div class="Element68">
+USB_DEVICE_EVENT_RESUMED&nbsp;</div></td><td class="Element67" valign="top" width="27%">
+<div class="Element68">
+NULL&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="73%">
+<div class="Element68">
+USB_DEVICE_EVENT_ERROR&nbsp;</div></td><td class="Element67" valign="top" width="27%">
+<div class="Element68">
+NULL&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="73%">
+<div class="Element68">
+USB_DEVICE_EVENT_SOF&nbsp;</div></td><td class="Element67" valign="top" width="27%">
+<div class="Element68">
+<a href="00783.html" target="topic">USB_DEVICE_EVENT_DATA_SOF</a> *&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="73%">
+<div class="Element68">
+USB_DEVICE_EVENT_CONFIGURED&nbsp;</div></td><td class="Element67" valign="top" width="27%">
+<div class="Element68">
+<a href="00776.html" target="topic">USB_DEVICE_EVENT_DATA_CONFIGURED</a> *&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="73%">
+<div class="Element68">
+USB_DEVICE_EVENT_DECONFIGURED&nbsp;</div></td><td class="Element67" valign="top" width="27%">
+<div class="Element68">
+NULL&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="73%">
+<div class="Element68">
+USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST&nbsp;</div></td><td class="Element67" valign="top" width="27%">
+<div class="Element68">
+USB_SETUP_PACKET *&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="73%">
+<div class="Element68">
+USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_SENT&nbsp;</div></td><td class="Element67" valign="top" width="27%">
+<div class="Element68">
+NULL&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="73%">
+<div class="Element68">
+USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED&nbsp;</div></td><td class="Element67" valign="top" width="27%">
+<div class="Element68">
+NULL&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+A detailed description of each Device Layer event along with the required application client response, the likely follow-up event (if applicable) and the event specific data is provided here.</p><div class="Element15">
+USB_DEVICE_EVENT_POWER_DETECTED</div>
+<p class="Element10">
+<i>Application Response:</i> This event indicates that the device has detected a valid VBUS to the host. The device is yet to be enumerated and configured. The application should not access the function drivers at this point. The application can use this event to attach the device on the bus.&nbsp;</p>
+<p class="Element10">
+<i>Event Specific Data(pData):</i> The pData parameter will be NULL.&nbsp;</p>
+<p class="Element10">
+<i>Likely Follow Up Event:</i> None.&nbsp;</p><div class="Element15">
+USB_DEVICE_EVENT_POWER_REMOVED</div>
+<p class="Element10">
+<i>Application Response:</i> This event is an indication to the application client that the device is detached from the bus. The application can use this event to detach the device.&nbsp;</p>
+<p class="Element10">
+<i>Event Specific Data(pData):</i> The pData parameter will be NULL&nbsp;</p>
+<p class="Element10">
+<i>Likely Follow Up Event:</i> None.&nbsp;</p><div class="Element15">
+USB_DEVICE_EVENT_SUSPENDED</div>
+<p class="Element10">
+<i>Application Response:</i> This event is an indication to the application client that device is suspended and it can put the device to sleep mode if required. Power saving routines should not be called in the event handler.&nbsp;</p>
+<p class="Element10">
+<i>Event Specific Data:</i> The pData parameter will be NULL.&nbsp;</p>
+<p class="Element10">
+<i>Likely Follow Up Event:</i> None.&nbsp;</p><div class="Element15">
+USB_DEVICE_EVENT_RESET</div>
+<p class="Element10">
+<i>Application Response:</i> USB bus reset occurred. This event is an indication to the application client that device layer has deinitialized all function drivers. The application should not use the function drivers in this state.&nbsp;</p>
+<p class="Element10">
+Event Specific Data: The pData parameter will be NULL.&nbsp;</p>
+<p class="Element10">
+<i>Likely Follow Up Event:</i> None.&nbsp;</p><div class="Element15">
+USB_DEVICE_EVENT_RESUMED</div>
+<p class="Element10">
+<i>Application Response:</i> This event indicates that device has resumed from suspended state. The application can use this event to resume the operational state of the device.&nbsp;</p>
+<p class="Element10">
+<i>Event Specific Data:</i> The pData parameter will be NULL.&nbsp;</p>
+<p class="Element10">
+<i>Likely Follow Up Event:</i> None.&nbsp;</p><div class="Element15">
+USB_DEVICE_EVENT_ERROR</div>
+<p class="Element10">
+<i>Application Response:</i> This event is an indication to the application client that an error occurred on the USB bus. The application can try detaching and reattaching the device.&nbsp;</p>
+<p class="Element10">
+<i>Event Specific Data:</i> The pData parameter will be NULL.&nbsp;</p>
+<p class="Element10">
+<i>Likely Follow Up Event:</i> None.&nbsp;</p><div class="Element15">
+USB_DEVICE_EVENT_SOF</div>
+<p class="Element10">
+<i>Application Response:</i> This event occurs when the device receives a Start Of Frame packet. The application can use this event for synchronizing purposes. This event will be received every 1 millisecond for Full Speed USB and every one 125 micro seconds for High Speed USB. No application response is required.&nbsp;</p>
+<p class="Element10">
+<i>Event Specific Data:</i> Will point to <a href="00783.html" target="topic">USB_DEVICE_EVENT_DATA_SOF</a> data type containing the frame number&nbsp;</p>
+<p class="Element10">
+<i>Likely Follow Up Event:</i> None.&nbsp;</p><div class="Element15">
+USB_DEVICE_CONFIGURED</div>
+<p class="Element10">
+<i>Application Response:</i> This event is an indication to the application client that device layer has initialized all function drivers. The application can check the configuration set by the host. The application should use the event to register event handlers with the function drivers that are contained in the active configuration.&nbsp;</p>
+<p class="Element10">
+<i>Event Specific Data:</i> The pData parameter will point to a <a href="00776.html" target="topic">USB_DEVICE_EVENT_DATA_CONFIGURED</a> data type that contains the configuration set by the host&nbsp;</p>
+<p class="Element10">
+<i>Likely Follow Up Event:</i> None.&nbsp;</p><div class="Element15">
+USB_DEVICE_DECONFIGURED</div>
+<p class="Element10">
+<i>Application Response:</i> The host has deconfigured the device. This happens when the host sends a Set Configuration request with configuration number 0. The device layer will deinitialize all function drivers and then generate this event. No application response is required.&nbsp;</p>
+<p class="Element10">
+<i>Event Specific Data:</i>: The pData parameter will be NULL&nbsp;</p>
+<p class="Element10">
+<i>Likely Follow Up Event:</i> None.&nbsp;</p><div class="Element15">
+USB_DEVICE_CONTROL_TRANSFER_ABORTED</div>
+<p class="Element10">
+<i>Application Response:</i> An on-going control transfer was aborted. The application can use this event to reset it's control transfer state machine.&nbsp;</p>
+<p class="Element10">
+<i>Event Specific Data:</i> The pData parameter will be NULL&nbsp;</p>
+<p class="Element10">
+<i>Likely Follow Up Event:</i> None.&nbsp;</p><div class="Element15">
+USB_DEVICE_CONTROL_TRANSFER_DATA_RECEIVED</div>
+<p class="Element10">
+<i>Application Response:</i> The data stage of a Control write transfer has completed. This event occurs after the application has used the <a href="00743.html" target="topic">USB_DEVICE_ControlReceive</a>() function to receive data in the control transfer (in response to the USB_DEVICE_CONTROL_TRANSFER_SETUP_REQUEST event) . The application can inspect the received data and stall or acknowledge the control transfer by calling the <a href="00745.html" target="topic">USB_DEVICE_ControlStatus</a>() function with the USB_DEVICE_CONTROL_STATUS_ERROR flag or USB_DEVICE_CONTROL_STATUS_OK flag respectively. The application can call the <a href="00745.html" target="topic">USB_DEVICE_ControlStatus</a>() function in the event handler or after exiting the event handler.&nbsp;</p>
+<p class="Element10">
+<i>Event Specific Data:</i> The pData parameter will be NULL&nbsp;</p>
+<p class="Element10">
+<i>Likely Follow Up Event:</i> None.&nbsp;</p><div class="Element15">
+USB_DEVICE_CONTROL_TRANSFER_SETUP_REQUEST</div>
+<p class="Element10">
+<i>Application Response:</i> A setup packet of a control transfer has been received. The recipient field of the received setup packet is Other. The application can initiate the data stage by using the <a href="00743.html" target="topic">USB_DEVICE_ControlReceive</a>() and <a href="00744.html" target="topic">USB_DEVICE_ControlSend</a>() functions. It can end the control transfer by calling the <a href="00745.html" target="topic">USB_DEVICE_ControlStatus</a>() function. The application will recieve this event when the Control Transfer recipient field is set to Other.&nbsp;</p>
+<p class="Element10">
+Event Specific Data: The pData parameter in the event handler will point to USB_SETUP_PACKET data type.&nbsp;</p>
+<p class="Element10">
+<i>Likely Follow Up Event:</i> USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_SENT if the <a href="00744.html" target="topic">USB_DEVICE_ControlSend</a>() function was called to send data to the host. USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED if the <a href="00743.html" target="topic">USB_DEVICE_ControlReceive</a>() function was called to receive data from the host.&nbsp;</p><div class="Element15">
+USB_DEVICE_CONTROL_TRANSFER_DATA_SENT</div>
+<p class="Element10">
+<i>Application Response:</i> The data stage of a Control Read transfer has completed. This event occurs after the application has used the <a href="00744.html" target="topic">USB_DEVICE_ControlSend</a>() function to send data in the control transfer. No application response is required.&nbsp;</p>
+<p class="Element10">
+<i>Event Specific Data:</i> The pData parameter will be NULL&nbsp;</p>
+<p class="Element10">
+<i>Likely Follow Up Event:</i> None.&nbsp;</p></div>
 </div>
 <a name="546F70696373"></a><div class="Element14">
 Topics</div>
@@ -72,24 +304,9 @@ Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00285.html" target="topic">Master Descriptor Table</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00275.html" target="topic">Device Layer Control Transfers</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Describes the USB Device Layer Master Descriptor Table.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00277.html" target="topic">Function Driver Registration Table</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section explains how function drivers can be registered with the USB Device Layer using the Function Registration Table.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00279.html" target="topic">Initializing the Device Layer</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes the USB Device Layer initialization.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00271.html" target="topic">Device Layer Task Routines</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Describes the Device Layer task routines.&nbsp;</div></td></tr></table></div></div>
+Describes the operation of USB Device Layer control transfers.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -97,7 +314,7 @@ Describes the Device Layer task routines.&nbsp;</div></td></tr></table></div></d
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00369.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Device Libraries</a> &gt; <a href="00259.html" target="topic">USB Device Layer Library</a> &gt; <a href="00288.html" target="topic">Using the Library</a> &gt; <a href="00278.html" target="topic">How the Library Works</a> &gt; <a href="00280.html" target="topic">Library Initialization</a></div>
+<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00264.html" target="topic">USB Device Layer Library</a> &gt; <a href="00293.html" target="topic">Using the Library</a> &gt; <a href="00283.html" target="topic">How the Library Works</a> &gt; <a href="00280.html" target="topic">Event Handling</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -105,13 +322,13 @@ Describes the Device Layer task routines.&nbsp;</div></td></tr></table></div></d
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00234.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00278.html" target="topic">Previous</a> | <a href="00278.html" target="topic">Up</a> | <a href="00285.html" target="topic">Next</a></div>
+<a href="00269.html" target="topic">Previous</a> | <a href="00283.html" target="topic">Up</a> | <a href="00275.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Initializing the library Topic Title: Library Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Event Handling Topic Title: Event Handling)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
