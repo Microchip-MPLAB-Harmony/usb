@@ -35,8 +35,8 @@
           <Name dnOrder="1">drv_usart.c</Name>
           <LogicalPath dnOrder="2">config/sam_g55_xpro_freertos/driver/usart/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usart/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">1EFBCA60EED3FF3B229146C8993C9361</GeneratedChecksum>
-          <UserChecksum dnOrder="5">1EFBCA60EED3FF3B229146C8993C9361</UserChecksum>
+          <GeneratedChecksum dnOrder="4">31A40F9982E65C9D8E6B5CC87A56D3AA</GeneratedChecksum>
+          <UserChecksum dnOrder="5">31A40F9982E65C9D8E6B5CC87A56D3AA</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -211,8 +211,8 @@
           <Name dnOrder="1">startup_xc32.c</Name>
           <LogicalPath dnOrder="2">config/sam_g55_xpro_freertos/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">27B25318FE002E34DD88F2EF9FBB9760</GeneratedChecksum>
-          <UserChecksum dnOrder="5">27B25318FE002E34DD88F2EF9FBB9760</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F7FEC4263607C977396E6F73EFA0893C</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F7FEC4263607C977396E6F73EFA0893C</UserChecksum>
         </File>
         <File dnOrder="26">
           <Type dnOrder="0">SOURCE</Type>
