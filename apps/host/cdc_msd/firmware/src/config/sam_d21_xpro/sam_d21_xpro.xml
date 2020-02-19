@@ -899,7 +899,15 @@
         </File>
       </Symbols>
     </UniqueComponent>
-    <UniqueComponent dnOrder="7" id="nvmctrl"/>
+    <UniqueComponent dnOrder="7" id="nvmctrl">
+      <Symbols dnOrder="0">
+        <Integer dnOrder="0" id="NVM_RWS">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="6"/>
+          </Values>
+        </Integer>
+      </Symbols>
+    </UniqueComponent>
     <UniqueComponent dnOrder="8" id="sys_fs">
       <Symbols dnOrder="0">
         <Menu dnOrder="0" id="MEDIA_CONF_MENU0">
@@ -1092,17 +1100,17 @@
         <ElementPosition dnOrder="0" id="BSP_SAM_D21_Xplained_Pro" x="25" y="35"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="23" y="66"/>
         <ElementPosition dnOrder="2" id="cmsis" x="223" y="35"/>
-        <ElementPosition dnOrder="3" id="core" x="229" y="9"/>
+        <ElementPosition dnOrder="3" id="core" x="229" y="8"/>
         <ElementPosition dnOrder="4" id="dfp" x="27" y="9"/>
-        <ElementPosition dnOrder="5" id="drv_usbfs_v1" x="14" y="272"/>
+        <ElementPosition dnOrder="5" id="drv_usbfs_v1" x="31" y="271"/>
         <ElementPosition dnOrder="6" id="evsys" x="337" y="17"/>
-        <ElementPosition dnOrder="7" id="nvmctrl" x="345" y="72"/>
-        <ElementPosition dnOrder="8" id="sys_fs" x="483" y="264"/>
+        <ElementPosition dnOrder="7" id="nvmctrl" x="468" y="9"/>
+        <ElementPosition dnOrder="8" id="sys_fs" x="491" y="272"/>
         <ElementPosition dnOrder="9" id="sys_time" x="177" y="129"/>
-        <ElementPosition dnOrder="10" id="tc3" x="10" y="171"/>
-        <ElementPosition dnOrder="11" id="usb_host" x="186" y="268"/>
-        <ElementPosition dnOrder="12" id="usb_host_cdc" x="344" y="348"/>
-        <ElementPosition dnOrder="13" id="usb_host_msd" x="346" y="264"/>
+        <ElementPosition dnOrder="10" id="tc3" x="27" y="171"/>
+        <ElementPosition dnOrder="11" id="usb_host" x="202" y="270"/>
+        <ElementPosition dnOrder="12" id="usb_host_cdc" x="342" y="361"/>
+        <ElementPosition dnOrder="13" id="usb_host_msd" x="342" y="272"/>
       </ElementPositions>
     </ComponentGraph>
   </UserData>
