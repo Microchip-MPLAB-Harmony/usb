@@ -104,7 +104,6 @@
           <itemPath>../src/config/sam_d21_xpro_xc32/device_cache.h</itemPath>
           <itemPath>../src/config/sam_d21_xpro_xc32/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_d21_xpro_xc32/definitions.h</itemPath>
-          <itemPath>../src/config/sam_d21_xpro_xc32/user.h</itemPath>
           <itemPath>../src/config/sam_d21_xpro_xc32/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
@@ -172,7 +171,6 @@
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
-      <itemPath>../src/app.h</itemPath>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
