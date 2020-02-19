@@ -105,7 +105,6 @@
           <itemPath>../src/config/sam_v71_xult_freertos/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_v71_xult_freertos/definitions.h</itemPath>
           <itemPath>../src/config/sam_v71_xult_freertos/FreeRTOSConfig.h</itemPath>
-          <itemPath>../src/config/sam_v71_xult_freertos/user.h</itemPath>
           <itemPath>../src/config/sam_v71_xult_freertos/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
@@ -210,7 +209,6 @@
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
-      <itemPath>../src/app.h</itemPath>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
