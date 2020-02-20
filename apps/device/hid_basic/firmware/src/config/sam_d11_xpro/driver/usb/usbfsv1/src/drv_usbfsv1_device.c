@@ -400,7 +400,7 @@ void DRV_USBFSV1_DEVICE_Detach
         hDriver = (DRV_USBFSV1_OBJ *) handle;
         usbID = hDriver->usbID;
             
-		DRV_USBFSV1_DEVICE_EndpointDisable((DRV_HANDLE)hDriver, DRV_USB_DEVICE_ENDPOINT_ALL);
+        DRV_USBFSV1_DEVICE_EndpointDisable((DRV_HANDLE)hDriver, DRV_USB_DEVICE_ENDPOINT_ALL);
         
         if(hDriver->isInInterruptContext == false)
         {
@@ -1872,7 +1872,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
                                     byteCount = endpointObj->maxPacketSize;
                                 }
 
-                                hDriver->endpointDescriptorTable[endpoint].DEVICE_DESC_BANK[1].USB_ADDR = (uint32_t) ((uint8_t *)(irp->data + irp->size - irp->nPendingBytes));
+                                hDriver->endpointDescriptorTable[endpoint].DEVICE_DESC_BANK[1].USB_ADDR = (uint32_t) ((uint8_t *)irp->data + irp->size - irp->nPendingBytes);
 
                                 irp->nPendingBytes -= byteCount;
 
@@ -2514,7 +2514,7 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                         byteCount = endpointObj->maxPacketSize;
                     }
                 
-                    memcpy((uint8_t *)hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[1].USB_ADDR, (uint8_t *)(irp->data + irp->size - irp->nPendingBytes), byteCount);
+                    memcpy((uint8_t *)hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[1].USB_ADDR, ((uint8_t *)irp->data + irp->size - irp->nPendingBytes), byteCount);
 
                     irp->nPendingBytes -= byteCount;
 
@@ -2707,7 +2707,7 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                                     byteCount = endpointObj->maxPacketSize;
                                 }
 
-                                hDriver->endpointDescriptorTable[epIndex].DEVICE_DESC_BANK[1].USB_ADDR = (uint32_t) ((uint8_t *)(irp->data + irp->size - irp->nPendingBytes));
+                                hDriver->endpointDescriptorTable[epIndex].DEVICE_DESC_BANK[1].USB_ADDR = (uint32_t) ((uint8_t *)irp->data + irp->size - irp->nPendingBytes);
 
                                 irp->nPendingBytes -= byteCount;
 
@@ -2732,7 +2732,7 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                             byteCount = endpointObj->maxPacketSize;
                         }
                         
-                        hDriver->endpointDescriptorTable[epIndex].DEVICE_DESC_BANK[1].USB_ADDR = (uint32_t)((uint8_t *)(irp->data + irp->size - irp->nPendingBytes));
+                        hDriver->endpointDescriptorTable[epIndex].DEVICE_DESC_BANK[1].USB_ADDR = (uint32_t)((uint8_t *)irp->data + irp->size - irp->nPendingBytes);
                 
                         irp->nPendingBytes -= byteCount;
 
@@ -2789,7 +2789,7 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
 
                     if((irp->nPendingBytes < irp->size) && (byteCount >= endpointObj->maxPacketSize))
                     {
-                        hDriver->endpointDescriptorTable[epIndex].DEVICE_DESC_BANK[0].USB_ADDR = (uint32_t) ((uint8_t *)(irp->data + irp->nPendingBytes));
+                        hDriver->endpointDescriptorTable[epIndex].DEVICE_DESC_BANK[0].USB_ADDR = (uint32_t) ((uint8_t *)irp->data + irp->nPendingBytes);
 
                         usbID->DEVICE_ENDPOINT[epIndex].USB_EPINTFLAG = USB_DEVICE_EPINTFLAG_TRCPT0_Msk | USB_DEVICE_EPINTFLAG_TRFAIL0_Msk;
                         
