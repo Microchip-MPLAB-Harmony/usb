@@ -2432,7 +2432,7 @@
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\bsp\bsp.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\cstartup.S</name>
+                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\cstartup.s</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult\driver\usb\udphs\src\drv_usb_udphs.c</name>
