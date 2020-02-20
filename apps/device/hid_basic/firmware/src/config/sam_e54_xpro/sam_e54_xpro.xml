@@ -3877,11 +3877,11 @@
         <ElementPosition dnOrder="2" id="cmsis" x="299" y="11"/>
         <ElementPosition dnOrder="3" id="core" x="309" y="36"/>
         <ElementPosition dnOrder="4" id="dfp" x="120" y="10"/>
-        <ElementPosition dnOrder="5" id="drv_usbfs_v1" x="155" y="132"/>
+        <ElementPosition dnOrder="5" id="drv_usbfs_v1" x="0" y="212"/>
         <ElementPosition dnOrder="6" id="evsys" x="0" y="18"/>
         <ElementPosition dnOrder="7" id="nvmctrl" x="152" y="65"/>
-        <ElementPosition dnOrder="8" id="usb_device" x="155" y="201"/>
-        <ElementPosition dnOrder="9" id="usb_device_hid" x="0" y="153"/>
+        <ElementPosition dnOrder="8" id="usb_device" x="167" y="214"/>
+        <ElementPosition dnOrder="9" id="usb_device_hid" x="312" y="213"/>
       </ElementPositions>
     </ComponentGraph>
   </UserData>
