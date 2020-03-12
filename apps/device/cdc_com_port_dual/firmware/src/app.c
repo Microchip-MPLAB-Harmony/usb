@@ -173,9 +173,13 @@ USB_DEVICE_CDC_EVENT_RESPONSE APP_USBDeviceCDCEventHandler
 
             /* This means that the host has sent some data*/
             eventDataRead =  (USB_DEVICE_CDC_EVENT_DATA_READ_COMPLETE *)pData; 
-            appDataObject->appCOMPortObjects[index].readDataLength = eventDataRead->length; 
             
-            appDataObject->appCOMPortObjects[index].isReadComplete = true;
+            if(eventDataRead->status != USB_DEVICE_CDC_RESULT_ERROR)
+            {
+                appDataObject->appCOMPortObjects[index].readDataLength = eventDataRead->length; 
+
+                appDataObject->appCOMPortObjects[index].isReadComplete = true;
+            }
             
             break;
 
@@ -262,6 +266,11 @@ void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, void * pData, uintptr_t c
             
             /* VBUS is not available. We can detach the device */
             USB_DEVICE_Detach(appData.deviceHandle);
+            
+            appData.isConfigured = false;
+            
+            LED_Off();
+            
             break;
 
         /* These events are not used in this demo */

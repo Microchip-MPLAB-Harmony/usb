@@ -168,8 +168,13 @@ USB_DEVICE_CDC_EVENT_RESPONSE APP_USBDeviceCDCEventHandler
 
             /* This means that the host has sent some data*/
             eventDataRead = (USB_DEVICE_CDC_EVENT_DATA_READ_COMPLETE *)pData;
-            appDataObject->isReadComplete = true;
-            appDataObject->numBytesRead = eventDataRead->length; 
+            
+            if(eventDataRead->status != USB_DEVICE_CDC_RESULT_ERROR)
+            {
+                appDataObject->isReadComplete = true;
+                
+                appDataObject->numBytesRead = eventDataRead->length; 
+            }
             break;
 
         case USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
@@ -262,9 +267,11 @@ void APP_USBDeviceEventHandler
             break;
 
         case USB_DEVICE_EVENT_POWER_REMOVED:
-
-            /* VBUS is not available any more. Detach the device. */
+            
+            /* VBUS is not available. We can detach the device */
             USB_DEVICE_Detach(appData.deviceHandle);
+            
+            appData.isConfigured = false;
             
             LED_Off();
             
