@@ -70,12 +70,12 @@
  * is not the same as the public IRP status
  *********************************************/
 typedef enum
-{   
+{
     DRV_USB_UHP_HOST_IRP_STATE_ABORTED,
     DRV_USB_UHP_HOST_IRP_STATE_PROCESSING,
     DRV_USB_UHP_HOST_IRP_STATE_DEFAULT
 }
-DRV_USB_UHP_HOST_IRP_STATE; 
+DRV_USB_UHP_HOST_IRP_STATE;
 
 
 /*********************************************
@@ -89,11 +89,11 @@ typedef struct _USB_HOST_IRP_LOCAL
 
     /* Pointer to data buffer */
     void * data;
-    
+
     /* Size of the data buffer */
     uint32_t size;
-    
-    /* Status of the IRP */ 
+
+    /* Status of the IRP */
     USB_HOST_IRP_STATUS status;
 
     /* Request specific flags */
@@ -134,10 +134,10 @@ typedef struct _DRV_USB_UHP_HOST_PIPE_OBJ
 
     /* Client that owns this pipe */
     DRV_HANDLE hClient;
-    
+
     /* USB endpoint and direction */
     USB_ENDPOINT endpointAndDirection;
-    
+
     /* USB Endpoint type */
     USB_TRANSFER_TYPE pipeType;
 
@@ -179,14 +179,14 @@ DRV_USB_UHP_HOST_PIPE_OBJ;
 
 typedef struct _DRV_USB_UHP_HOST_TRANSFER_GROUP
 {
-    /* The first pipe in this transfer 
+    /* The first pipe in this transfer
      * group */
     DRV_USB_UHP_HOST_PIPE_OBJ * pipe;
 
     /* The current pipe being serviced
      * in this transfer group */
     DRV_USB_UHP_HOST_PIPE_OBJ * currentPipe;
-    
+
     /* The current IRP being serviced
      * in the pipe */
     void * currentIRP;
@@ -209,7 +209,12 @@ typedef struct
 {
     /* Indicates this endpoint is in use */
     bool inUse;
-    uint8_t intXfrQtdComplete;
+    /* True if the Host Controller sets this bit to 1 on the completion of a USB transaction */
+    volatile uint8_t intXfrQtdComplete;
+
+    volatile uint8_t staticDToggleIn;
+    volatile uint8_t staticDToggleOut;
+
     DRV_USB_UHP_HOST_PIPE_OBJ * pipe;
 
 }_DRV_USB_UHP_HOST_ENDPOINT;
@@ -316,7 +321,7 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
     bool isOpened;
 
     /* Status of this driver instance */
-    SYS_STATUS status;     
+    SYS_STATUS status;
 
     /* The USB peripheral associated with the object */
 <#if core.DeviceFamily == "SAMA5D2" || core.DeviceFamily == "SAM9X60">
@@ -351,7 +356,7 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
 
     /* Non ISR Task Routine state */
     DRV_USB_UHP_TASK_STATE state;
-	
+
     /* Client data that will be returned at callback */
     uintptr_t  hClientArg;
 
@@ -363,23 +368,18 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
 
     /* Attach state of the device */
     DRV_USB_UHP_HOST_ATTACH_STATE attachState;
-    
+
     /* True if device is attached */
     volatile bool deviceAttached;
 
     uint8_t portNumber;
 
-    /* True if the Host Controller sets this bit to 1 on the completion of a USB transaction */
-    volatile uint8_t intXfrQtdComplete;
     volatile uint8_t hostPipeInUse;
     volatile uint8_t blockPipe;
-    
-    uint8_t staticDToggleIn;
-    uint8_t staticDToggleOut;
 
     /* Device Object handle assigned by the host */
     USB_HOST_DEVICE_OBJ_HANDLE usbHostDeviceInfo;
-    
+
      /* Device object handle of the current attached device. */
     USB_HOST_DEVICE_OBJ_HANDLE attachedDeviceObjHandle;
 
@@ -388,7 +388,7 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
 
     /* This counts the reset signal duration */
     DRV_USB_UHP_HOST_RESET_STATE resetState;
-    
+
     /* Timer handle for reset */
     SYS_TIME_HANDLE timerHandle;
 
@@ -397,7 +397,7 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
 
     /* True if Root Hub Operation is enabled */
     bool operationEnabled;
-	
+
 } DRV_USB_UHP_OBJ;
 
 // ****************************************************************************
@@ -415,7 +415,7 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
   Description:
     Facilitates in resetting of endpoint data toggle to 0 for Non Control
     endpoints.
-	
+
   Precondition:
     None.
 
@@ -427,8 +427,8 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
     <code>
 
     // This code shows how the USB Host Layer calls the
-    // DRV_USB_UHP_EndpointToggleClear function. 
-    // The Endpoint number and Direction of the endpoint is required to clear 
+    // DRV_USB_UHP_EndpointToggleClear function.
+    // The Endpoint number and Direction of the endpoint is required to clear
     // the data toggle to the endpoint.
 
     DRV_HANDLE drvHandle;
