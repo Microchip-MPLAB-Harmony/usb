@@ -6,7 +6,7 @@
     </device>
     <includePath>
         <path>$PROJ_DIR$\..\..\firmware\src</path>
-        <path>$PROJ_DIR$\..\..\firmware\src\config\sam_e54_xpro</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\config\sam_e54_xpro_iar</path>
         <path>$PROJ_DIR$\..\..\firmware\src\packs\ATSAME54P20A_DFP</path>
         <path>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS\CMSIS\Core\Include</path>
         <path>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS</path>
@@ -14,14 +14,14 @@
     </includePath>
     <asmIncludePath>
         <path>$PROJ_DIR$\..\..\firmware\src</path>
-        <path>$PROJ_DIR$\..\..\firmware\src\config\sam_e54_xpro</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\config\sam_e54_xpro_iar</path>
         <path>$PROJ_DIR$\..\..\firmware\src\packs\ATSAME54P20A_DFP</path>
         <path>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS\CMSIS\Core\Include</path>
         <path>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS</path>
         <path>$PROJ_DIR$\..\..\firmware\src\arm</path>
     </asmIncludePath>
-    <files relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_e54_xpro">
-        <group name="Header Files" relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_e54_xpro">
+    <files relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_e54_xpro_iar">
+        <group name="Header Files" relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_e54_xpro_iar">
             <path>\peripheral\nvmctrl\plib_nvmctrl.h</path>
             <path>\peripheral\sercom\usart\plib_sercom2_usart.h</path>
             <path>\peripheral\sercom\usart\plib_sercom_usart_common.h</path>
@@ -119,6 +119,9 @@
             <path>\..\..\packs\CMSIS\CMSIS\Core\Include\mpu_armv7.h</path>
             <path>\driver\driver.h</path>
             <path>\driver\driver_common.h</path>
+            <path>\system\system.h</path>
+            <path>\system\system_common.h</path>
+            <path>\system\system_module.h</path>
             <path>\system\system_media.h</path>
             <path>\system\int\sys_int.h</path>
             <path>\system\int\sys_int_mapping.h</path>
@@ -130,7 +133,7 @@
             <path>\user.h</path>
             <path>\configuration.h</path>
         </group>
-        <group name="Source Files" relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_e54_xpro">
+        <group name="Source Files" relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_e54_xpro_iar">
             <path>\peripheral\nvmctrl\plib_nvmctrl.c</path>
             <path>\peripheral\sercom\usart\plib_sercom2_usart.c</path>
             <path>\usb\src\usb_host_msd.c</path>

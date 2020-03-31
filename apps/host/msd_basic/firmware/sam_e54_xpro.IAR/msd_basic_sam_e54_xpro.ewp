@@ -62,7 +62,7 @@
                 </option>
                 <option>
                     <name>OGProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.40.2.22864</state>
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
@@ -346,7 +346,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$\..\..\firmware\src</state>
-                    <state>$PROJ_DIR$\..\..\firmware\src\config\sam_e54_xpro</state>
+                    <state>$PROJ_DIR$\..\..\firmware\src\config\sam_e54_xpro_iar</state>
                     <state>$PROJ_DIR$\..\..\firmware\src\packs\ATSAME54P20A_DFP</state>
                     <state>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS\CMSIS\Core\Include</state>
                     <state>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS</state>
@@ -604,7 +604,7 @@
                 </option>
                 <option>
                     <name>AOutputFile</name>
-                    <state></state>
+                    <state>$FILE_BNAME$.o</state>
                 </option>
                 <option>
                     <name>ALimitErrorsCheck</name>
@@ -621,7 +621,7 @@
                 <option>
                     <name>AUserIncludes</name>
                     <state>$PROJ_DIR$\..\..\firmware\src</state>
-                    <state>$PROJ_DIR$\..\..\firmware\src\config\sam_e54_xpro</state>
+                    <state>$PROJ_DIR$\..\..\firmware\src\config\sam_e54_xpro_iar</state>
                     <state>$PROJ_DIR$\..\..\firmware\src\packs\ATSAME54P20A_DFP</state>
                     <state>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS\CMSIS\Core\Include</state>
                     <state>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS</state>
@@ -659,7 +659,7 @@
                 </option>
                 <option>
                     <name>OOCOutputFile</name>
-                    <state></state>
+                    <state>msd_basic_sam_e54_xpro.srec</state>
                 </option>
                 <option>
                     <name>OOCCommandLineProducer</name>
@@ -778,7 +778,7 @@
                 </option>
                 <option>
                     <name>IlinkIcfFile</name>
-                    <state>$PROJ_DIR$\..\src\config\sam_d21_xpro\flash.icf</state>
+                    <state>C:\Repos\H3\usb\apps\host\msd_basic\firmware\src\config\sam_e54_xpro_iar\flash.icf</state>
                 </option>
                 <option>
                     <name>IlinkIcfFileSlave</name>
@@ -1123,7 +1123,7 @@
                 </option>
                 <option>
                     <name>OGProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.40.2.22864</state>
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
@@ -1407,7 +1407,7 @@
                 <option>
                     <name>CCIncludePath2</name>
                     <state>$PROJ_DIR$\..\..\firmware\src</state>
-                    <state>$PROJ_DIR$\..\..\firmware\src\config\sam_e54_xpro</state>
+                    <state>$PROJ_DIR$\..\..\firmware\src\config\sam_e54_xpro_iar</state>
                     <state>$PROJ_DIR$\..\..\firmware\src\packs\ATSAME54P20A_DFP</state>
                     <state>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS\CMSIS\Core\Include</state>
                     <state>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS</state>
@@ -1682,7 +1682,7 @@
                 <option>
                     <name>AUserIncludes</name>
                     <state>$PROJ_DIR$\..\..\firmware\src</state>
-                    <state>$PROJ_DIR$\..\..\firmware\src\config\sam_e54_xpro</state>
+                    <state>$PROJ_DIR$\..\..\firmware\src\config\sam_e54_xpro_iar</state>
                     <state>$PROJ_DIR$\..\..\firmware\src\packs\ATSAME54P20A_DFP</state>
                     <state>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS\CMSIS\Core\Include</state>
                     <state>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS</state>
@@ -2143,7 +2143,7 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\atsame54p20a.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\bsp\bsp.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\bsp\bsp.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\component\can.h</name>
@@ -2176,7 +2176,7 @@
                 <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core\Include\cmsis_version.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\configuration.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\configuration.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core\Include\core_cm4.h</name>
@@ -2185,40 +2185,40 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\component\dac.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\definitions.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\definitions.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\device.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\device_cache.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\device_cache.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\system\fs\fat_fs\src\hardware_access\diskio.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\fs\fat_fs\src\hardware_access\diskio.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\component\dmac.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\driver\driver.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\driver\driver.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\driver\driver_common.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\driver\driver_common.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\driver\usb\drv_usb.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\driver\usb\drv_usb.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\driver\usb\drv_usb_external_dependencies.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\driver\usb\drv_usb_external_dependencies.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\driver\usb\usbfsv1\drv_usbfsv1.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\driver\usb\usbfsv1\drv_usbfsv1.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\driver\usb\usbfsv1\src\drv_usbfsv1_local.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\driver\usb\usbfsv1\src\drv_usbfsv1_local.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\driver\usb\usbfsv1\src\drv_usbfsv1_variant_mapping.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\driver\usb\usbfsv1\src\drv_usbfsv1_variant_mapping.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\component\dsu.h</name>
@@ -2230,10 +2230,10 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\component\evsys.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\system\fs\fat_fs\src\file_system\ff.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\fs\fat_fs\src\file_system\ff.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\system\fs\fat_fs\src\file_system\ffconf.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\fs\fat_fs\src\file_system\ffconf.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\component\freqm.h</name>
@@ -2263,13 +2263,13 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\component\nvmctrl.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\osal\osal.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\osal\osal.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\osal\osal_definitions.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\osal\osal_definitions.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\osal\osal_impl_basic.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\osal\osal_impl_basic.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\component\osc32kctrl.h</name>
@@ -2287,34 +2287,34 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\component\pdec.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\peripheral\clock\plib_clock.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\peripheral\clock\plib_clock.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\peripheral\cmcc\plib_cmcc.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\peripheral\cmcc\plib_cmcc.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\peripheral\evsys\plib_evsys.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\peripheral\evsys\plib_evsys.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\peripheral\nvic\plib_nvic.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\peripheral\nvic\plib_nvic.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\peripheral\nvmctrl\plib_nvmctrl.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\peripheral\nvmctrl\plib_nvmctrl.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\peripheral\port\plib_port.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\peripheral\port\plib_port.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\peripheral\sercom\usart\plib_sercom2_usart.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\peripheral\sercom\usart\plib_sercom2_usart.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\peripheral\sercom\usart\plib_sercom_usart_common.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\peripheral\sercom\usart\plib_sercom_usart_common.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\peripheral\tc\plib_tc0.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\peripheral\tc\plib_tc0.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\peripheral\tc\plib_tc_common.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\peripheral\tc\plib_tc_common.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\component\pm.h</name>
@@ -2341,7 +2341,7 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\pio\same54p20a.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\usb\scsi.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\usb\scsi.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\component\sdhc.h</name>
@@ -2353,37 +2353,46 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\component\supc.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\system\cache\sys_cache.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\cache\sys_cache.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\system\fs\sys_fs.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\fs\sys_fs.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\system\fs\src\sys_fs_local.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\fs\src\sys_fs_local.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\system\fs\sys_fs_media_manager.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\fs\sys_fs_media_manager.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\system\fs\src\sys_fs_media_manager_local.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\fs\src\sys_fs_media_manager_local.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\system\int\sys_int.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\int\sys_int.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\system\int\sys_int_mapping.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\int\sys_int_mapping.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\system\time\sys_time.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\time\sys_time.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\system\time\sys_time_definitions.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\time\sys_time_definitions.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\system\time\src\sys_time_local.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\time\src\sys_time_local.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\system\system_media.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\system.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\system_common.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\system_media.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\system_module.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\component\tc.h</name>
@@ -2392,7 +2401,7 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\component\tcc.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\toolchain_specifics.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\toolchain_specifics.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\component\trng.h</name>
@@ -2401,49 +2410,49 @@
                 <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\component\usb.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\usb\usb_chapter_9.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\usb\usb_chapter_9.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\usb\usb_common.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\usb\usb_common.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\usb\src\usb_external_dependencies.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\usb\src\usb_external_dependencies.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\usb\usb_host.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\usb\usb_host.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\usb\usb_host_client_driver.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\usb\usb_host_client_driver.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\usb\usb_host_hub_interface.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\usb\usb_host_hub_interface.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\usb\src\usb_host_hub_mapping.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\usb\src\usb_host_hub_mapping.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\usb\src\usb_host_local.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\usb\src\usb_host_local.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\usb\usb_host_msd.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\usb\usb_host_msd.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\usb\src\usb_host_msd_local.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\usb\src\usb_host_msd_local.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\usb\usb_host_scsi.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\usb\usb_host_scsi.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\usb\src\usb_host_scsi_local.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\usb\src\usb_host_scsi_local.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\usb\usb_hub.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\usb\usb_hub.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\usb\usb_msd.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\usb\usb_msd.h</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\user.h</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\user.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\component\wdt.h</name>
@@ -2455,98 +2464,95 @@
                 <name>$PROJ_DIR$\..\src\app.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\bsp\bsp.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\bsp\bsp.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\system\fs\fat_fs\src\diskio.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\fs\fat_fs\src\diskio.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\driver\usb\usbfsv1\src\drv_usbfsv1.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\driver\usb\usbfsv1\src\drv_usbfsv1.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\driver\usb\usbfsv1\src\drv_usbfsv1_host.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\driver\usb\usbfsv1\src\drv_usbfsv1_host.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\exceptions.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\exceptions.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\system\fs\fat_fs\src\ff.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\fs\fat_fs\src\ff.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\stdio\iar_monitor.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\stdio\iar_monitor.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\initialization.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\initialization.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\interrupts.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\interrupts.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\src\main.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\peripheral\clock\plib_clock.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\peripheral\clock\plib_clock.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\peripheral\cmcc\plib_cmcc.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\peripheral\cmcc\plib_cmcc.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\peripheral\evsys\plib_evsys.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\peripheral\evsys\plib_evsys.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\peripheral\nvic\plib_nvic.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\peripheral\nvic\plib_nvic.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\peripheral\nvmctrl\plib_nvmctrl.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\peripheral\nvmctrl\plib_nvmctrl.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\peripheral\port\plib_port.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\peripheral\port\plib_port.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\peripheral\sercom\usart\plib_sercom2_usart.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\peripheral\sercom\usart\plib_sercom2_usart.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\peripheral\tc\plib_tc0.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\peripheral\tc\plib_tc0.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\startup_iar.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\startup_iar.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\system\cache\sys_cache.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\cache\sys_cache.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\system\fs\src\sys_fs.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\fs\src\sys_fs.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\system\fs\src\sys_fs_media_manager.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\fs\src\sys_fs_media_manager.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\system\int\src\sys_int.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\int\src\sys_int.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\system\time\src\sys_time.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\system\time\src\sys_time.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\tasks.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\tasks.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\usb\src\usb_host.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\usb\src\usb_host.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\usb_host_init_data.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\usb_host_init_data.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\usb\src\usb_host_msd.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\usb\src\usb_host_msd.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\usb\src\usb_host_scsi.c</name>
+                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\usb\src\usb_host_scsi.c</name>
             </file>
         </group>
     </group>
     <file>
-        <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\flash.icf</name>
-    </file>
-    <file>
-        <name>$PROJ_DIR$\..\src\config\sam_e54_xpro\sam_e54_xpro.ipcf</name>
+        <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\sam_e54_xpro_iar.ipcf</name>
     </file>
 </project>
