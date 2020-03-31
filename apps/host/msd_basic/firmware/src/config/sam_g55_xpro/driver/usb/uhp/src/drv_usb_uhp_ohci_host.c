@@ -180,8 +180,6 @@ typedef struct
  *  field of the HcFmInterval register. */
 #define OHCI_PRDSTRT    (FRAMEINTERVAL*90/100)
 
-#define DIT   0    /* DelayInterrupt (7 == no interrupt) */
-
 /* 4.4 Host Controller Communications Area */
 typedef struct 
 {
@@ -366,6 +364,7 @@ static void _DRV_USB_UHP_OHCI_HOST_CreateQueueHead(OHCIQueueHeadDescriptor * EDA
                             uint32_t DataToggle,
                             uint32_t BuffLen,
                             uint32_t Direction,
+                            uint32_t DelayInterrupt,
                             uint32_t BufRnding,
                             uint32_t * CurBufPtr)
 
@@ -383,6 +382,7 @@ static void _DRV_USB_UHP_OHCI_HOST_CreateQTD(OHCIQueueTDDescriptor * qTD_base_ad
                             uint32_t DataToggle,
                             uint32_t BuffLen,
                             uint32_t Direction,
+                            uint32_t DelayInterrupt,
                             uint32_t BufRnding,
                             uint32_t * CurBufPtr)
 {
@@ -396,7 +396,7 @@ static void _DRV_USB_UHP_OHCI_HOST_CreateQTD(OHCIQueueTDDescriptor * qTD_base_ad
      * T: (0=automatic) */
     pTD->Control.td_control &= 0x0007FFFF;          /* Clear all permit bits. */
     pTD->Control.td_control |= (DataToggle << 24) | /* T: DataToggle */
-                                      (DIT << 21) | /* DI: DelayInterrupt 7=no interrupt */
+                           (DelayInterrupt << 21) | /* DI: DelayInterrupt 7=no interrupt */
                                 (Direction << 19) | /* DP: Direction/PID: 0=setup, 1=out, 2=in */
                                 (BufRnding << 18);  /* R: bufferRounding */
     /* EC: ErrorCount: For each transmission error, this value is incremented. */
@@ -482,7 +482,7 @@ void DRV_USB_UHP_OHCI_HOST_Init(DRV_USB_UHP_OBJ *hDriver)
     usbIDOHCI->UHP_OHCI_HCPERIODICSTART = OHCI_PRDSTRT;
 
     usbIDOHCI->UHP_OHCI_HCCONTROL = (usbIDOHCI->UHP_OHCI_HCCONTROL & ~UHP_OHCI_HCCONTROL_HCFS_Msk) | UHP_OHCI_HCCONTROL_HCFS( DRV_USB_UHP_HOST_OHCI_STATE_USBRESUME );
-
+    
     /* ClearPortEnable: clear the PortEnableStatus bit: 0 = port is disabled */
     *((uint32_t *)&(usbIDOHCI->UHP_OHCI_HCRHPORTSTATUS0) + hDriver->portNumber) = UHP_OHCI_HCRHPORTSTATUS0_CCS_Msk;
     
@@ -556,9 +556,10 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
     uint8_t stop = 0;
     uint8_t DToggle = 0;
     uint8_t low_speed = 0;
+    uint32_t DelayInterrupt = 0;
     USB_ERROR returnValue = USB_ERROR_PARAMETER_INVALID;
     uint32_t i;
-    volatile uint32_t watchdog = 0;
+    volatile uint32_t elapsed = 0;
     uint32_t *QHToProceed = NULL;
 
     if((pipe == NULL) || (hPipe == (DRV_USB_UHP_HOST_PIPE_HANDLE_INVALID)))
@@ -575,11 +576,17 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
         /* Low speed is too slow, HID keyboard not working */
         if(hDriver->deviceSpeed == USB_SPEED_LOW)
         {
-            /* Watchdog in case of detach during the while. 900000 samg55: 120MHz => 7ms */
-            while(( hDriver->blockPipe == 1 ) & ( watchdog++ < 900000 ))
+            DelayInterrupt = 1;
+
+            /* Watchdog in case of detach during the while. */
+            while( hDriver->blockPipe == 1 )
             {
+                if( elapsed++ > 90000 )
+                {
+                    break;
+                }
             }
-        }        
+        }
         hDriver->blockPipe = 1;
 
         /* Assign owner pipe */
@@ -683,6 +690,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                         DToggle | 0x2,           /* T: DataToggle value is taken from the LSb of this field. */
                                         8,                       /* BE: BufferEnd: Total Bytes to transfer */
                                         0,                       /* DP: Direction/PID: SETUP=0 */
+                                        DelayInterrupt,
                                         0,                       /* R: bufferRounding: exactly fill the defined data buffer */
                                         (uint32_t *)USBSetupAligned);/* CBP: CurrentBufferPointer (must be aligned) */
 
@@ -712,6 +720,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                                 (++DToggle)|0x02,        /* T: DataToggle value is taken from the LSb of this field. */
                                                 tosend,                  /* BE: BufferEnd: Total Bytes to transfer */
                                                 2,                       /* DP: Direction/PID: IN=2 */
+                                                DelayInterrupt,
                                                 1,                       /* R: bufferRounding: data packet may be smaller than the defined buffer. */
                                                 (uint32_t *)(USBBufferAligned + irp->completedBytes)); /* CBP: CurrentBufferPointer */
 
@@ -736,6 +745,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                             3,        /* T: DataToggle, STATUS is always DATA1 */
                                             0,        /* BE: BufferEnd: Total Bytes to transfer: ZLP */
                                             1,        /* DP: Direction/PID: OUT=1 */
+                                            DelayInterrupt,
                                             0,        /* R: bufferRounding: exactly fill the defined data buffer */
                                             NULL);    /* CBP: CurrentBufferPointer ZLP */
                         }
@@ -766,6 +776,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                                 3,          /* T: DataToggle value is taken from the LSb of this field. */
                                                 irp->size,  /* BE: BufferEnd: Total Bytes to transfer */
                                                 1,          /* DP: Direction/PID: OUT=1 */
+                                                DelayInterrupt,
                                                 0,          /* R: bufferRounding: exactly fill the defined data buffer */
                                                 (uint32_t *)USBBufferAligned); /* CBP: CurrentBufferPointer */
                                 DCACHE_CLEAN_BY_ADDR((uint32_t *)irp->data, sizeof(irp->data)); 
@@ -779,6 +790,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                             3,     /* T: DataToggle value is taken from the LSb of this field. */
                                             0,     /* BE: BufferEnd: Total Bytes to transfer: ZLP */
                                             2,     /* DP: Direction/PID: IN=2 */
+                                            DelayInterrupt,
                                             0,     /* R: bufferRounding: exactly fill the defined data buffer */
                                             NULL); /* CBP: CurrentBufferPointer ZLP */
                         }
@@ -790,6 +802,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                         0,                  /* T: DataToggle acquired from the toggleCarry field in the ED */
                                         0,                  /* BE: BufferEnd: Total Bytes to transfer: ZLP */
                                         1,                  /* DP: Direction/PID: OUT=1 */
+                                        DelayInterrupt,
                                         0,                  /* R: bufferRounding: exactly fill the defined data buffer */
                                         NULL);              /* CBP: CurrentBufferPointer ZLP */
 
@@ -848,6 +861,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                             hDriver->staticDToggleOut|0x2,  /* T: DataToggle value is taken from the LSb of this field. */
                                             tosend,                  /* BE: BufferEnd: Total Bytes to transfer */
                                             1,                       /* DP: Direction/PID: OUT=1 */
+                                            DelayInterrupt,
                                             0,                       /* R: bufferRounding: exactly fill the defined data buffer */
                                             (uint32_t *)((uint32_t)irp->data + irp->completedBytes)); /* data buffer address base, 32-Byte align */
 
@@ -874,6 +888,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                         0,                  /* T: DataToggle acquired from the toggleCarry field in the ED */
                                         0,                  /* BE: BufferEnd: Total Bytes to transfer: ZLP */
                                         1,                  /* DP: Direction/PID: OUT=1 */
+                                        DelayInterrupt,
                                         0,                  /* R: bufferRounding: exactly fill the defined data buffer */
                                         NULL);              /* CBP: CurrentBufferPointer ZLP */
 
@@ -917,6 +932,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                             hDriver->staticDToggleIn|0x2, /* T: DataToggle value is taken from the LSb of this field. */
                                             tosend,                  /* BE: BufferEnd: Total Bytes to transfer */
                                             2,                       /* DP: Direction/PID: IN=2 */
+                                            DelayInterrupt,
                                             0,                       /* R: bufferRounding: exactly fill the defined data buffer */
                                             (uint32_t *)((uint32_t)irp->data + irp->completedBytes)); /* CBP: CurrentBufferPointer */
 
@@ -944,6 +960,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                         0,                  /* T: DataToggle acquired from the toggleCarry field in the ED */
                                         0,                  /* BE: BufferEnd: Total Bytes to transfer: ZLP */
                                         2,                  /* DP: Direction/PID: IN=2 */
+                                        DelayInterrupt,
                                         0,                  /* R: bufferRounding: exactly fill the defined data buffer */
                                         NULL);              /* CBP: CurrentBufferPointer ZLP */
 
