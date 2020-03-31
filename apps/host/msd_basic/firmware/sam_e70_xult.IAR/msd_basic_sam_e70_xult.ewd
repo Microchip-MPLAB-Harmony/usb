@@ -44,7 +44,7 @@
                 </option>
                 <option>
                     <name>MemFile</name>
-                    <state>$TOOLKIT_DIR$\CONFIG\debugger\Microchip\ATSAME70Q21xB.ddf</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>RunToEnable</name>
@@ -80,15 +80,15 @@
                 </option>
                 <option>
                     <name>OCProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.40.2.22864</state>
                 </option>
                 <option>
                     <name>OCDynDriverList</name>
-                    <state>CMSISDAP_ID</state>
+                    <state>ARMSIM_ID</state>
                 </option>
                 <option>
                     <name>OCLastSavedByProductVersion</name>
-                    <state>8.40.2.22864</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>UseFlashLoader</name>
@@ -112,7 +112,7 @@
                 </option>
                 <option>
                     <name>FlashLoadersV3</name>
-                    <state>$TOOLKIT_DIR$\config\flashloader\Microchip\same70x21\same70x21-flash.board</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>OCImagesSuppressCheck1</name>
@@ -180,7 +180,7 @@
                 </option>
                 <option>
                     <name>OCMulticoreNrOfCores</name>
-                    <state>1</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>OCMulticoreWorkspace</name>
@@ -296,7 +296,7 @@
                 <option>
                     <name>CMSISDAPResetList</name>
                     <version>1</version>
-                    <state>4</state>
+                    <state>10</state>
                 </option>
                 <option>
                     <name>CMSISDAPHWResetDuration</name>
@@ -316,7 +316,7 @@
                 </option>
                 <option>
                     <name>CMSISDAPInterfaceRadio</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>CMSISDAPInterfaceCmdLine</name>
@@ -437,7 +437,7 @@
                 </option>
                 <option>
                     <name>CMSISDAPSelectedCPUBehaviour</name>
-                    <state></state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>ICpuName</name>
@@ -830,12 +830,12 @@
                 </option>
                 <option>
                     <name>CCJLinkInterfaceRadio</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>CCJLinkResetList</name>
                     <version>6</version>
-                    <state>7</state>
+                    <state>5</state>
                 </option>
                 <option>
                     <name>CCJLinkInterfaceCmdLine</name>
@@ -900,7 +900,7 @@
                 </option>
                 <option>
                     <name>CCCpuClockEdit</name>
-                    <state>300.0</state>
+                    <state></state>
                 </option>
                 <option>
                     <name>CCSwoClockAuto</name>
@@ -1033,7 +1033,7 @@
                 </option>
                 <option>
                     <name>CCSwoClockAuto</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCSwoClockEdit</name>
@@ -1123,7 +1123,7 @@
                 <option>
                     <name>CCSTLinkProbeList</name>
                     <version>1</version>
-                    <state>2</state>
+                    <state>0</state>
                 </option>
             </data>
         </settings>
@@ -1565,7 +1565,7 @@
                 </option>
                 <option>
                     <name>OCProductVersion</name>
-                    <state>8.32.2.19370</state>
+                    <state>8.40.2.22864</state>
                 </option>
                 <option>
                     <name>OCDynDriverList</name>
@@ -2518,7 +2518,7 @@
                 </option>
                 <option>
                     <name>CCSwoClockAuto</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCSwoClockEdit</name>
@@ -2608,7 +2608,7 @@
                 <option>
                     <name>CCSTLinkProbeList</name>
                     <version>1</version>
-                    <state>2</state>
+                    <state>0</state>
                 </option>
             </data>
         </settings>

@@ -6,7 +6,7 @@
     </device>
     <includePath>
         <path>$PROJ_DIR$\..\..\firmware\src</path>
-        <path>$PROJ_DIR$\..\..\firmware\src\config\sam_e70_xult</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\config\sam_e70_xult_iar</path>
         <path>$PROJ_DIR$\..\..\firmware\src\packs\ATSAME70Q21B_DFP</path>
         <path>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS\CMSIS\Core\Include</path>
         <path>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS</path>
@@ -14,14 +14,14 @@
     </includePath>
     <asmIncludePath>
         <path>$PROJ_DIR$\..\..\firmware\src</path>
-        <path>$PROJ_DIR$\..\..\firmware\src\config\sam_e70_xult</path>
+        <path>$PROJ_DIR$\..\..\firmware\src\config\sam_e70_xult_iar</path>
         <path>$PROJ_DIR$\..\..\firmware\src\packs\ATSAME70Q21B_DFP</path>
         <path>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS\CMSIS\Core\Include</path>
         <path>$PROJ_DIR$\..\..\firmware\src\packs\CMSIS</path>
         <path>$PROJ_DIR$\..\..\firmware\src\arm</path>
     </asmIncludePath>
-    <files relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_e70_xult">
-        <group name="Header Files" relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_e70_xult">
+    <files relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_e70_xult_iar">
+        <group name="Header Files" relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_e70_xult_iar">
             <path>\usb\usb_host_msd.h</path>
             <path>\usb\usb_host_scsi.h</path>
             <path>\usb\usb_msd.h</path>
@@ -128,7 +128,7 @@
             <path>\user.h</path>
             <path>\configuration.h</path>
         </group>
-        <group name="Source Files" relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_e70_xult">
+        <group name="Source Files" relRoot="$PROJ_DIR$\..\..\firmware\src\config\sam_e70_xult_iar">
             <path>\usb\src\usb_host_msd.c</path>
             <path>\usb\src\usb_host_scsi.c</path>
             <path>\..\..\main.c</path>

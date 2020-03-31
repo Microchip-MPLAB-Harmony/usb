@@ -54,10 +54,6 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
-#pragma config TCM_CONFIGURATION = 0
-#pragma config SECURITY_BIT = CLEAR
-#pragma config BOOT_MODE = SET
-
 
 
 
