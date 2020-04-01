@@ -694,64 +694,57 @@
             <Dynamic dnOrder="0" id="core" value="1078034597"/>
           </Values>
         </Hex>
-        <Menu dnOrder="138" id="UPLL_OUT_OF_RANGE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">false</Value>
-            </Boolean>
-          </Attributes>
-        </Menu>
-        <Boolean dnOrder="139" id="USB1_CLOCK_ENABLE">
+        <Boolean dnOrder="138" id="USB1_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="140" id="USB1_CLOCK_FREQUENCY">
+        <Integer dnOrder="139" id="USB1_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="20000000"/>
           </Values>
         </Integer>
-        <String dnOrder="141" id="USBCLK">
+        <String dnOrder="140" id="USBCLK">
           <Values dnOrder="0">
             <User dnOrder="0" value="96000000"/>
           </Values>
         </String>
-        <Boolean dnOrder="142" id="USBPLL_ENABLE">
+        <Boolean dnOrder="141" id="USBPLL_ENABLE">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="143" id="USB_INTERRUPT_ENABLE">
+        <Boolean dnOrder="142" id="USB_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="144" id="USB_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="143" id="USB_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="145" id="USB_INTERRUPT_HANDLER">
+        <String dnOrder="144" id="USB_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbfs_v1" value="DRV_USBFS_USB_Handler"/>
           </Values>
         </String>
-        <Boolean dnOrder="146" id="USB_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="145" id="USB_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbfs_v1" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="147" id="WIFICLK">
+        <String dnOrder="146" id="WIFICLK">
           <Values dnOrder="0">
             <User dnOrder="0" value="0"/>
           </Values>
         </String>
-        <Integer dnOrder="148" id="WIFI_CLOCK_FREQUENCY">
+        <Integer dnOrder="147" id="WIFI_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
-        <KeyValueSet dnOrder="149" id="clkSvcMode">
+        <KeyValueSet dnOrder="148" id="clkSvcMode">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
@@ -939,32 +932,37 @@
             <Dynamic dnOrder="0" id="usb_device" value="2"/>
           </Values>
         </Integer>
-        <Integer dnOrder="2" id="CONFIG_USB_DEVICE_FUNCTIONS_NUMBER">
+        <Boolean dnOrder="2" id="CONFIG_USB_DEVICE_EVENT_ENABLE_SOF">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="3" id="CONFIG_USB_DEVICE_FUNCTIONS_NUMBER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="usb_device" value="1"/>
           </Values>
         </Integer>
-        <Integer dnOrder="3" id="CONFIG_USB_DEVICE_INTERFACES_NUMBER">
+        <Integer dnOrder="4" id="CONFIG_USB_DEVICE_INTERFACES_NUMBER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="usb_device" value="2"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="4" id="CONFIG_USB_DEVICE_MSD_DISK_IMAGE">
+        <Boolean dnOrder="5" id="CONFIG_USB_DEVICE_MSD_DISK_IMAGE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="usb_device" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="5" id="CONFIG_USB_DEVICE_PRODUCT_ID_IDX0">
+        <String dnOrder="6" id="CONFIG_USB_DEVICE_PRODUCT_ID_IDX0">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="usb_device" value="0x000A"/>
           </Values>
         </String>
-        <Combo dnOrder="6" id="CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0">
+        <Combo dnOrder="7" id="CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0">
           <Values dnOrder="0">
             <User dnOrder="0" value="cdc_com_port_single_demo"/>
           </Values>
         </Combo>
-        <String dnOrder="7" id="CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR">
+        <String dnOrder="8" id="CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="usb_device" value="Simple CDC Device Demo"/>
           </Values>
@@ -1008,7 +1006,8 @@
     </GeneratorComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_PIC32MZ_W1_Curiosity" x="25" y="60"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="236" y="21"/>
@@ -1019,6 +1018,5 @@
         <ElementPosition dnOrder="6" id="usb_device_cdc" x="333" y="164"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>

@@ -101,7 +101,7 @@
 #pragma config USBIDIO =         ON
 #pragma config VBUSIO =         ON
 #pragma config HSSPIEN =         OFF
-#pragma config SMCLR =      MCLR_NORM
+#pragma config SMCLR =      MCLR_POR
 #pragma config USBDMTRIM =      0
 #pragma config USBDPTRIM =      0
 #pragma config HSUARTEN =    ON

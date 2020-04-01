@@ -51,8 +51,8 @@
           <Name dnOrder="1">initialization.c</Name>
           <LogicalPath dnOrder="2">config/pic32mz_w1_curiosity/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">968EA28FA6C4424F11804F9F0DBBF99F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">968EA28FA6C4424F11804F9F0DBBF99F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">21CCE6A7D62927DBAEDA7AC84D805832</GeneratedChecksum>
+          <UserChecksum dnOrder="5">21CCE6A7D62927DBAEDA7AC84D805832</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -179,8 +179,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/pic32mz_w1_curiosity/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">8A83A043086E8AAE29C38467E0746F0F</GeneratedChecksum>
-          <UserChecksum dnOrder="5">8A83A043086E8AAE29C38467E0746F0F</UserChecksum>
+          <GeneratedChecksum dnOrder="4">6B27293C087A8C9CD716069F35F0E30E</GeneratedChecksum>
+          <UserChecksum dnOrder="5">6B27293C087A8C9CD716069F35F0E30E</UserChecksum>
         </File>
         <File dnOrder="22">
           <Type dnOrder="0">HEADER</Type>
@@ -1384,11 +1384,11 @@
     </Manifest>
     <Settings dnOrder="4">
       <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.6.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ-W_DFP\1.1.148\atdf\PIC32MZ1025W104132.atdf"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ-W_DFP\1.1.145\atdf\PIC32MZ1025W104132.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bootloader;bsp;core;csp;micrium_ucos3;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>
