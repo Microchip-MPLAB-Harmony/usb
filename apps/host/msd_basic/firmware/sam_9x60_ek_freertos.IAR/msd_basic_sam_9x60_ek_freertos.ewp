@@ -718,7 +718,7 @@
                 </option>
                 <option>
                     <name>IlinkOutputFile</name>
-                    <state>sam_9x60_ek_freertos.out</state>
+                    <state>msd_basic_sam_9x60_ek_freertos.out</state>
                 </option>
                 <option>
                     <name>IlinkDebugInfoEnable</name>
@@ -842,7 +842,7 @@
                 </option>
                 <option>
                     <name>IlinkProgramEntryLabel</name>
-                    <state></state>
+                    <state>__iar_program_start</state>
                 </option>
                 <option>
                     <name>DoFill</name>
@@ -1015,7 +1015,7 @@
                 </option>
                 <option>
                     <name>IlinkTrustzoneImportLibraryOut</name>
-                    <state>###Unitialized###</state>
+                    <state>msd_basic_sam_9x60_ek_freertos_import_lib.o</state>
                 </option>
                 <option>
                     <name>OILinkExtraOption</name>

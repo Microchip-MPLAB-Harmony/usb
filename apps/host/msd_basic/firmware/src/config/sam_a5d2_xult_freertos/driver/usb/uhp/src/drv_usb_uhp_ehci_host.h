@@ -59,12 +59,23 @@
 // *****************************************************************************
 // *****************************************************************************
 
-extern void DRV_USB_UHP_EHCI_HOST_ResetOverlay(uint32_t PipeInUse);
 extern void DRV_USB_UHP_EHCI_HOST_ResetEnable(DRV_USB_UHP_OBJ *hDriver);
 extern void DRV_USB_UHP_EHCI_HOST_ReceivedSize( uint32_t * BuffSize );
 extern void DRV_USB_UHP_EHCI_HOST_Init(DRV_USB_UHP_OBJ *drvObj);
 extern void DRV_USB_UHP_EHCI_HOST_DisableAsynchronousList(DRV_USB_UHP_OBJ *hDriver);
-extern void DRV_USB_UHP_EHCI_HOST_ResetOverlay(uint32_t PipeInUse);
 extern void DRV_USB_UHP_EHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver);
+extern DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_EHCI_PipeSetup
+(
+    DRV_HANDLE        client,
+    uint8_t           deviceAddress,
+    USB_ENDPOINT      endpointAndDirection,
+    uint8_t           hubAddress,
+    uint8_t           hubPort,
+    USB_TRANSFER_TYPE pipeType,
+    uint8_t           bInterval,
+    uint16_t          wMaxPacketSize,
+    USB_SPEED         speed
+);
+extern void DRV_USB_UHP_EHCI_PipeClose(DRV_USB_UHP_HOST_PIPE_HANDLE pipeHandle);
 
 #endif  // _DRV_USB_UHP_EHCI_H

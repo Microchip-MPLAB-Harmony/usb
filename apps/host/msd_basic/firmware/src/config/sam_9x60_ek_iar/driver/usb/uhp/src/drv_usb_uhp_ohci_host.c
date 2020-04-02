@@ -99,7 +99,7 @@ ED_Control;
 
 /* Endpoint Descriptor Field Definitions */
 /* 4.2.1 Endpoint Descriptor Format */
-typedef struct 
+typedef struct
 {
     /* FunctionAddress | EndpointNumber | Direction | Speed | sKip | Format
      * MaximumPacketSize */
@@ -117,7 +117,7 @@ typedef struct
 
     /* 240 */
     volatile uint8_t dummy[0xF0];
-    
+
 }  OHCIQueueHeadDescriptor;
 
 
@@ -126,7 +126,7 @@ typedef union __attribute__ ((packed))
 {
     struct
     {
-        uint32_t dummy : 18; 
+        uint32_t dummy : 18;
         uint32_t R     :  1; /* bufferRounding */
         uint32_t DP    :  2; /* Direction/PID */
         uint32_t DI    :  3; /* DelayInterrupt */
@@ -140,7 +140,7 @@ TD_Control;
 
 /* 4.3.1.1 General Transfer Descriptor Format */
 /* This General TD is a 16-byte, host memory structure that must be aligned to a 16-byte boundary. */
-typedef struct 
+typedef struct
 {
     volatile TD_Control Control;
     volatile uint32_t CBP;
@@ -165,7 +165,7 @@ typedef struct
  *  processing must start.
  *  It is a function of the new FrameInterval and is calculated by subtracting
  *  from FrameInterval the maximum number of bit times for transaction overhead
- *  on USB and the number of bit times needed for EOF processing, then 
+ *  on USB and the number of bit times needed for EOF processing, then
  *  multiplying the result by 6/7 to account for the worst case bit stuffing  */
 /*  The value of MAXIMUM_OVERHEAD below is 210 bit times. */
 #define MAXIMUM_OVERHEAD 210
@@ -173,15 +173,17 @@ typedef struct
 #define OHCI_FMINTERVAL ((FSLARGESTDATAPACKET << UHP_OHCI_HCFMINTERVAL_FSMPS_Pos) | (FRAMEINTERVAL-1))
 
 /* 7.3.4 HcPeriodicStart Register
- * The HcPeriodicStart register has a 14-bit programmable value which 
- * determines when is the earliest time HC should start processing the 
+ * The HcPeriodicStart register has a 14-bit programmable value which
+ * determines when is the earliest time HC should start processing the
  * periodic list. */
-/*  Set HcPeriodicStart to a value that is 90% of the value in FrameInterval 
+/*  Set HcPeriodicStart to a value that is 90% of the value in FrameInterval
  *  field of the HcFmInterval register. */
 #define OHCI_PRDSTRT    (FRAMEINTERVAL*90/100)
 
+#define DIT   0    /* DelayInterrupt (7 == no interrupt) */
+
 /* 4.4 Host Controller Communications Area */
-typedef struct 
+typedef struct
 {
     volatile uint32_t UHP_HccaInterruptTable[32]; /* 0x00: These 32 Dwords are pointers to interrupt EDs. (128 chars / 4 = 32 uint32_t) */
     volatile uint16_t UHP_HccaFrameNumber;        /* 0x80: Contains the current frame number. */
@@ -212,7 +214,7 @@ __ALIGNED(256) NOT_CACHED OHCI_HCCA HCCA;
     Test OHCI transfer descriptor
 
    Description:
-    
+
 
    Remarks:
     Refer to .h for usage information.
@@ -364,7 +366,6 @@ static void _DRV_USB_UHP_OHCI_HOST_CreateQueueHead(OHCIQueueHeadDescriptor * EDA
                             uint32_t DataToggle,
                             uint32_t BuffLen,
                             uint32_t Direction,
-                            uint32_t DelayInterrupt,
                             uint32_t BufRnding,
                             uint32_t * CurBufPtr)
 
@@ -382,7 +383,6 @@ static void _DRV_USB_UHP_OHCI_HOST_CreateQTD(OHCIQueueTDDescriptor * qTD_base_ad
                             uint32_t DataToggle,
                             uint32_t BuffLen,
                             uint32_t Direction,
-                            uint32_t DelayInterrupt,
                             uint32_t BufRnding,
                             uint32_t * CurBufPtr)
 {
@@ -396,7 +396,7 @@ static void _DRV_USB_UHP_OHCI_HOST_CreateQTD(OHCIQueueTDDescriptor * qTD_base_ad
      * T: (0=automatic) */
     pTD->Control.td_control &= 0x0007FFFF;          /* Clear all permit bits. */
     pTD->Control.td_control |= (DataToggle << 24) | /* T: DataToggle */
-                           (DelayInterrupt << 21) | /* DI: DelayInterrupt 7=no interrupt */
+                                      (DIT << 21) | /* DI: DelayInterrupt 7=no interrupt */
                                 (Direction << 19) | /* DP: Direction/PID: 0=setup, 1=out, 2=in */
                                 (BufRnding << 18);  /* R: bufferRounding */
     /* EC: ErrorCount: For each transmission error, this value is incremented. */
@@ -450,7 +450,7 @@ void DRV_USB_UHP_OHCI_HOST_ReceivedSize( uint32_t * BuffSize )
     OHCI initialization
 
    Description:
-    
+
 
    Remarks:
     Refer to .h for usage information.
@@ -463,11 +463,11 @@ void DRV_USB_UHP_OHCI_HOST_Init(DRV_USB_UHP_OBJ *hDriver)
 
     for( uint8_t i=0; i<32; i++)
     {
-        HCCA.UHP_HccaInterruptTable[i] = 0; 
+        HCCA.UHP_HccaInterruptTable[i] = 0;
     }
 
     /* Set the HcHCCA to the physical address of the HCCA block. */
-    usbIDOHCI->UHP_OHCI_HCHCCA = (uint32_t) &HCCA; 
+    usbIDOHCI->UHP_OHCI_HCHCCA = (uint32_t) &HCCA;
 
     memset(OHCI_QueueHead, 0, sizeof(OHCI_QueueHead));
     memset(OHCI_QueueTD, 0, sizeof(OHCI_QueueTD));
@@ -477,15 +477,15 @@ void DRV_USB_UHP_OHCI_HOST_Init(DRV_USB_UHP_OBJ *hDriver)
     Interval |= (((Interval - MAXIMUM_OVERHEAD) * 6) / 7) << 16;
     Interval |= 0x80000000 & (0x80000000 ^ (usbIDOHCI->UHP_OHCI_HCFMREMAINING));
     usbIDOHCI->UHP_OHCI_HCFMINTERVAL = Interval;
-    
+
     /* Set HcPeriodicStart to a value that is 90% of the value in FrameInterval field of the HcFmInterval register. */
     usbIDOHCI->UHP_OHCI_HCPERIODICSTART = OHCI_PRDSTRT;
 
     usbIDOHCI->UHP_OHCI_HCCONTROL = (usbIDOHCI->UHP_OHCI_HCCONTROL & ~UHP_OHCI_HCCONTROL_HCFS_Msk) | UHP_OHCI_HCCONTROL_HCFS( DRV_USB_UHP_HOST_OHCI_STATE_USBRESUME );
-    
+
     /* ClearPortEnable: clear the PortEnableStatus bit: 0 = port is disabled */
     *((uint32_t *)&(usbIDOHCI->UHP_OHCI_HCRHPORTSTATUS0) + hDriver->portNumber) = UHP_OHCI_HCRHPORTSTATUS0_CCS_Msk;
-    
+
     /* USB is in suspend state, set it to operational */
     usbIDOHCI->UHP_OHCI_HCCONTROL = (usbIDOHCI->UHP_OHCI_HCCONTROL & ~UHP_OHCI_HCCONTROL_HCFS_Msk) | UHP_OHCI_HCCONTROL_HCFS( DRV_USB_UHP_HOST_OHCI_STATE_USBOPERATIONAL );
 
@@ -495,7 +495,7 @@ void DRV_USB_UHP_OHCI_HOST_Init(DRV_USB_UHP_OBJ *hDriver)
 
     /* Only if ports are power switched (NoPowerSwitching) */
     if ((read_data & UHP_OHCI_HCRHDESCRIPTORA_NPS) == 0)  /* NPS bit */
-    { 
+    {
         /* PortPowerControlMask */
         if((read_data & UHP_OHCI_HCRHDESCRIPTORA_PSM_Msk) == UHP_OHCI_HCRHDESCRIPTORA_PSM_Msk) /* PSM */
         {
@@ -525,13 +525,13 @@ void DRV_USB_UHP_OHCI_HOST_Init(DRV_USB_UHP_OBJ *hDriver)
 
   Summary:
     Submits an IRP on a pipe.
-    
+
   Description:
     This function submits an IRP on the specified pipe. The IRP will be added to
     the queue and will be processed in turn. The data will be transferred on the
     bus based on the USB bus scheduling rules. When the IRP has been processed,
     the callback function specified in the IRP will be called. The IRP status
-    will be updated to reflect the completion status of the IRP. 
+    will be updated to reflect the completion status of the IRP.
 
   Remarks:
     See .h for usage information.
@@ -556,10 +556,9 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
     uint8_t stop = 0;
     uint8_t DToggle = 0;
     uint8_t low_speed = 0;
-    uint32_t DelayInterrupt = 0;
     USB_ERROR returnValue = USB_ERROR_PARAMETER_INVALID;
     uint32_t i;
-    volatile uint32_t elapsed = 0;
+    volatile uint32_t watchdog = 0;
     uint32_t *QHToProceed = NULL;
 
     if((pipe == NULL) || (hPipe == (DRV_USB_UHP_HOST_PIPE_HANDLE_INVALID)))
@@ -576,15 +575,9 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
         /* Low speed is too slow, HID keyboard not working */
         if(hDriver->deviceSpeed == USB_SPEED_LOW)
         {
-            DelayInterrupt = 1;
-
-            /* Watchdog in case of detach during the while. */
-            while( hDriver->blockPipe == 1 )
+            /* Watchdog in case of detach during the while. 900000 samg55: 120MHz => 7ms */
+            while(( hDriver->blockPipe == 1 ) & ( watchdog++ < 900000 ))
             {
-                if( elapsed++ > 90000 )
-                {
-                    break;
-                }
             }
         }
         hDriver->blockPipe = 1;
@@ -635,7 +628,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                 {
                     /* We need to update the flags parameter of the IRP
                      * to indicate the direction of the control transfer. */
-               
+
                     /* SETUP */
                     /* Set the initial stage of the IRP */
                     irp->tempState = DRV_USB_UHP_HOST_IRP_STATE_PROCESSING;
@@ -674,6 +667,9 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                         irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
                         /* Send the setup packet to device */
 
+                        memset(&OHCI_QueueHead[0], 0, 16); 
+                        memset(&OHCI_QueueTD[0][0], 0, 16*DRV_USB_UHP_MAX_TRANSACTION);
+
                         /* SETUP Transaction */
                         point = (uint8_t *)irp->setup;
                         for (i = 0; i < 8; i++)
@@ -690,7 +686,6 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                         DToggle | 0x2,           /* T: DataToggle value is taken from the LSb of this field. */
                                         8,                       /* BE: BufferEnd: Total Bytes to transfer */
                                         0,                       /* DP: Direction/PID: SETUP=0 */
-                                        DelayInterrupt,
                                         0,                       /* R: bufferRounding: exactly fill the defined data buffer */
                                         (uint32_t *)USBSetupAligned);/* CBP: CurrentBufferPointer (must be aligned) */
 
@@ -720,7 +715,6 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                                 (++DToggle)|0x02,        /* T: DataToggle value is taken from the LSb of this field. */
                                                 tosend,                  /* BE: BufferEnd: Total Bytes to transfer */
                                                 2,                       /* DP: Direction/PID: IN=2 */
-                                                DelayInterrupt,
                                                 1,                       /* R: bufferRounding: data packet may be smaller than the defined buffer. */
                                                 (uint32_t *)(USBBufferAligned + irp->completedBytes)); /* CBP: CurrentBufferPointer */
 
@@ -745,7 +739,6 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                             3,        /* T: DataToggle, STATUS is always DATA1 */
                                             0,        /* BE: BufferEnd: Total Bytes to transfer: ZLP */
                                             1,        /* DP: Direction/PID: OUT=1 */
-                                            DelayInterrupt,
                                             0,        /* R: bufferRounding: exactly fill the defined data buffer */
                                             NULL);    /* CBP: CurrentBufferPointer ZLP */
                         }
@@ -776,10 +769,9 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                                 3,          /* T: DataToggle value is taken from the LSb of this field. */
                                                 irp->size,  /* BE: BufferEnd: Total Bytes to transfer */
                                                 1,          /* DP: Direction/PID: OUT=1 */
-                                                DelayInterrupt,
                                                 0,          /* R: bufferRounding: exactly fill the defined data buffer */
                                                 (uint32_t *)USBBufferAligned); /* CBP: CurrentBufferPointer */
-                                DCACHE_CLEAN_BY_ADDR((uint32_t *)irp->data, sizeof(irp->data)); 
+                                DCACHE_CLEAN_BY_ADDR((uint32_t *)irp->data, sizeof(irp->data));
                             }
 
                             idx++;
@@ -790,7 +782,6 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                             3,     /* T: DataToggle value is taken from the LSb of this field. */
                                             0,     /* BE: BufferEnd: Total Bytes to transfer: ZLP */
                                             2,     /* DP: Direction/PID: IN=2 */
-                                            DelayInterrupt,
                                             0,     /* R: bufferRounding: exactly fill the defined data buffer */
                                             NULL); /* CBP: CurrentBufferPointer ZLP */
                         }
@@ -802,7 +793,6 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                         0,                  /* T: DataToggle acquired from the toggleCarry field in the ED */
                                         0,                  /* BE: BufferEnd: Total Bytes to transfer: ZLP */
                                         1,                  /* DP: Direction/PID: OUT=1 */
-                                        DelayInterrupt,
                                         0,                  /* R: bufferRounding: exactly fill the defined data buffer */
                                         NULL);              /* CBP: CurrentBufferPointer ZLP */
 
@@ -820,7 +810,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                                &OHCI_QueueTD[pipe->hostEndpoint][idx]);    /* TailP: TDQueueTailPointer */
 
                         /* The size of the data buffer  should not be larger than MaximumPacketSize
-                         * from the Endpoint Descriptor (this is not checked by the Host Controller and 
+                         * from the Endpoint Descriptor (this is not checked by the Host Controller and
                          * transmission problems occur if software violates this restriction). */
                         QHToProceed = (uint32_t *)&OHCI_QueueHead[pipe->hostEndpoint];
 
@@ -858,15 +848,14 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                             /* Host to Device: OUT */
                             _DRV_USB_UHP_OHCI_HOST_CreateQTD(&OHCI_QueueTD[pipe->hostEndpoint][idx], /* Transfer Descriptor address */
                                             &OHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* NextTD */
-                                            hDriver->staticDToggleOut|0x2,  /* T: DataToggle value is taken from the LSb of this field. */
+                                            hDriver->hostEndpointTable[pipe->hostEndpoint].endpoint.staticDToggleOut|0x2,  /* data toggle */
                                             tosend,                  /* BE: BufferEnd: Total Bytes to transfer */
                                             1,                       /* DP: Direction/PID: OUT=1 */
-                                            DelayInterrupt,
                                             0,                       /* R: bufferRounding: exactly fill the defined data buffer */
                                             (uint32_t *)((uint32_t)irp->data + irp->completedBytes)); /* data buffer address base, 32-Byte align */
 
                             DCACHE_CLEAN_BY_ADDR((uint32_t *)irp->data, irp->size);
-                            hDriver->staticDToggleOut++;
+                            hDriver->hostEndpointTable[pipe->hostEndpoint].endpoint.staticDToggleOut++;  /* data toggle */
                             idx++;
                             idx_plus = idx + 1;
                             if (nbBytes > pipe->endpointSize)
@@ -888,7 +877,6 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                         0,                  /* T: DataToggle acquired from the toggleCarry field in the ED */
                                         0,                  /* BE: BufferEnd: Total Bytes to transfer: ZLP */
                                         1,                  /* DP: Direction/PID: OUT=1 */
-                                        DelayInterrupt,
                                         0,                  /* R: bufferRounding: exactly fill the defined data buffer */
                                         NULL);              /* CBP: CurrentBufferPointer ZLP */
 
@@ -929,16 +917,14 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                             /* IN */
                             _DRV_USB_UHP_OHCI_HOST_CreateQTD(&OHCI_QueueTD[pipe->hostEndpoint][idx], /* Transfer Descriptor address */
                                             &OHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* NextTD */
-                                            hDriver->staticDToggleIn|0x2, /* T: DataToggle value is taken from the LSb of this field. */
+                                            hDriver->hostEndpointTable[pipe->hostEndpoint].endpoint.staticDToggleIn|0x2,  /* data toggle */
                                             tosend,                  /* BE: BufferEnd: Total Bytes to transfer */
                                             2,                       /* DP: Direction/PID: IN=2 */
-                                            DelayInterrupt,
                                             0,                       /* R: bufferRounding: exactly fill the defined data buffer */
                                             (uint32_t *)((uint32_t)irp->data + irp->completedBytes)); /* CBP: CurrentBufferPointer */
 
                             DCACHE_CLEAN_BY_ADDR((uint32_t *)irp->data, irp->size);
-
-                            hDriver->staticDToggleIn++;
+                            hDriver->hostEndpointTable[pipe->hostEndpoint].endpoint.staticDToggleIn++;  /* data toggle */
                             idx++;
                             idx_plus = idx + 1;
                             if (nbBytes > pipe->endpointSize)
@@ -960,7 +946,6 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                         0,                  /* T: DataToggle acquired from the toggleCarry field in the ED */
                                         0,                  /* BE: BufferEnd: Total Bytes to transfer: ZLP */
                                         2,                  /* DP: Direction/PID: IN=2 */
-                                        DelayInterrupt,
                                         0,                  /* R: bufferRounding: exactly fill the defined data buffer */
                                         NULL);              /* CBP: CurrentBufferPointer ZLP */
 
@@ -984,22 +969,22 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                 if( QHToProceed != NULL )
                 {
                     /*
-                     * if( pipe->pipeType == USB_TRANSFER_TYPE_INTERRUPT ) 
+                     * if( pipe->pipeType == USB_TRANSFER_TYPE_INTERRUPT )
                      * {
                      *     programming of HccaInterruptTable
                      *     An ED that is in only one list has a polling rate of once every 32 ms.
                      *     for( uint8_t i=0; i<32; i++)
                      *     {
-                     *         HCCA.UHP_HccaInterruptTable[i] = (uint32_t)QHToProceed; 
+                     *         HCCA.UHP_HccaInterruptTable[i] = (uint32_t)QHToProceed;
                      *     }
-                     *     HCCA.UHP_HccaInterruptTable[31] = (uint32_t)QHToProceed; 
+                     *     HCCA.UHP_HccaInterruptTable[31] = (uint32_t)QHToProceed;
                      *     HcPeriodicStart
                      *     PeriodCurrentED
                      *     HcPeriodicStart Register
                      *     PeriodicListEnable: enable the processing of the periodic list
                      *     usbIDOHCI->UHP_OHCI_HCCONTROL |= UHP_OHCI_HCCONTROL_PLE_Msk;
                      * }
-                     * else */ 
+                     * else */
                     if( pipe->pipeType == USB_TRANSFER_TYPE_ISOCHRONOUS )
                     {
                         /* IsochronousEnable: enable/disable processing of isochronous EDs */
@@ -1020,7 +1005,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                         /* BulkListEnable: Enable the processing of the Bulk list in the next Frame */
                         usbIDOHCI->UHP_OHCI_HCCONTROL |= UHP_OHCI_HCCONTROL_BLE_Msk;
                     }
-                    else 
+                    else
                     {
                         /* USB_TRANSFER_TYPE_CONTROL */
 
@@ -1068,7 +1053,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                 irpIterator->next = irp;
                 irp->previous = irpIterator;
             }
-            
+
             if(!hDriver->isInInterruptContext)
             {
                 if(controlTransferGroup->interruptWasEnabled)
@@ -1094,7 +1079,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
 
   Summary:
     Disable the processing of the Control list
-	
+
   Description:
     Disable the processing of the Control list
 
@@ -1118,7 +1103,7 @@ void DRV_USB_UHP_OHCI_HOST_DisableControlList(DRV_USB_UHP_OBJ *hDriver)
 
   Summary:
     Disable the processing of the Bulk list
-	
+
   Description:
     Disable the processing of the Bulk list
 
@@ -1142,7 +1127,7 @@ void DRV_USB_UHP_OHCI_HOST_DisableBulkList(DRV_USB_UHP_OBJ *hDriver)
 
   Summary:
     Interrupt handler
-	
+
   Description:
     Management of all OHCI interrupt
 
@@ -1153,7 +1138,7 @@ void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver)
 {
     volatile UhpOhci *usbIDOHCI = hDriver->usbIDOHCI;
     uint32_t read_data;
-    uint32_t i;
+    uint32_t i, j;
     uint32_t td;
     uint32_t endpoint = 0;
     uint32_t ContextInfo;
@@ -1162,7 +1147,7 @@ void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver)
     if ((uint32_t)HCCA.UHP_HccaDoneHead != 0 )
     {
         ContextInfo = UHP_OHCI_HCINTERRUPTSTATUS_WDH; /* note interrupt processing required */
-        if ((uint32_t)HCCA.UHP_HccaDoneHead & 1) 
+        if ((uint32_t)HCCA.UHP_HccaDoneHead & 1)
         {
             ContextInfo |= usbIDOHCI->UHP_OHCI_HCINTERRUPTSTATUS & usbIDOHCI->UHP_0HCI_HCINTERRUPTENABLE;
         }
@@ -1200,18 +1185,18 @@ void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver)
     /*
      * Check for Schedule Overrun
      */
-    if (ContextInfo & UHP_OHCI_HCINTERRUPTSTATUS_SO_Msk) 
+    if (ContextInfo & UHP_OHCI_HCINTERRUPTSTATUS_SO_Msk)
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rOHCI IRQ : Scheduling Overrun");
         usbIDOHCI->UHP_OHCI_HCINTERRUPTSTATUS = UHP_OHCI_HCINTERRUPTSTATUS_SO_Msk; /* acknowledge interrupt */
         ContextInfo &= ~UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_SO_Msk;
-    } 
+    }
 
     /*
      * Check for Frame Number Overflow
      * Note: the formula below prevents a debugger break from making the 32-bit frame number run backward.
      */
-    if (ContextInfo & UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_FNO_Msk) 
+    if (ContextInfo & UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_FNO_Msk)
     {
         usbIDOHCI->UHP_OHCI_HCINTERRUPTSTATUS = UHP_OHCI_HCINTERRUPTSTATUS_FNO_Msk; /* acknowledge interrupt */
         ContextInfo &= ~UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_FNO_Msk;
@@ -1230,11 +1215,11 @@ void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver)
         ContextInfo &= ~UHP_OHCI_HCINTERRUPTSTATUS_RD_Msk;
         usbIDOHCI->UHP_OHCI_HCINTERRUPTSTATUS = UHP_OHCI_HCINTERRUPTSTATUS_RD_Msk;
     }
-    
+
     /*
      * Process the Done Queue
      */
-    if (ContextInfo & UHP_OHCI_HCINTERRUPTSTATUS_WDH_Msk) 
+    if (ContextInfo & UHP_OHCI_HCINTERRUPTSTATUS_WDH_Msk)
     {
         if(hDriver->deviceSpeed == USB_SPEED_LOW)
         {
@@ -1275,7 +1260,7 @@ void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver)
     /*
      * Process Root Hub changes
      */
-    if (ContextInfo & UHP_OHCI_HCINTERRUPTSTATUS_RHSC_Msk) 
+    if (ContextInfo & UHP_OHCI_HCINTERRUPTSTATUS_RHSC_Msk)
     {
         usbIDOHCI->UHP_OHCI_HCINTERRUPTSTATUS = UHP_OHCI_HCINTERRUPTSTATUS_RHSC_Msk; /* clear interrupt */
         /*
@@ -1338,8 +1323,12 @@ void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver)
                     hDriver->controlTransferGroup.currentIRP = NULL;
                     hDriver->controlTransferGroup.currentPipe = NULL;
                     hDriver->hostPipeInUse = 0;
-                    hDriver->staticDToggleOut = 0;
-                    hDriver->staticDToggleIn = 0;
+                    for(j=0; j<DRV_USB_UHP_PIPES_NUMBER; j++)
+                    {
+                        hDriver->hostEndpointTable[j].endpoint.staticDToggleIn = 0;  /* data toggle */
+                        hDriver->hostEndpointTable[j].endpoint.staticDToggleOut = 0;  /* data toggle */
+                    }
+
                     hDriver->portNumber = 0;
                 }
             }
@@ -1378,20 +1367,20 @@ void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver)
         }
         ContextInfo &= ~UHP_OHCI_HCINTERRUPTSTATUS_RHSC_Msk;
     }
-    
+
     if (ContextInfo & UHP_OHCI_HCINTERRUPTSTATUS_OC_Msk)
     {
         /*
          * Only SMM drivers need implement this. See Sections 5.1.1.3.3 and 5.1.1.3.6 for descriptions of what
          * the code here must do.
          */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rOHCI IRQ : Ownership Change");          
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rOHCI IRQ : Ownership Change");
     }
 
     /* SOF */
     if (ContextInfo & UHP_OHCI_HCINTERRUPTSTATUS_SF_Msk)
     {
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rOHCI IRQ : SOF"); 
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rOHCI IRQ : SOF");
         usbIDOHCI->UHP_0HCI_HCINTERRUPTENABLE = UHP_OHCI_HCINTERRUPTSTATUS_SF_Msk; /* clear interrupt */
     }
 
@@ -1401,8 +1390,8 @@ void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver)
      */
     if (ContextInfo & ~UHP_OHCI_HCINTERRUPTDISABLE_MIE_Msk) // any unprocessed interrupts?
     {
-        usbIDOHCI->UHP_OHCI_HCINTERRUPTDISABLE = ContextInfo; // yes, mask them    
-    }   
+        usbIDOHCI->UHP_OHCI_HCINTERRUPTDISABLE = ContextInfo; // yes, mask them
+    }
     /*
      * We've completed the actual service of the HC interrupts, now we must deal with the effects
      */
@@ -1433,7 +1422,7 @@ void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver)
     Root hub enable
 
    Description:
-    
+
 
    Remarks:
     Refer to .h for usage information.
@@ -1482,5 +1471,6 @@ void DRV_USB_UHP_OHCI_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enab
         }
     }
 } /* end of DRV_USB_UHP_OHCI_HOST_ROOT_HUB_OperationEnable() */
+
 
 
