@@ -76,77 +76,82 @@ def onAttachmentConnected(source, target):
 	remoteComponent = target["component"]
 	remoteID = remoteComponent.getID()
 	
-	# Read number of functions from USB Device Layer 
-	nFunctions = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-	#usbDeviceCdcFunInitFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_INIT_ENTRY")
-	usbDeviceCdcFunRegTableFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_ENTRY")
-	usbDeviceCdcFunInitFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_INIT_ENTRY")
-	usbDeviceCdcDescriptorHsFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_HS_ENTRY")
-	usbDeviceCdcDescriptorFsFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_FS_ENTRY")
-	usbDeviceCdcDescriptorClassCodeFile.setOutputName(remoteID + ".LIST_USB_DEVICE_DESCRIPTOR_CLASS_CODE_ENTRY")
+	# Trim off the Instance index 
+	remoteIDtrimmed = remoteID[:-1]
+	
+	if (remoteIDtrimmed == "usb_device_"):
+	
+		# Read number of functions from USB Device Layer 
+		nFunctions = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
+		#usbDeviceCdcFunInitFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_INIT_ENTRY")
+		usbDeviceCdcFunRegTableFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_ENTRY")
+		usbDeviceCdcFunInitFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_INIT_ENTRY")
+		usbDeviceCdcDescriptorHsFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_HS_ENTRY")
+		usbDeviceCdcDescriptorFsFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_FS_ENTRY")
+		usbDeviceCdcDescriptorClassCodeFile.setOutputName(remoteID + ".LIST_USB_DEVICE_DESCRIPTOR_CLASS_CODE_ENTRY")
 
-	if nFunctions != None: 
-		#Log.writeDebugMessage ("USB Device CDC Function Driver: Attachment connected")
-		
-		# Update Number of Functions in USB Device, Increment the value by One. 
-		args = {"nFunction":nFunctions + 1}
-		res = Database.sendMessage(remoteID, "UPDATE_FUNCTIONS_NUMBER", args)
-	
-		# If we have CDC function driver plus any function driver (no matter what Class), we enable IAD. 
-		if nFunctions > 0:
-			args = {"nFunction":True}
-			res = Database.sendMessage(remoteID, "UPDATE_IAD_ENABLE", args)
-			iadEnableSymbol = ownerComponent.getSymbolByID("CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
-			iadEnableSymbol.clearValue()
-			iadEnableSymbol.setValue(True, 1)
-		
-			isIadEnabled = Database.getSymbolValue("usb_device_cdc_0", "CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
-			if isIadEnabled == False:
-				args = {"iadEnable":True}
-				res = Database.sendMessage("usb_device_cdc_0", "UPDATE_CDC_IAD_ENABLE", args)
+		if nFunctions != None: 
+			#Log.writeDebugMessage ("USB Device CDC Function Driver: Attachment connected")
 			
-			nCDCInstances = Database.getSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_INSTANCES")
-			if nCDCInstances == 2:
-				configDescriptorSize = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
-				if configDescriptorSize != None:
-					args = {"nFunction": configDescriptorSize + 8}
-					res = Database.sendMessage(remoteID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
+			# Update Number of Functions in USB Device, Increment the value by One. 
+			args = {"nFunction":nFunctions + 1}
+			res = Database.sendMessage(remoteID, "UPDATE_FUNCTIONS_NUMBER", args)
 		
-		configDescriptorSize = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
-		if configDescriptorSize != None: 
-			iadEnableSymbol = ownerComponent.getSymbolByID("CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
-			if iadEnableSymbol.getValue() == True:
-				descriptorSize =  cdcDescriptorSize + 8
-			else:
-				descriptorSize =  cdcDescriptorSize
-			args = {"nFunction": configDescriptorSize + descriptorSize}
-			res = Database.sendMessage(remoteID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
-	
-		nInterfaces = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
-		if nInterfaces != None: 
-			args = {"nFunction":  nInterfaces + cdcInterfacesNumber}
-			res = Database.sendMessage(remoteID, "UPDATE_INTERFACES_NUMBER", args)
-			startInterfaceNumber.setValue(nInterfaces, 1)
+			# If we have CDC function driver plus any function driver (no matter what Class), we enable IAD. 
+			if nFunctions > 0:
+				args = {"nFunction":True}
+				res = Database.sendMessage(remoteID, "UPDATE_IAD_ENABLE", args)
+				iadEnableSymbol = ownerComponent.getSymbolByID("CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
+				iadEnableSymbol.clearValue()
+				iadEnableSymbol.setValue(True, 1)
 			
-		nEndpoints = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-		if nEndpoints != None:
-			epNumberInterrupt.setValue(nEndpoints + 1, 1)
-			epNumberBulkOut.setValue(nEndpoints + 2, 1)
-			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MK", "SAMD21", "SAMDA1","SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22"]):
-				epNumberBulkIn.setValue(nEndpoints + 2, 1)
-				args = {"nFunction":  nEndpoints + cdcEndpointsPic32}
-				res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
-			else:
-				epNumberBulkIn.setValue(nEndpoints + 3, 1)
-				args = {"nFunction":  nEndpoints + cdcEndpointsSAM}
-				res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
-	
+				isIadEnabled = Database.getSymbolValue("usb_device_cdc_0", "CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
+				if isIadEnabled == False:
+					args = {"iadEnable":True}
+					res = Database.sendMessage("usb_device_cdc_0", "UPDATE_CDC_IAD_ENABLE", args)
+				
+				nCDCInstances = Database.getSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_INSTANCES")
+				if nCDCInstances == 2:
+					configDescriptorSize = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
+					if configDescriptorSize != None:
+						args = {"nFunction": configDescriptorSize + 8}
+						res = Database.sendMessage(remoteID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
+			
+			configDescriptorSize = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
+			if configDescriptorSize != None: 
+				iadEnableSymbol = ownerComponent.getSymbolByID("CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
+				if iadEnableSymbol.getValue() == True:
+					descriptorSize =  cdcDescriptorSize + 8
+				else:
+					descriptorSize =  cdcDescriptorSize
+				args = {"nFunction": configDescriptorSize + descriptorSize}
+				res = Database.sendMessage(remoteID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
+		
+			nInterfaces = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
+			if nInterfaces != None: 
+				args = {"nFunction":  nInterfaces + cdcInterfacesNumber}
+				res = Database.sendMessage(remoteID, "UPDATE_INTERFACES_NUMBER", args)
+				startInterfaceNumber.setValue(nInterfaces, 1)
+				
+			nEndpoints = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+			if nEndpoints != None:
+				epNumberInterrupt.setValue(nEndpoints + 1, 1)
+				epNumberBulkOut.setValue(nEndpoints + 2, 1)
+				if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MK", "SAMD21", "SAMDA1","SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22"]):
+					epNumberBulkIn.setValue(nEndpoints + 2, 1)
+					args = {"nFunction":  nEndpoints + cdcEndpointsPic32}
+					res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
+				else:
+					epNumberBulkIn.setValue(nEndpoints + 3, 1)
+					args = {"nFunction":  nEndpoints + cdcEndpointsSAM}
+					res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
+		
 
-	queueDepthCombined = Database.getSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED")
-	if (queueDepthCombined == None):
-		queueDepthCombined = 0
-	args = {"cdcQueueDepth": queueDepthCombined + currentQSizeRead + currentQSizeWrite + currentQSizeSerialStateNotification}
-	res = Database.sendMessage("usb_device_cdc", "UPDATE_CDC_QUEUE_DEPTH_COMBINED", args)	
+		queueDepthCombined = Database.getSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED")
+		if (queueDepthCombined == None):
+			queueDepthCombined = 0
+		args = {"cdcQueueDepth": queueDepthCombined + currentQSizeRead + currentQSizeWrite + currentQSizeSerialStateNotification}
+		res = Database.sendMessage("usb_device_cdc", "UPDATE_CDC_QUEUE_DEPTH_COMBINED", args)	
 	
 	
 def onAttachmentDisconnected(source, target):
@@ -173,58 +178,62 @@ def onAttachmentDisconnected(source, target):
 	ownerComponent = source["component"]
 	remoteComponent = target["component"]
 	remoteID = remoteComponent.getID()
+	remoteIDtrimmed = remoteID[:-1]
 	
-	nFunctions = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-	if nFunctions != None: 
-		nFunctions = nFunctions - 1
-		args = {"nFunction":nFunctions}
-		res = Database.sendMessage(remoteID, "UPDATE_FUNCTIONS_NUMBER", args)
+	# Trim off the Instance index 
+	if (remoteIDtrimmed == "usb_device_"):
 	
-	endpointNumber = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-	if endpointNumber != None:
-		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-			args = {"nFunction":endpointNumber -  cdcEndpointsPic32 }
-			res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
-		else:
-			args = {"nFunction":endpointNumber -  cdcEndpointsSAM }
-			res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
-	
-	interfaceNumber = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
-	if interfaceNumber != None: 
-		args = {"nFunction":   interfaceNumber - 2}
-		res = Database.sendMessage("remoteID", "UPDATE_INTERFACES_NUMBER", args)
+		nFunctions = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
+		if nFunctions != None: 
+			nFunctions = nFunctions - 1
+			args = {"nFunction":nFunctions}
+			res = Database.sendMessage(remoteID, "UPDATE_FUNCTIONS_NUMBER", args)
 		
-	nCDCInstances = Database.getSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_INSTANCES")
-	if nCDCInstances != None:
-		nCDCInstances = nCDCInstances - 1
-		args = {"cdcInstanceCount": nCDCInstances}
-		res = Database.sendMessage("usb_device_cdc", "UPDATE_CDC_INSTANCES", args)
+		endpointNumber = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+		if endpointNumber != None:
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+				args = {"nFunction":endpointNumber -  cdcEndpointsPic32 }
+				res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
+			else:
+				args = {"nFunction":endpointNumber -  cdcEndpointsSAM }
+				res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
 		
-		# As the component is destroyed update the Combined Queue Length 
-		queueDepthCombined = Database.getSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED")
-		if (queueDepthCombined == None):
-			queueDepthCombined = 0
-		args = {"cdcQueueDepth": queueDepthCombined - (currentQSizeRead + currentQSizeWrite + currentQSizeSerialStateNotification)}
-		res = Database.sendMessage("usb_device_cdc", "UPDATE_CDC_QUEUE_DEPTH_COMBINED", args)
+		interfaceNumber = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
+		if interfaceNumber != None: 
+			args = {"nFunction":   interfaceNumber - 2}
+			res = Database.sendMessage("remoteID", "UPDATE_INTERFACES_NUMBER", args)
+			
+		nCDCInstances = Database.getSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_INSTANCES")
+		if nCDCInstances != None:
+			nCDCInstances = nCDCInstances - 1
+			args = {"cdcInstanceCount": nCDCInstances}
+			res = Database.sendMessage("usb_device_cdc", "UPDATE_CDC_INSTANCES", args)
+			
+			# As the component is destroyed update the Combined Queue Length 
+			queueDepthCombined = Database.getSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED")
+			if (queueDepthCombined == None):
+				queueDepthCombined = 0
+			args = {"cdcQueueDepth": queueDepthCombined - (currentQSizeRead + currentQSizeWrite + currentQSizeSerialStateNotification)}
+			res = Database.sendMessage("usb_device_cdc", "UPDATE_CDC_QUEUE_DEPTH_COMBINED", args)
+			
+			if nCDCInstances == 1 and nFunctions != None and nFunctions == 1:
+				args = {"iadEnable":False}
+				res = Database.sendMessage("usb_device_cdc_0", "UPDATE_CDC_IAD_ENABLE", args)
+				args = {"nFunction":False}
+				res = Database.sendMessage(remoteID, "UPDATE_IAD_ENABLE", args)
+				configDescriptorSize = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
+				if configDescriptorSize != None:
+					args = {"nFunction": configDescriptorSize - 8}
+					res = Database.sendMessage(remoteID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 		
-		if nCDCInstances == 1 and nFunctions != None and nFunctions == 1:
-			args = {"iadEnable":False}
-			res = Database.sendMessage("usb_device_cdc_0", "UPDATE_CDC_IAD_ENABLE", args)
-			args = {"nFunction":False}
-			res = Database.sendMessage(remoteID, "UPDATE_IAD_ENABLE", args)
-			configDescriptorSize = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
-			if configDescriptorSize != None:
-				args = {"nFunction": configDescriptorSize - 8}
-				res = Database.sendMessage(remoteID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
-	
-	configDescriptorSize = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
-	if configDescriptorSize != None: 
-		if useIad.getValue() == True:
-			descriptorSize =  cdcDescriptorSize + 8
-		else:
-			descriptorSize =  cdcDescriptorSize
-		args = {"nFunction": configDescriptorSize - descriptorSize}
-		res = Database.sendMessage(remoteID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
+		configDescriptorSize = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
+		if configDescriptorSize != None: 
+			if useIad.getValue() == True:
+				descriptorSize =  cdcDescriptorSize + 8
+			else:
+				descriptorSize =  cdcDescriptorSize
+			args = {"nFunction": configDescriptorSize - descriptorSize}
+			res = Database.sendMessage(remoteID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 	
 def destroyComponent(component):
 	print ("CDC Function Driver: Destroyed")
