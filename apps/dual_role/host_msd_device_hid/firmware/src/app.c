@@ -211,10 +211,7 @@ void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, void * eventData, uintptr
             appData.isMouseReportSendBusy = false;
             appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
             appData.emulateMouse = true;
-            LED1_On ( );
-            LED2_On (  );
-            LED3_Off (  );
-
+            LED1_Off ( );
             break;
 
         case USB_DEVICE_EVENT_CONFIGURED:
@@ -225,10 +222,8 @@ void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, void * eventData, uintptr
             {
                 appData.isConfigured = true;
                 
-                LED1_Off (  );
-                LED2_Off (  );
-                LED3_Off (  );
-
+                LED1_On (  );
+              
                 /* Register the Application HID Event Handler. */
 
                 USB_DEVICE_HID_EventHandlerSet(appData.hidInstance,
@@ -237,15 +232,17 @@ void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, void * eventData, uintptr
             break;
 
         case USB_DEVICE_EVENT_POWER_DETECTED:
+            appData.powerDetected = true;
+           
             break;
 
         case USB_DEVICE_EVENT_POWER_REMOVED:
+            appData.powerDetected = false;
+            LED1_Off (  );
             break;
 
         case USB_DEVICE_EVENT_SUSPENDED:
             LED1_Off (  );
-            LED2_On (  );
-            LED3_On (  );
             break;
 
         case USB_DEVICE_EVENT_RESUMED:
@@ -341,21 +338,31 @@ void APP_ProcessSwitchPress(void)
     }
     if(SWITCH2_STATE_PRESSED == (SWITCH2_Get()))
     {
-        if(appData.roleSwitch == false)
+        appData.isSwitch2Pressed = true;
+        if (( appData.currentRole == APP_NONE ) || ( appData.currentRole == APP_HOST ))
         {
             appData.roleSwitch = true;
+            appData.currentRole = APP_DEVICE ;
+            USB_HOST_BusDisable(0);
             appData.state = APP_STATE_SELECT_USB_ROLE;
         }
-        else
-        {
-            /* Do not process continuous press */
-        }
+        
+        
     }
-    else
+    
+    if(SWITCH3_STATE_PRESSED == (SWITCH3_Get()))
     {
-        appData.roleSwitch = false;
+        appData.isSwitch3Pressed = true;
+        if (( appData.currentRole == APP_NONE ) || ( appData.currentRole == APP_DEVICE ))
+        {
+            appData.roleSwitch = true;
+            appData.currentRole = APP_HOST ;
+            appData.state = APP_STATE_SELECT_USB_ROLE;
+        }
+        
+        
     }
-}
+ }
 
 
 // *****************************************************************************
@@ -385,9 +392,12 @@ void APP_Initialize ( void )
     appData.isSwitchPressed = false;
     appData.ignoreSwitchPress = false;
     appData.deviceIsConnected = false;
-    appData.currentRole = 0x0;
+    appData.currentRole = APP_NONE ;
     appData.roleSwitch = false;
     appData.deviceIsConnected = false;
+    appData.isSwitch2Pressed = false;
+    appData.isSwitch3Pressed = false;
+    appData.powerDetected = false;
     
 }
 
@@ -457,36 +467,54 @@ void APP_Tasks ( void )
                 appData.ignoreSwitchPress = false;
                 appData.deviceIsConnected = false;
                 appData.deviceIsConnected = false;
-            
-                appData.currentRole = appData.currentRole ^ 0x01;
-                if(appData.currentRole == 0x1)
+ 
+                if(appData.currentRole == APP_HOST  )
                 {
-                    appData.state = APP_STATE_WAIT_FOR_BUS_DISABLE_COMPLETE;
+                    if  ( appData.isSwitch3Pressed == true  )
+                    {
+                        appData.state = APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE;
+                        USB_HOST_BusEnable(0);
+                        if ( appData.powerDetected == false )
+                        {
+                            USB_DEVICE_Detach(appData.deviceHandle);
+                        }
+                        appData.currentRole = APP_HOST ;
+                        appData.isSwitch3Pressed = false;
+                        appData.roleSwitch = false;
+                    }
                     
-                    USB_HOST_BusDisable(0);
                 }
-                else
+                if(appData.currentRole == APP_DEVICE  )
                 {
-                    appData.state = APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE;
-                    
-                    USB_DEVICE_Detach(appData.deviceHandle);
-
-                    USB_HOST_BusEnable(0);
+                    if ( appData.isSwitch2Pressed == true  )
+                    {
+                        appData.state = APP_STATE_WAIT_FOR_BUS_DISABLE_COMPLETE;
+                        USB_HOST_BusDisable(0);
+                        appData.isSwitch2Pressed  = false ;
+                        appData.currentRole = APP_DEVICE ;
+                        appData.roleSwitch = false;
+                    }
                 }
             }
-            
-            break;
+        break;
             
         case APP_STATE_WAIT_FOR_BUS_DISABLE_COMPLETE:
             
             if(USB_HOST_RESULT_TRUE == USB_HOST_BusIsDisabled(0))
             {
-                appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
-                
-                /* VBUS was detected. We can attach the device */
-                USB_DEVICE_Attach(appData.deviceHandle);
+                appData.state = APP_STATE_WAIT_FOR_POWER_DETECT;
             }
             
+            break;
+            
+        case APP_STATE_WAIT_FOR_POWER_DETECT :
+            
+            if ( appData.powerDetected == true )
+            {
+                /* VBUS was detected. We can attach the device */
+                USB_DEVICE_Attach(appData.deviceHandle);
+                appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
+            }
             break;
 
         case APP_STATE_WAIT_FOR_CONFIGURATION:

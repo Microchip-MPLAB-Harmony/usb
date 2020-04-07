@@ -3,7 +3,7 @@
   <Configurator>
     <Name dnOrder="0" value="pic32mz_ef_sk"/>
     <Processor dnOrder="1" value="PIC32MZ2048EFH144"/>
-    <Harmony dnOrder="2" path="../../.."/>
+    <Harmony dnOrder="2" path="../../../.."/>
     <Manifest dnOrder="3">
       <Files dnOrder="0">
         <File dnOrder="0">
@@ -924,7 +924,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>

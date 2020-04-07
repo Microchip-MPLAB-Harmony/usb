@@ -103,6 +103,9 @@ typedef enum
     
     /* Application waits for USB BUS to be disabled in this state */
     APP_STATE_WAIT_FOR_BUS_DISABLE_COMPLETE,
+            
+    /* Application waits for attach cable*/
+    APP_STATE_WAIT_FOR_POWER_DETECT,
 
     /* Application runs mouse emulation in this state */
     APP_STATE_MOUSE_EMULATE,
@@ -153,6 +156,10 @@ typedef struct
 
     /* Is device configured */
     bool isConfigured;
+    
+    /* power detected */
+    
+    bool powerDetected;
 
     /* If true, then mouse is emulated */
     bool emulateMouse;
@@ -162,6 +169,12 @@ typedef struct
 
     /* Tracks switch press*/
     bool isSwitchPressed;
+    
+    /* Tracks switch2 press*/
+    bool isSwitch2Pressed;
+    
+    /* Tracks switch press*/
+    bool isSwitch3Pressed;
 
     /* Mouse x coordinate*/
     MOUSE_COORDINATE xCoordinate;
@@ -206,6 +219,10 @@ typedef struct
     uint8_t currentRole;
 
 } APP_DATA;
+
+#define APP_HOST  0x02
+#define APP_DEVICE  0x03
+#define APP_NONE  0x01
 
 
 // *****************************************************************************
