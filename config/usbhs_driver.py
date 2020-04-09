@@ -33,6 +33,14 @@ drvUsbHsV1HostSourceFile = None
 addDrvUsbDeviceFile = None 
 addDrvUsbHostFile = None 
 
+
+def genRtosTask(symbol, event):
+	if event["value"] != "BareMetal":
+		symbol.setEnabled(True)
+	else:
+		symbol.setEnabled(False)
+
+
 def handleMessage(messageID, args):	
 	global usbOpMode
 	if (messageID == "UPDATE_OPERATION_MODE"):
@@ -329,6 +337,7 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverSystemTasksFileRTOS.setSourcePath(sourcePath + "system_tasks_c_driver_rtos.ftl")
 	usbDriverSystemTasksFileRTOS.setMarkup(True)
 	usbDriverSystemTasksFileRTOS.setEnabled(enable_rtos_settings)
+	usbDriverSystemTasksFileRTOS.setDependencies(genRtosTask, ["Harmony.SELECT_RTOS"])
 	
 	################################################
 	# USB Driver Header files  

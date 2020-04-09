@@ -26,6 +26,11 @@ usbDebugLogs = 1
 usbDriverPath = "driver/"
 usbDriverProjectPath = "/driver/usb/"
 
+def genRtosTask(symbol, event):
+	if event["value"] != "BareMetal":
+		symbol.setEnabled(True)
+	else:
+		symbol.setEnabled(False)
 
 def speedChanged(symbol, event):
 	Database.clearSymbolValue("core", "PMC_SCER_USBCLK")
@@ -209,6 +214,7 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverSystemTasksFileRTOS.setSourcePath(sourcePath + "system_tasks_c_driver_rtos.ftl")
 	usbDriverSystemTasksFileRTOS.setMarkup(True)
 	usbDriverSystemTasksFileRTOS.setEnabled(enable_rtos_settings)
+	usbDriverSystemTasksFileRTOS.setDependencies(genRtosTask, ["Harmony.SELECT_RTOS"])
 	
 	################################################
 	# USB Driver Header files  

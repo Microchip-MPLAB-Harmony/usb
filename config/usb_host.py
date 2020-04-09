@@ -24,6 +24,13 @@
 usbHostTplEntryNumber = None
 usbHostHubSaveValue = None 
 
+def genRtosTask(symbol, event):
+	if event["value"] != "BareMetal":
+		symbol.setEnabled(True)
+	else:
+		symbol.setEnabled(False)
+
+
 def setVisible(symbol, event):
 	if (event["value"] == True):
 		symbol.setVisible(True)
@@ -295,6 +302,7 @@ def instantiateComponent(usbHostComponent):
 	usbHostSystemTasksFileRTOS.setSourcePath("templates/host/system_tasks_c_host_rtos.ftl")
 	usbHostSystemTasksFileRTOS.setMarkup(True)
 	usbHostSystemTasksFileRTOS.setEnabled(enable_rtos_settings)
+	usbHostSystemTasksFileRTOS.setDependencies(genRtosTask, ["Harmony.SELECT_RTOS"])
 	
 	################################################
 	# USB Host Layer Files 

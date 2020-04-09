@@ -130,6 +130,12 @@ usbDeviceMsdSupport = None
 usbDeviceMsdDiskImageFile = None
 usbDeviceMsdDiskImageFileAdd = None 
 
+def genRtosTask(symbol, event):
+	if event["value"] != "BareMetal":
+		symbol.setEnabled(True)
+	else:
+		symbol.setEnabled(False)
+
 def setVisible(symbol, event):
 	if (event["value"] == True):
 		symbol.setVisible(True)
@@ -557,6 +563,7 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceSystemTasksFileRTOS.setSourcePath("templates/device/system_tasks_c_device_rtos.ftl")
 	usbDeviceSystemTasksFileRTOS.setMarkup(True)
 	usbDeviceSystemTasksFileRTOS.setEnabled(enable_rtos_settings)
+	usbDeviceSystemTasksFileRTOS.setDependencies(genRtosTask, ["Harmony.SELECT_RTOS"])
 	
 	
 	################################################
