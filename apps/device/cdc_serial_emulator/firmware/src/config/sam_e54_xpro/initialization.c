@@ -178,6 +178,7 @@ static DRV_USB_VBUS_LEVEL DRV_USBFSV1_VBUS_Comparator(void)
 
 }
 
+
 const DRV_USBFSV1_INIT drvUSBInit =
 {
 	/* Interrupt Source for USB module */
@@ -212,6 +213,7 @@ const DRV_USBFSV1_INIT drvUSBInit =
 	
     /* Function to check for VBus */
     .vbusComparator = DRV_USBFSV1_VBUS_Comparator
+	
 };
 
 

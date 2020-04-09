@@ -121,6 +121,7 @@ const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
  ******************************************************/
  
 
+
 const DRV_USBFSV1_INIT drvUSBInit =
 {
 
@@ -144,7 +145,10 @@ const DRV_USBFSV1_INIT drvUSBInit =
 	
 	/* Function to check for VBus */
     .vbusComparator = NULL,
-            
+       
+	/* USB Host Power Enable */ 
+    .portPowerEnable = NULL,
+	
     /* Root hub available current in milliamperes */
     .rootHubAvailableCurrent = 500,
 };

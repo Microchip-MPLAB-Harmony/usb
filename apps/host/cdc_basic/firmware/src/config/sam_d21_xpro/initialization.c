@@ -100,6 +100,7 @@ SYSTEM_OBJECTS sysObj;
  ******************************************************/
  
 
+
 const DRV_USBFSV1_INIT drvUSBInit =
 {
     /* Interrupt Source for USB module */
@@ -125,7 +126,10 @@ const DRV_USBFSV1_INIT drvUSBInit =
 	
 	/* Function to check for VBus */
     .vbusComparator = NULL,
-            
+       
+	/* USB Host Power Enable */ 
+    .portPowerEnable = NULL,
+	
     /* Root hub available current in milliamperes */
     .rootHubAvailableCurrent = 500,
 };

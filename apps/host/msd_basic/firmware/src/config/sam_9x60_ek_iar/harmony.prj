@@ -971,8 +971,8 @@
           <Name dnOrder="1">usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/sam_9x60_ek_iar/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5AAF69767C8CBB1A9952695AAF110C43</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5AAF69767C8CBB1A9952695AAF110C43</UserChecksum>
+          <GeneratedChecksum dnOrder="4">6C4A6859DB16EA8C046F995C6B6C1C6F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">6C4A6859DB16EA8C046F995C6B6C1C6F</UserChecksum>
         </File>
         <File dnOrder="121">
           <Type dnOrder="0">HEADER</Type>

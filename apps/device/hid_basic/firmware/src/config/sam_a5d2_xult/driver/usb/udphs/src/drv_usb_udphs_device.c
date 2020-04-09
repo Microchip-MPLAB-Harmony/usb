@@ -119,6 +119,19 @@ void _DRV_USB_UDPHS_DEVICE_Initialize
     udphs_registers_t * usbID;      /* USB instance pointer */
     uint8_t count;                  /* Loop Counter */
 
+#ifdef __CORE_CA_H_GENERIC /* Fix to issue MH3-30459. Will be removed later */  
+    
+    uint32_t uckr;                   /* Shadow Register */  
+
+    uckr = CKGR_UCKR_UPLLEN_Msk | CKGR_UCKR_UPLLCOUNT(0x3);
+    /* enable the 480MHz UTMI PLL  */
+    PMC_REGS->CKGR_UCKR = uckr;
+
+    /* wait until UPLL is locked */
+    while (!(PMC_REGS->PMC_SR & PMC_SR_LOCKU_Msk));
+
+#endif /* Fix to issue MH3-30459. Will be removed later */
+
     /* Get the USB H/W instance pointer */
     usbID = drvObj->usbID;
 

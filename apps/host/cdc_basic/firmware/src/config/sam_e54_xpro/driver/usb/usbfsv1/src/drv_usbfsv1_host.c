@@ -2212,17 +2212,29 @@ void DRV_USBFSV1_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enable)
     else
     {
         if(false == enable)
-        {
+        {	
              /* If the root hub operation is disable, we disable detach and
              * attached event and switch off the port power. */
-
+	
             SYS_INT_SourceStatusClear((INT_SOURCE)pUSBDrvObj->interruptSource);
             pUSBDrvObj->operationEnabled = false;
+			
+			/* Disable USB port by turning off VBUS */ 
+			if(pUSBDrvObj->rootHubInfo.portPowerEnable != NULL)
+            {   
+               pUSBDrvObj->rootHubInfo.portPowerEnable(0 /* Port 0 */, false); 
+            }
 
         }
         else
         {
-            /* The USB Global interrupt and USB module is already enabled at
+			/* Enable USB port */ 
+			if(pUSBDrvObj->rootHubInfo.portPowerEnable != NULL)
+			{
+				pUSBDrvObj->rootHubInfo.portPowerEnable(0 /* Port 0 */, true);
+			}
+			
+			/* The USB Global interrupt and USB module is already enabled at
              * this point. We enable the attach interrupt to detect attach
              */
             pUSBDrvObj->operationEnabled = true;

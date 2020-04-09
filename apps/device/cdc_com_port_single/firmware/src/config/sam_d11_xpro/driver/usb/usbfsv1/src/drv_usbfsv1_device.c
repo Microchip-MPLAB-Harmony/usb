@@ -351,7 +351,7 @@ void DRV_USBFSV1_DEVICE_Attach
          * on getting SUSPEND */
         usbID->USB_INTFLAG = USB_DEVICE_INTFLAG_Msk;
 
-        usbID->USB_INTENSET |= (USB_DEVICE_INTENSET_SUSPEND_Msk | USB_DEVICE_INTENSET_SOF_Msk | USB_DEVICE_INTENSET_EORST_Msk | USB_DEVICE_INTENSET_WAKEUP_Msk);
+        usbID->USB_INTENSET = (USB_DEVICE_INTENSET_SUSPEND_Msk | USB_DEVICE_INTENSET_SOF_Msk | USB_DEVICE_INTENSET_EORST_Msk | USB_DEVICE_INTENSET_WAKEUP_Msk);
 
         /* Enable the USB device by clearing the . This function
          * also enables the D+ pull up resistor.  */
@@ -2236,35 +2236,35 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
            ((usbID->USB_INTENSET & USB_DEVICE_INTENSET_LPMSUSP_Msk) == USB_DEVICE_INTENSET_LPMSUSP_Msk))
         {
             /* This is not supported yet. Just clear the flag and exit */
-            usbID->USB_INTFLAG |= USB_DEVICE_INTFLAG_LPMSUSP_Msk;
+            usbID->USB_INTFLAG = USB_DEVICE_INTFLAG_LPMSUSP_Msk;
         }
 
         if(((usbID->USB_INTFLAG & USB_DEVICE_INTFLAG_LPMNYET_Msk) == USB_DEVICE_INTFLAG_LPMNYET_Msk) &&
            ((usbID->USB_INTENSET & USB_DEVICE_INTENSET_LPMNYET_Msk) == USB_DEVICE_INTENSET_LPMNYET_Msk))
         {
             /* This is not supported yet. Just clear the flag and exit */
-            usbID->USB_INTFLAG |= USB_DEVICE_INTFLAG_LPMNYET_Msk;
+            usbID->USB_INTFLAG = USB_DEVICE_INTFLAG_LPMNYET_Msk;
         }
             
         if(((usbID->USB_INTFLAG & USB_DEVICE_INTFLAG_RAMACER_Msk) == USB_DEVICE_INTFLAG_RAMACER_Msk) &&
            ((usbID->USB_INTENSET & USB_DEVICE_INTENSET_RAMACER_Msk) == USB_DEVICE_INTENSET_RAMACER_Msk))
         {
             /* This is not supported yet. Just clear the flag and exit */
-            usbID->USB_INTFLAG |= USB_DEVICE_INTFLAG_RAMACER_Msk;
+            usbID->USB_INTFLAG = USB_DEVICE_INTFLAG_RAMACER_Msk;
         }
         
         if(((usbID->USB_INTFLAG & USB_DEVICE_INTFLAG_UPRSM_Msk) == USB_DEVICE_INTFLAG_UPRSM_Msk) &&
            ((usbID->USB_INTENSET & USB_DEVICE_INTENSET_UPRSM_Msk) == USB_DEVICE_INTENSET_UPRSM_Msk))
         {
             /* This is not supported yet. Just clear the flag and exit */
-            usbID->USB_INTFLAG |= USB_DEVICE_INTFLAG_UPRSM_Msk;
+            usbID->USB_INTFLAG = USB_DEVICE_INTFLAG_UPRSM_Msk;
         }
 
         if(((usbID->USB_INTFLAG & USB_DEVICE_INTFLAG_EORSM_Msk) == USB_DEVICE_INTFLAG_EORSM_Msk) &&
            ((usbID->USB_INTENSET & USB_DEVICE_INTENSET_EORSM_Msk) == USB_DEVICE_INTENSET_EORSM_Msk))
         {
             /* This is not supported yet. Just clear the flag and exit */
-            usbID->USB_INTFLAG |= USB_DEVICE_INTFLAG_EORSM_Msk;
+            usbID->USB_INTFLAG = USB_DEVICE_INTFLAG_EORSM_Msk;
         }
 
         if(((usbID->USB_INTFLAG & USB_DEVICE_INTFLAG_WAKEUP_Msk) == USB_DEVICE_INTFLAG_WAKEUP_Msk) &&
@@ -2279,7 +2279,7 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
              * currently not handled by Controller driver. It has to be handled
              * by the application. */
             
-            usbID->USB_INTFLAG |= USB_DEVICE_INTFLAG_WAKEUP_Msk;
+            usbID->USB_INTFLAG = USB_DEVICE_INTFLAG_WAKEUP_Msk;
 
             usbID->USB_INTENCLR = USB_DEVICE_INTENCLR_WAKEUP_Msk;
             
@@ -2300,7 +2300,7 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
              * currently not handled by Controller driver. It has to be handled
              * by the application. */
             
-            usbID->USB_INTFLAG |= USB_DEVICE_INTFLAG_SUSPEND_Msk;
+            usbID->USB_INTFLAG = USB_DEVICE_INTFLAG_SUSPEND_Msk;
             
             usbID->USB_INTENCLR = USB_DEVICE_INTENCLR_SUSPEND_Msk;
             
@@ -2315,7 +2315,7 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
             /* We have received a SOF interrupt - clear the flag and send the 
              * event to client */
             
-            usbID->USB_INTFLAG |= USB_DEVICE_INTFLAG_SOF_Msk;
+            usbID->USB_INTFLAG = USB_DEVICE_INTFLAG_SOF_Msk;
 
             hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBFSV1_EVENT_SOF_DETECT, NULL);
         }
@@ -2345,7 +2345,7 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
             /* We have received a EORST interrupt - clear the flag and send 
              * the event to client */
 
-            usbID->USB_INTFLAG |= USB_DEVICE_INTFLAG_EORST_Msk;
+            usbID->USB_INTFLAG = USB_DEVICE_INTFLAG_EORST_Msk;
         }
 
         if(((usbID->DEVICE_ENDPOINT[0].USB_EPINTFLAG & USB_DEVICE_EPINTFLAG_RXSTP_Msk) == USB_DEVICE_EPINTFLAG_RXSTP_Msk) &&

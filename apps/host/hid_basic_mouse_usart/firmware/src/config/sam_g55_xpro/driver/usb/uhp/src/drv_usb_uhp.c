@@ -8,7 +8,7 @@
     drv_usb_uhp.c
 
    Summary:
-    USB Host port Driver Implementation 
+    USB Host port Driver Implementation
 
 
    Description:
@@ -65,9 +65,9 @@ __ALIGNED(4096) NOT_CACHED uint8_t USBSetupAligned[8];
  * Prototype
  ***********************************/
 extern void UHP_Handler(void);
-void DRV_USB_UHP_StartOfFrameControl(DRV_HANDLE client, bool control);// remove warning was declared but never referenced
-bool DRV_USB_UHP_Resume(DRV_HANDLE handle);  // remove warning was declared but never referenced
-bool DRV_USB_UHP_Suspend(DRV_HANDLE handle); // remove warning was declared but never referenced
+void DRV_USB_UHP_StartOfFrameControl(DRV_HANDLE client, bool control);/* remove warning was declared but never referenced */
+bool DRV_USB_UHP_Resume(DRV_HANDLE handle);  /* remove warning was declared but never referenced */
+bool DRV_USB_UHP_Suspend(DRV_HANDLE handle); /* remove warning was declared but never referenced */
 
 /************************************
  * Driver instance object
@@ -96,14 +96,14 @@ DRV_USB_UHP_HOST_PIPE_OBJ gDrvUSBHostPipeObj[DRV_USB_UHP_PIPES_NUMBER];
 
   Summary:
     Control Transfer Process.
-    
+
   Description:
     This function is called every time there is an endpoint 0 interrupt.
     This means that a stage of the current control IRP has been completed.
     This function is called from an interrupt context
 
   Remarks:
-   
+
 */
 static void _DRV_USB_UHP_ControlTransferProcess(DRV_USB_UHP_OBJ *hDriver)
 {
@@ -222,7 +222,7 @@ static void _DRV_USB_UHP_ControlTransferProcess(DRV_USB_UHP_OBJ *hDriver)
             {
                 /* This means we have found another IRP to process. We must load the
                  * endpoint. */
-                
+
                 irp = transferGroup->currentIRP;
                 pipe = transferGroup->currentPipe;
                 irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
@@ -256,7 +256,7 @@ static void _DRV_USB_UHP_ControlTransferProcess(DRV_USB_UHP_OBJ *hDriver)
 
   Summary:
     Non Control Transfer Process.
-	
+
   Description:
     This function processes non-zero endpoint transfers which
     could be any of bulk, interrupt and isochronous transfers
@@ -279,7 +279,7 @@ static void _DRV_USB_UHP_NonControlTransferProcess
     bool endIRPOut = false;
 
     endpointTable = &(hDriver->hostEndpointTable[hostPipe]);
-    pipe = endpointTable->endpoint.pipe; 
+    pipe = endpointTable->endpoint.pipe;
 
     if((endpointTable->endpoint.inUse == false)
     || (pipe == NULL)
@@ -292,7 +292,7 @@ static void _DRV_USB_UHP_NonControlTransferProcess
     else
     {
         irp = pipe->irpQueueHead;
-       
+
         /* We should check the current state of the IRP and then proceed accordingly */
         if ( hDriver->hostEndpointTable[hDriver->hostPipeInUse].endpoint.intXfrQtdComplete == 0xFF )
         {
@@ -365,7 +365,7 @@ static void _DRV_USB_UHP_NonControlTransferProcess
 
             if((irp != NULL) && (!(irp->status == USB_HOST_IRP_STATUS_IN_PROGRESS)) && (endIRPOut == false) )
             {
-                irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;  
+                irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
             }
         }
     }
@@ -499,8 +499,6 @@ void DRV_USB_UHP_HostInitialize
     /* Initialize the device handle */
     drvObj->attachedDeviceObjHandle = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
     drvObj->blockPipe = 0;
-    drvObj->staticDToggleIn = 0;
-    drvObj->staticDToggleOut = 0;
     drvObj->portNumber = 0xFF;
 
     DRV_USB_UHP_OHCI_HOST_Init(drvObj);
@@ -518,7 +516,7 @@ void DRV_USB_UHP_HostInitialize
     Reset State Machine
 
    Description:
-    Reset State Machine 
+    Reset State Machine
 
    Remarks:
     Refer to .h for usage information.
@@ -709,11 +707,11 @@ void UHP_Handler(void)
 
   Summary:
     Cancels the specified IRP.
-    
+
   Description:
     This function attempts to cancel the specified IRP. If the IRP is queued and
     its processing has not started, it will be cancelled successfully. If the
-    IRP in progress, the ongoing transaction will be allowed to complete. 
+    IRP in progress, the ongoing transaction will be allowed to complete.
 
   Remarks:
     See .h for usage information.
@@ -775,7 +773,7 @@ void DRV_USB_UHP_IRPCancel
                 irp->next->previous = irp->previous;
             }
         }
-    
+
         if(irp->status == USB_HOST_IRP_STATUS_IN_PROGRESS)
         {
             /* If the irp is already in progress then
@@ -835,7 +833,7 @@ void DRV_USB_UHP_Tasks(SYS_MODULE_OBJ object)
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\n\rDriver is not initialized");
     }
     else
-    {        
+    {
         /* Check the tasks state and maintain */
         switch(hDriver->state)
         {
@@ -893,7 +891,7 @@ void DRV_USB_UHP_Tasks(SYS_MODULE_OBJ object)
 
   Summary:
     Closes an open pipe.
-	
+
   Description:
     This function closes an open pipe. Any IRPs scheduled on the pipe will be
     aborted and IRP callback functions will be called with the status as
@@ -911,7 +909,6 @@ void DRV_USB_UHP_PipeClose
     /* This function closes an open pipe */
 
     bool interruptWasEnabled = false;
-
     DRV_USB_UHP_OBJ * hDriver = NULL;
     USB_HOST_IRP_LOCAL  * irp = NULL;
     DRV_USB_UHP_HOST_PIPE_OBJ * pipe = NULL;
@@ -935,9 +932,7 @@ void DRV_USB_UHP_PipeClose
         else
         {
             hDriver = (DRV_USB_UHP_OBJ *)pipe->hClient;
-
             /* Disable the interrupt */
-
             if(!hDriver->isInInterruptContext)
             {
                 if(OSAL_MUTEX_Lock(&hDriver->mutexID, OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
@@ -946,7 +941,6 @@ void DRV_USB_UHP_PipeClose
                 }
                 interruptWasEnabled = _DRV_USB_UHP_InterruptSourceDisable(hDriver->interruptSource);
             }
-
             if(USB_TRANSFER_TYPE_CONTROL == pipe->pipeType)
             {
                 transferGroup = &hDriver->controlTransferGroup;
@@ -955,7 +949,6 @@ void DRV_USB_UHP_PipeClose
                 {
                     /* The previous pipe could be null if this was the first pipe in the
                      * transfer group */
-
                     transferGroup->pipe = pipe->next;
                     if(pipe->next != NULL)
                     {
@@ -965,7 +958,6 @@ void DRV_USB_UHP_PipeClose
                 else
                 {
                     /* Remove this pipe from the linked list */
-
                     pipe->previous->next = pipe->next;
                     if(pipe->next != NULL)
                     {
@@ -976,7 +968,6 @@ void DRV_USB_UHP_PipeClose
                 if(transferGroup->nPipes != 0)
                 {
                     /* Reduce the count only if its not zero already */
-
                     transferGroup->nPipes --;
                 }
             }
@@ -1022,10 +1013,10 @@ void DRV_USB_UHP_PipeClose
                     if(irp->callback != NULL)
                     {
                         irp->callback((USB_HOST_IRP*)irp);
+                    }
+                }
+                irp = irp->next;
             }
-        }
-        irp = irp->next;
-    }
 
             /* Now we return the pipe back to the driver */
             pipe->inUse = false ;
@@ -1065,7 +1056,7 @@ void DRV_USB_UHP_PipeClose
 
   Summary:
     Open a pipe with the specified attributes.
-	
+
   Description:
     This function opens a communication pipe between the Host and the device
     endpoint. The transfer type and other attributes are specified through the
@@ -1110,7 +1101,7 @@ DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_PipeSetup
              * Interrupt IN endpoints can be 4 bytes for HID Mouse device. This
              * USB module requires minimum 2 to the power 3 i.e. 8 bytes as the
              * wMaxPacketSize.
-             * 
+             *
              * For Control endpoints the minimum has to be 8 bytes.  */
 
             if(pipeType != USB_TRANSFER_TYPE_CONTROL)
@@ -1174,14 +1165,14 @@ DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_PipeSetup
                                         hDriver->hostEndpointTable[epIter].endpoint.pipe = pipe;
                                         break;
                                     }
-                                } 
+                                }
 
                                 if(!epFound)
                                 {
                                     /* This means we could not find a spare endpoint for this
                                      * non control transfer. */
                                     SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP Driver: Could not allocate endpoint in DRV USB_UHP_HOST_PipeSetup()");
-                                    
+
                                     if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
                                     {
                                         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP Driver: Mutex unlock failed in DRV USB_UHP_HOST_PipeSetup()");
@@ -1194,7 +1185,7 @@ DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_PipeSetup
                                      * connect */
 
                                 }
-                            } 
+                            }
                             else
                             {
                                 /* Set epIter to zero to indicate that we must
@@ -1274,14 +1265,14 @@ DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_PipeSetup
                         }
                     }
                 }
-            } 
-        } 
+            }
+        }
     }
     else
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP Driver: Invalid client in DRV USB_UHP_HOST_PipeSetup()");
     }
-    
+
     return (pipeHandle);
 }/* end of DRV_USB_UHP_PipeSetup() */
 
@@ -1292,7 +1283,7 @@ DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_PipeSetup
 
   Summary:
     SOF
-	
+
   Description:
     Management of SOF: nothing to do
 
@@ -1312,7 +1303,7 @@ void DRV_USB_UHP_StartOfFrameControl(DRV_HANDLE client, bool control)
 
   Summary:
     Current speed
-	
+
   Description:
     Get current usb speed of the connected device
 
@@ -1358,7 +1349,7 @@ void DRV_USB_UHP_TransferProcess(DRV_USB_UHP_OBJ *hDriver)
     if(hDriver->hostPipeInUse == 0)
     {
         _DRV_USB_UHP_ControlTransferProcess(hDriver);
-    }       
+    }
     else
     {
         _DRV_USB_UHP_NonControlTransferProcess(hDriver, hDriver->hostPipeInUse);
@@ -1390,8 +1381,8 @@ bool DRV_USB_UHP_EventsDisable
 )
 {
     DRV_USB_UHP_OBJ *pUSBDrvObj;
-    bool result = false; 
-    
+    bool result = false;
+
     if((DRV_HANDLE_INVALID != handle) && (0 != handle))
     {
         pUSBDrvObj = (DRV_USB_UHP_OBJ *)(handle);
@@ -1423,12 +1414,12 @@ bool DRV_USB_UHP_EventsDisable
 
 void DRV_USB_UHP_EventsEnable
 (
-    DRV_HANDLE handle, 
+    DRV_HANDLE handle,
     bool eventContext
 )
 {
     DRV_USB_UHP_OBJ *pUSBDrvObj;
-   
+
     if((DRV_HANDLE_INVALID != handle) && (0 != handle))
     {
         pUSBDrvObj = (DRV_USB_UHP_OBJ *)(handle);
@@ -1641,7 +1632,7 @@ void DRV_USB_UHP_Close
     else
     {
         hDriver = (DRV_USB_UHP_OBJ *)client;
-    
+
         if(!(hDriver->isOpened))
         {
             SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USB_UHP Driver: Invalid client handle in DRV_USB_UHP_Close().");
@@ -1789,7 +1780,7 @@ bool DRV_USB_UHP_Suspend
   Summary:
     This function sets up the event callback function that is invoked by the USB
     controller driver to notify the client of USB bus events.
-	
+
   Description:
     This function sets up the event callback function that is invoked by the USB
     controller driver to notify the client of USB bus events. The callback is
@@ -1830,7 +1821,7 @@ void DRV_USB_UHP_ClientEventCallBackSet
             pusbDrvObj->pEventCallBack = eventCallBack;
         }
     }
-        
+
 }/* end of DRV_USB_UHP_ClientEventCallBackSet() */
 
 
@@ -1863,7 +1854,7 @@ void DRV_USB_UHP_EndpointToggleClear
     /* Start of local variables */
     DRV_USB_UHP_OBJ * hDriver = NULL;
     uint8_t epIter = 0;
-    
+
     /* End of local variables */
     if((client == DRV_HANDLE_INVALID) || (((DRV_USB_UHP_OBJ *)client) == NULL))
     {
@@ -1872,7 +1863,7 @@ void DRV_USB_UHP_EndpointToggleClear
     else
     {
         hDriver = (DRV_USB_UHP_OBJ *)client;
-            
+
         /* Now map the device endpoint to host endpoint. This is required to
          * jump to the appropriate entry in the endpoint table */
         for(epIter = 1; epIter < DRV_USB_UHP_HOST_MAXIMUM_ENDPOINTS_NUMBER; epIter++)
@@ -1890,12 +1881,12 @@ void DRV_USB_UHP_EndpointToggleClear
                     if( (hDriver->hostEndpointTable[epIter].endpoint.pipe->endpointAndDirection & 0x80) == 0 )
                     {
                         /* Host to Device: OUT */
-                        hDriver->staticDToggleOut = 0;
+                        hDriver->hostEndpointTable[epIter].endpoint.staticDToggleOut = 0;
                     }
                     else
                     {
                         /* IN */
-                        hDriver->staticDToggleIn = 0;
+                        hDriver->hostEndpointTable[epIter].endpoint.staticDToggleIn = 0;
                     }
                 }
             }
@@ -2238,7 +2229,7 @@ USB_ERROR DRV_USB_UHP_ROOT_HUB_PortReset(DRV_HANDLE handle, uint8_t port)
         /* Start the reset signal. Set the driver flag to indicate the reset
          * signal is in progress. Start generating the reset signal.
          */
-        
+
         pUSBDrvObj->isResetting = true;
         pUSBDrvObj->resetState  = DRV_USB_UHP_HOST_RESET_STATE_START;
     }

@@ -1979,7 +1979,7 @@ USB_ERROR DRV_USBHSV1_DEVICE_IRPSubmit
                         else
                         {
                             /* direction is Host to Device */
-                            if((USBHS_DEVEPTISR_RXOUTI_Msk == (USBHS_DEVEPTISR_RXOUTI_Msk & usbID->USBHS_DEVEPTISR[endpoint])) & (USBHS_DEVEPTIMR_RXOUTE_Msk == (USBHS_DEVEPTIMR_RXOUTE_Msk & usbID->USBHS_DEVEPTIMR[endpoint])))
+                            if(USBHS_DEVEPTISR_RXOUTI_Msk == (USBHS_DEVEPTISR_RXOUTI_Msk & usbID->USBHS_DEVEPTISR[endpoint]))
                             {
                                 /* Data is already available in the FIFO */
                                 byteCount = (usbID->USBHS_DEVEPTISR[endpoint] & USBHS_DEVEPTISR_BYCT_Msk) >> USBHS_DEVEPTISR_BYCT_Pos;
@@ -2847,9 +2847,7 @@ void _DRV_USBHSV1_DEVICE_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
                 if(endpointObjNonZero->irpQueue == NULL)
                 {
                     /* Clear the interrupt */
-                    usbID->USBHS_DEVEPTICR[endpointIndex] = USBHS_DEVEPTICR_RXOUTIC_Msk;
-                    
-                    usbID->USBHS_DEVEPTIDR[endpointIndex] = USBHS_DEVEPTIDR_FIFOCONC_Msk;
+                    usbID->USBHS_DEVEPTIDR[endpointIndex] = USBHS_DEVEPTIDR_RXOUTEC_Msk;
                 }
                 else
                 {

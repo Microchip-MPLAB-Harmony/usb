@@ -2513,9 +2513,6 @@ void  _USB_HOST_HUB_ControlTransferComplete
     /* Get a pointer to the instance */
     hubInstance = &gUSBHostHubObj[hubIndex];
 
-    portIndex = portNumber - 1;
-    portInfo = &( hubInstance->portInfo[portIndex] );
-
     if ( portNumber == 0x0 )
     { 
         /* This was a hub request */
@@ -2525,6 +2522,8 @@ void  _USB_HOST_HUB_ControlTransferComplete
     else 
     {
         /* This was a port request */
+        portIndex = portNumber - 1;
+        portInfo = &( hubInstance->portInfo[portIndex] );
         portInfo->controlRequestDone = true ;
         portInfo->controlRequestResult = result;
     }

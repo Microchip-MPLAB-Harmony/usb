@@ -347,8 +347,8 @@
           <Name dnOrder="1">definitions.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">AECAB6F308A7910681CE3ACF5D814118</GeneratedChecksum>
-          <UserChecksum dnOrder="5">AECAB6F308A7910681CE3ACF5D814118</UserChecksum>
+          <GeneratedChecksum dnOrder="4">0502179E13494C1E481EA199D1EDD632</GeneratedChecksum>
+          <UserChecksum dnOrder="5">0502179E13494C1E481EA199D1EDD632</UserChecksum>
         </File>
         <File dnOrder="43">
           <Type dnOrder="0">HEADER</Type>
@@ -883,8 +883,8 @@
           <Name dnOrder="1">usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5AAF69767C8CBB1A9952695AAF110C43</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5AAF69767C8CBB1A9952695AAF110C43</UserChecksum>
+          <GeneratedChecksum dnOrder="4">6C4A6859DB16EA8C046F995C6B6C1C6F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">6C4A6859DB16EA8C046F995C6B6C1C6F</UserChecksum>
         </File>
         <File dnOrder="110">
           <Type dnOrder="0">HEADER</Type>
@@ -958,8 +958,8 @@
       <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAME54_DFP\3.2.53\atdf\ATSAME54P20A.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
-      <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;"/>
+      <Setting dnOrder="4" key="MERGE_STRATEGY" value="ALL"/>
+      <Setting dnOrder="5" key="PackageFilter" value="audio;bsp;core;csp;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>
