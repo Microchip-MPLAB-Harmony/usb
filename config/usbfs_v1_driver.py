@@ -103,6 +103,21 @@ def instantiateComponent(usbDriverComponent):
 	usbVbusSenseFunctionName.setVisible(True)
 	usbVbusSenseFunctionName.setDependencies(blUsbVbusPinName, ["USB_DEVICE_VBUS_SENSE"])
 
+	usbHostVbusEnable = usbDriverComponent.createBooleanSymbol("USB_HOST_VBUS_ENABLE", usbOpMode)
+	usbHostVbusEnable.setLabel("Generate VBUS Enable Function")
+	usbHostVbusEnable.setDescription("Generate the Port Power Enable function. Driver will call this function when the port power must be enabled")
+	usbHostVbusEnable.setVisible(False)
+	usbHostVbusEnable.setDescription("Select USB Operation Mode")
+	usbHostVbusEnable.setDefaultValue(False)
+	usbHostVbusEnable.setUseSingleDynamicValue(True)
+	usbHostVbusEnable.setDependencies(blUSBDriverOperationModeChanged, ["USB_OPERATION_MODE"])
+		
+	usbHostVbusEnableFunctionName = usbDriverComponent.createStringSymbol("USB_HOST_VBUS_ENABLE_PIN_NAME", usbHostVbusEnable)
+	usbHostVbusEnableFunctionName.setLabel("VBUS Enable Pin Name")
+	usbHostVbusEnableFunctionName.setDefaultValue("VBUS_AH")
+	usbHostVbusEnableFunctionName.setVisible(True)
+	usbHostVbusEnableFunctionName.setDependencies(blUsbHostVbusEnablePinName, ["USB_HOST_VBUS_ENABLE"])
+	
 	# USB Driver Host mode Attach de-bounce duration
 	usbDriverHostAttachDebounce = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION", usbOpMode)
 	usbDriverHostAttachDebounce.setLabel("Attach De-bounce Duration (mSec)")
@@ -852,3 +867,8 @@ def blUsbVbusPinName(usbSymbolSource, event):
 	else:
 		usbSymbolSource.setVisible(False)
 
+def blUsbHostVbusEnablePinName(usbSymbolSource, event):
+	if (event["value"] == True):
+		usbSymbolSource.setVisible(True)
+	else:
+		usbSymbolSource.setVisible(False)
