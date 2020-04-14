@@ -180,7 +180,7 @@ typedef struct
  *  field of the HcFmInterval register. */
 #define OHCI_PRDSTRT    (FRAMEINTERVAL*90/100)
 
-#define DIT   0    /* DelayInterrupt (7 == no interrupt) */
+#define DIT   6    /* DelayInterrupt (7 == no interrupt) */
 
 /* 4.4 Host Controller Communications Area */
 typedef struct
