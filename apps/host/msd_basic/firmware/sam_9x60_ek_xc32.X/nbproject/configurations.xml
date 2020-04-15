@@ -184,7 +184,6 @@
     <logicalFolder name="ScriptFiles"
                    displayName="Script Files"
                    projectFiles="true">
-      <itemPath>C:\jcb\usb\repo\H3\usb\apps\host\msd_basic\firmware\sam_9x60_ek_xc32.X\autoload.py</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -288,8 +287,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAM9X6_DFP" vendor="Microchip" version="1.1.28"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
+        <pack name="SAM9X6_DFP" vendor="Microchip" version="1.1.28"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -432,6 +431,7 @@
         <property key="symbol-stripping" value=""/>
         <property key="trace-symbols" value=""/>
         <property key="warn-section-align" value="false"/>
+        <appendMe value="-T../../firmware/src/config/sam_9x60_ek_xc32/ddram.ld"/>
       </C32-LD>
       <C32CPP>
         <property key="additional-warnings" value="false"/>
