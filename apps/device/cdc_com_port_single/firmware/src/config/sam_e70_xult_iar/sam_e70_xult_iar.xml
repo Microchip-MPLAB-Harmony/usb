@@ -420,112 +420,119 @@
             <Dynamic dnOrder="0" id="drv_usbhs_v1" value="true"/>
           </Values>
         </Boolean>
-        <Hex dnOrder="77" id="PMC_PCER0">
+        <Boolean dnOrder="77" id="PMC_MCKR_UPLLDIV2">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
+        <Hex dnOrder="78" id="PMC_PCER0">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="203776"/>
           </Values>
         </Hex>
-        <Hex dnOrder="78" id="PMC_PCER1">
+        <Hex dnOrder="79" id="PMC_PCER1">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="4"/>
           </Values>
         </Hex>
-        <KeyValueSet dnOrder="79" id="PMC_PCR_GCLK0CSS">
+        <KeyValueSet dnOrder="80" id="PMC_PCR_GCLK0CSS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="80" id="PMC_PCR_GCLK1CSS">
+        <KeyValueSet dnOrder="81" id="PMC_PCR_GCLK1CSS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </KeyValueSet>
-        <Boolean dnOrder="81" id="PMC_SCER_PCK4">
+        <Boolean dnOrder="82" id="PMC_SCER_PCK4">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="82" id="PMC_SCER_PCK6">
+        <Boolean dnOrder="83" id="PMC_SCER_PCK6">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="83" id="PMC_SCER_PCK7">
+        <Boolean dnOrder="84" id="PMC_SCER_PCK7">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="84" id="PMC_SCER_USBCLK">
+        <Boolean dnOrder="85" id="PMC_SCER_USBCLK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbhs_v1" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="85" id="PMC_USB_USBDIV">
+        <Integer dnOrder="86" id="PMC_USB_USBDIV">
           <Values dnOrder="0">
             <User dnOrder="0" value="10"/>
           </Values>
         </Integer>
-        <Integer dnOrder="86" id="PWM0_CLOCK_FREQUENCY">
+        <Integer dnOrder="87" id="PWM0_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="150000000"/>
           </Values>
         </Integer>
-        <Integer dnOrder="87" id="PWM1_CLOCK_FREQUENCY">
+        <Integer dnOrder="88" id="PWM1_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="150000000"/>
           </Values>
         </Integer>
-        <Integer dnOrder="88" id="QSPI_CLOCK_FREQUENCY">
+        <Integer dnOrder="89" id="QSPI_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="150000000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="89" id="RSWDT_INTERRUPT_ENABLE">
+        <Boolean dnOrder="90" id="RSWDT_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="90" id="RSWDT_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="91" id="RSWDT_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="91" id="RSWDT_INTERRUPT_HANDLER">
+        <String dnOrder="92" id="RSWDT_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="RSWDT_Handler"/>
           </Values>
         </String>
-        <Boolean dnOrder="92" id="RSWDT_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="93" id="RSWDT_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="93" id="SDRAMC_CLOCK_FREQUENCY">
+        <Integer dnOrder="94" id="SDRAMC_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="150000000"/>
           </Values>
         </Integer>
-        <Integer dnOrder="94" id="SMC_CLOCK_FREQUENCY">
+        <Integer dnOrder="95" id="SMC_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="150000000"/>
           </Values>
         </Integer>
-        <Integer dnOrder="95" id="SPI0_CLOCK_FREQUENCY">
+        <Integer dnOrder="96" id="SPI0_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="150000000"/>
           </Values>
         </Integer>
-        <Integer dnOrder="96" id="SPI1_CLOCK_FREQUENCY">
+        <Integer dnOrder="97" id="SPI1_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="150000000"/>
           </Values>
         </Integer>
-        <Integer dnOrder="97" id="SSC_CLOCK_FREQUENCY">
+        <Integer dnOrder="98" id="SSC_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="150000000"/>
           </Values>
         </Integer>
-        <File dnOrder="98" id="STARTUP_C">
+        <File dnOrder="99" id="STARTUP_C">
           <Attributes dnOrder="0">
             <String dnOrder="0" id="name">
               <Value dnOrder="0">startup_iar.c</Value>
@@ -535,97 +542,97 @@
             </String>
           </Attributes>
         </File>
-        <String dnOrder="99" id="SYSTICK_CLOCK_FREQUENCY">
+        <String dnOrder="100" id="SYSTICK_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <User dnOrder="0" value="150000000"/>
           </Values>
         </String>
-        <String dnOrder="100" id="SYSTICK_PERIOD">
+        <String dnOrder="101" id="SYSTICK_PERIOD">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0x493e0"/>
           </Values>
         </String>
-        <Integer dnOrder="101" id="SYSTICK_PERIOD_US">
+        <Integer dnOrder="102" id="SYSTICK_PERIOD_US">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="1000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="102" id="TCM_ENABLE">
+        <Boolean dnOrder="103" id="TCM_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="103" id="TCM_SIZE">
+        <String dnOrder="104" id="TCM_SIZE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0 KB"/>
           </Values>
         </String>
-        <Integer dnOrder="104" id="TRNG_CLOCK_FREQUENCY">
+        <Integer dnOrder="105" id="TRNG_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="150000000"/>
           </Values>
         </Integer>
-        <Integer dnOrder="105" id="TWIHS0_CLOCK_FREQUENCY">
+        <Integer dnOrder="106" id="TWIHS0_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="150000000"/>
           </Values>
         </Integer>
-        <Integer dnOrder="106" id="TWIHS1_CLOCK_FREQUENCY">
+        <Integer dnOrder="107" id="TWIHS1_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="150000000"/>
           </Values>
         </Integer>
-        <Integer dnOrder="107" id="TWIHS2_CLOCK_FREQUENCY">
+        <Integer dnOrder="108" id="TWIHS2_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="150000000"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="108" id="USBHS_CLOCK_ENABLE">
+        <Boolean dnOrder="109" id="USBHS_CLOCK_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbhs_v1" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="109" id="USBHS_INTERRUPT_ENABLE">
+        <Boolean dnOrder="110" id="USBHS_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbhs_v1" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="110" id="USBHS_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="111" id="USBHS_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="111" id="USBHS_INTERRUPT_HANDLER">
+        <String dnOrder="112" id="USBHS_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbhs_v1" value="DRV_USBHSV1_USBHS_Handler"/>
           </Values>
         </String>
-        <Boolean dnOrder="112" id="USBHS_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="113" id="USBHS_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="drv_usbhs_v1" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="113" id="WDT_INTERRUPT_ENABLE">
+        <Boolean dnOrder="114" id="WDT_INTERRUPT_ENABLE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="114" id="WDT_INTERRUPT_ENABLE_UPDATE">
+        <Boolean dnOrder="115" id="WDT_INTERRUPT_ENABLE_UPDATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="true"/>
           </Values>
         </Boolean>
-        <String dnOrder="115" id="WDT_INTERRUPT_HANDLER">
+        <String dnOrder="116" id="WDT_INTERRUPT_HANDLER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="WDT_Handler"/>
           </Values>
         </String>
-        <Boolean dnOrder="116" id="WDT_INTERRUPT_HANDLER_LOCK">
+        <Boolean dnOrder="117" id="WDT_INTERRUPT_HANDLER_LOCK">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="false"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="117" id="XDMAC_CLOCK_FREQUENCY">
+        <Integer dnOrder="118" id="XDMAC_CLOCK_FREQUENCY">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="150000000"/>
           </Values>
@@ -843,16 +850,41 @@
             <Dynamic dnOrder="0" id="usb_device" value="3"/>
           </Values>
         </Integer>
-        <Integer dnOrder="2" id="CONFIG_USB_DEVICE_FUNCTIONS_NUMBER">
+        <Boolean dnOrder="2" id="CONFIG_USB_DEVICE_EVENT_ENABLE_SOF">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="3" id="CONFIG_USB_DEVICE_FUNCTIONS_NUMBER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="usb_device" value="1"/>
           </Values>
         </Integer>
-        <Integer dnOrder="3" id="CONFIG_USB_DEVICE_INTERFACES_NUMBER">
+        <Integer dnOrder="4" id="CONFIG_USB_DEVICE_INTERFACES_NUMBER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="usb_device" value="2"/>
           </Values>
         </Integer>
+        <Boolean dnOrder="5" id="CONFIG_USB_DEVICE_MSD_DISK_IMAGE">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="usb_device" value="false"/>
+          </Values>
+        </Boolean>
+        <String dnOrder="6" id="CONFIG_USB_DEVICE_PRODUCT_ID_IDX0">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="usb_device" value="0x000A"/>
+          </Values>
+        </String>
+        <Combo dnOrder="7" id="CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="cdc_com_port_single_demo"/>
+          </Values>
+        </Combo>
+        <String dnOrder="8" id="CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR">
+          <Values dnOrder="0">
+            <Dynamic dnOrder="0" id="usb_device" value="Simple CDC Device Demo"/>
+          </Values>
+        </String>
       </Symbols>
     </UniqueComponent>
     <GeneratorComponent dnOrder="8" id="usb_device_cdc">
@@ -860,7 +892,6 @@
         <Integer dnOrder="0" id="CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="usb_device_cdc" value="6"/>
-            <User dnOrder="1" value="6"/>
           </Values>
         </Integer>
       </Symbols>
@@ -896,15 +927,15 @@
     <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
     <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="BSP_SAM_E70_Xplained" x="21" y="45"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="21" y="79"/>
-        <ElementPosition dnOrder="2" id="cmsis" x="228" y="47"/>
-        <ElementPosition dnOrder="3" id="core" x="240" y="20"/>
-        <ElementPosition dnOrder="4" id="dfp" x="20" y="20"/>
-        <ElementPosition dnOrder="5" id="drv_usbhs_v1" x="23" y="193"/>
-        <ElementPosition dnOrder="6" id="efc" x="334" y="12"/>
-        <ElementPosition dnOrder="7" id="usb_device" x="202" y="197"/>
-        <ElementPosition dnOrder="8" id="usb_device_cdc" x="353" y="193"/>
+        <ElementPosition dnOrder="0" id="BSP_SAM_E70_Xplained" x="152" y="10"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="0" y="6"/>
+        <ElementPosition dnOrder="2" id="cmsis" x="151" y="67"/>
+        <ElementPosition dnOrder="3" id="core" x="250" y="67"/>
+        <ElementPosition dnOrder="4" id="dfp" x="152" y="36"/>
+        <ElementPosition dnOrder="5" id="drv_usbhs_v1" x="0" y="181"/>
+        <ElementPosition dnOrder="6" id="efc" x="0" y="95"/>
+        <ElementPosition dnOrder="7" id="usb_device" x="166" y="182"/>
+        <ElementPosition dnOrder="8" id="usb_device_cdc" x="305" y="181"/>
       </ElementPositions>
     </ComponentGraph>
   </UserData>

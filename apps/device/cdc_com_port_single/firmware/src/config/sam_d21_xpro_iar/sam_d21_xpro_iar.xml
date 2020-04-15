@@ -865,32 +865,37 @@
             <Dynamic dnOrder="0" id="usb_device" value="2"/>
           </Values>
         </Integer>
-        <Integer dnOrder="2" id="CONFIG_USB_DEVICE_FUNCTIONS_NUMBER">
+        <Boolean dnOrder="2" id="CONFIG_USB_DEVICE_EVENT_ENABLE_SOF">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <Integer dnOrder="3" id="CONFIG_USB_DEVICE_FUNCTIONS_NUMBER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="usb_device" value="1"/>
           </Values>
         </Integer>
-        <Integer dnOrder="3" id="CONFIG_USB_DEVICE_INTERFACES_NUMBER">
+        <Integer dnOrder="4" id="CONFIG_USB_DEVICE_INTERFACES_NUMBER">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="usb_device" value="2"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="4" id="CONFIG_USB_DEVICE_MSD_DISK_IMAGE">
+        <Boolean dnOrder="5" id="CONFIG_USB_DEVICE_MSD_DISK_IMAGE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="usb_device" value="false"/>
           </Values>
         </Boolean>
-        <String dnOrder="5" id="CONFIG_USB_DEVICE_PRODUCT_ID_IDX0">
+        <String dnOrder="6" id="CONFIG_USB_DEVICE_PRODUCT_ID_IDX0">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="usb_device" value="0x000A"/>
           </Values>
         </String>
-        <Combo dnOrder="6" id="CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0">
+        <Combo dnOrder="7" id="CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0">
           <Values dnOrder="0">
             <User dnOrder="0" value="cdc_com_port_single_demo"/>
           </Values>
         </Combo>
-        <String dnOrder="7" id="CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR">
+        <String dnOrder="8" id="CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="usb_device" value="Simple CDC Device Demo"/>
           </Values>
@@ -902,7 +907,6 @@
         <Integer dnOrder="0" id="CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="usb_device_cdc" value="6"/>
-            <User dnOrder="1" value="6"/>
           </Values>
         </Integer>
       </Symbols>
@@ -935,20 +939,20 @@
     </GeneratorComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="BSP_SAM_D21_Xplained_Pro" x="10" y="48"/>
-        <ElementPosition dnOrder="1" id="HarmonyCore" x="14" y="82"/>
-        <ElementPosition dnOrder="2" id="cmsis" x="213" y="49"/>
-        <ElementPosition dnOrder="3" id="core" x="205" y="9"/>
-        <ElementPosition dnOrder="4" id="dfp" x="12" y="10"/>
-        <ElementPosition dnOrder="5" id="drv_usbfs_v1" x="10" y="185"/>
-        <ElementPosition dnOrder="6" id="evsys" x="323" y="18"/>
-        <ElementPosition dnOrder="7" id="nvmctrl" x="452" y="11"/>
-        <ElementPosition dnOrder="8" id="usb_device" x="177" y="190"/>
-        <ElementPosition dnOrder="9" id="usb_device_cdc" x="330" y="190"/>
+        <ElementPosition dnOrder="0" id="BSP_SAM_D21_Xplained_Pro" x="150" y="35"/>
+        <ElementPosition dnOrder="1" id="HarmonyCore" x="0" y="5"/>
+        <ElementPosition dnOrder="2" id="cmsis" x="149" y="62"/>
+        <ElementPosition dnOrder="3" id="core" x="249" y="63"/>
+        <ElementPosition dnOrder="4" id="dfp" x="150" y="7"/>
+        <ElementPosition dnOrder="5" id="drv_usbfs_v1" x="0" y="204"/>
+        <ElementPosition dnOrder="6" id="evsys" x="0" y="91"/>
+        <ElementPosition dnOrder="7" id="nvmctrl" x="0" y="131"/>
+        <ElementPosition dnOrder="8" id="usb_device" x="158" y="204"/>
+        <ElementPosition dnOrder="9" id="usb_device_cdc" x="297" y="204"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>

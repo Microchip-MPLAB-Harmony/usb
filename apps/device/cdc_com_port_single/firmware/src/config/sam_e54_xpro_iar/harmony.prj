@@ -27,8 +27,8 @@
           <Name dnOrder="1">drv_usbfsv1_device.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_iar/driver/usb/usbfsv1/src/</LogicalPath>
           <PhysicalPath dnOrder="3">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">C10A2947F52ABD3DC3798A9D825704F9</GeneratedChecksum>
-          <UserChecksum dnOrder="5">C10A2947F52ABD3DC3798A9D825704F9</UserChecksum>
+          <GeneratedChecksum dnOrder="4">8B2A2E1DE069F4F1AB4F207628213503</GeneratedChecksum>
+          <UserChecksum dnOrder="5">8B2A2E1DE069F4F1AB4F207628213503</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
@@ -171,8 +171,8 @@
           <Name dnOrder="1">usb_device_init_data.c</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_iar/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">449E9A7790B34D2B395CBA19A19E7B32</GeneratedChecksum>
-          <UserChecksum dnOrder="5">449E9A7790B34D2B395CBA19A19E7B32</UserChecksum>
+          <GeneratedChecksum dnOrder="4">31D86C87E7525E17C8BEA8D5E077AA79</GeneratedChecksum>
+          <UserChecksum dnOrder="5">31D86C87E7525E17C8BEA8D5E077AA79</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">HEADER</Type>
@@ -299,8 +299,8 @@
           <Name dnOrder="1">configuration.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_iar/</LogicalPath>
           <PhysicalPath dnOrder="3">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">80000677A0CDBC8D2C75FCE82ED8CFA6</GeneratedChecksum>
-          <UserChecksum dnOrder="5">80000677A0CDBC8D2C75FCE82ED8CFA6</UserChecksum>
+          <GeneratedChecksum dnOrder="4">F90F5526660524AE983B930C9D84347B</GeneratedChecksum>
+          <UserChecksum dnOrder="5">F90F5526660524AE983B930C9D84347B</UserChecksum>
         </File>
         <File dnOrder="37">
           <Type dnOrder="0">HEADER</Type>
@@ -867,8 +867,8 @@
           <Name dnOrder="1">usb_external_dependencies.h</Name>
           <LogicalPath dnOrder="2">config/sam_e54_xpro_iar/usb/src</LogicalPath>
           <PhysicalPath dnOrder="3">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="4">5AAF69767C8CBB1A9952695AAF110C43</GeneratedChecksum>
-          <UserChecksum dnOrder="5">5AAF69767C8CBB1A9952695AAF110C43</UserChecksum>
+          <GeneratedChecksum dnOrder="4">6C4A6859DB16EA8C046F995C6B6C1C6F</GeneratedChecksum>
+          <UserChecksum dnOrder="5">6C4A6859DB16EA8C046F995C6B6C1C6F</UserChecksum>
         </File>
         <File dnOrder="108">
           <Type dnOrder="0">HEADER</Type>
@@ -918,7 +918,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="OVERWRITE"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;csp;usb;usb;usb;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="audio;bsp;core;csp;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>

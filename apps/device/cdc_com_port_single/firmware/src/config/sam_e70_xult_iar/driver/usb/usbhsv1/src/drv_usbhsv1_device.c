@@ -380,6 +380,8 @@ void DRV_USBHSV1_DEVICE_Attach
 
     usbhs_registers_t * usbID;                  /* USB instance pointer */
     DRV_USBHSV1_OBJ * hDriver;                  /* USB driver object pointer */
+    USB_ERROR retVal = USB_ERROR_NONE;
+    bool interruptWasEnabled = false;       /* To track interrupt state */
 
     /* Check if the handle is invalid, if so return without any action */
     if(DRV_HANDLE_INVALID == handle)
@@ -390,31 +392,60 @@ void DRV_USBHSV1_DEVICE_Attach
     {
         hDriver = (DRV_USBHSV1_OBJ *) handle;
         usbID = hDriver->usbID;
+		
+        if(false == hDriver->isInInterruptContext)
+        {
+            if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
+            {
+                interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptSource);                
+            }
+            else
+            {
+                SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBHSV1 Device Driver: Mutex lock failed in DRV_USBHSV1_DEVICE_Detach()");
+                retVal = USB_ERROR_OSAL_FUNCTION;
+            }
+        }
+        if(retVal == USB_ERROR_NONE)
+        {
+            /* Enable the USB hardware */
+            usbID->USBHS_CTRL |= USBHS_CTRL_USBE_Msk;
+			
+            /* Unfreeze USB clock */
+            usbID->USBHS_CTRL &= ~USBHS_CTRL_FRZCLK_Msk;
 
-        /* Unfreeze USB clock */
-        usbID->USBHS_CTRL &= ~USBHS_CTRL_FRZCLK_Msk;
+	        /* Wait to unfreeze clock */
+            while(USBHS_SR_CLKUSABLE_Msk != (usbID->USBHS_SR & USBHS_SR_CLKUSABLE_Msk));
 
-        /* Wait to unfreeze clock */
-        while(USBHS_SR_CLKUSABLE_Msk != (usbID->USBHS_SR & USBHS_SR_CLKUSABLE_Msk));
+            /* Attach the device */
+            usbID->USBHS_DEVCTRL &= ~USBHS_DEVCTRL_DETACH_Msk;
 
-        /* Attach the device */
-        usbID->USBHS_DEVCTRL &= ~USBHS_DEVCTRL_DETACH_Msk;
+            /* Enable the End Of Reset, Suspend, SOF & Wakeup interrupts */
+            usbID->USBHS_DEVIER = (USBHS_DEVIER_EORSTES_Msk | USBHS_DEVIER_SUSPES_Msk | USBHS_DEVIER_SOFES_Msk | USBHS_DEVIER_WAKEUPES_Msk);
 
-        /* Enable the End Of Reset, Suspend, SOF & Wakeup interrupts */
-        usbID->USBHS_DEVIER = (USBHS_DEVIER_EORSTES_Msk | USBHS_DEVIER_SUSPES_Msk | USBHS_DEVIER_SOFES_Msk | USBHS_DEVIER_WAKEUPES_Msk);
+            /* Clear the End Of Reset, SOF & Wakeup interrupts */
+            usbID->USBHS_DEVICR = (USBHS_DEVICR_EORSTC_Msk | USBHS_DEVICR_SOFC_Msk | USBHS_DEVICR_WAKEUPC_Msk);
 
-        /* Clear the End Of Reset, SOF & Wakeup interrupts */
-        usbID->USBHS_DEVICR = (USBHS_DEVICR_EORSTC_Msk | USBHS_DEVICR_SOFC_Msk | USBHS_DEVICR_WAKEUPC_Msk);
+            /* Manually set the Suspend Interrupt */
+            usbID->USBHS_DEVIFR |= USBHS_DEVIFR_SUSPS_Msk;
 
-        /* Manually set the Suspend Interrupt */
-        usbID->USBHS_DEVIFR |= USBHS_DEVIFR_SUSPS_Msk;
+            /* Ack the Wakeup Interrupt */
+            usbID->USBHS_DEVICR = USBHS_DEVICR_WAKEUPC_Msk;
 
-        /* Ack the Wakeup Interrupt */
-        usbID->USBHS_DEVICR = USBHS_DEVICR_WAKEUPC_Msk;
+            /* Freeze USB clock */
+            usbID->USBHS_CTRL |= USBHS_CTRL_FRZCLK_Msk;
+        }
+        if(false == hDriver->isInInterruptContext)
+        {
+            if(true == interruptWasEnabled)
+            {
+                /* IF the interrupt was enabled when entering the routine
+                 * re-enable it now */
+                SYS_INT_SourceEnable(hDriver->interruptSource);
 
-        /* Freeze USB clock */
-        usbID->USBHS_CTRL |= USBHS_CTRL_FRZCLK_Msk;
-
+                /* Unlock the mutex */
+                OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
+            }
+        }
     }
 
 }/* end of DRV_USBHSV1_DEVICE_Attach() */
@@ -458,6 +489,9 @@ void DRV_USBHSV1_DEVICE_Detach(DRV_HANDLE handle)
         hDriver = (DRV_USBHSV1_OBJ *) handle;
         usbID = hDriver->usbID;
 
+		/* Disable All Endpoints */ 
+		DRV_USBHSV1_DEVICE_EndpointDisable((DRV_HANDLE)hDriver, DRV_USB_DEVICE_ENDPOINT_ALL);
+		
         if(false == hDriver->isInInterruptContext)
         {
             if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
@@ -476,9 +510,13 @@ void DRV_USBHSV1_DEVICE_Detach(DRV_HANDLE handle)
         {
             /* Update the driver flag indicating detach */
             hDriver->isAttached = false;
-            
-            DRV_USBHSV1_DEVICE_EndpointDisable((DRV_HANDLE)hDriver, DRV_USB_DEVICE_ENDPOINT_ALL);
+          
+            /* Unfreeze USB clock */
+            usbID->USBHS_CTRL &= ~USBHS_CTRL_FRZCLK_Msk;
 
+            /* Wait to unfreeze clock */
+            while(USBHS_SR_CLKUSABLE_Msk != (usbID->USBHS_SR & USBHS_SR_CLKUSABLE_Msk));
+        
             /* Clear all the pending interrupts */
             usbID->USBHS_DEVICR = USBHS_DEVICR_Msk;
             
@@ -498,6 +536,12 @@ void DRV_USBHSV1_DEVICE_Detach(DRV_HANDLE handle)
             /* Clear existing address and address enable bit */
             usbID->USBHS_DEVCTRL = regUSBHS_DEVCTRL;
             
+			/* Freeze USB clock */
+            usbID->USBHS_CTRL |= USBHS_CTRL_FRZCLK_Msk;
+			
+			/* Disable the USB hardware */
+            usbID->USBHS_CTRL &= ~USBHS_CTRL_USBE_Msk;
+			
             if(false == hDriver->isInInterruptContext)
             {
                 if(true == interruptWasEnabled)
@@ -1935,7 +1979,7 @@ USB_ERROR DRV_USBHSV1_DEVICE_IRPSubmit
                         else
                         {
                             /* direction is Host to Device */
-                            if((USBHS_DEVEPTISR_RXOUTI_Msk == (USBHS_DEVEPTISR_RXOUTI_Msk & usbID->USBHS_DEVEPTISR[endpoint])) & (USBHS_DEVEPTIMR_RXOUTE_Msk == (USBHS_DEVEPTIMR_RXOUTE_Msk & usbID->USBHS_DEVEPTIMR[endpoint])))
+                            if(USBHS_DEVEPTISR_RXOUTI_Msk == (USBHS_DEVEPTISR_RXOUTI_Msk & usbID->USBHS_DEVEPTISR[endpoint]))
                             {
                                 /* Data is already available in the FIFO */
                                 byteCount = (usbID->USBHS_DEVEPTISR[endpoint] & USBHS_DEVEPTISR_BYCT_Msk) >> USBHS_DEVEPTISR_BYCT_Pos;
@@ -2375,14 +2419,17 @@ void _DRV_USBHSV1_DEVICE_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
         /* Unfreeze USB clock */
         usbID->USBHS_CTRL &= ~USBHS_CTRL_FRZCLK_Msk;
 
-        /* Disable Suspend Interrupt */
+         /* Wait to unfreeze clock */
+        while(USBHS_SR_CLKUSABLE_Msk != (usbID->USBHS_SR & USBHS_SR_CLKUSABLE_Msk));
+        
+        /* Acknowledge the suspend interrupt */
+        usbID->USBHS_DEVICR = USBHS_DEVICR_SUSPC_Msk;
+		
+		/* Disable Suspend Interrupt */
         usbID->USBHS_DEVIDR = USBHS_DEVIDR_SUSPEC_Msk;
 
         /* Enable Wakeup Interrupt */
         usbID->USBHS_DEVIER = USBHS_DEVIER_WAKEUPES_Msk;
-
-        /* Acknowledge the suspend interrupt */
-        usbID->USBHS_DEVICR = USBHS_DEVICR_SUSPC_Msk;
 
         /* Freeze USB clock */
         usbID->USBHS_CTRL |= USBHS_CTRL_FRZCLK_Msk;
@@ -2392,9 +2439,15 @@ void _DRV_USBHSV1_DEVICE_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
     /* Check for Wakeup Interrupt Enable and Wakeup Interrupt Flag */
     if((USBHS_DEVISR_WAKEUP_Msk == (USBHS_DEVISR_WAKEUP_Msk & usbID->USBHS_DEVISR)) && (USBHS_DEVIMR_WAKEUPE_Msk == (USBHS_DEVIMR_WAKEUPE_Msk & usbID->USBHS_DEVIMR)))
     {
+        
+        /* This means that the bus was Resumed. */
+        hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBHSV1_EVENT_RESUME_DETECT, NULL);
 
         /* Unfreeze USB clock */
         usbID->USBHS_CTRL &= ~USBHS_CTRL_FRZCLK_Msk;
+        
+        /* Wait to unfreeze clock */
+        while(USBHS_SR_CLKUSABLE_Msk != (usbID->USBHS_SR & USBHS_SR_CLKUSABLE_Msk));
 
         /* Acknowledge the Wakeup interrupt */
         usbID->USBHS_DEVICR = USBHS_DEVICR_WAKEUPC_Msk;
@@ -2410,6 +2463,12 @@ void _DRV_USBHSV1_DEVICE_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
     /* Check for End Of Reset Interrupt Enable and End Of Reset Interrupt Flag */
     if((USBHS_DEVISR_EORST_Msk == (USBHS_DEVISR_EORST_Msk & usbID->USBHS_DEVISR)) && (USBHS_DEVIMR_EORSTE_Msk == (USBHS_DEVIMR_EORSTE_Msk & usbID->USBHS_DEVIMR)))
     {
+        /* Unfreeze USB clock */
+        usbID->USBHS_CTRL &= ~USBHS_CTRL_FRZCLK_Msk;
+        
+        /* Wait to unfreeze clock */
+        while(USBHS_SR_CLKUSABLE_Msk != (usbID->USBHS_SR & USBHS_SR_CLKUSABLE_Msk));
+        
         /* This means that RESET signaling was detected
          * on the bus. This means the packet that we should
          * get on the bus for EP0 should be a setup packet */
@@ -2788,9 +2847,7 @@ void _DRV_USBHSV1_DEVICE_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
                 if(endpointObjNonZero->irpQueue == NULL)
                 {
                     /* Clear the interrupt */
-                    usbID->USBHS_DEVEPTICR[endpointIndex] = USBHS_DEVEPTICR_RXOUTIC_Msk;
-                    
-                    usbID->USBHS_DEVEPTIDR[endpointIndex] = USBHS_DEVEPTIDR_FIFOCONC_Msk;
+                    usbID->USBHS_DEVEPTIDR[endpointIndex] = USBHS_DEVEPTIDR_RXOUTEC_Msk;
                 }
                 else
                 {
