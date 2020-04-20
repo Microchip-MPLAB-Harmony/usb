@@ -116,8 +116,8 @@ Example</div>
 <div class="Element13"><div class="Element12"><pre class="Element12">
 <i><span style="color: #008000">// The following code example shows an example of how the</span></i>
 <i><span style="color: #008000">// USB_DEVICE_ControlStatus() function is called in response to the</span></i>
-<i><span style="color: #008000">// USB_DEVICE_CONTROL_TRANSFER_EVENT_DATA_RECEIVED and</span></i>
-<i><span style="color: #008000">// USB_DEVICE_CONTROL_TRANSFER_EVENT_DATA_SENT event to complete the control</span></i>
+<i><span style="color: #008000">// USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED and</span></i>
+<i><span style="color: #008000">// USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_SENT event to complete the control</span></i>
 <i><span style="color: #008000">// transfer. Here, the application code acknowledges the status stage of the</span></i>
 <i><span style="color: #008000">// control transfer.</span></i>
 
@@ -132,15 +132,15 @@ Example</div>
 
     <strong><span style="color: #000080">switch</span></strong>(event)
     {
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CONTROL_TRANSFER_EVENT_SETUP_REQUEST:
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST:
 
             setupPkt = (USB_SETUP_PACKET *)pData;
             
             <i><span style="color: #008000">// Submit a buffer to receive 32 bytes in the  control write transfer.</span></i>
-            <a href="00743.html" target="topic">USB_DEVICE_ControlReceive</a>(usbDeviceHandle, data, 32); 
+            <i><span style="color: #008000">// USB_DEVICE_ControlReceive(usbDeviceHandle, data, 32); </span></i>
             <strong><span style="color: #000080">break</span></strong>;
 
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CONTROL_TRANSFER_EVENT_DATA_RECEIVED:
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
 
             <i><span style="color: #008000">// This means that data in the data stage of the control</span></i>
             <i><span style="color: #008000">// write transfer has been received. The application can either</span></i>
@@ -153,7 +153,7 @@ Example</div>
             USB_DEVICE_ControlStatus(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
             <strong><span style="color: #000080">break</span></strong>;
 
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CONTROL_TRANSFER_EVENT_DATA_SENT:
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_SENT:
             
             <i><span style="color: #008000">// This means that data in the data stage of the control</span></i>
             <i><span style="color: #008000">// read transfer has been sent. The application would typically</span></i>
@@ -164,7 +164,7 @@ Example</div>
             USB_DEVICE_ControlStatus(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
             <strong><span style="color: #000080">break</span></strong>;
 
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CONTROL_TRANSFER_EVENT_ABORTED:
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_CONTROL_TRANSFER_ABORTED:
 
             <i><span style="color: #008000">// This means the host has aborted the control transfer. The</span></i>
             <i><span style="color: #008000">// application can reset its control transfer state machine.</span></i>

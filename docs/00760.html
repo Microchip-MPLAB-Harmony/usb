@@ -115,7 +115,7 @@ The client must use the <a href="00790.html" target="topic">USB_DEVICE_EventHand
             <i><span style="color: #008000">// Reset signaling was detected on the bus. The </span></i>
             <i><span style="color: #008000">// application can find out the attach speed.</span></i>
             
-            attachedSpeed = <a href="00543.html" target="topic">USB_DEVICE_ActiveSpeedGet</a>(usbDeviceHandle);
+            attachSpeed = <a href="00543.html" target="topic">USB_DEVICE_ActiveSpeedGet</a>(usbDeviceHandle);
             <strong><span style="color: #000080">break</span></strong>;
 
         <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_DECONFIGURED :
@@ -164,13 +164,13 @@ The client must use the <a href="00790.html" target="topic">USB_DEVICE_EventHand
             <i><span style="color: #008000">// submit the buffer that would receive data in case of a</span></i>
             <i><span style="color: #008000">// control read transfer.</span></i>
 
-            setupPacket = (USB_SETUP_PACKET *)pData;
+            setupEventData = (USB_SETUP_PACKET *)pData;
 
             <i><span style="color: #008000">// Submit a buffer to receive 32 bytes in the  control write transfer.</span></i>
             <a href="00743.html" target="topic">USB_DEVICE_ControlReceive</a>(usbDeviceHandle, data, 32); 
             <strong><span style="color: #000080">break</span></strong>;
 
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CONTROL_TRANSFER_EVENT_DATA_RECEIVED:
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
 
             <i><span style="color: #008000">// This means that data in the data stage of the control write</span></i>
             <i><span style="color: #008000">// transfer has been received. The application can either accept</span></i>
@@ -183,14 +183,14 @@ The client must use the <a href="00790.html" target="topic">USB_DEVICE_EventHand
             <a href="00745.html" target="topic">USB_DEVICE_ControlStatus</a>(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
             <strong><span style="color: #000080">break</span></strong>;
 
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CONTROL_TRANSFER_EVENT_DATA_SENT:
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_SENT:
             
             <i><span style="color: #008000">// This means that data in the data stage of the control</span></i>
             <i><span style="color: #008000">// read transfer has been sent. </span></i>
 
             <strong><span style="color: #000080">break</span></strong>;
 
-        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_CONTROL_TRANSFER_EVENT_ABORTED:
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_CONTROL_TRANSFER_ABORTED:
 
             <i><span style="color: #008000">// This means the host has aborted the control transfer. The</span></i>
             <i><span style="color: #008000">// application can reset its control transfer state machine.</span></i>
@@ -246,7 +246,7 @@ The client must use the <a href="00790.html" target="topic">USB_DEVICE_EventHand
             <strong><span style="color: #000080">break</span></strong>;
     }
 
-    <strong><span style="color: #000080">return</span></strong> USB_DEVICE_EVENT_REPONSE_NONE;
+    <strong><span style="color: #000080">return</span></strong> <a href="00789.html" target="topic">USB_DEVICE_EVENT_RESPONSE_NONE</a>;
 }
 </pre></div></div>
 </div>
