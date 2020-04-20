@@ -2,6 +2,83 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 # Microchip MPLAB Harmony 3 Release Notes
+## USB Release v3.5.0
+### NEW FEATURES
+- **New part support** - This release introduces initial support for [SAMG55](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-g-mcus), [SAM DA1](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-l-mcus), PIC32MK MCM and PIC32MZ W1 families of 32-bit microcontrollers.
+
+- **New Features and Enhancements**
+   * USB Device demo for SAMDA1
+   * USB Host stack support for SAMG55
+   * USB Dual Controller demo for PIC32MK MCM 
+   * Dual Role support for PIC32MZ
+   * IAR Projects for SAM Microcontrollers
+   * USB Device and Host stack support for PIC32MZ W1
+   
+- All FreeRTOS based applications are tested with the CMSIS-FreeRTOS v10.2.0.
+
+- **Development kit and demo application support** - The following table provides number of demo application available for different development kits newly added in this release.
+
+    | Development Kits                                                                                                                               | Number of applications |
+    | ---                                                                                                                                            | --- |
+    | [SAM D21 Xplained Pro Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails.aspx?PartNO=ATSAMD21-XPRO)                     | 1 |
+    | [SAM E54 Xplained Pro Evaluation Kit](https://www.microchip.com/developmenttools/ProductDetails/ATSAME54-XPRO)                                 | 1 |
+    | [SAM E70 Xplained Ultra Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails.aspx?PartNO=ATSAME70-XULT)                   | 1 |
+    | [SAM DA1 Xplained Pro Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/ATSAMDA1-XPRO)                          | 1 |
+    | [SAM G55 Xplained Pro Evaluation Kit](https://www.microchip.com/developmenttools/ProductDetails/atsamg55-xpro)                                 | 7 |
+    | PIC32MK MCM Curiosity Pro                                                    | 3 |
+    | [PIC32MZ Embedded Connectivity with FPU (EF) Starter Kit](https://www.microchip.com/Developmenttools/ProductDetails/Dm320007)                  | 1 |
+    | [ATSAM9X60-EK](https://www.microchip.com/design-centers/32-bit-mpus/microprocessors/sam9)                                                      | 1 |
+    | PIC32MZ W1 Curiosity Board                                                                                                                     | 2 |
+    
+
+
+### Known Issues
+
+The current known issues are as follows:
+
+- Isochronous are not supported with USB Host Port Driver(EHCI/OHCI) on SAMA5D2. The issue will be fixed in an upcoming release.
+
+- USB Host Port High Speed Driver on SAMA5D2 does not support USB Hub. The issue will be fixed in an upcoming release.
+
+- Isochronous tranfers are not tested with USB Device Port High Speed Driver(UDPHS) Driver.  The issue will be fixed in an upcoming release.
+
+- Interactive help using the Show User Manual Entry in the Right-click menu for configuration options provided by this module is not yet available from within the MPLAB Harmony Configurator (MHC).  Please see the &quot;Configuring the Library&quot; section in the help documentation in the doc folder for this module instead.  Help is available in both CHM and PDF formats.
+
+- In a case where a MPLAB Harmony USB Device Project requires multiple Function Driver instances in the project, the MPLAB Harmony Configurator(MHC) may generate incorrect USB descriptors if a USB Device function driver component is added and then removed from the MHC Project Graph.  Removing all the USB components from project graph and starting over fixes this issue. The issue will be fixed in an upcoming release.
+
+- IAR projects for SAM MCUs and MPUs builds with warning messages. The issue will be fixed in an upcoming release.
+
+- The following USB Host Stack functions are not implemented:
+    - USB_HOST_BusResume 
+    - USB_HOST_DeviceSuspend 
+    - USB_HOST_DeviceResume 
+
+- The USB Host Layer does not check for the Hub Tier Level. This feature will be available in a future release of MPLAB Harmony.
+   
+- The USB Host Layer will only enable the first configuration when there are multiple configurations. If there are no interface matches in the first configuration, this causes the device to be become inoperative. Multiple configuration enabling will be activated in a future release of the of MPLAB Harmony.
+
+- The MSD Host Client Driver has not been tested with Multi-LUN Mass Storage Device and USB Card Readers.
+
+- The USB Host SCSI Block Driver, the CDC Client Driver, and the Audio Host Client Driver only support single-client operation. Multi-client operation will be enabled in a future release of MPLAB Harmony.
+
+- USB HID Host Client driver has not been tested with multiple usage devices. Sending of output or feature report has not been tested.
+
+- The USB Audio Host Client driver does not provide implementation for the following functions:
+    - USB_HOST_AUDIO_V1_DeviceObjHandleGet 
+    - USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeRangeGet 
+    - USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSubRangeNumbersGet 
+    - USB_HOST_AUDIO_V1_StreamSamplingFrequencyGet 
+    - USB_HOST_AUDIO_V1_TerminalIDGet 
+
+- USB Host Stack has been tested only limited numbers of USB Flash drives.  
+### Development Tools
+
+* [MPLAB® X IDE v5.35](https://www.microchip.com/mplab/mplab-x-ide)
+* [MPLAB® XC32 C/C++ Compiler v2.40](https://www.microchip.com/mplab/compilers)
+* [IAR Embedded Workbench® for ARM® v8.4] (https://www.iar.com/iar-embedded-workbench/#!?architecture=Arm)
+* MPLAB® X IDE plug-ins:
+  * MPLAB® Harmony Configurator (MHC) v3.4.2 and above.
+
 ## USB Release v3.4.0
 ### NEW FEATURES
 - **New part support** - This release introduces initial support for [SAMD11](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-g-mcus) family of 32-bit microcontrollers and [SAM9X60](https://www.microchip.com/design-centers/32-bit-mpus/microprocessors/sam9) family of 32-bit microprocessors.
