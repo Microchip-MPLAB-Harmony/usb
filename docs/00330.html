@@ -346,56 +346,26 @@ USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_ABORTED</div>
 <p class="Element10">
 <i>Likely Follow-up event</i>:<strong> </strong>None. The following code shows an example HID Function Driver event handling scheme.&nbsp;</p>
 <p class="Element10">
-The following code shows an example HID Function Driver event handling scheme. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// This code example shows all USB HID Driver events and a possible</span></i>
-<i><span style="color: #008000">// scheme for handling these events. In this example event responses are not</span></i>
-<i><span style="color: #008000">// deferred.</span></i>
-
-   USB_DEVICE_HID_EVENT_RESPONSE USB_AppHIDEventHandler
-   (
-      USB_DEVICE_HID_INDEX instanceIndex,
-      USB_DEVICE_HID_EVENT event,
-      <strong><span style="color: #000080">void</span></strong> * pData,
-      uintptr_t userData
+The following code shows an example HID Function Driver event handling scheme. </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_DEVICE_HID_EVENT_RESPONSE USB_AppHIDEventHandler
+(
+    USB_DEVICE_HID_INDEX instanceIndex,
+    USB_DEVICE_HID_EVENT event,
+    <strong><span style="color: #000080">void</span></strong> * pData,
+    uintptr_t userData
 )
 {
-      uint8_t currentIdleRate;</pre></div></div>
-<div class="Element13"><div class="Element12"><pre class="Element12">      uint8_t someHIDReport[128];
-      uint8_t someHIDDescriptor[128];
-      USB_DEVICE_HANDLE       usbDeviceHandle;
-      USB_HID_PROTOCOL_CODE * currentProtocol;
-      USB_DEVICE_HID_EVENT_DATA_GET_REPORT        * getReportEventData;
-      USB_DEVICE_HID_EVENT_DATA_SET_IDLE          * setIdleEventData;
-      USB_DEVICE_HID_EVENT_DATA_SET_DESCRIPTOR    * setDescriptorEventData;
-      USB_DEVICE_HID_EVENT_DATA_SET_REPORT        * setReportEventData;
+    uint8_t currentIdleRate;
 
-      <strong><span style="color: #000080">switch</span></strong>(event)</pre></div></div>
-<div class="Element13"><div class="Element12"><pre class="Element12">      {</pre></div></div>
-<div class="Element13"><div class="Element12"><pre class="Element12">         <strong><span style="color: #000080">case</span></strong> USB_DEVICE_HID_EVENT_GET_REPORT:
+    <strong><span style="color: #000080">switch</span></strong>(event)
+    {
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_HID_EVENT_GET_REPORT:
             <i><span style="color: #008000">// In this case, pData should be interpreted as a</span></i>
             <i><span style="color: #008000">// USB_DEVICE_HID_EVENT_DATA_GET_REPORT pointer. The application</span></i>
             <i><span style="color: #008000">// must send the requested report by using the</span></i>
             <i><span style="color: #008000">// USB_DEVICE_ControlSend() function.</span></i>
-            getReportEventData = (USB_DEVICE_HID_EVENT_DATA_GET_REPORT *)pData;
-            USB_DEVICE_ControlSend(usbDeviceHandle, someHIDReport, getReportEventData-&gt;reportLength);
-
-            <strong><span style="color: #000080">break</span></strong>;
-
-         <strong><span style="color: #000080">case</span></strong> USB_DEVICE_HID_EVENT_GET_PROTOCOL:
-
-            <i><span style="color: #008000">// In this case, pData will be NULL. The application</span></i>
-            <i><span style="color: #008000">// must send the current protocol to the host by using</span></i>
-            <i><span style="color: #008000">// the USB_DEVICE_ControlSend() function.</span></i>
-            USB_DEVICE_ControlSend(usbDeviceHandle, &amp;currentProtocol, <strong><span style="color: #000080">sizeof</span></strong>(USB_HID_PROTOCOL_CODE));
-
-            <strong><span style="color: #000080">break</span></strong>;</pre></div></div>
-<div class="Element13"><div class="Element12"><pre class="Element12"></pre></div></div>
-<div class="Element13"><div class="Element12"><pre class="Element12">         <strong><span style="color: #000080">case</span></strong> USB_DEVICE_HID_EVENT_GET_IDLE:
-
-             <i><span style="color: #008000">// In this case, pData will be a uint8_t pointer type to the</span></i>
-             <i><span style="color: #008000">// report ID for which the idle rate is being requested. The</span></i>
-             <i><span style="color: #008000">// application must send the current idle rate to the host by</span></i>
-             <i><span style="color: #008000">// using the USB_DEVICE_ControlSend() function.</span></i>
-             USB_DEVICE_ControlSend(usbDeviceHandle, &amp;currentIdleRate, 1);
+            <i><span style="color: #008000">// Example:</span></i>
+            <i><span style="color: #008000">// getReportEventData = (USB_DEVICE_HID_EVENT_DATA_GET_REPORT *)pData;</span></i>
+            <i><span style="color: #008000">// USB_DEVICE_ControlSend(usbDeviceHandle, someHIDReport, getReportEventData-&gt;reportLength);</span></i>
 
             <strong><span style="color: #000080">break</span></strong>;
 
@@ -405,9 +375,19 @@ The following code shows an example HID Function Driver event handling scheme. <
             <i><span style="color: #008000">// USB_DEVICE_HID_EVENT_DATA_SET_REPORT type pointer. The</span></i>
             <i><span style="color: #008000">// application can analyze the request and then obtain the</span></i>
             <i><span style="color: #008000">// report by using the USB_DEVICE_ControlReceive() function.</span></i>
-            setReportEventData = (USB_DEVICE_HID_EVENT_DATA_SET_REPORT *)pData;
-            USB_DEVICE_ControlReceive(deviceHandle, someHIDReport, setReportEventData-&gt;reportLength);
+            <i><span style="color: #008000">// Example:</span></i>
+            <i><span style="color: #008000">// setReportEventData = (USB_DEVICE_HID_EVENT_DATA_SET_REPORT *)pData;</span></i>
+            <i><span style="color: #008000">// USB_DEVICE_ControlReceive(usbDeviceHandle, someHIDReport, setReportEventData-&gt;reportLength);</span></i>
 
+            <strong><span style="color: #000080">break</span></strong>;
+
+         <strong><span style="color: #000080">case</span></strong> USB_DEVICE_HID_EVENT_GET_PROTOCOL:
+
+            <i><span style="color: #008000">// In this case, pData will be NULL. The application</span></i>
+            <i><span style="color: #008000">// must send the current protocol to the host by using</span></i>
+            <i><span style="color: #008000">// the USB_DEVICE_ControlSend() function.</span></i>
+            <i><span style="color: #008000">// Example:</span></i>
+            <i><span style="color: #008000">// USB_DEVICE_ControlSend(usbDeviceHandle, &amp;currentProtocol, sizeof(USB_HID_PROTOCOL_CODE));</span></i>
 
             <strong><span style="color: #000080">break</span></strong>;
 
@@ -417,7 +397,19 @@ The following code shows an example HID Function Driver event handling scheme. <
             <i><span style="color: #008000">// USB_HID_PROTOCOL_CODE type pointer. The application can</span></i>
             <i><span style="color: #008000">// analyze the data and decide to stall or accept the setting.</span></i>
             <i><span style="color: #008000">// This shows an example of accepting the protocol setting.</span></i>
-            USB_DEVICE_ControlStatus(deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
+            <i><span style="color: #008000">// Example:</span></i>
+            <i><span style="color: #008000">// *currentProtocol = *(USB_HID_PROTOCOL_CODE *)pData;</span></i>
+            <i><span style="color: #008000">// USB_DEVICE_ControlStatus(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);</span></i>
+
+            <strong><span style="color: #000080">break</span></strong>;
+
+         <strong><span style="color: #000080">case</span></strong> USB_DEVICE_HID_EVENT_GET_IDLE:
+
+             <i><span style="color: #008000">// In this case, pData will be a uint8_t pointer type to the</span></i>
+             <i><span style="color: #008000">// report ID for which the idle rate is being requested. The</span></i>
+             <i><span style="color: #008000">// application must send the current idle rate to the host by</span></i>
+             <i><span style="color: #008000">// using the USB_DEVICE_ControlSend() function.</span></i>
+             USB_DEVICE_ControlSend(usbDeviceHandle, &amp;currentIdleRate, 1);
 
             <strong><span style="color: #000080">break</span></strong>;
 
@@ -428,20 +420,9 @@ The following code shows an example HID Function Driver event handling scheme. <
             <i><span style="color: #008000">// application can analyze the data and decide to stall</span></i>
             <i><span style="color: #008000">// or accept the setting. This shows an example of accepting</span></i>
             <i><span style="color: #008000">// the protocol setting.</span></i>
-            setIdleEventData = (USB_DEVICE_HID_EVENT_DATA_SET_IDLE *)pData;
-            USB_DEVICE_ControlStatus(deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
+            currentIdleRate = ((USB_DEVICE_HID_EVENT_DATA_SET_IDLE*)pData)-&gt;duration;
+            USB_DEVICE_ControlStatus(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
 
-
-            <strong><span style="color: #000080">break</span></strong>;
-
-         <strong><span style="color: #000080">case</span></strong> USB_DEVICE_HID_EVENT_SET_DESCRIPTOR:
-
-            <i><span style="color: #008000">// In this case, the pData should be interpreted as a</span></i>
-            <i><span style="color: #008000">// USB_DEVICE_HID_EVENT_DATA_SET_DESCRIPTOR type pointer. The</span></i>
-            <i><span style="color: #008000">// application can analyze the request and then obtain the</span></i>
-            <i><span style="color: #008000">// descriptor by using the USB_DEVICE_ControlReceive() function.</span></i>
-            setDescriptorEventData = (USB_DEVICE_HID_EVENT_DATA_SET_DESCRIPTOR *)pData;
-            USB_DEVICE_ControlReceive(deviceHandle, someHIDReport, setReportEventData-&gt;reportLength);
 
             <strong><span style="color: #000080">break</span></strong>;
 
@@ -450,8 +431,8 @@ The following code shows an example HID Function Driver event handling scheme. <
             <i><span style="color: #008000">// In this case, control transfer data was received. The</span></i>
             <i><span style="color: #008000">// application can inspect that data and then stall the</span></i>
             <i><span style="color: #008000">// handshake stage of the control transfer or accept it</span></i>
-            <i><span style="color: #008000">// (as shown here).</span></i>
-            USB_DEVICE_ControlStatus(deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
+            <i><span style="color: #008000">// Example:</span></i>
+            <i><span style="color: #008000">// USB_DEVICE_ControlStatus(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);</span></i>
 
             <strong><span style="color: #000080">break</span></strong>;
 
@@ -460,9 +441,6 @@ The following code shows an example HID Function Driver event handling scheme. <
             <i><span style="color: #008000">// This means that control transfer data was sent. The</span></i>
             <i><span style="color: #008000">// application would typically acknowledge the handshake</span></i>
             <i><span style="color: #008000">// stage of the control transfer.</span></i>
-
-            USB_DEVICE_HID_ControlStatus(instanceIndex, controlTransferHandle,
-                  USB_DEVICE_HID_CONTROL_STATUS_OK);
 
             <strong><span style="color: #000080">break</span></strong>;
 
@@ -489,9 +467,10 @@ The following code shows an example HID Function Driver event handling scheme. <
             <i><span style="color: #008000">// USB_DEVICE_HID_EVENT_DATA_REPORT_SENT pointer type.</span></i>
 
             <strong><span style="color: #000080">break</span></strong>;
-      }
-      <strong><span style="color: #000080">return</span></strong>(USB_DEVICE_HID_EVENT_RESPONSE_NONE);</pre></div></div>
-<div class="Element13"><div class="Element12"><pre class="Element12">}</pre></div></div>
+    }
+    <strong><span style="color: #000080">return</span></strong> USB_DEVICE_HID_EVENT_RESPONSE_NONE;
+}
+</pre></div></div>
 </div>
 </div>
 </div>
