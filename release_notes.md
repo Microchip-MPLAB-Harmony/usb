@@ -7,12 +7,12 @@
 - **New part support** - This release introduces initial support for [SAMG55](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-g-mcus), [SAM DA1](https://www.microchip.com/design-centers/32-bit/sam-32-bit-mcus/sam-l-mcus), PIC32MK MCM and PIC32MZ W1 families of 32-bit microcontrollers.
 
 - **New Features and Enhancements**
-   * USB Device demo for SAMDA1
-   * USB Host stack support for SAMG55
-   * USB Dual Controller demo for PIC32MK MCM 
-   * Dual Role support for PIC32MZ
-   * IAR Projects for SAM Microcontrollers
-   * USB Device and Host stack support for PIC32MZ W1
+   * USB Device demo for SAMDA1 Microcontrollers.
+   * USB Host stack support for SAMG55 Microcontrollers.
+   * USB Dual Controller demo for PIC32MK MCM Microcontrollers.
+   * Dual Role support for PIC32MZ Microcontrollers.
+   * IAR Projects for SAM Microcontrollers.
+   * USB Device and Host stack support for PIC32MZ W1 Microcontrollers.
    
 - All FreeRTOS based applications are tested with the CMSIS-FreeRTOS v10.2.0.
 
