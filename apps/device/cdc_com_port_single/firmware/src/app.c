@@ -556,7 +556,7 @@ void APP_Tasks(void)
                 /* If the switch was pressed, then send the switch prompt*/
                 appData.isSwitchPressed = false;
                 USB_DEVICE_CDC_Write(USB_DEVICE_CDC_INDEX_0,
-                        &appData.writeTransferHandle, switchPromptUSB, 23,
+                        &appData.writeTransferHandle, switchPromptUSB, sizeof(switchPromptUSB),
                         USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE);
             }
             else
