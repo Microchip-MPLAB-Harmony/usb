@@ -796,7 +796,7 @@ void _USB_DEVICE_MSD_CheckAndUpdateMediaState
             }
 
             /* We should set an event handler with the media driver */
-            mediaFunctions->blockEventHandlerSet(drvHandle, _USB_DEVICE_MSD_BlockEventHandler, (uintptr_t)mediaDynamicData);
+            mediaFunctions->blockEventHandlerSet(drvHandle, (const void *)_USB_DEVICE_MSD_BlockEventHandler, (uintptr_t)mediaDynamicData);
             
             /* Get a pointer to the media geomtery */
             mediaDynamicData->mediaGeometry = mediaFunctions->geometryGet(drvHandle);
