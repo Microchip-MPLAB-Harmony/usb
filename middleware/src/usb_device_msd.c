@@ -121,7 +121,7 @@ void _USB_DEVICE_MSD_InitializeEndpoint
             msdInstance->bulkEndpointTxSize =  epDescriptor->wMaxPacketSize;
             
             /* Enable the TX endpoint */
-            USB_DEVICE_EndpointEnable(usbDevHandle, 0, msdInstance->bulkEndpointTx, epDescriptor->transferType, epDescriptor->wMaxPacketSize);
+            USB_DEVICE_EndpointEnable(usbDevHandle, 0, msdInstance->bulkEndpointTx, (USB_TRANSFER_TYPE) epDescriptor->transferType, epDescriptor->wMaxPacketSize);
         }
         else
         {
@@ -130,7 +130,7 @@ void _USB_DEVICE_MSD_InitializeEndpoint
             msdInstance->bulkEndpointRxSize = epDescriptor->wMaxPacketSize;
 
             /* Enable the endpoint */
-            USB_DEVICE_EndpointEnable(usbDevHandle, 0, msdInstance->bulkEndpointRx, epDescriptor->transferType,epDescriptor->wMaxPacketSize);
+            USB_DEVICE_EndpointEnable(usbDevHandle, 0, msdInstance->bulkEndpointRx, (USB_TRANSFER_TYPE) epDescriptor->transferType, epDescriptor->wMaxPacketSize);
 
             /* Now since device layer has already opened the bulk endpoint we can submit an
              * IRP to receive the CBW. */
