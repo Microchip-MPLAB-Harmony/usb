@@ -40,11 +40,11 @@
                 </option>
                 <option>
                     <name>MemOverride</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>MemFile</name>
-                    <state>$TOOLKIT_DIR$\CONFIG\debugger\Microchip\SAM9X60.ddf</state>
+                    <state>$TOOLKIT_DIR$\CONFIG\debugger\Microchip\AT91SAM9260.ddf</state>
                 </option>
                 <option>
                     <name>RunToEnable</name>
@@ -112,7 +112,7 @@
                 </option>
                 <option>
                     <name>FlashLoadersV3</name>
-                    <state></state>
+                    <state>$TOOLKIT_DIR$\config\flashloader\</state>
                 </option>
                 <option>
                     <name>OCImagesSuppressCheck1</name>
