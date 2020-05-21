@@ -2532,7 +2532,7 @@ void _DRV_USB_UDPHS_DEVICE_Tasks_ISR
 
                         data = (uint8_t *)irp->data;
 
-                        data = (uint8_t *)&data[irp->nPendingBytes];
+                        data = (uint8_t *)&data[irp->size - irp->nPendingBytes];
 
                         __DMB();
 
@@ -2865,7 +2865,7 @@ void _DRV_USB_UDPHS_DEVICE_Tasks_ISR
 
                         data = (uint8_t *)irp->data;
 
-                        data = (uint8_t *)&data[irp->nPendingBytes];
+                        data = (uint8_t *)&data[irp->size - irp->nPendingBytes];
 
                         __DMB();
 
