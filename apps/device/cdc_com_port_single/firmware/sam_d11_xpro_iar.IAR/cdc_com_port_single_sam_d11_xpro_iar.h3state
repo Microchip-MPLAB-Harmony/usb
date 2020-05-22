@@ -1,0 +1,23 @@
+{
+    "linker": {
+        "script": "..\\src\\config\\sam_d11_xpro_iar\\flash.icf"
+    }, 
+    "assembler": {
+        "macros": [], 
+        "includes": []
+    }, 
+    "general": {
+        "name": "sam_d11_xpro_iar", 
+        "device": "ATSAMD11D14AM"
+    }, 
+    "compiler": {
+        "macros": [], 
+        "includes": [
+            "..\\src", 
+            "..\\src\\config\\sam_d11_xpro_iar", 
+            "..\\src\\packs\\ATSAMD11D14AM_DFP", 
+            "..\\src\\packs\\CMSIS\\CMSIS\\Core\\Include", 
+            "..\\src\\packs\\CMSIS"
+        ]
+    }
+}
