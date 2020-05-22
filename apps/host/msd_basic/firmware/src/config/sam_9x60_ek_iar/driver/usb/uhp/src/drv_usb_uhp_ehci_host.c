@@ -941,7 +941,7 @@ USB_ERROR DRV_USB_UHP_EHCI_HOST_IRPSubmit
     volatile uint32_t nbBytes;
     uint8_t *point;
     volatile uint8_t idx = 0;
-    volatile uint8_t idx_plus;
+    volatile uint8_t idx_plus = 0;
     volatile uint8_t idx_eot = 0;
     volatile uhphs_registers_t *usbIDEHCI;
     uint8_t stop = 0;
