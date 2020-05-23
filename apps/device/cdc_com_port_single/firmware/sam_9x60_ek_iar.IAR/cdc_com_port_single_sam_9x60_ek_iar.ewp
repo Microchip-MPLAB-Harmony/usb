@@ -78,7 +78,7 @@
                 </option>
                 <option>
                     <name>OGChipSelectEditMenu</name>
-                    <state>SAM9X60	Microchip SAM9X60</state>
+                    <state>AT91SAM9260	Microchip AT91SAM9260</state>
                 </option>
                 <option>
                     <name>GenLowLevelInterface</name>
@@ -1135,7 +1135,7 @@
                 </option>
                 <option>
                     <name>OGChipSelectEditMenu</name>
-                    <state>SAM9X60	Microchip SAM9X60</state>
+                    <state>AT91SAM9260	Microchip AT91SAM9260</state>
                 </option>
                 <option>
                     <name>GenLowLevelInterface</name>
