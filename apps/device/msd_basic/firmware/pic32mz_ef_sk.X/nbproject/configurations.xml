@@ -74,6 +74,9 @@
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f5" displayName="system" projectFiles="true">
+            <logicalFolder name="f3" displayName="debug" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_sk/system/debug/sys_debug.h</itemPath>
+            </logicalFolder>
             <logicalFolder name="f2" displayName="int" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_sk/system/int/sys_int.h</itemPath>
               <itemPath>../src/config/pic32mz_ef_sk/system/int/sys_int_mapping.h</itemPath>
@@ -129,6 +132,8 @@
     </logicalFolder>
     <logicalFolder name="f4" displayName="Important Files" projectFiles="true">
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/pic32mz_ef_sk/harmony.prj</itemPath>
+      <itemPath>../src/config/pic32mz_ef_sk/pic32mz_ef_sk.xml</itemPath>
     </logicalFolder>
     <logicalFolder name="f2" displayName="Linker Files" projectFiles="true">
     </logicalFolder>
@@ -217,6 +222,8 @@
       <packs>
         <pack name="PIC32MZ-EF_DFP" vendor="Microchip" version="1.2.51"/>
       </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>
@@ -250,7 +257,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/pic32mz_ef_sk;../src/packs/PIC32MZ2048EFH144_DFP;../src/mips"/>
+                  value="../src;../src/config/pic32mz_ef_sk;../src/packs/PIC32MZ2048EFH144_DFP;"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
