@@ -1,7 +1,7 @@
 /**
  * \brief Header file for ATSAMD21J18A
  *
- * Copyright (c) 2019 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2020 Microchip Technology Inc. and its subsidiaries.
  *
  * Subject to your compliance with these terms, you may use Microchip software and any derivatives
  * exclusively with Microchip products. It is your responsibility to comply with third party license
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2018-11-30T03:32:41Z */
+/* file generated from device description version 2019-11-25T06:52:33Z */
 #ifndef _SAMD21J18A_H_
 #define _SAMD21J18A_H_
 
@@ -168,6 +168,12 @@ typedef struct _DeviceVectors
   void* pfnI2S_Handler;                          /*  27 Inter-IC Sound Interface (I2S) */
 } DeviceVectors;
 
+/* Defines for Deprecated Interrupt and Exceptions handler names */
+#define pfnMemManage_Handler      pfnMemoryManagement_Handler     /**< \deprecated  Backward compatibility for ASF*/
+#define pfnDebugMon_Handler       pfnDebugMonitor_Handler         /**< \deprecated  Backward compatibility for ASF*/
+#define pfnNMI_Handler            pfnNonMaskableInt_Handler       /**< \deprecated  Backward compatibility for ASF*/
+#define pfnSVC_Handler            pfnSVCall_Handler               /**< \deprecated  Backward compatibility for ASF*/
+
 #endif /* !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__)) */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
@@ -212,6 +218,12 @@ void DAC_Handler                   ( void );
 void PTC_Handler                   ( void );
 void I2S_Handler                   ( void );
 #endif /* DONT_USE_PREDEFINED_PERIPHERALS_HANDLERS */
+/* Defines for Deprecated Interrupt and Exceptions handler names */
+#define MemManage_Handler         MemoryManagement_Handler        /**< \deprecated  Backward compatibility*/
+#define DebugMon_Handler          DebugMonitor_Handler            /**< \deprecated  Backward compatibility*/
+#define NMI_Handler               NonMaskableInt_Handler          /**< \deprecated  Backward compatibility*/
+#define SVC_Handler               SVCall_Handler                  /**< \deprecated  Backward compatibility*/
+
 #endif /* !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__)) */
 
 /*
@@ -425,6 +437,10 @@ void I2S_Handler                   ( void );
 #define FLASH_NB_OF_PAGES              _UL_(      4096)
 
 #define CAL_SIZE                       _UL_(0x00000008)    /*    0kB Memory segment type: fuses */
+#define AUX3_SIZE                      _UL_(0x00000100)    /*    0kB Memory segment type: fuses */
+#define AUX3_PAGE_SIZE                 _UL_(        64)
+#define AUX3_NB_OF_PAGES               _UL_(         4)
+
 #define LOCKBIT_SIZE                   _UL_(0x00000004)    /*    0kB Memory segment type: fuses */
 #define OTP1_SIZE                      _UL_(0x00000008)    /*    0kB Memory segment type: fuses */
 #define OTP2_SIZE                      _UL_(0x00000008)    /*    0kB Memory segment type: fuses */
@@ -447,6 +463,7 @@ void I2S_Handler                   ( void );
 
 #define FLASH_ADDR                     _UL_(0x00000000)    /**< FLASH base address (type: flash)*/
 #define CAL_ADDR                       _UL_(0x00800000)    /**< CAL base address (type: fuses)*/
+#define AUX3_ADDR                      _UL_(0x0080a000)    /**< AUX3 base address (type: fuses)*/
 #define LOCKBIT_ADDR                   _UL_(0x00802000)    /**< LOCKBIT base address (type: fuses)*/
 #define OTP1_ADDR                      _UL_(0x00806000)    /**< OTP1 base address (type: fuses)*/
 #define OTP2_ADDR                      _UL_(0x00806008)    /**< OTP2 base address (type: fuses)*/
@@ -464,7 +481,7 @@ void I2S_Handler                   ( void );
 /* ************************************************************************** */
 /**  DEVICE SIGNATURES FOR SAMD21J18A                                         */
 /* ************************************************************************** */
-#define DSU_DID                        _UL_(0X10010300)
+#define CHIP_DSU_DID                   _UL_(0X10010300)
 
 /* ************************************************************************** */
 /**  ELECTRICAL DEFINITIONS FOR SAMD21J18A                                    */
