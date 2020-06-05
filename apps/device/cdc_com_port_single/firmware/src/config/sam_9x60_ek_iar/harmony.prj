@@ -248,8 +248,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_9x60_ek_iar/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">AC0AA3F114855C1768AE9D481BBBD04B</GeneratedChecksum>
-          <UserChecksum dnOrder="6">AC0AA3F114855C1768AE9D481BBBD04B</UserChecksum>
+          <GeneratedChecksum dnOrder="5">144E9E00F8A78B9DC1619A80F5B75367</GeneratedChecksum>
+          <UserChecksum dnOrder="6">144E9E00F8A78B9DC1619A80F5B75367</UserChecksum>
         </File>
         <File dnOrder="27">
           <Type dnOrder="0">HEADER</Type>
@@ -988,7 +988,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;usb;"/>
       <Setting dnOrder="6" key="TRUSTZONE" value="false"/>
     </Settings>
   </Configurator>
