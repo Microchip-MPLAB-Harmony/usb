@@ -401,8 +401,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e70_xult_iar/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">EB9D8DD4A1A9F60E4D5E52ABBAB1DEBE</GeneratedChecksum>
-          <UserChecksum dnOrder="6">EB9D8DD4A1A9F60E4D5E52ABBAB1DEBE</UserChecksum>
+          <GeneratedChecksum dnOrder="5">7D3809A6652071B570C6CD5302B6A51B</GeneratedChecksum>
+          <UserChecksum dnOrder="6">7D3809A6652071B570C6CD5302B6A51B</UserChecksum>
         </File>
         <File dnOrder="44">
           <Type dnOrder="0">HEADER</Type>
