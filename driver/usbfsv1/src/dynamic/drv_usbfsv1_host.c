@@ -1654,8 +1654,9 @@ void _DRV_USBFSV1_HOST_NonControlTransferDataSend(DRV_USBFSV1_OBJ * hDriver)
         hardwarePipeDesc->USB_ADDR = (uint32_t)(hDriver->hostTransactionBuffer);
     }
 
-    hardwarePipeDesc->USB_CTRL_PIPE &= ~(USB_HOST_CTRL_PIPE_PDADDR_Msk);
-    hardwarePipeDesc->USB_CTRL_PIPE |= ((pipe->deviceAddress << USB_HOST_CTRL_PIPE_PDADDR_Pos)
+    /* Clear the CTRL Pipe register */
+    hardwarePipeDesc->USB_CTRL_PIPE = 0;
+    hardwarePipeDesc->USB_CTRL_PIPE = ((pipe->deviceAddress << USB_HOST_CTRL_PIPE_PDADDR_Pos)
             |((pipe->endpointAndDirection & 0xF) << USB_HOST_CTRL_PIPE_PEPNUM_Pos));
     hardwarePipeDesc->USB_PCKSIZE = 0;
     hardwarePipeDesc->USB_PCKSIZE = (USB_HOST_PCKSIZE_MULTI_PACKET_SIZE(0)|USB_HOST_PCKSIZE_BYTE_COUNT(size)
@@ -1876,7 +1877,7 @@ static bool _DRV_USBFSV1_HOST_NonControlTransferProcess
             if(endIRP == true)
             {
                 /* Move the pipe queue head to next IRP in the queue */
-                pipe->irpQueueHead = (USB_HOST_IRP_LOCAL *)pipe->next;
+                pipe->irpQueueHead = (USB_HOST_IRP_LOCAL *)pIRP->next;
 
                 /* Update the size field with actual size received\transmitted */
                 pIRP->size = pIRP->completedBytes;
@@ -2054,7 +2055,7 @@ bool _DRV_USBFSV1_HOST_NonControlTransferBW(DRV_USBFSV1_OBJ * hDriver, USB_HOST_
     unsigned int bwAvailable = 0;
     unsigned int nTransactions = 0;
     unsigned int nPossibleTransactions = 0;
-
+    
     /* Check how much bandwidth is available */
     bwAvailable = (DRV_USBFSV1_MAX_BANDWIDTH_PER_FRAME - hDriver->globalBWConsumed);
     bwPerTransaction = pipe->bwPerTransaction;
@@ -2519,6 +2520,7 @@ void _DRV_USBFSV1_HOST_CreateFrameIRPList(DRV_USBFSV1_OBJ * hDriver)
                      * the next pipe in the pipe group. If the end of the group has
                      * been reached, then reset to the start of the group */
                     bulkOutPipeGroup->currentIRP = bulkOutPipeGroup->currentPipe->irpQueueHead;
+                    
                     if ((_DRV_USBFSV1_HOST_NonControlTransferBW(hDriver, bulkOutPipeGroup->currentIRP)) == true)
                     {
                         /* Bandwidth for this transaction is available and global
