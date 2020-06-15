@@ -102,7 +102,15 @@ def instantiateComponent(usbDriverComponent):
 	usbSpeed = usbDriverComponent.createComboSymbol("USB_SPEED", None, listUsbSpeed)
 	usbSpeed.setLabel("USB Speed Selection")
 	usbSpeed.setVisible(True)
-	usbSpeed.setDescription("Select USB Operation Speed")
+        helpText = '''While operating in Host Mode, this option configures the types (speed) of USB devices to be supported. 
+        For example, setting this option to High Speed will allow the Host to support High, Full and Low Speed devices. 
+        Setting this option to Full Speed will allow the Host to support only Full and Low Speed devices. If a High Speed
+        device is attached, it will operate at Full Speed.
+
+        In Device mode, this configuration select the operational speed of the device. If configured for High Speed mode, the
+        device will signal Chirp after receiving the bus reset from the host. If configured for Full Speed mode, the device 
+        will not signal Chirp and will operate at Full Speed only.'''
+	usbSpeed.setDescription(helpText)
 	usbSpeed.setDefaultValue("High Speed")
 	usbSpeed.setDependencies(blUSBDriverSpeedChanged, ["USB_SPEED"])
 	
@@ -110,7 +118,12 @@ def instantiateComponent(usbDriverComponent):
 	usbOpMode = usbDriverComponent.createComboSymbol("USB_OPERATION_MODE", None, listUsbOperationMode)
 	usbOpMode.setLabel("USB Mode Selection")
 	usbOpMode.setVisible(True)
-	usbOpMode.setDescription("Select USB Operation Mode")
+        helpText = '''This configuration controls the operational mode of the USB controller. If set to Host, the controller
+        operates in USB Host mode. If configured as Device, the controller operates as USB Device. If configured for 
+        DualRole, the application can switch the role of controller between Host and Device during the operations of the 
+        controller. When configured for Dual Role, application must explicitly set the startup operation mode (Device or Host)
+        of the controller using available USB Device and Host Stack API.'''
+	usbOpMode.setDescription(helpText)
 	usbOpMode.setDefaultValue("Device")
 	usbOpMode.setReadOnly(False)
 	usbOpMode.setUseSingleDynamicValue(True)
@@ -129,7 +142,12 @@ def instantiateComponent(usbDriverComponent):
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
 		usbVbusSense = usbDriverComponent.createBooleanSymbol("USB_DEVICE_VBUS_SENSE", usbOpMode)
 		usbVbusSense.setLabel("Enable VBUS Sense")
-		usbVbusSense.setDescription("A Self Powered USB Device firmware must have some means to detect VBUS from Host. A GPIO pin can be configured as an Input and connected to VBUS (through a resistor), and can be used to detect when VBUS is high (host actively powering). This configuration instructs MHC to generate a VBUS SENSE function. The GPIO pin name must be configured as in the below ")
+                helpText = '''A Self Powered USB Device firmware must have some means to detect VBUS from Host. 
+                A GPIO pin can be configured as an Input and connected to VBUS (through a resistor), and can be 
+                used to detect when VBUS is high (host actively powering). This configuration instructs MHC to 
+                generate a VBUS SENSE function. The GPIO pin name must be configured as in the below and should
+                match the pin name in the MHC Pin Mapping Table'''
+		usbVbusSense.setDescription(helpText)
 		usbVbusSense.setVisible(True)
 		usbVbusSense.setDescription("Select USB Operation Mode")
 		usbVbusSense.setDefaultValue(True)
@@ -138,15 +156,21 @@ def instantiateComponent(usbDriverComponent):
 		
 		usbVbusSenseFunctionName = usbDriverComponent.createStringSymbol("USB_DEVICE_VBUS_SENSE_PIN_NAME", usbVbusSense)
 		usbVbusSenseFunctionName.setLabel("VBUS SENSE Pin Name")
+                helpText = '''Enter the name of the GPIO pin to be monitored for VBUS level. The pin must be named and configured
+                in the MHC Pin Mapping tool. The name entered here must match the pin name given in the MHC Pin Mapping Tool'''
+                usbVbusSenseFunctionName.setDescription(helpText)
 		usbVbusSenseFunctionName.setDefaultValue("USB_VBUS_SENSE")
 		usbVbusSenseFunctionName.setVisible(True)
 		usbVbusSenseFunctionName.setDependencies(blUsbVbusPinName, ["USB_DEVICE_VBUS_SENSE"])
 	
 	usbHostVbusEnable = usbDriverComponent.createBooleanSymbol("USB_HOST_VBUS_ENABLE", usbOpMode)
 	usbHostVbusEnable.setLabel("Generate VBUS Enable Function")
-	usbHostVbusEnable.setDescription("Generate the Port Power Enable function. Driver will call this function when the port power must be enabled")
+        helpText = '''Enable this option if a VBUS control (enable/disable) function must be generated. This should be enabled 
+        if the board contains a VBUS switch that controls VBUS supply to the device and the switch can be controlled by a 
+        GPIO pin. The GPIO pin configuration must be peformned in the MHC pin mappping table. The driver code will configured
+        to call the generated function when port power is to be controlled. '''
+	usbHostVbusEnable.setDescription(helpText)
 	usbHostVbusEnable.setVisible(False)
-	usbHostVbusEnable.setDescription("Select USB Operation Mode")
 	usbHostVbusEnable.setDefaultValue(True)
 	usbHostVbusEnable.setUseSingleDynamicValue(True)
 	usbHostVbusEnable.setDependencies(blusbHostVbusEnable, ["USB_OPERATION_MODE"])
@@ -154,6 +178,9 @@ def instantiateComponent(usbDriverComponent):
 	usbHostVbusEnableFunctionName = usbDriverComponent.createStringSymbol("USB_HOST_VBUS_ENABLE_PIN_NAME", usbHostVbusEnable)
 	usbHostVbusEnableFunctionName.setLabel("VBUS Enable Pin Name")
 	usbHostVbusEnableFunctionName.setDefaultValue("VBUS_AH")
+        helpText = '''Specify the name of the GPIO Pin that controls the VBUS switch. The name is specified in the MHC
+        Pin Mapping table'''
+        usbHostVbusEnableFunctionName.setDescription(helpText)
 	usbHostVbusEnableFunctionName.setVisible(True)
 	usbHostVbusEnableFunctionName.setDependencies(blUsbHostVbusEnablePinName, ["USB_HOST_VBUS_ENABLE"])
 	
@@ -161,7 +188,10 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverHostAttachDebounce = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION", usbOpMode)
 	usbDriverHostAttachDebounce.setLabel("Attach De-bounce Duration (mSec)")
 	usbDriverHostAttachDebounce.setVisible(False)
-	usbDriverHostAttachDebounce.setDescription("Set USB Host Attach De-bounce duration")
+        helpText = '''Specify the time duration (in milliseconds) that the driver should wait after detecting the
+        attach interrupt and before polling the attach interrupt again to check if the attach condition still exists.
+        A longer duration slows down the Host Device Attach detection but allows for stable operation.'''
+	usbDriverHostAttachDebounce.setDescription(helpText)
 	usbDriverHostAttachDebounce.setDefaultValue(500)
 	usbDriverHostAttachDebounce.setDependencies(blUSBDriverOperationModeChanged, ["USB_OPERATION_MODE"])
 	
@@ -169,7 +199,9 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverHostResetDuration = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_RESET_DUARTION", usbOpMode)
 	usbDriverHostResetDuration.setLabel("Reset Duration (mSec)")
 	usbDriverHostResetDuration.setVisible(False)
-	usbDriverHostResetDuration.setDescription("Set USB Host Attach De-bounce duration")
+        helpText = '''Specify the duration of the USB Bus Reset Signal. A value of 100 millisecond works 
+        well. There may be cases where some USB devices require a shorter or longer reset duration time.'''
+	usbDriverHostResetDuration.setDescription(helpText)
 	usbDriverHostResetDuration.setDefaultValue(100)
 	usbDriverHostResetDuration.setDependencies(blUSBDriverOperationModeChanged, ["USB_OPERATION_MODE"])
 	

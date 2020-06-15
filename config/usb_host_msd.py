@@ -56,7 +56,10 @@ def instantiateComponent(usbHostMsdComponent):
 	# USB Host MSD client driver instances 
 	usbHostMsdClientDriverInstance = usbHostMsdComponent.createIntegerSymbol("CONFIG_USB_HOST_MSD_NUMBER_OF_INSTANCES", None)
 	usbHostMsdClientDriverInstance.setLabel("Number of MSD Client Driver Instances")
-	usbHostMsdClientDriverInstance.setDescription("Enter the number of MSD Class Driver instances required in the application.")
+        helpText = '''Configure this to match number of Mass Storage Devices that the application should support. For example,
+        setting this to 3 will configure the application to simultaneously support 3 different USB pen drives or a composite USB
+        device that more than one multiple Mass Storage Interfaces.'''
+	usbHostMsdClientDriverInstance.setDescription(helpText)
 	usbHostMsdClientDriverInstance.setDefaultValue(1)
 	usbHostMsdClientDriverInstance.setVisible(True)
 	

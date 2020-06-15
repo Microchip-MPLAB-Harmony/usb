@@ -194,6 +194,11 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	# Adding Start Interface number 
 	startInterfaceNumber = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INTERFACE_NUMBER", None)
 	startInterfaceNumber.setLabel("Start Interface Number")
+        helpText = '''Indicates the Interface Number of the first interface in
+        the Human Inteface Device Interface Group.  This is provided here for
+        indication purposes only and is automatically udpated based on the
+        function driver selection.'''
+        startInterfaceNumber.setDescription(helpText)
 	startInterfaceNumber.setVisible(True)
 	startInterfaceNumber.setMin(0)
 	startInterfaceNumber.setDefaultValue(0)
@@ -202,6 +207,9 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	# Adding Number of Interfaces
 	numberOfInterfaces = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_NUMBER_OF_INTERFACES", None)
 	numberOfInterfaces.setLabel("Number of Interfaces")
+        helpText = '''Indicates the interfaces in the Human Interface Group.
+        This is provided here for indication purposes only.'''
+        numberOfInterfaces.setDescription(helpText)
 	numberOfInterfaces.setVisible(True)
 	numberOfInterfaces.setMin(1)
 	numberOfInterfaces.setMax(16)
@@ -210,12 +218,22 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	# USB HID Report Descriptor 
 	usbDeviceHidReportType = usbDeviceHidComponent.createComboSymbol("CONFIG_USB_DEVICE_HID_REPORT_DESCRIPTOR_TYPE", None, usbDeviceHidReportList)
 	usbDeviceHidReportType.setLabel("Select Report Type")
+        helpText = '''Use this option to select between a range of available of
+        report descriptors or to use a custom one. Available report descriptors
+        implement common HID functions.'''
+        usbDeviceHidReportType.setDescription(helpText)
 	usbDeviceHidReportType.setVisible(True)
 	usbDeviceHidReportType.setDefaultValue("Mouse")
 	
 	# HID Function driver Report Receive Queue Size
 	queueSizeRead = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE", None)
 	queueSizeRead.setLabel("HID Report Receive Queue Size")
+        helpText = '''Configure the size of the Report Receive Queue. This configures the
+        maximum number of Receive Requests that can be queued before the Function
+        Driver returns a queue full response. Using a queue increasing memory
+        consumption but also increases throughput. The driver will queue
+        requests if the an transfer request is currently being processed.'''
+        queueSizeRead.setDescription(helpText)
 	queueSizeRead.setVisible(True)
 	queueSizeRead.setMin(1)
 	queueSizeRead.setMax(32767)
@@ -226,6 +244,13 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	# HID Function driver Report Send Queue Size 	
 	queueSizeWrite = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE", None)
 	queueSizeWrite.setLabel("HID Report Send Queue Size")
+        helpText = '''Configure the size of the Report Send Queue. This
+        configures the maximum number of Receive Requests that can be queued
+        before the Function Driver returns a queue full response. Using a queue
+        increasing memory consumption but also increases throughput. The driver
+        will queue requests if the an transfer request is currently being
+        processed.'''
+        queueSizeWrite.setDescription(helpText)
 	queueSizeWrite.setVisible(True)
 	queueSizeWrite.setMin(1)
 	queueSizeWrite.setMax(32767)
@@ -241,6 +266,10 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	# HID Function driver Interrupt IN Endpoint Number  
 	epNumberInterruptIn = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INT_IN_ENDPOINT_NUMBER", None)
 	epNumberInterruptIn.setLabel("Interrupt IN Endpoint Number")
+        helpText = '''Specify the endpoint number of Interrupt IN Endpoint to
+        be used for this instance of the HID Interface. Refer to Device
+        Datasheet for details on available endpoints and limitations.'''
+        epNumberInterruptIn.setDescription(helpText)
 	epNumberInterruptIn.setVisible(True)
 	epNumberInterruptIn.setMin(1)
 	epNumberInterruptIn.setMax(MaxIntEpNumber)
@@ -248,6 +277,11 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	# HID Function driver Interrupt OUT Endpoint Number  
 	epNumberInterruptOut = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INT_OUT_ENDPOINT_NUMBER", None)
 	epNumberInterruptOut.setLabel("Interrupt OUT Endpoint Number")
+        helpText = '''Specify the endpoint number of Interrupt OUT Endpoint to
+        be used for this instance of the HID Interface. Refer to Device
+        Datasheet for details on available endpoints and limitations. Ignore if
+        the device does not implement an OUT endpoint'''
+        epNumberInterruptOut.setDescription(helpText)
 	epNumberInterruptOut.setVisible(True)
 	epNumberInterruptOut.setMin(1)
 	epNumberInterruptOut.setMax(MaxIntEpNumber)

@@ -317,7 +317,11 @@ def instantiateComponent(usbDeviceComponent):
 	# Number of function numbers registered to this Device Layer Instance 
 	usbDeviceFunctionNumber = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", None)
 	usbDeviceFunctionNumber.setLabel("Number of Functions")	
+        helpText = '''This indicates the number of Function Driver instances in the current application. This is provided
+        for indication purposes only and is updated automatically based on the number of Function Drivers (and their 
+        instances) in the current application.'''
 	usbDeviceFunctionNumber.setVisible(True)
+	usbDeviceFunctionNumber.setDescription(helpText)
 	usbDeviceFunctionNumber.setMin(0)
 	usbDeviceFunctionNumber.setDefaultValue(0)
 	usbDeviceFunctionNumber.setUseSingleDynamicValue(True)
@@ -340,16 +344,28 @@ def instantiateComponent(usbDeviceComponent):
 	#SOF Event Enable 
 	usbDeviceEventEnableSOF = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_EVENT_ENABLE_SOF", usbDeviceEventsEnable)
 	usbDeviceEventEnableSOF.setLabel("Enable SOF Events")	
+        helpText = '''Enable this option if Start of Frame event needs to be generated. If enabled the Device Layer will generate
+        a Start of Frame event. In case of Full Speed USB, this event would be generated every 1 millisecond. In case of High
+        Speed USB, this event would be generated every 125 microseconds.'''
+        usbDeviceEventEnableSOF.setDescription(helpText)
 	usbDeviceEventEnableSOF.setVisible(True)	
 		
 	#Set Descriptor Event Enable 
 	usbDeviceEventEnableSetDescriptor = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_EVENT_ENABLE_SET_DESCRIPTOR", usbDeviceEventsEnable)
 	usbDeviceEventEnableSetDescriptor.setLabel("Enable Set Descriptor Events")	
+        helpText = '''Enable this option to support Set Descriptor requests. If enabled, the Device Layer will generate a
+        Set Descriptor Event to the application when such a request is received from the host. If disabled, the Device Layer will Stall the
+        Set Descritpor request.'''
+        usbDeviceEventEnableSetDescriptor.setDescription(helpText)
 	usbDeviceEventEnableSetDescriptor.setVisible(True)	
 	
 	#Synch Frame Event Enable 
 	usbDeviceEventEnableSynchFrame = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_EVENT_ENABLE_SYNCH_FRAME", usbDeviceEventsEnable)
 	usbDeviceEventEnableSynchFrame.setLabel("Enable Synch Frame Events")	
+        helpText = '''Enable this option to support Sync Frame requests. If enabled, the Device Layer will generate a
+        Sync Frame Event to the application when such a request is received from the host. If disabled, the Device Layer will Stall the
+        Sync Frame request.'''
+        usbDeviceEventEnableSynchFrame.setDescription(helpText)
 	usbDeviceEventEnableSynchFrame.setVisible(True)	
 	
 	# USB Device Features enable 
@@ -360,17 +376,32 @@ def instantiateComponent(usbDeviceComponent):
 	# Advanced string descriptor table enable 
 	usbDeviceFeatureEnableAdvancedStringDescriptorTable = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE", usbDeviceFeatureEnable)
 	usbDeviceFeatureEnableAdvancedStringDescriptorTable.setLabel("Enable advanced String Descriptor Table")
+        helpText = '''Enable this option to use an Advanced String Descriptor Table. This table allows the string index of 
+        the string to be specified against the actual string. This option should be used when the Device Layer is expected to support
+        String Descriptor requests which are not consecutive. Supporting these requests using a traditional string array
+        would cause gaps in memory.'''
+        usbDeviceFeatureEnableAdvancedStringDescriptorTable.setDescription(helpText)
 	usbDeviceFeatureEnableAdvancedStringDescriptorTable.setVisible(True)
 	
 	#Microsoft OS descriptor support Enable 
 	usbDeviceFeatureEnableMicrosoftOsDescriptor = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FEATURE_ENABLE_MICROSOFT_OS_DESCRIPTOR", usbDeviceFeatureEnableAdvancedStringDescriptorTable)
-	usbDeviceFeatureEnableMicrosoftOsDescriptor.setLabel("Enable Microsoft OS Descriptor Support")	
+	usbDeviceFeatureEnableMicrosoftOsDescriptor.setLabel("Enable Microsoft OS Descriptor Support")
+        helpText = '''Enable this option to allow the Device Layer to automatically handle Microsoft OS Descriptor 
+        requests. Enabling this option will generate a the OS String Descriptor with index 0xEE and update the 
+        Advanced String Descriptor table with this information. This option is typically used when creating
+        Vendor Devices.'''
+        usbDeviceFeatureEnableMicrosoftOsDescriptor.setDescription(helpText)
 	usbDeviceFeatureEnableMicrosoftOsDescriptor.setVisible(False)	
 	usbDeviceFeatureEnableMicrosoftOsDescriptor.setDependencies(blUSBDeviceFeatureEnableMicrosoftOsDescriptor, ["CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE"])
 
 	#BOS descriptor support Enable 
 	usbDeviceFeatureEnableBosDescriptor = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FEATURE_ENABLE_BOS_DESCRIPTOR", usbDeviceFeatureEnable)
 	usbDeviceFeatureEnableBosDescriptor.setLabel("Enable BOS Descriptor Support")	
+        helpText = '''Enable this option to allow the Device Layer to support BOS descriptor requests. If enabled, the
+        Device Layer will forward the BOS Descriptor Request to the application. If not enabled, the Device Layer will
+        Stall the request. The BOS Descriptor Request support is required when implementing Billboard Device Class
+        support.'''
+        usbDeviceFeatureEnableBosDescriptor.setDescription(helpText)
 	usbDeviceFeatureEnableBosDescriptor.setVisible(True)	
 	
 	# Enable Auto timed remote wakeup functions  
@@ -382,24 +413,38 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceEp0BufferSize = usbDeviceComponent.createComboSymbol("CONFIG_USB_DEVICE_EP0_BUFFER_SIZE", None, usbDeviceEp0BufferSizes)
 	usbDeviceEp0BufferSize.setLabel("Endpoint 0 Buffer Size")
 	usbDeviceEp0BufferSize.setVisible(True)
-	usbDeviceEp0BufferSize.setDescription("Select Endpoint 0 Buffer Size")
+        helpText = '''Configure the size (in bytes) of the Endpoint 0 buffer. The Device Layer will allocate a buffer of this
+        size and Endpoint transactions will be in the unit of this size. This should be 64 bytes for High Speed device and 
+        can be 8,16,32 and 64 for Full Speed devices.'''
+	usbDeviceEp0BufferSize.setDescription(helpText)
 	usbDeviceEp0BufferSize.setDefaultValue("64")
 	
 	# USB Device Vendor ID 
 	usbDeviceVendorId = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_VENDOR_ID_IDX0", None)
+        helpText = '''Specify the Vendor ID (VID) to be specified in the Device Descriptor. This should be a 
+        value assigned by the USB IF. The value 0x04D8 is assigned to Microchip Technology Inc'''
 	usbDeviceVendorId.setLabel("Vendor ID")
+	usbDeviceVendorId.setDescription(helpText)
 	usbDeviceVendorId.setVisible(True)
 	usbDeviceVendorId.setDefaultValue("0x04D8")
 	
 	# USB Device Product ID Selection
 	usbDeviceProductId = usbDeviceComponent.createComboSymbol("CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0", None, usbDeviceDemoList)
+        helpText = '''Choose from a list of available demo applications with pre-assigned Product IDs or choose
+        the 'Enter Product ID' option to enter a custom Product ID. This value is then assigned as the PID 
+        in the Device Descriptor'''
 	usbDeviceProductId.setLabel("Product ID Selection")
+        usbDeviceProductId.setDescription(helpText)
 	usbDeviceProductId.setVisible(True)
 	usbDeviceProductId.setDefaultValue("Enter Product ID")
 	
 	# USB Device Product ID 
 	usbDeviceProductId = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_PRODUCT_ID_IDX0", None)
 	usbDeviceProductId.setLabel("Product ID")
+        helpText = '''If the Product ID selection is set to a available demo application, then this field is 
+        automatically populated with the Product ID of that demo application. If the Product ID selection is
+        set to 'Enter Product ID' option, then enter the 16-bit Product ID in this field'''
+        usbDeviceProductId.setDescription(helpText)
 	usbDeviceProductId.setVisible(True)
 	usbDeviceProductId.setDefaultValue("0x0000")
 	usbDeviceProductId.setUseSingleDynamicValue(True)
@@ -408,6 +453,8 @@ def instantiateComponent(usbDeviceComponent):
 	# USB Device Manufacturer String 
 	usbDeviceManufacturerString = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_MANUFACTURER_STRING", None)
 	usbDeviceManufacturerString.setLabel("Manufacturer String")
+        helpText = '''Specify the Manufacturer String in this field.'''
+        usbDeviceManufacturerString.setDescription(helpText)
 	usbDeviceManufacturerString.setVisible(True)
 	usbDeviceManufacturerString.setDefaultValue("Microchip Technology Inc.")
 	
@@ -415,7 +462,11 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceProductString = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR", None)
 	usbDeviceProductString.setLabel("Product String Selection")
 	usbDeviceProductString.setVisible(True)
+        helpText = '''If the Product ID selection is set to a available demo application, then this field is 
+        automatically populated with the Product String that describes the demo application. If the Product ID selection is
+        set to 'Enter Product ID' option, then enter the Product String in this field'''
 	usbDeviceProductString.setDefaultValue("Enter Product string here")
+        usbDeviceProductString.setDescription(helpText)
 	usbDeviceProductString.setUseSingleDynamicValue(True)
 	usbDeviceProductString.setDependencies(blUSBDeviceProductStringSelection,["CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0"])
 

@@ -218,6 +218,10 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 	# MSD Function driver Number of Logical units  
 	usbDeviceMsdNumberOfLogicalUnits = usbDeviceMsdComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_MSD_LUN", None)
 	usbDeviceMsdNumberOfLogicalUnits.setLabel("Number of Logical Units")
+        helpText = '''Configure the number of Logical Units (LUN) this Mass
+        Storage Device should contain. Each LUN is treated as storage unit and
+        appears as different drives when connected to a Windows PC USB host.'''
+        usbDeviceMsdNumberOfLogicalUnits.setDescription(helpText)
 	usbDeviceMsdNumberOfLogicalUnits.setVisible(True)
 	usbDeviceMsdNumberOfLogicalUnits.setMin(1)
 	usbDeviceMsdNumberOfLogicalUnits.setMax(4)
@@ -232,11 +236,19 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 		usbDeviceMSDLun[i].setLabel("LUN" + str(i))
 		usbDeviceMSDLun[i].setVisible(i == 0)
 		usbDeviceMSDLun[i].setDefaultValue(i == 0)
+                helpText = '''Expand to configure the media type for this LUN'''
+                usbDeviceMSDLun[i].setDescription(helpText)
 		usbDeviceMSDLun[i].setReadOnly(True)
 		usbDeviceMSDLun[i].setDependencies(showMedia, ["CONFIG_USB_DEVICE_FUNCTION_MSD_LUN"])
 		
 		usbDeviceMSDLunMediaType.append(i)
 		usbDeviceMSDLunMediaType[i] = usbDeviceMsdComponent.createComboSymbol("CONFIG_USB_DEVICE_FUNCTION_MSD_LUN_MEDIA_TYPE_IDX" + str(i), usbDeviceMSDLun[i], mediaTypes)
+                helpText = '''Select the LUN media type from the list of
+                support media. NVM uses internal program memory. SDCARD SPI
+                uses SD CARD as memory with SPI as an interface. SDCARD MMC
+                uses SD CARD as memory with MMC interface.  SPIFLASH uses
+                external SPI based Flash memory'''
+                usbDeviceMSDLunMediaType[i].setDescription(helpText)
 		usbDeviceMSDLunMediaType[i].setLabel("Media Type")
 		usbDeviceMSDLunMediaType[i].setDefaultValue("MEDIA_TYPE_SD_CARD_SPI")
 	
@@ -244,12 +256,20 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 	usbDeviceMsdEPNumberBulkOut = usbDeviceMsdComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_BULK_OUT_ENDPOINT_NUMBER", None)		
 	usbDeviceMsdEPNumberBulkOut.setLabel("Bulk OUT Endpoint Number")
 	usbDeviceMsdEPNumberBulkOut.setVisible(True)
+        helpText = '''Specify the endpoint number of the Bulk OUT endpoint to
+        be used by this Mass Storage Interface. Refer to device datasheets for
+        details on available endpoints and limitations.'''
+        usbDeviceMsdEPNumberBulkOut.setDescription(helpText)
 	usbDeviceMsdEPNumberBulkOut.setMin(1)
 	usbDeviceMsdEPNumberBulkOut.setDefaultValue(1)
 
 	# MSD Function driver Bulk IN Endpoint Number 
 	usbDeviceMsdEPNumberBulkIn = usbDeviceMsdComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER", None)		
 	usbDeviceMsdEPNumberBulkIn.setLabel("Bulk IN Endpoint Number")
+        helpText = '''Specify the endpoint number of the Bulk IN endpoint to be
+        used by this Mass Storage Interface. Refer to device datasheets for
+        details on available endpoints and limitations.'''
+        usbDeviceMsdEPNumberBulkIn.setDescription(helpText)
 	usbDeviceMsdEPNumberBulkIn.setVisible(True)
 	usbDeviceMsdEPNumberBulkIn.setMin(1)
 	usbDeviceMsdEPNumberBulkIn.setDefaultValue(BulkInDefaultEpNumber)

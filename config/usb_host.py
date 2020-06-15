@@ -115,7 +115,10 @@ def instantiateComponent(usbHostComponent):
 	usbHostTplEntryNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_TPL_ENTRY_NUMBER", None)
 	usbHostTplEntryNumber.setVisible(True)
 	usbHostTplEntryNumber.setLabel("Number of TPL Entries")
-	usbHostTplEntryNumber.setDescription("Number of TPL entries")
+        helpText = '''This configuration option indicates the current number of number of entries in the Host 
+        TPL table. This is shown for indication purposes only. It is automatically updated based on the number 
+        of device types to be supported by the Host'''
+	usbHostTplEntryNumber.setDescription(helpText)
 	usbHostTplEntryNumber.setDefaultValue(0)
 	usbHostTplEntryNumber.setUseSingleDynamicValue(True)
 	#usbHostTplEntryNumber.setDependencies(blUsbHostDeviceNumber, ["USB_OPERATION_MODE"])
@@ -124,8 +127,13 @@ def instantiateComponent(usbHostComponent):
 	# USB Host Max Interfaces  
 	usbHostMaxInterfaceNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_MAX_INTERFACES", None)
 	usbHostMaxInterfaceNumber.setLabel("Maximum Interfaces per Device")
+        helpText = '''This value should be set to the maximum number of interfaces that a device attached to this 
+        Host will contain. For example, if two devices can be connected to the Host, one device has 3 interfaces
+        and the other device has 5 interfaces, then this configuration should be set to 5. Setting this value 
+        incorrectly could result in the attached device operating incorrectly. Increasing the number increases
+        the attached device operational memory.'''
 	usbHostMaxInterfaceNumber.setVisible(True)
-	usbHostMaxInterfaceNumber.setDescription("Maximum Number of Interfaces per Device")
+	usbHostMaxInterfaceNumber.setDescription(helpText)
 	usbHostMaxInterfaceNumber.setDefaultValue(5)
 	usbHostMaxInterfaceNumber.setDependencies(blUsbHostMaxInterfaceNumber, ["USB_OPERATION_MODE"])	
 	
@@ -133,7 +141,13 @@ def instantiateComponent(usbHostComponent):
 	usbHostTransfersNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_TRANSFERS_NUMBER", None)
 	usbHostTransfersNumber.setLabel("Maximum Number of Transfers")
 	usbHostTransfersNumber.setVisible(True)
-	usbHostTransfersNumber.setDescription("Maximum number of transfers that host layer should handle")
+        helpText = '''Configures the maximum number of USB transfers requests that the Host Layer can process. 
+        Client driver (MSD, CDC, HID etc.) place data transfer requests with the Host Layer. If a transfer is
+        currently in progress, then the transfer request is queued. If the number of currently queued transfer 
+        requests has reached this number, the Host Layer directs the Client Driver to try again later. Increasing
+        the number increases the ability of the Host Layer to queue additional requests but also increases the
+        memory requirements.'''
+	usbHostTransfersNumber.setDescription(helpText)
 	usbHostTransfersNumber.setDefaultValue(10)
 	usbHostTransfersNumber.setDependencies(blUsbHostMaxInterfaceNumber, ["USB_OPERATION_MODE"])	
 	
@@ -142,9 +156,12 @@ def instantiateComponent(usbHostComponent):
 		usbHostHubsupport = usbHostComponent.createBooleanSymbol("CONFIG_USB_HOST_HUB_SUPPORT", None)
 		usbHostHubsupport.setLabel( "Hub support" )
 		usbHostHubsupport.setVisible( True)
+                helpText = '''Enable this option to add Hub Support to the current application. Checking this box 
+                adds the Hub Driver to the USB Host application and allows the Host Layer to communicate with several
+                USB devices.'''
+                usbHostHubsupport.setDescription(helpText)
 		usbHostHubsupport.setDefaultValue(False)
 		usbHostHubsupport.setDependencies(hubUpdateTPL, ["CONFIG_USB_HOST_HUB_SUPPORT"])
-		
 		usbHostHubSaveValue = usbHostComponent.createBooleanSymbol("CONFIG_USB_HOST_HUB_SUPPORT_SAVE_STATUS", None)
 		usbHostHubSaveValue.setLabel( "Hub support" )
 		usbHostHubSaveValue.setVisible( False)

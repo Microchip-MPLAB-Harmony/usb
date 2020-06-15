@@ -66,20 +66,36 @@ def instantiateComponent(usbDriverComponent):
 	# USB Driver Speed selection 	
 	usbSpeed = usbDriverComponent.createComboSymbol("USB_SPEED", None, listUsbSpeed)
 	usbSpeed.setLabel("USB Speed Selection")
+        helpText = '''While operating in Host Mode, this option configures the types (speed) of USB devices to be supported. 
+        For example, setting this option to High Speed will allow the Host to support High, Full and Low Speed devices. 
+        Setting this option to Full Speed will allow the Host to support only Full and Low Speed devices. If a High Speed
+        device is attached, it will operate at Full Speed.
+
+        In Device mode, this configuration select the operational speed of the device. If configured for High Speed mode, the
+        device will signal Chirp after receiving the bus reset from the host. If configured for Full Speed mode, the device 
+        will not signal Chirp and will operate at Full Speed only.'''
+
 	usbSpeed.setVisible(True)
-	usbSpeed.setDescription("Select USB Operation Speed")
+	usbSpeed.setDescription(helpText)
 	usbSpeed.setDefaultValue("High Speed")
 	usbSpeed.setDependencies(blUSBDriverSpeedChanged, ["USB_SPEED"])
 		
 	usbVbusSense = usbDriverComponent.createBooleanSymbol("USB_DEVICE_VBUS_SENSE", None)
 	usbVbusSense.setLabel("Enable VBUS Sense")
-	usbVbusSense.setDescription("A Self Powered USB Device firmware must have some means to detect VBUS from Host. A GPIO pin can be configured as an Input and connected to VBUS (through a resistor), and can be used to detect when VBUS is high (host actively powering). This configuration instructs MHC to generate a VBUS SENSE function. The GPIO pin name must be configured as in the below ")
+        helpText = '''A Self Powered USB Device firmware must have some means to detect VBUS from Host. A GPIO pin can be 
+        configured as an Input and connected to VBUS (through a resistor), and can be used to detect when VBUS is high 
+        (host actively powering). This configuration instructs MHC to generate a VBUS SENSE function. The GPIO pin name 
+        must be configured as in the below '''
+	usbVbusSense.setDescription(helpText)
 	usbVbusSense.setVisible(True)
 	usbVbusSense.setDefaultValue(True)
 	
 	usbVbusSenseFunctionName = usbDriverComponent.createStringSymbol("USB_DEVICE_VBUS_SENSE_PIN_NAME", usbVbusSense)
 	usbVbusSenseFunctionName.setLabel("VBUS SENSE Pin Name")
 	usbVbusSenseFunctionName.setDefaultValue("USB_VBUS_SENSE")
+        helpText = '''Enter the name of the GPIO pin to be monitored for VBUS level. The pin must be named and configured
+        in the MHC Pin Mapping tool. The name entered here must match the pin name given in the MHC Pin Mapping Tool'''
+        usbVbusSenseFunctionName.setDescription(helpText)
 	usbVbusSenseFunctionName.setVisible(True)
 	usbVbusSenseFunctionName.setDependencies(blUsbVbusPinName, ["USB_DEVICE_VBUS_SENSE"])
 		

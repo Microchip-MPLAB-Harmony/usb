@@ -234,6 +234,11 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	# Adding Start Interface number 
 	startInterfaceNumber = usbDeviceVendorComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INTERFACE_NUMBER", None)
 	startInterfaceNumber.setLabel("Start Interface Number")
+        helpText = '''Indicates the Interface Number of the first interfaces in
+        the Vendor Interface Group.  This is provided here for indication
+        purposes only and is automatically udpated based on the function driver
+        selection.'''
+        startInterfaceNumber.setDescription(helpText)
 	startInterfaceNumber.setVisible(True)
 	startInterfaceNumber.setMin(0)
 	startInterfaceNumber.setDefaultValue(0)
@@ -243,6 +248,9 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	# Adding Number of Interfaces
 	numberOfInterfaces = usbDeviceVendorComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_NUMBER_OF_INTERFACES", None)
 	numberOfInterfaces.setLabel("Number of Interfaces")
+        helpText = '''Indicates the interfaces in the Vendor Device Interface
+        Group. This is provided here for indication purposes only.'''
+        numberOfInterfaces.setDescription(helpText)
 	numberOfInterfaces.setVisible(True)
 	numberOfInterfaces.setMin(1)
 	numberOfInterfaces.setMax(16)
@@ -252,6 +260,12 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	# Vendor Function driver Read Queue Size 
 	queueSizeRead = usbDeviceVendorComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE", None)
 	queueSizeRead.setLabel("Vendor Read Queue Size")
+        helpText = '''Configure the size of the Read Queue. This configures the
+        maximum number of Read Requests that can be queued before the Function
+        Driver returns a queue full response. Using a queue increasing memory
+        consumption but also increases throughput. The driver will queue
+        requests if the an transfer request is currently being processed.'''
+        queueSizeRead.setDescription(helpText)
 	queueSizeRead.setVisible(True)
 	queueSizeRead.setMin(1)
 	queueSizeRead.setMax(32767)
@@ -262,7 +276,13 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	# Vendor Function driver Write Queue Size 
 	queueSizeWrite = usbDeviceVendorComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE", None)
 	queueSizeWrite.setLabel("Vendor Write Queue Size")
+        helpText = '''Configure the size of the Write Queue. This configures
+        the maximum number of Write Requests that can be queued before the
+        Function Driver returns a queue full response. Using a queue increasing
+        memory consumption but also increases throughput. The driver will queue
+        requests if the an transfer request is currently being processed.'''
 	queueSizeWrite.setVisible(True)
+        queueSizeWrite.setDescription(helpText)
 	queueSizeWrite.setMin(1)
 	queueSizeWrite.setMax(32767)
 	queueSizeWrite.setDefaultValue(1)	
@@ -272,6 +292,10 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	# Vendor Function driver Data OUT Endpoint Number   
 	epNumberBulkOut = usbDeviceVendorComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_BULK_OUT_ENDPOINT_NUMBER", None)
 	epNumberBulkOut.setLabel("Bulk OUT Endpoint Number")
+        helpText = '''Specify the endpoint number of Bulk Out Endpoint to
+        be used for this instance of the Vendor Interface. Refer to Device
+        Datasheet for details on available endpoints and limitations.'''
+        epNumberBulkOut.setDescription(helpText)
 	epNumberBulkOut.setVisible(True)
 	epNumberBulkOut.setMin(1)
 	epNumberBulkOut.setMax(MaxEpNumber)
@@ -280,6 +304,10 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	# Vendor Function driver Data IN Endpoint Number   
 	epNumberBulkIn = usbDeviceVendorComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER", None)
 	epNumberBulkIn.setLabel("Bulk IN Endpoint Number")
+        helpText = '''Specify the endpoint number of Bulk IN Endpoint to
+        be used for this instance of the Vendor Interface. Refer to Device
+        Datasheet for details on available endpoints and limitations.'''
+        epNumberBulkIn.setDescription(helpText)
 	epNumberBulkIn.setVisible(True)
 	epNumberBulkIn.setMin(1)
 	epNumberBulkIn.setMax(MaxEpNumber)

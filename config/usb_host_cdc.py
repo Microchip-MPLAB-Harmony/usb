@@ -46,14 +46,20 @@ def instantiateComponent(usbHostCdcComponent):
 	# USB Host CDC client driver instances 
 	usbHostCdcClientDriverInstance = usbHostCdcComponent.createIntegerSymbol("CONFIG_USB_HOST_CDC_NUMBER_OF_INSTANCES", None)
 	usbHostCdcClientDriverInstance.setLabel("Number of CDC Host Driver Instances")
-	usbHostCdcClientDriverInstance.setDescription("Enter the number of CDC Class Driver instances required in the application.")
-	usbHostCdcClientDriverInstance.setDefaultValue(1)
+	helpText = '''Configure this to match the number of Communication Class Devices that the application should support. 
+        For example, setting this to 3 will configure the application to simultaneously support 3 different CDC or a composite USB
+        device that has 3 CDC Interfaces.'''
+        usbHostCdcClientDriverInstance.setDescription(helpText)
+        usbHostCdcClientDriverInstance.setDefaultValue(1)
 	usbHostCdcClientDriverInstance.setVisible(True)
 	
 	#USB Host CDC Attach Listeners Number 
 	usbHostCdcClientDriverAttachListnerNumber = usbHostCdcComponent.createIntegerSymbol("CONFIG_USB_HOST_CDC_ATTACH_LISTENERS_NUMBER", None)
 	usbHostCdcClientDriverAttachListnerNumber.setLabel("Number of CDC Host Attach Listeners")
-	usbHostCdcClientDriverAttachListnerNumber.setDescription("Enter the number of CDC Attach Listeners required in the application.")
+        helpText = '''Configure this to define the maximum number of Attach Listener functions that can register
+        with the CDC Client Driver. The driver will call all registered Attach Listener Functions for every CDC 
+        interface that has been detected.'''
+	usbHostCdcClientDriverAttachListnerNumber.setDescription(helpText)
 	usbHostCdcClientDriverAttachListnerNumber.setDefaultValue(1)
 	usbHostCdcClientDriverAttachListnerNumber.setVisible(True)
 

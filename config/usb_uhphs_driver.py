@@ -69,7 +69,16 @@ def instantiateComponent(usbDriverComponent):
 	usbSpeed = usbDriverComponent.createComboSymbol("USB_SPEED", None, listUsbSpeed)
 	usbSpeed.setLabel("USB Speed Selection")
 	usbSpeed.setVisible(False)
-	usbSpeed.setDescription("Select USB Operation Speed")
+        helpText = '''While operating in Host Mode, this option configures the types (speed) of USB devices to be supported. 
+        For example, setting this option to High Speed will allow the Host to support High, Full and Low Speed devices. 
+        Setting this option to Full Speed will allow the Host to support only Full and Low Speed devices. If a High Speed
+        device is attached, it will operate at Full Speed.
+
+        In Device mode, this configuration select the operational speed of the device. If configured for High Speed mode, the
+        device will signal Chirp after receiving the bus reset from the host. If configured for Full Speed mode, the device 
+        will not signal Chirp and will operate at Full Speed only.'''
+	
+	usbSpeed.setDescription(helpText)
 	usbSpeed.setDefaultValue("High Speed")
 	usbSpeed.setDependencies(blUSBDriverSpeedChanged, ["USB_SPEED"])	
 	
@@ -77,15 +86,20 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverHostAttachDebounce = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION", None)
 	usbDriverHostAttachDebounce.setLabel("Attach De-bounce Duration (mSec)")
 	usbDriverHostAttachDebounce.setVisible(False)
-	usbDriverHostAttachDebounce.setDescription("Set USB Host Attach De-bounce duration")
+        helpText = '''Specify the time duration (in milliseconds) that the driver should wait after detecting the
+        attach interrupt and before polling the attach interrupt again to check if the attach condition still exists.
+        A longer duration slows down the Host Device Attach detection but allows for stable operation.'''
+	usbDriverHostAttachDebounce.setDescription(helpText)
 	usbDriverHostAttachDebounce.setDefaultValue(500)
 	usbDriverHostAttachDebounce.setDependencies(blUSBDriverOperationModeChanged, ["USB_OPERATION_MODE"])
 	
 	# USB Driver Host mode Reset Duration
 	usbDriverHostResetDuration = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_RESET_DUARTION", None)
 	usbDriverHostResetDuration.setLabel("Reset Duration (mSec)")
+        helpText = '''Specify the duration of the USB Bus Reset Signal. A value of 100 millisecond works 
+        well. There may be cases where some USB devices require a shorter or longer reset duration time.'''
 	usbDriverHostResetDuration.setVisible(False)
-	usbDriverHostResetDuration.setDescription("Set USB Host Attach De-bounce duration")
+	usbDriverHostResetDuration.setDescription(helpText)
 	usbDriverHostResetDuration.setDefaultValue(100)
 	usbDriverHostResetDuration.setDependencies(blUSBDriverOperationModeChanged, ["USB_OPERATION_MODE"])
 	

@@ -139,35 +139,50 @@ def instantiateComponent(usbHostHidComponent):
 	# USB Host HID Client driver Number of Instances
 	usbHostHidClientDriverInstancesNumber = usbHostHidComponent.createIntegerSymbol("CONFIG_USB_HOST_HID_NUMBER_OF_INSTANCES", None)
 	usbHostHidClientDriverInstancesNumber.setLabel("Number of Instances")
-	usbHostHidClientDriverInstancesNumber.setDescription("Enter the number of HID Client Driver instances required in the application.")
+        helpText = '''Configure the number of HID devices or interfaces to be supported. For example, setting this 
+        value to 2 will allow the application to support two different HID devices, say a mouse and a keyboard or a 
+        composite USB device that has two HID interfaces.'''
+	usbHostHidClientDriverInstancesNumber.setDescription(helpText)
 	usbHostHidClientDriverInstancesNumber.setVisible(True)
 	usbHostHidClientDriverInstancesNumber.setDefaultValue(1)
 	
 	# USB Host HID Client driver Interrupt In Endpoints Number 
 	usbHostHidClientDriverIntEPsNumber = usbHostHidComponent.createIntegerSymbol("CONFIG_USB_HOST_HID_INTERRUPT_IN_ENDPOINTS_NUMBER", None)
 	usbHostHidClientDriverIntEPsNumber.setLabel("Number of INTERRUPT IN endpoints per Interface")
-	usbHostHidClientDriverIntEPsNumber.setDescription("Enter the number of INTERRUPT IN endpoints supported per HID interface.")
+        helpText = '''Configure the maximum number of Interrupt endpoints that a attached HID device or interface
+        will contain. For example, if the application supports two HID interfaces, one of them has 1 interrupt 
+        endpoint and then other has 2 interrupt endpoints, then set this number to 2.'''
+	usbHostHidClientDriverIntEPsNumber.setDescription(helpText)
 	usbHostHidClientDriverIntEPsNumber.setVisible(True)
 	usbHostHidClientDriverIntEPsNumber.setDefaultValue(1)
 	
 	# USB Host HID Client driver Global Push Pop Stack size
 	usbHostHidClientDriverPushPopStackSize = usbHostHidComponent.createIntegerSymbol("CONFIG_USB_HID_GLOBAL_PUSH_POP_STACK_SIZE", None)
 	usbHostHidClientDriverPushPopStackSize.setLabel("Number of PUSH items")
-	usbHostHidClientDriverPushPopStackSize.setDescription("Enter the number of PUSH items that can be saved in the Global item queue per field per HID interface.")
+        helpText = '''Configure the size of the Global Item Stack. Each nested PUSH and POP item encountered 
+        in the Report Descriptor requires space in the Global Item Stack. To configure this item, review the
+        device HID report descriptor and identify the Push/Pop item nesting level and set this configuration
+        item to match the item level. If the application support multiple HID devices, this number should be
+        set to the maximum expected nesting level'''
+	usbHostHidClientDriverPushPopStackSize.setDescription(helpText)
 	usbHostHidClientDriverPushPopStackSize.setVisible(True)
 	usbHostHidClientDriverPushPopStackSize.setDefaultValue(1)
 	
 	# USB Host HID Client driver Mouse 
 	usbHostHidClientDriverMouse = usbHostHidComponent.createBooleanSymbol("CONFIG_USB_HOST_USE_MOUSE", None)
 	usbHostHidClientDriverMouse.setLabel("Use Mouse Driver")
-	usbHostHidClientDriverMouse.setDescription("Selecting this will include HID Host Mouse Usage Driver into the project.")
+        helpText = '''Enable this option to add the Mouse Usage Driver to the application. This allows the
+        application to interact with a USB Mouse'''
+	usbHostHidClientDriverMouse.setDescription(helpText)
 	usbHostHidClientDriverMouse.setVisible(True)
 	usbHostHidClientDriverMouse.setDefaultValue(False)
 	
 	# USB Host HID Client driver Mouse Buttons Number 
 	usbHostHidClientDriverMouseButtonsNumber = usbHostHidComponent.createIntegerSymbol("CONFIG_USB_HOST_HID_MOUSE_BUTTONS_NUMBER", usbHostHidClientDriverMouse)
 	usbHostHidClientDriverMouseButtonsNumber.setLabel("Number of Mouse buttons")
-	usbHostHidClientDriverMouseButtonsNumber.setDescription("Enter the Number of Mouse buttons whose value will be captured per HID Mouse device")
+        helpText = '''Configure the maximum number of mouse button that the Mouse Usage Driver should 
+        support. Additional mouse buttons will be ignored.'''
+	usbHostHidClientDriverMouseButtonsNumber.setDescription(helpText)
 	usbHostHidClientDriverMouseButtonsNumber.setVisible(False)
 	usbHostHidClientDriverMouseButtonsNumber.setDefaultValue(5)
 	usbHostHidClientDriverMouseButtonsNumber.setDependencies(setVisible, ["CONFIG_USB_HOST_USE_MOUSE"])
@@ -181,7 +196,9 @@ def instantiateComponent(usbHostHidComponent):
 	# USB Host HID Client driver Keyboard 
 	usbHostHidClientDriverKeyboard = usbHostHidComponent.createBooleanSymbol("CONFIG_USB_HOST_USE_KEYBOARD", None)
 	usbHostHidClientDriverKeyboard.setLabel("Use Keyboard Driver")
-	usbHostHidClientDriverKeyboard.setDescription("Selecting this will include HID Host Keyboard Usage Driver into the project.")
+        helpText = '''Enable this option to add the Keyboard Usage Driver to the application. This allows the
+        application to interact with a USB Keyboard'''
+	usbHostHidClientDriverKeyboard.setDescription(helpText)
 	usbHostHidClientDriverKeyboard.setVisible(True)
 	usbHostHidClientDriverKeyboard.setDefaultValue(False)
 	
