@@ -1,27 +1,26 @@
 /*******************************************************************************
- System Tasks File
+  PIC32MZ L1 Cache Header
 
   File Name:
-    tasks.c
+    device_cache.h
 
   Summary:
-    This file contains source code necessary to maintain system's polled tasks.
+    Preprocessor definitions to provide L1 Cache control.
 
   Description:
-    This file contains source code necessary to maintain system's polled tasks.
-    It implements the "SYS_Tasks" function that calls the individual "Tasks"
-    functions for all polled MPLAB Harmony modules in the system.
+    An MPLAB PLIB or Project can include this header to perform cache cleans,
+    invalidates etc. For the DCache and ICache.
 
   Remarks:
-    This file requires access to the systemObjects global data structure that
-    contains the object handles to all MPLAB Harmony module objects executing
-    polled in the system.  These handles are passed into the individual module
-    "Tasks" functions to identify the instance of the module to maintain.
- *******************************************************************************/
+    This header should not define any prototypes or data definitions, or
+    include any files that do.  The file only provides macro definitions for
+    build-time.
+
+*******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -41,64 +40,53 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *******************************************************************************/
+*******************************************************************************/
 // DOM-IGNORE-END
+
+#ifndef DEVICE_CACHE_H
+#define DEVICE_CACHE_H
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-
-#include "configuration.h"
-#include "definitions.h"
-
-
-
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: System "Tasks" Routine
-// *****************************************************************************
-// *****************************************************************************
-
-/*******************************************************************************
-  Function:
-    void SYS_Tasks ( void )
-
-  Remarks:
-    See prototype in system/common/sys_module.h.
+/*  This section Includes other configuration headers necessary to completely
+    define this configuration.
 */
-void SYS_Tasks ( void )
-{
-    /* Maintain system services */
-    
-SYS_FS_Tasks();
 
+// DOM-IGNORE-BEGIN
+#ifdef __cplusplus  // Provide C++ Compatibility
 
+extern "C" {
 
-    /* Maintain Device Drivers */
-    
+#endif
+// DOM-IGNORE-END
 
-    /* Maintain Middleware & Other Libraries */
-        /* USBHS Driver Task Routine */ 
-    DRV_USBHS_Tasks(sysObj.drvUSBHSObject);
+// *****************************************************************************
+// *****************************************************************************
+// Section: L1 Cache Configuration
+// *****************************************************************************
+// *****************************************************************************
+#define ICACHE_ENABLE()
+#define ICACHE_DISABLE()
+#define ICACHE_INVALIDATE()                            CACHE_InstructionCacheFlush()
+#define INSTRUCTION_CACHE_ENABLED                      true
 
-	/* USB Host Task Routine */ 
-     USB_HOST_Tasks(sysObj.usbHostObject0);
+#define DCACHE_ENABLE()
+#define DCACHE_DISABLE()
+#define DCACHE_CLEAN()
+#define DCACHE_CLEAN_INVALIDATE()
+#define DCACHE_INVALIDATE()                            CACHE_DataCacheFlush()
+#define DCACHE_CLEAN_BY_ADDR(addr,sz)                  CACHE_DataCacheClean(addr,sz)
+#define DCACHE_INVALIDATE_BY_ADDR(addr,sz)             CACHE_DataCacheInvalidate(addr,sz)
+#define DCACHE_CLEAN_INVALIDATE_BY_ADDR(addr,sz)       CACHE_DataCacheClean(addr,sz)
+#define DATA_CACHE_ENABLED                             true
 
-
-
-    /* Maintain the application's state machine. */
-        /* Call Application task APP. */
-    APP_Tasks();
-
-
-
-
+//DOM-IGNORE-BEGIN
+#ifdef __cplusplus
 }
+#endif
+//DOM-IGNORE-END
 
-/*******************************************************************************
- End of File
- */
-
+#endif // #ifndef DEVICE_CACHE_H
