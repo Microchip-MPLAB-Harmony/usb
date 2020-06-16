@@ -937,7 +937,8 @@
     </GeneratorComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_D11_Xplained_Pro" x="149" y="34"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="0" y="5"/>
@@ -948,9 +949,8 @@
         <ElementPosition dnOrder="6" id="evsys" x="0" y="92"/>
         <ElementPosition dnOrder="7" id="nvmctrl" x="0" y="134"/>
         <ElementPosition dnOrder="8" id="usb_device" x="158" y="210"/>
-        <ElementPosition dnOrder="9" id="usb_device_cdc" x="297" y="212"/>
+        <ElementPosition dnOrder="9" id="usb_device_cdc" x="307" y="210"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
