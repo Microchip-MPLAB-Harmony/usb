@@ -296,7 +296,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	startInterfaceNumber.setLabel("Start Interface Number")
         helpText = '''Indicates the Interface Number of the first interfaces in
         the Communication Device Interface Group.  This is provided here for
-        indication purposes only and is automatically udpated based on the
+        indication purposes only and is automatically updated based on the
         function driver selection.'''
         startInterfaceNumber.setDescription(helpText)
 	startInterfaceNumber.setVisible(True)
@@ -336,9 +336,9 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	queueSizeRead.setLabel("CDC Read Queue Size")
         helpText = '''Configure the size of the Read Queue. This configures the
         maximum number of Read Requests that can be queued before the Function
-        Driver returns a queue full response. Using a queue increasing memory
+        Driver returns a queue full response. Using a queue increases memory
         consumption but also increases throughput. The driver will queue
-        requests if the an transfer request is currently being processed.'''
+        requests if the transfer request is currently being processed.'''
 	queueSizeRead.setDescription(helpText)
         queueSizeRead.setVisible(True)
 	queueSizeRead.setMin(1)
@@ -351,9 +351,9 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	queueSizeWrite = usbDeviceCdcComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE", None)
         helpText = '''Configure the size of the Write Queue. This configures
         the maximum number of Write Requests that can be queued before the
-        Function Driver returns a queue full response. Using a queue increasing
+        Function Driver returns a queue full response. Using a queue increases
         memory consumption but also increases throughput. The driver will queue
-        requests if the an transfer request is currently being processed.'''
+        requests if the transfer request is currently being processed.'''
         queueSizeWrite.setDescription(helpText)
 	queueSizeWrite.setLabel("CDC Write Queue Size")
 	queueSizeWrite.setVisible(True)
@@ -369,8 +369,8 @@ def instantiateComponent(usbDeviceCdcComponent, index):
         helpText = '''Configure the size of the Serial State Notification
         Queue. This configures the maximum number of Serial State Notification
         Requests that can be queued before the Function Driver returns a queue
-        full response. Using a queue increasing memory consumption but also
-        increases throughput. The driver will queue requests if the an transfer
+        full response. Using a queue increases memory consumption but also
+        increases throughput. The driver will queue requests if the transfer
         request is currently being processed.'''
         queueSizeSerialStateNotification.setDescription(helpText)
 	queueSizeSerialStateNotification.setVisible(True)

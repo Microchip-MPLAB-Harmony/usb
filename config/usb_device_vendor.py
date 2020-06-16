@@ -236,7 +236,7 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	startInterfaceNumber.setLabel("Start Interface Number")
         helpText = '''Indicates the Interface Number of the first interfaces in
         the Vendor Interface Group.  This is provided here for indication
-        purposes only and is automatically udpated based on the function driver
+        purposes only and is automatically updated based on the function driver
         selection.'''
         startInterfaceNumber.setDescription(helpText)
 	startInterfaceNumber.setVisible(True)
@@ -262,9 +262,9 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	queueSizeRead.setLabel("Vendor Read Queue Size")
         helpText = '''Configure the size of the Read Queue. This configures the
         maximum number of Read Requests that can be queued before the Function
-        Driver returns a queue full response. Using a queue increasing memory
+        Driver returns a queue full response. Using a queue increases memory
         consumption but also increases throughput. The driver will queue
-        requests if the an transfer request is currently being processed.'''
+        requests if the  transfer request is currently being processed.'''
         queueSizeRead.setDescription(helpText)
 	queueSizeRead.setVisible(True)
 	queueSizeRead.setMin(1)
@@ -278,9 +278,9 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	queueSizeWrite.setLabel("Vendor Write Queue Size")
         helpText = '''Configure the size of the Write Queue. This configures
         the maximum number of Write Requests that can be queued before the
-        Function Driver returns a queue full response. Using a queue increasing
+        Function Driver returns a queue full response. Using a queue increases
         memory consumption but also increases throughput. The driver will queue
-        requests if the an transfer request is currently being processed.'''
+        requests if the transfer request is currently being processed.'''
 	queueSizeWrite.setVisible(True)
         queueSizeWrite.setDescription(helpText)
 	queueSizeWrite.setMin(1)

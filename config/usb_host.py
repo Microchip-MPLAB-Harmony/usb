@@ -115,9 +115,10 @@ def instantiateComponent(usbHostComponent):
 	usbHostTplEntryNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_TPL_ENTRY_NUMBER", None)
 	usbHostTplEntryNumber.setVisible(True)
 	usbHostTplEntryNumber.setLabel("Number of TPL Entries")
-        helpText = '''This configuration option indicates the current number of number of entries in the Host 
-        TPL table. This is shown for indication purposes only. It is automatically updated based on the number 
-        of device types to be supported by the Host'''
+        helpText = '''This configuration option indicates the current number of
+        entries in the Host TPL table. This is shown for indication purposes
+        only. It is automatically updated based on the number of device types
+        to be supported by the Host'''
 	usbHostTplEntryNumber.setDescription(helpText)
 	usbHostTplEntryNumber.setDefaultValue(0)
 	usbHostTplEntryNumber.setUseSingleDynamicValue(True)
@@ -127,11 +128,13 @@ def instantiateComponent(usbHostComponent):
 	# USB Host Max Interfaces  
 	usbHostMaxInterfaceNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_MAX_INTERFACES", None)
 	usbHostMaxInterfaceNumber.setLabel("Maximum Interfaces per Device")
-        helpText = '''This value should be set to the maximum number of interfaces that a device attached to this 
-        Host will contain. For example, if two devices can be connected to the Host, one device has 3 interfaces
-        and the other device has 5 interfaces, then this configuration should be set to 5. Setting this value 
-        incorrectly could result in the attached device operating incorrectly. Increasing the number increases
-        the attached device operational memory.'''
+        helpText = '''This value should be set to the maximum number of
+        interfaces that a device attached to this Host will contain. For
+        example, if two devices can be connected to the Host, one device has 3
+        interfaces and the other device has 5 interfaces, then this
+        configuration should be set to 5. Setting this value incorrectly could
+        result in the attached device operating incorrectly. Increasing the
+        number increases the attached device operational memory.'''
 	usbHostMaxInterfaceNumber.setVisible(True)
 	usbHostMaxInterfaceNumber.setDescription(helpText)
 	usbHostMaxInterfaceNumber.setDefaultValue(5)

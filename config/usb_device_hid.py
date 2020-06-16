@@ -196,7 +196,7 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	startInterfaceNumber.setLabel("Start Interface Number")
         helpText = '''Indicates the Interface Number of the first interface in
         the Human Inteface Device Interface Group.  This is provided here for
-        indication purposes only and is automatically udpated based on the
+        indication purposes only and is automatically updated based on the
         function driver selection.'''
         startInterfaceNumber.setDescription(helpText)
 	startInterfaceNumber.setVisible(True)
@@ -218,7 +218,7 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	# USB HID Report Descriptor 
 	usbDeviceHidReportType = usbDeviceHidComponent.createComboSymbol("CONFIG_USB_DEVICE_HID_REPORT_DESCRIPTOR_TYPE", None, usbDeviceHidReportList)
 	usbDeviceHidReportType.setLabel("Select Report Type")
-        helpText = '''Use this option to select between a range of available of
+        helpText = '''Use this option to select between a range of available 
         report descriptors or to use a custom one. Available report descriptors
         implement common HID functions.'''
         usbDeviceHidReportType.setDescription(helpText)
@@ -230,9 +230,9 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	queueSizeRead.setLabel("HID Report Receive Queue Size")
         helpText = '''Configure the size of the Report Receive Queue. This configures the
         maximum number of Receive Requests that can be queued before the Function
-        Driver returns a queue full response. Using a queue increasing memory
+        Driver returns a queue full response. Using a queue increases memory
         consumption but also increases throughput. The driver will queue
-        requests if the an transfer request is currently being processed.'''
+        requests if the transfer request is currently being processed.'''
         queueSizeRead.setDescription(helpText)
 	queueSizeRead.setVisible(True)
 	queueSizeRead.setMin(1)
@@ -247,8 +247,8 @@ def instantiateComponent(usbDeviceHidComponent, index):
         helpText = '''Configure the size of the Report Send Queue. This
         configures the maximum number of Receive Requests that can be queued
         before the Function Driver returns a queue full response. Using a queue
-        increasing memory consumption but also increases throughput. The driver
-        will queue requests if the an transfer request is currently being
+        increases memory consumption but also increases throughput. The driver
+        will queue requests if the transfer request is currently being
         processed.'''
         queueSizeWrite.setDescription(helpText)
 	queueSizeWrite.setVisible(True)
