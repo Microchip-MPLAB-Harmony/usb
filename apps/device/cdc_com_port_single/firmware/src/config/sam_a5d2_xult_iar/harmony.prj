@@ -131,8 +131,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_a5d2_xult_iar/peripheral/pio/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/pio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">EE4C085EACFC91B7B8CE7D305B16D7B7</GeneratedChecksum>
-          <UserChecksum dnOrder="6">EE4C085EACFC91B7B8CE7D305B16D7B7</UserChecksum>
+          <GeneratedChecksum dnOrder="5">A84E54B6C019873A7314FD5124A14218</GeneratedChecksum>
+          <UserChecksum dnOrder="6">A84E54B6C019873A7314FD5124A14218</UserChecksum>
         </File>
         <File dnOrder="14">
           <Type dnOrder="0">SOURCE</Type>
