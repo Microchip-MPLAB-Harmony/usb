@@ -62,7 +62,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-const uint8_t __attribute__((aligned(16))) switchPromptUSB[] = "\r\nPUSH BUTTON PRESSED";
+uint8_t __attribute__((aligned(16))) switchPromptUSB[] = "\r\nPUSH BUTTON PRESSED";
 
 uint8_t CACHE_ALIGN cdcReadBuffer[APP_READ_BUFFER_SIZE];
 uint8_t CACHE_ALIGN cdcWriteBuffer[APP_READ_BUFFER_SIZE];
@@ -140,6 +140,17 @@ void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, void * pData,
                 portEND_SWITCHING_ISR( xHigherPriorityTaskWoken1 );
             }
 
+            break;
+
+        case USB_DEVICE_EVENT_SOF:
+
+            /* Received SOF Event */
+            USB_Event = USBDEVICETASK_SOF_EVENT;
+
+            xQueueSendToBackFromISR(USBDeviceTask_EventQueue_Handle, &USB_Event, 
+                &xHigherPriorityTaskWoken1);
+            portEND_SWITCHING_ISR( xHigherPriorityTaskWoken1 );
+            
             break;
 
         case USB_DEVICE_EVENT_SUSPENDED:
@@ -370,6 +381,58 @@ void USBDevice_Task(void* p_arg)
                         );  
                         break;                    
                         
+                    case USBDEVICETASK_SOF_EVENT:
+                        /*USB ready, wait for user input on either com port*/
+                        if(SWITCH_STATE_PRESSED == (SWITCH_Get()))
+                        {
+                            if(appData.ignoreSwitchPress)
+                            {
+                                /* A timer event has occurred. Update the de-bounce timer */
+                                appData.switchDebounceTimer++;
+
+                                if (USB_DEVICE_ActiveSpeedGet(appData.deviceHandle) == USB_SPEED_FULL)
+                                {
+                                    appData.debounceCount = APP_USB_SWITCH_DEBOUNCE_COUNT_FS;
+                                }
+                                else if (USB_DEVICE_ActiveSpeedGet(appData.deviceHandle) == USB_SPEED_HIGH)
+                                {
+                                    appData.debounceCount = APP_USB_SWITCH_DEBOUNCE_COUNT_HS;
+                                }
+                                if(appData.switchDebounceTimer >= appData.debounceCount)
+                                {
+                                    /* Indicate that we have valid switch press. The switch is
+                                     * pressed flag will be cleared by the application tasks
+                                     * routine. We should be ready for the next key press.*/
+                                    appData.switchDebounceTimer = 0;
+                                    appData.ignoreSwitchPress = false;
+                                    
+                                    USB_DEVICE_CDC_Write
+                                    (
+                                        USB_DEVICE_CDC_INDEX_0,
+                                        &COM1Write_Handle,
+                                        switchPromptUSB, 
+                                        sizeof(switchPromptUSB),
+                                        USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE
+                                    );
+                                        
+                                }
+                            }
+                            else
+                            {
+                                /* We have a fresh key press */
+                                appData.ignoreSwitchPress = true;
+                                appData.switchDebounceTimer = 0;
+                            }
+                        }
+                        else
+                        {
+                            /* No key press. Reset all the indicators. */
+                            appData.ignoreSwitchPress = false;
+                            appData.switchDebounceTimer = 0;
+                        }
+                        
+                        break;                    
+                        
                     case USBDEVICETASK_READDONECOM1_EVENT:
                         /* Send the received data to COM2 */
                         /* Else echo each received character by adding 1 */
@@ -445,6 +508,10 @@ void APP_FREERTOS_Initialize ( void )
     appData.appCOMPortObjects[1].getLineCodingData.bDataBits = 8;
     appData.appCOMPortObjects[1].getLineCodingData.bParityType = 0;
     appData.appCOMPortObjects[1].getLineCodingData.bCharFormat = 0;
+    
+    appData.ignoreSwitchPress = false;
+    appData.switchDebounceTimer = 0;
+    appData.debounceCount = 0;
 }
 
 

@@ -97,6 +97,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define APP_USB_LED_1 BSP_LED_1
 #define APP_USB_LED_2 BSP_LED_2
 #define APP_USB_LED_3 BSP_LED_3
+#define APP_USB_SWITCH_DEBOUNCE_COUNT_FS                    75
+#define APP_USB_SWITCH_DEBOUNCE_COUNT_HS                    100
 
 // *****************************************************************************
 /* Application States
@@ -116,6 +118,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define USBDEVICETASK_USBCONFIGURED_EVENT          2
 #define USBDEVICETASK_READDONECOM1_EVENT           3
 #define USBDEVICETASK_WRITEDONECOM1_EVENT          4
+#define USBDEVICETASK_SOF_EVENT                    5
 
 /******************************************************
  * Application COM Port Object
@@ -162,6 +165,16 @@ typedef struct
     APP_COM_PORT_OBJECT appCOMPortObjects[1];
     
     int numBytesRead; 
+
+    /* True if the switch press needs to be ignored*/
+    bool ignoreSwitchPress;
+
+    /* Switch debounce timer */
+    unsigned int switchDebounceTimer;
+
+    /* Switch debounce timer count */
+    unsigned int debounceCount;
+    
 } APP_DATA;
 
 
@@ -251,6 +264,7 @@ void APP_FREERTOS_Initialize ( void );
  */
 
 void APP_FREERTOS_Tasks ( void );
+void APP_FREERTOS_Initialize ( void );
 
 
 #endif /* _APP_H */
