@@ -43,51 +43,68 @@
 
 static void SYSCTRL_Initialize(void)
 {
-    /****************** XOSC32K initialization  ******************************/
+    /****************** OSC32K Initialization  ******************************/
+    uint32_t calibValue = (uint32_t)(((*(uint64_t*)0x806020) >> 38 ) & 0x7f);
+    /* Configure 32K RC oscillator */
+    SYSCTRL_REGS->SYSCTRL_OSC32K = SYSCTRL_OSC32K_CALIB(calibValue) | SYSCTRL_OSC32K_STARTUP(0) | SYSCTRL_OSC32K_ENABLE_Msk | SYSCTRL_OSC32K_EN32K_Msk ;
 
-    /* Configure 32K External Oscillator */
-    SYSCTRL_REGS->SYSCTRL_XOSC32K = SYSCTRL_XOSC32K_STARTUP(0) | SYSCTRL_XOSC32K_ENABLE_Msk | SYSCTRL_XOSC32K_EN32K_Msk | SYSCTRL_XOSC32K_XTALEN_Msk;
-
-    while(!((SYSCTRL_REGS->SYSCTRL_PCLKSR & SYSCTRL_PCLKSR_XOSC32KRDY_Msk) == SYSCTRL_PCLKSR_XOSC32KRDY_Msk))
+    while(!((SYSCTRL_REGS->SYSCTRL_PCLKSR & SYSCTRL_PCLKSR_OSC32KRDY_Msk) == SYSCTRL_PCLKSR_OSC32KRDY_Msk))
     {
-        /* Waiting for the XOSC32K Ready state */
+        /* Waiting for the OSC32K Ready state */
     }
-
-    SYSCTRL_REGS->SYSCTRL_OSC32K = 0x0;
 }
 
-static void FDPLL_Initialize(void)
+
+static void DFLL_Initialize(void)
 {
+    /****************** DFLL Initialization  *********************************/
+    SYSCTRL_REGS->SYSCTRL_DFLLCTRL &= ~SYSCTRL_DFLLCTRL_ONDEMAND_Msk;
 
-    /****************** DPLL Initialization  *********************************/
-
-    /* Configure DPLL    */
-    SYSCTRL_REGS->SYSCTRL_DPLLCTRLB = SYSCTRL_DPLLCTRLB_FILTER(0x0) | SYSCTRL_DPLLCTRLB_LTIME(0x0)| SYSCTRL_DPLLCTRLB_REFCLK(0x0) | SYSCTRL_DPLLCTRLB_LBYPASS_Msk ;
-
-
-    SYSCTRL_REGS->SYSCTRL_DPLLRATIO = SYSCTRL_DPLLRATIO_LDRFRAC(11) | SYSCTRL_DPLLRATIO_LDR(2928);
-
-    /* Selection of the DPLL Enable */
-    SYSCTRL_REGS->SYSCTRL_DPLLCTRLA = SYSCTRL_DPLLCTRLA_ENABLE_Msk   ;
-
-    while((SYSCTRL_REGS->SYSCTRL_DPLLSTATUS & (SYSCTRL_DPLLSTATUS_LOCK_Msk | SYSCTRL_DPLLSTATUS_CLKRDY_Msk)) !=
-                (SYSCTRL_DPLLSTATUS_LOCK_Msk | SYSCTRL_DPLLSTATUS_CLKRDY_Msk))
+    while((SYSCTRL_REGS->SYSCTRL_PCLKSR & SYSCTRL_PCLKSR_DFLLRDY_Msk) != SYSCTRL_PCLKSR_DFLLRDY_Msk)
     {
         /* Waiting for the Ready state */
     }
-}
 
+    /*Load Calibration Value*/
+    uint8_t calibCoarse = (uint8_t)(((*(uint32_t*)0x806024) >> 26 ) & 0x3f);
+    calibCoarse = (((calibCoarse) == 0x3F) ? 0x1F : (calibCoarse));
+    uint16_t calibFine = (uint16_t)(((*(uint32_t*)0x806028)) & 0x3ff);
+
+    SYSCTRL_REGS->SYSCTRL_DFLLVAL = SYSCTRL_DFLLVAL_COARSE(calibCoarse) | SYSCTRL_DFLLVAL_FINE(calibFine);
+
+    SYSCTRL_REGS->SYSCTRL_DFLLMUL = SYSCTRL_DFLLMUL_MUL(48000) | SYSCTRL_DFLLMUL_FSTEP(10) | SYSCTRL_DFLLMUL_CSTEP(1);
+
+
+    /* Configure DFLL    */
+    SYSCTRL_REGS->SYSCTRL_DFLLCTRL = SYSCTRL_DFLLCTRL_ENABLE_Msk | SYSCTRL_DFLLCTRL_MODE_Msk | SYSCTRL_DFLLCTRL_USBCRM_Msk ;
+
+    while((SYSCTRL_REGS->SYSCTRL_PCLKSR & SYSCTRL_PCLKSR_DFLLRDY_Msk) != SYSCTRL_PCLKSR_DFLLRDY_Msk)
+    {
+        /* Waiting for DFLL to be ready */
+    }
+}
 
 
 static void GCLK0_Initialize(void)
 {
     
-    GCLK_REGS->GCLK_GENCTRL = GCLK_GENCTRL_SRC(8) | GCLK_GENCTRL_GENEN_Msk | GCLK_GENCTRL_ID(0);
+    GCLK_REGS->GCLK_GENCTRL = GCLK_GENCTRL_SRC(7) | GCLK_GENCTRL_OE_Msk | GCLK_GENCTRL_GENEN_Msk | GCLK_GENCTRL_ID(0);
 
-    GCLK_REGS->GCLK_GENDIV = GCLK_GENDIV_DIV(2) | GCLK_GENDIV_ID(0);
     while((GCLK_REGS->GCLK_STATUS & GCLK_STATUS_SYNCBUSY_Msk) == GCLK_STATUS_SYNCBUSY_Msk)
     {
         /* wait for the Generator 0 synchronization */
+    }
+}
+
+
+static void GCLK1_Initialize(void)
+{
+    GCLK_REGS->GCLK_GENCTRL = GCLK_GENCTRL_SRC(4) | GCLK_GENCTRL_IDC_Msk | GCLK_GENCTRL_GENEN_Msk | GCLK_GENCTRL_ID(1);
+
+    GCLK_REGS->GCLK_GENDIV = GCLK_GENDIV_DIV(32) | GCLK_GENDIV_ID(1);
+    while((GCLK_REGS->GCLK_STATUS & GCLK_STATUS_SYNCBUSY_Msk) == GCLK_STATUS_SYNCBUSY_Msk)
+    {
+        /* wait for the Generator 1 synchronization */
     }
 }
 
@@ -96,7 +113,8 @@ void CLOCK_Initialize (void)
     /* Function to Initialize the Oscillators */
     SYSCTRL_Initialize();
 
-    FDPLL_Initialize();
+    DFLL_Initialize();
+    GCLK1_Initialize();
     GCLK0_Initialize();
 
 
