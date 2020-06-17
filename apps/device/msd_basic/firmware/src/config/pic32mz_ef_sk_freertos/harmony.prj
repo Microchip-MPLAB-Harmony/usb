@@ -319,8 +319,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk_freertos/usb/src</LogicalPath>
           <PhysicalPath dnOrder="4">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">B438EA4435CC3B6D99AACB8F7050ECE8</GeneratedChecksum>
-          <UserChecksum dnOrder="6">B438EA4435CC3B6D99AACB8F7050ECE8</UserChecksum>
+          <GeneratedChecksum dnOrder="5">5B2E4F04BB9E3347BD0D10242479D4F0</GeneratedChecksum>
+          <UserChecksum dnOrder="6">5B2E4F04BB9E3347BD0D10242479D4F0</UserChecksum>
         </File>
         <File dnOrder="35">
           <Type dnOrder="0">SOURCE</Type>
