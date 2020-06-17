@@ -153,6 +153,9 @@
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f5" displayName="system" projectFiles="true">
+            <logicalFolder name="f2" displayName="debug" projectFiles="true">
+              <itemPath>../src/config/pic32mx470_curiosity_freertos/system/debug/sys_debug.h</itemPath>
+            </logicalFolder>
             <logicalFolder name="f1" displayName="int" projectFiles="true">
               <itemPath>../src/config/pic32mx470_curiosity_freertos/system/int/sys_int.h</itemPath>
               <itemPath>../src/config/pic32mx470_curiosity_freertos/system/int/sys_int_mapping.h</itemPath>
@@ -319,6 +322,7 @@
                    displayName="Important Files"
                    projectFiles="false">
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/pic32mx470_curiosity_freertos/harmony.prj</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -332,7 +336,7 @@
         <targetDevice>PIC32MX470F512H</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>noID</platformTool>
+        <platformTool></platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.40</languageToolchainVersion>
         <platform>3</platform>
@@ -340,6 +344,8 @@
       <packs>
         <pack name="PIC32MX_DFP" vendor="Microchip" version="1.2.228"/>
       </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>
@@ -373,7 +379,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/pic32mx470_curiosity_freertos;../src/packs/PIC32MX470F512H_DFP;../src/mips;../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include"/>
+                  value="../src;../src/config/pic32mx470_curiosity_freertos;../src/packs/PIC32MX470F512H_DFP;../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -400,9 +406,9 @@
         <property key="exclude-floating-point-library" value="false"/>
         <property key="expand-macros" value="false"/>
         <property key="extra-include-directories-for-assembler"
-                  value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx470_curiosity_freertos"/>
+                  value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx470_curiosity_freertos;"/>
         <property key="extra-include-directories-for-preprocessor"
-                  value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx470_curiosity_freertos"/>
+                  value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MX;../src/third_party/rtos/FreeRTOS/Source/include;../src/config/pic32mx470_curiosity_freertos;"/>
         <property key="false-conditionals" value="false"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>

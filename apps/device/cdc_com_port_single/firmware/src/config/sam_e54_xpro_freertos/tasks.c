@@ -79,17 +79,18 @@ void _USB_DEVICE_Tasks(  void *pvParameters  )
     }
 }
 
-/* Handle for the APP_Tasks. */
-TaskHandle_t xAPP_Tasks;
+/* Handle for the APP_FREERTOS_Tasks. */
+TaskHandle_t xAPP_FREERTOS_Tasks;
 
-void _APP_Tasks(  void *pvParameters  )
+void _APP_FREERTOS_Tasks(  void *pvParameters  )
 {
     while(1)
     {
-        APP_Tasks();
+        APP_FREERTOS_Tasks();
         vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 }
+
 
 
 
@@ -136,13 +137,14 @@ void SYS_Tasks ( void )
 
 
     /* Maintain the application's state machine. */
-        /* Create OS Thread for APP_Tasks. */
-    xTaskCreate((TaskFunction_t) _APP_Tasks,
-                "APP_Tasks",
+        /* Create OS Thread for APP_FREERTOS_Tasks. */
+    xTaskCreate((TaskFunction_t) _APP_FREERTOS_Tasks,
+                "APP_FREERTOS_Tasks",
                 1024,
                 NULL,
                 1,
-                &xAPP_Tasks);
+                &xAPP_FREERTOS_Tasks);
+
 
 
 

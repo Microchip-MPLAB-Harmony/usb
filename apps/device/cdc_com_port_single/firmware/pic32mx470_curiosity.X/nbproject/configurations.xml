@@ -151,6 +151,9 @@
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f5" displayName="system" projectFiles="true">
+            <logicalFolder name="f2" displayName="debug" projectFiles="true">
+              <itemPath>../src/config/pic32mx470_curiosity/system/debug/sys_debug.h</itemPath>
+            </logicalFolder>
             <logicalFolder name="f1" displayName="int" projectFiles="true">
               <itemPath>../src/config/pic32mx470_curiosity/system/int/sys_int.h</itemPath>
               <itemPath>../src/config/pic32mx470_curiosity/system/int/sys_int_mapping.h</itemPath>
@@ -257,6 +260,7 @@
                    displayName="Important Files"
                    projectFiles="false">
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/pic32mx470_curiosity/harmony.prj</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -270,7 +274,7 @@
         <targetDevice>PIC32MX470F512H</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>noID</platformTool>
+        <platformTool></platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.40</languageToolchainVersion>
         <platform>3</platform>
@@ -278,6 +282,8 @@
       <packs>
         <pack name="PIC32MX_DFP" vendor="Microchip" version="1.2.228"/>
       </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>
@@ -311,7 +317,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/pic32mx470_curiosity;../src/packs/PIC32MX470F512H_DFP;../src/mips"/>
+                  value="../src;../src/config/pic32mx470_curiosity;../src/packs/PIC32MX470F512H_DFP;"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
