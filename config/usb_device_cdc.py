@@ -126,13 +126,6 @@ def onAttachmentConnected(source, target):
 					epNumberBulkIn.setValue(nEndpoints + 3, 1)
 					args = {"nFunction":  nEndpoints + cdcEndpointsSAM}
 					res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
-		
-
-		queueDepthCombined = Database.getSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED")
-		if (queueDepthCombined == None):
-			queueDepthCombined = 0
-		args = {"cdcQueueDepth": queueDepthCombined + currentQSizeRead + currentQSizeWrite + currentQSizeSerialStateNotification}
-		res = Database.sendMessage("usb_device_cdc", "UPDATE_CDC_QUEUE_DEPTH_COMBINED", args)	
 	
 	
 def onAttachmentDisconnected(source, target):
@@ -187,13 +180,6 @@ def onAttachmentDisconnected(source, target):
 			nCDCInstances = nCDCInstances - 1
 			args = {"cdcInstanceCount": nCDCInstances}
 			res = Database.sendMessage("usb_device_cdc", "UPDATE_CDC_INSTANCES", args)
-			
-			# As the component is destroyed update the Combined Queue Length 
-			queueDepthCombined = Database.getSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED")
-			if (queueDepthCombined == None):
-				queueDepthCombined = 0
-			args = {"cdcQueueDepth": queueDepthCombined - (currentQSizeRead + currentQSizeWrite + currentQSizeSerialStateNotification)}
-			res = Database.sendMessage("usb_device_cdc", "UPDATE_CDC_QUEUE_DEPTH_COMBINED", args)
 			
 			if nCDCInstances == 1 and nFunctions != None and nFunctions == 1:
 				args = {"iadEnable":False}

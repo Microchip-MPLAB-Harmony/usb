@@ -36,8 +36,6 @@ def handleMessage(messageID, args):
 def instantiateComponent(usbCdcComponentCommon):
 	global usbDeviceCdcInstnces
 	global usbDeviceCdcQueuDepth
-	
-	print("CDC Function Driver Common: Instantiated")
 
 	usbDeviceCdcInstnces = usbCdcComponentCommon.createIntegerSymbol("CONFIG_USB_DEVICE_CDC_INSTANCES", None)
 	usbDeviceCdcInstnces.setLabel("Number of Instances")
@@ -53,7 +51,7 @@ def instantiateComponent(usbCdcComponentCommon):
 	usbDeviceCdcQueuDepth.setMax(32767)
 	usbDeviceCdcQueuDepth.setDefaultValue(3)
 	#usbDeviceCdcQueuDepth.setUseSingleDynamicValue(True)
-	usbDeviceCdcQueuDepth.setVisible(True)
+	usbDeviceCdcQueuDepth.setVisible(False)
 	
 	################################################
 	# system_config.h file for USB Device stack    

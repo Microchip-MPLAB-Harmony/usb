@@ -45,10 +45,76 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /* Maximum instances of CDC function driver */
 #define USB_DEVICE_CDC_INSTANCES_NUMBER                     ${__INSTANCE_COUNT}
 
+
+<#assign queuedepthCombined = 0>
+<#list 1..10 as x>
+  <#if x == 1>
+  <#assign queuedepthCombined = usb_device_cdc_0.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
+				                + usb_device_cdc_0.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE
+								+ usb_device_cdc_0.CONFIG_USB_DEVICE_FUNCTION_SERIAL_NOTIFIACATION_Q_SIZE>
+  </#if>
+  <#if x == 2>
+  <#assign queuedepthCombined = queuedepthCombined 
+					            + usb_device_cdc_1.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
+								+ usb_device_cdc_1.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE
+								+ usb_device_cdc_1.CONFIG_USB_DEVICE_FUNCTION_SERIAL_NOTIFIACATION_Q_SIZE>
+  </#if>
+  <#if x == 3>
+  <#assign queuedepthCombined = queuedepthCombined 
+								+ usb_device_cdc_2.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE
+								+ usb_device_cdc_2.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE
+								+ usb_device_cdc_2.CONFIG_USB_DEVICE_FUNCTION_SERIAL_NOTIFIACATION_Q_SIZE>
+  </#if>
+  <#if x == 4>
+  <#assign queuedepthCombined = queuedepthCombined 
+								+ usb_device_cdc_3.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
+								+ usb_device_cdc_3.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE
+								+ usb_device_cdc_3.CONFIG_USB_DEVICE_FUNCTION_SERIAL_NOTIFIACATION_Q_SIZE>
+  </#if>
+  <#if x == 5>
+  <#assign queuedepthCombined = queuedepthCombined 
+								+ usb_device_cdc_4.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
+								+ usb_device_cdc_4.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE
+								+ usb_device_cdc_4.CONFIG_USB_DEVICE_FUNCTION_SERIAL_NOTIFIACATION_Q_SIZE>
+  </#if>
+  <#if x == 6>
+  <#assign queuedepthCombined = queuedepthCombined 
+								+ usb_device_cdc_5.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
+								+ usb_device_cdc_5.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE
+								+ usb_device_cdc_5.CONFIG_USB_DEVICE_FUNCTION_SERIAL_NOTIFIACATION_Q_SIZE>
+  </#if>
+  <#if x == 7>
+  <#assign queuedepthCombined = queuedepthCombined 
+								+ usb_device_cdc_6.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
+								+ usb_device_cdc_6.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE
+								+ usb_device_cdc_6.CONFIG_USB_DEVICE_FUNCTION_SERIAL_NOTIFIACATION_Q_SIZE>
+  </#if>
+  <#if x == 8>
+  <#assign queuedepthCombined = queuedepthCombined 
+								+ usb_device_cdc_7.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
+								+ usb_device_cdc_7.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE
+								+ usb_device_cdc_7.CONFIG_USB_DEVICE_FUNCTION_SERIAL_NOTIFIACATION_Q_SIZE>
+  </#if>
+  <#if x == 9>
+  <#assign queuedepthCombined = queuedepthCombined 
+								+ usb_device_cdc_8.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
+								+ usb_device_cdc_8.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE
+								+ usb_device_cdc_8.CONFIG_USB_DEVICE_FUNCTION_SERIAL_NOTIFIACATION_Q_SIZE>
+  </#if>
+  <#if x == 10>
+  <#assign queuedepthCombined = queuedepthCombined 
+								+ usb_device_cdc_9.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
+								+ usb_device_cdc_9.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE
+								+ usb_device_cdc_9.CONFIG_USB_DEVICE_FUNCTION_SERIAL_NOTIFIACATION_Q_SIZE>
+  </#if>
+  <#if x == __INSTANCE_COUNT>
+    <#break>
+  </#if>
+</#list>
 /* CDC Transfer Queue Size for both read and
    write. Applicable to all instances of the
    function driver */
-#define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED                 ${CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED}
+#define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED                 ${queuedepthCombined}
 <#--
 /*******************************************************************************
  End of File
