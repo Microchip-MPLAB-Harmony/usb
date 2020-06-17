@@ -166,7 +166,6 @@
     <logicalFolder name="f4" displayName="Important Files" projectFiles="true">
       <itemPath>Makefile</itemPath>
       <itemPath>../src/config/pic32mz_ef_sk_freertos/harmony.prj</itemPath>
-      <itemPath>../src/config/pic32mz_ef_sk_freertos/pic32mz_ef_sk_freertos.xml</itemPath>
     </logicalFolder>
     <logicalFolder name="f2" displayName="Linker Files" projectFiles="true">
     </logicalFolder>
@@ -278,7 +277,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>PKOBSKDEPlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.40</languageToolchainVersion>
+        <languageToolchainVersion>2.41</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>

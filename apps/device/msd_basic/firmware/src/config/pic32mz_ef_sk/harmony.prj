@@ -67,8 +67,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/driver/usb/usbhs/src/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/usbhs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">4FC9C8844840FA41A8E98C1BA496A670</GeneratedChecksum>
-          <UserChecksum dnOrder="6">4FC9C8844840FA41A8E98C1BA496A670</UserChecksum>
+          <GeneratedChecksum dnOrder="5">1E6A7D3B04A51A3F5A955081DA2FB1C4</GeneratedChecksum>
+          <UserChecksum dnOrder="6">1E6A7D3B04A51A3F5A955081DA2FB1C4</UserChecksum>
         </File>
         <File dnOrder="7">
           <Type dnOrder="0">SOURCE</Type>
@@ -202,8 +202,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/usb/src</LogicalPath>
           <PhysicalPath dnOrder="4">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">5B2E4F04BB9E3347BD0D10242479D4F0</GeneratedChecksum>
-          <UserChecksum dnOrder="6">5B2E4F04BB9E3347BD0D10242479D4F0</UserChecksum>
+          <GeneratedChecksum dnOrder="5">B438EA4435CC3B6D99AACB8F7050ECE8</GeneratedChecksum>
+          <UserChecksum dnOrder="6">B438EA4435CC3B6D99AACB8F7050ECE8</UserChecksum>
         </File>
         <File dnOrder="22">
           <Type dnOrder="0">SOURCE</Type>
@@ -921,7 +921,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bootloader;bsp;core;csp;micrium_ucos3;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;validation;"/>
     </Settings>
   </Configurator>
 </Configuration>
