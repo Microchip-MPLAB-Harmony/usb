@@ -186,7 +186,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">B3C809FA7FFCCC3B71EA8F6CC47D28A8</GeneratedChecksum>
-          <UserChecksum dnOrder="6">8DFFC6BFAFBF04F972BC666DAA5CC09A</UserChecksum>
+          <UserChecksum dnOrder="6">B3C809FA7FFCCC3B71EA8F6CC47D28A8</UserChecksum>
         </File>
         <File dnOrder="20">
           <Type dnOrder="0">HEADER</Type>
@@ -195,7 +195,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">FDBFD9F75EEBE324AA96C928A6A04B1A</GeneratedChecksum>
-          <UserChecksum dnOrder="6">EA352FFEB8DB7F152E9A88DA66BC01D2</UserChecksum>
+          <UserChecksum dnOrder="6">FDBFD9F75EEBE324AA96C928A6A04B1A</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">HEADER</Type>
@@ -204,7 +204,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">DA3D25BC74A1F9D710EAEAE01E09CB6B</GeneratedChecksum>
-          <UserChecksum dnOrder="6">F2F0F9B4C3D501673F441A2CCD3998DF</UserChecksum>
+          <UserChecksum dnOrder="6">DA3D25BC74A1F9D710EAEAE01E09CB6B</UserChecksum>
         </File>
         <File dnOrder="22">
           <Type dnOrder="0">HEADER</Type>
@@ -213,7 +213,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">0A28F3B91FA81E2A6CD0200CC859C994</GeneratedChecksum>
-          <UserChecksum dnOrder="6">732A01E68B3CE69CE3464189997B3DD2</UserChecksum>
+          <UserChecksum dnOrder="6">0A28F3B91FA81E2A6CD0200CC859C994</UserChecksum>
         </File>
         <File dnOrder="23">
           <Type dnOrder="0">HEADER</Type>
@@ -231,7 +231,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">E7ED3FC8D0289ABF467A256B128C9D1A</GeneratedChecksum>
-          <UserChecksum dnOrder="6">E4F601D26631FDD934935B1B9C2A6018</UserChecksum>
+          <UserChecksum dnOrder="6">E7ED3FC8D0289ABF467A256B128C9D1A</UserChecksum>
         </File>
         <File dnOrder="25">
           <Type dnOrder="0">HEADER</Type>
@@ -321,7 +321,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">9DAA5BF1D99700676BDD7A9BF97DBBB9</GeneratedChecksum>
-          <UserChecksum dnOrder="6">81DBE9E1BB2397183867CDC70A29037F</UserChecksum>
+          <UserChecksum dnOrder="6">9DAA5BF1D99700676BDD7A9BF97DBBB9</UserChecksum>
         </File>
         <File dnOrder="35">
           <Type dnOrder="0">HEADER</Type>
@@ -420,7 +420,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">0F965FE155AB58FCE4BE9C2A61E13CA2</GeneratedChecksum>
-          <UserChecksum dnOrder="6">9BEFB9CD436AEBD3B8C985CAC7231B8C</UserChecksum>
+          <UserChecksum dnOrder="6">0F965FE155AB58FCE4BE9C2A61E13CA2</UserChecksum>
         </File>
         <File dnOrder="46">
           <Type dnOrder="0">HEADER</Type>
@@ -429,7 +429,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">FF9E1358AB5A9ED7A6238878D589609B</GeneratedChecksum>
-          <UserChecksum dnOrder="6">6D787ACCBD3F967D9103577BA021F51A</UserChecksum>
+          <UserChecksum dnOrder="6">FF9E1358AB5A9ED7A6238878D589609B</UserChecksum>
         </File>
         <File dnOrder="47">
           <Type dnOrder="0">HEADER</Type>
@@ -438,7 +438,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">F004479B3985F06CCFD4DE1A35CA5EB0</GeneratedChecksum>
-          <UserChecksum dnOrder="6">D7FDB69A103350D098A3AE9CFE41A04B</UserChecksum>
+          <UserChecksum dnOrder="6">F004479B3985F06CCFD4DE1A35CA5EB0</UserChecksum>
         </File>
         <File dnOrder="48">
           <Type dnOrder="0">HEADER</Type>
@@ -447,7 +447,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">050EE912A4D366C41E0397BA97BDF055</GeneratedChecksum>
-          <UserChecksum dnOrder="6">299D27B3B682E278D3EE236833B1F6C9</UserChecksum>
+          <UserChecksum dnOrder="6">050EE912A4D366C41E0397BA97BDF055</UserChecksum>
         </File>
         <File dnOrder="49">
           <Type dnOrder="0">HEADER</Type>
@@ -456,7 +456,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">0F98538EAF8A923ACC797399640D3F48</GeneratedChecksum>
-          <UserChecksum dnOrder="6">42FD840CB9EC77156E92E77A0DB1461D</UserChecksum>
+          <UserChecksum dnOrder="6">0F98538EAF8A923ACC797399640D3F48</UserChecksum>
         </File>
         <File dnOrder="50">
           <Type dnOrder="0">HEADER</Type>
@@ -465,7 +465,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">696A901CED4CDCF634ADBC1F38264155</GeneratedChecksum>
-          <UserChecksum dnOrder="6">C693F583E5C23BBBBBB6F67B538B5A35</UserChecksum>
+          <UserChecksum dnOrder="6">696A901CED4CDCF634ADBC1F38264155</UserChecksum>
         </File>
         <File dnOrder="51">
           <Type dnOrder="0">HEADER</Type>
@@ -474,7 +474,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">5DC4E80ED75FBEBDA64E862734EA806E</GeneratedChecksum>
-          <UserChecksum dnOrder="6">6CC86718D8F7146371D8BC4F02B38986</UserChecksum>
+          <UserChecksum dnOrder="6">5DC4E80ED75FBEBDA64E862734EA806E</UserChecksum>
         </File>
         <File dnOrder="52">
           <Type dnOrder="0">HEADER</Type>
@@ -483,7 +483,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">20C63C1E718889076C082F9455CE2B96</GeneratedChecksum>
-          <UserChecksum dnOrder="6">B2D2FAAC1082D7F519CBC9B72BFE7685</UserChecksum>
+          <UserChecksum dnOrder="6">20C63C1E718889076C082F9455CE2B96</UserChecksum>
         </File>
         <File dnOrder="53">
           <Type dnOrder="0">HEADER</Type>
@@ -492,7 +492,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">E2C47EB1000BF87206D66814F110FC6E</GeneratedChecksum>
-          <UserChecksum dnOrder="6">C878947F6A0E93F9C78F577D2767FCA4</UserChecksum>
+          <UserChecksum dnOrder="6">E2C47EB1000BF87206D66814F110FC6E</UserChecksum>
         </File>
         <File dnOrder="54">
           <Type dnOrder="0">HEADER</Type>
@@ -537,7 +537,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">968031D671812B8066BC8EF46FBED2A3</GeneratedChecksum>
-          <UserChecksum dnOrder="6">6C44A31F67BA60AB7E9A5AC6A68D83C0</UserChecksum>
+          <UserChecksum dnOrder="6">968031D671812B8066BC8EF46FBED2A3</UserChecksum>
         </File>
         <File dnOrder="59">
           <Type dnOrder="0">HEADER</Type>
@@ -582,7 +582,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">DE0F267E3B47C0775756BAD1A572FE8A</GeneratedChecksum>
-          <UserChecksum dnOrder="6">E6F434360EF94D4D6828645F83872C2C</UserChecksum>
+          <UserChecksum dnOrder="6">DE0F267E3B47C0775756BAD1A572FE8A</UserChecksum>
         </File>
         <File dnOrder="64">
           <Type dnOrder="0">HEADER</Type>
@@ -591,7 +591,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">E4FCF5F115A397FFA6F5580CA0C07F5A</GeneratedChecksum>
-          <UserChecksum dnOrder="6">D605D79AA33EBF333D20641460D777C2</UserChecksum>
+          <UserChecksum dnOrder="6">E4FCF5F115A397FFA6F5580CA0C07F5A</UserChecksum>
         </File>
         <File dnOrder="65">
           <Type dnOrder="0">HEADER</Type>
@@ -600,7 +600,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">831F95392DFA73C934469C7FBA8F0F2B</GeneratedChecksum>
-          <UserChecksum dnOrder="6">E0F674CF21F89DA0CE6582ED3585C836</UserChecksum>
+          <UserChecksum dnOrder="6">831F95392DFA73C934469C7FBA8F0F2B</UserChecksum>
         </File>
         <File dnOrder="66">
           <Type dnOrder="0">HEADER</Type>
@@ -609,7 +609,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">70D1C76F5AE56E5EFAB500DB05D0DBCD</GeneratedChecksum>
-          <UserChecksum dnOrder="6">563E6D3A049A157A86ACD865D394BE1D</UserChecksum>
+          <UserChecksum dnOrder="6">70D1C76F5AE56E5EFAB500DB05D0DBCD</UserChecksum>
         </File>
         <File dnOrder="67">
           <Type dnOrder="0">HEADER</Type>
@@ -618,7 +618,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">DE4AD0FFEEACE3CCB834D5DDFC3DA23A</GeneratedChecksum>
-          <UserChecksum dnOrder="6">FAF6610D35CB94C879A09F39FCA73099</UserChecksum>
+          <UserChecksum dnOrder="6">DE4AD0FFEEACE3CCB834D5DDFC3DA23A</UserChecksum>
         </File>
         <File dnOrder="68">
           <Type dnOrder="0">HEADER</Type>
@@ -627,7 +627,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">33214F6C0D5836DA317D7492CF55A564</GeneratedChecksum>
-          <UserChecksum dnOrder="6">F317BD9C9330C9DBDF44904D0CBDEE37</UserChecksum>
+          <UserChecksum dnOrder="6">33214F6C0D5836DA317D7492CF55A564</UserChecksum>
         </File>
         <File dnOrder="69">
           <Type dnOrder="0">HEADER</Type>
@@ -636,7 +636,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">ABE56900A9A1EF02CAE0567BE350CCE5</GeneratedChecksum>
-          <UserChecksum dnOrder="6">4DD4934DF74BA82C49106CD487465582</UserChecksum>
+          <UserChecksum dnOrder="6">ABE56900A9A1EF02CAE0567BE350CCE5</UserChecksum>
         </File>
         <File dnOrder="70">
           <Type dnOrder="0">HEADER</Type>
@@ -645,7 +645,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/pio/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/pio/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">27709FC220811543DC528E9690778C51</GeneratedChecksum>
-          <UserChecksum dnOrder="6">F84747F8BED9B4478C30F7D2A4402153</UserChecksum>
+          <UserChecksum dnOrder="6">27709FC220811543DC528E9690778C51</UserChecksum>
         </File>
         <File dnOrder="71">
           <Type dnOrder="0">HEADER</Type>
@@ -654,7 +654,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">5D92DF17E8ABDEB1375FFB0BE4F59BCA</GeneratedChecksum>
-          <UserChecksum dnOrder="6">7126E30AD00C0BD8D2E1782A7B1C2DCB</UserChecksum>
+          <UserChecksum dnOrder="6">5D92DF17E8ABDEB1375FFB0BE4F59BCA</UserChecksum>
         </File>
         <File dnOrder="72">
           <Type dnOrder="0">HEADER</Type>
@@ -663,7 +663,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">10EE310F1D11E5196FEE345181EBFDD9</GeneratedChecksum>
-          <UserChecksum dnOrder="6">DCF2AE2C33468DB041D80C7063469356</UserChecksum>
+          <UserChecksum dnOrder="6">10EE310F1D11E5196FEE345181EBFDD9</UserChecksum>
         </File>
         <File dnOrder="73">
           <Type dnOrder="0">HEADER</Type>
@@ -672,7 +672,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">B6CDE24E6F28FB668602E165EC59B608</GeneratedChecksum>
-          <UserChecksum dnOrder="6">6AC50CA20ED904F959F7E8362670EA27</UserChecksum>
+          <UserChecksum dnOrder="6">B6CDE24E6F28FB668602E165EC59B608</UserChecksum>
         </File>
         <File dnOrder="74">
           <Type dnOrder="0">HEADER</Type>
@@ -681,7 +681,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">739EE4D3846046487C305EE2CCAABBF4</GeneratedChecksum>
-          <UserChecksum dnOrder="6">ED5AFA778111466AF857BD9E640C6404</UserChecksum>
+          <UserChecksum dnOrder="6">739EE4D3846046487C305EE2CCAABBF4</UserChecksum>
         </File>
         <File dnOrder="75">
           <Type dnOrder="0">HEADER</Type>
@@ -690,7 +690,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">BFBC12D17106A26D0A51A329CE1A2CC5</GeneratedChecksum>
-          <UserChecksum dnOrder="6">65835A0FE529E60E11F4500098C597FF</UserChecksum>
+          <UserChecksum dnOrder="6">BFBC12D17106A26D0A51A329CE1A2CC5</UserChecksum>
         </File>
         <File dnOrder="76">
           <Type dnOrder="0">HEADER</Type>
@@ -762,7 +762,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">C96BA321D40C8A2F92C52B18DB669D35</GeneratedChecksum>
-          <UserChecksum dnOrder="6">D8DC1BFA916CB951A12AAB8FE0C2DE2D</UserChecksum>
+          <UserChecksum dnOrder="6">C96BA321D40C8A2F92C52B18DB669D35</UserChecksum>
         </File>
         <File dnOrder="84">
           <Type dnOrder="0">HEADER</Type>
@@ -780,7 +780,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">C4D80D71ED9675E381790369F7F0E533</GeneratedChecksum>
-          <UserChecksum dnOrder="6">73E11B370412C2F23021540452D3CC6E</UserChecksum>
+          <UserChecksum dnOrder="6">C4D80D71ED9675E381790369F7F0E533</UserChecksum>
         </File>
         <File dnOrder="86">
           <Type dnOrder="0">HEADER</Type>
@@ -789,7 +789,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">49D8B2BE48B828EAB9715EB85BF1E28F</GeneratedChecksum>
-          <UserChecksum dnOrder="6">C0B4720E7F3B76419CCAC30ED42BED05</UserChecksum>
+          <UserChecksum dnOrder="6">49D8B2BE48B828EAB9715EB85BF1E28F</UserChecksum>
         </File>
         <File dnOrder="87">
           <Type dnOrder="0">HEADER</Type>
@@ -798,7 +798,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">29180AE4124615220D0D0043D0816ED4</GeneratedChecksum>
-          <UserChecksum dnOrder="6">006B912925CCB762DA61819168636C7D</UserChecksum>
+          <UserChecksum dnOrder="6">29180AE4124615220D0D0043D0816ED4</UserChecksum>
         </File>
         <File dnOrder="88">
           <Type dnOrder="0">HEADER</Type>
@@ -807,7 +807,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">0FC10EC0144A6F28EF2C777FF06C8FF9</GeneratedChecksum>
-          <UserChecksum dnOrder="6">5284A15ED3F0E228D8B3150815106BB3</UserChecksum>
+          <UserChecksum dnOrder="6">0FC10EC0144A6F28EF2C777FF06C8FF9</UserChecksum>
         </File>
         <File dnOrder="89">
           <Type dnOrder="0">HEADER</Type>
@@ -942,7 +942,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">527DBBBC5C142DE218ADC40981813BE7</GeneratedChecksum>
-          <UserChecksum dnOrder="6">8D579F2F09FDE5A8831B0559239AD4EB</UserChecksum>
+          <UserChecksum dnOrder="6">527DBBBC5C142DE218ADC40981813BE7</UserChecksum>
         </File>
         <File dnOrder="104">
           <Type dnOrder="0">HEADER</Type>
@@ -951,7 +951,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">66A47EFC74B7CFE70446ED8A12981963</GeneratedChecksum>
-          <UserChecksum dnOrder="6">F1E27E38A51C12F91717357AEE09F288</UserChecksum>
+          <UserChecksum dnOrder="6">66A47EFC74B7CFE70446ED8A12981963</UserChecksum>
         </File>
         <File dnOrder="105">
           <Type dnOrder="0">HEADER</Type>
@@ -960,7 +960,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">858228063058DD499413B02C7AF901E3</GeneratedChecksum>
-          <UserChecksum dnOrder="6">45114B4FDB817836ED4FFE412ADECCFC</UserChecksum>
+          <UserChecksum dnOrder="6">858228063058DD499413B02C7AF901E3</UserChecksum>
         </File>
         <File dnOrder="106">
           <Type dnOrder="0">HEADER</Type>
@@ -969,7 +969,7 @@
           <LogicalPath dnOrder="3">packs/ATSAME70Q21B_DFP/component/</LogicalPath>
           <PhysicalPath dnOrder="4">/../../packs/ATSAME70Q21B_DFP/component/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">BE8EA4D1F690522A7FF375DBDBC0B95B</GeneratedChecksum>
-          <UserChecksum dnOrder="6">3417E55918352F51108CDB50E3B998B7</UserChecksum>
+          <UserChecksum dnOrder="6">BE8EA4D1F690522A7FF375DBDBC0B95B</UserChecksum>
         </File>
         <File dnOrder="107">
           <Type dnOrder="0">LINKER</Type>
@@ -987,7 +987,7 @@
       <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAME70_DFP\4.3.67\same70b\atdf\ATSAME70Q21B.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
-      <Setting dnOrder="4" key="MERGE_STRATEGY" value="ALL"/>
+      <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
       <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;"/>
     </Settings>
   </Configurator>
