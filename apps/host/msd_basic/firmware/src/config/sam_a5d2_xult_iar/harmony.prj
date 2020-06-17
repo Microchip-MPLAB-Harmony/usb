@@ -428,8 +428,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_a5d2_xult_iar/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">CBE07DE00D8750D8DB1566C4248E344F</GeneratedChecksum>
-          <UserChecksum dnOrder="6">CBE07DE00D8750D8DB1566C4248E344F</UserChecksum>
+          <GeneratedChecksum dnOrder="5">EB0752051890344736900506A475AED7</GeneratedChecksum>
+          <UserChecksum dnOrder="6">EB0752051890344736900506A475AED7</UserChecksum>
         </File>
         <File dnOrder="47">
           <Type dnOrder="0">HEADER</Type>
