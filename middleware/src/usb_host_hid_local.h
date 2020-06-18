@@ -121,15 +121,6 @@
  * Usage Page and Usage ID together in 32 bits.
  */
 #define USB_HOST_HID_USAGE_PAGE_SHIFT                          16
- 
-#ifdef __ICCARM__
-   #define USB_HOST_HID_GET_UNALIGNED(ptr)       (uint32_t)ptr
-#else           
-  #define USB_HOST_HID_GET_UNALIGNED(ptr)                 \
-          ({ __typeof__(*(ptr)) tmp;                      \
-           memmove(&tmp, (ptr), sizeof(*(ptr)));          \
-           tmp; }) 
-#endif
 
 /***********************************************
  * Read\Write Data buffers needed by for the HID function driver instance.
@@ -245,7 +236,6 @@ typedef enum
 
 typedef enum
 {
-    USB_HOST_HID_QUERY_ERROR                      = 0,
     USB_HOST_HID_QUERY_USAGE                      = 1,
     USB_HOST_HID_QUERY_STRING,
     USB_HOST_HID_QUERY_DESIGNATOR
@@ -271,7 +261,7 @@ typedef union _USB_HOST_HID_ITEM_DATA_OPTIONAL_
     uint8_t unsignedData8; /* 1 byte unsigned data */
     int8_t  signedData8; /* 1 byte signed data */
     uint16_t unsignedData16; /* 2 bytes unsigned data */
-    int16_t signedData16; /* 2 bytes signed data */
+    int16_t signedData16;; /* 2 bytes signed data */
     uint32_t unsignedData32; /* 4 bytes unsigned data */
     int32_t signedData32; /* 4 bytes signed data */
 
