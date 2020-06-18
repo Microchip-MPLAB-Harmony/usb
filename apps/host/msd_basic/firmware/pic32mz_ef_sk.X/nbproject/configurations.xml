@@ -149,6 +149,8 @@
       <itemPath>Makefile</itemPath>
       <itemPath>../src/config/pic32mz_ef_sk/harmony.prj</itemPath>
       <itemPath>../src/config/pic32mz_ef_sk/pic32mz_ef_sk.xml</itemPath>
+      <itemPath>../src/config/pic32mz_ef_sk/harmony.prj</itemPath>
+      <itemPath>../src/config/pic32mz_ef_sk/harmony.prj</itemPath>
     </logicalFolder>
     <logicalFolder name="f2" displayName="Linker Files" projectFiles="true">
     </logicalFolder>
@@ -244,9 +246,9 @@
         <targetDevice>PIC32MZ2048EFH144</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>PKOBSKDEPlatformTool</platformTool>
+        <platformTool>noID</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.20</languageToolchainVersion>
+        <languageToolchainVersion>2.41</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
@@ -287,7 +289,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value=";../src/config/pic32mz_ef_sk/system/fs/fat_fs/file_system;../src/config/pic32mz_ef_sk/system/fs/fat_fs/hardware_access;../src;../src/config/pic32mz_ef_sk;../src/packs/PIC32MZ2048EFH144_DFP"/>
+                  value="../src/config/pic32mz_ef_sk/system/fs/fat_fs/file_system;../src/config/pic32mz_ef_sk/system/fs/fat_fs/hardware_access;../src;../src/config/pic32mz_ef_sk;../src/packs/PIC32MZ2048EFH144_DFP"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>

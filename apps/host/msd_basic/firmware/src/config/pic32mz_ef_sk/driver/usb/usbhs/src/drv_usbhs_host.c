@@ -3260,8 +3260,10 @@ USB_SPEED DRV_USBHS_HOST_ROOT_HUB_PortSpeedGet
 /* Function:
     void DRV_USBHS_HOST_EndpointToggleClear
     (
-        DRV_USBHS_HOST_PIPE_HANDLE pipeHandle
+        DRV_HANDLE client,
+        USB_ENDPOINT endpointAndDirection
     )
+
   Summary:
     Facilitates in resetting of endpoint data toggle to 0 for Non Control
     endpoints.
