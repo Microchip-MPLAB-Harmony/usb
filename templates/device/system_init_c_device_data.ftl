@@ -116,7 +116,7 @@ const USB_DEVICE_DESCRIPTOR deviceDescriptor =
     0x0100,                                                 // Device release number in BCD format
     0x01,                                                   // Manufacturer string index
     0x02,                                                   // Product string index
-<#if CONFIG_USB_DEVICE_USE_MSD == true>
+<#if CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_ENABLE == true>
     0x03,                                                   // Device serial number string index
 <#else>
 	0x00,                                                   // Device serial number string index
@@ -165,8 +165,8 @@ const uint8_t highSpeedConfigurationDescriptor[]=
     ${CONFIG_USB_DEVICE_INTERFACES_NUMBER},                                                      // Number of interfaces in this configuration
     0x01,                                               // Index value of this configuration
     0x00,                                               // Configuration string index
-    USB_ATTRIBUTE_DEFAULT | USB_ATTRIBUTE_SELF_POWERED, // Attributes
-    50,
+    USB_ATTRIBUTE_DEFAULT<#if CONFIG_USB_DEVICE_ATTRIBUTE_SELF_POWERED == true> | USB_ATTRIBUTE_SELF_POWERED</#if><#if CONFIG_USB_DEVICE_ATTRIBUTE_REMOTE_WAKEUP == true> | USB_ATTRIBUTE_REMOTE_WAKEUP</#if>, // Attributes
+    ${CONFIG_USB_DEVICE_MAX_POWER},
 	
 ${LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_HS_ENTRY}
 };
@@ -197,8 +197,8 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
     ${CONFIG_USB_DEVICE_INTERFACES_NUMBER},                                                      // Number of interfaces in this configuration
     0x01,                                                   // Index value of this configuration
     0x00,                                                   // Configuration string index
-    USB_ATTRIBUTE_DEFAULT | USB_ATTRIBUTE_SELF_POWERED,     // Attributes
-    50,
+    USB_ATTRIBUTE_DEFAULT<#if CONFIG_USB_DEVICE_ATTRIBUTE_SELF_POWERED == true> | USB_ATTRIBUTE_SELF_POWERED</#if><#if CONFIG_USB_DEVICE_ATTRIBUTE_REMOTE_WAKEUP == true> | USB_ATTRIBUTE_REMOTE_WAKEUP</#if>, // Attributes
+    ${CONFIG_USB_DEVICE_MAX_POWER},
 	
 ${LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_FS_ENTRY}
 };
@@ -216,10 +216,11 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
 /**************************************
  *  String descriptors.
  *************************************/
-
+<#assign stringDescriptorTableSize = 0>
  /*******************************************
  *  Language code string descriptor
  *******************************************/
+ <#assign stringDescriptorTableSize = stringDescriptorTableSize + 1>
  <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
     <#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
 	struct __attribute__ ((packed)) USB_ALIGN
@@ -262,6 +263,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
 /*******************************************
  *  Manufacturer string descriptor
  *******************************************/
+ <#assign stringDescriptorTableSize = stringDescriptorTableSize + 1>
  <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
 	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
 	struct __attribute__ ((packed)) USB_ALIGN
@@ -310,6 +312,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
 /*******************************************
  *  Product string descriptor
  *******************************************/
+ <#assign stringDescriptorTableSize = stringDescriptorTableSize + 1>
 <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
 	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
 	struct __attribute__ ((packed)) USB_ALIGN
@@ -353,7 +356,8 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
 		</#if>
     }; 
 </#if>
-<#if CONFIG_USB_DEVICE_USE_MSD == true>
+<#if CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_ENABLE == true>
+<#assign stringDescriptorTableSize = stringDescriptorTableSize + 1>
 /******************************************************************************
  * Serial number string descriptor.  Note: This should be unique for each unit
  * built on the assembly line.  Plugging in two units simultaneously with the
@@ -367,74 +371,100 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
 	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
 	struct __attribute__ ((packed)) USB_ALIGN
 	<#else>
-	const struct __attribute__ ((packed))
+    const struct __attribute__ ((packed))
 	</#if>
     {
         uint8_t stringIndex;                                //Index of the string descriptor
         uint16_t languageID ;                               // Language ID of this string.
         uint8_t bLength;                                    // Size of this descriptor in bytes
-        uint8_t bDscType;                                   // STRING descriptor type 
-        uint16_t string[12];                                // String
+        uint8_t bDscType;                                   // STRING descriptor type
+        uint16_t string[${CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?length}];                                // String
     }
-    sd003 =
+    serialNumberStringDescriptor =
     {
         3,                                                  // Index of this string descriptor is 3. 
         0x0409,                                             // Language ID of this string descriptor is 0x0409 (English)
-        sizeof(sd003)-sizeof(sd003.stringIndex)-sizeof(sd003.languageID),
+        sizeof(serialNumberStringDescriptor)-sizeof(serialNumberStringDescriptor.stringIndex)-sizeof(serialNumberStringDescriptor.languageID),
         USB_DESCRIPTOR_STRING,
-		{'1','2','3','4','5','6','7','8','9','9','9','9'}
+		<#if CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?length gt 0 >
+        {<#list 1..CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?length as index>'${CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?substring(index-1,index)}'<#if index_has_next>,</#if></#list>}
+		</#if>
     };
 <#else>
-<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
- struct USB_ALIGN
-<#else>
-const struct
+	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+	struct USB_ALIGN
+	<#else>
+    const struct
+	</#if>
+    {
+        uint8_t bLength;                                    // Size of this descriptor in bytes
+        uint8_t bDscType;                                   // STRING descriptor type
+        uint16_t string[${CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?length}];                                // String
+    }
+    serialNumberStringDescriptor =
+    {
+        sizeof(serialNumberStringDescriptor),
+        USB_DESCRIPTOR_STRING,
+		<#if CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?length gt 0 >
+        {<#list 1..CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?length as index>'${CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?substring(index-1,index)}'<#if index_has_next>,</#if></#list>}
+		</#if>
+		
+    };
 </#if>
-{
-    uint8_t bLength;
-    uint8_t bDscType;
-    uint16_t string[12];
-}
-sd003 =
-{
-    sizeof(sd003),
-    USB_DESCRIPTOR_STRING,
-    {'1','2','3','4','5','6','7','8','9','9','9','9'}
-};
 </#if>
+<#if CONFIG_USB_DEVICE_FEATURE_ENABLE_MICROSOFT_OS_DESCRIPTOR == true>
+<#assign stringDescriptorTableSize = stringDescriptorTableSize + 1>
+/*******************************************
+ *  MS OS string descriptor
+ *******************************************/
+    const struct __attribute__ ((packed))
+    {
+        uint8_t stringIndex;    //Index of the string descriptor
+        uint16_t languageID ;   // Language ID of this string.
+        uint8_t bLength;        // Size of this descriptor in bytes
+        uint8_t bDscType;       // STRING descriptor type 
+        uint16_t string[18];    // String
+    }
+    microSoftOsDescriptor =
+    {
+        0xEE,       /* This value is per Microsoft OS Descriptor documentation */  
+        0x0000,  /* Language ID is 0x0000 as per Microsoft Documentation */  
+        18, /* Size is 18 Bytes as Microsoft documentation */  
+        USB_DESCRIPTOR_STRING,
+        /* Vendor code to retrieve OS feature descriptors.  */ 
+        /* qwSignature = MSFT100 */ 
+        /* Vendor Code = User Defined Value */
+        {'M','S','F','T','1','0','0',0x0100 | USB_DEVICE_MICROSOFT_OS_DESCRIPTOR_VENDOR_CODE} 
+    };
 </#if>
+
 /***************************************
  * Array of string descriptors
  ***************************************/
- <#if CONFIG_USB_DEVICE_USE_MSD == true>
- USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[4]=
+USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[${stringDescriptorTableSize}]=
 {
 <#if __PROCESSOR?contains("SAMA5D2") == true>
     (uint8_t *)&sd000,
     (uint8_t *)&sd001,
     (uint8_t *)&sd002,
-    (uint8_t *)&sd003
+	<#if CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_ENABLE == true>
+    (uint8_t *)&serialNumberStringDescriptor
+	</#if>
+	<#if CONFIG_USB_DEVICE_FEATURE_ENABLE_MICROSOFT_OS_DESCRIPTOR == true>
+	(uint8_t *)&microSoftOsDescriptor
+	</#if>
 <#else>
     (const uint8_t *const)&sd000,
     (const uint8_t *const)&sd001,
     (const uint8_t *const)&sd002,
-    (const uint8_t *const)&sd003
+	<#if CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_ENABLE == true>
+    (const uint8_t *const)&serialNumberStringDescriptor,
+	</#if>
+	<#if CONFIG_USB_DEVICE_FEATURE_ENABLE_MICROSOFT_OS_DESCRIPTOR == true>
+	(const uint8_t *const)&microSoftOsDescriptor,
+	</#if>
 </#if>
 };
- <#else>
-USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[3]=
-{
-<#if __PROCESSOR?contains("SAMA5D2") == true>
-    (uint8_t *)&sd000,
-    (uint8_t *)&sd001,
-    (uint8_t *)&sd002
-<#else>
-    (const uint8_t *const)&sd000,
-    (const uint8_t *const)&sd001,
-    (const uint8_t *const)&sd002
-</#if>
-};
-</#if>
 
 /*******************************************
  * USB Device Layer Master Descriptor Table 
@@ -458,11 +488,7 @@ const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =
 	0,
 	NULL,
 </#if>
-<#if CONFIG_USB_DEVICE_USE_MSD == true>
-	4,  													// Total number of string descriptors available.
-<#else>
-    3,														// Total number of string descriptors available.
-</#if>
+	${stringDescriptorTableSize},  													// Total number of string descriptors available.
     stringDescriptors,                                      // Pointer to array of string descriptors.
 <#if CONFIG_USB_DEVICE_SPEED == "High Speed">
     &deviceQualifierDescriptor1,                            // Pointer to full speed dev qualifier.

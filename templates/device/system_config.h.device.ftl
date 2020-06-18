@@ -95,6 +95,9 @@
 
 /* Enable Microsoft OS Descriptor support.  */
 #define USB_DEVICE_MICROSOFT_OS_DESCRIPTOR_SUPPORT_ENABLE
+
+/* Enable Microsoft OS Descriptor Vendor code  */
+#define USB_DEVICE_MICROSOFT_OS_DESCRIPTOR_VENDOR_CODE ${CONFIG_USB_DEVICE_FEATURE_ENABLE_MICROSOFT_OS_DESCRIPTOR_VENDOR_CODE}
 </#if>
 </#if>
 <#--

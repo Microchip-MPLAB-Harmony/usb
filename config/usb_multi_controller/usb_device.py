@@ -39,6 +39,7 @@ usbDeviceDemoList = [
 "cdc_com_port_dual_demo",
 "cdc_com_port_single_demo",
 "cdc_msd_basic_demo",
+"cdc_msd_sdcard_demo",
 "cdc_serial_emulator_demo",
 "cdc_serial_emulator_msd_demo",
 "hid_basic_demo",
@@ -63,6 +64,7 @@ usbDeviceDemoProductList = [
 "0xABCD",
 "0x0208",
 "0x000A",
+"0x0057",
 "0x0057",
 "0x000A",
 "0x0057",
@@ -89,6 +91,7 @@ usbDeviceProductStringList = [
 "CDC Dual COM Port Demo",
 "Simple CDC Device Demo",
 "CDC + MSD Demo",
+"CDC + MSD SD Card Demo",
 "Simple CDC Device Demo",
 "CDC + MSD Demo", 
 "Simple HID Device Demo", 
@@ -344,7 +347,11 @@ def instantiateComponent(usbDeviceComponent,index):
 	# Number of function numbers registered to this Device Layer Instance 
 	usbDeviceFunctionNumber = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTIONS_NUMBER", None)
 	usbDeviceFunctionNumber.setLabel("Number of Functions")	
+        helpText = '''This indicates the number of Function Driver instances in the current application. This is provided
+        for indication purposes only and is updated automatically based on the number of Function Drivers (and their 
+        instances) in the current application.'''
 	usbDeviceFunctionNumber.setVisible(True)
+	usbDeviceFunctionNumber.setDescription(helpText)
 	usbDeviceFunctionNumber.setMin(0)
 	usbDeviceFunctionNumber.setDefaultValue(0)
 	usbDeviceFunctionNumber.setUseSingleDynamicValue(True)
@@ -361,19 +368,34 @@ def instantiateComponent(usbDeviceComponent,index):
 	
 	# USB Device Vendor ID 
 	usbDeviceVendorId = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_VENDOR_ID_IDX0", None)
+        helpText = '''Specify the Vendor ID (VID) to be specified in the Device
+        Descriptor. This should be a value assigned by the USB IF. The value
+        0x04D8 is assigned to Microchip Technology Inc'''
 	usbDeviceVendorId.setLabel("Vendor ID")
+	usbDeviceVendorId.setDescription(helpText)
 	usbDeviceVendorId.setVisible(True)
 	usbDeviceVendorId.setDefaultValue("0x04D8")
 	
 	# USB Device Product ID Selection
 	usbDeviceProductId = usbDeviceComponent.createComboSymbol("CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0", None, usbDeviceDemoList)
+        helpText = '''Choose from a list of available demo applications with
+        pre-assigned Product IDs or choose the 'Enter Product ID' option to
+        enter a custom Product ID. This value is then assigned as the PID in
+        the Device Descriptor'''
 	usbDeviceProductId.setLabel("Product ID Selection")
+        usbDeviceProductId.setDescription(helpText)
 	usbDeviceProductId.setVisible(True)
 	usbDeviceProductId.setDefaultValue("Enter Product ID")
 	
 	# USB Device Product ID 
 	usbDeviceProductId = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_PRODUCT_ID_IDX0", None)
 	usbDeviceProductId.setLabel("Product ID")
+        helpText = '''If the Product ID selection is set to a available demo
+        application, then this field is automatically populated with the
+        Product ID of that demo application. If the Product ID selection is set
+        to 'Enter Product ID' option, then enter the 16-bit Product ID in this
+        field'''
+        usbDeviceProductId.setDescription(helpText)
 	usbDeviceProductId.setVisible(True)
 	usbDeviceProductId.setDefaultValue("0x0000")
 	usbDeviceProductId.setUseSingleDynamicValue(True)
@@ -382,6 +404,8 @@ def instantiateComponent(usbDeviceComponent,index):
 	# USB Device Manufacturer String 
 	usbDeviceManufacturerString = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_MANUFACTURER_STRING", None)
 	usbDeviceManufacturerString.setLabel("Manufacturer String")
+        helpText = '''Specify the Manufacturer String in this field.'''
+        usbDeviceManufacturerString.setDescription(helpText)
 	usbDeviceManufacturerString.setVisible(True)
 	usbDeviceManufacturerString.setDefaultValue("Microchip Technology Inc.")
 	
@@ -389,9 +413,33 @@ def instantiateComponent(usbDeviceComponent,index):
 	usbDeviceProductString = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR", None)
 	usbDeviceProductString.setLabel("Product String Selection")
 	usbDeviceProductString.setVisible(True)
+        helpText = '''If the Product ID selection is set to a available demo
+        application, then this field is automatically populated with the
+        Product String that describes the demo application. If the Product ID
+        selection is set to 'Enter Product ID' option, then enter the Product
+        String in this field'''
 	usbDeviceProductString.setDefaultValue("Enter Product string here")
+        usbDeviceProductString.setDescription(helpText)
 	usbDeviceProductString.setUseSingleDynamicValue(True)
 	usbDeviceProductString.setDependencies(blUSBDeviceProductStringSelection,["CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0"])
+	
+	
+	# Serial Number String enable 
+	usbDeviceFeatureSerialNumberStringEnable = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_ENABLE", None)
+	usbDeviceFeatureSerialNumberStringEnable.setLabel("Add Device Serial Number")
+        helpText = '''Enable this option to add Device Serial Number.'''
+        usbDeviceFeatureSerialNumberStringEnable.setDescription(helpText)
+	usbDeviceFeatureSerialNumberStringEnable.setVisible(True)
+	
+	# USB Device Serial Number String 
+	usbDeviceSerialNumberString = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR", usbDeviceFeatureSerialNumberStringEnable)
+	usbDeviceSerialNumberString.setLabel("Serial Number")
+	usbDeviceSerialNumberString.setVisible(False)
+        helpText = '''Enter Device Serial Number here. The Serial Number will be added as a String descriptor table.'''
+	usbDeviceProductString.setDescription(helpText)
+	usbDeviceSerialNumberString.setDefaultValue("12345678999")
+	usbDeviceSerialNumberString.setDependencies(blUSBDeviceEnableSerialNumberString,["CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_ENABLE"])
+		
 
 	# USB Device IAD Enable 
 	usbDeviceIadEnable = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_DESCRIPTOR_IAD_ENABLE", None)
@@ -430,6 +478,43 @@ def instantiateComponent(usbDeviceComponent,index):
 	usbDeviceVendorWriteQueueSize.setDefaultValue(0)
 	usbDeviceVendorWriteQueueSize.setUseSingleDynamicValue(True)
 	usbDeviceVendorWriteQueueSize.setVisible(False)
+	
+	# USB Device Configurations
+	usbDeviceConfigurations = usbDeviceComponent.createMenuSymbol("USB_DEVICE_CONFIGURATION", None)
+	usbDeviceConfigurations.setLabel("USB Device Configuration")	
+	usbDeviceConfigurations.setVisible(True)
+	
+	# USB Device Attributes Self Powered. 
+	usbDeviceConfigDescritorAttributeSelfPowered = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_ATTRIBUTE_SELF_POWERED", usbDeviceConfigurations)
+	usbDeviceConfigDescritorAttributeSelfPowered.setLabel("Self Powered")
+	usbDeviceConfigDescritorAttributeSelfPowered.setVisible(True)
+	helpText = '''Enable this option if the USB Device is Self Powered. If not it implies that the Device is Bus Powered.'''
+	usbDeviceConfigDescritorAttributeSelfPowered.setDescription(helpText)
+	usbDeviceConfigDescritorAttributeSelfPowered.setDefaultValue(True)
+	
+	
+	# USB Device Attributes Remote Wakeup. 
+	usbDeviceConfigDescritorAttributeRemoteWakeup = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_ATTRIBUTE_REMOTE_WAKEUP", usbDeviceConfigurations)
+	usbDeviceConfigDescritorAttributeRemoteWakeup.setLabel("Remote Wakeup Feature")
+	usbDeviceConfigDescritorAttributeRemoteWakeup.setVisible(True)
+	helpText = '''Enable this option if the USB Device supports remote wakeup 
+				  feature. This informs the Host that the device is capable of 
+				  generating wakeup signal when the bus is suspended '''
+	usbDeviceConfigDescritorAttributeRemoteWakeup.setDescription(helpText)
+	usbDeviceConfigDescritorAttributeRemoteWakeup.setDefaultValue(False)
+	
+	
+	# USB Device max power 
+	usbDeviceConfigDescritorMaxPower = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_MAX_POWER", usbDeviceConfigurations)
+	usbDeviceConfigDescritorMaxPower.setLabel("Maximum Power")
+	usbDeviceConfigDescritorMaxPower.setVisible(True)
+	helpText = '''Maximum power consumption of the USB device from the bus in this specific
+					configuration when the device is fully operational. Expressed in 2 mA units 
+					(i.e., 50 = 100 mA).'''
+	usbDeviceConfigDescritorMaxPower.setDescription(helpText)
+	usbDeviceVendorWriteQueueSize.setMin(0)
+	usbDeviceVendorWriteQueueSize.setMax(250)
+	usbDeviceConfigDescritorMaxPower.setDefaultValue(50)
 	
 	configName = Variables.get("__CONFIGURATION_NAME")
 	
@@ -630,4 +715,8 @@ def blUSBDeviceProductStringSelection(usbSymbolSource, event):
 	usbSymbolSource.setValue(usbDeviceProductStringList[index],2)
 	
 	
-		
+def blUSBDeviceEnableSerialNumberString(usbSymbolSource, event):
+	if (event["value"] == True):		
+		usbSymbolSource.setVisible(True)
+	else:
+		usbSymbolSource.setVisible(False)	

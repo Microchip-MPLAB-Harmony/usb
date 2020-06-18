@@ -134,6 +134,7 @@ usbDeviceMsdDiskImageFile = None
 usbDeviceMsdDiskImageFileAdd = None 
 
 def genRtosTask(symbol, event):
+	print("genRtosTask: USB Device")
 	if event["value"] != "BareMetal":
 		symbol.setEnabled(True)
 	else:
@@ -401,6 +402,17 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceFeatureEnableMicrosoftOsDescriptor.setVisible(False)	
 	usbDeviceFeatureEnableMicrosoftOsDescriptor.setDependencies(blUSBDeviceFeatureEnableMicrosoftOsDescriptor, ["CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE"])
 
+	#Microsoft OS descriptor Vendor ID  
+	usbDeviceFeatureEnableMicrosoftOsDescriptorVendorCode =  usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_FEATURE_ENABLE_MICROSOFT_OS_DESCRIPTOR_VENDOR_CODE", usbDeviceFeatureEnableMicrosoftOsDescriptor)
+	usbDeviceFeatureEnableMicrosoftOsDescriptorVendorCode.setLabel("Vendor Code")
+	helpText = '''Vendor code is used to retrieve the associated feature 
+				   descriptors. The vendor defines the format of this field.'''
+	usbDeviceFeatureEnableMicrosoftOsDescriptorVendorCode.setDescription(helpText)
+	usbDeviceFeatureEnableMicrosoftOsDescriptorVendorCode.setVisible(False)
+	usbDeviceFeatureEnableMicrosoftOsDescriptorVendorCode.setDependencies(blUSBDeviceFeatureEnableMicrosoftOsDescriptor, ["CONFIG_USB_DEVICE_FEATURE_ENABLE_MICROSOFT_OS_DESCRIPTOR"])
+	usbDeviceFeatureEnableMicrosoftOsDescriptorVendorCode.setDefaultValue("0xFF")
+		
+	
 	#BOS descriptor support Enable 
 	usbDeviceFeatureEnableBosDescriptor = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FEATURE_ENABLE_BOS_DESCRIPTOR", usbDeviceFeatureEnable)
 	usbDeviceFeatureEnableBosDescriptor.setLabel("Enable BOS Descriptor Support")	
@@ -428,7 +440,7 @@ def instantiateComponent(usbDeviceComponent):
         devices.'''
 	usbDeviceEp0BufferSize.setDescription(helpText)
 	usbDeviceEp0BufferSize.setDefaultValue("64")
-	
+			
 	# USB Device Vendor ID 
 	usbDeviceVendorId = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_VENDOR_ID_IDX0", None)
         helpText = '''Specify the Vendor ID (VID) to be specified in the Device
@@ -485,6 +497,24 @@ def instantiateComponent(usbDeviceComponent):
         usbDeviceProductString.setDescription(helpText)
 	usbDeviceProductString.setUseSingleDynamicValue(True)
 	usbDeviceProductString.setDependencies(blUSBDeviceProductStringSelection,["CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0"])
+	
+	
+	# Serial Number String enable 
+	usbDeviceFeatureSerialNumberStringEnable = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_ENABLE", None)
+	usbDeviceFeatureSerialNumberStringEnable.setLabel("Add Device Serial Number")
+        helpText = '''Enable this option to add Device Serial Number.'''
+        usbDeviceFeatureSerialNumberStringEnable.setDescription(helpText)
+	usbDeviceFeatureSerialNumberStringEnable.setVisible(True)
+	
+	# USB Device Serial Number String 
+	usbDeviceSerialNumberString = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR", usbDeviceFeatureSerialNumberStringEnable)
+	usbDeviceSerialNumberString.setLabel("Serial Number")
+	usbDeviceSerialNumberString.setVisible(False)
+        helpText = '''Enter Device Serial Number here. The Serial Number will be added as a String descriptor table.'''
+	usbDeviceProductString.setDescription(helpText)
+	usbDeviceSerialNumberString.setDefaultValue("12345678999")
+	usbDeviceSerialNumberString.setDependencies(blUSBDeviceEnableSerialNumberString,["CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_ENABLE"])
+		
 
 	# USB Device IAD Enable 
 	usbDeviceIadEnable = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_DESCRIPTOR_IAD_ENABLE", None)
@@ -523,6 +553,43 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceVendorWriteQueueSize.setDefaultValue(0)
 	usbDeviceVendorWriteQueueSize.setUseSingleDynamicValue(True)
 	usbDeviceVendorWriteQueueSize.setVisible(False)
+	
+	# USB Device Configurations
+	usbDeviceConfigurations = usbDeviceComponent.createMenuSymbol("USB_DEVICE_CONFIGURATION", None)
+	usbDeviceConfigurations.setLabel("USB Device Configuration")	
+	usbDeviceConfigurations.setVisible(True)
+	
+	# USB Device Attributes Self Powered. 
+	usbDeviceConfigDescritorAttributeSelfPowered = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_ATTRIBUTE_SELF_POWERED", usbDeviceConfigurations)
+	usbDeviceConfigDescritorAttributeSelfPowered.setLabel("Self Powered")
+	usbDeviceConfigDescritorAttributeSelfPowered.setVisible(True)
+	helpText = '''Enable this option if the USB Device is Self Powered. If not it implies that the Device is Bus Powered.'''
+	usbDeviceConfigDescritorAttributeSelfPowered.setDescription(helpText)
+	usbDeviceConfigDescritorAttributeSelfPowered.setDefaultValue(True)
+	
+	
+	# USB Device Attributes Remote Wakeup. 
+	usbDeviceConfigDescritorAttributeRemoteWakeup = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_ATTRIBUTE_REMOTE_WAKEUP", usbDeviceConfigurations)
+	usbDeviceConfigDescritorAttributeRemoteWakeup.setLabel("Remote Wakeup Feature")
+	usbDeviceConfigDescritorAttributeRemoteWakeup.setVisible(True)
+	helpText = '''Enable this option if the USB Device supports remote wakeup 
+				  feature. This informs the Host that the device is capable of 
+				  generating wakeup signal when the bus is suspended '''
+	usbDeviceConfigDescritorAttributeRemoteWakeup.setDescription(helpText)
+	usbDeviceConfigDescritorAttributeRemoteWakeup.setDefaultValue(False)
+	
+	
+	# USB Device max power 
+	usbDeviceConfigDescritorMaxPower = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_MAX_POWER", usbDeviceConfigurations)
+	usbDeviceConfigDescritorMaxPower.setLabel("Maximum Power")
+	usbDeviceConfigDescritorMaxPower.setVisible(True)
+	helpText = '''Maximum power consumption of the USB device from the bus in this specific
+					configuration when the device is fully operational. Expressed in 2 mA units 
+					(i.e., 50 = 100 mA).'''
+	usbDeviceConfigDescritorMaxPower.setDescription(helpText)
+	usbDeviceVendorWriteQueueSize.setMin(0)
+	usbDeviceVendorWriteQueueSize.setMax(250)
+	usbDeviceConfigDescritorMaxPower.setDefaultValue(50)
 	
 	configName = Variables.get("__CONFIGURATION_NAME")
 	
@@ -692,18 +759,9 @@ def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callbac
 	if callback != None:
 		symbol.setDependencies(callback, ["USB_DEVICE_FUNCTION_1_DEVICE_CLASS"])
 		
-def blUsbLog (usbSymbolSource, event):
-	if (usbDebugLogs == 1):
-			print("Source: " + usbSymbolSource.getID().encode('ascii', 'ignore'), "id: " + event["id"].encode('ascii', 'ignore') , "Value: ", event["value"])
-			
-def blUsbPrint(string):
-	if (usbDebugLogs == 1):
-		print(string)
 		
 def blUSBDeviceFeatureEnableMicrosoftOsDescriptor(usbSymbolSource, event):
-	blUsbLog(usbSymbolSource, event)
 	if (event["value"] == True):		
-		blUsbPrint("Set Visible " + usbSymbolSource.getID().encode('ascii', 'ignore'))
 		usbSymbolSource.setVisible(True)
 	else:
 		usbSymbolSource.setVisible(False)
@@ -727,4 +785,8 @@ def blUSBDeviceProductStringSelection(usbSymbolSource, event):
 	usbSymbolSource.setValue(usbDeviceProductStringList[index],2)
 	
 	
-		
+def blUSBDeviceEnableSerialNumberString(usbSymbolSource, event):
+	if (event["value"] == True):		
+		usbSymbolSource.setVisible(True)
+	else:
+		usbSymbolSource.setVisible(False)	

@@ -93,16 +93,29 @@ def instantiateComponent(usbDeviceComponent):
 	#SOF Event Enable 
 	usbDeviceEventEnableSOF = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_EVENT_ENABLE_SOF", usbDeviceEventsEnable)
 	usbDeviceEventEnableSOF.setLabel("Enable SOF Events")	
+        helpText = '''Enable this option if Start of Frame event needs to be generated. If enabled the Device Layer will generate
+        a Start of Frame event. In case of Full Speed USB, this event would be generated every 1 millisecond. In case of High
+        Speed USB, this event would be generated every 125 microseconds.'''
+        usbDeviceEventEnableSOF.setDescription(helpText)
 	usbDeviceEventEnableSOF.setVisible(True)	
 		
 	#Set Descriptor Event Enable 
 	usbDeviceEventEnableSetDescriptor = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_EVENT_ENABLE_SET_DESCRIPTOR", usbDeviceEventsEnable)
 	usbDeviceEventEnableSetDescriptor.setLabel("Enable Set Descriptor Events")	
+        helpText = '''Enable this option to support Set Descriptor requests. If enabled, the Device Layer will generate a
+        Set Descriptor Event to the application when such a request is received from the host. If disabled, the Device Layer will Stall the
+        Set Descritpor request.'''
+        usbDeviceEventEnableSetDescriptor.setDescription(helpText)
 	usbDeviceEventEnableSetDescriptor.setVisible(True)	
 	
 	#Synch Frame Event Enable 
 	usbDeviceEventEnableSynchFrame = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_EVENT_ENABLE_SYNCH_FRAME", usbDeviceEventsEnable)
 	usbDeviceEventEnableSynchFrame.setLabel("Enable Synch Frame Events")	
+        helpText = '''Enable this option to support Sync Frame requests. If
+        enabled, the Device Layer will generate a Sync Frame Event to the
+        application when such a request is received from the host. If disabled,
+        the Device Layer will Stall the Sync Frame request.'''
+        usbDeviceEventEnableSynchFrame.setDescription(helpText)
 	usbDeviceEventEnableSynchFrame.setVisible(True)	
 	
 	# USB Device Features enable 
@@ -113,17 +126,44 @@ def instantiateComponent(usbDeviceComponent):
 	# Advanced string descriptor table enable 
 	usbDeviceFeatureEnableAdvancedStringDescriptorTable = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE", usbDeviceFeatureEnable)
 	usbDeviceFeatureEnableAdvancedStringDescriptorTable.setLabel("Enable advanced String Descriptor Table")
+        helpText = '''Enable this option to use an Advanced String Descriptor
+        Table. This table allows the string index of the string to be specified
+        against the actual string. This option should be used when the Device
+        Layer is expected to support String Descriptor requests which are not
+        consecutive. Supporting these requests using a traditional string array
+        would cause gaps in memory.'''
+        usbDeviceFeatureEnableAdvancedStringDescriptorTable.setDescription(helpText)
 	usbDeviceFeatureEnableAdvancedStringDescriptorTable.setVisible(True)
 	
 	#Microsoft OS descriptor support Enable 
 	usbDeviceFeatureEnableMicrosoftOsDescriptor = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FEATURE_ENABLE_MICROSOFT_OS_DESCRIPTOR", usbDeviceFeatureEnableAdvancedStringDescriptorTable)
 	usbDeviceFeatureEnableMicrosoftOsDescriptor.setLabel("Enable Microsoft OS Descriptor Support")	
-	usbDeviceFeatureEnableMicrosoftOsDescriptor.setVisible(True)	
+        helpText = '''Enable this option to allow the Device Layer to
+        automatically handle Microsoft OS Descriptor requests. Enabling this
+        option will generate the OS String Descriptor with index 0xEE and
+        update the Advanced String Descriptor table with this information. This
+        option is typically used when creating Vendor Devices.'''
+        usbDeviceFeatureEnableMicrosoftOsDescriptor.setDescription(helpText)
+	usbDeviceFeatureEnableMicrosoftOsDescriptor.setVisible(False)	
 	usbDeviceFeatureEnableMicrosoftOsDescriptor.setDependencies(blUSBDeviceFeatureEnableMicrosoftOsDescriptor, ["CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE"])
 
+	usbDeviceFeatureEnableMicrosoftOsDescriptorVendorCode =  usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_FEATURE_ENABLE_MICROSOFT_OS_DESCRIPTOR_VENDOR_CODE", usbDeviceFeatureEnableMicrosoftOsDescriptor)
+	usbDeviceFeatureEnableMicrosoftOsDescriptorVendorCode.setLabel("Vendor Code")
+	helpText = '''Vendor code is used to retrieve the associated feature 
+				   descriptors. The vendor defines the format of this field.'''
+	usbDeviceFeatureEnableMicrosoftOsDescriptorVendorCode.setDescription(helpText)
+	usbDeviceFeatureEnableMicrosoftOsDescriptorVendorCode.setVisible(False)
+	usbDeviceFeatureEnableMicrosoftOsDescriptorVendorCode.setDependencies(blUSBDeviceFeatureEnableMicrosoftOsDescriptor, ["CONFIG_USB_DEVICE_FEATURE_ENABLE_MICROSOFT_OS_DESCRIPTOR"])
+	usbDeviceFeatureEnableMicrosoftOsDescriptorVendorCode.setDefaultValue("0xFF")
 	#BOS descriptor support Enable 
 	usbDeviceFeatureEnableBosDescriptor = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FEATURE_ENABLE_BOS_DESCRIPTOR", usbDeviceFeatureEnable)
 	usbDeviceFeatureEnableBosDescriptor.setLabel("Enable BOS Descriptor Support")	
+        helpText = '''Enable this option to allow the Device Layer to support
+        BOS descriptor requests. If enabled, the Device Layer will forward the
+        BOS Descriptor Request to the application. If not enabled, the Device
+        Layer will Stall the request. The BOS Descriptor Request support is
+        required when implementing Billboard Device Class support.'''
+        usbDeviceFeatureEnableBosDescriptor.setDescription(helpText)
 	usbDeviceFeatureEnableBosDescriptor.setVisible(True)	
 	
 	# Enable Auto timed remote wakeup functions  
