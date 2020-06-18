@@ -41,7 +41,7 @@
 /* -------- UHP_OHCI_HCREVISION : (UHP_OHCI Offset: 0x00) (R/ 32) UHP OHCI Revision Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t REV:4;                     /**< bit:   0..3  Revision                                 */
     uint32_t :28;                       /**< bit:  4..31  Reserved */
@@ -63,7 +63,7 @@ typedef union {
 /* -------- UHP_OHCI_HCCONTROL : (UHP_OHCI Offset: 0x04) (R/W 32) UHP OHCI HcControl Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t CBSR:2;                    /**< bit:   0..1  ControlBulkServiceRatio                  */
     uint32_t PLE:1;                     /**< bit:      2  PeriodicListEnable                       */
@@ -117,7 +117,7 @@ typedef union {
 /* -------- UHP_OHCI_HCCOMMANDSTATUS : (UHP_OHCI Offset: 0x08) (R/W 32) UHP_OHCI HcInterruptStatus Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t HCR:1;                     /**< bit:      0  HostControllerReset                      */
     uint32_t CLF:1;                     /**< bit:      1  ControlListFilled                        */
@@ -156,7 +156,7 @@ typedef union {
 /* -------- UHP_OHCI_HCINTERRUPTSTATUS : (UHP_OHCI Offset: 0x0c) (R/W 32) UHP OHCI HcInterruptStatus Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t SO:1;                      /**< bit:      0  SchedulingOverrun                        */
     uint32_t WDH:1;                     /**< bit:      1  WritebackDoneHead                        */
@@ -207,7 +207,7 @@ typedef union {
 /* -------- UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE : (UHP_OHCI Offset: 0x10) (R/W 32) UHP OHCI HcInterruptEnable Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t SO:1;                      /**< bit:      0  Enable SchedulingOverrun                 */
     uint32_t WDH:1;                     /**< bit:      1  Enable WritebackDoneHead                 */
@@ -261,7 +261,7 @@ typedef union {
 /* -------- UHP_OHCI_HCINTERRUPTDISABLE : (UHP_OHCI Offset: 0x14) (R/W 32) UHP OHCI HcInterruptDisable Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t SO:1;                      /**< bit:      0  Disable SchedulingOverrun                */
     uint32_t WDH:1;                     /**< bit:      1  Disable WritebackDoneHead                */
@@ -315,7 +315,7 @@ typedef union {
 /* -------- UHP_OHCI_HCHCCA : (UHP_OHCI Offset: 0x18) (R/W 32) UHP OHCI HcHCCA Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t :8;                        /**< bit:   0..7  Reserved */
     uint32_t HCCA:24;                   /**< bit:  8..31  base address of the Host Controller Communication Area */
@@ -337,7 +337,7 @@ typedef union {
 /* -------- UHP_OHCI_HCPERIODCURRENTED : (UHP_OHCI Offset: 0x1c) (R/W 32) UHP OHCI HcPeriodCurrentED Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t :4;                        /**< bit:   0..3  Reserved */
     uint32_t PCED:28;                   /**< bit:  4..31  PeriodCurrentED                          */
@@ -359,7 +359,7 @@ typedef union {
 /* -------- UHP_OHCI_HCCONTROLHEADED : (UHP_OHCI Offset: 0x20) (R/W 32) UHP OHCI HcControlHeadED Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t :4;                        /**< bit:   0..3  Reserved */
     uint32_t CHED:28;                   /**< bit:  4..31  ControlHeadED                            */
@@ -381,7 +381,7 @@ typedef union {
 /* -------- UHP_OHCI_HCCONTROLCURRENTED : (UHP_OHCI Offset: 0x24) (R/W 32) UHP OHCI HcControlCurrentED Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t :4;                        /**< bit:   0..3  Reserved */
     uint32_t CCED:28;                   /**< bit:  4..31  ControlCurrentED                         */
@@ -403,7 +403,7 @@ typedef union {
 /* -------- UHP_OHCI_HCBULKHEADED : (UHP_OHCI Offset: 0x28) (R/W 32) UHP OHCI HcBulkHeadED Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t :4;                        /**< bit:   0..3  Reserved */
     uint32_t BHED:28;                   /**< bit:  4..31  BulkHeadED                               */
@@ -425,7 +425,7 @@ typedef union {
 /* -------- UHP_OHCI_HCBULKCURRENTED : (UHP_OHCI Offset: 0x2c) (R/W 32) UHP OHCI HcBulkCurrentED Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t :4;                        /**< bit:   0..3  Reserved */
     uint32_t BCED:28;                   /**< bit:  4..31  BulkCurrentED                            */
@@ -447,7 +447,7 @@ typedef union {
 /* -------- UHP_OHCI_HCDONEHEAD : (UHP_OHCI Offset: 0x30) (R/W 32) UHP OHCI HcDoneHead Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t :4;                        /**< bit:   0..3  Reserved */
     uint32_t DH:28;                     /**< bit:  4..31  DoneHead                                 */
@@ -469,7 +469,7 @@ typedef union {
 /* -------- UHP_OHCI_HCFMINTERVAL : (UHP_OHCI Offset: 0x34) (R/W 32) UHP OHCI HcFmInterval Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t FI:14;                     /**< bit:  0..13  FrameInterval                            */
     uint32_t :2;                        /**< bit: 14..15  Reserved */
@@ -499,7 +499,7 @@ typedef union {
 /* -------- UHP_OHCI_HCFMREMAINING : (UHP_OHCI Offset: 0x38) (R/W 32) UHP OHCI HcFmRemaining Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t FR:14;                     /**< bit:  0..13  FrameRemaining                           */
     uint32_t :17;                       /**< bit: 14..30  Reserved */
@@ -525,7 +525,7 @@ typedef union {
 /* -------- UHP_OHCI_HCFMNUMBER : (UHP_OHCI Offset: 0x3c) (R/W 32) UHP OHCI HcFmNumber Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t FN:16;                     /**< bit:  0..15  FrameNumber                              */
     uint32_t :16;                       /**< bit: 16..31  Reserved */
@@ -547,7 +547,7 @@ typedef union {
 /* -------- UHP_OHCI_HCPERIODICSTART : (UHP_OHCI Offset: 0x40) (R/W 32) UHP OHCI HcPeriodicStart Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t PS:14;                     /**< bit:  0..13  PeriodicStart                            */
     uint32_t :18;                       /**< bit: 14..31  Reserved */
@@ -569,7 +569,7 @@ typedef union {
 /* -------- UHP_OHCI_HCLSTHRESHOLD : (UHP_OHCI Offset: 0x44) (R/W 32) UHP OHCI HcLSThreshold Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t LST:12;                    /**< bit:  0..11  LSThreshold                              */
     uint32_t :20;                       /**< bit: 12..31  Reserved */
@@ -591,7 +591,7 @@ typedef union {
 /* -------- UHP_OHCI_HCRHDESCRIPTORA : (UHP_OHCI Offset: 0x48) (R/W 32) UHP OHCI HcRhDescriptorA Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t NDP:8;                     /**< bit:   0..7  NumberDownstreamPorts                    */
     uint32_t PSM:1;                     /**< bit:      8  PowerSwitchingMode                       */
@@ -637,7 +637,7 @@ typedef union {
 /* -------- UHP_OHCI_HCRHDESCRIPTORB : (UHP_OHCI Offset: 0x4c) (R/W 32) UHP OHCI HcRhDescriptorB Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t :16;                       /**< bit:  0..15  Reserved */
     uint32_t PPCM:16;                   /**< bit: 16..31  PortPowerControlMask                     */
@@ -659,7 +659,7 @@ typedef union {
 /* -------- UHP_OHCI_HCRHSTATUS : (UHP_OHCI Offset: 0x50) (R/W 32) UHP OHCI HcRhStatus Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t LPS:1;                     /**< bit:      0  LocalPowerStatus                         */
     uint32_t OCI:1;                     /**< bit:      1  OverCurrentIndicator                     */
@@ -702,7 +702,7 @@ typedef union {
 /* -------- UHP_OHCI_HCRHPORTSTATUS0 : (UHP_OHCI Offset: 0x54) (R/W 32) UHP OHCI HcRhPortStatus 0 Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t CCS:1;                     /**< bit:      0  CurrentConnectStatus                     */
     uint32_t PES:1;                     /**< bit:      1  PortEnableStatus                         */
@@ -770,7 +770,7 @@ typedef union {
 /* -------- UHP_OHCI_HCRHPORTSTATUS1 : (UHP_OHCI Offset: 0x58) (R/W 32) UHP OHCI HcRhPortStatus 1 Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t CCS:1;                     /**< bit:      0  CurrentConnectStatus                     */
     uint32_t PES:1;                     /**< bit:      1  PortEnableStatus                         */
@@ -838,7 +838,7 @@ typedef union {
 /* -------- UHP_OHCI_HCRHPORTSTATUS2 : (UHP_OHCI Offset: 0x5c) (R/W 32) UHP OHCI HcRhPortStatus 2 Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
-typedef union { 
+typedef union {
   struct {
     uint32_t CCS:1;                     /**< bit:      0  CurrentConnectStatus                     */
     uint32_t PES:1;                     /**< bit:      1  PortEnableStatus                         */
@@ -906,7 +906,7 @@ typedef union {
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'R'
 /** \brief UHP_OHCI hardware registers */
-typedef struct {  
+typedef struct {
   __I  uint32_t UHP_OHCI_HCREVISION; /**< (UHP_OHCI Offset: 0x00) UHP OHCI Revision Register */
   __IO uint32_t UHP_OHCI_HCCONTROL; /**< (UHP_OHCI Offset: 0x04) UHP OHCI HcControl Register */
   __IO uint32_t UHP_OHCI_HCCOMMANDSTATUS; /**< (UHP_OHCI Offset: 0x08) UHP_OHCI HcInterruptStatus Register */
@@ -935,7 +935,7 @@ typedef struct {
 
 #elif COMPONENT_TYPEDEF_STYLE == 'N'
 /** \brief UHP_OHCI hardware registers */
-typedef struct {  
+typedef struct {
   __I  UHP_OHCI_HCREVISION_Type       UHP_OHCI_HCREVISION; /**< Offset: 0x00 (R/   32) UHP OHCI Revision Register */
   __IO UHP_OHCI_HCCONTROL_Type        UHP_OHCI_HCCONTROL; /**< Offset: 0x04 (R/W  32) UHP OHCI HcControl Register */
   __IO UHP_OHCI_HCCOMMANDSTATUS_Type  UHP_OHCI_HCCOMMANDSTATUS; /**< Offset: 0x08 (R/W  32) UHP_OHCI HcInterruptStatus Register */

@@ -79,11 +79,11 @@
 
     /* Multi client operation in static is not supported */
 
-    
-    
-        /* Map internal macros and functions to the static 
+
+
+        /* Map internal macros and functions to the static
          * single open variant */
-        
+
 
 
 
@@ -151,17 +151,17 @@
     #define _DRV_USB_UHP_InterruptSourceStatusGet(source)               SYS_INT_SourceStatusGet( source )
     #define _DRV_USB_UHP_InterruptSourceStatusSet(source)               SYS_INT_SourceStatusSet( source )
     #define _DRV_USB_UHP_InterruptVectorPrioritySet(source, priority)   SYS_INT_VectorPrioritySet(source, priority)
-    #define _DRV_USB_UHP_Tasks_ISR(object)                             
- 
+    #define _DRV_USB_UHP_Tasks_ISR(object)
+
 #endif
 
 #if (DRV_USB_UHP_INTERRUPT_MODE == false)
 
-    #define _DRV_USB_UHP_InterruptSourceEnable(source)      
-    #define _DRV_USB_UHP_InterruptSourceDisable(source)     
-    #define _DRV_USB_UHP_InterruptSourceClear(source)       
-    #define _DRV_USB_UHP_InterruptSourceStatusGet(source)   
-    #define _DRV_USB_UHP_Tasks_ISR(object)                   DRV_USB_UHP_Tasks_ISR(object) 
+    #define _DRV_USB_UHP_InterruptSourceEnable(source)
+    #define _DRV_USB_UHP_InterruptSourceDisable(source)
+    #define _DRV_USB_UHP_InterruptSourceClear(source)
+    #define _DRV_USB_UHP_InterruptSourceStatusGet(source)
+    #define _DRV_USB_UHP_Tasks_ISR(object)                   DRV_USB_UHP_Tasks_ISR(object)
 
 #endif
 
