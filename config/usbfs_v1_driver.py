@@ -388,7 +388,7 @@ def instantiateComponent(usbDriverComponent):
 		drvUsbHsV1HeaderFile.setOverwrite(True)
 
 		drvUsbHsV1VarMapHeaderFile = usbDriverComponent.createFileSymbol(None, None)
-		drvUsbHsV1VarMapHeaderFile.setSourcePath(usbDriverPath + "usbfsv1/src/drv_usbfsv1_variant_mapping.h.ftl")
+		drvUsbHsV1VarMapHeaderFile.setSourcePath(usbDriverPath + usbDriverSourcePath + "/src/drv_usbfsv1_variant_mapping.h.ftl")
 		drvUsbHsV1VarMapHeaderFile.setOutputName("drv_usbfsv1_variant_mapping.h")
 		drvUsbHsV1VarMapHeaderFile.setDestPath(usbDriverProjectPath + "usbfsv1/src")
 		drvUsbHsV1VarMapHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbfsv1/src")
@@ -398,7 +398,7 @@ def instantiateComponent(usbDriverComponent):
 
 
 		drvUsbHsV1LocalHeaderFile = usbDriverComponent.createFileSymbol(None, None)
-		drvUsbHsV1LocalHeaderFile.setSourcePath(usbDriverPath + "usbfsv1/src/drv_usbfsv1_local.h")
+		drvUsbHsV1LocalHeaderFile.setSourcePath(usbDriverPath + usbDriverSourcePath + "/src/drv_usbfsv1_local.h")
 		drvUsbHsV1LocalHeaderFile.setOutputName("drv_usbfsv1_local.h")
 		drvUsbHsV1LocalHeaderFile.setDestPath(usbDriverProjectPath + "usbfsv1/src")
 		drvUsbHsV1LocalHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbfsv1/src")
