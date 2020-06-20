@@ -5673,8 +5673,11 @@ USB_HOST_RESULT USB_HOST_DevicePipeHaltClear
                     }
                     else
                     {
-                        deviceObj->hcdInterface->endpointToggleClear(deviceObj->hcdHandle, pipeObj->endpointAddress);
+                        if((pipeObj->pipeHandle != 0) && (pipeObj->pipeHandle != DRV_USB_HOST_PIPE_HANDLE_INVALID))
+                        {
+                            deviceObj->hcdInterface->endpointToggleClear(pipeObj->pipeHandle);
                         result = USB_HOST_RESULT_SUCCESS;
+                        }
                     }
                 }
             }
