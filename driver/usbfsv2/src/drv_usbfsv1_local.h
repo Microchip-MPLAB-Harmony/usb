@@ -75,6 +75,11 @@
 
 #define DRV_USBFSV1_AUTO_ZLP_ENABLE                         false
 
+/* Macro to define number of USB Device descriptor banks */
+#ifndef USB_DEVICE_DESC_BANK_NUMBER
+#define USB_DEVICE_DESC_BANK_NUMBER                         DEVICE_DESC_BANK_NUMBER
+#endif
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Data Type Definitions
@@ -534,7 +539,7 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
     OSAL_MUTEX_DECLARE(mutexID);
 
     /* Pointer to the endpoint 0 Buffers */
-    uint8_t * endpoint0BufferPtr[DEVICE_DESC_BANK_NUMBER];
+    uint8_t * endpoint0BufferPtr[USB_DEVICE_DESC_BANK_NUMBER];
 
     /* Next Ping Pong state */
     uint32_t rxEndpointsNextPingPong;
