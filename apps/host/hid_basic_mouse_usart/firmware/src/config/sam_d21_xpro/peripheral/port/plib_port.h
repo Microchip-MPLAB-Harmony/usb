@@ -65,8 +65,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-
-
+  
 /*** Macros for VBUS_HOST_EN pin ***/
 #define VBUS_HOST_EN_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 3)
 #define VBUS_HOST_EN_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 3)

@@ -4064,8 +4064,9 @@ uint8_t * _USB_HOST_HID_ItemFetch
                 }
                 else
                 {
-                    itemData->optionalItemData.unsignedData16 = 
-                    USB_HOST_HID_GET_UNALIGNED((uint16_t *)startAddress);
+                    uint16_t itemData16;
+                    memmove(&itemData16, (uint16_t *)startAddress, sizeof(uint16_t));
+                    itemData->optionalItemData.unsignedData16 = itemData16;
                     startAddress = (uint8_t *)((uint16_t *) startAddress + 1);
                     returnValue = startAddress;
                 }
@@ -4079,8 +4080,9 @@ uint8_t * _USB_HOST_HID_ItemFetch
                 }
                 else
                 {
-                    itemData->optionalItemData.unsignedData32 = 
-                    USB_HOST_HID_GET_UNALIGNED((uint32_t *)startAddress);
+                    uint32_t itemData32;
+                    memmove(&itemData32, (uint32_t *)startAddress, sizeof(uint32_t));
+                    itemData->optionalItemData.unsignedData32 = itemData32;
                     startAddress = (uint8_t *)((uint32_t *)startAddress + 1);
                     returnValue = startAddress;
                 }

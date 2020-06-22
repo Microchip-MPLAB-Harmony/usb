@@ -47,20 +47,24 @@
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f3" displayName="system" projectFiles="true">
+            <logicalFolder name="f4" displayName="debug" projectFiles="true">
+              <itemPath>../src/config/sam_l21_xpro/system/debug/sys_debug.h</itemPath>
+            </logicalFolder>
             <logicalFolder name="f2" displayName="fs" projectFiles="true">
               <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
                 <logicalFolder name="f1" displayName="file_system" projectFiles="true">
-                  <itemPath>../src/config/sam_l21_xpro/system/fs/fat_fs/src/file_system/ff.h</itemPath>
-                  <itemPath>../src/config/sam_l21_xpro/system/fs/fat_fs/src/file_system/ffconf.h</itemPath>
+                  <itemPath>../src/config/sam_l21_xpro/system/fs/fat_fs/file_system/ff.h</itemPath>
+                  <itemPath>../src/config/sam_l21_xpro/system/fs/fat_fs/file_system/ffconf.h</itemPath>
                 </logicalFolder>
                 <logicalFolder name="f2" displayName="hardware_access" projectFiles="true">
-                  <itemPath>../src/config/sam_l21_xpro/system/fs/fat_fs/src/hardware_access/diskio.h</itemPath>
+                  <itemPath>../src/config/sam_l21_xpro/system/fs/fat_fs/hardware_access/diskio.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
               <itemPath>../src/config/sam_l21_xpro/system/fs/sys_fs.h</itemPath>
               <itemPath>../src/config/sam_l21_xpro/system/fs/src/sys_fs_local.h</itemPath>
               <itemPath>../src/config/sam_l21_xpro/system/fs/sys_fs_media_manager.h</itemPath>
               <itemPath>../src/config/sam_l21_xpro/system/fs/src/sys_fs_media_manager_local.h</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/system/fs/sys_fs_fat_interface.h</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_l21_xpro/system/int/sys_int.h</itemPath>
@@ -95,10 +99,10 @@
             <itemPath>../src/config/sam_l21_xpro/usb/usb_host_hub_interface.h</itemPath>
             <itemPath>../src/config/sam_l21_xpro/usb/usb_hub.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/config/sam_l21_xpro/user.h</itemPath>
           <itemPath>../src/config/sam_l21_xpro/device_cache.h</itemPath>
           <itemPath>../src/config/sam_l21_xpro/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_l21_xpro/definitions.h</itemPath>
+          <itemPath>../src/config/sam_l21_xpro/user.h</itemPath>
           <itemPath>../src/config/sam_l21_xpro/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
@@ -144,6 +148,7 @@
             <itemPath>../src/packs/ATSAML21J18B_DFP/pio/saml21j18b.h</itemPath>
           </logicalFolder>
           <itemPath>../src/packs/ATSAML21J18B_DFP/device.h</itemPath>
+          <itemPath>../src/packs/ATSAML21J18B_DFP/atsaml21j18b_compat.h</itemPath>
           <itemPath>../src/packs/ATSAML21J18B_DFP/atsaml21j18b.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="CMSIS" projectFiles="true">
@@ -168,6 +173,8 @@
     </logicalFolder>
     <logicalFolder name="f4" displayName="Important Files" projectFiles="true">
       <itemPath>Makefile</itemPath>
+      <itemPath>../src/config/sam_l21_xpro/harmony.prj</itemPath>
+      <itemPath>../src/config/sam_l21_xpro/harmony.prj</itemPath>
     </logicalFolder>
     <logicalFolder name="f2" displayName="Linker Files" projectFiles="true">
     </logicalFolder>
@@ -216,11 +223,17 @@
           <logicalFolder name="f4" displayName="system" projectFiles="true">
             <logicalFolder name="f2" displayName="fs" projectFiles="true">
               <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
-                <itemPath>../src/config/sam_l21_xpro/system/fs/fat_fs/src/ff.c</itemPath>
-                <itemPath>../src/config/sam_l21_xpro/system/fs/fat_fs/src/diskio.c</itemPath>
+                <logicalFolder name="f1" displayName="file_system" projectFiles="true">
+                  <itemPath>../src/config/sam_l21_xpro/system/fs/fat_fs/file_system/ff.c</itemPath>
+                  <itemPath>../src/config/sam_l21_xpro/system/fs/fat_fs/file_system/ffunicode.c</itemPath>
+                </logicalFolder>
+                <logicalFolder name="f2" displayName="hardware_access" projectFiles="true">
+                  <itemPath>../src/config/sam_l21_xpro/system/fs/fat_fs/hardware_access/diskio.c</itemPath>
+                </logicalFolder>
               </logicalFolder>
               <itemPath>../src/config/sam_l21_xpro/system/fs/src/sys_fs.c</itemPath>
               <itemPath>../src/config/sam_l21_xpro/system/fs/src/sys_fs_media_manager.c</itemPath>
+              <itemPath>../src/config/sam_l21_xpro/system/fs/src/sys_fs_fat_interface.c</itemPath>
             </logicalFolder>
             <logicalFolder name="f3" displayName="int" projectFiles="true">
               <itemPath>../src/config/sam_l21_xpro/system/int/src/sys_int.c</itemPath>
@@ -266,8 +279,10 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAML21_DFP" vendor="Microchip" version="3.2.61"/>
+        <pack name="SAML21_DFP" vendor="Microchip" version="3.3.68"/>
       </packs>
+      <ScriptingSettings>
+      </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>
@@ -325,7 +340,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/sam_l21_xpro;../src/packs/ATSAML21J18B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/arm"/>
+                  value="../src;../src/config/sam_l21_xpro;../src/packs/ATSAML21J18B_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;../src/config/sam_l21_xpro/system/fs/fat_fs/file_system;../src/config/sam_l21_xpro/system/fs/fat_fs/hardware_access"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>

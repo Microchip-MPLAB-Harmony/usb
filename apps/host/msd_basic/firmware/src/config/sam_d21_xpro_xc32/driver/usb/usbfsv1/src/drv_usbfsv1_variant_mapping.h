@@ -194,7 +194,7 @@
     #endif
 
 #elif (DRV_USBFSV1_HOST_SUPPORT == false)
-    #define _DRV_USBFSV1_HOST_INIT(x, y)
+    #define _DRV_USBFSV1_HOST_INIT(x, y, z)
     #define _DRV_USBFSV1_HOST_TASKS_ISR(x) 
     #define _DRV_USBFSV1_HOST_ATTACH_DETACH_STATE_MACHINE(x)
     #define _DRV_USBFSV1_FOR_HOST(x, y)

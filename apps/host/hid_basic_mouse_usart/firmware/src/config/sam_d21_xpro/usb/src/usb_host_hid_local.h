@@ -121,15 +121,6 @@
  * Usage Page and Usage ID together in 32 bits.
  */
 #define USB_HOST_HID_USAGE_PAGE_SHIFT                          16
- 
-#ifdef __ICCARM__
-   #define USB_HOST_HID_GET_UNALIGNED(ptr)       (uint16_t)ptr
-#else           
-  #define USB_HOST_HID_GET_UNALIGNED(ptr)                 \
-          ({ __typeof__(*(ptr)) tmp;                      \
-           memmove(&tmp, (ptr), sizeof(*(ptr)));          \
-           tmp; }) 
-#endif
 
 /***********************************************
  * Read\Write Data buffers needed by for the HID function driver instance.

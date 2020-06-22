@@ -1085,7 +1085,7 @@ void _DRV_USBFSV1_HOST_ControlTransferDataStageSend(DRV_USBFSV1_OBJ * hDriver)
     {
         /* Bank 0 contains the data. User data must be copied to the host
          * control transfer data buffer. */
-        memcpy(hDriver->hostTransactionBuffer, (pIRP->data + pIRP->completedBytes), size);
+        memcpy(hDriver->hostTransactionBuffer, ( ( uint8_t * )pIRP->data + pIRP->completedBytes), size);
         controlPipe->USB_PSTATUSSET = USB_HOST_PSTATUSSET_BK0RDY_Msk;
         controlPipe->USB_PCFG |= DRV_USBFSV1_HOST_PIPE_TOKEN_OUT;
     }
@@ -1336,7 +1336,7 @@ bool _DRV_USBFSV1_HOST_ControlTransferProcess(DRV_USBFSV1_OBJ * hDriver)
                              * that the USB DMA will write a minimum of 4 bytes. This can prove dangerous at
                              * the client level. */
 
-                            memcpy((pIRP->data + pIRP->completedBytes), hDriver->hostTransactionBuffer, byteCount);
+                            memcpy(( ( uint8_t * )pIRP->data + pIRP->completedBytes), hDriver->hostTransactionBuffer, byteCount);
                             pIRP->completedBytes += byteCount;
                             pIRP->completedBytesInThisFrame += byteCount;
 
@@ -1646,7 +1646,7 @@ void _DRV_USBFSV1_HOST_NonControlTransferDataSend(DRV_USBFSV1_OBJ * hDriver)
     if(pipe->pipeType == USB_TRANSFER_TYPE_ISOCHRONOUS)
     {
         /* For isoc transfers the user application buffer is used */
-        hardwarePipeDesc->USB_ADDR = (uint32_t)(pIRP->data + pIRP->completedBytes);
+        hardwarePipeDesc->USB_ADDR = (uint32_t)( ( uint8_t * )pIRP->data + pIRP->completedBytes);
     }
     else
     {
@@ -1696,7 +1696,7 @@ void _DRV_USBFSV1_HOST_NonControlTransferDataSend(DRV_USBFSV1_OBJ * hDriver)
         
         if(pipe->pipeType != USB_TRANSFER_TYPE_ISOCHRONOUS)
         {
-            memcpy(hDriver->hostTransactionBuffer, (pIRP->data + pIRP->completedBytes), size);
+            memcpy(hDriver->hostTransactionBuffer, ( ( uint8_t * )pIRP->data + pIRP->completedBytes), size);
         }
 
         hardwarePipe->USB_PSTATUSSET = USB_HOST_PSTATUSSET_BK0RDY_Msk;
@@ -1821,7 +1821,7 @@ static bool _DRV_USBFSV1_HOST_NonControlTransferProcess
                         if((pipe->endpointAndDirection & 0x80) != 0)
                         {
                             /* Data has been received from the device */
-                            memcpy((pIRP->data + pIRP->completedBytes), hDriver->hostTransactionBuffer, byteCount);
+                            memcpy(( ( uint8_t * )pIRP->data + pIRP->completedBytes), hDriver->hostTransactionBuffer, byteCount);
                         }
 
                         /* Now update the byte counters */

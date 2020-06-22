@@ -4,7 +4,8 @@
     <Name dnOrder="0" value="sam_d21_xpro_xc32"/>
     <Processor dnOrder="1" value="ATSAMD21J18A"/>
     <Harmony dnOrder="2" path="../../../.."/>
-    <Manifest dnOrder="3">
+    <Folder_Name dnOrder="3" value=""/>
+    <Manifest dnOrder="4">
       <Files dnOrder="0">
         <File dnOrder="0">
           <Type dnOrder="0">SOURCE</Type>
@@ -48,8 +49,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_xc32/driver/usb/usbfsv1/src/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">F93521F4654B17D7D834EEFD1CC91786</GeneratedChecksum>
-          <UserChecksum dnOrder="6">F93521F4654B17D7D834EEFD1CC91786</UserChecksum>
+          <GeneratedChecksum dnOrder="5">228FC67820EE2C5164646F6741303EA3</GeneratedChecksum>
+          <UserChecksum dnOrder="6">228FC67820EE2C5164646F6741303EA3</UserChecksum>
         </File>
         <File dnOrder="5">
           <Type dnOrder="0">SOURCE</Type>
@@ -84,8 +85,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_xc32/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">2AF5E18843DD702CAD33FCF21686B38A</GeneratedChecksum>
-          <UserChecksum dnOrder="6">2AF5E18843DD702CAD33FCF21686B38A</UserChecksum>
+          <GeneratedChecksum dnOrder="5">0D694607CCE994CC1154DF7ACC9CD158</GeneratedChecksum>
+          <UserChecksum dnOrder="6">0D694607CCE994CC1154DF7ACC9CD158</UserChecksum>
         </File>
         <File dnOrder="9">
           <Type dnOrder="0">SOURCE</Type>
@@ -192,8 +193,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_xc32/system/fs/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/fs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">A8EAD4F4DF812FF22482B1E6CD2D450C</GeneratedChecksum>
-          <UserChecksum dnOrder="6">A8EAD4F4DF812FF22482B1E6CD2D450C</UserChecksum>
+          <GeneratedChecksum dnOrder="5">8FA22626E2C716F0749A4BA7D2294539</GeneratedChecksum>
+          <UserChecksum dnOrder="6">8FA22626E2C716F0749A4BA7D2294539</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">SOURCE</Type>
@@ -201,8 +202,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_xc32/system/fs/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/fs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">AB781921C3F8BBA1FB639490FC5FDFBA</GeneratedChecksum>
-          <UserChecksum dnOrder="6">AB781921C3F8BBA1FB639490FC5FDFBA</UserChecksum>
+          <GeneratedChecksum dnOrder="5">E62E081A20EFF73AB7D56A3E353F8EAC</GeneratedChecksum>
+          <UserChecksum dnOrder="6">E62E081A20EFF73AB7D56A3E353F8EAC</UserChecksum>
         </File>
         <File dnOrder="22">
           <Type dnOrder="0">SOURCE</Type>
@@ -246,8 +247,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_xc32/usb/src</LogicalPath>
           <PhysicalPath dnOrder="4">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">51640AAAE4EFB583773EBA6EABA466F4</GeneratedChecksum>
-          <UserChecksum dnOrder="6">51640AAAE4EFB583773EBA6EABA466F4</UserChecksum>
+          <GeneratedChecksum dnOrder="5">C27AE70812AABB989D756DABF06DBF83</GeneratedChecksum>
+          <UserChecksum dnOrder="6">C27AE70812AABB989D756DABF06DBF83</UserChecksum>
         </File>
         <File dnOrder="27">
           <Type dnOrder="0">SOURCE</Type>
@@ -264,8 +265,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_xc32/usb/src</LogicalPath>
           <PhysicalPath dnOrder="4">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">3B5803B9958F12ADE664FCF3F8C2ED99</GeneratedChecksum>
-          <UserChecksum dnOrder="6">3B5803B9958F12ADE664FCF3F8C2ED99</UserChecksum>
+          <GeneratedChecksum dnOrder="5">A44FA6E3F312CC5DB91590DBEC0A7895</GeneratedChecksum>
+          <UserChecksum dnOrder="6">A44FA6E3F312CC5DB91590DBEC0A7895</UserChecksum>
         </File>
         <File dnOrder="29">
           <Type dnOrder="0">SOURCE</Type>
@@ -273,8 +274,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_xc32/usb/src</LogicalPath>
           <PhysicalPath dnOrder="4">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">705EEFFAF9EABEDE2B5D75DA2E3AC80C</GeneratedChecksum>
-          <UserChecksum dnOrder="6">705EEFFAF9EABEDE2B5D75DA2E3AC80C</UserChecksum>
+          <GeneratedChecksum dnOrder="5">6FB71B015A2C3B84C8913F9C8A53532F</GeneratedChecksum>
+          <UserChecksum dnOrder="6">6FB71B015A2C3B84C8913F9C8A53532F</UserChecksum>
         </File>
         <File dnOrder="30">
           <Type dnOrder="0">SOURCE</Type>
@@ -435,8 +436,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_xc32/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">A5998A8334D2FDE7A5BE5E36FC9EE608</GeneratedChecksum>
-          <UserChecksum dnOrder="6">A5998A8334D2FDE7A5BE5E36FC9EE608</UserChecksum>
+          <GeneratedChecksum dnOrder="5">262652ACD057E47CCAD2B3D4AF91F733</GeneratedChecksum>
+          <UserChecksum dnOrder="6">262652ACD057E47CCAD2B3D4AF91F733</UserChecksum>
         </File>
         <File dnOrder="48">
           <Type dnOrder="0">HEADER</Type>
@@ -525,8 +526,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_xc32/driver/usb/usbfsv1/src</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">09F923AE31046CAA330FCEB97A13D2F3</GeneratedChecksum>
-          <UserChecksum dnOrder="6">09F923AE31046CAA330FCEB97A13D2F3</UserChecksum>
+          <GeneratedChecksum dnOrder="5">9AC35C4BCA2D22ABB5D1787F040BE1A7</GeneratedChecksum>
+          <UserChecksum dnOrder="6">9AC35C4BCA2D22ABB5D1787F040BE1A7</UserChecksum>
         </File>
         <File dnOrder="58">
           <Type dnOrder="0">HEADER</Type>
@@ -534,8 +535,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_xc32/driver/usb/usbfsv1/src</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/usbfsv1/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">53CD13C6D1CA94216F836235585C9804</GeneratedChecksum>
-          <UserChecksum dnOrder="6">53CD13C6D1CA94216F836235585C9804</UserChecksum>
+          <GeneratedChecksum dnOrder="5">AEC6FEA1066A2BC7D54BC5A8E99EB16B</GeneratedChecksum>
+          <UserChecksum dnOrder="6">AEC6FEA1066A2BC7D54BC5A8E99EB16B</UserChecksum>
         </File>
         <File dnOrder="59">
           <Type dnOrder="0">HEADER</Type>
@@ -822,8 +823,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_xc32/system/debug/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/debug/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">33F85B8B82ED7CA982F3291C4E541C0A</GeneratedChecksum>
-          <UserChecksum dnOrder="6">33F85B8B82ED7CA982F3291C4E541C0A</UserChecksum>
+          <GeneratedChecksum dnOrder="5">6BB6C54C5CD963A5A940CF7BB28F4E10</GeneratedChecksum>
+          <UserChecksum dnOrder="6">6BB6C54C5CD963A5A940CF7BB28F4E10</UserChecksum>
         </File>
         <File dnOrder="91">
           <Type dnOrder="0">HEADER</Type>
@@ -840,8 +841,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_d21_xpro_xc32/system/fs/</LogicalPath>
           <PhysicalPath dnOrder="4">/system/fs/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">142A5A13F2BF34D4AB4AFCA60961D312</GeneratedChecksum>
-          <UserChecksum dnOrder="6">142A5A13F2BF34D4AB4AFCA60961D312</UserChecksum>
+          <GeneratedChecksum dnOrder="5">67904617BD60BD3657328D85DC8C48F7</GeneratedChecksum>
+          <UserChecksum dnOrder="6">67904617BD60BD3657328D85DC8C48F7</UserChecksum>
         </File>
         <File dnOrder="93">
           <Type dnOrder="0">HEADER</Type>
@@ -1149,13 +1150,13 @@
         <Setting append="true" category="C32-LD" delimiter=";" dnOrder="4" key="preprocessor-macros" security="NON_SECURE" value=""/>
       </Settings>
     </Manifest>
-    <Settings dnOrder="4">
+    <Settings dnOrder="5">
       <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.6.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAMD21_DFP\3.2.92\samd21a\atdf\ATSAMD21J18A.atdf"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\SAMD21_DFP\3.3.98\samd21a\atdf\ATSAMD21J18A.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
-      <Setting dnOrder="4" key="MERGE_STRATEGY" value="ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;validation;"/>
+      <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>

@@ -1085,7 +1085,7 @@ void _DRV_USBFSV1_HOST_ControlTransferDataStageSend(DRV_USBFSV1_OBJ * hDriver)
     {
         /* Bank 0 contains the data. User data must be copied to the host
          * control transfer data buffer. */
-        memcpy(hDriver->hostTransactionBuffer, (pIRP->data + pIRP->completedBytes), size);
+        memcpy(hDriver->hostTransactionBuffer, ( ( uint8_t * )pIRP->data + pIRP->completedBytes), size);
         controlPipe->USB_PSTATUSSET = USB_HOST_PSTATUSSET_BK0RDY_Msk;
         controlPipe->USB_PCFG |= DRV_USBFSV1_HOST_PIPE_TOKEN_OUT;
     }
@@ -1336,7 +1336,7 @@ bool _DRV_USBFSV1_HOST_ControlTransferProcess(DRV_USBFSV1_OBJ * hDriver)
                              * that the USB DMA will write a minimum of 4 bytes. This can prove dangerous at
                              * the client level. */
 
-                            memcpy((pIRP->data + pIRP->completedBytes), hDriver->hostTransactionBuffer, byteCount);
+                            memcpy(( ( uint8_t * )pIRP->data + pIRP->completedBytes), hDriver->hostTransactionBuffer, byteCount);
                             pIRP->completedBytes += byteCount;
                             pIRP->completedBytesInThisFrame += byteCount;
 
@@ -1646,7 +1646,7 @@ void _DRV_USBFSV1_HOST_NonControlTransferDataSend(DRV_USBFSV1_OBJ * hDriver)
     if(pipe->pipeType == USB_TRANSFER_TYPE_ISOCHRONOUS)
     {
         /* For isoc transfers the user application buffer is used */
-        hardwarePipeDesc->USB_ADDR = (uint32_t)(pIRP->data + pIRP->completedBytes);
+        hardwarePipeDesc->USB_ADDR = (uint32_t)( ( uint8_t * )pIRP->data + pIRP->completedBytes);
     }
     else
     {
@@ -1654,8 +1654,9 @@ void _DRV_USBFSV1_HOST_NonControlTransferDataSend(DRV_USBFSV1_OBJ * hDriver)
         hardwarePipeDesc->USB_ADDR = (uint32_t)(hDriver->hostTransactionBuffer);
     }
 
-    hardwarePipeDesc->USB_CTRL_PIPE &= ~(USB_HOST_CTRL_PIPE_PDADDR_Msk);
-    hardwarePipeDesc->USB_CTRL_PIPE |= ((pipe->deviceAddress << USB_HOST_CTRL_PIPE_PDADDR_Pos)
+    /* Clear the CTRL Pipe register */
+    hardwarePipeDesc->USB_CTRL_PIPE = 0;
+    hardwarePipeDesc->USB_CTRL_PIPE = ((pipe->deviceAddress << USB_HOST_CTRL_PIPE_PDADDR_Pos)
             |((pipe->endpointAndDirection & 0xF) << USB_HOST_CTRL_PIPE_PEPNUM_Pos));
     hardwarePipeDesc->USB_PCKSIZE = 0;
     hardwarePipeDesc->USB_PCKSIZE = (USB_HOST_PCKSIZE_MULTI_PACKET_SIZE(0)|USB_HOST_PCKSIZE_BYTE_COUNT(size)
@@ -1695,7 +1696,7 @@ void _DRV_USBFSV1_HOST_NonControlTransferDataSend(DRV_USBFSV1_OBJ * hDriver)
         
         if(pipe->pipeType != USB_TRANSFER_TYPE_ISOCHRONOUS)
         {
-            memcpy(hDriver->hostTransactionBuffer, (pIRP->data + pIRP->completedBytes), size);
+            memcpy(hDriver->hostTransactionBuffer, ( ( uint8_t * )pIRP->data + pIRP->completedBytes), size);
         }
 
         hardwarePipe->USB_PSTATUSSET = USB_HOST_PSTATUSSET_BK0RDY_Msk;
@@ -1820,7 +1821,7 @@ static bool _DRV_USBFSV1_HOST_NonControlTransferProcess
                         if((pipe->endpointAndDirection & 0x80) != 0)
                         {
                             /* Data has been received from the device */
-                            memcpy((pIRP->data + pIRP->completedBytes), hDriver->hostTransactionBuffer, byteCount);
+                            memcpy(( ( uint8_t * )pIRP->data + pIRP->completedBytes), hDriver->hostTransactionBuffer, byteCount);
                         }
 
                         /* Now update the byte counters */
@@ -1876,7 +1877,7 @@ static bool _DRV_USBFSV1_HOST_NonControlTransferProcess
             if(endIRP == true)
             {
                 /* Move the pipe queue head to next IRP in the queue */
-                pipe->irpQueueHead = (USB_HOST_IRP_LOCAL *)pipe->next;
+                pipe->irpQueueHead = (USB_HOST_IRP_LOCAL *)pIRP->next;
 
                 /* Update the size field with actual size received\transmitted */
                 pIRP->size = pIRP->completedBytes;
@@ -2054,7 +2055,7 @@ bool _DRV_USBFSV1_HOST_NonControlTransferBW(DRV_USBFSV1_OBJ * hDriver, USB_HOST_
     unsigned int bwAvailable = 0;
     unsigned int nTransactions = 0;
     unsigned int nPossibleTransactions = 0;
-
+    
     /* Check how much bandwidth is available */
     bwAvailable = (DRV_USBFSV1_MAX_BANDWIDTH_PER_FRAME - hDriver->globalBWConsumed);
     bwPerTransaction = pipe->bwPerTransaction;
@@ -2519,6 +2520,7 @@ void _DRV_USBFSV1_HOST_CreateFrameIRPList(DRV_USBFSV1_OBJ * hDriver)
                      * the next pipe in the pipe group. If the end of the group has
                      * been reached, then reset to the start of the group */
                     bulkOutPipeGroup->currentIRP = bulkOutPipeGroup->currentPipe->irpQueueHead;
+                    
                     if ((_DRV_USBFSV1_HOST_NonControlTransferBW(hDriver, bulkOutPipeGroup->currentIRP)) == true)
                     {
                         /* Bandwidth for this transaction is available and global
@@ -3165,6 +3167,8 @@ void DRV_USBFSV1_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enable)
              * attached event and switch off the port power. */
 	
             SYS_INT_SourceStatusClear((INT_SOURCE)pUSBDrvObj->interruptSource);
+            /* Let the host layer know that root hub operation is disabled */
+
             pUSBDrvObj->operationEnabled = false;
 			
 			/* Disable USB port by turning off VBUS */ 
