@@ -44,6 +44,25 @@
  ******************************************************/
  
 <#if (USB_OPERATION_MODE == "Device") && (USB_DEVICE_VBUS_SENSE == true)>
+/*  When designing a Self-powered USB Device, the application should make sure
+    that USB_DEVICE_Attach() function is called only when VBUS is actively powered.
+	Therefore, the firmware needs some means to detect when the Host is powering 
+	the VBUS. A 5V tolerant I/O pin can be connected to VBUS (through a resistor)
+	and can be used to detect when VBUS is high or low. The application can specify
+	a VBUS Detect function through the USB Driver Initialize data structure. 
+	The USB device stack will periodically call this function. If the VBUS is 
+	detected, the USB_DEVICE_EVENT_POWER_DETECTED event is generated. If the VBUS 
+	is removed (i.e., the device is physically detached from Host), the USB stack 
+	will generate the event USB_DEVICE_EVENT_POWER_REMOVED. The application should 
+	call USB_DEVICE_Detach() when VBUS is removed. 
+    
+    The following are the steps to generate the VBUS_SENSE Function through MHC     
+        1) Navigate to MHC->Tools->Pin Configuration and Configure the pin used 
+		   as VBUS_SENSE. Set this pin Function as "GPIO" and set as "Input". 
+		   Provide a custom name to the pin.
+        2) Select the USB Driver Component in MHC Project Graph and enable the  
+		   "Enable VBUS Sense" Check-box.     
+        3) Specify the custom name of the VBUS SENSE pin in the "VBUS SENSE Pin Name" box.  */ 
 static DRV_USB_VBUS_LEVEL DRV_USBFSV1_VBUS_Comparator(void)
 {
     DRV_USB_VBUS_LEVEL retVal = DRV_USB_VBUS_LEVEL_INVALID;
@@ -64,7 +83,7 @@ static DRV_USB_VBUS_LEVEL DRV_USBFSV1_VBUS_Comparator(void)
 void _DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
 {
 	/* Note: When operating in Host mode, the application can specify a Root 
-	   hub port enable function. The USB Host Controller driver initi data 
+	   hub port enable function. The USB Host Controller driver initialize data 
 	   structure has a member for specifying the root hub enable function. 
 	   This parameter should point to Root hub port enable function. If this 
 	   parameter is NULL, it implies that the port is always enabled. 
