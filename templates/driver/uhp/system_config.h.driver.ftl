@@ -62,9 +62,12 @@
 /* Reset duration in milli Seconds */ 
 #define DRV_USB_UHP_RESET_DURATION                     ${USB_DRV_HOST_RESET_DUARTION}
 
+/* Maximum Transfer Size */ 
+#define DRV_USB_UHP_NO_CACHE_BUFFER_LENGTH  ${USB_DRV_HOST_BUFFER_SIZE}
+
 /* Alignment for buffers that are submitted to USB Driver*/ 
 #ifndef USB_ALIGN
-#define USB_ALIGN __ALIGNED(4096)
+#define USB_ALIGN __ALIGNED(32)
 #endif 
 <#--
 /*******************************************************************************
