@@ -236,6 +236,7 @@ typedef enum
 
 typedef enum
 {
+    USB_HOST_HID_QUERY_ERROR                      = 0,
     USB_HOST_HID_QUERY_USAGE                      = 1,
     USB_HOST_HID_QUERY_STRING,
     USB_HOST_HID_QUERY_DESIGNATOR
@@ -261,7 +262,7 @@ typedef union _USB_HOST_HID_ITEM_DATA_OPTIONAL_
     uint8_t unsignedData8; /* 1 byte unsigned data */
     int8_t  signedData8; /* 1 byte signed data */
     uint16_t unsignedData16; /* 2 bytes unsigned data */
-    int16_t signedData16;; /* 2 bytes signed data */
+    int16_t signedData16; /* 2 bytes signed data */
     uint32_t unsignedData32; /* 4 bytes unsigned data */
     int32_t signedData32; /* 4 bytes signed data */
 
