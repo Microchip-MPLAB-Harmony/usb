@@ -3522,39 +3522,27 @@ void DRV_USBFS_HOST_ROOT_HUB_Initialize
 
 void DRV_USBFS_HOST_EndpointToggleClear
 (
-    DRV_HANDLE client,
-    USB_ENDPOINT endpointAndDirection
+    DRV_USBFS_HOST_PIPE_HANDLE pipeHandle
 )
 {
-    /* Start of local variables */
     DRV_USBFS_HOST_PIPE_OBJ * pPipe = (DRV_USBFS_HOST_PIPE_OBJ *)NULL;
-    uint8_t pipeCount = 0;
-    /* End of local variables */
 
-    if((client == DRV_HANDLE_INVALID) || (((DRV_USBFS_OBJ *)client) == NULL))
+    if((pipeHandle != DRV_USBFS_HOST_PIPE_HANDLE_INVALID) && ((DRV_USBFS_HOST_PIPE_HANDLE)NULL != pipeHandle))
     {
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "Invalid client");
+        pPipe = (DRV_USBFS_HOST_PIPE_OBJ *)pipeHandle;
+        if (pPipe->inUse)
+        {
+            pPipe->nakCounter = 0;
+            pPipe->dataToggle = USB_BUFFER_DATA0;
+        }
+        else
+        {
+            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBFS Driver: Invalid Pipe");
+        }
     }
     else
     {
-        for(pipeCount = 0; pipeCount < DRV_USBFS_HOST_PIPES_NUMBER; pipeCount++)
-        {
-            /* Check for free pipe object */
-            if((client == gDrvUSBHostPipeObj[pipeCount].hClient) && (true == gDrvUSBHostPipeObj[pipeCount].inUse) &&
-                    (gDrvUSBHostPipeObj[pipeCount].endpointAndDirection == endpointAndDirection))
-            {
-                /* Found the pipe for this endpoint and direction */
-                
-                pPipe = &gDrvUSBHostPipeObj[pipeCount];
-                
-                pPipe->nakCounter = 0;
-                pPipe->dataToggle = USB_BUFFER_DATA0;
-                break;
-            }
-        }
-        if(DRV_USBFS_HOST_PIPES_NUMBER == pipeCount)
-        {
-            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "Invalid endpoint");
-        }
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBFS Driver: Invalid endpoint");
     }
+    
 } /* End of DRV_USBFS_HOST_EndpointToggleClear() */
