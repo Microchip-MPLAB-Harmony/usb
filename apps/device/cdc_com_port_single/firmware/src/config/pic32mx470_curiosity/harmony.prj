@@ -157,8 +157,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mx470_curiosity/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">C18F7B3179BE76583B0B71327D0FED7B</GeneratedChecksum>
-          <UserChecksum dnOrder="6">C18F7B3179BE76583B0B71327D0FED7B</UserChecksum>
+          <GeneratedChecksum dnOrder="5">9070D0A67AC9C877CF82A00FB798AC5B</GeneratedChecksum>
+          <UserChecksum dnOrder="6">9070D0A67AC9C877CF82A00FB798AC5B</UserChecksum>
         </File>
         <File dnOrder="17">
           <Type dnOrder="0">SOURCE</Type>
@@ -193,8 +193,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mx470_curiosity/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">08AF0C07A22B1567BE2071D5014876C3</GeneratedChecksum>
-          <UserChecksum dnOrder="6">08AF0C07A22B1567BE2071D5014876C3</UserChecksum>
+          <GeneratedChecksum dnOrder="5">F6E80C3E948DFFEEAA5DD46A620B6486</GeneratedChecksum>
+          <UserChecksum dnOrder="6">F6E80C3E948DFFEEAA5DD46A620B6486</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">HEADER</Type>
@@ -238,8 +238,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mx470_curiosity/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">38148410A4C123F6D3C8D2A5684C2D2D</GeneratedChecksum>
-          <UserChecksum dnOrder="6">38148410A4C123F6D3C8D2A5684C2D2D</UserChecksum>
+          <GeneratedChecksum dnOrder="5">DF147276AE56CA76E3E9BEB8447620AB</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DF147276AE56CA76E3E9BEB8447620AB</UserChecksum>
         </File>
         <File dnOrder="26">
           <Type dnOrder="0">HEADER</Type>
@@ -256,8 +256,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mx470_curiosity/driver/usb/usbfs</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/usbfs/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">6F0D6F59FCBE65208A7E18076207DC69</GeneratedChecksum>
-          <UserChecksum dnOrder="6">6F0D6F59FCBE65208A7E18076207DC69</UserChecksum>
+          <GeneratedChecksum dnOrder="5">8E09A88EA42C831AF5D8F17A1549E1D2</GeneratedChecksum>
+          <UserChecksum dnOrder="6">8E09A88EA42C831AF5D8F17A1549E1D2</UserChecksum>
         </File>
         <File dnOrder="28">
           <Type dnOrder="0">HEADER</Type>
@@ -1543,8 +1543,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mx470_curiosity/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5"/>
-          <UserChecksum dnOrder="6"/>
+          <GeneratedChecksum dnOrder="5">4B3C3EF8A318908A22B78500515C3288</GeneratedChecksum>
+          <UserChecksum dnOrder="6">4B3C3EF8A318908A22B78500515C3288</UserChecksum>
         </File>
       </Files>
       <Settings dnOrder="1">
