@@ -194,8 +194,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_g55_xpro/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">209E730092D619506291B21113B827F1</GeneratedChecksum>
-          <UserChecksum dnOrder="6">209E730092D619506291B21113B827F1</UserChecksum>
+          <GeneratedChecksum dnOrder="5">F96C38F5B2714380BEDD7E8E83DED873</GeneratedChecksum>
+          <UserChecksum dnOrder="6">F96C38F5B2714380BEDD7E8E83DED873</UserChecksum>
         </File>
         <File dnOrder="21">
           <Type dnOrder="0">SOURCE</Type>
@@ -329,8 +329,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_g55_xpro/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">A69D7847AEA8F047FF4D02BBC7325C49</GeneratedChecksum>
-          <UserChecksum dnOrder="6">A69D7847AEA8F047FF4D02BBC7325C49</UserChecksum>
+          <GeneratedChecksum dnOrder="5">55DE7CACBDBD75A8BBB4CD1AA58F2BC3</GeneratedChecksum>
+          <UserChecksum dnOrder="6">55DE7CACBDBD75A8BBB4CD1AA58F2BC3</UserChecksum>
         </File>
         <File dnOrder="36">
           <Type dnOrder="0">HEADER</Type>
@@ -401,8 +401,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_g55_xpro/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">38148410A4C123F6D3C8D2A5684C2D2D</GeneratedChecksum>
-          <UserChecksum dnOrder="6">38148410A4C123F6D3C8D2A5684C2D2D</UserChecksum>
+          <GeneratedChecksum dnOrder="5">DF147276AE56CA76E3E9BEB8447620AB</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DF147276AE56CA76E3E9BEB8447620AB</UserChecksum>
         </File>
         <File dnOrder="44">
           <Type dnOrder="0">HEADER</Type>
@@ -905,8 +905,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_g55_xpro/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5"/>
-          <UserChecksum dnOrder="6"/>
+          <GeneratedChecksum dnOrder="5">4B3C3EF8A318908A22B78500515C3288</GeneratedChecksum>
+          <UserChecksum dnOrder="6">4B3C3EF8A318908A22B78500515C3288</UserChecksum>
         </File>
         <File dnOrder="100">
           <Type dnOrder="0">HEADER</Type>
