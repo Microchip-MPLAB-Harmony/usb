@@ -352,6 +352,50 @@ typedef struct
 
 } DRV_USB_UHP_INIT;
 
+// ****************************************************************************
+/* Function:
+    void DRV_USB_UHP_EndpointToggleClear
+    (
+        DRV_USB_UHP_HOST_PIPE_HANDLE pipeHandle
+    )
+
+  Summary:
+    Facilitates in resetting of endpoint data toggle to 0 for Non Control
+    endpoints.
+
+  Description:
+    Facilitates in resetting of endpoint data toggle to 0 for Non Control
+    endpoints.
+	
+  Precondition:
+    None.
+
+  Parameters:
+    handle - Handle to the driver.
+    pipeHandle - Handle to the pipe that connected to the device endpoint
+    whose toggle needs to be cleared.
+
+  Example:
+    <code>
+
+    // This code shows how the USB Host Layer calls the
+    // DRV_USB_UHP_EndpointToggleClear function.
+
+    DRV_USB_UHP_HOST_PIPE_HANDLE pipeHandle;
+
+    DRV_USB_UHP_EndpointToggleClear(pipeHandle);
+
+    </code>
+
+  Remarks:
+    None.
+*/
+
+void DRV_USB_UHP_EndpointToggleClear
+(
+    DRV_USB_UHP_HOST_PIPE_HANDLE pipeHandle
+);
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Interface Routines - System Level
