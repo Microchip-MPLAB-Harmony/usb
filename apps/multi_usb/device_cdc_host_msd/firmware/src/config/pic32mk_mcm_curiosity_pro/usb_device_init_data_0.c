@@ -119,7 +119,7 @@ const uint8_t fullSpeedConfigurationDescriptor0[]=
     2,                                                      // Number of interfaces in this configuration
     0x01,                                                   // Index value of this configuration
     0x00,                                                   // Configuration string index
-    USB_ATTRIBUTE_DEFAULT | USB_ATTRIBUTE_SELF_POWERED,     // Attributes
+    USB_ATTRIBUTE_DEFAULT | USB_ATTRIBUTE_SELF_POWERED, // Attributes
     50,
 	
 	/* Interface Descriptor */
@@ -214,7 +214,6 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet0[1] =
 /**************************************
  *  String descriptors.
  *************************************/
-
  /*******************************************
  *  Language code string descriptor
  *******************************************/
@@ -269,7 +268,7 @@ USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors0[3]=
 {
     (const uint8_t *const)&sd000_0,
     (const uint8_t *const)&sd001_0,
-    (const uint8_t *const)&sd002_0
+    (const uint8_t *const)&sd002_0,
 };
 
 /*******************************************
@@ -283,7 +282,7 @@ const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor0 =
 	NULL, 
 	0,
 	NULL,
-    3,														// Total number of string descriptors available.
+	3,  													// Total number of string descriptors available.
     stringDescriptors0,                                      // Pointer to array of string descriptors.
 	NULL, 
 	NULL
