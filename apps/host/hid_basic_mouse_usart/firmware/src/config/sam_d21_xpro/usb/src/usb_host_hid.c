@@ -478,7 +478,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_FindTopLevelUsage
             memset(&localItem, 0, (size_t)sizeof(USB_HOST_HID_LOCAL_ITEM));
             memset(&(mainItem.data), 0,
                     (size_t)sizeof(USB_HID_MAIN_ITEM_OPTIONAL_DATA));
-            mainItem.tag = 0;
+            mainItem.tag = USB_HID_REPORT_TYPE_ERROR;
             
             /* Extract the Main item from the Report Descriptor having index
              * mainItemIndex starting from 1 */ 
@@ -498,7 +498,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_FindTopLevelUsage
                                         NULL,
                                         /* Not Usage driver initiated so query
                                          * type is not applicable */
-                                        0
+                                        USB_HOST_HID_QUERY_ERROR
                                     ))
             {
                 hidInstanceInfo->topLevelUsageProcessing = false;
@@ -2690,8 +2690,7 @@ void _USB_HOST_HID_InterfaceAssign
                     /* INTERRUPT IN endpoint query */
                     USB_HOST_DeviceEndpointQueryContextClear(&endpointQuery);
 
-                    endpointQuery.flags = USB_HOST_ENDPOINT_QUERY_BY_DIRECTION |
-                    USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE;
+                    endpointQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)(USB_HOST_ENDPOINT_QUERY_BY_DIRECTION |USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE);
                     endpointQuery.direction  = USB_DATA_DIRECTION_DEVICE_TO_HOST;
                     endpointQuery.transferType = USB_TRANSFER_TYPE_INTERRUPT;
 
@@ -2784,8 +2783,8 @@ void _USB_HOST_HID_InterfaceAssign
                          */
                         USB_HOST_DeviceEndpointQueryContextClear(&endpointQuery);
 
-                        endpointQuery.flags = USB_HOST_ENDPOINT_QUERY_BY_DIRECTION |
-                            USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE;
+                        endpointQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)(USB_HOST_ENDPOINT_QUERY_BY_DIRECTION |
+                            USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE);
                         endpointQuery.direction  = USB_DATA_DIRECTION_HOST_TO_DEVICE;
                         endpointQuery.transferType = USB_TRANSFER_TYPE_INTERRUPT;
 
@@ -3163,7 +3162,7 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_HID_InterfaceEventHandler
                                         gUSBHostHIDObjectHandlePool[index].usage)
                                     {
                                         responseData.result = 
-                                                USB_HOST_RESULT_REQUEST_STALLED;
+                                                (USB_HOST_HID_RESULT)USB_HOST_RESULT_REQUEST_STALLED;
                                         responseData.handle = 
                                                 transferCompleteEventData->transferHandle;
 
@@ -3345,7 +3344,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_MainItemParse
             hidInstanceInfo->mainItemData->data.data4Bytes
                         = data;
             hidInstanceInfo->mainItemData->tag
-                        = USB_HID_MAIN_ITEM_TAG_BEGIN_COLLECTION;
+                        = (USB_HID_REPORT_TYPE)USB_HID_MAIN_ITEM_TAG_BEGIN_COLLECTION;
             hidInstanceInfo->collectionNestingLevel++;
             returnValue = USB_HOST_HID_RESULT_SUCCESS;
 
@@ -3354,7 +3353,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_MainItemParse
         case USB_HID_MAIN_ITEM_TAG_END_COLLECTION:
             hidInstanceInfo->mainItemData->data.data4Bytes
                         = data;
-            hidInstanceInfo->mainItemData->tag = USB_HID_MAIN_ITEM_TAG_END_COLLECTION;
+            hidInstanceInfo->mainItemData->tag = (USB_HID_REPORT_TYPE)USB_HID_MAIN_ITEM_TAG_END_COLLECTION;
             hidInstanceInfo->collectionNestingLevel--;
             returnValue = USB_HOST_HID_RESULT_SUCCESS;
 
@@ -3368,7 +3367,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_MainItemParse
             {
                 hidInstanceInfo->mainItemData->data.data4Bytes
                         = data;
-                hidInstanceInfo->mainItemData->tag = USB_HID_MAIN_ITEM_TAG_INPUT;
+                hidInstanceInfo->mainItemData->tag = (USB_HID_REPORT_TYPE)USB_HID_MAIN_ITEM_TAG_INPUT;
 
                 returnValue = USB_HOST_HID_RESULT_SUCCESS;
             }
@@ -3390,7 +3389,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_MainItemParse
                     hidInstanceInfo->mainItemData->globalItem->physicalMaximum))
             {
                 hidInstanceInfo->mainItemData->data.data4Bytes = data;
-                hidInstanceInfo->mainItemData->tag = USB_HID_MAIN_ITEM_TAG_OUTPUT;
+                hidInstanceInfo->mainItemData->tag = (USB_HID_REPORT_TYPE)USB_HID_MAIN_ITEM_TAG_OUTPUT;
                 
                 returnValue = USB_HOST_HID_RESULT_SUCCESS;
             }
@@ -3412,7 +3411,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_MainItemParse
                     hidInstanceInfo->mainItemData->globalItem->physicalMaximum))
             {
                 hidInstanceInfo->mainItemData->data.data4Bytes = data;
-                hidInstanceInfo->mainItemData->tag = USB_HID_MAIN_ITEM_TAG_FEATURE;
+                hidInstanceInfo->mainItemData->tag = (USB_HID_REPORT_TYPE)USB_HID_MAIN_ITEM_TAG_FEATURE;
                 
                 returnValue = USB_HOST_HID_RESULT_SUCCESS;
             }
@@ -3848,7 +3847,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_GlobalItemParse
 
         case USB_HID_GLOBAL_ITEM_TAG_USAGE_PAGE:
             (hidInstanceInfo->mainItemData)->globalItem->
-                    usagePage = _USB_HOST_HID_UnsignedDataGet(itemData);
+                    usagePage = (USB_HID_USAGE_PAGE)_USB_HOST_HID_UnsignedDataGet(itemData);
 
             if(0 == hidInstanceInfo->mainItemData->globalItem->usagePage)
             {
@@ -4358,7 +4357,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_MainItemGet
              * case only.
              */
             if(USB_HOST_HID_RESULT_SUCCESS != _USB_HOST_HID_ItemGet((uint8_t)hidInstanceIndex, mainItemIndex,
-                           false, 0, NULL, 0))
+                           false, 0, NULL, USB_HOST_HID_QUERY_ERROR))
             {
                 /* USB_HOST_HID_RESULT_FAILURE will be returned */
             }
@@ -4874,7 +4873,7 @@ void _USB_HOST_HID_InterfaceTasks(USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHand
                              /* INTERFACE NUMBER */
                              hidInstanceInfo->bInterfaceNumber,
                              /* REPORT PROTOCOL TYPE */
-                             1
+                             USB_HID_REPORT_PROTOCOL
                         );
 
                         /* Launch the request */
