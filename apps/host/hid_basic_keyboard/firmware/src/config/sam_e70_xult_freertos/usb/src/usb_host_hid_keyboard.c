@@ -490,7 +490,7 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
                             (size_t)sizeof(USB_HOST_HID_LOCAL_ITEM));
                     memset(&(mainItem.data), 0,
                             (size_t)sizeof(USB_HID_MAIN_ITEM_OPTIONAL_DATA));
-                    mainItem.tag = 0;
+                    mainItem.tag = USB_HID_REPORT_TYPE_ERROR;
 
                     /* Start enquiring for the main items starting from
                      * index = 1. index = 0 is invalid to HID client driver. */
@@ -746,7 +746,7 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                                     = USB_HID_KEY_RELEASED;
                                                 keyboardData[keyboardIndex].appData.nonModifierKeysData
                                                     [keyboardData[keyboardIndex].appData.nNonModifierKeysData].event
-                                                    = SYS_TIME_CounterGet();
+                                                    = (USB_HID_KEY_EVENT)SYS_TIME_CounterGet();
                                                 keyboardData[keyboardIndex].appData.nNonModifierKeysData++;
                                             }
                                             else
@@ -761,7 +761,7 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                     {
                                         /* Save the present key state for next
                                          * processing */
-                                        keyboardData[keyboardIndex].lastKeyCode[count] = 0;
+                                        keyboardData[keyboardIndex].lastKeyCode[count] = USB_HID_KEYBOARD_KEYPAD_RESERVED_NO_EVENT_INDICATED;
                                         if(keyboardData[keyboardIndex].appData
                                                 .nonModifierKeysData[count].event == USB_HID_KEY_PRESSED)
                                         {
