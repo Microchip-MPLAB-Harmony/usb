@@ -96,6 +96,7 @@ extern "C" {
 /* Maximum instances of CDC function driver */
 #define USB_DEVICE_CDC_INSTANCES_NUMBER                     2
 
+
 /* CDC Transfer Queue Size for both read and
    write. Applicable to all instances of the
    function driver */
