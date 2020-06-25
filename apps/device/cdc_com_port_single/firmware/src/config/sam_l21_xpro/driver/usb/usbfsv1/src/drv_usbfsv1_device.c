@@ -2267,6 +2267,34 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
             usbID->DEVICE.USB_INTFLAG = USB_DEVICE_INTFLAG_EORSM_Msk;
         }
 
+        if(((usbID->DEVICE.USB_INTFLAG & USB_DEVICE_INTFLAG_SUSPEND_Msk) == USB_DEVICE_INTFLAG_SUSPEND_Msk) &&
+           ((usbID->DEVICE.USB_INTENSET & USB_DEVICE_INTENSET_SUSPEND_Msk) == USB_DEVICE_INTENSET_SUSPEND_Msk))
+        {
+            /* We have received a SUSPEND interrupt - clear the flag and send 
+             * the event to client */
+            
+            /* If the application goes to Sleep mode when USB receives a 
+             * Suspend interrupt, then when the device wakes up, it has to 
+             * ensure that the clocks are ready for functioning. This is 
+             * currently not handled by Controller driver. It has to be handled
+             * by the application. */
+			 
+			/* Wake UP interrupt will always be set when the device is 
+			 * active. When the device goes to suspend, we have to 
+			 * manually clear the WAKEUP flag to avoid getting a WAKEUP 
+			 * interrupt right after we enter the suspend. */
+            
+            usbID->DEVICE.USB_INTFLAG = USB_DEVICE_INTFLAG_SUSPEND_Msk;
+            
+            usbID->DEVICE.USB_INTENCLR = USB_DEVICE_INTENCLR_SUSPEND_Msk;
+            
+            usbID->DEVICE.USB_INTFLAG = USB_DEVICE_INTFLAG_WAKEUP_Msk;
+            
+            usbID->DEVICE.USB_INTENSET = USB_DEVICE_INTENSET_WAKEUP_Msk;
+            
+            hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBFSV1_EVENT_IDLE_DETECT, NULL);
+        }
+
         if(((usbID->DEVICE.USB_INTFLAG & USB_DEVICE_INTFLAG_WAKEUP_Msk) == USB_DEVICE_INTFLAG_WAKEUP_Msk) &&
            ((usbID->DEVICE.USB_INTENSET & USB_DEVICE_INTENSET_WAKEUP_Msk) == USB_DEVICE_INTENSET_WAKEUP_Msk))
         {
@@ -2283,30 +2311,11 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
 
             usbID->DEVICE.USB_INTENCLR = USB_DEVICE_INTENCLR_WAKEUP_Msk;
             
+            usbID->DEVICE.USB_INTFLAG = USB_DEVICE_INTFLAG_SUSPEND_Msk;
+            
             usbID->DEVICE.USB_INTENSET = USB_DEVICE_INTENSET_SUSPEND_Msk;
 
             hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBFSV1_EVENT_RESUME_DETECT, NULL);
-        }
-
-        if(((usbID->DEVICE.USB_INTFLAG & USB_DEVICE_INTFLAG_SUSPEND_Msk) == USB_DEVICE_INTFLAG_SUSPEND_Msk) &&
-           ((usbID->DEVICE.USB_INTENSET & USB_DEVICE_INTENSET_SUSPEND_Msk) == USB_DEVICE_INTENSET_SUSPEND_Msk))
-        {
-            /* We have received a SUSPEND interrupt - clear the flag and send 
-             * the event to client */
-            
-            /* If the application goes to Sleep mode when USB receives a 
-             * Suspend interrupt, then when the device wakes up, it has to 
-             * ensure that the clocks are ready for functioning. This is 
-             * currently not handled by Controller driver. It has to be handled
-             * by the application. */
-            
-            usbID->DEVICE.USB_INTFLAG = USB_DEVICE_INTFLAG_SUSPEND_Msk;
-            
-            usbID->DEVICE.USB_INTENCLR = USB_DEVICE_INTENCLR_SUSPEND_Msk;
-            
-            usbID->DEVICE.USB_INTENSET = USB_DEVICE_INTENSET_WAKEUP_Msk;
-            
-            hDriver->pEventCallBack(hDriver->hClientArg, DRV_USBFSV1_EVENT_IDLE_DETECT, NULL);
         }
 
         if(((usbID->DEVICE.USB_INTFLAG & USB_DEVICE_INTFLAG_SOF_Msk) == USB_DEVICE_INTFLAG_SOF_Msk) &&
