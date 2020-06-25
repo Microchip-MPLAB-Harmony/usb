@@ -129,7 +129,7 @@ extern "C" {
 /* HID Transfer Queue Size for both read and
    write. Applicable to all instances of the
    function driver */
-#define USB_DEVICE_HID_QUEUE_DEPTH_COMBINED 2
+#define USB_DEVICE_HID_QUEUE_DEPTH_COMBINED                 2
 
 /* Maximum instances of MSD function driver */
 #define USB_DEVICE_MSD_INSTANCES_NUMBER     1 
