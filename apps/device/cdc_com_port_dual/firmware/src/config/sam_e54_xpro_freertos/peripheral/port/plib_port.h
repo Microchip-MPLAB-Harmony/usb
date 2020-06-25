@@ -65,8 +65,7 @@
 // *****************************************************************************
 // *****************************************************************************
 
-
-
+  
 /*** Macros for USB_VBUS_SENSE pin ***/
 #define USB_VBUS_SENSE_Set()               (PORT_REGS->GROUP[2].PORT_OUTSET = 1 << 0)
 #define USB_VBUS_SENSE_Clear()             (PORT_REGS->GROUP[2].PORT_OUTCLR = 1 << 0)
