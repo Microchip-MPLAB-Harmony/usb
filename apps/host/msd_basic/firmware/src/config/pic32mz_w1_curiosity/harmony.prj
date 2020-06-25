@@ -49,8 +49,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity/driver/usb/usbfs/src/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/usbfs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">89C487ED4FCC258AF681D043DFCDC871</GeneratedChecksum>
-          <UserChecksum dnOrder="6">89C487ED4FCC258AF681D043DFCDC871</UserChecksum>
+          <GeneratedChecksum dnOrder="5">A807A88CE177C0AF06553EFF3582885E</GeneratedChecksum>
+          <UserChecksum dnOrder="6">A807A88CE177C0AF06553EFF3582885E</UserChecksum>
         </File>
         <File dnOrder="5">
           <Type dnOrder="0">SOURCE</Type>
@@ -247,8 +247,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity/usb/src</LogicalPath>
           <PhysicalPath dnOrder="4">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">7E9FDF6729D1CA5E5DF0EBD7EFD97EC4</GeneratedChecksum>
-          <UserChecksum dnOrder="6">7E9FDF6729D1CA5E5DF0EBD7EFD97EC4</UserChecksum>
+          <GeneratedChecksum dnOrder="5">79E34F8C5819285EC8E8367B375B2817</GeneratedChecksum>
+          <UserChecksum dnOrder="6">79E34F8C5819285EC8E8367B375B2817</UserChecksum>
         </File>
         <File dnOrder="27">
           <Type dnOrder="0">SOURCE</Type>
@@ -265,8 +265,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity/usb/src</LogicalPath>
           <PhysicalPath dnOrder="4">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">3B5803B9958F12ADE664FCF3F8C2ED99</GeneratedChecksum>
-          <UserChecksum dnOrder="6">3B5803B9958F12ADE664FCF3F8C2ED99</UserChecksum>
+          <GeneratedChecksum dnOrder="5">A44FA6E3F312CC5DB91590DBEC0A7895</GeneratedChecksum>
+          <UserChecksum dnOrder="6">A44FA6E3F312CC5DB91590DBEC0A7895</UserChecksum>
         </File>
         <File dnOrder="29">
           <Type dnOrder="0">SOURCE</Type>
@@ -274,8 +274,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity/usb/src</LogicalPath>
           <PhysicalPath dnOrder="4">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">705EEFFAF9EABEDE2B5D75DA2E3AC80C</GeneratedChecksum>
-          <UserChecksum dnOrder="6">705EEFFAF9EABEDE2B5D75DA2E3AC80C</UserChecksum>
+          <GeneratedChecksum dnOrder="5">6FB71B015A2C3B84C8913F9C8A53532F</GeneratedChecksum>
+          <UserChecksum dnOrder="6">6FB71B015A2C3B84C8913F9C8A53532F</UserChecksum>
         </File>
         <File dnOrder="30">
           <Type dnOrder="0">SOURCE</Type>
@@ -319,8 +319,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">BA49C6854BF0445F104BEB12DFE76AF8</GeneratedChecksum>
-          <UserChecksum dnOrder="6">BA49C6854BF0445F104BEB12DFE76AF8</UserChecksum>
+          <GeneratedChecksum dnOrder="5">608F0E6541884D813C41AEA786BDCBA7</GeneratedChecksum>
+          <UserChecksum dnOrder="6">608F0E6541884D813C41AEA786BDCBA7</UserChecksum>
         </File>
         <File dnOrder="35">
           <Type dnOrder="0">HEADER</Type>
@@ -373,8 +373,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">38148410A4C123F6D3C8D2A5684C2D2D</GeneratedChecksum>
-          <UserChecksum dnOrder="6">38148410A4C123F6D3C8D2A5684C2D2D</UserChecksum>
+          <GeneratedChecksum dnOrder="5">DF147276AE56CA76E3E9BEB8447620AB</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DF147276AE56CA76E3E9BEB8447620AB</UserChecksum>
         </File>
         <File dnOrder="41">
           <Type dnOrder="0">HEADER</Type>
@@ -391,8 +391,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity/driver/usb/usbfs</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/usbfs/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">6F0D6F59FCBE65208A7E18076207DC69</GeneratedChecksum>
-          <UserChecksum dnOrder="6">6F0D6F59FCBE65208A7E18076207DC69</UserChecksum>
+          <GeneratedChecksum dnOrder="5">8E09A88EA42C831AF5D8F17A1549E1D2</GeneratedChecksum>
+          <UserChecksum dnOrder="6">8E09A88EA42C831AF5D8F17A1549E1D2</UserChecksum>
         </File>
         <File dnOrder="43">
           <Type dnOrder="0">HEADER</Type>
@@ -1822,8 +1822,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_w1_curiosity/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5"/>
-          <UserChecksum dnOrder="6"/>
+          <GeneratedChecksum dnOrder="5">4B3C3EF8A318908A22B78500515C3288</GeneratedChecksum>
+          <UserChecksum dnOrder="6">4B3C3EF8A318908A22B78500515C3288</UserChecksum>
         </File>
       </Files>
       <Settings dnOrder="1">
