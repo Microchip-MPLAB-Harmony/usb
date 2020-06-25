@@ -59,8 +59,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_9x60_ek_freertos_iar/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/uhp/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">76D017DBEE61674331F8DB2922653EC8</GeneratedChecksum>
-          <UserChecksum dnOrder="6">76D017DBEE61674331F8DB2922653EC8</UserChecksum>
+          <GeneratedChecksum dnOrder="5">C9DF61B1A59DBA8EC30114F14A205D08</GeneratedChecksum>
+          <UserChecksum dnOrder="6">C9DF61B1A59DBA8EC30114F14A205D08</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -302,8 +302,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_9x60_ek_freertos_iar/usb/src</LogicalPath>
           <PhysicalPath dnOrder="4">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">24D5A6720AED48CF5629FEC387CB3A3A</GeneratedChecksum>
-          <UserChecksum dnOrder="6">24D5A6720AED48CF5629FEC387CB3A3A</UserChecksum>
+          <GeneratedChecksum dnOrder="5">C27AE70812AABB989D756DABF06DBF83</GeneratedChecksum>
+          <UserChecksum dnOrder="6">C27AE70812AABB989D756DABF06DBF83</UserChecksum>
         </File>
         <File dnOrder="33">
           <Type dnOrder="0">SOURCE</Type>
@@ -311,8 +311,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_9x60_ek_freertos_iar/usb/src/</LogicalPath>
           <PhysicalPath dnOrder="4">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">189A48B71F3AEAFA32544A95020BB58D</GeneratedChecksum>
-          <UserChecksum dnOrder="6">189A48B71F3AEAFA32544A95020BB58D</UserChecksum>
+          <GeneratedChecksum dnOrder="5">5C55C155698AA4A18D1842484DA9A564</GeneratedChecksum>
+          <UserChecksum dnOrder="6">5C55C155698AA4A18D1842484DA9A564</UserChecksum>
         </File>
         <File dnOrder="34">
           <Type dnOrder="0">SOURCE</Type>
@@ -518,8 +518,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_9x60_ek_freertos_iar/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">38148410A4C123F6D3C8D2A5684C2D2D</GeneratedChecksum>
-          <UserChecksum dnOrder="6">38148410A4C123F6D3C8D2A5684C2D2D</UserChecksum>
+          <GeneratedChecksum dnOrder="5">DF147276AE56CA76E3E9BEB8447620AB</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DF147276AE56CA76E3E9BEB8447620AB</UserChecksum>
         </File>
         <File dnOrder="57">
           <Type dnOrder="0">HEADER</Type>
@@ -536,8 +536,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_9x60_ek_freertos_iar/driver/usb/uhp</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/uhp/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">A0126542653425BB8212338366BD2EBC</GeneratedChecksum>
-          <UserChecksum dnOrder="6">A0126542653425BB8212338366BD2EBC</UserChecksum>
+          <GeneratedChecksum dnOrder="5">3186BECD07F9FCD7D45C11FD7652F7E6</GeneratedChecksum>
+          <UserChecksum dnOrder="6">3186BECD07F9FCD7D45C11FD7652F7E6</UserChecksum>
         </File>
         <File dnOrder="59">
           <Type dnOrder="0">HEADER</Type>
@@ -554,8 +554,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_9x60_ek_freertos_iar/driver/usb/uhp/src</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/uhp/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">C33090552E77B36820FB19A19EF77D34</GeneratedChecksum>
-          <UserChecksum dnOrder="6">C33090552E77B36820FB19A19EF77D34</UserChecksum>
+          <GeneratedChecksum dnOrder="5">63C443EDC543317C51C1A431379B2B47</GeneratedChecksum>
+          <UserChecksum dnOrder="6">63C443EDC543317C51C1A431379B2B47</UserChecksum>
         </File>
         <File dnOrder="61">
           <Type dnOrder="0">HEADER</Type>
