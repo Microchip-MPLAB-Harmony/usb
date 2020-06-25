@@ -4,9 +4,9 @@
 
 
 project: cdc_msd_sdcard
-creation_date: 2020-06-19T12:23:07.057+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2020-06-25T09:50:56.511+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 10
-mhc_mode: Standalone            # [IDE|Standalone|Headless]
+mhc_mode: Headless            # [IDE|Standalone|Headless]
 mplabx_version: NA        # if MPLAB X plugin only
 plugin_version: NA        # if MPLAB X plugin only
 
@@ -17,9 +17,6 @@ modules:
     - {name: "core", version: "v3.7.1"}
     - {name: "csp", version: "v3.7.1"}
     - {name: "dev_packs", version: "v3.7.0"}
-    - {name: "h3_apps_regenerator", version: "unknown"}
-    - {name: "h3_dft_setup", version: "unknown"}
     - {name: "mhc", version: "v3.4.0"}
-    - {name: "mplabx_plugin", version: "v3.5.0-rc.1"}
-    - {name: "usb", version: "unknown"}
+    - {name: "usb", version: "v3.6.0"}
 

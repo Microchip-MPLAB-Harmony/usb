@@ -212,8 +212,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_9x60_ek_iar/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">50B4C7D9E1679686D2C16999B69F5D94</GeneratedChecksum>
-          <UserChecksum dnOrder="6">50B4C7D9E1679686D2C16999B69F5D94</UserChecksum>
+          <GeneratedChecksum dnOrder="5">A5E77BB0B88AAB1A9255470E9D6EBCA5</GeneratedChecksum>
+          <UserChecksum dnOrder="6">A5E77BB0B88AAB1A9255470E9D6EBCA5</UserChecksum>
         </File>
         <File dnOrder="23">
           <Type dnOrder="0">SOURCE</Type>
@@ -302,8 +302,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_9x60_ek_iar/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">10B303D6AAC494E618A633C8012B28BB</GeneratedChecksum>
-          <UserChecksum dnOrder="6">10B303D6AAC494E618A633C8012B28BB</UserChecksum>
+          <GeneratedChecksum dnOrder="5">3E73A0C8EDA85321FBA20B6AB9BE00A8</GeneratedChecksum>
+          <UserChecksum dnOrder="6">3E73A0C8EDA85321FBA20B6AB9BE00A8</UserChecksum>
         </File>
         <File dnOrder="33">
           <Type dnOrder="0">HEADER</Type>
@@ -401,8 +401,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_9x60_ek_iar/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">38148410A4C123F6D3C8D2A5684C2D2D</GeneratedChecksum>
-          <UserChecksum dnOrder="6">38148410A4C123F6D3C8D2A5684C2D2D</UserChecksum>
+          <GeneratedChecksum dnOrder="5">DF147276AE56CA76E3E9BEB8447620AB</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DF147276AE56CA76E3E9BEB8447620AB</UserChecksum>
         </File>
         <File dnOrder="44">
           <Type dnOrder="0">HEADER</Type>
