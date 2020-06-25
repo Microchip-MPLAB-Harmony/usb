@@ -678,7 +678,7 @@ void _USB_HOST_CDC_InterfaceAssign
                 USB_HOST_DeviceEndpointQueryContextClear(&endpointDescriptorQuery);
                 endpointDescriptorQuery.transferType = USB_TRANSFER_TYPE_INTERRUPT;
                 endpointDescriptorQuery.direction = USB_DATA_DIRECTION_DEVICE_TO_HOST;
-                endpointDescriptorQuery.flags = USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|USB_HOST_ENDPOINT_QUERY_BY_DIRECTION;
+                endpointDescriptorQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)(USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|USB_HOST_ENDPOINT_QUERY_BY_DIRECTION);
                 endpointDescriptor = USB_HOST_DeviceEndpointDescriptorQuery(interfaceDescriptor, &endpointDescriptorQuery);
 
                 /* Did we find the endpoint? */
@@ -699,7 +699,7 @@ void _USB_HOST_CDC_InterfaceAssign
                 USB_HOST_DeviceEndpointQueryContextClear(&endpointDescriptorQuery);
                 endpointDescriptorQuery.transferType = USB_TRANSFER_TYPE_BULK;
                 endpointDescriptorQuery.direction = USB_DATA_DIRECTION_DEVICE_TO_HOST;
-                endpointDescriptorQuery.flags = USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|USB_HOST_ENDPOINT_QUERY_BY_DIRECTION;
+                endpointDescriptorQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)(USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|USB_HOST_ENDPOINT_QUERY_BY_DIRECTION);
                 endpointDescriptor = USB_HOST_DeviceEndpointDescriptorQuery(interfaceDescriptor, &endpointDescriptorQuery);
 
                 /* Did we find the bulk in point */
@@ -713,7 +713,7 @@ void _USB_HOST_CDC_InterfaceAssign
                 USB_HOST_DeviceEndpointQueryContextClear(&endpointDescriptorQuery);
                 endpointDescriptorQuery.transferType = USB_TRANSFER_TYPE_BULK;
                 endpointDescriptorQuery.direction = USB_DATA_DIRECTION_HOST_TO_DEVICE;
-                endpointDescriptorQuery.flags = USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|USB_HOST_ENDPOINT_QUERY_BY_DIRECTION;
+                endpointDescriptorQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)(USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|USB_HOST_ENDPOINT_QUERY_BY_DIRECTION);
                 endpointDescriptor = USB_HOST_DeviceEndpointDescriptorQuery(interfaceDescriptor, &endpointDescriptorQuery);
 
                 /* Did we find the pipe */
@@ -797,7 +797,7 @@ void _USB_HOST_CDC_InterfaceAssign
                         USB_HOST_DeviceEndpointQueryContextClear(&endpointDescriptorQuery);
                         endpointDescriptorQuery.transferType = USB_TRANSFER_TYPE_INTERRUPT;
                         endpointDescriptorQuery.direction = USB_DATA_DIRECTION_DEVICE_TO_HOST;
-                        endpointDescriptorQuery.flags = USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|USB_HOST_ENDPOINT_QUERY_BY_DIRECTION;
+                        endpointDescriptorQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)(USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|USB_HOST_ENDPOINT_QUERY_BY_DIRECTION);
                         endpointDescriptor = USB_HOST_DeviceEndpointDescriptorQuery(interfaceDescriptor, &endpointDescriptorQuery);
 
                         if(endpointDescriptor != NULL)
@@ -826,7 +826,7 @@ void _USB_HOST_CDC_InterfaceAssign
                         USB_HOST_DeviceEndpointQueryContextClear(&endpointDescriptorQuery);
                         endpointDescriptorQuery.transferType = USB_TRANSFER_TYPE_BULK;
                         endpointDescriptorQuery.direction = USB_DATA_DIRECTION_DEVICE_TO_HOST;
-                        endpointDescriptorQuery.flags = USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|USB_HOST_ENDPOINT_QUERY_BY_DIRECTION;
+                        endpointDescriptorQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)(USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|USB_HOST_ENDPOINT_QUERY_BY_DIRECTION);
                         endpointDescriptor = USB_HOST_DeviceEndpointDescriptorQuery(interfaceDescriptor, &endpointDescriptorQuery);
 
                         if(endpointDescriptor != NULL)
@@ -844,7 +844,7 @@ void _USB_HOST_CDC_InterfaceAssign
                         USB_HOST_DeviceEndpointQueryContextClear(&endpointDescriptorQuery);
                         endpointDescriptorQuery.transferType = USB_TRANSFER_TYPE_BULK;
                         endpointDescriptorQuery.direction = USB_DATA_DIRECTION_HOST_TO_DEVICE;
-                        endpointDescriptorQuery.flags = USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|USB_HOST_ENDPOINT_QUERY_BY_DIRECTION;
+                        endpointDescriptorQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)(USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|USB_HOST_ENDPOINT_QUERY_BY_DIRECTION);
                         endpointDescriptor = USB_HOST_DeviceEndpointDescriptorQuery(interfaceDescriptor, &endpointDescriptorQuery);
 
                         if(endpointDescriptor != NULL)
