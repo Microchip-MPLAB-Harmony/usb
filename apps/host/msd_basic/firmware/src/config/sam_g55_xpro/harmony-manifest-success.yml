@@ -4,20 +4,19 @@
 
 
 project: msd_basic
-creation_date: 2020-06-09T13:32:53.671+02:00[Europe/Paris]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2020-06-25T11:36:32.157+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 10
-mhc_mode: Standalone            # [IDE|Standalone|Headless]
+mhc_mode: Headless            # [IDE|Standalone|Headless]
 mplabx_version: NA        # if MPLAB X plugin only
 plugin_version: NA        # if MPLAB X plugin only
 
 modules:
     - {name: "bsp", version: "v3.7.0"}
-    - {name: "CMSIS-FreeRTOS", version: "unknown"}
+    - {name: "CMSIS-FreeRTOS", version: "v10.3.0"}
     - {name: "contentmanager", version: "v1.3.1"}
     - {name: "core", version: "v3.7.1"}
     - {name: "csp", version: "v3.7.1"}
     - {name: "dev_packs", version: "v3.7.0"}
-    - {name: "h3_apps_regenerator", version: "unknown"}
     - {name: "mhc", version: "v3.4.0"}
-    - {name: "usb", version: "unknown"}
+    - {name: "usb", version: "v3.6.0"}
 
