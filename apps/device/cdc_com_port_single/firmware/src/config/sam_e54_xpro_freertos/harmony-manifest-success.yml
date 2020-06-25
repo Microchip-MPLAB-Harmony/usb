@@ -4,11 +4,11 @@
 
 
 project: cdc_com_port_single
-creation_date: 2020-06-17T13:23:50.408+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2020-06-25T09:43:13.045+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 10
-mhc_mode: IDE            # [IDE|Standalone|Headless]
-mplabx_version: v5.40        # if MPLAB X plugin only
-plugin_version: v3.5.0        # if MPLAB X plugin only
+mhc_mode: Headless            # [IDE|Standalone|Headless]
+mplabx_version: NA        # if MPLAB X plugin only
+plugin_version: NA        # if MPLAB X plugin only
 
 modules:
     - {name: "bsp", version: "v3.7.0"}
@@ -17,9 +17,6 @@ modules:
     - {name: "core", version: "v3.7.1"}
     - {name: "csp", version: "v3.7.1"}
     - {name: "dev_packs", version: "v3.7.0"}
-    - {name: "h3_apps_regenerator", version: "unknown"}
-    - {name: "h3_dft_setup", version: "unknown"}
     - {name: "mhc", version: "v3.4.0"}
-    - {name: "mplabx_plugin", version: "v3.5.0-rc.1"}
-    - {name: "usb", version: "unknown"}
+    - {name: "usb", version: "v3.6.0"}
 
