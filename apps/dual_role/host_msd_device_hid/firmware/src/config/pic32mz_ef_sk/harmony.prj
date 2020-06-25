@@ -58,8 +58,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/driver/usb/usbhs/src/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/usbhs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">FAEC89A2526957B1A50422D0908B5ECE</GeneratedChecksum>
-          <UserChecksum dnOrder="6">FAEC89A2526957B1A50422D0908B5ECE</UserChecksum>
+          <GeneratedChecksum dnOrder="5">862CB396655B0EE4EEFCBDCAA6649C58</GeneratedChecksum>
+          <UserChecksum dnOrder="6">862CB396655B0EE4EEFCBDCAA6649C58</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -265,8 +265,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">DB16A894D725569ED9EE3852B6BEC78E</GeneratedChecksum>
-          <UserChecksum dnOrder="6">DB16A894D725569ED9EE3852B6BEC78E</UserChecksum>
+          <GeneratedChecksum dnOrder="5">981EC9483C1B02E5E570B2AE4AA6BE9A</GeneratedChecksum>
+          <UserChecksum dnOrder="6">981EC9483C1B02E5E570B2AE4AA6BE9A</UserChecksum>
         </File>
         <File dnOrder="29">
           <Type dnOrder="0">SOURCE</Type>
@@ -274,8 +274,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/usb/src</LogicalPath>
           <PhysicalPath dnOrder="4">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">24D5A6720AED48CF5629FEC387CB3A3A</GeneratedChecksum>
-          <UserChecksum dnOrder="6">24D5A6720AED48CF5629FEC387CB3A3A</UserChecksum>
+          <GeneratedChecksum dnOrder="5">C27AE70812AABB989D756DABF06DBF83</GeneratedChecksum>
+          <UserChecksum dnOrder="6">C27AE70812AABB989D756DABF06DBF83</UserChecksum>
         </File>
         <File dnOrder="30">
           <Type dnOrder="0">SOURCE</Type>
@@ -292,8 +292,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/usb/src</LogicalPath>
           <PhysicalPath dnOrder="4">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">3B5803B9958F12ADE664FCF3F8C2ED99</GeneratedChecksum>
-          <UserChecksum dnOrder="6">3B5803B9958F12ADE664FCF3F8C2ED99</UserChecksum>
+          <GeneratedChecksum dnOrder="5">A44FA6E3F312CC5DB91590DBEC0A7895</GeneratedChecksum>
+          <UserChecksum dnOrder="6">A44FA6E3F312CC5DB91590DBEC0A7895</UserChecksum>
         </File>
         <File dnOrder="32">
           <Type dnOrder="0">SOURCE</Type>
@@ -301,8 +301,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/usb/src</LogicalPath>
           <PhysicalPath dnOrder="4">/usb/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">705EEFFAF9EABEDE2B5D75DA2E3AC80C</GeneratedChecksum>
-          <UserChecksum dnOrder="6">705EEFFAF9EABEDE2B5D75DA2E3AC80C</UserChecksum>
+          <GeneratedChecksum dnOrder="5">6FB71B015A2C3B84C8913F9C8A53532F</GeneratedChecksum>
+          <UserChecksum dnOrder="6">6FB71B015A2C3B84C8913F9C8A53532F</UserChecksum>
         </File>
         <File dnOrder="33">
           <Type dnOrder="0">SOURCE</Type>
@@ -400,8 +400,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">38148410A4C123F6D3C8D2A5684C2D2D</GeneratedChecksum>
-          <UserChecksum dnOrder="6">38148410A4C123F6D3C8D2A5684C2D2D</UserChecksum>
+          <GeneratedChecksum dnOrder="5">DF147276AE56CA76E3E9BEB8447620AB</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DF147276AE56CA76E3E9BEB8447620AB</UserChecksum>
         </File>
         <File dnOrder="44">
           <Type dnOrder="0">HEADER</Type>
@@ -418,8 +418,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/driver/usb/usbhs</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/usbhs/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">28999752D72713FD357EC84F99871D93</GeneratedChecksum>
-          <UserChecksum dnOrder="6">28999752D72713FD357EC84F99871D93</UserChecksum>
+          <GeneratedChecksum dnOrder="5">111CA749DD3C4A12029D163277253BBF</GeneratedChecksum>
+          <UserChecksum dnOrder="6">111CA749DD3C4A12029D163277253BBF</UserChecksum>
         </File>
         <File dnOrder="46">
           <Type dnOrder="0">HEADER</Type>
@@ -805,8 +805,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/usb/</LogicalPath>
           <PhysicalPath dnOrder="4">/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">6E02B466F420C1B312E5D72D71D0F93C</GeneratedChecksum>
-          <UserChecksum dnOrder="6">6E02B466F420C1B312E5D72D71D0F93C</UserChecksum>
+          <GeneratedChecksum dnOrder="5">F258661D72F9E844BF936D43BF859BE7</GeneratedChecksum>
+          <UserChecksum dnOrder="6">F258661D72F9E844BF936D43BF859BE7</UserChecksum>
         </File>
         <File dnOrder="89">
           <Type dnOrder="0">HEADER</Type>
@@ -1129,8 +1129,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5"/>
-          <UserChecksum dnOrder="6"/>
+          <GeneratedChecksum dnOrder="5">4B3C3EF8A318908A22B78500515C3288</GeneratedChecksum>
+          <UserChecksum dnOrder="6">4B3C3EF8A318908A22B78500515C3288</UserChecksum>
         </File>
       </Files>
       <Settings dnOrder="1">
