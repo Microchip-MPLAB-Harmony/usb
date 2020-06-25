@@ -1829,8 +1829,7 @@ void DRV_USB_UHP_ClientEventCallBackSet
 /* Function:
     void DRV_USB_UHP_EndpointToggleClear
     (
-        DRV_HANDLE client,
-        USB_ENDPOINT endpointAndDirection
+        DRV_USB_UHP_HOST_PIPE_HANDLE pipeHandle
     )
 
   Summary:
@@ -1847,51 +1846,35 @@ void DRV_USB_UHP_ClientEventCallBackSet
 
 void DRV_USB_UHP_EndpointToggleClear
 (
-    DRV_HANDLE client,
-    USB_ENDPOINT endpointAndDirection
+    DRV_USB_UHP_HOST_PIPE_HANDLE pipeHandle
 )
 {
-    /* Start of local variables */
+    DRV_USB_UHP_HOST_PIPE_OBJ * pPipe = NULL;
     DRV_USB_UHP_OBJ * hDriver = NULL;
-    uint8_t epIter = 0;
 
-    /* End of local variables */
-    if((client == DRV_HANDLE_INVALID) || (((DRV_USB_UHP_OBJ *)client) == NULL))
+    if ((pipeHandle != DRV_USB_UHP_HOST_PIPE_HANDLE_INVALID) && ((DRV_USB_UHP_HOST_PIPE_HANDLE)NULL != pipeHandle))
     {
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Invalid client handle");
+        pPipe = (DRV_USB_UHP_HOST_PIPE_OBJ *)pipeHandle;
+        hDriver = (DRV_USB_UHP_OBJ *)pPipe->hClient;
+
+        if( (hDriver->hostEndpointTable[pPipe->hostEndpoint].endpoint.pipe->endpointAndDirection & 0x80) == 0 )
+        {
+            /* Host to Device: OUT */
+            /* Clear the Data Toggle for TX Endpoint */
+            hDriver->hostEndpointTable[pPipe->hostEndpoint].endpoint.staticDToggleOut = 0;
+        }
+        else
+        {
+            /* IN */
+            /* Clear the Data Toggle for RX Endpoint */
+            hDriver->hostEndpointTable[pPipe->hostEndpoint].endpoint.staticDToggleIn = 0;
+        }
     }
     else
     {
-        hDriver = (DRV_USB_UHP_OBJ *)client;
-
-        /* Now map the device endpoint to host endpoint. This is required to
-         * jump to the appropriate entry in the endpoint table */
-        for(epIter = 1; epIter < DRV_USB_UHP_HOST_MAXIMUM_ENDPOINTS_NUMBER; epIter++)
-        {
-            if(true == hDriver->hostEndpointTable[epIter].endpoint.inUse)
-            {
-                /* Please not that for a single non control endpoint there cannot
-                 * be multiple pipes. Hence there should be only 1 pipe object
-                 * that can be linked to this "endpointAndDirection". */
-                if((hDriver->hostEndpointTable[epIter].endpoint.pipe)->endpointAndDirection
-                        == endpointAndDirection)
-                {
-                    /* Got the entry in the host endpoint table. We can exit
-                     * from this loop now for further processing */
-                    if( (hDriver->hostEndpointTable[epIter].endpoint.pipe->endpointAndDirection & 0x80) == 0 )
-                    {
-                        /* Host to Device: OUT */
-                        hDriver->hostEndpointTable[epIter].endpoint.staticDToggleOut = 0;
-                    }
-                    else
-                    {
-                        /* IN */
-                        hDriver->hostEndpointTable[epIter].endpoint.staticDToggleIn = 0;
-                    }
-                }
-            }
-        }
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Invalid Pipe handle");
     }
+
 } /* end of DRV_USB_UHP_EndpointToggleClear() */
 
 
