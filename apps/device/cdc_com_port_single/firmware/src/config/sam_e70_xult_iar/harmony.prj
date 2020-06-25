@@ -59,8 +59,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e70_xult_iar/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">628239A1D0F120189012C5BB71A9BD2D</GeneratedChecksum>
-          <UserChecksum dnOrder="6">628239A1D0F120189012C5BB71A9BD2D</UserChecksum>
+          <GeneratedChecksum dnOrder="5">54D6C3AA7D2E8AD5589D23F2F882E696</GeneratedChecksum>
+          <UserChecksum dnOrder="6">54D6C3AA7D2E8AD5589D23F2F882E696</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -176,8 +176,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e70_xult_iar/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">2E8B45C86B0398991013B31F832E4ACD</GeneratedChecksum>
-          <UserChecksum dnOrder="6">2E8B45C86B0398991013B31F832E4ACD</UserChecksum>
+          <GeneratedChecksum dnOrder="5">F931063E6ACD2A01D8F313F2982219CE</GeneratedChecksum>
+          <UserChecksum dnOrder="6">F931063E6ACD2A01D8F313F2982219CE</UserChecksum>
         </File>
         <File dnOrder="19">
           <Type dnOrder="0">HEADER</Type>
@@ -302,8 +302,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e70_xult_iar/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">4B9F6082D53EFB102F69EEF13091E4D3</GeneratedChecksum>
-          <UserChecksum dnOrder="6">4B9F6082D53EFB102F69EEF13091E4D3</UserChecksum>
+          <GeneratedChecksum dnOrder="5">AFE69E06FF0F4AB018C88498EE7FA276</GeneratedChecksum>
+          <UserChecksum dnOrder="6">AFE69E06FF0F4AB018C88498EE7FA276</UserChecksum>
         </File>
         <File dnOrder="33">
           <Type dnOrder="0">HEADER</Type>
@@ -374,8 +374,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e70_xult_iar/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">38148410A4C123F6D3C8D2A5684C2D2D</GeneratedChecksum>
-          <UserChecksum dnOrder="6">38148410A4C123F6D3C8D2A5684C2D2D</UserChecksum>
+          <GeneratedChecksum dnOrder="5">DF147276AE56CA76E3E9BEB8447620AB</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DF147276AE56CA76E3E9BEB8447620AB</UserChecksum>
         </File>
         <File dnOrder="41">
           <Type dnOrder="0">HEADER</Type>
@@ -392,8 +392,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e70_xult_iar/driver/usb/usbhsv1</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/usbhsv1/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">5F3963DE6BCBD886668BF40A9DE41ED5</GeneratedChecksum>
-          <UserChecksum dnOrder="6">5F3963DE6BCBD886668BF40A9DE41ED5</UserChecksum>
+          <GeneratedChecksum dnOrder="5">CBC5FB04D6370CCAE8C4C64D1BDE7049</GeneratedChecksum>
+          <UserChecksum dnOrder="6">CBC5FB04D6370CCAE8C4C64D1BDE7049</UserChecksum>
         </File>
         <File dnOrder="43">
           <Type dnOrder="0">HEADER</Type>
