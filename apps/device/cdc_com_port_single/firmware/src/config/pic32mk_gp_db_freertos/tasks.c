@@ -93,6 +93,7 @@ void _APP_FREERTOS_Tasks(  void *pvParameters  )
 
 
 
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: System "Tasks" Routine
@@ -143,6 +144,7 @@ void SYS_Tasks ( void )
                 NULL,
                 1,
                 &xAPP_FREERTOS_Tasks);
+
 
 
 
