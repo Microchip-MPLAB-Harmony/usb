@@ -124,19 +124,19 @@ typedef struct
 typedef enum
 {
     /* Threshold number of bytes are available in the receive ring buffer */
-    UART_EVENT_READ_THRESHOLD_REACHED = 0,
+    DBGU_EVENT_READ_THRESHOLD_REACHED = 0,
 
     /* Receive ring buffer is full. Application must read the data out to avoid missing data on the next RX interrupt. */
-    UART_EVENT_READ_BUFFER_FULL,
+    DBGU_EVENT_READ_BUFFER_FULL,
 
-    /* USART error. Application must call the UARTx_ErrorGet API to get the type of error and clear the error. */
-    UART_EVENT_READ_ERROR,
+    /* DBGU error. Application must call the DBGU_ErrorGet API to get the type of error and clear the error. */
+    DBGU_EVENT_READ_ERROR,
 
     /* Threshold number of free space is available in the transmit ring buffer */
-    UART_EVENT_WRITE_THRESHOLD_REACHED,
-}UART_EVENT;
+    DBGU_EVENT_WRITE_THRESHOLD_REACHED,
+}DBGU_EVENT;
 
-typedef void (* UART_RING_BUFFER_CALLBACK)(UART_EVENT event, uintptr_t context );
+typedef void (* DBGU_RING_BUFFER_CALLBACK)(DBGU_EVENT event, uintptr_t context );
 
 
 // *****************************************************************************
@@ -147,35 +147,35 @@ typedef void (* UART_RING_BUFFER_CALLBACK)(UART_EVENT event, uintptr_t context )
 
 typedef struct
 {
-    UART_RING_BUFFER_CALLBACK                           wrCallback;
+    DBGU_RING_BUFFER_CALLBACK                           wrCallback;
 
-    uintptr_t                               			wrContext;
+    uintptr_t                                           wrContext;
 
-    volatile uint32_t                       			wrInIndex;
+    volatile uint32_t                                   wrInIndex;
 
-    volatile uint32_t                       			wrOutIndex;
+    volatile uint32_t                                   wrOutIndex;
 
-    bool                                    			isWrNotificationEnabled;
+    bool                                                isWrNotificationEnabled;
 
-    uint32_t                                			wrThreshold;
+    uint32_t                                            wrThreshold;
 
-    bool                                    			isWrNotifyPersistently;
+    bool                                                isWrNotifyPersistently;
 
-    UART_RING_BUFFER_CALLBACK                  			rdCallback;
+    DBGU_RING_BUFFER_CALLBACK                           rdCallback;
 
-    uintptr_t                               			rdContext;
+    uintptr_t                                           rdContext;
 
-    volatile uint32_t                       			rdInIndex;
+    volatile uint32_t                                   rdInIndex;
 
-    volatile uint32_t                       			rdOutIndex;
+    volatile uint32_t                                   rdOutIndex;
 
-    bool                                    			isRdNotificationEnabled;
+    bool                                                isRdNotificationEnabled;
 
-    uint32_t                                			rdThreshold;
+    uint32_t                                            rdThreshold;
 
-    bool                                    			isRdNotifyPersistently;
+    bool                                                isRdNotifyPersistently;
 
-} UART_RING_BUFFER_OBJECT;
+} DBGU_RING_BUFFER_OBJECT;
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
