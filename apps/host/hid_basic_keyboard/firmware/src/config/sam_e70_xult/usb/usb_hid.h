@@ -282,6 +282,7 @@ typedef enum
 
 typedef enum
 {
+    USB_HID_REPORT_TYPE_ERROR                                               = 0x00,
     USB_HID_REPORT_TYPE_INPUT                                               = 0x01,
     USB_HID_REPORT_TYPE_OUTPUT                                              = 0x02,
     USB_HID_REPORT_TYPE_FEATURE                                             = 0x03
