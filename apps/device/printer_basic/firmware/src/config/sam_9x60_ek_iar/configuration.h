@@ -115,7 +115,7 @@ extern "C" {
 /* Printer Transfer Queue Size for both read and
    write. Applicable to all instances of the
    function driver */
-#define USB_DEVICE_PRINTER_QUEUE_DEPTH_COMBINED       2
+#define USB_DEVICE_PRINTER_QUEUE_DEPTH_COMBINED                 2
 
 /* Length of the Device ID string including length in the first two bytes */
 #define USB_DEVICE_PRINTER_DEVICE_ID_STRING_LENGTH    81
