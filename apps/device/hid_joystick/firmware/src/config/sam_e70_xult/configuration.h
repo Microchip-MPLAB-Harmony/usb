@@ -116,7 +116,7 @@ extern "C" {
 /* HID Transfer Queue Size for both read and
    write. Applicable to all instances of the
    function driver */
-#define USB_DEVICE_HID_QUEUE_DEPTH_COMBINED 5
+#define USB_DEVICE_HID_QUEUE_DEPTH_COMBINED                 2
 
 /* Number of Endpoints used */
 #define DRV_USBHSV1_ENDPOINTS_NUMBER                        3
