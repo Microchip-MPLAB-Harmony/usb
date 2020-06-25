@@ -3646,7 +3646,7 @@ USB_HOST_RESULT USB_HOST_BusEnable(USB_HOST_BUS bus)
     else
     {
         /* Validate bus number */
-        if( bus < 0 || bus >= USB_HOST_CONTROLLERS_NUMBER )
+        if( bus >= USB_HOST_CONTROLLERS_NUMBER )
         {
             status = USB_HOST_RESULT_BUS_UNKNOWN;
         }
@@ -3696,7 +3696,7 @@ USB_HOST_RESULT USB_HOST_BusDisable(USB_HOST_BUS bus)
     else
     {
         /* Validate bus number */
-        if( bus < 0 || bus >= USB_HOST_CONTROLLERS_NUMBER )
+        if(  bus >= USB_HOST_CONTROLLERS_NUMBER )
         {
             status = USB_HOST_RESULT_BUS_UNKNOWN;
         }
@@ -3764,7 +3764,7 @@ USB_HOST_RESULT USB_HOST_BusIsEnabled(USB_HOST_BUS bus)
     else
     {
         /* Validate bus number */
-        if( bus < 0 || bus >= USB_HOST_CONTROLLERS_NUMBER )
+        if( bus >= USB_HOST_CONTROLLERS_NUMBER )
         {
             status = USB_HOST_RESULT_BUS_UNKNOWN;
         }
@@ -3814,7 +3814,7 @@ USB_HOST_RESULT USB_HOST_BusIsDisabled(USB_HOST_BUS bus)
     else
     {
         /* Validate bus number */
-        if( bus < 0 || bus >= USB_HOST_CONTROLLERS_NUMBER )
+        if( bus >= USB_HOST_CONTROLLERS_NUMBER )
         {
             status = USB_HOST_RESULT_BUS_UNKNOWN;
         }
@@ -3891,7 +3891,7 @@ USB_HOST_RESULT USB_HOST_BusSuspend (USB_HOST_BUS bus)
     else
     {
         /* Suspend a specific bus. Validate bus number */
-        if( bus < 0 || bus >= USB_HOST_CONTROLLERS_NUMBER )
+        if( bus >= USB_HOST_CONTROLLERS_NUMBER )
         {
             status = USB_HOST_RESULT_BUS_UNKNOWN;
         }
@@ -3976,7 +3976,7 @@ USB_HOST_RESULT USB_HOST_BusIsSuspended (USB_HOST_BUS bus)
     else
     {
         /* Check if this bus is suspended. Validate the bus number */
-        if ( bus < 0 || bus >= USB_HOST_CONTROLLERS_NUMBER )
+        if ( bus >= USB_HOST_CONTROLLERS_NUMBER )
         {
             status = USB_HOST_RESULT_BUS_UNKNOWN ;
         }
@@ -4587,7 +4587,7 @@ USB_ENDPOINT_DESCRIPTOR * USB_HOST_DeviceEndpointDescriptorQuery
     uint8_t * search;
     int bNumEndPoints, iterator;
     USB_DESCRIPTOR_HEADER * descriptorHeader;
-    USB_HOST_ENDPOINT_QUERY_FLAG matchedCriteria = 0;
+    USB_HOST_ENDPOINT_QUERY_FLAG matchedCriteria = USB_HOST_ENDPOINT_QUERY_ANY;
     uint8_t * lastLocation;
 
     /* Validate input parameters */
@@ -5660,8 +5660,12 @@ USB_HOST_RESULT USB_HOST_DevicePipeHaltClear
                     }
                     else
                     {
-                        deviceObj->hcdInterface->endpointToggleClear(deviceObj->hcdHandle, pipeObj->endpointAddress);
-                        result = USB_HOST_RESULT_SUCCESS;
+                        if((pipeObj->pipeHandle != 0) && (pipeObj->pipeHandle != DRV_USB_HOST_PIPE_HANDLE_INVALID))
+                        {
+                            /* Clear the data toggle on this pipe */
+                            deviceObj->hcdInterface->endpointToggleClear(pipeObj->pipeHandle);
+                            result = USB_HOST_RESULT_SUCCESS;
+                        }
                     }
                 }
             }

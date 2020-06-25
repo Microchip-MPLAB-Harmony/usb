@@ -336,7 +336,7 @@ void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
                             (size_t)sizeof(USB_HOST_HID_LOCAL_ITEM));
                     memset(&(mainItem.data), 0,
                             (size_t)sizeof(USB_HID_MAIN_ITEM_OPTIONAL_DATA));
-                    mainItem.tag = 0;
+                    mainItem.tag = USB_HID_REPORT_TYPE_ERROR;
                     
                     result = USB_HOST_HID_MainItemGet(handle,index,&mainItem);
                     if(result == USB_HOST_HID_RESULT_SUCCESS)
