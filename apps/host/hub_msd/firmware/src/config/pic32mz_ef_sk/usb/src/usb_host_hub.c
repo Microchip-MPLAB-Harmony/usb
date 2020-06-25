@@ -413,7 +413,7 @@ void _USB_HOST_HUB_InterfaceAssign
 
         endpointQuery.transferType = USB_TRANSFER_TYPE_INTERRUPT;
         endpointQuery.direction = USB_DATA_DIRECTION_DEVICE_TO_HOST;
-        endpointQuery.flags = USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE | USB_HOST_ENDPOINT_QUERY_BY_DIRECTION ;
+        endpointQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)(USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE | USB_HOST_ENDPOINT_QUERY_BY_DIRECTION);
 
         /* Now find the endpoint */
         interruptEndpointDescriptor =  USB_HOST_DeviceEndpointDescriptorQuery(interfaceDescriptor, &endpointQuery);
@@ -1824,7 +1824,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
 
             /* This state will suspend the port. */
 
-            portInfo->portCommand  = ( portInfo->portCommand & ~USB_HOST_PORT_COMMAND_SUSPEND);
+            portInfo->portCommand  = (USB_HOST_HUB_PORT_COMMAND)( portInfo->portCommand & ~USB_HOST_PORT_COMMAND_SUSPEND);
             portInfo->controlRequestDone = false;
 
             /* Send a control transfer to  suspend the port */
@@ -1869,7 +1869,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
             /* This state starts the port resume sequence. Start by clear the
              * resume bit in port command*/
 
-            portInfo->portCommand  = ( portInfo->portCommand & ~USB_HOST_PORT_COMMAND_RESUME);
+            portInfo->portCommand  = (USB_HOST_HUB_PORT_COMMAND)( portInfo->portCommand & ~USB_HOST_PORT_COMMAND_RESUME);
 
             /* Send a control tranfer to resume the port */
             result =_USB_HOST_HUB_FeatureRequest( hubInstanceIndex ,
