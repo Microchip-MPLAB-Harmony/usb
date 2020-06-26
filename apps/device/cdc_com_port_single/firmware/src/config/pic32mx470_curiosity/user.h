@@ -32,6 +32,8 @@ extern "C" {
 // Section: User Configuration macros
 // *****************************************************************************
 // *****************************************************************************
+#define APP_USB_SWITCH_DEBOUNCE_COUNT_FS                    200
+#define APP_USB_SWITCH_DEBOUNCE_COUNT_HS                    100
 
 
 //DOM-IGNORE-BEGIN
