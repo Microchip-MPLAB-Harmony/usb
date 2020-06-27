@@ -79,11 +79,11 @@
             <itemPath>../src/config/sam_e54_xpro_freertos/usb/usb_device_cdc.h</itemPath>
             <itemPath>../src/config/sam_e54_xpro_freertos/usb/usb_cdc.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/config/sam_e54_xpro_freertos/user.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro_freertos/device_cache.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro_freertos/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro_freertos/definitions.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro_freertos/FreeRTOSConfig.h</itemPath>
+          <itemPath>../src/config/sam_e54_xpro_freertos/user.h</itemPath>
           <itemPath>../src/config/sam_e54_xpro_freertos/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
@@ -313,7 +313,7 @@
         <targetDevice>ATSAME54P20A</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>noID</platformTool>
+        <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.41</languageToolchainVersion>
         <platform>3</platform>

@@ -71,10 +71,10 @@
             <itemPath>../src/config/sam_d11_xpro/usb/usb_common.h</itemPath>
             <itemPath>../src/config/sam_d11_xpro/usb/usb_chapter_9.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/config/sam_d11_xpro/user.h</itemPath>
           <itemPath>../src/config/sam_d11_xpro/device_cache.h</itemPath>
           <itemPath>../src/config/sam_d11_xpro/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/sam_d11_xpro/definitions.h</itemPath>
+          <itemPath>../src/config/sam_d11_xpro/user.h</itemPath>
           <itemPath>../src/config/sam_d11_xpro/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
@@ -220,7 +220,7 @@
         <targetDevice>ATSAMD11D14AM</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>noID</platformTool>
+        <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.41</languageToolchainVersion>
         <platform>3</platform>
