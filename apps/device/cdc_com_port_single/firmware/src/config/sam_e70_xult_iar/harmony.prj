@@ -104,8 +104,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e70_xult_iar/peripheral/pio/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/pio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">8C8C44E81D8D2F43F7B13C3F535D9ACB</GeneratedChecksum>
-          <UserChecksum dnOrder="6">8C8C44E81D8D2F43F7B13C3F535D9ACB</UserChecksum>
+          <GeneratedChecksum dnOrder="5">F06D2CC535EB4D1776D377CD1D1C0C66</GeneratedChecksum>
+          <UserChecksum dnOrder="6">F06D2CC535EB4D1776D377CD1D1C0C66</UserChecksum>
         </File>
         <File dnOrder="11">
           <Type dnOrder="0">SOURCE</Type>

@@ -32,7 +32,7 @@ extern "C" {
 // Section: User Configuration macros
 // *****************************************************************************
 // *****************************************************************************
-#define APP_USB_SWITCH_DEBOUNCE_COUNT_FS                    75
+#define APP_USB_SWITCH_DEBOUNCE_COUNT_FS                    150
 #define APP_USB_SWITCH_DEBOUNCE_COUNT_HS                    100
 
 

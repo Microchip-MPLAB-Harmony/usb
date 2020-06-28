@@ -97,8 +97,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define APP_USB_LED_1 BSP_LED_1
 #define APP_USB_LED_2 BSP_LED_2
 #define APP_USB_LED_3 BSP_LED_3
-#define APP_USB_SWITCH_DEBOUNCE_COUNT_FS                    75
-#define APP_USB_SWITCH_DEBOUNCE_COUNT_HS                    100
 
 // *****************************************************************************
 /* Application States

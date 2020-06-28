@@ -786,7 +786,7 @@
         </String>
         <String dnOrder="140" id="PIN_4_PU">
           <Values dnOrder="0">
-            <User dnOrder="0" value=""/>
+            <User dnOrder="0" value="True"/>
           </Values>
         </String>
         <String dnOrder="141" id="PIOA_INTERRUPT_MAP_TYPE">
@@ -1071,7 +1071,7 @@
         </String>
         <String dnOrder="197" id="PORT_B_CFGR_Value9">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0x0"/>
+            <Dynamic dnOrder="0" id="core" value="0x200"/>
           </Values>
         </String>
         <String dnOrder="198" id="PORT_B_LATCH">
@@ -2026,7 +2026,8 @@
     </GeneratorComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_A5D2_Xplained_Ultra" x="148" y="40"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="0" y="10"/>
@@ -2038,6 +2039,5 @@
         <ElementPosition dnOrder="7" id="usb_device_cdc" x="320" y="146"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
