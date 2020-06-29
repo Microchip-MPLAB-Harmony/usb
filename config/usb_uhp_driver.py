@@ -80,23 +80,40 @@ def instantiateComponent(usbDriverComponent):
 	# USB Driver Host mode Attach de-bounce duration 
 	usbDriverHostAttachDebounce = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION", None)
 	usbDriverHostAttachDebounce.setLabel("Attach De-bounce Duration (mSec)")
-	usbDriverHostAttachDebounce.setVisible(False)
+	usbDriverHostAttachDebounce.setVisible(True)
         helpText = '''Specify the time duration (in milliseconds) that the driver should wait after detecting the
         attach interrupt and before polling the attach interrupt again to check if the attach condition still exists.
         A longer duration slows down the Host Device Attach detection but allows for stable operation.'''
 	usbDriverHostAttachDebounce.setDescription(helpText)
+	usbDriverHostAttachDebounce.setMin(1)
+	usbDriverHostAttachDebounce.setMax(2000)
 	usbDriverHostAttachDebounce.setDefaultValue(500)
 	usbDriverHostAttachDebounce.setDependencies(blUSBDriverOperationModeChanged, ["USB_OPERATION_MODE"])
 	
 	# USB Driver Host mode Reset Duration
 	usbDriverHostResetDuration = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_RESET_DUARTION", None)
 	usbDriverHostResetDuration.setLabel("Reset Duration (mSec)")
-	usbDriverHostResetDuration.setVisible(False)
         helpText = '''Specify the duration of the USB Bus Reset Signal. A value of 100 millisecond works 
         well. There may be cases where some USB devices require a shorter or longer reset duration time.'''
+	usbDriverHostResetDuration.setVisible(True)
 	usbDriverHostResetDuration.setDescription(helpText)
+	usbDriverHostResetDuration.setMin(1)
+	usbDriverHostResetDuration.setMax(500)
 	usbDriverHostResetDuration.setDefaultValue(100)
 	usbDriverHostResetDuration.setDependencies(blUSBDriverOperationModeChanged, ["USB_OPERATION_MODE"])
+	
+	# USB Driver Host mode DRV_USB_UHP_NO_CACHE_BUFFER_LENGTH
+	usbDriverHostBufferSize = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_BUFFER_SIZE", None)
+	usbDriverHostBufferSize.setLabel("Transfer Buffer Cache Size (Bytes)")
+	usbDriverHostBufferSize.setVisible(True)
+        helpText = '''Specify the maximum transfer size here. The USB driver will 
+		create a buffer for each transfer object with a size specified here. The 
+		USB driver will decline the transfer request if the transfer size is greater
+		than this value.'''
+	usbDriverHostBufferSize.setDescription(helpText)
+	usbDriverHostBufferSize.setMin(500)
+	usbDriverHostBufferSize.setMax(4096)
+	usbDriverHostBufferSize.setDefaultValue(512)
 	
 	enable_rtos_settings = False
 
