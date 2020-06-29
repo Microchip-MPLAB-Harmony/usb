@@ -4,7 +4,7 @@
     <Name dnOrder="0" value="sam_9x60_ek_iar"/>
     <Processor dnOrder="1" value="SAM9X60"/>
     <Harmony dnOrder="2" path="C:\Repos\H3"/>
-    <Project_Name dnOrder="3" value="cdc_msd_sdcard_sam_9x60_ek"/>
+    <Project_Name dnOrder="3" value="cdc_msd_sdcard_sam_9x60_ek_iar"/>
     <Folder_Name dnOrder="4" value="sam_9x60_ek_iar.IAR"/>
     <Manifest dnOrder="5">
       <Files dnOrder="0">
