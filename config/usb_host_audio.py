@@ -48,6 +48,7 @@ def instantiateComponent(usbHostAudioComponent):
 	usbHostAudioClientDriverInstance.setLabel("Number of Audio Host Driver Instances")
 	usbHostAudioClientDriverInstance.setDescription("Enter the number of Audio Class Driver instances required in the application.")
 	usbHostAudioClientDriverInstance.setDefaultValue(1)
+	usbHostAudioClientDriverInstance.setMin(1)
 	usbHostAudioClientDriverInstance.setVisible(True)
 
 	
@@ -58,7 +59,42 @@ def instantiateComponent(usbHostAudioComponent):
 	# usbHostAudioClientDriverAttachListnerNumber.setDefaultValue(1)
 	# usbHostAudioClientDriverAttachListnerNumber.setVisible(True)
 
-		
+	# Number of Audio streaming interfaces in the attached USB Audio device 
+	usbHostAudioStreamingInterfaceNumbers =  usbHostAudioComponent.createIntegerSymbol("USB_HOST_AUDIO_NUMBER_OF_STREAMING_INTERFACES", None)
+	usbHostAudioStreamingInterfaceNumbers.setLabel("Number of Audio Streaming Interfaces")
+	usbHostAudioStreamingInterfaceNumbers.setDefaultValue(2)
+	helpText = '''Enter the maximum number of Audio streaming interfaces that an 
+				  attached USB Audio device would have. E.g., A USB Headset will 
+				  usually have Two Audio streaming interfaces. So this value 
+				  should be set to Two for Audio Headset.'''
+	usbHostAudioStreamingInterfaceNumbers.setDescription(helpText)
+	usbHostAudioStreamingInterfaceNumbers.setMin(1)
+	usbHostAudioStreamingInterfaceNumbers.setVisible(True)
+    
+	# Number of the Audio Streaming interface alternate settings 
+	usbHostAudioStreamingInterfaceSettingNumbers =  usbHostAudioComponent.createIntegerSymbol("USB_HOST_AUDIO_NUMBER_OF_STREAMING_INTERFACE_SETTINGS", None)
+	usbHostAudioStreamingInterfaceSettingNumbers.setLabel("Number of Audio Streaming Interface Settings")
+	usbHostAudioStreamingInterfaceSettingNumbers.setDefaultValue(2)
+	helpText = '''Enter the number of Audio streaming interface settings. This
+				  value should include the default Interface setting as well. 
+				  Most standard USB Audio devices will have two interface 
+				  settings. However, USB Audio devices are available with 
+				  multiple interface settings.'''
+	usbHostAudioStreamingInterfaceSettingNumbers.setDescription(helpText)
+	usbHostAudioStreamingInterfaceSettingNumbers.setMin(2)
+	usbHostAudioStreamingInterfaceSettingNumbers.setVisible(True)
+	
+	# Number of sampling frequencies 
+	usbHostAudioSamplingFrequenciesNumber =  usbHostAudioComponent.createIntegerSymbol("USB_HOST_AUDIO_NUMBER_OF_SAMPLING_FREQUENCIES", None)
+	usbHostAudioSamplingFrequenciesNumber.setLabel("Number of Sampling Frequencies supported")
+	usbHostAudioSamplingFrequenciesNumber.setDefaultValue(3)
+	helpText = '''Enter the number of discrete Sampling frequencies supported by 
+				  the attached device.'''
+	usbHostAudioSamplingFrequenciesNumber.setDescription(helpText)
+	usbHostAudioSamplingFrequenciesNumber.setMin(1)
+	usbHostAudioSamplingFrequenciesNumber.setVisible(True)
+
+	
 	##############################################################
 	# system_definitions.h file for USB Host Audio Client driver   
 	##############################################################

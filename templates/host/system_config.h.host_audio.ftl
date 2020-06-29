@@ -42,20 +42,22 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
 -->
+
 /* Number of Audio v1.0 Client driver instances in the application */
 #define USB_HOST_AUDIO_V1_INSTANCES_NUMBER         ${CONFIG_USB_HOST_AUDIO_NUMBER_OF_INSTANCES}
 
 /* Maximum number of Streaming interfaces provides by any Device that will be
  be connected to this Audio Host */
-#define USB_HOST_AUDIO_V1_STREAMING_INTERFACES_NUMBER 2
+#define USB_HOST_AUDIO_V1_STREAMING_INTERFACES_NUMBER ${USB_HOST_AUDIO_NUMBER_OF_STREAMING_INTERFACES}
 
 /* Maximum number of Streaming interface alternate settings provided by any 
    Device that will be connected to this Audio Host. (This number includes 
    alternate setting 0) */
-#define USB_HOST_AUDIO_V1_STREAMING_INTERFACE_ALTERNATE_SETTINGS_NUMBER 2
+#define USB_HOST_AUDIO_V1_STREAMING_INTERFACE_ALTERNATE_SETTINGS_NUMBER ${USB_HOST_AUDIO_NUMBER_OF_STREAMING_INTERFACE_SETTINGS}
 
 /* Maximum number of discrete Sampling frequencies supported by the Attached Audio Device */ 
-#define USB_HOST_AUDIO_V1_SAMPLING_FREQUENCIES_NUMBER 0
+#define USB_HOST_AUDIO_V1_SAMPLING_FREQUENCIES_NUMBER ${USB_HOST_AUDIO_NUMBER_OF_SAMPLING_FREQUENCIES}
+
 <#--
 /*******************************************************************************
  End of File
