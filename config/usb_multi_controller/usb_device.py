@@ -635,7 +635,7 @@ def instantiateComponent(usbDeviceComponent,index):
 	usbDeviceSystemTasksFileRTOS.setSourcePath(sourcePath +"system_tasks_c_device_rtos.ftl")
 	usbDeviceSystemTasksFileRTOS.setMarkup(True)
 	usbDeviceSystemTasksFileRTOS.setEnabled(enable_rtos_settings)
-	usbDeviceSystemTasksFileRTOS.setDependencies(genRtosTask, ["Harmony.SELECT_RTOS"])
+	usbDeviceSystemTasksFileRTOS.setDependencies(genRtosTask, ["HarmonyCore.SELECT_RTOS"])
 	
 	
 	################################################
