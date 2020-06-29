@@ -995,8 +995,6 @@ USB_ERROR DRV_USB_UHP_EHCI_HOST_IRPSubmit
     USB_HOST_IRP_LOCAL *irp  = (USB_HOST_IRP_LOCAL *)inputIRP;
     DRV_USB_UHP_HOST_PIPE_OBJ *pipe = (DRV_USB_UHP_HOST_PIPE_OBJ *)(hPipe);
     DRV_USB_UHP_OBJ *hDriver;
-    volatile uint32_t tosend;
-    volatile uint32_t nbBytes;
     uint8_t *point;
     volatile uint8_t idx = 0;
     volatile uint8_t idx_plus = 0;
