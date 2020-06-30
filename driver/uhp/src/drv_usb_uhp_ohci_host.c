@@ -806,7 +806,7 @@ DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_OHCI_PipeSetup
 
                                 /* Dword 3, Next Endpoint Descriptor (NextED) */
                                 pQueueHeadCurrentOHCI->NextEd = ((uint32_t)pQueueHeadNew) & 0xFFFFFFF0;      /* NextED */
-                                pQueueHeadNew->NextEd = (uint32_t)pQueueHeadCurrentOHCI;
+                                pQueueHeadNew->NextEd = (uint32_t)&OHCI_QueueHead[0];
                                 pQueueHeadCurrentOHCI = pQueueHeadNew;
                                 if(pipe->pipeType == USB_TRANSFER_TYPE_CONTROL)
                                 {
@@ -1032,7 +1032,7 @@ void DRV_USB_UHP_OHCI_PipeClose
              */
 
             /* Previous ED go to next ED, let unlik unchanged */
-            if( ( 0 != pipe->hostEndpoint ) && (pipe->pipeType != USB_TRANSFER_TYPE_INTERRUPT) )
+            if( 0 != pipe->hostEndpoint )
             {
                 if( (pQueueHeadToUnlink->NextEd & 0xFFFFFFF8) != (uint32_t)pQueueHeadToUnlink )
                 {
@@ -1412,7 +1412,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                             tosend,                  /* BE: BufferEnd: Total Bytes to transfer */
                                             1,                       /* DP: Direction/PID: OUT=1 */
                                             0,                       /* R: bufferRounding: exactly fill the defined data buffer */
-                                        (uint32_t *)USBBufferNoCache[pipe->hostEndpoint]);
+                                        (uint32_t *)(USBBufferNoCache[pipe->hostEndpoint] + irp->completedBytes)); /* CBP: CurrentBufferPointer */
 
                             hDriver->hostEndpointTable[pipe->hostEndpoint].endpoint.staticDToggleOut++;  /* data toggle */
                             idx++;
@@ -1480,7 +1480,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                             tosend,                  /* BE: BufferEnd: Total Bytes to transfer */
                                             2,                       /* DP: Direction/PID: IN=2 */
                                             0,                       /* R: bufferRounding: exactly fill the defined data buffer */
-                                            (uint32_t *)USBBufferNoCache[pipe->hostEndpoint]);
+                                            (uint32_t *)(USBBufferNoCache[pipe->hostEndpoint] + irp->completedBytes)); /* CBP: CurrentBufferPointer */
 
                             hDriver->hostEndpointTable[pipe->hostEndpoint].endpoint.staticDToggleIn++;  /* data toggle */
                             idx++;
