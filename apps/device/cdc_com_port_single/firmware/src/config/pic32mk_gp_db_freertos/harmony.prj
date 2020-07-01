@@ -238,8 +238,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mk_gp_db_freertos/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">6B17F0592A4E461955A1FCC0C3CDCC77</GeneratedChecksum>
-          <UserChecksum dnOrder="6">6B17F0592A4E461955A1FCC0C3CDCC77</UserChecksum>
+          <GeneratedChecksum dnOrder="5">968CFB11F9B93C732C1D59CA07C03EB4</GeneratedChecksum>
+          <UserChecksum dnOrder="6">968CFB11F9B93C732C1D59CA07C03EB4</UserChecksum>
         </File>
         <File dnOrder="26">
           <Type dnOrder="0">SOURCE</Type>
@@ -346,8 +346,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mk_gp_db_freertos/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">6B54524E539AF78F1AE44E4DCBD93827</GeneratedChecksum>
-          <UserChecksum dnOrder="6">6B54524E539AF78F1AE44E4DCBD93827</UserChecksum>
+          <GeneratedChecksum dnOrder="5">D0931A6B79A6626EDBB4F85C02A78181</GeneratedChecksum>
+          <UserChecksum dnOrder="6">D0931A6B79A6626EDBB4F85C02A78181</UserChecksum>
         </File>
         <File dnOrder="38">
           <Type dnOrder="0">HEADER</Type>
@@ -1831,8 +1831,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mk_gp_db_freertos/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">4B3C3EF8A318908A22B78500515C3288</GeneratedChecksum>
-          <UserChecksum dnOrder="6">4B3C3EF8A318908A22B78500515C3288</UserChecksum>
+          <GeneratedChecksum dnOrder="5"/>
+          <UserChecksum dnOrder="6"/>
         </File>
       </Files>
       <Settings dnOrder="1">
@@ -1847,7 +1847,7 @@
     </Manifest>
     <Settings dnOrder="5">
       <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.6.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MK-GP_DFP\1.2.83\atdf\PIC32MK1024GPE100.atdf"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MK-GP_DFP\1.2.87\atdf\PIC32MK1024GPE100.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
