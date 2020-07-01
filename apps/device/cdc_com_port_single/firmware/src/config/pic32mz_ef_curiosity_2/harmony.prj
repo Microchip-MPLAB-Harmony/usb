@@ -58,8 +58,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_curiosity_2/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">76E8CDB25C6D715AEA9C581CDF69325C</GeneratedChecksum>
-          <UserChecksum dnOrder="6">76E8CDB25C6D715AEA9C581CDF69325C</UserChecksum>
+          <GeneratedChecksum dnOrder="5">F9471470EAC4E46AD31B57119DDA62C9</GeneratedChecksum>
+          <UserChecksum dnOrder="6">F9471470EAC4E46AD31B57119DDA62C9</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -220,8 +220,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_curiosity_2/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">62BFED5C377613C79FE2BA0D8F753313</GeneratedChecksum>
-          <UserChecksum dnOrder="6">62BFED5C377613C79FE2BA0D8F753313</UserChecksum>
+          <GeneratedChecksum dnOrder="5">E0AF9234629278B471E6787F3BD1387A</GeneratedChecksum>
+          <UserChecksum dnOrder="6">E0AF9234629278B471E6787F3BD1387A</UserChecksum>
         </File>
         <File dnOrder="24">
           <Type dnOrder="0">HEADER</Type>
@@ -814,8 +814,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_curiosity_2/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">4B3C3EF8A318908A22B78500515C3288</GeneratedChecksum>
-          <UserChecksum dnOrder="6">4B3C3EF8A318908A22B78500515C3288</UserChecksum>
+          <GeneratedChecksum dnOrder="5"/>
+          <UserChecksum dnOrder="6"/>
         </File>
       </Files>
       <Settings dnOrder="1">
@@ -831,7 +831,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;validation;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>
