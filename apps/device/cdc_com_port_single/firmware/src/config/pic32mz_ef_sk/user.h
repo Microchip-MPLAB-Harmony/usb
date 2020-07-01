@@ -34,7 +34,6 @@ extern "C" {
 // *****************************************************************************
 #define APP_USB_SWITCH_DEBOUNCE_COUNT_FS                    200
 #define APP_USB_SWITCH_DEBOUNCE_COUNT_HS                    1200
-#define APP_USB_SWITCH_DEBOUNCE_COUNT_HS                    1200
 
 
 //DOM-IGNORE-BEGIN
