@@ -1238,7 +1238,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                         point = (uint8_t *)irp->setup;
                         for (i = 0; i < 8; i++)
                         {
-                            USBBufferNoCache[pipe->hostEndpoint][i] = point[i];
+                            USBBufferNoCacheSetup[pipe->hostEndpoint][i] = point[i];
                         }
 
                         /* SETUP packet PID */
@@ -1248,7 +1248,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                                         8,                       /* BE: BufferEnd: Total Bytes to transfer */
                                         0,                       /* DP: Direction/PID: SETUP=0 */
                                         0,                       /* R: bufferRounding: exactly fill the defined data buffer */
-                                        (uint32_t *)USBBufferNoCache[pipe->hostEndpoint]); /* CBP: CurrentBufferPointer */
+                                        (uint32_t *)USBBufferNoCacheSetup[pipe->hostEndpoint]); /* CBP: CurrentBufferPointer */
 
                         irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
 

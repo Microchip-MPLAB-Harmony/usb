@@ -399,5 +399,6 @@ extern USB_SPEED DRV_USB_UHP_DeviceCurrentSpeedGet(DRV_HANDLE client);
 
 
 extern uint8_t USBBufferNoCache[DRV_USB_UHP_PIPES_NUMBER][DRV_USB_UHP_NO_CACHE_BUFFER_LENGTH];
+extern uint8_t USBBufferNoCacheSetup[DRV_USB_UHP_PIPES_NUMBER][8];
 
 #endif  // _DRV_USB_UHP_LOCAL_

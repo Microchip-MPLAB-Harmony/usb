@@ -1291,7 +1291,7 @@ else
                         point = (uint8_t *)irp->setup;
                         for (i = 0; i < 8; i++)
                         {
-                            USBBufferNoCache[pipe->hostEndpoint][i] = point[i];
+                            USBBufferNoCacheSetup[pipe->hostEndpoint][i] = point[i];
                         }
 
                         /* SETUP packet PID */
@@ -1301,7 +1301,7 @@ else
                                         0,                        /* data toggle */
                                         8,                        /* Total Bytes to transfer */
                                         0,                        /* Interrupt on Complete */
-                                        (uint32_t *)USBBufferNoCache[pipe->hostEndpoint]);  /* SETUP packet PID */
+                                        (uint32_t *)USBBufferNoCacheSetup[pipe->hostEndpoint]);  /* SETUP packet PID */
                     }
                 }
                 else

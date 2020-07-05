@@ -60,7 +60,7 @@
 
 #define NOT_CACHED __attribute__((__section__(".region_nocache")))
 NOT_CACHED uint8_t USBBufferNoCache[DRV_USB_UHP_PIPES_NUMBER][DRV_USB_UHP_NO_CACHE_BUFFER_LENGTH];
-
+NOT_CACHED uint8_t USBBufferNoCacheSetup[DRV_USB_UHP_PIPES_NUMBER][8];
 
 /************************************
  * Prototype
