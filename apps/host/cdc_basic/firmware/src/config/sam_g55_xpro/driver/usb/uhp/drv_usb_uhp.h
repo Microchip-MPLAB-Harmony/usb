@@ -3,19 +3,19 @@
 
   Company:
     Microchip Technology Inc.
-    
+
   File Name:
     drv_usb_uhp.h
-	
+
   Summary:
     USB Host Port Module Driver Interface File
-	
+
   Description:
     The USB Host port Module driver provides a simple interface to manage
     the "USB" peripheral on the  microcontroller. This file defines the
     interface definitions and prototypes for the Hi-Speed USB Driver. The driver
     interface meets the requirements of the MPLAB Harmony USB Host and Device
-    Layer.                                                  
+    Layer.
 *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -102,7 +102,7 @@
   Description:
     This constant defines the value of Hi-Speed USB Driver Index 0.  The
     SYS_MODULE_INDEX parameter of the DRV_USB_UHP_Initialize and DRV_USB_UHP_Open
-    functions should be set to this value to identify instance 0 of the driver. 
+    functions should be set to this value to identify instance 0 of the driver.
 
   Remarks:
     These constants should be used in place of hard-coded numeric literals
@@ -204,13 +204,13 @@ typedef enum
     Define the type of the Hi-Speed USB Driver event callback function. The
     client should register an event callback function of this type when it
     intends to receive events from the Hi-Speed USB Driver. The event callback
-    function is registered using the DRV_USB_UHP_ClientEventCallBackSet function. 
+    function is registered using the DRV_USB_UHP_ClientEventCallBackSet function.
 
   Parameters:
     hClient    - Handle to the driver client that registered this callback function.
     eventType  - This parameter identifies the event that caused the callback
                  function to be called.
-    eventData  - Pointer to a data structure that is related to this event. 
+    eventData  - Pointer to a data structure that is related to this event.
                  This value will be NULL if the event has no related data.
 
   Returns:
@@ -221,11 +221,11 @@ typedef enum
 
 */
 
-typedef void (*DRV_USB_UHP_EVENT_CALLBACK) 
+typedef void (*DRV_USB_UHP_EVENT_CALLBACK)
 (
-    uintptr_t hClient, 
+    uintptr_t hClient,
     DRV_USB_UHP_EVENT  eventType,
-    void * eventData   
+    void * eventData
 );
 
 // *****************************************************************************
@@ -240,7 +240,7 @@ typedef void (*DRV_USB_UHP_EVENT_CALLBACK)
     periodically by the root hub driver to check the Overcurrent status of the
     port. It should continue to return true while the Overcurrent condition
     exists on the port. It should return false when the Overcurrent condition
-    does not exist. 
+    does not exist.
 
   Remarks:
     None.
@@ -261,7 +261,7 @@ typedef bool (* DRV_USB_UHP_ROOT_HUB_PORT_OVER_CURRENT_DETECT)(uint8_t port);
     switch, the switch should be accessed and controlled by this function. If
     the enable parameter is true, the switch should be enabled and VBUS should
     be available on the port. If the enable parameter is false, the
-    switch should be disabled and VBUS should not be available on the port.  
+    switch should be disabled and VBUS should not be available on the port.
 
   Remarks:
     None.
@@ -269,7 +269,7 @@ typedef bool (* DRV_USB_UHP_ROOT_HUB_PORT_OVER_CURRENT_DETECT)(uint8_t port);
 
 typedef void (* DRV_USB_UHP_ROOT_HUB_PORT_POWER_ENABLE)
 (
-    uint8_t port, 
+    uint8_t port,
     bool control
 );
 
@@ -293,8 +293,8 @@ typedef void (* DRV_USB_UHP_ROOT_HUB_PORT_POWER_ENABLE)
 
 typedef void(* DRV_USB_UHP_ROOT_HUB_PORT_INDICATION)
 (
-    uint8_t port, 
-    USB_HUB_PORT_INDICATOR_COLOR color, 
+    uint8_t port,
+    USB_HUB_PORT_INDICATOR_COLOR color,
     USB_HUB_PORT_INDICATOR_STATE state
 );
 
@@ -314,17 +314,17 @@ typedef void(* DRV_USB_UHP_ROOT_HUB_PORT_INDICATION)
 */
 
 typedef struct
-{    
-    /* Identifies the USB peripheral to be used. */   
+{
+    /* Identifies the USB peripheral to be used. */
     UhpOhci * usbIDOHCI;
 
-    /* Specify the interrupt source for the USB module. This should be the 
+    /* Specify the interrupt source for the USB module. This should be the
        interrupt source for the USB module instance specified in usbID. */
     INT_SOURCE interruptSource;
 
     /* Specify the operational speed of the USB module. This should always be
        set to USB_SPEED_FULL. */
-    USB_SPEED operationSpeed; 
+    USB_SPEED operationSpeed;
 
     /* Root hub available current in milliamperes. This specifies the amount of current
        that root hub can provide to the attached device. This should be
@@ -405,39 +405,39 @@ void DRV_USB_UHP_EndpointToggleClear
 // *****************************************************************************
 /* Function:
     SYS_MODULE_OBJ DRV_USB_UHP_Initialize
-    ( 
+    (
         const SYS_MODULE_INDEX drvIndex,
-        const SYS_MODULE_INIT * const init    
+        const SYS_MODULE_INIT * const init
     )
-    
+
   Summary:
     Initializes the Hi-Speed USB Driver.
-	
+
   Description:
     This function initializes the Hi-Speed USB Driver, making it ready for
     clients to open. The driver initialization does not complete when this
     function returns. The DRV_USB_UHP_Tasks function must called periodically to
     complete the driver initialization. The DRV_USB_UHP_Open function will fail if
     the driver was not initialized or if initialization has not completed.
-	
+
   Precondition:
     None.
-	
+
   Parameters:
     drvIndex - Ordinal number of driver instance to be initialized. This should
     be set to DRV_USB_UHP_INDEX_0 if driver instance 0 needs to be initialized.
 
     init - Pointer to a data structure containing data necessary to
     initialize the driver. This should be a DRV_USB_UHP_INIT structure reference
-    typecast to SYS_MODULE_INIT reference. 
-				
+    typecast to SYS_MODULE_INIT reference.
+
   Returns:
     * SYS_MODULE_OBJ_INVALID - The driver initialization failed.
     * A valid System Module Object - The driver initialization was able to
       start. It may have not completed and requires the DRV_USB_UHP_Tasks function
       to be called periodically. This value will never be the same as
-      SYS_MODULE_OBJ_INVALID. 
-	
+      SYS_MODULE_OBJ_INVALID.
+
   Example:
     <code>
      // The following code shows an example initialization of the
@@ -447,7 +447,7 @@ void DRV_USB_UHP_EndpointToggleClear
      // power state is set to run at full clock speeds. Device Mode operation
      // should be at FULL speed. The size of the endpoint table is set for two
      // endpoints.
-    
+
     DRV_USB_UHP_INIT moduleInit;
 
     usbInitData.usbID               = USB_UHP_ID_0;
@@ -456,24 +456,24 @@ void DRV_USB_UHP_EndpointToggleClear
     usbInitData.suspendInSleep      = false;
     usbInitData.operationSpeed      = USB_SPEED_FULL;
     usbInitData.interruptSource     = INT_SOURCE_USB;
-    
+
     usbInitData.sysModuleInit.powerState = SYS_MODULE_POWER_RUN_FULL ;
-    
+
     // This is how this data structure is passed to the initialize
     // function.
-    
+
     DRV_USB_UHP_Initialize(DRV_USB_UHP_INDEX_0, (SYS_MODULE_INIT *) &usbInitData);
-    
+
     </code>
-	
+
   Remarks:
     This function must be called before any other Hi-Speed USB Driver function
     is called. This function should only be called once during system
     initialization unless DRV_USB_UHP_Deinitialize is called to deinitialize the
-    driver instance.                                    
+    driver instance.
 */
 
-extern SYS_MODULE_OBJ DRV_USB_UHP_Initialize 
+extern SYS_MODULE_OBJ DRV_USB_UHP_Initialize
 (
     const SYS_MODULE_INDEX drvIndex,
     const SYS_MODULE_INIT * const init
@@ -518,21 +518,21 @@ extern void DRV_USB_UHP_Deinitialize(const SYS_MODULE_INDEX object);
     SYS_MODULE_OBJ      object;     // Returned from DRV_USB_UHP_Initialize
     SYS_STATUS          status;
     DRV_USB_UHP_INIT moduleInit;
-    
+
     usbInitData.usbID               = USB_UHP_ID_0;
     usbInitData.opMode              = DRV_USB_UHP_OPMODE_DEVICE;
     usbInitData.stopInIdle          = false;
     usbInitData.suspendInSleep      = false;
     usbInitData.operationSpeed      = USB_SPEED_FULL;
     usbInitData.interruptSource     = INT_SOURCE_USB;
-    
+
     usbInitData.sysModuleInit.powerState = SYS_MODULE_POWER_RUN_FULL ;
-    
+
     // This is how this data structure is passed to the initialize
     // function.
-    
+
     DRV_USB_UHP_Initialize(DRV_USB_UHP_INDEX_0, (SYS_MODULE_INIT *) &usbInitData);
-    
+
     // The status of the driver can be checked.
     status = DRV_USB_UHP_Status(object);
     if(SYS_STATUS_READY == status)
@@ -553,7 +553,7 @@ extern SYS_STATUS DRV_USB_UHP_Status ( SYS_MODULE_OBJ object );
     void DRV_USB_UHP_Tasks( SYS_MODULE_OBJ object )
 
   Summary:
-    Maintains the driver's state machine when the driver is configured for 
+    Maintains the driver's state machine when the driver is configured for
     Polled mode.
 
   Description:
@@ -586,7 +586,7 @@ extern SYS_STATUS DRV_USB_UHP_Status ( SYS_MODULE_OBJ object );
   Remarks:
     This function is normally not called  directly  by  an  application.   It  is
     called by the system's Tasks function (SYS_Tasks). This function will never
-    block.  
+    block.
 */
 
 extern void DRV_USB_UHP_Tasks(SYS_MODULE_OBJ object);
@@ -642,14 +642,14 @@ extern void DRV_USB_UHP_Tasks_ISR( SYS_MODULE_OBJ object );
 // ****************************************************************************
 /* Function:
     DRV_HANDLE DRV_USB_UHP_Open
-    ( 
+    (
         const SYS_MODULE_INDEX drvIndex,
         const DRV_IO_INTENT intent
     )
-    
+
   Summary:
     Opens the specified Hi-Speed USB Driver instance and returns a handle to it.
-	
+
   Description:
     This function opens the specified Hi-Speed USB Driver instance and provides a
     handle that must be provided to all other client-level operations to
@@ -660,27 +660,27 @@ extern void DRV_USB_UHP_Tasks_ISR( SYS_MODULE_OBJ object );
     handle. A driver instance can only support one client. Trying to open a
     driver that has an existing client will result in an unsuccessful
     function call.
-	
+
   Precondition:
     Function DRV_USB_UHP_Initialize must have been called before calling this
     function.
-	
+
   Parameters:
     drvIndex - Identifies the driver instance to be opened. As an example, this
     value can be set to DRV_USB_UHP_INDEX_0 if instance 0 of the driver has to be
     opened.
-    
-    intent - Should always be 
+
+    intent - Should always be
     (DRV_IO_INTENT_EXCLUSIVE|DRV_IO_INTENT_READWRITE| DRV_IO_INTENT_NON_BLOCKING).
-				
+
   Returns:
     * DRV_HANDLE_INVALID - The driver could not be opened successfully.This can
      happen if the driver initialization was not complete or if an internal
-     error has occurred.  
+     error has occurred.
     * A Valid Driver Handle - This is an arbitrary value and is returned if the
       function was successful. This value will never be the same as
-      DRV_HANDLE_INVALID. 
-	
+      DRV_HANDLE_INVALID.
+
   Example:
     <code>
 
@@ -693,9 +693,9 @@ extern void DRV_USB_UHP_Tasks_ISR( SYS_MODULE_OBJ object );
     {
         // The application should try opening the driver again.
     }
-    
+
     </code>
-	
+
   Remarks:
     The handle returned is valid until the DRV_USB_UHP_Close function is called.
     The function will typically return DRV_HANDLE_INVALID if the driver was not
@@ -705,7 +705,7 @@ extern void DRV_USB_UHP_Tasks_ISR( SYS_MODULE_OBJ object );
 extern DRV_HANDLE DRV_USB_UHP_Open
 (
     const SYS_MODULE_INDEX drvIndex,
-    const DRV_IO_INTENT intent  
+    const DRV_IO_INTENT intent
 );
 
 // *****************************************************************************
@@ -749,16 +749,16 @@ extern void DRV_USB_UHP_Close( DRV_HANDLE handle );
 // *****************************************************************************
 /* Function:
     void DRV_USB_UHP_ClientEventCallBackSet
-    ( 
+    (
         DRV_HANDLE handle,
         uintptr_t hReferenceData,
-        DRV_USB_UHP_EVENT_CALLBACK myEventCallBack 
+        DRV_USB_UHP_EVENT_CALLBACK myEventCallBack
     );
 
   Summary:
     This function sets up the event callback function that is invoked by the USB
     controller driver to notify the client of USB bus events.
-	
+
   Description:
     This function sets up the event callback function that is invoked by the USB
     controller driver to notify the client of USB bus events. The callback is
@@ -766,21 +766,21 @@ extern void DRV_USB_UHP_Close( DRV_HANDLE handle );
     function has been called or by setting the myEventCallBack argument as NULL.
     When the callback function is called, the hReferenceData argument is
     returned.
-	
+
   Precondition:
     None.
-	
+
   Parameters:
     handle - Client's driver handle (returned from DRV_USB_UHP_Open function).
 
     hReferenceData - Object (could be a pointer) that is returned with the
-    callback.  
-    
+    callback.
+
     myEventCallBack -  Callback function for all USB events.
-	
+
   Returns:
     None.
-	
+
   Example:
     <code>
 
@@ -791,17 +791,17 @@ extern void DRV_USB_UHP_Close( DRV_HANDLE handle );
      // is the Device Layer data structure). This allows the application
      // firmware to identify, as an example, the Device Layer object associated
      // with this callback.
-    
+
     DRV_USB_UHP_ClientEventCallBackSet(myUSBDevice.usbDriverHandle, (uintptr_t)&myUSBDevice, USBDeviceLayerEventHandler);
-    
+
     </code>
-	
+
   Remarks:
-    Typical usage of the Hi-Speed USB Driver requires a client to register a callback.                                                                         
+    Typical usage of the Hi-Speed USB Driver requires a client to register a callback.
 */
 
 extern void DRV_USB_UHP_ClientEventCallBackSet
-( 
+(
     DRV_HANDLE handle,
     uintptr_t  hReferenceData ,
     DRV_USB_EVENT_CALLBACK myEventCallBack
@@ -813,25 +813,25 @@ extern void DRV_USB_UHP_ClientEventCallBackSet
     (
         DRV_HANDLE handle
     );
-    
+
   Summary:
     Disables Host mode events.
-	
+
   Description:
     This function disables the Host mode events. This function is called by the
-    Host Layer when it wants to execute code atomically. 
-	
+    Host Layer when it wants to execute code atomically.
+
   Precondition:
     The handle should be valid.
-	
+
   Parameters:
     handle - Client's driver handle (returned from DRV_USB_UHP_Open function).
-	
+
   Returns:
     * true - Driver event generation was enabled when this function was called.
     * false - Driver event generation was not enabled when this function was
-      called. 
-	
+      called.
+
   Example:
     <code>
     // This code shows how the DRV_USB_UHP_EventsDisable and
@@ -850,7 +850,7 @@ extern void DRV_USB_UHP_ClientEventCallBackSet
     DRV_USB_UHP_EventsEnable(driverHandle, eventsWereEnabled);
 
     </code>
-	
+
   Remarks:
     None.
 */
@@ -867,26 +867,26 @@ extern bool DRV_USB_UHP_EventsDisable
         DRV_HANDLE handle
         bool eventRestoreContext
     );
-    
+
   Summary:
     Restores the events to the specified the original value.
-	
+
   Description:
     This function will restore the enable disable state of the events.  The
     eventRestoreContext parameter should be equal to the value returned by the
     DRV_USB_UHP_EventsDisable function.
-	
+
   Precondition:
     The handle should be valid.
-	
+
   Parameters:
     handle - Handle to the driver (returned from DRV_USB_UHP_Open function).
     eventRestoreContext - Value returned by the DRV_USB_UHP_EventsDisable
     function.
-	
+
   Returns:
     None.
-	
+
   Example:
     <code>
     // This code shows how the DRV_USB_UHP_EventsDisable and
@@ -905,14 +905,14 @@ extern bool DRV_USB_UHP_EventsDisable
     DRV_USB_UHP_EventsEnable(driverHandle, eventsWereEnabled);
 
     </code>
-	
+
   Remarks:
     None.
 */
 
 extern void DRV_USB_UHP_EventsEnable
 (
-    DRV_HANDLE handle, 
+    DRV_HANDLE handle,
     bool eventContext
 );
 
@@ -925,24 +925,24 @@ extern void DRV_USB_UHP_EventsEnable
 // ****************************************************************************
 /* Function:
     void DRV_USB_UHP_IRPCancel(USB_HOST_IRP * inputIRP);
-    
+
   Summary:
     Cancels the specified IRP.
-	
+
   Description:
     This function attempts to cancel the specified IRP. If the IRP is queued and
     its processing has not started, it will be canceled successfully. If the
-    IRP in progress, the ongoing transaction will be allowed to complete. 
-	
+    IRP in progress, the ongoing transaction will be allowed to complete.
+
   Precondition:
     None.
-	
+
   Parameters:
     inputIRP - Pointer to the IRP to cancel.
-	
+
   Returns:
     None.
-	
+
   Example:
     <code>
 
@@ -965,13 +965,13 @@ extern void DRV_USB_UHP_EventsEnable
 
     // Additional application logic may come here. This logic may decide to
     // cancel the submitted IRP.
-    
+
     DRV_USB_UHP_IRPCancel(&irp);
 
     </code>
-	
+
   Remarks:
-    None.                                                                  
+    None.
 */
 
 extern void DRV_USB_UHP_IRPCancel(USB_HOST_IRP * inputIRP);
@@ -982,38 +982,38 @@ extern void DRV_USB_UHP_IRPCancel(USB_HOST_IRP * inputIRP);
     (
         DRV_USB_UHP_HOST_PIPE_HANDLE pipeHandle
     );
-    
+
   Summary:
     Closes an open pipe.
-	
+
   Description:
     This function closes an open pipe. Any IRPs scheduled on the pipe will be
     aborted and IRP callback functions will be called with the status as
     DRV_USB_HOST_IRP_STATE_ABORTED. The pipe handle will become invalid and the
     pipe and will not accept IRPs.
-	
+
   Precondition:
     The pipe handle should be valid.
-	
+
   Parameters:
     pipeHandle - Handle to the pipe to close.
-	
+
   Returns:
     None.
-	
+
   Example:
     <code>
     // This code shows how an open Host pipe can be closed.
-    
+
     DRV_HANDLE driverHandle;
     DRV_USB_UHP_HOST_PIPE_HANDLE pipeHandle;
 
     // Close the pipe.
     DRV_USB_UHP_PipeClose(pipeHandle);
     </code>
-	
+
   Remarks:
-    None.                                                                  
+    None.
 */
 
 extern void DRV_USB_UHP_PipeClose
@@ -1028,79 +1028,79 @@ extern void DRV_USB_UHP_PipeClose
         DRV_USB_UHP_HOST_PIPE_HANDLE  hPipe,
         USB_HOST_IRP * pInputIRP
     );
-    
+
   Summary:
     Submits an IRP on a pipe.
-	
+
   Description:
     This function submits an IRP on the specified pipe. The IRP will be added to
     the queue and will be processed in turn. The data will be transferred on the
     bus based on the USB bus scheduling rules. When the IRP has been processed,
     the callback function specified in the IRP will be called. The IRP status
-    will be updated to reflect the completion status of the IRP. 
-	
+    will be updated to reflect the completion status of the IRP.
+
   Precondition:
     The pipe handle should be valid.
-	
+
   Parameters:
     hPipe - Handle to the pipe to which the IRP has to be submitted.
 
     pInputIRP - Pointer to the IRP.
-	
+
   Returns:
     * USB_ERROR_NONE - The IRP was submitted successfully.
     * USB_ERROR_PARAMETER_INVALID - The pipe handle is not valid.
     * USB_ERROR_OSAL_FUNCTION - An error occurred in an OSAL function called in
       this function.
-	
+
   Example:
     <code>
     // The following code shows an example of how the host layer populates
     // the IRP object and then submits it. IRP_Callback function is called when an
     // IRP has completed processing. The status of the IRP at completion can be
     // checked in the status flag. The size field of the irp will contain the amount
-    // of data transferred.  
+    // of data transferred.
 
     void IRP_Callback(USB_HOST_IRP * irp)
     {
         // irp is pointing to the IRP for which the callback has occurred. In most
         // cases this function will execute in an interrupt context. The application
         // should not perform any hardware access or interrupt un-safe operations in
-        // this function. 
+        // this function.
 
         switch(irp->status)
         {
             case USB_HOST_IRP_STATUS_ERROR_UNKNOWN:
-                // IRP was terminated due to an unknown error 
+                // IRP was terminated due to an unknown error
                 break;
 
             case USB_HOST_IRP_STATUS_ABORTED:
-                // IRP was terminated by the application 
+                // IRP was terminated by the application
                 break;
 
             case USB_HOST_IRP_STATUS_ERROR_BUS:
-                // IRP was terminated due to a bus error 
+                // IRP was terminated due to a bus error
                 break;
 
             case USB_HOST_IRP_STATUS_ERROR_DATA:
-                // IRP was terminated due to data error 
+                // IRP was terminated due to data error
                 break;
 
             case USB_HOST_IRP_STATUS_ERROR_NAK_TIMEOUT:
-                // IRP was terminated because of a NAK timeout 
+                // IRP was terminated because of a NAK timeout
                 break;
 
             case USB_HOST_IRP_STATUS_ERROR_STALL:
-                // IRP was terminated because of a device sent a STALL 
+                // IRP was terminated because of a device sent a STALL
                 break;
 
             case USB_HOST_IRP_STATUS_COMPLETED:
-                // IRP has been completed 
+                // IRP has been completed
                 break;
 
             case USB_HOST_IRP_STATUS_COMPLETED_SHORT:
                 // IRP has been completed but the amount of data processed was less
-                // than requested. 
+                // than requested.
                 break;
 
             default:
@@ -1111,7 +1111,7 @@ extern void DRV_USB_UHP_PipeClose
     // In the following code snippet the a control transfer IRP is submitted to a
     // control pipe. The setup parameter of the IRP points to the Setup command of
     // the control transfer. The direction of the data stage is specified by the
-    // Setup packet. 
+    // Setup packet.
 
     USB_HOST_IRP irp;
     USB_ERROR result;
@@ -1129,9 +1129,9 @@ extern void DRV_USB_UHP_PipeClose
     result = DRV_USB_UHP_HOST_IRPSubmit(controlPipeHandle, &irp);
 
     </code>
-	
+
   Remarks:
-    An IRP can also be submitted in an IRP callback function.                                                                  
+    An IRP can also be submitted in an IRP callback function.
 */
 extern USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
 (
@@ -1141,45 +1141,45 @@ extern USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
 
 // ****************************************************************************
 /* Function:
-    DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_PipeSetup 
+    DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_PipeSetup
     (
         DRV_HANDLE client,
-        uint8_t deviceAddress, 
+        uint8_t deviceAddress,
         USB_ENDPOINT endpointAndDirection,
         uint8_t hubAddress,
         uint8_t hubPort,
-        USB_TRANSFER_TYPE pipeType, 
-        uint8_t bInterval, 
+        USB_TRANSFER_TYPE pipeType,
+        uint8_t bInterval,
         uint16_t wMaxPacketSize,
         USB_SPEED speed
     );
-    
+
   Summary:
     Open a pipe with the specified attributes.
-	
+
   Description:
     This function opens a communication pipe between the Host and the device
     endpoint. The transfer type and other attributes are specified through the
     function parameters. The driver does not check for available bus bandwidth,
     which should be done by the application (the USB Host Layer in this case)
-	
+
   Precondition:
     The driver handle should be valid.
-	
+
   Parameters:
     client - Handle to the driver (returned from DRV_USB_UHP_Open function).
-    
+
     deviceAddress - USB Address of the device to connect to.
-    
+
     endpoint - Endpoint on the device to connect to.
-    
+
     hubAddress - Address of the hub to which this device is connected. If not
-    connected to a hub, this value should be set to 0. 
+    connected to a hub, this value should be set to 0.
 
     hubPort - Port number of the hub to which this device is connected.
 
     pipeType - Transfer type of the pipe to open.
-    
+
     bInterval - Polling interval for periodic transfers. This should be
     specified as defined by the USB 2.0 Specification.
 
@@ -1195,7 +1195,7 @@ extern USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
     * A valid Pipe Handle - The pipe was created successfully. This is an
       arbitrary value and will never be the same as
       DRV_USB_HOST_PIPE_HANDLE_INVALID.
-	
+
   Example:
     <code>
     // This code shows how the DRV_USB_UHP_PipeSetup function is called for
@@ -1210,7 +1210,7 @@ extern USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
     DRV_HANDLE driverHandle;
     DRV_USB_UHP_HOST_PIPE_HANDLE pipeHandle;
 
-    pipeHandle = DRV_USB_UHP_PipeSetup(driverHandle, 0x02, 0x14, 0x03, 0x01, USB_TRANSFER_TYPE_BULK, 0, 64, USB_SPEED_FULL); 
+    pipeHandle = DRV_USB_UHP_PipeSetup(driverHandle, 0x02, 0x14, 0x03, 0x01, USB_TRANSFER_TYPE_BULK, 0, 64, USB_SPEED_FULL);
 
     if(pipeHandle != DRV_USB_UHP_HOST_PIPE_HANDLE_INVALID)
     {
@@ -1218,20 +1218,20 @@ extern USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
     }
 
     </code>
-	
+
   Remarks:
-    None.                                                                  
+    None.
 */
 
-extern DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_PipeSetup 
+extern DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_PipeSetup
 (
     DRV_HANDLE client,
-    uint8_t deviceAddress, 
+    uint8_t deviceAddress,
     USB_ENDPOINT endpointAndDirection,
     uint8_t hubAddress,
     uint8_t hubPort,
-    USB_TRANSFER_TYPE pipeType, 
-    uint8_t bInterval, 
+    USB_TRANSFER_TYPE pipeType,
+    uint8_t bInterval,
     uint16_t wMaxPacketSize,
     USB_SPEED speed
 );
@@ -1246,26 +1246,26 @@ extern DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_PipeSetup
 // ****************************************************************************
 /* Function:
     void DRV_USB_UHP_ROOT_HUB_PortReset(DRV_HANDLE handle, uint8_t port );
-    
+
   Summary:
     Resets the specified root hub port.
-	
+
   Description:
     This function resets the root hub port. The reset duration is defined by
     DRV_USB_UHP_ROOT_HUB_RESET_DURATION. The status of the reset signaling can be
     checked using the DRV_USB_UHP_ROOT_HUB_PortResetIsComplete function.
-	
+
   Precondition:
     None.
-	
+
   Parameters:
     handle - Handle to the driver (returned from DRV_USB_UHP_Open function).
 
     port - Port to reset.
-	
+
   Returns:
     None.
-	
+
   Example:
     <code>
     // This code shows how the DRV_USB_HOST_ROOT_HUB_PortReset and the
@@ -1286,9 +1286,9 @@ extern DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_PipeSetup
     }
 
     </code>
-	
+
   Remarks:
-    The root hub on the PIC32MZ USB controller contains only one port - port 0.                                                                  
+    The root hub on the PIC32MZ USB controller contains only one port - port 0.
 */
 
 extern USB_ERROR DRV_USB_UHP_ROOT_HUB_PortReset(DRV_HANDLE handle, uint8_t port );
@@ -1352,31 +1352,31 @@ extern bool DRV_USB_UHP_ROOT_HUB_PortResetIsComplete(DRV_HANDLE handle, uint8_t 
 /* Function:
     USB_ERROR DRV_USB_UHP_HOST_ROOT_HUB_PortResume
     (
-        DRV_HANDLE handle, 
+        DRV_HANDLE handle,
         uint8_t port
     );
-    
+
   Summary:
     Resumes the specified root hub port.
-	
+
   Description:
     This function resumes the root hub. The resume duration is defined by
     DRV_USB_UHP_ROOT_HUB_RESUME_DURATION. The status of the resume signaling can
     be checked using the DRV_USB_UHP_ROOT_HUB_PortResumeIsComplete function.
-	
+
   Precondition:
     None.
-	
+
   Parameters:
     handle - Handle to the driver (returned from DRV_USB_UHP_Open function).
 
     port - Port to resume.
-	
+
   Returns:
     * USB_ERROR_NONE - The function executed successfully.
     * USB_ERROR_PARAMETER_INVALID - The driver handle is not valid or the port
       number does not exist.
-	
+
   Example:
     <code>
     // This code shows how the DRV_USB_UHP_ROOT_HUB_PortResume function is
@@ -1388,9 +1388,9 @@ extern bool DRV_USB_UHP_ROOT_HUB_PortResetIsComplete(DRV_HANDLE handle, uint8_t 
     DRV_USB_UHP_ROOT_HUB_PortResume(driverHandle, 0);
 
     </code>
-	
+
   Remarks:
-    The root hub on this particular hardware only contains one port - port 0.                                                                  
+    The root hub on this particular hardware only contains one port - port 0.
 */
 
 extern USB_ERROR DRV_USB_UHP_ROOT_HUB_PortResume(DRV_HANDLE handle, uint8_t port);
@@ -1398,26 +1398,26 @@ extern USB_ERROR DRV_USB_UHP_ROOT_HUB_PortResume(DRV_HANDLE handle, uint8_t port
 // ****************************************************************************
 /* Function:
     USB_ERROR DRV_USB_UHP_ROOT_HUB_PortSuspend(DRV_HANDLE handle, uint8_t port);
-    
+
   Summary:
     Suspends the specified root hub port.
-	
+
   Description:
-    This function suspends the root hub port. 
-	
+    This function suspends the root hub port.
+
   Precondition:
     None.
-	
+
   Parameters:
     handle - Handle to the driver (returned from DRV_USB_UHP_Open function).
 
     port - Port to suspend.
-	
+
   Returns:
     * USB_ERROR_NONE - The function executed successfully.
     * USB_ERROR_PARAMETER_INVALID - The driver handle is not valid or the port
       number does not exist.
-	
+
   Example:
     <code>
     // This code shows how the DRV_USB_UHP_ROOT_HUB_PortSuspend function is
@@ -1429,9 +1429,9 @@ extern USB_ERROR DRV_USB_UHP_ROOT_HUB_PortResume(DRV_HANDLE handle, uint8_t port
     DRV_USB_UHP_ROOT_HUB_PortSuspend(driverHandle, 0);
 
     </code>
-	
+
   Remarks:
-    The root hub on this particular hardware only contains one port - port 0.                                                                  
+    The root hub on this particular hardware only contains one port - port 0.
 */
 
 extern USB_ERROR DRV_USB_UHP_ROOT_HUB_PortSuspend(DRV_HANDLE handle, uint8_t port);
@@ -1440,31 +1440,31 @@ extern USB_ERROR DRV_USB_UHP_ROOT_HUB_PortSuspend(DRV_HANDLE handle, uint8_t por
 /* Function:
     USB_SPEED DRV_USB_UHP_ROOT_HUB_PortSpeedGet
     (
-        DRV_HANDLE handle, 
+        DRV_HANDLE handle,
         uint8_t port
     );
-    
+
   Summary:
     Returns the speed of at which the port is operating.
-	
+
   Description:
     This function returns the speed at which the port is operating.
-	
+
   Precondition:
     None.
-	
+
   Parameters:
     handle - Handle to the driver (returned from DRV_USB_UHP_Open function).
 
     port - Port number of the port to be analyzed..
-	
+
   Returns:
     * USB_SPEED_ERROR - This value is returned  if the driver handle is not
       or if the speed information is not available or if the specified port is
       not valid.
     * USB_SPEED_FULL - A Full Speed device has been connected to the port.
     * USB_SPEED_LOW - A Low Speed device has been connected to the port.
-	
+
   Example:
     <code>
     // This code shows how the DRV_USB_UHP_ROOT_HUB_PortSpeedGet function is
@@ -1477,9 +1477,9 @@ extern USB_ERROR DRV_USB_UHP_ROOT_HUB_PortSuspend(DRV_HANDLE handle, uint8_t por
     speed = DRV_USB_UHP_ROOT_HUB_PortSpeedGet(driverHandle, 0);
 
     </code>
-	
+
   Remarks:
-    The root hub on this particular hardware only contains one port - port 0.                                                                  
+    The root hub on this particular hardware only contains one port - port 0.
 */
 
 extern USB_SPEED DRV_USB_UHP_ROOT_HUB_PortSpeedGet(DRV_HANDLE handle, uint8_t port);
@@ -1487,25 +1487,25 @@ extern USB_SPEED DRV_USB_UHP_ROOT_HUB_PortSpeedGet(DRV_HANDLE handle, uint8_t po
 // ****************************************************************************
 /* Function:
     USB_SPEED DRV_USB_UHP_ROOT_HUB_BusSpeedGet(DRV_HANDLE handle);
-    
+
   Summary:
     This function returns the operating speed of the bus to which this root hub
     is connected.
-	
+
   Description:
     This function returns the operating speed of the bus to which this root hub
     is connected.
- 
+
   Precondition:
     None.
-	
+
   Parameters:
     handle - Handle to the driver (returned from DRV_USB_UHP_Open function).
 
   Returns:
     * USB_SPEED_FULL - The Root hub is connected to a bus that is operating at
       Full Speed.
-	
+
   Example:
     <code>
     // This code shows how the DRV_USB_UHP_ROOT_HUB_BusSpeedGet function is
@@ -1517,7 +1517,7 @@ extern USB_SPEED DRV_USB_UHP_ROOT_HUB_PortSpeedGet(DRV_HANDLE handle, uint8_t po
 
     speed = DRV_USB_UHP_ROOT_HUB_BusSpeedGet(driverHandle);
     </code>
-	
+
   Remarks:
     None.
 */
@@ -1527,24 +1527,24 @@ extern USB_SPEED DRV_USB_UHP_ROOT_HUB_BusSpeedGet(DRV_HANDLE handle);
 // ****************************************************************************
 /* Function:
     uint32_t DRV_USB_UHP_ROOT_HUB_MaximumCurrentGet(DRV_HANDLE);
-    
+
   Summary:
     Returns the maximum amount of current that this root hub can provide on the
     bus.
-	
+
   Description:
     This function returns the maximum amount of current that this root hub can
     provide on the bus.
-	
+
   Precondition:
     None.
-	
+
   Parameters:
     handle - Handle to the driver (returned from DRV_USB_UHP_Open function).
 
   Returns:
-    Returns the maximum current (in milliamperes) that the root hub can supply. 
-	
+    Returns the maximum current (in milliamperes) that the root hub can supply.
+
   Example:
     <code>
     // This code shows how the DRV_USB_UHP_ROOT_HUB_MaximumCurrentGet
@@ -1556,7 +1556,7 @@ extern USB_SPEED DRV_USB_UHP_ROOT_HUB_BusSpeedGet(DRV_HANDLE handle);
 
     currentMilliAmperes = DRV_USB_UHP_ROOT_HUB_MaximumCurrentGet(driverHandle);
     </code>
-	
+
   Remarks:
     None.
 */
@@ -1604,7 +1604,7 @@ extern uint8_t DRV_USB_UHP_ROOT_HUB_PortNumbersGet(DRV_HANDLE handle);
 /* Function:
     void DRV_USB_UHP_HOST_ROOT_HUB_OperationEnable
     (
-        DRV_HANDLE handle, 
+        DRV_HANDLE handle,
         bool enable
     );
 
@@ -1641,7 +1641,7 @@ extern uint8_t DRV_USB_UHP_ROOT_HUB_PortNumbersGet(DRV_HANDLE handle);
     // Enable Root hub operation.
     DRV_USB_UHP_HOST_ROOT_HUB_OperationEnable(driverHandle);
 
-    // Wait till the Root hub operation is enabled.  
+    // Wait till the Root hub operation is enabled.
     if(DRV_USB_UHP_ROOT_HUB_OperationIsEnabled(driverHandle) == false)
     {
         // The operation has not completed. Call the
@@ -1690,7 +1690,7 @@ extern void DRV_USB_UHP_OHCI_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bo
     // Enable Root hub operation.
     DRV_USB_UHP_HOST_ROOT_HUB_OperationEnable(driverHandle);
 
-    // Wait till the Root hub operation is enabled.  
+    // Wait till the Root hub operation is enabled.
     if(DRV_USB_UHP_ROOT_HUB_OperationIsEnabled(driverHandle) == false)
     {
         // The operation has not completed. Call the
