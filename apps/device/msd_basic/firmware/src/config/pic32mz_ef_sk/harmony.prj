@@ -238,8 +238,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">82E04212A2924BADD17DB012BA30EE5F</GeneratedChecksum>
-          <UserChecksum dnOrder="6">82E04212A2924BADD17DB012BA30EE5F</UserChecksum>
+          <GeneratedChecksum dnOrder="5">CF254004E726710AD44AE4D233FE92A7</GeneratedChecksum>
+          <UserChecksum dnOrder="6">CF254004E726710AD44AE4D233FE92A7</UserChecksum>
         </File>
         <File dnOrder="26">
           <Type dnOrder="0">HEADER</Type>
@@ -427,8 +427,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/peripheral/nvm/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/nvm/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">D56C272B20A77F07A4DAF8D2AD351F4B</GeneratedChecksum>
-          <UserChecksum dnOrder="6">D56C272B20A77F07A4DAF8D2AD351F4B</UserChecksum>
+          <GeneratedChecksum dnOrder="5">7B2A66551E53C5EEE02CBD872FA8C3F3</GeneratedChecksum>
+          <UserChecksum dnOrder="6">7B2A66551E53C5EEE02CBD872FA8C3F3</UserChecksum>
         </File>
         <File dnOrder="47">
           <Type dnOrder="0">HEADER</Type>

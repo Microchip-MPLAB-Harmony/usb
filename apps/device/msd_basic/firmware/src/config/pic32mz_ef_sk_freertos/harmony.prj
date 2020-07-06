@@ -382,8 +382,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk_freertos/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">79F55E47747C53C8F2D3D4C541C609FF</GeneratedChecksum>
-          <UserChecksum dnOrder="6">79F55E47747C53C8F2D3D4C541C609FF</UserChecksum>
+          <GeneratedChecksum dnOrder="5">BBEAB8A387F2319B007F4C9050997BC4</GeneratedChecksum>
+          <UserChecksum dnOrder="6">BBEAB8A387F2319B007F4C9050997BC4</UserChecksum>
         </File>
         <File dnOrder="42">
           <Type dnOrder="0">HEADER</Type>
@@ -634,8 +634,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk_freertos/peripheral/nvm/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/nvm/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">311CEBAAC39EBB5B594FBFED684D28DF</GeneratedChecksum>
-          <UserChecksum dnOrder="6">311CEBAAC39EBB5B594FBFED684D28DF</UserChecksum>
+          <GeneratedChecksum dnOrder="5">7B2A66551E53C5EEE02CBD872FA8C3F3</GeneratedChecksum>
+          <UserChecksum dnOrder="6">7B2A66551E53C5EEE02CBD872FA8C3F3</UserChecksum>
         </File>
         <File dnOrder="70">
           <Type dnOrder="0">HEADER</Type>
@@ -1192,8 +1192,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk_freertos/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">4B3C3EF8A318908A22B78500515C3288</GeneratedChecksum>
-          <UserChecksum dnOrder="6">4B3C3EF8A318908A22B78500515C3288</UserChecksum>
+          <GeneratedChecksum dnOrder="5"/>
+          <UserChecksum dnOrder="6"/>
         </File>
       </Files>
       <Settings dnOrder="1">
@@ -1212,7 +1212,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;validation;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;"/>
     </Settings>
   </Configurator>
 </Configuration>
