@@ -52,11 +52,6 @@
 #include "driver/usb/drv_usb_external_dependencies.h"
 #include "drv_usb_uhp_variant_mapping.h"
 
-#define NUMBER_OF_PORTS   (hDriver->usbIDOHCI->UHP_OHCI_HCRHDESCRIPTORA & UHP_OHCI_HCRHDESCRIPTORA_NDP_Msk)
-/* #define HSIC */
-
-#define DRV_USB_UHP_HOST_MAXIMUM_ENDPOINTS_NUMBER   USB_HOST_PIPES_NUMBER
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Data Type Definitions
@@ -143,9 +138,6 @@ typedef struct _DRV_USB_UHP_HOST_PIPE_OBJ
 
     /* The IRP queue on this pipe */
     USB_HOST_IRP_LOCAL * irpQueueHead;
-
-    /* The NAK counter for the IRP being served on the pipe */
-//    uint32_t nakCounter;
 
     /* Pipe endpoint size*/
     uint32_t endpointSize;
@@ -333,7 +325,7 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
     OSAL_MUTEX_DECLARE (mutexID);
 
     /* Pointer to the endpoint table */
-   DRV_USB_UHP_HOST_ENDPOINT_OBJ hostEndpointTable[DRV_USB_UHP_HOST_MAXIMUM_ENDPOINTS_NUMBER];
+   DRV_USB_UHP_HOST_ENDPOINT_OBJ hostEndpointTable[USB_HOST_PIPES_NUMBER];
 
     /* The object is current in an interrupt context */
     bool isInInterruptContext;
@@ -371,7 +363,6 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
 
     uint8_t portNumber;
 
-    volatile uint8_t hostPipeInUse;
     volatile uint8_t blockPipe;
 
     /* Device Object handle assigned by the host */
@@ -400,11 +391,11 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
 extern void DRV_USB_UHP_AttachDetachStateMachine (DRV_USB_UHP_OBJ * hDriver);
 extern void DRV_USB_UHP_ResetStateMachine(DRV_USB_UHP_OBJ * hDriver);
 extern void DRV_USB_UHP_HostInitialize(DRV_USB_UHP_OBJ * drvObj, SYS_MODULE_INDEX index);
-extern void DRV_USB_UHP_TransferProcess(DRV_USB_UHP_OBJ *hDriver);
+extern void DRV_USB_UHP_TransferProcess(DRV_USB_UHP_OBJ *hDriver, uint8_t hostPipeInUse);
 extern USB_SPEED DRV_USB_UHP_DeviceCurrentSpeedGet(DRV_HANDLE client);
 
 
-extern uint8_t USBBufferAligned[USB_HOST_TRANSFERS_NUMBER*64]; /* 4K page aligned */
-extern uint8_t USBSetupAligned[8];
+extern uint8_t USBBufferNoCache[DRV_USB_UHP_PIPES_NUMBER][DRV_USB_UHP_NO_CACHE_BUFFER_LENGTH];
+extern uint8_t USBBufferNoCacheSetup[DRV_USB_UHP_PIPES_NUMBER][8];
 
-#endif  // _DRV_USB_UHP_LOCAL_H
+#endif  // _DRV_USB_UHP_LOCAL_
