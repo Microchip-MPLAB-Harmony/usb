@@ -48,7 +48,10 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include <stdio.h>
+#include "driver/usb/uhp/drv_usb_uhp.h"
+#include "usb/usb_chapter_9.h"
+#include "usb/usb_host.h"
+#include "bsp/bsp.h"
 #include "peripheral/pit/plib_pit.h"
 #include "peripheral/mmu/plib_mmu.h"
 #include "peripheral/matrix/plib_matrix.h"
@@ -59,14 +62,9 @@
 #include "usb/usb_host_cdc.h"
 #include "usb/usb_cdc.h"
 #include "peripheral/tc/plib_tc0.h"
-#include "system/time/sys_time.h"
-#include "driver/usb/uhp/drv_usb_uhp.h"
-#include "usb/usb_chapter_9.h"
-#include "usb/usb_host.h"
-#include "bsp/bsp.h"
-#include "peripheral/uart/plib_uart1.h"
 #include "FreeRTOS.h"
 #include "task.h"
+#include "system/time/sys_time.h"
 #include "system/int/sys_int.h"
 #include "system/cache/sys_cache.h"
 #include "osal/osal.h"
@@ -193,11 +191,11 @@ Remarks:
         
 typedef struct
 {
-    SYS_MODULE_OBJ  sysTime;
     SYS_MODULE_OBJ  drvUSBObject;
 
 	SYS_MODULE_OBJ  usbHostObject0;
 
+    SYS_MODULE_OBJ  sysTime;
 
 } SYSTEM_OBJECTS;
 

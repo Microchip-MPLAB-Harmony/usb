@@ -4,9 +4,9 @@
 
 
 project: cdc_basic
-creation_date: 2020-06-25T10:43:34.006+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
-operating_system: Windows 10
-mhc_mode: Headless            # [IDE|Standalone|Headless]
+creation_date: 2020-07-07T06:45:08.700+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+operating_system: Windows 8.1
+mhc_mode: Standalone            # [IDE|Standalone|Headless]
 mplabx_version: NA        # if MPLAB X plugin only
 plugin_version: NA        # if MPLAB X plugin only
 
@@ -17,6 +17,6 @@ modules:
     - {name: "core", version: "v3.7.1"}
     - {name: "csp", version: "v3.7.1"}
     - {name: "dev_packs", version: "v3.7.0"}
-    - {name: "mhc", version: "v3.4.0"}
-    - {name: "usb", version: "v3.6.0"}
+    - {name: "mhc", version: "v3.4.1-rc.1"}
+    - {name: "usb", version: "unknown"}
 

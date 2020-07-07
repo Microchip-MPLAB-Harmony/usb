@@ -2139,6 +2139,96 @@
                 <group>
                     <name>sam_a5d2_xult_freertos_iar</name>
                     <group>
+                        <name>driver</name>
+                        <group>
+                            <name>usb</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\drv_usb.h</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\drv_usb_external_dependencies.h</name>
+                            </file>
+                            <group>
+                                <name>uhp</name>
+                                <file>
+                                    <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\uhp\drv_usb_uhp.h</name>
+                                </file>
+                                <group>
+                                    <name>src</name>
+                                    <file>
+                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\uhp\src\drv_usb_uhp_ehci_host.h</name>
+                                    </file>
+                                    <file>
+                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\uhp\src\drv_usb_uhp_ohci_host.h</name>
+                                    </file>
+                                    <file>
+                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\uhp\src\drv_usb_uhp_ohci_registers.h</name>
+                                    </file>
+                                    <file>
+                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\uhp\src\drv_usb_uhp_variant_mapping.h</name>
+                                    </file>
+                                    <file>
+                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\uhp\src\drv_usb_uhp_local.h</name>
+                                    </file>
+                                </group>
+                            </group>
+                        </group>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\driver.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\driver_common.h</name>
+                        </file>
+                    </group>
+                    <group>
+                        <name>usb</name>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\usb_host_client_driver.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\usb_host_hub_interface.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\usb_host.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\usb_hub.h</name>
+                        </file>
+                        <group>
+                            <name>src</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\src\usb_host_local.h</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\src\usb_host_hub_mapping.h</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\src\usb_external_dependencies.h</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\src\usb_host_cdc_local.h</name>
+                            </file>
+                        </group>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\usb_common.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\usb_chapter_9.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\usb_host_cdc.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\usb_cdc.h</name>
+                        </file>
+                    </group>
+                    <group>
+                        <name>bsp</name>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\bsp\bsp.h</name>
+                        </file>
+                    </group>
+                    <group>
                         <name>peripheral</name>
                         <group>
                             <name>pit</name>
@@ -2191,15 +2281,6 @@
                                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\peripheral\tc\plib_tc_common.h</name>
                             </file>
                         </group>
-                        <group>
-                            <name>uart</name>
-                            <file>
-                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\peripheral\uart\plib_uart_common.h</name>
-                            </file>
-                            <file>
-                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\peripheral\uart\plib_uart1.h</name>
-                            </file>
-                        </group>
                     </group>
                     <file>
                         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\device_cache.h</name>
@@ -2210,48 +2291,9 @@
                     <file>
                         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\definitions.h</name>
                     </file>
-                    <group>
-                        <name>usb</name>
-                        <file>
-                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\usb_host_cdc.h</name>
-                        </file>
-                        <file>
-                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\usb_cdc.h</name>
-                        </file>
-                        <group>
-                            <name>src</name>
-                            <file>
-                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\src\usb_host_cdc_local.h</name>
-                            </file>
-                            <file>
-                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\src\usb_host_local.h</name>
-                            </file>
-                            <file>
-                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\src\usb_host_hub_mapping.h</name>
-                            </file>
-                            <file>
-                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\src\usb_external_dependencies.h</name>
-                            </file>
-                        </group>
-                        <file>
-                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\usb_host_client_driver.h</name>
-                        </file>
-                        <file>
-                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\usb_host_hub_interface.h</name>
-                        </file>
-                        <file>
-                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\usb_host.h</name>
-                        </file>
-                        <file>
-                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\usb_hub.h</name>
-                        </file>
-                        <file>
-                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\usb_common.h</name>
-                        </file>
-                        <file>
-                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\usb_chapter_9.h</name>
-                        </file>
-                    </group>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\FreeRTOSConfig.h</name>
+                    </file>
                     <group>
                         <name>system</name>
                         <group>
@@ -2297,57 +2339,6 @@
                             </file>
                         </group>
                     </group>
-                    <group>
-                        <name>driver</name>
-                        <group>
-                            <name>usb</name>
-                            <file>
-                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\drv_usb.h</name>
-                            </file>
-                            <file>
-                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\drv_usb_external_dependencies.h</name>
-                            </file>
-                            <group>
-                                <name>uhp</name>
-                                <file>
-                                    <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\uhp\drv_usb_uhp.h</name>
-                                </file>
-                                <group>
-                                    <name>src</name>
-                                    <file>
-                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\uhp\src\drv_usb_uhp_ehci_host.h</name>
-                                    </file>
-                                    <file>
-                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\uhp\src\drv_usb_uhp_ohci_host.h</name>
-                                    </file>
-                                    <file>
-                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\uhp\src\drv_usb_uhp_ohci_registers.h</name>
-                                    </file>
-                                    <file>
-                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\uhp\src\drv_usb_uhp_variant_mapping.h</name>
-                                    </file>
-                                    <file>
-                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\uhp\src\drv_usb_uhp_local.h</name>
-                                    </file>
-                                </group>
-                            </group>
-                        </group>
-                        <file>
-                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\driver.h</name>
-                        </file>
-                        <file>
-                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\driver_common.h</name>
-                        </file>
-                    </group>
-                    <group>
-                        <name>bsp</name>
-                        <file>
-                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\bsp\bsp.h</name>
-                        </file>
-                    </group>
-                    <file>
-                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\FreeRTOSConfig.h</name>
-                    </file>
                     <file>
                         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\user.h</name>
                     </file>
@@ -2643,6 +2634,51 @@
                 <group>
                     <name>sam_a5d2_xult_freertos_iar</name>
                     <group>
+                        <name>driver</name>
+                        <group>
+                            <name>usb</name>
+                            <group>
+                                <name>uhp</name>
+                                <group>
+                                    <name>src</name>
+                                    <file>
+                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\uhp\src\drv_usb_uhp.c</name>
+                                    </file>
+                                    <file>
+                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\uhp\src\drv_usb_uhp_ehci_host.c</name>
+                                    </file>
+                                    <file>
+                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\uhp\src\drv_usb_uhp_ohci_host.c</name>
+                                    </file>
+                                </group>
+                            </group>
+                        </group>
+                    </group>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb_host_init_data.c</name>
+                    </file>
+                    <group>
+                        <name>usb</name>
+                        <group>
+                            <name>src</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\src\usb_host.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\src\usb_host_cdc.c</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\src\usb_host_cdc_acm.c</name>
+                            </file>
+                        </group>
+                    </group>
+                    <group>
+                        <name>bsp</name>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\bsp\bsp.c</name>
+                        </file>
+                    </group>
+                    <group>
                         <name>peripheral</name>
                         <group>
                             <name>pit</name>
@@ -2692,12 +2728,6 @@
                                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\peripheral\tc\plib_tc0.c</name>
                             </file>
                         </group>
-                        <group>
-                            <name>uart</name>
-                            <file>
-                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\peripheral\uart\plib_uart1.c</name>
-                            </file>
-                        </group>
                     </group>
                     <file>
                         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\initialization.c</name>
@@ -2717,21 +2747,9 @@
                     <file>
                         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\fault_handlers.c</name>
                     </file>
-                    <group>
-                        <name>usb</name>
-                        <group>
-                            <name>src</name>
-                            <file>
-                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\src\usb_host_cdc.c</name>
-                            </file>
-                            <file>
-                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\src\usb_host_cdc_acm.c</name>
-                            </file>
-                            <file>
-                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb\src\usb_host.c</name>
-                            </file>
-                        </group>
-                    </group>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\freertos_hooks.c</name>
+                    </file>
                     <group>
                         <name>system</name>
                         <group>
@@ -2753,39 +2771,6 @@
                             </file>
                         </group>
                     </group>
-                    <group>
-                        <name>driver</name>
-                        <group>
-                            <name>usb</name>
-                            <group>
-                                <name>uhp</name>
-                                <group>
-                                    <name>src</name>
-                                    <file>
-                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\uhp\src\drv_usb_uhp.c</name>
-                                    </file>
-                                    <file>
-                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\uhp\src\drv_usb_uhp_ehci_host.c</name>
-                                    </file>
-                                    <file>
-                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\driver\usb\uhp\src\drv_usb_uhp_ohci_host.c</name>
-                                    </file>
-                                </group>
-                            </group>
-                        </group>
-                    </group>
-                    <file>
-                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\usb_host_init_data.c</name>
-                    </file>
-                    <group>
-                        <name>bsp</name>
-                        <file>
-                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\bsp\bsp.c</name>
-                        </file>
-                    </group>
-                    <file>
-                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\freertos_hooks.c</name>
-                    </file>
                     <file>
                         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\tasks.c</name>
                     </file>
