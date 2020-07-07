@@ -2216,17 +2216,17 @@
                             <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\bsp\bsp.h</name>
                         </file>
                     </group>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\device_cache.h</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\toolchain_specifics.h</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\definitions.h</name>
+                    </file>
                     <group>
                         <name>peripheral</name>
-                        <group>
-                            <name>uart</name>
-                            <file>
-                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\peripheral\uart\plib_uart_common.h</name>
-                            </file>
-                            <file>
-                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\peripheral\uart\plib_uart1.h</name>
-                            </file>
-                        </group>
                         <group>
                             <name>mmu</name>
                             <file>
@@ -2273,15 +2273,6 @@
                             </file>
                         </group>
                     </group>
-                    <file>
-                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\device_cache.h</name>
-                    </file>
-                    <file>
-                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\toolchain_specifics.h</name>
-                    </file>
-                    <file>
-                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\definitions.h</name>
-                    </file>
                     <group>
                         <name>system</name>
                         <file>
@@ -2591,14 +2582,20 @@
                             <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\bsp\bsp.c</name>
                         </file>
                     </group>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\initialization.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\interrupts.c</name>
+                    </file>
+                    <group>
+                        <name>stdio</name>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\stdio\iar_monitor.c</name>
+                        </file>
+                    </group>
                     <group>
                         <name>peripheral</name>
-                        <group>
-                            <name>uart</name>
-                            <file>
-                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\peripheral\uart\plib_uart1.c</name>
-                            </file>
-                        </group>
                         <group>
                             <name>mmu</name>
                             <file>
@@ -2641,18 +2638,6 @@
                                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\peripheral\tc\plib_tc0.c</name>
                             </file>
                         </group>
-                    </group>
-                    <file>
-                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\initialization.c</name>
-                    </file>
-                    <file>
-                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\interrupts.c</name>
-                    </file>
-                    <group>
-                        <name>stdio</name>
-                        <file>
-                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\stdio\iar_monitor.c</name>
-                        </file>
                     </group>
                     <file>
                         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\cstartup.s</name>

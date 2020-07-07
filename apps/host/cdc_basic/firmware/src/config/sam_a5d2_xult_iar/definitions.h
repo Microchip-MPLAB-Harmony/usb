@@ -48,12 +48,10 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include <stdio.h>
 #include "driver/usb/uhp/drv_usb_uhp.h"
 #include "usb/usb_chapter_9.h"
 #include "usb/usb_host.h"
 #include "bsp/bsp.h"
-#include "peripheral/uart/plib_uart1.h"
 #include "peripheral/mmu/plib_mmu.h"
 #include "peripheral/matrix/plib_matrix.h"
 #include "peripheral/l2cc/plib_l2cc.h"

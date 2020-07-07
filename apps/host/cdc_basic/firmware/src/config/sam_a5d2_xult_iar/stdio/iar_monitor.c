@@ -38,9 +38,6 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 #include <stddef.h>    // size_t
-#include <yfuns.h>      // _LLIO_ERROR, _LLIO_STDOUT, _LLIO_STDIN, _LLIO_STDERR
-#include <stdbool.h>    // true
-#include "definitions.h"
 
 /*******************
  *
@@ -76,15 +73,10 @@
 size_t 
 __write( int handle, const unsigned char * buffer, size_t size )
 {
-    size_t nChars = _LLIO_ERROR;
-    if(     handle == _LLIO_STDOUT 
-        ||  handle == _LLIO_STDERR 
-    ){
-        nChars = 0;
-        if( buffer ){
-           nChars = UART1_Write( (void*) buffer, size );      // "MyLowLevelPutchar"
-        }
-    }
+    (void) handle;      // avoid compiler warning
+    (void) buffer;      // avoid compiler warning
+    (void) size;        // avoid compiler warning
+    size_t nChars = 0;
 
     return( nChars );
 }
@@ -116,19 +108,10 @@ __write( int handle, const unsigned char * buffer, size_t size )
 size_t
 __read( int handle, unsigned char * buffer, size_t size )
 {
-    size_t nChars = _LLIO_ERROR;
-    if( handle == _LLIO_STDIN ){
-        unsigned char cc = 0;
-        for( nChars = 0; nChars < size; ++nChars ){
-            while( UART1_Read( (void*) &cc, 1 ) != true );     // "MyLowLevelGetchar"
-            if( cc ){
-                buffer[ nChars ] = cc;
-            }
-            else{
-                break;
-            }
-        }
-    }
+    (void) handle;      // avoid compiler warning
+    (void) buffer;      // avoid compiler warning
+    (void) size;        // avoid compiler warning
+    size_t nChars = 0;
 
     return( nChars );
 }

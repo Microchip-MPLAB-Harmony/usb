@@ -174,8 +174,6 @@ void SYS_Initialize ( void* data )
 
 
 	BSP_Initialize();
-	UART1_Initialize();
-
     MMU_Initialize();
     Matrix_Initialize();
 
