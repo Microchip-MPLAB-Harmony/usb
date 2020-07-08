@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Contact Microchip Technology</title>
+<title>General Device Mode Operations</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00156.html" target="topic">Support</a> &gt; <a href="00146.html" target="topic">Contact Microchip Technology</a></div>
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="01026.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00139.html" target="topic">Common Interface</a> &gt; <a href="00149.html" target="topic">USB Driver Device Mode Operation</a> &gt; <a href="00146.html" target="topic">General Device Mode Operations</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00148.html" target="topic">Previous</a> | <a href="00156.html" target="topic">Up</a> | <a href="00150.html" target="topic">Next</a></div>
+<a href="00149.html" target="topic">Previous</a> | <a href="00149.html" target="topic">Up</a> | <a href="00140.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: HARMONY Contact Microchip Technology Topic Title: Contact Microchip Technology)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON General Device Mode Operations Topic Title: General Device Mode Operations)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Contact Microchip Technology</div>
+General Device Mode Operations</div>
 </div>
 </div>
 
@@ -49,14 +49,118 @@ Contact Microchip Technology</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Please visit the following Microchip Web page for contact information: <a href="#" onclick="openExternalLink('http://www.microchip.com/about-us/contact-us');"><img src="indicator_external_link.gif" border="0" alt="" title="">http://www.microchip.com/about-us/contact-us</a></p></div>
+This section describes the USBCD operations such as setting event handlers and attaching and detaching the device.</p><div class="Element15">
+Handling Device Mode Driver Events</div>
+<p class="Element10">
+The Device Layer will call the USBCD eventHandlerSet function to register the Device mode event handling function. The USBCD generates various events that indicate different states of the USB. These events are defined by the DRV_USB_EVENT enumeration. The following code example shows how the Device Layer registers the driver event handling function. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code example shows the implementation of the USB_DEVICE_Attach and the
+ * USB_DEVICE_Detach function. These functions are actually macro that map
+ * directly deviceAttach and the deviceDetach function of the driverInterface
+ * member of the deviceClient Object (which is the macro parameter) */</span></i>
+
+<strong><span style="color: #000080">#define</span></strong> USB_DEVICE_Attach( x )  ((USB_DEVICE_OBJ *)x)-&gt;driverInterface-&gt;deviceAttach
+                                ( ((USB_DEVICE_OBJ *)(x))-&gt;usbCDHandle)
+<strong><span style="color: #000080">#define</span></strong> USB_DEVICE_Detach( x )  ((USB_DEVICE_OBJ *)x)-&gt;driverInterface-&gt;deviceDetach
+                                ( ((USB_DEVICE_OBJ *)x)-&gt;usbCDHandle)</pre></div></div>
+<p class="Element10">
+If the driver is operating in interrupt mode, the client event handling function will execute in an interrupt context. The client should not call interrupt unsafe, computationally intensive or blocking functions in the event handler. The following code shows a small example of the Device Layer USBCD Event Handler: </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code example shows a partial implementation of the USB Device Layer
+ * event handler. Note how the code type casts the referenceHandle parameter to
+ * a USB_DEVICE_OBJ type. This referenceHandle is the same value that the Device
+ * Layer passed when the event handler was set. This now easily allows one
+ * implementation of the event handling code to be used by multiple Device
+ * Layer instances. */</span></i>
+
+    <strong><span style="color: #000080">void</span></strong> _USB_DEVICE_EventHandler
+(
+    uintptr_t referenceHandle,
+    DRV_USB_EVENT eventType,
+    <strong><span style="color: #000080">void</span></strong> * eventData
+)
+{
+    USB_DEVICE_OBJ* usbDeviceThisInstance;
+    USB_DEVICE_MASTER_DESCRIPTOR * ptrMasterDescTable;
+    USB_DEVICE_EVENT_DATA_SOF SOFFrameNumber;
+
+    usbDeviceThisInstance = (USB_DEVICE_OBJ *)referenceHandle;
+
+    <i><span style="color: #008000">/* Handle events, only if this instance is in initialized state */</span></i>
+    <strong><span style="color: #000080">if</span></strong>( usbDeviceThisInstance-&gt;usbDeviceInstanceState &lt;= SYS_STATUS_UNINITIALIZED )
+    {
+        <i><span style="color: #008000">/* The device should anyway not be attached when the Device Layer is
+         * not initialized. If we receive driver event when the Device Layer is
+         * not initialized, there is nothing we can do but ignore them. */</span></i>
+        <strong><span style="color: #000080">return</span></strong>;
+    }
+
+    <strong><span style="color: #000080">switch</span></strong>(eventType)
+    {
+        <strong><span style="color: #000080">case</span></strong> DRV_USB_EVENT_RESET_DETECT:
+
+            <i><span style="color: #008000">/* Clear the suspended state */</span></i>
+            usbDeviceThisInstance-&gt;usbDeviceStatusStruct.isSuspended = <strong><span style="color: #000080">false</span></strong>;
+
+            <i><span style="color: #008000">/* Cancel any IRP already submitted in the RX direction. */</span></i>
+            DRV_USB_DEVICE_IRPCancelAll( usbDeviceThisInstance-&gt;usbCDHandle,
+                    controlEndpointRx );
+
+            <i><span style="color: #008000">/* Code not shown for the sake of brevity. */</span></i>
+
+    }
+}</pre></div></div>
+<p class="Element10">
+In the previous code example, the Device Layer (the Driver Client) sets the <span class="Element146">hReferenceData</span> parameter, of the Event Handler Set function, to point to a local object. This pointer is returned to the Device Layer, in the event handler when an event occurs. For multiple instances of USB drivers in one application, this allows the Device Layer to easily associate a Device Layer specific context to the driver instance, thus simplifying implementation of the event handler.</p><div class="Element15">
+Attaching and Detaching the Device</div>
+<p class="Element10">
+The USB Device Layer calls the USBCD deviceAttach and deviceDetach functions to attach and detach the device on the USB. The USB Device Layer should be ready to handle events which would occur when the device is attached on the bus. Hence the USB Device Layer should register the USBCD event handler before the attach function is called. The deviceAttach and deviceDetach functions can be called in an interrupt context. These functions are respectively called when the USB Device application detects a valid VBUS voltage and when the VBUS voltage is not valid.</p><div class="Element15">
+Setting the Device Address</div>
+<p class="Element10">
+The USB Device Layer will call the USBCD deviceAddressSet function to set the USB address of the device. The Device Layer will do this when it receives the Set Address control request from the Host. The USBCD will reset the device address to '<span class="Element146">0</span>' when it has received reset signaling from the root hub. The following code example shows how the USB Device Layer calls this function. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The following code example shows how the USB Device Layer calls the
+ * DRV_USB_DEVICE_AddressSet function to set the address. The
+ * DRV_USB_DEVICE_AddressSet function is actually a macro that calls the
+ * deviceAddressSet function of the driverInterface of usbDeviceThisInstance
+ * object. The usbDeviceThisInstance is Device Layer object.
+ *
+ * As seen in this code, the Device Layer calls the address set function when
+ * the it a pending set address control request from the Host has completed. */</span></i>
+
+
+<strong><span style="color: #000080">void</span></strong> _USB_DEVICE_Ep0TransmitCompleteCallback(USB_DEVICE_IRP * handle)
+{
+    USB_DEVICE_IRP * irpHandle = (USB_DEVICE_IRP *)handle;
+    USB_DEVICE_OBJ * usbDeviceThisInstance;
+    USB_DEVICE_CONTROL_TRANSFER_STRUCT * controlTransfer;
+
+    usbDeviceThisInstance = (USB_DEVICE_OBJ *)irpHandle-&gt;userData;
+    controlTransfer = &amp;(usbDeviceThisInstance-&gt;controlTransfer);
+
+    <strong><span style="color: #000080">if</span></strong>(irpHandle-&gt;status == USB_DEVICE_IRP_STATUS_ABORTED)
+    {
+        <strong><span style="color: #000080">return</span></strong>;
+    }
+
+    <strong><span style="color: #000080">if</span></strong>(usbDeviceThisInstance-&gt;usbDeviceStatusStruct.setAddressPending)
+    {
+        DRV_USB_DEVICE_AddressSet(usbDeviceThisInstance-&gt;usbCDHandle,
+                                  usbDeviceThisInstance-&gt;deviceAddress);
+        usbDeviceThisInstance-&gt;usbDeviceStatusStruct.setAddressPending = <strong><span style="color: #000080">false</span></strong>;
+    }
+
+    <i><span style="color: #008000">/* Code not shown for the sake of brevity */</span></i>
+
+}</pre></div></div>
+<div class="Element15">
+Device Current Speed and SOF Number</div>
+<p class="Element10">
+The USB Device Layer will call the USBCD deviceCurrentSpeedGet function to know the speed at which the device is attached to the USB. This allows the Device Layer to select the correct endpoint settings at the time of processing the Set Configuration request issued by the Host. The USB Device Layer will call the deviceSOFNumberGet function to return the SOF number at the time of the SOF event.</p><div class="Element15">
+Device Remote Wake-up</div>
+<p class="Element10">
+The USB Device Layer will call the USBCD deviceRemoteWakeupStop and deviceRemoteWakeupStart functions to stop and start remote signaling. The Device layer application will call the USB Device Layer Stop and Start Remote Wakeup Signaling functions to remotely let the root hub know that the device is ready to be woken up. The timing of the remote signaling is controlled by the Device Layer. The client should call the remote wakeup function only when the device is suspended by the Host.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00156.html" target="topic">Support</a> &gt; <a href="00146.html" target="topic">Contact Microchip Technology</a></div>
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="01026.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00139.html" target="topic">Common Interface</a> &gt; <a href="00149.html" target="topic">USB Driver Device Mode Operation</a> &gt; <a href="00146.html" target="topic">General Device Mode Operations</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -64,13 +168,13 @@ Please visit the following Microchip Web page for contact information: <a href="
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00148.html" target="topic">Previous</a> | <a href="00156.html" target="topic">Up</a> | <a href="00150.html" target="topic">Next</a></div>
+<a href="00149.html" target="topic">Previous</a> | <a href="00149.html" target="topic">Up</a> | <a href="00140.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: HARMONY Contact Microchip Technology Topic Title: Contact Microchip Technology)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON General Device Mode Operations Topic Title: General Device Mode Operations)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

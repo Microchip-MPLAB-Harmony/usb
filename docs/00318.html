@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>HID Device TPL Table Configuration</title>
+<title>USB HID Device Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a> &gt; <a href="00316.html" target="topic">USB HID Host Mouse Driver Library</a> &gt; <a href="00325.html" target="topic">Using the Library</a> &gt; <a href="00319.html" target="topic">How the Library Works</a> &gt; <a href="00318.html" target="topic">HID Device TPL Table Configuration</a></div>
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00273.html" target="topic">USB Device Libraries</a> &gt; <a href="00318.html" target="topic">USB HID Device Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00319.html" target="topic">Previous</a> | <a href="00319.html" target="topic">Up</a> | <a href="00315.html" target="topic">Next</a></div>
+<a href="00680.html" target="topic">Previous</a> | <a href="00273.html" target="topic">Up</a> | <a href="00342.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HID HOST MOUSE HID Device TPL Table Configuration Topic Title: HID Device TPL Table Configuration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HID Device Library Topic Title: USB HID Device Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-HID Device TPL Table Configuration</div>
+USB HID Device Library</div>
 </div>
 </div>
 
@@ -46,40 +46,49 @@ HID Device TPL Table Configuration</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="4465736372697074696F6E"></a><div class="Element11">
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
 <div class="Element10">
-<p class="Element10">
-The Host Layer attaches the USB HID Host Client Driver to a device when the device class, subclass, protocol in the device descriptor or when the class, subclass and protocol fields in the Interface descriptor matches the entry in the TPL table. When specifying the entry for the HID device along with the Usage driver, the driver interface must be set to USB_HOST_HID_INTERFACE and the usage driver interface must be set to usageDriverInterface. usageDriverInterface must be properly initialized to capture the Mouse driver APIs. This will attach the USB HID Host Mouse Driver to the device when the USB Host HID Client Driver is attached. The following code shows possible TPL table options for matching HID Devices.&nbsp;</p>
-<p class="Element10">
-<strong>Example:</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of TPL table entries for supporting HID mouse devices.
- * Note that the driver interface is set to USB_HOST_HID_INTERFACE. This
- * will load the HID Host Client Driver when there is TPL match. Usage driver
- * interface is initialized with appropriate function pointer for Mouse driver.
- * This facilitates subsequent loading of Mouse driver post HID client driver.
- */</span></i>
-
- USB_HOST_HID_USAGE_DRIVER_INTERFACE usageDriverInterface =
-{
-  .initialize = NULL,
-  .deinitialize = NULL,
-  .usageDriverEventHandler = _USB_HOST_HID_MOUSE_EventHandler,
-  .usageDriverTask = _USB_HOST_HID_MOUSE_Task
-};
-
-USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY usageDriverTableEntry[1] =
-{
-    {
-        .usage = USB_HID_USAGE_MOUSE,
-        .initializeData = NULL,
-        .interface = &amp;usageDriverInterface
-    }
-};
-<strong><span style="color: #000080">const</span></strong> USB_HOST_TPL_ENTRY USBTPList[1] =
-{
-    <i><span style="color: #008000">/* This entry looks for any HID Mouse device */</span></i>
-    TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL(0x03, 0x01, 0x02, usageDriverTableEntry,
-                                          USB_HOST_HID_INTERFACE) ,
-};</pre></div></div>
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00342.html" target="topic">Introduction</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Introduces the MPLAB Harmony USB Human Interface Device (HID) Device Library.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00348.html" target="topic">Using the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This topic describes the basic architecture of the HID Function Driver and provides information and examples on its use.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00336.html" target="topic">Configuring the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes how to configure the HID Function Driver.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00335.html" target="topic">Building the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes the files to be included in the project while using the HID Function Driver.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00345.html" target="topic">Library Interface</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section describes the Application Programming Interface (API) functions of the USB Device HID library.<br>Refer to each section for a detailed description.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00339.html" target="topic">Files</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This section lists the source and header files used by the library.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -87,7 +96,7 @@ USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY usageDriverTableEntry[1] =
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a> &gt; <a href="00316.html" target="topic">USB HID Host Mouse Driver Library</a> &gt; <a href="00325.html" target="topic">Using the Library</a> &gt; <a href="00319.html" target="topic">How the Library Works</a> &gt; <a href="00318.html" target="topic">HID Device TPL Table Configuration</a></div>
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00273.html" target="topic">USB Device Libraries</a> &gt; <a href="00318.html" target="topic">USB HID Device Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -95,13 +104,13 @@ USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY usageDriverTableEntry[1] =
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00319.html" target="topic">Previous</a> | <a href="00319.html" target="topic">Up</a> | <a href="00315.html" target="topic">Next</a></div>
+<a href="00680.html" target="topic">Previous</a> | <a href="00273.html" target="topic">Up</a> | <a href="00342.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HID HOST MOUSE HID Device TPL Table Configuration Topic Title: HID Device TPL Table Configuration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HID Device Library Topic Title: USB HID Device Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

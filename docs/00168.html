@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Initializing the Library</title>
+<title>mask Enumeration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00194.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00179.html" target="topic">Using the Library</a> &gt; <a href="00174.html" target="topic">How the Library Works</a> &gt; <a href="00168.html" target="topic">Initializing the Library</a></div>
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00363.html" target="topic">USB Host Layer Library</a> &gt; <a href="00366.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00168.html" target="topic">mask Enumeration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00174.html" target="topic">Previous</a> | <a href="00174.html" target="topic">Up</a> | <a href="00172.html" target="topic">Next</a></div>
+<a href="00167.html" target="topic">Previous</a> | <a href="00366.html" target="topic">Up</a> | <a href="00169.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDDEV V1_0  Initializing the Library Topic Title: Initializing the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: mask Topic Title: mask Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Initializing the Library</div>
+mask Enumeration</div>
 </div>
 </div>
 
@@ -49,51 +49,33 @@ Initializing the Library</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The Audio 1.0 Function Driver instance for a USB device configuration is initialized by the Device Layer when the configuration is set by the host. This process does not require application intervention. Each instance of the Audio 1.0 Function Driver should be registered with the Device<span style="color: #FFFFFF">_</span>layer through the Device Layer Function Driver Registration Table. The Audio 1.0 Function Driver requires a initialization data structure to be specified. This is a <a href="00593.html" target="topic">USB_DEVICE_AUDIO_INIT</a> data type that specifies the size of the read and write queues. The funcDriverInit member of the function driver registration table entry of the Audio 1.0 Function Driver instance should point to this initialization data structure. The <a href="00591.html" target="topic">USB_DEVICE_AUDIO_FUNCTION_DRIVER</a> object is a global object provided by the Audio 1.0 Function Driver and provides the Device Layer with an entry point into the Audio 1.0 Function Driver. The following code shows an example of how the Audio 1.0 Function Driver can be registered with the Device Layer. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of how an Audio 1.0 Function Driver instances
- * can be registered with the Device Layer via the Device Layer Function Driver
- * Registration Table.  In this case Device Configuration 1 consists of one
- * Audio 1.0 Function Driver instance. */</span></i>
-
-<i><span style="color: #008000">/* The Audio 1.0 Function Driver requires an initialization data structure that
- * specifies the read and write buffer queue sizes. Note that these settings are
- * also affected by the USB_DEVICE_AUDIO_QUEUE_DEPTH_COMBINED configuration
- * macro. */</span></i>
-
-<strong><span style="color: #000080">const</span></strong> USB_DEVICE_AUDIO_INIT audioDeviceInit =
-{
-    .queueSizeRead = 1,
-    .queueSizeWrite = 1
-};
-
-<strong><span style="color: #000080">const</span></strong> USB_DEVICE_FUNC_REGISTRATION_TABLE funcRegistrationTable[1] =
-{
-    {
-        .speed = USB_SPEED_FULL,                    <i><span style="color: #008000">// Supported speed</span></i>
-        .configurationValue = 1,                    <i><span style="color: #008000">// To be initialized for Configuration 1</span></i>
-        .interfaceNumber = 0,                       <i><span style="color: #008000">// Starting interface number.</span></i>
-        .numberOfInterfaces = 2,                    <i><span style="color: #008000">// Number of interfaces in this instance</span></i>
-        .funcDriverIndex = 0,                       <i><span style="color: #008000">// Function Driver instance index is 0</span></i>
-        .funcDriverInit = &amp;audioDeviceInit,         <i><span style="color: #008000">// Function Driver does not need initialization data structure</span></i>
-        .driver = USB_DEVICE_AUDIO_FUNCTION_DRIVER  <i><span style="color: #008000">// Pointer to Function Driver - Device Layer interface functions</span></i>
-    },
-};</pre></div></div>
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</p>
 <p class="Element10">
-The following figure illustrates the typical sequence that is followed in the application when using the Audio 1.0 Function Driver. </p><p class="Element10" style="text-align: center;">
-<strong>Typical USB Audio 1.0 Device Sequence</strong>&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="USB_Device_Audio_Initialization_Image_1.png" border="0" alt="" title=""></p>
-<ol class="Element630">
-<li value="1" class="Element600">Call set of APIs to initialize USB Device Layer (refer to the <a href="00264.html" target="topic">USB Device Layer Library</a> section for details about these APIs).</li>
-<li value="2" class="Element600">The Device Layer provides a callback to the application for any USB Device events like attached, powered, configured, etc. The application should receive a callback with an event USB_DEVICE_EVENT_CONFIGURED to proceed.</li>
-<li value="3" class="Element600">Once the Device Layer is configured, the application needs to register a callback function with the Audio 1.0 Function Driver to receive Audio Control transfers, and also other Audio 1.0 Function Driver events. Now the application can use Audio 1.0 Function Driver APIs to communicate with the USB Host.</li>
-</ol></div>
+This enumeration defines the possible matching criteria flag that can be specified for a Host TPL table entry. The tplFlag member of the TPL table entry should be set to one or more of these flags. These flags define the criteria that the Host layer will use while matching the attached device to the TPL table entry. For example, if a device is specified by class, subclass and protocol specifying the TPL_FLAG_IGNORE_SUBCLASS flag will cause the Host layer to ignore the subclass while comparing the class, subclass and protocol of the attached device.&nbsp;</p>
+<p class="Element10">
+Multiple flags can be specified as a logically OR'ed combination. While combining multiple flags, VID and PID criteria flags cannot be combined with the Class, Subclass, Protocol flags. For example, the TPL_FLAG_VID_PID flag cannot be combined with TPL_FLAG_IGNORE_SUBCLASS.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
+  <strong><span style="color: #000000"><a href="00167.html" target="topic">initData</a></span></strong>,
+  <strong><span style="color: #000000"><a href="00137.html" target="topic">classCode</a></span></strong>,
+  <strong><span style="color: #000000"><a href="00171.html" target="topic">subClassCode</a></span></strong>,
+  <strong><span style="color: #000000">protocolCode</span></strong>
+} driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL), \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .hostClientDriverInitData = <a href="00167.html" target="topic">initData</a>, driver)\ {\ .id.cl_sc_p = { <a href="00137.html" target="topic">classCode</a>, <a href="00171.html" target="topic">subClassCode</a>, \ .hostClientDriverInitData = <a href="00167.html" target="topic">initData</a>, driver)\ {\ .id.cl_sc_p = { <a href="00137.html" target="topic">classCode</a>, <a href="00171.html" target="topic">subClassCode</a>, 0xFF }, driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL), \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .hostClientDriverInitData = <a href="00167.html" target="topic">initData</a>, driver)\ {\ .id.cl_sc_p = { <a href="00137.html" target="topic">classCode</a>, \ .hostClientDriverInitData = <a href="00167.html" target="topic">initData</a>, driver)\ {\ .id.cl_sc_p = { <a href="00137.html" target="topic">classCode</a>, 0xFF, 0xFF }, driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL), \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .hostClientDriverInitData = <a href="00167.html" target="topic">initData</a>, \ .hostClientDriverInitData = <a href="00167.html" target="topic">initData</a>, 0xFF, 0xFF, 0xFF }, driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL), \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .hostClientDriverInitData = <a href="00167.html" target="topic">initData</a>, driver)\ {\ .id.vid_pid = { <a href="01429.html" target="topic">vid</a>, <a href="00169.html" target="topic">pid</a>, \ .hostClientDriverInitData = <a href="00167.html" target="topic">initData</a>, driver)\ {\ .id.vid_pid = { <a href="01429.html" target="topic">vid</a>, <a href="00169.html" target="topic">pid</a> }, driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_VID_PID), \ .tplFlags.ignoreVIDPID = 0, \ .tplFlags.ignoreVIDPID = 0, \ .hostClientDriverInitData = <a href="00167.html" target="topic">initData</a>, driver)\ {\ .id.vid_pid = { <a href="01429.html" target="topic">vid</a>, <a href="00169.html" target="topic">pid</a>, \ .pidMask = mask, \ .hostClientDriverInitData = <a href="00167.html" target="topic">initData</a>, driver)\ {\ .id.vid_pid = { <a href="01429.html" target="topic">vid</a>, <a href="00169.html" target="topic">pid</a> }, \ .pidMask = mask, \ .tplFlags.driverType = (TPL_FLAG_VID_PID), \ .tplFlags.ignoreVIDPID = 1, \ .tplFlags.ignoreVIDPID = 0, \ .hostClientDriverInitData = <a href="00167.html" target="topic">initData</a>, \ .hostClientDriverInitData = <a href="00167.html" target="topic">initData</a>, driver)\ {\ .id.vid_pid = { 0xFFFF, 0xFFFF }, \ .pidMask = 0x0000, \ .tplFlags.driverType = (TPL_FLAG_VID_PID), \ .tplFlags.ignoreVIDPID = 1, \ .tplFlags.ignoreVIDPID = 1, \ .hostClientDriverInitData = <a href="00167.html" target="topic">initData</a>, \ .hostClientDriver = driver\ } <strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">struct</span></strong> { <strong><span style="color: #000080">union</span></strong> { uint32_t value; <strong><span style="color: #000080">struct</span></strong> { uint16_t <a href="01429.html" target="topic">vid</a>; uint16_t <a href="00169.html" target="topic">pid</a>; } vid_pid; <strong><span style="color: #000080">struct</span></strong> { uint8_t <a href="00137.html" target="topic">classCode</a>; uint8_t <a href="00171.html" target="topic">subClassCode</a>; uint8_t protocolCode; } cl_sc_p; } id; uint16_t pidMask; <strong><span style="color: #000080">struct</span></strong> { uint8_t driverType :1; uint8_t ignoreClass :1; uint8_t ignoreSubClass :1; uint8_t ignoreProtocol :1; uint8_t pidMasked :1; uint8_t ignoreVIDPID :1; } tplFlags; <strong><span style="color: #000080">void</span></strong> * hostClientDriverInitData; <strong><span style="color: #000080">void</span></strong> * hostClientDriver; } <a href="01411.html" target="topic">USB_HOST_TARGET_PERIPHERAL_LIST_ENTRY</a>, <a href="01413.html" target="topic">USB_HOST_TPL_ENTRY</a>;</pre></div></div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00194.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00179.html" target="topic">Using the Library</a> &gt; <a href="00174.html" target="topic">How the Library Works</a> &gt; <a href="00168.html" target="topic">Initializing the Library</a></div>
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00363.html" target="topic">USB Host Layer Library</a> &gt; <a href="00366.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00168.html" target="topic">mask Enumeration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -101,13 +83,13 @@ The following figure illustrates the typical sequence that is followed in the ap
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00174.html" target="topic">Previous</a> | <a href="00174.html" target="topic">Up</a> | <a href="00172.html" target="topic">Next</a></div>
+<a href="00167.html" target="topic">Previous</a> | <a href="00366.html" target="topic">Up</a> | <a href="00169.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDDEV V1_0  Initializing the Library Topic Title: Initializing the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: mask Topic Title: mask Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

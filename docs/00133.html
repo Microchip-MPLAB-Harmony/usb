@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Driver Device Mode Client Functions</title>
+<title>USB MSD Host USB Pen Drive Tests</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="01018.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00131.html" target="topic">Common Interface</a> &gt; <a href="00133.html" target="topic">Driver Device Mode Client Functions</a></div>
+<a href="00247.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00133.html" target="topic">USB MSD Host USB Pen Drive Tests</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00137.html" target="topic">Previous</a> | <a href="00131.html" target="topic">Up</a> | <a href="00134.html" target="topic">Next</a></div>
+<a href="00123.html" target="topic">Previous</a> | <a href="00247.html" target="topic">Up</a> | <a href="00068.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver Device Mode Client Functions Topic Title: Driver Device Mode Client Functions)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB Pen Drive Tests Topic Title: USB MSD Host USB Pen Drive Tests)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Driver Device Mode Client Functions</div>
+USB MSD Host USB Pen Drive Tests</div>
 </div>
 </div>
 
@@ -49,150 +49,328 @@ Driver Device Mode Client Functions</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The DRV_USB_DEVICE_INTERFACE structure contains pointers to the USB Driver’s Device mode Client Functions. These functions are only applicable when the USB module is operating as a USB Device. A USB Driver must implement these functions and ensure that the Device Stack can access these functions through the driver’s DRV_USB_DEVICE_INTERFACE structure. Descriptions of the Driver Device Mode Client functions in the DRV_USB_DEVICE_INTERFACE structure include:</p>
-<ul class="Element630">
-<li class="Element600">Driver Device Address Set Function</li>
-<li class="Element600">Driver Device Current Speed Get Function</li>
-<li class="Element600">Driver Device SOF Number Get Function</li>
-<li class="Element600">Driver Device Attach Function</li>
-<li class="Element600">Driver Device Detach Function</li>
-<li class="Element600">Driver Device Endpoint Enable Function</li>
-<li class="Element600">Driver Device Endpoint Disable Function</li>
-<li class="Element600">Driver Device Endpoint Stall Function</li>
-<li class="Element600">Driver Device Endpoint Stall Clear Function</li>
-<li class="Element600">Driver Device Endpoint Enable Status Function</li>
-<li class="Element600">Driver Device Endpoint Stall Status Function</li>
-<li class="Element600">Driver Device IRP Submit Function</li>
-<li class="Element600">Driver Device IRP Cancel All Function</li>
-<li class="Element600">Driver Device IRP Cancel Function</li>
-<li class="Element600">Driver Device Remote Wakeup Start Function</li>
-<li class="Element600">Driver Device Remote Wakeup Stop Function</li>
-<li class="Element600">Driver Device Test Mode Enter Function</li>
-</ul><p class="Element10">
-The PIC32MZ and the PIC32MX USB peripheral drivers implement the Device mode functions and export these functions to the Device Stack though their respective DRV_USB_DEVICE_INTERFACE structure.</p><div class="Element15">
-Driver Device Address Set Function</div>
+<strong>USB MSD Host USB Pen Drive Tests</strong>&nbsp;</p>
 <p class="Element10">
-The <span class="Element146">deviceAddressSet</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Device Address Set function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> (*deviceAddressSet)(DRV_HANDLE handle, uint8_t address);</pre></div></div>
+The following table lists the commercially available USB pen drives, which have been tested to successfully enumerate with the MSD Host Driver in the MPLAB Harmony USB Host Stack. Note that if the USB pen drive you are using in not included in the table, this indicates that this USB pen drive has not been tested with the MSD Host Driver. However, the USB pen drive could still potentially work with MSD Host Driver. Some USB pen drives in this table did not have their manufacturer or model data available. The USB Pen drives were tested with the msd_basic USB Host demonstration in the latest version of the MPLAB Harmony USB Host Stack.&nbsp;</p>
 <p class="Element10">
-The USB Driver Device Address Set Function should match this signature. The USB Device Stack will call this function to set the Device USB Address. The function will be called in an interrupt context and hence the function implementation must be interrupt-safe. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">address</span> parameter is the address provided by the USB Host through the Set Device Address Standard request.</p><div class="Element15">
-Driver Device Current Speed Get Function</div>
-<p class="Element10">
-The <span class="Element146">deviceCurrentSpeedGet</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Current Speed Get function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_SPEED (*deviceCurrentSpeedGet)(DRV_HANDLE handle);</pre></div></div>
-<p class="Element10">
-The USB Driver Device Current Speed Get function should match this signature. The USB Device Stack will call this function to obtain the speed at which the device has connected to the USB. It will call this function after reset signaling has completed. The <span class="Element146">handle</span> parameter is driver handle obtained from calling the driver Open function. This function is called in an interrupt context and should be interrupt-safe.</p><div class="Element15">
-Driver Device SOF Number Get Function</div>
-<p class="Element10">
-The <span class="Element146">deviceSOFNumberGet</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Start-Of-Frame Number Get function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">uint16_t (*deviceSOFNumberGet)(DRV_HANDLE handle);</pre></div></div>
-<p class="Element10">
-The USB Driver SOF Number Get function should match this signature. The USB Device Stack will call this function to obtain the current SOF number. The USB peripheral uses a 16 bit counter to count the number of SOFs that have occurred since USB reset. This value is returned along with the Device Stack Start of Frame event. This function is called from an interrupt context and should be interrupt-safe. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function.</p><div class="Element15">
-Driver Device Attach Function</div>
-<p class="Element10">
-The <span class="Element146">deviceAttach</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Attach function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">uint16_t(*deviceAttach)(DRV_HANDLE handle);</pre></div></div>
-<p class="Element10">
-The USB Driver Attach function should match this signature. The USB Device Stack will call this function when the Device application calls the USB Device Stack Device Attach function. The USB Driver will enable the required signaling resistors for indicate attach to the Host. The application could call this function in response to a VBUS power available event. This function must be interrupt-safe. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function.</p><div class="Element15">
-Driver Device Detach Function</div>
-<p class="Element10">
-The deviceDetach member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Detach function. The signature of this function is as follows:&nbsp;</p>
-<p class="Element10">
-uint16_t(*deviceDetach)(DRV_HANDLE handle);&nbsp;</p>
-<p class="Element10">
-The USB Driver Detach function should match this signature. The USB Device Stack will call this function when the Device application calls the USB Device Stack Device Detach function. The USB Driver will disable the required signaling resistors to indicate detach to the Host. The application could call this function in response to a VBUS power not available event. This function should be interrupt-safe. The <span class="Element146">handle</span> parameter is driver handle obtained from calling the driver Open function.</p><div class="Element15">
-Driver Device Endpoint Enable Function</div>
-<p class="Element10">
-The <span class="Element146">deviceEndpointEnable</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Endpoint Enable function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR (*deviceEndpointEnable)(DRV_HANDLE handle, USB_ENDPOINT endpoint,
-            USB_TRANSFER_TYPE transferType, uint16_t endpointSize);</pre></div></div>
-<p class="Element10">
-The USB Driver Endpoint Enable function should match this signature. The USB Device Stack Function Driver will call this function when it is initialized by the USB Device Layer. The Device Layer, on receiving the Set Configuration request from the Host, identifies the function drivers that are required by the configuration and initializes them. The function drivers will call the endpoint enable function to enable the endpoints required for their operation. Enabling the endpoint will cause it reply to transaction requests from the Host and accept transfer requests from the device application.&nbsp;</p>
-<p class="Element10">
-The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">endpoint</span> parameter is the USB endpoint (which indicates the direction along with endpoint number) that should be enabled. The transferType is the type of the USB transfer that this endpoint will handle. The endpointSize is the size of the maximum transaction that the endpoint will handle. This should match the endpoint size communicated to the Host via the device endpoint descriptors.&nbsp;</p>
-<p class="Element10">
-The function will return USB_ERRROR_NONE if the endpoint was configured successfully. The function will return USB_ERROR_DEVICE_ENDPOINT_INVALID if the specified endpoint is not provisioned in the system configuration. It will return USB_ERROR_PARAMETER_INVALID if the driver handle is not valid.&nbsp;</p>
-<p class="Element10">
-The endpoint enable function will be called in an interrupt context and should be interrupt-safe. It is not expected to be thread safe. For standard function drivers, the endpoint enable function will be called in the context of the USB Device Layer Client. For vendor USB devices, the vendor application must call the endpoint enable function in response to and within the context of the device configured event. Again this event itself will execute in the context of the Device Layer.</p><div class="Element15">
-Driver Device Endpoint Disable Function</div>
-<p class="Element10">
-The <span class="Element146">deviceEndpointDisable</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Endpoint Disable function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR (*deviceEndpointDisable)(DRV_HANDLE handle, USB_ENDPOINT endpoint);</pre></div></div>
-<p class="Element10">
-The USB Driver Endpoint Disable function should match this signature. The USB Device Stack Function Driver will call this function when it is deinitialized by the USB Device Layer. The Device Layer will deinitialize function drivers when it receives a USB reset event from the driver or on receiving the Set Configuration request from the Host with configuration parameter 0. Disabling the endpoint will cause it NAK transaction request from the Host and not accept transfer requests from the device application.&nbsp;</p>
-<p class="Element10">
-The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">endpoint</span> parameter is the USB endpoint (which indicates the direction along with endpoint number) that should be disabled.&nbsp;</p>
-<p class="Element10">
-The function will return USB_ERRROR_NONE if the function executed successfully. The function will return USB_ERROR_DEVICE_ENDPOINT_INVALID if the specified endpoint is not provisioned in the system configuration. It will return USB_ERROR_PARAMETER_INVALID if the driver handle is not valid.&nbsp;</p>
-<p class="Element10">
-The endpoint disable function will be called in an interrupt context and should be interrupt-safe. It is not expected to be thread safe. For standard function drivers, the endpoint disable function will be called in the context of the USB Device Layer Client. For vendor USB devices, the vendor application must call the endpoint enable function in response to and within the context of the device reset event. Again this event itself will execute in the context of the Device Layer. Disabling the endpoint will not cancel any transfers that have been queued against the endpoint. The function drivers will call the IRP Cancel All function to cancel any pending transfers.</p><div class="Element15">
-Driver Device Endpoint Stall Function</div>
-<p class="Element10">
-The <span class="Element146">deviceEndpointStall</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Endpoint Stall function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR (*deviceEndpointStall)(DRV_HANDLE handle, USB_ENDPOINT endpoint);</pre></div></div>
-<p class="Element10">
-The USB Driver Endpoint Stall function should match this signature. The USB Device Stack Function Driver will call this function to stall an endpoint. The Device Layer itself will stall endpoint 0 for several reasons including non-support of the Host request or failure while executing the request. A function driver will also stall an endpoint for protocol specific reasons. The driver will stall both, receive and transmit directions when stalling Endpoint 0. The driver will stall the specified direction while stalling a non-zero endpoint.&nbsp;</p>
-<p class="Element10">
-This function must be thread safe and interrupt safe. Stalling the endpoint will abort all the transfers queued on the endpoint with the completion status set to USB_DEVICE_IRP_STATUS_ABORTED_ENDPOINT_HALT. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">endpoint</span> parameter is the USB endpoint (which indicates the direction along with endpoint number) that should be stalled. The function will return USB_ERRROR_NONE if the function executed successfully. The function will return USB_ERROR_DEVICE_ENDPOINT_INVALID if the specified endpoint is not provisioned in the system configuration. It will return USB_ERROR_PARAMETER_INVALID if the driver handle is not valid.</p><div class="Element15">
-Driver Device Endpoint Stall Clear Function</div>
-<p class="Element10">
-The <span class="Element146">deviceEndpointStallClear</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Endpoint Stall Clear function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR (*deviceEndpointStallClear)(DRV_HANDLE handle, USB_ENDPOINT endpoint);</pre></div></div>
-<p class="Element10">
-The USB Driver Endpoint Stall Clear function should match this signature. The USB Device Stack Function Driver will call this function to clear the stall on a non-zero endpoint. The Device Layer will call this function to clear the stall condition on Endpoint 0. Clearing the stall on a non-zero endpoint will clear all transfers scheduled on the endpoint and transfer completion status will be set to USB_DEVICE_IRP_STATUS_TERMINATED_BY_HOST. When the stall is cleared, the data toggle for non-zero endpoint will be set to DATA0. The data toggle on Endpoint 0 OUT endpoint will be set to DATA1. The USB Driver will clear the Stall condition on an endpoint even if it was not stalled.&nbsp;</p>
-<p class="Element10">
-This function must be thread safe and interrupt safe. Stalling the endpoint will flush all the transfers queued on the endpoint. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">endpoint</span> parameter is the USB endpoint (which indicates the direction along with endpoint number) whose stall condition must be cleared. The function will return USB_ERRROR_NONE if the function executed successfully. The function will return USB_ERROR_DEVICE_ENDPOINT_INVALID if the specified endpoint is not provisioned in the system configuration. It will return USB_ERROR_PARAMETER_INVALID if the driver handle is not valid.</p><div class="Element15">
-Driver Device Endpoint Enable Status Function</div>
-<p class="Element10">
-The <span class="Element146">deviceEndpointIsEnabled</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Endpoint Enable Status function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">bool</span></strong> (*deviceEndpointIsEnabled)(DRV_HANDLE handle, USB_ENDPOINT endpoint);</pre></div></div>
-<p class="Element10">
-The USB Driver Endpoint Enable Status function should match this signature. The USB Device Stack function will call this function to check if an endpoint has been enabled. The function returns true if the endpoint is enabled. The endpoint is enabled through the USB Driver Endpoint Enable function. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">endpoint</span> parameter is the USB endpoint (which indicates the direction along with endpoint number) whose enable status needs to be queried.</p><div class="Element15">
-Driver Device Endpoint Stall Status Function</div>
-<p class="Element10">
-The <span class="Element146">deviceEndpointIsStalled</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Endpoint Stall Status function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">bool</span></strong> (*deviceEndpointIsStalled)(DRV_HANDLE handle, USB_ENDPOINT endpoint);</pre></div></div>
-<p class="Element10">
-The USB Driver Endpoint Stall Status function should match this signature. The USB Device Stack function will call this function to check if an endpoint has been stalled. The function returns true if the endpoint is stalled. The endpoint is stalled through the USB Driver Endpoint Stall function. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">endpoint</span> parameter is the USB endpoint (which indicates the direction along with endpoint number) whose stall status needs to be queried.</p><div class="Element15">
-Driver Device IRP Submit Function</div>
-<p class="Element10">
-The deviceIRPSubmit member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Device IRP Submit function. The signature of the IRP submit function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR (*deviceIRPSubmit)(DRV_HANDLE handle, USB_ENDPOINT endpoint, USB_DEVICE_IRP * irp);</pre></div></div>
-<p class="Element10">
-The USB Driver Device IRP Submit function must match this signature. The Device Stack (USB Device calls this function to submit an IRP to the USB Driver. The USB Driver provides this mechanism to transfer data between the device and the Host. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">endpoint</span> parameter should set to endpoint through which transfer must be processed. The <span class="Element146">irp</span> parameter should point to the Device IRP data structure. The IRP data structure will transport an entire transfer over the endpoint. The USB Driver will split up the transfer into transactions based on the endpoint size specified at the time of enabling the endpoint. This process does not require Device Stack intervention.&nbsp;</p>
-<p class="Element10">
-The function will return USB_ERRROR_NONE if the function executed successfully. The function will return USB_ERROR_DEVICE_ENDPOINT_INVALID if the specified endpoint is not provisioned in the system configuration. It will return USB_ERROR_PARAMETER_INVALID if the driver handle is not valid. It will return USB_ERROR_DEVICE_IRP_IN_USE if an in progress IRP is resubmitted. It will return USB_ERROR_ENDPOINT_NOT_CONFIGURED if the IRP is submitted to an endpoint that is not enabled.&nbsp;</p>
-<p class="Element10">
-The USB Driver will queue the IRP if there is already an IRP being processed on the endpoint. The completion of the IRP processing is indicated by the USB Driver calling the IRP callback function specified within the IRP. The Device IRP Submit function must be thread safe and IRP callback safe. The Device Stack may resubmit the IRP within the IRP callback function. The IRP callback function itself executes within an interrupt context. The completion status of the IRP will be available in the status member of the IRP when the IRP callback function is invoked.</p><div class="Element15">
-Driver Device IRP Cancel All Function</div>
-<p class="Element10">
-The <span class="Element146">deviceIRPCancelAll</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Device IRP Cancel All function. The signature of this is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR (*deviceIRPCancelAll)(DRV_HANDLE handle, USB_ENDPOINT endpoint);</pre></div></div>
-<p class="Element10">
-The USB Driver Device IRP Cancel All function must match this signature. The USB Device Stack will call this function before disabling the endpoint. Calling this function will call all IRPs that are queued on the endpoint to be canceled. The callback of each IRP will be invoked and the IRP completion status will be set to USB_DEVICE_IRP_STATUS_ABORTED. If an IRP is in progress, an ongoing transaction will be allowed to complete and pending transactions will be canceled. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">endpoint</span> parameter is the USB endpoint (which indicates the direction along with endpoint number) whose queued IRPs must be canceled.&nbsp;</p>
-<p class="Element10">
-The function is thread safe and interrupt safe and will return USB_ERRROR_NONE if it executed successfully. The function will return USB_ERROR_DEVICE_ENDPOINT_INVALID if the specified endpoint is not provisioned in the system configuration. It will return USB_ERROR_PARAMETER_INVALID if the driver handle is not valid.</p><div class="Element15">
-Driver Device IRP Cancel Function</div>
-<p class="Element10">
-The <span class="Element146">deviceIRPCancel</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Device IRP Cancel function. The signature of this is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR (*deviceIRPCancel)(DRV_HANDLE handle, USB_DEVICE_IRP * IRP);</pre></div></div>
-<p class="Element10">
-The USB Driver Device IRP Cancel function must match this signature. This function is called by the USB Device Stack function driver to cancel a scheduled IRP. If the IRP is in the queue but it’s processing has not started, the IRP will removed from the queue and the IRP callback function will be called from within the cancel function. The callback will be invoked with the IRP completion status set to USB_DEVICE_IRP_STATUS_ABORTED. If an IRP is in progress, an ongoing transaction will be allowed to complete and pending transactions will be canceled. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">irp</span> parameter is the IRP to be canceled.&nbsp;</p>
-<p class="Element10">
-The function is thread safe and will return USB_ERRROR_NONE if it executed successfully. It will return USB_ERROR_PARAMETER_INVALID if the driver handle is not valid or if the IRP has status indicates that this IRP is not queued or not in progress. The application should not release the data memory associated with IRP unless the callback has been received.</p><div class="Element15">
-Driver Device Remote Wakeup Start Function</div>
-<p class="Element10">
-The <span class="Element146">deviceRemoteWakeupStart</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Device Remote Wakeup Start function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> (*deviceRemoteWakeupStart)(DRV_HANDLE handle);</pre></div></div>
-<p class="Element10">
-The USB Driver Device Remote Wakeup Start function must match this signature. The USB Device Stack will call the function when the device application wants to start remote wakeup signaling. This would happen if the device supports remote wake-up capability and this has been enabled by the Host. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function.</p><div class="Element15">
-Driver Device Remote Wakeup Stop Function</div>
-<p class="Element10">
-The <span class="Element146">deviceRemoteWakeupStop</span> member of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Device Remote Wakeup Stop function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> (*deviceRemoteWakeupStop)(DRV_HANDLE handle);</pre></div></div>
-<p class="Element10">
-The USB Driver Device Remote Wakeup Stop function must match this signature. The USB Device Stack will call the function when the device application wants to stop remote wakeup signaling. The application would call after calling the remote wakeup start function. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function.</p><div class="Element15">
-Driver Device Test Mode Enter Function</div>
-<p class="Element10">
-The <span class="Element146">deviceTestModeEnter</span> parameter of the DRV_USB_DEVICE_INTERFACE structure should point to the USB Driver Device Test Mode Enter function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR (*deviceTestModeEnter)(DRV_HANDLE handle, USB_TEST_MODE_SELECTORS testMode);</pre></div></div>
-<p class="Element10">
-The USB Driver Device Test Mode Enter function should match this signature. The USB Device Stack calls this driver function to place the driver into test mode. This is required when the USB Host (operating at Hi-Speed) send the Set Feature request with the feature selector test set to test mode. This request also specifies which of the test mode signals, the driver should enable. The <span class="Element146">handle</span> parameter is the driver handle obtained from calling the driver Open function. The <span class="Element146">testMode</span> parameter should be set to one of the test modes as defined in table 9-7 of the USB 2.0 specification.&nbsp;</p>
-<p class="Element10">
-The test mode enter function is only supported by the PIC32MZ USB Driver as the USB peripheral on this controller supports Hi-Speed operation. The function will return USB_ERRROR_NONE if it executed successfully. It will return USB_ERROR_PARAMETER_INVALID if the driver handle is not valid.&nbsp;</p>
-<p class="Element10">
-This concludes the discussion on the DRV_USB_DEVICE_INTERFACE structure. The following sections describe using the USB Common Driver.</p></div>
+&nbsp;</p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element75" valign="top" width="55%">
+<div class="Element76">
+Manufacturer&nbsp;</div></td><td class="Element75" valign="top" width="11%">
+<div class="Element76">
+Capacity&nbsp;</div></td><td class="Element75" valign="top" width="17%">
+<div class="Element76">
+VID&nbsp;</div></td><td class="Element75" valign="top" width="17%">
+<div class="Element76">
+PID&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Verico Tseres&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x8644&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x8003&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Hewlett Packard&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x03F0&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x5A07&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Freescale&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+1GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x2008&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x2018&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Imation Corp&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x0718&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x0704&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+ITE Tech Inc.&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x048D&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x0100&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Silicon Motion Inc - Taiwan&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+8GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x090C&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x1000&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Kingston Technology (Dell)&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x0951&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x16A7&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Verbatim Americas LLC&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+8GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x18A5&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x0245&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Apacer Technology&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+8GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x1005&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x0100&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Sony Corporation&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+8GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x054C&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x06B0&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Sony Coporation&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+8GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x054C&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x0862&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Silicon Motion Inc.&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+4GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x090C&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x1000&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+SanDisk Corporation&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x0781&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x0127&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Etron Technology Inc&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x1E4E&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x3257&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Verbatim Americas LLC&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+4GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x18A5&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x0100&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Appotech Limited&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+4GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x1908&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x1320&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Decorative Pen Drive&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+4GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0xABCD&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x1234&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Moser Baer India Ltd.&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x1EC9&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x0101&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Lexar Media Inc&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+4GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x05DC&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x1100&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Realtek Semiconductor Corp.&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x0BDA&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x0109&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Silicon Motion Inc. Taiwan&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+4/8/16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x090C&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x1000&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Kingston Technology Company&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x0951&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x1665&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Kingston Data Traveller&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+4GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x0951&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x1643&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Lexar Media Inc&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+32GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x05DC&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0xA838&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+SanDisk Corporation&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x0781&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x5583&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+SanDisk Corporation&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+8GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x0781&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x5571&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Toshiba Corporation&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+32GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x0930&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x6544&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Strontium&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+8GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x090C&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x1000&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Kingston Technology Company&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x0951&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x1666&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Phison Electronics Corp&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+32GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x13FE&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x6300&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Kingston Technology Company&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+32GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x0951&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x16A3&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+SSP&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+4GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x8644&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x800B&nbsp;</div></td></tr><tr>
+<td class="Element77" valign="top" width="55%">
+<div class="Element78">
+Toshiba Corporation&nbsp;</div></td><td class="Element77" valign="top" width="11%">
+<div class="Element78">
+2GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x0930&nbsp;</div></td><td class="Element77" valign="top" width="17%">
+<div class="Element78">
+0x6544&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="01018.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00131.html" target="topic">Common Interface</a> &gt; <a href="00133.html" target="topic">Driver Device Mode Client Functions</a></div>
+<a href="00247.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00133.html" target="topic">USB MSD Host USB Pen Drive Tests</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -200,13 +378,13 @@ This concludes the discussion on the DRV_USB_DEVICE_INTERFACE structure. The fol
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00137.html" target="topic">Previous</a> | <a href="00131.html" target="topic">Up</a> | <a href="00134.html" target="topic">Next</a></div>
+<a href="00123.html" target="topic">Previous</a> | <a href="00247.html" target="topic">Up</a> | <a href="00068.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver Device Mode Client Functions Topic Title: Driver Device Mode Client Functions)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB Pen Drive Tests Topic Title: USB MSD Host USB Pen Drive Tests)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

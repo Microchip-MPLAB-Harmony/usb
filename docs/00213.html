@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Obtaining Audio v1.0 Device Audio Stream Details</title>
+<title>Detecting Device Attach</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a> &gt; <a href="00196.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00218.html" target="topic">Using the Library</a> &gt; <a href="00208.html" target="topic">How the Library Works</a> &gt; <a href="00213.html" target="topic">Obtaining Audio v1.0 Device Audio Stream Details</a></div>
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00204.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00226.html" target="topic">Using the Library</a> &gt; <a href="00216.html" target="topic">How the Library Works</a> &gt; <a href="00213.html" target="topic">Detecting Device Attach</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00205.html" target="topic">Previous</a> | <a href="00208.html" target="topic">Up</a> | <a href="00212.html" target="topic">Next</a></div>
+<a href="00225.html" target="topic">Previous</a> | <a href="00216.html" target="topic">Up</a> | <a href="00221.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Obtaining Audio v1.0 Device Audio Stream Details Topic Title: Obtaining Audio v1.0 Device Audio Stream Details)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Detecting Device Attach Topic Title: Detecting Device Attach)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Obtaining Audio v1.0 Device Audio Stream Details</div>
+Detecting Device Attach</div>
 </div>
 </div>
 
@@ -49,71 +49,14 @@ Obtaining Audio v1.0 Device Audio Stream Details</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The application will need to know more details about an attached audio device like Number of Audio Stream Groups and audio format details of each audio stream in audio stream group. Application will need to search through all of the audio streams and find if a suitable audio stream is available before it can open a stream and start communicating.&nbsp;</p>
+The application will need to know when a Audio v1.0 Device is attached. To receive this attach event from the Audio v1.0 Host Client Driver, the application must register an Attach Event Handler by calling the <a href="01032.html" target="topic">USB_HOST_AUDIO_V1_0_AttachEventHandlerSet</a> function. This function should be called before the <a href="01217.html" target="topic">USB_HOST_BusEnable</a> function is called, else the application may miss Audio v1.0 attach events. It can be called multiple times to register multiple event handlers, each for different application clients that need to know about Audio v1.0 Device Attach events.&nbsp;</p>
 <p class="Element10">
-<a href="01035.html" target="topic">USB_HOST_AUDIO_V1_0_NumberOfStreamGroupsGet</a> function can be used to know how many stream groups are available in the attached Audio device. This function takes <a href="01036.html" target="topic">USB_HOST_AUDIO_V1_0_OBJ</a> as an argument and returns uint8_t value as number of stream groups.&nbsp;</p>
-<p class="Element10">
-<a href="01100.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetFirst</a> function can be used to find out audio format details of first audio stream in a Stream Groups. This function takes <a href="01036.html" target="topic">USB_HOST_AUDIO_V1_0_OBJ</a>, stream group index and pointer to the <a href="01068.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_INFO</a> as arguments. The stream index can any number between zero to number of stream groups returned by <a href="01035.html" target="topic">USB_HOST_AUDIO_V1_0_NumberOfStreamGroupsGet</a> function. The audio stream object returned as part of <a href="01077.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_OBJ</a> structure.&nbsp;</p>
-<p class="Element10">
-<a href="01101.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetNext</a> function can be used to find details about subsequent audio streams. When there are no more audio streams available in the specified audio stream group this function return USB_HOST_AUDIO_V1_0_RESULT_END_OF_STREAM_LIST error. It is application’s responsibility to map and Audio Stream group and an audio stream.&nbsp;</p>
-<p class="Element10">
-If the application is looking for a audio stream with certain properties, application need compare audio stream properties with members of the <a href="01068.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_INFO</a> structure returned by <a href="01100.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetFirst</a> and <a href="01101.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetNext</a> functions. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of getting details about audio stream
-   in an attached Audio v1.0 device.*/</span></i>
-
-<i><span style="color: #008000">/* Specify the Audio Stream format details that this application supports */</span></i>
-<strong><span style="color: #000080">const</span></strong> APP_USB_HOST_AUDIO_STREAM_FORTMAT audioSpeakerStreamFormat =
-{
-
-    .streamDirection = USB_HOST_AUDIO_V1_0_DIRECTION_OUT,
-    .format = USB_AUDIO_FORMAT_PCM,
-    .nChannels = 2,
-    .bitResolution = 16,
-    .subFrameSize = 2,
-    .samplingRate = 48000
-};
-
+The total number of event handlers that can be registered is defined by USB_HOST_AUDIO_V1_0_ATTACH_LISTENERS_NUMBER configuration option in <span class="Element146">system_config.h</span>. When a device is attached, the Audio v1.0 Host Client Driver will send the attach event to all the registered event handlers. In this event handler, the USB Audio v1.0 Host Client Driver will pass a USB_HOST_AUDIO V1_0_OBJ that can be opened to gain access to the device. The following code shows an example of how to register attach event handlers. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of Audio v1.0 Attach Event Handler and how this
+ * attach event handler can be registered with the Audio v1.0 Host Client Driver */</span></i>
 <strong><span style="color: #000080">bool</span></strong> isAudioDeviceAttached = <strong><span style="color: #000080">false</span></strong>;
 USB_HOST_AUDIO_V1_0_OBJ audioDeviceObj;
 
-<i><span style="color: #008000">/*************************************************************/</span></i>
-<i><span style="color: #008000">/* Function to search for a specific Audio Stream */</span></i>
-<i><span style="color: #008000">/************************************************************/</span></i>
-USB_HOST_AUDIO_V1_0_STREAM_OBJ App_USBHostAudioSpeakerStreamFind
-(
-    USB_HOST_AUDIO_V1_0_OBJ audioDeviceObj,
-    APP_USB_HOST_AUDIO_STREAM_FORTMAT audioStream,
-    uint8_t* numberofStreamGroups
-)
-{
-    USB_HOST_AUDIO_V1_0_RESULT result;
-    USB_HOST_AUDIO_V1_0_STREAM_INFO streamInfo;
-
-    <i><span style="color: #008000">/* Get Number of Stream Groups */</span></i>
-    *numberofStreamGroups = USB_HOST_AUDIO_V1_0_NumberOfStreamGroupsGet(audioDeviceObj);
-    <strong><span style="color: #000080">if</span></strong> (*numberofStreamGroups == 0)
-    {
-        <strong><span style="color: #000080">return</span></strong> (USB_HOST_AUDIO_V1_0_STREAM_OBJ)0;
-    }
-    <i><span style="color: #008000">/* Get the First Stream Information in the Stream Group */</span></i>
-    result = USB_HOST_AUDIO_V1_0_StreamGetFirst(appData.audioDeviceObj, 0, &amp;streamInfo);
-    <strong><span style="color: #000080">if</span></strong> (result == USB_HOST_AUDIO_V1_0_RESULT_SUCCESS)
-    {
-         <i><span style="color: #008000">/* Compare Audio Stream info */</span></i>
-        <strong><span style="color: #000080">if</span></strong> ((streamInfo.format == audioStream.format)
-            &amp;&amp; (streamInfo.streamDirection == audioStream.streamDirection)
-                    &amp;&amp; (streamInfo.nChannels == audioStream.nChannels)
-                    &amp;&amp; (streamInfo.bitResolution == audioStream.bitResolution)
-                    &amp;&amp; (streamInfo.subFrameSize == audioStream.subFrameSize))
-        {
-            <strong><span style="color: #000080">return</span></strong> streamInfo.streamObj;
-        }
-    }
-    <strong><span style="color: #000080">return</span></strong> (USB_HOST_AUDIO_V1_0_STREAM_OBJ)0;
-}
-
-<i><span style="color: #008000">/*************************************************************/</span></i>
 <i><span style="color: #008000">/* Audio attach event listener function */</span></i>
-<i><span style="color: #008000">/************************************************************/</span></i>
 <strong><span style="color: #000080">void</span></strong> APP_USBHostAudioAttachEventListener
 (
     USB_HOST_AUDIO_V1_0_OBJ audioObj,
@@ -150,64 +93,24 @@ USB_HOST_AUDIO_V1_0_STREAM_OBJ App_USBHostAudioSpeakerStreamFind
     }
 }
 
-<i><span style="color: #008000">/*************************************************************/</span></i>
-<i><span style="color: #008000">/* Audio Tasks function */</span></i>
-<i><span style="color: #008000">/************************************************************/</span></i>
-<strong><span style="color: #000080">void</span></strong> APP_Tasks ( <strong><span style="color: #000080">void</span></strong> )
-{
-    USB_HOST_AUDIO_V1_0_RESULT audioResult;
-    USB_HOST_AUDIO_V1_0_STREAM_RESULT streamResult;
 
-    <i><span style="color: #008000">/* Check the application's current state. */</span></i>
-    <strong><span style="color: #000080">switch</span></strong> ( appData.state )
+<strong><span style="color: #000080">void</span></strong> APP_Tasks(<strong><span style="color: #000080">void</span></strong>)
+{
+    <strong><span style="color: #000080">switch</span></strong> (appData.state)
     {
         <strong><span style="color: #000080">case</span></strong> APP_STATE_BUS_ENABLE:
 
-            <i><span style="color: #008000">/* Register a callback for Audio Device Attach. */</span></i>
-            audioResult = USB_HOST_AUDIO_V1_0_AttachEventHandlerSet
-                          (
-                              &amp;APP_USBHostAudioAttachEventListener,
-                              (uintptr_t)0
-                          );
+            <i><span style="color: #008000">/* In this state the application enables the USB Host Bus. Note
+             * how the Audio v1.0 Attach event handler is registered before the bus
+             * is enabled. */</span></i>
 
-            <strong><span style="color: #000080">if</span></strong> (audioResult == USB_HOST_AUDIO_V1_0_RESULT_SUCCESS )
-            {
-                <i><span style="color: #008000">/* Set Host Event Handler */</span></i>
-                USB_HOST_EventHandlerSet(APP_USBHostEventHandler, 0);
-                USB_HOST_BusEnable(0);
-                <i><span style="color: #008000">/* Advance application state */</span></i>
-                appData.state = APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE;
-            }
+            USB_HOST_AUDIO_V1_0_AttachEventHandlerSet(APP_USBHostAudioAttachEventListener, (uintptr_t) 0);
+            USB_HOST_BusEnable(0);
+            appData.state = APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE;
             <strong><span style="color: #000080">break</span></strong>;
 
         <strong><span style="color: #000080">case</span></strong> APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE:
-            <strong><span style="color: #000080">if</span></strong>(USB_HOST_BusIsEnabled(0))
-            {
-                appData.state = APP_STATE_WAIT_FOR_DEVICE_ATTACH;
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_WAIT_FOR_DEVICE_ATTACH:
-            <i><span style="color: #008000">/* Check if an Audio Device has been attached  */</span></i>
-            <strong><span style="color: #000080">if</span></strong>(appData.isAudioDeviceAttached == <strong><span style="color: #000080">true</span></strong>)
-            {
-                appData.nAudioStreamGroups = 0;
-                <i><span style="color: #008000">/* Find an Audio Stream matching to our requirement */</span></i>
-                appData.ouStreamObj = App_USBHostAudioSpeakerStreamFind
-                                      (
-                                          appData.audioDeviceObj,
-                                          audioSpeakerStreamFormat,
-                                          &amp;appData.nAudioStreamGroups
-                                      );
-                <strong><span style="color: #000080">if</span></strong> (appData.nAudioStreamGroups == 0)
-                {
-                    appData.state = APP_STATE_ERROR;
-                    <strong><span style="color: #000080">break</span></strong>;
-                }
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">default</span></strong>:
+            <i><span style="color: #008000">/* Here we wait for the bus enable operation to complete. */</span></i>
             <strong><span style="color: #000080">break</span></strong>;
     }
 }</pre></div></div>
@@ -218,7 +121,7 @@ USB_HOST_AUDIO_V1_0_STREAM_OBJ App_USBHostAudioSpeakerStreamFind
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a> &gt; <a href="00196.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00218.html" target="topic">Using the Library</a> &gt; <a href="00208.html" target="topic">How the Library Works</a> &gt; <a href="00213.html" target="topic">Obtaining Audio v1.0 Device Audio Stream Details</a></div>
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00204.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00226.html" target="topic">Using the Library</a> &gt; <a href="00216.html" target="topic">How the Library Works</a> &gt; <a href="00213.html" target="topic">Detecting Device Attach</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -226,13 +129,13 @@ USB_HOST_AUDIO_V1_0_STREAM_OBJ App_USBHostAudioSpeakerStreamFind
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00205.html" target="topic">Previous</a> | <a href="00208.html" target="topic">Up</a> | <a href="00212.html" target="topic">Next</a></div>
+<a href="00225.html" target="topic">Previous</a> | <a href="00216.html" target="topic">Up</a> | <a href="00221.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Obtaining Audio v1.0 Device Audio Stream Details Topic Title: Obtaining Audio v1.0 Device Audio Stream Details)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Detecting Device Attach Topic Title: Detecting Device Attach)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

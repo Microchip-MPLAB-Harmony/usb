@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Device Layer Task Routines</title>
+<title>Abstraction Model</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00264.html" target="topic">USB Device Layer Library</a> &gt; <a href="00293.html" target="topic">Using the Library</a> &gt; <a href="00283.html" target="topic">How the Library Works</a> &gt; <a href="00285.html" target="topic">Library Initialization</a> &gt; <a href="00276.html" target="topic">Device Layer Task Routines</a></div>
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00273.html" target="topic">USB Device Libraries</a> &gt; <a href="00272.html" target="topic">USB Device Layer Library</a> &gt; <a href="00301.html" target="topic">Using the Library</a> &gt; <a href="00276.html" target="topic">Abstraction Model</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00284.html" target="topic">Previous</a> | <a href="00285.html" target="topic">Up</a> | <a href="00269.html" target="topic">Next</a></div>
+<a href="00301.html" target="topic">Previous</a> | <a href="00301.html" target="topic">Up</a> | <a href="00297.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Device Layer Task Routines Topic Title: Device Layer Task Routines)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Device Layer Task Routines</div>
+Abstraction Model</div>
 </div>
 </div>
 
@@ -49,24 +49,44 @@ Device Layer Task Routines</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-A call to the <a href="01012.html" target="topic">USB_DEVICE_Tasks</a>() function should be placed in the SYS_Tasks() function. This will ensure that this function is called periodically. The <a href="01012.html" target="topic">USB_DEVICE_Tasks</a>() function in turn calls the tasks routines of the applicable functions drivers. The following code shows an example of how the <a href="01012.html" target="topic">USB_DEVICE_Tasks</a>() function is called in the SYS_Tasks() function. </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> SYS_Tasks ( <strong><span style="color: #000080">void</span></strong> )
-{
-    <i><span style="color: #008000">/* Device layer tasks routine. Function Driver tasks gets called
-     * from device layer tasks */</span></i>
-
-    USB_DEVICE_Tasks(sysObjects.usbDevObject);
-
-    <i><span style="color: #008000">/* Call the application's tasks routine */</span></i>
-    APP_Tasks ();
-}</pre></div></div>
-</div>
+<span style="color: #000000">The Device Layer in the MPLAB Harmony USB Device Stack handles enumeration requests from the USB Host and provides an abstracted access to Control Transfers and Non-Control Endpoint Management. The Device Layer intercepts all Control transfers issues by the host. Only those control transfers that require application or function driver intervention are forwarded. Standard device control transfers are completely handled by the Device Layer. All access to the bus is routed via the Device Layer.</span>&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">The following block diagram shows the USB Device Layer interaction with USB Controller Driver, Function Drivers, User Application and the Harmony System module.</span> </p><p class="Element10" style="text-align: center;">
+<img src="device_layer_interaction.png" border="0" alt="" title="">&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<span style="color: #000000"><strong>USB Device Layer Interaction Block Diagram</strong></span>&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000"><strong>Harmony System Module Interaction</strong></span>&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">The MPLAB Harmony System Module initializes the Device Layer in the SYS_Initialize() function. It calls the USB Device Layer task routine periodically from the SYS_Tasks() function.</span>&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000"><strong>USB Controller Driver Interaction</strong></span>&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">The Device Layer opens the USB Controller Driver exclusively. It is the only client to the controller driver. The Device Layer manages Endpoint 0 and has exclusive access to this endpoint. It maintains the Control Transfer state machine and seeks intervention from the Application or the Function Drivers where required. The Device Layer provides layered access to the required USB Controller Driver functions.</span>&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000"><strong>Function Driver Interaction</strong></span>&nbsp;</p>
+<p class="Element10">
+<span style="color: #000000">The USB Device Layer interaction with the function driver involves the following:</span></p>
+<ul class="Element630">
+<li class="Element600"><span style="color: #000000">It initializes the function driver when device is configured by the Host. This happens when the Host issues the standard USB Set Configuration Request to the device. The device</span><span style="color: #FFFFFF">_</span><span style="color: #000000">layer initializes only those function drivers that are part of the selected configuration.</span></li>
+<li class="Element600"><span style="color: #000000">Deinitializes the function driver when the Host issues a bus reset or when device is detached from the host or when the Host issues a Set Configuration request with configuration value set to '0'.</span></li>
+<li class="Element600">The Device Layer executes the F<span style="color: #000000">unction driver task routines from within its own tasks routine (<a href="01020.html" target="topic">USB_DEVICE_Tasks</a>() function). In an RTOS application, this implies that the function driver</span> task routines run at the same priority and context as the device<span style="color: #FFFFFF">_</span>layer task routine.</li>
+<li class="Element600"><span style="color: #000000">Forwards class/interface specific control transfer requests from host to function drivers for processing. The function drivers can use Device layer</span><span style="color: #FFFFFF">_</span><span style="color: #000000">API routines to read and write data to Endpoint 0.</span></li>
+</ul><p class="Element10">
+<span style="color: #000000">The Device Layer initiates all of the above interactions with the function driver independent of function driver type. Each </span>function driver implements a set of common APIs. These common API allow the Device Layer to initialize/deinitialize the function driver, forward control transfers and invoke the function driver's task routine. Function Drivers are registered with the Device Layer as a part of the Device Stack Configuration. This is a compile time step. Function driver registration is explained elsewhere in this help section.&nbsp;</p>
+<p class="Element10">
+<strong>User Application (Client) Interaction</strong>&nbsp;</p>
+<p class="Element10">
+The user application opens the Device Layer and becomes a Device Layer client. It registers an event callback function with the Device<span style="color: #FFFFFF">_</span>layer to get Device Layer event notifications. Other than receiving such notifications, the application client can also interact with the Device Layer<span style="color: #FFFFFF">_</span>to determine device status such as USB speed or initiate a remote wake-up. The Device Layer will forward Control Transfers, whose recipient field is set to Other, to the application. The application must use the Device Layer Control Transfer Routines to complete these control transfers.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00264.html" target="topic">USB Device Layer Library</a> &gt; <a href="00293.html" target="topic">Using the Library</a> &gt; <a href="00283.html" target="topic">How the Library Works</a> &gt; <a href="00285.html" target="topic">Library Initialization</a> &gt; <a href="00276.html" target="topic">Device Layer Task Routines</a></div>
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00273.html" target="topic">USB Device Libraries</a> &gt; <a href="00272.html" target="topic">USB Device Layer Library</a> &gt; <a href="00301.html" target="topic">Using the Library</a> &gt; <a href="00276.html" target="topic">Abstraction Model</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -74,13 +94,13 @@ A call to the <a href="01012.html" target="topic">USB_DEVICE_Tasks</a>() functio
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00284.html" target="topic">Previous</a> | <a href="00285.html" target="topic">Up</a> | <a href="00269.html" target="topic">Next</a></div>
+<a href="00301.html" target="topic">Previous</a> | <a href="00301.html" target="topic">Up</a> | <a href="00297.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Device Layer Task Routines Topic Title: Device Layer Task Routines)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB Host Libraries</title>
+<title>Introduction</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a></div>
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00365.html" target="topic">USB Host Library - Getting Started</a> &gt; <a href="00356.html" target="topic">Introduction</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00943.html" target="topic">Previous</a> | <a href="00374.html" target="topic">Up</a> | <a href="00357.html" target="topic">Next</a></div>
+<a href="00365.html" target="topic">Previous</a> | <a href="00365.html" target="topic">Up</a> | <a href="00358.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB Host Libraries Topic Title: USB Host Libraries)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST GS Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB Host Libraries</div>
+Introduction</div>
 </div>
 </div>
 
@@ -48,56 +48,34 @@ USB Host Libraries</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-</div>
-</div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
+<p class="Element10">
+The MPLAB Harmony USB Host Library (referred to as the USB Host Library) provides embedded application developers with a framework to design and develop USB Host Support for a wide variety of USB Device Classes. Low-Speed and Full-Speed USB Devices can be supported with PIC32MX and SAM microcontrollers. High-Speed devices can be supported with PIC32MZ and SAM microcontrollers. The USB Host Library facilitates support of standard USB devices through client drivers that implement standard the USB Device class specification. The library is modular, thus allowing application developers to readily support composite USB devices.&nbsp;</p>
+<p class="Element10">
+The USB Host Library is a part of the MPLAB Harmony installation and is accompanied by demonstration applications that highlight library usage. These demonstration applications can also be modified or updated to build custom applications. The USB Host Library also features the following:</p>
+<ul class="Element630">
+<li class="Element600">Class Driver Support (CDC, Audio, HID, and MSD)</li>
+<li class="Element600">Designed to support USB devices with multiple configurations at different speeds</li>
+<li class="Element600">Supports low-speed, full-speed and high-speed operation</li>
+<li class="Element600">Supports multiple USB peripherals (allows multiple host stacks)</li>
+<li class="Element600">Modular and Layered architecture</li>
+<li class="Element600">Completely non-blocking</li>
+<li class="Element600">Supports both polled and interrupt operation</li>
+<li class="Element600">Works readily in an RTOS environment</li>
+<li class="Element600">Designed to readily integrate with other Harmony Middleware</li>
+</ul><p class="Element10">
+This document serves as a getting started guide and provides information on the following:</p>
+<ul class="Element630">
+<li class="Element600">USB Host Stack Architecture</li>
+<li class="Element600">USB Host Library - Application Interaction</li>
+</ul><div class="Element63">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table2">
 <tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00357.html" target="topic">USB Host Library - Getting Started</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section provides information for getting started with the USB Host Library.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00355.html" target="topic">USB Host Layer Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes the USB Host Layer Library.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00196.html" target="topic">USB Audio v1.0 Host Client Driver Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes the USB Audio v1.0 Host Client Driver Library.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00231.html" target="topic">USB CDC Host Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes the USB CDC Host Library.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00316.html" target="topic">USB HID Host Mouse Driver Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes the USB HID Host Mouse Driver Library.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00363.html" target="topic">USB Hub Host Client Driver Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes the USB Hub Host Client Driver Library.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00390.html" target="topic">USB MSD Host Client Driver Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes the USB MSD Host Client Driver Library.&nbsp;</div></td></tr></table></div></div>
+<td class="Element67" valign="top" width="10%" style="border:none;">
+<div class="Element68">
+<img src="Note Icon.png" border="0" alt="" title=""> <strong>Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<div class="Element68">
+It is assumed that the reader is familiar with the USB 2.0 specification (available at <a href="#" onclick="openExternalLink('http://www.usbif.org');"><img src="indicator_external_link.gif" border="0" alt="" title="">www.usbif.org</a>). While certain topics in USB may be discussed in this document, it is recommended that the reader refer to the specification documentation for a complete description.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -105,7 +83,7 @@ This section describes the USB MSD Host Client Driver Library.&nbsp;</div></td><
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a></div>
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00365.html" target="topic">USB Host Library - Getting Started</a> &gt; <a href="00356.html" target="topic">Introduction</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -113,13 +91,13 @@ This section describes the USB MSD Host Client Driver Library.&nbsp;</div></td><
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00943.html" target="topic">Previous</a> | <a href="00374.html" target="topic">Up</a> | <a href="00357.html" target="topic">Next</a></div>
+<a href="00365.html" target="topic">Previous</a> | <a href="00365.html" target="topic">Up</a> | <a href="00358.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB Host Libraries Topic Title: USB Host Libraries)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST GS Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

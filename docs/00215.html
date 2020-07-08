@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Sending Class Specific Control Transfers</title>
+<title>Files</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a> &gt; <a href="00196.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00218.html" target="topic">Using the Library</a> &gt; <a href="00208.html" target="topic">How the Library Works</a> &gt; <a href="00215.html" target="topic">Sending Class Specific Control Transfers</a></div>
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00204.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00215.html" target="topic">Files</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00198.html" target="topic">Previous</a> | <a href="00208.html" target="topic">Up</a> | <a href="00203.html" target="topic">Next</a></div>
+<a href="01178.html" target="topic">Previous</a> | <a href="00204.html" target="topic">Up</a> | <a href="01030.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Sending Class Specific Control Transfers Topic Title: Sending Class Specific Control Transfers)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Files Topic Title: Files)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Sending Class Specific Control Transfers</div>
+Files</div>
 </div>
 </div>
 
@@ -49,178 +49,41 @@ Sending Class Specific Control Transfers</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The Audio v1.0 Host Client Driver allows the application client to send Audio v1.0 Class specific commands to the connected device. These commands can be send using <a href="01027.html" target="topic">USB_HOST_AUDIO_V1_0_ControlRequest</a> function.&nbsp;</p>
-<p class="Element10">
-This function is non-blocking. The functions will return before the actual command execution is complete. The return value indicates if the command was scheduled successfully, or if the driver is busy and cannot accept commands, or if the command failed due to an unknown reason. If the command failed because the driver was busy, it can be retried. If scheduled successfully, the function will return a valid request handle. This request handle is unique and tracks the requested command.&nbsp;</p>
-<p class="Element10">
-When the command related control transfer has completed, the Audio v1.0 Host Client Driver generates a callback function. The call back function is one of the argument to the <a href="01027.html" target="topic">USB_HOST_AUDIO_V1_0_ControlRequest</a> function.&nbsp;</p>
-<p class="Element10">
-The following code shows an example of sending a Audio v1.0 class specific commands. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example for Audio Control transfer */</span></i>
-<strong><span style="color: #000080">bool</span></strong> isAudioDeviceAttached = <strong><span style="color: #000080">false</span></strong>;
-USB_HOST_AUDIO_V1_0_OBJ audioDeviceObj;
-
-
-<i><span style="color: #008000">/*************************************************************/</span></i>
-<i><span style="color: #008000">/* Audio control request call back function   */</span></i>
-<i><span style="color: #008000">/************************************************************/</span></i>
-<strong><span style="color: #000080">void</span></strong> App_USBAudioControlRequestCallback
-(
-    USB_HOST_AUDIO_V1_0_OBJ audioObj,
-    USB_HOST_AUDIO_V1_0_REQUEST_HANDLE requestHandle,
-    USB_HOST_AUDIO_V1_0_RESULT result,
-    size_t size,
-    uintptr_t context
-)
-{
-    APP_USB_AUDIO_CONTROL_TRANSFER_ACTION controlAction = (APP_USB_AUDIO_CONTROL_TRANSFER_ACTION)context;
-    <strong><span style="color: #000080">switch</span></strong> (controlAction)
-    {
-        <strong><span style="color: #000080">case</span></strong> APP_USB_AUDIO_MASTER_UNMUTE_SET:
-            <strong><span style="color: #000080">if</span></strong> (result == USB_HOST_AUDIO_V1_0_RESULT_SUCCESS)
-            {
-                appData.isMasterUnmuteSetComplete = <strong><span style="color: #000080">true</span></strong>;
-            }
-            <strong><span style="color: #000080">else</span></strong>
-            {
-                appData.muteStatus = 1;
-            }
-
-        <strong><span style="color: #000080">break</span></strong>;
-        <strong><span style="color: #000080">default</span></strong>:
-            <strong><span style="color: #000080">break</span></strong>;
-
-    }
-}
-
-<i><span style="color: #008000">/*************************************************************/</span></i>
-<i><span style="color: #008000">/* Function for sending Mute control to Audio device.  */</span></i>
-<i><span style="color: #008000">/************************************************************/</span></i>
-<strong><span style="color: #000080">void</span></strong> APP_SendAudioMuteControl
-(
-    APP_USB_AUDIO_CONTROL_TRANSFER_ACTION action,
-    uint32_t* mute
-)
-{
-    USB_HOST_AUDIO_V1_0_RESULT result;
-    USB_AUDIO_FEATURE_UNIT_CONTROL_REQUEST setupPacket;
-    uint32_t status;
-
-
-    <i><span style="color: #008000">/* Fill in Setup Packet */</span></i>
-    setupPacket.bmRequestType = (  USB_SETUP_DIRN_HOST_TO_DEVICE
-                   | USB_SETUP_TYPE_CLASS
-                   | USB_SETUP_RECIPIENT_INTERFACE
-                  ); <i><span style="color: #008000">//interface , Host to device , Standard;</span></i>
-    setupPacket.bRequest = USB_AUDIO_CS_SET_CUR;
-    <strong><span style="color: #000080">if</span></strong> (action ==  APP_USB_AUDIO_MASTER_MUTE_SET)
-    {
-        setupPacket.channelNumber = APP_USB_AUDIO_CHANNEL_MASTER;
-        status = __builtin_disable_interrupts();
-        *mute = 1;
-        __builtin_mtc0(12,0,status);
-    }
-    <strong><span style="color: #000080">else</span></strong> <strong><span style="color: #000080">if</span></strong> (action ==  APP_USB_AUDIO_MASTER_UNMUTE_SET)
-    {
-        setupPacket.channelNumber = APP_USB_AUDIO_CHANNEL_MASTER;
-        status = __builtin_disable_interrupts();
-        *mute = 0;
-        __builtin_mtc0(12,0,status);
-    }
-
-    setupPacket.controlSelector = USB_AUDIO_MUTE_CONTROL;
-    setupPacket.featureUnitId = 0x02; <i><span style="color: #008000">//appData.featureUnitDescriptor-&gt;bUnitID;</span></i>
-    setupPacket.wLength = 1;
-    result = USB_HOST_AUDIO_V1_0_ControlRequest
-             (
-                appData.audioDeviceObj,
-                &amp;appData.requestHandle,
-                (USB_SETUP_PACKET *)&amp;setupPacket,
-                mute,
-                App_USBAudioControlRequestCallback,
-                (uintptr_t)action
-             );
-
-}
-
-<i><span style="color: #008000">/*************************************************************/</span></i>
-<i><span style="color: #008000">/* Audio attach event listener function */</span></i>
-<i><span style="color: #008000">/************************************************************/</span></i>
-<strong><span style="color: #000080">void</span></strong> APP_USBHostAudioAttachEventListener
-(
-    USB_HOST_AUDIO_V1_0_OBJ audioObj,
-    USB_HOST_AUDIO_V1_0_EVENT event,
-    uintptr_t context
-)
-{
-    <i><span style="color: #008000">/* This function gets called when the Audio v1.0 device is attached/detached. In this
-     * example we let the application know that a device is attached and we
-     * store the Audio v1.0 device object. This object will be required to open the
-     * device. */</span></i>
-    <strong><span style="color: #000080">switch</span></strong> (event)
-    {
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_AUDIO_V1_0_EVENT_ATTACH:
-            <strong><span style="color: #000080">if</span></strong> (isAudioDeviceAttached == <strong><span style="color: #000080">false</span></strong>)
-            {
-                isAudioDeviceAttached = <strong><span style="color: #000080">true</span></strong>;
-                audioDeviceObj = audioObj;
-            }
-            <strong><span style="color: #000080">else</span></strong>
-            {
-                <i><span style="color: #008000">/* This application supports only one Audio Device . Handle Error Here.*/</span></i>
-            }
-        <strong><span style="color: #000080">break</span></strong>;
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_AUDIO_V1_0_EVENT_DETACH:
-            <strong><span style="color: #000080">if</span></strong> (isAudioDeviceAttached == <strong><span style="color: #000080">true</span></strong>)
-            {
-                <i><span style="color: #008000">/* This means the device was detached. There is no event data
-                 * associated with this event.*/</span></i>
-                isAudioDeviceAttached = <strong><span style="color: #000080">false</span></strong>;
-                <strong><span style="color: #000080">break</span></strong>;
-            }
-        <strong><span style="color: #000080">break</span></strong>;
-    }
-}
-
-<i><span style="color: #008000">/*************************************************************/</span></i>
-<i><span style="color: #008000">/* Audio Tasks function */</span></i>
-<i><span style="color: #008000">/************************************************************/</span></i>
-<strong><span style="color: #000080">void</span></strong> APP_Tasks ( <strong><span style="color: #000080">void</span></strong> )
-{
-    <strong><span style="color: #000080">switch</span></strong> (appData.state)
-    {
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_BUS_ENABLE:
-
-            <i><span style="color: #008000">/* In this state the application enables the USB Host Bus. Note
-             * how the Audio v1.0 Attach event handler is registered before the bus
-             * is enabled. */</span></i>
-
-            USB_HOST_AUDIO_V1_0_AttachEventHandlerSet(APP_USBHostAudioAttachEventListener, (uintptr_t) 0);
-            USB_HOST_BusEnable(0);
-            appData.state = APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE;
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE:
-            <strong><span style="color: #000080">if</span></strong>(USB_HOST_BusIsEnabled(0) != <strong><span style="color: #000080">true</span></strong>)
-            {
-                <strong><span style="color: #000080">return</span></strong>;
-            }
-            <i><span style="color: #008000">/* Here we wait for the bus enable operation to complete. */</span></i>
-            <i><span style="color: #008000">/* Unmute the  Device */</span></i>
-            appData.isMasterUnmuteSetComplete = <strong><span style="color: #000080">false</span></strong>;
-            APP_SendAudioMuteControl
-            (
-                APP_USB_AUDIO_MASTER_UNMUTE_SET,
-                (uint32_t*)&amp;appData.muteStatus
-            );
-            appData.state = APP_STATE_AUDIO_WAIT_FOR_UNMUTE_COMPLETE;
-            <strong><span style="color: #000080">break</span></strong>;
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_AUDIO_WAIT_FOR_UNMUTE_COMPLETE:
-            <strong><span style="color: #000080">if</span></strong> (appData.isMasterUnmuteSetComplete == <strong><span style="color: #000080">true</span></strong>)
-            {
-                <i><span style="color: #008000">/* Audio Control request completed */</span></i>
-            }
-    }
-} </pre></div></div>
+This section lists the source and header files used by the library.</p></div>
+</div>
+<a name="46696C6573"></a><div class="Element14">
+Files</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="01030.html" target="topic">usb_host_audio_v1_0.h</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Host Audio v1_0 Class Driver Interface Header&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="01222.html" target="topic">usb_host_cdc.h</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Host CDC Client Driver Interface Header&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="01341.html" target="topic">usb_host_hub_config_template.h</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB host CDC Class configuration definitions template&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="01033.html" target="topic">usb_host_audio_v1_0_config_template.h</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB host Audio v1.0 Class configuration definitions template&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -228,7 +91,7 @@ USB_HOST_AUDIO_V1_0_OBJ audioDeviceObj;
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a> &gt; <a href="00196.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00218.html" target="topic">Using the Library</a> &gt; <a href="00208.html" target="topic">How the Library Works</a> &gt; <a href="00215.html" target="topic">Sending Class Specific Control Transfers</a></div>
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00204.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00215.html" target="topic">Files</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -236,13 +99,13 @@ USB_HOST_AUDIO_V1_0_OBJ audioDeviceObj;
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00198.html" target="topic">Previous</a> | <a href="00208.html" target="topic">Up</a> | <a href="00203.html" target="topic">Next</a></div>
+<a href="01178.html" target="topic">Previous</a> | <a href="00204.html" target="topic">Up</a> | <a href="01030.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Sending Class Specific Control Transfers Topic Title: Sending Class Specific Control Transfers)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Files Topic Title: Files)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

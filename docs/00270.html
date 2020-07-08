@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>BOS Descriptor Support</title>
+<title>Using the Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00264.html" target="topic">USB Device Layer Library</a> &gt; <a href="00293.html" target="topic">Using the Library</a> &gt; <a href="00283.html" target="topic">How the Library Works</a> &gt; <a href="00270.html" target="topic">BOS Descriptor Support</a></div>
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00273.html" target="topic">USB Device Libraries</a> &gt; <a href="00271.html" target="topic">USB CDC Device Library</a> &gt; <a href="00270.html" target="topic">Using the Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00291.html" target="topic">Previous</a> | <a href="00283.html" target="topic">Up</a> | <a href="00287.html" target="topic">Next</a></div>
+<a href="00264.html" target="topic">Previous</a> | <a href="00271.html" target="topic">Up</a> | <a href="00256.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER BOS Descriptor Support Topic Title: BOS Descriptor Support)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVCDC Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-BOS Descriptor Support</div>
+Using the Library</div>
 </div>
 </div>
 
@@ -49,18 +49,49 @@ BOS Descriptor Support</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The USB 3.0 and the USB 2.0 LPM specifications define a new descriptor called the Binary Device Object Store (BOS) descriptor. This descriptor contains information about the capability of the device. When the bcdUSB value in the Device Descriptor is greater than 0x0200, the USB Host Operating System may request for the BOS descriptor.&nbsp;</p>
-<p class="Element10">
-The MPLAB Harmony USB Device Library allows the application to support the BOS descriptor requests. This support is enabled by adding the <a href="00670.html" target="topic">USB_DEVICE_BOS_DESCRIPTOR_SUPPORT_ENABLE</a> configuration macro in <span class="Element146">system_config.h</span>. The application must set the bosDescriptor member of the <a href="00877.html" target="topic">USB_DEVICE_INIT</a> data structure (this data structure is passed in the <a href="00893.html" target="topic">USB_DEVICE_Initialize</a> function) to point to the data to be returned in the data stage of the BOS descriptor request.&nbsp;</p>
-<p class="Element10">
-If the <a href="00670.html" target="topic">USB_DEVICE_BOS_DESCRIPTOR_SUPPORT_ENABLE</a> configuration macro is not specified, the Device Layer will stall the Host request for the BOS descriptor.</p></div>
+This topic describes the basic architecture of the USB CDC Device Library and provides information and examples on its use.</p></div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00256.html" target="topic">Abstraction Model</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Provides an architectural overview of the CDC Function Driver.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00255.html" target="topic">Abstract Control Model (ACM)</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes the various Abstract Control Model (ACM) commands supported by this CDC Function Driver implementation.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00265.html" target="topic">Library Overview</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+The USB CDC Device Library mainly interacts with the system, its clients and function drivers, as shown in the <a href="00256.html" target="topic">Abstraction Model</a><span style="color: #000000">.</span><br><span style="color: #000000">The library interface routines are divided into sub-sections, which address one of the blocks or the overall operation of the USB CDC Device Library.</span> &nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00263.html" target="topic">How the Library Works</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+ &nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00265.html" target="topic">USB Device Libraries</a> &gt; <a href="00264.html" target="topic">USB Device Layer Library</a> &gt; <a href="00293.html" target="topic">Using the Library</a> &gt; <a href="00283.html" target="topic">How the Library Works</a> &gt; <a href="00270.html" target="topic">BOS Descriptor Support</a></div>
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00273.html" target="topic">USB Device Libraries</a> &gt; <a href="00271.html" target="topic">USB CDC Device Library</a> &gt; <a href="00270.html" target="topic">Using the Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -68,13 +99,13 @@ If the <a href="00670.html" target="topic">USB_DEVICE_BOS_DESCRIPTOR_SUPPORT_ENA
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00291.html" target="topic">Previous</a> | <a href="00283.html" target="topic">Up</a> | <a href="00287.html" target="topic">Next</a></div>
+<a href="00264.html" target="topic">Previous</a> | <a href="00271.html" target="topic">Up</a> | <a href="00256.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER BOS Descriptor Support Topic Title: BOS Descriptor Support)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVCDC Using the Library Topic Title: Using the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

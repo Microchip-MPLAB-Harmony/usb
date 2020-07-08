@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Opening the CDC Host Client Driver</title>
+<title>Detecting Device Attach</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a> &gt; <a href="00231.html" target="topic">USB CDC Host Library</a> &gt; <a href="00238.html" target="topic">Using the Library</a> &gt; <a href="00229.html" target="topic">How the Library Works</a> &gt; <a href="00234.html" target="topic">Opening the CDC Host Client Driver</a></div>
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00239.html" target="topic">USB CDC Host Library</a> &gt; <a href="00246.html" target="topic">Using the Library</a> &gt; <a href="00237.html" target="topic">How the Library Works</a> &gt; <a href="00234.html" target="topic">Detecting Device Attach</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00226.html" target="topic">Previous</a> | <a href="00229.html" target="topic">Up</a> | <a href="00236.html" target="topic">Next</a></div>
+<a href="00245.html" target="topic">Previous</a> | <a href="00237.html" target="topic">Up</a> | <a href="00242.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Opening the CDC Host Client Driver Topic Title: Opening the CDC Host Client Driver)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Detecting Device Attach Topic Title: Detecting Device Attach)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Opening the CDC Host Client Driver</div>
+Detecting Device Attach</div>
 </div>
 </div>
 
@@ -49,23 +49,24 @@ Opening the CDC Host Client Driver</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The application must open the CDC Host Client Driver to communicate and control the attached device. The device can be opened by using the <a href="01254.html" target="topic">USB_HOST_CDC_Open</a> function and specifying the <a href="01253.html" target="topic">USB_HOST_CDC_OBJ</a> object that was returned in the attached event handler. If the open function fails, it returns an invalid handle (<a href="01250.html" target="topic">USB_HOST_CDC_HANDLE_INVALID</a>). Once opened successfully, a valid handle tracks the relationship between the client and the CDC Host Client Driver. This handle should be used with other CDC Host Client Driver functions to specify the instance of the CDC Host Client Driver being accessed.&nbsp;</p>
+The application will need to know when a CDC Device is attached. To receive this attach event from the CDC Host Client Driver, the application must register an Attach Event Handler by calling the <a href="01227.html" target="topic">USB_HOST_CDC_AttachEventHandlerSet</a> function. This function should be called before the <a href="01217.html" target="topic">USB_HOST_BusEnable</a> function is called, else the application may miss CDC attach events. It can be called multiple times to register multiple event handlers, each for different application clients that need to know about CDC Device Attach events.&nbsp;</p>
 <p class="Element10">
-A CDC Host Client Driver instance can be opened multiple times by different application clients. In an ROTS based application each client could running its own thread. Multiple clients can read write data to the one CDC device. In such a case, the read and write requests are queued. The following code shows an example of how the CDC Driver is opened.&nbsp;</p>
+The total number of event handlers that can be registered is defined by <a href="01226.html" target="topic">USB_HOST_CDC_ATTACH_LISTENERS_NUMBER</a> configuration option in <span class="Element146">system_config.h</span>. When a device is attached, the CDC Host Client Driver will send the attach event to all the registered event handlers. In this event handler, the CDC Host Client Driver will pass a <a href="01261.html" target="topic">USB_HOST_CDC_OBJ</a> that can be opened to gain access to the device. The following code shows an example of how to register attach event handlers.&nbsp;</p>
 <p class="Element10">
-<strong>Example:</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of the how to open the CDC Host Client
- * driver. The application state machine waits for a device attach and then
- * opens the CDC Host Client Driver. */</span></i>
+<strong>Example:</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of CDC Attach Event Handler and how this
+ * attach event handler can be registered with the CDC Host Client Driver */</span></i>
 
 <strong><span style="color: #000080">void</span></strong> APP_USBHostCDCAttachEventListener(USB_HOST_CDC_OBJ cdcObj, uintptr_t context)
 {
-    <i><span style="color: #008000">/* This function gets called when the CDC device is attached. Update the
-     * application data structure to let the application know that this device
-     * is attached */</span></i>
+    <i><span style="color: #008000">/* This function gets called when the CDC device is attached. In this
+     * example we let the application know that a device is attached and we
+     * store the CDC device object. This object will be required to open the
+     * device. */</span></i>
 
     appData.deviceIsAttached = <strong><span style="color: #000080">true</span></strong>;
     appData.cdcObj = cdcObj;
 }
+
 
 <strong><span style="color: #000080">void</span></strong> APP_Tasks(<strong><span style="color: #000080">void</span></strong>)
 {
@@ -74,52 +75,16 @@ A CDC Host Client Driver instance can be opened multiple times by different appl
         <strong><span style="color: #000080">case</span></strong> APP_STATE_BUS_ENABLE:
 
             <i><span style="color: #008000">/* In this state the application enables the USB Host Bus. Note
-             * how the CDC Attach event handler are registered before the bus
+             * how the CDC Attach event handler is registered before the bus
              * is enabled. */</span></i>
 
-            USB_HOST_EventHandlerSet(APP_USBHostEventHandler, (uintptr_t)0);
             USB_HOST_CDC_AttachEventHandlerSet(APP_USBHostCDCAttachEventListener, (uintptr_t) 0);
             USB_HOST_BusEnable(0);
             appData.state = APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE;
             <strong><span style="color: #000080">break</span></strong>;
 
         <strong><span style="color: #000080">case</span></strong> APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE:
-
-            <i><span style="color: #008000">/* In this state we wait for the Bus enable to complete */</span></i>
-            <strong><span style="color: #000080">if</span></strong>(USB_HOST_BusIsEnabled(0))
-            {
-                appData.state = APP_STATE_WAIT_FOR_DEVICE_ATTACH;
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_WAIT_FOR_DEVICE_ATTACH:
-
-            <i><span style="color: #008000">/* In this state the application is waiting for the device to be
-             * attached */</span></i>
-            <strong><span style="color: #000080">if</span></strong>(appData.deviceIsAttached)
-            {
-                <i><span style="color: #008000">/* A device is attached. We can open this device */</span></i>
-                appData.state = APP_STATE_OPEN_DEVICE;
-                appData.deviceIsAttached = <strong><span style="color: #000080">false</span></strong>;
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_OPEN_DEVICE:
-
-            <i><span style="color: #008000">/* In this state the application opens the attached device */</span></i>
-            appData.cdcHostHandle = USB_HOST_CDC_Open(appData.cdcObj);
-            <strong><span style="color: #000080">if</span></strong>(appData.cdcHostHandle != USB_HOST_CDC_HANDLE_INVALID)
-            {
-                <i><span style="color: #008000">/* The driver was opened successfully. Set the event handler
-                 * and then go to the next state. */</span></i>
-                USB_HOST_CDC_EventHandlerSet(appData.cdcHostHandle,
-                                             APP_USBHostCDCEventHandler,
-                                            (uintptr_t)0);
-                appData.state = APP_STATE_SET_LINE_CODING;
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">default</span></strong>:
+            <i><span style="color: #008000">/* Here we wait for the bus enable operation to complete. */</span></i>
             <strong><span style="color: #000080">break</span></strong>;
     }
 }</pre></div></div>
@@ -130,7 +95,7 @@ A CDC Host Client Driver instance can be opened multiple times by different appl
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a> &gt; <a href="00231.html" target="topic">USB CDC Host Library</a> &gt; <a href="00238.html" target="topic">Using the Library</a> &gt; <a href="00229.html" target="topic">How the Library Works</a> &gt; <a href="00234.html" target="topic">Opening the CDC Host Client Driver</a></div>
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00239.html" target="topic">USB CDC Host Library</a> &gt; <a href="00246.html" target="topic">Using the Library</a> &gt; <a href="00237.html" target="topic">How the Library Works</a> &gt; <a href="00234.html" target="topic">Detecting Device Attach</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -138,13 +103,13 @@ A CDC Host Client Driver instance can be opened multiple times by different appl
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00226.html" target="topic">Previous</a> | <a href="00229.html" target="topic">Up</a> | <a href="00236.html" target="topic">Next</a></div>
+<a href="00245.html" target="topic">Previous</a> | <a href="00237.html" target="topic">Up</a> | <a href="00242.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Opening the CDC Host Client Driver Topic Title: Opening the CDC Host Client Driver)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Detecting Device Attach Topic Title: Detecting Device Attach)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

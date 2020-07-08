@@ -1,0 +1,242 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>USB_HOST_MSD_ERROR_CODE Enumeration</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '01354.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00398.html" target="topic">USB MSD Host Client Driver Library</a> &gt; <a href="00400.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="01354.html" target="topic">USB_HOST_MSD_ERROR_CODE Enumeration</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="01369.html" target="topic">Previous</a> | <a href="00400.html" target="topic">Up</a> | <a href="00395.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_MSD_ERROR_CODE Topic Title: USB_HOST_MSD_ERROR_CODE Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+USB_HOST_MSD_ERROR_CODE Enumeration</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+USB Host MSD Error Codes.&nbsp;</p>
+<p class="Element10">
+This enumeration defines the codes that the MSD Client Driver returns for possible errors that lead to the device being placed in an error state. The MSD client driver will not operate on a device which is in an error state. The error are returned in the USB_HOST_MSD_ErrorCallback function.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
+  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_INSUFFICIENT_INSTANCES</span></strong> = 1,
+  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_NOT_FOUND_BULK_IN_ENDPOINT</span></strong>,
+  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_NOT_FOUND_BULK_OUT_ENDPOINT</span></strong>,
+  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_FAILED_PIPE_OPEN</span></strong>,
+  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_FAILED_GET_MAX_LUN</span></strong>,
+  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_FAILED_BOT_TRANSFER</span></strong>,
+  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_FAILED_RESET_RECOVERY</span></strong>,
+  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_CBW_STALL_RESET_RECOVERY</span></strong>,
+  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_TRANSFER_BUSY</span></strong>,
+  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_CSW_PHASE_ERROR</span></strong>,
+  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_CSW_UNKNOWN_ERROR</span></strong>
+} USB_HOST_MSD_ERROR_CODE;</pre></div></div>
+<a name="4D656D62657273"></a><div class="Element14">
+Members</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element272">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element260" valign="top" width="35%">
+<div class="Element261">
+Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
+<div class="Element265">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_HOST_MSD_ERROR_CODE_INSUFFICIENT_INSTANCES = 1&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This error occurs when the number of MSD instances defined via</p>
+<ul class="Element630">
+<li class="Element600"><a href="01366.html" target="topic">USB_HOST_MSD_INSTANCES_NUMBER</a> (in system_config.h) is insufficient. For</li>
+<li class="Element600">example, this error would occur if the value of</li>
+<li class="Element600"><a href="01366.html" target="topic">USB_HOST_MSD_INSTANCES_NUMBER</a> is 2, two MSC devices are already connected</li>
+<li class="Element600">and third MSC device is connected to the host. The object identifier in</li>
+<li class="Element600">this case will be the <a href="01287.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE</a> value.</li>
+</ul><p class="Element267">
+&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_HOST_MSD_ERROR_CODE_NOT_FOUND_BULK_IN_ENDPOINT&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This error occurs when the driver descriptor parser could not find a Bulk</p>
+<ul class="Element630">
+<li class="Element600">IN endpoint in the interface descriptor. The object identifier in this</li>
+<li class="Element600">case will be the <a href="01287.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE</a> value.</li>
+</ul><p class="Element267">
+&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_HOST_MSD_ERROR_CODE_NOT_FOUND_BULK_OUT_ENDPOINT&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This error occurs when the driver descriptor parser could not find a Bulk</p>
+<ul class="Element630">
+<li class="Element600">OUT endpoint in the interface descriptor. The object identifier in this</li>
+<li class="Element600">case will be <a href="01287.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE</a> value.</li>
+</ul><p class="Element267">
+&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_HOST_MSD_ERROR_CODE_FAILED_PIPE_OPEN&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This error occurs when the driver could not open a Bulk pipe. This</p>
+<ul class="Element630">
+<li class="Element600">typically happens either due to a host layer error or due to insufficient</li>
+<li class="Element600">number of pipes (which is configured via <a href="01388.html" target="topic">USB_HOST_PIPES_NUMBER</a>). The</li>
+<li class="Element600">object idenfier in this case will be <a href="01287.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE</a> value.</li>
+</ul><p class="Element267">
+&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_HOST_MSD_ERROR_CODE_FAILED_GET_MAX_LUN&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This error occurs when the Get Max LUN request issued by the driver fails</p>
+<ul class="Element630">
+<li class="Element600">for any reason. The object identifier in this case will be the MSC device</li>
+<li class="Element600">instance index.</li>
+</ul><p class="Element267">
+&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_HOST_MSD_ERROR_CODE_FAILED_BOT_TRANSFER&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This error occurs when any stage of the BOT has failed due to bus error</p>
+<ul class="Element630">
+<li class="Element600">or an unknown failure. The object identifier in this case will be the MSC</li>
+<li class="Element600">device instance index.</li>
+</ul><p class="Element267">
+&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_HOST_MSD_ERROR_CODE_FAILED_RESET_RECOVERY&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This error occurs when the MSD Reset Recovery procedure has failed. A MSC</p>
+<ul class="Element630">
+<li class="Element600">device should not fail a MSD Reset Recovery procedure. The object</li>
+<li class="Element600">identifier in this case will be the device instance index.</li>
+</ul><p class="Element267">
+&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_HOST_MSD_ERROR_CODE_CBW_STALL_RESET_RECOVERY&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This error code indicates a condtion where the CBW stage of the BOT was</p>
+<ul class="Element630">
+<li class="Element600">stalled and the driver is about to launch MSD reset recovery. The</li>
+<li class="Element600">identifier in this case if the MSC Device instance index. This code is</li>
+<li class="Element600">generated from an interrupt context. The driver may continue to function</li>
+<li class="Element600">normally post this condition.</li>
+</ul><p class="Element267">
+&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_HOST_MSD_ERROR_CODE_TRANSFER_BUSY&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This error code indicates a condition where the BOT transfer could not be</p>
+<ul class="Element630">
+<li class="Element600">initiated because a transfer is already in progress. The identifier in</li>
+<li class="Element600">this case is the MSC Device Instance Index. The driver may continue to</li>
+<li class="Element600">function normall post this condition. This condition may occur several</li>
+<li class="Element600">times.</li>
+</ul><p class="Element267">
+&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_HOST_MSD_ERROR_CODE_CSW_PHASE_ERROR&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This error code indicates a condition where the BOT transfer failed due a</p>
+<ul class="Element630">
+<li class="Element600">phase error in the CSW stage of the BOT. The identifier in this case if</li>
+<li class="Element600">the MSC Device instance index. This code is generated from an interrupt</li>
+<li class="Element600">context. The driver may continue to function normally post this</li>
+<li class="Element600">condition.</li>
+</ul><p class="Element267">
+&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+USB_HOST_MSD_ERROR_CODE_CSW_UNKNOWN_ERROR&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+This error code indicates that a condition where an unknown error has</p>
+<ul class="Element630">
+<li class="Element600">occured during the CSW stage of the BOT. The identifier in this case if</li>
+<li class="Element600">the MSC Device instance index. This code is generated from an interrupt</li>
+<li class="Element600">context. The driver may continue to function normally post this</li>
+<li class="Element600">condition.</li>
+</ul><p class="Element267">
+&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00398.html" target="topic">USB MSD Host Client Driver Library</a> &gt; <a href="00400.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="01354.html" target="topic">USB_HOST_MSD_ERROR_CODE Enumeration</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="01369.html" target="topic">Previous</a> | <a href="00400.html" target="topic">Up</a> | <a href="00395.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_MSD_ERROR_CODE Topic Title: USB_HOST_MSD_ERROR_CODE Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

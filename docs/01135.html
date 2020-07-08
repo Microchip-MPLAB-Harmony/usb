@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID Macro</title>
+<title>USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a> &gt; <a href="00196.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00211.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01135.html" target="topic">USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID Macro</a></div>
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00204.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00219.html" target="topic">Library Interface</a> &gt; a) Audio Device Access Functions &gt; <a href="01135.html" target="topic">USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01132.html" target="topic">Previous</a> | <a href="00211.html" target="topic">Up</a> | <a href="01149.html" target="topic">Next</a></div>
+<a href="01134.html" target="topic">Previous</a> | <a href="00219.html" target="topic">Up</a> | <a href="01137.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID Topic Title: USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSet@USB_HOST_AUDIO_V1_OBJ@USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ@USB_HOST_AUDIO_V1_REQUEST_HANDLE *@uint8_t@uint16_t * Topic Title: USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID Macro</div>
+USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSet Function</div>
 </div>
 </div>
 
@@ -49,13 +49,73 @@ USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID Macro</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-USB Host Audio v1.0 Client Driver Invalid Request Handle&nbsp;</p>
+This function schedules a set current volume request to the specified channel. Prior to calling this function the user should check if volume control exists on the specified channel by calling the <a href="01132.html" target="topic">USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeExists</a> function.&nbsp;</p>
 <p class="Element10">
-This handle is returned by the Audio v1.0 Client driver command routines when the request could not be scheduled.</p></div>
+If the request was scheduled successfully, the requestHandle parameter will contain a request handle that uniquely identifies this request. If the request could not be scheduled successfully, requestHandle will contain <a href="01143.html" target="topic">USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID</a>.&nbsp;</p>
+<p class="Element10">
+When the control request completes, the Audio v1.0 Client Driver will call the callback function that was set using the <a href="01123.html" target="topic">USB_HOST_AUDIO_V1_EntityRequestCallbackSet</a> function. The context parameter specified here will be returned in the callback.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID</span></strong> ((<a href="01134.html" target="topic">USB_HOST_AUDIO_V1_REQUEST_HANDLE</a>)(-1))</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01144.html" target="topic">USB_HOST_AUDIO_V1_RESULT</a> <strong><span style="color: #000000">USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSet</span></strong>(
+    <a href="01141.html" target="topic">USB_HOST_AUDIO_V1_OBJ</a> <strong><span style="color: #000000">audioObj</span></strong>, 
+    <a href="01117.html" target="topic">USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ</a> <strong><span style="color: #000000">entityObject</span></strong>, 
+    <a href="01142.html" target="topic">USB_HOST_AUDIO_V1_REQUEST_HANDLE</a> * <strong><span style="color: #000000">requestHandle</span></strong>, 
+    uint8_t <strong><span style="color: #000000">channelNumber</span></strong>, 
+    uint16_t * <strong><span style="color: #000000">volume</span></strong>
+);</pre></div></div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+audioObj&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+USB Host Audio v1.0 Device object&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+entityObject&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Audio control entity object&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+requestHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Output parameter that will contain the handle to this request&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+channelNumber&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Channel number to which the volume control is addressed&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+volume&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Current volume control value that should be set in the Audio Device&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+
+<ul class="Element630">
+<li class="Element600">USB_HOST_AUDIO_V1_RESULT_SUCCESS - The request was scheduled successfully. requestHandle will contain a valid request handle.</li>
+<li class="Element600">USB_HOST_AUDIO_V1_RESULT_BUSY - The control request mechanism is currently busy. Retry the request. </li>
+<li class="Element600">USB_HOST_AUDIO_V1_RESULT_FAILURE - An unknown failure occurred. requestHandle will contain <a href="01046.html" target="topic">USB_HOST_AUDIO_V1_0_REQUEST_HANDLE_INVALID</a>.</li>
+<li class="Element600">USB_HOST_AUDIO_V1_RESULT_PARAMETER_INVALID - The data pointer or requestHandle pointer is NULL</li>
+</ul></div>
+</div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
@@ -68,7 +128,7 @@ None.</p></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00374.html" target="topic">USB Libraries Help</a> &gt; <a href="00356.html" target="topic">USB Host Libraries</a> &gt; <a href="00196.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00211.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01135.html" target="topic">USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID Macro</a></div>
+<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00204.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00219.html" target="topic">Library Interface</a> &gt; a) Audio Device Access Functions &gt; <a href="01135.html" target="topic">USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -76,13 +136,13 @@ None.</p></div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00239.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01132.html" target="topic">Previous</a> | <a href="00211.html" target="topic">Up</a> | <a href="01149.html" target="topic">Next</a></div>
+<a href="01134.html" target="topic">Previous</a> | <a href="00219.html" target="topic">Up</a> | <a href="01137.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID Topic Title: USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSet@USB_HOST_AUDIO_V1_OBJ@USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ@USB_HOST_AUDIO_V1_REQUEST_HANDLE *@uint8_t@uint16_t * Topic Title: USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
