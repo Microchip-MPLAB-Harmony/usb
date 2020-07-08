@@ -58,8 +58,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">58859AE840A386562A0D11D5BBD433C0</GeneratedChecksum>
-          <UserChecksum dnOrder="6">58859AE840A386562A0D11D5BBD433C0</UserChecksum>
+          <GeneratedChecksum dnOrder="5">D2653DB6746469160A6DF4A8F040606D</GeneratedChecksum>
+          <UserChecksum dnOrder="6">D2653DB6746469160A6DF4A8F040606D</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
