@@ -4,7 +4,7 @@
 
 
 project: hid_joystick
-creation_date: 2020-06-25T10:05:37.243+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2020-07-08T15:36:16.635+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 10
 mhc_mode: Headless            # [IDE|Standalone|Headless]
 mplabx_version: NA        # if MPLAB X plugin only
@@ -17,6 +17,6 @@ modules:
     - {name: "core", version: "v3.7.1"}
     - {name: "csp", version: "v3.7.1"}
     - {name: "dev_packs", version: "v3.7.0"}
-    - {name: "mhc", version: "v3.4.0"}
+    - {name: "mhc", version: "v3.4.1"}
     - {name: "usb", version: "v3.6.0"}
 

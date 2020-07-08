@@ -73,10 +73,154 @@ typedef enum
 // *****************************************************************************
 // *****************************************************************************
 
+extern uint32_t DRV_USB_UHP_OHCI_HOST_EDIsFinish( uint8_t hostPipeInUse );
 extern void DRV_USB_UHP_OHCI_HOST_ReceivedSize( uint32_t * BuffSize );
 extern void DRV_USB_UHP_OHCI_HOST_Init(DRV_USB_UHP_OBJ *drvObj);
+extern void DRV_USB_UHP_OHCI_HOST_Init_simpl(DRV_USB_UHP_OBJ *drvObj);
 extern void DRV_USB_UHP_OHCI_HOST_DisableControlList(DRV_USB_UHP_OBJ *hDriver);
 extern void DRV_USB_UHP_OHCI_HOST_DisableBulkList(DRV_USB_UHP_OBJ *hDriver);
 extern void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver);
+// ****************************************************************************
+/* Function:
+    DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_OHCI_PipeSetup
+    (
+        DRV_HANDLE client,
+        uint8_t deviceAddress,
+        USB_ENDPOINT endpointAndDirection,
+        uint8_t hubAddress,
+        uint8_t hubPort,
+        USB_TRANSFER_TYPE pipeType,
+        uint8_t bInterval,
+        uint16_t wMaxPacketSize,
+        USB_SPEED speed
+    );
+
+  Summary:
+    Open a pipe with the specified attributes.
+
+  Description:
+    This function opens a communication pipe between the Host and the device
+    endpoint. The transfer type and other attributes are specified through the
+    function parameters. The driver does not check for available bus bandwidth,
+    which should be done by the application (the USB Host Layer in this case)
+
+  Precondition:
+    The driver handle should be valid.
+
+  Parameters:
+    client - Handle to the driver (returned from DRV_USB_UHP_Open function).
+
+    deviceAddress - USB Address of the device to connect to.
+
+    endpoint - Endpoint on the device to connect to.
+
+    hubAddress - Address of the hub to which this device is connected. If not
+    connected to a hub, this value should be set to 0.
+
+    hubPort - Port number of the hub to which this device is connected.
+
+    pipeType - Transfer type of the pipe to open.
+
+    bInterval - Polling interval for periodic transfers. This should be
+    specified as defined by the USB 2.0 Specification.
+
+    wMaxPacketSize - This should be set to the endpoint size reported by the
+    device in its configuration descriptors. This defines the maximum size of
+    the transaction in a transfer on this pipe.
+
+    speed - The speed of the pipe. This should match the speed at which the
+    device connected to the Host.
+
+  Returns:
+    * DRV_USB_HOST_PIPE_HANDLE_INVALID - The pipe could not be created.
+    * A valid Pipe Handle - The pipe was created successfully. This is an
+      arbitrary value and will never be the same as
+      DRV_USB_HOST_PIPE_HANDLE_INVALID.
+
+  Example:
+    <code>
+    // This code shows how the DRV_USB_UHP_PipeSetup function is called for
+    // create a communication pipe. In this example, Bulk pipe is created
+    // between the Host and a device. The Device address is 2 and the target
+    // endpoint on this device is 4 . The direction of the data transfer over
+    // this pipe is from the Host to the device. The device is connected to Port
+    // 1 of a Hub, whose USB address is 3. The maximum size of a transaction
+    // on this pipe is 64 bytes. This is a Bulk Pipe and hence the bInterval
+    // field is set to 0. The target device is operating at Full Speed.
+
+    DRV_HANDLE driverHandle;
+    DRV_USB_UHP_HOST_PIPE_HANDLE pipeHandle;
+
+    pipeHandle = DRV_USB_UHP_PipeSetup(driverHandle, 0x02, 0x14, 0x03, 0x01, USB_TRANSFER_TYPE_BULK, 0, 64, USB_SPEED_FULL);
+
+    if(pipeHandle != DRV_USB_UHP_HOST_PIPE_HANDLE_INVALID)
+    {
+        // The pipe was created successfully.
+    }
+
+    </code>
+
+  Remarks:
+    None.
+*/
+
+extern DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_OHCI_PipeSetup
+(
+    DRV_HANDLE client,
+    uint8_t deviceAddress,
+    USB_ENDPOINT endpointAndDirection,
+    uint8_t hubAddress,
+    uint8_t hubPort,
+    USB_TRANSFER_TYPE pipeType,
+    uint8_t bInterval,
+    uint16_t wMaxPacketSize,
+    USB_SPEED speed
+);
+
+// ****************************************************************************
+/* Function:
+    void DRV_USB_UHP_OHCI_PipeClose
+    (
+        DRV_USB_UHP_HOST_PIPE_HANDLE pipeHandle
+    );
+
+  Summary:
+    Closes an open pipe.
+
+  Description:
+    This function closes an open pipe. Any IRPs scheduled on the pipe will be
+    aborted and IRP callback functions will be called with the status as
+    DRV_USB_HOST_IRP_STATE_ABORTED. The pipe handle will become invalid and the
+    pipe and will not accept IRPs.
+
+  Precondition:
+    The pipe handle should be valid.
+
+  Parameters:
+    pipeHandle - Handle to the pipe to close.
+
+  Returns:
+    None.
+
+  Example:
+    <code>
+    // This code shows how an open Host pipe can be closed.
+
+    DRV_HANDLE driverHandle;
+    DRV_USB_UHP_HOST_PIPE_HANDLE pipeHandle;
+
+    // Close the pipe.
+    DRV_USB_UHP_PipeClose(pipeHandle);
+    </code>
+
+  Remarks:
+    None.
+*/
+
+extern void DRV_USB_UHP_OHCI_PipeClose
+(
+    DRV_USB_UHP_HOST_PIPE_HANDLE pipeHandle
+);
+
 
 #endif  /* _DRV_USB_UHP_OHCI_H */

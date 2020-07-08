@@ -358,6 +358,9 @@ void _USB_HOST_UpdateInterfaceStatus
          * configured */
         for(iterator = 0; iterator < deviceObj->nInterfaces ; iterator ++)
         {
+             /* Disable USB Interrupts. A detach interrupt occuring during this time can 
+                make interfaceInfo->interfaceDriver = NULL */ 
+            _USB_HOST_InterrutpSourceDisable();
             interfaceInfo = &deviceObj->configDescriptorInfo.interfaceInfo[iterator];
 
             if(interfaceInfo->interfaceDriver != NULL)
@@ -509,6 +512,8 @@ void _USB_HOST_UpdateInterfaceStatus
                     }
                 }
             }
+             /* Re-enable USB Interrupt source */ 
+            _USB_HOST_InterrutpSourceEnable(); 
         }
 
         /* We have to keep check if all the interfaces and the device are

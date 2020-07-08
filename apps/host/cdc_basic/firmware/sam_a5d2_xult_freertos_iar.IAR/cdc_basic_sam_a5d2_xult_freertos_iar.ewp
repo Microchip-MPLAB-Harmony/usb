@@ -2296,18 +2296,6 @@
                     </file>
                     <group>
                         <name>system</name>
-                        <group>
-                            <name>time</name>
-                            <file>
-                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\system\time\sys_time.h</name>
-                            </file>
-                            <file>
-                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\system\time\sys_time_definitions.h</name>
-                            </file>
-                            <file>
-                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\system\time\src\sys_time_local.h</name>
-                            </file>
-                        </group>
                         <file>
                             <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\system\system.h</name>
                         </file>
@@ -2336,6 +2324,18 @@
                             <name>debug</name>
                             <file>
                                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\system\debug\sys_debug.h</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>time</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\system\time\sys_time.h</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\system\time\sys_time_definitions.h</name>
+                            </file>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\system\time\src\sys_time_local.h</name>
                             </file>
                         </group>
                     </group>
@@ -2753,12 +2753,6 @@
                     <group>
                         <name>system</name>
                         <group>
-                            <name>time</name>
-                            <file>
-                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\system\time\src\sys_time.c</name>
-                            </file>
-                        </group>
-                        <group>
                             <name>int</name>
                             <file>
                                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\system\int\src\sys_int.c</name>
@@ -2768,6 +2762,12 @@
                             <name>cache</name>
                             <file>
                                 <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\system\cache\sys_cache.c</name>
+                            </file>
+                        </group>
+                        <group>
+                            <name>time</name>
+                            <file>
+                                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_freertos_iar\system\time\src\sys_time.c</name>
                             </file>
                         </group>
                     </group>

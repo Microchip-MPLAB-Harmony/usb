@@ -373,8 +373,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk_freertos/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">7B61071E3212F94CC615369D86AFB7AD</GeneratedChecksum>
-          <UserChecksum dnOrder="6">7B61071E3212F94CC615369D86AFB7AD</UserChecksum>
+          <GeneratedChecksum dnOrder="5">FC8675DC685FFA3B950878C5E211D9E3</GeneratedChecksum>
+          <UserChecksum dnOrder="6">FC8675DC685FFA3B950878C5E211D9E3</UserChecksum>
         </File>
         <File dnOrder="41">
           <Type dnOrder="0">HEADER</Type>

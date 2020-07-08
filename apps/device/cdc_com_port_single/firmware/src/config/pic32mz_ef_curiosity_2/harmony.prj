@@ -220,8 +220,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_curiosity_2/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">E0AF9234629278B471E6787F3BD1387A</GeneratedChecksum>
-          <UserChecksum dnOrder="6">E0AF9234629278B471E6787F3BD1387A</UserChecksum>
+          <GeneratedChecksum dnOrder="5">62BFED5C377613C79FE2BA0D8F753313</GeneratedChecksum>
+          <UserChecksum dnOrder="6">62BFED5C377613C79FE2BA0D8F753313</UserChecksum>
         </File>
         <File dnOrder="24">
           <Type dnOrder="0">HEADER</Type>

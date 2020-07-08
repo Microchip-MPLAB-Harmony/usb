@@ -527,8 +527,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_a5d2_xult_freertos_iar/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">01FE6AE81B01D42A169A9592210994CE</GeneratedChecksum>
-          <UserChecksum dnOrder="6">01FE6AE81B01D42A169A9592210994CE</UserChecksum>
+          <GeneratedChecksum dnOrder="5">6CF12172984EBF6192C87472A35C7C92</GeneratedChecksum>
+          <UserChecksum dnOrder="6">6CF12172984EBF6192C87472A35C7C92</UserChecksum>
         </File>
         <File dnOrder="58">
           <Type dnOrder="0">HEADER</Type>
