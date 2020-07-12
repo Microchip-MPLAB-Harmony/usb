@@ -2131,9 +2131,6 @@
                 <String dnOrder="0" id="text">
                   <Value dnOrder="0">***&amp;#160;Configure&amp;#160;Memory&amp;#160;Device&amp;#160;in&amp;#160;NVMCTRL&amp;#160;Configurations&amp;#160;***</Value>
                 </String>
-                <Boolean dnOrder="1" id="visible">
-                  <Value dnOrder="0">true</Value>
-                </Boolean>
               </Attributes>
             </Comment>
             <Boolean dnOrder="2" id="DRV_MEMORY_ERASE_ENABLE">
@@ -2153,28 +2150,29 @@
             </String>
             <File dnOrder="5" id="DRV_MEMORY_PLIB_HEADER">
               <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">true</Value>
-                </Boolean>
-                <String dnOrder="1" id="name">
+                <String dnOrder="0" id="name">
                   <Value dnOrder="0">drv_memory_nvmctrl.h</Value>
                 </String>
               </Attributes>
             </File>
             <File dnOrder="6" id="DRV_MEMORY_PLIB_SOURCE">
               <Attributes dnOrder="0">
-                <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">true</Value>
-                </Boolean>
-                <String dnOrder="1" id="name">
+                <String dnOrder="0" id="name">
                   <Value dnOrder="0">drv_memory_nvmctrl.c</Value>
                 </String>
               </Attributes>
             </File>
-            <File dnOrder="7" id="DRV_MEMORY_PLIB_SYS_DEF">
+            <Menu dnOrder="7" id="DRV_MEMORY_RTOS_MENU">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="visible">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </Menu>
+            <File dnOrder="8" id="DRV_MEMORY_SYS_RTOS_TASK">
               <Attributes dnOrder="0">
                 <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">true</Value>
+                  <Value dnOrder="0">false</Value>
                 </Boolean>
               </Attributes>
             </File>
@@ -2466,42 +2464,16 @@
             <Dynamic dnOrder="0" id="drv_memory_0" value="true"/>
           </Values>
         </Boolean>
-        <Integer dnOrder="1" id="ERASE_BUFFER_SIZE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Integer>
-        <Comment dnOrder="2" id="ERASE_COMMENT">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </Comment>
-        <Integer dnOrder="3" id="MEMORY_MEDIA_SIZE">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-          <Values dnOrder="1">
+        <Integer dnOrder="1" id="MEMORY_MEDIA_SIZE">
+          <Values dnOrder="0">
             <User dnOrder="0" value="32"/>
           </Values>
         </Integer>
-        <Integer dnOrder="4" id="NVM_RWS">
+        <Integer dnOrder="2" id="NVM_RWS">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="nvmctrl" value="1"/>
           </Values>
         </Integer>
-        <String dnOrder="5" id="START_ADDRESS">
-          <Attributes dnOrder="0">
-            <Boolean dnOrder="0" id="visible">
-              <Value dnOrder="0">true</Value>
-            </Boolean>
-          </Attributes>
-        </String>
       </Symbols>
       <Attachments dnOrder="1">
         <DirectCapability dnOrder="0" id="NVMCTRL_MEMORY">
@@ -2558,12 +2530,24 @@
             <Dynamic dnOrder="0" id="usb_device" value="Simple MSD Device Demo"/>
           </Values>
         </String>
-        <Boolean dnOrder="8" id="CONFIG_USB_DEVICE_USE_MSD">
+        <String dnOrder="8" id="CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </String>
+        <Boolean dnOrder="9" id="CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_ENABLE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="true"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="10" id="CONFIG_USB_DEVICE_USE_MSD">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="usb_device" value="true"/>
           </Values>
         </Boolean>
-        <File dnOrder="9" id="USB_DEVICE_DISK_IMAGE_FILE">
+        <File dnOrder="11" id="USB_DEVICE_DISK_IMAGE_FILE">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="enabled">
               <Value dnOrder="0">true</Value>
