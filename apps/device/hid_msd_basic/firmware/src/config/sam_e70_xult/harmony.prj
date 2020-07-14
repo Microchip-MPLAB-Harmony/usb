@@ -238,8 +238,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_e70_xult/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">A2314AD2337BBA39D751A5AE7A0C7F23</GeneratedChecksum>
-          <UserChecksum dnOrder="6">A2314AD2337BBA39D751A5AE7A0C7F23</UserChecksum>
+          <GeneratedChecksum dnOrder="5">A61DC45F81FE66F83D273CB90420CFD8</GeneratedChecksum>
+          <UserChecksum dnOrder="6">A61DC45F81FE66F83D273CB90420CFD8</UserChecksum>
         </File>
         <File dnOrder="26">
           <Type dnOrder="0">SOURCE</Type>
