@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Abstraction Model</title>
+<title>Using Older Drivers With Windows 8</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00273.html" target="topic">USB Device Libraries</a> &gt; <a href="00271.html" target="topic">USB CDC Device Library</a> &gt; <a href="00270.html" target="topic">Using the Library</a> &gt; <a href="00256.html" target="topic">Abstraction Model</a></div>
+<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00251.html" target="topic">Driver Signing and Windows 8 (for v1.08)</a> &gt; <a href="00256.html" target="topic">Using Older Drivers With Windows 8</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00270.html" target="topic">Previous</a> | <a href="00270.html" target="topic">Up</a> | <a href="00255.html" target="topic">Next</a></div>
+<a href="00252.html" target="topic">Previous</a> | <a href="00251.html" target="topic">Up</a> | <a href="00254.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVCDC Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEV DRV WIN8 Using Older Drivers With Windows 8 Topic Title: Using Older Drivers With Windows 8)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Abstraction Model</div>
+Using Older Drivers With Windows 8</div>
 </div>
 </div>
 
@@ -49,29 +49,41 @@ Abstraction Model</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The CDC Function Driver offers services to a USB CDC Device to communicate with the host by abstracting the USB specification details. It must be used along with the USB Device Layer and USB controller to communicate with the USB Host. Figure 1 shows a block diagram of the MPLAB Harmony USB Architecture and where the CDC Function Driver is placed. </p><p class="Element10" style="text-align: center;">
-<strong>Figure 1: CDC Function Driver</strong>&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="USB_DEV_CDC figure_1.png" border="0" alt="" title=""></p><p class="Element10">
-As shown in Figure 1, the USB Controller Driver takes the responsibility of managing the USB peripheral on the device. The USB Device Layer handles the device enumeration, etc. The USB Device<span style="color: #FFFFFF">_</span>layer forwards all USB CDC specific control transfers to the CDC Function Driver. The CDC Function Driver ACM sub-layer interprets the control transfers and requests application's intervention through event handlers and well defined set of API. The application must register a event handler with the CDC Function Driver in the Device Layer Set Configuration Event. The application should respond to CDC ACM events. Response to CDC ACM event that require control transfer response can be deferred by responding to the event after returning from the event handler. The application interacts directly with the CDC Function Driver to send/receive data and to send serial state notifications.&nbsp;</p>
+In general, USB driver packages that are designed for Windows 7 and prior operating system versions will also work in Windows 8, but there is one important exception to this. Starting with Windows 8 64-bit,  all drivers must contain a proper &quot;full  driver  package&quot; digital signature (prior operating systems only required an embedded signature  in the <span class="Element146">.sys</span> file, rather than the entire driver package including the <span class="Element146">.inf</span> file). The driver package signature exists as a <span class="Element146">.cat</span> file that comes with the driver package, and needs to be correctly referenced from within the <span class="Element146">.inf</span> file.  If either the <span class="Element146">.cat</span> file is entirely missing, or it is not being correctly  referenced from the <span class="Element146">.inf</span> file, Windows 8 will generate the following error message when the user attempts to install the driver: <i>The third party INF does not contain digital signature information</i>.&nbsp;</p>
 <p class="Element10">
-<span style="color: #000000">As per the CDC specification,a USB CDC Device is a collection of the following interfaces:</span>&nbsp;</p>
-<ul class="Element630">
-<li class="Element600"><span style="color: #000000">Communication Interface (Device Management) on Endpoint 0</span></li>
-<li class="Element600">Optional <span style="color: #000000">Communication Interface (Notification) on an interrupt endpoint</span></li>
-<li class="Element600"><span style="color: #000000">Optional Data Interface (either a bulk or isochronous endpoint)</span></li>
-</ul><p class="Element10" style="text-align: center;">
-<img src="USB_DEV_CDC figure_2.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<span style="color: #000000"><strong>Figure 2: CDC Function Driver Architecture</strong></span></p><p class="Element10">
-<span style="color: #000000">Figure 2 shows the architecture of the CDC Function Driver. The device management on Endpoint 0 is handled by the device library(class specific requests are routed to the CDC Function Driver by the USB Device Layer). An instance of the CDC Function Driver actually consists of a data interface and a notification interface. The library is implemented in two <span class="Element146">.c</span> files. The <span class="Element146">usb_device_cdc.c</span> file implements the CDC data and serial state notification, while the <span class="Element146">usb_device_cdc_acm.c</span> file implements the control transfer interpretation and event generation. The application must respond to control transfer related CDC ACM events by directly calling the Device Layer control transfer routines.</span></p></div>
+If the <span class="Element146">.cat</span> file is present and is correctly referenced, but something in the driver package was modified since the signature was applied, a slightly different error message will occur: <i>The hash for the file is not present in the specified catalog file. The file is likely corrupt or the victim of tampering.</i>&nbsp;</p>
+<p class="Element10">
+In both cases, Windows 8 64-bit will not allow the driver package to be installed, even though it may technically be capable of functioning correctly. To correct this, the driver package must be properly signed with a full package signature. This signature may be either a WHQL signature (which is the best kind of signature), or a Microsoft Authenticode signature.&nbsp;</p>
+<p class="Element10">
+The  MPLAB Harmony USB CDC and WinUSB Application driver packages include a WHQL signature and can be installed successfully on Windows 8 32-bit and 64-bit (as well as prior operating systems). When the firmware is using the same VID/PID as the default value from the demonstration, the latest driver package from MPLAB Harmony should install directly.&nbsp;</p>
+<p class="Element10">
+When the application uses a customized <span class="Element146">.inf</span>  file (e.g., VID/PID and/or strings are different), it will not be possible to directly use the driver package from MPLAB Harmony. The reason for this is that any time anyone makes any changes to the driver package (including adding or deleting one character of whitespace in the <span class="Element146">.inf</span> file), this action will break and invalidate the driver package signature. Therefore, even if the <span class="Element146">.cat</span> file is present, the signature will be invalid (and will not install correctly).&nbsp;</p>
+<p class="Element10">
+Therefore, if an application needs to use a custom-modified driver package, the only practical solution is to make the modifications, and then resign the driver package. A driver package can be signed with an Authenticode signature using the procedure described in <a href="00255.html" target="topic">Using  a Code Signing Certificate to Sign Driver Packages</a>.  A package signed  with the Microsoft Authenticode signature will install successfully on Windows 8, but will still produce a user prompt asking if they would like to trust the company that signed the driver package. This user dialog can be suppressed if the driver  package instead contains a WHQL signature.&nbsp;</p>
+<p class="Element10">
+Although not very suitable for end-consumers, Windows 8 does have a feature that allows driver package signing enforcement to be temporarily disabled. This is particularly useful for development and testing purposes. The feature is hidden under several layers of menus and requires the following steps to enable:</p>
+<ol class="Element630">
+<li value="1" class="Element600">From the desktop, move the mouse to the lower right hand corner of the screen, to launch the charm bar.</li>
+<li value="2" class="Element600">Click the Settings “gear” icon.</li>
+<li value="3" class="Element600">Click the “Change PC Settings” option.</li>
+<li value="4" class="Element600">In the PC Settings menu on the left, select the “General” option.</li>
+<li value="5" class="Element600">In  the  right  hand  pane,  scroll  down  to  the  bottom  of  the  options  list.  Under  the  “Advanced  startup”  section,  click  the “Restart now” button. This does not directly reboot the computer, but launches a page that provides additional restart options.</li>
+<li value="6" class="Element600">In the “Choose an option” page, select the “Troubleshoot” option.</li>
+<li value="7" class="Element600">From the Troubleshoot menu, click “Advanced options”.</li>
+<li value="8" class="Element600">In the “Advanced options” dialog, click the “Startup Settings” option.</li>
+<li value="9" class="Element600">From the “Startup Settings” dialog, click the “Restart” button.</li>
+<li value="10" class="Element600">The computer should now begin a reboot cycle. During the boot up sequence, a special “Startup Settings” dialog screen should appear.</li>
+<li value="11" class="Element600">On the “Startup Settings” dialog, press the “F7” key, to select the “Disable driver signature enforcement” option.</li>
+<li value="12" class="Element600">Allow Windows 8 to finish booting.</li>
+</ol><p class="Element10">
+Once driver signing enforcement is disabled, unsigned driver packages can then be installed. After rebooting the PC, driver signing enforcement will be reenabled, but Windows 8 will continue to allow the installed unsigned driver(s) to be loaded for the hardware, without requiring the system to be repeatedly rebooted into the driver  signing enforcement disabled mode.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00273.html" target="topic">USB Device Libraries</a> &gt; <a href="00271.html" target="topic">USB CDC Device Library</a> &gt; <a href="00270.html" target="topic">Using the Library</a> &gt; <a href="00256.html" target="topic">Abstraction Model</a></div>
+<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00251.html" target="topic">Driver Signing and Windows 8 (for v1.08)</a> &gt; <a href="00256.html" target="topic">Using Older Drivers With Windows 8</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -79,13 +91,13 @@ As shown in Figure 1, the USB Controller Driver takes the responsibility of mana
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00270.html" target="topic">Previous</a> | <a href="00270.html" target="topic">Up</a> | <a href="00255.html" target="topic">Next</a></div>
+<a href="00252.html" target="topic">Previous</a> | <a href="00251.html" target="topic">Up</a> | <a href="00254.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVCDC Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEV DRV WIN8 Using Older Drivers With Windows 8 Topic Title: Using Older Drivers With Windows 8)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

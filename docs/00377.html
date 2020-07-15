@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Introduction</title>
+<title>How the Library Works</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00371.html" target="topic">USB Hub Host Client Driver Library</a> &gt; <a href="00377.html" target="topic">Introduction</a></div>
+<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00373.html" target="topic">USB Hub Host Client Driver Library</a> &gt; <a href="00383.html" target="topic">Using the Library</a> &gt; <a href="00377.html" target="topic">How the Library Works</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00371.html" target="topic">Previous</a> | <a href="00371.html" target="topic">Up</a> | <a href="00381.html" target="topic">Next</a></div>
+<a href="00380.html" target="topic">Previous</a> | <a href="00383.html" target="topic">Up</a> | <a href="00378.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HUB HOST Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HUB HOST How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Introduction</div>
+How the Library Works</div>
 </div>
 </div>
 
@@ -49,20 +49,36 @@ Introduction</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The USB Hub Host Client Driver in the MPLAB Harmony USB Host Stack allows USB Host Applications to interact with a USB Hub and thus manage multiple USB devices simultaneously in one application. The key features of the Hub Host Client Driver include:</p>
-<ul class="Element630">
-<li class="Element600">Allows multiple USB devices to be connected to the host and hence allow the USB Host application to interact simultaneously with multiple USB devices.</li>
-<li class="Element600">Implemented as per Chapter 11 of the USB 2.0 specification.</li>
-<li class="Element600">Support multiple Hub tiers. A Hub can be connected to another Hub.</li>
-<li class="Element600">Does not require application intervention for its operation. The application does not have to call an Hub Driver API.</li>
-</ul></div>
+The USB Hub Host Client Driver does not contain any application callable functions. The only step that the application code must implement is to enable USB Host Layer Hub support and to provision the USB Hub Host Client Driver in the TPL table.&nbsp;</p>
+<p class="Element10">
+The USB Host Layer enables Hub Support when the <a href="01347.html" target="topic">USB_HOST_HUB_SUPPORT_ENABLE</a> configuration macro is defined in <span class="Element146">system_config.h</span>. Refer to the <a href="00353.html" target="topic">Configuring the Library</a> section of the USB Host Layer Library Help Topic for more information.</p></div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00378.html" target="topic">Hub TPL Table Configuration</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Provides information on configuring the TPL table for adding Hub support.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00371.html" target="topic">USB Hub Host Client Driver Library</a> &gt; <a href="00377.html" target="topic">Introduction</a></div>
+<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00373.html" target="topic">USB Hub Host Client Driver Library</a> &gt; <a href="00383.html" target="topic">Using the Library</a> &gt; <a href="00377.html" target="topic">How the Library Works</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -70,13 +86,13 @@ The USB Hub Host Client Driver in the MPLAB Harmony USB Host Stack allows USB Ho
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00371.html" target="topic">Previous</a> | <a href="00371.html" target="topic">Up</a> | <a href="00381.html" target="topic">Next</a></div>
+<a href="00380.html" target="topic">Previous</a> | <a href="00383.html" target="topic">Up</a> | <a href="00378.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HUB HOST Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HUB HOST How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

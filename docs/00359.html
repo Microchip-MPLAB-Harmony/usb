@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Host Layer - Application Interaction</title>
+<title>USB Host Library - Application Interaction</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00363.html" target="topic">USB Host Layer Library</a> &gt; <a href="00368.html" target="topic">Using the Library</a> &gt; <a href="00361.html" target="topic">How the Library Works</a> &gt; <a href="00359.html" target="topic">Host Layer - Application Interaction</a></div>
+<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00367.html" target="topic">USB Host Library - Getting Started</a> &gt; <a href="00359.html" target="topic">USB Host Library - Application Interaction</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00360.html" target="topic">Previous</a> | <a href="00361.html" target="topic">Up</a> | <a href="00353.html" target="topic">Next</a></div>
+<a href="00360.html" target="topic">Previous</a> | <a href="00367.html" target="topic">Up</a> | <a href="00365.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST Host Layer - Application Interaction Topic Title: Host Layer - Application Interaction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST GS USB Host Library - Application Interaction Topic Title: USB Host Library - Application Interaction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Host Layer - Application Interaction</div>
+USB Host Library - Application Interaction</div>
 </div>
 </div>
 
@@ -48,180 +48,32 @@ Host Layer - Application Interaction</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
+<div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element67" valign="top" width="10%" style="border:none;">
+<div class="Element68">
+<img src="Note Icon.png" border="0" alt="" title=""> <strong>Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<div class="Element68">
+Additional information on the tests conducted on Flash devices (i.e., Pen Drives) and a list of USB application configurations is available in the <a href="00249.html" target="topic">USB Demonstrations</a> section.&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
-The Host Layer in the MPLAB Harmony USB Host stack provides the user application with API methods to operate the USB Host. The following sections discuss these API methods.</p><div class="Element15">
-Registering the Event Handler</div>
+The following figure highlights the steps that the application must follow to use the USB Host Library. </p><p class="Element10" style="text-align: center;">
+<strong>Application Interaction with Host Layer</strong>&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="USB HOST GS Host Layer Application Interaction.png" border="0" alt="" title=""></p><p class="Element10">
+The USB Host stack is initialized in the MPLAB Harmony System Initialization function. The Host Stack requires the Timer System Service and USB Driver. So these must be initialized as well. Note that the figure refers to a general USB Driver. The application may use the USBFS Driver (DRV_USBFS) for PIC32MX microcontroller, USBHS Driver (DRV_USBHS) for PIC32MZ microcontroller or the DRV_USBHS_V1 driver for SAME microcontrollers. The Timer and USB module interrupt priorities must be configured.&nbsp;</p>
 <p class="Element10">
-The application must register an event handler to receive device related USB Host events. The application sets the events handler by using the <a href="01311.html" target="topic">USB_HOST_EventHandlerSet</a> function. An application defined context can also be provided. This context is returned along with the event handler and helps the application to identify the context in case of a dynamic application use cases. The host layer provides events when a connected device requires more current than can be provided or when a unsupported device was attached. The following code shows an example of registering the event handler. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of registering an event handler with the
- * Host Layer */</span></i>
-
-USB_HOST_EVENT_RESPONSE APP_USBHostEventHandler
-(
-    USB_HOST_EVENT event,
-    <strong><span style="color: #000080">void</span></strong> * eventData,
-    uintptr_t context
-)
-{
-    <i><span style="color: #008000">/* This is the event handler implementation */</span></i>
-    <strong><span style="color: #000080">switch</span></strong> (event)
-    {
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_EVENT_DEVICE_UNSUPPORTED:
-            <strong><span style="color: #000080">break</span></strong>;
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_EVENT_DEVICE_REJECTED_INSUFFICIENT_POWER:
-            <strong><span style="color: #000080">break</span></strong>;
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_EVENT_HUB_TIER_LEVEL_EXCEEDED:
-            <strong><span style="color: #000080">break</span></strong>;
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_EVENT_PORT_OVERCURRENT_DETECTED:
-            <strong><span style="color: #000080">break</span></strong>;
-        <strong><span style="color: #000080">default</span></strong>:
-            <strong><span style="color: #000080">break</span></strong>;
-    }
-
-    <strong><span style="color: #000080">return</span></strong>(USB_HOST_EVENT_RESPONSE_NONE);
-}
-
-<strong><span style="color: #000080">void</span></strong> APP_Tasks(<strong><span style="color: #000080">void</span></strong>)
-{
-    <i><span style="color: #008000">/* This shows an example app state machine implementation in which the event
-     * handler is set and the bus is then enabled. */</span></i>
-
-    <strong><span style="color: #000080">switch</span></strong>(appData.state)
-    {
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_BUS_ENABLE:
-
-            <i><span style="color: #008000">/* Set the event handler and enable the bus */</span></i>
-            USB_HOST_EventHandlerSet(APP_USBHostEventHandler, 0);
-            USB_HOST_BusEnable(0);
-            appData.state = APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE;
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">default</span></strong>:
-            <strong><span style="color: #000080">break</span></strong>;
-    }
-}</pre></div></div>
-<div class="Element15">
-Enabling the Bus</div>
+The USB Host layer, the USB Driver and the Timer System Service tasks must be called in the MPLAB Harmony System Tasks Routine. This ensures that the state machines of these module stays updated. If the USB Driver and the Timer driver have been configured for interrupt operation, then their corresponding interrupt tasks routines should be called in the corresponding module interrupt service routines.&nbsp;</p>
 <p class="Element10">
-The user application must call the <a href="01217.html" target="topic">USB_HOST_BusEnable</a> function to enable the bus. This function enables the 5V VBUS supply to root hub port thus powering up the bus powered device that are attached to the bus. The attached devices will then indicate attach. The root hub will provide these attach events to the Host layer which in turn starts the enumeration process. The application can call other Host Layer functions only after the bus has been enabled. The <a href="01218.html" target="topic">USB_HOST_BusIsEnabled</a> function must be called to check if the enable process has completed. The following code shows an example application state machine that enables the bus. </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> APP_Tasks ( <strong><span style="color: #000080">void</span></strong> )
-{
-   <i><span style="color: #008000">/* The application shows an example of how the USB bus is enabled and how the
-    * application must wait for the bus to enabled */</span></i>
-
-    <strong><span style="color: #000080">switch</span></strong>(appData.state)
-    {
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_BUS_ENABLE:
-
-           <i><span style="color: #008000">/* Set the event handler and enable the bus */</span></i>
-            USB_HOST_EventHandlerSet(APP_USBHostEventHandler, 0);
-            USB_HOST_BusEnable(0);
-            appData.state = APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE;
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE:
-            <i><span style="color: #008000">/* Check if the bus is enabled */</span></i>
-            <strong><span style="color: #000080">if</span></strong>(USB_HOST_BusIsEnabled(0))
-            {
-                appData.state = APP_STATE_WAIT_FOR_DEVICE_ATTACH;
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">default</span></strong>:
-            <strong><span style="color: #000080">break</span></strong>;
-    }
-}</pre></div></div>
-<div class="Element15">
-Attached Device Information</div>
-<p class="Element10">
-The application can use the USB_HOST_DeviceFirstGet and the USB_HOST_DeviceNextGet function to query for attached devices. The USB_HOST_DeviceFirstGet function will provide information on the first device that was attached to the bus. Information is returned in application specified <a href="01282.html" target="topic">USB_HOST_DEVICE_INFO</a> object. The USB_HOST_DeviceFirstGet function will return the following information in the <a href="01282.html" target="topic">USB_HOST_DEVICE_INFO</a> object:</p>
-<ul class="Element630">
-<li class="Element600">A Device Object Handle of the type <a href="01287.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE</a>. The application can use this device object handle to perform operations on the device.</li>
-<li class="Element600">The address of the device on the USB</li>
-<li class="Element600">The bus to which this device belongs</li>
-</ul><p class="Element10">
-The application can access the contents of the <a href="01282.html" target="topic">USB_HOST_DEVICE_INFO</a> object but should not alter it contents. The same object is passed to the USB_HOST_DeviceNextGet function to get the information about the next device attached on the bus. Each call to this function defines the point at which the USB_HOST_DeviceNextGet function will start searching. If the device that is represented by the <a href="01282.html" target="topic">USB_HOST_DEVICE_INFO</a> object has been disconnected, calling the USB_HOST_DeviceNextGet function will return an error. The search must be reset by calling the USB_HOST_DeviceFirstGet function. The application can define multiple <a href="01282.html" target="topic">USB_HOST_DEVICE_INFO</a> objects to search on different busses or maintain different search points. </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">void</span></strong> APP_Tasks(<strong><span style="color: #000080">void</span></strong>)
-{
-    USB_HOST_DEVICE_INFO deviceInfo;
-    USB_HOST_RESULT result;
-
-    <i><span style="color: #008000">/* Get information about the first device on Bus 0 */</span></i>
-    result = USB_HOST_DeviceGetFirst(0, &amp;deviceInfo);
-
-    <strong><span style="color: #000080">while</span></strong>(result != USB_HOST_RESULT_END_OF_DEVICE_LIST)
-    {
-        <i><span style="color: #008000">/* deviceInfo.address has the address of the bus */</span></i>
-        <i><span style="color: #008000">/* deviceInfo.deviceObjHandle will have the device object handle */</span></i>
-
-        <i><span style="color: #008000">/* Now we can get the information about the next device on the bus. */</span></i>
-        result = USB_HOST_DeviceGetNext(&amp;deviceInfo);
-    }
-}</pre></div></div>
-<div class="Element15">
-Suspend and Resume</div>
-<p class="Element10">
-The USB Host Layer allows the application to suspend and resume a device. The <a href="01302.html" target="topic">USB_HOST_DeviceSuspend</a> and the <a href="01298.html" target="topic">USB_HOST_DeviceResume</a> function are provided for this purpose. The application must use the device object handles, obtained from the USB_HOST_DeviceFirstGet or USB_HOST_DeviceNextGet function, to specify the device to suspend or resume when calling <a href="01302.html" target="topic">USB_HOST_DeviceSuspend</a> and the <a href="01298.html" target="topic">USB_HOST_DeviceResume</a>() function. The <a href="01297.html" target="topic">USB_HOST_DeviceIsSuspended</a> function can be called to check the suspend status of the device.&nbsp;</p>
-<p class="Element10">
-In a case where the entire bus (and hence all device connected on the bus) need to be suspended or resumed, the application must call <a href="01221.html" target="topic">USB_HOST_BusSuspend</a> and <a href="01220.html" target="topic">USB_HOST_BusResume</a> functions to suspend or resume the entire bus. The <a href="01219.html" target="topic">USB_HOST_BusIsSuspended</a> function can be called to check the suspend status of the bus.</p><div class="Element15">
-Device String Descriptors</div>
-<p class="Element10">
-The application may want to obtain the string descriptors of a device. Sting descriptors are optionally provided by the USB device manufacturer and provide device information. The <a href="01301.html" target="topic">USB_HOST_DeviceStringDescriptorGet</a> function is available to read the string descriptors. Calling this function will cause the Host Layer to invoke a control transfer request to read the string descriptor. The string descriptor will be available when the control transfer completes. The host layer calls the <a href="01410.html" target="topic">USB_HOST_STRING_REQUEST_COMPLETE_CALLBACK</a> type callback function, that is provided in the <a href="01301.html" target="topic">USB_HOST_DeviceStringDescriptorGet</a> function, when the control transfer has completed. The completion status of the request and the size of the string descriptor are available in the callback.&nbsp;</p>
-<p class="Element10">
-The function allows the application to obtain the supported string language IDs. The language ID of the string can be specified or a default can be used. </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">struct</span></strong>
-{
-    <i><span style="color: #008000">/* This is an application specific data structure */</span></i>
-    <strong><span style="color: #000080">char</span></strong> string[APP_STRING_SIZE];
-    USB_HOST_REQUEST_HANDLE requestHandle;
-    uintptr_t context;
-
-} APP_DATA;
-
-APP_DATA appData;
-
-<strong><span style="color: #000080">void</span></strong> APP_USBHostSringDescriptorGetCallBack
-(
-    USB_HOST_REQUEST_HANDLE requestHandle,
-    size_t size,
-    uintptr_t context
-)
-{
-    <i><span style="color: #008000">/* This function is called when the string descriptor get function has
-     * completed. */</span></i>
-
-    <strong><span style="color: #000080">if</span></strong>(size != 0)
-    {
-        <i><span style="color: #008000">/* This means the function executed successfully and we have a string.
-         * An application function prints the string to the console. */</span></i>
-        APP_PrintStringToConsole(appData.string, size);
-    }
-}
-
-<strong><span style="color: #000080">void</span></strong> APP_Tasks(<strong><span style="color: #000080">void</span></strong>)
-{
-    USB_HOST_DEVICE_INFO deviceInfo;
-    USB_HOST_RESULT result;
-
-    <i><span style="color: #008000">/* Get information about the first device on Bus 0 */</span></i>
-    result = USB_HOST_DeviceGetFirst(0, &amp;deviceInfo);
-
-    <strong><span style="color: #000080">if</span></strong>(result != USB_HOST_RESULT_END_OF_DEVICE_LIST)
-    {
-        <i><span style="color: #008000">/* deviceInfo.deviceObjHandle will have the device object handle. Use
-         * this device object handle along with the
-         * USB_HOST_DeviceStringDescriptorGet() function to read the product
-         * string ID using the default Language ID. */</span></i>
-
-        USB_HOST_DeviceStringDescriptorGet(deviceInfo.deviceObjHandle, USB_HOST_DEVICE_STRING_PRODUCT,
-                USB_HOST_DEVICE_STRING_LANG_ID_DEFAULT, appData.string, APP_STRING_SIZE,
-                &amp;appData.requestHandle, APP_USBHostSringDescriptorGetCallBack, appData.context );
-    }
-}</pre></div></div>
-</div>
+The application state machine must first set the Host Layer event handler and then enable the bus. Enabling the bus will enable device detection and the Host Layer will enumerate attached devices. The application can query for attached devices and perform operations on attached devices.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00363.html" target="topic">USB Host Layer Library</a> &gt; <a href="00368.html" target="topic">Using the Library</a> &gt; <a href="00361.html" target="topic">How the Library Works</a> &gt; <a href="00359.html" target="topic">Host Layer - Application Interaction</a></div>
+<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00367.html" target="topic">USB Host Library - Getting Started</a> &gt; <a href="00359.html" target="topic">USB Host Library - Application Interaction</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -229,13 +81,13 @@ APP_DATA appData;
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00360.html" target="topic">Previous</a> | <a href="00361.html" target="topic">Up</a> | <a href="00353.html" target="topic">Next</a></div>
+<a href="00360.html" target="topic">Previous</a> | <a href="00367.html" target="topic">Up</a> | <a href="00365.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST Host Layer - Application Interaction Topic Title: Host Layer - Application Interaction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST GS USB Host Library - Application Interaction Topic Title: USB Host Library - Application Interaction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

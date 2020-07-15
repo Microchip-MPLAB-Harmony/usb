@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_HOST_CDC_Close Function</title>
+<title>USB_HOST_CDC_ATTACH_LISTENERS_NUMBER Macro</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00239.html" target="topic">USB CDC Host Library</a> &gt; <a href="00240.html" target="topic">Library Interface</a> &gt; a) Client Access Functions &gt; <a href="01228.html" target="topic">USB_HOST_CDC_Close Function</a></div>
+<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00241.html" target="topic">USB CDC Host Library</a> &gt; <a href="00233.html" target="topic">Configuring the Library</a> &gt; <a href="01228.html" target="topic">USB_HOST_CDC_ATTACH_LISTENERS_NUMBER Macro</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01262.html" target="topic">Previous</a> | <a href="00240.html" target="topic">Up</a> | <a href="01227.html" target="topic">Next</a></div>
+<a href="00016.html" target="topic">Previous</a> | <a href="00233.html" target="topic">Up</a> | <a href="01261.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_Close@USB_HOST_CDC_HANDLE Topic Title: USB_HOST_CDC_Close Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_ATTACH_LISTENERS_NUMBER Topic Title: USB_HOST_CDC_ATTACH_LISTENERS_NUMBER Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_HOST_CDC_Close Function</div>
+USB_HOST_CDC_ATTACH_LISTENERS_NUMBER Macro</div>
 </div>
 </div>
 
@@ -49,67 +49,26 @@ USB_HOST_CDC_Close Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function will close the open CDC device. This closes the association between the application entity that opened the device and device. The driver handle becomes invalid.</p></div>
+USB Host CDC Attach Listeners Number&nbsp;</p>
+<p class="Element10">
+The USB CDC Host Client Driver provides attach notification to listeners who have registered with the client driver via the <a href="01229.html" target="topic">USB_HOST_CDC_AttachEventHandlerSet</a>() function. The USB_HOST_CDC_ATTACH_LISTENERS_NUMBER configuration constant defines the maximum number of event handlers that can be set. This number should be set to equal the number of entities that interested in knowing when a CDC device is attached.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">USB_HOST_CDC_Close</span></strong>(
-    <a href="01257.html" target="topic">USB_HOST_CDC_HANDLE</a> <strong><span style="color: #000000">cdcDeviceHandle</span></strong>
-);</pre></div></div>
-<a name="507265636F6E646974696F6E73"></a><div class="Element14">
-Preconditions</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-None.</p></div>
-</div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
-<div class="TableDiv">
-<table cellspacing="0" class="Table3">
-<tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-cdcDeviceHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-handle to the CDC device obtained from the <a href="01262.html" target="topic">USB_HOST_CDC_Open</a>() function.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-None.</p></div>
-</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">USB_HOST_CDC_ATTACH_LISTENERS_NUMBER</span></strong> </pre></div></div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The device handle becomes invalid after calling this function.</p></div>
-</div>
-<a name="4578616D706C65"></a><div class="Element14">
-Example</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"></pre></div></div>
-</div>
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00239.html" target="topic">USB CDC Host Library</a> &gt; <a href="00240.html" target="topic">Library Interface</a> &gt; a) Client Access Functions &gt; <a href="01228.html" target="topic">USB_HOST_CDC_Close Function</a></div>
+<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00241.html" target="topic">USB CDC Host Library</a> &gt; <a href="00233.html" target="topic">Configuring the Library</a> &gt; <a href="01228.html" target="topic">USB_HOST_CDC_ATTACH_LISTENERS_NUMBER Macro</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -117,13 +76,13 @@ Example</div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01262.html" target="topic">Previous</a> | <a href="00240.html" target="topic">Up</a> | <a href="01227.html" target="topic">Next</a></div>
+<a href="00016.html" target="topic">Previous</a> | <a href="00233.html" target="topic">Up</a> | <a href="01261.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_Close@USB_HOST_CDC_HANDLE Topic Title: USB_HOST_CDC_Close Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_ATTACH_LISTENERS_NUMBER Topic Title: USB_HOST_CDC_ATTACH_LISTENERS_NUMBER Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

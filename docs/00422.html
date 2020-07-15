@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Endpoint Management</title>
+<title>Endpoint Data Transfer</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00273.html" target="topic">USB Device Libraries</a> &gt; <a href="00415.html" target="topic">Generic USB Device Library</a> &gt; <a href="00429.html" target="topic">Using the Library</a> &gt; <a href="00424.html" target="topic">How the Library Works</a> &gt; <a href="00422.html" target="topic">Endpoint Management</a></div>
+<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00275.html" target="topic">USB Device Libraries</a> &gt; <a href="00417.html" target="topic">Generic USB Device Library</a> &gt; <a href="00431.html" target="topic">Using the Library</a> &gt; <a href="00426.html" target="topic">How the Library Works</a> &gt; <a href="00422.html" target="topic">Endpoint Data Transfer</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00421.html" target="topic">Previous</a> | <a href="00424.html" target="topic">Up</a> | <a href="00420.html" target="topic">Next</a></div>
+<a href="00424.html" target="topic">Previous</a> | <a href="00426.html" target="topic">Up</a> | <a href="00420.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Endpoint Management Topic Title: Endpoint Management)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Endpoint Data Transfer Topic Title: Endpoint Data Transfer)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Endpoint Management</div>
+Endpoint Data Transfer</div>
 </div>
 </div>
 
@@ -49,62 +49,62 @@ Endpoint Management</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Unlike standard USB function drivers, such as CDC, MSD, Audio, and HID, the Device Layer does not automatically manage endpoints for a Generic USB Device interface. This means that the application must maintain all endpoint that belong to a Generic USB Device Interface. Maintaining the endpoint involves the following:</p>
-<ul class="Element630">
-<li class="Element600">Enabling the endpoints for the desired transfer type when the host sets the configuration,</li>
-<li class="Element600">Disabling the endpoint when the device receives a USB reset or when the Host changes the configuration</li>
-<li class="Element600">Enabling and clearing endpoint stall conditions</li>
-</ul><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table2">
-<tr>
-<td class="Element67" valign="top" width="10%" style="border:none;">
-<div class="Element68">
-<img src="Warning ICON.png" border="0" alt="" title=""><br><strong>Warning</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
-<div class="Element68">
-The application should never access Endpoint 0 directly. Doing so may cause the Device Stack to malfunction, which could cause the USB device to be non-compliant.&nbsp;</div></td></tr></table></div></div>
+The application should call the <a href="00764.html" target="topic">USB_DEVICE_EndpointRead</a> and <a href="00768.html" target="topic">USB_DEVICE_EndpointWrite</a> functions to transfer data over an enabled endpoint. Calling this function causes a USB transfer to be scheduled on the endpoint. The transfer is added to the endpoint queue and is serviced as the host schedules the transaction on the bus. The <a href="00764.html" target="topic">USB_DEVICE_EndpointRead</a> and <a href="00768.html" target="topic">USB_DEVICE_EndpointWrite</a> functions return a unique transfer handle which can be track the transfer. These transfer handles are returned along with the USB_DEVICE_EVENT_ENDPOINT_READ_COMPLETE (when a endpoint read transfer is complete) and USB_DEVICE_EVENT_ENDPOINT_WRITE_COMPLETE (when an endpoint write is complete) events.&nbsp;</p>
 <p class="Element10">
-Endpoints can be enabled or disabled with the <a href="00759.html" target="topic">USB_DEVICE_EndpointEnable</a> and <a href="00758.html" target="topic">USB_DEVICE_EndpointDisable</a> functions. The <a href="00760.html" target="topic">USB_DEVICE_EndpointIsEnabled</a> function can be used to check if an endpoint is enabled. The application should enable the endpoint when host sets the configuration which contains interfaces that use the endpoint. The endpoints should otherwise be disabled. The endpoint function should not be called in the Device Layer event handler. Instead, they should be called in the application task routine. The following code shows an example of how an endpoint is enabled. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The following code shows an example of how the endpoint enable functions
- * are called to enabled a Receive and Transmit Bulk endpoints. Note that the size
- * of the endpoint must be specified and this size should match the endpoint size
- * mentioned in the endpoint descriptor */</span></i>
-<strong><span style="color: #000080">if</span></strong> (USB_DEVICE_EndpointIsEnabled(appData.usbDevHandle, appData.endpointRx) == <strong><span style="color: #000080">false</span></strong> )
-{
-    <i><span style="color: #008000">/* Enable Read Endpoint */</span></i>
-    USB_DEVICE_EndpointEnable(appData.usbDevHandle, 0, appData.endpointRx,
-                            USB_TRANSFER_TYPE_BULK, <strong><span style="color: #000080">sizeof</span></strong>(receivedDataBuffer));
-}
-<strong><span style="color: #000080">if</span></strong> (USB_DEVICE_EndpointIsEnabled(appData.usbDevHandle, appData.endpointTx) == <strong><span style="color: #000080">false</span></strong> )
-{
-    <i><span style="color: #008000">/* Enable Write Endpoint */</span></i>
-    USB_DEVICE_EndpointEnable(appData.usbDevHandle, 0, appData.endpointTx,
-                           USB_TRANSFER_TYPE_BULK, <strong><span style="color: #000080">sizeof</span></strong>(transmitDataBuffer));
-}</pre></div></div>
-<p class="Element10">
-An endpoint should be disabled when the host has changed the device configuration and the new configuration does not contain any interfaces that use this endpoint. The endpoint can also be disabled when the application receives USB_DEVICE_EVENT_RESET or when the USB_DEVICE_EVENT_DECONFIGURED event has occurred. The following code shows an example of disabling the endpoint. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* In this example, the endpoints are disabled when
- * when the device has is not configured. This can happen
- * if the configuration set is 0 or if the device is reset. */</span></i>
-<strong><span style="color: #000080">if</span></strong>(!appData.deviceIsConfigured)
-{
-    <i><span style="color: #008000">/* This means the device got deconfigured. Change the
-     * application state back to waiting for configuration. */</span></i>
-    appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
+The following code shows an example of sending data over an endpoint. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of using the USB_DEVICE_EndpointWrite
+ * function to send data over the endpoint. The completion of the write is
+ * indicated by the USB_DEVICE_EVENT_ENDPOINT_WRITE_COMPLETE event. The
+ * transfer handle is returned in appData.writeTransferHandle */</span></i>
+USB_DEVICE_EndpointWrite ( appData.usbDevHandle, &amp;appData.writeTranferHandle,
+        appData.endpointTx, &amp;transmitDataBuffer[0], <strong><span style="color: #000080">sizeof</span></strong>(transmitDataBuffer),
+        USB_DEVICE_TRANSFER_FLAGS_DATA_COMPLETE );
 
-    <i><span style="color: #008000">/* Disable the endpoint*/</span></i>
-    USB_DEVICE_EndpointDisable(appData.usbDevHandle, appData.endpointRx);
-    USB_DEVICE_EndpointDisable(appData.usbDevHandle, appData.endpointTx);
-    appData.epDataReadPending = <strong><span style="color: #000080">false</span></strong>;
-    appData.epDataWritePending = <strong><span style="color: #000080">false</span></strong>;
+<strong><span style="color: #000080">void</span></strong> APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, <strong><span style="color: #000080">void</span></strong> * eventData, uintptr_t context)
+{
+    <i><span style="color: #008000">/* This is the Device Layer event handler */</span></i>
+    <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_ENDPOINT_WRITE_COMPLETE:
+        <i><span style="color: #008000">/* Endpoint write is complete */</span></i>
+        appData.epDataWritePending = <strong><span style="color: #000080">false</span></strong>;
+        <strong><span style="color: #000080">break</span></strong>;
 }</pre></div></div>
 <p class="Element10">
-The application can use the <a href="00763.html" target="topic">USB_DEVICE_EndpointStall</a> and <a href="00764.html" target="topic">USB_DEVICE_EndpointStallClear</a> functions to enable stall and clear the stall on endpoints. The <a href="00761.html" target="topic">USB_DEVICE_EndpointIsStalled</a> function can be called to check stall status of the endpoint.</p></div>
+The <a href="00768.html" target="topic">USB_DEVICE_EndpointWrite</a> function allows the application to send data to the host without ending the transfer. This is done by specifying USB_DEVICE_TRANSFER_FLAGS_DATA_PENDING as the transfer flag in the call to the <a href="00768.html" target="topic">USB_DEVICE_EndpointWrite</a> function. The application can use this option when the data to be sent is not readily available or when the application is memory constrained. The combination of the transfer flag and the transfer size affects how the data is sent to the host:</p>
+<ul class="Element630">
+<li class="Element600">If size is a multiple of maxPacketSize (the IN endpoint size) and flag is set as USB_DEVICE_TRANSFER_FLAGS_DATA_COMPLETE, the write function will append a Zero Length Packet (ZLP) to complete the transfer</li>
+<li class="Element600">If size is a multiple of maxPacketSize and flag is set as USB_DEVICE_TRANSFER_FLAGS_MORE_DATA_PENDING, the write function will not append a ZLP and therefore and hence will not complete the transfer</li>
+<li class="Element600">If size is greater than but not a multiple of maxPacketSize and flags is set as USB_DEVICE_TRANSFER_FLAGS_DATA_COMPLETE, the write function schedules (length/maxPacketSize) packets and one packet for the residual data</li>
+<li class="Element600">If size is greater than but not a multiple of maxPacketSize and flags is set as USB_DEVICE_TRANSFER_FLAGS_MORE_DATA_PENDING, the write function returns an error code and sets the transferHandle parameter to <a href="01027.html" target="topic">USB_DEVICE_TRANSFER_HANDLE_INVALID</a></li>
+<li class="Element600">If size is less than maxPacketSize and flag is set USB_DEVICE_TRANSFER_FLAGS_DATA_COMPLETE, the write function schedules one packet</li>
+<li class="Element600">If size is less than maxPacketSize and flag is set as USB_DEVICE_TRANSFER_FLAGS_MORE_DATA_PENDING, the write function returns an error code and sets the transferHandle parameter to <a href="01027.html" target="topic">USB_DEVICE_TRANSFER_HANDLE_INVALID</a></li>
+</ul><p class="Element10">
+Refer to <a href="00768.html" target="topic">USB_DEVICE_EndpointWrite</a> function API description for more details and code examples.&nbsp;</p>
+<p class="Element10">
+The application should use the <a href="00764.html" target="topic">USB_DEVICE_EndpointRead</a> function to read data from an endpoint. The size of the buffer that is specified in this function should always be a multiple of the endpoint size. The following code shows an example of using the <a href="00764.html" target="topic">USB_DEVICE_EndpointRead</a> function. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows to use the USB_DEVICE_EndpointRead function
+ * to read from an endpoint.  The transfer handle is returned in
+ * appData.readTransferHandle. The size of receivedDataBuffer should
+ * be a multiple of the receive endpoint size. */</span></i>
+
+USB_DEVICE_EndpointRead(appData.usbDevHandle, &amp;appData.readTranferHandle,
+              appData.endpointRx, &amp;receivedDataBuffer[0], <strong><span style="color: #000080">sizeof</span></strong>(receivedDataBuffer) );
+<strong><span style="color: #000080">void</span></strong> APP_USBDeviceEventHandler(USB_DEVICE_EVENT event, <strong><span style="color: #000080">void</span></strong> * eventData, uintptr_t context)
+{
+    <i><span style="color: #008000">/* This is the Device Layer event handler */</span></i>
+    <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_ENDPOINT_READ_COMPLETE:
+        <i><span style="color: #008000">/* Endpoint write is complete */</span></i>
+        appData.epDataReadPending = <strong><span style="color: #000080">false</span></strong>;
+        <strong><span style="color: #000080">break</span></strong>;
+}</pre></div></div>
+<p class="Element10">
+In a case where a transfer is in progress, the <a href="00764.html" target="topic">USB_DEVICE_EndpointRead</a> and <a href="00768.html" target="topic">USB_DEVICE_EndpointWrite</a> functions can queue up transfers. The maximum number of read transfers that can queued (on any receive endpoint) is specified by the endpointQueueSizeRead member of the <a href="00887.html" target="topic">USB_DEVICE_INIT</a> data structure. The maximum number of write transfers that can queued (on any transmit endpoint) is specified by the endpointQueueSizeWrite member of the <a href="00887.html" target="topic">USB_DEVICE_INIT</a> data structure. The <a href="00759.html" target="topic">USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED</a> configuration macro should be set to total of read and write transfers that need to be queued.&nbsp;</p>
+<p class="Element10">
+For example, consider a Generic USB Device that contains two OUT (read) endpoint (EP1 and EP2) and one IN write endpoint (EP1). The application will queue a maximum of three read transfers on EP1, a maximum of five read transfers on EP2 and a maximum of four write transfers on EP1. Therefore, the total read transfer that will be queued in eight (3 + 5) and total write transfers that will be queued is four. The endpointQueueSizeRead member of the <a href="00887.html" target="topic">USB_DEVICE_INIT</a> data structure should be set to eight. The endpointQueueSizeWrite member of the <a href="00887.html" target="topic">USB_DEVICE_INIT</a> data structure should be set to four. The <a href="00759.html" target="topic">USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED</a> configuration macro should be set to 12 (8 + 4).</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00273.html" target="topic">USB Device Libraries</a> &gt; <a href="00415.html" target="topic">Generic USB Device Library</a> &gt; <a href="00429.html" target="topic">Using the Library</a> &gt; <a href="00424.html" target="topic">How the Library Works</a> &gt; <a href="00422.html" target="topic">Endpoint Management</a></div>
+<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00275.html" target="topic">USB Device Libraries</a> &gt; <a href="00417.html" target="topic">Generic USB Device Library</a> &gt; <a href="00431.html" target="topic">Using the Library</a> &gt; <a href="00426.html" target="topic">How the Library Works</a> &gt; <a href="00422.html" target="topic">Endpoint Data Transfer</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -112,13 +112,13 @@ The application can use the <a href="00763.html" target="topic">USB_DEVICE_Endpo
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00421.html" target="topic">Previous</a> | <a href="00424.html" target="topic">Up</a> | <a href="00420.html" target="topic">Next</a></div>
+<a href="00424.html" target="topic">Previous</a> | <a href="00426.html" target="topic">Up</a> | <a href="00420.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Endpoint Management Topic Title: Endpoint Management)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Endpoint Data Transfer Topic Title: Endpoint Data Transfer)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

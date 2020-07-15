@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_DEVICE_IsSuspended Function</title>
+<title>USB_DEVICE_Initialize Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00273.html" target="topic">USB Device Libraries</a> &gt; <a href="00272.html" target="topic">USB Device Layer Library</a> &gt; <a href="00296.html" target="topic">Library Interface</a> &gt; c) Device Power State Management Functions &gt; <a href="00903.html" target="topic">USB_DEVICE_IsSuspended Function</a></div>
+<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00275.html" target="topic">USB Device Libraries</a> &gt; <a href="00274.html" target="topic">USB Device Layer Library</a> &gt; <a href="00298.html" target="topic">Library Interface</a> &gt; a) System Interaction Functions &gt; <a href="00903.html" target="topic">USB_DEVICE_Initialize Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01001.html" target="topic">Previous</a> | <a href="00296.html" target="topic">Up</a> | <a href="00999.html" target="topic">Next</a></div>
+<a href="00298.html" target="topic">Previous</a> | <a href="00298.html" target="topic">Up</a> | <a href="00756.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_IsSuspended@USB_DEVICE_HANDLE Topic Title: USB_DEVICE_IsSuspended Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: USB_DEVICE_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_DEVICE_IsSuspended Function</div>
+USB_DEVICE_Initialize Function</div>
 </div>
 </div>
 
@@ -49,19 +49,20 @@ USB_DEVICE_IsSuspended Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function returns true is the device is presently in suspended state. The application can use this function in conjunction with the <a href="01015.html" target="topic">USB_DEVICE_StateGet</a> function to obtain the detailed state of the device (such as addressed and suspended, configured and suspended etc.). The Device Layer also provides the macro USB_DEVICE_EVENT_SUSPENDED event to indicate entry into suspend state.</p></div>
+This function initializes an instance of USB device layer, making it ready for clients to open and use it. The number of instances is limited by the value of macro USB_DEVICE_MAX_INSTANCES defined in system_config.h file.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">USB_DEVICE_IsSuspended</span></strong>(
-    <a href="00807.html" target="topic">USB_DEVICE_HANDLE</a> <strong><span style="color: #000000">usbDeviceHandle</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100">SYS_MODULE_OBJ <strong><span style="color: #000000">USB_DEVICE_Initialize</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> SYS_MODULE_INDEX <strong><span style="color: #000000">instanceIndex</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> SYS_MODULE_INIT * <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000000">init</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The USB Device Layer must have been initialized and opened before calling this function.</p></div>
+None.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -78,9 +79,14 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-usbDeviceHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+instanceIndex&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Pointer to the Device Layer Handle that is returned from <a href="00945.html" target="topic">USB_DEVICE_Open</a>&nbsp;</div></td></tr></table></div></div>
+In case of microcontrollers with multiple USB peripherals, user can create multiple instances of USB device layer. Parameter instanceIndex identifies this instance.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+init&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to a data structure containing any data necessary to initialize the USB device layer&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -88,34 +94,63 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Returns true if the device is suspended.</p></div>
+If successful, returns a valid handle to a device layer object. Otherwise, it returns SYS_MODULE_OBJ_INVALID.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+This routine must be called before any other USB Device Layer routine is called and after the initialization of USB Device Driver. This routine should only be called once during system initialization.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
 <div class="Element13"><div class="Element12"><pre class="Element12">
-<i><span style="color: #008000">// This code example shows how the application</span></i>
-<i><span style="color: #008000">// can find out if the device is in a configured but suspended state.</span></i>
+<i><span style="color: #008000">// This code example shows the initialization of the </span></i>
+<i><span style="color: #008000">// the USB Device Layer. Note how an endpoint table is</span></i>
+<i><span style="color: #008000">// created and assigned. </span></i>
 
-<strong><span style="color: #000080">if</span></strong>(USB_DEVICE_IsSuspended(usbDeviceHandle))
+<a href="00887.html" target="topic">USB_DEVICE_INIT</a> deviceLayerInit;
+SYS_MODULE_OBJ usbDeviceObj;
+uint8_t __attribute__((aligned(512))) endpointTable[USB_DEVICE_ENDPOINT_TABLE_SIZE]; 
+
+<i><span style="color: #008000">// System module initialization</span></i>
+deviceLayerInit.moduleInit.value = SYS_MODULE_POWER_RUN_FULL;
+
+<i><span style="color: #008000">// Identifies peripheral (PLIB-level) ID</span></i>
+deviceLayerInit.usbID = USB_ID_1;
+
+<i><span style="color: #008000">// Boolean flag: true -&gt; Stop USB module in Idle Mode</span></i>
+deviceLayerInit.stopInIdle = <strong><span style="color: #000080">false</span></strong>;
+
+<i><span style="color: #008000">// Boolean flag: true -&gt; Suspend USB in Sleep Mode</span></i>
+deviceLayerInit.suspendInSleep = <strong><span style="color: #000080">false</span></strong>;
+
+<i><span style="color: #008000">// Interrupt Source for USB module</span></i>
+deviceLayerInit.interruptSource = INT_SOURCE_USB_1;
+
+<i><span style="color: #008000">// Number of function drivers registered to this instance of the</span></i>
+<i><span style="color: #008000">// USB device layer </span></i>
+deviceLayerInit.registeredFuncCount = 1;
+
+<i><span style="color: #008000">// Function driver table registered to this instance of the USB device layer</span></i>
+deviceLayerInit.registeredFunctions = funcRegistrationTable;
+
+<i><span style="color: #008000">// Pointer to USB Descriptor structure </span></i>
+deviceLayerInit.usbMasterDescriptor   = &amp;usbMasterDescriptor;
+
+<i><span style="color: #008000">// Pointer to an endpoint table.</span></i>
+deviceLayerInit.endpointTable = endpointTable;
+
+<i><span style="color: #008000">// USB device initialization</span></i>
+usbDeviceObj = USB_DEVICE_Initialize(<a href="00881.html" target="topic">USB_DEVICE_INDEX_0</a>, &amp;deviceLayerInit);
+  
+<strong><span style="color: #000080">if</span></strong> (SYS_MODULE_OBJ_INVALID == usbDeviceObj)
 {
-    <i><span style="color: #008000">// Device is in a suspended state.</span></i>
-
-    <strong><span style="color: #000080">if</span></strong>(USB_DEVICE_STATE_CONFIGURED == <a href="01015.html" target="topic">USB_DEVICE_StateGet</a>(usbDeviceHandle))
-    {
-        <i><span style="color: #008000">// This means the device is in configured and suspended state.</span></i>
-        
-    }
-}
-</pre></div></div>
+    <i><span style="color: #008000">// Handle error</span></i>
+}</pre></div></div>
 </div>
 </div>
 </div>
@@ -123,7 +158,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00273.html" target="topic">USB Device Libraries</a> &gt; <a href="00272.html" target="topic">USB Device Layer Library</a> &gt; <a href="00296.html" target="topic">Library Interface</a> &gt; c) Device Power State Management Functions &gt; <a href="00903.html" target="topic">USB_DEVICE_IsSuspended Function</a></div>
+<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00275.html" target="topic">USB Device Libraries</a> &gt; <a href="00274.html" target="topic">USB Device Layer Library</a> &gt; <a href="00298.html" target="topic">Library Interface</a> &gt; a) System Interaction Functions &gt; <a href="00903.html" target="topic">USB_DEVICE_Initialize Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -131,13 +166,13 @@ Example</div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01001.html" target="topic">Previous</a> | <a href="00296.html" target="topic">Up</a> | <a href="00999.html" target="topic">Next</a></div>
+<a href="00298.html" target="topic">Previous</a> | <a href="00298.html" target="topic">Up</a> | <a href="00756.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_IsSuspended@USB_DEVICE_HANDLE Topic Title: USB_DEVICE_IsSuspended Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_Initialize@SYS_MODULE_INDEX@SYS_MODULE_INIT * const Topic Title: USB_DEVICE_Initialize Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

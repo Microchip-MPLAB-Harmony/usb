@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_HOST_MSD_ERROR_CODE Enumeration</title>
+<title>usb_host_msd.h</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00398.html" target="topic">USB MSD Host Client Driver Library</a> &gt; <a href="00400.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="01354.html" target="topic">USB_HOST_MSD_ERROR_CODE Enumeration</a></div>
+<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00400.html" target="topic">USB MSD Host Client Driver Library</a> &gt; <a href="00397.html" target="topic">Files</a> &gt; <a href="01354.html" target="topic">usb_host_msd.h</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01369.html" target="topic">Previous</a> | <a href="00400.html" target="topic">Up</a> | <a href="00395.html" target="topic">Next</a></div>
+<a href="00397.html" target="topic">Previous</a> | <a href="00397.html" target="topic">Up</a> | <a href="01355.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_MSD_ERROR_CODE Topic Title: USB_HOST_MSD_ERROR_CODE Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_host_msd.h Topic Title: usb_host_msd.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_HOST_MSD_ERROR_CODE Enumeration</div>
+usb_host_msd.h</div>
 </div>
 </div>
 
@@ -46,178 +46,178 @@ USB_HOST_MSD_ERROR_CODE Enumeration</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="4465736372697074696F6E"></a><div class="Element11">
+<a name="436F6D70616E79"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-USB Host MSD Error Codes.&nbsp;</p>
-<p class="Element10">
-This enumeration defines the codes that the MSD Client Driver returns for possible errors that lead to the device being placed in an error state. The MSD client driver will not operate on a device which is in an error state. The error are returned in the USB_HOST_MSD_ErrorCallback function.</p></div>
+Microchip Technology Inc.</p></div>
 </div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
-  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_INSUFFICIENT_INSTANCES</span></strong> = 1,
-  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_NOT_FOUND_BULK_IN_ENDPOINT</span></strong>,
-  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_NOT_FOUND_BULK_OUT_ENDPOINT</span></strong>,
-  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_FAILED_PIPE_OPEN</span></strong>,
-  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_FAILED_GET_MAX_LUN</span></strong>,
-  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_FAILED_BOT_TRANSFER</span></strong>,
-  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_FAILED_RESET_RECOVERY</span></strong>,
-  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_CBW_STALL_RESET_RECOVERY</span></strong>,
-  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_TRANSFER_BUSY</span></strong>,
-  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_CSW_PHASE_ERROR</span></strong>,
-  <strong><span style="color: #000000">USB_HOST_MSD_ERROR_CODE_CSW_UNKNOWN_ERROR</span></strong>
-} USB_HOST_MSD_ERROR_CODE;</pre></div></div>
-<a name="4D656D62657273"></a><div class="Element14">
-Members</div>
+<a name="46696C65204E616D65"></a><div class="Element14">
+File Name</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element272">
+<p class="Element10">
+usb_host_msd.h</p></div>
+</div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+USB Host MSD Class Driver Interface Definition&nbsp;</p>
+<p class="Element10">
+This header file contains the function prototypes and definitions of the data types and constants that make up the interface to the USB Host MSD Class Driver.</p></div>
+</div>
+<a name="456E756D65726174696F6E73"></a><div class="Element14">
+Enumerations</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
 <div class="TableDiv">
-<table cellspacing="0" class="Table4">
+<table cellspacing="0" class="Table0">
 <tr>
-<td class="Element260" valign="top" width="35%">
-<div class="Element261">
-Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
-<div class="Element265">
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_MSD_ERROR_CODE_INSUFFICIENT_INSTANCES = 1&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This error occurs when the number of MSD instances defined via</p>
-<ul class="Element630">
-<li class="Element600"><a href="01366.html" target="topic">USB_HOST_MSD_INSTANCES_NUMBER</a> (in system_config.h) is insufficient. For</li>
-<li class="Element600">example, this error would occur if the value of</li>
-<li class="Element600"><a href="01366.html" target="topic">USB_HOST_MSD_INSTANCES_NUMBER</a> is 2, two MSC devices are already connected</li>
-<li class="Element600">and third MSC device is connected to the host. The object identifier in</li>
-<li class="Element600">this case will be the <a href="01287.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE</a> value.</li>
-</ul><p class="Element267">
-&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_MSD_ERROR_CODE_NOT_FOUND_BULK_IN_ENDPOINT&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This error occurs when the driver descriptor parser could not find a Bulk</p>
-<ul class="Element630">
-<li class="Element600">IN endpoint in the interface descriptor. The object identifier in this</li>
-<li class="Element600">case will be the <a href="01287.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE</a> value.</li>
-</ul><p class="Element267">
-&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_MSD_ERROR_CODE_NOT_FOUND_BULK_OUT_ENDPOINT&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This error occurs when the driver descriptor parser could not find a Bulk</p>
-<ul class="Element630">
-<li class="Element600">OUT endpoint in the interface descriptor. The object identifier in this</li>
-<li class="Element600">case will be <a href="01287.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE</a> value.</li>
-</ul><p class="Element267">
-&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_MSD_ERROR_CODE_FAILED_PIPE_OPEN&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This error occurs when the driver could not open a Bulk pipe. This</p>
-<ul class="Element630">
-<li class="Element600">typically happens either due to a host layer error or due to insufficient</li>
-<li class="Element600">number of pipes (which is configured via <a href="01388.html" target="topic">USB_HOST_PIPES_NUMBER</a>). The</li>
-<li class="Element600">object idenfier in this case will be <a href="01287.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE</a> value.</li>
-</ul><p class="Element267">
-&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_MSD_ERROR_CODE_FAILED_GET_MAX_LUN&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This error occurs when the Get Max LUN request issued by the driver fails</p>
-<ul class="Element630">
-<li class="Element600">for any reason. The object identifier in this case will be the MSC device</li>
-<li class="Element600">instance index.</li>
-</ul><p class="Element267">
-&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_MSD_ERROR_CODE_FAILED_BOT_TRANSFER&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This error occurs when any stage of the BOT has failed due to bus error</p>
-<ul class="Element630">
-<li class="Element600">or an unknown failure. The object identifier in this case will be the MSC</li>
-<li class="Element600">device instance index.</li>
-</ul><p class="Element267">
-&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_MSD_ERROR_CODE_FAILED_RESET_RECOVERY&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This error occurs when the MSD Reset Recovery procedure has failed. A MSC</p>
-<ul class="Element630">
-<li class="Element600">device should not fail a MSD Reset Recovery procedure. The object</li>
-<li class="Element600">identifier in this case will be the device instance index.</li>
-</ul><p class="Element267">
-&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_MSD_ERROR_CODE_CBW_STALL_RESET_RECOVERY&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This error code indicates a condtion where the CBW stage of the BOT was</p>
-<ul class="Element630">
-<li class="Element600">stalled and the driver is about to launch MSD reset recovery. The</li>
-<li class="Element600">identifier in this case if the MSC Device instance index. This code is</li>
-<li class="Element600">generated from an interrupt context. The driver may continue to function</li>
-<li class="Element600">normally post this condition.</li>
-</ul><p class="Element267">
-&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_MSD_ERROR_CODE_TRANSFER_BUSY&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This error code indicates a condition where the BOT transfer could not be</p>
-<ul class="Element630">
-<li class="Element600">initiated because a transfer is already in progress. The identifier in</li>
-<li class="Element600">this case is the MSC Device Instance Index. The driver may continue to</li>
-<li class="Element600">function normall post this condition. This condition may occur several</li>
-<li class="Element600">times.</li>
-</ul><p class="Element267">
-&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_MSD_ERROR_CODE_CSW_PHASE_ERROR&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This error code indicates a condition where the BOT transfer failed due a</p>
-<ul class="Element630">
-<li class="Element600">phase error in the CSW stage of the BOT. The identifier in this case if</li>
-<li class="Element600">the MSC Device instance index. This code is generated from an interrupt</li>
-<li class="Element600">context. The driver may continue to function normally post this</li>
-<li class="Element600">condition.</li>
-</ul><p class="Element267">
-&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_MSD_ERROR_CODE_CSW_UNKNOWN_ERROR&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This error code indicates that a condition where an unknown error has</p>
-<ul class="Element630">
-<li class="Element600">occured during the CSW stage of the BOT. The identifier in this case if</li>
-<li class="Element600">the MSC Device instance index. This code is generated from an interrupt</li>
-<li class="Element600">context. The driver may continue to function normally post this</li>
-<li class="Element600">condition.</li>
-</ul><p class="Element267">
-&nbsp;</div></td></tr></table></div></div>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01356.html" target="topic">USB_HOST_MSD_ERROR_CODE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Host MSD Error Codes.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01373.html" target="topic">USB_HOST_MSD_RESULT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB HOST MSD Result&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01384.html" target="topic">USB_HOST_MSD_TRANSFER_DIRECTION</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB HOST MSD Transfer Direction.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
+<a name="46756E6374696F6E73"></a><div class="Element14">
+Functions</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-None.</p></div>
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01382.html" target="topic">USB_HOST_MSD_Transfer</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function schedules a MSD BOT transfer.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01389.html" target="topic">USB_HOST_MSD_TransferErrorTasks</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function maintains the MSD transfer error handling state machine.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="4D6163726F73"></a><div class="Element14">
+Macros</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01369.html" target="topic">USB_HOST_MSD_INTERFACE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB HOST MSD Client Driver Interface&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01371.html" target="topic">USB_HOST_MSD_LUN_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB HOST MSD LUN Handle Invalid&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01388.html" target="topic">USB_HOST_MSD_TRANSFER_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB HOST MSD Transfer Handle Invalid&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="5479706573"></a><div class="Element14">
+Types</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01370.html" target="topic">USB_HOST_MSD_LUN_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB HOST MSD LUN Handle&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01383.html" target="topic">USB_HOST_MSD_TRANSFER_CALLBACK</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB HOST MSD Transfer Complete Callback&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01387.html" target="topic">USB_HOST_MSD_TRANSFER_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB HOST MSD Transfer Handle&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00398.html" target="topic">USB MSD Host Client Driver Library</a> &gt; <a href="00400.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="01354.html" target="topic">USB_HOST_MSD_ERROR_CODE Enumeration</a></div>
+<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00400.html" target="topic">USB MSD Host Client Driver Library</a> &gt; <a href="00397.html" target="topic">Files</a> &gt; <a href="01354.html" target="topic">usb_host_msd.h</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -225,13 +225,13 @@ None.</p></div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01369.html" target="topic">Previous</a> | <a href="00400.html" target="topic">Up</a> | <a href="00395.html" target="topic">Next</a></div>
+<a href="00397.html" target="topic">Previous</a> | <a href="00397.html" target="topic">Up</a> | <a href="01355.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_MSD_ERROR_CODE Topic Title: USB_HOST_MSD_ERROR_CODE Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_host_msd.h Topic Title: usb_host_msd.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

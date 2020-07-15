@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Data Transfer</title>
+<title>Building the Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00398.html" target="topic">USB MSD Host Client Driver Library</a> &gt; <a href="00402.html" target="topic">Using the Library</a> &gt; <a href="00396.html" target="topic">How the Library Works</a> &gt; <a href="00392.html" target="topic">Data Transfer</a></div>
+<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00400.html" target="topic">USB MSD Host Client Driver Library</a> &gt; <a href="00392.html" target="topic">Building the Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00401.html" target="topic">Previous</a> | <a href="00396.html" target="topic">Up</a> | <a href="00391.html" target="topic">Next</a></div>
+<a href="00022.html" target="topic">Previous</a> | <a href="00400.html" target="topic">Up</a> | <a href="00402.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSD HOST Data Transfer Topic Title: Data Transfer)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSD HOST Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Data Transfer</div>
+Building the Library</div>
 </div>
 </div>
 
@@ -49,91 +49,80 @@ Data Transfer</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The USB MSD Host Client Driver data transfer function is typically called by the SCSI Block Storage Driver Library. The <a href="01380.html" target="topic">USB_HOST_MSD_Transfer</a> function allows the SCSI Block Storage Driver to transport SCSI commands to the mass storage device. The cdb parameter and the cdbLength parameter of the function specify the command and its size respectively. If the command requires the transport of data, then data must contain the pointer to the buffer and size specifies the amount of data expected to be transported. When the BOT transfer complete, the USB MSD Host Client Diver will call the callback function. The following code snippet shows an example of using the <a href="01380.html" target="topic">USB_HOST_MSD_Transfer</a> function.&nbsp;</p>
+The following three tables list and describe the header (<span class="Element146">.h</span>) and source (<span class="Element146">.c</span>) files that implement this library. The parent folder for these files is <span class="Element146">&lt;install-dir&gt;/framework/usb</span><span style="color: #0000FF">.</span></p><div class="Element15">
+Interface File(s)</div>
 <p class="Element10">
-<strong>Example:</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows usage of the USB_HOST_MSD_Transfer function. The SCSI Block
- * Driver Library uses this function to send a SCSI Inquiry Command to the
- * device. Note how the commandCompleted flag in the SCSI instance object
- * tracks the completion of the transfer. This flag is updated in the transfer
- * callback. */</span></i>
-
-<strong><span style="color: #000080">void</span></strong> _USB_HOST_SCSI_TransferCallback
-(
-    USB_HOST_MSD_LUN_HANDLE lunHandle,
-    USB_HOST_MSD_TRANSFER_HANDLE transferHandle,
-    USB_HOST_MSD_RESULT result,
-    size_t size,
-    uintptr_t context
-)
-{
-    <strong><span style="color: #000080">int</span></strong> scsiObjIndex;
-    USB_HOST_SCSI_OBJ * scsiObj;
-    USB_HOST_SCSI_COMMAND_OBJ * commandObj;
-    USB_HOST_SCSI_EVENT event;
-
-    <i><span style="color: #008000">/* Get the SCSI object index from the lunHandle */</span></i>
-    scsiObjIndex = _USB_HOST_SCSI_LUNHandleToSCSIInstance(lunHandle);
-
-    <i><span style="color: #008000">/* Get the pointer to the SCSI object */</span></i>
-    scsiObj = &amp;gUSBHostSCSIObj[scsiObjIndex];
-
-    <i><span style="color: #008000">/* Pointer to the command object */</span></i>
-    commandObj = &amp;scsiObj-&gt;commandObj;
-
-    <i><span style="color: #008000">/* The processed size */</span></i>
-    commandObj-&gt;size = size;
-
-    <i><span style="color: #008000">/* The result of the command */</span></i>
-    commandObj-&gt;result = result;
-
-    <i><span style="color: #008000">/* Let the main state machine know that the command is completed */</span></i>
-    commandObj-&gt;commandCompleted = <strong><span style="color: #000080">true</span></strong>;
-
-    <i><span style="color: #008000">/* The rest of code is not shown here for the sake of brevity */</span></i>
-}
-
-<strong><span style="color: #000080">void</span></strong> USB_HOST_SCSI_Tasks(USB_HOST_MSD_LUN_HANDLE lunHandle)
-{
-    <strong><span style="color: #000080">switch</span></strong>(scsiObj-&gt;state)
-    {
-        <i><span style="color: #008000">/* For the sake of brevity, only one SCSI command is show here */</span></i>
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_SCSI_STATE_INQUIRY_RESPONSE:
-
-            <i><span style="color: #008000">/* We get the SCSI Enquiry response. Although there isn't much
-             * that we can do with this data */</span></i>
-            _USB_HOST_SCSI_InquiryResponseCommand(scsiObj-&gt;commandObj.cdb);
-
-            <i><span style="color: #008000">/* The commandCompleted flag will be updated in the callback.
-             * Update the state and send the command.   */</span></i>
-            scsiObj-&gt;commandObj.inUse = <strong><span style="color: #000080">true</span></strong>;
-            scsiObj-&gt;commandObj.commandCompleted = <strong><span style="color: #000080">false</span></strong>;
-            scsiObj-&gt;commandObj.generateEvent = <strong><span style="color: #000080">false</span></strong>;
-
-            result = USB_HOST_MSD_Transfer(scsiObj-&gt;lunHandle,
-                    scsiObj-&gt;commandObj.cdb, 6, scsiObj-&gt;buffer, 36,
-                    USB_HOST_MSD_TRANSFER_DIRECTION_DEVICE_TO_HOST,
-                    _USB_HOST_SCSI_TransferCallback, (uintptr_t)(scsiObj));
-
-            <strong><span style="color: #000080">if</span></strong>(result == USB_HOST_MSD_RESULT_SUCCESS)
-            {
-                scsiObj-&gt;state = USB_HOST_SCSI_STATE_WAIT_INQUIRY_RESPONSE;
-            }
-
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">default</span></strong>:
-            <strong><span style="color: #000080">break</span></strong>;
-
-    }
-} </pre></div></div>
-</div>
+This table lists and describes the header files that must be included (i.e., using <span class="Element146">#include</span>) by any code that uses this library. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="23%">
+<div class="Element66">
+Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="77%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="23%">
+<div class="Element68">
+<span class="Element146"><a href="01354.html" target="topic">usb_host_msd.h</a></span>&nbsp;</div></td><td class="Element67" valign="top" width="77%">
+<div class="Element68">
+This header file should be included in any <span class="Element146">.c</span> file that accesses the USB Host MSD Client Driver API.&nbsp;</div></td></tr></table></div></div>
+<div class="Element15">
+Required File(s)</div>
+<div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element67" valign="top" width="10%" style="border:none;">
+<div class="Element68">
+<img src="MHC_Logo_Medium.png" border="0" alt="" title="">&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<div class="Element68">
+<span style="color: #008000"><strong><i>All of the required files listed in the following table are automatically added into the MPLAB X IDE project by the MHC when the library is selected for use.</i></strong></span>&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+This table lists and describes the source and header files that must <i>always</i> be included in the MPLAB X IDE project to build this library. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="23%">
+<div class="Element66">
+Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="77%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="23%">
+<div class="Element68">
+<span class="Element146">/src/dynamic/usb_host_msd.c</span>&nbsp;</div></td><td class="Element67" valign="top" width="77%">
+<div class="Element68">
+This file implements the USB Host MSD Client Driver interface and should be included in the project if USB Host MSD Client Driver operation is desired.&nbsp;</div></td></tr></table></div></div>
+<div class="Element15">
+Optional File(s)</div>
+<p class="Element10">
+This table lists and describes the source and header files that may optionally be included if required for the desired implementation. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="25%">
+<div class="Element66">
+Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="75%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="25%">
+<div class="Element68">
+N/A&nbsp;</div></td><td class="Element67" valign="top" width="75%">
+<div class="Element68">
+There are no optional files for this library.&nbsp;</div></td></tr></table></div></div>
+<div class="Element15">
+Module Dependencies</div>
+<p class="Element10">
+The USB MSD Host Library depends on the following modules:</p>
+<ul class="Element630">
+<li class="Element600"><a href="00365.html" target="topic">USB Host Layer Library</a></li>
+</ul></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00364.html" target="topic">USB Host Libraries</a> &gt; <a href="00398.html" target="topic">USB MSD Host Client Driver Library</a> &gt; <a href="00402.html" target="topic">Using the Library</a> &gt; <a href="00396.html" target="topic">How the Library Works</a> &gt; <a href="00392.html" target="topic">Data Transfer</a></div>
+<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00400.html" target="topic">USB MSD Host Client Driver Library</a> &gt; <a href="00392.html" target="topic">Building the Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -141,13 +130,13 @@ The USB MSD Host Client Driver data transfer function is typically called by the
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00401.html" target="topic">Previous</a> | <a href="00396.html" target="topic">Up</a> | <a href="00391.html" target="topic">Next</a></div>
+<a href="00022.html" target="topic">Previous</a> | <a href="00400.html" target="topic">Up</a> | <a href="00402.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSD HOST Data Transfer Topic Title: Data Transfer)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSD HOST Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

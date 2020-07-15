@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Library Initialization</title>
+<title>How the Library Works</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00273.html" target="topic">USB Device Libraries</a> &gt; <a href="00415.html" target="topic">Generic USB Device Library</a> &gt; <a href="00429.html" target="topic">Using the Library</a> &gt; <a href="00424.html" target="topic">How the Library Works</a> &gt; <a href="00426.html" target="topic">Library Initialization</a></div>
+<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00275.html" target="topic">USB Device Libraries</a> &gt; <a href="00417.html" target="topic">Generic USB Device Library</a> &gt; <a href="00431.html" target="topic">Using the Library</a> &gt; <a href="00426.html" target="topic">How the Library Works</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00424.html" target="topic">Previous</a> | <a href="00424.html" target="topic">Up</a> | <a href="00423.html" target="topic">Next</a></div>
+<a href="00418.html" target="topic">Previous</a> | <a href="00431.html" target="topic">Up</a> | <a href="00428.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Library Initialization Topic Title: Library Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Library Initialization</div>
+How the Library Works</div>
 </div>
 </div>
 
@@ -49,33 +49,49 @@ Library Initialization</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Unlike the standard USB function drivers in the MPLAB Harmony USB Device Stack, in the case of a Generic USB Device, the USB Device Layer does not automatically enable or disable endpoints that belong to the Generic interface. This must be done by the application when the device is configured by the Host.&nbsp;</p>
-<p class="Element10">
-A USB Device can have multiple Generic interfaces. Each of these interfaces must have corresponding entries in the USB Device Layer function driver registration table. For Generic interfaces, the driver and funcDriverInit member of the function driver registration table entry should be set to NULL. The following code shows an example of how this is done. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example function driver registration table entry
- * for a Generic USB Device Interface. Note that the function driver entry point
- * member is NULL. This instructs the Device Layer to pass all interface related
- * control transfers to the application. */</span></i>
-<strong><span style="color: #000080">const</span></strong> USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[1] =
-{
-    {
-         .configurationValue = 1 ,      <i><span style="color: #008000">// Configuration descriptor index</span></i>
-         .driver = NULL,                <i><span style="color: #008000">// No APIs exposed to the device layer</span></i>
-         .funcDriverIndex = 0 ,         <i><span style="color: #008000">// Zero Instance index</span></i>
-         .funcDriverInit = NULL,        <i><span style="color: #008000">// No init data</span></i>
-         .interfaceNumber = 0 ,         <i><span style="color: #008000">// Start interface number of this instance</span></i>
-         .numberOfInterfaces = 1 ,      <i><span style="color: #008000">// Total number of interfaces contained in this instance</span></i>
-         .speed = USB_SPEED_FULL|USB_SPEED_HIGH         <i><span style="color: #008000">// USB Speed</span></i>
-    }
-};</pre></div></div>
-<p class="Element10">
-The endpoint read and endpoint write queue sizes are specified by the queueSizeEndpointRead and queueSizeEndpointWrite members of the <a href="00885.html" target="topic">USB_DEVICE_INIT</a> device layer initialization data structure. These read and write queue sizes define the size of the read and write buffer object pools. Objects from these pools are then queued up at each read and write endpoint, when an endpoint read or write is requested. The total number of buffer objects is specified by the <a href="00757.html" target="topic">USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED</a> configuration constant.</p></div>
+This topic describes the basic architecture of the Generic USB Device Library and provides information and examples on its use.</p></div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00428.html" target="topic">Library Initialization</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes how the Generic USB Device Library is initialized.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00425.html" target="topic">Event Handling</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This topic explains how the application should handle Generic USB Device events.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00424.html" target="topic">Endpoint Management</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes how the application can enable and disable endpoints.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00422.html" target="topic">Endpoint Data Transfer</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes how the application can transfer data over endpoints.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00382.html" target="topic">USB Libraries Help</a> &gt; <a href="00273.html" target="topic">USB Device Libraries</a> &gt; <a href="00415.html" target="topic">Generic USB Device Library</a> &gt; <a href="00429.html" target="topic">Using the Library</a> &gt; <a href="00424.html" target="topic">How the Library Works</a> &gt; <a href="00426.html" target="topic">Library Initialization</a></div>
+<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00275.html" target="topic">USB Device Libraries</a> &gt; <a href="00417.html" target="topic">Generic USB Device Library</a> &gt; <a href="00431.html" target="topic">Using the Library</a> &gt; <a href="00426.html" target="topic">How the Library Works</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -83,13 +99,13 @@ The endpoint read and endpoint write queue sizes are specified by the queueSizeE
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00247.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00424.html" target="topic">Previous</a> | <a href="00424.html" target="topic">Up</a> | <a href="00423.html" target="topic">Next</a></div>
+<a href="00418.html" target="topic">Previous</a> | <a href="00431.html" target="topic">Up</a> | <a href="00428.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Library Initialization Topic Title: Library Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
