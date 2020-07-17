@@ -4,9 +4,9 @@
 
 
 project: msd_basic
-creation_date: 2020-07-08T16:55:17.604+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2020-07-17T11:06:41.523+02:00[Europe/Paris]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 10
-mhc_mode: Headless            # [IDE|Standalone|Headless]
+mhc_mode: Standalone            # [IDE|Standalone|Headless]
 mplabx_version: NA        # if MPLAB X plugin only
 plugin_version: NA        # if MPLAB X plugin only
 
@@ -18,5 +18,5 @@ modules:
     - {name: "csp", version: "v3.7.1"}
     - {name: "dev_packs", version: "v3.7.0"}
     - {name: "mhc", version: "v3.4.1"}
-    - {name: "usb", version: "v3.6.0"}
+    - {name: "usb", version: "unknown"}
 

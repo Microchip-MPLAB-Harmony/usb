@@ -49,8 +49,6 @@
 #include "driver/usb/uhp/src/drv_usb_uhp_local.h"
 #include "driver/usb/uhp/src/drv_usb_uhp_ohci_host.h"
 
-extern DRV_USB_UHP_HOST_PIPE_OBJ gDrvUSBHostPipeObj[DRV_USB_UHP_PIPES_NUMBER];
-
 /**********************************************************
  * This structure is a set of pointer to the USB OHCI driver
  * functions. It is provided to the host and device layer
@@ -201,7 +199,9 @@ __ALIGNED(32) NOT_CACHED OHCIQueueHeadDescriptor OHCI_QueueHead[DRV_USB_UHP_PIPE
 __ALIGNED(32) NOT_CACHED OHCIQueueTDDescriptor   OHCI_QueueTD[DRV_USB_UHP_PIPES_NUMBER][DRV_USB_UHP_MAX_TRANSACTION];   /* Queue Element Transfer Descriptor: 1 qTD is 0x20=32. Size 9 to reach 512 byte (8x64) + 1 NULL Packet transfer */
 __ALIGNED(256) NOT_CACHED OHCI_HCCA HCCA;
 /* pQueueHeadCurrentOHCI is a pointer to a queue head that is already in the active list */
-OHCIQueueHeadDescriptor* pQueueHeadCurrentOHCI;
+OHCIQueueHeadDescriptor* pQueueHeadCurrentOHCIBulk;
+OHCIQueueHeadDescriptor* pQueueHeadCurrentOHCICtrl;
+
 
 // ****************************************************************************
 // ****************************************************************************
@@ -225,8 +225,8 @@ OHCIQueueHeadDescriptor* pQueueHeadCurrentOHCI;
 static uint8_t _DRV_USB_UHP_OHCI_HOST_TestTD(void)
 {
     uint32_t ConditionCode = 0xFF;
-    volatile uint32_t i=0;
-    volatile uint32_t j=0;
+    uint32_t i=0;
+    uint32_t j=0;
     OHCIQueueTDDescriptor *qTD;
 
     for (i = 0; i < DRV_USB_UHP_PIPES_NUMBER; i++)
@@ -372,53 +372,6 @@ static void _DRV_USB_UHP_OHCI_HOST_CreateQTD(OHCIQueueTDDescriptor * qTD_base_ad
 // ****************************************************************************
 // ****************************************************************************
 
-/* Function:
-    uint32_t DRV_USB_UHP_OHCI_HOST_EDIsFinish(void)
-
-  Summary:
-    Test if end of transfer
-
-  Description:
-    Test if HEADP == TAILP
-  Remarks:
-    See drv_xxx.h for usage information.
-*/
-
-uint32_t DRV_USB_UHP_OHCI_HOST_EDIsFinish( uint8_t hostPipeInUse )
-{
-    if( OHCI_QueueHead[hostPipeInUse].HeadP != OHCI_QueueHead[hostPipeInUse].TailP )
-    {
-        return 0;
-    }
-    else
-    {
-        return 1;
-    }
-}
-
-
-// *****************************************************************************
-/* Function:
-    void DRV_USB_UHP_OHCI_HOST_ReceivedSize( uint32_t * BuffSize )
-
-   Summary:
-    Change the received size if needed
-
-   Description:
-    Change the received size if the requesting data number have not been sent
-
-   Remarks:
-    Refer to .h for usage information.
- */
-void DRV_USB_UHP_OHCI_HOST_ReceivedSize( uint32_t * BuffSize )
-{
-    /* If CurrentBufferPointer == 0, all data has been receive */
-    if( OHCI_QueueTD[0][1].CBP != 0 )
-    {
-        *BuffSize = OHCI_QueueTD[0][1].BE - OHCI_QueueTD[0][1].CBP;
-    }
-}
-
 
 // *****************************************************************************
 /* Function:
@@ -446,7 +399,7 @@ void DRV_USB_UHP_OHCI_HOST_Init(DRV_USB_UHP_OBJ *hDriver)
 
     /* Set the HcHCCA to the physical address of the HCCA block. */
     usbIDOHCI->UHP_OHCI_HCHCCA = (uint32_t) &HCCA;
-
+    HCCA.UHP_HccaDoneHead = 0;
     memset(OHCI_QueueHead, 0, sizeof(OHCI_QueueHead));
     memset(OHCI_QueueTD, 0, sizeof(OHCI_QueueTD));
 
@@ -602,20 +555,14 @@ DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_OHCI_PipeSetup
     volatile UhpOhci *usbIDOHCI;
     DRV_USB_UHP_OBJ * hDriver;
     DRV_USB_UHP_HOST_PIPE_OBJ * pipe = NULL;
-    DRV_USB_UHP_HOST_PIPE_OBJ * iteratorPipe = NULL;
-    DRV_USB_UHP_HOST_TRANSFER_GROUP * transferGroup = NULL;
     DRV_USB_UHP_HOST_PIPE_HANDLE pipeHandle = DRV_USB_UHP_HOST_PIPE_HANDLE_INVALID;
     OHCIQueueHeadDescriptor* pQueueHeadNew;  /* pQueueHeadNew is a pointer to the queue head to be added */
-    static uint8_t OnlyOneTime = 0;
     uint8_t pipeIter = 0;
-    uint8_t epIter = 0;
-    bool epFound = false;
 
     if((client == DRV_HANDLE_INVALID) || (((DRV_USB_UHP_OBJ *)client) == NULL))
     {
         SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Invalid client handle");
     }
-
     else if(((DRV_USB_UHP_OBJ *)client)->inUse)
     {
         if((speed == USB_SPEED_LOW) || (speed == USB_SPEED_FULL) || (speed == USB_SPEED_HIGH))
@@ -626,7 +573,6 @@ DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_OHCI_PipeSetup
              * wMaxPacketSize.
              *
              * For Control endpoints the minimum has to be 8 bytes.  */
-
             if(pipeType != USB_TRANSFER_TYPE_CONTROL)
             {
                 if(wMaxPacketSize < 8)
@@ -634,17 +580,13 @@ DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_OHCI_PipeSetup
                     wMaxPacketSize = 8;
                 }
             }
-
-            if((wMaxPacketSize < 8) ||(wMaxPacketSize > 4096))
+            if((wMaxPacketSize < 8) || (wMaxPacketSize > DRV_USB_UHP_NO_CACHE_BUFFER_LENGTH))
             {
                 SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Invalid pipe endpoint size");
             }
             else
             {
-
                 hDriver = (DRV_USB_UHP_OBJ *)client;
-
-
                 /* There are two things that we need to check before we allocate
                  * a pipe. We check if have a free pipe object and check if we
                  * have a free endpoint that we can use */
@@ -654,7 +596,6 @@ DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_OHCI_PipeSetup
                  * individually */
 
                 /* We start by searching for a free pipe */
-
                 if(OSAL_MUTEX_Lock(&hDriver->mutexID, OSAL_WAIT_FOREVER) != OSAL_RESULT_TRUE)
                 {
                     SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nDRV USB_UHP: Mutex lock failed");
@@ -663,93 +604,11 @@ DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_OHCI_PipeSetup
                 {
                     for(pipeIter = 0; pipeIter < USB_HOST_PIPES_NUMBER; pipeIter ++)
                     {
-                        if(false == gDrvUSBHostPipeObj[pipeIter].inUse)
+                        pipe = &gDrvUSBHostPipeObj[pipeIter];
+
+                        if(false == pipe->inUse)
                         {
                             /* This means we have found a free pipe object */
-
-                            pipe = &gDrvUSBHostPipeObj[pipeIter];
-
-                            if(pipeType != USB_TRANSFER_TYPE_CONTROL)
-                            {
-                                /* For non control transfer we need a free non
-                                 * zero endpoint object. */
-
-                                epFound = false;
-                                for (epIter = 1; epIter < DRV_USB_UHP_PIPES_NUMBER; epIter++)
-                                {
-                                    if (false == hDriver->hostEndpointTable[epIter].endpoint.inUse)
-                                    {
-                                        /* This means we have found an endpoint.
-                                         * Capture this endpoint and indicate
-                                         * that we have found an endpoint */
-
-                                        epFound = true;
-                                        hDriver->hostEndpointTable[epIter].endpoint.inUse = true;
-                                        hDriver->hostEndpointTable[epIter].endpoint.pipe = pipe;
-                                        break;
-                                    }
-                                }
-
-                                if(!epFound)
-                                {
-                                    /* This means we could not find a spare endpoint for this
-                                     * non control transfer. */
-                                    SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nDRV USB_UHP Driver: Could not allocate endpoint in DRV USB_UHP_HOST_PipeSetup()");
-
-                                    if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
-                                    {
-                                        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nDRV USB_UHP Driver: Mutex unlock failed in DRV USB_UHP_HOST_PipeSetup()");
-                                    }
-                                }
-                                else
-                                {
-                                    /* Clear all the previous error condition
-                                     * that may be there from the last device
-                                     * connect */
-                                }
-                            }
-                            else
-                            {
-                                /* Set epIter to zero to indicate that we must
-                                 * use endpoint 0 for control transfers. We also
-                                 * add the control transfer pipe to the control
-                                 * transfer group. */
-
-                                epIter = 0;
-
-                                transferGroup = &hDriver->controlTransferGroup;
-
-                                if(transferGroup->pipe == NULL)
-                                {
-                                    /* This if the first pipe to be setup */
-
-                                    transferGroup->pipe = pipe;
-                                    transferGroup->currentPipe = pipe;
-                                    pipe->previous = NULL;
-                                }
-                                else
-                                {
-                                    /* This is not the first pipe. Find the last
-                                     * pipe in the linked list */
-
-                                    iteratorPipe = transferGroup->pipe;
-                                    while(iteratorPipe->next != NULL)
-                                    {
-                                        /* This is not the last pipe in this transfer group */
-                                        iteratorPipe = iteratorPipe->next;
-                                    }
-
-                                    iteratorPipe->next = pipe;
-                                    pipe->previous = iteratorPipe;
-                                }
-
-                                pipe->next = NULL;
-
-                                /* Update the pipe count in the transfer group */
-
-                                transferGroup->nPipes++;
-
-                            }
 
                             /* Setup the pipe object */
                             pipe->inUse = true;
@@ -763,21 +622,14 @@ DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_OHCI_PipeSetup
                             pipe->hClient = client;
                             pipe->endpointSize = wMaxPacketSize;
                             pipe->intervalCounter = bInterval;
-                            pipe->hostEndpoint = epIter;
+                            pipe->hostEndpoint = pipeIter;
                             pipe->endpointAndDirection = endpointAndDirection;
 
-                            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\033[31m\n\rPipeSetup: %d @%d\033[0m", pipe->hostEndpoint, pipe->deviceAddress);
-
                             usbIDOHCI = hDriver->usbIDOHCI;
+                            SYS_DEBUG_PRINT(SYS_ERROR_DEBUG, "\r\n\033[31mPSt = %d %d @%d \033[0m", pipe->hostEndpoint, pipeIter, pipe->deviceAddress);
 
-                            pQueueHeadNew = &OHCI_QueueHead[pipe->hostEndpoint];
-                            if( OnlyOneTime == 0 )
-                            {
-                                OnlyOneTime++;
-                                pQueueHeadCurrentOHCI = &OHCI_QueueHead[0];
-                            }
-
-                            pQueueHeadNew = &OHCI_QueueHead[pipe->hostEndpoint];
+                            pQueueHeadNew = &OHCI_QueueHead[pipeIter];
+                            pQueueHeadNew->Control.sKip = 1;  /* SKIP */
 
                             /*
                              * Link endpoint descriptor into HCD tracking queue
@@ -799,26 +651,51 @@ DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_OHCI_PipeSetup
                                 {
                                     pQueueHeadNew->Control.ed_control |= (1 << 13); /* S: Speed 0 FS, 1 LS */
                                 }
-                                /* Dword 1, TailP: TDQueueTailPointer */
-                                pQueueHeadNew->TailP = (uint32_t)&OHCI_QueueTD[pipe->hostEndpoint][DRV_USB_UHP_MAX_TRANSACTION-1];
-                                /* Dword 2, TD Queue Head Pointer (HeadP) */
-                                pQueueHeadNew->HeadP = (uint32_t)&OHCI_QueueTD[pipe->hostEndpoint][DRV_USB_UHP_MAX_TRANSACTION-1];
 
-                                /* Dword 3, Next Endpoint Descriptor (NextED) */
-                                pQueueHeadCurrentOHCI->NextEd = ((uint32_t)pQueueHeadNew) & 0xFFFFFFF0;      /* NextED */
-                                pQueueHeadNew->NextEd = (uint32_t)&OHCI_QueueHead[0];
-                                pQueueHeadCurrentOHCI = pQueueHeadNew;
+                                pQueueHeadNew->TailP = (uint32_t)&OHCI_QueueTD[pipeIter][0];
+                                pQueueHeadNew->HeadP = (uint32_t)&OHCI_QueueTD[pipeIter][0];
+
                                 if(pipe->pipeType == USB_TRANSFER_TYPE_CONTROL)
                                 {
-                                    /* programming of HcControlHeadED */
-                                    usbIDOHCI->UHP_OHCI_HCCONTROLHEADED = (uint32_t)pQueueHeadNew;
+                                    /* Dword 3, Next Endpoint Descriptor (NextED) */
+                                    if(pQueueHeadCurrentOHCICtrl == NULL)
+                                    {
+                                        /* programming of HcControlHeadED */
+                                        usbIDOHCI->UHP_OHCI_HCCONTROLHEADED = (uint32_t)pQueueHeadNew;
+                                        /* ControlListEnable: Enable the processing of the Control list in the next Frame */
+                                        usbIDOHCI->UHP_OHCI_HCCONTROL |= UHP_OHCI_HCCONTROL_CLE_Msk;
+                                        pQueueHeadCurrentOHCICtrl = &OHCI_QueueHead[0];
+                                    }
+                                    else
+                                    {
+                                        if( pQueueHeadCurrentOHCICtrl != pQueueHeadNew )
+                                        {
+                                            pQueueHeadCurrentOHCICtrl->NextEd = ((uint32_t)pQueueHeadNew) & 0xFFFFFFF0;      /* NextED */
+                                        }
+                                        pQueueHeadCurrentOHCICtrl = pQueueHeadNew;
+                                    }
                                 }
                                 else
                                 {
-                                    /* Bulk */
-                                    /* programming of HcBulkHeadED */
-                                    usbIDOHCI->UHP_OHCI_HCBULKHEADED = (uint32_t)pQueueHeadNew;
+                                    /* Dword 3, Next Endpoint Descriptor (NextED) */
+                                    if(pQueueHeadCurrentOHCIBulk == NULL)
+                                    {
+                                        /* programming of HcBulkHeadED */
+                                        usbIDOHCI->UHP_OHCI_HCBULKHEADED = (uint32_t)pQueueHeadNew;
+                                        /* BulkListEnable: Enable the processing of the Bulk list in the next Frame */
+                                        usbIDOHCI->UHP_OHCI_HCCONTROL |= UHP_OHCI_HCCONTROL_BLE_Msk;
+                                        pQueueHeadCurrentOHCIBulk = &OHCI_QueueHead[pipeIter];
+                                    }
+                                    else
+                                    {
+                                        if( pQueueHeadCurrentOHCIBulk != pQueueHeadNew )
+                                        {
+                                            pQueueHeadCurrentOHCIBulk->NextEd = ((uint32_t)pQueueHeadNew) & 0xFFFFFFF0;      /* NextED */
+                                        }
+                                        pQueueHeadCurrentOHCIBulk = pQueueHeadNew;
+                                    }
                                 }
+
                             }
                             else
                             {
@@ -826,10 +703,11 @@ DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_OHCI_PipeSetup
                                 /*
                                  * Link ED into tail of ED list
                                  */
-                        //        TailED = CONTAINING_RECORD( List->Head.Blink, HCD_ENDPOINT_DESCRIPTOR, Link);
-                        //        InsertTailList (&List->Head, &Endpoint->Link);
-                        //        ED->NextED = 0;
-                        //        TailED->NextED = ED->PhysicalAddress;
+                                /* TailED = CONTAINING_RECORD( List->Head.Blink, HCD_ENDPOINT_DESCRIPTOR, Link);
+                                 * InsertTailList (&List->Head, &Endpoint->Link);
+                                 * ED->NextED = 0;
+                                 * TailED->NextED = ED->PhysicalAddress;
+                                 */
 
                                 /* Dword 0 */
                                 pQueueHeadNew->Control.ed_control = (pipe->endpointSize << 16) | /* MPS: MaximumPacketSize */
@@ -839,9 +717,6 @@ DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_OHCI_PipeSetup
                                                                   (3 << 11) | /* D: Direction: 1 OUT, 2 IN, 0 or 3 => def in TD */
                                                  (pipe->hostEndpoint <<  7) | /* EN: EndpointNumber */
                                                 (pipe->deviceAddress <<  0);  /* FA: FunctionAddress */
-
-                                /* Dword 3, Next Endpoint Descriptor (NextED) */
-                                pQueueHeadCurrentOHCI->NextEd = 0;      /* NextED */
 
                                 /* TailED ? */
                             }
@@ -857,7 +732,6 @@ DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_OHCI_PipeSetup
                             }
                         }
                     }
-
                     if(pipeHandle == DRV_USB_UHP_HOST_PIPE_HANDLE_INVALID)
                     {
                         /* This means that we could not find a free pipe object */
@@ -874,7 +748,6 @@ DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_OHCI_PipeSetup
     {
         SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nDRV USB_UHP Driver: Invalid client in DRV USB_UHP_HOST_PipeSetup()");
     }
-
     return (pipeHandle);
 }/* end of DRV_USB_UHP_OHCI_PipeSetup() */
 
@@ -900,17 +773,13 @@ void DRV_USB_UHP_OHCI_PipeClose
     DRV_USB_UHP_HOST_PIPE_HANDLE pipeHandle
 )
 {
-    /* This function closes an open pipe */
-
-    bool interruptWasEnabled = false;
     DRV_USB_UHP_OBJ * hDriver = NULL;
     USB_HOST_IRP_LOCAL  * irp = NULL;
     DRV_USB_UHP_HOST_PIPE_OBJ * pipe = NULL;
-    DRV_USB_UHP_HOST_TRANSFER_GROUP * transferGroup = NULL;
-    DRV_USB_UHP_HOST_ENDPOINT_OBJ * endpointObj = NULL;
     OHCIQueueHeadDescriptor* pQueueHeadToUnlink; /* pQHeadToUnlink is a pointer to the queue head to be removed */
     OHCIQueueHeadDescriptor* pQueueHeadPrevious = NULL; /* pQHeadPrevious is a pointer to a queue head that references the queue head to remove */
     uint8_t pipeIter = 0;
+    bool interruptWasEnabled = false;
 
     /* Make sure we have a valid pipe */
     if ((pipeHandle == 0) || (pipeHandle == DRV_USB_UHP_HOST_PIPE_HANDLE_INVALID))
@@ -938,45 +807,8 @@ void DRV_USB_UHP_OHCI_PipeClose
                 }
                 interruptWasEnabled = _DRV_USB_UHP_InterruptSourceDisable(hDriver->interruptSource);
             }
-            if(USB_TRANSFER_TYPE_CONTROL == pipe->pipeType)
-            {
-                transferGroup = &hDriver->controlTransferGroup;
 
-                if(pipe->previous == NULL)
-                {
-                    /* The previous pipe could be null if this was the first pipe in the
-                     * transfer group */
-                    transferGroup->pipe = pipe->next;
-                    if(pipe->next != NULL)
-                    {
-                        pipe->next->previous = NULL;
-                    }
-                }
-                else
-                {
-                    /* Remove this pipe from the linked list */
-                    pipe->previous->next = pipe->next;
-                    if(pipe->next != NULL)
-                    {
-                        pipe->next->previous = pipe->previous;
-                    }
-                }
-
-                if(transferGroup->nPipes != 0)
-                {
-                    /* Reduce the count only if its not zero already */
-                    transferGroup->nPipes --;
-                }
-            }
-            else
-            {
-                /* Non control transfer pipes are not stored as groups.  We deallocate
-                 * the endpoint object that this pipe used */
-
-                endpointObj = &hDriver->hostEndpointTable[pipe->hostEndpoint];
-                endpointObj->endpoint.inUse = false;
-                endpointObj->endpoint.pipe  = NULL;
-            }
+            pipe->inUse = false;
 
             /* Now we invoke the call back for each IRP in this pipe and say that it is
              * aborted.  If the IRP is in progress, then that IRP will be actually
@@ -991,8 +823,7 @@ void DRV_USB_UHP_OHCI_PipeClose
                 if(irp->status == USB_HOST_IRP_STATUS_IN_PROGRESS)
                 {
                     /* If the IRP is in progress, then we set the temp IRP state. This
-                     * will be caught in the _DRV_USB_UHP_NonControlTransferProcess() and
-                     * _DRV_USB_UHP_HOST_ControlXferProcess() functions */
+                     * will be caught in the DRV_USB_UHP_TransferProcess() function */
 
                     irp->status = USB_HOST_IRP_STATUS_ABORTED;
 
@@ -1016,10 +847,10 @@ void DRV_USB_UHP_OHCI_PipeClose
             }
 
             /* Now we return the pipe back to the driver */
-            pipe->inUse = false ;
+            pipe->inUse = false;
 
             /* 5.2.7.1.2 Removing */
-            SYS_DEBUG_PRINT(SYS_ERROR_DEBUG, "\r\nDRV USB_UHP: Pipe close = %d", pipe->hostEndpoint);
+            SYS_DEBUG_PRINT(SYS_ERROR_DEBUG, "\r\n\033[31mPCl = %d @%d\033[0m", pipe->hostEndpoint, pipe->deviceAddress);
 
             /*
              * Prevent Host Controller from processing this ED
@@ -1057,14 +888,31 @@ void DRV_USB_UHP_OHCI_PipeClose
                 }
                 pQueueHeadPrevious->NextEd = pQueueHeadToUnlink->NextEd;
                 /* pQueueHeadToUnlink->Horizontal_Link_Pointer: Stay pointed to the next. */
-                pQueueHeadCurrentOHCI = pQueueHeadPrevious;
+                if( pipe->pipeType == USB_TRANSFER_TYPE_CONTROL )
+                {
+                    pQueueHeadCurrentOHCICtrl = pQueueHeadPrevious;
+                }
+                else
+                {
+                    pQueueHeadCurrentOHCIBulk = pQueueHeadPrevious;
+                }
+
+
             }
             else
             {
-                pQueueHeadCurrentOHCI = &OHCI_QueueHead[0];
+                if( pipe->pipeType == USB_TRANSFER_TYPE_CONTROL )
+                {
+                    pQueueHeadCurrentOHCICtrl = pQueueHeadPrevious;
+                }
+                else
+                {
+                    pQueueHeadCurrentOHCIBulk = pQueueHeadPrevious;
+                }
+
             }
 
-            /* Enable the interrupts */
+            /* Enable interrupts */
             if(!hDriver->isInInterruptContext)
             {
                 if(interruptWasEnabled)
@@ -1080,6 +928,7 @@ void DRV_USB_UHP_OHCI_PipeClose
         }
     }
 }/* end of DRV_USB_UHP_OHCI_PipeClose() */
+
 
 // *****************************************************************************
 /* Function:
@@ -1109,22 +958,23 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
 )
 {
     USB_HOST_IRP_LOCAL * irpIterator;
-    DRV_USB_UHP_HOST_TRANSFER_GROUP *controlTransferGroup;
     USB_HOST_IRP_LOCAL * irp = (USB_HOST_IRP_LOCAL *)inputIRP;
     DRV_USB_UHP_HOST_PIPE_OBJ *pipe = (DRV_USB_UHP_HOST_PIPE_OBJ *)(hPipe);
     DRV_USB_UHP_OBJ *hDriver;
     volatile uint32_t tosend;
     volatile uint32_t nbBytes;
+    volatile uint32_t div;
     uint8_t *point;
     volatile uint8_t idx = 0;
-    volatile uint8_t idx_plus;
+    volatile uint8_t idx_plus = 0;
+    volatile uint8_t idx_eot = 0;
+    volatile uint8_t idx_end = 0;
     volatile UhpOhci *usbIDOHCI;
     volatile uint8_t stop = 0;
     volatile uint8_t DToggle = 0;
     USB_ERROR returnValue = USB_ERROR_PARAMETER_INVALID;
     volatile uint32_t i;
     volatile uint32_t watchdog = 0;
-    uint32_t *QHToProceed = NULL;
 
     if((pipe == NULL) || (hPipe == (DRV_USB_UHP_HOST_PIPE_HANDLE_INVALID)))
     {
@@ -1135,17 +985,16 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
     {
         hDriver = (DRV_USB_UHP_OBJ *)(pipe->hClient);
         usbIDOHCI = hDriver->usbIDOHCI;
-        controlTransferGroup = &hDriver->controlTransferGroup;
 
-        /* Low speed is too slow, HID keyboard not working */
-        if(hDriver->deviceSpeed == USB_SPEED_LOW)
-        {
-            /* Watchdog in case of detach during the while. 900000 samg55: 120MHz => 7ms */
-            while(( hDriver->blockPipe == 1 ) & ( watchdog++ < 900000 ))
-            {
-            }
-        }
-        hDriver->blockPipe = 1;
+//        /* Low speed is too slow, HID keyboard not working */
+//        if(hDriver->deviceSpeed == USB_SPEED_LOW)
+//        {
+//            /* Watchdog in case of detach during the while. 900000 samg55: 120MHz => 7ms */
+//            while(( hDriver->blockPipe == 1 ) & ( watchdog++ < 900000 ))
+//            {
+//            }
+//        }
+//        hDriver->blockPipe = 1;
 
         /* Assign owner pipe */
         irp->pipe = hPipe;
@@ -1164,10 +1013,10 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
             }
             else
             {
-                controlTransferGroup->interruptWasEnabled = _DRV_USB_UHP_InterruptSourceDisable(hDriver->interruptSource);
+                _DRV_USB_UHP_InterruptSourceDisable(hDriver->interruptSource);
             }
         }
-        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nDRV USB_UHP: IRPSubmit= %d", pipe->hostEndpoint);
+        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nDRV USB_UHP: IRPSubmit= %d @%d E%d", pipe->hostEndpoint, pipe->deviceAddress, pipe->endpointAndDirection&0xF );
 
         if(USB_ERROR_OSAL_FUNCTION != returnValue)
         {
@@ -1188,8 +1037,24 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
 
                 OHCI_QueueHead[pipe->hostEndpoint].Control.sKip = 1;  /* SKIP */
 
-                idx = 0;
-                idx_plus = idx + 1;
+                /* Find qTD End of Tranfer */
+                for (idx_eot = 0; idx_eot < DRV_USB_UHP_MAX_TRANSACTION; idx_eot++)
+                {
+                    if( (uint32_t)OHCI_QueueHead[pipe->hostEndpoint].TailP == (uint32_t)(&OHCI_QueueTD[pipe->hostEndpoint][idx_eot]))
+                    {
+                        idx = idx_eot;
+                        if( idx == DRV_USB_UHP_MAX_TRANSACTION)
+                        {
+                            idx = 0;
+                        }
+                        idx_plus = idx + 1;
+                        if( idx_plus == DRV_USB_UHP_MAX_TRANSACTION)
+                        {
+                            idx_plus = 0;
+                        }
+                        break;
+                    }
+                }
 
                 if(pipe->pipeType == USB_TRANSFER_TYPE_CONTROL)
                 {
@@ -1208,7 +1073,6 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                         /* Device to Host: IN */
                         /* This means the data stage moves from device to host.
                          * Set bit 15 of the flags parameter */
-
                         irp->flags |= 0x80;
                     }
                     else
@@ -1216,191 +1080,247 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                         /* Host to Device: OUT */
                         /* This means the data stage moves from host to device.
                          * Clear bit 15 of the flags parameter. */
-
                         irp->flags &= 0x7F;
                     }
 
-                    /* We need to check if the endpoint 0 is free and if so
-                     * then start processing the IRP */
+                    /* Send the setup packet to device */
 
-                    if (controlTransferGroup->currentIRP == NULL)
+                    /* SETUP Transaction */
+                    if (*((uint8_t *)(irp->setup)) & 0x80)
                     {
-                        /* This means that no IRPs are being processed
-                         * So we should start the IRP processing. Else
-                         * the IRP processing will start in interrupt.
-                         * We start by copying the setup command */
-                        controlTransferGroup->currentIRP  = irp;
-                        controlTransferGroup->currentPipe = pipe;
-                        irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
+                        /* SETUP IN: (1<<7) Device to host */
 
-                        /* Send the setup packet to device */
-                        /* SETUP Transaction */
-                        point = (uint8_t *)irp->setup;
-                        for (i = 0; i < 8; i++)
-                        {
-                            USBBufferNoCacheSetup[pipe->hostEndpoint][i] = point[i];
-                        }
-
-                        /* SETUP packet PID */
-                        _DRV_USB_UHP_OHCI_HOST_CreateQTD(&OHCI_QueueTD[pipe->hostEndpoint][idx], /* Transfer Descriptor address */
-                                        &OHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* NextTD */
-                                        DToggle | 0x2,           /* T: DataToggle value is taken from the LSb of this field. */
-                                        8,                       /* BE: BufferEnd: Total Bytes to transfer */
-                                        0,                       /* DP: Direction/PID: SETUP=0 */
-                                        0,                       /* R: bufferRounding: exactly fill the defined data buffer */
-                                        (uint32_t *)USBBufferNoCacheSetup[pipe->hostEndpoint]); /* CBP: CurrentBufferPointer */
-
-                        irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
-
-                        if (*((uint8_t *)(irp->setup)) & 0x80)
-                        {
-                            /* SETUP IN: (1<<7) Device to host */
-                            nbBytes = irp->size;
-                            stop = 0;
-                            do
+                        nbBytes = irp->size;
+                        stop = 0;
+//                        do
+//                        {
+//                            if (nbBytes > pipe->endpointSize)
+//                            {
+//                                tosend = pipe->endpointSize;
+//                            }
+//                            else
                             {
-                                if (nbBytes > pipe->endpointSize)
-                                {
-                                    tosend = pipe->endpointSize;
-                                }
-                                else
-                                {
-                                    tosend = nbBytes;
-                                }
-                                idx++;
-                                idx_plus = idx + 1;
-
-                                /* The host sends an IN packet to allow the device to send the descriptor. */
-                                /* IN transaction */
-                                /* Setup DATA IN packet */
-                                _DRV_USB_UHP_OHCI_HOST_CreateQTD(&OHCI_QueueTD[pipe->hostEndpoint][idx], /* Transfer Descriptor address */
-                                                &OHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* NextTD */
-                                                (++DToggle)|0x02,        /* T: DataToggle value is taken from the LSb of this field. */
-                                                tosend,                  /* BE: BufferEnd: Total Bytes to transfer */
-                                                2,                       /* DP: Direction/PID: IN=2 */
-                                                1,                       /* R: bufferRounding: data packet may be smaller than the defined buffer. */
-                                                (uint32_t *)(USBBufferNoCache[pipe->hostEndpoint] + irp->completedBytes)); /* CBP: CurrentBufferPointer */
-
-                                if (nbBytes > pipe->endpointSize)
-                                {
-                                    nbBytes -= pipe->endpointSize;
-                                    irp->completedBytes += pipe->endpointSize;
-                                }
-                                else
-                                {
-                                    stop = 1;
-                                    irp->completedBytes += irp->size;
-                                }
-                            } while (stop == 0);
-
-                            /* The host issues an OUT zero length packet (ZLP) to acknowledge reception of the descriptor. */
+                                tosend = nbBytes;
+                            }
                             idx++;
-                            idx_plus = idx + 1;
-
-                            /* Setup STATUS OUT packet */
-                            _DRV_USB_UHP_OHCI_HOST_CreateQTD(&OHCI_QueueTD[pipe->hostEndpoint][idx], /* Transfer Descriptor address */
-                                            &OHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* NextTD */
-                                            3,        /* T: DataToggle, STATUS is always DATA1 */
-                                            0,        /* BE: BufferEnd: Total Bytes to transfer: ZLP */
-                                            1,        /* DP: Direction/PID: OUT=1 */
-                                            0,        /* R: bufferRounding: exactly fill the defined data buffer */
-                                            NULL);    /* CBP: CurrentBufferPointer ZLP */
-                        }
-                        else
-                        {
-                            /* SETUP OUT: (1<<7) Host to Device */
-                            if (irp->size != 0)
+                            if( idx == DRV_USB_UHP_MAX_TRANSACTION)
                             {
-                                /* OUT Packet */
-                                idx++;
-                                idx_plus = idx + 1;
-
-                                point = (uint8_t *)irp->data;
-                                for (i = 0; i < irp->size; i++)
-                                {
-                                    USBBufferNoCache[pipe->hostEndpoint][i] = point[i];
-                                }
-
-                                /* Setup DATA OUT Packet */
-                                _DRV_USB_UHP_OHCI_HOST_CreateQTD(&OHCI_QueueTD[pipe->hostEndpoint][idx], /* Transfer Descriptor address */
-                                                &OHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* NextTD */
-                                                3,          /* T: DataToggle value is taken from the LSb of this field. */
-                                                irp->size,  /* BE: BufferEnd: Total Bytes to transfer */
-                                                1,          /* DP: Direction/PID: OUT=1 */
-                                                0,          /* R: bufferRounding: exactly fill the defined data buffer */
-                                                (uint32_t *)USBBufferNoCache[pipe->hostEndpoint]); /* Setup DATA OUT Packet */
-                                DCACHE_CLEAN_BY_ADDR((uint32_t *)irp->data, sizeof(irp->data));
+                                idx = 0;
+                            }
+                            idx_plus = idx + 1;
+                            if( idx_plus == DRV_USB_UHP_MAX_TRANSACTION)
+                            {
+                                idx_plus = 0;
                             }
 
-                            idx++;
-                            idx_plus = idx + 1;
-
-                            /* Setup STATUS IN Packet (ZLP) */
+                            /* The host sends an IN packet to allow the device to send the descriptor. */
+                            /* IN transaction */
+                            /* Setup DATA IN packet */
                             _DRV_USB_UHP_OHCI_HOST_CreateQTD(&OHCI_QueueTD[pipe->hostEndpoint][idx], /* Transfer Descriptor address */
                                             &OHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* NextTD */
-                                            3,     /* T: DataToggle value is taken from the LSb of this field. */
-                                            0,     /* BE: BufferEnd: Total Bytes to transfer: ZLP */
-                                            2,     /* DP: Direction/PID: IN=2 */
-                                            0,     /* R: bufferRounding: exactly fill the defined data buffer */
-                                            NULL); /* CBP: CurrentBufferPointer ZLP */
+                                            (++DToggle)|0x02,        /* T: DataToggle value is taken from the LSb of this field. */
+                                            tosend,                  /* BE: BufferEnd: Total Bytes to transfer */
+                                            2,                       /* DP: Direction/PID: IN=2 */
+                                            1,                       /* R: bufferRounding: data packet may be smaller than the defined buffer. */
+                                            (uint32_t *)(USBBufferNoCache[pipe->hostEndpoint] + irp->completedBytes)); /* CBP: CurrentBufferPointer */
+
+//                            if (nbBytes > pipe->endpointSize)
+//                            {
+//                                nbBytes -= pipe->endpointSize;
+//                                irp->completedBytes += pipe->endpointSize;
+//                            }
+//                            else
+                            {
+//                                stop = 1;
+                                irp->completedBytes += irp->size;
+                            }
+//                        } while (stop == 0);
+
+                        /* The host issues an OUT zero length packet (ZLP) to acknowledge reception of the descriptor. */
+                        idx++;
+                        if( idx == DRV_USB_UHP_MAX_TRANSACTION)
+                        {
+                            idx = 0;
+                        }
+                        idx_plus = idx + 1;
+                        if( idx_plus == DRV_USB_UHP_MAX_TRANSACTION)
+                        {
+                            idx_plus = 0;
                         }
 
-                        /* Set previous next td to the dummy */
-                        /* Dword 2: Next TD (NextTD) */
-                        OHCI_QueueTD[pipe->hostEndpoint][idx].NextTD = (uint32_t)&OHCI_QueueTD[pipe->hostEndpoint][DRV_USB_UHP_MAX_TRANSACTION-1] & 0xFFFFFFF0;  /* NextTD */
-
-                        /* Create new dummy qTD */
-                        _DRV_USB_UHP_OHCI_HOST_CreateQTD(&OHCI_QueueTD[pipe->hostEndpoint][DRV_USB_UHP_MAX_TRANSACTION-1], /* Transfer Descriptor address */
-                                        NULL,               /* NextTD */
-                                        0,                  /* T: DataToggle acquired from the toggleCarry field in the ED */
-                                        0,                  /* BE: BufferEnd: Total Bytes to transfer: ZLP */
-                                        1,                  /* DP: Direction/PID: OUT=1 */
-                                        0,                  /* R: bufferRounding: exactly fill the defined data buffer */
-                                        NULL);              /* CBP: CurrentBufferPointer ZLP */
-
-                        /* Create Queue Head for the command: */
-                        /* Dword 1, TailP: TDQueueTailPointer */
-                        OHCI_QueueHead[pipe->hostEndpoint].TailP = ((uint32_t)&OHCI_QueueTD[pipe->hostEndpoint][DRV_USB_UHP_MAX_TRANSACTION-1]);
-                        /* Dword 2, TD Queue Head Pointer (HeadP) */
-                        OHCI_QueueHead[pipe->hostEndpoint].HeadP = (OHCI_QueueHead[pipe->hostEndpoint].HeadP & (~0xFFFFFFFD)) | /* clear all but not C */
-                                                                   (((uint32_t)&OHCI_QueueTD[pipe->hostEndpoint][0]) & 0xFFFFFFF2); /* HeadP: TDQueueHeadPointer */
-                        /* C: toggleCarry: This bit is the data toggle carry bit. */
-
-                        /* The size of the data buffer  should not be larger than MaximumPacketSize
-                         * from the Endpoint Descriptor (this is not checked by the Host Controller and
-                         * transmission problems occur if software violates this restriction). */
-                        QHToProceed = (uint32_t *)&OHCI_QueueHead[pipe->hostEndpoint];
-
+                        /* Setup STATUS OUT packet */
+                        _DRV_USB_UHP_OHCI_HOST_CreateQTD(&OHCI_QueueTD[pipe->hostEndpoint][idx], /* Transfer Descriptor address */
+                                        &OHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* NextTD */
+                                        3,        /* T: DataToggle, STATUS is always DATA1 */
+                                        0,        /* BE: BufferEnd: Total Bytes to transfer: ZLP */
+                                        1,        /* DP: Direction/PID: OUT=1 */
+                                        0,        /* R: bufferRounding: exactly fill the defined data buffer */
+                                        NULL);    /* CBP: CurrentBufferPointer ZLP */
                     }
+                    else
+                    {
+                        /* SETUP OUT: (1<<7) Host to Device */
+
+                        if (irp->size != 0)
+                        {
+                            /* OUT Packet */
+                            idx++;
+                            if( idx == DRV_USB_UHP_MAX_TRANSACTION)
+                            {
+                                idx = 0;
+                            }
+                            idx_plus = idx + 1;
+                            if( idx_plus == DRV_USB_UHP_MAX_TRANSACTION)
+                            {
+                                idx_plus = 0;
+                            }
+
+                            point = (uint8_t *)irp->data;
+                            for (i = 0; i < irp->size; i++)
+                            {
+                                USBBufferNoCache[pipe->hostEndpoint][i] = point[i];
+                            }
+
+                            /* Setup DATA OUT Packet */
+                            _DRV_USB_UHP_OHCI_HOST_CreateQTD(&OHCI_QueueTD[pipe->hostEndpoint][idx], /* Transfer Descriptor address */
+                                            &OHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* NextTD */
+                                            3,          /* T: DataToggle value is taken from the LSb of this field. */
+                                            irp->size,  /* BE: BufferEnd: Total Bytes to transfer */
+                                            1,          /* DP: Direction/PID: OUT=1 */
+                                            0,          /* R: bufferRounding: exactly fill the defined data buffer */
+                                            (uint32_t *)USBBufferNoCache[pipe->hostEndpoint]); /* Setup DATA OUT Packet */
+                        }
+
+                        idx++;
+                        if( idx == DRV_USB_UHP_MAX_TRANSACTION)
+                        {
+                            idx = 0;
+                        }
+                        idx_plus = idx + 1;
+                        if( idx_plus == DRV_USB_UHP_MAX_TRANSACTION)
+                        {
+                            idx_plus = 0;
+                        }
+
+                        /* Setup STATUS IN Packet (ZLP) */
+                        _DRV_USB_UHP_OHCI_HOST_CreateQTD(&OHCI_QueueTD[pipe->hostEndpoint][idx], /* Transfer Descriptor address */
+                                        &OHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* NextTD */
+                                        3,     /* T: DataToggle value is taken from the LSb of this field. */
+                                        0,     /* BE: BufferEnd: Total Bytes to transfer: ZLP */
+                                        2,     /* DP: Direction/PID: IN=2 */
+                                        0,     /* R: bufferRounding: exactly fill the defined data buffer */
+                                        NULL); /* CBP: CurrentBufferPointer ZLP */
+                    }
+
+                    /* Create new dummy qTD */
+                    idx++;
+                    if( idx == DRV_USB_UHP_MAX_TRANSACTION)
+                    {
+                        idx = 0;
+                    }
+                    _DRV_USB_UHP_OHCI_HOST_CreateQTD(&OHCI_QueueTD[pipe->hostEndpoint][idx], /* Transfer Descriptor address */
+                                    NULL,               /* NextTD */
+                                    0,                  /* T: DataToggle acquired from the toggleCarry field in the ED */
+                                    0,                  /* BE: BufferEnd: Total Bytes to transfer: ZLP */
+                                    0,                  /* DP: Direction/PID */
+                                    0,                  /* R: bufferRounding: exactly fill the defined data buffer */
+                                    NULL);              /* CBP: CurrentBufferPointer ZLP */
+                    OHCI_QueueTD[pipe->hostEndpoint][idx].Control.td_control = 0;
+
+                    idx_end = idx;
+                    /* The size of the data buffer  should not be larger than MaximumPacketSize
+                     * from the Endpoint Descriptor (this is not checked by the Host Controller and
+                     * transmission problems occur if software violates this restriction). */
+
+                    /* Then overwrite the old dummy QTD: */
+                    idx = idx_eot;
+                    if( idx == DRV_USB_UHP_MAX_TRANSACTION)
+                    {
+                        idx = 0;
+                    }
+                    idx_plus = idx + 1;
+                    if( idx_plus == DRV_USB_UHP_MAX_TRANSACTION)
+                    {
+                        idx_plus = 0;
+                    }
+
+                    point = (uint8_t *)irp->setup;
+                    for (i = 0; i < 8; i++)
+                    {
+                        USBBufferNoCacheSetup[pipe->hostEndpoint][i] = point[i];
+                    }
+
+                    /* SETUP packet PID */
+                    _DRV_USB_UHP_OHCI_HOST_CreateQTD(&OHCI_QueueTD[pipe->hostEndpoint][idx], /* Transfer Descriptor address */
+                                    &OHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* NextTD */
+                                    0x2,                     /* T: DataToggle value is taken from the LSb of this field. */
+                                    8,                       /* BE: BufferEnd: Total Bytes to transfer */
+                                    0,                       /* DP: Direction/PID: SETUP=0 */
+                                    0,                       /* R: bufferRounding: exactly fill the defined data buffer */
+                                    (uint32_t *)USBBufferNoCacheSetup[pipe->hostEndpoint]); /* CBP: CurrentBufferPointer */
+
+                    /* 3. Advancing the TailP pointer to the new place holder */
+                    OHCI_QueueHead[pipe->hostEndpoint].TailP = ((uint32_t)&OHCI_QueueTD[pipe->hostEndpoint][idx_end]);
                 }
                 else
                 {
                     /* For non control transfers, if this is the first
                      * irp in the queue, then we can start the irp */
-                    irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
-                    irp->tempState = DRV_USB_UHP_HOST_IRP_STATE_PROCESSING;
 
-                    point = (uint8_t *)irp->data;
-                    for (i = 0; i < irp->size; i++)
-                    {
-                        USBBufferNoCache[pipe->hostEndpoint][i] = point[i];
-                    }
+                    irp->tempState = DRV_USB_UHP_HOST_IRP_STATE_PROCESSING;
 
                     if( (pipe->endpointAndDirection & 0x80) == 0 )
                     {
-                        /* Host to Device: OUT */
+                       /* Host to Device: OUT */
+                       /* Find the last QTD to be filled */
+                       div = irp->size / pipe->endpointSize;
+                       if( (irp->size % pipe->endpointSize) != 0 )
+                       {
+                          div++;
+                       }
+                       idx = idx + div;
+                       if( idx == DRV_USB_UHP_MAX_TRANSACTION)
+                       {
+                           idx = 0;
+                       }
+                       idx_end = idx;
+                       /* Create new dummy qTD */
+                       _DRV_USB_UHP_OHCI_HOST_CreateQTD(&OHCI_QueueTD[pipe->hostEndpoint][idx], /* Transfer Descriptor address */
+                                    NULL,               /* NextTD */
+                                    0,                  /* T: DataToggle acquired from the toggleCarry field in the ED */
+                                    0,                  /* BE: BufferEnd: Total Bytes to transfer: ZLP */
+                                    0,                  /* DP: Direction/PID: OUT=1 */
+                                    0,                  /* R: bufferRounding: exactly fill the defined data buffer */
+                                    NULL);              /* CBP: CurrentBufferPointer ZLP */
+                        OHCI_QueueTD[pipe->hostEndpoint][idx].Control.td_control = 0;
 
-                        /* Data is moving from device to host
-                         * We need to set the Rx Packet Request bit */
+                        /* Then overwrite the old dummy QTD: */
+                        idx = idx_eot;
+                        if( idx == DRV_USB_UHP_MAX_TRANSACTION)
+                        {
+                            idx = 0;
+                        }
+                        idx_plus = idx + 1;
+                        if( idx_plus == DRV_USB_UHP_MAX_TRANSACTION)
+                        {
+                            idx_plus = 0;
+                        }
+
+                        point = (uint8_t *)irp->data;
+                        for (i = 0; i < irp->size; i++)
+                        {
+                            USBBufferNoCache[pipe->hostEndpoint][i] = point[i];
+                        }
+
                         nbBytes = irp->size;
                         stop = 0;
-                        do
-                        {
-                            if (nbBytes > pipe->endpointSize)
-                            {
-                                tosend = pipe->endpointSize;
-                            }
-                            else
+//                        do
+//                        {
+//                            if (nbBytes > pipe->endpointSize)
+//                            {
+//                                tosend = pipe->endpointSize;
+//                            }
+//                            else
                             {
                                 tosend = nbBytes;
                             }
@@ -1408,187 +1328,179 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
                             /* Host to Device: OUT */
                             _DRV_USB_UHP_OHCI_HOST_CreateQTD(&OHCI_QueueTD[pipe->hostEndpoint][idx], /* Transfer Descriptor address */
                                             &OHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* NextTD */
-                                            hDriver->hostEndpointTable[pipe->hostEndpoint].endpoint.staticDToggleOut|0x2,  /* data toggle */
+                                            0,                       /* data toggle */
                                             tosend,                  /* BE: BufferEnd: Total Bytes to transfer */
                                             1,                       /* DP: Direction/PID: OUT=1 */
                                             0,                       /* R: bufferRounding: exactly fill the defined data buffer */
                                         (uint32_t *)(USBBufferNoCache[pipe->hostEndpoint] + irp->completedBytes)); /* CBP: CurrentBufferPointer */
-
-                            hDriver->hostEndpointTable[pipe->hostEndpoint].endpoint.staticDToggleOut++;  /* data toggle */
                             idx++;
-                            idx_plus = idx + 1;
-                            if (nbBytes > pipe->endpointSize)
+                            if( idx == DRV_USB_UHP_MAX_TRANSACTION)
                             {
-                                nbBytes -= pipe->endpointSize;
-                                irp->completedBytes += pipe->endpointSize;
+                                idx = 0;
                             }
-                            else
+                            idx_plus = idx + 1;
+                            if( idx_plus == DRV_USB_UHP_MAX_TRANSACTION)
                             {
-                                stop = 1;
+                                idx_plus = 0;
+                            }
+
+//                            if (nbBytes > pipe->endpointSize)
+//                            {
+//                                nbBytes -= pipe->endpointSize;
+//                                irp->completedBytes += pipe->endpointSize;
+//                            }
+//                            else
+                            {
+//                                stop = 1;
                                 irp->completedBytes += irp->size;
                             }
-                        } while (stop == 0);
+//                        } while (stop == 0);
 
-                        /* Set previous next td to the dummy */
-                        /* Dword 2: Next TD (NextTD) */
-                        OHCI_QueueTD[pipe->hostEndpoint][idx-1].NextTD = (uint32_t)&OHCI_QueueTD[pipe->hostEndpoint][DRV_USB_UHP_MAX_TRANSACTION-1] & 0xFFFFFFF0;  /* NextTD */
-
-                        /* If TailP and HeadP are the same, then the list contains no TD that the HC can process. */
-                        /* NULL Packet */
-                        _DRV_USB_UHP_OHCI_HOST_CreateQTD(&OHCI_QueueTD[pipe->hostEndpoint][DRV_USB_UHP_MAX_TRANSACTION-1], /* Transfer Descriptor address */
-                                        NULL,               /* NextTD */
-                                        0,                  /* T: DataToggle acquired from the toggleCarry field in the ED */
-                                        0,                  /* BE: BufferEnd: Total Bytes to transfer: ZLP */
-                                        1,                  /* DP: Direction/PID: OUT=1 */
-                                        0,                  /* R: bufferRounding: exactly fill the defined data buffer */
-                                        NULL);              /* CBP: CurrentBufferPointer ZLP */
-
-                        /* Create Queue Head for the command: */
-                        /* Dword 1, TailP: TDQueueTailPointer */
-                        OHCI_QueueHead[pipe->hostEndpoint].TailP = ((uint32_t)&OHCI_QueueTD[pipe->hostEndpoint][DRV_USB_UHP_MAX_TRANSACTION-1]);
-                        /* Dword 2, TD Queue Head Pointer (HeadP) */
-                        OHCI_QueueHead[pipe->hostEndpoint].HeadP = (OHCI_QueueHead[pipe->hostEndpoint].HeadP & (~0xFFFFFFFD)) | /* clear all but not C */
-                                                                   (((uint32_t)&OHCI_QueueTD[pipe->hostEndpoint][0]) & 0xFFFFFFF2); /* HeadP: TDQueueHeadPointer */
-
-
-                        QHToProceed = (uint32_t *)&OHCI_QueueHead[pipe->hostEndpoint];
+                        /* 3. Advancing the TailP pointer to the new place holder */
+                        OHCI_QueueHead[pipe->hostEndpoint].TailP = ((uint32_t)&OHCI_QueueTD[pipe->hostEndpoint][idx_end]);
                     }
                     else
                     {
                         /* Device to Host: IN */
-                        /* Data is moving from host to device. We
-                         * need to copy data into the FIFO and
-                         * then and set the TX request bit. If the
-                         * IRP size is greater than endpoint size then
-                         * we must packetize. */
+                        /* Find the last QTD to be filled */
+                        div = irp->size / pipe->endpointSize;
+                        if( (irp->size % pipe->endpointSize) != 0 )
+                        {
+                           div++;
+                        }
+                        idx = idx + div;
+                        if( idx == DRV_USB_UHP_MAX_TRANSACTION)
+                        {
+                            idx = 0;
+                        }
+                        idx_end = idx;
+                        /* Create new dummy qTD */
+                        _DRV_USB_UHP_OHCI_HOST_CreateQTD(&OHCI_QueueTD[pipe->hostEndpoint][idx], /* Transfer Descriptor address */
+                                    NULL,               /* NextTD */
+                                    0,                  /* T: DataToggle acquired from the toggleCarry field in the ED */
+                                    0,                  /* BE: BufferEnd: Total Bytes to transfer: ZLP */
+                                    0,                  /* DP: Direction/PID: OUT=1 */
+                                    0,                  /* R: bufferRounding: exactly fill the defined data buffer */
+                                    NULL);              /* CBP: CurrentBufferPointer ZLP */
+                        OHCI_QueueTD[pipe->hostEndpoint][idx].Control.td_control = 0;
+
+                        /* Then overwrite the old dummy QTD: */
+                        idx = idx_eot;
+                        if( idx == DRV_USB_UHP_MAX_TRANSACTION)
+                        {
+                            idx = 0;
+                        }
+                        idx_plus = idx + 1;
+                        if( idx_plus == DRV_USB_UHP_MAX_TRANSACTION)
+                        {
+                            idx_plus = 0;
+                        }
+
                         nbBytes = irp->size;
                         stop = 0;
-                        do
-                        {
-                            if (nbBytes > pipe->endpointSize)
-                            {
-                                tosend = pipe->endpointSize;
-                            }
-                            else
+//                        do
+//                        {
+//                            if (nbBytes > pipe->endpointSize)
+//                            {
+//                                tosend = pipe->endpointSize;
+//                            }
+//                            else
                             {
                                 tosend = nbBytes;
                             }
                             /* IN */
                             _DRV_USB_UHP_OHCI_HOST_CreateQTD(&OHCI_QueueTD[pipe->hostEndpoint][idx], /* Transfer Descriptor address */
                                             &OHCI_QueueTD[pipe->hostEndpoint][idx_plus], /* NextTD */
-                                            hDriver->hostEndpointTable[pipe->hostEndpoint].endpoint.staticDToggleIn|0x2,  /* data toggle */
+                                            0,                       /* T: DataToggle acquired from the toggleCarry field in the ED */
                                             tosend,                  /* BE: BufferEnd: Total Bytes to transfer */
                                             2,                       /* DP: Direction/PID: IN=2 */
                                             0,                       /* R: bufferRounding: exactly fill the defined data buffer */
                                             (uint32_t *)(USBBufferNoCache[pipe->hostEndpoint] + irp->completedBytes)); /* CBP: CurrentBufferPointer */
-
-                            hDriver->hostEndpointTable[pipe->hostEndpoint].endpoint.staticDToggleIn++;  /* data toggle */
                             idx++;
-                            idx_plus = idx + 1;
-                            if (nbBytes > pipe->endpointSize)
+                            if( idx == DRV_USB_UHP_MAX_TRANSACTION)
                             {
-                                nbBytes -= pipe->endpointSize;
-                                irp->completedBytes += pipe->endpointSize;
+                                idx = 0;
                             }
-                            else
+                            idx_plus = idx + 1;
+                            if( idx_plus == DRV_USB_UHP_MAX_TRANSACTION)
                             {
-                                stop = 1;
+                                idx_plus = 0;
+                            }
+//                            if (nbBytes > pipe->endpointSize)
+//                            {
+//                                nbBytes -= pipe->endpointSize;
+//                                irp->completedBytes += pipe->endpointSize;
+//                            }
+//                            else
+                            {
+//                                stop = 1;
                                 irp->completedBytes += irp->size;
                             }
-                        } while (stop == 0);
-
-                        /* Set previous next td to the dummy */
-                        /* Dword 2: Next TD (NextTD) */
-                        OHCI_QueueTD[pipe->hostEndpoint][idx-1].NextTD = (uint32_t)&OHCI_QueueTD[pipe->hostEndpoint][DRV_USB_UHP_MAX_TRANSACTION-1] & 0xFFFFFFF0;  /* NextTD */
-
-                        /* If TailP and HeadP are the same, then the list contains no TD that the HC can process. */
-                        /* NULL Packet */
-                        _DRV_USB_UHP_OHCI_HOST_CreateQTD(&OHCI_QueueTD[pipe->hostEndpoint][DRV_USB_UHP_MAX_TRANSACTION-1], /* Transfer Descriptor address */
-                                        NULL,               /* NextTD */
-                                        0,                  /* T: DataToggle acquired from the toggleCarry field in the ED */
-                                        0,                  /* BE: BufferEnd: Total Bytes to transfer: ZLP */
-                                        2,                  /* DP: Direction/PID: IN=2 */
-                                        0,                  /* R: bufferRounding: exactly fill the defined data buffer */
-                                        NULL);              /* CBP: CurrentBufferPointer ZLP */
+//                        } while (stop == 0);
 
 
-                        /* Create Queue Head for the command: */
-                        /* Dword 1, TailP: TDQueueTailPointer */
-                        OHCI_QueueHead[pipe->hostEndpoint].TailP = ((uint32_t)&OHCI_QueueTD[pipe->hostEndpoint][DRV_USB_UHP_MAX_TRANSACTION-1]);
-                        /* Dword 2, TD Queue Head Pointer (HeadP) */
-                        OHCI_QueueHead[pipe->hostEndpoint].HeadP = (OHCI_QueueHead[pipe->hostEndpoint].HeadP & (~0xFFFFFFFD)) | /* clear all but not C */
-                                                                   (((uint32_t)&OHCI_QueueTD[pipe->hostEndpoint][0]) & 0xFFFFFFF2); /* HeadP: TDQueueHeadPointer */
-
-
-                        QHToProceed = (uint32_t *)&OHCI_QueueHead[pipe->hostEndpoint];
+                        /* 3. Advancing the TailP pointer to the new place holder */
+                        OHCI_QueueHead[pipe->hostEndpoint].TailP = ((uint32_t)&OHCI_QueueTD[pipe->hostEndpoint][idx_end]);
                     }
                 }
-
                 OHCI_QueueHead[pipe->hostEndpoint].Control.sKip = 0;  /* SKIP */
+//                OHCI_QueueHead[pipe->hostEndpoint].HeadP &= ~1;  /* remove Halt */
                 __DSB();
-                if( QHToProceed != NULL )
+
+                /*
+                 * if( pipe->pipeType == USB_TRANSFER_TYPE_INTERRUPT )
+                 * {
+                 *     programming of HccaInterruptTable
+                 *     An ED that is in only one list has a polling rate of once every 32 ms.
+                 *     for( uint8_t i=0; i<32; i++)
+                 *     {
+                 *         HCCA.UHP_HccaInterruptTable[i] = (uint32_t)QHToProceed;
+                 *     }
+                 *     HCCA.UHP_HccaInterruptTable[31] = (uint32_t)QHToProceed;
+                 *     HcPeriodicStart
+                 *     PeriodCurrentED
+                 *     HcPeriodicStart Register
+                 *     PeriodicListEnable: enable the processing of the periodic list
+                 *     usbIDOHCI->UHP_OHCI_HCCONTROL |= UHP_OHCI_HCCONTROL_PLE_Msk;
+                 * }
+                 * else */
+                if( pipe->pipeType == USB_TRANSFER_TYPE_ISOCHRONOUS )
                 {
-                    /*
-                     * if( pipe->pipeType == USB_TRANSFER_TYPE_INTERRUPT )
-                     * {
-                     *     programming of HccaInterruptTable
-                     *     An ED that is in only one list has a polling rate of once every 32 ms.
-                     *     for( uint8_t i=0; i<32; i++)
-                     *     {
-                     *         HCCA.UHP_HccaInterruptTable[i] = (uint32_t)QHToProceed;
-                     *     }
-                     *     HCCA.UHP_HccaInterruptTable[31] = (uint32_t)QHToProceed;
-                     *     HcPeriodicStart
-                     *     PeriodCurrentED
-                     *     HcPeriodicStart Register
-                     *     PeriodicListEnable: enable the processing of the periodic list
-                     *     usbIDOHCI->UHP_OHCI_HCCONTROL |= UHP_OHCI_HCCONTROL_PLE_Msk;
-                     * }
-                     * else */
-                    if( pipe->pipeType == USB_TRANSFER_TYPE_ISOCHRONOUS )
-                    {
-                        /* IsochronousEnable: enable/disable processing of isochronous EDs */
-                        usbIDOHCI->UHP_OHCI_HCCONTROL |= UHP_OHCI_HCCONTROL_IE_Msk;
+                    /* IsochronousEnable: enable/disable processing of isochronous EDs */
+                    usbIDOHCI->UHP_OHCI_HCCONTROL |= UHP_OHCI_HCCONTROL_IE_Msk;
 
-                        /* Change Format in Endpoint Descriptor
-                         * IsochronousListEnable */
-                    }
-                    else if(( pipe->pipeType == USB_TRANSFER_TYPE_BULK )
-                         || ( pipe->pipeType == USB_TRANSFER_TYPE_INTERRUPT ) )
-                    {
-                        /* BulkListFilled: programming HcCommandStatus Register */
-                        usbIDOHCI->UHP_OHCI_HCCOMMANDSTATUS |= UHP_OHCI_HCCOMMANDSTATUS_BLF_Msk;
-
-                        /* BulkListEnable: Enable the processing of the Bulk list in the next Frame */
-                        usbIDOHCI->UHP_OHCI_HCCONTROL |= UHP_OHCI_HCCONTROL_BLE_Msk;
-                    }
-                    else
-                    {
-                        /* USB_TRANSFER_TYPE_CONTROL */
-                        /* ControlListFilled: programming HcCommandStatus Register */
-                        usbIDOHCI->UHP_OHCI_HCCOMMANDSTATUS |= UHP_OHCI_HCCOMMANDSTATUS_CLF_Msk;
-
-                        /* ControlListEnable: Enable the processing of the Control list in the next Frame */
-                        usbIDOHCI->UHP_OHCI_HCCONTROL |= UHP_OHCI_HCCONTROL_CLE_Msk;
-                    }
-
-                    __DMB();
-                    __ISB();
-
-                    /* Enable interrupts */
-                    usbIDOHCI->UHP_0HCI_HCINTERRUPTENABLE = UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_SO   |   /* SchedulingOverrun */
-                                                            UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_WDH  |   /* WritebackDoneHead */
-                                                          /*UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_SF   |*/ /* StartofFrame      */
-                                                            UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_RD   |   /* ResumeDetected    */
-                                                            UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_UE   |   /* UnrecoverableError  */
-                                                            UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_FNO  |   /* FrameNumberOverflow */
-                                                            UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_RHSC |   /* RootHubStatusChange */
-                                                            UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_OC   |   /* OwnershipChange     */
-                                                            UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_MIE;     /* MasterInterruptEnable */
-
-                    irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
-                    returnValue = USB_ERROR_NONE;
+                    /* Change Format in Endpoint Descriptor
+                     * IsochronousListEnable */
                 }
+                else if(( pipe->pipeType == USB_TRANSFER_TYPE_BULK )
+                     || ( pipe->pipeType == USB_TRANSFER_TYPE_INTERRUPT ) )
+                {
+                    /* BulkListFilled: programming HcCommandStatus Register */
+                    usbIDOHCI->UHP_OHCI_HCCOMMANDSTATUS |= UHP_OHCI_HCCOMMANDSTATUS_BLF_Msk;
+                }
+                else
+                {
+                    /* USB_TRANSFER_TYPE_CONTROL */
+                    /* ControlListFilled: programming HcCommandStatus Register */
+                    usbIDOHCI->UHP_OHCI_HCCOMMANDSTATUS |= UHP_OHCI_HCCOMMANDSTATUS_CLF_Msk;
+                }
+
+                __DMB();
+                __ISB();
+
+                /* Enable interrupts */
+                usbIDOHCI->UHP_0HCI_HCINTERRUPTENABLE = UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_SO   |   /* SchedulingOverrun */
+                                                        UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_WDH  |   /* WritebackDoneHead */
+                                                      /*UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_SF   |*/ /* StartofFrame      */
+                                                        UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_RD   |   /* ResumeDetected    */
+                                                        UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_UE   |   /* UnrecoverableError  */
+                                                        UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_FNO  |   /* FrameNumberOverflow */
+                                                        UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_RHSC |   /* RootHubStatusChange */
+                                                        UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_OC   |   /* OwnershipChange     */
+                                                        UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_MIE;     /* MasterInterruptEnable */
+
+                irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
+                returnValue = USB_ERROR_NONE;
             }
             else
             {
@@ -1609,10 +1521,7 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
 
             if(!hDriver->isInInterruptContext)
             {
-                if(controlTransferGroup->interruptWasEnabled)
-                {
-                    _DRV_USB_UHP_InterruptSourceEnable(hDriver->interruptSource);
-                }
+                _DRV_USB_UHP_InterruptSourceEnable(hDriver->interruptSource);
 
                 if(OSAL_MUTEX_Unlock(&hDriver->mutexID) != OSAL_RESULT_TRUE)
                 {
@@ -1624,54 +1533,6 @@ USB_ERROR DRV_USB_UHP_OHCI_HOST_IRPSubmit
     }
     return (returnValue);
 }/* end of DRV_USB_UHP_OHCI_HOST_IRPSubmit() */
-
-
-// *****************************************************************************
-/* Function:
-    void DRV_USB_UHP_OHCI_HOST_DisableControlList(DRV_USB_UHP_OBJ *hDriver)
-
-  Summary:
-    Disable the processing of the Control list
-
-  Description:
-    Disable the processing of the Control list
-
-  Remarks:
-    See drv_xxx.h for usage information.
-*/
-void DRV_USB_UHP_OHCI_HOST_DisableControlList(DRV_USB_UHP_OBJ *hDriver)
-{
-    volatile UhpOhci *usbIDOHCI;
-
-    usbIDOHCI = hDriver->usbIDOHCI;
-
-    /* Disable Asynchronous list */
-    usbIDOHCI->UHP_OHCI_HCCONTROL &= ~UHP_OHCI_HCCONTROL_CLE_Msk;
-}
-
-
-// *****************************************************************************
-/* Function:
-    void DRV_USB_UHP_OHCI_HOST_DisableBulkList(DRV_USB_UHP_OBJ *hDriver)
-
-  Summary:
-    Disable the processing of the Bulk list
-
-  Description:
-    Disable the processing of the Bulk list
-
-  Remarks:
-    See drv_xxx.h for usage information.
-*/
-void DRV_USB_UHP_OHCI_HOST_DisableBulkList(DRV_USB_UHP_OBJ *hDriver)
-{
-    volatile UhpOhci *usbIDOHCI;
-
-    usbIDOHCI = hDriver->usbIDOHCI;
-
-    /* Disable Asynchronous list */
-    usbIDOHCI->UHP_OHCI_HCCONTROL &= ~UHP_OHCI_HCCONTROL_BLE_Msk;
-}
 
 
 // *****************************************************************************
@@ -1692,9 +1553,11 @@ void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver)
     volatile UhpOhci *usbIDOHCI = hDriver->usbIDOHCI;
     uint32_t read_data;
     uint32_t i, j;
+    uint32_t old_it;
     uint32_t td;
     uint32_t ContextInfo;
     volatile uint32_t test=0;
+    OHCIQueueTDDescriptor *done_td;
 
     if ((uint32_t)HCCA.UHP_HccaDoneHead != 0 )
     {
@@ -1755,13 +1618,13 @@ void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver)
     }
     /*
      * Processor interrupts could be enabled here and the interrupt dismissed at the interrupt
-     * controller, but for simplicity this code won?t.
+     * controller, but for simplicity this code won t.
      */
     if (ContextInfo & UHP_OHCI_HCINTERRUPTSTATUS_RD_Msk)
     {
         /*
          * Resume has been requested by a device on USB. HCD must wait 20ms then put controller in the
-         * UsbOperational state. This code is left as an exercise to the reader.
+         * UsbOperational state.
          */
         SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rOHCI IRQ: Resume Detected");
         ContextInfo &= ~UHP_OHCI_HCINTERRUPTSTATUS_RD_Msk;
@@ -1773,38 +1636,51 @@ void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver)
      */
     if (ContextInfo & UHP_OHCI_HCINTERRUPTSTATUS_WDH_Msk)
     {
-        if(hDriver->deviceSpeed == USB_SPEED_LOW)
+//        if(hDriver->deviceSpeed == USB_SPEED_LOW)
+//        {
+//            /* Patch for low speed device. */
+//            test=0;
+//            while( test < 9000 )
+//            {
+//                test++;
+//            }
+//        }
+        //td = ((uint32_t)HCCA.UHP_HccaDoneHead & 0xFFFFFFFC);
+        td = (uint32_t)HCCA.UHP_HccaDoneHead & ~1;
+        /* UHP_HccaDoneHead can be updated */
+        usbIDOHCI->UHP_OHCI_HCINTERRUPTSTATUS = UHP_OHCI_HCINTERRUPTSTATUS_WDH_Msk;
+	    /* Process done queue (reversed order) */
+        while (td)
         {
-            /* Patch for low speed device. */
-            test=0;
-            while( test < 9000 )
+            done_td = (OHCIQueueTDDescriptor *)(td);
+
+            for(i=0; i<DRV_USB_UHP_PIPES_NUMBER-1; i++)
             {
-                test++;
-            }
-        }
-        td = ((uint32_t)HCCA.UHP_HccaDoneHead & 0xFFFFFFFC);
-        if( td != 0)
-        {
-            for(i=0; i<DRV_USB_UHP_PIPES_NUMBER; i++)
-            {
-                if( (uint32_t)td < OHCI_QueueHead[i].TailP)
+                if( td < (uint32_t)&OHCI_QueueTD[i+1])
                 {
-                    hDriver->hostEndpointTable[i].endpoint.intXfrQtdComplete = 1;
-                    hDriver->blockPipe = 0;
-                    if( _DRV_USB_UHP_OHCI_HOST_TestTD() == 4)
+                    if( old_it != i )
                     {
-                        /* Stall detected */
-                        hDriver->hostEndpointTable[i].endpoint.intXfrQtdComplete = 0xFF;
+                        old_it = i;
+                        gDrvUSBHostPipeObj[i].intXfrQtdComplete = 1;
+                        hDriver->blockPipe = 0;
+                        if( _DRV_USB_UHP_OHCI_HOST_TestTD() == 4)   /* Todo: Test LSB of UHP_HccaDoneHead */
+                        {
+                            /* Stall detected */
+                            gDrvUSBHostPipeObj[i].intXfrQtdComplete = 0xFF;
+                        }
+                        DRV_USB_UHP_TransferProcess(hDriver, i);
                     }
-                    DRV_USB_UHP_TransferProcess(hDriver, i);
+                    break;
                 }
             }
+            /* Advance pointer to next TD. */
+            td = done_td->NextTD;
         }
+
         /*
          * Done Queue processing complete, notify controller
          */
         HCCA.UHP_HccaDoneHead = 0;
-        usbIDOHCI->UHP_OHCI_HCINTERRUPTSTATUS = UHP_OHCI_HCINTERRUPTSTATUS_WDH_Msk;
         ContextInfo &= ~UHP_OHCI_HCINTERRUPTSTATUS_WDH_Msk;
     }
     /*
@@ -1869,12 +1745,10 @@ void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver)
                         USB_HOST_DeviceDenumerate(hDriver->attachedDeviceObjHandle);
                     }
                     hDriver->attachedDeviceObjHandle = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
-                    hDriver->controlTransferGroup.currentIRP = NULL;
-                    hDriver->controlTransferGroup.currentPipe = NULL;
                     for(j=0; j<DRV_USB_UHP_PIPES_NUMBER; j++)
                     {
-                        hDriver->hostEndpointTable[j].endpoint.staticDToggleIn = 0;  /* data toggle */
-                        hDriver->hostEndpointTable[j].endpoint.staticDToggleOut = 0;  /* data toggle */
+                        gDrvUSBHostPipeObj[j].staticDToggleIn = 0;  /* data toggle */
+                        gDrvUSBHostPipeObj[j].staticDToggleOut = 0;  /* data toggle */
                     }
 
                     hDriver->portNumber = 0;
@@ -1980,7 +1854,6 @@ void DRV_USB_UHP_OHCI_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enab
     DRV_USB_UHP_OBJ *pUSBDrvObj = (DRV_USB_UHP_OBJ *)handle;
     volatile UhpOhci *usbIDOHCI = pUSBDrvObj->usbIDOHCI;
 
-    SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nDRV_USB_UHP_OHCI_HOST_ROOT_HUB_OperationEnable");
 
     /* Check if the handle is valid or opened */
     if((handle == DRV_HANDLE_INVALID) || (!(pUSBDrvObj->isOpened)))
@@ -2019,6 +1892,4 @@ void DRV_USB_UHP_OHCI_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enab
         }
     }
 } /* end of DRV_USB_UHP_OHCI_HOST_ROOT_HUB_OperationEnable() */
-
-
 
