@@ -133,6 +133,11 @@ typedef struct _DRV_USB_UHP_HOST_PIPE_OBJ
     /* USB endpoint and direction */
     USB_ENDPOINT endpointAndDirection;
 
+    volatile uint8_t intXfrQtdComplete;
+
+    volatile uint8_t staticDToggleIn;
+    volatile uint8_t staticDToggleOut;
+
     /* USB Endpoint type */
     USB_TRANSFER_TYPE pipeType;
 
@@ -162,65 +167,6 @@ typedef struct _DRV_USB_UHP_HOST_PIPE_OBJ
     uint8_t hostEndpoint;
 }
 DRV_USB_UHP_HOST_PIPE_OBJ;
-
-/*********************************************
- * Host Transfer Group. This data structures
- * contains all pipes belonging to one tranfer
- * type.
- *********************************************/
-
-typedef struct _DRV_USB_UHP_HOST_TRANSFER_GROUP
-{
-    /* The first pipe in this transfer
-     * group */
-    DRV_USB_UHP_HOST_PIPE_OBJ * pipe;
-
-    /* The current pipe being serviced
-     * in this transfer group */
-    DRV_USB_UHP_HOST_PIPE_OBJ * currentPipe;
-
-    /* The current IRP being serviced
-     * in the pipe */
-    void * currentIRP;
-
-    /* Total number of pipes in this
-     * transfer group */
-    uint32_t nPipes;
-
-    /* Are the interrupt enable or not during transfer ? */
-    uint32_t interruptWasEnabled;
-}
-DRV_USB_UHP_HOST_TRANSFER_GROUP;
-
-
-/**********************************************
- * Host Endpoint Object.
- *********************************************/
-
-typedef struct
-{
-    /* Indicates this endpoint is in use */
-    bool inUse;
-    /* True if the Host Controller sets this bit to 1 on the completion of a USB transaction */
-    volatile uint8_t intXfrQtdComplete;
-
-    volatile uint8_t staticDToggleIn;
-    volatile uint8_t staticDToggleOut;
-
-    DRV_USB_UHP_HOST_PIPE_OBJ * pipe;
-
-}_DRV_USB_UHP_HOST_ENDPOINT;
-
-
-typedef struct
-{
-    /* A combination of two structures for
-     * each direction. */
-
-    _DRV_USB_UHP_HOST_ENDPOINT endpoint;
-
-}DRV_USB_UHP_HOST_ENDPOINT_OBJ;
-
 
 /*********************************************
  * Driver NON ISR Tasks routine states.
@@ -324,24 +270,12 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
     /* Mutex create function place holder*/
     OSAL_MUTEX_DECLARE (mutexID);
 
-    /* Pointer to the endpoint table */
-   DRV_USB_UHP_HOST_ENDPOINT_OBJ hostEndpointTable[USB_HOST_PIPES_NUMBER];
-
     /* The object is current in an interrupt context */
     bool isInInterruptContext;
-
-    /* Maintains the timer count value for host */
-    uint32_t timerCount;
 
     /* Root Hub Port 0 attached device speed in host mode
      * In device mode, the speed at which the device attached */
     USB_SPEED deviceSpeed;
-
-    /* Transfer Groups */
-    DRV_USB_UHP_HOST_TRANSFER_GROUP controlTransferGroup;
-
-    /* Tracks if the current control transfer is a zero length */
-    bool isZeroLengthControlTransfer;
 
     /* Non ISR Task Routine state */
     DRV_USB_UHP_TASK_STATE state;
@@ -391,10 +325,10 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
 extern void DRV_USB_UHP_AttachDetachStateMachine (DRV_USB_UHP_OBJ * hDriver);
 extern void DRV_USB_UHP_ResetStateMachine(DRV_USB_UHP_OBJ * hDriver);
 extern void DRV_USB_UHP_HostInitialize(DRV_USB_UHP_OBJ * drvObj, SYS_MODULE_INDEX index);
-extern void DRV_USB_UHP_TransferProcess(DRV_USB_UHP_OBJ *hDriver, uint8_t hostPipeInUse);
+extern void DRV_USB_UHP_TransferProcess(DRV_USB_UHP_OBJ *hDriver, uint8_t hostPipe);
 extern USB_SPEED DRV_USB_UHP_DeviceCurrentSpeedGet(DRV_HANDLE client);
 
-
+extern DRV_USB_UHP_HOST_PIPE_OBJ gDrvUSBHostPipeObj[DRV_USB_UHP_PIPES_NUMBER];
 extern uint8_t USBBufferNoCache[DRV_USB_UHP_PIPES_NUMBER][DRV_USB_UHP_NO_CACHE_BUFFER_LENGTH];
 extern uint8_t USBBufferNoCacheSetup[DRV_USB_UHP_PIPES_NUMBER][8];
 
