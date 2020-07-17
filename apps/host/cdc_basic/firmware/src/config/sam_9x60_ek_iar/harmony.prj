@@ -32,8 +32,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_9x60_ek_iar/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/uhp/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">AC3C2B2B6E49BFF9764F271F54BB7368</GeneratedChecksum>
-          <UserChecksum dnOrder="6">AC3C2B2B6E49BFF9764F271F54BB7368</UserChecksum>
+          <GeneratedChecksum dnOrder="5">D017ABDB95CE6B68FFD65803855BA50F</GeneratedChecksum>
+          <UserChecksum dnOrder="6">D017ABDB95CE6B68FFD65803855BA50F</UserChecksum>
         </File>
         <File dnOrder="3">
           <Type dnOrder="0">SOURCE</Type>
@@ -41,8 +41,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_9x60_ek_iar/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/uhp/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">2B3D8FC82F0BB31ABC11D94FF9D255E6</GeneratedChecksum>
-          <UserChecksum dnOrder="6">2B3D8FC82F0BB31ABC11D94FF9D255E6</UserChecksum>
+          <GeneratedChecksum dnOrder="5">E228C9CD58620BB295AA3990647155BA</GeneratedChecksum>
+          <UserChecksum dnOrder="6">E228C9CD58620BB295AA3990647155BA</UserChecksum>
         </File>
         <File dnOrder="4">
           <Type dnOrder="0">SOURCE</Type>
@@ -50,8 +50,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_9x60_ek_iar/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/uhp/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">3EB07998A96BF41EE5EFCB770953EEBB</GeneratedChecksum>
-          <UserChecksum dnOrder="6">3EB07998A96BF41EE5EFCB770953EEBB</UserChecksum>
+          <GeneratedChecksum dnOrder="5">CE4243E1933076DCEA9F2257D3550117</GeneratedChecksum>
+          <UserChecksum dnOrder="6">CE4243E1933076DCEA9F2257D3550117</UserChecksum>
         </File>
         <File dnOrder="5">
           <Type dnOrder="0">SOURCE</Type>
@@ -392,8 +392,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_9x60_ek_iar/driver/usb/uhp/src</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/uhp/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">9E7613EF40907EFA83DEBE4D87B5CA8E</GeneratedChecksum>
-          <UserChecksum dnOrder="6">9E7613EF40907EFA83DEBE4D87B5CA8E</UserChecksum>
+          <GeneratedChecksum dnOrder="5">B01D7B696721ABE8396ECA3806000571</GeneratedChecksum>
+          <UserChecksum dnOrder="6">B01D7B696721ABE8396ECA3806000571</UserChecksum>
         </File>
         <File dnOrder="43">
           <Type dnOrder="0">HEADER</Type>
@@ -401,8 +401,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/sam_9x60_ek_iar/driver/usb/uhp/src/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/uhp/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">9CCE00F5AA2B1B9CCCA4408E5DE8ACC8</GeneratedChecksum>
-          <UserChecksum dnOrder="6">9CCE00F5AA2B1B9CCCA4408E5DE8ACC8</UserChecksum>
+          <GeneratedChecksum dnOrder="5">A0EA94F956A9EAF76C7D3092BCE36074</GeneratedChecksum>
+          <UserChecksum dnOrder="6">A0EA94F956A9EAF76C7D3092BCE36074</UserChecksum>
         </File>
         <File dnOrder="44">
           <Type dnOrder="0">HEADER</Type>

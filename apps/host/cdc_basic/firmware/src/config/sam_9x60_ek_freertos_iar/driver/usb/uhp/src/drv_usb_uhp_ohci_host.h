@@ -73,12 +73,8 @@ typedef enum
 // *****************************************************************************
 // *****************************************************************************
 
-extern uint32_t DRV_USB_UHP_OHCI_HOST_EDIsFinish( uint8_t hostPipeInUse );
-extern void DRV_USB_UHP_OHCI_HOST_ReceivedSize( uint32_t * BuffSize );
 extern void DRV_USB_UHP_OHCI_HOST_Init(DRV_USB_UHP_OBJ *drvObj);
 extern void DRV_USB_UHP_OHCI_HOST_Init_simpl(DRV_USB_UHP_OBJ *drvObj);
-extern void DRV_USB_UHP_OHCI_HOST_DisableControlList(DRV_USB_UHP_OBJ *hDriver);
-extern void DRV_USB_UHP_OHCI_HOST_DisableBulkList(DRV_USB_UHP_OBJ *hDriver);
 extern void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver);
 // ****************************************************************************
 /* Function:

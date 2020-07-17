@@ -88,301 +88,6 @@ DRV_USB_UHP_HOST_PIPE_OBJ gDrvUSBHostPipeObj[DRV_USB_UHP_PIPES_NUMBER];
 // ****************************************************************************
 // ****************************************************************************
 
-// *****************************************************************************
-/* Function:
-    static void DRV_USB_UHP_ControlTransferProcess
-    (
-        DRV_USB_UHP_OBJ *hDriver
-    )
-
-  Summary:
-    Control Transfer Process.
-
-  Description:
-    This function is called every time there is an endpoint 0 interrupt.
-    This means that a stage of the current control IRP has been completed.
-    This function is called from an interrupt context
-
-  Remarks:
-
-*/
-static void _DRV_USB_UHP_ControlTransferProcess(DRV_USB_UHP_OBJ *hDriver, uint8_t hostPipeInUse)
-{
-    USB_HOST_IRP_LOCAL *irp;
-    DRV_USB_UHP_HOST_PIPE_OBJ *pipe, *iterPipe;
-    DRV_USB_UHP_HOST_TRANSFER_GROUP *transferGroup;
-    bool endIRP = false;
-    bool foundIRP = false;
-    uint8_t *pResult;
-    uint32_t i;
-
-    transferGroup = &hDriver->controlTransferGroup;
-
-    /* First check if the IRP was aborted */
-    irp  = transferGroup->currentIRP;
-    pipe = transferGroup->currentPipe;
-
-    /* If current IRP is null, or current pipe is null then we have unknown
-     * failure. We just quit.  Nothing we can do.*/
-
-    if((irp != NULL) && (pipe != NULL) && (pipe != (DRV_USB_UHP_HOST_PIPE_OBJ *)DRV_USB_UHP_HOST_PIPE_HANDLE_INVALID))
-    {
-
-        /* We should check the current state of the IRP and then proceed accordingly */
-        /* If here means, we have a valid IRP and pipe.  Check the status register.
-         * The IRP could have been aborted. This would be known in the temp state.
-         */
-
-        if ( hDriver->hostEndpointTable[hostPipeInUse].endpoint.intXfrQtdComplete == 0xFF )
-        {
-            /* This means the packet was stalled. */
-            endIRP = true;
-            irp->status = USB_HOST_IRP_STATUS_ERROR_STALL;
-            irp->tempState = DRV_USB_UHP_HOST_IRP_STATE_PROCESSING;
-            hDriver->hostEndpointTable[hostPipeInUse].endpoint.intXfrQtdComplete = 0;
-            hDriver->controlTransferGroup.currentIRP = NULL;
-        }
-        else if (irp->tempState == DRV_USB_UHP_HOST_IRP_STATE_ABORTED)
-        {
-            /* This means the application has aborted this IRP. */
-            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rIRP state aborted");
-            endIRP = true;
-            irp->status = USB_HOST_IRP_STATUS_ABORTED;
-        }
-        else if (irp->tempState == DRV_USB_UHP_HOST_IRP_STATE_PROCESSING)
-        {
-            if (hDriver->hostEndpointTable[hostPipeInUse].endpoint.intXfrQtdComplete == 1)
-            {
-                hDriver->hostEndpointTable[hostPipeInUse].endpoint.intXfrQtdComplete = 0;
-                irp->status = USB_HOST_IRP_STATUS_COMPLETED;
-                endIRP = true;
-
-               if(hDriver->deviceSpeed == USB_SPEED_FULL)
-                {
-                    DRV_USB_UHP_OHCI_HOST_DisableControlList(hDriver);
-                }
-            }
-        }
-
-        if(endIRP == true)
-        {
-            if( (irp->flags & 0x80) == 0x80 )
-            {
-                /* Device to Host: IN */
-                if (irp->completedBytes != 0)
-                {
-                    /* Check the real bytes received */
-                    if(hDriver->deviceSpeed == USB_SPEED_HIGH)
-                    {
-                        DRV_USB_UHP_EHCI_HOST_ReceivedSize( &(irp->size) );
-                    }
-                    else
-                    {
-                        DRV_USB_UHP_OHCI_HOST_ReceivedSize( &(irp->size) );
-                    }
-                    pResult = irp->data;
-                    for (i = 0; i < irp->size; i++)
-                    {
-                        *(uint8_t *)(pResult + i) = USBBufferNoCache[hostPipeInUse][i];
-                    }
-                }
-            }
-            /* This means this IRP needs to be terminated and new one started. */
-
-            if(irp->callback != NULL)
-            {
-                /* Invoke the call back*/
-                irp->callback((USB_HOST_IRP *)irp);
-            }
-
-            /* Expire the IRP */
-
-            pipe->irpQueueHead = irp->next;
-
-            /* Now we need to check if any more IRPs are in this group are pending.
-             * We start searching from the current pipe onwards. If we dont find
-             * another pipe with an IRP, we should land back on the current pipe and
-             * check if we have a IRP to process */
-
-            iterPipe = transferGroup->currentPipe->next;
-            for(i = 0; i < transferGroup->nPipes; i ++)
-            {
-                if(iterPipe == NULL)
-                {
-                    /* We have reached the end of the pipe group. Rewind the pipe
-                     * iterator to the start of the pipe group. */
-
-                    iterPipe = transferGroup->pipe;
-                }
-
-                /* This means that we have a valid pipe.  Now check if there is irp
-                 * to be processed. */
-
-                if(iterPipe->irpQueueHead != NULL)
-                {
-                    foundIRP = true;
-                    transferGroup->currentPipe = iterPipe;
-                    transferGroup->currentIRP  = iterPipe->irpQueueHead;
-                    break;
-                }
-
-                iterPipe = iterPipe->next;
-            }
-
-            if(foundIRP)
-            {
-                /* This means we have found another IRP to process. We must load the
-                 * endpoint. */
-
-                irp = transferGroup->currentIRP;
-                pipe = transferGroup->currentPipe;
-                irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
-                irp->tempState = DRV_USB_UHP_HOST_IRP_STATE_PROCESSING;
-            }
-            else
-            {
-                /* This means we dont have an IRP. Set the current IRP and current
-                 * pipe to NULL to indicate that we dont have any active IRP */
-
-                transferGroup->currentPipe = NULL;
-                transferGroup->currentIRP  = NULL;
-            }
-        }
-    }
-    else
-    {
-        /* This means the pipe was closed. We don't do anything */
-        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\033[31m\n\rError ControlTransferProcess: %d \033[0m", (int)hostPipeInUse);
-    }
-}/* end of _DRV_USB_UHP_ControlTransferProcess() */
-
-
-// *****************************************************************************
-/* Function:
-    void _DRV_USB_UHP_NonControlTransferProcess
-    (
-        DRV_USB_UHP_OBJ *hDriver
-        uint8_t hostPipe
-   )
-
-  Summary:
-    Non Control Transfer Process.
-
-  Description:
-    This function processes non-zero endpoint transfers which
-    could be any of bulk, interrupt and isochronous transfers
-
-  Remarks:
-*/
-static void _DRV_USB_UHP_NonControlTransferProcess
-(
-    DRV_USB_UHP_OBJ *hDriver,
-    uint8_t hostPipe
-)
-{
-    /* This function processes non-zero endpoint transfers which
-     * could be any of bulk, interrupt and isochronous transfers */
-
-    DRV_USB_UHP_HOST_ENDPOINT_OBJ *endpointTable;
-    DRV_USB_UHP_HOST_PIPE_OBJ *pipe;
-    USB_HOST_IRP_LOCAL *irp;
-    bool endIRP = false;
-    bool endIRPOut = false;
-    uint8_t *pResult;
-    uint32_t i;
-
-    endpointTable = &(hDriver->hostEndpointTable[hostPipe]);
-    pipe = endpointTable->endpoint.pipe;
-
-    if((endpointTable->endpoint.inUse == false)
-    || (pipe == NULL)
-    || (pipe == (DRV_USB_UHP_HOST_PIPE_OBJ *)DRV_USB_UHP_HOST_PIPE_HANDLE_INVALID)
-    || (pipe->irpQueueHead == NULL))
-    {
-        /* This means the pipe was closed. We don't do anything */
-        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\033[31m\n\rError NonControlTransferProcess: %d \033[0m", (int)hostPipe);
-    }
-    else
-    {
-        irp = pipe->irpQueueHead;
-
-        /* We should check the current state of the IRP and then proceed accordingly */
-        if ( hDriver->hostEndpointTable[hostPipe].endpoint.intXfrQtdComplete == 0xFF )
-        {
-            /* This means the packet was stalled */
-            endIRP = true;
-            irp->status = USB_HOST_IRP_STATUS_ERROR_STALL;
-
-            irp->tempState = DRV_USB_UHP_HOST_IRP_STATE_PROCESSING;
-            hDriver->hostEndpointTable[hostPipe].endpoint.intXfrQtdComplete = 0;
-            hDriver->controlTransferGroup.currentIRP = NULL;
-        }
-        else if ( irp->tempState == DRV_USB_UHP_HOST_IRP_STATE_ABORTED )
-        {
-            /* This means the application has aborted this IRP.*/
-            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rIRP state aborted");
-            endIRP = true;
-            irp->status = USB_HOST_IRP_STATUS_ABORTED;
-        }
-        else if ( irp->tempState == DRV_USB_UHP_HOST_IRP_STATE_PROCESSING )
-        {
-            if (hDriver->hostEndpointTable[hostPipe].endpoint.intXfrQtdComplete == 1)
-            {
-                hDriver->hostEndpointTable[hostPipe].endpoint.intXfrQtdComplete = 0;
-
-                if(irp->completedBytes >= irp->size)
-                {
-                    endIRP = true;
-                    endIRPOut = true;
-                    irp->status = USB_HOST_IRP_STATUS_COMPLETED;
-                }
-                else
-                {
-                    /* This means we have more data to send */
-                    endIRP = false;
-                }
-
-                if(hDriver->deviceSpeed == USB_SPEED_FULL)
-                {
-                    DRV_USB_UHP_OHCI_HOST_DisableBulkList(hDriver);
-                }
-            }
-        }
-
-        if(endIRP)
-        {
-            pResult = irp->data;
-            for (i = 0; i < irp->size; i++)
-            {
-                *(uint8_t *)(pResult + i) = USBBufferNoCache[hostPipe][i];
-            }
-            /* This means we need to end the IRP */
-            pipe->irpQueueHead = irp->next;
-            if (irp->callback != NULL)
-            {
-                /* Invoke the call back*/
-                irp->callback((USB_HOST_IRP *)(uint32_t)irp);
-            }
-            irp = pipe->irpQueueHead;
-            if((irp != NULL) && (!(irp->status == USB_HOST_IRP_STATUS_IN_PROGRESS)) && (endIRPOut != false) )
-            {
-                /* We do have another IRP to process. */
-                irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
-            }
-
-            /* A IRP could have been submitted in the callback. If that is the
-             * case and the IRP status would indicate that it already in
-             * progress. If the IRP in the queue head is not in progress then we
-             * should initiate the transaction */
-
-            if((irp != NULL) && (!(irp->status == USB_HOST_IRP_STATUS_IN_PROGRESS)) && (endIRPOut == false) )
-            {
-                irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
-            }
-        }
-    }
-}/* end of _DRV_USB_UHP_NonControlTransferProcess() */
-
 
 
 // ****************************************************************************
@@ -913,10 +618,8 @@ void DRV_USB_UHP_IRPCancel
 
         if(irp->status == USB_HOST_IRP_STATUS_IN_PROGRESS)
         {
-            /* If the irp is already in progress then
-             * we set the temporary state. This will get
-             * caught in _DRV_USB_UHP_HOST_ControlXferProcess()
-             * and _DRV_USB_UHP_HOST_NonControlIRPProcess() functions. */
+            /* If the irp is already in progress then we set the temporary state.
+             * This will get caught in DRV_USB_UHP_TransferProcess() function */
 
             irp->tempState = DRV_USB_UHP_HOST_IRP_STATE_ABORTED;
         }
@@ -1074,7 +777,7 @@ USB_SPEED DRV_USB_UHP_DeviceCurrentSpeedGet(DRV_HANDLE client)
 
 // *****************************************************************************
 /* Function:
-    void DRV_USB_UHP_TransferProcess(DRV_USB_UHP_OBJ *hDriver, uint8_t hostPipeInUse)
+    void DRV_USB_UHP_TransferProcess(DRV_USB_UHP_OBJ *hDriver, uint8_t hostPipe)
 
    Summary:
     Dynamic implementation of USB HOST Transfer Process system interface function.
@@ -1086,21 +789,103 @@ USB_SPEED DRV_USB_UHP_DeviceCurrentSpeedGet(DRV_HANDLE client)
    Remarks:
     See drv_uhp.h for usage information.
  */
-void DRV_USB_UHP_TransferProcess(DRV_USB_UHP_OBJ *hDriver, uint8_t hostPipeInUse)
+void DRV_USB_UHP_TransferProcess
+(
+    DRV_USB_UHP_OBJ *hDriver,
+    uint8_t hostPipe
+)
 {
-    /* This function is called every time there is an endpoint 0
-     * interrupt. This means that a stage of the current control IRP has been
-     * completed. This function is called from an interrupt context */
+    DRV_USB_UHP_HOST_PIPE_OBJ *pipe;
+    USB_HOST_IRP_LOCAL *irp;
+    bool endIRP = false;
+    bool endIRPOut = false;
+    uint8_t *pResult;
+    uint32_t i;
 
-    if(hostPipeInUse == 0)
+    pipe = &gDrvUSBHostPipeObj[hostPipe];
+
+    if((pipe->inUse == false)
+    || (pipe == NULL)
+    || (pipe == (DRV_USB_UHP_HOST_PIPE_OBJ *)DRV_USB_UHP_HOST_PIPE_HANDLE_INVALID)
+    || (pipe->irpQueueHead == NULL))
     {
-        _DRV_USB_UHP_ControlTransferProcess(hDriver, hostPipeInUse);
+        /* This means the pipe was closed. We don't do anything */
+        SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\033[31m\n\rError DRV_USB_UHP_TransferProcess: %d \033[0m", (int)hostPipe);
     }
     else
     {
-        _DRV_USB_UHP_NonControlTransferProcess(hDriver, hostPipeInUse);
+        irp = pipe->irpQueueHead;
+
+        /* We should check the current state of the IRP and then proceed accordingly */
+        if ( pipe->intXfrQtdComplete == 0xFF )
+        {
+            /* This means the packet was stalled */
+            endIRP = true;
+            irp->status = USB_HOST_IRP_STATUS_ERROR_STALL;
+
+            irp->tempState = DRV_USB_UHP_HOST_IRP_STATE_PROCESSING;
+            pipe->intXfrQtdComplete = 0;
+        }
+        else if ( irp->tempState == DRV_USB_UHP_HOST_IRP_STATE_ABORTED )
+        {
+            /* This means the application has aborted this IRP.*/
+            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\rIRP state aborted");
+            endIRP = true;
+            irp->status = USB_HOST_IRP_STATUS_ABORTED;
+        }
+        else if ( irp->tempState == DRV_USB_UHP_HOST_IRP_STATE_PROCESSING )
+        {
+            if (pipe->intXfrQtdComplete == 1)
+            {
+                pipe->intXfrQtdComplete = 0;
+
+                if(irp->completedBytes >= irp->size)
+                {
+                    endIRP = true;
+                    endIRPOut = true;
+                    irp->status = USB_HOST_IRP_STATUS_COMPLETED;
+                }
+                else
+                {
+                    /* This means we have more data to send */
+                    endIRP = false;
+                }
+            }
+        }
+
+        if(endIRP)
+        {
+            pResult = irp->data;
+            for (i = 0; i < irp->size; i++)
+            {
+                *(uint8_t *)(pResult + i) = USBBufferNoCache[hostPipe][i];
+            }
+            /* This means we need to end the IRP */
+            pipe->irpQueueHead = irp->next;
+            if (irp->callback != NULL)
+            {
+                /* Invoke the call back*/
+                irp->callback((USB_HOST_IRP *)(uint32_t)irp);
+            }
+            irp = pipe->irpQueueHead;
+            if((irp != NULL) && (!(irp->status == USB_HOST_IRP_STATUS_IN_PROGRESS)) && (endIRPOut != false) )
+            {
+                /* We do have another IRP to process. */
+                irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
+            }
+
+            /* A IRP could have been submitted in the callback. If that is the
+             * case and the IRP status would indicate that it already in
+             * progress. If the IRP in the queue head is not in progress then we
+             * should initiate the transaction */
+
+            if((irp != NULL) && (!(irp->status == USB_HOST_IRP_STATUS_IN_PROGRESS)) && (endIRPOut == false) )
+            {
+                irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
+            }
+        }
     }
-}
+}/* end of DRV_USB_UHP_TransferProcess() */
 
 
 /* **************************************************************************** */
@@ -1132,7 +917,7 @@ bool DRV_USB_UHP_EventsDisable
     if((DRV_HANDLE_INVALID != handle) && (0 != handle))
     {
         pUSBDrvObj = (DRV_USB_UHP_OBJ *)(handle);
-        result     = _DRV_USB_UHP_InterruptSourceDisable(pUSBDrvObj->interruptSource);
+        result = _DRV_USB_UHP_InterruptSourceDisable(pUSBDrvObj->interruptSource);
     }
 
     return(result);
@@ -1226,7 +1011,7 @@ void DRV_USB_UHP_Deinitialize
 
                 /* Populate the driver object with the required data */
 
-                drvObj->inUse  = false;
+                drvObj->inUse = false;
                 drvObj->status = SYS_STATUS_UNINITIALIZED;
 
                 /* Clear and disable the interrupts. Assigning to a value has
@@ -1236,7 +1021,7 @@ void DRV_USB_UHP_Deinitialize
                 _DRV_USB_UHP_InterruptSourceDisable(drvObj->interruptSource);
                 SYS_INT_SourceStatusClear(drvObj->interruptSource);
 
-                drvObj->isOpened       = false;
+                drvObj->isOpened = false;
                 drvObj->pEventCallBack = NULL;
 
                 /* Delete the mutex */
@@ -1458,8 +1243,9 @@ bool DRV_USB_UHP_Resume
         pusbdrvObj = (DRV_USB_UHP_OBJ *)handle;
         usbIDEHCI = pusbdrvObj->usbIDEHCI;
         /* Function enables resume signaling */
-        *((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC) + (pusbdrvObj->hostEndpointTable[0].endpoint.pipe->hubPort))
-              |= UHPHS_PORTSC_FPR_Msk;  /* Force Port Resume */
+        *((uint32_t *)&(usbIDEHCI->UHPHS_PORTSC)
+          + (gDrvUSBHostPipeObj[0].hubPort))
+            |= UHPHS_PORTSC_FPR_Msk;  /* Force Port Resume */
         retVal = true;
     }
 
@@ -1594,24 +1380,22 @@ void DRV_USB_UHP_EndpointToggleClear
 )
 {
     DRV_USB_UHP_HOST_PIPE_OBJ * pPipe = NULL;
-    DRV_USB_UHP_OBJ * hDriver = NULL;
 
     if ((pipeHandle != DRV_USB_UHP_HOST_PIPE_HANDLE_INVALID) && ((DRV_USB_UHP_HOST_PIPE_HANDLE)NULL != pipeHandle))
     {
         pPipe = (DRV_USB_UHP_HOST_PIPE_OBJ *)pipeHandle;
-        hDriver = (DRV_USB_UHP_OBJ *)pPipe->hClient;
 
-        if( (hDriver->hostEndpointTable[pPipe->hostEndpoint].endpoint.pipe->endpointAndDirection & 0x80) == 0 )
+        if( (pPipe->endpointAndDirection & 0x80) == 0 )
         {
             /* Host to Device: OUT */
             /* Clear the Data Toggle for TX Endpoint */
-            hDriver->hostEndpointTable[pPipe->hostEndpoint].endpoint.staticDToggleOut = 0;
+            pPipe->staticDToggleOut = 0;
         }
         else
         {
             /* IN */
             /* Clear the Data Toggle for RX Endpoint */
-            hDriver->hostEndpointTable[pPipe->hostEndpoint].endpoint.staticDToggleIn = 0;
+            pPipe->staticDToggleIn = 0;
         }
     }
     else
