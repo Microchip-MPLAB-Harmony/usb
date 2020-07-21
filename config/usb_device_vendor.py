@@ -80,7 +80,7 @@ def onAttachmentConnected(source, target):
 			
 		nEndpoints = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if nEndpoints != None:
-			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MK", "SAMD21","SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22" , "SAMD11"]):
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MK", "SAMD21","SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22" , "SAMD11", "PIC32CM"]):
 				args = {"nFunction":  nEndpoints + VENDOR_ENDPOINTS_PIC32 }
 				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 				epNumberBulkOut.setValue(nEndpoints + 1, 1)
@@ -129,7 +129,7 @@ def onAttachmentDisconnected(source, target):
 	
 	endpointNumber = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 	if endpointNumber != None:
-		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MK", "SAMD21","SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMD11"]):
+		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MK", "SAMD21","SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMD11", "PIC32CM"]):
 			args = {"nFunction":endpointNumber -  VENDOR_ENDPOINTS_PIC32 }
 			res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 		else:
@@ -202,7 +202,7 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX", "PIC32MK"]):
 		MaxEpNumber = 15
 		BulkInDefaultEpNumber = 1
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMDA1","SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMD11"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMDA1","SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMD11", "PIC32CM"]):
 		MaxEpNumber = 7
 		BulkInDefaultEpNumber = 1
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAM9X60"]):
