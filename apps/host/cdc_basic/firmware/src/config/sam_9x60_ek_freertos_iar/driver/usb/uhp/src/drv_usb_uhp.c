@@ -216,7 +216,6 @@ void DRV_USB_UHP_HostInitialize
     drvObj->deviceAttached = false;
     /* Initialize the device handle */
     drvObj->attachedDeviceObjHandle = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
-    drvObj->blockPipe = 0;
     drvObj->portNumber = 0xFF;
 
     DRV_USB_UHP_EHCI_HOST_Init(drvObj);
@@ -1385,17 +1384,15 @@ void DRV_USB_UHP_EndpointToggleClear
     {
         pPipe = (DRV_USB_UHP_HOST_PIPE_OBJ *)pipeHandle;
 
-        if( (pPipe->endpointAndDirection & 0x80) == 0 )
+        if( pPipe->speed == USB_SPEED_HIGH )
         {
-            /* Host to Device: OUT */
-            /* Clear the Data Toggle for TX Endpoint */
-            pPipe->staticDToggleOut = 0;
+            /* High Speed */
+            DRV_USB_UHP_EHCI_ClearDataToggle(pPipe);
         }
         else
         {
-            /* IN */
-            /* Clear the Data Toggle for RX Endpoint */
-            pPipe->staticDToggleIn = 0;
+            /* Full or Low speed */
+            DRV_USB_UHP_OHCI_ClearDataToggle(pPipe);
         }
     }
     else

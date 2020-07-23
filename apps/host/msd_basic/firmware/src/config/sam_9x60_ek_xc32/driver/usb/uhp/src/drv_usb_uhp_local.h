@@ -298,8 +298,6 @@ typedef struct _DRV_USB_UHP_OBJ_STRUCT
 
     uint8_t portNumber;
 
-    volatile uint8_t blockPipe;
-
     /* Device Object handle assigned by the host */
     USB_HOST_DEVICE_OBJ_HANDLE usbHostDeviceInfo;
 

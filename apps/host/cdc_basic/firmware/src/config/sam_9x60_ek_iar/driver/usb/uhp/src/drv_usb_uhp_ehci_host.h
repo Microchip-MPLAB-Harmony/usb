@@ -64,6 +64,7 @@ extern void DRV_USB_UHP_EHCI_HOST_ReceivedSize( uint32_t * BuffSize );
 extern void DRV_USB_UHP_EHCI_HOST_Init(DRV_USB_UHP_OBJ *drvObj);
 extern void DRV_USB_UHP_EHCI_HOST_DisableAsynchronousList(DRV_USB_UHP_OBJ *hDriver);
 extern void DRV_USB_UHP_EHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver);
+extern void DRV_USB_UHP_EHCI_ClearDataToggle(DRV_USB_UHP_HOST_PIPE_OBJ *pipe);
 extern DRV_USB_UHP_HOST_PIPE_HANDLE DRV_USB_UHP_EHCI_PipeSetup
 (
     DRV_HANDLE        client,

@@ -855,6 +855,25 @@ void DRV_USB_UHP_EHCI_PipeClose
 
 // *****************************************************************************
 /* Function:
+    void DRV_USB_UHP_EHCI_ClearDataToggle(DRV_USB_UHP_HOST_PIPE_OBJ *pipe);
+
+  Summary:
+    Clear the datatoggle for a pipe.
+
+  Description:
+    This function clear the datatoggle for a pipe.
+
+  Remarks:
+    See .h for usage information.
+*/
+void DRV_USB_UHP_EHCI_ClearDataToggle(DRV_USB_UHP_HOST_PIPE_OBJ *pipe)
+{
+    EHCI_QueueHead[pipe->hostEndpoint].qTD_Token.DataToggle = 0;
+} /* end of DRV_USB_UHP_OHCI_ClearDataToggle() */
+
+
+// *****************************************************************************
+/* Function:
     USB_ERROR DRV_USB_UHP_EHCI_HOST_IRPSubmit
     (
         DRV_USB_UHP_HOST_PIPE_HANDLE  hPipe,
@@ -1041,7 +1060,6 @@ USB_ERROR DRV_USB_UHP_EHCI_HOST_IRPSubmit
                                         0,                  /* Total Bytes to transfer: ZLP */
                                         1,                  /* Interrupt on Complete */
                                         NULL);              /* data buffer address base, 32-Byte align */
-
                     }
                     else
                     {
@@ -1075,6 +1093,7 @@ USB_ERROR DRV_USB_UHP_EHCI_HOST_IRPSubmit
                                             irp->size,               /* Total Bytes to transfer */
                                             0,                       /* Interrupt on Complete */
                                             (uint32_t *)USBBufferNoCache[pipe->hostEndpoint]); /* Setup DATA OUT Packet */
+                            irp->completedBytes += irp->size;
                         }
 
                         idx++;
@@ -1097,7 +1116,6 @@ USB_ERROR DRV_USB_UHP_EHCI_HOST_IRPSubmit
                                         0,                  /* Total Bytes to transfer: ZLP */
                                         1,                  /* Interrupt on Complete */
                                         NULL);
-
                     }
 
                     /* Create new dummy qTD */
@@ -1190,8 +1208,6 @@ USB_ERROR DRV_USB_UHP_EHCI_HOST_IRPSubmit
                             USBBufferNoCache[pipe->hostEndpoint][i] = point[i];
                         }
 
-                        irp->completedBytes += irp->size;
-
                         EHCI_IRP_QueueTD[pipe->hostEndpoint][idx].inUse = 1;
                         _DRV_USB_UHP_EHCI_HOST_CreateQTD(&EHCI_IRP_QueueTD[pipe->hostEndpoint][idx].qTD, /* qTD address base */
                                         &EHCI_IRP_QueueTD[pipe->hostEndpoint][idx_plus].qTD, /* next qTD address base */
@@ -1201,6 +1217,8 @@ USB_ERROR DRV_USB_UHP_EHCI_HOST_IRPSubmit
                                         irp->size,                     /* Total Bytes to transfer */
                                         1,                             /* Interrupt on Complete */
                                         (uint32_t *)USBBufferNoCache[pipe->hostEndpoint]);
+                        irp->completedBytes += irp->size;
+
                     }
                     else
                     {
