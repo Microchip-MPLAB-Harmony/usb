@@ -75,6 +75,7 @@ typedef enum
 
 extern void DRV_USB_UHP_OHCI_HOST_Init(DRV_USB_UHP_OBJ *drvObj);
 extern void DRV_USB_UHP_OHCI_HOST_Init_simpl(DRV_USB_UHP_OBJ *drvObj);
+extern void DRV_USB_UHP_OHCI_ClearDataToggle(DRV_USB_UHP_HOST_PIPE_OBJ *pipe);
 extern void DRV_USB_UHP_OHCI_HOST_Tasks_ISR(DRV_USB_UHP_OBJ *hDriver);
 // ****************************************************************************
 /* Function:

@@ -4,7 +4,7 @@
 
 
 project: hid_basic_mouse_usart
-creation_date: 2020-07-17T11:42:58.268+02:00[Europe/Paris]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2020-07-23T17:27:51.050+02:00[Europe/Paris]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 10
 mhc_mode: Standalone            # [IDE|Standalone|Headless]
 mplabx_version: NA        # if MPLAB X plugin only
