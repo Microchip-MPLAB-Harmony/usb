@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Receiving Data</title>
+<title>Introduction</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00275.html" target="topic">USB Device Libraries</a> &gt; <a href="00277.html" target="topic">USB Device Printer Library</a> &gt; <a href="00318.html" target="topic">Using the Library</a> &gt; <a href="00311.html" target="topic">How the Library Works</a> &gt; <a href="00316.html" target="topic">Receiving Data</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00281.html" target="topic">USB Device Printer Library</a> &gt; <a href="00316.html" target="topic">Introduction</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00317.html" target="topic">Previous</a> | <a href="00311.html" target="topic">Up</a> | <a href="00306.html" target="topic">Next</a></div>
+<a href="00281.html" target="topic">Previous</a> | <a href="00281.html" target="topic">Up</a> | <a href="00322.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVPrinter Receiving Data Topic Title: Receiving Data)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVPrinter Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Receiving Data</div>
+Introduction</div>
 </div>
 </div>
 
@@ -49,48 +49,14 @@ Receiving Data</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
- &nbsp;</p>
-<p class="Element10">
-The application can receive data from the host by using the <a href="00981.html" target="topic">USB_DEVICE_PRINTER_Read</a> function. This function returns a transfer handle that allows the application to track the read request. The request is completed when the Host sends the required amount or less than required amount of data. The application must make sure that it allocates a buffer size that is at least the size or a multiple of the receive endpoint size. The return value of the function indicates the success of the request. A read request could fail if the function driver transfer queue is full. The completion of the read transfer is indicated by the USB_DEVICE_PRINTER_EVENT_READ_COMPLETE event. The request completes based on the amount of the data that was requested and size of the transaction initiated by the Host.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-• If the size parameter is not a multiple of maxPacketSize or is '0', the function returns&nbsp;</p>
-<p class="Element10">
-<a href="00996.html" target="topic">USB_DEVICE_PRINTER_TRANSFER_HANDLE_INVALID</a> in transferHandle and returns&nbsp;</p>
-<p class="Element10">
-USB_DEVICE_PRINTER_RESULT_ERROR_TRANSFER_SIZE_INVALID as a return value&nbsp;</p>
-<p class="Element10">
-• If the size parameter is a multiple of maxPacketSize and the Host sends less than maxPacketSize data in any transaction, the transfer completes and the function driver will issue a USB_DEVICE_PRINTER_EVENT_READ_COMPLETE event along with the&nbsp;</p>
-<p class="Element10">
-USB_DEVICE_PRINTER_EVENT_READ_COMPLETE_DATA data structure&nbsp;</p>
-<p class="Element10">
-• If the size parameter is a multiple of maxPacketSize and the Host sends maxPacketSize amount of data, and total data received does not exceed size, the function driver will wait for the next packet&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-The following code shows an example of the <a href="00981.html" target="topic">USB_DEVICE_PRINTER_Read</a> function: </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// Shows an example of how to read. This assumes that</span></i>
-<i><span style="color: #008000">// driver was opened successfully.</span></i>
-USB_DEVICE_PRINTER_TRANSFER_HANDLE transferHandle;
-USB_DEVICE_PRINTER_RESULT readRequestResult;
-USB_DEVICE_PRINTER_HANDLE instanceHandle;
-readRequestResult = USB_DEVICE_PRINTER_Read(instanceHandle,
-&amp;transferHandle, data, 64);
-
-<strong><span style="color: #000080">if</span></strong>(USB_DEVICE_PRINTER_RESULT_OK != readRequestResult)
-{
-<i><span style="color: #008000">//Do Error handling here</span></i>
-}
-<i><span style="color: #008000">// The completion of the read request will be indicated by the</span></i>
-<i><span style="color: #008000">// USB_DEVICE_PRINTER_EVENT_READ_COMPLETE event.</span></i></pre></div></div>
-</div>
+The MPLAB Harmony USB Printer Device Library (also referred to as the Printer function driver or library) provides functions and methods that allow application designers to implement a USB Printer Device. The current version of the library supports a unidirectional as well as bi-directional printer interface types. This library must be used in conjunction with the MPLAB Harmony USB Device Layer.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00275.html" target="topic">USB Device Libraries</a> &gt; <a href="00277.html" target="topic">USB Device Printer Library</a> &gt; <a href="00318.html" target="topic">Using the Library</a> &gt; <a href="00311.html" target="topic">How the Library Works</a> &gt; <a href="00316.html" target="topic">Receiving Data</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00281.html" target="topic">USB Device Printer Library</a> &gt; <a href="00316.html" target="topic">Introduction</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -98,13 +64,13 @@ readRequestResult = USB_DEVICE_PRINTER_Read(instanceHandle,
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00317.html" target="topic">Previous</a> | <a href="00311.html" target="topic">Up</a> | <a href="00306.html" target="topic">Next</a></div>
+<a href="00281.html" target="topic">Previous</a> | <a href="00281.html" target="topic">Up</a> | <a href="00322.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVPrinter Receiving Data Topic Title: Receiving Data)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVPrinter Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

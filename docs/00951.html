@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_DEVICE_PowerStateSet Function</title>
+<title>USB_DEVICE_Open Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00275.html" target="topic">USB Device Libraries</a> &gt; <a href="00274.html" target="topic">USB Device Layer Library</a> &gt; <a href="00298.html" target="topic">Library Interface</a> &gt; c) Device Power State Management Functions &gt; <a href="00951.html" target="topic">USB_DEVICE_PowerStateSet Function</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00302.html" target="topic">Library Interface</a> &gt; b) Client Core Functions &gt; <a href="00951.html" target="topic">USB_DEVICE_Open Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00800.html" target="topic">Previous</a> | <a href="00298.html" target="topic">Up</a> | <a href="01003.html" target="topic">Next</a></div>
+<a href="01026.html" target="topic">Previous</a> | <a href="00302.html" target="topic">Up</a> | <a href="00748.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_PowerStateSet@USB_DEVICE_HANDLE@USB_DEVICE_POWER_STATE Topic Title: USB_DEVICE_PowerStateSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: USB_DEVICE_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_DEVICE_PowerStateSet Function</div>
+USB_DEVICE_Open Function</div>
 </div>
 </div>
 
@@ -49,20 +49,20 @@ USB_DEVICE_PowerStateSet Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Application clients can use this function to set the power state of the device. A USB device can be bus powered or self powered. Based on hardware configuration, this power state may change while the device is on operation. The application can call this function to update the Device Layer on the present power status of the device.</p></div>
+This function opens the USB device layer instance specified by instance index and returns a handle. This handle must be provided to all other client operations to identify the caller and the instance of the USB device layer. An instance of the Device Layer can be opened only once. Trying to open the Device Layer more than once will return a invalid device layer handle.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">USB_DEVICE_PowerStateSet</span></strong>(
-    <a href="00809.html" target="topic">USB_DEVICE_HANDLE</a> <strong><span style="color: #000000">usbDeviceHandle</span></strong>, 
-    <a href="00948.html" target="topic">USB_DEVICE_POWER_STATE</a> <strong><span style="color: #000000">powerState</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00813.html" target="topic">USB_DEVICE_HANDLE</a> <strong><span style="color: #000000">USB_DEVICE_Open</span></strong>(
+    <strong><span style="color: #000080">const</span></strong> SYS_MODULE_INDEX <strong><span style="color: #000000">instanceIndex</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> DRV_IO_INTENT <strong><span style="color: #000000">intent</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The device layer should have been initialized and opened.</p></div>
+This function must be called after USB device driver initialization and after the initialization of USB Device Layer.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -79,14 +79,14 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-usbDeviceHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+instanceIndex&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-USB device handle returned by <a href="00947.html" target="topic">USB_DEVICE_Open</a>().&nbsp;</div></td></tr><tr>
+USB device layer instance index&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-powerState&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+intent&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-USB_DEVICE_POWER_STATE_BUS_POWERED/ USB_DEVICE_POWER_STATE_SELF_POWERED&nbsp;</div></td></tr></table></div></div>
+This parameter is ignored. The Device Layer will always open in read/write and exclusive mode.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -94,36 +94,33 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+If successful, returns a valid device layer handle. Otherwise, it returns <a href="00814.html" target="topic">USB_DEVICE_HANDLE_INVALID</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-By default, the device is bus powered.</p></div>
+None.</p></div>
 </div>
 <a name="4578616D706C65"></a><div class="Element14">
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// The following code example shows how the application can</span></i>
-<i><span style="color: #008000">// change the power state of the device. In this case the application checks</span></i>
-<i><span style="color: #008000">// if a battery is charged and if so, the application set the device power</span></i>
-<i><span style="color: #008000">// state to self-powered.</span></i>
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// This code example shows how the </span></i>
+<i><span style="color: #008000">// USB Device Layer can be opened.</span></i>
 
-<strong><span style="color: #000080">if</span></strong>(APP_BATTERY_IS_CHARGED == APP_BatteryChargeStatusGet())
+<a href="00813.html" target="topic">USB_DEVICE_HANDLE</a> usbDeviceHandle;
+
+<i><span style="color: #008000">// Before opening a handle, USB device must have been initialized </span></i>
+<i><span style="color: #008000">// by calling USB_DEVICE_Initialize().</span></i>
+
+usbDeviceHandle = USB_DEVICE_Open( <a href="00885.html" target="topic">USB_DEVICE_INDEX_0</a>, 
+                                DRV_IO_INTENT_READWRITE );
+
+<strong><span style="color: #000080">if</span></strong>(<a href="00814.html" target="topic">USB_DEVICE_HANDLE_INVALID</a> == usbDeviceHandle)
 {
-    <i><span style="color: #008000">// The application switches if power source.</span></i>
-
-    APP_PowerSourceSwitch(APP_POWER_SOURCE_BATTERY);
-    USB_DEVICE_PowerStateSet(usbDeviceHandle, USB_DEVICE_POWER_STATE_SELF_POWERED);
-}
-<strong><span style="color: #000080">else</span></strong>
-{
-    <i><span style="color: #008000">// The battery is still not charged. The application uses the USB power.</span></i>
-
-    USB_DEVICE_PowerStateSet(usbDeviceHandle, USB_DEVICE_POWER_STATE_BUS_POWERED);
+    <i><span style="color: #008000">//Failed to open handle.</span></i>
 }
 </pre></div></div>
 </div>
@@ -133,7 +130,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00275.html" target="topic">USB Device Libraries</a> &gt; <a href="00274.html" target="topic">USB Device Layer Library</a> &gt; <a href="00298.html" target="topic">Library Interface</a> &gt; c) Device Power State Management Functions &gt; <a href="00951.html" target="topic">USB_DEVICE_PowerStateSet Function</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00302.html" target="topic">Library Interface</a> &gt; b) Client Core Functions &gt; <a href="00951.html" target="topic">USB_DEVICE_Open Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -141,13 +138,13 @@ Example</div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00800.html" target="topic">Previous</a> | <a href="00298.html" target="topic">Up</a> | <a href="01003.html" target="topic">Next</a></div>
+<a href="01026.html" target="topic">Previous</a> | <a href="00302.html" target="topic">Up</a> | <a href="00748.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_PowerStateSet@USB_DEVICE_HANDLE@USB_DEVICE_POWER_STATE Topic Title: USB_DEVICE_PowerStateSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_Open@SYS_MODULE_INDEX@DRV_IO_INTENT Topic Title: USB_DEVICE_Open Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>TPL Table Configuration for CDC Devices</title>
+<title>Library Overview</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00241.html" target="topic">USB CDC Host Library</a> &gt; <a href="00248.html" target="topic">Using the Library</a> &gt; <a href="00239.html" target="topic">How the Library Works</a> &gt; <a href="00247.html" target="topic">TPL Table Configuration for CDC Devices</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00245.html" target="topic">USB CDC Host Library</a> &gt; <a href="00252.html" target="topic">Using the Library</a> &gt; <a href="00247.html" target="topic">Library Overview</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00239.html" target="topic">Previous</a> | <a href="00239.html" target="topic">Up</a> | <a href="00236.html" target="topic">Next</a></div>
+<a href="00233.html" target="topic">Previous</a> | <a href="00252.html" target="topic">Up</a> | <a href="00243.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST TPL Table Configuration for CDC Devices Topic Title: TPL Table Configuration for CDC Devices)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Library Overview Topic Title: Library Overview)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-TPL Table Configuration for CDC Devices</div>
+Library Overview</div>
 </div>
 </div>
 
@@ -49,24 +49,30 @@ TPL Table Configuration for CDC Devices</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The Host Layer attaches the CDC Host Client Driver to a device when the device class, subclass, protocol in the device descriptor or when the class, subclass and protocol fields in the Interface Association Descriptor (IAD) or Interface descriptor matches the entry in the TPL table. When specifying the entry for the CDC device, the entry for the CDC device, the driver interface must be set to <a href="01262.html" target="topic">USB_HOST_CDC_INTERFACE</a>. This will attach the CDC Host Client Driver to the device when the USB Host matches the TPL entry to the device. The following code shows possible TPL table options for matching CDC Devices.&nbsp;</p>
-<p class="Element10">
-<strong>Example:</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of TPL table entries for supporting CDC
- * devices. Note the driver interface is set to USB_HOST_CDC_INTERFACE. This
- * will load the CDC Host Client Driver when there is TPL match */</span></i>
-
-<strong><span style="color: #000080">const</span></strong> USB_HOST_TPL_ENTRY USBTPList[1] =
-{
-    <i><span style="color: #008000">/* This entry looks for any CDC device. The CDC Host Client Driver will
-     * check if this is an ACM device and will then load itself */</span></i>
-    TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL(USB_CDC_CLASS_CODE, USB_CDC_SUBCLASS_CODE, 0x0 , NULL,  USB_HOST_CDC_INTERFACE),
-
-    <i><span style="color: #008000">/* This entry looks specifically for the communications class protocol.
-     * This entry should be used if the host application is expected to support
-     * CDC as a part of an composite device */</span></i>
-    TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOLUSB_CDC_COMMUNICATIONS_INTERFACE_CLASS_CODE,  USB_CDC_SUBCLASS_ABSTRACT_CONTROL_MODEL, USB_CDC_PROTOCOL_AT_V250 , NULL,  USB_HOST_CDC_INTERFACE),
-
-};</pre></div></div>
+The USB CDC Host Client Driver API is grouped functionally, as shown in the following table. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="19%">
+<div class="Element66">
+Library Interface Section&nbsp;</div></td><td class="Element65" valign="top" width="81%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="19%">
+<div class="Element68">
+Client Access Functions&nbsp;</div></td><td class="Element67" valign="top" width="81%">
+<div class="Element68">
+These functions allow application clients to open, close the client and register event handlers. These functions are implemented in <span class="Element146">usb_host_cdc.c</span>.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="19%">
+<div class="Element68">
+Data Transfer Functions&nbsp;</div></td><td class="Element67" valign="top" width="81%">
+<div class="Element68">
+These functions allow the application client to transfer data to the attached device. These functions are implemented in <span class="Element146">usb_host_cdc.c</span>.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="19%">
+<div class="Element68">
+CDC Class-specific Command Functions&nbsp;</div></td><td class="Element67" valign="top" width="81%">
+<div class="Element68">
+These functions allow the application to send class specific control transfer requests to the application. These functions are implemented in <span class="Element146">usb_host_cdc_acm.c</span>.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -74,7 +80,7 @@ The Host Layer attaches the CDC Host Client Driver to a device when the device c
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00241.html" target="topic">USB CDC Host Library</a> &gt; <a href="00248.html" target="topic">Using the Library</a> &gt; <a href="00239.html" target="topic">How the Library Works</a> &gt; <a href="00247.html" target="topic">TPL Table Configuration for CDC Devices</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00245.html" target="topic">USB CDC Host Library</a> &gt; <a href="00252.html" target="topic">Using the Library</a> &gt; <a href="00247.html" target="topic">Library Overview</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -82,13 +88,13 @@ The Host Layer attaches the CDC Host Client Driver to a device when the device c
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00239.html" target="topic">Previous</a> | <a href="00239.html" target="topic">Up</a> | <a href="00236.html" target="topic">Next</a></div>
+<a href="00233.html" target="topic">Previous</a> | <a href="00252.html" target="topic">Up</a> | <a href="00243.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST TPL Table Configuration for CDC Devices Topic Title: TPL Table Configuration for CDC Devices)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Library Overview Topic Title: Library Overview)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

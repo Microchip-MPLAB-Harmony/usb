@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB MSD Device Library</title>
+<title>Introduction</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00275.html" target="topic">USB Device Libraries</a> &gt; <a href="00390.html" target="topic">USB MSD Device Library</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00280.html" target="topic">USB Device Library - Getting Started</a> &gt; <a href="00390.html" target="topic">Introduction</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00429.html" target="topic">Previous</a> | <a href="00275.html" target="topic">Up</a> | <a href="00411.html" target="topic">Next</a></div>
+<a href="00280.html" target="topic">Previous</a> | <a href="00280.html" target="topic">Up</a> | <a href="00392.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSD Device Library Topic Title: USB MSD Device Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MID Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB MSD Device Library</div>
+Introduction</div>
 </div>
 </div>
 
@@ -46,49 +46,36 @@ USB MSD Device Library</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
-<div class="Element11">
+<a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<div class="Element212">
+<p class="Element10">
+The MPLAB Harmony USB Device Library (referred to as the USB Device Library) provides embedded application developers with a framework to design and develop a wide variety of USB Devices. A choice of Full Speed only or Full Speed and Hi-Speed USB operations are available, depending on the selected PIC32 or SAM microcontroller. The USB Device Library facilitates development of standard USB devices through function drivers that implement standard USB Device class specification. Vendor USB devices can be implemented via USB Device Layer Endpoint functions. The USB Device Library is modular, thus allowing application developers to readily design composite USB devices. The USB Device Library is a part of the MPLAB Harmony installation and is accompanied by demonstration applications that highlight library usage. These demonstrations can also be modified or updated to build custom applications. The USB Device Library also features the following:</p>
+<ul class="Element630">
+<li class="Element600">Support for different USB device classes (CDC, Audio, HID, MSD, Printer and Vendor)</li>
+<li class="Element600">Supports multiple instance of the same class in a composite device</li>
+<li class="Element600">Supports multiple configurations at different speeds</li>
+<li class="Element600">Supports Full-Speed and High-Speed operation</li>
+<li class="Element600">Supports multiple USB peripherals (allows multiple device stacks)</li>
+<li class="Element600">Modular and Layered architecture</li>
+<li class="Element600">Supports deferred control transfer responses</li>
+<li class="Element600">Completely non-blocking</li>
+<li class="Element600">Supports both polled and interrupt operation</li>
+<li class="Element600">Works readily in an RTOS application</li>
+</ul><p class="Element10">
+This document serves as a getting started guide and provides information on the following:</p>
+<ul class="Element630">
+<li class="Element600">USB Device Library architecture</li>
+<li class="Element600">USB Device Library - application interaction</li>
+<li class="Element600">Creating your own USB device</li>
+</ul><div class="Element63">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table2">
 <tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00411.html" target="topic">Introduction</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Introduces the MPLAB Harmony USB Mass Storage Device (MSD) Library.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00416.html" target="topic">Using the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This topic describes the basic architecture of the USB MSD Device Library and provides information and examples on its use.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00389.html" target="topic">Configuring the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Describes how to configure the MSD Function Driver.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00406.html" target="topic">Building the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Describes the files to be included in the project while using the MSD Function Driver.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00413.html" target="topic">Library Interface</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section describes the Application Programming Interface (API) functions of the USB MSD Device Library.<br>Refer to each section for a detailed description.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00409.html" target="topic">Files</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This section lists the source and header files used by the library.&nbsp;</div></td></tr></table></div></div>
+<td class="Element67" valign="top" width="10%" style="border:none;">
+<div class="Element68">
+<img src="Note Icon.png" border="0" alt="" title=""> <strong>Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<div class="Element68">
+It is assumed that the reader is familiar with the USB 2.0 specification (available at <a href="#" onclick="openExternalLink('http://www.usbif.org');"><img src="indicator_external_link.gif" border="0" alt="" title="">www.usbif.org</a>). While the document, for the sake completeness, does cover certain aspects of the USB 2.0 protocol, it is recommended that the reader refer to the specification for a complete description of USB operation.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -96,7 +83,7 @@ This section lists the source and header files used by the library.&nbsp;</div><
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00275.html" target="topic">USB Device Libraries</a> &gt; <a href="00390.html" target="topic">USB MSD Device Library</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00280.html" target="topic">USB Device Library - Getting Started</a> &gt; <a href="00390.html" target="topic">Introduction</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -104,13 +91,13 @@ This section lists the source and header files used by the library.&nbsp;</div><
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00429.html" target="topic">Previous</a> | <a href="00275.html" target="topic">Up</a> | <a href="00411.html" target="topic">Next</a></div>
+<a href="00280.html" target="topic">Previous</a> | <a href="00280.html" target="topic">Up</a> | <a href="00392.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSD Device Library Topic Title: USB MSD Device Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MID Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

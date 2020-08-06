@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Setting the Desired Audio Stream Sampling Rate</title>
+<title>Obtaining an Audio Stream</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00206.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00228.html" target="topic">Using the Library</a> &gt; <a href="00218.html" target="topic">How the Library Works</a> &gt; <a href="00226.html" target="topic">Setting the Desired Audio Stream Sampling Rate</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00226.html" target="topic">Obtaining an Audio Stream</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00216.html" target="topic">Previous</a> | <a href="00218.html" target="topic">Up</a> | <a href="00208.html" target="topic">Next</a></div>
+<a href="00227.html" target="topic">Previous</a> | <a href="00222.html" target="topic">Up</a> | <a href="00215.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Setting the Desired Audio Stream Sampling Rate Topic Title: Setting the Desired Audio Stream Sampling Rate)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Obtaining an Audio Stream Topic Title: Obtaining an Audio Stream)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Setting the Desired Audio Stream Sampling Rate</div>
+Obtaining an Audio Stream</div>
 </div>
 </div>
 
@@ -49,7 +49,9 @@ Setting the Desired Audio Stream Sampling Rate</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Sampling rate of an audio stream can be set using <a href="01114.html" target="topic">USB_HOST_AUDIO_V1_0_StreamSamplingRateSet</a> function. Supported sampling rates for an audio stream is returned as part of <a href="01078.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_INFO</a> by the <a href="01110.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetFirst</a> and USB_HOST_AUDIO_V1_0_StreamGetNextfunctions. Return values of these function indicates if the request has been placed successfully or failed. When the set sampling rate request is completed the stream event handler generates an event USB_HOST_AUDIO_V1_0_STREAM_EVENT_SAMPLING_RATE_SET_COMPLETE. The event data USB_HOST_AUDIO_V1_0_STREAM_EVENT_SAMPLING_RATE_SET_COMPLETE_DATA has request handle and the requestStatus which indicates the set sampling request was accepted by the device or failed. The following code shows an example of how sampling rates can be set in an audio stream. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of Set sampling rate to an audio stream */</span></i>
+Once application has identified which audio stream to use, application must open that audio stream by using <a href="01116.html" target="topic">USB_HOST_AUDIO_V1_0_StreamOpen</a> function. This function takes audio stream object <a href="01091.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_OBJ</a> as an argument which obtained by <a href="01114.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetFirst</a> and <a href="01115.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetNext</a> functions and returns audio stream handle <a href="01080.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_HANDLE</a>. If the open function fails, it returns an invalid handle (<a href="01080.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_HANDLE</a> _INVALID). Once opened successfully, a valid handle tracks the relationship between the client and the Audio Stream. This handle should be used with other Audio Stream functions.&nbsp;</p>
+<p class="Element10">
+An audio stream can be opened multiple times by different application clients. In an RTOS based application each client could running its own thread. Multiple clients can read write data to the one Audio stream. In such a case, the read and write requests are queued. The following code shows an example of how an Audio Stream is opened. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of opening an audio stream */</span></i>
 
 <i><span style="color: #008000">/* Specify the Audio Stream format details that this application supports */</span></i>
 <strong><span style="color: #000080">const</span></strong> APP_USB_HOST_AUDIO_STREAM_FORTMAT audioSpeakerStreamFormat =
@@ -64,51 +66,8 @@ Sampling rate of an audio stream can be set using <a href="01114.html" target="t
 };
 
 <strong><span style="color: #000080">bool</span></strong> isAudioDeviceAttached = <strong><span style="color: #000080">false</span></strong>;
-<strong><span style="color: #000080">bool</span></strong> isStreamEnabled = <strong><span style="color: #000080">false</span></strong>;
-<strong><span style="color: #000080">bool</span></strong> isSampleRateSetComplete = <strong><span style="color: #000080">false</span></strong>;
 USB_HOST_AUDIO_V1_0_OBJ audioDeviceObj;
 
-
-<i><span style="color: #008000">/*************************************************************
- * Audio Stream Event Handler function.
- ************************************************************/</span></i>
-
-USB_HOST_AUDIO_V1_0_STREAM_EVENT_RESPONSE APP_USBHostAudioStreamEventHandler
-(
-    USB_HOST_AUDIO_V1_0_STREAM_HANDLE streamHandle,
-    USB_HOST_AUDIO_V1_0_STREAM_EVENT event,
-    <strong><span style="color: #000080">void</span></strong> * eventData,
-    uintptr_t context
-)
-{
-    USB_HOST_AUDIO_V1_0_STREAM_EVENT_WRITE_COMPLETE_DATA * writeCompleteEventData;
-    <strong><span style="color: #000080">switch</span></strong>(event)
-    {
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_AUDIO_V1_0_STREAM_EVENT_DISABLE_COMPLETE:
-
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_AUDIO_V1_0_STREAM_EVENT_ENABLE_COMPLETE:
-            <i><span style="color: #008000">/* Check eventData result member to know if stream enable is complete */</span></i>
-                isStreamEnabled = <strong><span style="color: #000080">true</span></strong>;
-
-            <strong><span style="color: #000080">break</span></strong>;
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_AUDIO_V1_0_STREAM_EVENT_WRITE_COMPLETE:
-
-
-            <strong><span style="color: #000080">break</span></strong>;
-
-         <strong><span style="color: #000080">case</span></strong> USB_HOST_AUDIO_V1_0_STREAM_EVENT_SAMPLING_RATE_SET_COMPLETE:
-                <i><span style="color: #008000">/* Check eventData result member to know if stream enable is complete */</span></i>
-                isSampleRateSetComplete = <strong><span style="color: #000080">true</span></strong>;
-
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">default</span></strong>:
-            <strong><span style="color: #000080">break</span></strong>;
-    }
-    <strong><span style="color: #000080">return</span></strong> USB_HOST_AUDIO_V1_0_STREAM_EVENT_RESPONSE_NONE;
-}
 <i><span style="color: #008000">/*************************************************************/</span></i>
 <i><span style="color: #008000">/* Function to search for a specific Audio Stream */</span></i>
 <i><span style="color: #008000">/************************************************************/</span></i>
@@ -250,64 +209,9 @@ USB_HOST_AUDIO_V1_0_STREAM_OBJ App_USBHostAudioSpeakerStreamFind
                     appData.state = APP_STATE_ERROR;
                     <strong><span style="color: #000080">break</span></strong>;
                 }
-
-                <i><span style="color: #008000">/* Set Stream Event Handler  */</span></i>
-                streamResult = USB_HOST_AUDIO_V1_0_StreamEventHandlerSet
-                               (
-                                   appData.outStreamHandle,
-                                   APP_USBHostAudioStreamEventHandler,
-                                   (uintptr_t)appData.ouStreamObj
-                               );
-
-                <strong><span style="color: #000080">if</span></strong> (streamResult != USB_HOST_AUDIO_V1_0_STREAM_SUCCESS)
-                {
-                    appData.state = APP_STATE_ERROR;
-                    <strong><span style="color: #000080">break</span></strong>;
-                }
-                appData.state = APP_STATE_ENABLE_AUDIO_STREAM;
             }
             <strong><span style="color: #000080">break</span></strong>;
 
-            <strong><span style="color: #000080">case</span></strong>  APP_STATE_ENABLE_AUDIO_STREAM:
-                isStreamEnableComplete = <strong><span style="color: #000080">false</span></strong>;
-                 <i><span style="color: #008000">/* Set default interface setting of the streaming interface */</span></i>
-                streamResult = USB_HOST_AUDIO_V1_0_StreamEnable
-                               (
-                                   appData.outStreamHandle,
-                                   &amp;appData.requestHandle
-                               );
-                <strong><span style="color: #000080">if</span></strong> (streamResult != USB_HOST_AUDIO_V1_0_STREAM_SUCCESS)
-                {
-                    appData.state = APP_STATE_ERROR;
-                    <strong><span style="color: #000080">break</span></strong>;
-                }
-                appData.state = APP_STATE_WAIT_FOR_ENABLE_AUDIO_STREAM;
-            <strong><span style="color: #000080">break</span></strong>;
-        <strong><span style="color: #000080">case</span></strong>  APP_STATE_WAIT_FOR_ENABLE_AUDIO_STREAM:
-            <strong><span style="color: #000080">if</span></strong> (isStreamEnabled == <strong><span style="color: #000080">true</span></strong>)
-            {
-                <i><span style="color: #008000">/* Set sampling rate 48000 Hz */</span></i>
-                isSampleRateSetComplete = <strong><span style="color: #000080">false</span></strong>;
-                streamResult = USB_HOST_AUDIO_V1_0_StreamSamplingRateSet
-                               (
-                                   appData.outStreamHandle,
-                                   &amp;appData.requestHandle,
-                                   48000
-                               );
-                <strong><span style="color: #000080">if</span></strong> (streamResult != USB_HOST_AUDIO_V1_0_STREAM_SUCCESS)
-                {
-                    appData.state = APP_STATE_ERROR;
-                    <strong><span style="color: #000080">break</span></strong>;
-                }
-                appData.state = APP_STATE_WAIT_FOR_SAMPLE_RATE_SET_COMPLETE;
-
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-        <strong><span style="color: #000080">case</span></strong>  APP_STATE_WAIT_FOR_SAMPLE_RATE_SET_COMPLETE:
-            <strong><span style="color: #000080">if</span></strong> (isSampleRateSetComplete == <strong><span style="color: #000080">true</span></strong>)
-            {
-                <i><span style="color: #008000">/* Set sampling rate completed */</span></i>
-            }
         <strong><span style="color: #000080">default</span></strong>:
             <strong><span style="color: #000080">break</span></strong>;
     }
@@ -319,7 +223,7 @@ USB_HOST_AUDIO_V1_0_STREAM_OBJ App_USBHostAudioSpeakerStreamFind
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00206.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00228.html" target="topic">Using the Library</a> &gt; <a href="00218.html" target="topic">How the Library Works</a> &gt; <a href="00226.html" target="topic">Setting the Desired Audio Stream Sampling Rate</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00226.html" target="topic">Obtaining an Audio Stream</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -327,13 +231,13 @@ USB_HOST_AUDIO_V1_0_STREAM_OBJ App_USBHostAudioSpeakerStreamFind
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00216.html" target="topic">Previous</a> | <a href="00218.html" target="topic">Up</a> | <a href="00208.html" target="topic">Next</a></div>
+<a href="00227.html" target="topic">Previous</a> | <a href="00222.html" target="topic">Up</a> | <a href="00215.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Setting the Desired Audio Stream Sampling Rate Topic Title: Setting the Desired Audio Stream Sampling Rate)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDIO1_0 HOST Obtaining an Audio Stream Topic Title: Obtaining an Audio Stream)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

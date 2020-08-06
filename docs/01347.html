@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_HOST_HUB_SUPPORT_ENABLE Macro</title>
+<title>usb_host_hub_config_template.h</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00365.html" target="topic">USB Host Layer Library</a> &gt; <a href="00353.html" target="topic">Configuring the Library</a> &gt; <a href="01347.html" target="topic">USB_HOST_HUB_SUPPORT_ENABLE Macro</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00221.html" target="topic">Files</a> &gt; <a href="01347.html" target="topic">usb_host_hub_config_template.h</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01301.html" target="topic">Previous</a> | <a href="00353.html" target="topic">Up</a> | <a href="01348.html" target="topic">Next</a></div>
+<a href="01228.html" target="topic">Previous</a> | <a href="00221.html" target="topic">Up</a> | <a href="01039.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_HUB_SUPPORT_ENABLE Topic Title: USB_HOST_HUB_SUPPORT_ENABLE Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_host_hub_config_template.h Topic Title: usb_host_hub_config_template.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_HOST_HUB_SUPPORT_ENABLE Macro</div>
+usb_host_hub_config_template.h</div>
 </div>
 </div>
 
@@ -46,29 +46,71 @@ USB_HOST_HUB_SUPPORT_ENABLE Macro</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="4465736372697074696F6E"></a><div class="Element11">
+<a name="436F6D70616E79"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-USB Host Layer Hub Support&nbsp;</p>
-<p class="Element10">
-Specifying this macro will enable Hub Support. The HUB tier level to be supported is then specified by <a href="01348.html" target="topic">USB_HOST_HUB_TIER_LEVEL</a> constant. If this macro is specified, the file usb_host_hub.c must be included in the application.</p></div>
+Microchip Technology Inc.</p></div>
 </div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">USB_HOST_HUB_SUPPORT_ENABLE</span></strong> </pre></div></div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
+<a name="46696C65204E616D65"></a><div class="Element14">
+File Name</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Not specifying this macro will disable Hub support.</p></div>
+usb_host_hub_config_template.h</p></div>
+</div>
+<a name="4465736372697074696F6E"></a><div class="Element14">
+Description</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+USB Host Hub Configuration Definitions&nbsp;</p>
+<p class="Element10">
+This file contains configurations macros needed to configure the Hub Driver. This file is a template file only. It should not be included by the application. The configuration macros defined in the file should be defined in the configuration specific system_config.h.</p></div>
+</div>
+<a name="4D6163726F73"></a><div class="Element14">
+Macros</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00021.html" target="topic">_USB_HOST_HUB_CONFIG_TEMPLATE_H_</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is macro _USB_HOST_HUB_CONFIG_TEMPLATE_H_.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01348.html" target="topic">USB_HOST_HUB_INSTANCES_NUMBER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Specifies the number of Hub to be supported in the system.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01350.html" target="topic">USB_HOST_HUB_PORTS_NUMBER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Specifies the number of ports per Hub.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00365.html" target="topic">USB Host Layer Library</a> &gt; <a href="00353.html" target="topic">Configuring the Library</a> &gt; <a href="01347.html" target="topic">USB_HOST_HUB_SUPPORT_ENABLE Macro</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00221.html" target="topic">Files</a> &gt; <a href="01347.html" target="topic">usb_host_hub_config_template.h</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -76,13 +118,13 @@ Not specifying this macro will disable Hub support.</p></div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01301.html" target="topic">Previous</a> | <a href="00353.html" target="topic">Up</a> | <a href="01348.html" target="topic">Next</a></div>
+<a href="01228.html" target="topic">Previous</a> | <a href="00221.html" target="topic">Up</a> | <a href="01039.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_HUB_SUPPORT_ENABLE Topic Title: USB_HOST_HUB_SUPPORT_ENABLE Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_host_hub_config_template.h Topic Title: usb_host_hub_config_template.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

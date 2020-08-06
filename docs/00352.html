@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Building the Library</title>
+<title>Receiving a Report</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00365.html" target="topic">USB Host Layer Library</a> &gt; <a href="00352.html" target="topic">Building the Library</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00324.html" target="topic">USB HID Device Library</a> &gt; <a href="00354.html" target="topic">Using the Library</a> &gt; <a href="00347.html" target="topic">How the Library Works</a> &gt; <a href="00352.html" target="topic">Receiving a Report</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01420.html" target="topic">Previous</a> | <a href="00365.html" target="topic">Up</a> | <a href="00368.html" target="topic">Next</a></div>
+<a href="00353.html" target="topic">Previous</a> | <a href="00347.html" target="topic">Up</a> | <a href="00342.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HIDDEV Receiving a Report Topic Title: Receiving a Report)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Building the Library</div>
+Receiving a Report</div>
 </div>
 </div>
 
@@ -49,81 +49,29 @@ Building the Library</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The following three tables list and describe the header (<span class="Element146">.h</span>) and source (<span class="Element146">.c</span>) files that implement this library. The parent folder for these files is <span class="Element146">&lt;install-dir&gt;/framework/usb</span><span style="color: #0000FF">.</span>&nbsp;</p>
-<p class="Element10">
-<strong>Interface File(s)</strong>&nbsp;</p>
-<p class="Element10">
-This table lists and describes the header files that must be included (i.e., using <span class="Element146">#include</span>) by any code that uses this library. </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="23%">
-<div class="Element66">
-Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="77%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="23%">
-<div class="Element68">
-<span class="Element146"><a href="01031.html" target="topic">usb_host.h</a></span>&nbsp;</div></td><td class="Element67" valign="top" width="77%">
-<div class="Element68">
-This header file should be included in any <span class="Element146">.c</span> file that accesses the USB Host Layer API.&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-<strong>Required File(s)</strong> </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table2">
-<tr>
-<td class="Element67" valign="top" width="10%" style="border:none;">
-<div class="Element68">
-<img src="MHC_Logo_Medium.png" border="0" alt="" title="">&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
-<div class="Element68">
-<span style="color: #008000"><strong><i>All of the required files listed in the following table are automatically added into the MPLAB X IDE project by the MHC when the library is selected for use.</i></strong></span>&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-This table lists and describes the source and header files that must <i>always</i> be included in the MPLAB X IDE project to build this library. </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="25%">
-<div class="Element66">
-Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="75%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="25%">
-<div class="Element68">
-<span class="Element146">/src/dynamic/usb_host.c</span>&nbsp;</div></td><td class="Element67" valign="top" width="75%">
-<div class="Element68">
-This file implements the USB Host Layer interface and should be included in the project if USB Host mode operation is desired.&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-<strong>Optional File(s)</strong>&nbsp;</p>
-<p class="Element10">
-This table lists and describes the source and header files that may optionally be included if required for the desired implementation. </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="25%">
-<div class="Element66">
-Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="75%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="25%">
-<div class="Element68">
-N/A&nbsp;</div></td><td class="Element67" valign="top" width="75%">
-<div class="Element68">
-There are no optional files for this library.&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-<strong>Module Dependencies</strong>&nbsp;</p>
-<p class="Element10">
-The USB Host Layer Library depends on the following modules:</p>
-<ul class="Element630">
-<li class="Element600"><span class="Element145">USB Driver Library</span> (Host mode files)</li>
-<li class="Element600"><span class="Element145">Timer System Service Library</span></li>
-</ul></div>
+The application can receive a report from the Host by using the <a href="00873.html" target="topic">USB_DEVICE_HID_ReportReceive</a> function. This function returns a transfer handler that allows the application to track the read request. The request is completed when the Host sends the report. The application must make sure that it allocates a buffer size that is at least the size of the report. The return value of the function indicates the success of the request. A read request could fail if the driver transfer queue is full. The completion of the read transfer is indicated by a USB_DEVICE_HID_EVENT_REPORT_RECEIVED event. The reportReceived member of the eventData data structure contains details about the received report. The following code shows an example of how a USB HID Keyboard can schedule a receive report operation to get the keyboard LED status. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* The following code shows how the
+ * USB HID Keyboard application schedules a
+ * receive report operation to receive the
+ * keyboard output report from the host. This
+ * report contains the keyboard LED status. The
+ * size of the report is 1 byte */</span></i>
+
+result = USB_DEVICE_HID_ReportReceive(appData.hidInstance,
+             &amp;appData.receiveTransferHandle,
+             (uint8_t *)&amp;appData.keyboardOutputReport,1);
+
+<strong><span style="color: #000080">if</span></strong>(USB_DEVICE_HID_RESULT_OK != result)
+{
+    <i><span style="color: #008000">/* Do error handling here */</span></i>
+}</pre></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00365.html" target="topic">USB Host Layer Library</a> &gt; <a href="00352.html" target="topic">Building the Library</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00324.html" target="topic">USB HID Device Library</a> &gt; <a href="00354.html" target="topic">Using the Library</a> &gt; <a href="00347.html" target="topic">How the Library Works</a> &gt; <a href="00352.html" target="topic">Receiving a Report</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -131,13 +79,13 @@ The USB Host Layer Library depends on the following modules:</p>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01420.html" target="topic">Previous</a> | <a href="00365.html" target="topic">Up</a> | <a href="00368.html" target="topic">Next</a></div>
+<a href="00353.html" target="topic">Previous</a> | <a href="00347.html" target="topic">Up</a> | <a href="00342.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HIDDEV Receiving a Report Topic Title: Receiving a Report)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

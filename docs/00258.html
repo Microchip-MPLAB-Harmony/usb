@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Abstraction Model</title>
+<title>USB Application Project Driver Signatures</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00275.html" target="topic">USB Device Libraries</a> &gt; <a href="00273.html" target="topic">USB CDC Device Library</a> &gt; <a href="00272.html" target="topic">Using the Library</a> &gt; <a href="00258.html" target="topic">Abstraction Model</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00255.html" target="topic">Driver Signing and Windows 8 (for v1.08)</a> &gt; <a href="00258.html" target="topic">USB Application Project Driver Signatures</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00272.html" target="topic">Previous</a> | <a href="00272.html" target="topic">Up</a> | <a href="00257.html" target="topic">Next</a></div>
+<a href="00260.html" target="topic">Previous</a> | <a href="00255.html" target="topic">Up</a> | <a href="00257.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVCDC Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEV DRV WIN8 USB Application Project Driver Signatures Topic Title: USB Application Project Driver Signatures)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Abstraction Model</div>
+USB Application Project Driver Signatures</div>
 </div>
 </div>
 
@@ -48,30 +48,25 @@ Abstraction Model</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
+<div class="Element15">
+Projects Based on WinUSB</div>
 <p class="Element10">
-The CDC Function Driver offers services to a USB CDC Device to communicate with the host by abstracting the USB specification details. It must be used along with the USB Device Layer and USB controller to communicate with the USB Host. Figure 1 shows a block diagram of the MPLAB Harmony USB Architecture and where the CDC Function Driver is placed. </p><p class="Element10" style="text-align: center;">
-<strong>Figure 1: CDC Function Driver</strong>&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<img src="USB_DEV_CDC figure_1.png" border="0" alt="" title=""></p><p class="Element10">
-As shown in Figure 1, the USB Controller Driver takes the responsibility of managing the USB peripheral on the device. The USB Device Layer handles the device enumeration, etc. The USB Device<span style="color: #FFFFFF">_</span>layer forwards all USB CDC specific control transfers to the CDC Function Driver. The CDC Function Driver ACM sub-layer interprets the control transfers and requests application's intervention through event handlers and well defined set of API. The application must register a event handler with the CDC Function Driver in the Device Layer Set Configuration Event. The application should respond to CDC ACM events. Response to CDC ACM event that require control transfer response can be deferred by responding to the event after returning from the event handler. The application interacts directly with the CDC Function Driver to send/receive data and to send serial state notifications.&nbsp;</p>
+WinUSB is a Microsoft created/supplied driver.  All Microsoft-supplied drivers contain an embedded signature from Microsoft.&nbsp;</p>
 <p class="Element10">
-<span style="color: #000000">As per the CDC specification,a USB CDC Device is a collection of the following interfaces:</span>&nbsp;</p>
-<ul class="Element630">
-<li class="Element600"><span style="color: #000000">Communication Interface (Device Management) on Endpoint 0</span></li>
-<li class="Element600">Optional <span style="color: #000000">Communication Interface (Notification) on an interrupt endpoint</span></li>
-<li class="Element600"><span style="color: #000000">Optional Data Interface (either a bulk or isochronous endpoint)</span></li>
-</ul><p class="Element10" style="text-align: center;">
-<img src="USB_DEV_CDC figure_2.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10" style="text-align: center;">
-<span style="color: #000000"><strong>Figure 2: CDC Function Driver Architecture</strong></span></p><p class="Element10">
-<span style="color: #000000">Figure 2 shows the architecture of the CDC Function Driver. The device management on Endpoint 0 is handled by the device library(class specific requests are routed to the CDC Function Driver by the USB Device Layer). An instance of the CDC Function Driver actually consists of a data interface and a notification interface. The library is implemented in two <span class="Element146">.c</span> files. The <span class="Element146">usb_device_cdc.c</span> file implements the CDC data and serial state notification, while the <span class="Element146">usb_device_cdc_acm.c</span> file implements the control transfer interpretation and event generation. The application must respond to control transfer related CDC ACM events by directly calling the Device Layer control transfer routines.</span></p></div>
+In operating systems prior to Windows 8, WinUSB-based devices require the user to install a driver package for the hardware. However, starting with Windows 8, it is possible to make WinUSB-based devices that are fully &quot;plug and play&quot;, and do not require any user-supplied driver package. Windows 8 allows for automatic installation of the WinUSB driver, when the device firmware implements the correct Microsoft specific &quot;OS&quot; and related USB descriptors. These special descriptors are optional, but when implemented, allow for automatic driver installation using the WinUSB driver that is distributed with the operating system installation.</p><div class="Element15">
+Projects Based on CDC</div>
+<p class="Element10">
+When used with Windows, the CDC projects in MPLAB Harmony use the Microsoft created/supplied <span class="Element146">usbser.sys</span> driver. This driver contains an embedded signature from Microsoft.</p><div class="Element15">
+Projects Based on HID, MSD, Audio Class</div>
+<p class="Element10">
+These USB device classes/projects rely on Microsoft-supplied drivers that are distributed with the operating system, and do not require any user-supplied driver packages or <span class="Element146">.inf</span> files. Therefore, driver  package signing is usually not relevant for these types of applications, as the drivers are normally installed automatically when the hardware is attached to the PC.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00275.html" target="topic">USB Device Libraries</a> &gt; <a href="00273.html" target="topic">USB CDC Device Library</a> &gt; <a href="00272.html" target="topic">Using the Library</a> &gt; <a href="00258.html" target="topic">Abstraction Model</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00255.html" target="topic">Driver Signing and Windows 8 (for v1.08)</a> &gt; <a href="00258.html" target="topic">USB Application Project Driver Signatures</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -79,13 +74,13 @@ As shown in Figure 1, the USB Controller Driver takes the responsibility of mana
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00272.html" target="topic">Previous</a> | <a href="00272.html" target="topic">Up</a> | <a href="00257.html" target="topic">Next</a></div>
+<a href="00260.html" target="topic">Previous</a> | <a href="00255.html" target="topic">Up</a> | <a href="00257.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVCDC Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEV DRV WIN8 USB Application Project Driver Signatures Topic Title: USB Application Project Driver Signatures)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

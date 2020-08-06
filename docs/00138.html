@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>CS_INTERFACE Macro</title>
+<title>Building the Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00275.html" target="topic">USB Device Libraries</a> &gt; <a href="00273.html" target="topic">USB CDC Device Library</a> &gt; <a href="00269.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00138.html" target="topic">CS_INTERFACE Macro</a></div>
+<a href="00253.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00068.html" target="topic">Device Demonstrations</a> &gt; <a href="00032.html" target="topic">printer_basic</a> &gt; <a href="00138.html" target="topic">Building the Application</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00550.html" target="topic">Previous</a> | <a href="00269.html" target="topic">Up</a> | <a href="00433.html" target="topic">Next</a></div>
+<a href="00032.html" target="topic">Previous</a> | <a href="00032.html" target="topic">Up</a> | <a href="00139.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: CS_INTERFACE Topic Title: CS_INTERFACE Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB printer_basic_build Topic Title: Building the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-CS_INTERFACE Macro</div>
+Building the Application</div>
 </div>
 </div>
 
@@ -49,17 +49,69 @@ CS_INTERFACE Macro</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This is macro CS_INTERFACE.</p></div>
+ &nbsp;</p>
+<p class="Element10">
+The following table lists the MPLAB X Projects contained in <span class="Element146">&lt;install-dir&gt;/usb/apps/device/printer_basic/firmware</span> folder and provides a description of each project. All projects listed in this table implement the same functionality.&nbsp;</p>
+<p class="Element10">
+<strong>MPLAB X IDE Project</strong>&nbsp;</p>
+<p class="Element10">
+This table lists the name and location of the MPLAB X IDE project folder for the demonstration.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="10%">
+<div class="Element66">
+Project Name&nbsp;</div></td><td class="Element65" valign="top" width="7%">
+<div class="Element66">
+Target Device&nbsp;</div></td><td class="Element65" valign="top" width="10%">
+<div class="Element66">
+Target Board&nbsp;</div></td><td class="Element65" valign="top" width="73%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="10%">
+<div class="Element68">
+<span class="Element146">sam_e54_xpro.X</span>&nbsp;</div></td><td class="Element67" valign="top" width="7%">
+<div class="Element68">
+ATSAME54P20A&nbsp;</div></td><td class="Element67" valign="top" width="10%">
+<div class="Element68">
+SAM E54 Xplained Pro&nbsp;</div></td><td class="Element67" valign="top" width="73%">
+<div class="Element68">
+This project implements a bare-metal(non RTOS) USB Printer Device application on a ATSAME54P20A device.<br>This demo shows how the SAM E54 Xplained Pro connected to the Windows PC enumerate as a USB printer device is capable of printing.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+&nbsp;</p>
+<p class="Element10">
+<strong>IAR Embedded Workbench Projects</strong> </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="11%">
+<div class="Element66">
+Project Name&nbsp;</div></td><td class="Element65" valign="top" width="6%">
+<div class="Element66">
+Target Device&nbsp;</div></td><td class="Element65" valign="top" width="11%">
+<div class="Element66">
+Target Board&nbsp;</div></td><td class="Element65" valign="top" width="72%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="11%">
+<div class="Element68">
+<span class="Element146">sam_9x60_ek_iar.IAR</span>&nbsp;</div></td><td class="Element67" valign="top" width="6%">
+<div class="Element68">
+SAM9X60&nbsp;</div></td><td class="Element67" valign="top" width="11%">
+<div class="Element68">
+SAM9X60 Evaluation Kit&nbsp;</div></td><td class="Element67" valign="top" width="72%">
+<div class="Element68">
+This project implements a bare-metal(non RTOS) USB Printer Device application on a SAM9X60 device. This demo shows how the SAM9X60 Evaluation Kit Pro connected to the Windows PC enumerate as a USB printer device is capable of printing.&nbsp;</div></td></tr></table></div></div>
 </div>
-<a name="43"></a><div class="Element99">
-C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">CS_INTERFACE</span></strong> 0x24</pre></div></div>
+</div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00275.html" target="topic">USB Device Libraries</a> &gt; <a href="00273.html" target="topic">USB CDC Device Library</a> &gt; <a href="00269.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00138.html" target="topic">CS_INTERFACE Macro</a></div>
+<a href="00253.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00068.html" target="topic">Device Demonstrations</a> &gt; <a href="00032.html" target="topic">printer_basic</a> &gt; <a href="00138.html" target="topic">Building the Application</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -67,13 +119,13 @@ C</div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00550.html" target="topic">Previous</a> | <a href="00269.html" target="topic">Up</a> | <a href="00433.html" target="topic">Next</a></div>
+<a href="00032.html" target="topic">Previous</a> | <a href="00032.html" target="topic">Up</a> | <a href="00139.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: CS_INTERFACE Topic Title: CS_INTERFACE Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB printer_basic_build Topic Title: Building the Application)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

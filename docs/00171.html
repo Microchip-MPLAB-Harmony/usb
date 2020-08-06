@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Release Contents</title>
+<title>initData Enumeration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00172.html" target="topic">Release Information</a> &gt; <a href="00171.html" target="topic">Release Contents</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00369.html" target="topic">USB Host Layer Library</a> &gt; <a href="00372.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00171.html" target="topic">initData Enumeration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00172.html" target="topic">Previous</a> | <a href="00172.html" target="topic">Up</a> | <a href="00249.html" target="topic">Next</a></div>
+<a href="00155.html" target="topic">Previous</a> | <a href="00372.html" target="topic">Up</a> | <a href="00172.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Release Contents Topic Title: Release Contents)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: initData Topic Title: initData Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Release Contents</div>
+initData Enumeration</div>
 </div>
 </div>
 
@@ -49,262 +49,33 @@ Release Contents</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This table lists the contents of the USB v3.6.0 release, including a brief description.&nbsp;</p>
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</p>
 <p class="Element10">
-&nbsp;</p>
+This enumeration defines the possible matching criteria flag that can be specified for a Host TPL table entry. The tplFlag member of the TPL table entry should be set to one or more of these flags. These flags define the criteria that the Host layer will use while matching the attached device to the TPL table entry. For example, if a device is specified by class, subclass and protocol specifying the TPL_FLAG_IGNORE_SUBCLASS flag will cause the Host layer to ignore the subclass while comparing the class, subclass and protocol of the attached device.&nbsp;</p>
 <p class="Element10">
-<span style="color: #800000"><strong>USB Middleware:</strong></span> &nbsp;</p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="30%">
-<div class="Element66">
-Module&nbsp;</div></td><td class="Element65" valign="top" width="70%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="30%">
-<div class="Element68">
-<a href="00275.html" target="topic">USB Device Stack</a>&nbsp;</div></td><td class="Element67" valign="top" width="70%">
-<div class="Element68">
-USB Device Libraries with support for different USB device classes (CDC, Audio, HID, MSD, Printer and Vendor).&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="30%">
-<div class="Element68">
-<a href="00366.html" target="topic">USB Host stack</a>&nbsp;</div></td><td class="Element67" valign="top" width="70%">
-<div class="Element68">
-USB Host Libraries with support for different client drivers (CDC, Audio, HID, and MSD)&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<span style="color: #800000"><strong>USB Drivers:</strong></span> </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="6%">
-<div class="Element66">
-Module&nbsp;</div></td><td class="Element65" valign="top" width="94%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="6%">
-<div class="Element68">
-USBHS&nbsp;</div></td><td class="Element67" valign="top" width="94%">
-<div class="Element68">
-USB High Speed Device and Host mode driver for PIC32MZ EF/DA microcontroller families.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="6%">
-<div class="Element68">
-USBFS&nbsp;</div></td><td class="Element67" valign="top" width="94%">
-<div class="Element68">
-USB Device and Host mode driver for PIC32MX/MK and PIC32MZ W1 microcontroller families.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="6%">
-<div class="Element68">
-USBHSV1&nbsp;</div></td><td class="Element67" valign="top" width="94%">
-<div class="Element68">
-USB High Speed Device and Host mode driver for SAME70/V70/V71/S70 microcontroller families.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="6%">
-<div class="Element68">
-USBFSV1&nbsp;</div></td><td class="Element67" valign="top" width="94%">
-<div class="Element68">
-USB Device and Host mode driver for SAMD2x/E5x/D5x/DA1/L21 microcontroller families.<br>USB Device mode driver for SAMD11/L22 microcontroller families.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="6%">
-<div class="Element68">
-UDPHS&nbsp;</div></td><td class="Element67" valign="top" width="94%">
-<div class="Element68">
-USB High Speed Device Port driver for SAMA5D2 and SAM9X60 microprocessors.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="6%">
-<div class="Element68">
-USBDP&nbsp;</div></td><td class="Element67" valign="top" width="94%">
-<div class="Element68">
-USB Device Port driver for SAMG55 microcontroller families.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="6%">
-<div class="Element68">
-UHP-EHCI&nbsp;</div></td><td class="Element67" valign="top" width="94%">
-<div class="Element68">
-USB Host Port driver for EHCI (Enhanced Host Controller Interface) complaint USB peripheral in SAMA5D2 and SAM9X60 microprocessors.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="6%">
-<div class="Element68">
-UHP-OHCI&nbsp;</div></td><td class="Element67" valign="top" width="94%">
-<div class="Element68">
-USB Host Port driver for OHCI (Open Host Controller Interface) complaint USB peripheral in SAMA5D2 and SAM9X60 microprocessors<br>and SAMG55 microcontrollers.&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<span style="color: #800000"><strong>USB Device Applications:</strong></span> </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="49%">
-<div class="Element66">
-Application&nbsp;</div></td><td class="Element65" valign="top" width="51%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="49%">
-<div class="Element68">
-<a href="00052.html" target="topic">cdc_com_port_dual</a>&nbsp;</div></td><td class="Element67" valign="top" width="51%">
-<div class="Element68">
-CDC Dual Serial COM Ports Emulation Demonstration&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="49%">
-<div class="Element68">
-<a href="00056.html" target="topic">cdc_com_port_single</a>&nbsp;</div></td><td class="Element67" valign="top" width="51%">
-<div class="Element68">
-CDC Single Serial COM Port Emulation Demonstration&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="49%">
-<div class="Element68">
-<a href="00069.html" target="topic">cdc_msd_basic</a>&nbsp;</div></td><td class="Element67" valign="top" width="51%">
-<div class="Element68">
-CDC + Mass Storage Device (MSD) Demonstration&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="49%">
-<div class="Element68">
-<a href="00073.html" target="topic">cdc_msd_sdcard</a>&nbsp;</div></td><td class="Element67" valign="top" width="51%">
-<div class="Element68">
-CDC + Mass Storage Device (MSD) Demonstration with SD Card media.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="49%">
-<div class="Element68">
-<a href="00064.html" target="topic">cdc_serial_emulator</a>&nbsp;</div></td><td class="Element67" valign="top" width="51%">
-<div class="Element68">
-CDC Serial Emulation Demonstration&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="49%">
-<div class="Element68">
-<a href="00097.html" target="topic">hid_basic</a>&nbsp;</div></td><td class="Element67" valign="top" width="51%">
-<div class="Element68">
-Basic USB Human Interface Device (HID) Demonstration&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="49%">
-<div class="Element68">
-<a href="00077.html" target="topic">hid_joystick</a>&nbsp;</div></td><td class="Element67" valign="top" width="51%">
-<div class="Element68">
-USB HID Class Joystick Device Demonstration&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="49%">
-<div class="Element68">
-<a href="00077.html" target="topic">hid_keyboard</a>&nbsp;</div></td><td class="Element67" valign="top" width="51%">
-<div class="Element68">
-USB HID Class Keyboard Device Demonstration&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="49%">
-<div class="Element68">
-<a href="00105.html" target="topic">hid_mouse</a>&nbsp;</div></td><td class="Element67" valign="top" width="51%">
-<div class="Element68">
-USB HID Class Mouse Device Demonstration&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="49%">
-<div class="Element68">
-<a href="00081.html" target="topic">hid_msd_basic</a>&nbsp;</div></td><td class="Element67" valign="top" width="51%">
-<div class="Element68">
-USB HID Class MSD Demonstration&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="49%">
-<div class="Element68">
-<a href="00124.html" target="topic">msd_basic</a>&nbsp;</div></td><td class="Element67" valign="top" width="51%">
-<div class="Element68">
-USB Mass Storage Device (MSD) Demonstration&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="49%">
-<div class="Element68">
-<a href="00085.html" target="topic">msd_sdcard</a>&nbsp;</div></td><td class="Element67" valign="top" width="51%">
-<div class="Element68">
-USB Mass Storage Device (MSD) SD Card Demonstration&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="49%">
-<div class="Element68">
-<a href="00093.html" target="topic">vendor</a>&nbsp;</div></td><td class="Element67" valign="top" width="51%">
-<div class="Element68">
-USB Vendor (i.e., Generic) Demonstration&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="49%">
-<div class="Element68">
-<a href="00032.html" target="topic">printer_basic</a>&nbsp;</div></td><td class="Element67" valign="top" width="51%">
-<div class="Element68">
-USB Device generic printer demonstration.&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<span style="color: #800000"><strong>USB Host Applications:</strong></span> </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="54%">
-<div class="Element66">
-Application&nbsp;</div></td><td class="Element65" valign="top" width="46%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="54%">
-<div class="Element68">
-<a href="00048.html" target="topic">cdc_basic</a>&nbsp;</div></td><td class="Element67" valign="top" width="46%">
-<div class="Element68">
-USB CDC Basic Demonstration&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="54%">
-<div class="Element68">
-<a href="00060.html" target="topic">cdc_msd</a>&nbsp;</div></td><td class="Element67" valign="top" width="46%">
-<div class="Element68">
-USB CDC MSD Basic Demonstration&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="54%">
-<div class="Element68">
-<a href="00110.html" target="topic">hid_basic_keyboard</a>&nbsp;</div></td><td class="Element67" valign="top" width="46%">
-<div class="Element68">
-USB HID Host Keyboard Demonstration&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="54%">
-<div class="Element68">
-<a href="00114.html" target="topic">hid_basic_mouse_usart</a>&nbsp;</div></td><td class="Element67" valign="top" width="46%">
-<div class="Element68">
-USB HID Host Mouse USART Demonstration&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="54%">
-<div class="Element68">
-<a href="00120.html" target="topic">hub_cdc_hid</a>&nbsp;</div></td><td class="Element67" valign="top" width="46%">
-<div class="Element68">
-USB HID CDC Hub Demonstration&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="54%">
-<div class="Element68">
-<a href="00121.html" target="topic">hub_msd</a>&nbsp;</div></td><td class="Element67" valign="top" width="46%">
-<div class="Element68">
-USB MSD Hub Host Demonstration&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="54%">
-<div class="Element68">
-<a href="00127.html" target="topic">msd_basic</a>&nbsp;</div></td><td class="Element67" valign="top" width="46%">
-<div class="Element68">
-USB MSD Host Simple Thumb Drive Demonstration&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<span style="color: #800000"><strong>USB Dual Role Applications:</strong></span> </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="51%">
-<div class="Element66">
-Application&nbsp;</div></td><td class="Element65" valign="top" width="49%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="51%">
-<div class="Element68">
-<a href="00031.html" target="topic">host_msd_device_hid</a>&nbsp;</div></td><td class="Element67" valign="top" width="49%">
-<div class="Element68">
-USB Dual Role with MSD Host and HID Device Demonstration&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<span style="color: #800000"><strong>USB Multiple Controller Applications:</strong></span> </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element65" valign="top" width="27%">
-<div class="Element66">
-Application&nbsp;</div></td><td class="Element65" valign="top" width="73%">
-<div class="Element66">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="27%">
-<div class="Element68">
-<a href="00033.html" target="topic">device_cdc_host_msd</a>&nbsp;</div></td><td class="Element67" valign="top" width="73%">
-<div class="Element68">
-This application demonstrates USB Device and Host operation on a PIC32 microcontroller with two USB Controllers.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="27%">
-<div class="Element68">
-<a href="00037.html" target="topic">device_dual_cdc</a>&nbsp;</div></td><td class="Element67" valign="top" width="73%">
-<div class="Element68">
-This application demonstrates dual USB Device operation on a microcontroller with two USB Controllers.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="27%">
-<div class="Element68">
-<a href="00041.html" target="topic">host_msd_dual</a>&nbsp;</div></td><td class="Element67" valign="top" width="73%">
-<div class="Element68">
-This application demonstrates the capability of a PIC32 microcontroller and MPLAB Harmony USB Host stack to work with two USB Controllers in an application.&nbsp;</div></td></tr></table></div></div>
+Multiple flags can be specified as a logically OR'ed combination. While combining multiple flags, VID and PID criteria flags cannot be combined with the Class, Subclass, Protocol flags. For example, the TPL_FLAG_VID_PID flag cannot be combined with TPL_FLAG_IGNORE_SUBCLASS.</p></div>
 </div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
+  <strong><span style="color: #000000">initData</span></strong>,
+  <strong><span style="color: #000000"><a href="00141.html" target="topic">classCode</a></span></strong>,
+  <strong><span style="color: #000000"><a href="00177.html" target="topic">subClassCode</a></span></strong>,
+  <strong><span style="color: #000000">protocolCode</span></strong>
+} driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL), \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .hostClientDriverInitData = initData, driver)\ {\ .id.cl_sc_p = { <a href="00141.html" target="topic">classCode</a>, <a href="00177.html" target="topic">subClassCode</a>, \ .hostClientDriverInitData = initData, driver)\ {\ .id.cl_sc_p = { <a href="00141.html" target="topic">classCode</a>, <a href="00177.html" target="topic">subClassCode</a>, 0xFF }, driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL), \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .hostClientDriverInitData = initData, driver)\ {\ .id.cl_sc_p = { <a href="00141.html" target="topic">classCode</a>, \ .hostClientDriverInitData = initData, driver)\ {\ .id.cl_sc_p = { <a href="00141.html" target="topic">classCode</a>, 0xFF, 0xFF }, driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL), \ .tplFlags.ignoreClass = <strong><span style="color: #000080">false</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .hostClientDriverInitData = initData, \ .hostClientDriverInitData = initData, 0xFF, 0xFF, 0xFF }, driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL), \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .tplFlags.ignoreProtocol = <strong><span style="color: #000080">true</span></strong>, \ .hostClientDriverInitData = initData, driver)\ {\ .id.vid_pid = { <a href="01435.html" target="topic">vid</a>, <a href="00173.html" target="topic">pid</a>, \ .hostClientDriverInitData = initData, driver)\ {\ .id.vid_pid = { <a href="01435.html" target="topic">vid</a>, <a href="00173.html" target="topic">pid</a> }, driver)\ {\ .id.vid_pid = { 0xFFFF, \ .tplFlags.driverType = (TPL_FLAG_VID_PID), \ .tplFlags.ignoreVIDPID = 0, \ .tplFlags.ignoreVIDPID = 0, \ .hostClientDriverInitData = initData, driver)\ {\ .id.vid_pid = { <a href="01435.html" target="topic">vid</a>, <a href="00173.html" target="topic">pid</a>, \ .pidMask = <a href="00172.html" target="topic">mask</a>, \ .hostClientDriverInitData = initData, driver)\ {\ .id.vid_pid = { <a href="01435.html" target="topic">vid</a>, <a href="00173.html" target="topic">pid</a> }, \ .pidMask = <a href="00172.html" target="topic">mask</a>, \ .tplFlags.driverType = (TPL_FLAG_VID_PID), \ .tplFlags.ignoreVIDPID = 1, \ .tplFlags.ignoreVIDPID = 0, \ .hostClientDriverInitData = initData, \ .hostClientDriverInitData = initData, driver)\ {\ .id.vid_pid = { 0xFFFF, 0xFFFF }, \ .pidMask = 0x0000, \ .tplFlags.driverType = (TPL_FLAG_VID_PID), \ .tplFlags.ignoreVIDPID = 1, \ .tplFlags.ignoreVIDPID = 1, \ .hostClientDriverInitData = initData, \ .hostClientDriver = driver\ } <strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">struct</span></strong> { <strong><span style="color: #000080">union</span></strong> { uint32_t value; <strong><span style="color: #000080">struct</span></strong> { uint16_t <a href="01435.html" target="topic">vid</a>; uint16_t <a href="00173.html" target="topic">pid</a>; } vid_pid; <strong><span style="color: #000080">struct</span></strong> { uint8_t <a href="00141.html" target="topic">classCode</a>; uint8_t <a href="00177.html" target="topic">subClassCode</a>; uint8_t protocolCode; } cl_sc_p; } id; uint16_t pidMask; <strong><span style="color: #000080">struct</span></strong> { uint8_t driverType :1; uint8_t ignoreClass :1; uint8_t ignoreSubClass :1; uint8_t ignoreProtocol :1; uint8_t pidMasked :1; uint8_t ignoreVIDPID :1; } tplFlags; <strong><span style="color: #000080">void</span></strong> * hostClientDriverInitData; <strong><span style="color: #000080">void</span></strong> * hostClientDriver; } <a href="01417.html" target="topic">USB_HOST_TARGET_PERIPHERAL_LIST_ENTRY</a>, <a href="01419.html" target="topic">USB_HOST_TPL_ENTRY</a>;</pre></div></div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00172.html" target="topic">Release Information</a> &gt; <a href="00171.html" target="topic">Release Contents</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00369.html" target="topic">USB Host Layer Library</a> &gt; <a href="00372.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00171.html" target="topic">initData Enumeration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -312,13 +83,13 @@ This application demonstrates the capability of a PIC32 microcontroller and MPLA
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00172.html" target="topic">Previous</a> | <a href="00172.html" target="topic">Up</a> | <a href="00249.html" target="topic">Next</a></div>
+<a href="00155.html" target="topic">Previous</a> | <a href="00372.html" target="topic">Up</a> | <a href="00172.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: Release Contents Topic Title: Release Contents)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: initData Topic Title: initData Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

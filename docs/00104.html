@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00249.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00068.html" target="topic">Device Demonstrations</a> &gt; <a href="00101.html" target="topic">hid_keyboard</a> &gt; <a href="00104.html" target="topic">Running the Demonstration</a></div>
+<a href="00253.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00068.html" target="topic">Device Demonstrations</a> &gt; <a href="00101.html" target="topic">hid_basic</a> &gt; <a href="00104.html" target="topic">Running the Demonstration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,13 +26,13 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00103.html" target="topic">Previous</a> | <a href="00101.html" target="topic">Up</a> | <a href="00105.html" target="topic">Next</a></div>
+<a href="00103.html" target="topic">Previous</a> | <a href="00101.html" target="topic">Up</a> | <a href="00077.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB hid_keyboard_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB hid_basic_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 Running the Demonstration</div>
 </div>
@@ -49,18 +49,47 @@ Running the Demonstration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This demonstration uses the selected hardware platform as a USB keyboard. While compiling, select the appropriate MPLAB X IDE project based on the demonstration board. Refer to <a href="00102.html" target="topic">Building the Application</a> for details.&nbsp;</p>
+This demonstration uses the selected hardware platform as a HID class USB device, but uses the HID class for general purpose I/O operations. While compiling, select the appropriate MPLAB X IDE project based on the demonstration board. Refer to <a href="00102.html" target="topic">Building the Application</a> for details.&nbsp;</p>
 <p class="Element10">
-The LEDs on the demonstration board will indicate the USB state of the device, as described in the Configuring the Hardware section.&nbsp;</p>
+Typically, the HID class is used to implement human interface products, such as mice and keyboards. The HID protocol, is however, quite flexible, and can be adapted and used to send/receive general purpose data to/from a USB device. Using the HID class for general purpose I/O operations is quite advantageous, in that it does not require any kind of custom driver installation process. HID class drivers are already provided by and are distributed with common operating systems. Therefore, upon plugging in a HID class device into a typical computer system, no user installation of drivers is required, the installation is fully automatic.&nbsp;</p>
 <p class="Element10">
-Before pressing the button, select a window in which it is safe to type text freely. Pressing the button on the demonstration board will cause the device to print a character on the screen. LED on the board will also indicate the current CapsLock key status.</p></div>
+The LEDs on the demonstration board will indicate the USB state of the device as described in Configuring the Hardware section.&nbsp;</p>
+<p class="Element10">
+HID devices primarily communicate through one interrupt IN endpoint and one interrupt OUT endpoint. In most applications, this effectively limits the maximum achievable bandwidth for full speed HID devices to 64 kBytes/s of IN traffic, and 64 kBytes/s of OUT traffic (64 kB/s, but effectively &quot;full duplex&quot;).&nbsp;</p>
+<p class="Element10">
+The <span class="Element146">GenericHIDSimpleDemo.exe</span> program, and the associated firmware demonstrate how to use the HID protocol for basic general purpose USB data transfer.&nbsp;</p>
+<p class="Element10">
+Before you can run the <span class="Element146">GenericHIDSimpleDemo.exe</span> executable, you will need to have the Microsoft® .NET Framework Version 2.0 Redistributable Package (later versions are probably acceptable, but have not been tested) installed on your computer. Programs that were built in the Visual Studio® .NET languages require the .NET redistributable package. The redistributable package can be freely downloaded from Microsoft’s website. Users of Windows Vista<sup>®</sup> operating systems will not need to install the .NET framework, as it comes preinstalled as part of the operating system.</p><div class="Element15">
+Launching the Application</div>
+<p class="Element10">
+To launch the application, simply double click the executable <span class="Element146">GenericHIDSimpleDemo.exe</span> in the <span class="Element146">&lt;install-dir&gt;\usb\apps\device\hid_basic\bin</span> directory. A property sheet similar to the following should appear:&nbsp;</p>
+<p class="Element10">
+<img src="pc_app.png" border="0" alt="" title=""> &nbsp;</p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element67" valign="top" width="10%" style="border:none;">
+<div class="Element68">
+<img src="Note Icon.png" border="0" alt="" title=""> <strong>Note:</strong>&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<div class="Element68">
+If instead of this window, an error message appears while trying to launch the application, it is likely the Microsoft .NET Framework Version 2.0 Redistributable Package has not yet been installed. Please install it and try again.&nbsp;</div></td></tr></table></div></div>
+<div class="Element15">
+Send/Receive Packets</div>
+<p class="Element10">
+To begin sending/receiving packets to the device, you must first find and<span style="color: #FFFFFF">_</span>connect<span style="color: #FFFFFF">_</span> to the device. As configured by default, the application is looking for HID class USB devices with VID = 0x04D8 and PID = 0x003F. The device descriptor in the firmware project meant to be used with this demonstration uses the same VID/PID. If you plug in a USB device programmed with the correct precompiled <span class="Element146">.hex</span> file, and click <strong>Connect</strong>, the other push buttons should become enabled. If clicking <strong>Connect</strong> has no effect, it is likely the USB device is either not connected, or has not been programmed with the correct firmware.&nbsp;</p>
+<p class="Element10">
+Clicking <strong>Toggle LED(s)</strong> should send a single packet of general purpose generic data to the HID class USB peripheral device. The data will arrive on the interrupt OUT endpoint. The firmware has been configured to receive this generic data packet, parse the packet looking for the Toggle LED(s) command, and should respond appropriately by controlling the LED(s) on the demonstration board.&nbsp;</p>
+<p class="Element10">
+The Get Pushbutton State option will send one packet of data over the USB to the peripheral device (to the interrupt OUT endpoint) requesting the current push button state. The firmware will process the received Get Pushbutton State command, and will prepare an appropriate response packet depending upon the pushbutton state.&nbsp;</p>
+<p class="Element10">
+Refer to the Configuring the Hardware section for details on the LED indication and Switch that are relevant to the selected hardware.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00249.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00068.html" target="topic">Device Demonstrations</a> &gt; <a href="00101.html" target="topic">hid_keyboard</a> &gt; <a href="00104.html" target="topic">Running the Demonstration</a></div>
+<a href="00253.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00068.html" target="topic">Device Demonstrations</a> &gt; <a href="00101.html" target="topic">hid_basic</a> &gt; <a href="00104.html" target="topic">Running the Demonstration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -68,13 +97,13 @@ Before pressing the button, select a window in which it is safe to type text fre
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00103.html" target="topic">Previous</a> | <a href="00101.html" target="topic">Up</a> | <a href="00105.html" target="topic">Next</a></div>
+<a href="00103.html" target="topic">Previous</a> | <a href="00101.html" target="topic">Up</a> | <a href="00077.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB hid_keyboard_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB hid_basic_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

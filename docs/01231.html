@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>usb_host_cdc_config_template.h</title>
+<title>USB_HOST_CDC_ATTACH_EVENT_HANDLER Type</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00241.html" target="topic">USB CDC Host Library</a> &gt; <a href="00238.html" target="topic">Files</a> &gt; <a href="01231.html" target="topic">usb_host_cdc_config_template.h</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00245.html" target="topic">USB CDC Host Library</a> &gt; <a href="00246.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01231.html" target="topic">USB_HOST_CDC_ATTACH_EVENT_HANDLER Type</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00238.html" target="topic">Previous</a> | <a href="00238.html" target="topic">Up</a> | <a href="00326.html" target="topic">Next</a></div>
+<a href="01283.html" target="topic">Previous</a> | <a href="00246.html" target="topic">Up</a> | <a href="01246.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_host_cdc_config_template.h Topic Title: usb_host_cdc_config_template.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_ATTACH_EVENT_HANDLER Topic Title: USB_HOST_CDC_ATTACH_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-usb_host_cdc_config_template.h</div>
+USB_HOST_CDC_ATTACH_EVENT_HANDLER Type</div>
 </div>
 </div>
 
@@ -46,71 +46,33 @@ usb_host_cdc_config_template.h</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="436F6D70616E79"></a><div class="Element11">
+<a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Microchip Technology Inc.</p></div>
+USB Host CDC Client Driver Attach Event Handler Function Pointer Type.&nbsp;</p>
+<p class="Element10">
+This data type defines the required function signature of the USB Host CDC Client Driver attach event handling callback function. The application must register a pointer to a CDC Client Driver attach events handling function whose function signature (parameter and return value types) match the types specified by this function pointer in order to receive attach event call backs from the CDC Client Driver. The client driver will invoke this function with event relevant parameters. The description of the event handler function parameters is given here.&nbsp;</p>
+<p class="Element10">
+cdcObjHandle - Handle of the client to which this event is directed.&nbsp;</p>
+<p class="Element10">
+context - Value identifying the context of the application that was registered along with the event handling function.</p></div>
 </div>
-<a name="46696C65204E616D65"></a><div class="Element14">
-File Name</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">void</span></strong> (* <strong><span style="color: #000000">USB_HOST_CDC_ATTACH_EVENT_HANDLER</span></strong>)(<a href="01267.html" target="topic">USB_HOST_CDC_OBJ</a> cdcObjHandle, uintptr_t context);</pre></div></div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-usb_host_cdc_config_template.h</p></div>
-</div>
-<a name="4465736372697074696F6E"></a><div class="Element14">
-Description</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-USB Host CDC Class Configuration Definitions&nbsp;</p>
-<p class="Element10">
-This file contains configurations macros needed to configure the CDC host Driver. This file is a template file only. It should not be included by the application. The configuration macros defined in the file should be defined in the configuration specific system_config.h.</p></div>
-</div>
-<a name="4D6163726F73"></a><div class="Element14">
-Macros</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00016.html" target="topic">_USB_HOST_CDC_CONFIG_TEMPLATE_H_</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro _USB_HOST_CDC_CONFIG_TEMPLATE_H_.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01228.html" target="topic">USB_HOST_CDC_ATTACH_LISTENERS_NUMBER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the number of attach event listeners that can be registered with CDC Host Client Driver.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01261.html" target="topic">USB_HOST_CDC_INSTANCES_NUMBER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Specifies the number of CDC instances.&nbsp;</div></td></tr></table></div></div>
-</div>
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00241.html" target="topic">USB CDC Host Library</a> &gt; <a href="00238.html" target="topic">Files</a> &gt; <a href="01231.html" target="topic">usb_host_cdc_config_template.h</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00245.html" target="topic">USB CDC Host Library</a> &gt; <a href="00246.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01231.html" target="topic">USB_HOST_CDC_ATTACH_EVENT_HANDLER Type</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -118,13 +80,13 @@ Specifies the number of CDC instances.&nbsp;</div></td></tr></table></div></div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00238.html" target="topic">Previous</a> | <a href="00238.html" target="topic">Up</a> | <a href="00326.html" target="topic">Next</a></div>
+<a href="01283.html" target="topic">Previous</a> | <a href="00246.html" target="topic">Up</a> | <a href="01246.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_host_cdc_config_template.h Topic Title: usb_host_cdc_config_template.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_ATTACH_EVENT_HANDLER Topic Title: USB_HOST_CDC_ATTACH_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

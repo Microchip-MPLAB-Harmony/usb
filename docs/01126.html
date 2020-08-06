@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_HOST_AUDIO_V1_EntityTypeGet Function</title>
+<title>USB_HOST_AUDIO_V1_DeviceObjHandleGet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00206.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00221.html" target="topic">Library Interface</a> &gt; a) Audio Device Access Functions &gt; <a href="01126.html" target="topic">USB_HOST_AUDIO_V1_EntityTypeGet Function</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00225.html" target="topic">Library Interface</a> &gt; a) Audio Device Access Functions &gt; <a href="01126.html" target="topic">USB_HOST_AUDIO_V1_DeviceObjHandleGet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01125.html" target="topic">Previous</a> | <a href="00221.html" target="topic">Up</a> | <a href="01130.html" target="topic">Next</a></div>
+<a href="01125.html" target="topic">Previous</a> | <a href="00225.html" target="topic">Up</a> | <a href="01128.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_EntityTypeGet@USB_HOST_AUDIO_V1_OBJ@USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ Topic Title: USB_HOST_AUDIO_V1_EntityTypeGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_DeviceObjHandleGet@USB_HOST_AUDIO_V1_OBJ Topic Title: USB_HOST_AUDIO_V1_DeviceObjHandleGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_HOST_AUDIO_V1_EntityTypeGet Function</div>
+USB_HOST_AUDIO_V1_DeviceObjHandleGet Function</div>
 </div>
 </div>
 
@@ -49,14 +49,20 @@ USB_HOST_AUDIO_V1_EntityTypeGet Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function returns the entity type of the audio control entity. Prior to calling this function the entity object should be obtained by calling <a href="01120.html" target="topic">USB_HOST_AUDIO_V1_ControlEntityGetFirst</a>, <a href="01121.html" target="topic">USB_HOST_AUDIO_V1_ControlEntityGetNext</a>, or <a href="01124.html" target="topic">USB_HOST_AUDIO_V1_EntityObjectGet</a>.</p></div>
+This function returns the device object handle for this Audio v1.0 Device. This returned handle can be used by the application to perform device-level operations, such as obtaining the string descriptors.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100">USB_AUDIO_V1_ENTITY_TYPE <strong><span style="color: #000000">USB_HOST_AUDIO_V1_EntityTypeGet</span></strong>(
-    <a href="01143.html" target="topic">USB_HOST_AUDIO_V1_OBJ</a> <strong><span style="color: #000000">audioObj</span></strong>, 
-    <a href="01119.html" target="topic">USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ</a> <strong><span style="color: #000000">entityObject</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01293.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE</a> <strong><span style="color: #000000">USB_HOST_AUDIO_V1_DeviceObjHandleGet</span></strong>(
+    <a href="01147.html" target="topic">USB_HOST_AUDIO_V1_OBJ</a> <strong><span style="color: #000000">audioDeviceObj</span></strong>
 );</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
 <div class="Element11">
@@ -72,14 +78,9 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-audioObj&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+audioDeviceObj&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-USB Host Audio v1.0 Device object&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-entityObject&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Audio control entity object&nbsp;</div></td></tr></table></div></div>
+Audio V1.0 device object handle returned in the <a href="01120.html" target="topic">USB_HOST_AUDIO_V1_ATTACH_EVENT_HANDLER</a> function.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -87,7 +88,7 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-USB_AUDIO_V1_ENTITY_TYPE.</p></div>
+Will return a valid device object handle if the device is still connected to the system. Otherwise, the function will return <a href="01294.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE_INVALID</a>.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -101,7 +102,7 @@ None.</p></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00384.html" target="topic">USB Libraries Help</a> &gt; <a href="00366.html" target="topic">USB Host Libraries</a> &gt; <a href="00206.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00221.html" target="topic">Library Interface</a> &gt; a) Audio Device Access Functions &gt; <a href="01126.html" target="topic">USB_HOST_AUDIO_V1_EntityTypeGet Function</a></div>
+<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00225.html" target="topic">Library Interface</a> &gt; a) Audio Device Access Functions &gt; <a href="01126.html" target="topic">USB_HOST_AUDIO_V1_DeviceObjHandleGet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -109,13 +110,13 @@ None.</p></div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00172.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01125.html" target="topic">Previous</a> | <a href="00221.html" target="topic">Up</a> | <a href="01130.html" target="topic">Next</a></div>
+<a href="01125.html" target="topic">Previous</a> | <a href="00225.html" target="topic">Up</a> | <a href="01128.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_EntityTypeGet@USB_HOST_AUDIO_V1_OBJ@USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ Topic Title: USB_HOST_AUDIO_V1_EntityTypeGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_DeviceObjHandleGet@USB_HOST_AUDIO_V1_OBJ Topic Title: USB_HOST_AUDIO_V1_DeviceObjHandleGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
