@@ -2,6 +2,76 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 # Microchip MPLAB Harmony 3 Release Notes
+## USB Release v3.6.1
+### NEW FEATURES
+- **New part support** - N/A
+
+- **New Features and Enhancements**
+   * Dual Channel USB to UART application for ATSAMD21 Xplained Pro Evaluation kit.   
+   * USB Host Hub demo for SAM9X60 and SAMA5D25 Microcprocessors.
+  
+
+- **Development kit and demo application support** - The following table provides number of demo applications available for different development kits newly added in this release.
+
+    | Development Kits                                                                                                                               | Number of applications |
+    | ---                                                                                                                                            | --- |
+    | [SAM D21 Xplained Pro Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails.aspx?PartNO=ATSAMD21-XPRO)                     | 1 |
+    | [ATSAM9X60-EK](https://www.microchip.com/design-centers/32-bit-mpus/microprocessors/sam9)                                                      | 2 |
+     [SAMA5D2 Xplained Ultra Evaluation Kit](https://www.microchip.com/developmenttools/ProductDetails/atsama5d2c-xult)                             | 2 |
+    
+### Bug fixes
+- Added High Speed Hub support for USB Host EHCI Driver.   
+
+### Known Issues
+
+The current known issues are as follows:
+
+- Isochronous transfers are not supported with USB Host Port Driver(EHCI/OHCI) for SAMA5D2/SAM9X60 MCUs. The issue will be fixed in an upcoming release.
+
+- USB Host Port High-Speed Driver for SAMA5D2/SAM9X60 MCUs supports only High Speed USB Hubs. Full speed Hubs are not supported. Only High Speed USB Devices could be attached to the Host. The issue will be fixed in an upcoming release.
+
+- USB keyboard Host demonstration application on the SAMG55x microcontroller does not toggle the keyboard LED. This issue will be fixed in an upcoming release.
+
+- Detaching a USB device from a SAMG55x Host when the enumeration is in progress causes the affects Plug N'Play operation. This issue will be fixed in an upcoming release.
+
+- Isochronous tranfers are not tested with USB Device Port High Speed Driver(UDPHS) Driver.  The issue will be fixed in an upcoming release.
+
+- Interactive help using the Show User Manual Entry in the Right-click menu for configuration options provided by this module is not yet available from within the MPLAB Harmony Configurator (MHC).  Please see the &quot;Configuring the Library&quot; section in the help documentation in the doc folder for this module instead.  Help is available in both CHM and PDF formats.
+
+- In a case where an MPLAB Harmony USB Device Project requires multiple Function Driver instances in the project, the MPLAB Harmony Configurator(MHC) may generate incorrect USB descriptors if a USB Device function driver component is added and then removed from the MHC Project Graph.  Removing all the USB components from the project graph and starting over fixes this issue. The issue will be fixed in an upcoming release.
+
+- IAR projects for SAM MCUs and MPUs build with warning messages. The issue will be fixed in an upcoming release.
+
+- The following USB Host Stack functions are not implemented:
+    - USB_HOST_BusResume 
+    - USB_HOST_DeviceSuspend 
+    - USB_HOST_DeviceResume 
+
+- The USB Host Layer does not check for the Hub Tier Level. This feature will be available in a future release of MPLAB Harmony.
+   
+- The USB Host Layer will only enable the first configuration when there are multiple configurations. If there are no interface matches in the first configuration, this causes the device to become inoperative. Multiple configuration enabling will be activated in a future release.
+
+- The MSD Host Client Driver has not been tested with Multi-LUN Mass Storage Device and USB Card Readers.
+
+- The USB Host SCSI Block Driver, the CDC Client Driver, and the Audio Host Client Driver only support single-client operation. Multi-client operation will be enabled in a future release of MPLAB Harmony.
+
+- USB HID Host Client driver has not been tested with multiple usage devices. Sending of output or feature report has not been tested.
+
+- The USB Audio Host Client driver does not provide an implementation for the following functions:
+    - USB_HOST_AUDIO_V1_DeviceObjHandleGet 
+    - USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeRangeGet 
+    - USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSubRangeNumbersGet 
+    - USB_HOST_AUDIO_V1_StreamSamplingFrequencyGet 
+    - USB_HOST_AUDIO_V1_TerminalIDGet 
+
+- USB Host Stack has been tested only limited numbers of USB Flash drives.  
+### Development Tools
+
+* [MPLAB® X IDE v5.40](https://www.microchip.com/mplab/mplab-x-ide)
+* [MPLAB® XC32 C/C++ Compiler v2.41](https://www.microchip.com/mplab/compilers)
+* [IAR Embedded Workbench® for ARM® v8.5] (https://www.iar.com/iar-embedded-workbench/#!?architecture=Arm)
+* MPLAB® X IDE plug-ins:
+* MPLAB® Harmony Configurator (MHC) v3.5.0 and above.
 ## USB Release v3.6.0
 ### NEW FEATURES
 - **New part support** - N/A
