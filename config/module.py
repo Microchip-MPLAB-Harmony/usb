@@ -143,7 +143,8 @@ def loadModule():
         loadUSBDeviceHID = True
         loadUSBDeviceMSD = True
         loadUSBDeviceVendor = True
-        loadUSBDevicePrinter = True            
+        loadUSBDevicePrinter = True
+        loadUSBDeviceAudio = True
 
     elif any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32MZ"]):
         # Create USB High Speed Driver Component
