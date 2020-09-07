@@ -244,17 +244,17 @@ void APP_USBDeviceEventHandler(USB_DEVICE_EVENT event,
             break;
 
         case USB_DEVICE_EVENT_SUSPENDED:
-           
-            
             break;
 
         case USB_DEVICE_EVENT_RESUMED:
+            break; 
+
         case USB_DEVICE_EVENT_POWER_DETECTED:
             
             /* Attach the device */
             USB_DEVICE_Attach (appData.deviceHandle);
-            
             break;
+
         case USB_DEVICE_EVENT_POWER_REMOVED:
             
             /* There is no VBUS. We can detach the device */
