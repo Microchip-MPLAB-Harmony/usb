@@ -202,6 +202,7 @@ void _USB_DEVICE_PRINTER_Initialization
     USB_ENDPOINT_DESCRIPTOR *pEPDesc;
     USB_INTERFACE_DESCRIPTOR *pInfDesc;
     USB_DEVICE_PRINTER_INIT *prnInitializationData;
+	int count; 
 
     /* Check the validity of the function driver index */
     if (iPRN >= USB_DEVICE_PRINTER_INSTANCES_NUMBER)
@@ -295,7 +296,7 @@ void _USB_DEVICE_PRINTER_Initialization
                     }
                     
                     prnInstance->deviceIDLength = prnInitializationData->length;
-                    for (int count = 0; count < prnInstance->deviceIDLength; count++)
+                    for (count = 0; count < prnInstance->deviceIDLength; count++)
                     {
                         prnInstance->deviceIDString[count] = prnInitializationData->deviceID_String[count];
                     }

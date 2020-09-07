@@ -2273,6 +2273,9 @@
                             </file>
                         </group>
                     </group>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_9x60_ek_iar\device.h</name>
+                    </file>
                     <group>
                         <name>system</name>
                         <file>
@@ -2315,6 +2318,18 @@
                             </file>
                         </group>
                     </group>
+                    <group>
+                        <name>osal</name>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_9x60_ek_iar\osal\osal.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_9x60_ek_iar\osal\osal_definitions.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_9x60_ek_iar\osal\osal_impl_basic.h</name>
+                        </file>
+                    </group>
                     <file>
                         <name>$PROJ_DIR$\..\src\config\sam_9x60_ek_iar\user.h</name>
                     </file>
@@ -2327,9 +2342,6 @@
                 <name>packs</name>
                 <group>
                     <name>SAM9X60_DFP</name>
-                    <file>
-                        <name>$PROJ_DIR$\..\src\packs\SAM9X60_DFP\device.h</name>
-                    </file>
                     <group>
                         <name>component</name>
                         <file>
@@ -2479,15 +2491,6 @@
                     </group>
                 </group>
             </group>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_9x60_ek_iar\osal\osal.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_9x60_ek_iar\osal\osal_definitions.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_9x60_ek_iar\osal\osal_impl_basic.h</name>
-            </file>
             <file>
                 <name>$PROJ_DIR$\..\src\app.h</name>
             </file>

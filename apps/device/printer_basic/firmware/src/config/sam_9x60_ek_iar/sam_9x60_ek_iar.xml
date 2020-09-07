@@ -6,7 +6,7 @@
       <Symbols dnOrder="0">
         <Integer dnOrder="0" id="ADC_CLOCK_FREQUENCY">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="200000000"/>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
         <Integer dnOrder="1" id="ADC_GCLK_FREQUENCY">
@@ -81,7 +81,7 @@
         </KeyValueSet>
         <Integer dnOrder="15" id="CLASSD_CLOCK_FREQUENCY">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="200000000"/>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
         <Integer dnOrder="16" id="CLASSD_GCLK_FREQUENCY">
@@ -559,7 +559,7 @@
         </KeyValueSet>
         <Integer dnOrder="109" id="I2SMCC_CLOCK_FREQUENCY">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="200000000"/>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
         <Integer dnOrder="110" id="I2SMCC_GCLK_FREQUENCY">
@@ -599,7 +599,7 @@
         </String>
         <Integer dnOrder="117" id="LCDC_CLOCK_FREQUENCY">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="200000000"/>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
         <Integer dnOrder="118" id="LCDC_GCLK_FREQUENCY">
@@ -984,7 +984,7 @@
         </Hex>
         <Integer dnOrder="194" id="PIT64B_CLOCK_FREQUENCY">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="200000000"/>
+            <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </Integer>
         <Integer dnOrder="195" id="PIT64B_GCLK_FREQUENCY">
@@ -1390,6 +1390,26 @@
             <Dynamic dnOrder="0" id="dbgu" value="200000000"/>
           </Values>
         </Integer>
+        <Boolean dnOrder="2" id="DBGU_RING_BUFFER_ENABLE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="readOnly">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <Dynamic dnOrder="0" id="dbgu" value="false"/>
+          </Values>
+        </Boolean>
+        <Boolean dnOrder="3" id="USART_INTERRUPT_MODE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="readOnly">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
+            <Dynamic dnOrder="0" id="dbgu" value="true"/>
+          </Values>
+        </Boolean>
       </Symbols>
       <Attachments dnOrder="1">
         <DirectCapability dnOrder="0" id="DBGU_UART">
@@ -1416,17 +1436,38 @@
       <Instances dnOrder="1">
         <InstanceComponent dnOrder="0" id="drv_usart" instance="0">
           <Symbols dnOrder="0">
-            <String dnOrder="0" id="DRV_USART_PLIB">
+            <Comment dnOrder="0" id="DRV_USART_DEPENDENCY_DMA_COMMENT">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="visible">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </Comment>
+            <String dnOrder="1" id="DRV_USART_PLIB">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="drv_usart_0" value="DBGU"/>
               </Values>
             </String>
-            <Integer dnOrder="1" id="DRV_USART_RX_DMA_CHANNEL">
+            <Boolean dnOrder="2" id="DRV_USART_RX_DMA">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="readOnly">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </Boolean>
+            <Integer dnOrder="3" id="DRV_USART_RX_DMA_CHANNEL">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="drv_usart_0" value="-1"/>
               </Values>
             </Integer>
-            <Integer dnOrder="2" id="DRV_USART_TX_DMA_CHANNEL">
+            <Boolean dnOrder="4" id="DRV_USART_TX_DMA">
+              <Attributes dnOrder="0">
+                <Boolean dnOrder="0" id="readOnly">
+                  <Value dnOrder="0">false</Value>
+                </Boolean>
+              </Attributes>
+            </Boolean>
+            <Integer dnOrder="5" id="DRV_USART_TX_DMA_CHANNEL">
               <Values dnOrder="0">
                 <Dynamic dnOrder="0" id="drv_usart_0" value="-1"/>
               </Values>
@@ -1769,7 +1810,8 @@
     </GeneratorComponent>
   </Components>
   <UserData>
-    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
+    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="BSP_SAM_9X60_Evaluation_Kit" x="148" y="40"/>
         <ElementPosition dnOrder="1" id="HarmonyCore" x="0" y="10"/>
@@ -1782,6 +1824,5 @@
         <ElementPosition dnOrder="8" id="usb_device_printer" x="320" y="306"/>
       </ElementPositions>
     </ComponentGraph>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
