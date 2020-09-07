@@ -394,27 +394,26 @@ void APP_Tasks(void)
     switch(appData.state)
     {
         case APP_STATE_INIT:
-            appData.usartHandle = DRV_USART_Open(DRV_USART_INDEX_0, DRV_IO_INTENT_READWRITE);
-            
             /* Open the device layer */
-            appData.deviceHandle = USB_DEVICE_Open( USB_DEVICE_INDEX_0, DRV_IO_INTENT_READWRITE );
-            
+            appData.deviceHandle = USB_DEVICE_Open( USB_DEVICE_INDEX_0,    DRV_IO_INTENT_READWRITE );
+
             if(appData.deviceHandle != USB_DEVICE_HANDLE_INVALID)
             {
                 /* Register a callback with device layer to get event notification (for end point 0) */
                 USB_DEVICE_EventHandlerSet(appData.deviceHandle, APP_USBDeviceEventHandler, 0);
-                if(appData.usartHandle != DRV_HANDLE_INVALID)
-                {
-                    DRV_USART_BufferEventHandlerSet(appData.usartHandle, APP_BufferEventHandler, 0);
-                    appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
-                }
+                
+                appData.usartHandle = DRV_USART_Open(DRV_USART_INDEX_0, DRV_IO_INTENT_READWRITE);
+
+                DRV_USART_BufferEventHandlerSet(appData.usartHandle, APP_BufferEventHandler, 0);
+                
+                /* Application waits for device configuration. */
+                appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
             }
             else
             {
                 /* The Device Layer is not ready to be opened. We should try
                  * again later. */
             }
-
             break;
 
         case APP_STATE_WAIT_FOR_CONFIGURATION:
