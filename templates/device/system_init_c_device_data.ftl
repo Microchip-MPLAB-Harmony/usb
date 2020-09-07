@@ -223,7 +223,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
  <#assign stringDescriptorTableSize = stringDescriptorTableSize + 1>
  <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
     <#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
-	struct __attribute__ ((packed)) USB_ALIGN
+    USB_ALIGN struct __attribute__ ((packed)) 
 	<#else>
 	const struct __attribute__ ((packed))
 	</#if>
@@ -244,7 +244,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
     };  
 <#else>
 	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
-	struct USB_ALIGN
+    USB_ALIGN struct 
 	<#else>
     const struct
 	</#if>
@@ -266,7 +266,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
  <#assign stringDescriptorTableSize = stringDescriptorTableSize + 1>
  <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
 	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
-	struct __attribute__ ((packed)) USB_ALIGN
+    USB_ALIGN struct __attribute__ ((packed)) 
 	<#else>
     const struct __attribute__ ((packed))
 	</#if>
@@ -289,7 +289,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
     };
 <#else>
 	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
-	struct USB_ALIGN
+    USB_ALIGN struct 
 	<#else>
     const struct
 	</#if>
@@ -315,7 +315,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
  <#assign stringDescriptorTableSize = stringDescriptorTableSize + 1>
 <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
 	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
-	struct __attribute__ ((packed)) USB_ALIGN
+    USB_ALIGN struct __attribute__ ((packed)) 
 	<#else>
 	const struct __attribute__ ((packed))
 	</#if>
@@ -338,7 +338,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
     }; 
 <#else>
 	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
-    struct USB_ALIGN
+    USB_ALIGN struct 
 	<#else>
 	const struct
 	</#if>
@@ -369,7 +369,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
  ******************************************************************************/
  <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
 	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
-	struct __attribute__ ((packed)) USB_ALIGN
+    USB_ALIGN struct __attribute__ ((packed)) 
 	<#else>
     const struct __attribute__ ((packed))
 	</#if>
@@ -392,7 +392,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
     };
 <#else>
 	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
-	struct USB_ALIGN
+	USB_ALIGN struct 
 	<#else>
     const struct
 	</#if>
