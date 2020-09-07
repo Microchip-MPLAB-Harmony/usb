@@ -2304,8 +2304,10 @@ void _USB_DEVICE_ProcessStandardEndpointRequest
          * */
         usbDeviceThisInstance->getStatusResponse.status = 0x00;
         usbDeviceThisInstance->getStatusResponse.endPointHalt =  usbDeviceThisInstance->driverInterface->deviceEndpointIsStalled(usbDeviceThisInstance->usbCDHandle, usbEndpoint );
-
-        USB_DEVICE_ControlSend( (USB_DEVICE_HANDLE)usbDeviceThisInstance, (uint8_t *)&usbDeviceThisInstance->getStatusResponse, 2 );
+        
+        memcpy(usbDeviceThisInstance->ep0TxBuffer, &usbDeviceThisInstance->getStatusResponse, sizeof(USB_DEVICE_STATUS_RESPONSE));
+        
+        USB_DEVICE_ControlSend( (USB_DEVICE_HANDLE)usbDeviceThisInstance, usbDeviceThisInstance->ep0TxBuffer, 2 );
     }
     else if( setupPkt->bRequest == USB_REQUEST_CLEAR_FEATURE )
     {
@@ -2490,7 +2492,8 @@ void _USB_DEVICE_ProcessStandardDeviceGetRequests
     else if (setupPkt->bRequest == USB_REQUEST_GET_CONFIGURATION)
     {
         /* Host wants to know what is current configuration */
-        pData = &(usbDeviceThisInstance->activeConfiguration);
+        usbDeviceThisInstance->ep0TxBuffer[0] = usbDeviceThisInstance->activeConfiguration;
+        pData = usbDeviceThisInstance->ep0TxBuffer;
         size = 1;
     }
     else if (setupPkt->bRequest == USB_REQUEST_GET_STATUS)
@@ -2500,7 +2503,8 @@ void _USB_DEVICE_ProcessStandardDeviceGetRequests
         usbDeviceThisInstance->getStatusResponse.status = 0;
         usbDeviceThisInstance->getStatusResponse.selfPowered = usbDeviceThisInstance->usbDeviceStatusStruct.powerState;
         usbDeviceThisInstance->getStatusResponse.remoteWakeup = usbDeviceThisInstance->remoteWakeupStatus;
-        pData = (uint8_t *)&usbDeviceThisInstance->getStatusResponse;
+        memcpy(usbDeviceThisInstance->ep0TxBuffer, &usbDeviceThisInstance->getStatusResponse, sizeof(USB_DEVICE_STATUS_RESPONSE));
+        pData = usbDeviceThisInstance->ep0TxBuffer;
         size = 2;
     }
     

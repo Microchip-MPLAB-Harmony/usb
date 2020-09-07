@@ -218,7 +218,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
  /*******************************************
  *  Language code string descriptor
  *******************************************/
-	struct USB_ALIGN
+    USB_ALIGN struct 
     {
         uint8_t bLength;
         uint8_t bDscType;
@@ -233,7 +233,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
 /*******************************************
  *  Manufacturer string descriptor
  *******************************************/
-	struct USB_ALIGN
+    USB_ALIGN struct 
     {
         uint8_t bLength;                                    // Size of this descriptor in bytes
         uint8_t bDscType;                                   // STRING descriptor type
@@ -250,7 +250,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
 /*******************************************
  *  Product string descriptor
  *******************************************/
-    struct USB_ALIGN
+    USB_ALIGN struct 
     {
         uint8_t bLength;                                    // Size of this descriptor in bytes
         uint8_t bDscType;                                   // STRING descriptor type
