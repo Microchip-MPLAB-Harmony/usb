@@ -130,6 +130,31 @@ typedef enum
 } USB_PRINTER_COMMAND;
 
 // *****************************************************************************
+/* USB Printer Port Status.
+
+  Summary:
+    Printer status required by class-specific request.
+
+  Description:
+    This structure defines the Printer status.
+
+  Remarks:
+    None.
+ */
+typedef struct 
+{
+    /* 1 = No Error, 0 = Error */
+    uint8_t errorStatus;
+    
+    /* 1 = Selected, 0 = Not Selected */
+    uint8_t selectStatus;
+    
+    /* 1 = Paper Empty, 0 = Paper Not Empty */
+    uint8_t paperEmptyStatus;
+
+} USB_PRINTER_PORT_STATUS;
+
+// *****************************************************************************
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
