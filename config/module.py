@@ -274,12 +274,12 @@ def loadModule():
         if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK"]):
             usbDeviceMsdComponent = Module.CreateGeneratorComponent("usb_device_msd", "MSD Function Driver", "/Libraries/USB/Device Stack", "config/usb_device_msd_common.py", "config/usb_multi_controller/usb_device_msd.py")
             usbDeviceMsdComponent.addDependency("usb_device_dependency", "USB_DEVICE", False, True)
-            usbDeviceMsdComponent.addDependency("usb_device_msd_media_dependency", "DRV_MEDIA", False, True)
+            usbDeviceMsdComponent.addMultiDependency("usb_device_msd_media_dependency", "DRV_MEDIA", None, True)
             usbDeviceMsdComponent.addCapability("USB Device", "USB_DEVICE_MSD")
         else:
             usbDeviceMsdComponent = Module.CreateGeneratorComponent("usb_device_msd", "MSD Function Driver", "/Libraries/USB/Device Stack", "config/usb_device_msd_common.py", "config/usb_device_msd.py")
             usbDeviceMsdComponent.addDependency("usb_device_dependency", "USB_DEVICE", True, True)
-            usbDeviceMsdComponent.addDependency("usb_device_msd_media_dependency", "DRV_MEDIA", False, True)
+            usbDeviceMsdComponent.addMultiDependency("usb_device_msd_media_dependency", "DRV_MEDIA", None, True)
             usbDeviceMsdComponent.addCapability("USB Device", "USB_DEVICE_MSD")
 
     # Create USB Device Printer Component 
