@@ -336,7 +336,7 @@ def instantiateComponent(usbDeviceComponent):
 	# USB Device Endpoint Number 
 	usbDeviceEndpointsNumber = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", None)
 	usbDeviceEndpointsNumber.setLabel("Number of Endpoints")	
-	usbDeviceEndpointsNumber.setVisible(False)
+	usbDeviceEndpointsNumber.setVisible(True)
 	usbDeviceEndpointsNumber.setMin(0)
 	usbDeviceEndpointsNumber.setDefaultValue(0)
 	usbDeviceEndpointsNumber.setUseSingleDynamicValue(True)

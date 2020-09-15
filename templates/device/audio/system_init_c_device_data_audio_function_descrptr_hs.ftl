@@ -153,7 +153,7 @@
     /*  USB Speaker Standard Endpoint Descriptor */
     0x09,                            // Size of the descriptor, in bytes (bLength)
     USB_DESCRIPTOR_ENDPOINT,         // ENDPOINT descriptor (bDescriptorType)
-    0x01,                            // OUT Endpoint 1. (bEndpointAddress)
+    ${CONFIG_USB_DEVICE_FUNCTION_OUT_ENDPOINT_NUMBER} | USB_EP_DIRECTION_OUT,                            // Endpoint${CONFIG_USB_DEVICE_FUNCTION_INT_ENDPOINT_NUMBER}:OUT (bEndpointAddress)
     0x09,                            /* ?(bmAttributes) Isochronous,
                                       * Adaptive, data endpoint */
     (192),0x00,                      // ?(wMaxPacketSize) //48 * 4
@@ -286,7 +286,7 @@
     /*  USB Microphone Standard Endpoint Descriptor */
     0x09,                            // Size of the descriptor, in bytes (bLength)
     USB_DESCRIPTOR_ENDPOINT,         // ENDPOINT descriptor (bDescriptorType)
-    0x81,                            // IN Endpoint 2. (bEndpointAddress)
+    ${CONFIG_USB_DEVICE_FUNCTION_IN_ENDPOINT_NUMBER} | USB_EP_DIRECTION_IN,                            // Endpoint${CONFIG_USB_DEVICE_FUNCTION_IN_ENDPOINT_NUMBER}:IN (bEndpointAddress)
     0x01,                            //vorher: 0x09/* ?(bmAttributes) Isochronous,
                                       /* Asynchronized, data endpoint */
     0x20,0x00,                      // ?(wMaxPacketSize) //32=16*2  (2ms@16000)
@@ -482,7 +482,7 @@
     /*  USB Headset Standard Endpoint Descriptor */
     0x09,                            // Size of the descriptor, in bytes (bLength)
     USB_DESCRIPTOR_ENDPOINT,         // ENDPOINT descriptor (bDescriptorType)
-    0x01,                            // OUT Endpoint 1. (bEndpointAddress)
+    ${CONFIG_USB_DEVICE_FUNCTION_OUT_ENDPOINT_NUMBER} | USB_EP_DIRECTION_OUT,                            // Endpoint${CONFIG_USB_DEVICE_FUNCTION_OUT_ENDPOINT_NUMBER}:OUT  (bEndpointAddress)
     0x09,                            /* ?(bmAttributes) Isochronous,
                                       * asynchronous, data endpoint */
     0xC0,0x00,                      // ?(wMaxPacketSize) //48 * 4
@@ -547,7 +547,7 @@
     /*  USB Microphone Standard Endpoint Descriptor */
     0x09,                            // Size of the descriptor, in bytes (bLength)
     USB_DESCRIPTOR_ENDPOINT,         // ENDPOINT descriptor (bDescriptorType)
-    0x081,                            // OUT Endpoint 1. (bEndpointAddress)
+    ${CONFIG_USB_DEVICE_FUNCTION_IN_ENDPOINT_NUMBER} | USB_EP_DIRECTION_IN,                            // Endpoint${CONFIG_USB_DEVICE_FUNCTION_IN_ENDPOINT_NUMBER}:IN (bEndpointAddress)
     0x0D,                            /* ?(bmAttributes) Isochronous,
                                       * asynchronous, data endpoint */
     0x60, 0x00,                      // ?(wMaxPacketSize) //48 * 2

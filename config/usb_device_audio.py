@@ -29,6 +29,7 @@ queueSizeWrite = None
 epNumberIn = None
 epNumberOut = None
 currentAudioDescriptorSize = None 
+audioDeviceType = None 
 
 
 	
@@ -54,6 +55,7 @@ def onAttachmentConnected(source, target):
 	global epNumberOut
 	global currentAudioDescriptorSize
 	global currentAudioNumberOfInterfaces
+	global audioDeviceType
 	
 	ownerComponent = source["component"]
 	dependencyID = source["id"]
@@ -74,12 +76,25 @@ def onAttachmentConnected(source, target):
 			res = Database.sendMessage("usb_device", "UPDATE_INTERFACES_NUMBER", args)
 			startInterfaceNumber.setValue(readValue, 1)
 		
-		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-		if readValue != None:
-			args = {"nFunction":   readValue + 2}
-			res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
-			epNumberIn.setValue(readValue , 1)
-			epNumberOut.setValue(readValue + 1, 1)
+		nEndpoints = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+		if nEndpoints != None:
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MK", "SAMD21", "SAMDA1","SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMD11"]):
+				epNumberIn.setValue(nEndpoints + 1)
+				epNumberOut.setValue(nEndpoints + 1)
+				args = {"nFunction":  nEndpoints + 1}
+			elif any(x in Variables.get("__PROCESSOR") for x in ["SAME70", "SAMV70", "SAMV71", "SAMS70"]):
+				if (audioDeviceType.getValue() == "Audio v2.0 USB Speaker") \
+				or (audioDeviceType.getValue() == "Audio v1.0 USB Speaker") \
+				or (audioDeviceType.getValue() == "Audio v1.0 USB Headset") \
+				or (audioDeviceType.getValue() == "Audio v1.0 USB Headset Multi Sampling rates") :		
+					epNumberOut.setValue(nEndpoints + 1)
+					epNumberIn.setValue(nEndpoints + 2)
+				elif (audioDeviceType.getValue() == "Audio v1.0 USB Microphone"):	
+					epNumberIn.setValue(nEndpoints + 1)	
+					epNumberOut.setValue(nEndpoints + 2)
+				args = {"nFunction":  nEndpoints + 2}
+			res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)	
+	
 
 def onAttachmentDisconnected(source, target):
 
@@ -95,6 +110,7 @@ def onAttachmentDisconnected(source, target):
 	global epNumberOut
 	global currentAudioDescriptorSize
 	global currentAudioNumberOfInterfaces
+	global audioDeviceType
 	
 	ownerComponent = source["component"]
 	dependencyID = source["id"]
@@ -114,9 +130,23 @@ def onAttachmentDisconnected(source, target):
 			args = {"nFunction":  readValue - numberOfInterfaces.getValue()}
 			res = Database.sendMessage("usb_device", "UPDATE_INTERFACES_NUMBER", args)
 		
-		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
-		if readValue != None:
-			args = {"nFunction":readValue - 2 }
+		nEndpoints = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+		if nEndpoints != None:
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MK", "SAMD21", "SAMDA1","SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMD11"]):
+				epNumberIn.setValue(1)
+				epNumberOut.setValue(1)
+				args = {"nFunction":  nEndpoints - 1}
+			elif any(x in Variables.get("__PROCESSOR") for x in ["SAME70", "SAMV70", "SAMV71", "SAMS70"]):
+				if (audioDeviceType.getValue() == "Audio v2.0 USB Speaker") \
+				or (audioDeviceType.getValue() == "Audio v1.0 USB Speaker") \
+				or (audioDeviceType.getValue() == "Audio v1.0 USB Headset") \
+				or (audioDeviceType.getValue() == "Audio v1.0 USB Headset Multi Sampling rates") :		
+					epNumberOut.setValue(1)
+					epNumberIn.setValue(2)
+				elif (audioDeviceType.getValue() == "Audio v1.0 USB Microphone"):	
+					epNumberIn.setValue(1)	
+					epNumberOut.setValue(2)
+				args = {"nFunction":  nEndpoints - 2}
 			res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 			
 			
@@ -237,6 +267,45 @@ def usbDeviceAudioDeviceTypeUpdate(usbSymbolSource, event):
 	else :
 		currentAudioDescriptorSize.setValue(100)
 	updateConfigurationDescriptorSize(descriptorSize)	
+	
+def usbDeviceAudioEpInUpdate(usbSymbolSource, event):
+	global epNumberIn
+	global epNumberOut
+	if (event["value"] == "Audio v2.0 USB Speaker"):	
+		usbSymbolSource.setVisible(False)
+	elif (event["value"] == "Audio v1.0 USB Speaker"):	
+		usbSymbolSource.setVisible(False)
+	elif (event["value"] == "Audio v1.0 USB Microphone"):	
+		usbSymbolSource.setVisible(True)
+	elif (event["value"] == "Audio v1.0 USB Headset"):	
+		usbSymbolSource.setVisible(True)
+	elif (event["value"] == "Audio v1.0 USB Headset Multi Sampling rates"):	
+		usbSymbolSource.setVisible(True)
+
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAME70", "SAMV70", "SAMV71", "SAMS70"]):
+		if (audioDeviceType.getValue() == "Audio v1.0 USB Microphone"):	
+			if (epNumberIn.getValue() >  epNumberOut.getValue()):
+				temp = epNumberIn.getValue()
+				epNumberIn.setValue(epNumberOut.getValue())
+				epNumberOut.setValue(temp)	
+		else:
+			if (epNumberOut.getValue() >  epNumberIn.getValue()):
+				temp = epNumberIn.getValue()
+				epNumberIn.setValue(epNumberOut.getValue())
+				epNumberOut.setValue(temp)	
+			
+
+def usbDeviceAudioEpOutUpdate(usbSymbolSource, event):
+	if (event["value"] == "Audio v2.0 USB Speaker"):	
+		usbSymbolSource.setVisible(True)
+	elif (event["value"] == "Audio v1.0 USB Speaker"):	
+		usbSymbolSource.setVisible(True)
+	elif (event["value"] == "Audio v1.0 USB Microphone"):	
+		usbSymbolSource.setVisible(False)
+	elif (event["value"] == "Audio v1.0 USB Headset"):	
+		usbSymbolSource.setVisible(True)
+	elif (event["value"] == "Audio v1.0 USB Headset Multi Sampling rates"):	
+		usbSymbolSource.setVisible(True)
 		
 def instantiateComponent(usbDeviceAudioComponent, index):
 
@@ -253,6 +322,7 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 	global currentQSizeRead
 	global currentQSizeWrite
 	global currentAudioDescriptorSize
+	global audioDeviceType
 	
 	
 	# Index of this function 
@@ -283,7 +353,7 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 	audioDeviceType = usbDeviceAudioComponent.createComboSymbol("CONFIG_USB_DEVICE_FUNCTION_AUDIO_DEVICE_TYPE", None, audioDeviceTypes)
 	audioDeviceType.setLabel("Audio Device Type")
 	audioDeviceType.setVisible(True)
-	audioDeviceType.setUseSingleDynamicValue(True)
+	audioDeviceType.setDefaultValue("Audio v1.0 USB Headset")
 	audioDeviceType.setDependencies(usbDeviceAudioDeviceTypeUpdate, ["CONFIG_USB_DEVICE_FUNCTION_AUDIO_DEVICE_TYPE"])
 	
 	# Audio Spec version
@@ -356,15 +426,17 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 	epNumberIn.setVisible(True)
 	epNumberIn.setMin(1)
 	epNumberIn.setMax(10)
-	epNumberIn.setDefaultValue(3)
+	epNumberIn.setDefaultValue(1)
+	epNumberIn.setDependencies(usbDeviceAudioEpInUpdate, ["CONFIG_USB_DEVICE_FUNCTION_AUDIO_DEVICE_TYPE"])
 	
 	# Audio Function driver Data OUT Endpoint Number   
 	epNumberOut = usbDeviceAudioComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_OUT_ENDPOINT_NUMBER", None)
 	epNumberOut.setLabel("OUT Endpoint Number")
-	epNumberOut.setVisible(False)
+	epNumberOut.setVisible(True)
 	epNumberOut.setMin(1)
 	epNumberOut.setMax(10)
 	epNumberOut.setDefaultValue(2)
+	epNumberOut.setDependencies(usbDeviceAudioEpOutUpdate, ["CONFIG_USB_DEVICE_FUNCTION_AUDIO_DEVICE_TYPE"])
 	
 	# Audio Function save descriptor size
 	currentAudioDescriptorSize = usbDeviceAudioComponent.createIntegerSymbol("USB_DEVICE_AUDIO_FUNCTION_DESCRIPTOR_SIZE_CURRENT", None)
@@ -473,4 +545,3 @@ def addFileName(fileName, symbol, srcPath, destPath, enabled, callback):
 	else:
 		symbol.setType("SOURCE")
 	symbol.setEnabled(enabled)
-
