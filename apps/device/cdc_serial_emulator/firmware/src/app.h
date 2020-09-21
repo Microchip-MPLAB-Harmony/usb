@@ -101,13 +101,7 @@ typedef enum
     APP_STATE_WAIT_FOR_CONFIGURATION,
 
     /* Check if we got data from CDC */
-    APP_STATE_CHECK_CDC_READ,
-
-    /* A character is received from the UART */
-    APP_STATE_CHECK_UART_RECEIVE,
-
-    /* Application runs the service task */
-    APP_STATE_SERVICE_TASKS,
+    APP_STATE_SERIAL_EMULATOR,
 
     /* Application error occurred */
     APP_STATE_ERROR
@@ -145,7 +139,10 @@ typedef struct
     bool deviceIsConfigured;
 
     /* Read Data Buffer */
-    uint8_t * readBuffer;
+    uint8_t * cdcReadBuffer;
+
+    /* Read Data Buffer */
+    uint8_t * uartReadBuffer;
 
     /* Set Line Coding Data */
     USB_CDC_LINE_CODING setLineCodingData;
@@ -166,10 +163,10 @@ typedef struct
     USB_DEVICE_CDC_TRANSFER_HANDLE writeTransferHandle;
 
     /* True if a character was read */
-    bool isCDCReadComplete;
+    bool isCDCReadInProgress;
 
     /* True if a character was written*/
-    bool isCDCWriteComplete;
+    bool isCDCWriteInProgress;
 
     /* True if a character was read */
     bool isUSARTReadInProgress;
@@ -184,7 +181,10 @@ typedef struct
     volatile bool errorStatus;
     
     /* USART Buffer Handler */
-    DRV_USART_BUFFER_HANDLE bufferHandler;
+    DRV_USART_BUFFER_HANDLE readBufferHandler;
+    
+    /* USART Buffer Handler */
+    DRV_USART_BUFFER_HANDLE writeBufferHandler;
 
     /* UART1 received data */
     uint8_t * uartReceivedData;
