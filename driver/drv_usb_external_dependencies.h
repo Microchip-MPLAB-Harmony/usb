@@ -48,7 +48,10 @@
 #include "definitions.h"
 #include "system/system_module.h"
 
-#if ((DRV_USBFSV1_HOST_SUPPORT == true) ||(DRV_USBFS_HOST_SUPPORT  == true) || (DRV_USBHS_HOST_SUPPORT == true) || (DRV_USBHSV1_HOST_SUPPORT == true))
+#if ( ( defined( DRV_USBFSV1_HOST_SUPPORT ) && (DRV_USBFSV1_HOST_SUPPORT == true) ) ||  \
+       ( defined( DRV_USBFS_HOST_SUPPORT )  &&  ( DRV_USBFS_HOST_SUPPORT == true ) ) || \
+       ( defined ( DRV_USBHS_HOST_SUPPORT ) &&  ( DRV_USBHS_HOST_SUPPORT == true ) ) || \
+       ( defined ( DRV_USBHSV1_HOST_SUPPORT) &&  ( DRV_USBHSV1_HOST_SUPPORT == true ) )  )  
 #include "system/time/sys_time.h"
 #define SYS_TMR_HANDLE SYS_TIME_HANDLE
 #define SYS_TMR_HANDLE_INVALID SYS_TIME_HANDLE_INVALID
