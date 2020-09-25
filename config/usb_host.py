@@ -155,7 +155,7 @@ def instantiateComponent(usbHostComponent):
 	usbHostTransfersNumber.setDependencies(blUsbHostMaxInterfaceNumber, ["USB_OPERATION_MODE"])	
 	
 	# USB Host Hub Support
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX" , "SAMA5D2", "SAM9X60" ]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX" , "SAMA5D2", "SAM9X60" , "SAMD21", "SAMDA1", "SAMD5","SAMV70", "SAMV71","SAME70", "SAMS70" ,"PIC32MK" ,"SAME5", "SAML21" , "SAM9X60", "SAMG55" ]):
 		usbHostHubsupport = usbHostComponent.createBooleanSymbol("CONFIG_USB_HOST_HUB_SUPPORT", None)
 		usbHostHubsupport.setLabel( "Hub support" )
 		usbHostHubsupport.setVisible( True)
@@ -279,7 +279,7 @@ def instantiateComponent(usbHostComponent):
 	
 	# system_config.h file for USB Host Layer    
 	################################################
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX", "SAMA5D2", "SAM9X60"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX" , "SAMA5D2", "SAM9X60" , "SAMD21", "SAMDA1", "SAMD5","SAMV70", "SAMV71","SAME70", "SAMS70" ,"PIC32MK" ,"SAME5", "SAML21" , "SAM9X60", "SAMG55" ]):
 		usbHostHubConfigFile = usbHostComponent.createFileSymbol("FILE_USB_HOST_HUB_CONFIG", None)
 		usbHostHubConfigFile.setType("STRING")
 		usbHostHubConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION")
