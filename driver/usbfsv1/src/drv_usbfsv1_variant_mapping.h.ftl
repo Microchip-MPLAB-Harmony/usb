@@ -84,7 +84,13 @@
 /* SAMD5x Family Devices has Four interrupt vectors for USB module */ 
 #define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE true
 <#elseif __PROCESSOR?matches("ATSAMD2.*") || __PROCESSOR?matches("ATSAML2.*") == true>
-/* ${__PROCESSOR} Devices has one interrupt vector for USB module */ 
+/* ${__PROCESSOR} Devices has one interrupt vector for USB module */
+#define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE false
+<#elseif __PROCESSOR?matches("ATSAMD1.*") == true>
+/* ${__PROCESSOR} Devices has one interrupt vector for USB module */
+#define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE false
+<#elseif __PROCESSOR?matches("ATSAMDA.*") == true>
+/* ${__PROCESSOR} Devices has one interrupt vector for USB module */
 #define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE false
 </#if>
   
