@@ -47,7 +47,6 @@ static void SYSCTRL_Initialize(void)
 
     /* Configure 32K External Oscillator */
     SYSCTRL_REGS->SYSCTRL_XOSC32K = SYSCTRL_XOSC32K_STARTUP(0) | SYSCTRL_XOSC32K_ENABLE_Msk | SYSCTRL_XOSC32K_EN32K_Msk | SYSCTRL_XOSC32K_XTALEN_Msk;
-
     while(!((SYSCTRL_REGS->SYSCTRL_PCLKSR & SYSCTRL_PCLKSR_XOSC32KRDY_Msk) == SYSCTRL_PCLKSR_XOSC32KRDY_Msk))
     {
         /* Waiting for the XOSC32K Ready state */
@@ -81,7 +80,7 @@ static void FDPLL_Initialize(void)
 
 static void GCLK0_Initialize(void)
 {
-    
+
     GCLK_REGS->GCLK_GENCTRL = GCLK_GENCTRL_SRC(8) | GCLK_GENCTRL_GENEN_Msk | GCLK_GENCTRL_ID(0);
 
     GCLK_REGS->GCLK_GENDIV = GCLK_GENDIV_DIV(2) | GCLK_GENDIV_ID(0);
@@ -104,7 +103,7 @@ void CLOCK_Initialize (void)
     GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(6) | GCLK_CLKCTRL_GEN(0x0)  | GCLK_CLKCTRL_CLKEN_Msk;
     /* Selection of the Generator and write Lock for SERCOM3_CORE */
     GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(23) | GCLK_CLKCTRL_GEN(0x0)  | GCLK_CLKCTRL_CLKEN_Msk;
-    
+
     /* Configure the APBC Bridge Clocks */
     PM_REGS->PM_APBCMASK = 0x10020;
 

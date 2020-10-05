@@ -79,6 +79,11 @@ extern "C" {
 /* Macro defines USB internal DMA Buffer criteria*/
 
 #define APP_MAKE_BUFFER_DMA_READY  __attribute__((aligned(16)))
+
+/* Macro defines the offset needed to map Data Width parameter of USART 
+   COM port setting */
+
+#define APP_USART_USB_DATA_WIDTH_DIFF 5
     
     
 // *****************************************************************************

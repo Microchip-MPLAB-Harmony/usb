@@ -200,10 +200,10 @@ USB_DEVICE_CDC_EVENT_RESPONSE APP_USBDeviceCDCEventHandler
                 
                 appDataObject->readLength = eventDataRead->length;
             }
-//            else
-//            {
-//                appDataObject->errorStatus = true;
-//            }
+            else
+            {
+                appDataObject->errorStatus = true;
+            }
             break;
 
         case USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
@@ -219,10 +219,6 @@ USB_DEVICE_CDC_EVENT_RESPONSE APP_USBDeviceCDCEventHandler
                 * send in the APP_Tasks() function.  */
                 appDataObject->isSetLineCodingCommandInProgress = false;
                 appDataObject->isBaudrateDataReceived = true;
-                appDataObject->getLineCodingData.dwDTERate = appDataObject->setLineCodingData.dwDTERate;
-                appDataObject->getLineCodingData.bParityType = appDataObject->setLineCodingData.bParityType;
-                appDataObject->getLineCodingData.bDataBits = appDataObject->setLineCodingData.bDataBits;
-                appDataObject->getLineCodingData.bCharFormat = appDataObject->setLineCodingData.bCharFormat;
             }
             else
             {
@@ -380,92 +376,18 @@ void _APP_SetLineCodingHandler(void)
 {    
     DRV_USART_SERIAL_SETUP UsartSetup;
 
-    UsartSetup.baudRate = appData.getLineCodingData.dwDTERate;
-        
-    switch(appData.getLineCodingData.bParityType)
+    UsartSetup.baudRate = appData.setLineCodingData.dwDTERate;
+    UsartSetup.parity = appData.setLineCodingData.bParityType;
+    UsartSetup.stopBits = appData.setLineCodingData.bCharFormat; 
+    if(appData.setLineCodingData.bDataBits <= (uint8_t)DRV_USART_DATA_9_BIT)
     {
-        case USB_CDC_LINE_CODING_PARITY_NONE:
-            
-            UsartSetup.parity = DRV_USART_PARITY_NONE;            
-            break;
-            
-        case USB_CDC_LINE_CODING_PARITY_EVEN:
-            
-            UsartSetup.parity = DRV_USART_PARITY_EVEN;   
-            break;
-            
-        case USB_CDC_LINE_CODING_PARITY_ODD:
-            
-            UsartSetup.parity = DRV_USART_PARITY_ODD;   
-            break;
-            
-        case USB_CDC_LINE_CODING_PARITY_MARK:
-            
-            UsartSetup.parity = DRV_USART_PARITY_MARK;   
-            break;
-            
-        case USB_CDC_LINE_CODING_PARITY_SPACE:
-            
-            UsartSetup.parity = DRV_USART_PARITY_SPACE;   
-            break;
-            
-        default:
-            UsartSetup.parity = DRV_USART_PARITY_NONE;    
-            break;
+        UsartSetup.dataWidth = appData.setLineCodingData.bDataBits - APP_USART_USB_DATA_WIDTH_DIFF; 
     }
-        
-    switch(appData.getLineCodingData.bCharFormat)
+    else
     {
-        case USB_CDC_LINE_CODING_STOP_1_BIT:
-            
-            UsartSetup.stopBits = DRV_USART_STOP_1_BIT;            
-            break;
-            
-        case USB_CDC_LINE_CODING_STOP_1_5_BIT:
-            
-            UsartSetup.stopBits = DRV_USART_STOP_1_5_BIT;   
-            break;
-            
-        case USB_CDC_LINE_CODING_STOP_2_BIT:
-            
-            UsartSetup.stopBits = DRV_USART_STOP_2_BIT;   
-            break;
-            
-        default:
-            UsartSetup.stopBits = DRV_USART_STOP_1_BIT;    
-            break;
-    }
-        
-    switch(appData.getLineCodingData.bDataBits)
-    {
-        case USB_CDC_LINE_CODING_DATA_5_BIT:
-            
-            UsartSetup.dataWidth = DRV_USART_DATA_5_BIT;            
-            break;
-            
-        case USB_CDC_LINE_CODING_DATA_6_BIT:
-            
-            UsartSetup.dataWidth = DRV_USART_DATA_6_BIT;   
-            break;
-            
-        case USB_CDC_LINE_CODING_DATA_7_BIT:
-            
-            UsartSetup.dataWidth = DRV_USART_DATA_7_BIT;   
-            break;
-            
-        case USB_CDC_LINE_CODING_DATA_8_BIT:
-            
-            UsartSetup.dataWidth = DRV_USART_DATA_8_BIT;   
-            break;
-            
-        case USB_CDC_LINE_CODING_DATA_16_BIT:
-            
-            UsartSetup.dataWidth = DRV_USART_DATA_9_BIT;   
-            break;
-            
-        default:
-            UsartSetup.dataWidth = DRV_USART_DATA_8_BIT;    
-            break;
+        /* If it is a non-supported data width, we currently set it to 8-bit 
+         * mode value. */
+        UsartSetup.dataWidth = DRV_USART_DATA_8_BIT; 
     }
 
     DRV_USART_ReadQueuePurge(appData.usartHandle);
@@ -476,7 +398,12 @@ void _APP_SetLineCodingHandler(void)
     {
         /* Baudrate is changed successfully. Update Baudrate info in the
          * Get line coding structure. */
-                
+
+        appData.getLineCodingData.dwDTERate = appData.setLineCodingData.dwDTERate;
+        appData.getLineCodingData.bParityType = appData.setLineCodingData.bParityType;
+        appData.getLineCodingData.bDataBits = appData.setLineCodingData.bDataBits;
+        appData.getLineCodingData.bCharFormat = appData.setLineCodingData.bCharFormat;
+                                
         DRV_USART_ReadBufferAdd(appData.usartHandle, appData.uartReadBuffer, 1, &appData.readBufferHandler);
         
         /* Acknowledge the Status stage of the Control transfer */
