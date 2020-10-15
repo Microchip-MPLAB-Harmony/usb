@@ -614,11 +614,13 @@ def instantiateComponent(usbDeviceComponent):
 
 	usbDeviceRTOSStackSize = usbDeviceComponent.createIntegerSymbol("USB_DEVICE_RTOS_STACK_SIZE", usbDeviceRTOSMenu)
 	usbDeviceRTOSStackSize.setLabel("Stack Size")
+	usbDeviceRTOSStackSize.setMin(0)
 	usbDeviceRTOSStackSize.setDefaultValue(1024)
 	usbDeviceRTOSStackSize.setReadOnly(True)
 
 	usbDeviceRTOSTaskPriority = usbDeviceComponent.createIntegerSymbol("USB_DEVICE_RTOS_TASK_PRIORITY", usbDeviceRTOSMenu)
 	usbDeviceRTOSTaskPriority.setLabel("Task Priority")
+	usbDeviceRTOSTaskPriority.setMin(0)
 	usbDeviceRTOSTaskPriority.setDefaultValue(1)
 
 	usbDeviceRTOSTaskDelay = usbDeviceComponent.createBooleanSymbol("USB_DEVICE_RTOS_USE_DELAY", usbDeviceRTOSMenu)
@@ -627,6 +629,7 @@ def instantiateComponent(usbDeviceComponent):
 
 	usbDeviceRTOSTaskDelayVal = usbDeviceComponent.createIntegerSymbol("USB_DEVICE_RTOS_DELAY", usbDeviceRTOSMenu)
 	usbDeviceRTOSTaskDelayVal.setLabel("Task Delay")
+	usbDeviceRTOSTaskDelayVal.setMin(0)
 	usbDeviceRTOSTaskDelayVal.setDefaultValue(10) 
 	usbDeviceRTOSTaskDelayVal.setVisible((usbDeviceRTOSTaskDelay.getValue() == True))
 	usbDeviceRTOSTaskDelayVal.setDependencies(setVisible, ["USB_DEVICE_RTOS_USE_DELAY"])

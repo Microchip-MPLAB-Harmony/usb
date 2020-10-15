@@ -120,6 +120,7 @@ def instantiateComponent(usbHostComponent):
         only. It is automatically updated based on the number of device types
         to be supported by the Host'''
 	usbHostTplEntryNumber.setDescription(helpText)
+	usbHostTplEntryNumber.setMin(0)
 	usbHostTplEntryNumber.setDefaultValue(0)
 	usbHostTplEntryNumber.setUseSingleDynamicValue(True)
 	#usbHostTplEntryNumber.setDependencies(blUsbHostDeviceNumber, ["USB_OPERATION_MODE"])
@@ -137,6 +138,7 @@ def instantiateComponent(usbHostComponent):
         number increases the attached device operational memory.'''
 	usbHostMaxInterfaceNumber.setVisible(True)
 	usbHostMaxInterfaceNumber.setDescription(helpText)
+	usbHostMaxInterfaceNumber.setMin(0)
 	usbHostMaxInterfaceNumber.setDefaultValue(5)
 	usbHostMaxInterfaceNumber.setDependencies(blUsbHostMaxInterfaceNumber, ["USB_OPERATION_MODE"])	
 	
@@ -151,6 +153,7 @@ def instantiateComponent(usbHostComponent):
         the number increases the ability of the Host Layer to queue additional requests but also increases the
         memory requirements.'''
 	usbHostTransfersNumber.setDescription(helpText)
+	usbHostTransfersNumber.setMin(0)
 	usbHostTransfersNumber.setDefaultValue(10)
 	usbHostTransfersNumber.setDependencies(blUsbHostMaxInterfaceNumber, ["USB_OPERATION_MODE"])	
 	
@@ -220,11 +223,13 @@ def instantiateComponent(usbHostComponent):
 
 	usbHostRTOSStackSize = usbHostComponent.createIntegerSymbol("USB_HOST_RTOS_STACK_SIZE", usbHostRTOSMenu)
 	usbHostRTOSStackSize.setLabel("Stack Size")
+	usbHostRTOSStackSize.setMin(0)
 	usbHostRTOSStackSize.setDefaultValue(1024)
 	usbHostRTOSStackSize.setReadOnly(True)
 
 	usbHostRTOSTaskPriority = usbHostComponent.createIntegerSymbol("USB_HOST_RTOS_TASK_PRIORITY", usbHostRTOSMenu)
 	usbHostRTOSTaskPriority.setLabel("Task Priority")
+	usbHostRTOSTaskPriority.setMin(0)
 	usbHostRTOSTaskPriority.setDefaultValue(1)
 
 	usbHostRTOSTaskDelay = usbHostComponent.createBooleanSymbol("USB_HOST_RTOS_USE_DELAY", usbHostRTOSMenu)
@@ -233,6 +238,7 @@ def instantiateComponent(usbHostComponent):
 
 	usbHostRTOSTaskDelayVal = usbHostComponent.createIntegerSymbol("USB_HOST_RTOS_DELAY", usbHostRTOSMenu)
 	usbHostRTOSTaskDelayVal.setLabel("Task Delay")
+	usbHostRTOSTaskPriority.setMin(0)
 	usbHostRTOSTaskDelayVal.setDefaultValue(10) 
 	usbHostRTOSTaskDelayVal.setVisible((usbHostRTOSTaskDelay.getValue() == True))
 	usbHostRTOSTaskDelayVal.setDependencies(setVisible, ["USB_HOST_RTOS_USE_DELAY"])

@@ -99,10 +99,12 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverRTOSStackSize.setLabel("Stack Size")
 	usbDriverRTOSStackSize.setDefaultValue(1024)
 	usbDriverRTOSStackSize.setReadOnly(True)
+	usbDriverRTOSStackSize.setMin(0)
 
 	usbDriverRTOSTaskPriority = usbDriverComponent.createIntegerSymbol("USB_DRIVER_RTOS_TASK_PRIORITY", usbDriverRTOSMenu)
 	usbDriverRTOSTaskPriority.setLabel("Task Priority")
 	usbDriverRTOSTaskPriority.setDefaultValue(1)
+	usbDriverRTOSTaskPriority.setMin(1)
 
 	usbDriverRTOSTaskDelay = usbDriverComponent.createBooleanSymbol("USB_DRIVER_RTOS_USE_DELAY", usbDriverRTOSMenu)
 	usbDriverRTOSTaskDelay.setLabel("Use Task Delay?")
@@ -110,6 +112,7 @@ def instantiateComponent(usbDriverComponent):
 
 	usbDriverRTOSTaskDelayVal = usbDriverComponent.createIntegerSymbol("USB_DRIVER_RTOS_DELAY", usbDriverRTOSMenu)
 	usbDriverRTOSTaskDelayVal.setLabel("Task Delay")
+	usbDriverRTOSTaskDelayVal.setMin(0)
 	usbDriverRTOSTaskDelayVal.setDefaultValue(10)
 	usbDriverRTOSTaskDelayVal.setVisible((usbDriverRTOSTaskDelay.getValue() == True))
 	usbDriverRTOSTaskDelayVal.setDependencies(setVisible, ["USB_DRIVER_RTOS_USE_DELAY"])

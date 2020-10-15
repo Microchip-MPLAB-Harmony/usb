@@ -162,6 +162,7 @@ def instantiateComponent(usbDriverComponent):
         detection but allows for stable operation.'''
 	usbDriverHostAttachDebounce.setDescription(helpText)
 	usbDriverHostAttachDebounce.setDefaultValue(500)
+	usbDriverHostAttachDebounce.setMin(0)
 	usbDriverHostAttachDebounce.setDependencies(blUSBDriverOperationModeChanged, ["USB_OPERATION_MODE"])
 
 	# USB Driver Host mode Reset Duration
@@ -173,6 +174,7 @@ def instantiateComponent(usbDriverComponent):
         devices require a shorter or longer reset duration time.'''
 	usbDriverHostResetDuration.setDescription(helpText)
 	usbDriverHostResetDuration.setDefaultValue(100)
+	usbDriverHostResetDuration.setMin(0)
 	usbDriverHostResetDuration.setDependencies(blUSBDriverOperationModeChanged, ["USB_OPERATION_MODE"])
 
 	enable_rtos_settings = False
@@ -196,10 +198,12 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverRTOSStackSize.setLabel("Stack Size")
 	usbDriverRTOSStackSize.setDefaultValue(1024)
 	usbDriverRTOSStackSize.setReadOnly(True)
+	usbDriverRTOSStackSize.setMin(0)
 
 	usbDriverRTOSTaskPriority = usbDriverComponent.createIntegerSymbol("USB_DRIVER_RTOS_TASK_PRIORITY", usbDriverRTOSMenu)
 	usbDriverRTOSTaskPriority.setLabel("Task Priority")
 	usbDriverRTOSTaskPriority.setDefaultValue(1)
+	usbDriverRTOSTaskPriority.setMin(0)
 
 	usbDriverRTOSTaskDelay = usbDriverComponent.createBooleanSymbol("USB_DRIVER_RTOS_USE_DELAY", usbDriverRTOSMenu)
 	usbDriverRTOSTaskDelay.setLabel("Use Task Delay?")
@@ -208,6 +212,7 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverRTOSTaskDelayVal = usbDriverComponent.createIntegerSymbol("USB_DRIVER_RTOS_DELAY", usbDriverRTOSMenu)
 	usbDriverRTOSTaskDelayVal.setLabel("Task Delay")
 	usbDriverRTOSTaskDelayVal.setDefaultValue(10)
+	usbDriverRTOSTaskDelayVal.setMin(1)
 	usbDriverRTOSTaskDelayVal.setVisible((usbDriverRTOSTaskDelay.getValue() == True))
 	usbDriverRTOSTaskDelayVal.setDependencies(setVisible, ["USB_DRIVER_RTOS_USE_DELAY"])
 
