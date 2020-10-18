@@ -1090,7 +1090,7 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
              * descriptor. */
 
             SYS_TIME_DelayMS(2 * hubInstance->hubDescriptor.bPwrOn2PwrGood , &portInfo->timerHandle  );
-            if( SYS_TMR_HANDLE_INVALID != portInfo->timerHandle )
+            if( SYS_TIME_HANDLE_INVALID != portInfo->timerHandle )
             {
                 /* The delay could be started. Wait for the delay to complete */
                 portInfo->portTaskState =  USB_HOST_HUB_PORT_TASK_STATE_PWRON2PWRGOOD_DELAY_WAIT;

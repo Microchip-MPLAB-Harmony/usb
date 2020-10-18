@@ -160,15 +160,15 @@ void _DRV_USBHS_HOST_AttachDetachStateMachine
             {   
                 /* Explicitely try to delete the Timer object if it is not
                  * running */
-                SYS_TMR_ObjectDelete(hDriver->usbDrvCommonObj.timerHandle);
+                SYS_TIME_TimerDestroy(hDriver->usbDrvHostObj.timerHandle);
                 
                 hDriver->usbDrvHostObj.timerExpired = false;
                 
                 /* Start the de-bouncing timer */
-                hDriver->usbDrvCommonObj.timerHandle = SYS_TMR_CallbackSingle( DRV_USBHS_HOST_ATTACH_DEBOUNCE_DURATION,
-                        (uintptr_t ) hDriver, _DRV_USBHS_HOST_TimerCallback);
+                hDriver->usbDrvHostObj.timerHandle = SYS_TIME_CallbackRegisterMS(_DRV_USBHS_HOST_TimerCallback,
+                       (uintptr_t ) hDriver,  DRV_USBHS_HOST_ATTACH_DEBOUNCE_DURATION, SYS_TIME_SINGLE);
                 
-                if(SYS_TMR_HANDLE_INVALID != hDriver->usbDrvCommonObj.timerHandle)
+                if(SYS_TIME_HANDLE_INVALID != hDriver->usbDrvHostObj.timerHandle)
                 {
                     /* The de-bounce timer has started */
                     hDriver->usbDrvHostObj.attachState = DRV_USBHS_HOST_ATTACH_STATE_DEBOUNCING;
@@ -291,9 +291,10 @@ void _DRV_USBHS_HOST_ResetStateMachine
         case DRV_USBHS_HOST_RESET_STATE_START:
 
             /* We should start reset signaling. First try to get a timer */
-            hDriver->usbDrvCommonObj.timerHandle = SYS_TMR_CallbackSingle( DRV_USBHS_HOST_RESET_DURATION, (uintptr_t ) hDriver, _DRV_USBHS_HOST_TimerCallback);
+            hDriver->usbDrvHostObj.timerHandle = SYS_TIME_CallbackRegisterMS(_DRV_USBHS_HOST_TimerCallback, (uintptr_t ) hDriver, 
+                    DRV_USBHS_HOST_RESET_DURATION, SYS_TIME_SINGLE );
             
-            if(SYS_TMR_HANDLE_INVALID != hDriver->usbDrvCommonObj.timerHandle)
+            if(SYS_TIME_HANDLE_INVALID != hDriver->usbDrvHostObj.timerHandle)
             {
                 PLIB_USBHS_ResetEnable(hDriver->usbDrvCommonObj.usbID);
                 hDriver->usbDrvHostObj.resetState = DRV_USBHS_HOST_RESET_STATE_WAIT_FOR_COMPLETE;
@@ -338,8 +339,8 @@ void _DRV_USBHS_HOST_ResetStateMachine
 					/* Enable Suspend */
                     PLIB_USBHS_SuspendEnable(hDriver->usbDrvCommonObj.usbID);
 
-                    hDriver->usbDrvCommonObj.timerHandle = SYS_TMR_CallbackSingle( 100,(uintptr_t ) hDriver, _DRV_USBHS_HOST_TimerCallback);
-                    if(SYS_TMR_HANDLE_INVALID != hDriver->usbDrvCommonObj.timerHandle)
+                    hDriver->usbDrvHostObj.timerHandle = SYS_TIME_CallbackRegisterMS(_DRV_USBHS_HOST_TimerCallback, (uintptr_t ) hDriver, 100, SYS_TIME_SINGLE );
+                    if(SYS_TIME_HANDLE_INVALID != hDriver->usbDrvHostObj.timerHandle)
                     {
                         hDriver->usbDrvHostObj.resetState = DRV_USBHS_HOST_RESET_STATE_WAIT_FOR_SUSPEND_COMPLETE;
                     }
@@ -356,8 +357,8 @@ void _DRV_USBHS_HOST_ResetStateMachine
                 /* Enable Resume. This will clear Suspend as well */
                 PLIB_USBHS_ResumeEnable(hDriver->usbDrvCommonObj.usbID);
                 
-                hDriver->usbDrvCommonObj.timerHandle = SYS_TMR_CallbackSingle( 20, (uintptr_t ) hDriver, _DRV_USBHS_HOST_TimerCallback);
-                if(SYS_TMR_HANDLE_INVALID != hDriver->usbDrvCommonObj.timerHandle)
+                hDriver->usbDrvHostObj.timerHandle = SYS_TIME_CallbackRegisterMS(_DRV_USBHS_HOST_TimerCallback, (uintptr_t )hDriver, 20, SYS_TIME_SINGLE);
+                if(SYS_TIME_HANDLE_INVALID != hDriver->usbDrvHostObj.timerHandle)
                 {
                     hDriver->usbDrvHostObj.resetState = DRV_USBHS_HOST_RESET_STATE_WAIT_FOR_RESUME_COMPLETE;
                 }

@@ -1,32 +1,19 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="65">
-  <logicalFolder displayName="root" name="root" projectFiles="true">
-    <logicalFolder displayName="Header Files" name="HeaderFiles" projectFiles="true">
-      <logicalFolder displayName="config" name="f1" projectFiles="true">
-        <logicalFolder displayName="pic32mz_ef_sk" name="f1" projectFiles="true">
-          <logicalFolder displayName="peripheral" name="f1" projectFiles="true">
-            <logicalFolder displayName="coretimer" name="f1" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_sk/peripheral/coretimer/plib_coretimer.h</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="clk" name="f2" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_sk/peripheral/clk/plib_clk.h</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="gpio" name="f3" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_sk/peripheral/gpio/plib_gpio.h</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="cache" name="f4" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_sk/peripheral/cache/plib_cache.h</itemPath>
-              <itemPath>../src/config/pic32mz_ef_sk/peripheral/cache/plib_cache_pic32mz.h</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="evic" name="f5" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_sk/peripheral/evic/plib_evic.h</itemPath>
-            </logicalFolder>
+  <logicalFolder name="root" displayName="root" projectFiles="true">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
+        <logicalFolder name="f1" displayName="pic32mz_ef_sk" projectFiles="true">
+          <logicalFolder name="f5" displayName="bsp" projectFiles="true">
+            <itemPath>../src/config/pic32mz_ef_sk/bsp/bsp.h</itemPath>
           </logicalFolder>
-          <logicalFolder displayName="driver" name="f2" projectFiles="true">
-            <logicalFolder displayName="usb" name="f1" projectFiles="true">
-              <logicalFolder displayName="usbhs" name="f1" projectFiles="true">
-                <logicalFolder displayName="src" name="f1" projectFiles="true">
-                  <logicalFolder displayName="templates" name="f1" projectFiles="true">
+          <logicalFolder name="f2" displayName="driver" projectFiles="true">
+            <logicalFolder name="f1" displayName="usb" projectFiles="true">
+              <logicalFolder name="f1" displayName="usbhs" projectFiles="true">
+                <logicalFolder name="f1" displayName="src" projectFiles="true">
+                  <logicalFolder name="f1" displayName="templates" projectFiles="true">
                     <itemPath>../src/config/pic32mz_ef_sk/driver/usb/usbhs/src/templates/usbhs_registers.h</itemPath>
                     <itemPath>../src/config/pic32mz_ef_sk/driver/usb/usbhs/src/templates/usbhs_ClockResetControl_Default.h</itemPath>
                     <itemPath>../src/config/pic32mz_ef_sk/driver/usb/usbhs/src/templates/usbhs_ClockResetControl_Unsupported.h</itemPath>
@@ -65,8 +52,68 @@
             <itemPath>../src/config/pic32mz_ef_sk/driver/driver.h</itemPath>
             <itemPath>../src/config/pic32mz_ef_sk/driver/driver_common.h</itemPath>
           </logicalFolder>
-          <logicalFolder displayName="usb" name="f3" projectFiles="true">
-            <logicalFolder displayName="src" name="f1" projectFiles="true">
+          <logicalFolder name="f6" displayName="osal" projectFiles="true">
+            <itemPath>../src/config/pic32mz_ef_sk/osal/osal.h</itemPath>
+            <itemPath>../src/config/pic32mz_ef_sk/osal/osal_definitions.h</itemPath>
+            <itemPath>../src/config/pic32mz_ef_sk/osal/osal_impl_basic.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
+            <logicalFolder name="f4" displayName="cache" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_sk/peripheral/cache/plib_cache.h</itemPath>
+              <itemPath>../src/config/pic32mz_ef_sk/peripheral/cache/plib_cache_pic32mz.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="clk" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_sk/peripheral/clk/plib_clk.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f1" displayName="coretimer" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_sk/peripheral/coretimer/plib_coretimer.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f5" displayName="evic" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_sk/peripheral/evic/plib_evic.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="gpio" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_sk/peripheral/gpio/plib_gpio.h</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f4" displayName="system" projectFiles="true">
+            <logicalFolder name="f3" displayName="cache" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_sk/system/cache/sys_cache.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f4" displayName="debug" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_sk/system/debug/sys_debug.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f1" displayName="fs" projectFiles="true">
+              <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
+                <logicalFolder name="f1" displayName="file_system" projectFiles="true">
+                  <itemPath>../src/config/pic32mz_ef_sk/system/fs/fat_fs/file_system/ff.h</itemPath>
+                  <itemPath>../src/config/pic32mz_ef_sk/system/fs/fat_fs/file_system/ffconf.h</itemPath>
+                </logicalFolder>
+                <logicalFolder name="f2" displayName="hardware_access" projectFiles="true">
+                  <itemPath>../src/config/pic32mz_ef_sk/system/fs/fat_fs/hardware_access/diskio.h</itemPath>
+                </logicalFolder>
+              </logicalFolder>
+              <itemPath>../src/config/pic32mz_ef_sk/system/fs/sys_fs.h</itemPath>
+              <itemPath>../src/config/pic32mz_ef_sk/system/fs/src/sys_fs_local.h</itemPath>
+              <itemPath>../src/config/pic32mz_ef_sk/system/fs/sys_fs_media_manager.h</itemPath>
+              <itemPath>../src/config/pic32mz_ef_sk/system/fs/src/sys_fs_media_manager_local.h</itemPath>
+              <itemPath>../src/config/pic32mz_ef_sk/system/fs/sys_fs_fat_interface.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="int" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_sk/system/int/sys_int.h</itemPath>
+              <itemPath>../src/config/pic32mz_ef_sk/system/int/sys_int_mapping.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f5" displayName="time" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_sk/system/time/sys_time.h</itemPath>
+              <itemPath>../src/config/pic32mz_ef_sk/system/time/sys_time_definitions.h</itemPath>
+              <itemPath>../src/config/pic32mz_ef_sk/system/time/src/sys_time_local.h</itemPath>
+            </logicalFolder>
+            <itemPath>../src/config/pic32mz_ef_sk/system/system.h</itemPath>
+            <itemPath>../src/config/pic32mz_ef_sk/system/system_common.h</itemPath>
+            <itemPath>../src/config/pic32mz_ef_sk/system/system_module.h</itemPath>
+            <itemPath>../src/config/pic32mz_ef_sk/system/system_media.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f3" displayName="usb" projectFiles="true">
+            <logicalFolder name="f1" displayName="src" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_sk/usb/src/usb_host_local.h</itemPath>
               <itemPath>../src/config/pic32mz_ef_sk/usb/src/usb_host_hub_mapping.h</itemPath>
               <itemPath>../src/config/pic32mz_ef_sk/usb/src/usb_external_dependencies.h</itemPath>
@@ -86,119 +133,84 @@
             <itemPath>../src/config/pic32mz_ef_sk/usb/usb_msd.h</itemPath>
             <itemPath>../src/config/pic32mz_ef_sk/usb/scsi.h</itemPath>
           </logicalFolder>
-          <logicalFolder displayName="system" name="f4" projectFiles="true">
-            <logicalFolder displayName="fs" name="f1" projectFiles="true">
-              <logicalFolder displayName="fat_fs" name="f1" projectFiles="true">
-                <logicalFolder displayName="file_system" name="f1" projectFiles="true">
-                  <itemPath>../src/config/pic32mz_ef_sk/system/fs/fat_fs/file_system/ff.h</itemPath>
-                  <itemPath>../src/config/pic32mz_ef_sk/system/fs/fat_fs/file_system/ffconf.h</itemPath>
-                </logicalFolder>
-                <logicalFolder displayName="hardware_access" name="f2" projectFiles="true">
-                  <itemPath>../src/config/pic32mz_ef_sk/system/fs/fat_fs/hardware_access/diskio.h</itemPath>
-                </logicalFolder>
-              </logicalFolder>
-              <itemPath>../src/config/pic32mz_ef_sk/system/fs/sys_fs.h</itemPath>
-              <itemPath>../src/config/pic32mz_ef_sk/system/fs/src/sys_fs_local.h</itemPath>
-              <itemPath>../src/config/pic32mz_ef_sk/system/fs/sys_fs_media_manager.h</itemPath>
-              <itemPath>../src/config/pic32mz_ef_sk/system/fs/src/sys_fs_media_manager_local.h</itemPath>
-              <itemPath>../src/config/pic32mz_ef_sk/system/fs/sys_fs_fat_interface.h</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="int" name="f2" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_sk/system/int/sys_int.h</itemPath>
-              <itemPath>../src/config/pic32mz_ef_sk/system/int/sys_int_mapping.h</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="cache" name="f3" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_sk/system/cache/sys_cache.h</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="debug" name="f4" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_sk/system/debug/sys_debug.h</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="time" name="f5" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_sk/system/time/sys_time.h</itemPath>
-              <itemPath>../src/config/pic32mz_ef_sk/system/time/sys_time_definitions.h</itemPath>
-              <itemPath>../src/config/pic32mz_ef_sk/system/time/src/sys_time_local.h</itemPath>
-            </logicalFolder>
-            <itemPath>../src/config/pic32mz_ef_sk/system/system.h</itemPath>
-            <itemPath>../src/config/pic32mz_ef_sk/system/system_common.h</itemPath>
-            <itemPath>../src/config/pic32mz_ef_sk/system/system_module.h</itemPath>
-            <itemPath>../src/config/pic32mz_ef_sk/system/system_media.h</itemPath>
-          </logicalFolder>
-          <logicalFolder displayName="bsp" name="f5" projectFiles="true">
-            <itemPath>../src/config/pic32mz_ef_sk/bsp/bsp.h</itemPath>
-          </logicalFolder>
           <itemPath>../src/config/pic32mz_ef_sk/device_cache.h</itemPath>
           <itemPath>../src/config/pic32mz_ef_sk/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/pic32mz_ef_sk/definitions.h</itemPath>
+          <itemPath>../src/config/pic32mz_ef_sk/device.h</itemPath>
           <itemPath>../src/config/pic32mz_ef_sk/user.h</itemPath>
           <itemPath>../src/config/pic32mz_ef_sk/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder displayName="packs" name="f2" projectFiles="true">
-        <logicalFolder displayName="PIC32MZ2048EFH144_DFP" name="f1" projectFiles="true">
-          <itemPath>../src/packs/PIC32MZ2048EFH144_DFP/device.h</itemPath>
-        </logicalFolder>
-      </logicalFolder>
-      <logicalFolder displayName="osal" name="f3" projectFiles="true">
-        <itemPath>../src/config/pic32mz_ef_sk/osal/osal.h</itemPath>
-        <itemPath>../src/config/pic32mz_ef_sk/osal/osal_definitions.h</itemPath>
-        <itemPath>../src/config/pic32mz_ef_sk/osal/osal_impl_basic.h</itemPath>
-      </logicalFolder>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
-    <logicalFolder displayName="Important Files" name="ExternalFiles" projectFiles="true">
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="true">
       <itemPath>Makefile</itemPath>
       <itemPath>../src/config/pic32mz_ef_sk/harmony.prj</itemPath>
       <itemPath>../src/config/pic32mz_ef_sk/pic32mz_ef_sk.xml</itemPath>
+      <itemPath>../src/config/pic32mz_ef_sk/harmony-manifest-success.yml</itemPath>
     </logicalFolder>
-    <logicalFolder displayName="Linker Files" name="LinkerScript" projectFiles="true"/>
-    <logicalFolder displayName="Source Files" name="SourceFiles" projectFiles="true">
-      <logicalFolder displayName="config" name="f1" projectFiles="true">
-        <logicalFolder displayName="pic32mz_ef_sk" name="f1" projectFiles="true">
-          <logicalFolder displayName="peripheral" name="f1" projectFiles="true">
-            <logicalFolder displayName="coretimer" name="f1" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_sk/peripheral/coretimer/plib_coretimer.c</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="clk" name="f2" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_sk/peripheral/clk/plib_clk.c</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="gpio" name="f3" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_sk/peripheral/gpio/plib_gpio.c</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="cache" name="f4" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_sk/peripheral/cache/plib_cache_local.h</itemPath>
-              <itemPath>../src/config/pic32mz_ef_sk/peripheral/cache/plib_cache.c</itemPath>
-              <itemPath>../src/config/pic32mz_ef_sk/peripheral/cache/plib_cache_pic32mz.S</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="evic" name="f5" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_sk/peripheral/evic/plib_evic.c</itemPath>
-            </logicalFolder>
+    <logicalFolder name="LinkerScript"
+                   displayName="Linker Files"
+                   projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
+        <logicalFolder name="f1" displayName="pic32mz_ef_sk" projectFiles="true">
+          <itemPath>../src/config/pic32mz_ef_sk/p32MZ2048EFH144.ld</itemPath>
+        </logicalFolder>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
+        <logicalFolder name="f1" displayName="pic32mz_ef_sk" projectFiles="true">
+          <logicalFolder name="f6" displayName="bsp" projectFiles="true">
+            <itemPath>../src/config/pic32mz_ef_sk/bsp/bsp.c</itemPath>
           </logicalFolder>
-          <logicalFolder displayName="driver" name="f2" projectFiles="true">
-            <logicalFolder displayName="usb" name="f1" projectFiles="true">
-              <logicalFolder displayName="usbhs" name="f1" projectFiles="true">
-                <logicalFolder displayName="src" name="f1" projectFiles="true">
+          <logicalFolder name="f2" displayName="driver" projectFiles="true">
+            <logicalFolder name="f1" displayName="usb" projectFiles="true">
+              <logicalFolder name="f1" displayName="usbhs" projectFiles="true">
+                <logicalFolder name="f1" displayName="src" projectFiles="true">
                   <itemPath>../src/config/pic32mz_ef_sk/driver/usb/usbhs/src/drv_usbhs.c</itemPath>
                   <itemPath>../src/config/pic32mz_ef_sk/driver/usb/usbhs/src/drv_usbhs_host.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder displayName="usb" name="f3" projectFiles="true">
-            <logicalFolder displayName="src" name="f1" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_sk/usb/src/usb_host.c</itemPath>
-              <itemPath>../src/config/pic32mz_ef_sk/usb/src/usb_host_hub.c</itemPath>
-              <itemPath>../src/config/pic32mz_ef_sk/usb/src/usb_host_msd.c</itemPath>
-              <itemPath>../src/config/pic32mz_ef_sk/usb/src/usb_host_scsi.c</itemPath>
+          <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
+            <logicalFolder name="f4" displayName="cache" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_sk/peripheral/cache/plib_cache_local.h</itemPath>
+              <itemPath>../src/config/pic32mz_ef_sk/peripheral/cache/plib_cache.c</itemPath>
+              <itemPath>../src/config/pic32mz_ef_sk/peripheral/cache/plib_cache_pic32mz.S</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="clk" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_sk/peripheral/clk/plib_clk.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f1" displayName="coretimer" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_sk/peripheral/coretimer/plib_coretimer.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f5" displayName="evic" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_sk/peripheral/evic/plib_evic.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="gpio" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_sk/peripheral/gpio/plib_gpio.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder displayName="system" name="f4" projectFiles="true">
-            <logicalFolder displayName="fs" name="f1" projectFiles="true">
-              <logicalFolder displayName="fat_fs" name="f1" projectFiles="true">
-                <logicalFolder displayName="file_system" name="f1" projectFiles="true">
+          <logicalFolder name="f5" displayName="stdio" projectFiles="true">
+            <itemPath>../src/config/pic32mz_ef_sk/stdio/xc32_monitor.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f4" displayName="system" projectFiles="true">
+            <logicalFolder name="f3" displayName="cache" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_sk/system/cache/sys_cache.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f1" displayName="fs" projectFiles="true">
+              <logicalFolder name="f1" displayName="fat_fs" projectFiles="true">
+                <logicalFolder name="f1" displayName="file_system" projectFiles="true">
                   <itemPath>../src/config/pic32mz_ef_sk/system/fs/fat_fs/file_system/ff.c</itemPath>
                   <itemPath>../src/config/pic32mz_ef_sk/system/fs/fat_fs/file_system/ffunicode.c</itemPath>
                 </logicalFolder>
-                <logicalFolder displayName="hardware_access" name="f2" projectFiles="true">
+                <logicalFolder name="f2" displayName="hardware_access" projectFiles="true">
                   <itemPath>../src/config/pic32mz_ef_sk/system/fs/fat_fs/hardware_access/diskio.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
@@ -206,21 +218,20 @@
               <itemPath>../src/config/pic32mz_ef_sk/system/fs/src/sys_fs_media_manager.c</itemPath>
               <itemPath>../src/config/pic32mz_ef_sk/system/fs/src/sys_fs_fat_interface.c</itemPath>
             </logicalFolder>
-            <logicalFolder displayName="int" name="f2" projectFiles="true">
+            <logicalFolder name="f2" displayName="int" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_sk/system/int/src/sys_int.c</itemPath>
             </logicalFolder>
-            <logicalFolder displayName="cache" name="f3" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_sk/system/cache/sys_cache.c</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="time" name="f4" projectFiles="true">
+            <logicalFolder name="f4" displayName="time" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_sk/system/time/src/sys_time.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder displayName="stdio" name="f5" projectFiles="true">
-            <itemPath>../src/config/pic32mz_ef_sk/stdio/xc32_monitor.c</itemPath>
-          </logicalFolder>
-          <logicalFolder displayName="bsp" name="f6" projectFiles="true">
-            <itemPath>../src/config/pic32mz_ef_sk/bsp/bsp.c</itemPath>
+          <logicalFolder name="f3" displayName="usb" projectFiles="true">
+            <logicalFolder name="f1" displayName="src" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_sk/usb/src/usb_host.c</itemPath>
+              <itemPath>../src/config/pic32mz_ef_sk/usb/src/usb_host_hub.c</itemPath>
+              <itemPath>../src/config/pic32mz_ef_sk/usb/src/usb_host_msd.c</itemPath>
+              <itemPath>../src/config/pic32mz_ef_sk/usb/src/usb_host_scsi.c</itemPath>
+            </logicalFolder>
           </logicalFolder>
           <itemPath>../src/config/pic32mz_ef_sk/usb_host_init_data.c</itemPath>
           <itemPath>../src/config/pic32mz_ef_sk/initialization.c</itemPath>
@@ -242,8 +253,8 @@
       <toolsSet>
         <developmentServer>localhost</developmentServer>
         <targetDevice>PIC32MZ2048EFH144</targetDevice>
-        <targetHeader/>
-        <targetPluginBoard/>
+        <targetHeader></targetHeader>
+        <targetPluginBoard></targetPluginBoard>
         <platformTool>PKOBSKDEPlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.41</languageToolchainVersion>
@@ -264,16 +275,16 @@
         <loading>
           <useAlternateLoadableFile>false</useAlternateLoadableFile>
           <parseOnProdLoad>false</parseOnProdLoad>
-          <alternateLoadableFile/>
+          <alternateLoadableFile></alternateLoadableFile>
         </loading>
         <subordinates>
         </subordinates>
       </compileType>
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
-        <makeCustomizationPreStep/>
+        <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
-        <makeCustomizationPostStep/>
+        <makeCustomizationPostStep></makeCustomizationPostStep>
         <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
@@ -286,7 +297,8 @@
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value="../src/config/pic32mz_ef_sk/system/fs/fat_fs/file_system;../src/config/pic32mz_ef_sk/system/fs/fat_fs/hardware_access;../src;../src/config/pic32mz_ef_sk;../src/packs/PIC32MZ2048EFH144_DFP"/>
+        <property key="extra-include-directories"
+                  value="../src;../src/config/pic32mz_ef_sk;../src/packs/PIC32MZ2048EFH144_DFP;;../src/config/pic32mz_ef_sk/system/fs/fat_fs/file_system;../src/config/pic32mz_ef_sk/system/fs/fat_fs/hardware_access"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -381,7 +393,8 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exceptions" value="true"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value=""/>
+        <property key="extra-include-directories"
+                  value="../src;../src/config/pic32mz_ef_sk;../src/packs/PIC32MZ2048EFH144_DFP;;../src/config/pic32mz_ef_sk/system/fs/fat_fs/file_system;../src/config/pic32mz_ef_sk/system/fs/fat_fs/hardware_access"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -442,7 +455,8 @@
         <property key="TIMER3" value="true"/>
         <property key="TIMER4" value="true"/>
         <property key="TIMER5" value="true"/>
-        <property key="ToolFirmwareFilePath" value="Press to browse for a specific firmware version"/>
+        <property key="ToolFirmwareFilePath"
+                  value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
         <property key="UART1" value="true"/>
         <property key="UART2" value="true"/>
@@ -474,7 +488,8 @@
       <PKOBSKDEPlatformTool>
         <property key="AutoSelectMemRanges" value="auto"/>
         <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>
-        <property key="ToolFirmwareFilePath" value="Press to browse for a specific firmware version"/>
+        <property key="ToolFirmwareFilePath"
+                  value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
         <property key="memories.configurationmemory" value="true"/>
         <property key="memories.dataflash" value="true"/>
@@ -488,7 +503,8 @@
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges" value=""/>
         <property key="programoptions.preserveeeprom" value="false"/>
-        <property key="programoptions.preserveeeprom.ranges" value="${memories.eedata.default}"/>
+        <property key="programoptions.preserveeeprom.ranges"
+                  value="${memories.eedata.default}"/>
         <property key="programoptions.preserveprogram.ranges" value=""/>
         <property key="programoptions.preserveprogramrange" value="false"/>
         <property key="programoptions.usehighvoltageonmclr" value="false"/>
