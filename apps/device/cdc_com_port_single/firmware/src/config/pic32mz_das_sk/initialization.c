@@ -77,7 +77,7 @@
 /*** DEVCFG1 ***/
 #pragma config FNOSC =      SPLL
 #pragma config DMTINTV =    WIN_127_128
-#pragma config FSOSCEN =    ON
+#pragma config FSOSCEN =    OFF
 #pragma config IESO =       ON
 #pragma config POSCMOD =    EC
 #pragma config OSCIOFNC =   OFF
@@ -183,25 +183,6 @@ const DRV_USBHS_INIT drvUSBInit =
 // Section: System Initialization
 // *****************************************************************************
 // *****************************************************************************
-// <editor-fold defaultstate="collapsed" desc="SYS_TIME Initialization Data">
-
-const SYS_TIME_PLIB_INTERFACE sysTimePlibAPI = {
-    .timerCallbackSet = (SYS_TIME_PLIB_CALLBACK_REGISTER)CORETIMER_CallbackSet,
-    .timerStart = (SYS_TIME_PLIB_START)CORETIMER_Start,
-    .timerStop = (SYS_TIME_PLIB_STOP)CORETIMER_Stop ,
-    .timerFrequencyGet = (SYS_TIME_PLIB_FREQUENCY_GET)CORETIMER_FrequencyGet,
-    .timerPeriodSet = (SYS_TIME_PLIB_PERIOD_SET)NULL,
-    .timerCompareSet = (SYS_TIME_PLIB_COMPARE_SET)CORETIMER_CompareSet,
-    .timerCounterGet = (SYS_TIME_PLIB_COUNTER_GET)CORETIMER_CounterGet,
-};
-
-const SYS_TIME_INIT sysTimeInitData =
-{
-    .timePlib = &sysTimePlibAPI,
-    .hwTimerIntNum = 0,
-};
-
-// </editor-fold>
 
 
 
@@ -240,11 +221,9 @@ void SYS_Initialize ( void* data )
 
 	GPIO_Initialize();
 
-    CORETIMER_Initialize();
 	BSP_Initialize();
 
 
-    sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);
 
 	/* Initialize USB Driver */ 
     sysObj.drvUSBHSObject = DRV_USBHS_Initialize(DRV_USBHS_INDEX_0, (SYS_MODULE_INIT *) &drvUSBInit);	

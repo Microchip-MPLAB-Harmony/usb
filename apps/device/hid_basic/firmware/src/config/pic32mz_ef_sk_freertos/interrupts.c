@@ -59,18 +59,12 @@
 // *****************************************************************************
 
 
-void CORE_TIMER_InterruptHandler( void );
 void DRV_USBHS_InterruptHandler( void );
 void DRV_USBHS_DMAInterruptHandler( void );
 
 
 
 /* All the handlers are defined here.  Each will call its PLIB-specific function. */
-
-void CORE_TIMER_Handler (void)
-{
-    CORE_TIMER_InterruptHandler();
-}
 
 
 

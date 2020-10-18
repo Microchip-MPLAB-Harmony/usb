@@ -52,24 +52,6 @@
 #include <xc.h>
 #include "ISR_Support.h"
 
-    .extern  CORE_TIMER_Handler
-
-    .section   .vector_0,code, keep
-    .equ     __vector_dispatch_0, IntVectorCORE_TIMER_Handler
-    .global  __vector_dispatch_0
-    .set     nomicromips
-    .set     noreorder
-    .set     nomips16
-    .set     noat
-    .ent  IntVectorCORE_TIMER_Handler
-
-IntVectorCORE_TIMER_Handler:
-    portSAVE_CONTEXT
-    la    s6,  CORE_TIMER_Handler
-    jalr  s6
-    nop
-    portRESTORE_CONTEXT
-    .end   IntVectorCORE_TIMER_Handler
     .extern  USB_Handler
 
     .section   .vector_132,code, keep

@@ -59,7 +59,6 @@
 // *****************************************************************************
 
 
-void CORE_TIMER_InterruptHandler( void );
 void DRV_USBHS_InterruptHandler( void );
 void DRV_USBHS_DMAInterruptHandler( void );
 void NVM_InterruptHandler( void );
@@ -67,10 +66,6 @@ void NVM_InterruptHandler( void );
 
 
 /* All the handlers are defined here.  Each will call its PLIB-specific function. */
-void CORE_TIMER_Handler (void)
-{
-    CORE_TIMER_InterruptHandler();
-}
 
 
 
@@ -88,7 +83,6 @@ void FLASH_CONTROL_Handler (void)
 {
     NVM_InterruptHandler();
 }
-
 
 
 

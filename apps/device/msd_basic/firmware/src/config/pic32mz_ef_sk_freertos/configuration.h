@@ -79,15 +79,6 @@ extern "C" {
 // Section: System Service Configuration
 // *****************************************************************************
 // *****************************************************************************
-/* TIME System Service Configuration Options */
-#define SYS_TIME_INDEX_0                     0
-#define SYS_TIME_MAX_TIMERS                  5
-#define SYS_TIME_HW_COUNTER_WIDTH            32
-#define SYS_TIME_HW_COUNTER_PERIOD           4294967295U
-#define SYS_TIME_HW_COUNTER_HALF_PERIOD	     (SYS_TIME_HW_COUNTER_PERIOD>>1)
-#define SYS_TIME_CPU_CLOCK_FREQUENCY         200000000
-#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (620)
-
 
 
 // *****************************************************************************
@@ -95,8 +86,6 @@ extern "C" {
 // Section: Driver Configuration
 // *****************************************************************************
 // *****************************************************************************
-/* Memory Driver Global Configuration Options */
-#define DRV_MEMORY_INSTANCES_NUMBER          1
 
 /* Memory Driver Instance 0 Configuration */
 #define DRV_MEMORY_INDEX_0                   0
@@ -112,6 +101,8 @@ extern "C" {
 #define DRV_MEMORY_PRIORITY_IDX0             1
 #define DRV_MEMORY_RTOS_DELAY_IDX0                         10
 
+/* Memory Driver Global Configuration Options */
+#define DRV_MEMORY_INSTANCES_NUMBER          1
 
 
 // *****************************************************************************
@@ -119,23 +110,6 @@ extern "C" {
 // Section: Middleware & Other Library Configuration
 // *****************************************************************************
 // *****************************************************************************
-/* Number of Endpoints used */
-#define DRV_USBHS_ENDPOINTS_NUMBER                        3
-
-/* The USB Device Layer will not initialize the USB Driver */
-#define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT
-
-/* Maximum device layer instances */
-#define USB_DEVICE_INSTANCES_NUMBER                         1
-
-/* EP0 size in bytes */
-#define USB_DEVICE_EP0_BUFFER_SIZE                          64
-
-
-
-
-
-
 /*** USB Driver Configuration ***/
 
 /* Maximum USB driver instances */
@@ -165,6 +139,23 @@ extern "C" {
 
 /* Number of Logical Units */
 #define USB_DEVICE_MSD_LUNS_NUMBER      1
+
+
+
+/* Number of Endpoints used */
+#define DRV_USBHS_ENDPOINTS_NUMBER                        3
+
+/* The USB Device Layer will not initialize the USB Driver */
+#define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT
+
+/* Maximum device layer instances */
+#define USB_DEVICE_INSTANCES_NUMBER                         1
+
+/* EP0 size in bytes */
+#define USB_DEVICE_EP0_BUFFER_SIZE                          64
+
+
+
 
 
 

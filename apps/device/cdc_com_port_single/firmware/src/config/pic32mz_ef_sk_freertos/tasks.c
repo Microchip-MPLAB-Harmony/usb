@@ -83,7 +83,7 @@ void _USB_DEVICE_Tasks(  void *pvParameters  )
 TaskHandle_t xAPP_FREERTOS_Tasks;
 
 void _APP_FREERTOS_Tasks(  void *pvParameters  )
-{
+{   
     while(1)
     {
         APP_FREERTOS_Tasks();

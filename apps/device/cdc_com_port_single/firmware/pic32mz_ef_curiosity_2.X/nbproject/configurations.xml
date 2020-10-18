@@ -1,28 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="65">
-  <logicalFolder displayName="root" name="root" projectFiles="true">
-    <logicalFolder displayName="Header Files" name="HeaderFiles" projectFiles="true">
-      <logicalFolder displayName="config" name="f1" projectFiles="true">
-        <logicalFolder displayName="pic32mz_ef_curiosity_2" name="f1" projectFiles="true">
-          <logicalFolder displayName="peripheral" name="f1" projectFiles="true">
-            <logicalFolder displayName="coretimer" name="f1" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_curiosity_2/peripheral/coretimer/plib_coretimer.h</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="clk" name="f2" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_curiosity_2/peripheral/clk/plib_clk.h</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="gpio" name="f3" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_curiosity_2/peripheral/gpio/plib_gpio.h</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="evic" name="f4" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_curiosity_2/peripheral/evic/plib_evic.h</itemPath>
-            </logicalFolder>
+  <logicalFolder name="root" displayName="root" projectFiles="true">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
+        <logicalFolder name="f1"
+                       displayName="pic32mz_ef_curiosity_2"
+                       projectFiles="true">
+          <logicalFolder name="f4" displayName="bsp" projectFiles="true">
+            <itemPath>../src/config/pic32mz_ef_curiosity_2/bsp/bsp.h</itemPath>
           </logicalFolder>
-          <logicalFolder displayName="driver" name="f2" projectFiles="true">
-            <logicalFolder displayName="usb" name="f1" projectFiles="true">
-              <logicalFolder displayName="usbhs" name="f1" projectFiles="true">
-                <logicalFolder displayName="src" name="f1" projectFiles="true">
-                  <logicalFolder displayName="templates" name="f1" projectFiles="true">
+          <logicalFolder name="f1" displayName="driver" projectFiles="true">
+            <logicalFolder name="f1" displayName="usb" projectFiles="true">
+              <logicalFolder name="f1" displayName="usbhs" projectFiles="true">
+                <logicalFolder name="f1" displayName="src" projectFiles="true">
+                  <logicalFolder name="f1" displayName="templates" projectFiles="true">
                     <itemPath>../src/config/pic32mz_ef_curiosity_2/driver/usb/usbhs/src/templates/usbhs_registers.h</itemPath>
                     <itemPath>../src/config/pic32mz_ef_curiosity_2/driver/usb/usbhs/src/templates/usbhs_ClockResetControl_Default.h</itemPath>
                     <itemPath>../src/config/pic32mz_ef_curiosity_2/driver/usb/usbhs/src/templates/usbhs_ClockResetControl_Unsupported.h</itemPath>
@@ -61,8 +54,30 @@
             <itemPath>../src/config/pic32mz_ef_curiosity_2/driver/driver.h</itemPath>
             <itemPath>../src/config/pic32mz_ef_curiosity_2/driver/driver_common.h</itemPath>
           </logicalFolder>
-          <logicalFolder displayName="usb" name="f3" projectFiles="true">
-            <logicalFolder displayName="src" name="f1" projectFiles="true">
+          <logicalFolder name="f6" displayName="osal" projectFiles="true">
+            <itemPath>../src/config/pic32mz_ef_curiosity_2/osal/osal.h</itemPath>
+            <itemPath>../src/config/pic32mz_ef_curiosity_2/osal/osal_definitions.h</itemPath>
+            <itemPath>../src/config/pic32mz_ef_curiosity_2/osal/osal_impl_basic.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f3" displayName="peripheral" projectFiles="true">
+            <logicalFolder name="f1" displayName="clk" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_curiosity_2/peripheral/clk/plib_clk.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="evic" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_curiosity_2/peripheral/evic/plib_evic.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="gpio" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_curiosity_2/peripheral/gpio/plib_gpio.h</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f5" displayName="system" projectFiles="true">
+            <logicalFolder name="f1" displayName="int" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_curiosity_2/system/int/sys_int.h</itemPath>
+              <itemPath>../src/config/pic32mz_ef_curiosity_2/system/int/sys_int_mapping.h</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f2" displayName="usb" projectFiles="true">
+            <logicalFolder name="f1" displayName="src" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_curiosity_2/usb/src/usb_device_local.h</itemPath>
               <itemPath>../src/config/pic32mz_ef_curiosity_2/usb/src/usb_device_mapping.h</itemPath>
               <itemPath>../src/config/pic32mz_ef_curiosity_2/usb/src/usb_device_function_driver.h</itemPath>
@@ -79,96 +94,78 @@
             <itemPath>../src/config/pic32mz_ef_curiosity_2/usb/usb_device_cdc.h</itemPath>
             <itemPath>../src/config/pic32mz_ef_curiosity_2/usb/usb_cdc.h</itemPath>
           </logicalFolder>
-          <logicalFolder displayName="bsp" name="f4" projectFiles="true">
-            <itemPath>../src/config/pic32mz_ef_curiosity_2/bsp/bsp.h</itemPath>
-          </logicalFolder>
-          <logicalFolder displayName="system" name="f5" projectFiles="true">
-            <logicalFolder displayName="int" name="f1" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_curiosity_2/system/int/sys_int.h</itemPath>
-              <itemPath>../src/config/pic32mz_ef_curiosity_2/system/int/sys_int_mapping.h</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="debug" name="f2" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_curiosity_2/system/debug/sys_debug.h</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="time" name="f3" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_curiosity_2/system/time/sys_time.h</itemPath>
-              <itemPath>../src/config/pic32mz_ef_curiosity_2/system/time/sys_time_definitions.h</itemPath>
-              <itemPath>../src/config/pic32mz_ef_curiosity_2/system/time/src/sys_time_local.h</itemPath>
-            </logicalFolder>
-            <itemPath>../src/config/pic32mz_ef_curiosity_2/system/system.h</itemPath>
-            <itemPath>../src/config/pic32mz_ef_curiosity_2/system/system_common.h</itemPath>
-            <itemPath>../src/config/pic32mz_ef_curiosity_2/system/system_module.h</itemPath>
-          </logicalFolder>
           <itemPath>../src/config/pic32mz_ef_curiosity_2/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/pic32mz_ef_curiosity_2/definitions.h</itemPath>
+          <itemPath>../src/config/pic32mz_ef_curiosity_2/device.h</itemPath>
           <itemPath>../src/config/pic32mz_ef_curiosity_2/user.h</itemPath>
           <itemPath>../src/config/pic32mz_ef_curiosity_2/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder displayName="packs" name="f2" projectFiles="true">
-        <logicalFolder displayName="PIC32MZ2048EFM144_DFP" name="f1" projectFiles="true">
-          <itemPath>../src/packs/PIC32MZ2048EFM144_DFP/device.h</itemPath>
-        </logicalFolder>
-      </logicalFolder>
-      <logicalFolder displayName="osal" name="f3" projectFiles="true">
-        <itemPath>../src/config/pic32mz_ef_curiosity_2/osal/osal.h</itemPath>
-        <itemPath>../src/config/pic32mz_ef_curiosity_2/osal/osal_definitions.h</itemPath>
-        <itemPath>../src/config/pic32mz_ef_curiosity_2/osal/osal_impl_basic.h</itemPath>
-      </logicalFolder>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
-    <logicalFolder displayName="Important Files" name="ExternalFiles" projectFiles="true">
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="true">
       <itemPath>Makefile</itemPath>
       <itemPath>../src/config/pic32mz_ef_curiosity_2/harmony.prj</itemPath>
       <itemPath>../src/config/pic32mz_ef_curiosity_2/pic32mz_ef_curiosity_2.xml</itemPath>
+      <itemPath>../src/config/pic32mz_ef_curiosity_2/harmony-manifest-success.yml</itemPath>
     </logicalFolder>
-    <logicalFolder displayName="Linker Files" name="LinkerScript" projectFiles="true"/>
-    <logicalFolder displayName="Source Files" name="SourceFiles" projectFiles="true">
-      <logicalFolder displayName="config" name="f1" projectFiles="true">
-        <logicalFolder displayName="pic32mz_ef_curiosity_2" name="f1" projectFiles="true">
-          <logicalFolder displayName="peripheral" name="f1" projectFiles="true">
-            <logicalFolder displayName="coretimer" name="f1" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_curiosity_2/peripheral/coretimer/plib_coretimer.c</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="clk" name="f2" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_curiosity_2/peripheral/clk/plib_clk.c</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="gpio" name="f3" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_curiosity_2/peripheral/gpio/plib_gpio.c</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="evic" name="f4" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_curiosity_2/peripheral/evic/plib_evic.c</itemPath>
-            </logicalFolder>
+    <logicalFolder name="LinkerScript"
+                   displayName="Linker Files"
+                   projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
+        <logicalFolder name="f1"
+                       displayName="pic32mz_ef_curiosity_2"
+                       projectFiles="true">
+          <itemPath>../src/config/pic32mz_ef_curiosity_2/p32MZ2048EFM144.ld</itemPath>
+        </logicalFolder>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
+        <logicalFolder name="f1"
+                       displayName="pic32mz_ef_curiosity_2"
+                       projectFiles="true">
+          <logicalFolder name="f5" displayName="bsp" projectFiles="true">
+            <itemPath>../src/config/pic32mz_ef_curiosity_2/bsp/bsp.c</itemPath>
           </logicalFolder>
-          <logicalFolder displayName="driver" name="f2" projectFiles="true">
-            <logicalFolder displayName="usb" name="f1" projectFiles="true">
-              <logicalFolder displayName="usbhs" name="f1" projectFiles="true">
-                <logicalFolder displayName="src" name="f1" projectFiles="true">
+          <logicalFolder name="f1" displayName="driver" projectFiles="true">
+            <logicalFolder name="f1" displayName="usb" projectFiles="true">
+              <logicalFolder name="f1" displayName="usbhs" projectFiles="true">
+                <logicalFolder name="f1" displayName="src" projectFiles="true">
                   <itemPath>../src/config/pic32mz_ef_curiosity_2/driver/usb/usbhs/src/drv_usbhs.c</itemPath>
                   <itemPath>../src/config/pic32mz_ef_curiosity_2/driver/usb/usbhs/src/drv_usbhs_device.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder displayName="stdio" name="f3" projectFiles="true">
+          <logicalFolder name="f3" displayName="peripheral" projectFiles="true">
+            <logicalFolder name="f1" displayName="clk" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_curiosity_2/peripheral/clk/plib_clk.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f3" displayName="evic" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_curiosity_2/peripheral/evic/plib_evic.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="gpio" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_curiosity_2/peripheral/gpio/plib_gpio.c</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f2" displayName="stdio" projectFiles="true">
             <itemPath>../src/config/pic32mz_ef_curiosity_2/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
-          <logicalFolder displayName="usb" name="f4" projectFiles="true">
-            <logicalFolder displayName="src" name="f1" projectFiles="true">
+          <logicalFolder name="f6" displayName="system" projectFiles="true">
+            <logicalFolder name="f1" displayName="int" projectFiles="true">
+              <itemPath>../src/config/pic32mz_ef_curiosity_2/system/int/src/sys_int.c</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f4" displayName="usb" projectFiles="true">
+            <logicalFolder name="f1" displayName="src" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_curiosity_2/usb/src/usb_device.c</itemPath>
               <itemPath>../src/config/pic32mz_ef_curiosity_2/usb/src/usb_device_cdc.c</itemPath>
               <itemPath>../src/config/pic32mz_ef_curiosity_2/usb/src/usb_device_cdc_acm.c</itemPath>
-            </logicalFolder>
-          </logicalFolder>
-          <logicalFolder displayName="bsp" name="f5" projectFiles="true">
-            <itemPath>../src/config/pic32mz_ef_curiosity_2/bsp/bsp.c</itemPath>
-          </logicalFolder>
-          <logicalFolder displayName="system" name="f6" projectFiles="true">
-            <logicalFolder displayName="int" name="f1" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_curiosity_2/system/int/src/sys_int.c</itemPath>
-            </logicalFolder>
-            <logicalFolder displayName="time" name="f2" projectFiles="true">
-              <itemPath>../src/config/pic32mz_ef_curiosity_2/system/time/src/sys_time.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <itemPath>../src/config/pic32mz_ef_curiosity_2/initialization.c</itemPath>
@@ -191,9 +188,9 @@
       <toolsSet>
         <developmentServer>localhost</developmentServer>
         <targetDevice>PIC32MZ2048EFM144</targetDevice>
-        <targetHeader/>
-        <targetPluginBoard/>
-        <platformTool/>
+        <targetHeader></targetHeader>
+        <targetPluginBoard></targetPluginBoard>
+        <platformTool></platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.41</languageToolchainVersion>
         <platform>3</platform>
@@ -213,16 +210,16 @@
         <loading>
           <useAlternateLoadableFile>false</useAlternateLoadableFile>
           <parseOnProdLoad>false</parseOnProdLoad>
-          <alternateLoadableFile/>
+          <alternateLoadableFile></alternateLoadableFile>
         </loading>
         <subordinates>
         </subordinates>
       </compileType>
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
-        <makeCustomizationPreStep/>
+        <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
-        <makeCustomizationPostStep/>
+        <makeCustomizationPostStep></makeCustomizationPostStep>
         <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
@@ -235,7 +232,8 @@
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value="../src;../src/config/pic32mz_ef_curiosity_2;../src/packs/PIC32MZ2048EFM144_DFP"/>
+        <property key="extra-include-directories"
+                  value="../src;../src/config/pic32mz_ef_curiosity_2;../src/packs/PIC32MZ2048EFM144_DFP;"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -330,7 +328,8 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exceptions" value="true"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value=""/>
+        <property key="extra-include-directories"
+                  value="../src;../src/config/pic32mz_ef_curiosity_2;../src/packs/PIC32MZ2048EFM144_DFP;"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -425,7 +424,8 @@
         <property key="TIMER7" value="true"/>
         <property key="TIMER8" value="true"/>
         <property key="TIMER9" value="true"/>
-        <property key="ToolFirmwareFilePath" value="Press to browse for a specific firmware version"/>
+        <property key="ToolFirmwareFilePath"
+                  value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
         <property key="UART1" value="true"/>
         <property key="UART2" value="true"/>
@@ -444,7 +444,8 @@
         <property key="memories.flashdata" value="true"/>
         <property key="memories.id" value="true"/>
         <property key="memories.instruction.ram" value="true"/>
-        <property key="memories.instruction.ram.ranges" value="${memories.instruction.ram.ranges}"/>
+        <property key="memories.instruction.ram.ranges"
+                  value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="1d000000-1d003fff"/>
         <property key="poweroptions.powerenable" value="false"/>
@@ -453,7 +454,8 @@
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.pgmspeed" value="2"/>
         <property key="programoptions.preservedataflash" value="false"/>
-        <property key="programoptions.preservedataflash.ranges" value="${programoptions.preservedataflash.ranges}"/>
+        <property key="programoptions.preservedataflash.ranges"
+                  value="${programoptions.preservedataflash.ranges}"/>
         <property key="programoptions.preserveeeprom" value="false"/>
         <property key="programoptions.preserveeeprom.ranges" value=""/>
         <property key="programoptions.preserveprogram.ranges" value=""/>
@@ -530,9 +532,12 @@
         <property key="TIMER7" value="true"/>
         <property key="TIMER8" value="true"/>
         <property key="TIMER9" value="true"/>
-        <property key="ToolFirmwareFilePath" value="Press to browse for a specific firmware version"/>
-        <property key="ToolFirmwareOption.UpdateOptions" value="ToolFirmwareOption.UseLatest"/>
-        <property key="ToolFirmwareToolPack" value="Press to select which tool pack to use"/>
+        <property key="ToolFirmwareFilePath"
+                  value="Press to browse for a specific firmware version"/>
+        <property key="ToolFirmwareOption.UpdateOptions"
+                  value="ToolFirmwareOption.UseLatest"/>
+        <property key="ToolFirmwareToolPack"
+                  value="Press to select which tool pack to use"/>
         <property key="UART1" value="true"/>
         <property key="UART2" value="true"/>
         <property key="UART3" value="true"/>
@@ -552,7 +557,8 @@
         <property key="memories.exclude.configurationmemory" value="true"/>
         <property key="memories.flashdata" value="true"/>
         <property key="memories.id" value="true"/>
-        <property key="memories.instruction.ram.ranges" value="${memories.instruction.ram.ranges}"/>
+        <property key="memories.instruction.ram.ranges"
+                  value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="1d000000-1d1fffff"/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
@@ -560,7 +566,8 @@
         <property key="programoptions.pgmentry.voltage" value="low"/>
         <property key="programoptions.pgmspeed" value="Min"/>
         <property key="programoptions.preservedataflash" value="false"/>
-        <property key="programoptions.preservedataflash.ranges" value="${memories.dataflash.default}"/>
+        <property key="programoptions.preservedataflash.ranges"
+                  value="${memories.dataflash.default}"/>
         <property key="programoptions.preserveeeprom" value="false"/>
         <property key="programoptions.preserveeeprom.ranges" value=""/>
         <property key="programoptions.preserveprogram.ranges" value="1d000000-1d1fffff"/>
@@ -570,8 +577,10 @@
         <property key="programoptions.programuserotp" value="false"/>
         <property key="programoptions.testmodeentrymethod" value="VDDFirst"/>
         <property key="programoptionsedbg.eraseb4program" value="true"/>
-        <property key="toolpack.updateoptions" value="toolpack.updateoptions.uselatestoolpack"/>
-        <property key="toolpack.updateoptions.packversion" value="Press to select which tool pack to use"/>
+        <property key="toolpack.updateoptions"
+                  value="toolpack.updateoptions.uselatestoolpack"/>
+        <property key="toolpack.updateoptions.packversion"
+                  value="Press to select which tool pack to use"/>
       </pkob4hybrid>
     </conf>
   </confs>

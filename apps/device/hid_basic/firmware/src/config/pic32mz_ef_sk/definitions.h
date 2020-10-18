@@ -48,7 +48,6 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "peripheral/coretimer/plib_coretimer.h"
 #include "driver/usb/usbhs/drv_usbhs.h"
 #include "usb/usb_device_hid.h"
 #include "usb/usb_hid.h"
@@ -61,7 +60,6 @@
 #include "system/int/sys_int.h"
 #include "osal/osal.h"
 #include "system/debug/sys_debug.h"
-#include "system/time/sys_time.h"
 #include "app.h"
 
 
@@ -188,7 +186,6 @@ typedef struct
 
 	SYS_MODULE_OBJ  usbDevObject0;
 
-    SYS_MODULE_OBJ  sysTime;
 
 } SYSTEM_OBJECTS;
 

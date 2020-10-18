@@ -49,8 +49,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">322976BB28859B437B0D6D3B8E2AFE42</GeneratedChecksum>
-          <UserChecksum dnOrder="6">322976BB28859B437B0D6D3B8E2AFE42</UserChecksum>
+          <GeneratedChecksum dnOrder="5">4238740A6A08738E296E6139E26E53D8</GeneratedChecksum>
+          <UserChecksum dnOrder="6">4238740A6A08738E296E6139E26E53D8</UserChecksum>
         </File>
         <File dnOrder="5">
           <Type dnOrder="0">SOURCE</Type>
@@ -58,8 +58,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">8DE64D42F1CBD0D752F60CBCCE2E7725</GeneratedChecksum>
-          <UserChecksum dnOrder="6">8DE64D42F1CBD0D752F60CBCCE2E7725</UserChecksum>
+          <GeneratedChecksum dnOrder="5">DAEFDFEB88CB0AD9796045B8926144D4</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DAEFDFEB88CB0AD9796045B8926144D4</UserChecksum>
         </File>
         <File dnOrder="6">
           <Type dnOrder="0">SOURCE</Type>
@@ -67,8 +67,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">45C4619D42A559F641741E64498EA648</GeneratedChecksum>
-          <UserChecksum dnOrder="6">45C4619D42A559F641741E64498EA648</UserChecksum>
+          <GeneratedChecksum dnOrder="5">4ED3C94B5D2887169BEBCE7BB700A9F7</GeneratedChecksum>
+          <UserChecksum dnOrder="6">4ED3C94B5D2887169BEBCE7BB700A9F7</UserChecksum>
         </File>
         <File dnOrder="7">
           <Type dnOrder="0">SOURCE</Type>
@@ -85,28 +85,19 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/peripheral/clk/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/clk/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">793483C2A1B8AC180BF233F8EC8B0A96</GeneratedChecksum>
-          <UserChecksum dnOrder="6">793483C2A1B8AC180BF233F8EC8B0A96</UserChecksum>
+          <GeneratedChecksum dnOrder="5">DC56120333D3B0CEEB6A6B9697B3EF87</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DC56120333D3B0CEEB6A6B9697B3EF87</UserChecksum>
         </File>
         <File dnOrder="9">
-          <Type dnOrder="0">SOURCE</Type>
-          <Name dnOrder="1">plib_coretimer.c</Name>
-          <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">config/pic32mz_ef_sk/peripheral/coretimer/</LogicalPath>
-          <PhysicalPath dnOrder="4">/peripheral/coretimer/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">2FEFEA0D4E94F5A5F3D76BAEC3D602E5</GeneratedChecksum>
-          <UserChecksum dnOrder="6">2FEFEA0D4E94F5A5F3D76BAEC3D602E5</UserChecksum>
-        </File>
-        <File dnOrder="10">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_evic.c</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/peripheral/evic/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/evic/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">E5351813784ABBE7F8CEABD4E3A0CB21</GeneratedChecksum>
-          <UserChecksum dnOrder="6">E5351813784ABBE7F8CEABD4E3A0CB21</UserChecksum>
+          <GeneratedChecksum dnOrder="5">0ADF18AD53BF6B9824D06AA25803E0AB</GeneratedChecksum>
+          <UserChecksum dnOrder="6">0ADF18AD53BF6B9824D06AA25803E0AB</UserChecksum>
         </File>
-        <File dnOrder="11">
+        <File dnOrder="10">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">plib_gpio.c</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -115,7 +106,7 @@
           <GeneratedChecksum dnOrder="5">6869DFE3BCB68A0ED8A2AAF6F6A77A78</GeneratedChecksum>
           <UserChecksum dnOrder="6">6869DFE3BCB68A0ED8A2AAF6F6A77A78</UserChecksum>
         </File>
-        <File dnOrder="12">
+        <File dnOrder="11">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">sys_int.c</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -124,16 +115,7 @@
           <GeneratedChecksum dnOrder="5">640A4B35B8CDB53BD8EA5077D81386BE</GeneratedChecksum>
           <UserChecksum dnOrder="6">640A4B35B8CDB53BD8EA5077D81386BE</UserChecksum>
         </File>
-        <File dnOrder="13">
-          <Type dnOrder="0">SOURCE</Type>
-          <Name dnOrder="1">sys_time.c</Name>
-          <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">config/pic32mz_ef_sk/system/time/</LogicalPath>
-          <PhysicalPath dnOrder="4">/system/time/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">40A99C84F50EB7DFAA579B8675F140DD</GeneratedChecksum>
-          <UserChecksum dnOrder="6">40A99C84F50EB7DFAA579B8675F140DD</UserChecksum>
-        </File>
-        <File dnOrder="14">
+        <File dnOrder="12">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">tasks.c</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -142,7 +124,7 @@
           <GeneratedChecksum dnOrder="5">A45FCCC37B1DA296971694112DDE881D</GeneratedChecksum>
           <UserChecksum dnOrder="6">A45FCCC37B1DA296971694112DDE881D</UserChecksum>
         </File>
-        <File dnOrder="15">
+        <File dnOrder="13">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">usb_device.c</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -151,7 +133,7 @@
           <GeneratedChecksum dnOrder="5">BCCEF5B801FFD0CF22D0B454D2F25F1F</GeneratedChecksum>
           <UserChecksum dnOrder="6">BCCEF5B801FFD0CF22D0B454D2F25F1F</UserChecksum>
         </File>
-        <File dnOrder="16">
+        <File dnOrder="14">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">usb_device_hid.c</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -160,7 +142,7 @@
           <GeneratedChecksum dnOrder="5">B8D87B6533E2CE239E9EEB8486DF6996</GeneratedChecksum>
           <UserChecksum dnOrder="6">B8D87B6533E2CE239E9EEB8486DF6996</UserChecksum>
         </File>
-        <File dnOrder="17">
+        <File dnOrder="15">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">usb_device_init_data.c</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -169,16 +151,16 @@
           <GeneratedChecksum dnOrder="5">2DEFBD55B42F89B07B5A506E2EC645FD</GeneratedChecksum>
           <UserChecksum dnOrder="6">2DEFBD55B42F89B07B5A506E2EC645FD</UserChecksum>
         </File>
-        <File dnOrder="18">
+        <File dnOrder="16">
           <Type dnOrder="0">SOURCE</Type>
           <Name dnOrder="1">xc32_monitor.c</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/stdio/</LogicalPath>
           <PhysicalPath dnOrder="4">/stdio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">A9F55E7CB78F22D9000CA03DC635973C</GeneratedChecksum>
-          <UserChecksum dnOrder="6">A9F55E7CB78F22D9000CA03DC635973C</UserChecksum>
+          <GeneratedChecksum dnOrder="5">16BE5CCEE5F9AF5909BF3F69B51C7D93</GeneratedChecksum>
+          <UserChecksum dnOrder="6">16BE5CCEE5F9AF5909BF3F69B51C7D93</UserChecksum>
         </File>
-        <File dnOrder="19">
+        <File dnOrder="17">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">app.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -187,7 +169,7 @@
           <GeneratedChecksum dnOrder="5"/>
           <UserChecksum dnOrder="6"/>
         </File>
-        <File dnOrder="20">
+        <File dnOrder="18">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">bsp.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -196,34 +178,34 @@
           <GeneratedChecksum dnOrder="5">DBB1CA73E964F26D2DBEE952A61652ED</GeneratedChecksum>
           <UserChecksum dnOrder="6">DBB1CA73E964F26D2DBEE952A61652ED</UserChecksum>
         </File>
-        <File dnOrder="21">
+        <File dnOrder="19">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">configuration.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">4D3C21DD1DAFEC8BB764D7972CECFD15</GeneratedChecksum>
-          <UserChecksum dnOrder="6">4D3C21DD1DAFEC8BB764D7972CECFD15</UserChecksum>
+          <GeneratedChecksum dnOrder="5">EC81BAB12D8FE0C44B13C2B2F768AB2B</GeneratedChecksum>
+          <UserChecksum dnOrder="6">EC81BAB12D8FE0C44B13C2B2F768AB2B</UserChecksum>
         </File>
-        <File dnOrder="22">
+        <File dnOrder="20">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">definitions.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">2060BEF1D8BB447047F53040D9BC9EB2</GeneratedChecksum>
-          <UserChecksum dnOrder="6">2060BEF1D8BB447047F53040D9BC9EB2</UserChecksum>
+          <GeneratedChecksum dnOrder="5">4CAD5CFC8805314B38D86BE2C7B404B1</GeneratedChecksum>
+          <UserChecksum dnOrder="6">4CAD5CFC8805314B38D86BE2C7B404B1</UserChecksum>
         </File>
-        <File dnOrder="23">
+        <File dnOrder="21">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">device.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">packs/PIC32MZ2048EFH144_DFP/</LogicalPath>
-          <PhysicalPath dnOrder="4">/../../packs/PIC32MZ2048EFH144_DFP/</PhysicalPath>
+          <LogicalPath dnOrder="3">config/pic32mz_ef_sk/</LogicalPath>
+          <PhysicalPath dnOrder="4">/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">5D5C52527AB1435153DB9B50ADE6B79D</GeneratedChecksum>
           <UserChecksum dnOrder="6">5D5C52527AB1435153DB9B50ADE6B79D</UserChecksum>
         </File>
-        <File dnOrder="24">
+        <File dnOrder="22">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">driver.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -232,7 +214,7 @@
           <GeneratedChecksum dnOrder="5">1D2094DFA60F847FFD4E8153B6E78027</GeneratedChecksum>
           <UserChecksum dnOrder="6">1D2094DFA60F847FFD4E8153B6E78027</UserChecksum>
         </File>
-        <File dnOrder="25">
+        <File dnOrder="23">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">driver_common.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -241,7 +223,7 @@
           <GeneratedChecksum dnOrder="5">CC7DFCC51CD25171A3E400E18969354F</GeneratedChecksum>
           <UserChecksum dnOrder="6">CC7DFCC51CD25171A3E400E18969354F</UserChecksum>
         </File>
-        <File dnOrder="26">
+        <File dnOrder="24">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_usb.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -250,16 +232,16 @@
           <GeneratedChecksum dnOrder="5">DF147276AE56CA76E3E9BEB8447620AB</GeneratedChecksum>
           <UserChecksum dnOrder="6">DF147276AE56CA76E3E9BEB8447620AB</UserChecksum>
         </File>
-        <File dnOrder="27">
+        <File dnOrder="25">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_usb_external_dependencies.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/driver/usb/</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">520DC1C088A41A16C28DCB58C92BDEC1</GeneratedChecksum>
-          <UserChecksum dnOrder="6">520DC1C088A41A16C28DCB58C92BDEC1</UserChecksum>
+          <GeneratedChecksum dnOrder="5">A8072403A5346EF85CDFD4EF996C0826</GeneratedChecksum>
+          <UserChecksum dnOrder="6">A8072403A5346EF85CDFD4EF996C0826</UserChecksum>
         </File>
-        <File dnOrder="28">
+        <File dnOrder="26">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_usbhs.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -268,16 +250,16 @@
           <GeneratedChecksum dnOrder="5">111CA749DD3C4A12029D163277253BBF</GeneratedChecksum>
           <UserChecksum dnOrder="6">111CA749DD3C4A12029D163277253BBF</UserChecksum>
         </File>
-        <File dnOrder="29">
+        <File dnOrder="27">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_usbhs_local.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/driver/usb/usbhs/src</LogicalPath>
           <PhysicalPath dnOrder="4">/driver/usb/usbhs/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">3B3FD1E40A9CA581FF4D113058B1E46C</GeneratedChecksum>
-          <UserChecksum dnOrder="6">3B3FD1E40A9CA581FF4D113058B1E46C</UserChecksum>
+          <GeneratedChecksum dnOrder="5">97A016945F13D27F39DEEC64F7299DDA</GeneratedChecksum>
+          <UserChecksum dnOrder="6">97A016945F13D27F39DEEC64F7299DDA</UserChecksum>
         </File>
-        <File dnOrder="30">
+        <File dnOrder="28">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">drv_usbhs_variant_mapping.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -286,34 +268,34 @@
           <GeneratedChecksum dnOrder="5">5B375CF6C397852741ACFCAA92674989</GeneratedChecksum>
           <UserChecksum dnOrder="6">5B375CF6C397852741ACFCAA92674989</UserChecksum>
         </File>
-        <File dnOrder="31">
+        <File dnOrder="29">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">/osal/</LogicalPath>
+          <LogicalPath dnOrder="3">config/pic32mz_ef_sk/osal/</LogicalPath>
           <PhysicalPath dnOrder="4">/osal/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">F0AD88762263B7CB89B02AB4F5876059</GeneratedChecksum>
           <UserChecksum dnOrder="6">F0AD88762263B7CB89B02AB4F5876059</UserChecksum>
         </File>
-        <File dnOrder="32">
+        <File dnOrder="30">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal_definitions.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">/osal/</LogicalPath>
+          <LogicalPath dnOrder="3">config/pic32mz_ef_sk/osal/</LogicalPath>
           <PhysicalPath dnOrder="4">/osal/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">0AC88C49E4585B606FD5AC6804F0C340</GeneratedChecksum>
           <UserChecksum dnOrder="6">0AC88C49E4585B606FD5AC6804F0C340</UserChecksum>
         </File>
-        <File dnOrder="33">
+        <File dnOrder="31">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">osal_impl_basic.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">/osal/</LogicalPath>
+          <LogicalPath dnOrder="3">config/pic32mz_ef_sk/osal/</LogicalPath>
           <PhysicalPath dnOrder="4">/osal/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">63FBE37825657165B9EA584BF05DBA43</GeneratedChecksum>
-          <UserChecksum dnOrder="6">63FBE37825657165B9EA584BF05DBA43</UserChecksum>
+          <GeneratedChecksum dnOrder="5">B358678B02AC7D3AD6CC80621ECC826D</GeneratedChecksum>
+          <UserChecksum dnOrder="6">B358678B02AC7D3AD6CC80621ECC826D</UserChecksum>
         </File>
-        <File dnOrder="34">
+        <File dnOrder="32">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_clk.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -322,16 +304,7 @@
           <GeneratedChecksum dnOrder="5">7066CC390335CF75126E2A50C46E3BDD</GeneratedChecksum>
           <UserChecksum dnOrder="6">7066CC390335CF75126E2A50C46E3BDD</UserChecksum>
         </File>
-        <File dnOrder="35">
-          <Type dnOrder="0">HEADER</Type>
-          <Name dnOrder="1">plib_coretimer.h</Name>
-          <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">config/pic32mz_ef_sk/peripheral/coretimer/</LogicalPath>
-          <PhysicalPath dnOrder="4">/peripheral/coretimer/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">77E2C83A700CD1F724CFD90ED3AA2B71</GeneratedChecksum>
-          <UserChecksum dnOrder="6">77E2C83A700CD1F724CFD90ED3AA2B71</UserChecksum>
-        </File>
-        <File dnOrder="36">
+        <File dnOrder="33">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_evic.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -340,16 +313,16 @@
           <GeneratedChecksum dnOrder="5">0718C4C8BAA47288E82FE9CCD4854832</GeneratedChecksum>
           <UserChecksum dnOrder="6">0718C4C8BAA47288E82FE9CCD4854832</UserChecksum>
         </File>
-        <File dnOrder="37">
+        <File dnOrder="34">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_gpio.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/peripheral/gpio/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/gpio/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">C3EB5D6856249F16760FC8D1DA99FE36</GeneratedChecksum>
-          <UserChecksum dnOrder="6">C3EB5D6856249F16760FC8D1DA99FE36</UserChecksum>
+          <GeneratedChecksum dnOrder="5">4C6C4A7B7E33767128AA763FFAE2E394</GeneratedChecksum>
+          <UserChecksum dnOrder="6">4C6C4A7B7E33767128AA763FFAE2E394</UserChecksum>
         </File>
-        <File dnOrder="38">
+        <File dnOrder="35">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_usbhs.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -358,7 +331,7 @@
           <GeneratedChecksum dnOrder="5">CD26F27EDC181E4AAB47A522AD24EA5F</GeneratedChecksum>
           <UserChecksum dnOrder="6">CD26F27EDC181E4AAB47A522AD24EA5F</UserChecksum>
         </File>
-        <File dnOrder="39">
+        <File dnOrder="36">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">plib_usbhs_header.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -367,7 +340,7 @@
           <GeneratedChecksum dnOrder="5">696059AC9F4DC7CE9282F22900F397C2</GeneratedChecksum>
           <UserChecksum dnOrder="6">696059AC9F4DC7CE9282F22900F397C2</UserChecksum>
         </File>
-        <File dnOrder="40">
+        <File dnOrder="37">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_debug.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -376,7 +349,7 @@
           <GeneratedChecksum dnOrder="5">6972608768DDBE6E37A2D81B83DF490B</GeneratedChecksum>
           <UserChecksum dnOrder="6">6972608768DDBE6E37A2D81B83DF490B</UserChecksum>
         </File>
-        <File dnOrder="41">
+        <File dnOrder="38">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_int.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -385,7 +358,7 @@
           <GeneratedChecksum dnOrder="5">47330C2D8F204B2B69F8A86240A564B6</GeneratedChecksum>
           <UserChecksum dnOrder="6">47330C2D8F204B2B69F8A86240A564B6</UserChecksum>
         </File>
-        <File dnOrder="42">
+        <File dnOrder="39">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">sys_int_mapping.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -394,34 +367,7 @@
           <GeneratedChecksum dnOrder="5">FC7B55936A09E0CA1395AE4DFB1A188F</GeneratedChecksum>
           <UserChecksum dnOrder="6">FC7B55936A09E0CA1395AE4DFB1A188F</UserChecksum>
         </File>
-        <File dnOrder="43">
-          <Type dnOrder="0">HEADER</Type>
-          <Name dnOrder="1">sys_time.h</Name>
-          <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">config/pic32mz_ef_sk/system/time/</LogicalPath>
-          <PhysicalPath dnOrder="4">/system/time/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">466D676839280C0E7FC2CC6F78BA6EE9</GeneratedChecksum>
-          <UserChecksum dnOrder="6">466D676839280C0E7FC2CC6F78BA6EE9</UserChecksum>
-        </File>
-        <File dnOrder="44">
-          <Type dnOrder="0">HEADER</Type>
-          <Name dnOrder="1">sys_time_definitions.h</Name>
-          <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">config/pic32mz_ef_sk/system/time/</LogicalPath>
-          <PhysicalPath dnOrder="4">/system/time/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">82C87C4CF49EE4D859363C15E9073333</GeneratedChecksum>
-          <UserChecksum dnOrder="6">82C87C4CF49EE4D859363C15E9073333</UserChecksum>
-        </File>
-        <File dnOrder="45">
-          <Type dnOrder="0">HEADER</Type>
-          <Name dnOrder="1">sys_time_local.h</Name>
-          <Security dnOrder="2">NON_SECURE</Security>
-          <LogicalPath dnOrder="3">config/pic32mz_ef_sk/system/time/</LogicalPath>
-          <PhysicalPath dnOrder="4">/system/time/src/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">62F39464265EC34979649F761FB4FE57</GeneratedChecksum>
-          <UserChecksum dnOrder="6">62F39464265EC34979649F761FB4FE57</UserChecksum>
-        </File>
-        <File dnOrder="46">
+        <File dnOrder="40">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -430,7 +376,7 @@
           <GeneratedChecksum dnOrder="5">BE95B4F134C5C929787B9DA6FDBF3501</GeneratedChecksum>
           <UserChecksum dnOrder="6">BE95B4F134C5C929787B9DA6FDBF3501</UserChecksum>
         </File>
-        <File dnOrder="47">
+        <File dnOrder="41">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system_common.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -439,7 +385,7 @@
           <GeneratedChecksum dnOrder="5">C3F5136D520DAC4416512EBFCCA023C3</GeneratedChecksum>
           <UserChecksum dnOrder="6">C3F5136D520DAC4416512EBFCCA023C3</UserChecksum>
         </File>
-        <File dnOrder="48">
+        <File dnOrder="42">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">system_module.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -448,16 +394,16 @@
           <GeneratedChecksum dnOrder="5">1C75A8A6B60598A2FD0D533F57839B72</GeneratedChecksum>
           <UserChecksum dnOrder="6">1C75A8A6B60598A2FD0D533F57839B72</UserChecksum>
         </File>
-        <File dnOrder="49">
+        <File dnOrder="43">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">toolchain_specifics.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/</LogicalPath>
           <PhysicalPath dnOrder="4">/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">9D344CAF1743381AA0EA1641ABCDE373</GeneratedChecksum>
-          <UserChecksum dnOrder="6">9D344CAF1743381AA0EA1641ABCDE373</UserChecksum>
+          <GeneratedChecksum dnOrder="5">FA212DEAE39D4E86EF4E6CB440610FE9</GeneratedChecksum>
+          <UserChecksum dnOrder="6">FA212DEAE39D4E86EF4E6CB440610FE9</UserChecksum>
         </File>
-        <File dnOrder="50">
+        <File dnOrder="44">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_chapter_9.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -466,7 +412,7 @@
           <GeneratedChecksum dnOrder="5">39659CDE2CC726544BD68544FB7EF4B2</GeneratedChecksum>
           <UserChecksum dnOrder="6">39659CDE2CC726544BD68544FB7EF4B2</UserChecksum>
         </File>
-        <File dnOrder="51">
+        <File dnOrder="45">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_common.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -475,16 +421,16 @@
           <GeneratedChecksum dnOrder="5">2AAF1AB3341FB7F74004B6C7EFF8929C</GeneratedChecksum>
           <UserChecksum dnOrder="6">2AAF1AB3341FB7F74004B6C7EFF8929C</UserChecksum>
         </File>
-        <File dnOrder="52">
+        <File dnOrder="46">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_device.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/pic32mz_ef_sk/usb/</LogicalPath>
           <PhysicalPath dnOrder="4">/usb/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">C3A6851F02AB3A2A5169A42F2EA459C6</GeneratedChecksum>
-          <UserChecksum dnOrder="6">C3A6851F02AB3A2A5169A42F2EA459C6</UserChecksum>
+          <GeneratedChecksum dnOrder="5">68F7DBD311EDCAF1098CDF2FD15B8C73</GeneratedChecksum>
+          <UserChecksum dnOrder="6">68F7DBD311EDCAF1098CDF2FD15B8C73</UserChecksum>
         </File>
-        <File dnOrder="53">
+        <File dnOrder="47">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_device_function_driver.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -493,7 +439,7 @@
           <GeneratedChecksum dnOrder="5">626BFDDD140B808E90C9DD2E4A27421E</GeneratedChecksum>
           <UserChecksum dnOrder="6">626BFDDD140B808E90C9DD2E4A27421E</UserChecksum>
         </File>
-        <File dnOrder="54">
+        <File dnOrder="48">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_device_hid.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -502,7 +448,7 @@
           <GeneratedChecksum dnOrder="5">144BD1138A70A9AA387E3742DB6E7448</GeneratedChecksum>
           <UserChecksum dnOrder="6">144BD1138A70A9AA387E3742DB6E7448</UserChecksum>
         </File>
-        <File dnOrder="55">
+        <File dnOrder="49">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_device_hid_local.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -511,7 +457,7 @@
           <GeneratedChecksum dnOrder="5">6C72D678DC0100860FD1086BCF4A22C5</GeneratedChecksum>
           <UserChecksum dnOrder="6">6C72D678DC0100860FD1086BCF4A22C5</UserChecksum>
         </File>
-        <File dnOrder="56">
+        <File dnOrder="50">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_device_local.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -520,7 +466,7 @@
           <GeneratedChecksum dnOrder="5">9B727D396CAEBD5FCB12F1F8264C4FD9</GeneratedChecksum>
           <UserChecksum dnOrder="6">9B727D396CAEBD5FCB12F1F8264C4FD9</UserChecksum>
         </File>
-        <File dnOrder="57">
+        <File dnOrder="51">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_device_mapping.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -529,7 +475,7 @@
           <GeneratedChecksum dnOrder="5">C8D4A1D9092FD842506F565CE9B8C265</GeneratedChecksum>
           <UserChecksum dnOrder="6">C8D4A1D9092FD842506F565CE9B8C265</UserChecksum>
         </File>
-        <File dnOrder="58">
+        <File dnOrder="52">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_external_dependencies.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -538,7 +484,7 @@
           <GeneratedChecksum dnOrder="5">6C4A6859DB16EA8C046F995C6B6C1C6F</GeneratedChecksum>
           <UserChecksum dnOrder="6">6C4A6859DB16EA8C046F995C6B6C1C6F</UserChecksum>
         </File>
-        <File dnOrder="59">
+        <File dnOrder="53">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_hid.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -547,7 +493,7 @@
           <GeneratedChecksum dnOrder="5">F258661D72F9E844BF936D43BF859BE7</GeneratedChecksum>
           <UserChecksum dnOrder="6">F258661D72F9E844BF936D43BF859BE7</UserChecksum>
         </File>
-        <File dnOrder="60">
+        <File dnOrder="54">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_host.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -556,7 +502,7 @@
           <GeneratedChecksum dnOrder="5">F127C67A3E33E5788C0F057F648EE57C</GeneratedChecksum>
           <UserChecksum dnOrder="6">F127C67A3E33E5788C0F057F648EE57C</UserChecksum>
         </File>
-        <File dnOrder="61">
+        <File dnOrder="55">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_host_client_driver.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -565,7 +511,7 @@
           <GeneratedChecksum dnOrder="5">6EBC5E4D06FC96A02ADF3B7416957DD6</GeneratedChecksum>
           <UserChecksum dnOrder="6">6EBC5E4D06FC96A02ADF3B7416957DD6</UserChecksum>
         </File>
-        <File dnOrder="62">
+        <File dnOrder="56">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_host_hub_interface.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -574,7 +520,7 @@
           <GeneratedChecksum dnOrder="5">757C8484C955543C893361992D11FD4C</GeneratedChecksum>
           <UserChecksum dnOrder="6">757C8484C955543C893361992D11FD4C</UserChecksum>
         </File>
-        <File dnOrder="63">
+        <File dnOrder="57">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usb_hub.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -583,7 +529,7 @@
           <GeneratedChecksum dnOrder="5">3E3CC6BC9128194CB4D19F29C57E312B</GeneratedChecksum>
           <UserChecksum dnOrder="6">3E3CC6BC9128194CB4D19F29C57E312B</UserChecksum>
         </File>
-        <File dnOrder="64">
+        <File dnOrder="58">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_ClockResetControl_Default.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -592,7 +538,7 @@
           <GeneratedChecksum dnOrder="5">92EB24A8BD2D772947C0BF8AC050833F</GeneratedChecksum>
           <UserChecksum dnOrder="6">92EB24A8BD2D772947C0BF8AC050833F</UserChecksum>
         </File>
-        <File dnOrder="65">
+        <File dnOrder="59">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_ClockResetControl_Unsupported.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -601,7 +547,7 @@
           <GeneratedChecksum dnOrder="5">DE4F2288F390CFA9881DE462794F0DDA</GeneratedChecksum>
           <UserChecksum dnOrder="6">DE4F2288F390CFA9881DE462794F0DDA</UserChecksum>
         </File>
-        <File dnOrder="66">
+        <File dnOrder="60">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_EP0Status_Default.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -610,7 +556,7 @@
           <GeneratedChecksum dnOrder="5">C633386FC9C5872623EA1EFBAB764442</GeneratedChecksum>
           <UserChecksum dnOrder="6">C633386FC9C5872623EA1EFBAB764442</UserChecksum>
         </File>
-        <File dnOrder="67">
+        <File dnOrder="61">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_EP0Status_Unsupported.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -619,7 +565,7 @@
           <GeneratedChecksum dnOrder="5">D3CA06CFFAF0BAED492DB71AC775EEBD</GeneratedChecksum>
           <UserChecksum dnOrder="6">D3CA06CFFAF0BAED492DB71AC775EEBD</UserChecksum>
         </File>
-        <File dnOrder="68">
+        <File dnOrder="62">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_EndpointFIFO_Default.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -628,7 +574,7 @@
           <GeneratedChecksum dnOrder="5">D1DA501EF7BAB24A2CEADE3CBD29AEB6</GeneratedChecksum>
           <UserChecksum dnOrder="6">D1DA501EF7BAB24A2CEADE3CBD29AEB6</UserChecksum>
         </File>
-        <File dnOrder="69">
+        <File dnOrder="63">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_EndpointFIFO_Unsupported.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -637,7 +583,7 @@
           <GeneratedChecksum dnOrder="5">4A752D8534E86F7FE62082A735AD041D</GeneratedChecksum>
           <UserChecksum dnOrder="6">4A752D8534E86F7FE62082A735AD041D</UserChecksum>
         </File>
-        <File dnOrder="70">
+        <File dnOrder="64">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_EndpointOperations_Default.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -646,7 +592,7 @@
           <GeneratedChecksum dnOrder="5">78FB74FDBAB09F28AD644ED2959752A2</GeneratedChecksum>
           <UserChecksum dnOrder="6">78FB74FDBAB09F28AD644ED2959752A2</UserChecksum>
         </File>
-        <File dnOrder="71">
+        <File dnOrder="65">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_EndpointOperations_Unsupported.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -655,7 +601,7 @@
           <GeneratedChecksum dnOrder="5">381AB7453B25DF9AB7A16A93704FEBC8</GeneratedChecksum>
           <UserChecksum dnOrder="6">381AB7453B25DF9AB7A16A93704FEBC8</UserChecksum>
         </File>
-        <File dnOrder="72">
+        <File dnOrder="66">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_HighSpeedSupport_Default.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -664,7 +610,7 @@
           <GeneratedChecksum dnOrder="5">456E97A1CFF4C0C132CC9FB17FA86A54</GeneratedChecksum>
           <UserChecksum dnOrder="6">456E97A1CFF4C0C132CC9FB17FA86A54</UserChecksum>
         </File>
-        <File dnOrder="73">
+        <File dnOrder="67">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_HighSpeedSupport_Unsupported.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -673,7 +619,7 @@
           <GeneratedChecksum dnOrder="5">9B6843BEE1C3DE488EFA017EF03E239E</GeneratedChecksum>
           <UserChecksum dnOrder="6">9B6843BEE1C3DE488EFA017EF03E239E</UserChecksum>
         </File>
-        <File dnOrder="74">
+        <File dnOrder="68">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_Interrupts_Default.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -682,7 +628,7 @@
           <GeneratedChecksum dnOrder="5">A7B4C37BC9B019F1EF0D638AE3B5F751</GeneratedChecksum>
           <UserChecksum dnOrder="6">A7B4C37BC9B019F1EF0D638AE3B5F751</UserChecksum>
         </File>
-        <File dnOrder="75">
+        <File dnOrder="69">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_Interrupts_Unsupported.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -691,7 +637,7 @@
           <GeneratedChecksum dnOrder="5">F64EC7A0E28E413630A114E4A2BD81EE</GeneratedChecksum>
           <UserChecksum dnOrder="6">F64EC7A0E28E413630A114E4A2BD81EE</UserChecksum>
         </File>
-        <File dnOrder="76">
+        <File dnOrder="70">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_ModuleControl_Default.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -700,7 +646,7 @@
           <GeneratedChecksum dnOrder="5">6B89CE47C098F2F2C08D7FD6269CF8A2</GeneratedChecksum>
           <UserChecksum dnOrder="6">6B89CE47C098F2F2C08D7FD6269CF8A2</UserChecksum>
         </File>
-        <File dnOrder="77">
+        <File dnOrder="71">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_ModuleControl_Unsupported.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -709,7 +655,7 @@
           <GeneratedChecksum dnOrder="5">5C0545CC006D8D8F43B2674F99AF3D8F</GeneratedChecksum>
           <UserChecksum dnOrder="6">5C0545CC006D8D8F43B2674F99AF3D8F</UserChecksum>
         </File>
-        <File dnOrder="78">
+        <File dnOrder="72">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_RxEPStatus_Default.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -718,7 +664,7 @@
           <GeneratedChecksum dnOrder="5">4C53000458C43B6AA3D342A5C0E19D98</GeneratedChecksum>
           <UserChecksum dnOrder="6">4C53000458C43B6AA3D342A5C0E19D98</UserChecksum>
         </File>
-        <File dnOrder="79">
+        <File dnOrder="73">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_RxEPStatus_Unsupported.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -727,7 +673,7 @@
           <GeneratedChecksum dnOrder="5">80935F65B5AA43F175AE93EDB0429F0E</GeneratedChecksum>
           <UserChecksum dnOrder="6">80935F65B5AA43F175AE93EDB0429F0E</UserChecksum>
         </File>
-        <File dnOrder="80">
+        <File dnOrder="74">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_SoftReset_Default.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -736,7 +682,7 @@
           <GeneratedChecksum dnOrder="5">6EBA0CA23919D6861098B126EE5BB68F</GeneratedChecksum>
           <UserChecksum dnOrder="6">6EBA0CA23919D6861098B126EE5BB68F</UserChecksum>
         </File>
-        <File dnOrder="81">
+        <File dnOrder="75">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_SoftReset_Unsupported.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -745,7 +691,7 @@
           <GeneratedChecksum dnOrder="5">958C517D7A3A0DADAC6EAA0151016948</GeneratedChecksum>
           <UserChecksum dnOrder="6">958C517D7A3A0DADAC6EAA0151016948</UserChecksum>
         </File>
-        <File dnOrder="82">
+        <File dnOrder="76">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_TxEPStatus_Default.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -754,7 +700,7 @@
           <GeneratedChecksum dnOrder="5">DD22742221B2FFC5CF75A5FE70050337</GeneratedChecksum>
           <UserChecksum dnOrder="6">DD22742221B2FFC5CF75A5FE70050337</UserChecksum>
         </File>
-        <File dnOrder="83">
+        <File dnOrder="77">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_TxEPStatus_Unsupported.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -763,7 +709,7 @@
           <GeneratedChecksum dnOrder="5">5A0C7E357552842059C217766C2DEB25</GeneratedChecksum>
           <UserChecksum dnOrder="6">5A0C7E357552842059C217766C2DEB25</UserChecksum>
         </File>
-        <File dnOrder="84">
+        <File dnOrder="78">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_USBIDControl_Default.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -772,7 +718,7 @@
           <GeneratedChecksum dnOrder="5">75C41D5914D078AAA731F9BA9D07E88C</GeneratedChecksum>
           <UserChecksum dnOrder="6">75C41D5914D078AAA731F9BA9D07E88C</UserChecksum>
         </File>
-        <File dnOrder="85">
+        <File dnOrder="79">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_USBIDControl_Unsupported.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -781,7 +727,7 @@
           <GeneratedChecksum dnOrder="5">AF999B951C57AD5D333E1260532C88E2</GeneratedChecksum>
           <UserChecksum dnOrder="6">AF999B951C57AD5D333E1260532C88E2</UserChecksum>
         </File>
-        <File dnOrder="86">
+        <File dnOrder="80">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_registers.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -790,7 +736,7 @@
           <GeneratedChecksum dnOrder="5">A0803FFCE7DA932883C0B89AD48FA04C</GeneratedChecksum>
           <UserChecksum dnOrder="6">A0803FFCE7DA932883C0B89AD48FA04C</UserChecksum>
         </File>
-        <File dnOrder="87">
+        <File dnOrder="81">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">usbhs_registers.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -799,7 +745,7 @@
           <GeneratedChecksum dnOrder="5">A0803FFCE7DA932883C0B89AD48FA04C</GeneratedChecksum>
           <UserChecksum dnOrder="6">A0803FFCE7DA932883C0B89AD48FA04C</UserChecksum>
         </File>
-        <File dnOrder="88">
+        <File dnOrder="82">
           <Type dnOrder="0">HEADER</Type>
           <Name dnOrder="1">user.h</Name>
           <Security dnOrder="2">NON_SECURE</Security>
@@ -808,21 +754,33 @@
           <GeneratedChecksum dnOrder="5"/>
           <UserChecksum dnOrder="6"/>
         </File>
+        <File dnOrder="83">
+          <Type dnOrder="0">LINKER</Type>
+          <Name dnOrder="1">p32MZ2048EFH144.ld</Name>
+          <Security dnOrder="2">NON_SECURE</Security>
+          <LogicalPath dnOrder="3">config/pic32mz_ef_sk/</LogicalPath>
+          <PhysicalPath dnOrder="4">/</PhysicalPath>
+          <GeneratedChecksum dnOrder="5">C28E11AB7E036CF8F895B28BE0902893</GeneratedChecksum>
+          <UserChecksum dnOrder="6">C28E11AB7E036CF8F895B28BE0902893</UserChecksum>
+        </File>
       </Files>
       <Settings dnOrder="1">
         <Setting append="true" category="C32" delimiter=";" dnOrder="0" key="extra-include-directories" security="NON_SECURE" value="../src;../src/config/pic32mz_ef_sk;../src/packs/PIC32MZ2048EFH144_DFP;"/>
-        <Setting category="C32-LD" dnOrder="1" key="heap-size" security="NON_SECURE" value="512"/>
-        <Setting category="C32-LD" dnOrder="2" key="no-device-startup-code" security="NON_SECURE" value="true"/>
-        <Setting append="true" category="C32-LD" delimiter=";" dnOrder="3" key="preprocessor-macros" security="NON_SECURE" value=""/>
+        <Setting category="C32" dnOrder="1" key="generate-micro-compressed-code" security="NON_SECURE" value="false"/>
+        <Setting category="C32-LD" dnOrder="2" key="heap-size" security="NON_SECURE" value="512"/>
+        <Setting category="C32-LD" dnOrder="3" key="no-device-startup-code" security="NON_SECURE" value="true"/>
+        <Setting append="true" category="C32-LD" delimiter=";=" dnOrder="4" key="preprocessor-macros" security="NON_SECURE" value=""/>
+        <Setting append="true" category="C32CPP" delimiter=";" dnOrder="5" key="extra-include-directories" security="NON_SECURE" value="../src;../src/config/pic32mz_ef_sk;../src/packs/PIC32MZ2048EFH144_DFP;"/>
+        <Setting category="C32CPP" dnOrder="6" key="generate-micro-compressed-code" security="NON_SECURE" value="false"/>
       </Settings>
     </Manifest>
     <Settings dnOrder="5">
-      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.6.0"/>
-      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ-EF_DFP\1.1.45\atdf\PIC32MZ2048EFH144.atdf"/>
+      <Setting dnOrder="0" key="CMSISPath" value=".\dev_packs\arm\CMSIS\5.7.0"/>
+      <Setting dnOrder="1" key="DFPPath" value=".\dev_packs\Microchip\PIC32MZ-EF_DFP\1.3.57\atdf\PIC32MZ2048EFH144.atdf"/>
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;usb;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="bsp;core;csp;ethercat;usb;validation;"/>
     </Settings>
   </Configurator>
 </Configuration>
