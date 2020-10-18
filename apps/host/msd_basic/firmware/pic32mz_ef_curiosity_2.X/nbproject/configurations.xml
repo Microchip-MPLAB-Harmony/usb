@@ -54,6 +54,11 @@
             <itemPath>../src/config/pic32mz_ef_curiosity_20/driver/driver.h</itemPath>
             <itemPath>../src/config/pic32mz_ef_curiosity_20/driver/driver_common.h</itemPath>
           </logicalFolder>
+          <logicalFolder name="f6" displayName="osal" projectFiles="true">
+            <itemPath>../src/config/pic32mz_ef_curiosity_20/osal/osal.h</itemPath>
+            <itemPath>../src/config/pic32mz_ef_curiosity_20/osal/osal_definitions.h</itemPath>
+            <itemPath>../src/config/pic32mz_ef_curiosity_20/osal/osal_impl_basic.h</itemPath>
+          </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f4" displayName="cache" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_curiosity_20/peripheral/cache/plib_cache.h</itemPath>
@@ -131,20 +136,9 @@
           <itemPath>../src/config/pic32mz_ef_curiosity_20/device_cache.h</itemPath>
           <itemPath>../src/config/pic32mz_ef_curiosity_20/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/pic32mz_ef_curiosity_20/definitions.h</itemPath>
+          <itemPath>../src/config/pic32mz_ef_curiosity_20/device.h</itemPath>
           <itemPath>../src/config/pic32mz_ef_curiosity_20/user.h</itemPath>
           <itemPath>../src/config/pic32mz_ef_curiosity_20/configuration.h</itemPath>
-        </logicalFolder>
-      </logicalFolder>
-      <logicalFolder name="f3" displayName="osal" projectFiles="true">
-        <itemPath>../src/config/pic32mz_ef_curiosity_20/osal/osal.h</itemPath>
-        <itemPath>../src/config/pic32mz_ef_curiosity_20/osal/osal_definitions.h</itemPath>
-        <itemPath>../src/config/pic32mz_ef_curiosity_20/osal/osal_impl_basic.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f2" displayName="packs" projectFiles="true">
-        <logicalFolder name="f1"
-                       displayName="PIC32MZ2048EFM144_DFP"
-                       projectFiles="true">
-          <itemPath>../src/packs/PIC32MZ2048EFM144_DFP/device.h</itemPath>
         </logicalFolder>
       </logicalFolder>
       <itemPath>../src/app.h</itemPath>
@@ -152,6 +146,13 @@
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
                    projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
+        <logicalFolder name="f1"
+                       displayName="pic32mz_ef_curiosity_20"
+                       projectFiles="true">
+          <itemPath>../src/config/pic32mz_ef_curiosity_20/p32MZ2048EFM144.ld</itemPath>
+        </logicalFolder>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -243,6 +244,7 @@
       <itemPath>Makefile</itemPath>
       <itemPath>../src/config/pic32mz_ef_curiosity_20/harmony.prj</itemPath>
       <itemPath>../src/config/pic32mz_ef_curiosity_20/pic32mz_ef_curiosity_20.xml</itemPath>
+      <itemPath>../src/config/pic32mz_ef_curiosity_20/harmony-manifest-success.yml</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -299,7 +301,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value=";../src/config/pic32mz_ef_curiosity_20/system/fs/fat_fs/file_system;../src/config/pic32mz_ef_curiosity_20/system/fs/fat_fs/hardware_access;../src;../src/config/pic32mz_ef_curiosity_20;../src/packs/PIC32MZ2048EFM144_DFP"/>
+                  value="../src;../src/config/pic32mz_ef_curiosity_20;../src/packs/PIC32MZ2048EFM144_DFP;;../src/config/pic32mz_ef_curiosity_20/system/fs/fat_fs/file_system;../src/config/pic32mz_ef_curiosity_20/system/fs/fat_fs/hardware_access"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -394,7 +396,8 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exceptions" value="true"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value=""/>
+        <property key="extra-include-directories"
+                  value="../src;../src/config/pic32mz_ef_curiosity_20;../src/packs/PIC32MZ2048EFM144_DFP;;../src/config/pic32mz_ef_curiosity_20/system/fs/fat_fs/file_system;../src/config/pic32mz_ef_curiosity_20/system/fs/fat_fs/hardware_access"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>

@@ -54,6 +54,11 @@
             <itemPath>../src/config/pic32mz_ef_sk_freertos/driver/driver.h</itemPath>
             <itemPath>../src/config/pic32mz_ef_sk_freertos/driver/driver_common.h</itemPath>
           </logicalFolder>
+          <logicalFolder name="f6" displayName="osal" projectFiles="true">
+            <itemPath>../src/config/pic32mz_ef_sk_freertos/osal/osal.h</itemPath>
+            <itemPath>../src/config/pic32mz_ef_sk_freertos/osal/osal_definitions.h</itemPath>
+            <itemPath>../src/config/pic32mz_ef_sk_freertos/osal/osal_freertos.h</itemPath>
+          </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f4" displayName="cache" projectFiles="true">
               <itemPath>../src/config/pic32mz_ef_sk_freertos/peripheral/cache/plib_cache.h</itemPath>
@@ -131,12 +136,13 @@
           <itemPath>../src/config/pic32mz_ef_sk_freertos/device_cache.h</itemPath>
           <itemPath>../src/config/pic32mz_ef_sk_freertos/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/pic32mz_ef_sk_freertos/definitions.h</itemPath>
+          <itemPath>../src/config/pic32mz_ef_sk_freertos/device.h</itemPath>
           <itemPath>../src/config/pic32mz_ef_sk_freertos/FreeRTOSConfig.h</itemPath>
           <itemPath>../src/config/pic32mz_ef_sk_freertos/user.h</itemPath>
           <itemPath>../src/config/pic32mz_ef_sk_freertos/configuration.h</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="FreeRTOS" projectFiles="true">
+      <logicalFolder name="f2" displayName="FreeRTOS" projectFiles="true">
         <logicalFolder name="f1" displayName="Source" projectFiles="true">
           <logicalFolder name="f1" displayName="include" projectFiles="true">
             <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/croutine.h</itemPath>
@@ -166,18 +172,6 @@
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f4" displayName="osal" projectFiles="true">
-        <itemPath>../src/config/pic32mz_ef_sk_freertos/osal/osal.h</itemPath>
-        <itemPath>../src/config/pic32mz_ef_sk_freertos/osal/osal_definitions.h</itemPath>
-        <itemPath>../src/config/pic32mz_ef_sk_freertos/osal/osal_freertos.h</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f2" displayName="packs" projectFiles="true">
-        <logicalFolder name="f1"
-                       displayName="PIC32MZ2048EFH144_DFP"
-                       projectFiles="true">
-          <itemPath>../src/packs/PIC32MZ2048EFH144_DFP/device.h</itemPath>
-        </logicalFolder>
-      </logicalFolder>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
@@ -186,10 +180,18 @@
       <itemPath>Makefile</itemPath>
       <itemPath>../src/config/pic32mz_ef_sk_freertos/harmony.prj</itemPath>
       <itemPath>../src/config/pic32mz_ef_sk_freertos/pic32mz_ef_sk_freertos.xml</itemPath>
+      <itemPath>../src/config/pic32mz_ef_sk_freertos/harmony-manifest-success.yml</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
                    projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
+        <logicalFolder name="f1"
+                       displayName="pic32mz_ef_sk_freertos"
+                       projectFiles="true">
+          <itemPath>../src/config/pic32mz_ef_sk_freertos/p32MZ2048EFH144.ld</itemPath>
+        </logicalFolder>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -210,6 +212,9 @@
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="f7" displayName="osal" projectFiles="true">
+            <itemPath>../src/config/pic32mz_ef_sk_freertos/osal/osal_freertos.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
             <logicalFolder name="f4" displayName="cache" projectFiles="true">
@@ -296,9 +301,6 @@
           <itemPath>../src/third_party/rtos/FreeRTOS/Source/stream_buffer.c</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder name="f3" displayName="osal" projectFiles="true">
-        <itemPath>../src/config/pic32mz_ef_sk_freertos/osal/osal_freertos.c</itemPath>
-      </logicalFolder>
       <itemPath>../src/main.c</itemPath>
       <itemPath>../src/app.c</itemPath>
     </logicalFolder>
@@ -357,7 +359,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value=";../src/config/pic32mz_ef_sk_freertos/system/fs/fat_fs/file_system;../src/config/pic32mz_ef_sk_freertos/system/fs/fat_fs/hardware_access;../src;../src/config/pic32mz_ef_sk_freertos;../src/packs/PIC32MZ2048EFH144_DFP;../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MZ;../src/third_party/rtos/FreeRTOS/Source/include"/>
+                  value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MZ;../src/third_party/rtos/FreeRTOS/Source/include;../src;../src/config/pic32mz_ef_sk_freertos;../src/packs/PIC32MZ2048EFH144_DFP;;../src/config/pic32mz_ef_sk_freertos/system/fs/fat_fs/file_system;../src/config/pic32mz_ef_sk_freertos/system/fs/fat_fs/hardware_access"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -454,7 +456,8 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exceptions" value="true"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value=""/>
+        <property key="extra-include-directories"
+                  value="../src/third_party/rtos/FreeRTOS/Source/portable/MPLAB/PIC32MZ;../src/third_party/rtos/FreeRTOS/Source/include;../src;../src/config/pic32mz_ef_sk_freertos;../src/packs/PIC32MZ2048EFH144_DFP;;../src/config/pic32mz_ef_sk_freertos/system/fs/fat_fs/file_system;../src/config/pic32mz_ef_sk_freertos/system/fs/fat_fs/hardware_access"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
