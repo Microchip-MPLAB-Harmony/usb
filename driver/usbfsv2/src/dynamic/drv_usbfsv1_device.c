@@ -1444,6 +1444,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
     uint8_t direction;
     uint8_t endpoint;
     USB_ERROR retVal = USB_ERROR_NONE;
+    USB_DEVICE_IRP_LOCAL * iterator;
     _DRV_USBFSV1_DECLARE_BOOL_VARIABLE(interruptWasEnabled);
 
 
@@ -1908,7 +1909,6 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
                     else
                     {
                         /* This means we should surf the linked list to get to the last entry . */
-                        USB_DEVICE_IRP_LOCAL * iterator;
                         iterator = endpointObj->irpQueue;
                         while (iterator->next != NULL)
                         {
@@ -1916,7 +1916,6 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
                         }
                         iterator->next = irp;
                         irp->previous = iterator;
-                        irp->status = USB_DEVICE_IRP_STATUS_PENDING;
                     }
                     
                     if(hDriver->isInInterruptContext == false)
@@ -2824,10 +2823,26 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                         {
                             irp->callback((USB_DEVICE_IRP *)irp);
                         }
+                        
+                        if(endpointObj->irpQueue != NULL)
+                        {
+                            /* direction is Host to Device */
+                            /* Host has not sent any data and IRP is already added
+                             * to the queue. IRP will be processed in the ISR */
+                            hDriver->endpointDescriptorTable[epIndex].DEVICE_DESC_BANK[0].USB_ADDR = (uint32_t)endpointObj->irpQueue->data;
 
-                        usbID->DEVICE_ENDPOINT[epIndex].USB_EPINTENCLR = USB_DEVICE_EPINTENCLR_TRFAIL0_Msk | USB_DEVICE_EPINTENCLR_TRCPT0_Msk;
+                            usbID->DEVICE_ENDPOINT[epIndex].USB_EPINTFLAG = USB_DEVICE_EPINTFLAG_TRCPT0_Msk | USB_DEVICE_EPINTFLAG_TRFAIL0_Msk;
 
-                        usbID->DEVICE_ENDPOINT[epIndex].USB_EPINTFLAG = USB_DEVICE_EPINTFLAG_TRCPT0_Msk | USB_DEVICE_EPINTFLAG_TRFAIL0_Msk;
+                            usbID->DEVICE_ENDPOINT[epIndex].USB_EPINTENSET = USB_DEVICE_EPINTENSET_TRCPT0_Msk | USB_DEVICE_EPINTENSET_TRFAIL0_Msk;
+
+                            usbID->DEVICE_ENDPOINT[epIndex].USB_EPSTATUSCLR = USB_DEVICE_EPSTATUSCLR_BK0RDY_Msk;
+                        }
+                        else
+                        {
+                            usbID->DEVICE_ENDPOINT[epIndex].USB_EPINTENCLR = USB_DEVICE_EPINTENCLR_TRFAIL0_Msk | USB_DEVICE_EPINTENCLR_TRCPT0_Msk;
+
+                            usbID->DEVICE_ENDPOINT[epIndex].USB_EPINTFLAG = USB_DEVICE_EPINTFLAG_TRCPT0_Msk | USB_DEVICE_EPINTFLAG_TRFAIL0_Msk;
+                        }
                     }
 
                 }
