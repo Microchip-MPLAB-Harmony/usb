@@ -65,18 +65,14 @@
 // *****************************************************************************
 // *****************************************************************************
 
-  
 /*** Macros for VBUS_HOST_EN pin ***/
 #define VBUS_HOST_EN_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 3)
 #define VBUS_HOST_EN_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 3)
 #define VBUS_HOST_EN_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 3)
-#define VBUS_HOST_EN_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 3)) & 0x01)
 #define VBUS_HOST_EN_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 3)
 #define VBUS_HOST_EN_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 3)
+#define VBUS_HOST_EN_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 3)) & 0x01)
 #define VBUS_HOST_EN_PIN                  PORT_PIN_PA03
-
-
-
 // *****************************************************************************
 /* PORT Group
 
@@ -886,7 +882,7 @@ void PORT_GroupToggle(PORT_GROUP group, uint32_t mask);
     void PORT_GroupInputEnable(PORT_GROUP group, uint32_t mask)
 
   Summary:
-    Confgiures the selected IO pins of a group as input.
+    Configures the selected IO pins of a group as input.
 
   Description:
     This function configures the selected IO pins of a group as input. The pins
@@ -925,7 +921,7 @@ void PORT_GroupInputEnable(PORT_GROUP group, uint32_t mask);
     void PORT_GroupOutputEnable(PORT_GROUP group, uint32_t mask)
 
   Summary:
-    Confgiures the selected IO pins of a group as output.
+    Configures the selected IO pins of a group as output.
 
   Description:
     This function configures the selected IO pins of a group as output. The pins
