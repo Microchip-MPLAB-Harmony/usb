@@ -42,28 +42,55 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
 -->
-/*** USB Driver Configuration ***/
+<#if (USB_DRV_EHCI_MENU)?has_content == true>
+    <#if USB_DRV_OHCI_MENU == true>
+	
+/*** USB EHCI Driver Configurations ***/
 
 /* Maximum USB driver instances */
-#define DRV_USB_UHP_INSTANCES_NUMBER                         1
-
-/* Interrupt mode enabled */
-#define DRV_USB_UHP_INTERRUPT_MODE                           true
-
-/* Number of NAKs to wait before returning transfer failure */ 
-#define DRV_USB_UHP_NAK_LIMIT                          2000 
-
-/* Maximum Number of pipes */
-#define DRV_USB_UHP_PIPES_NUMBER                       10  
+#define DRV_USB_EHCI_INSTANCES_NUMBER                     1
 
 /* Attach Debounce duration in milli Seconds */ 
-#define DRV_USB_UHP_ATTACH_DEBOUNCE_DURATION           ${USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION}
+#define DRV_USB_EHCI_ATTACH_DEBOUNCE_DURATION           500
 
 /* Reset duration in milli Seconds */ 
-#define DRV_USB_UHP_RESET_DURATION                     ${USB_DRV_HOST_RESET_DUARTION}
+#define DRV_USB_EHCI_RESET_DURATION                     100
 
-/* Maximum Transfer Size */ 
-#define DRV_USB_UHP_NO_CACHE_BUFFER_LENGTH  ${USB_DRV_HOST_BUFFER_SIZE}
+/* Maximum Control Transfer Size */
+#define DRV_USB_EHCI_CONTROL_TRANSFER_BUFFER_SIZE ${USB_DRV_HOST_EHCI_BUFFER_SIZE_CONTROL}
+
+/* Maximum Non Control Transfer Size */ 
+#define DRV_USB_EHCI_TRANSFER_BUFFER_SIZE  ${USB_DRV_HOST_EHCI_BUFFER_SIZE}
+    </#if>
+
+<#else>
+
+/* EHCI Driver is not used */  
+#define DRV_USB_EHCI_INSTANCES_NUMBER                     0
+</#if>
+	
+
+
+<#if (USB_DRV_OHCI_MENU)?has_content == true>
+	<#if USB_DRV_OHCI_MENU == true>
+/*** USB OHCI Driver Configurations ***/
+
+#define DRV_USB_OHCI_INSTANCES_NUMBER                        1
+
+/* Attach Debounce duration in milli Seconds */ 
+#define DRV_USB_OHCI_ATTACH_DEBOUNCE_DURATION           500
+
+/* Reset duration in milli Seconds */ 
+#define DRV_USB_OHCI_RESET_DURATION                     100
+
+/* Maximum Control Transfer Size */
+#define DRV_USB_OHCI_CONTROL_TRANSFER_BUFFER_SIZE ${USB_DRV_HOST_OHCI_BUFFER_SIZE_CONTROL}
+
+/* Maximum Non Control Transfer Size */ 
+#define DRV_USB_OHCI_TRANSFER_BUFFER_SIZE  ${USB_DRV_HOST_OHCI_BUFFER_SIZE}
+    </#if>
+</#if>
+
 
 /* Alignment for buffers that are submitted to USB Driver*/ 
 #ifndef USB_ALIGN

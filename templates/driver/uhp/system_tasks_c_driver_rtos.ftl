@@ -43,12 +43,18 @@
  *******************************************************************************/
 -->
 <#if HarmonyCore.SELECT_RTOS == "FreeRTOS">
-    <#lt>void _DRV_USB_UHP_Tasks(  void *pvParameters  )
+    <#lt>void _DRV_USB_HOST_Tasks(  void *pvParameters  )
     <#lt>{
     <#lt>    while(1)
     <#lt>    {
-                 /* USB HS Driver Task Routine */
-    <#lt>        DRV_USB_UHP_Tasks(sysObj.drvUSBObject);
+<#if (USB_DRV_EHCI_MENU)?has_content == true>
+    <#lt>        /* USB EHCI Task Routine */
+    <#lt>        DRV_USB_EHCI_Tasks(sysObj.drvUSBEHCIObject);
+</#if>
+<#if (USB_DRV_OHCI_MENU)?has_content == true>
+     <#lt>       /* USB OHCI Task Routine */
+     <#lt>       DRV_USB_OHCI_Tasks(sysObj.drvUSBOHCIObject);
+</#if>
              <#if USB_DRIVER_RTOS_USE_DELAY >
     <#lt>        vTaskDelay(${USB_DRIVER_RTOS_DELAY} / portTICK_PERIOD_MS);
              </#if>

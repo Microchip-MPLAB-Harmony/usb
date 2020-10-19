@@ -61,7 +61,7 @@ def loadModule():
                     availablePeripherals.append(str(instances[instance].getAttribute("name")))
     if any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAM9X60"]):
         # Create USB High Speed Host Port Driver Component for SAMA5D2 & SAM9X60
-        usbUhpHsDriverComponent =  Module.CreateComponent("drv_usbhs_v1", "USB UHPHS Host Driver", "/Harmony/Drivers", "config/usb_uhphs_driver.py")
+        usbUhpHsDriverComponent =  Module.CreateComponent("drv_usbhs_v1", "USB Host Port HS Driver", "/Harmony/Drivers", "config/usb_uhphs_driver.py")
         usbUhpHsDriverComponent.addCapability("DRV_UHPHS", "DRV_UHPHS", True)
         usbUhpHsDriverComponent.addDependency("usb_uhphs_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
         
@@ -113,7 +113,7 @@ def loadModule():
 
     elif any(x in Variables.get("__PROCESSOR") for x in ["SAMG55"]):
         # Create USB High Speed Host Port Driver Component for SAMG55
-        usbUhpHsDriverComponent =  Module.CreateComponent("drv_usbhs_v1", "USB UHP Host Driver", "/Harmony/Drivers", "config/usb_uhp_driver.py")
+        usbUhpHsDriverComponent =  Module.CreateComponent("drv_usbhs_v1", "USB Host Port Driver", "/Harmony/Drivers", "config/usb_uhp_driver.py")
         usbUhpHsDriverComponent.addCapability("DRV_UHPHS", "DRV_UHP", True)
         usbUhpHsDriverComponent.addDependency("usb_uhphs_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
         

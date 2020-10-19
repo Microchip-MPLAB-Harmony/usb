@@ -42,7 +42,12 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
 -->
-#include "driver/usb/uhp/drv_usb_uhp.h"
+<#if (USB_DRV_EHCI_MENU)?has_content == true>
+#include "driver/usb/uhp/drv_usb_ehci.h"
+</#if>
+<#if (USB_DRV_OHCI_MENU)?has_content == true>
+#include "driver/usb/uhp/drv_usb_ohci.h"
+</#if>
 <#--
 /*******************************************************************************
  End of File

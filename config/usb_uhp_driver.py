@@ -21,10 +21,6 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 # Global definitions  
-listUsbSpeed = ["Full Speed"]
-#listUsbSpeed = ["DRV_USBHSV1_DEVICE_SPEEDCONF_NORMAL", "DRV_USBHSV1_DEVICE_SPEEDCONF_LOW_POWER"]
-listUsbOperationMode = ["Device", "Host", "Dual Role"]
-usbDebugLogs = 1 
 usbDriverPath = "driver/"
 usbDriverProjectPath = "/driver/usb/"
 
@@ -33,21 +29,7 @@ def genRtosTask(symbol, event):
 		symbol.setEnabled(True)
 	else:
 		symbol.setEnabled(False)
-
-def speedChanged(symbol, event):
-	Database.clearSymbolValue("core", "PMC_SCER_USBCLK")
-	Database.setSymbolValue("core", "PMC_SCER_USBCLK", True, 2)
-
-def dependencyStatus(symbol, event):
-	if (event["value"] == False):
-		symbol.setVisible(True)
-	else :
-		symbol.setVisible(False)
 		
-#def blUSBDriverSpeedChanged(symbol, event):
-#	Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED")
-#	Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED", event["value"], 2)
-
 def setVisible(symbol, event):
 	if (event["value"] == True):
 		symbol.setVisible(True)
@@ -64,56 +46,74 @@ def showRTOSMenu(symbol, event):
 def instantiateComponent(usbDriverComponent):	
 
 	res = Database.activateComponents(["HarmonyCore"])
+		
+	# OHCI Menu starts here 
+	usbDriverOHCI = usbDriverComponent.createBooleanSymbol("USB_DRV_OHCI_MENU", None)
+	usbDriverOHCI.setLabel("Enable OHCI")
+	helpText = '''Check this box to enable OHCI Driver'''
+	usbDriverOHCI.setDescription(helpText)
+	usbDriverOHCI.setVisible(True)
+	usbDriverOHCI.setReadOnly(False)
+	usbDriverOHCI.setReadOnly(True)
+	usbDriverOHCI.setDefaultValue(True)
 	
-	# USB Driver Speed selection 	
-	usbSpeed = usbDriverComponent.createComboSymbol("USB_SPEED", None, listUsbSpeed)
-	usbSpeed.setLabel("USB Speed Selection")
-	usbSpeed.setVisible(False)
-        helpText = '''While operating in Host Mode, this option configures the types (speed) of USB devices to be supported. 
-        For example, setting this option to High Speed will allow the Host to support High, Full and Low Speed devices. 
-        Setting this option to Full Speed will allow the Host to support only Full and Low Speed devices. If a High Speed
-        device is attached, it will operate at Full Speed.'''
-	usbSpeed.setDescription(helpText)
-	usbSpeed.setDefaultValue("Full Speed")
-#	usbSpeed.setDependencies(blUSBDriverSpeedChanged, ["USB_SPEED"])	
 	
-	# USB Driver Host mode Attach de-bounce duration 
-	usbDriverHostAttachDebounce = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION", None)
-	usbDriverHostAttachDebounce.setLabel("Attach De-bounce Duration (mSec)")
-	usbDriverHostAttachDebounce.setVisible(True)
-        helpText = '''Specify the time duration (in milliseconds) that the driver should wait after detecting the
-        attach interrupt and before polling the attach interrupt again to check if the attach condition still exists.
-        A longer duration slows down the Host Device Attach detection but allows for stable operation.'''
-	usbDriverHostAttachDebounce.setDescription(helpText)
-	usbDriverHostAttachDebounce.setMin(1)
-	usbDriverHostAttachDebounce.setMax(2000)
-	usbDriverHostAttachDebounce.setDefaultValue(500)
-	usbDriverHostAttachDebounce.setDependencies(blUSBDriverOperationModeChanged, ["USB_OPERATION_MODE"])
-	
-	# USB Driver Host mode Reset Duration
-	usbDriverHostResetDuration = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_RESET_DUARTION", None)
-	usbDriverHostResetDuration.setLabel("Reset Duration (mSec)")
-        helpText = '''Specify the duration of the USB Bus Reset Signal. A value of 100 millisecond works 
-        well. There may be cases where some USB devices require a shorter or longer reset duration time.'''
-	usbDriverHostResetDuration.setVisible(True)
-	usbDriverHostResetDuration.setDescription(helpText)
-	usbDriverHostResetDuration.setMin(1)
-	usbDriverHostResetDuration.setMax(500)
-	usbDriverHostResetDuration.setDefaultValue(100)
-	usbDriverHostResetDuration.setDependencies(blUSBDriverOperationModeChanged, ["USB_OPERATION_MODE"])
-	
-	# USB Driver Host mode DRV_USB_UHP_NO_CACHE_BUFFER_LENGTH
-	usbDriverHostBufferSize = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_BUFFER_SIZE", None)
-	usbDriverHostBufferSize.setLabel("Transfer Buffer Cache Size (Bytes)")
-	usbDriverHostBufferSize.setVisible(True)
+	# USB Driver OHCI Host mode Control Transfer Buffer Size 
+	usbDriverOhciHostBufferSizeControl = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_OHCI_BUFFER_SIZE_CONTROL", usbDriverOHCI)
+	usbDriverOhciHostBufferSizeControl.setLabel("Control Transfer Cache Buffer Size (Bytes)")
+	usbDriverOhciHostBufferSizeControl.setVisible(True)
         helpText = '''Specify the maximum transfer size here. The USB driver will 
 		create a buffer for each transfer object with a size specified here. The 
 		USB driver will decline the transfer request if the transfer size is greater
 		than this value.'''
-	usbDriverHostBufferSize.setDescription(helpText)
-	usbDriverHostBufferSize.setMin(500)
-	usbDriverHostBufferSize.setMax(4096)
-	usbDriverHostBufferSize.setDefaultValue(512)
+	usbDriverOhciHostBufferSizeControl.setDescription(helpText)
+	usbDriverOhciHostBufferSizeControl.setMin(64)
+	usbDriverOhciHostBufferSizeControl.setMax(4096)
+	usbDriverOhciHostBufferSizeControl.setDefaultValue(512)
+	usbDriverOhciHostBufferSizeControl.setDependencies(blUSBDriverOHCI, ["USB_DRV_OHCI_MENU"])
+	
+	# USB Driver Host OHCI  NO CACHE BUFFER LENGTH
+	usbDriverHostOhciBufferSize = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_OHCI_BUFFER_SIZE", usbDriverOHCI)
+	usbDriverHostOhciBufferSize.setLabel("Non Control Transfer Cache Buffer Size (Bytes)")
+	usbDriverHostOhciBufferSize.setVisible(True)
+        helpText = '''Specify the maximum transfer size here. The USB driver will 
+		create a buffer for each transfer object with a size specified here. The 
+		USB driver will decline the transfer request if the transfer size is greater
+		than this value.'''
+	usbDriverHostOhciBufferSize.setDescription(helpText)
+	usbDriverHostOhciBufferSize.setMin(500)
+	usbDriverHostOhciBufferSize.setMax(4096)
+	usbDriverHostOhciBufferSize.setDefaultValue(512)
+	usbDriverHostOhciBufferSize.setDependencies(blUSBDriverOHCI, ["USB_DRV_OHCI_MENU"]) 
+	
+	# USB OHCI Driver Ports selection
+	usbDriverOHCIPortSelection = usbDriverComponent.createStringSymbol("USB_DRV_HOST_OHCI_PORTS_SELECTION", usbDriverOHCI)
+	usbDriverOHCIPortSelection.setLabel("Ports Selection")
+	usbDriverOHCIPortSelection.setVisible(True)
+        helpText = '''The EHCI controller supports multiple ports. Specify the bit 
+		map value of the ports should be scanned by the host controller. e.g. a value
+		of 0x02 will cause the EHCI driver to scan the Port B.'''
+	usbDriverOHCIPortSelection.setDescription(helpText)
+	usbDriverOHCIPortSelection.setDefaultValue("0x01")
+	
+	usbHostVbusEnable = usbDriverComponent.createBooleanSymbol("USB_HOST_VBUS_ENABLE", usbDriverOHCI)
+	usbHostVbusEnable.setLabel("Generate VBUS Enable Function")
+        helpText = '''Enable this option if a VBUS control (enable/disable) function must be generated. This should be enabled 
+        if the board contains a VBUS switch that controls VBUS supply to the device and the switch can be controlled by a 
+        GPIO pin. The GPIO pin configuration must be performed in the MHC pin mapping table. The driver code will configured
+        to call the generated function when port power is to be controlled. '''
+	usbHostVbusEnable.setDescription(helpText)
+	usbHostVbusEnable.setVisible(True)
+	usbHostVbusEnable.setDefaultValue(False)
+		
+	usbHostVbusEnableFunctionName = usbDriverComponent.createStringSymbol("USB_HOST_VBUS_ENABLE_PIN_NAME", usbHostVbusEnable)
+	usbHostVbusEnableFunctionName.setLabel("VBUS Enable Pin Name")
+	usbHostVbusEnableFunctionName.setDefaultValue("VBUS_AH")
+        helpText = '''Specify the name of the GPIO Pin that controls the VBUS switch. The name is specified in the MHC
+        Pin Mapping table'''
+        usbHostVbusEnableFunctionName.setDescription(helpText)
+	usbHostVbusEnableFunctionName.setVisible(False)
+	usbHostVbusEnableFunctionName.setDependencies(blUsbHostVbusEnablePinName, ["USB_HOST_VBUS_ENABLE"])
 	
 	enable_rtos_settings = False
 
@@ -218,17 +218,7 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverSystemInitCallsFile.setType("STRING")
 	usbDriverSystemInitCallsFile.setOutputName("core.LIST_SYSTEM_INIT_C_INITIALIZE_MIDDLEWARE")
 	usbDriverSystemInitCallsFile.setSourcePath(sourcePath + "system_init_c_driver_calls.ftl")
-	usbDriverSystemInitCallsFile.setMarkup(True)
-	
-	################################################
-	# system_interrupt.c file for USB Driver   
-	################################################
-	# usbDriverSystemInterruptFile = usbDriverComponent.createFileSymbol(None, None)
-	# usbDriverSystemInterruptFile.setType("STRING")
-	# usbDriverSystemInterruptFile.setOutputName("core.LIST_SYSTEM_INTERRUPT_HANDLERS")
-	# usbDriverSystemInterruptFile.setSourcePath(sourcePath + "system_interrupt_c_driver.ftl")
-	# usbDriverSystemInterruptFile.setMarkup(True)
-	
+	usbDriverSystemInitCallsFile.setMarkup(True)	
 	
 	################################################
 	# system_tasks.c file for USB Driver   
@@ -266,36 +256,26 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbExternalDependenciesFile.setType("HEADER")
 	drvUsbExternalDependenciesFile.setOverwrite(True)
 
-	# Add drv_usb_uhp.h file
-	drvUsbHsV1VarHeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbHsV1VarHeaderFile.setSourcePath(usbDriverPath + "uhp/drv_usb_uhp.h.ftl")
-	drvUsbHsV1VarHeaderFile.setOutputName("drv_usb_uhp.h")
-	drvUsbHsV1VarHeaderFile.setDestPath(usbDriverProjectPath + "uhp")
-	drvUsbHsV1VarHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp")
-	drvUsbHsV1VarHeaderFile.setType("HEADER")
-	drvUsbHsV1VarHeaderFile.setOverwrite(True)
-	drvUsbHsV1VarHeaderFile.setMarkup(True)
-
-#	# EHCI Header file 
-#	drvUsbUhpEHCIHeaderFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_HEADER_FILE_EHCI", None)
-#	drvUsbUhpEHCIHeaderFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_ehci_host.h")
-#	drvUsbUhpEHCIHeaderFile.setOutputName("drv_usb_uhp_ehci_host.h")
-#	drvUsbUhpEHCIHeaderFile.setDestPath(usbDriverProjectPath + "uhp/src")
-#	drvUsbUhpEHCIHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src/")
-#	drvUsbUhpEHCIHeaderFile.setType("HEADER")
-#	drvUsbUhpEHCIHeaderFile.setOverwrite(True)
-#	drvUsbUhpEHCIHeaderFile.setEnabled(True)
 	
 	# OHCI Header file 
-	drvUsbUhpOHCIHeaderFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_HEADER_FILE_OHCI", None)
-	drvUsbUhpOHCIHeaderFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_ohci_host.h")
-	drvUsbUhpOHCIHeaderFile.setOutputName("drv_usb_uhp_ohci_host.h")
-	drvUsbUhpOHCIHeaderFile.setDestPath(usbDriverProjectPath + "uhp/src")
-	drvUsbUhpOHCIHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src/")
-	drvUsbUhpOHCIHeaderFile.setType("HEADER")
-	drvUsbUhpOHCIHeaderFile.setOverwrite(True)
-	drvUsbUhpOHCIHeaderFile.setEnabled(True)
+	drvUsbOHCIHeaderFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_HEADER_FILE_OHCI", None)
+	drvUsbOHCIHeaderFile.setSourcePath(usbDriverPath + "uhp/drv_usb_ohci.h")
+	drvUsbOHCIHeaderFile.setOutputName("drv_usb_ohci.h")
+	drvUsbOHCIHeaderFile.setDestPath(usbDriverProjectPath + "uhp/")
+	drvUsbOHCIHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/")
+	drvUsbOHCIHeaderFile.setType("HEADER")
+	drvUsbOHCIHeaderFile.setOverwrite(True)
+	drvUsbOHCIHeaderFile.setEnabled(True)
 	
+	# Add OHCI Local Header file 
+	drvUsbOHCILocalHeaderFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_HEADER_FILE_OHCI_LOCAL", None)
+	drvUsbOHCILocalHeaderFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_ohci_local.h")
+	drvUsbOHCILocalHeaderFile.setOutputName("drv_usb_ohci_local.h")
+	drvUsbOHCILocalHeaderFile.setDestPath(usbDriverProjectPath + "uhp/src")
+	drvUsbOHCILocalHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src")
+	drvUsbOHCILocalHeaderFile.setType("HEADER")
+	drvUsbOHCILocalHeaderFile.setOverwrite(True)
+
 	# OHCI SFR Header file 
 	drvUsbUhpOHCISFRHeaderFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_HEADER_FILE_OHCI_SFR", None)
 	drvUsbUhpOHCISFRHeaderFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_ohci_registers.h")
@@ -306,25 +286,6 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbUhpOHCISFRHeaderFile.setOverwrite(True)
 	drvUsbUhpOHCISFRHeaderFile.setEnabled(True)
 	
-    # Add drv_usb_uhp_variant_mapping.h file 
-	drvUsbHsV1VarMapHeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbHsV1VarMapHeaderFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_variant_mapping.h.ftl")
-	drvUsbHsV1VarMapHeaderFile.setOutputName("drv_usb_uhp_variant_mapping.h")
-	drvUsbHsV1VarMapHeaderFile.setDestPath(usbDriverProjectPath + "uhp/src")
-	drvUsbHsV1VarMapHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src")
-	drvUsbHsV1VarMapHeaderFile.setType("HEADER")
-	drvUsbHsV1VarMapHeaderFile.setOverwrite(True)
-	drvUsbHsV1VarMapHeaderFile.setMarkup(True)
-
-	# Add drv_usb_uhp_local.h file 
-	drvUsbHsV1Var2HeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbHsV1Var2HeaderFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_local.h.ftl")
-	drvUsbHsV1Var2HeaderFile.setOutputName("drv_usb_uhp_local.h")
-	drvUsbHsV1Var2HeaderFile.setDestPath(usbDriverProjectPath + "uhp/src")
-	drvUsbHsV1Var2HeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src")
-	drvUsbHsV1Var2HeaderFile.setType("HEADER")
-	drvUsbHsV1Var2HeaderFile.setOverwrite(True)
-	drvUsbHsV1Var2HeaderFile.setMarkup(True)
 
 	usbHostControllerDriverHeaderFile = usbDriverComponent.createFileSymbol(None, None)
 	addFileName('usb_host_client_driver.h', usbDriverComponent, usbHostControllerDriverHeaderFile, "middleware/", "/usb/", True, None)
@@ -338,34 +299,19 @@ def instantiateComponent(usbDriverComponent):
 	usbHubHeaderFile = usbDriverComponent.createFileSymbol(None, None)
 	addFileName('usb_hub.h', usbDriverComponent, usbHubHeaderFile, "middleware/", "/usb/", True, None)
 	
-	################################################
-	# USB Driver Source files  
-	################################################
-	drvUsbHsV1SourceFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_SOURCE_FILE_COMMON", None)
-	drvUsbHsV1SourceFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_ohci.c")
-	drvUsbHsV1SourceFile.setOutputName("drv_usb_uhp.c")
-	drvUsbHsV1SourceFile.setDestPath(usbDriverProjectPath + "uhp/src")
-	drvUsbHsV1SourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src/")
-	drvUsbHsV1SourceFile.setType("SOURCE")
-	drvUsbHsV1SourceFile.setOverwrite(True)
+	usbOHCIHeaderFile = usbDriverComponent.createFileSymbol(None, None)
+	addFileName('usb_ohci.h', usbDriverComponent, usbOHCIHeaderFile, "middleware/", "/usb/", True, None)
 	
-#	drvUsbHsV1HostSourceFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_SOURCE_FILE_EHCI", None)
-#	drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_ehci_host.c")
-#	drvUsbHsV1HostSourceFile.setOutputName("drv_usb_uhp_ehci_host.c")
-#	drvUsbHsV1HostSourceFile.setDestPath(usbDriverProjectPath + "uhp/src")
-#	drvUsbHsV1HostSourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src/")
-#	drvUsbHsV1HostSourceFile.setType("SOURCE")
-#	drvUsbHsV1HostSourceFile.setOverwrite(True)
-#	drvUsbHsV1HostSourceFile.setEnabled(True)
 	
-	drvUsbHsV1HostSourceFileOhci = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_SOURCE_FILE_OHCI", None)
-	drvUsbHsV1HostSourceFileOhci.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_ohci_host.c")
-	drvUsbHsV1HostSourceFileOhci.setOutputName("drv_usb_uhp_ohci_host.c")
-	drvUsbHsV1HostSourceFileOhci.setDestPath(usbDriverProjectPath + "uhp/src")
-	drvUsbHsV1HostSourceFileOhci.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src/")
-	drvUsbHsV1HostSourceFileOhci.setType("SOURCE")
-	drvUsbHsV1HostSourceFileOhci.setOverwrite(True)
-	drvUsbHsV1HostSourceFileOhci.setEnabled(True)
+	# OHCI Source file 
+	drvUsbHostOhciSourceFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_SOURCE_FILE_OHCI", None)
+	drvUsbHostOhciSourceFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_ohci.c")
+	drvUsbHostOhciSourceFile.setOutputName("drv_usb_ohci.c")
+	drvUsbHostOhciSourceFile.setDestPath(usbDriverProjectPath + "uhp/src")
+	drvUsbHostOhciSourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src/")
+	drvUsbHostOhciSourceFile.setType("SOURCE")
+	drvUsbHostOhciSourceFile.setOverwrite(True)
+	drvUsbHostOhciSourceFile.setEnabled(True)
 
 		
 # all files go into src/
@@ -382,38 +328,12 @@ def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callbac
 	symbol.setEnabled(enabled)
 	if callback != None:
 		symbol.setDependencies(callback, ["USB_OPERATION_MODE"])
-		
-def blDrvUsbHsV1DeviceSourceFile (usbSymbolSource, event):
-	if (event["value"] == "Device"):
-		usbSymbolSource.setEnabled(True)
-	elif (event["value"] == "Host"):
-		usbSymbolSource.setEnabled(False)
-		
-def blDrvUsbHsV1HostSourceFile (usbSymbolSource, event):
-	if (event["value"] == "Device"):
-		usbSymbolSource.setEnabled(False)
-	elif (event["value"] == "Host"):
-		usbSymbolSource.setEnabled(True)
-
-def blUSBDriverOperationModeDevice(usbSymbolSource, event):
-	if (event["value"] == "Host"):
-		usbSymbolSource.setVisible(False)
-	else:
-		usbSymbolSource.setVisible(True)
 	
-def blUSBDriverOperationModeChanged(usbSymbolSource, event):
-	if (event["value"] == "Device"):
-		usbSymbolSource.setVisible(False)
-	else:
-		usbSymbolSource.setVisible(True)
+def blUSBDriverOHCI(usbSymbolSource, event):
+	usbSymbolSource.setVisible(event["value"])	
 		
-def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
-	print(ownerComponent, dependencyID, dependentComponent)
-	
-def blUsbVbusPinName(usbSymbolSource, event):
+def blUsbHostVbusEnablePinName(usbSymbolSource, event):
 	if (event["value"] == True):
 		usbSymbolSource.setVisible(True)
 	else:
-		usbSymbolSource.setVisible(False)
-	
-	
+		usbSymbolSource.setVisible(False)	

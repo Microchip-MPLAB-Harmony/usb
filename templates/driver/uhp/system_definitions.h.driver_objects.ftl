@@ -22,7 +22,12 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
  -->
-    SYS_MODULE_OBJ  drvUSBObject;
+<#if (USB_DRV_EHCI_MENU)?has_content == true>
+    SYS_MODULE_OBJ  drvUSBEHCIObject;
+</#if>
+<#if (USB_DRV_OHCI_MENU)?has_content == true>
+    SYS_MODULE_OBJ  drvUSBOHCIObject;
+</#if>
 <#--
 /*******************************************************************************
  End of File

@@ -42,8 +42,13 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
 -->
-    /* Initialize USB Driver */ 
-    sysObj.drvUSBObject = DRV_USB_UHP_Initialize (DRV_USB_UHP_INDEX_0, (SYS_MODULE_INIT *) &drvUSBInit);
+<#if (USB_DRV_EHCI_MENU)?has_content == true>
+     /* Initialize USB Driver */ 
+    sysObj.drvUSBEHCIObject = DRV_USB_EHCI_Initialize (DRV_USB_EHCI_INDEX_0, (SYS_MODULE_INIT *) &drvUSBEHCIInit);
+</#if>
+<#if (USB_DRV_OHCI_MENU)?has_content == true>
+    sysObj.drvUSBOHCIObject = DRV_USB_OHCI_Initialize (DRV_USB_OHCI_INDEX_0, (SYS_MODULE_INIT *) &drvUSBOHCIInit);
+</#if>
 <#--
 /*******************************************************************************
  End of File
