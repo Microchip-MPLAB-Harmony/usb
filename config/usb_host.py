@@ -49,8 +49,7 @@ def handleMessage(messageID, args):
 	global usbHostTplEntryNumber
 	if (messageID == "UPDATE_TPL_ENTRY_NUMBER"):
 		usbHostTplEntryNumber.setValue(args["nTpl"])
-
-
+	
 def instantiateComponent(usbHostComponent):
 	global usbHostTplEntryNumber
 	global usbHostHubSaveValue
@@ -85,18 +84,16 @@ def instantiateComponent(usbHostComponent):
 		driverInterface = "DRV_USBFSV1_HOST_INTERFACE"
 		args = {"operationMode":"Host"}
 		Database.sendMessage("drv_usbfs_v1", "UPDATE_OPERATION_MODE", args)
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAM9X60", "SAMG55"]):
-		res = Database.activateComponents(["drv_uhphs"])
-		speed = Database.getSymbolValue("drv_uhphs", "USB_SPEED")
-		driverIndex = "DRV_USB_UHP_INDEX_0"
-		driverInterface = "DRV_USB_UHP_HOST_INTERFACE"
-		args = {"operationMode":"Host"}
-		Database.sendMessage("drv_uhphs", "UPDATE_OPERATION_MODE", args)
-#	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMG55"]):
-#		res = Database.activateComponents(["drv_uhp"])
-#		speed = Database.getSymbolValue("drv_uhp", "USB_SPEED")
-#		driverIndex = "DRV_USB_UHP_INDEX_0"
-#		driverInterface = "DRV_USB_UHP_HOST_INTERFACE"
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAM9X60"]):
+		res = Database.activateComponents(["drv_usbhs_v1"])
+		#speed = Database.getSymbolValue("drv_uhphs", "USB_SPEED")
+		driverIndex = "DRV_USB_EHCI_INDEX_0"
+		driverInterface = "DRV_USB_EHCI_INTERFACE"
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMG55"]):
+		res = Database.activateComponents(["drv_usbhs_v1"])
+		#speed = Database.getSymbolValue("drv_uhp", "USB_SPEED")
+		driverIndex = "DRV_USB_OHCI_INDEX_0"
+		driverInterface = "DRV_USB_OHCI_INTERFACE"
 	
 	
 	# USB Driver Index - This symbol actually should get set from a Driver dependency connected callback. 
@@ -157,6 +154,15 @@ def instantiateComponent(usbHostComponent):
 	usbHostTransfersNumber.setDefaultValue(10)
 	usbHostTransfersNumber.setDependencies(blUsbHostMaxInterfaceNumber, ["USB_OPERATION_MODE"])	
 	
+	# USB Host Pipes Number 
+	usbHostPipesNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_PIPES_NUMBER", None)
+	usbHostPipesNumber.setLabel("Number of Pipes")
+	usbHostPipesNumber.setVisible(True)
+        helpText = '''Configures the maximum number of Pipes required for the application.'''
+	usbHostPipesNumber.setDescription(helpText)
+	usbHostPipesNumber.setMin(0)
+	usbHostPipesNumber.setDefaultValue(10)
+		
 	# USB Host Hub Support
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX" , "SAMA5D2", "SAM9X60" , "SAMD21", "SAMDA1", "SAMD5","SAMV70", "SAMV71","SAME70", "SAMS70" ,"PIC32MK" ,"SAME5", "SAML21" , "SAM9X60", "SAMG55" ]):
 		usbHostHubsupport = usbHostComponent.createBooleanSymbol("CONFIG_USB_HOST_HUB_SUPPORT", None)

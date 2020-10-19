@@ -68,6 +68,25 @@ const USB_HOST_TPL_ENTRY USBTPList[${CONFIG_USB_HOST_TPL_ENTRY_NUMBER}] =
 ${LIST_USB_HOST_TPL_ENTRY}
 };
 
+<#if core.DeviceFamily == "SAMA5D2" || core.DeviceFamily == "SAM9X60" >
+const USB_HOST_HCD hcdTable[2] = 
+{
+    {
+         /* EHCI Driver Index */ 
+        .drvIndex = DRV_USB_EHCI_INDEX_0,
+
+        /* Pointer to the USB Driver Functions. */
+        .hcdInterface = DRV_USB_EHCI_INTERFACE,
+    },
+    {
+        /* OHCI Driver Index */ 
+        .drvIndex = DRV_USB_OHCI_INDEX_0,
+
+         /* Pointer to the USB Driver Interface. */
+        .hcdInterface = DRV_USB_OHCI_INTERFACE
+    }
+};
+<#else>
 const USB_HOST_HCD hcdTable = 
 {
     /* Index of the USB Driver used by the Host Layer */
@@ -75,7 +94,9 @@ const USB_HOST_HCD hcdTable =
 
     /* Pointer to the USB Driver Functions. */
     .hcdInterface = ${CONFIG_USB_DRIVER_INTERFACE},
+
 };
+</#if>
 
 const USB_HOST_INIT usbHostInitData = 
 {

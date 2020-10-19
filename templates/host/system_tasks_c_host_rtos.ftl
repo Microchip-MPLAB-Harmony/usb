@@ -47,7 +47,7 @@
     <#lt>{
     <#lt>    while(1)
     <#lt>    {
-				/* USB Host layer tasks routine */ 
+    <#lt>        /* USB Host layer tasks routine */ 
     <#lt>        USB_HOST_Tasks(sysObj.usbHostObject0);
              <#if USB_HOST_RTOS_USE_DELAY >
     <#lt>        vTaskDelay(${USB_HOST_RTOS_DELAY} / portTICK_PERIOD_MS);

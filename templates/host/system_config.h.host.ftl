@@ -77,24 +77,23 @@
 #define USB_HOST_DEVICES_NUMBER                             ${CONFIG_USB_HOST_DEVICE_NUMNBER} 
 </#if>
 
-/* Size of Endpoint 0 buffer */
-#define USB_DEVICE_EP0_BUFFER_SIZE                          64
-
 /* Target peripheral list entries */
 #define  USB_HOST_TPL_ENTRIES                               ${CONFIG_USB_HOST_TPL_ENTRY_NUMBER} 
 
 /* Maximum number of configurations supported per device */
 #define USB_HOST_DEVICE_INTERFACES_NUMBER                   ${CONFIG_USB_HOST_MAX_INTERFACES}    
 
+<#if core.DeviceFamily == "SAMA5D2" || core.DeviceFamily == "SAM9X60" >
+#define USB_HOST_CONTROLLERS_NUMBER                         2
+<#else>
 #define USB_HOST_CONTROLLERS_NUMBER                         1
+</#if>
 
-#define USB_HOST_TRANSFERS_NUMBER                           10
+#define USB_HOST_TRANSFERS_NUMBER                           ${CONFIG_USB_HOST_TRANSFERS_NUMBER}
 
 /* Provides Host pipes number */
-#define USB_HOST_PIPES_NUMBER                               10
+#define USB_HOST_PIPES_NUMBER                               ${CONFIG_USB_HOST_PIPES_NUMBER}
 
-/* Number of Host Layer Clients */
-#define USB_HOST_CLIENTS_NUMBER                             1   
 <#--
 /*******************************************************************************
  End of File
