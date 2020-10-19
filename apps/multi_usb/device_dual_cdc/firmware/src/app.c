@@ -62,8 +62,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 #define APP_READ_BUFFER_SIZE 64
-#define APP_USB_SWITCH_DEBOUNCE_COUNT_FS                    200
-#define APP_USB_SWITCH_DEBOUNCE_COUNT_HS                    1280
+#define APP_USB_SWITCH_DEBOUNCE_COUNT_FS                    150
+#define APP_USB_SWITCH_DEBOUNCE_COUNT_HS                    1200
 uint8_t __attribute__((aligned(16))) switchPromptUSB[] = "\r\nPUSH BUTTON PRESSED";
 
 uint8_t CACHE_ALIGN readBuffer[2][APP_READ_BUFFER_SIZE];

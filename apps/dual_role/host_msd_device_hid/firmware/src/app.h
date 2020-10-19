@@ -70,7 +70,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 /*** Application Instance 0 Configuration ***/
 
 /* Tick time in 125 usec units */
-#define APP_USB_SWITCH_DEBOUNCE_COUNT (1280)
+#define APP_USB_SWITCH_DEBOUNCE_COUNT (1200)
 
 /* Macro defines the conversion factor to be
  * multiplied to convert to millisecs*/

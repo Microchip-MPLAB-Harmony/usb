@@ -76,8 +76,8 @@ extern "C" {
 #define APP_MAKE_BUFFER_DMA_READY                           __attribute__((aligned(16)))
 #define APP_READ_BUFFER_SIZE                                64
 #define APP_WRITE_BUFFER_SIZE                                64
-#define APP_USB_SWITCH_DEBOUNCE_COUNT_FS                    260
-#define APP_USB_SWITCH_DEBOUNCE_COUNT_HS                    500
+#define APP_USB_SWITCH_DEBOUNCE_COUNT_FS                    150
+#define APP_USB_SWITCH_DEBOUNCE_COUNT_HS                    1200
 
 
 // *****************************************************************************

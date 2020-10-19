@@ -61,8 +61,8 @@
 // Section: Global Data Definitions
 // *****************************************************************************
 // *****************************************************************************
-#define APP_USB_SWITCH_DEBOUNCE_COUNT_FS                    260
-#define APP_USB_SWITCH_DEBOUNCE_COUNT_HS                    500
+#define APP_USB_SWITCH_DEBOUNCE_COUNT_FS                    150
+#define APP_USB_SWITCH_DEBOUNCE_COUNT_HS                    1200
 
 #if defined (__PIC32MZ__) || defined (_SAMD21J18A_H_) || defined (_SAME54P20A_H_)
 #define APP_EP_BULK_OUT 1

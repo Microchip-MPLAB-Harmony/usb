@@ -33,7 +33,7 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 #define APP_USB_SWITCH_DEBOUNCE_COUNT_FS                    150
-#define APP_USB_SWITCH_DEBOUNCE_COUNT_HS                    100
+#define APP_USB_SWITCH_DEBOUNCE_COUNT_HS                    150
 
 
 //DOM-IGNORE-BEGIN
