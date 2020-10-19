@@ -42,6 +42,7 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
 -->
+<#if CONFIG_USB_HID_TOTAL_USAGE_DRIVER_INSTANCES gt 0>
 <#if CONFIG_USB_HOST_USE_KEYBOARD == true>
 USB_HOST_HID_USAGE_DRIVER_INTERFACE usageDriverInterfaceKeyboard =
 {
@@ -77,12 +78,18 @@ USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY usageDriverTableEntry[${CONFIG_USB_HID_TOT
     },
 </#if>
 };
-
+</#if>
 
 USB_HOST_HID_INIT hidInitData =
 {
     .nUsageDriver = ${CONFIG_USB_HID_TOTAL_USAGE_DRIVER_INSTANCES},
+<#if CONFIG_USB_HID_TOTAL_USAGE_DRIVER_INSTANCES gt 0>
     .usageDriverTable = usageDriverTableEntry
+<#else>
+
+	/* No usage drivers added. At least one Usage driver must be added */ 
+	.usageDriverTable = NULL
+</#if>
 };
 
 <#--
