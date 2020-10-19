@@ -41,6 +41,7 @@ def loadModule():
     USBDeviceDriverCapabilityName = "DRV_USB" 
     USBHostDriverCapabilityName = "DRV_USB" 
     availablePeripherals = []
+    usbControllersNumber = 0
     if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK" , "PIC32MX"]):
         modules = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals").getChildren()
         for module in range(len(modules)):
@@ -49,7 +50,6 @@ def loadModule():
                 if str(instances[instance].getAttribute("name")) == "USB":
                     usbRegGroup = ATDF.getNode('/avr-tools-device-file/modules/module@[name="USB"]/register-group@[name="USB"]').getChildren()
                     usbIndex = 1
-                    usbControllersNumber = 0
                     for register in usbRegGroup:
                         regName = str(register.getAttribute("name"))
                         usbInstance = "U" + str(usbIndex) + "CON"
