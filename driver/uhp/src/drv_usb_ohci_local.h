@@ -215,7 +215,7 @@ typedef struct USB_HOST_IRP_LOCAL
     uint32_t completedBytes;
     uint32_t scheduledBytes;
     void * next;
-    DRV_USB_EHCI_PIPE_HANDLE  pipe;
+    DRV_USB_OHCI_PIPE_HANDLE  pipe;
 
 } USB_HOST_IRP_LOCAL;
 

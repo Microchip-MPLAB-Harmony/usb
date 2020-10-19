@@ -406,6 +406,10 @@ void _DRV_USB_EHCI_PortsTask(DRV_USB_EHCI_OBJ * hDriver)
                                 }
                                 else
                                 {
+                                    /* If the companion driver index is -1, this indicates
+                                     * there is no companion driver in the project. We should
+                                     * go to a state where this the device must be detached and
+                                     * we will wait for attach. */
                                     port->portAttachState = DRV_USB_EHCI_PORT_ATTACH_STATE_WAITING_FOR_ATTACH;
                                 }
                             }
@@ -1310,6 +1314,9 @@ SYS_MODULE_OBJ DRV_USB_EHCI_Initialize
                 hDriver->portIndication = drvInit->portIndication;
                 hDriver->portOverCurrentDetect = drvInit->portOverCurrentDetect;
                 hDriver->rootHubAvailableCurrent = drvInit->rootHubAvailableCurrent;
+                
+                /* Enable the module clock */
+                PMC_UCKR_UPLLEN();
 
                 /* Assign the frame list to this instance */
                 hDriver->periodicList = &gDrvUSBEHCIPeriodicFrameList[drvIndex][0];
@@ -3774,7 +3781,7 @@ void DRV_USB_EHCI_Tasks_ISR(SYS_MODULE_OBJ moduleObj)
 
 void UHPHS_Handler(void)
 {
-    DRV_USB_EHCI_Tasks_ISR(sysObj.drvUSBObject);
+    DRV_USB_EHCI_Tasks_ISR(sysObj.drvUSBEHCIObject);
     DRV_USB_OHCI_Tasks_ISR(sysObj.drvUSBOHCIObject);
 }
 

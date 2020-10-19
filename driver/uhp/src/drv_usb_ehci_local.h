@@ -57,16 +57,8 @@
 #include <string.h>
 
 
-/******************************************
- * Need to check if these macros are alread
- * handled in the clock initialization.
- *******************************************/
-#define PMC_UCKR_UPLLEN()   \
-    PMC_REGS->CKGR_UCKR = CKGR_UCKR_UPLLCOUNT_Msk | CKGR_UCKR_UPLLEN_Msk;\
-    PMC_REGS->PMC_PCR = PMC_PCR_PID(hDriver->interruptSource);\
-    PMC_REGS->PMC_PCR = PMC_PCR_PID(hDriver->interruptSource) | PMC_PCR_CMD_Msk | PMC_PCR_EN_Msk | PMC_PCR_GCKCSS_UPLL_CLK
 
-#define IS_LOCKU_ENABLE()  ((PMC_REGS->PMC_SR & PMC_SR_LOCKU_Msk) == PMC_SR_LOCKU_Msk)
+
 #define _DRV_USB_EHCI_NON_CACHED __attribute__((__section__(".region_nocache")))
 #define _DRV_USB_EHCI_POLLING_RATE(x) ((1 << (x-1))/8)
 /**********************************************
@@ -100,7 +92,13 @@
     #define UHPHS_PORTSC_N_PP_Msk   UHPHS_PORTSC_PP_Msk
     #define UHPHS_PORTSC_N_PED_Msk  UHPHS_PORTSC_PED_Msk
 
-
+    #define PMC_UCKR_UPLLEN()   \
+    PMC_REGS->PMC_PCR = PMC_PCR_PID(hDriver->interruptSource);\
+    PMC_REGS->PMC_PCR = PMC_PCR_PID(hDriver->interruptSource) | PMC_PCR_CMD_Msk | PMC_PCR_EN_Msk | PMC_PCR_GCKCSS_UPLL_CLK;\
+    while ((PMC_REGS->PMC_PLL_ISR0 & PMC_PLL_ISR0_LOCKU_Msk) != PMC_PLL_ISR0_LOCKU_Msk)
+    
+    #define PMC_PCR_GCKCSS_UPLL_CLK  PMC_PCR_GCLKCSS(PMC_PCR_GCLKCSS_UPLL_Val) 
+    #define IS_LOCKU_ENABLE()  ((PMC_REGS->PMC_PLL_ISR0 & PMC_PLL_ISR0_LOCKU_Msk) == PMC_PLL_ISR0_LOCKU_Msk)
 #endif
 
 #ifdef UHPHS_PORTSC_0_REG_OFST
@@ -116,6 +114,13 @@
     #define UHPHS_PORTSC_N_PP_Msk   UHPHS_PORTSC_0_PP_Msk
     #define UHPHS_PORTSC_N_PED_Msk  UHPHS_PORTSC_0_PED_Msk
 
+    #define PMC_UCKR_UPLLEN()   \
+    PMC_REGS->CKGR_UCKR = CKGR_UCKR_UPLLCOUNT_Msk | CKGR_UCKR_UPLLEN_Msk;\
+    PMC_REGS->PMC_PCR = PMC_PCR_PID(hDriver->interruptSource);\
+    PMC_REGS->PMC_PCR = PMC_PCR_PID(hDriver->interruptSource) | PMC_PCR_CMD_Msk | PMC_PCR_EN_Msk | PMC_PCR_GCKCSS_UPLL_CLK;\
+    while ((PMC_REGS->PMC_SR & PMC_SR_LOCKU_Msk) != PMC_SR_LOCKU_Msk)
+      
+    #define IS_LOCKU_ENABLE()  ((PMC_REGS->PMC_SR & PMC_SR_LOCKU_Msk) == PMC_SR_LOCKU_Msk)
 #endif
     
 

@@ -142,7 +142,7 @@ void _DRV_USB_OHCI_PeriodicListRemove
 
     if(interruptList[slotIndex] != 0)
     {
-        if(interruptList[slotIndex] = (uint32_t)ed)
+        if(interruptList[slotIndex] == (uint32_t)ed)
         {
             /* This means the ED is at the head of the list */
             interruptList[slotIndex] = ed->nextED;
@@ -2232,6 +2232,10 @@ DRV_USB_OHCI_PIPE_HANDLE DRV_USB_OHCI_PipeSetup
 
                         if((pipe != NULL) && (placeHolderTD != NULL))
                         {
+
+                            /* Set up the OHCI Endpoint Descriptor */
+                            ed = &pipe->ed;
+
                             /* We have found a pipe and a place holder TD */
                             pipe->pipeType = pipeType;
                             pipe->clientUniqueKey = _DRV_USB_OHCI_GetUniqueKey(hDriver);
@@ -2249,8 +2253,6 @@ DRV_USB_OHCI_PIPE_HANDLE DRV_USB_OHCI_PipeSetup
                             /* Clear up the endpoint descriptor structure */
                             memset(ed, 0, sizeof(USB_OHCI_ED));
 
-                            /* Set up the OHCI Endpoint Descriptor */
-                            ed = &pipe->ed;
                             ed->fa = deviceAddress;
                             ed->en = endpointAndDirection & 0xF;
 
@@ -3639,7 +3641,7 @@ void DRV_USB_OHCI_Tasks_ISR(SYS_MODULE_OBJ moduleObj)
 
 #ifdef DRV_USB_EHCI_INSTANCES_NUMBER
     #if (DRV_USB_EHCI_INSTANCES_NUMBER == 0)
-    void UHPHS_Handler(void)
+    void UHP_Handler(void)
     {
         DRV_USB_OHCI_Tasks_ISR(sysObj.drvUSBOHCIObject);
     }
