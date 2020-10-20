@@ -83,7 +83,7 @@
 /* Maximum number of configurations supported per device */
 #define USB_HOST_DEVICE_INTERFACES_NUMBER                   ${CONFIG_USB_HOST_MAX_INTERFACES}    
 
-<#if core.DeviceFamily == "SAMA5D2" || core.DeviceFamily == "SAM9X60" >
+<#if (core.DeviceFamily?has_content == true) && (core.DeviceFamily == "SAMA5D2" || core.DeviceFamily == "SAM9X60") >
 #define USB_HOST_CONTROLLERS_NUMBER                         2
 <#else>
 #define USB_HOST_CONTROLLERS_NUMBER                         1

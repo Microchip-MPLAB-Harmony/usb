@@ -68,7 +68,7 @@ const USB_HOST_TPL_ENTRY USBTPList[${CONFIG_USB_HOST_TPL_ENTRY_NUMBER}] =
 ${LIST_USB_HOST_TPL_ENTRY}
 };
 
-<#if core.DeviceFamily == "SAMA5D2" || core.DeviceFamily == "SAM9X60" >
+<#if (core.DeviceFamily?has_content == true) && (core.DeviceFamily == "SAMA5D2" || core.DeviceFamily == "SAM9X60") >
 const USB_HOST_HCD hcdTable[2] = 
 {
     {
