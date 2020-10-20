@@ -425,13 +425,13 @@ void APP_Tasks ( void )
             USB_HOST_EventHandlerSet(APP_USBHostEventHandler, 0);
             USB_HOST_HID_KEYBOARD_EventHandlerSet(APP_USBHostHIDKeyboardEventHandler);
             
-			USB_HOST_BusEnable(0);
+			USB_HOST_BusEnable(USB_HOST_BUS_ALL);
 			appData.state = APP_STATE_WAIT_FOR_HOST_ENABLE;
             break;
 			
 		case APP_STATE_WAIT_FOR_HOST_ENABLE:
             /* Check if the host operation has been enabled */
-            if(USB_HOST_BusIsEnabled(0))
+            if(USB_HOST_BusIsEnabled(USB_HOST_BUS_ALL))
             {
                 /* This means host operation is enabled. We can
                  * move on to the next state */
