@@ -283,7 +283,7 @@ void APP_Tasks ( void )
             USB_HOST_EventHandlerSet(APP_USBHostEventHandler, (uintptr_t)0);
             USB_HOST_CDC_AttachEventHandlerSet(APP_USBHostCDCAttachEventListener, (uintptr_t) 0);
             USB_HOST_HID_MOUSE_EventHandlerSet(APP_USBHostHIDMouseEventHandler);
-            USB_HOST_BusEnable(USB_HOST_BUS_ALL)
+            USB_HOST_BusEnable(USB_HOST_BUS_ALL);
             appData.state = APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE;
             break;
         
