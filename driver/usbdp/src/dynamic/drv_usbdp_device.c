@@ -2626,6 +2626,7 @@ void _DRV_USBDP_Tasks_ISR
     udp_registers_t * usbID;                    /* USB instance pointer */
     DRV_USBDP_ENDPOINT_OBJ * endpointObj;       /* Endpoint object pointer */
     USB_DEVICE_IRP_LOCAL * irp;                 /* Local irp pointer */
+    USB_SETUP_PACKET * setupPkt;
     uint16_t offset;                            /* Endpoint data offset holder */
     uint16_t index;                             /* Loop counter */
     uint16_t epIndex;                           /* Loop counter */
@@ -2755,9 +2756,12 @@ void _DRV_USBDP_Tasks_ISR
 
                     /* Analyze the setup packet. We need to check if the control
                      * transfer contains a data stage and if so, get the direction. */
+                
+					setupPkt = (USB_SETUP_PACKET *)irp->data;
+											
+					endpoint0DataStageSize = setupPkt->W_Length.Val;
 
-                    endpoint0DataStageSize = *((uint8_t *)irp->data + 6);
-                    endpoint0DataStageDirection = (uint8_t)((*((uint8_t *)irp->data) & DRV_USBDP_ENDPOINT_DIRECTION_MASK) != 0);
+					endpoint0DataStageDirection = (uint16_t)((setupPkt->bmRequestType & DRV_USBDP_ENDPOINT_DIRECTION_MASK) != 0);
 
                     if(endpoint0DataStageSize == 0)
                     {

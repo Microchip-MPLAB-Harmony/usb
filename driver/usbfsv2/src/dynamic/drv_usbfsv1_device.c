@@ -2210,6 +2210,7 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
     DRV_USBFSV1_DEVICE_ENDPOINT_OBJ * endpointObj;
     USB_DEVICE_IRP_LOCAL * irp;
     usb_registers_t * usbID;
+    USB_SETUP_PACKET * setupPkt;
     volatile uint32_t regIntEnSet;
     volatile uint32_t regIntFlag;
     uint16_t endpoint0DataStageSize;
@@ -2385,10 +2386,12 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                 /* Analyze the setup packet. We need to check if the
                  * control transfer contains a data stage and if so,
                  * what is its direction. */
+                
+                setupPkt = (USB_SETUP_PACKET *)irp->data;
                                         
-                endpoint0DataStageSize = *((uint8_t *)irp->data + 6);
+                endpoint0DataStageSize = setupPkt->W_Length.Val;
 
-                endpoint0DataStageDirection = (uint8_t)((*((uint8_t *)irp->data) & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0);
+                endpoint0DataStageDirection = (uint16_t)((setupPkt->bmRequestType & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0);
 
                 if(endpoint0DataStageSize == 0)
                 {
