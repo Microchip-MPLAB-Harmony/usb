@@ -200,12 +200,12 @@ void APP_Tasks ( void )
            /* Set the event handler and enable the bus */
             SYS_FS_EventHandlerSet((void *)APP_SYSFSEventHandler, (uintptr_t)NULL);
             USB_HOST_EventHandlerSet(APP_USBHostEventHandler, 0);
-            USB_HOST_BusEnable(0);
+            USB_HOST_BusEnable(USB_HOST_BUS_ALL);
             appData.state = APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE;
             break;
             
         case APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE:
-            if(USB_HOST_BusIsEnabled(0))
+            if(USB_HOST_BusIsEnabled(USB_HOST_BUS_ALL))
             {
                 appData.state = APP_STATE_WAIT_FOR_DEVICE_ATTACH;
             }
