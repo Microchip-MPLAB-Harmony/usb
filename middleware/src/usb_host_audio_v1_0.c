@@ -5226,13 +5226,7 @@ USB_HOST_AUDIO_V1_0_RESULT USB_HOST_AUDIO_V1_0_StreamGetNext
     
     audioInstanceIndex = (uint8_t)audioStreamObj;
     asIntrefaceIndex = (uint8_t)(audioStreamObj>>8); 
-    alternateSetting = (uint8_t)(audioStreamObj>>16);
-    
-    if (alternateSetting == 0)
-    {
-        return USB_HOST_AUDIO_V1_0_STREAM_HANDLE_INVALID; 
-    }
-    // TODO alternateSettingIndex = alternateSetting;     
+    alternateSetting = (uint8_t)(audioStreamObj>>16);   
     
     audioInstanceInfo = &gUSBHostAudioInstance[audioInstanceIndex]; 
     asInterface = &audioInstanceInfo->streamInf[asIntrefaceIndex]; 

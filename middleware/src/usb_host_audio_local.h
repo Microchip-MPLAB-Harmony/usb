@@ -484,8 +484,6 @@ void _USB_HOST_AUDIO_V1_ReleaseInterface
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
 );
 
-void _USB_HOST_AUDIO_V1_InterfaceRelease( USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle ); 
-
 
 void _USB_HOST_Audio_StreamEnableCallback
 (

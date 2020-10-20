@@ -53,6 +53,7 @@
 #include "usb/usb_host.h"
 #include "usb/usb_host_client_driver.h"
 #include "usb/usb_audio_v1_0.h"
+#include "configuration.h"
 
 
 // DOM-IGNORE-BEGIN
