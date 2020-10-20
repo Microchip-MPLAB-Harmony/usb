@@ -98,7 +98,7 @@ void APP_USBDeviceHIDEventHandler
 )
 
 {
-    APP_DATA * appData = (APP_DATA *)context;
+    APP_DATA * appDataObject = (APP_DATA *)context;
 
     switch(event)
     {
@@ -107,7 +107,7 @@ void APP_USBDeviceHIDEventHandler
             /* This means the mouse report was sent.
              We are free to send another report */
 
-            appData->isReportSentComplete = true;
+            appDataObject->isReportSentComplete = true;
             break;
 
         case USB_DEVICE_HID_EVENT_REPORT_RECEIVED:
@@ -122,17 +122,17 @@ void APP_USBDeviceHIDEventHandler
              * this request using the USB_DEVICE_HID_ControlStatus()
              * function with a USB_DEVICE_CONTROL_STATUS_OK flag */
 
-            USB_DEVICE_ControlStatus(appData->deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
+            USB_DEVICE_ControlStatus(appDataObject->deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
 
             /* save Idle rate recieved from Host */
-            appData->idleRate = *(uint8_t*)pData;
+            appDataObject->idleRate = *(uint8_t*)pData;
             break;
 
         case USB_DEVICE_HID_EVENT_GET_IDLE:
 
             /* Host is requesting for Idle rate. Now send the Idle rate */
-            USB_DEVICE_ControlSend(appData->deviceHandle,
-                    & (appData->idleRate),1);
+            USB_DEVICE_ControlSend(appDataObject->deviceHandle,
+                    & (appDataObject->idleRate),1);
             /* On successfully reciveing Idle rate, the Host would acknowledge back with a
                Zero Length packet. The HID function drvier returns an event
                USB_DEVICE_HID_EVENT_CONTROL_TRANSFER_DATA_SENT to the application upon

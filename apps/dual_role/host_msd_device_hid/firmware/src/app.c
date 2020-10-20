@@ -103,7 +103,7 @@ void APP_USBDeviceHIDEventHandler
 )
 {
     /* Start of local variables */
-    APP_DATA * appData = (APP_DATA *)userData;
+    APP_DATA * appDataObject = (APP_DATA *)userData;
     /* End of local variables */
 
     switch(event)
@@ -113,7 +113,7 @@ void APP_USBDeviceHIDEventHandler
             /* This means the mouse report was sent.
              We are free to send another report */
 
-            appData->isMouseReportSendBusy = false;
+            appDataObject->isMouseReportSendBusy = false;
             break;
 
         case USB_DEVICE_HID_EVENT_REPORT_RECEIVED:
@@ -124,16 +124,16 @@ void APP_USBDeviceHIDEventHandler
         case USB_DEVICE_HID_EVENT_SET_IDLE:
 
              /* Acknowledge the Control Write Transfer */
-           USB_DEVICE_ControlStatus(appData->deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
+           USB_DEVICE_ControlStatus(appDataObject->deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
 
             /* save Idle rate received from Host */
-            appData->idleRate = ((USB_DEVICE_HID_EVENT_DATA_SET_IDLE*)eventData)->duration;
+            appDataObject->idleRate = ((USB_DEVICE_HID_EVENT_DATA_SET_IDLE*)eventData)->duration;
             break;
 
         case USB_DEVICE_HID_EVENT_GET_IDLE:
 
             /* Host is requesting for Idle rate. Now send the Idle rate */
-            USB_DEVICE_ControlSend(appData->deviceHandle, &(appData->idleRate),1);
+            USB_DEVICE_ControlSend(appDataObject->deviceHandle, &(appDataObject->idleRate),1);
 
             /* On successfully receiving Idle rate, the Host would acknowledge
                back with a Zero Length packet. The HID function driver returns
@@ -146,16 +146,16 @@ void APP_USBDeviceHIDEventHandler
 
         case USB_DEVICE_HID_EVENT_SET_PROTOCOL:
             /* Host is trying set protocol. Now receive the protocol and save */
-            appData->activeProtocol = *(USB_HID_PROTOCOL_CODE *)eventData;
+            appDataObject->activeProtocol = *(USB_HID_PROTOCOL_CODE *)eventData;
 
               /* Acknowledge the Control Write Transfer */
-            USB_DEVICE_ControlStatus(appData->deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
+            USB_DEVICE_ControlStatus(appDataObject->deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
             break;
 
         case  USB_DEVICE_HID_EVENT_GET_PROTOCOL:
 
             /* Host is requesting for Current Protocol. Now send the Idle rate */
-             USB_DEVICE_ControlSend(appData->deviceHandle, &(appData->activeProtocol), 1);
+             USB_DEVICE_ControlSend(appDataObject->deviceHandle, &(appDataObject->activeProtocol), 1);
 
              /* On successfully receiving Idle rate, the Host would acknowledge
                back with a Zero Length packet. The HID function driver returns
