@@ -103,7 +103,7 @@ void APP_USBDeviceEventHandler( USB_DEVICE_EVENT event, void * pEventData, uintp
     /* This is an example of how the context parameter
        in the event handler can be used.*/
 
-    APP_DATA * appData = (APP_DATA*)context;
+    APP_DATA * appDataObject = (APP_DATA*)context;
 
     switch( event )
     {
@@ -126,13 +126,13 @@ void APP_USBDeviceEventHandler( USB_DEVICE_EVENT event, void * pEventData, uintp
         case USB_DEVICE_EVENT_POWER_DETECTED:
 
             /* VBUS is detected. Attach the device. */
-            USB_DEVICE_Attach(appData->usbDeviceHandle);
+            USB_DEVICE_Attach(appDataObject->usbDeviceHandle);
             break;
 
         case USB_DEVICE_EVENT_POWER_REMOVED:
 
             /* VBUS is not detected. Detach the device */
-            USB_DEVICE_Detach(appData->usbDeviceHandle);
+            USB_DEVICE_Detach(appDataObject->usbDeviceHandle);
             LED_Off();
             break;
 
