@@ -267,14 +267,14 @@ void APP_Tasks ( void )
             
             USB_HOST_EventHandlerSet(APP_USBHostEventHandler, (uintptr_t)0);
             USB_HOST_CDC_AttachEventHandlerSet(APP_USBHostCDCAttachEventListener, (uintptr_t) 0);
-            USB_HOST_BusEnable(0);
+            USB_HOST_BusEnable(USB_HOST_BUS_ALL);
             appData.state = APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE;
             break;
         
         case APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE:
             
             /* In this state we wait for the Bus enable to complete */
-            if(USB_HOST_BusIsEnabled(0))
+            if(USB_HOST_BusIsEnabled(USB_HOST_BUS_ALL))
             {
                 appData.state = APP_STATE_WAIT_FOR_DEVICE_ATTACH;
             }
