@@ -284,7 +284,7 @@ void APP_Tasks ( void )
             USB_HOST_EventHandlerSet(APP_USBHostEventHandler, 0);
             USB_HOST_HID_MOUSE_EventHandlerSet(APP_USBHostHIDMouseEventHandler);
             
-			USB_HOST_BusEnable(0);
+			USB_HOST_BusEnable(USB_HOST_BUS_ALL);
             
             memcpy(&appData.string[0], "***Connect Mouse***\r\n",
                         sizeof("***Connect Mouse***\r\n"));
@@ -301,7 +301,7 @@ void APP_Tasks ( void )
         case APP_STATE_WAIT_FOR_HOST_ENABLE:
         {
             /* Check if the host operation has been enabled */
-            if(USB_HOST_BusIsEnabled(0))
+            if(USB_HOST_BusIsEnabled(USB_HOST_BUS_ALL))
             {
                 appData.state = APP_STATE_WAIT_FOR_DEVICE_ATTACH;
             }
