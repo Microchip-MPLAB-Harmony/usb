@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2020-04-24T12:41:07Z */
+/* file generated from device description version 2020-08-25T15:51:45Z */
 #ifndef _PIC32CMLE00_OSCCTRL_COMPONENT_H_
 #define _PIC32CMLE00_OSCCTRL_COMPONENT_H_
 
@@ -597,11 +597,11 @@
 #define OSCCTRL_DPLLCTRLB_FILTER_Pos          _U_(0)                                               /**< (OSCCTRL_DPLLCTRLB) Proportional Integral Filter Selection Position */
 #define OSCCTRL_DPLLCTRLB_FILTER_Msk          (_U_(0x3) << OSCCTRL_DPLLCTRLB_FILTER_Pos)           /**< (OSCCTRL_DPLLCTRLB) Proportional Integral Filter Selection Mask */
 #define OSCCTRL_DPLLCTRLB_FILTER(value)       (OSCCTRL_DPLLCTRLB_FILTER_Msk & ((value) << OSCCTRL_DPLLCTRLB_FILTER_Pos))
-#define   OSCCTRL_DPLLCTRLB_FILTER_Default_Val _U_(0x0)                                             /**< (OSCCTRL_DPLLCTRLB) Default Filter Mode  */
+#define   OSCCTRL_DPLLCTRLB_FILTER_DEFAULT_Val _U_(0x0)                                             /**< (OSCCTRL_DPLLCTRLB) Default Filter Mode  */
 #define   OSCCTRL_DPLLCTRLB_FILTER_LBFILT_Val _U_(0x1)                                             /**< (OSCCTRL_DPLLCTRLB) Low Bandwidth Filter  */
 #define   OSCCTRL_DPLLCTRLB_FILTER_HBFILT_Val _U_(0x2)                                             /**< (OSCCTRL_DPLLCTRLB) High Bandwidth Filter  */
 #define   OSCCTRL_DPLLCTRLB_FILTER_HDFILT_Val _U_(0x3)                                             /**< (OSCCTRL_DPLLCTRLB) High Damping Filter  */
-#define OSCCTRL_DPLLCTRLB_FILTER_Default      (OSCCTRL_DPLLCTRLB_FILTER_Default_Val << OSCCTRL_DPLLCTRLB_FILTER_Pos) /**< (OSCCTRL_DPLLCTRLB) Default Filter Mode Position  */
+#define OSCCTRL_DPLLCTRLB_FILTER_DEFAULT      (OSCCTRL_DPLLCTRLB_FILTER_DEFAULT_Val << OSCCTRL_DPLLCTRLB_FILTER_Pos) /**< (OSCCTRL_DPLLCTRLB) Default Filter Mode Position  */
 #define OSCCTRL_DPLLCTRLB_FILTER_LBFILT       (OSCCTRL_DPLLCTRLB_FILTER_LBFILT_Val << OSCCTRL_DPLLCTRLB_FILTER_Pos) /**< (OSCCTRL_DPLLCTRLB) Low Bandwidth Filter Position  */
 #define OSCCTRL_DPLLCTRLB_FILTER_HBFILT       (OSCCTRL_DPLLCTRLB_FILTER_HBFILT_Val << OSCCTRL_DPLLCTRLB_FILTER_Pos) /**< (OSCCTRL_DPLLCTRLB) High Bandwidth Filter Position  */
 #define OSCCTRL_DPLLCTRLB_FILTER_HDFILT       (OSCCTRL_DPLLCTRLB_FILTER_HDFILT_Val << OSCCTRL_DPLLCTRLB_FILTER_Pos) /**< (OSCCTRL_DPLLCTRLB) High Damping Filter Position  */

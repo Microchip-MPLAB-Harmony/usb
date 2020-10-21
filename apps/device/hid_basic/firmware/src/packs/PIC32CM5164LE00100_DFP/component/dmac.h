@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2020-04-24T12:41:07Z */
+/* file generated from device description version 2020-08-25T15:51:45Z */
 #ifndef _PIC32CMLE00_DMAC_COMPONENT_H_
 #define _PIC32CMLE00_DMAC_COMPONENT_H_
 
@@ -336,50 +336,50 @@
 #define DMAC_SWTRIGCTRL_SWTRIG_Msk            (_U_(0xFFFF) << DMAC_SWTRIGCTRL_SWTRIG_Pos)          /**< (DMAC_SWTRIGCTRL Mask) SWTRIG */
 #define DMAC_SWTRIGCTRL_SWTRIG(value)         (DMAC_SWTRIGCTRL_SWTRIG_Msk & ((value) << DMAC_SWTRIGCTRL_SWTRIG_Pos)) 
 
-/* -------- DMAC_PRICTRL : (DMAC Offset: 0x14) (R/W 32) Priority Control -------- */
-#define DMAC_PRICTRL_RESETVALUE               _U_(0x00)                                            /**<  (DMAC_PRICTRL) Priority Control  Reset Value */
+/* -------- DMAC_PRICTRL0 : (DMAC Offset: 0x14) (R/W 32) Priority Control -------- */
+#define DMAC_PRICTRL0_RESETVALUE              _U_(0x00)                                            /**<  (DMAC_PRICTRL0) Priority Control  Reset Value */
 
-#define DMAC_PRICTRL_LVLPRI0_Pos              _U_(0)                                               /**< (DMAC_PRICTRL) Level 0 Channel Priority Number Position */
-#define DMAC_PRICTRL_LVLPRI0_Msk              (_U_(0xF) << DMAC_PRICTRL_LVLPRI0_Pos)               /**< (DMAC_PRICTRL) Level 0 Channel Priority Number Mask */
-#define DMAC_PRICTRL_LVLPRI0(value)           (DMAC_PRICTRL_LVLPRI0_Msk & ((value) << DMAC_PRICTRL_LVLPRI0_Pos))
-#define DMAC_PRICTRL_RRLVLEN0_Pos             _U_(7)                                               /**< (DMAC_PRICTRL) Level 0 Round-Robin Scheduling Enable Position */
-#define DMAC_PRICTRL_RRLVLEN0_Msk             (_U_(0x1) << DMAC_PRICTRL_RRLVLEN0_Pos)              /**< (DMAC_PRICTRL) Level 0 Round-Robin Scheduling Enable Mask */
-#define DMAC_PRICTRL_RRLVLEN0(value)          (DMAC_PRICTRL_RRLVLEN0_Msk & ((value) << DMAC_PRICTRL_RRLVLEN0_Pos))
-#define   DMAC_PRICTRL_RRLVLEN0_STATIC_LVL_Val _U_(0x0)                                             /**< (DMAC_PRICTRL) Static arbitration scheme for channels with level 0 priority  */
-#define   DMAC_PRICTRL_RRLVLEN0_ROUND_ROBIN_LVL_Val _U_(0x1)                                             /**< (DMAC_PRICTRL) Round-robin arbitration scheme for channels with level 0 priority  */
-#define DMAC_PRICTRL_RRLVLEN0_STATIC_LVL      (DMAC_PRICTRL_RRLVLEN0_STATIC_LVL_Val << DMAC_PRICTRL_RRLVLEN0_Pos) /**< (DMAC_PRICTRL) Static arbitration scheme for channels with level 0 priority Position  */
-#define DMAC_PRICTRL_RRLVLEN0_ROUND_ROBIN_LVL (DMAC_PRICTRL_RRLVLEN0_ROUND_ROBIN_LVL_Val << DMAC_PRICTRL_RRLVLEN0_Pos) /**< (DMAC_PRICTRL) Round-robin arbitration scheme for channels with level 0 priority Position  */
-#define DMAC_PRICTRL_LVLPRI1_Pos              _U_(8)                                               /**< (DMAC_PRICTRL) Level 1 Channel Priority Number Position */
-#define DMAC_PRICTRL_LVLPRI1_Msk              (_U_(0xF) << DMAC_PRICTRL_LVLPRI1_Pos)               /**< (DMAC_PRICTRL) Level 1 Channel Priority Number Mask */
-#define DMAC_PRICTRL_LVLPRI1(value)           (DMAC_PRICTRL_LVLPRI1_Msk & ((value) << DMAC_PRICTRL_LVLPRI1_Pos))
-#define DMAC_PRICTRL_RRLVLEN1_Pos             _U_(15)                                              /**< (DMAC_PRICTRL) Level 1 Round-Robin Scheduling Enable Position */
-#define DMAC_PRICTRL_RRLVLEN1_Msk             (_U_(0x1) << DMAC_PRICTRL_RRLVLEN1_Pos)              /**< (DMAC_PRICTRL) Level 1 Round-Robin Scheduling Enable Mask */
-#define DMAC_PRICTRL_RRLVLEN1(value)          (DMAC_PRICTRL_RRLVLEN1_Msk & ((value) << DMAC_PRICTRL_RRLVLEN1_Pos))
-#define   DMAC_PRICTRL_RRLVLEN1_STATIC_LVL_Val _U_(0x0)                                             /**< (DMAC_PRICTRL) Static arbitration scheme for channels with level 1 priority  */
-#define   DMAC_PRICTRL_RRLVLEN1_ROUND_ROBIN_LVL_Val _U_(0x1)                                             /**< (DMAC_PRICTRL) Round-robin arbitration scheme for channels with level 1 priority  */
-#define DMAC_PRICTRL_RRLVLEN1_STATIC_LVL      (DMAC_PRICTRL_RRLVLEN1_STATIC_LVL_Val << DMAC_PRICTRL_RRLVLEN1_Pos) /**< (DMAC_PRICTRL) Static arbitration scheme for channels with level 1 priority Position  */
-#define DMAC_PRICTRL_RRLVLEN1_ROUND_ROBIN_LVL (DMAC_PRICTRL_RRLVLEN1_ROUND_ROBIN_LVL_Val << DMAC_PRICTRL_RRLVLEN1_Pos) /**< (DMAC_PRICTRL) Round-robin arbitration scheme for channels with level 1 priority Position  */
-#define DMAC_PRICTRL_LVLPRI2_Pos              _U_(16)                                              /**< (DMAC_PRICTRL) Level 2 Channel Priority Number Position */
-#define DMAC_PRICTRL_LVLPRI2_Msk              (_U_(0xF) << DMAC_PRICTRL_LVLPRI2_Pos)               /**< (DMAC_PRICTRL) Level 2 Channel Priority Number Mask */
-#define DMAC_PRICTRL_LVLPRI2(value)           (DMAC_PRICTRL_LVLPRI2_Msk & ((value) << DMAC_PRICTRL_LVLPRI2_Pos))
-#define DMAC_PRICTRL_RRLVLEN2_Pos             _U_(23)                                              /**< (DMAC_PRICTRL) Level 2 Round-Robin Scheduling Enable Position */
-#define DMAC_PRICTRL_RRLVLEN2_Msk             (_U_(0x1) << DMAC_PRICTRL_RRLVLEN2_Pos)              /**< (DMAC_PRICTRL) Level 2 Round-Robin Scheduling Enable Mask */
-#define DMAC_PRICTRL_RRLVLEN2(value)          (DMAC_PRICTRL_RRLVLEN2_Msk & ((value) << DMAC_PRICTRL_RRLVLEN2_Pos))
-#define   DMAC_PRICTRL_RRLVLEN2_STATIC_LVL_Val _U_(0x0)                                             /**< (DMAC_PRICTRL) Static arbitration scheme for channels with level 2 priority  */
-#define   DMAC_PRICTRL_RRLVLEN2_ROUND_ROBIN_LVL_Val _U_(0x1)                                             /**< (DMAC_PRICTRL) Round-robin arbitration scheme for channels with level 2 priority  */
-#define DMAC_PRICTRL_RRLVLEN2_STATIC_LVL      (DMAC_PRICTRL_RRLVLEN2_STATIC_LVL_Val << DMAC_PRICTRL_RRLVLEN2_Pos) /**< (DMAC_PRICTRL) Static arbitration scheme for channels with level 2 priority Position  */
-#define DMAC_PRICTRL_RRLVLEN2_ROUND_ROBIN_LVL (DMAC_PRICTRL_RRLVLEN2_ROUND_ROBIN_LVL_Val << DMAC_PRICTRL_RRLVLEN2_Pos) /**< (DMAC_PRICTRL) Round-robin arbitration scheme for channels with level 2 priority Position  */
-#define DMAC_PRICTRL_LVLPRI3_Pos              _U_(24)                                              /**< (DMAC_PRICTRL) Level 3 Channel Priority Number Position */
-#define DMAC_PRICTRL_LVLPRI3_Msk              (_U_(0xF) << DMAC_PRICTRL_LVLPRI3_Pos)               /**< (DMAC_PRICTRL) Level 3 Channel Priority Number Mask */
-#define DMAC_PRICTRL_LVLPRI3(value)           (DMAC_PRICTRL_LVLPRI3_Msk & ((value) << DMAC_PRICTRL_LVLPRI3_Pos))
-#define DMAC_PRICTRL_RRLVLEN3_Pos             _U_(31)                                              /**< (DMAC_PRICTRL) Level 3 Round-Robin Scheduling Enable Position */
-#define DMAC_PRICTRL_RRLVLEN3_Msk             (_U_(0x1) << DMAC_PRICTRL_RRLVLEN3_Pos)              /**< (DMAC_PRICTRL) Level 3 Round-Robin Scheduling Enable Mask */
-#define DMAC_PRICTRL_RRLVLEN3(value)          (DMAC_PRICTRL_RRLVLEN3_Msk & ((value) << DMAC_PRICTRL_RRLVLEN3_Pos))
-#define   DMAC_PRICTRL_RRLVLEN3_STATIC_LVL_Val _U_(0x0)                                             /**< (DMAC_PRICTRL) Static arbitration scheme for channels with level 3 priority  */
-#define   DMAC_PRICTRL_RRLVLEN3_ROUND_ROBIN_LVL_Val _U_(0x1)                                             /**< (DMAC_PRICTRL) Round-robin arbitration scheme for channels with level 3 priority  */
-#define DMAC_PRICTRL_RRLVLEN3_STATIC_LVL      (DMAC_PRICTRL_RRLVLEN3_STATIC_LVL_Val << DMAC_PRICTRL_RRLVLEN3_Pos) /**< (DMAC_PRICTRL) Static arbitration scheme for channels with level 3 priority Position  */
-#define DMAC_PRICTRL_RRLVLEN3_ROUND_ROBIN_LVL (DMAC_PRICTRL_RRLVLEN3_ROUND_ROBIN_LVL_Val << DMAC_PRICTRL_RRLVLEN3_Pos) /**< (DMAC_PRICTRL) Round-robin arbitration scheme for channels with level 3 priority Position  */
-#define DMAC_PRICTRL_Msk                      _U_(0x8F8F8F8F)                                      /**< (DMAC_PRICTRL) Register Mask  */
+#define DMAC_PRICTRL0_LVLPRI0_Pos             _U_(0)                                               /**< (DMAC_PRICTRL0) Level 0 Channel Priority Number Position */
+#define DMAC_PRICTRL0_LVLPRI0_Msk             (_U_(0xF) << DMAC_PRICTRL0_LVLPRI0_Pos)              /**< (DMAC_PRICTRL0) Level 0 Channel Priority Number Mask */
+#define DMAC_PRICTRL0_LVLPRI0(value)          (DMAC_PRICTRL0_LVLPRI0_Msk & ((value) << DMAC_PRICTRL0_LVLPRI0_Pos))
+#define DMAC_PRICTRL0_RRLVLEN0_Pos            _U_(7)                                               /**< (DMAC_PRICTRL0) Level 0 Round-Robin Scheduling Enable Position */
+#define DMAC_PRICTRL0_RRLVLEN0_Msk            (_U_(0x1) << DMAC_PRICTRL0_RRLVLEN0_Pos)             /**< (DMAC_PRICTRL0) Level 0 Round-Robin Scheduling Enable Mask */
+#define DMAC_PRICTRL0_RRLVLEN0(value)         (DMAC_PRICTRL0_RRLVLEN0_Msk & ((value) << DMAC_PRICTRL0_RRLVLEN0_Pos))
+#define   DMAC_PRICTRL0_RRLVLEN0_STATIC_LVL_Val _U_(0x0)                                             /**< (DMAC_PRICTRL0) Static arbitration scheme for channels with level 0 priority  */
+#define   DMAC_PRICTRL0_RRLVLEN0_ROUND_ROBIN_LVL_Val _U_(0x1)                                             /**< (DMAC_PRICTRL0) Round-robin arbitration scheme for channels with level 0 priority  */
+#define DMAC_PRICTRL0_RRLVLEN0_STATIC_LVL     (DMAC_PRICTRL0_RRLVLEN0_STATIC_LVL_Val << DMAC_PRICTRL0_RRLVLEN0_Pos) /**< (DMAC_PRICTRL0) Static arbitration scheme for channels with level 0 priority Position  */
+#define DMAC_PRICTRL0_RRLVLEN0_ROUND_ROBIN_LVL (DMAC_PRICTRL0_RRLVLEN0_ROUND_ROBIN_LVL_Val << DMAC_PRICTRL0_RRLVLEN0_Pos) /**< (DMAC_PRICTRL0) Round-robin arbitration scheme for channels with level 0 priority Position  */
+#define DMAC_PRICTRL0_LVLPRI1_Pos             _U_(8)                                               /**< (DMAC_PRICTRL0) Level 1 Channel Priority Number Position */
+#define DMAC_PRICTRL0_LVLPRI1_Msk             (_U_(0xF) << DMAC_PRICTRL0_LVLPRI1_Pos)              /**< (DMAC_PRICTRL0) Level 1 Channel Priority Number Mask */
+#define DMAC_PRICTRL0_LVLPRI1(value)          (DMAC_PRICTRL0_LVLPRI1_Msk & ((value) << DMAC_PRICTRL0_LVLPRI1_Pos))
+#define DMAC_PRICTRL0_RRLVLEN1_Pos            _U_(15)                                              /**< (DMAC_PRICTRL0) Level 1 Round-Robin Scheduling Enable Position */
+#define DMAC_PRICTRL0_RRLVLEN1_Msk            (_U_(0x1) << DMAC_PRICTRL0_RRLVLEN1_Pos)             /**< (DMAC_PRICTRL0) Level 1 Round-Robin Scheduling Enable Mask */
+#define DMAC_PRICTRL0_RRLVLEN1(value)         (DMAC_PRICTRL0_RRLVLEN1_Msk & ((value) << DMAC_PRICTRL0_RRLVLEN1_Pos))
+#define   DMAC_PRICTRL0_RRLVLEN1_STATIC_LVL_Val _U_(0x0)                                             /**< (DMAC_PRICTRL0) Static arbitration scheme for channels with level 1 priority  */
+#define   DMAC_PRICTRL0_RRLVLEN1_ROUND_ROBIN_LVL_Val _U_(0x1)                                             /**< (DMAC_PRICTRL0) Round-robin arbitration scheme for channels with level 1 priority  */
+#define DMAC_PRICTRL0_RRLVLEN1_STATIC_LVL     (DMAC_PRICTRL0_RRLVLEN1_STATIC_LVL_Val << DMAC_PRICTRL0_RRLVLEN1_Pos) /**< (DMAC_PRICTRL0) Static arbitration scheme for channels with level 1 priority Position  */
+#define DMAC_PRICTRL0_RRLVLEN1_ROUND_ROBIN_LVL (DMAC_PRICTRL0_RRLVLEN1_ROUND_ROBIN_LVL_Val << DMAC_PRICTRL0_RRLVLEN1_Pos) /**< (DMAC_PRICTRL0) Round-robin arbitration scheme for channels with level 1 priority Position  */
+#define DMAC_PRICTRL0_LVLPRI2_Pos             _U_(16)                                              /**< (DMAC_PRICTRL0) Level 2 Channel Priority Number Position */
+#define DMAC_PRICTRL0_LVLPRI2_Msk             (_U_(0xF) << DMAC_PRICTRL0_LVLPRI2_Pos)              /**< (DMAC_PRICTRL0) Level 2 Channel Priority Number Mask */
+#define DMAC_PRICTRL0_LVLPRI2(value)          (DMAC_PRICTRL0_LVLPRI2_Msk & ((value) << DMAC_PRICTRL0_LVLPRI2_Pos))
+#define DMAC_PRICTRL0_RRLVLEN2_Pos            _U_(23)                                              /**< (DMAC_PRICTRL0) Level 2 Round-Robin Scheduling Enable Position */
+#define DMAC_PRICTRL0_RRLVLEN2_Msk            (_U_(0x1) << DMAC_PRICTRL0_RRLVLEN2_Pos)             /**< (DMAC_PRICTRL0) Level 2 Round-Robin Scheduling Enable Mask */
+#define DMAC_PRICTRL0_RRLVLEN2(value)         (DMAC_PRICTRL0_RRLVLEN2_Msk & ((value) << DMAC_PRICTRL0_RRLVLEN2_Pos))
+#define   DMAC_PRICTRL0_RRLVLEN2_STATIC_LVL_Val _U_(0x0)                                             /**< (DMAC_PRICTRL0) Static arbitration scheme for channels with level 2 priority  */
+#define   DMAC_PRICTRL0_RRLVLEN2_ROUND_ROBIN_LVL_Val _U_(0x1)                                             /**< (DMAC_PRICTRL0) Round-robin arbitration scheme for channels with level 2 priority  */
+#define DMAC_PRICTRL0_RRLVLEN2_STATIC_LVL     (DMAC_PRICTRL0_RRLVLEN2_STATIC_LVL_Val << DMAC_PRICTRL0_RRLVLEN2_Pos) /**< (DMAC_PRICTRL0) Static arbitration scheme for channels with level 2 priority Position  */
+#define DMAC_PRICTRL0_RRLVLEN2_ROUND_ROBIN_LVL (DMAC_PRICTRL0_RRLVLEN2_ROUND_ROBIN_LVL_Val << DMAC_PRICTRL0_RRLVLEN2_Pos) /**< (DMAC_PRICTRL0) Round-robin arbitration scheme for channels with level 2 priority Position  */
+#define DMAC_PRICTRL0_LVLPRI3_Pos             _U_(24)                                              /**< (DMAC_PRICTRL0) Level 3 Channel Priority Number Position */
+#define DMAC_PRICTRL0_LVLPRI3_Msk             (_U_(0xF) << DMAC_PRICTRL0_LVLPRI3_Pos)              /**< (DMAC_PRICTRL0) Level 3 Channel Priority Number Mask */
+#define DMAC_PRICTRL0_LVLPRI3(value)          (DMAC_PRICTRL0_LVLPRI3_Msk & ((value) << DMAC_PRICTRL0_LVLPRI3_Pos))
+#define DMAC_PRICTRL0_RRLVLEN3_Pos            _U_(31)                                              /**< (DMAC_PRICTRL0) Level 3 Round-Robin Scheduling Enable Position */
+#define DMAC_PRICTRL0_RRLVLEN3_Msk            (_U_(0x1) << DMAC_PRICTRL0_RRLVLEN3_Pos)             /**< (DMAC_PRICTRL0) Level 3 Round-Robin Scheduling Enable Mask */
+#define DMAC_PRICTRL0_RRLVLEN3(value)         (DMAC_PRICTRL0_RRLVLEN3_Msk & ((value) << DMAC_PRICTRL0_RRLVLEN3_Pos))
+#define   DMAC_PRICTRL0_RRLVLEN3_STATIC_LVL_Val _U_(0x0)                                             /**< (DMAC_PRICTRL0) Static arbitration scheme for channels with level 3 priority  */
+#define   DMAC_PRICTRL0_RRLVLEN3_ROUND_ROBIN_LVL_Val _U_(0x1)                                             /**< (DMAC_PRICTRL0) Round-robin arbitration scheme for channels with level 3 priority  */
+#define DMAC_PRICTRL0_RRLVLEN3_STATIC_LVL     (DMAC_PRICTRL0_RRLVLEN3_STATIC_LVL_Val << DMAC_PRICTRL0_RRLVLEN3_Pos) /**< (DMAC_PRICTRL0) Static arbitration scheme for channels with level 3 priority Position  */
+#define DMAC_PRICTRL0_RRLVLEN3_ROUND_ROBIN_LVL (DMAC_PRICTRL0_RRLVLEN3_ROUND_ROBIN_LVL_Val << DMAC_PRICTRL0_RRLVLEN3_Pos) /**< (DMAC_PRICTRL0) Round-robin arbitration scheme for channels with level 3 priority Position  */
+#define DMAC_PRICTRL0_Msk                     _U_(0x8F8F8F8F)                                      /**< (DMAC_PRICTRL0) Register Mask  */
 
 
 /* -------- DMAC_INTPEND : (DMAC Offset: 0x20) (R/W 16) Interrupt Pending -------- */
@@ -889,7 +889,7 @@
 #define DMAC_DBGCTRL_REG_OFST          (0x0D)              /**< (DMAC_DBGCTRL) Debug Control Offset */
 #define DMAC_QOSCTRL_REG_OFST          (0x0E)              /**< (DMAC_QOSCTRL) QOS Control Offset */
 #define DMAC_SWTRIGCTRL_REG_OFST       (0x10)              /**< (DMAC_SWTRIGCTRL) Software Trigger Control Offset */
-#define DMAC_PRICTRL_REG_OFST          (0x14)              /**< (DMAC_PRICTRL) Priority Control Offset */
+#define DMAC_PRICTRL0_REG_OFST         (0x14)              /**< (DMAC_PRICTRL0) Priority Control Offset */
 #define DMAC_INTPEND_REG_OFST          (0x20)              /**< (DMAC_INTPEND) Interrupt Pending Offset */
 #define DMAC_INTSTATUS_REG_OFST        (0x24)              /**< (DMAC_INTSTATUS) Interrupt Status Offset */
 #define DMAC_BUSYCH_REG_OFST           (0x28)              /**< (DMAC_BUSYCH) Busy Channels Offset */
@@ -932,7 +932,7 @@ typedef struct
   __IO  uint8_t                        DMAC_QOSCTRL;       /**< Offset: 0x0E (R/W  8) QOS Control */
   __I   uint8_t                        Reserved1[0x01];
   __IO  uint32_t                       DMAC_SWTRIGCTRL;    /**< Offset: 0x10 (R/W  32) Software Trigger Control */
-  __IO  uint32_t                       DMAC_PRICTRL;       /**< Offset: 0x14 (R/W  32) Priority Control */
+  __IO  uint32_t                       DMAC_PRICTRL0;      /**< Offset: 0x14 (R/W  32) Priority Control */
   __I   uint8_t                        Reserved2[0x08];
   __IO  uint16_t                       DMAC_INTPEND;       /**< Offset: 0x20 (R/W  16) Interrupt Pending */
   __I   uint8_t                        Reserved3[0x02];

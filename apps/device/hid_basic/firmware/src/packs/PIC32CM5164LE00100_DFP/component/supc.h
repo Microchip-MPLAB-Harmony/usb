@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2020-04-24T12:41:07Z */
+/* file generated from device description version 2020-08-25T15:51:45Z */
 #ifndef _PIC32CMLE00_SUPC_COMPONENT_H_
 #define _PIC32CMLE00_SUPC_COMPONENT_H_
 
@@ -264,23 +264,11 @@
 #define SUPC_VREF_ONDEMAND_Pos                _U_(7)                                               /**< (SUPC_VREF) On Demand Control Position */
 #define SUPC_VREF_ONDEMAND_Msk                (_U_(0x1) << SUPC_VREF_ONDEMAND_Pos)                 /**< (SUPC_VREF) On Demand Control Mask */
 #define SUPC_VREF_ONDEMAND(value)             (SUPC_VREF_ONDEMAND_Msk & ((value) << SUPC_VREF_ONDEMAND_Pos))
-#define SUPC_VREF_SEL_Pos                     _U_(16)                                              /**< (SUPC_VREF) Voltage Reference Selection Position */
-#define SUPC_VREF_SEL_Msk                     (_U_(0xF) << SUPC_VREF_SEL_Pos)                      /**< (SUPC_VREF) Voltage Reference Selection Mask */
+#define SUPC_VREF_SEL_Pos                     _U_(16)                                              /**< (SUPC_VREF) Voltage Reference Selection for ADC/DAC Position */
+#define SUPC_VREF_SEL_Msk                     (_U_(0xF) << SUPC_VREF_SEL_Pos)                      /**< (SUPC_VREF) Voltage Reference Selection for ADC/DAC Mask */
 #define SUPC_VREF_SEL(value)                  (SUPC_VREF_SEL_Msk & ((value) << SUPC_VREF_SEL_Pos))
-#define   SUPC_VREF_SEL_1V0_Val               _U_(0x0)                                             /**< (SUPC_VREF) 1.0V voltage reference typical value  */
-#define   SUPC_VREF_SEL_1V1_Val               _U_(0x1)                                             /**< (SUPC_VREF) 1.1V voltage reference typical value  */
-#define   SUPC_VREF_SEL_1V2_Val               _U_(0x2)                                             /**< (SUPC_VREF) 1.2V voltage reference typical value  */
-#define   SUPC_VREF_SEL_1V25_Val              _U_(0x3)                                             /**< (SUPC_VREF) 1.25V voltage reference typical value  */
-#define   SUPC_VREF_SEL_2V0_Val               _U_(0x4)                                             /**< (SUPC_VREF) 2.0V voltage reference typical value  */
-#define   SUPC_VREF_SEL_2V2_Val               _U_(0x5)                                             /**< (SUPC_VREF) 2.2V voltage reference typical value  */
 #define   SUPC_VREF_SEL_2V4_Val               _U_(0x6)                                             /**< (SUPC_VREF) 2.4V voltage reference typical value  */
 #define   SUPC_VREF_SEL_2V5_Val               _U_(0x7)                                             /**< (SUPC_VREF) 2.5V voltage reference typical value  */
-#define SUPC_VREF_SEL_1V0                     (SUPC_VREF_SEL_1V0_Val << SUPC_VREF_SEL_Pos)         /**< (SUPC_VREF) 1.0V voltage reference typical value Position  */
-#define SUPC_VREF_SEL_1V1                     (SUPC_VREF_SEL_1V1_Val << SUPC_VREF_SEL_Pos)         /**< (SUPC_VREF) 1.1V voltage reference typical value Position  */
-#define SUPC_VREF_SEL_1V2                     (SUPC_VREF_SEL_1V2_Val << SUPC_VREF_SEL_Pos)         /**< (SUPC_VREF) 1.2V voltage reference typical value Position  */
-#define SUPC_VREF_SEL_1V25                    (SUPC_VREF_SEL_1V25_Val << SUPC_VREF_SEL_Pos)        /**< (SUPC_VREF) 1.25V voltage reference typical value Position  */
-#define SUPC_VREF_SEL_2V0                     (SUPC_VREF_SEL_2V0_Val << SUPC_VREF_SEL_Pos)         /**< (SUPC_VREF) 2.0V voltage reference typical value Position  */
-#define SUPC_VREF_SEL_2V2                     (SUPC_VREF_SEL_2V2_Val << SUPC_VREF_SEL_Pos)         /**< (SUPC_VREF) 2.2V voltage reference typical value Position  */
 #define SUPC_VREF_SEL_2V4                     (SUPC_VREF_SEL_2V4_Val << SUPC_VREF_SEL_Pos)         /**< (SUPC_VREF) 2.4V voltage reference typical value Position  */
 #define SUPC_VREF_SEL_2V5                     (SUPC_VREF_SEL_2V5_Val << SUPC_VREF_SEL_Pos)         /**< (SUPC_VREF) 2.5V voltage reference typical value Position  */
 #define SUPC_VREF_Msk                         _U_(0x000F00C4)                                      /**< (SUPC_VREF) Register Mask  */

@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2020-04-24T12:41:07Z */
+/* file generated from device description version 2020-08-25T15:51:45Z */
 #ifndef _PIC32CMLE00_OSC32KCTRL_COMPONENT_H_
 #define _PIC32CMLE00_OSC32KCTRL_COMPONENT_H_
 
@@ -173,13 +173,10 @@
 #define OSC32KCTRL_OSCULP32K_ULP32KSW_Pos     _U_(5)                                               /**< (OSC32KCTRL_OSCULP32K) OSCULP32K Clock Switch Enable Position */
 #define OSC32KCTRL_OSCULP32K_ULP32KSW_Msk     (_U_(0x1) << OSC32KCTRL_OSCULP32K_ULP32KSW_Pos)      /**< (OSC32KCTRL_OSCULP32K) OSCULP32K Clock Switch Enable Mask */
 #define OSC32KCTRL_OSCULP32K_ULP32KSW(value)  (OSC32KCTRL_OSCULP32K_ULP32KSW_Msk & ((value) << OSC32KCTRL_OSCULP32K_ULP32KSW_Pos))
-#define OSC32KCTRL_OSCULP32K_CALIB_Pos        _U_(8)                                               /**< (OSC32KCTRL_OSCULP32K) Oscillator Calibration Position */
-#define OSC32KCTRL_OSCULP32K_CALIB_Msk        (_U_(0x1F) << OSC32KCTRL_OSCULP32K_CALIB_Pos)        /**< (OSC32KCTRL_OSCULP32K) Oscillator Calibration Mask */
-#define OSC32KCTRL_OSCULP32K_CALIB(value)     (OSC32KCTRL_OSCULP32K_CALIB_Msk & ((value) << OSC32KCTRL_OSCULP32K_CALIB_Pos))
 #define OSC32KCTRL_OSCULP32K_WRTLOCK_Pos      _U_(15)                                              /**< (OSC32KCTRL_OSCULP32K) Write Lock Position */
 #define OSC32KCTRL_OSCULP32K_WRTLOCK_Msk      (_U_(0x1) << OSC32KCTRL_OSCULP32K_WRTLOCK_Pos)       /**< (OSC32KCTRL_OSCULP32K) Write Lock Mask */
 #define OSC32KCTRL_OSCULP32K_WRTLOCK(value)   (OSC32KCTRL_OSCULP32K_WRTLOCK_Msk & ((value) << OSC32KCTRL_OSCULP32K_WRTLOCK_Pos))
-#define OSC32KCTRL_OSCULP32K_Msk              _U_(0x00009F20)                                      /**< (OSC32KCTRL_OSCULP32K) Register Mask  */
+#define OSC32KCTRL_OSCULP32K_Msk              _U_(0x00008020)                                      /**< (OSC32KCTRL_OSCULP32K) Register Mask  */
 
 
 /** \brief OSC32KCTRL register offsets definitions */

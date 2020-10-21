@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2020-04-24T12:41:07Z */
+/* file generated from device description version 2020-08-25T15:51:45Z */
 #ifndef _PIC32CMLE00_TRAM_COMPONENT_H_
 #define _PIC32CMLE00_TRAM_COMPONENT_H_
 

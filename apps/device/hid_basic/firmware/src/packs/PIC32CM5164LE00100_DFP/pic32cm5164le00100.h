@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2020-04-24T12:41:07Z */
+/* file generated from device description version 2020-08-25T15:51:45Z */
 #ifndef _PIC32CM5164LE00100_H_
 #define _PIC32CM5164LE00100_H_
 
@@ -30,12 +30,12 @@
 #define HEADER_FORMAT_VERSION_MAJOR (2)
 #define HEADER_FORMAT_VERSION_MINOR (0)
 
-/** \addtogroup PIC32CM5164LE00100_definitions PIC32CM5164LE00100 definitions
+/** \addtogroup PIC32CM5164LE00100_definitions b'PIC32CM5164LE00100 definitions
   This file defines all structures and symbols for PIC32CM5164LE00100:
     - registers and bitfields
     - peripheral base address
     - peripheral ID
-    - PIO definitions
+    - PIO definitions'
  *  @{
  */
 
@@ -65,7 +65,7 @@
 #  define _UL_(x) x   /**< Assembler: Unsigned Long integer literal constant value */
 #endif /* !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__)) */
 #endif /* SKIP_INTEGER_LITERALS */
-/** @}  end of Atmel Global Defines */
+/** @}  b'end of Atmel Global Defines' */
 
 /* ************************************************************************** */
 /*   CMSIS DEFINITIONS FOR PIC32CM5164LE00100                                 */
@@ -87,7 +87,7 @@ typedef enum IRQn
   SUPC_IRQn                 =   0, /**< 0   Shared between MCLK OSCCTRL OSC32KCTRL PM SUPC (SUPC) */
   MCLK_IRQn                 =   0, /**< 0   Shared between MCLK OSCCTRL OSC32KCTRL PM SUPC (MCLK) */
   PM_IRQn                   =   0, /**< 0   Shared between MCLK OSCCTRL OSC32KCTRL PM SUPC (PM) */
-  WDT_EW_IRQn               =   1, /**< 1   Watchdog Timer (WDT)                */
+  WDT_IRQn                  =   1, /**< 1   Watchdog Timer (WDT)                */
   RTC_IRQn                  =   2, /**< 2   Real-Time Counter (RTC)             */
   EIC_EXTINT_0_IRQn         =   3, /**< 3   External Interrupt Controller (EIC) */
   EIC_EXTINT_1_IRQn         =   4, /**< 4   External Interrupt Controller (EIC) */
@@ -98,7 +98,7 @@ typedef enum IRQn
   EIC_EXTINT_6_IRQn         =   9, /**< 9   External Interrupt Controller (EIC) */
   EIC_EXTINT_7_IRQn         =  10, /**< 10  External Interrupt Controller (EIC) */
   EIC_OTHER_IRQn            =  11, /**< 11  External Interrupt Controller (EIC) */
-  FREQM_DONE_IRQn           =  12, /**< 12  Frequency Meter (FREQM)             */
+  FREQM_IRQn                =  12, /**< 12  Frequency Meter (FREQM)             */
   NVMCTRL_IRQn              =  13, /**< 13  Non-Volatile Memory Controller (NVMCTRL) */
   DMAC_0_IRQn               =  15, /**< 15  Direct Memory Access Controller (DMAC) */
   DMAC_1_IRQn               =  16, /**< 16  Direct Memory Access Controller (DMAC) */
@@ -114,7 +114,7 @@ typedef enum IRQn
   EVSYS_5_IRQn              =  26, /**< 26  Event System Interface (EVSYS)      */
   EVSYS_6_IRQn              =  27, /**< 27  Event System Interface (EVSYS)      */
   EVSYS_7_IRQn              =  28, /**< 28  Event System Interface (EVSYS)      */
-  PAC_ERR_IRQn              =  30, /**< 30  Peripheral Access Controller (PAC)  */
+  PAC_IRQn                  =  30, /**< 30  Peripheral Access Controller (PAC)  */
   SERCOM0_0_IRQn            =  31, /**< 31  Serial Communication Interface (SERCOM0) */
   SERCOM0_1_IRQn            =  32, /**< 32  Serial Communication Interface (SERCOM0) */
   SERCOM0_2_IRQn            =  33, /**< 33  Serial Communication Interface (SERCOM0) */
@@ -152,7 +152,7 @@ typedef enum IRQn
   DAC_UNDERRUN_IRQn         =  65, /**< 65  Digital-to-Analog Converter (DAC)   */
   DAC_EMPTY_IRQn            =  66, /**< 66  Digital-to-Analog Converter (DAC)   */
   PTC_IRQn                  =  67, /**< 67  Peripheral Touch Controller (PTC)   */
-  TRNG_DATARDY_IRQn         =  68, /**< 68  True Random Generator (TRNG)        */
+  TRNG_IRQn                 =  68, /**< 68  True Random Generator (TRNG)        */
   I2S_IRQn                  =  69, /**< 69  Inter-IC Sound Interface (I2S)      */
   TRAM_IRQn                 =  70, /**< 70  TrustRAM (TRAM)                     */
 
@@ -165,7 +165,7 @@ typedef struct _DeviceVectors
 {
   /* Stack pointer */
   void* pvStack;
-  /* Cortex-M handlers */
+  /* CORTEX-M23 handlers */
   void* pfnReset_Handler;                        /* -15 Reset Vector, invoked on Power up and warm reset */
   void* pfnNonMaskableInt_Handler;               /* -14 Non maskable Interrupt, cannot be stopped or preempted */
   void* pfnHardFault_Handler;                    /* -13 Hard Fault, all classes of Fault */
@@ -183,8 +183,8 @@ typedef struct _DeviceVectors
   void* pfnSysTick_Handler;                      /*  -1 System Tick Timer */
 
   /* Peripheral handlers */
-  void* pfnSYSTEM_Handler;                       /*   0  (MCLK OSCCTRL OSC32KCTRL PM SUPC) */
-  void* pfnWDT_EW_Handler;                       /*   1 Watchdog Timer (WDT) */
+  void* pfnSYSTEM_Handler;                       /*   0 System peripherals shared interrupt (MCLK OSCCTRL OSC32KCTRL PM SUPC) */
+  void* pfnWDT_Handler;                          /*   1 Watchdog Timer (WDT) */
   void* pfnRTC_Handler;                          /*   2 Real-Time Counter (RTC) */
   void* pfnEIC_EXTINT_0_Handler;                 /*   3 External Interrupt Controller (EIC) */
   void* pfnEIC_EXTINT_1_Handler;                 /*   4 External Interrupt Controller (EIC) */
@@ -195,7 +195,7 @@ typedef struct _DeviceVectors
   void* pfnEIC_EXTINT_6_Handler;                 /*   9 External Interrupt Controller (EIC) */
   void* pfnEIC_EXTINT_7_Handler;                 /*  10 External Interrupt Controller (EIC) */
   void* pfnEIC_OTHER_Handler;                    /*  11 External Interrupt Controller (EIC) */
-  void* pfnFREQM_DONE_Handler;                   /*  12 Frequency Meter (FREQM) */
+  void* pfnFREQM_Handler;                        /*  12 Frequency Meter (FREQM) */
   void* pfnNVMCTRL_Handler;                      /*  13 Non-Volatile Memory Controller (NVMCTRL) */
   void* pvReserved14;
   void* pfnDMAC_0_Handler;                       /*  15 Direct Memory Access Controller (DMAC) */
@@ -213,7 +213,7 @@ typedef struct _DeviceVectors
   void* pfnEVSYS_6_Handler;                      /*  27 Event System Interface (EVSYS) */
   void* pfnEVSYS_7_Handler;                      /*  28 Event System Interface (EVSYS) */
   void* pvReserved29;
-  void* pfnPAC_ERR_Handler;                      /*  30 Peripheral Access Controller (PAC) */
+  void* pfnPAC_Handler;                          /*  30 Peripheral Access Controller (PAC) */
   void* pfnSERCOM0_0_Handler;                    /*  31 Serial Communication Interface (SERCOM0) */
   void* pfnSERCOM0_1_Handler;                    /*  32 Serial Communication Interface (SERCOM0) */
   void* pfnSERCOM0_2_Handler;                    /*  33 Serial Communication Interface (SERCOM0) */
@@ -251,16 +251,10 @@ typedef struct _DeviceVectors
   void* pfnDAC_UNDERRUN_Handler;                 /*  65 Digital-to-Analog Converter (DAC) */
   void* pfnDAC_EMPTY_Handler;                    /*  66 Digital-to-Analog Converter (DAC) */
   void* pfnPTC_Handler;                          /*  67 Peripheral Touch Controller (PTC) */
-  void* pfnTRNG_DATARDY_Handler;                 /*  68 True Random Generator (TRNG) */
+  void* pfnTRNG_Handler;                         /*  68 True Random Generator (TRNG) */
   void* pfnI2S_Handler;                          /*  69 Inter-IC Sound Interface (I2S) */
   void* pfnTRAM_Handler;                         /*  70 TrustRAM (TRAM) */
 } DeviceVectors;
-
-/* Defines for Deprecated Interrupt and Exceptions handler names */
-#define pfnMemManage_Handler      pfnMemoryManagement_Handler     /**< \deprecated  Backward compatibility for ASF*/
-#define pfnDebugMon_Handler       pfnDebugMonitor_Handler         /**< \deprecated  Backward compatibility for ASF*/
-#define pfnNMI_Handler            pfnNonMaskableInt_Handler       /**< \deprecated  Backward compatibility for ASF*/
-#define pfnSVC_Handler            pfnSVCall_Handler               /**< \deprecated  Backward compatibility for ASF*/
 
 #endif /* !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__)) */
 
@@ -278,7 +272,7 @@ void SysTick_Handler               ( void );
 #if !defined DONT_USE_PREDEFINED_PERIPHERALS_HANDLERS
 /* Peripherals interrupt handlers */
 void SYSTEM_Handler                ( void );
-void WDT_EW_Handler                ( void );
+void WDT_Handler                   ( void );
 void RTC_Handler                   ( void );
 void EIC_EXTINT_0_Handler          ( void );
 void EIC_EXTINT_1_Handler          ( void );
@@ -289,7 +283,7 @@ void EIC_EXTINT_5_Handler          ( void );
 void EIC_EXTINT_6_Handler          ( void );
 void EIC_EXTINT_7_Handler          ( void );
 void EIC_OTHER_Handler             ( void );
-void FREQM_DONE_Handler            ( void );
+void FREQM_Handler                 ( void );
 void NVMCTRL_Handler               ( void );
 void DMAC_0_Handler                ( void );
 void DMAC_1_Handler                ( void );
@@ -305,7 +299,7 @@ void EVSYS_4_Handler               ( void );
 void EVSYS_5_Handler               ( void );
 void EVSYS_6_Handler               ( void );
 void EVSYS_7_Handler               ( void );
-void PAC_ERR_Handler               ( void );
+void PAC_Handler                   ( void );
 void SERCOM0_0_Handler             ( void );
 void SERCOM0_1_Handler             ( void );
 void SERCOM0_2_Handler             ( void );
@@ -343,21 +337,13 @@ void AC_Handler                    ( void );
 void DAC_UNDERRUN_Handler          ( void );
 void DAC_EMPTY_Handler             ( void );
 void PTC_Handler                   ( void );
-void TRNG_DATARDY_Handler          ( void );
+void TRNG_Handler                  ( void );
 void I2S_Handler                   ( void );
 void TRAM_Handler                  ( void );
 #endif /* DONT_USE_PREDEFINED_PERIPHERALS_HANDLERS */
-/* Defines for Deprecated Interrupt and Exceptions handler names */
-#define MemManage_Handler         MemoryManagement_Handler        /**< \deprecated  Backward compatibility*/
-#define DebugMon_Handler          DebugMonitor_Handler            /**< \deprecated  Backward compatibility*/
-#define NMI_Handler               NonMaskableInt_Handler          /**< \deprecated  Backward compatibility*/
-#define SVC_Handler               SVCall_Handler                  /**< \deprecated  Backward compatibility*/
-
 #endif /* !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__)) */
 
-/*
- * \brief Configuration of the CORTEX-M23 Processor and Core Peripherals
- */
+/** \brief Configuration of the CORTEX-M23 Processor and Core Peripherals */
 #define __FPU_PRESENT                  0 /**< FPU present or not                                                        */
 #define __MPU_PRESENT                  1 /**< MPU present or not                                                        */
 #define __NVIC_PRIO_BITS               2 /**< Number of NVIC Priority bits                                              */
@@ -374,7 +360,7 @@ void TRAM_Handler                  ( void );
 #include "system_pic32cmle00.h"
 #endif /* USE_CMSIS_INIT */
 
-/** \defgroup PIC32CM5164LE00100_api Peripheral Software API
+/** \defgroup PIC32CM5164LE00100_api b'Peripheral Software API'
  *  @{
  */
 
@@ -411,9 +397,9 @@ void TRAM_Handler                  ( void );
 #include "component/trng.h"
 #include "component/usb.h"
 #include "component/wdt.h"
-/** @}  end of Peripheral Software API */
+/** @}  b'end of Peripheral Software API' */
 
-/** \addtogroup PIC32CM5164LE00100_id Peripheral Ids Definitions
+/** \addtogroup PIC32CM5164LE00100_id b'Peripheral Ids Definitions'
  *  @{
  */
 
@@ -462,9 +448,9 @@ void TRAM_Handler                  ( void );
 #define ID_TRAM          ( 85) /**< \brief Instance index for TRAM (TRAM) */
 
 #define ID_PERIPH_MAX    ( 85) /**< \brief Number of peripheral IDs */
-/** @}  end of Peripheral Ids Definitions */
+/** @}  b'end of Peripheral Ids Definitions' */
 
-/** \addtogroup PIC32CM5164LE00100_base Peripheral Base Address Definitions
+/** \addtogroup PIC32CM5164LE00100_base b'Peripheral Base Address Definitions'
  *  @{
  */
 
@@ -515,9 +501,9 @@ void TRAM_Handler                  ( void );
 #define USB_REGS                         ((usb_registers_t*)0x4100a000)                /**< \brief USB Registers Address        */
 #define WDT_REGS                         ((wdt_registers_t*)0x40002000)                /**< \brief WDT Registers Address        */
 #endif /* (defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__)) */
-/** @}  end of Peripheral Base Address Definitions */
+/** @}  b'end of Peripheral Base Address Definitions' */
 
-/** \addtogroup PIC32CM5164LE00100_base Peripheral Base Address Definitions
+/** \addtogroup PIC32CM5164LE00100_base b'Peripheral Base Address Definitions'
  *  @{
  */
 
@@ -566,9 +552,9 @@ void TRAM_Handler                  ( void );
 #define TRNG_BASE_ADDRESS                _UL_(0x42004400)                              /**< \brief TRNG Base Address */
 #define USB_BASE_ADDRESS                 _UL_(0x4100a000)                              /**< \brief USB Base Address */
 #define WDT_BASE_ADDRESS                 _UL_(0x40002000)                              /**< \brief WDT Base Address */
-/** @}  end of Peripheral Base Address Definitions */
+/** @}  b'end of Peripheral Base Address Definitions' */
 
-/** \addtogroup PIC32CM5164LE00100_pio Peripheral Pio Definitions
+/** \addtogroup PIC32CM5164LE00100_pio b'Peripheral Pio Definitions'
  *  @{
  */
 
@@ -576,7 +562,7 @@ void TRAM_Handler                  ( void );
 /*   PIO DEFINITIONS FOR PIC32CM5164LE00100                                   */
 /* ************************************************************************** */
 #include "pio/pic32cm5164le00100.h"
-/** @}  end of Peripheral Pio Definitions */
+/** @}  b'end of Peripheral Pio Definitions' */
 
 /* ************************************************************************** */
 /*   MEMORY MAPPING DEFINITIONS FOR PIC32CM5164LE00100                        */
@@ -725,37 +711,37 @@ void TRAM_Handler                  ( void );
 #define EVENT_ID_GEN_DMAC_CH_6                           39 /**< ID for DMAC event generator CH_6 */
 #define EVENT_ID_GEN_DMAC_CH_7                           40 /**< ID for DMAC event generator CH_7 */
 #define EVENT_ID_GEN_TC0_OVF                             41 /**< ID for TC0 event generator OVF */
-#define EVENT_ID_GEN_TC0_MCX_0                           42 /**< ID for TC0 event generator MCX_0 */
-#define EVENT_ID_GEN_TC0_MCX_1                           43 /**< ID for TC0 event generator MCX_1 */
+#define EVENT_ID_GEN_TC0_MC_0                            42 /**< ID for TC0 event generator MC_0 */
+#define EVENT_ID_GEN_TC0_MC_1                            43 /**< ID for TC0 event generator MC_1 */
 #define EVENT_ID_GEN_TC1_OVF                             44 /**< ID for TC1 event generator OVF */
-#define EVENT_ID_GEN_TC1_MCX_0                           45 /**< ID for TC1 event generator MCX_0 */
-#define EVENT_ID_GEN_TC1_MCX_1                           46 /**< ID for TC1 event generator MCX_1 */
+#define EVENT_ID_GEN_TC1_MC_0                            45 /**< ID for TC1 event generator MC_0 */
+#define EVENT_ID_GEN_TC1_MC_1                            46 /**< ID for TC1 event generator MC_1 */
 #define EVENT_ID_GEN_TC2_OVF                             47 /**< ID for TC2 event generator OVF */
-#define EVENT_ID_GEN_TC2_MCX_0                           48 /**< ID for TC2 event generator MCX_0 */
-#define EVENT_ID_GEN_TC2_MCX_1                           49 /**< ID for TC2 event generator MCX_1 */
+#define EVENT_ID_GEN_TC2_MC_0                            48 /**< ID for TC2 event generator MC_0 */
+#define EVENT_ID_GEN_TC2_MC_1                            49 /**< ID for TC2 event generator MC_1 */
 #define EVENT_ID_GEN_TCC0_TRG                            50 /**< ID for TCC0 event generator TRG */
 #define EVENT_ID_GEN_TCC0_CNT                            51 /**< ID for TCC0 event generator CNT */
-#define EVENT_ID_GEN_TCC0_MCX_0                          52 /**< ID for TCC0 event generator MCX_0 */
-#define EVENT_ID_GEN_TCC0_MCX_1                          53 /**< ID for TCC0 event generator MCX_1 */
-#define EVENT_ID_GEN_TCC0_MCX_2                          54 /**< ID for TCC0 event generator MCX_2 */
-#define EVENT_ID_GEN_TCC0_MCX_3                          55 /**< ID for TCC0 event generator MCX_3 */
+#define EVENT_ID_GEN_TCC0_MC_0                           52 /**< ID for TCC0 event generator MC_0 */
+#define EVENT_ID_GEN_TCC0_MC_1                           53 /**< ID for TCC0 event generator MC_1 */
+#define EVENT_ID_GEN_TCC0_MC_2                           54 /**< ID for TCC0 event generator MC_2 */
+#define EVENT_ID_GEN_TCC0_MC_3                           55 /**< ID for TCC0 event generator MC_3 */
 #define EVENT_ID_GEN_TCC0_OVF                            56 /**< ID for TCC0 event generator OVF */
 #define EVENT_ID_GEN_TCC1_TRG                            57 /**< ID for TCC1 event generator TRG */
 #define EVENT_ID_GEN_TCC1_CNT                            58 /**< ID for TCC1 event generator CNT */
-#define EVENT_ID_GEN_TCC1_MCX_0                          59 /**< ID for TCC1 event generator MCX_0 */
-#define EVENT_ID_GEN_TCC1_MCX_1                          60 /**< ID for TCC1 event generator MCX_1 */
+#define EVENT_ID_GEN_TCC1_MC_0                           59 /**< ID for TCC1 event generator MC_0 */
+#define EVENT_ID_GEN_TCC1_MC_1                           60 /**< ID for TCC1 event generator MC_1 */
 #define EVENT_ID_GEN_TCC1_OVF                            61 /**< ID for TCC1 event generator OVF */
 #define EVENT_ID_GEN_TCC2_TRG                            62 /**< ID for TCC2 event generator TRG */
 #define EVENT_ID_GEN_TCC2_CNT                            63 /**< ID for TCC2 event generator CNT */
-#define EVENT_ID_GEN_TCC2_MCX_0                          64 /**< ID for TCC2 event generator MCX_0 */
-#define EVENT_ID_GEN_TCC2_MCX_1                          65 /**< ID for TCC2 event generator MCX_1 */
+#define EVENT_ID_GEN_TCC2_MC_0                           64 /**< ID for TCC2 event generator MC_0 */
+#define EVENT_ID_GEN_TCC2_MC_1                           65 /**< ID for TCC2 event generator MC_1 */
 #define EVENT_ID_GEN_TCC2_OVF                            66 /**< ID for TCC2 event generator OVF */
 #define EVENT_ID_GEN_TCC3_TRG                            67 /**< ID for TCC3 event generator TRG */
 #define EVENT_ID_GEN_TCC3_CNT                            68 /**< ID for TCC3 event generator CNT */
-#define EVENT_ID_GEN_TCC3_MCX_0                          69 /**< ID for TCC3 event generator MCX_0 */
-#define EVENT_ID_GEN_TCC3_MCX_1                          70 /**< ID for TCC3 event generator MCX_1 */
-#define EVENT_ID_GEN_TCC3_MCX_2                          71 /**< ID for TCC3 event generator MCX_2 */
-#define EVENT_ID_GEN_TCC3_MCX_3                          72 /**< ID for TCC3 event generator MCX_3 */
+#define EVENT_ID_GEN_TCC3_MC_0                           69 /**< ID for TCC3 event generator MC_0 */
+#define EVENT_ID_GEN_TCC3_MC_1                           70 /**< ID for TCC3 event generator MC_1 */
+#define EVENT_ID_GEN_TCC3_MC_2                           71 /**< ID for TCC3 event generator MC_2 */
+#define EVENT_ID_GEN_TCC3_MC_3                           72 /**< ID for TCC3 event generator MC_3 */
 #define EVENT_ID_GEN_TCC3_OVF                            73 /**< ID for TCC3 event generator OVF */
 #define EVENT_ID_GEN_ADC_RESRDY                          74 /**< ID for ADC event generator RESRDY */
 #define EVENT_ID_GEN_ADC_WINMON                          75 /**< ID for ADC event generator WINMON */
@@ -767,6 +753,8 @@ void TRAM_Handler                  ( void );
 #define EVENT_ID_GEN_AC_WIN_1                            81 /**< ID for AC event generator WIN_1 */
 #define EVENT_ID_GEN_DAC_EMPTY_0                         82 /**< ID for DAC event generator EMPTY_0 */
 #define EVENT_ID_GEN_DAC_EMPTY_1                         83 /**< ID for DAC event generator EMPTY_1 */
+#define EVENT_ID_GEN_PTC_EOC                             84 /**< ID for PTC event generator EOC */
+#define EVENT_ID_GEN_PTC_WCOMP                           85 /**< ID for PTC event generator WCOMP */
 #define EVENT_ID_GEN_TRNG_READY                          86 /**< ID for TRNG event generator READY */
 #define EVENT_ID_GEN_CCL_LUTOUT_0                        87 /**< ID for CCL event generator LUTOUT_0 */
 #define EVENT_ID_GEN_CCL_LUTOUT_1                        88 /**< ID for CCL event generator LUTOUT_1 */
@@ -823,6 +811,8 @@ void TRAM_Handler                  ( void );
 #define EVENT_ID_USER_AC_SOC_3                           43 /**< ID for AC event user SOC_3 */
 #define EVENT_ID_USER_DAC_START_0                        44 /**< ID for DAC event user START_0 */
 #define EVENT_ID_USER_DAC_START_1                        45 /**< ID for DAC event user START_1 */
+#define EVENT_ID_USER_PTC_STCONV                         46 /**< ID for PTC event user STCONV */
+#define EVENT_ID_USER_PTC_DSEQR                          47 /**< ID for PTC event user DSEQR */
 #define EVENT_ID_USER_CCL_LUTIN_0                        48 /**< ID for CCL event user LUTIN_0 */
 #define EVENT_ID_USER_CCL_LUTIN_1                        49 /**< ID for CCL event user LUTIN_1 */
 #define EVENT_ID_USER_CCL_LUTIN_2                        50 /**< ID for CCL event user LUTIN_2 */
@@ -832,7 +822,7 @@ void TRAM_Handler                  ( void );
 }
 #endif
 
-/** @}  end of PIC32CM5164LE00100 definitions */
+/** @}  b'end of PIC32CM5164LE00100 definitions' */
 
 
 #endif /* _PIC32CM5164LE00100_H_ */

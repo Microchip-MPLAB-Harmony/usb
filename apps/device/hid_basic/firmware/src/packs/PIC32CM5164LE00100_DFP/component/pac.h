@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2020-04-24T12:41:07Z */
+/* file generated from device description version 2020-08-25T15:51:45Z */
 #ifndef _PIC32CMLE00_PAC_COMPONENT_H_
 #define _PIC32CMLE00_PAC_COMPONENT_H_
 
@@ -29,7 +29,7 @@
 /* ************************************************************************** */
 
 /* -------- PAC_WRCTRL : (PAC Offset: 0x00) (R/W 32) Write control -------- */
-#define PAC_WRCTRL_RESETVALUE                 _U_(0x00)                                            /**<  (PAC_WRCTRL) Write control  Reset Value */
+#define PAC_WRCTRL_RESETVALUE                 _U_(0x20021)                                         /**<  (PAC_WRCTRL) Write control  Reset Value */
 
 #define PAC_WRCTRL_PERID_Pos                  _U_(0)                                               /**< (PAC_WRCTRL) Peripheral identifier Position */
 #define PAC_WRCTRL_PERID_Msk                  (_U_(0xFFFF) << PAC_WRCTRL_PERID_Pos)                /**< (PAC_WRCTRL) Peripheral identifier Mask */
