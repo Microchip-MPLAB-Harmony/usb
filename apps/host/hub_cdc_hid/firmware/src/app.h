@@ -404,10 +404,10 @@ void APP_Initialize ( void );
 
 void APP_Tasks( void );
 
-void APP_HID_Tasks (  );
-void APP_CDC_Tasks ( );
+void APP_HID_Tasks ( void  );
+void APP_CDC_Tasks ( void );
 
-void APP_HID_Initialize ();
+void APP_HID_Initialize ( void );
 void APP_CDC_Initialize ( APP_CDC_DATA * appCDCData);
 
 

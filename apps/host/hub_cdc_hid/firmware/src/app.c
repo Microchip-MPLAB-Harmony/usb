@@ -233,22 +233,22 @@ void APP_Initialize ( void )
      */
 }
 
-void APP_CDC_Initialize ( APP_CDC_DATA *appCDCData )
+void APP_CDC_Initialize ( APP_CDC_DATA *appCDCInitData )
 {
       /* Initialize the application state machine */
     
-    appCDCData->state =  APP_CDC_STATE_WAIT_FOR_DEVICE_ATTACH;
-    appCDCData->cdcHostLineCoding.dwDTERate     = APP_HOST_CDC_BAUDRATE_SUPPORTED;
-    appCDCData->cdcHostLineCoding.bDataBits     = (uint8_t)APP_HOST_CDC_NO_OF_DATA_BITS;
-    appCDCData->cdcHostLineCoding.bParityType   = (uint8_t)APP_HOST_CDC_PARITY_TYPE;
-    appCDCData->cdcHostLineCoding.bCharFormat   = (uint8_t)APP_HOST_CDC_STOP_BITS;
-    appCDCData->controlLineState.dtr = 0;
-    appCDCData->controlLineState.carrier = 0;
-    appCDCData->deviceIsAttached = false;
-    appCDCData->deviceWasDetached = false;
-    appCDCData->readTransferDone = false;
-    appCDCData->writeTransferDone = false;
-    appCDCData->controlRequestDone = false;
+    appCDCInitData->state =  APP_CDC_STATE_WAIT_FOR_DEVICE_ATTACH;
+    appCDCInitData->cdcHostLineCoding.dwDTERate     = APP_HOST_CDC_BAUDRATE_SUPPORTED;
+    appCDCInitData->cdcHostLineCoding.bDataBits     = (uint8_t)APP_HOST_CDC_NO_OF_DATA_BITS;
+    appCDCInitData->cdcHostLineCoding.bParityType   = (uint8_t)APP_HOST_CDC_PARITY_TYPE;
+    appCDCInitData->cdcHostLineCoding.bCharFormat   = (uint8_t)APP_HOST_CDC_STOP_BITS;
+    appCDCInitData->controlLineState.dtr = 0;
+    appCDCInitData->controlLineState.carrier = 0;
+    appCDCInitData->deviceIsAttached = false;
+    appCDCInitData->deviceWasDetached = false;
+    appCDCInitData->readTransferDone = false;
+    appCDCInitData->writeTransferDone = false;
+    appCDCInitData->controlRequestDone = false;
 }
 
 void APP_HID_Initialize ( void )

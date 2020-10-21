@@ -181,10 +181,10 @@ void APP_SYSFSEventHandler(SYS_FS_EVENT event, void * eventData, uintptr_t conte
  * Application MSD Task Initialize Function.
  *************************************************/
 
-void APP_MSD_Initialize (APP_MSD_DATA * appMSDData )
+void APP_MSD_Initialize (APP_MSD_DATA * appMSDInitData )
 {
-     appMSDData->state = APP_MSD_STATE_WAIT_FOR_DEVICE_ATTACH;
-     appMSDData->deviceIsConnected = false;
+     appMSDInitData->state = APP_MSD_STATE_WAIT_FOR_DEVICE_ATTACH;
+     appMSDInitData->deviceIsConnected = false;
 }
 
 
@@ -192,22 +192,22 @@ void APP_MSD_Initialize (APP_MSD_DATA * appMSDData )
  * Application CDC Task Initialize Function.
  *************************************************/
 
-void APP_CDC_Initialize ( APP_CDC_DATA *appCDCData )
+void APP_CDC_Initialize ( APP_CDC_DATA *appCDInitCData )
 {
       /* Initialize the application state machine */
     
-    appCDCData->state =  APP_CDC_STATE_WAIT_FOR_DEVICE_ATTACH;
-    appCDCData->cdcHostLineCoding.dwDTERate     = APP_HOST_CDC_BAUDRATE_SUPPORTED;
-    appCDCData->cdcHostLineCoding.bDataBits     = (uint8_t)APP_HOST_CDC_NO_OF_DATA_BITS;
-    appCDCData->cdcHostLineCoding.bParityType   = (uint8_t)APP_HOST_CDC_PARITY_TYPE;
-    appCDCData->cdcHostLineCoding.bCharFormat   = (uint8_t)APP_HOST_CDC_STOP_BITS;
-    appCDCData->controlLineState.dtr = 0;
-    appCDCData->controlLineState.carrier = 0;
-    appCDCData->deviceIsAttached = false;
-    appCDCData->deviceWasDetached = false;
-    appCDCData->readTransferDone = false;
-    appCDCData->writeTransferDone = false;
-    appCDCData->controlRequestDone = false;
+    appCDInitCData->state =  APP_CDC_STATE_WAIT_FOR_DEVICE_ATTACH;
+    appCDInitCData->cdcHostLineCoding.dwDTERate     = APP_HOST_CDC_BAUDRATE_SUPPORTED;
+    appCDInitCData->cdcHostLineCoding.bDataBits     = (uint8_t)APP_HOST_CDC_NO_OF_DATA_BITS;
+    appCDInitCData->cdcHostLineCoding.bParityType   = (uint8_t)APP_HOST_CDC_PARITY_TYPE;
+    appCDInitCData->cdcHostLineCoding.bCharFormat   = (uint8_t)APP_HOST_CDC_STOP_BITS;
+    appCDInitCData->controlLineState.dtr = 0;
+    appCDInitCData->controlLineState.carrier = 0;
+    appCDInitCData->deviceIsAttached = false;
+    appCDInitCData->deviceWasDetached = false;
+    appCDInitCData->readTransferDone = false;
+    appCDInitCData->writeTransferDone = false;
+    appCDInitCData->controlRequestDone = false;
 }
 
 void APP_USBHostCDCAttachEventListener(USB_HOST_CDC_OBJ cdcObj, uintptr_t context)

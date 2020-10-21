@@ -390,8 +390,8 @@ void APP_Initialize ( void );
 void APP_Tasks ( void );
 
 
-void APP_MSD_Tasks (  );
-void APP_CDC_Tasks ( );
+void APP_MSD_Tasks ( void );
+void APP_CDC_Tasks (void );
 
 void APP_MSD_Initialize (APP_MSD_DATA * appMSDData);
 void APP_CDC_Initialize ( APP_CDC_DATA * appCDCData);

@@ -54,7 +54,6 @@ USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY usageDriverTableEntry[1] =
     },
 };
 
-
 USB_HOST_HID_INIT hidInitData =
 {
     .nUsageDriver = 1,
@@ -69,7 +68,7 @@ const USB_HOST_TPL_ENTRY USBTPList[3] =
 
 	TPL_INTERFACE_CLASS(0x02, NULL,  USB_HOST_CDC_INTERFACE),
 
-	TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL(0x03, 0x01, 0x02, &hidInitData,  USB_HOST_HID_INTERFACE),
+	TPL_INTERFACE_CLASS(0x03,&hidInitData,  USB_HOST_HID_INTERFACE) ,
 
 
 };
@@ -81,6 +80,7 @@ const USB_HOST_HCD hcdTable =
 
     /* Pointer to the USB Driver Functions. */
     .hcdInterface = DRV_USBHS_HOST_INTERFACE,
+
 };
 
 const USB_HOST_INIT usbHostInitData = 
