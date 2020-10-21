@@ -1520,36 +1520,6 @@ bool DRV_USB_OHCI_IsCompanionControllerReady
     SYS_MODULE_INDEX drvIndex
 );
 
-// ****************************************************************************
-/* Function:
-    void DRV_USB_OHCI_Tasks_ISR(SYS_MODULE_OBJ moduleObj);
-
-  Summary:
-    Interrupt handler for the OHCI controller.
-
-  Description:
-    Interrupt handler for the OHCI controller. 
-
-  Precondition:
-    None.
-
-  Parameters:
-    moduleObj - Valid System module object returned from DRV_USB_OHCI_Initialize
-    function.
-
-  Example:
-    <code>
-
-    DRV_USB_OHCI_Tasks_ISR(sysObj.drvUSBOHCIObject);
-
-    </code>
-
-  Remarks:
-    This function is intended to be called only in the UHPHS Interrupt Handler.
-*/
-
-void DRV_USB_OHCI_Tasks_ISR(SYS_MODULE_OBJ moduleObj);
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files (continued)

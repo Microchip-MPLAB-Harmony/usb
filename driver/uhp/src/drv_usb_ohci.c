@@ -2310,7 +2310,7 @@ DRV_USB_OHCI_PIPE_HANDLE DRV_USB_OHCI_PipeSetup
                                 else
                                 {
                                     /* Start with the head ED and then reach the end of the ED list */
-                                    USB_OHCI_ED * currentED = (USB_OHCI_ED *)usbID->UHP_OHCI_HCCONTROLHEADED;
+                                    currentED = (USB_OHCI_ED *)usbID->UHP_OHCI_HCCONTROLHEADED;
                                     while(currentED->nextED != 0)
                                     {
                                         currentED = (USB_OHCI_ED *)(currentED->nextED);
@@ -2333,7 +2333,7 @@ DRV_USB_OHCI_PIPE_HANDLE DRV_USB_OHCI_PipeSetup
                                 else
                                 {
                                     /* Start with the head ED and then reach the end of the ED list */
-                                    USB_OHCI_ED * currentED = (USB_OHCI_ED *)usbID->UHP_OHCI_HCBULKHEADED;
+                                    currentED = (USB_OHCI_ED *)usbID->UHP_OHCI_HCBULKHEADED;
                                     while(currentED->nextED != 0)
                                     {
                                         currentED = (USB_OHCI_ED *)(currentED->nextED);

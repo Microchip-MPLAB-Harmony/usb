@@ -1838,7 +1838,7 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
                                     if(pipe->pipeInQueue == 0)
                                     {
                                         /* This means pipe is not in async schedule. Add it */
-                                        USB_EHCI_QH * currentQH = (USB_EHCI_QH *)usbID->UHPHS_ASYNCLISTADDR;
+                                        currentQH = (USB_EHCI_QH *)usbID->UHPHS_ASYNCLISTADDR;
                                         pipe->qH.horizontalQH.pointer = currentQH->horizontalQH.pointer;
                                         currentQH->horizontalQH.pointer = (USB_EHCI_QH *)((uint32_t)&pipe->qH | ((USB_EHCI_QH_TYPE_QH) << 1));
                                         pipe->pipeInQueue = 1;
@@ -1912,7 +1912,7 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
                                         if(pipe->pipeType == USB_TRANSFER_TYPE_BULK)
                                         {
                                             /* This means pipe is not in async schedule. Add it */
-                                            USB_EHCI_QH * currentQH = (USB_EHCI_QH *)usbID->UHPHS_ASYNCLISTADDR;
+                                            currentQH = (USB_EHCI_QH *)usbID->UHPHS_ASYNCLISTADDR;
                                             pipe->qH.horizontalQH.pointer = currentQH->horizontalQH.pointer;
                                             currentQH->horizontalQH.pointer = (USB_EHCI_QH *)((uint32_t)&pipe->qH | ((USB_EHCI_QH_TYPE_QH) << 1));
                                             pipe->pipeInQueue = 1; 
