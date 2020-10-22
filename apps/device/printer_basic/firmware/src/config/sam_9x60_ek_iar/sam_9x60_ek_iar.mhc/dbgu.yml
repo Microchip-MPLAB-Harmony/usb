@@ -1,0 +1,51 @@
+format_version: v1.0
+type: UniqueComponent
+attributes: {id: dbgu}
+children:
+- type: Symbols
+  children:
+  - type: Integer
+    attributes: {id: BRG_VALUE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: dbgu, value: '108'}
+  - type: Integer
+    attributes: {id: DBGU_CLOCK_FREQ}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: dbgu, value: '200000000'}
+  - type: Boolean
+    attributes: {id: DBGU_RING_BUFFER_ENABLE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: dbgu, value: 'false'}
+  - type: Boolean
+    attributes: {id: USART_INTERRUPT_MODE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: dbgu, value: 'true'}
+- type: Attachments
+  children:
+  - type: DirectCapability
+    attributes: {id: DBGU_UART}
+    children:
+    - type: Attributes
+      children:
+      - type: String
+        attributes: {id: targetComponentID}
+        children:
+        - {type: Value, value: drv_usart_0}
+      - type: String
+        attributes: {id: targetAttachmentID}
+        children:
+        - {type: Value, value: drv_usart_UART_dependency}
+- type: ElementPosition
+  attributes: {x: '0', y: '98', id: dbgu}
