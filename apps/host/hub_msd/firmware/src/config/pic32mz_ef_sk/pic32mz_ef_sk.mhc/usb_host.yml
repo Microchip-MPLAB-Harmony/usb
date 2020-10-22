@@ -1,0 +1,96 @@
+format_version: v1.0
+type: UniqueComponent
+attributes: {id: usb_host}
+children:
+- type: Symbols
+  children:
+  - type: Integer
+    attributes: {id: CONFIG_USB_HOST_DEVICE_NUMNBER}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: visible}
+        children:
+        - {type: Value, value: 'true'}
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: '3'}
+  - type: Integer
+    attributes: {id: CONFIG_USB_HOST_HUB_NUMBER_OF_INSTANCES}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: visible}
+        children:
+        - {type: Value, value: 'true'}
+  - type: Boolean
+    attributes: {id: CONFIG_USB_HOST_HUB_SUPPORT}
+    children:
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: 'true'}
+  - type: Boolean
+    attributes: {id: CONFIG_USB_HOST_HUB_SUPPORT_SAVE_STATUS}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: usb_host, value: 'true'}
+  - type: Integer
+    attributes: {id: CONFIG_USB_HOST_TPL_ENTRY_NUMBER}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: usb_host, value: '2'}
+  - type: File
+    attributes: {id: FILE_USB_HOST_HUB_CONFIG}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: enabled}
+        children:
+        - {type: Value, value: 'true'}
+  - type: File
+    attributes: {id: FILE_USB_HOST_HUB_HEADER}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: enabled}
+        children:
+        - {type: Value, value: 'true'}
+  - type: File
+    attributes: {id: FILE_USB_HOST_HUB_HEADER_LOCAL}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: enabled}
+        children:
+        - {type: Value, value: 'true'}
+  - type: File
+    attributes: {id: FILE_USB_HOST_HUB_SOURCE}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: enabled}
+        children:
+        - {type: Value, value: 'true'}
+  - type: File
+    attributes: {id: FILE_USB_HOST_HUB_TPL}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: enabled}
+        children:
+        - {type: Value, value: 'true'}
+- type: ElementPosition
+  attributes: {x: '180', y: '174', id: usb_host}
