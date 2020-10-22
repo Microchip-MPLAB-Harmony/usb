@@ -2267,6 +2267,7 @@ void _DRV_USB_UDPHS_DEVICE_Tasks_ISR
     DRV_USB_UDPHS_DEVICE_ENDPOINT_OBJ * endpointObj;
     udphs_registers_t * usbID;
     USB_DEVICE_IRP_LOCAL * irp;
+    USB_SETUP_PACKET * setupPkt;
     uint16_t endpoint0DataStageSize;
     unsigned int endpoint0DataStageDirection;
     uint8_t eptIndex;
@@ -2413,9 +2414,12 @@ void _DRV_USB_UDPHS_DEVICE_Tasks_ISR
                 }
 
                 usbID->UDPHS_EPT[0].UDPHS_EPTCLRSTA = UDPHS_EPTCLRSTA_RX_SETUP_Msk;
+                
+                setupPkt = (USB_SETUP_PACKET *)irp->data;
+                                        
+                endpoint0DataStageSize = setupPkt->W_Length.Val;
 
-                endpoint0DataStageSize = *((uint16_t *) (data + 6));
-                endpoint0DataStageDirection = ((data[0] & DRV_USB_UDPHS_ENDPOINT_DIRECTION_MASK) != 0);
+                endpoint0DataStageDirection = (uint16_t)((setupPkt->bmRequestType & DRV_USB_UDPHS_ENDPOINT_DIRECTION_MASK) != 0);
 
                 /* Indicate that this is a setup IRP */
                 irp->status = USB_DEVICE_IRP_STATUS_SETUP;
