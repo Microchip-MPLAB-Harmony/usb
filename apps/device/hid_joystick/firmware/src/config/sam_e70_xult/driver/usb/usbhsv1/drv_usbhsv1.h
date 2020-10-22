@@ -1,21 +1,21 @@
 /******************************************************************************
-  PIC32MZ USB Module Driver Interface Header File
+  USBHSV1 USB Module Driver Interface Header File
 
   Company:
     Microchip Technology Inc.
     
   File Name:
-    drv_usbhs.h
+    drv_usbhsv1.h
 	
   Summary:
-    PIC32MZ USB Module Driver Interface File
+    USBHSV1 USB Module Driver Interface File
 	
   Description:
-    The PIC32MZ Hi-Speed USB Module driver provides a simple interface to manage
-    the "USB" peripheral on the PIC32MZ microcontroller. This file defines the
-    interface definitions and prototypes for the Hi-Speed USB Driver. The driver
-    interface meets the requirements of the MPLAB Harmony USB Host and Device
-    Layer.                                                  
+    The Hi-Speed USB Module driver provides a simple interface to manage
+    the "USB" peripheral on the SAMV70/V71/E70/U70 microcontroller. This file 
+	defines the interface definitions and prototypes for the Hi-Speed USB Driver. 
+	The driver interface meets the requirements of the MPLAB Harmony USB Host and 
+	Device Layer.                                                  
 *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -2602,7 +2602,7 @@ DRV_USBHSV1_HOST_PIPE_HANDLE DRV_USBHSV1_HOST_PipeSetup
     </code>
 	
   Remarks:
-    The root hub on the PIC32MZ USB controller contains only one port - port 0.                                                                  
+    The root hub on the SAMV70/V71/E70/U70 USB controller contains only one port - port 0.                                                                  
 */
 
 USB_ERROR DRV_USBHSV1_HOST_ROOT_HUB_PortReset(DRV_HANDLE handle, uint8_t port );
@@ -3073,11 +3073,10 @@ bool DRV_USBHSV1_HOST_ROOT_HUB_OperationIsEnabled(DRV_HANDLE handle);
 
 void DRV_USBHSV1_HOST_ROOT_HUB_Initialize
 (
-    //DRV_HANDLE handle,
-    //USB_HOST_DEVICE_OBJ_HANDLE usbHostDeviceInfo
+    DRV_HANDLE handle,
+    USB_HOST_DEVICE_OBJ_HANDLE usbHostDeviceInfo
 );
 
-void USBHS_Handler(void); 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files (continued)
