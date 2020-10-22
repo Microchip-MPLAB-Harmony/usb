@@ -111,8 +111,12 @@ def instantiateComponent(usbDriverComponent):
         to generate a VBUS SENSE function. The GPIO pin name must be configured
         as in the below.'''
 	usbVbusSense.setDescription(helpText)
-	usbVbusSense.setVisible(True)
-	usbVbusSense.setDefaultValue(True)
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX"]):
+		usbVbusSense.setVisible(False)
+		usbVbusSense.setDefaultValue(False)
+	else:
+		usbVbusSense.setVisible(True)
+		usbVbusSense.setDefaultValue(True)
 	usbVbusSense.setUseSingleDynamicValue(True)
 	usbVbusSense.setDependencies(blUSBDriverOperationModeDevice, ["USB_OPERATION_MODE"])
 
@@ -180,8 +184,10 @@ def instantiateComponent(usbDriverComponent):
 	enable_rtos_settings = False
 
 	if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
-		enable_rtos_settings = True
-
+		# no RTOS Task required for USBFS driver (PIC32MX/MK) if operating in Interrupt mode. MHC only support interrupt mode.
+		if not any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX"]):
+			enable_rtos_settings = True
+		
 	# RTOS Settings
 	usbDriverRTOSMenu = usbDriverComponent.createMenuSymbol(None, None)
 	usbDriverRTOSMenu.setLabel("RTOS settings")

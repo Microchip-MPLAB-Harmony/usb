@@ -114,11 +114,9 @@ def setVisible(symbol, event):
 		symbol.setVisible(False)
 
 def showRTOSMenu(symbol, event):
+	# no RTOS Task required for USBFS driver if operating in Interrupt mode. MHC only support interrupt mode. 
 	show_rtos_menu = False
 
-	if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
-		show_rtos_menu = True
-	symbol.setVisible(show_rtos_menu)
 def instantiateComponent(usbDriverComponent, index):
 	global usbHostControllerEntryFile
 	usbDriverSourcePath = "usbfs"

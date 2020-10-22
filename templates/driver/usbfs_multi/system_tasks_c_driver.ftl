@@ -45,15 +45,6 @@
 <#if HarmonyCore.SELECT_RTOS == "BareMetal">
     /* USB FS Driver Task Routine */ 
     DRV_USBFS_Tasks(sysObj.drvUSBFSObject${INDEX?string});
-<#elseif HarmonyCore.SELECT_RTOS == "FreeRTOS">
-    <#lt>    /* Create OS Thread for USB Driver Tasks. */
-    <#lt>    xTaskCreate( _DRV_USBFS_Tasks_${INDEX?string},
-    <#lt>        "DRV_USBFS_TASKS",
-    <#lt>        ${USB_DRIVER_RTOS_STACK_SIZE},
-    <#lt>        (void*)NULL,
-    <#lt>        ${USB_DRIVER_RTOS_TASK_PRIORITY},
-    <#lt>        (TaskHandle_t*)NULL
-    <#lt>    );
 </#if>
 <#--
 /*******************************************************************************
