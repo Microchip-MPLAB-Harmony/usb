@@ -96,6 +96,7 @@
 /* CDC specific request */
 #define USB_CDC_REQUEST_CLASS_SPECIFIC                  0x20
 
+/* CDC Line Coding specific macro definitions */
 #define USB_CDC_LINE_CODING_STOP_1_BIT                  0x00
 #define USB_CDC_LINE_CODING_STOP_1_5_BIT                0x01
 #define USB_CDC_LINE_CODING_STOP_2_BIT                  0x02
