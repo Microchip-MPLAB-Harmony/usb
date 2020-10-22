@@ -1,0 +1,104 @@
+format_version: v1.0
+type: GeneratorComponent
+attributes: {id: usb_device_cdc}
+children:
+- type: Symbols
+  children:
+  - type: Integer
+    attributes: {id: CONFIG_USB_DEVICE_CDC_INSTANCES}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: usb_device_cdc, value: '2'}
+  - type: Integer
+    attributes: {id: CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: usb_device_cdc, value: '6'}
+- type: Instances
+  children:
+  - type: InstanceComponent
+    attributes: {instance: '0', id: usb_device_cdc}
+    children:
+    - type: Symbols
+      children:
+      - type: Integer
+        attributes: {id: CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER}
+        children:
+        - type: Values
+          children:
+          - type: Dynamic
+            attributes: {id: usb_device_cdc_0, value: '3'}
+      - type: Integer
+        attributes: {id: CONFIG_USB_DEVICE_FUNCTION_BULK_OUT_ENDPOINT_NUMBER}
+        children:
+        - type: Values
+          children:
+          - type: Dynamic
+            attributes: {id: usb_device_cdc_0, value: '2'}
+      - type: Integer
+        attributes: {id: CONFIG_USB_DEVICE_FUNCTION_INTERFACE_NUMBER}
+        children:
+        - type: Values
+          children:
+          - type: Dynamic
+            attributes: {id: usb_device_cdc_0, value: '0'}
+      - type: Integer
+        attributes: {id: CONFIG_USB_DEVICE_FUNCTION_INT_ENDPOINT_NUMBER}
+        children:
+        - type: Values
+          children:
+          - type: Dynamic
+            attributes: {id: usb_device_cdc_0, value: '1'}
+      - type: Boolean
+        attributes: {id: CONFIG_USB_DEVICE_FUNCTION_USE_IAD}
+        children:
+        - type: Values
+          children:
+          - type: Dynamic
+            attributes: {id: usb_device_cdc_0, value: 'true'}
+  - type: InstanceComponent
+    attributes: {instance: '1', id: usb_device_cdc}
+    children:
+    - type: Symbols
+      children:
+      - type: Integer
+        attributes: {id: CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER}
+        children:
+        - type: Values
+          children:
+          - type: Dynamic
+            attributes: {id: usb_device_cdc_1, value: '6'}
+      - type: Integer
+        attributes: {id: CONFIG_USB_DEVICE_FUNCTION_BULK_OUT_ENDPOINT_NUMBER}
+        children:
+        - type: Values
+          children:
+          - type: Dynamic
+            attributes: {id: usb_device_cdc_1, value: '5'}
+      - type: Integer
+        attributes: {id: CONFIG_USB_DEVICE_FUNCTION_INTERFACE_NUMBER}
+        children:
+        - type: Values
+          children:
+          - type: Dynamic
+            attributes: {id: usb_device_cdc_1, value: '2'}
+      - type: Integer
+        attributes: {id: CONFIG_USB_DEVICE_FUNCTION_INT_ENDPOINT_NUMBER}
+        children:
+        - type: Values
+          children:
+          - type: Dynamic
+            attributes: {id: usb_device_cdc_1, value: '4'}
+      - type: Boolean
+        attributes: {id: CONFIG_USB_DEVICE_FUNCTION_USE_IAD}
+        children:
+        - type: Values
+          children:
+          - type: Dynamic
+            attributes: {id: usb_device_cdc_1, value: 'true'}
+- type: ElementPosition
+  attributes: {x: '299', y: '233', id: usb_device_cdc}
