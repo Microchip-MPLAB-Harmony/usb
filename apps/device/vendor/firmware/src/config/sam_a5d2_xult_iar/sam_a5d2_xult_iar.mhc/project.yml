@@ -118,20 +118,20 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: BCCEF5B801FFD0CF22D0B454D2F25F1F
-- generatedChecksum: B8D87B6533E2CE239E9EEB8486DF6996
+- generatedChecksum: E81965F9AF1D7FBAC5D322A8A15C0E85
   logicalPath: config/sam_a5d2_xult_iar/usb/src
-  name: usb_device_hid.c
+  name: usb_device_endpoint_functions.c
   physicalPath: /usb/src/
   security: NON_SECURE
   type: SOURCE
-  userChecksum: B8D87B6533E2CE239E9EEB8486DF6996
-- generatedChecksum: 56FFC80F0AEFC797083FD0E50BC04F45
+  userChecksum: E81965F9AF1D7FBAC5D322A8A15C0E85
+- generatedChecksum: 5E67474C79967CBBB61DCAE41403359A
   logicalPath: config/sam_a5d2_xult_iar/
   name: usb_device_init_data.c
   physicalPath: /
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 56FFC80F0AEFC797083FD0E50BC04F45
+  userChecksum: 5E67474C79967CBBB61DCAE41403359A
 - generatedChecksum: 13A60E9CE3622444C86CC695E221BAA7
   logicalPath: packs/ATSAMA5D27_DFP/component/
   name: acc.h
@@ -230,13 +230,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 9856726CC7D811B5AE45F903F5727340
-- generatedChecksum: DEAD264E78D65AD8161C13B8EA170AAD
+- generatedChecksum: D8985569AB623F31957B7D0504B42C5C
   logicalPath: config/sam_a5d2_xult_iar/
   name: configuration.h
   physicalPath: /
   security: NON_SECURE
   type: HEADER
-  userChecksum: DEAD264E78D65AD8161C13B8EA170AAD
+  userChecksum: D8985569AB623F31957B7D0504B42C5C
 - generatedChecksum: 789BC94E81700B86004C6A43BAC0EFF2
   logicalPath: packs/CMSIS/CMSIS/Core_A/Include/
   name: core_ca.h
@@ -244,13 +244,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 789BC94E81700B86004C6A43BAC0EFF2
-- generatedChecksum: 77EF2FF354CC10D4D9D38245E2EDBCD1
+- generatedChecksum: EFCA63EE7EF3403FAD5EF7E5D745E448
   logicalPath: config/sam_a5d2_xult_iar/
   name: definitions.h
   physicalPath: /
   security: NON_SECURE
   type: HEADER
-  userChecksum: 77EF2FF354CC10D4D9D38245E2EDBCD1
+  userChecksum: EFCA63EE7EF3403FAD5EF7E5D745E448
 - generatedChecksum: FAA04921E75A13B8730954676182E8F1
   logicalPath: packs/ATSAMA5D27_DFP/
   name: device.h
@@ -720,20 +720,6 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 626BFDDD140B808E90C9DD2E4A27421E
-- generatedChecksum: 144BD1138A70A9AA387E3742DB6E7448
-  logicalPath: config/sam_a5d2_xult_iar/usb/
-  name: usb_device_hid.h
-  physicalPath: /usb/
-  security: NON_SECURE
-  type: HEADER
-  userChecksum: 144BD1138A70A9AA387E3742DB6E7448
-- generatedChecksum: 6C72D678DC0100860FD1086BCF4A22C5
-  logicalPath: config/sam_a5d2_xult_iar/usb/src
-  name: usb_device_hid_local.h
-  physicalPath: /usb/src/
-  security: NON_SECURE
-  type: HEADER
-  userChecksum: 6C72D678DC0100860FD1086BCF4A22C5
 - generatedChecksum: 9B727D396CAEBD5FCB12F1F8264C4FD9
   logicalPath: config/sam_a5d2_xult_iar/usb/src
   name: usb_device_local.h
@@ -755,13 +741,6 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 6C4A6859DB16EA8C046F995C6B6C1C6F
-- generatedChecksum: F258661D72F9E844BF936D43BF859BE7
-  logicalPath: config/sam_a5d2_xult_iar/usb/
-  name: usb_hid.h
-  physicalPath: /usb/
-  security: NON_SECURE
-  type: HEADER
-  userChecksum: F258661D72F9E844BF936D43BF859BE7
 - generatedChecksum: F127C67A3E33E5788C0F057F648EE57C
   logicalPath: config/sam_a5d2_xult_iar/usb/
   name: usb_host.h
