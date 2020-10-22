@@ -96,6 +96,24 @@
 /* CDC specific request */
 #define USB_CDC_REQUEST_CLASS_SPECIFIC                  0x20
 
+/* CDC Line Coding specific macro definitions */
+#define USB_CDC_LINE_CODING_STOP_1_BIT                  0x00
+#define USB_CDC_LINE_CODING_STOP_1_5_BIT                0x01
+#define USB_CDC_LINE_CODING_STOP_2_BIT                  0x02
+        
+#define USB_CDC_LINE_CODING_PARITY_NONE                 0x00
+#define USB_CDC_LINE_CODING_PARITY_ODD                  0x01
+#define USB_CDC_LINE_CODING_PARITY_EVEN                 0x02
+#define USB_CDC_LINE_CODING_PARITY_MARK                 0x03
+#define USB_CDC_LINE_CODING_PARITY_SPACE                0x04
+
+#define USB_CDC_LINE_CODING_DATA_5_BIT                  0x05
+#define USB_CDC_LINE_CODING_DATA_6_BIT                  0x06
+#define USB_CDC_LINE_CODING_DATA_7_BIT                  0x07
+#define USB_CDC_LINE_CODING_DATA_8_BIT                  0x08
+#define USB_CDC_LINE_CODING_DATA_16_BIT                 0x10
+
+
 // *****************************************************************************
 /* CDC ACM capabilities.
 
@@ -347,101 +365,6 @@ typedef enum
 } USB_CDC_INTERFACE_TYPE;
 
 // *****************************************************************************
-/* CDC Line Coding Data Terminal Rate.
-
-  Summary:
-    Identifies the CDC line data terminal rate.
-
-  Description:
-    This type identifies the CDC line coding data terminal rate. This enum is 
-    as per the USB CDC PSTN Subclass protocol.
-
-  Remarks:
-    None.
-*/
-
-typedef uint32_t USB_CDC_LINE_CODING_DATARATE;
-
-// *****************************************************************************
-/* CDC Line Coding Parity Type.
-
-  Summary:
-    Identifies the CDC line parity information.
-
-  Description:
-    This type identifies the CDC line coding parity information. This enum is 
-    as per the USB CDC PSTN Subclass protocol.
-
-  Remarks:
-    None.
-*/
-
-typedef enum
-{
-    USB_CDC_LINE_CODING_STOP_1_BIT              = 0,
-    USB_CDC_LINE_CODING_STOP_1_5_BIT            = 1,
-    USB_CDC_LINE_CODING_STOP_2_BIT              = 2,
-
-    /* Force the compiler to reserve 8-bit memory space for each enum */
-    USB_CDC_LINE_CODING_STOP_INVALID            = 0xFF
-
-} USB_CDC_LINE_CODING_STOP;
-
-// *****************************************************************************
-/* CDC Line Coding Character Format (Stop Bits).
-
-  Summary:
-    Identifies the CDC line stop bits information.
-
-  Description:
-    This type identifies the CDC line coding stop bits information. This 
-    enum is as per the USB CDC PSTN Subclass protocol.
-
-  Remarks:
-    None.
-*/
-
-typedef enum
-{
-    USB_CDC_LINE_CODING_PARITY_NONE             = 0,
-    USB_CDC_LINE_CODING_PARITY_ODD              = 1,
-    USB_CDC_LINE_CODING_PARITY_EVEN             = 2,
-    USB_CDC_LINE_CODING_PARITY_MARK             = 3,
-    USB_CDC_LINE_CODING_PARITY_SPACE            = 4,
-
-    /* Force the compiler to reserve 8-bit memory space for each enum */
-    USB_CDC_LINE_CODING_PARITY_INVALID          = 0xFF
-
-} USB_CDC_LINE_CODING_PARITY;
-
-// *****************************************************************************
-/* CDC Line Coding Data Bits.
-
-  Summary:
-    Identifies the CDC line data bits information.
-
-  Description:
-    This type identifies the CDC line coding data bits information. This 
-    enum is as per the USB CDC PSTN Subclass protocol.
-
-  Remarks:
-    None.
-*/
-
-typedef enum
-{
-    USB_CDC_LINE_CODING_DATA_5_BIT              = 5,
-    USB_CDC_LINE_CODING_DATA_6_BIT              = 6,
-    USB_CDC_LINE_CODING_DATA_7_BIT              = 7,
-    USB_CDC_LINE_CODING_DATA_8_BIT              = 8,
-    USB_CDC_LINE_CODING_DATA_16_BIT             = 16,
-
-    /* Force the compiler to reserve 8-bit memory space for each enum */
-    USB_CDC_LINE_CODING_DATA_INVALID            = 0xFF
-
-} USB_CDC_LINE_CODING_DATA;
-
-// *****************************************************************************
 /* CDC line coding.
 
   Summary:
@@ -458,16 +381,16 @@ typedef enum
 typedef struct __attribute__ ((packed))
 {
     /* data terminal rate in bits per second */
-    USB_CDC_LINE_CODING_DATARATE dwDTERate;
+    uint32_t dwDTERate;
 
     /* stop bits */
-    USB_CDC_LINE_CODING_STOP bCharFormat;
+    uint8_t bCharFormat;
 
     /* Parity */
-    USB_CDC_LINE_CODING_PARITY bParityType;
+    uint8_t bParityType;
 
     /* Data bits */
-    USB_CDC_LINE_CODING_DATA bDataBits;
+    uint8_t bDataBits;
 
 } USB_CDC_LINE_CODING;
 
