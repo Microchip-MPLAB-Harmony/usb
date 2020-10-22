@@ -6,146 +6,151 @@
         <logicalFolder displayName="sam_e54_xpro_freertos" name="f1" projectFiles="true">
           <logicalFolder displayName="peripheral" name="f1" projectFiles="true">
             <logicalFolder displayName="nvmctrl" name="f1" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro_freertos/peripheral/nvmctrl/plib_nvmctrl.h</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\peripheral\nvmctrl\plib_nvmctrl.h</itemPath>
             </logicalFolder>
             <logicalFolder displayName="evsys" name="f2" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro_freertos/peripheral/evsys/plib_evsys.h</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\peripheral\evsys\plib_evsys.h</itemPath>
             </logicalFolder>
             <logicalFolder displayName="port" name="f3" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro_freertos/peripheral/port/plib_port.h</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\peripheral\port\plib_port.h</itemPath>
             </logicalFolder>
             <logicalFolder displayName="clock" name="f4" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro_freertos/peripheral/clock/plib_clock.h</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\peripheral\clock\plib_clock.h</itemPath>
             </logicalFolder>
             <logicalFolder displayName="nvic" name="f5" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro_freertos/peripheral/nvic/plib_nvic.h</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\peripheral\nvic\plib_nvic.h</itemPath>
             </logicalFolder>
             <logicalFolder displayName="cmcc" name="f6" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro_freertos/peripheral/cmcc/plib_cmcc.h</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\peripheral\cmcc\plib_cmcc.h</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder displayName="bsp" name="f2" projectFiles="true">
-            <itemPath>../src/config/sam_e54_xpro_freertos/bsp/bsp.h</itemPath>
+            <itemPath>..\src\config\sam_e54_xpro_freertos\bsp\bsp.h</itemPath>
           </logicalFolder>
           <logicalFolder displayName="driver" name="f3" projectFiles="true">
             <logicalFolder displayName="usb" name="f1" projectFiles="true">
               <logicalFolder displayName="usbfsv1" name="f1" projectFiles="true">
                 <logicalFolder displayName="src" name="f1" projectFiles="true">
-                  <itemPath>../src/config/sam_e54_xpro_freertos/driver/usb/usbfsv1/src/drv_usbfsv1_variant_mapping.h</itemPath>
-                  <itemPath>../src/config/sam_e54_xpro_freertos/driver/usb/usbfsv1/src/drv_usbfsv1_local.h</itemPath>
+                  <itemPath>..\src\config\sam_e54_xpro_freertos\driver\usb\usbfsv1\src\drv_usbfsv1_variant_mapping.h</itemPath>
+                  <itemPath>..\src\config\sam_e54_xpro_freertos\driver\usb\usbfsv1\src\drv_usbfsv1_local.h</itemPath>
                 </logicalFolder>
-                <itemPath>../src/config/sam_e54_xpro_freertos/driver/usb/usbfsv1/drv_usbfsv1.h</itemPath>
+                <itemPath>..\src\config\sam_e54_xpro_freertos\driver\usb\usbfsv1\drv_usbfsv1.h</itemPath>
               </logicalFolder>
-              <itemPath>../src/config/sam_e54_xpro_freertos/driver/usb/drv_usb.h</itemPath>
-              <itemPath>../src/config/sam_e54_xpro_freertos/driver/usb/drv_usb_external_dependencies.h</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\driver\usb\drv_usb.h</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\driver\usb\drv_usb_external_dependencies.h</itemPath>
             </logicalFolder>
-            <itemPath>../src/config/sam_e54_xpro_freertos/driver/driver.h</itemPath>
-            <itemPath>../src/config/sam_e54_xpro_freertos/driver/driver_common.h</itemPath>
+            <itemPath>..\src\config\sam_e54_xpro_freertos\driver\driver.h</itemPath>
+            <itemPath>..\src\config\sam_e54_xpro_freertos\driver\driver_common.h</itemPath>
           </logicalFolder>
           <logicalFolder displayName="usb" name="f4" projectFiles="true">
             <logicalFolder displayName="src" name="f1" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro_freertos/usb/src/usb_device_local.h</itemPath>
-              <itemPath>../src/config/sam_e54_xpro_freertos/usb/src/usb_device_mapping.h</itemPath>
-              <itemPath>../src/config/sam_e54_xpro_freertos/usb/src/usb_device_function_driver.h</itemPath>
-              <itemPath>../src/config/sam_e54_xpro_freertos/usb/src/usb_external_dependencies.h</itemPath>
-              <itemPath>../src/config/sam_e54_xpro_freertos/usb/src/usb_device_cdc_local.h</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\usb\src\usb_device_local.h</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\usb\src\usb_device_mapping.h</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\usb\src\usb_device_function_driver.h</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\usb\src\usb_external_dependencies.h</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\usb\src\usb_device_cdc_local.h</itemPath>
             </logicalFolder>
-            <itemPath>../src/config/sam_e54_xpro_freertos/usb/usb_host_client_driver.h</itemPath>
-            <itemPath>../src/config/sam_e54_xpro_freertos/usb/usb_host_hub_interface.h</itemPath>
-            <itemPath>../src/config/sam_e54_xpro_freertos/usb/usb_host.h</itemPath>
-            <itemPath>../src/config/sam_e54_xpro_freertos/usb/usb_hub.h</itemPath>
-            <itemPath>../src/config/sam_e54_xpro_freertos/usb/usb_device.h</itemPath>
-            <itemPath>../src/config/sam_e54_xpro_freertos/usb/usb_common.h</itemPath>
-            <itemPath>../src/config/sam_e54_xpro_freertos/usb/usb_chapter_9.h</itemPath>
-            <itemPath>../src/config/sam_e54_xpro_freertos/usb/usb_device_cdc.h</itemPath>
-            <itemPath>../src/config/sam_e54_xpro_freertos/usb/usb_cdc.h</itemPath>
+            <itemPath>..\src\config\sam_e54_xpro_freertos\usb\usb_host_client_driver.h</itemPath>
+            <itemPath>..\src\config\sam_e54_xpro_freertos\usb\usb_host_hub_interface.h</itemPath>
+            <itemPath>..\src\config\sam_e54_xpro_freertos\usb\usb_host.h</itemPath>
+            <itemPath>..\src\config\sam_e54_xpro_freertos\usb\usb_hub.h</itemPath>
+            <itemPath>..\src\config\sam_e54_xpro_freertos\usb\usb_device.h</itemPath>
+            <itemPath>..\src\config\sam_e54_xpro_freertos\usb\usb_common.h</itemPath>
+            <itemPath>..\src\config\sam_e54_xpro_freertos\usb\usb_chapter_9.h</itemPath>
+            <itemPath>..\src\config\sam_e54_xpro_freertos\usb\usb_device_cdc.h</itemPath>
+            <itemPath>..\src\config\sam_e54_xpro_freertos\usb\usb_cdc.h</itemPath>
           </logicalFolder>
           <logicalFolder displayName="system" name="f5" projectFiles="true">
             <logicalFolder displayName="int" name="f1" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro_freertos/system/int/sys_int.h</itemPath>
-              <itemPath>../src/config/sam_e54_xpro_freertos/system/int/sys_int_mapping.h</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\system\int\sys_int.h</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\system\int\sys_int_mapping.h</itemPath>
             </logicalFolder>
             <logicalFolder displayName="cache" name="f2" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro_freertos/system/cache/sys_cache.h</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\system\cache\sys_cache.h</itemPath>
             </logicalFolder>
             <logicalFolder displayName="debug" name="f3" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro_freertos/system/debug/sys_debug.h</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\system\debug\sys_debug.h</itemPath>
             </logicalFolder>
-            <itemPath>../src/config/sam_e54_xpro_freertos/system/system.h</itemPath>
-            <itemPath>../src/config/sam_e54_xpro_freertos/system/system_common.h</itemPath>
-            <itemPath>../src/config/sam_e54_xpro_freertos/system/system_module.h</itemPath>
+            <itemPath>..\src\config\sam_e54_xpro_freertos\system\system.h</itemPath>
+            <itemPath>..\src\config\sam_e54_xpro_freertos\system\system_common.h</itemPath>
+            <itemPath>..\src\config\sam_e54_xpro_freertos\system\system_module.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/config/sam_e54_xpro_freertos/device_cache.h</itemPath>
-          <itemPath>../src/config/sam_e54_xpro_freertos/toolchain_specifics.h</itemPath>
-          <itemPath>../src/config/sam_e54_xpro_freertos/definitions.h</itemPath>
-          <itemPath>../src/config/sam_e54_xpro_freertos/FreeRTOSConfig.h</itemPath>
-          <itemPath>../src/config/sam_e54_xpro_freertos/user.h</itemPath>
-          <itemPath>../src/config/sam_e54_xpro_freertos/configuration.h</itemPath>
+          <logicalFolder displayName="osal" name="f6" projectFiles="true">
+            <itemPath>..\src\config\sam_e54_xpro_freertos\osal\osal.h</itemPath>
+            <itemPath>..\src\config\sam_e54_xpro_freertos\osal\osal_definitions.h</itemPath>
+            <itemPath>..\src\config\sam_e54_xpro_freertos\osal\osal_freertos.h</itemPath>
+          </logicalFolder>
+          <itemPath>..\src\config\sam_e54_xpro_freertos\device_cache.h</itemPath>
+          <itemPath>..\src\config\sam_e54_xpro_freertos\toolchain_specifics.h</itemPath>
+          <itemPath>..\src\config\sam_e54_xpro_freertos\definitions.h</itemPath>
+          <itemPath>..\src\config\sam_e54_xpro_freertos\FreeRTOSConfig.h</itemPath>
+          <itemPath>..\src\config\sam_e54_xpro_freertos\user.h</itemPath>
+          <itemPath>..\src\config\sam_e54_xpro_freertos\configuration.h</itemPath>
+          <itemPath>..\src\config\sam_e54_xpro_freertos\device.h</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder displayName="packs" name="f2" projectFiles="true">
         <logicalFolder displayName="ATSAME54P20A_DFP" name="f1" projectFiles="true">
           <logicalFolder displayName="component" name="f1" projectFiles="true">
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/ac.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/adc.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/aes.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/can.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/ccl.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/cmcc.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/dac.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/dmac.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/dsu.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/eic.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/evsys.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/freqm.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/gclk.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/gmac.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/hmatrixb.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/i2s.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/icm.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/mclk.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/nvmctrl.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/osc32kctrl.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/oscctrl.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/pac.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/pcc.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/pdec.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/pm.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/port.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/pukcc.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/qspi.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/ramecc.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/rstc.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/rtc.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/sdhc.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/sercom.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/supc.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/tc.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/tcc.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/trng.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/usb.h</itemPath>
-            <itemPath>../src/packs/ATSAME54P20A_DFP/component/wdt.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\ac.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\adc.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\aes.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\can.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\ccl.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\cmcc.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\dac.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\dmac.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\dsu.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\eic.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\evsys.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\freqm.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\gclk.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\gmac.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\hmatrixb.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\i2s.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\icm.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\mclk.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\nvmctrl.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\osc32kctrl.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\oscctrl.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\pac.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\pcc.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\pdec.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\pm.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\port.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\pukcc.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\qspi.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\ramecc.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\rstc.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\rtc.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\sdhc.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\sercom.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\supc.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\tc.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\tcc.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\trng.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\usb.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\component\wdt.h</itemPath>
           </logicalFolder>
           <logicalFolder displayName="pio" name="f2" projectFiles="true">
-            <itemPath>../src/packs/ATSAME54P20A_DFP/pio/same54p20a.h</itemPath>
+            <itemPath>..\src\packs\ATSAME54P20A_DFP\pio\same54p20a.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/packs/ATSAME54P20A_DFP/device.h</itemPath>
-          <itemPath>../src/packs/ATSAME54P20A_DFP/atsame54p20a_compat.h</itemPath>
-          <itemPath>../src/packs/ATSAME54P20A_DFP/atsame54p20a.h</itemPath>
+          <itemPath>..\src\packs\ATSAME54P20A_DFP\atsame54p20a.h</itemPath>
         </logicalFolder>
         <logicalFolder displayName="CMSIS" name="f2" projectFiles="true">
           <logicalFolder displayName="CMSIS" name="f1" projectFiles="true">
             <logicalFolder displayName="Core" name="f1" projectFiles="true">
               <logicalFolder displayName="Include" name="f1" projectFiles="true">
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_version.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_compiler.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_iccarm.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_gcc.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armcc.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/cmsis_armclang_ltm.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/core_cm4.h</itemPath>
-                <itemPath>../src/packs/CMSIS/CMSIS/Core/Include/mpu_armv7.h</itemPath>
+                <itemPath>..\src\packs\CMSIS\CMSIS\Core\Include\cmsis_version.h</itemPath>
+                <itemPath>..\src\packs\CMSIS\CMSIS\Core\Include\cmsis_compiler.h</itemPath>
+                <itemPath>..\src\packs\CMSIS\CMSIS\Core\Include\cmsis_iccarm.h</itemPath>
+                <itemPath>..\src\packs\CMSIS\CMSIS\Core\Include\cmsis_gcc.h</itemPath>
+                <itemPath>..\src\packs\CMSIS\CMSIS\Core\Include\cmsis_armcc.h</itemPath>
+                <itemPath>..\src\packs\CMSIS\CMSIS\Core\Include\cmsis_armclang.h</itemPath>
+                <itemPath>..\src\packs\CMSIS\CMSIS\Core\Include\cmsis_armclang_ltm.h</itemPath>
+                <itemPath>..\src\packs\CMSIS\CMSIS\Core\Include\core_cm4.h</itemPath>
+                <itemPath>..\src\packs\CMSIS\CMSIS\Core\Include\mpu_armv7.h</itemPath>
+                <itemPath>..\src\packs\CMSIS\CMSIS\Core\Include\cachel1_armv7.h</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
@@ -154,139 +159,141 @@
       <logicalFolder displayName="FreeRTOS" name="f3" projectFiles="true">
         <logicalFolder displayName="Source" name="f1" projectFiles="true">
           <logicalFolder displayName="include" name="f1" projectFiles="true">
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/croutine.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/event_groups.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/FreeRTOS.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/list.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/mpu_wrappers.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/portable.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/projdefs.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/queue.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/semphr.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/stack_macros.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/deprecated_definitions.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/task.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/timers.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/mpu_prototypes.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/stream_buffer.h</itemPath>
-            <itemPath>../src/third_party/rtos/FreeRTOS/Source/include/message_buffer.h</itemPath>
+            <itemPath>..\src\third_party\rtos\FreeRTOS\Source\include\croutine.h</itemPath>
+            <itemPath>..\src\third_party\rtos\FreeRTOS\Source\include\event_groups.h</itemPath>
+            <itemPath>..\src\third_party\rtos\FreeRTOS\Source\include\FreeRTOS.h</itemPath>
+            <itemPath>..\src\third_party\rtos\FreeRTOS\Source\include\list.h</itemPath>
+            <itemPath>..\src\third_party\rtos\FreeRTOS\Source\include\mpu_wrappers.h</itemPath>
+            <itemPath>..\src\third_party\rtos\FreeRTOS\Source\include\portable.h</itemPath>
+            <itemPath>..\src\third_party\rtos\FreeRTOS\Source\include\projdefs.h</itemPath>
+            <itemPath>..\src\third_party\rtos\FreeRTOS\Source\include\queue.h</itemPath>
+            <itemPath>..\src\third_party\rtos\FreeRTOS\Source\include\semphr.h</itemPath>
+            <itemPath>..\src\third_party\rtos\FreeRTOS\Source\include\stack_macros.h</itemPath>
+            <itemPath>..\src\third_party\rtos\FreeRTOS\Source\include\deprecated_definitions.h</itemPath>
+            <itemPath>..\src\third_party\rtos\FreeRTOS\Source\include\task.h</itemPath>
+            <itemPath>..\src\third_party\rtos\FreeRTOS\Source\include\timers.h</itemPath>
+            <itemPath>..\src\third_party\rtos\FreeRTOS\Source\include\mpu_prototypes.h</itemPath>
+            <itemPath>..\src\third_party\rtos\FreeRTOS\Source\include\stream_buffer.h</itemPath>
+            <itemPath>..\src\third_party\rtos\FreeRTOS\Source\include\message_buffer.h</itemPath>
           </logicalFolder>
           <logicalFolder displayName="portable" name="f2" projectFiles="true">
             <logicalFolder displayName="GCC" name="f1" projectFiles="true">
               <logicalFolder displayName="SAM" name="f1" projectFiles="true">
                 <logicalFolder displayName="ARM_CM4F" name="f1" projectFiles="true">
-                  <itemPath>../src/third_party/rtos/FreeRTOS/Source/portable/GCC/SAM/ARM_CM4F/portmacro.h</itemPath>
+                  <itemPath>..\src\third_party\rtos\FreeRTOS\Source\portable\GCC\SAM\ARM_CM4F\portmacro.h</itemPath>
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder displayName="osal" name="f4" projectFiles="true">
-        <itemPath>../src/config/sam_e54_xpro_freertos/osal/osal.h</itemPath>
-        <itemPath>../src/config/sam_e54_xpro_freertos/osal/osal_definitions.h</itemPath>
-        <itemPath>../src/config/sam_e54_xpro_freertos/osal/osal_freertos.h</itemPath>
-      </logicalFolder>
-      <itemPath>../src/app_freertos.h</itemPath>
+      <itemPath>..\src\app_freertos.h</itemPath>
     </logicalFolder>
     <logicalFolder displayName="Important Files" name="ExternalFiles" projectFiles="true">
       <itemPath>Makefile</itemPath>
-      <itemPath>../src/config/sam_e54_xpro_freertos/harmony.prj</itemPath>
-      <itemPath>../src/config/sam_e54_xpro_freertos/sam_e54_xpro_freertos.xml</itemPath>
+      <itemPath>..\src\config\sam_e54_xpro_freertos\harmony.prj</itemPath>
+      <itemPath>..\src\config\sam_e54_xpro_freertos\sam_e54_xpro_freertos.xml</itemPath>
+      <itemPath>..\src\config\sam_e54_xpro_freertos\harmony-manifest-success.yml</itemPath>
     </logicalFolder>
-    <logicalFolder displayName="Linker Files" name="LinkerScript" projectFiles="true"/>
+    <logicalFolder displayName="Linker Files" name="LinkerScript" projectFiles="true">
+      <logicalFolder displayName="config" name="f1" projectFiles="true">
+        <logicalFolder displayName="sam_e54_xpro_freertos" name="f1" projectFiles="true">
+          <itemPath>..\src\config\sam_e54_xpro_freertos\ATSAME54P20A.ld</itemPath>
+        </logicalFolder>
+      </logicalFolder>
+    </logicalFolder>
     <logicalFolder displayName="Source Files" name="SourceFiles" projectFiles="true">
       <logicalFolder displayName="config" name="f1" projectFiles="true">
         <logicalFolder displayName="sam_e54_xpro_freertos" name="f1" projectFiles="true">
           <logicalFolder displayName="peripheral" name="f1" projectFiles="true">
             <logicalFolder displayName="nvmctrl" name="f1" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro_freertos/peripheral/nvmctrl/plib_nvmctrl.c</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\peripheral\nvmctrl\plib_nvmctrl.c</itemPath>
             </logicalFolder>
             <logicalFolder displayName="evsys" name="f2" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro_freertos/peripheral/evsys/plib_evsys.c</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\peripheral\evsys\plib_evsys.c</itemPath>
             </logicalFolder>
             <logicalFolder displayName="port" name="f3" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro_freertos/peripheral/port/plib_port.c</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\peripheral\port\plib_port.c</itemPath>
             </logicalFolder>
             <logicalFolder displayName="clock" name="f4" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro_freertos/peripheral/clock/plib_clock.c</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\peripheral\clock\plib_clock.c</itemPath>
             </logicalFolder>
             <logicalFolder displayName="nvic" name="f5" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro_freertos/peripheral/nvic/plib_nvic.c</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\peripheral\nvic\plib_nvic.c</itemPath>
             </logicalFolder>
             <logicalFolder displayName="cmcc" name="f6" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro_freertos/peripheral/cmcc/plib_cmcc.c</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\peripheral\cmcc\plib_cmcc.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder displayName="bsp" name="f2" projectFiles="true">
-            <itemPath>../src/config/sam_e54_xpro_freertos/bsp/bsp.c</itemPath>
+            <itemPath>..\src\config\sam_e54_xpro_freertos\bsp\bsp.c</itemPath>
           </logicalFolder>
           <logicalFolder displayName="stdio" name="f3" projectFiles="true">
-            <itemPath>../src/config/sam_e54_xpro_freertos/stdio/xc32_monitor.c</itemPath>
+            <itemPath>..\src\config\sam_e54_xpro_freertos\stdio\xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder displayName="driver" name="f4" projectFiles="true">
             <logicalFolder displayName="usb" name="f1" projectFiles="true">
               <logicalFolder displayName="usbfsv1" name="f1" projectFiles="true">
                 <logicalFolder displayName="src" name="f1" projectFiles="true">
-                  <itemPath>../src/config/sam_e54_xpro_freertos/driver/usb/usbfsv1/src/drv_usbfsv1.c</itemPath>
-                  <itemPath>../src/config/sam_e54_xpro_freertos/driver/usb/usbfsv1/src/drv_usbfsv1_device.c</itemPath>
+                  <itemPath>..\src\config\sam_e54_xpro_freertos\driver\usb\usbfsv1\src\drv_usbfsv1.c</itemPath>
+                  <itemPath>..\src\config\sam_e54_xpro_freertos\driver\usb\usbfsv1\src\drv_usbfsv1_device.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder displayName="usb" name="f5" projectFiles="true">
             <logicalFolder displayName="src" name="f1" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro_freertos/usb/src/usb_device.c</itemPath>
-              <itemPath>../src/config/sam_e54_xpro_freertos/usb/src/usb_device_cdc.c</itemPath>
-              <itemPath>../src/config/sam_e54_xpro_freertos/usb/src/usb_device_cdc_acm.c</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\usb\src\usb_device.c</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\usb\src\usb_device_cdc.c</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\usb\src\usb_device_cdc_acm.c</itemPath>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder displayName="system" name="f6" projectFiles="true">
             <logicalFolder displayName="int" name="f1" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro_freertos/system/int/src/sys_int.c</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\system\int\src\sys_int.c</itemPath>
             </logicalFolder>
             <logicalFolder displayName="cache" name="f2" projectFiles="true">
-              <itemPath>../src/config/sam_e54_xpro_freertos/system/cache/sys_cache.c</itemPath>
+              <itemPath>..\src\config\sam_e54_xpro_freertos\system\cache\sys_cache.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <itemPath>../src/config/sam_e54_xpro_freertos/initialization.c</itemPath>
-          <itemPath>../src/config/sam_e54_xpro_freertos/interrupts.c</itemPath>
-          <itemPath>../src/config/sam_e54_xpro_freertos/exceptions.c</itemPath>
-          <itemPath>../src/config/sam_e54_xpro_freertos/startup_xc32.c</itemPath>
-          <itemPath>../src/config/sam_e54_xpro_freertos/libc_syscalls.c</itemPath>
-          <itemPath>../src/config/sam_e54_xpro_freertos/usb_device_init_data.c</itemPath>
-          <itemPath>../src/config/sam_e54_xpro_freertos/freertos_hooks.c</itemPath>
-          <itemPath>../src/config/sam_e54_xpro_freertos/tasks.c</itemPath>
+          <logicalFolder displayName="osal" name="f7" projectFiles="true">
+            <itemPath>..\src\config\sam_e54_xpro_freertos\osal\osal_freertos.c</itemPath>
+          </logicalFolder>
+          <itemPath>..\src\config\sam_e54_xpro_freertos\initialization.c</itemPath>
+          <itemPath>..\src\config\sam_e54_xpro_freertos\interrupts.c</itemPath>
+          <itemPath>..\src\config\sam_e54_xpro_freertos\exceptions.c</itemPath>
+          <itemPath>..\src\config\sam_e54_xpro_freertos\startup_xc32.c</itemPath>
+          <itemPath>..\src\config\sam_e54_xpro_freertos\libc_syscalls.c</itemPath>
+          <itemPath>..\src\config\sam_e54_xpro_freertos\usb_device_init_data.c</itemPath>
+          <itemPath>..\src\config\sam_e54_xpro_freertos\freertos_hooks.c</itemPath>
+          <itemPath>..\src\config\sam_e54_xpro_freertos\tasks.c</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder displayName="FreeRTOS" name="f2" projectFiles="true">
         <logicalFolder displayName="Source" name="f1" projectFiles="true">
           <logicalFolder displayName="portable" name="f1" projectFiles="true">
             <logicalFolder displayName="MemMang" name="f1" projectFiles="true">
-              <itemPath>../src/third_party/rtos/FreeRTOS/Source/portable/MemMang/heap_1.c</itemPath>
+              <itemPath>..\src\third_party\rtos\FreeRTOS\Source\portable\MemMang\heap_1.c</itemPath>
             </logicalFolder>
             <logicalFolder displayName="GCC" name="f2" projectFiles="true">
               <logicalFolder displayName="SAM" name="f1" projectFiles="true">
                 <logicalFolder displayName="ARM_CM4F" name="f1" projectFiles="true">
-                  <itemPath>../src/third_party/rtos/FreeRTOS/Source/portable/GCC/SAM/ARM_CM4F/port.c</itemPath>
+                  <itemPath>..\src\third_party\rtos\FreeRTOS\Source\portable\GCC\SAM\ARM_CM4F\port.c</itemPath>
                 </logicalFolder>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
-          <itemPath>../src/third_party/rtos/FreeRTOS/Source/croutine.c</itemPath>
-          <itemPath>../src/third_party/rtos/FreeRTOS/Source/list.c</itemPath>
-          <itemPath>../src/third_party/rtos/FreeRTOS/Source/queue.c</itemPath>
-          <itemPath>../src/third_party/rtos/FreeRTOS/Source/FreeRTOS_tasks.c</itemPath>
-          <itemPath>../src/third_party/rtos/FreeRTOS/Source/timers.c</itemPath>
-          <itemPath>../src/third_party/rtos/FreeRTOS/Source/event_groups.c</itemPath>
-          <itemPath>../src/third_party/rtos/FreeRTOS/Source/stream_buffer.c</itemPath>
+          <itemPath>..\src\third_party\rtos\FreeRTOS\Source\croutine.c</itemPath>
+          <itemPath>..\src\third_party\rtos\FreeRTOS\Source\list.c</itemPath>
+          <itemPath>..\src\third_party\rtos\FreeRTOS\Source\queue.c</itemPath>
+          <itemPath>..\src\third_party\rtos\FreeRTOS\Source\FreeRTOS_tasks.c</itemPath>
+          <itemPath>..\src\third_party\rtos\FreeRTOS\Source\timers.c</itemPath>
+          <itemPath>..\src\third_party\rtos\FreeRTOS\Source\event_groups.c</itemPath>
+          <itemPath>..\src\third_party\rtos\FreeRTOS\Source\stream_buffer.c</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <logicalFolder displayName="osal" name="f3" projectFiles="true">
-        <itemPath>../src/config/sam_e54_xpro_freertos/osal/osal_freertos.c</itemPath>
-      </logicalFolder>
-      <itemPath>../src/main.c</itemPath>
-      <itemPath>../src/app_freertos.c</itemPath>
+      <itemPath>..\src\main.c</itemPath>
+      <itemPath>..\src\app_freertos.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -461,7 +468,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exceptions" value="true"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value=""/>
+        <property key="extra-include-directories" value="../src;../src/config/sam_e54_xpro_freertos;../src/packs/ATSAME54P20A_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>

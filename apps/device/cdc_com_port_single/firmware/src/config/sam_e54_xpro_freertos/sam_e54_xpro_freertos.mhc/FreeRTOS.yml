@@ -1,0 +1,31 @@
+format_version: v1.0
+type: UniqueComponent
+attributes: {id: FreeRTOS}
+children:
+- type: Symbols
+  children:
+  - type: Integer
+    attributes: {id: FREERTOS_CPU_CLOCK_HZ}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: FreeRTOS, value: '120000000'}
+  - type: Integer
+    attributes: {id: FREERTOS_MINIMAL_STACK_SIZE}
+    children:
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: '512'}
+  - type: Setting
+    attributes: {id: FREERTOS_XC32CPP_INCLUDE_DIRS}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: enabled}
+        children:
+        - {type: Value, value: 'false'}
+- type: ElementPosition
+  attributes: {x: '149', y: '96', id: FreeRTOS}
