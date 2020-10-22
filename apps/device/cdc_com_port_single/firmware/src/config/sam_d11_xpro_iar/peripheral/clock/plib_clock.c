@@ -59,7 +59,6 @@ static void SYSCTRL_Initialize( void )
 {
     /* Configure 8MHz Oscillator */
     SYSCTRL_REGS->SYSCTRL_OSC8M = (SYSCTRL_REGS->SYSCTRL_OSC8M & (SYSCTRL_OSC8M_CALIB_Msk | SYSCTRL_OSC8M_FRANGE_Msk)) | SYSCTRL_OSC8M_ENABLE_Msk | SYSCTRL_OSC8M_PRESC(0x0) ;
-
     while((SYSCTRL_REGS->SYSCTRL_PCLKSR & SYSCTRL_PCLKSR_OSC8MRDY_Msk) != SYSCTRL_PCLKSR_OSC8MRDY_Msk)
     {
         /* Waiting for the OSC8M Ready state */
@@ -69,7 +68,6 @@ static void SYSCTRL_Initialize( void )
 
     /* Configure 32K External Oscillator */
     SYSCTRL_REGS->SYSCTRL_XOSC32K = SYSCTRL_XOSC32K_STARTUP(0) | SYSCTRL_XOSC32K_ENABLE_Msk | SYSCTRL_XOSC32K_EN32K_Msk | SYSCTRL_XOSC32K_XTALEN_Msk;
-
     while(!((SYSCTRL_REGS->SYSCTRL_PCLKSR & SYSCTRL_PCLKSR_XOSC32KRDY_Msk) == SYSCTRL_PCLKSR_XOSC32KRDY_Msk))
     {
         /* Waiting for the XOSC32K Ready state */
@@ -92,7 +90,7 @@ static void FDPLL_Initialize( void )
 
     /* Selection of the DPLL Enable */
     SYSCTRL_REGS->SYSCTRL_DPLLCTRLA = SYSCTRL_DPLLCTRLA_ENABLE_Msk   ;
-
+    
     while((SYSCTRL_REGS->SYSCTRL_DPLLSTATUS & (SYSCTRL_DPLLSTATUS_LOCK_Msk | SYSCTRL_DPLLSTATUS_CLKRDY_Msk)) !=
                 (SYSCTRL_DPLLSTATUS_LOCK_Msk | SYSCTRL_DPLLSTATUS_CLKRDY_Msk))
     {
@@ -104,7 +102,7 @@ static void FDPLL_Initialize( void )
 
 static void GCLK0_Initialize( void )
 {
-    
+
     GCLK_REGS->GCLK_GENCTRL = GCLK_GENCTRL_SRC(8) | GCLK_GENCTRL_GENEN_Msk | GCLK_GENCTRL_ID(0);
 
     GCLK_REGS->GCLK_GENDIV = GCLK_GENDIV_DIV(2) | GCLK_GENDIV_ID(0);
