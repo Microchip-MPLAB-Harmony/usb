@@ -106,6 +106,7 @@ const DRV_SDMMC_INIT drvSDMMC0InitData =
     .isWriteProtectCheckEnabled     = false,
     .speedMode                      = DRV_SDMMC_CONFIG_SPEED_MODE_IDX0,
     .busWidth                       = DRV_SDMMC_CONFIG_BUS_WIDTH_IDX0,
+	.sleepWhenIdle 					= false,
     .isFsEnabled                    = false,
 };
 

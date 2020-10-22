@@ -1,0 +1,13 @@
+configName: sam_9x60_ek_iar
+folderName: sam_9x60_ek_iar.IAR
+format_version: v1.0
+frameworkPath: C:\Repos\H3
+processor: SAM9X60
+projectName: msd_sdcard_sam_9x60_ek_iar
+settings:
+  PackageFilter: audio;bsp;core;csp;usb;
+  FORCE_OPTIMIZATION: 'false'
+  GENERATE_BACKUP: 'true'
+  CMSISPath: .\dev_packs\arm\CMSIS\5.6.0
+  MERGE_STRATEGY: USER_ALL
+  DFPPath: .\dev_packs\Microchip\SAM9X6_DFP\1.2.31\atdf\SAM9X60.atdf
