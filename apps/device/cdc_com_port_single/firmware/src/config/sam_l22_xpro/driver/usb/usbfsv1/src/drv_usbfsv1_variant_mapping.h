@@ -60,7 +60,7 @@
 /* ATSAML22N18A Devices have USB PADCAL values in OTP4_ADDR */ 
 #define DRV_USBFSV1_READ_PADCAL_VALUE (*((uint32_t *) OTP4_ADDR) >> 13)
 
-/* ATSAML22N18A Devices has one interrupt vector for USB module */ 
+/* ATSAML22N18A Devices has one interrupt vector for USB module */
 #define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE false
   
 #if (DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE == true)

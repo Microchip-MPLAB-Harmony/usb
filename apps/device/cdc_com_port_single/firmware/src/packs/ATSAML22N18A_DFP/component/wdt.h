@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2019-11-24T16:22:29Z */
+/* file generated from device description version 2020-08-25T05:26:06Z */
 #ifndef _SAML22_WDT_COMPONENT_H_
 #define _SAML22_WDT_COMPONENT_H_
 
