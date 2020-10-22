@@ -1,0 +1,14 @@
+configName: sam_g55_xpro
+folderName: ''
+format_version: v1.0
+frameworkPath: ../../../..
+processor: ATSAMG55J19
+projectName: ''
+settings:
+  PackageFilter: bsp;core;csp;usb;
+  FORCE_OPTIMIZATION: 'false'
+  GENERATE_BACKUP: 'true'
+  TRUSTZONE: 'false'
+  CMSISPath: .\dev_packs\arm\CMSIS\5.6.0
+  MERGE_STRATEGY: USER_ALL
+  DFPPath: .\dev_packs\Microchip\SAMG_DFP\3.3.42\samg55\atdf\ATSAMG55J19.atdf
