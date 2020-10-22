@@ -1,5 +1,24 @@
 /*******************************************************************************
-* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
+  Device Header File
+
+  Company:
+    Microchip Technology Inc.
+
+  File Name:
+    device.h
+
+  Summary:
+    This file includes the selected device from within the project.
+    The device will provide access to respective device packs.
+
+  Description:
+    None
+
+*******************************************************************************/
+
+// DOM-IGNORE-BEGIN
+/*******************************************************************************
+* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -19,24 +38,10 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *******************************************************************************/
-void __attribute((weak, noreturn)) undefined_instruction_irq_handler (void)
-{
-	while(1);
-}
+*******************************************************************************/
+// DOM-IGNORE-END
 
+#include "atsama5d27.h"
+#include "device_cache.h"
+#include "toolchain_specifics.h"
 
-void __attribute((weak, noreturn)) software_interrupt_irq_handler(void)
-{
-	while(1);
-}
-
-void __attribute((weak, noreturn)) data_abort_irq_handler(void)
-{
-	while(1);
-}
-
-void __attribute((weak, noreturn)) prefetch_abort_irq_handler(void)
-{
-	while(1);
-}
