@@ -96,6 +96,24 @@
 /* CDC specific request */
 #define USB_CDC_REQUEST_CLASS_SPECIFIC                  0x20
 
+/* CDC Line Coding specific macro definitions */
+#define USB_CDC_LINE_CODING_STOP_1_BIT                  0x00
+#define USB_CDC_LINE_CODING_STOP_1_5_BIT                0x01
+#define USB_CDC_LINE_CODING_STOP_2_BIT                  0x02
+        
+#define USB_CDC_LINE_CODING_PARITY_NONE                 0x00
+#define USB_CDC_LINE_CODING_PARITY_ODD                  0x01
+#define USB_CDC_LINE_CODING_PARITY_EVEN                 0x02
+#define USB_CDC_LINE_CODING_PARITY_MARK                 0x03
+#define USB_CDC_LINE_CODING_PARITY_SPACE                0x04
+
+#define USB_CDC_LINE_CODING_DATA_5_BIT                  0x05
+#define USB_CDC_LINE_CODING_DATA_6_BIT                  0x06
+#define USB_CDC_LINE_CODING_DATA_7_BIT                  0x07
+#define USB_CDC_LINE_CODING_DATA_8_BIT                  0x08
+#define USB_CDC_LINE_CODING_DATA_16_BIT                 0x10
+
+
 // *****************************************************************************
 /* CDC ACM capabilities.
 
