@@ -111,7 +111,7 @@ typedef struct _DeviceVectors
 {
   /* Stack pointer */
   void* pvStack;
-  /* Cortex-M handlers */
+  /* CORTEX-M0PLUS handlers */
   void* pfnReset_Handler;                        /* -15 Reset Vector, invoked on Power up and warm reset */
   void* pfnNonMaskableInt_Handler;               /* -14 Non maskable Interrupt, cannot be stopped or preempted */
   void* pfnHardFault_Handler;                    /* -13 Hard Fault, all classes of Fault */
@@ -150,12 +150,6 @@ typedef struct _DeviceVectors
   void* pfnPTC_Handler;                          /*  18 Peripheral Touch Controller (PTC) */
 } DeviceVectors;
 
-/* Defines for Deprecated Interrupt and Exceptions handler names */
-#define pfnMemManage_Handler      pfnMemoryManagement_Handler     /**< \deprecated  Backward compatibility for ASF*/
-#define pfnDebugMon_Handler       pfnDebugMonitor_Handler         /**< \deprecated  Backward compatibility for ASF*/
-#define pfnNMI_Handler            pfnNonMaskableInt_Handler       /**< \deprecated  Backward compatibility for ASF*/
-#define pfnSVC_Handler            pfnSVCall_Handler               /**< \deprecated  Backward compatibility for ASF*/
-
 #endif /* !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__)) */
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
@@ -191,24 +185,16 @@ void AC_Handler                    ( void );
 void DAC_Handler                   ( void );
 void PTC_Handler                   ( void );
 #endif /* DONT_USE_PREDEFINED_PERIPHERALS_HANDLERS */
-/* Defines for Deprecated Interrupt and Exceptions handler names */
-#define MemManage_Handler         MemoryManagement_Handler        /**< \deprecated  Backward compatibility*/
-#define DebugMon_Handler          DebugMonitor_Handler            /**< \deprecated  Backward compatibility*/
-#define NMI_Handler               NonMaskableInt_Handler          /**< \deprecated  Backward compatibility*/
-#define SVC_Handler               SVCall_Handler                  /**< \deprecated  Backward compatibility*/
-
 #endif /* !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__)) */
 
-/*
- * \brief Configuration of the CORTEX-M0PLUS Processor and Core Peripherals
- */
+/** \brief Configuration of the CORTEX-M0PLUS Processor and Core Peripherals */
+#define __CM0PLUS_REV             0x0001 /**< Cortex-M0+ Core Revision                                                  */
 #define __MPU_PRESENT                  0 /**< MPU present or not                                                        */
 #define __NVIC_PRIO_BITS               2 /**< Number of Bits used for Priority Levels                                   */
 #define __VTOR_PRESENT                 1 /**< Vector Table Offset Register present or not                               */
 #define __Vendor_SysTickConfig         0 /**< Set to 1 if different SysTick Config is used                              */
 #define __ARCH_ARM                     1
 #define __ARCH_ARM_CORTEX_M            1
-#define __DEVICE_IS_SAM                1
 
 /*
  * \brief CMSIS includes
