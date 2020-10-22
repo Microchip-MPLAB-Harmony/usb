@@ -1,0 +1,13 @@
+configName: sam_e54_xpro_iar
+folderName: sam_e54_xpro_iar.IAR
+format_version: v1.0
+frameworkPath: C:\jcb\usb\repo\H3
+processor: ATSAME54P20A
+projectName: cdc_com_port_single_sam_e54_xpro_iar
+settings:
+  PackageFilter: bsp;core;core_apps_sam_d21_da1;core_apps_sam_d5x_e5x;core_apps_sam_e70_s70_v70_v71;csp;csp_apps_pic32mx;csp_apps_sam_d21_da1;csp_apps_sam_d5x_e5x;csp_apps_sam_e70_s70_v70_v71;quick_docs;usb;validation;
+  FORCE_OPTIMIZATION: 'false'
+  GENERATE_BACKUP: 'true'
+  CMSISPath: .\dev_packs\arm\CMSIS\5.7.0
+  MERGE_STRATEGY: USER_ALL
+  DFPPath: .\dev_packs\Microchip\SAME54_DFP\3.4.70\atdf\ATSAME54P20A.atdf

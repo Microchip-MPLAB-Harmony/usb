@@ -2178,6 +2178,9 @@
                     <file>
                         <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\definitions.h</name>
                     </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\device.h</name>
+                    </file>
                     <group>
                         <name>driver</name>
                         <group>
@@ -2292,6 +2295,18 @@
                             </file>
                         </group>
                     </group>
+                    <group>
+                        <name>osal</name>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\osal\osal.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\osal\osal_definitions.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\osal\osal_impl_basic.h</name>
+                        </file>
+                    </group>
                     <file>
                         <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\user.h</name>
                     </file>
@@ -2304,12 +2319,6 @@
                 <name>packs</name>
                 <group>
                     <name>ATSAME54P20A_DFP</name>
-                    <file>
-                        <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\device.h</name>
-                    </file>
-                    <file>
-                        <name>$PROJ_DIR$\..\src\packs\ATSAME54P20A_DFP\atsame54p20a_compat.h</name>
-                    </file>
                     <group>
                         <name>component</name>
                         <file>
@@ -2475,20 +2484,14 @@
                                 <file>
                                     <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core\Include\mpu_armv7.h</name>
                                 </file>
+                                <file>
+                                    <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core\Include\cachel1_armv7.h</name>
+                                </file>
                             </group>
                         </group>
                     </group>
                 </group>
             </group>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\osal\osal.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\osal\osal_definitions.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e54_xpro_iar\osal\osal_impl_basic.h</name>
-            </file>
             <file>
                 <name>$PROJ_DIR$\..\src\app.h</name>
             </file>
