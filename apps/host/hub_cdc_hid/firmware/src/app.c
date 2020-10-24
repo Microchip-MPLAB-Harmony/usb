@@ -326,24 +326,23 @@ void APP_Tasks ( void )
 void APP_CDC_Tasks( )
 {
     USB_HOST_CDC_RESULT result;
-    
-    
+
     if(appCDCData.deviceWasDetached)
-   {
-       /* This means the device is not attached. Reset the application state */
-       
-       appCDCData.state = APP_CDC_STATE_WAIT_FOR_DEVICE_ATTACH;
-       appCDCData.readTransferDone = false;
-       appCDCData.writeTransferDone = false;
-       appCDCData.controlRequestDone = false;
-       appCDCData.deviceWasDetached = false;
-   }
+    {
+        /* This means the device is not attached. Reset the application state */
+
+        appCDCData.state = APP_CDC_STATE_WAIT_FOR_DEVICE_ATTACH;
+        appCDCData.readTransferDone = false;
+        appCDCData.writeTransferDone = false;
+        appCDCData.controlRequestDone = false;
+        appCDCData.deviceWasDetached = false;
+    }
 
     switch (appCDCData.state)
     {
-         case APP_CDC_STATE_WAIT_FOR_DEVICE_ATTACH:
-            
-           /* In this state the application is waiting for the device to be
+        case APP_CDC_STATE_WAIT_FOR_DEVICE_ATTACH:
+
+            /* In this state the application is waiting for the device to be
              * attached */
             if(appCDCData.deviceIsAttached)
             {
@@ -352,9 +351,9 @@ void APP_CDC_Tasks( )
                 appCDCData.deviceIsAttached = false;
             }
             break;
-            
+
         case APP_CDC_STATE_OPEN_DEVICE:
-            
+
             /* In this state the application opens the attached device */
             appCDCData.cdcHostHandle = USB_HOST_CDC_Open(appCDCData.cdcObj);
             if(appCDCData.cdcHostHandle != USB_HOST_CDC_HANDLE_INVALID)
@@ -365,25 +364,25 @@ void APP_CDC_Tasks( )
                 appCDCData.state = APP_CDC_STATE_SET_LINE_CODING;
             }
             break;
-            
+
         case APP_CDC_STATE_SET_LINE_CODING:
-            
+
             /* Here we set the Line coding. The control request done flag will
              * be set to true when the control request has completed. */
-            
+
             appCDCData.controlRequestDone = false;
             result = USB_HOST_CDC_ACM_LineCodingSet(appCDCData.cdcHostHandle, NULL, &appCDCData.cdcHostLineCoding);
-            
+
             if(result == USB_HOST_CDC_RESULT_SUCCESS)
             {
                 /* We wait for the set line coding to complete */
                 appCDCData.state = APP_CDC_STATE_WAIT_FOR_SET_LINE_CODING;
             }
-                            
+
             break;
-            
+
         case APP_CDC_STATE_WAIT_FOR_SET_LINE_CODING:
-            
+
             if(appCDCData.controlRequestDone)
             {
                 if(appCDCData.controlRequestResult != USB_HOST_CDC_RESULT_SUCCESS)
@@ -398,24 +397,24 @@ void APP_CDC_Tasks( )
                 }
             }
             break;
-            
+
         case APP_CDC_STATE_SEND_SET_CONTROL_LINE_STATE:
-            
+
             /* Here we set the control line state */
             appCDCData.controlRequestDone = false;
             result = USB_HOST_CDC_ACM_ControlLineStateSet(appCDCData.cdcHostHandle, NULL, 
                     &appCDCData.controlLineState);
-            
+
             if(result == USB_HOST_CDC_RESULT_SUCCESS)
             {
                 /* We wait for the set line coding to complete */
                 appCDCData.state = APP_CDC_STATE_WAIT_FOR_SET_CONTROL_LINE_STATE;
             }
-            
+
             break;
-            
+
         case APP_CDC_STATE_WAIT_FOR_SET_CONTROL_LINE_STATE:
-            
+
             /* Here we wait for the control line state set request to complete */
             if(appCDCData.controlRequestDone)
             {
@@ -430,25 +429,25 @@ void APP_CDC_Tasks( )
                     appCDCData.state = APP_CDC_STATE_SEND_PROMPT_TO_DEVICE;
                 }
             }
-            
+
             break;
-            
+
         case APP_CDC_STATE_SEND_PROMPT_TO_DEVICE:
-            
+
             /* The prompt is sent to the device here. The write transfer done
              * flag is updated in the event handler. */
-            
+
             appCDCData.writeTransferDone = false;
             result = USB_HOST_CDC_Write(appCDCData.cdcHostHandle, NULL, ( void * )prompt, 8);
-            
+
             if(result == USB_HOST_CDC_RESULT_SUCCESS)
             {
                 appCDCData.state = APP_CDC_STATE_WAIT_FOR_PROMPT_SEND_COMPLETE;
             }
             break;
-            
+
         case APP_CDC_STATE_WAIT_FOR_PROMPT_SEND_COMPLETE:
-            
+
             /* Here we check if the write transfer is done */
             if(appCDCData.writeTransferDone)
             {
@@ -463,11 +462,11 @@ void APP_CDC_Tasks( )
                     appCDCData.state = APP_CDC_STATE_SEND_PROMPT_TO_DEVICE;
                 }
             }
-            
+
             break;
-            
+
         case APP_CDC_STATE_GET_DATA_FROM_DEVICE:
-            
+
             /* Here we request data from the device */
             appCDCData.readTransferDone = false;
             result = USB_HOST_CDC_Read(appCDCData.cdcHostHandle, NULL, appCDCData.inDataArray, 1);
@@ -475,36 +474,45 @@ void APP_CDC_Tasks( )
             {
                 appCDCData.state = APP_CDC_STATE_WAIT_FOR_DATA_FROM_DEVICE;
             }
+
             break;
-           
+
         case APP_CDC_STATE_WAIT_FOR_DATA_FROM_DEVICE:
-            
+
             /* Wait for data from device. If the data has arrived, then toggle
              * the LED. */
             if(appCDCData.readTransferDone)
             {
                 if(appCDCData.readTransferResult == USB_HOST_CDC_RESULT_SUCCESS)
                 {
-                   if ( appCDCData.inDataArray[0] == '1')
+                    if (appCDCData.inDataArray[0] == '1')
                     {
-                        /* Switch on LED 1 */
-                        LED1_On();
+                        /* Toggle LED 1 */
+                        LED1_Toggle();
                     }
-                    else
+                    else if (appCDCData.inDataArray[0] == '2')
                     {
-                        /* Switch off LED  */
-                        LED1_Off();
+                        /* Toggle LED 2  */
+                        LED2_Toggle();
                     }
-                    /* Send the prompt to the device and wait
-                     * for data again */
+                    else if (appCDCData.inDataArray[0] == '3')
+                    {
+                        /* Toggle LED 3 */
+                        LED3_Toggle();
+                    }
+
+                    /* Send the prompt to the device and wait for data again */
                     appCDCData.state = APP_CDC_STATE_SEND_PROMPT_TO_DEVICE;
                 }
             }
-            
+
+            break;
+
         case APP_STATE_ERROR:
+
             /* An error has occurred */
             break;
-            
+
         default:
             break;
     }

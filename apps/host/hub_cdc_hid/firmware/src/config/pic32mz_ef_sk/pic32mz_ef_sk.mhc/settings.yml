@@ -5,7 +5,7 @@ frameworkPath: ../../../..
 processor: PIC32MZ2048EFH144
 projectName: ''
 settings:
-  PackageFilter: bsp;core;csp;usb;
+  PackageFilter: bsp;core;csp;quick_docs;usb;
   FORCE_OPTIMIZATION: 'false'
   GENERATE_BACKUP: 'true'
   CMSISPath: .\dev_packs\arm\CMSIS\5.7.0
