@@ -5,9 +5,9 @@ frameworkPath: ../../../..
 processor: ATSAMV71Q21B
 projectName: cdc_com_port_dual_sam_v71_xult_freertos
 settings:
-  PackageFilter: bsp;core;csp;usb;
+  PackageFilter: bsp;core;core_apps_sam_d21_da1;core_apps_sam_d5x_e5x;core_apps_sam_e70_s70_v70_v71;csp;csp_apps_pic32mx;csp_apps_sam_d21_da1;csp_apps_sam_d5x_e5x;csp_apps_sam_e70_s70_v70_v71;quick_docs;usb;validation;
   FORCE_OPTIMIZATION: 'false'
   GENERATE_BACKUP: 'true'
-  CMSISPath: .\dev_packs\arm\CMSIS\5.6.0
+  CMSISPath: .\dev_packs\arm\CMSIS\5.7.0
   MERGE_STRATEGY: USER_ALL
-  DFPPath: .\dev_packs\Microchip\SAMV71_DFP\4.3.66\samv71b\atdf\ATSAMV71Q21B.atdf
+  DFPPath: .\dev_packs\Microchip\SAMV71_DFP\4.4.74\samv71b\atdf\ATSAMV71Q21B.atdf

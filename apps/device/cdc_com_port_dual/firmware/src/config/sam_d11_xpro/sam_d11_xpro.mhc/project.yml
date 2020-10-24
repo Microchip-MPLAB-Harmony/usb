@@ -678,13 +678,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 3E3CC6BC9128194CB4D19F29C57E312B
-- generatedChecksum: null
+- generatedChecksum: 4B3C3EF8A318908A22B78500515C3288
   logicalPath: config\sam_d11_xpro
   name: user.h
   physicalPath: ''
   security: NON_SECURE
   type: HEADER
-  userChecksum: null
+  userChecksum: 4B3C3EF8A318908A22B78500515C3288
 - generatedChecksum: 7ACDFC92FD15ECFBF7D14D1E2E6A4A9F
   logicalPath: packs\ATSAMD11D14AM_DFP\component
   name: wdt.h
