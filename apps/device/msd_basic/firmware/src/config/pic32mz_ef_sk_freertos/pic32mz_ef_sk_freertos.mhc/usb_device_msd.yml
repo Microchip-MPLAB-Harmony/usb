@@ -72,5 +72,14 @@ children:
           children:
           - type: User
             attributes: {value: MEDIA_TYPE_NVM}
+    - type: Attachments
+      children:
+      - type: MultiCapability
+        attributes: {id: usb_device_msd_media_dependency}
+        children:
+        - type: TargetAttachments
+          children:
+          - type: TargetAttachment
+            attributes: {targetComponentID: drv_memory_0, targetAttachmentID: drv_media}
 - type: ElementPosition
   attributes: {x: '358', y: '239', id: usb_device_msd}
