@@ -90,6 +90,8 @@ size_t FLEXCOM7_USART_WriteCountGet( void );
 
 size_t FLEXCOM7_USART_ReadCountGet( void );
 
+bool FLEXCOM7_USART_ReadAbort(void);
+
 void FLEXCOM7_USART_WriteCallbackRegister( FLEXCOM_USART_CALLBACK callback, uintptr_t context );
 
 void FLEXCOM7_USART_ReadCallbackRegister( FLEXCOM_USART_CALLBACK callback, uintptr_t context );
