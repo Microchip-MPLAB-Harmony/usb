@@ -102,14 +102,16 @@ void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
 }
 
 
-DRV_USB_UHP_INIT drvUSBInit =
+DRV_USB_OHCI_INIT drvUSBOHCIInit =
 {
     /* Interrupt Source for USB module */
     .interruptSource = (INT_SOURCE)UHP_IRQn,
-    /* Enable Full Speed Operation */
-    .operationSpeed = USB_SPEED_FULL,
+
     /* USB base address */
-    .usbIDOHCI = ((UhpOhci*)0x20400000),
+    .usbID = ((UhpOhci*)0x20400000),   
+
+     /* Ports Selection */ 
+    .bmPortSelect = 0x01,
     
     /* USB Host Power Enable. USB Driver uses this function to Enable the VBUS */ 
     .portPowerEnable = DRV_USB_VBUSPowerEnable,
@@ -215,6 +217,26 @@ const SYS_TIME_INIT sysTimeInitData =
 // *****************************************************************************
 // *****************************************************************************
 
+/*******************************************************************************
+  Function:
+    void STDIO_BufferModeSet ( void )
+
+  Summary:
+    Sets the buffering mode for stdin and stdout
+
+  Remarks:
+ ********************************************************************************/
+static void STDIO_BufferModeSet(void)
+{
+
+    /* Make stdin unbuffered */
+    setbuf(stdin, NULL);
+
+    /* Make stdout unbuffered */
+    setbuf(stdout, NULL);
+}
+
+
 
 
 /*******************************************************************************
@@ -231,6 +253,9 @@ void SYS_Initialize ( void* data )
 {
 
     EFC_Initialize();
+    STDIO_BufferModeSet();
+
+
   
 	PIO_Initialize();
 
@@ -253,8 +278,7 @@ void SYS_Initialize ( void* data )
 
     sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);
 
-    /* Initialize USB Driver */ 
-    sysObj.drvUSBObject = DRV_USB_UHP_Initialize (DRV_USB_UHP_INDEX_0, (SYS_MODULE_INIT *) &drvUSBInit);
+    sysObj.drvUSBOHCIObject = DRV_USB_OHCI_Initialize (DRV_USB_OHCI_INDEX_0, (SYS_MODULE_INIT *) &drvUSBOHCIInit);
 
 	/* Initialize the USB Host layer */
     sysObj.usbHostObject0 = USB_HOST_Initialize (( SYS_MODULE_INIT *)& usbHostInitData );	
