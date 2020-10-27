@@ -37,12 +37,6 @@ children:
   - type: Boolean
     attributes: {id: USART_INTERRUPT_MODE}
     children:
-    - type: Attributes
-      children:
-      - type: Boolean
-        attributes: {id: readOnly}
-        children:
-        - {type: Value, value: 'true'}
     - type: Values
       children:
       - type: Dynamic
@@ -50,12 +44,6 @@ children:
   - type: KeyValueSet
     attributes: {id: USART_MODE}
     children:
-    - type: Attributes
-      children:
-      - type: Boolean
-        attributes: {id: readOnly}
-        children:
-        - {type: Value, value: 'true'}
     - type: Values
       children:
       - type: Dynamic
@@ -72,12 +60,6 @@ children:
   - type: Boolean
     attributes: {id: USART_RING_BUFFER_ENABLE}
     children:
-    - type: Attributes
-      children:
-      - type: Boolean
-        attributes: {id: readOnly}
-        children:
-        - {type: Value, value: 'true'}
     - type: Values
       children:
       - type: Dynamic
@@ -91,15 +73,6 @@ children:
         attributes: {id: usart1, value: '150'}
 - type: Attachments
   children:
-  - type: DirectCapability
-    attributes: {id: USART1_SPI}
-    children:
-    - type: Attributes
-      children:
-      - type: Boolean
-        attributes: {id: enabled}
-        children:
-        - {type: Value, value: 'false'}
   - type: DirectCapability
     attributes: {id: USART1_UART}
     children:
