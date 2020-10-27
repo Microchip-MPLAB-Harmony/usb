@@ -153,9 +153,6 @@ extern "C" {
 /* Total number of devices to be supported */
 #define USB_HOST_DEVICES_NUMBER                             1
 
-/* Size of Endpoint 0 buffer */
-#define USB_DEVICE_EP0_BUFFER_SIZE                          64
-
 /* Target peripheral list entries */
 #define  USB_HOST_TPL_ENTRIES                               1 
 
@@ -169,8 +166,6 @@ extern "C" {
 /* Provides Host pipes number */
 #define USB_HOST_PIPES_NUMBER                               10
 
-/* Number of Host Layer Clients */
-#define USB_HOST_CLIENTS_NUMBER                             1   
 
 /*** USB Driver Configuration ***/
 
