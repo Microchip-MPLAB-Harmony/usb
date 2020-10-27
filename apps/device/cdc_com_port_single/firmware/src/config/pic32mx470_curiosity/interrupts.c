@@ -64,7 +64,7 @@ void DRV_USBFS_USB_Handler( void );
 
 
 /* All the handlers are defined here.  Each will call its PLIB-specific function. */
-void __ISR(_USB_1_VECTOR, ipl4AUTO) USB_FS_Handler (void)
+void __ISR(_USB_1_VECTOR, ipl4SOFT) USB_FS_Handler (void)
 {
     DRV_USBFS_USB_Handler();
 }
