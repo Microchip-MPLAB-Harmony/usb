@@ -46,7 +46,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #ifndef _APP_H
 #define _APP_H
 
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
@@ -55,19 +54,11 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <string.h>
 #include <stddef.h>
 #include <stdlib.h>
-#include <string.h>
 #include "configuration.h"
 #include "definitions.h"
-
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-extern "C" {
-
-#endif
-// DOM-IGNORE-END 
 
 // *****************************************************************************
 // *****************************************************************************
@@ -75,8 +66,14 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 
+#ifndef LED1_On
+#define LED1_Toggle()                   LED_Toggle()
+#define LED1_On()                       LED_On()
+#define LED1_Off()                      LED_Off()
+#endif
+
 // *****************************************************************************
-/* Application states
+/* Application States
 
   Summary:
     Application states enumeration
@@ -84,25 +81,41 @@ extern "C" {
   Description:
     This enumeration defines the valid application states.  These states
     determine the behavior of the application at various times.
+
+  Remarks:
+    None.
 */
 
 typedef enum
 {
-	APP_STATE_BUS_ENABLE = 0,
+    /* Enable the USB */
+    APP_STATE_BUS_ENABLE = 0,
+
+    /* Wait for USB enable to complete */
     APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE,
+
+    /* Wait for devices to attach */
     APP_STATE_WAIT_FOR_DEVICE_ATTACH,
-    APP_STATE_DEVICE_CONNECTED,
-    APP_STATE_MOUNT_DISK,
-    APP_STATE_UNMOUNT_DISK,
+
+    /* Open the files */
     APP_STATE_OPEN_FILE,
-            APP_STATE_READ_FROM_FILE,
+
+    /* Read from file 1 */
+    APP_STATE_READ_FROM_FILE,
+
+    /* Write to file 2 */
     APP_STATE_WRITE_TO_FILE,
+
+    /* Close both files */
     APP_STATE_CLOSE_FILE,
+
+    /* Operation complete. Lets idle. */
     APP_STATE_IDLE,
+
+    /* There was an error */
     APP_STATE_ERROR
 
 } APP_STATES;
-
 
 // *****************************************************************************
 /* Application Data
@@ -119,8 +132,6 @@ typedef enum
 
 typedef struct
 {
-    /* The application's current state */
-  
     /* SYS_FS File handle for 1st file */
     SYS_FS_HANDLE fileHandle1;
     
@@ -131,7 +142,7 @@ typedef struct
     APP_STATES state;
 
     /* Application data buffer */
-    uint8_t data[1024];
+    uint8_t data[512];
 
     /* Number of bytes written */
     uint32_t nBytesWritten;
@@ -139,7 +150,11 @@ typedef struct
     /* Number of bytes read */
     uint32_t nBytesRead;
 
-    bool deviceIsConnected;
+    /* Tracks device connected status */
+    bool gUSBFirstDeviceConnected;
+
+    /* Tracks device connected status */
+    bool gUSBSecondDeviceConnected;
 
 } APP_DATA;
 
@@ -151,6 +166,7 @@ typedef struct
 // *****************************************************************************
 /* These routines are called by drivers when certain events occur.
 */
+
 	
 // *****************************************************************************
 // *****************************************************************************
@@ -225,15 +241,8 @@ void APP_Initialize ( void );
 void APP_Tasks ( void );
 
 
+
 #endif /* _APP_H */
-
-//DOM-IGNORE-BEGIN
-#ifdef __cplusplus
-}
-#endif
-//DOM-IGNORE-END
-
 /*******************************************************************************
  End of File
  */
-
