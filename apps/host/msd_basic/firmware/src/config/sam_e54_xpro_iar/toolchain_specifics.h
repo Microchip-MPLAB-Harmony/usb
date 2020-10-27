@@ -24,24 +24,45 @@
 #ifndef TOOLCHAIN_SPECIFICS_H
 #define TOOLCHAIN_SPECIFICS_H
 
+#ifdef __cplusplus  // Provide C++ Compatibility
+extern "C" {
+#endif
 
 #include "cmsis_compiler.h"
+#include <stdint.h>
+
 #define COMPILER_PRAGMA(arg)            _Pragma(#arg)
 #define SECTION(a)                      COMPILER_PRAGMA(location = a)
 #define NO_INIT                         __no_init
 
-#include <stdint.h>
 #define __inline__                      inline
+
+#ifndef _SSIZE_T_DECLARED
+#ifdef __SIZE_T_TYPE__
+/* If __SIZE_T_TYPE__ is defined (IAR) we define ssize_t based on size_t.
+We simply change "unsigned" to "signed" for this single definition
+to make sure ssize_t and size_t only differ by their signedness. */
+#define unsigned signed
+typedef __SIZE_T_TYPE__ _ssize_t;
+#undef unsigned
+#else
+#if defined(__INT_MAX__) && __INT_MAX__ == 2147483647
+typedef int _ssize_t;
+#else
+typedef long _ssize_t;
+#endif
+#endif
+typedef _ssize_t ssize_t;
+#define	_SSIZE_T_DECLARED
+#endif
 
 #define CACHE_LINE_SIZE                 (16u)
 #define CACHE_ALIGN                     __ALIGNED(CACHE_LINE_SIZE)
 
-// ************************************************************************
-// H3_IAR_SYS_TYPES
+#ifndef FORMAT_ATTRIBUTE
+   #define FORMAT_ATTRIBUTE(archetype, string_index, first_to_check)
+#endif
 
-#define ssize_t                         long
-
-// ************************************************************************
 // Usually defined in errno.h, include extended E codes not provided in IAR errno.h
 // H3_IAR_ERRNO
 extern __attribute__((section(".bss.errno"))) int errno;
@@ -136,6 +157,9 @@ extern __attribute__((section(".bss.errno"))) int errno;
 #define EXDEV           (81) /* Cross-device link */
 
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif // end of header
 
