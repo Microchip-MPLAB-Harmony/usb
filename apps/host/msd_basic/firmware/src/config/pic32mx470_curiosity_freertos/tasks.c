@@ -63,7 +63,7 @@ void _USB_HOST_Tasks(  void *pvParameters  )
 {
     while(1)
     {
-				/* USB Host layer tasks routine */ 
+        /* USB Host layer tasks routine */ 
         USB_HOST_Tasks(sysObj.usbHostObject0);
         vTaskDelay(10 / portTICK_PERIOD_MS);
     }
@@ -80,21 +80,11 @@ void _SYS_FS_Tasks(  void *pvParameters  )
 }
 
 
-void _DRV_USBFS_Tasks(  void *pvParameters  )
-{
-    while(1)
-    {
-				 /* USB FS Driver Task Routine */
-        DRV_USBFS_Tasks(sysObj.drvUSBFSObject);
-        vTaskDelay(10 / portTICK_PERIOD_MS);
-    }
-}
-
 /* Handle for the APP_Tasks. */
 TaskHandle_t xAPP_Tasks;
 
 void _APP_Tasks(  void *pvParameters  )
-{
+{   
     while(1)
     {
         APP_Tasks();
@@ -145,14 +135,6 @@ void SYS_Tasks ( void )
         (TaskHandle_t*)NULL
     );
 
-	/* Create OS Thread for USB Driver Tasks. */
-    xTaskCreate( _DRV_USBFS_Tasks,
-        "DRV_USBFS_TASKS",
-        1024,
-        (void*)NULL,
-        1,
-        (TaskHandle_t*)NULL
-    );
 
 
 

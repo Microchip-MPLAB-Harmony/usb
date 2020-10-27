@@ -61,8 +61,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 PLIB_TEMPLATE void USB_LastTransactionDetailsGet_Default( USB_MODULE_ID index , USB_BUFFER_DIRECTION * direction , USB_PING_PONG_STATE * pingpong , uint8_t * endpoint )
 {
     volatile usb_registers_t   * usb = ((usb_registers_t *)(index));
-    *direction = usb->UxSTAT.DIR;
-    *pingpong = usb->UxSTAT.PPBI;
+    *direction = ( USB_BUFFER_DIRECTION ) usb->UxSTAT.DIR;
+    *pingpong =  ( USB_PING_PONG_STATE )usb->UxSTAT.PPBI;
     *endpoint = usb->UxSTAT.ENDPT;
 }
 
