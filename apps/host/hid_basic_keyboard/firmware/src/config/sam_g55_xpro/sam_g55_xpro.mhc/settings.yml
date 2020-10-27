@@ -1,0 +1,13 @@
+configName: sam_g55_xpro
+folderName: C:\jcb\usb\repo\H3\usb\apps\host\hid_basic_keyboard\firmware\sam_g55_xpro.X
+format_version: v1.0
+frameworkPath: ../../../..
+processor: ATSAMG55J19
+projectName: hid_basic_keyboard_sam_g55_xpro
+settings:
+  PackageFilter: bsp;core;csp;quick_docs;usb;
+  FORCE_OPTIMIZATION: 'false'
+  GENERATE_BACKUP: 'true'
+  CMSISPath: .\dev_packs\arm\CMSIS\5.7.0
+  MERGE_STRATEGY: USER_ALL
+  DFPPath: .\dev_packs\Microchip\SAMG_DFP\3.3.45\samg55\atdf\ATSAMG55J19.atdf

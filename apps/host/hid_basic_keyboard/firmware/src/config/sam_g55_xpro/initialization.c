@@ -77,6 +77,7 @@ const DRV_USART_PLIB_INTERFACE drvUsart0PlibAPI = {
     .read = (DRV_USART_PLIB_READ)FLEXCOM7_USART_Read,
     .readIsBusy = (DRV_USART_PLIB_READ_IS_BUSY)FLEXCOM7_USART_ReadIsBusy,
     .readCountGet = (DRV_USART_PLIB_READ_COUNT_GET)FLEXCOM7_USART_ReadCountGet,
+	.readAbort = (DRV_USART_PLIB_READ_ABORT)FLEXCOM7_USART_ReadAbort,
     .writeCallbackRegister = (DRV_USART_PLIB_WRITE_CALLBACK_REG)FLEXCOM7_USART_WriteCallbackRegister,
     .write = (DRV_USART_PLIB_WRITE)FLEXCOM7_USART_Write,
     .writeIsBusy = (DRV_USART_PLIB_WRITE_IS_BUSY)FLEXCOM7_USART_WriteIsBusy,
@@ -164,14 +165,16 @@ void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
 }
 
 
-DRV_USB_UHP_INIT drvUSBInit =
+DRV_USB_OHCI_INIT drvUSBOHCIInit =
 {
     /* Interrupt Source for USB module */
     .interruptSource = (INT_SOURCE)UHP_IRQn,
-    /* Enable Full Speed Operation */
-    .operationSpeed = USB_SPEED_FULL,
+
     /* USB base address */
-    .usbIDOHCI = ((UhpOhci*)0x20400000),
+    .usbID = ((UhpOhci*)0x20400000),   
+
+     /* Ports Selection */ 
+    .bmPortSelect = 0x01,
     
     /* USB Host Power Enable. USB Driver uses this function to Enable the VBUS */ 
     .portPowerEnable = DRV_USB_VBUSPowerEnable,
@@ -255,8 +258,7 @@ void SYS_Initialize ( void* data )
 
     sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);
 
-    /* Initialize USB Driver */ 
-    sysObj.drvUSBObject = DRV_USB_UHP_Initialize (DRV_USB_UHP_INDEX_0, (SYS_MODULE_INIT *) &drvUSBInit);
+    sysObj.drvUSBOHCIObject = DRV_USB_OHCI_Initialize (DRV_USB_OHCI_INDEX_0, (SYS_MODULE_INIT *) &drvUSBOHCIInit);
 
 	/* Initialize the USB Host layer */
     sysObj.usbHostObject0 = USB_HOST_Initialize (( SYS_MODULE_INIT *)& usbHostInitData );	

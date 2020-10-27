@@ -746,7 +746,7 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                                     = USB_HID_KEY_RELEASED;
                                                 keyboardData[keyboardIndex].appData.nonModifierKeysData
                                                     [keyboardData[keyboardIndex].appData.nNonModifierKeysData].event
-                                                    = (USB_HID_KEY_EVENT)SYS_TIME_CounterGet();
+                                                    = SYS_TIME_CounterGet();
                                                 keyboardData[keyboardIndex].appData.nNonModifierKeysData++;
                                             }
                                             else
