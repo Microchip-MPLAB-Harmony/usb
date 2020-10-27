@@ -194,16 +194,13 @@ USB_DEVICE_CDC_EVENT_RESPONSE APP_USBDeviceCDCEventHandler
             /* This means that the host has sent some data*/
             eventDataRead = (USB_DEVICE_CDC_EVENT_DATA_READ_COMPLETE *)pData;
             
+            appDataObject->isCDCReadInProgress = false;
+            
             if(eventDataRead->status != USB_DEVICE_CDC_RESULT_ERROR)
-            {
-                appDataObject->isCDCReadInProgress = false;
-                
+            {                
                 appDataObject->readLength = eventDataRead->length;
             }
-            else
-            {
-                appDataObject->errorStatus = true;
-            }
+                
             break;
 
         case USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
@@ -354,6 +351,7 @@ bool APP_StateReset(void)
         appData.writeTransferHandle = USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID;
         appData.isCDCReadInProgress = false;
         appData.isCDCWriteInProgress = false;
+        appData.errorStatus = false;
 
         appData.isSetLineCodingCommandInProgress = false;
         appData.isBaudrateDataReceived = false;
@@ -492,6 +490,7 @@ void APP_Initialize ( void )
     
 
     appData.uartTxCount = 0;
+    appData.errorStatus = false;
     
     appData.usartHandle = DRV_HANDLE_INVALID;
     appData.readBufferHandler = DRV_USART_BUFFER_HANDLE_INVALID;  
