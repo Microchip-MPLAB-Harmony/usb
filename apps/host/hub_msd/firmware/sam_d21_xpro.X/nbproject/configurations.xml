@@ -45,12 +45,6 @@
             <logicalFolder name="f4" displayName="port" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/peripheral/port/plib_port.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="sercom" projectFiles="true">
-              <logicalFolder name="f1" displayName="usart" projectFiles="true">
-                <itemPath>../src/config/sam_d21_xpro/peripheral/sercom/usart/plib_sercom3_usart.h</itemPath>
-                <itemPath>../src/config/sam_d21_xpro/peripheral/sercom/usart/plib_sercom_usart_common.h</itemPath>
-              </logicalFolder>
-            </logicalFolder>
             <logicalFolder name="f7" displayName="tc" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/peripheral/tc/plib_tc_common.h</itemPath>
               <itemPath>../src/config/sam_d21_xpro/peripheral/tc/plib_tc3.h</itemPath>
@@ -215,11 +209,6 @@
             <logicalFolder name="f4" displayName="port" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/peripheral/port/plib_port.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="sercom" projectFiles="true">
-              <logicalFolder name="f1" displayName="usart" projectFiles="true">
-                <itemPath>../src/config/sam_d21_xpro/peripheral/sercom/usart/plib_sercom3_usart.c</itemPath>
-              </logicalFolder>
-            </logicalFolder>
             <logicalFolder name="f7" displayName="tc" projectFiles="true">
               <itemPath>../src/config/sam_d21_xpro/peripheral/tc/plib_tc3.c</itemPath>
             </logicalFolder>
@@ -272,9 +261,25 @@
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false">
+      <logicalFolder name="f1" displayName="sam_d21_xpro.mhc" projectFiles="true">
+        <itemPath>..\src\config\sam_d21_xpro\sam_d21_xpro.mhc\BSP_SAM_D21_Xplained_Pro.yml</itemPath>
+        <itemPath>..\src\config\sam_d21_xpro\sam_d21_xpro.mhc\cmsis.yml</itemPath>
+        <itemPath>..\src\config\sam_d21_xpro\sam_d21_xpro.mhc\core.yml</itemPath>
+        <itemPath>..\src\config\sam_d21_xpro\sam_d21_xpro.mhc\dfp.yml</itemPath>
+        <itemPath>..\src\config\sam_d21_xpro\sam_d21_xpro.mhc\drv_usbfs_v1.yml</itemPath>
+        <itemPath>..\src\config\sam_d21_xpro\sam_d21_xpro.mhc\evsys.yml</itemPath>
+        <itemPath>..\src\config\sam_d21_xpro\sam_d21_xpro.mhc\GraphSettings.yml</itemPath>
+        <itemPath>..\src\config\sam_d21_xpro\sam_d21_xpro.mhc\HarmonyCore.yml</itemPath>
+        <itemPath>..\src\config\sam_d21_xpro\sam_d21_xpro.mhc\nvmctrl.yml</itemPath>
+        <itemPath>..\src\config\sam_d21_xpro\sam_d21_xpro.mhc\project.yml</itemPath>
+        <itemPath>..\src\config\sam_d21_xpro\sam_d21_xpro.mhc\settings.yml</itemPath>
+        <itemPath>..\src\config\sam_d21_xpro\sam_d21_xpro.mhc\sys_fs.yml</itemPath>
+        <itemPath>..\src\config\sam_d21_xpro\sam_d21_xpro.mhc\sys_time.yml</itemPath>
+        <itemPath>..\src\config\sam_d21_xpro\sam_d21_xpro.mhc\tc3.yml</itemPath>
+        <itemPath>..\src\config\sam_d21_xpro\sam_d21_xpro.mhc\usb_host.yml</itemPath>
+        <itemPath>..\src\config\sam_d21_xpro\sam_d21_xpro.mhc\usb_host_msd.yml</itemPath>
+      </logicalFolder>
       <itemPath>Makefile</itemPath>
-      <itemPath>../src/config/sam_d21_xpro/harmony.prj</itemPath>
-      <itemPath>../src/config/sam_d21_xpro/sam_d21_xpro.xml</itemPath>
       <itemPath>../src/config/sam_d21_xpro/harmony-manifest-success.yml</itemPath>
     </logicalFolder>
   </logicalFolder>
@@ -291,12 +296,12 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.41</languageToolchainVersion>
+        <languageToolchainVersion>2.50</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAMD21_DFP" vendor="Microchip" version="3.3.98"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
+        <pack name="SAMD21_DFP" vendor="Microchip" version="3.3.98"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -498,6 +503,7 @@
         <property key="firmware.toolpack"
                   value="Press to select which tool pack to use"/>
         <property key="firmware.update.action" value="firmware.update.use.latest"/>
+        <property key="freeze.timers" value="false"/>
         <property key="lastid" value=""/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>
@@ -512,7 +518,10 @@
                   value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-3ffff"/>
+        <property key="memories.rww" value="true"/>
         <property key="poweroptions.powerenable" value="false"/>
+        <property key="programmerToGoFilePath"
+                  value="D:/usbR3.70/usb/apps/host/hub_msd/firmware/sam_d21_xpro.X/debug/sam_d21_xpro/sam_d21_xpro_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
