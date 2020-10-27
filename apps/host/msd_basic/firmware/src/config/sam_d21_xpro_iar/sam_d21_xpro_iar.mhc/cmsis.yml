@@ -1,0 +1,25 @@
+format_version: v1.0
+type: UniqueComponent
+attributes: {id: cmsis}
+children:
+- type: Symbols
+  children:
+  - type: Library
+    attributes: {id: CMSIS_DSP_LIB_cortexM0l}
+    children:
+    - type: Attributes
+      children:
+      - type: String
+        attributes: {id: dest}
+        children:
+        - {type: Value, value: ../../packs/CMSIS/CMSIS/DSP/Lib/IAR}
+      - type: String
+        attributes: {id: name}
+        children:
+        - {type: Value, value: iar_cortexM0l_math.a}
+      - type: String
+        attributes: {id: source}
+        children:
+        - {type: Value, value: ../../dev_packs/arm/CMSIS/5.7.0/CMSIS/DSP/Lib/IAR/iar_cortexM0l_math.a}
+- type: ElementPosition
+  attributes: {x: '148', y: '65', id: cmsis}

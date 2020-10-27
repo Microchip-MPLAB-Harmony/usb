@@ -1,20 +1,22 @@
 /*******************************************************************************
-  NVIC PLIB Implementation
+  Device Header File
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    plib_nvic.c
+    device.h
 
   Summary:
-    NVIC PLIB Source File
+    This file includes the selected device from within the project.
+    The device will provide access to respective device packs.
 
   Description:
     None
 
 *******************************************************************************/
 
+// DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -37,31 +39,9 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
+// DOM-IGNORE-END
 
-#include "device.h"
-#include "plib_nvic.h"
+#include "atsamd21j18a.h"
+#include "device_cache.h"
+#include "toolchain_specifics.h"
 
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: NVIC Implementation
-// *****************************************************************************
-// *****************************************************************************
-
-void NVIC_Initialize( void )
-{
-
-    /* Enable NVIC Controller */
-    __DMB();
-    __enable_irq();
-
-    /* Enable the interrupt sources and configure the priorities as configured
-     * from within the "Interrupt Manager" of MHC. */
-    NVIC_SetPriority(USB_IRQn, 3);
-    NVIC_EnableIRQ(USB_IRQn);
-    NVIC_SetPriority(TC3_IRQn, 3);
-    NVIC_EnableIRQ(TC3_IRQn);
-
-
-
-}
