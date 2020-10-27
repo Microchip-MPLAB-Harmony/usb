@@ -475,6 +475,30 @@ static void _DRV_USART_RemoveClientTransfersFromList(
     }
 }
 
+static void _DRV_USART_ReadAbort(DRV_USART_OBJ* dObj, DRV_USART_CLIENT_OBJ* clientObj)
+{    
+    DRV_USART_BUFFER_OBJ* bufferObj = NULL;   	
+
+    // Get the buffer object at the head of the list
+    bufferObj = _DRV_USART_TransferObjListGet(dObj, DRV_USART_DIRECTION_RX);
+
+    if (bufferObj == NULL)
+    {
+        // List is empty.
+        return;
+    }
+
+	/* Make sure the ongoing request belongs to the client that called this API and is currently with the PLIB */
+    if ((bufferObj->clientHandle == clientObj->clientHandle) && (bufferObj->currentState == DRV_USART_BUFFER_IS_PROCESSING))
+    {
+
+        dObj->usartPlib->readAbort();		    		
+
+        /* Free the buffer at the top of the list */
+        _DRV_USART_RemoveTransferObjFromList(dObj, DRV_USART_DIRECTION_RX);                
+    }
+}
+
 static bool _DRV_USART_QueuePurge(const DRV_HANDLE handle, DRV_USART_DIRECTION dir)
 {
     DRV_USART_OBJ* dObj = NULL;
@@ -494,7 +518,14 @@ static bool _DRV_USART_QueuePurge(const DRV_HANDLE handle, DRV_USART_DIRECTION d
     {
         return false;
     }
+	
+	if (dir == DRV_USART_DIRECTION_RX)
+	{	
+		/* For read, abort the ongoing read request and then remove the queued requests */
+		_DRV_USART_ReadAbort(dObj, clientObj);
+	}
 
+	/* Remove any pending read requests in the queue */
     _DRV_USART_RemoveClientTransfersFromList(dObj, clientObj, dir);
 
     _DRV_USART_ResourceUnlock(dObj);
@@ -505,7 +536,7 @@ static bool _DRV_USART_QueuePurge(const DRV_HANDLE handle, DRV_USART_DIRECTION d
 static void _DRV_USART_WriteSubmit( DRV_USART_OBJ* dObj )
 {
     // Get the buffer object at the top of the list
-    DRV_USART_BUFFER_OBJ* bufferObj = _DRV_USART_TransferObjListGet(dObj, DRV_USART_DIRECTION_TX);
+    DRV_USART_BUFFER_OBJ* bufferObj = _DRV_USART_TransferObjListGet(dObj, DRV_USART_DIRECTION_TX);	
 
     if (bufferObj == NULL)
     {
@@ -1192,4 +1223,34 @@ bool DRV_USART_WriteQueuePurge( const DRV_HANDLE handle )
 bool DRV_USART_ReadQueuePurge( const DRV_HANDLE handle )
 {
     return _DRV_USART_QueuePurge(handle, DRV_USART_DIRECTION_RX);
+}
+
+bool DRV_USART_ReadAbort(const DRV_HANDLE handle)
+{
+    DRV_USART_OBJ* dObj = NULL;
+    DRV_USART_CLIENT_OBJ* clientObj = NULL;    
+
+    /* Validate the driver handle */
+    clientObj = _DRV_USART_DriverHandleValidate(handle);
+
+    if (clientObj == NULL)
+    {
+        return false;
+    }
+
+    dObj = (DRV_USART_OBJ* )&gDrvUSARTObj[clientObj->drvIndex];
+
+    if (_DRV_USART_ResourceLock(dObj) == false)
+    {
+        return false;
+    }
+	
+	_DRV_USART_ReadAbort(dObj, clientObj);
+	
+	// Submit the next request (if any) from the queue to the USART PLIB
+	_DRV_USART_ReadSubmit(dObj);
+
+    _DRV_USART_ResourceUnlock(dObj);
+
+    return true;
 }
