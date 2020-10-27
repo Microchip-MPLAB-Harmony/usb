@@ -100,6 +100,7 @@ extern "C" {
 #define SYS_FS_FAT_READONLY               false
 #define SYS_FS_FAT_CODE_PAGE              437
 #define SYS_FS_FAT_MAX_SS                 SYS_FS_MEDIA_MAX_BLOCK_SIZE
+#define SYS_FS_FAT_ALIGNED_BUFFER_LEN     512
 
 
 
@@ -111,13 +112,13 @@ extern "C" {
 								
 
 /* TIME System Service Configuration Options */
-#define SYS_TIME_INDEX_0                     0
-#define SYS_TIME_MAX_TIMERS                  5
-#define SYS_TIME_HW_COUNTER_WIDTH            16
-#define SYS_TIME_HW_COUNTER_PERIOD           65535U
-#define SYS_TIME_HW_COUNTER_HALF_PERIOD	     (SYS_TIME_HW_COUNTER_PERIOD>>1)
-#define SYS_TIME_CPU_CLOCK_FREQUENCY         300000000
-#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (900)
+#define SYS_TIME_INDEX_0                            (0)
+#define SYS_TIME_MAX_TIMERS                         (5)
+#define SYS_TIME_HW_COUNTER_WIDTH                   (16)
+#define SYS_TIME_HW_COUNTER_PERIOD                  (65535U)
+#define SYS_TIME_HW_COUNTER_HALF_PERIOD             (SYS_TIME_HW_COUNTER_PERIOD>>1)
+#define SYS_TIME_CPU_CLOCK_FREQUENCY                (300000000)
+#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES    (900)
 
 
 
@@ -171,10 +172,8 @@ extern "C" {
 /* Number of Endpoints used */
 #define DRV_USBHSV1_ENDPOINTS_NUMBER                        1
 
+/* Total number of devices to be supported */
 #define USB_HOST_DEVICES_NUMBER                             1
-
-/* Size of Endpoint 0 buffer */
-#define USB_DEVICE_EP0_BUFFER_SIZE                          64
 
 /* Target peripheral list entries */
 #define  USB_HOST_TPL_ENTRIES                               1 
@@ -189,8 +188,6 @@ extern "C" {
 /* Provides Host pipes number */
 #define USB_HOST_PIPES_NUMBER                               10
 
-/* Number of Host Layer Clients */
-#define USB_HOST_CLIENTS_NUMBER                             1   
 
 /* Number of MSD Function driver instances in the application */
 #define USB_HOST_MSD_INSTANCES_NUMBER         1
