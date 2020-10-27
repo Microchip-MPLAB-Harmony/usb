@@ -65,12 +65,12 @@ void DRV_USBFS_USB2_Handler( void );
 
 
 /* All the handlers are defined here.  Each will call its PLIB-specific function. */
-void __ISR(_USB_1_VECTOR, ipl1AUTO) USB_1_Handler (void)
+void __ISR(_USB_1_VECTOR, ipl1SRS) USB_1_Handler (void)
 {
     DRV_USBFS_USB1_Handler();
 }
 
-void __ISR(_USB_2_VECTOR, ipl1AUTO) USB_2_Handler (void)
+void __ISR(_USB_2_VECTOR, ipl1SRS) USB_2_Handler (void)
 {
     DRV_USBFS_USB2_Handler();
 }
