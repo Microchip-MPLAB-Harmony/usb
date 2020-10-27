@@ -48,17 +48,6 @@
 #include "definitions.h"
 #include "system/system_module.h"
 
-#if ( ( defined( DRV_USBFSV1_HOST_SUPPORT ) && (DRV_USBFSV1_HOST_SUPPORT == true) ) ||  \
-       ( defined( DRV_USBFS_HOST_SUPPORT )  &&  ( DRV_USBFS_HOST_SUPPORT == true ) ) || \
-       ( defined ( DRV_USBHS_HOST_SUPPORT ) &&  ( DRV_USBHS_HOST_SUPPORT == true ) ) || \
-       ( defined ( DRV_USBHSV1_HOST_SUPPORT) &&  ( DRV_USBHSV1_HOST_SUPPORT == true ) )  )  
-//#include "system/time/sys_time.h"
-//#define SYS_TMR_HANDLE SYS_TIME_HANDLE
-//#define SYS_TMR_HANDLE_INVALID SYS_TIME_HANDLE_INVALID
-//#define SYS_TMR_CallbackSingle(delay,context,callback) SYS_TIME_CallbackRegisterMS(callback,context,delay, SYS_TIME_SINGLE)
-//#define SYS_TMR_ObjectDelete SYS_TIME_TimerDestroy
-#endif 
-
 #if  !defined(SYS_DEBUG_ENABLE) 
 
     #if  !defined(SYS_DEBUG_PRINT)
