@@ -140,9 +140,22 @@
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="true">
+      <logicalFolder name="f1"
+                     displayName="pic32mz_ef_sk_freertos.mhc"
+                     projectFiles="true">
+        <itemPath>..\src\config\pic32mz_ef_sk_freertos\pic32mz_ef_sk_freertos.mhc\BSP_PIC32MZ_EF_Starter_Kit.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk_freertos\pic32mz_ef_sk_freertos.mhc\core.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk_freertos\pic32mz_ef_sk_freertos.mhc\dfp.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk_freertos\pic32mz_ef_sk_freertos.mhc\drv_usbhs_v1.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk_freertos\pic32mz_ef_sk_freertos.mhc\FreeRTOS.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk_freertos\pic32mz_ef_sk_freertos.mhc\GraphSettings.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk_freertos\pic32mz_ef_sk_freertos.mhc\HarmonyCore.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk_freertos\pic32mz_ef_sk_freertos.mhc\project.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk_freertos\pic32mz_ef_sk_freertos.mhc\settings.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk_freertos\pic32mz_ef_sk_freertos.mhc\usb_device.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk_freertos\pic32mz_ef_sk_freertos.mhc\usb_device_vendor.yml</itemPath>
+      </logicalFolder>
       <itemPath>Makefile</itemPath>
-      <itemPath>../src/config/pic32mz_ef_sk_freertos/harmony.prj</itemPath>
-      <itemPath>../src/config/pic32mz_ef_sk_freertos/pic32mz_ef_sk_freertos.xml</itemPath>
       <itemPath>../src/config/pic32mz_ef_sk_freertos/harmony-manifest-success.yml</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -250,9 +263,9 @@
         <targetDevice>PIC32MZ2048EFH144</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool></platformTool>
+        <platformTool>PKOBSKDEPlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.41</languageToolchainVersion>
+        <languageToolchainVersion>2.50</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
@@ -277,6 +290,7 @@
       </compileType>
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
+        <makeUseCleanTarget>false</makeUseCleanTarget>
         <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
         <makeCustomizationPostStep></makeCustomizationPostStep>
