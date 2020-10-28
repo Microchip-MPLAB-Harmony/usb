@@ -59,16 +59,6 @@
 // Section: RTOS "Tasks" Routine
 // *****************************************************************************
 // *****************************************************************************
-void _DRV_USBFS_Tasks(  void *pvParameters  )
-{
-    while(1)
-    {
-				 /* USB FS Driver Task Routine */
-        DRV_USBFS_Tasks(sysObj.drvUSBFSObject);
-        vTaskDelay(10 / portTICK_PERIOD_MS);
-    }
-}
-
 void _USB_DEVICE_Tasks(  void *pvParameters  )
 {
     while(1)
@@ -83,7 +73,7 @@ void _USB_DEVICE_Tasks(  void *pvParameters  )
 TaskHandle_t xAPP_FREERTOS_Tasks;
 
 void _APP_FREERTOS_Tasks(  void *pvParameters  )
-{
+{   
     while(1)
     {
         APP_FREERTOS_Tasks();
@@ -115,15 +105,7 @@ void SYS_Tasks ( void )
     
 
     /* Maintain Middleware & Other Libraries */
-    	/* Create OS Thread for USB Driver Tasks. */
-    xTaskCreate( _DRV_USBFS_Tasks,
-        "DRV_USBFS_TASKS",
-        1024,
-        (void*)NULL,
-        1,
-        (TaskHandle_t*)NULL
-    );
-
+    
     /* Create OS Thread for USB_DEVICE_Tasks. */
     xTaskCreate( _USB_DEVICE_Tasks,
         "USB_DEVICE_TASKS",
