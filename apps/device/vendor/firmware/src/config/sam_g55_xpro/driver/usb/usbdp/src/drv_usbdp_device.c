@@ -1792,6 +1792,7 @@ USB_ERROR DRV_USBDP_IRPSubmit
     uint8_t direction;                          /* Endpoint direction */
     uint8_t endpoint;                           /* Endpoint number */
     USB_ERROR retVal = USB_ERROR_NONE;          /* Return value */
+    USB_DEVICE_IRP_LOCAL * iterator;
 
 
     /* Get the endpoint number and its direction */
@@ -1910,14 +1911,7 @@ USB_ERROR DRV_USBDP_IRPSubmit
                          * far */
                         irp->nPendingBytes = 0;
                     }
-                    
-                    if((usbID->UDP_CSR[endpoint] & UDP_CSR_TXPKTRDY_Msk) && (direction == USB_DATA_DIRECTION_DEVICE_TO_HOST))
-                    {
-                        /* IRP cannot be submitted when FIFO is still holding 
-                         * data to be sent to host. */
-                        retVal = USB_ERROR_IRP_QUEUE_FULL;
-                    }
-                    else if(endpointObj->irpQueue == NULL)
+                    if(endpointObj->irpQueue == NULL)
                     {
                         /* Queue is empty. Update the irp status as in progress */
                         irp->status = USB_DEVICE_IRP_STATUS_IN_PROGRESS;
@@ -2237,6 +2231,7 @@ USB_ERROR DRV_USBDP_IRPSubmit
                                 /* Clear the TXPKTRDY flag. Now controller can send the data 
                                  * when host request for it */
                                 USBDP_CSR_SET_BITS(usbID, endpoint, UDP_CSR_TXPKTRDY_Msk)
+                                USBDP_CSR_CLR_BITS(usbID, endpoint, UDP_CSR_TXCOMP_Msk)
 
                                 /* The rest of the IRP processing takes place in ISR */
                             }
@@ -2317,7 +2312,6 @@ USB_ERROR DRV_USBDP_IRPSubmit
                     else
                     {
                         /* This means we should surf the linked list to get to the last entry . */
-                        USB_DEVICE_IRP_LOCAL * iterator;
                         iterator = endpointObj->irpQueue;
                         while (iterator->next != NULL)
                         {
@@ -2325,7 +2319,6 @@ USB_ERROR DRV_USBDP_IRPSubmit
                         }
                         iterator->next = irp;
                         irp->previous = iterator;
-                        irp->status = USB_DEVICE_IRP_STATUS_PENDING;
                     }
 
                     if(hDriver->isInInterruptContext == false)
@@ -2633,6 +2626,7 @@ void _DRV_USBDP_Tasks_ISR
     udp_registers_t * usbID;                    /* USB instance pointer */
     DRV_USBDP_ENDPOINT_OBJ * endpointObj;       /* Endpoint object pointer */
     USB_DEVICE_IRP_LOCAL * irp;                 /* Local irp pointer */
+    USB_SETUP_PACKET * setupPkt;
     uint16_t offset;                            /* Endpoint data offset holder */
     uint16_t index;                             /* Loop counter */
     uint16_t epIndex;                           /* Loop counter */
@@ -2762,9 +2756,12 @@ void _DRV_USBDP_Tasks_ISR
 
                     /* Analyze the setup packet. We need to check if the control
                      * transfer contains a data stage and if so, get the direction. */
+                
+					setupPkt = (USB_SETUP_PACKET *)irp->data;
+											
+					endpoint0DataStageSize = setupPkt->W_Length.Val;
 
-                    endpoint0DataStageSize = *((uint8_t *)irp->data + 6);
-                    endpoint0DataStageDirection = (uint8_t)((*((uint8_t *)irp->data) & DRV_USBDP_ENDPOINT_DIRECTION_MASK) != 0);
+					endpoint0DataStageDirection = (uint16_t)((setupPkt->bmRequestType & DRV_USBDP_ENDPOINT_DIRECTION_MASK) != 0);
 
                     if(endpoint0DataStageSize == 0)
                     {
@@ -3137,11 +3134,7 @@ void _DRV_USBDP_Tasks_ISR
                             irp->status = USB_DEVICE_IRP_STATUS_COMPLETED_SHORT;
                         }
 
-                        /* No more data expected. Clear and free up the Bank for transaction */
-                        USBDP_CSR_CLR_BITS(usbID, epIndex, UDP_CSR_RX_DATA_BK0_Msk | UDP_CSR_RX_DATA_BK1_Msk)
-
-                        /* Re-enable the interrupt. Just in case */
-                        usbID->UDP_IER = (UDP_IER_EP0INT_Msk << epIndex);
+                       
 
                         /* Update the irpQueue and irp size. */
                         endpointObj->irpQueue = irp->next;
@@ -3151,6 +3144,12 @@ void _DRV_USBDP_Tasks_ISR
                         {
                             irp->callback((USB_DEVICE_IRP *)irp);
                         }
+                        
+                         /* No more data expected. Clear and free up the Bank for transaction */
+                        USBDP_CSR_CLR_BITS(usbID, epIndex, UDP_CSR_RX_DATA_BK0_Msk | UDP_CSR_RX_DATA_BK1_Msk)
+
+                        /* Re-enable the interrupt. Just in case */
+                        usbID->UDP_IER = (UDP_IER_EP0INT_Msk << epIndex);
                     }
                 }
             }
@@ -3168,12 +3167,8 @@ void _DRV_USBDP_Tasks_ISR
                         /* This means we are in Transmission of Data stage.
                          * nPendingBytes is 0, it means all TX data has been
                          * sent. Check if ZLP is to be sent, else mark the IRP
-                         * as completed. */
-                        if(usbID->UDP_CSR[epIndex] & UDP_CSR_TXPKTRDY_Msk)
-                        {
-                            /* This cannot happen. Do nothing, just return */
-                        }
-                        else if((irp->flags & USB_DEVICE_IRP_FLAG_SEND_ZLP) == USB_DEVICE_IRP_FLAG_SEND_ZLP)
+                         * as completed. */                            
+                        if((irp->flags & USB_DEVICE_IRP_FLAG_SEND_ZLP) == USB_DEVICE_IRP_FLAG_SEND_ZLP)
                         {
                             /* Need to send ZLP. Clear the size of buffer and
                              * ready the buffer to send data */
@@ -3196,10 +3191,48 @@ void _DRV_USBDP_Tasks_ISR
                             if(irp->callback != NULL)
                             {
                                 irp->callback((USB_DEVICE_IRP *)irp);
-                            }
+                            }                                    
+                                    
+                            if(endpointObj->irpQueue != NULL)
+                            {           
+                                irp = endpointObj->irpQueue;
+                                
+                                /* Sending from Device to Host */
+                                if(irp->nPendingBytes <= endpointObj->maxPacketSize)
+                                {
+                                    /* Data to be sent is less than endpoint size. It means, 
+                                     * this is the last transaction in the transfer or total
+                                     * size itself is less than endpoint size */
+                                    byteCount = irp->nPendingBytes;
+                                }
+                                else
+                                {
+                                    /* Data to be sent is more than the endpoint size.
+                                     * Send only the size of endpoint in this iteration. 
+                                     * This could be first or a continuing transaction in the
+                                     * transfer */
+                                    byteCount = endpointObj->maxPacketSize;
+                                }
 
-                            /* Set the BK1RDY bit to TX the ZLP to host */
-                            USBDP_CSR_CLR_BITS(usbID, epIndex, UDP_CSR_TXCOMP_Msk)
+                                /* Copy the data from irp data buffer to FIFO */
+                                for(index = 0; index < byteCount; index++)
+                                {
+                                    usbID->UDP_FDR[epIndex] = ((uint8_t *)irp->data)[index];
+                                }
+
+                                /* Update the nPendingBytes, reduce by byteCount */
+                                irp->nPendingBytes -= byteCount;
+
+                                /* Clear the TXPKTRDY flag. Now controller can send the data 
+                                 * when host request for it */
+                                USBDP_CSR_SET_BITS(usbID, epIndex, UDP_CSR_TXPKTRDY_Msk)
+                                USBDP_CSR_CLR_BITS(usbID, epIndex, UDP_CSR_TXCOMP_Msk)
+                            }
+                            else
+                            {
+                                
+                                USBDP_CSR_CLR_BITS(usbID, epIndex, UDP_CSR_TXCOMP_Msk)
+                            }
                         }
                     }
                     else
@@ -3236,6 +3269,10 @@ void _DRV_USBDP_Tasks_ISR
                         USBDP_CSR_SET_BITS(usbID, epIndex, UDP_CSR_TXPKTRDY_Msk)
                         USBDP_CSR_CLR_BITS(usbID, epIndex, UDP_CSR_TXCOMP_Msk)
                     }
+                }
+                else
+                {
+                    usbID->UDP_IDR = (UDP_IDR_EP0INT_Msk << epIndex);                    
                 }
             }
         }
