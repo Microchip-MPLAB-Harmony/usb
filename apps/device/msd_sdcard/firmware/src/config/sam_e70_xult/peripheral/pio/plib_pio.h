@@ -66,18 +66,18 @@
 #define GPIO_PC16_Set()               (PIOC_REGS->PIO_SODR = (1<<16))
 #define GPIO_PC16_Clear()             (PIOC_REGS->PIO_CODR = (1<<16))
 #define GPIO_PC16_Toggle()            (PIOC_REGS->PIO_ODSR ^= (1<<16))
-#define GPIO_PC16_Get()               ((PIOC_REGS->PIO_PDSR >> 16) & 0x1)
 #define GPIO_PC16_OutputEnable()      (PIOC_REGS->PIO_OER = (1<<16))
 #define GPIO_PC16_InputEnable()       (PIOC_REGS->PIO_ODR = (1<<16))
+#define GPIO_PC16_Get()               ((PIOC_REGS->PIO_PDSR >> 16) & 0x1)
 #define GPIO_PC16_PIN                  PIO_PIN_PC16
 
 /*** Macros for USB_VBUS_SENSE pin ***/
 #define USB_VBUS_SENSE_Set()               (PIOB_REGS->PIO_SODR = (1<<8))
 #define USB_VBUS_SENSE_Clear()             (PIOB_REGS->PIO_CODR = (1<<8))
 #define USB_VBUS_SENSE_Toggle()            (PIOB_REGS->PIO_ODSR ^= (1<<8))
-#define USB_VBUS_SENSE_Get()               ((PIOB_REGS->PIO_PDSR >> 8) & 0x1)
 #define USB_VBUS_SENSE_OutputEnable()      (PIOB_REGS->PIO_OER = (1<<8))
 #define USB_VBUS_SENSE_InputEnable()       (PIOB_REGS->PIO_ODR = (1<<8))
+#define USB_VBUS_SENSE_Get()               ((PIOB_REGS->PIO_PDSR >> 8) & 0x1)
 #define USB_VBUS_SENSE_PIN                  PIO_PIN_PB8
 
 
