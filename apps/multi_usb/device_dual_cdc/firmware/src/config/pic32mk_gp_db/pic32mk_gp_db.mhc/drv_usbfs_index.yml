@@ -1,0 +1,88 @@
+format_version: v1.0
+type: GeneratorComponent
+attributes: {id: drv_usbfs_index}
+children:
+- type: Instances
+  children:
+  - type: InstanceComponent
+    attributes: {instance: '0', id: drv_usbfs_index}
+    children:
+    - type: Symbols
+      children:
+      - type: String
+        attributes: {id: DRV_USB_PLIB}
+        children:
+        - type: Values
+          children:
+          - type: Dynamic
+            attributes: {id: drv_usbfs_index_0, value: PERIPHERAL_USB_1}
+    - type: Attachments
+      children:
+      - type: DirectCapability
+        attributes: {id: DRV_USB}
+        children:
+        - type: Attributes
+          children:
+          - type: String
+            attributes: {id: targetComponentID}
+            children:
+            - {type: Value, value: usb_device_0}
+          - type: String
+            attributes: {id: targetAttachmentID}
+            children:
+            - {type: Value, value: usb_driver_dependency}
+      - type: DirectDependency
+        attributes: {id: usb_peripheral_dependency}
+        children:
+        - type: Attributes
+          children:
+          - type: String
+            attributes: {id: targetComponentID}
+            children:
+            - {type: Value, value: peripheral_usb_1}
+          - type: String
+            attributes: {id: targetAttachmentID}
+            children:
+            - {type: Value, value: USB_1}
+  - type: InstanceComponent
+    attributes: {instance: '1', id: drv_usbfs_index}
+    children:
+    - type: Symbols
+      children:
+      - type: String
+        attributes: {id: DRV_USB_PLIB}
+        children:
+        - type: Values
+          children:
+          - type: Dynamic
+            attributes: {id: drv_usbfs_index_1, value: PERIPHERAL_USB_2}
+    - type: Attachments
+      children:
+      - type: DirectCapability
+        attributes: {id: DRV_USB}
+        children:
+        - type: Attributes
+          children:
+          - type: String
+            attributes: {id: targetComponentID}
+            children:
+            - {type: Value, value: usb_device_1}
+          - type: String
+            attributes: {id: targetAttachmentID}
+            children:
+            - {type: Value, value: usb_driver_dependency}
+      - type: DirectDependency
+        attributes: {id: usb_peripheral_dependency}
+        children:
+        - type: Attributes
+          children:
+          - type: String
+            attributes: {id: targetComponentID}
+            children:
+            - {type: Value, value: peripheral_usb_2}
+          - type: String
+            attributes: {id: targetAttachmentID}
+            children:
+            - {type: Value, value: USB_2}
+- type: ElementPosition
+  attributes: {x: '84', y: '152', id: drv_usbfs_index}
