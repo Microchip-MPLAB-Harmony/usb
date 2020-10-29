@@ -1,11 +1,11 @@
 /*******************************************************************************
- Debug Console Source file 
+ Debug Console Source file
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    debug_console.c
+    xc32_monitor.c
 
   Summary:
     debug console Source File
@@ -38,20 +38,18 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
 
-#include "definitions.h"
+
+#ifdef __arm__
+/* Declaration of these functions are missing in stdio.h for ARM parts*/
+int _mon_getc(int canblock);
+void _mon_putc(char c);
+#endif //__arm__
 
 int _mon_getc(int canblock)
 {
-   volatile int c = 0;
-   while(USART1_Read((void*)&c, 1) != true);
-   return c;
+   return 0;
 }
 
 void _mon_putc(char c)
 {
-   uint8_t size = 0;
-   do
-   {
-       size = USART1_Write((void*)&c, 1);
-   }while (size != 1);
 }

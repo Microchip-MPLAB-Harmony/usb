@@ -53,6 +53,7 @@ const USB_HOST_HCD hcdTable =
 
     /* Pointer to the USB Driver Functions. */
     .hcdInterface = DRV_USBHSV1_HOST_INTERFACE,
+
 };
 
 const USB_HOST_INIT usbHostInitData = 

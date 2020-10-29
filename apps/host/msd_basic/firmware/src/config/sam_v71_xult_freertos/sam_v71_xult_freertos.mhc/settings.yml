@@ -1,0 +1,13 @@
+configName: sam_v71_xult_freertos
+folderName: ''
+format_version: v1.0
+frameworkPath: ../../../..
+processor: ATSAMV71Q21B
+projectName: ''
+settings:
+  PackageFilter: bsp;core;csp;csp_apps_pic32mk;quick_docs;usb;
+  FORCE_OPTIMIZATION: 'false'
+  GENERATE_BACKUP: 'true'
+  CMSISPath: .\dev_packs\arm\CMSIS\5.7.0
+  MERGE_STRATEGY: USER_ALL
+  DFPPath: .\dev_packs\Microchip\SAMV71_DFP\4.4.74\samv71b\atdf\ATSAMV71Q21B.atdf

@@ -1,20 +1,22 @@
 /*******************************************************************************
-  USART1 PLIB
+  Device Header File
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    plib_usart1.h
+    device.h
 
   Summary:
-    USART1 PLIB Header File
+    This file includes the selected device from within the project.
+    The device will provide access to respective device packs.
 
   Description:
     None
 
 *******************************************************************************/
 
+// DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -37,57 +39,17 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
-
-#ifndef PLIB_USART1_H
-#define PLIB_USART1_H
-
-#include "plib_usart_common.h"
-
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-    extern "C" {
-
-#endif
 // DOM-IGNORE-END
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Interface
-// *****************************************************************************
-// *****************************************************************************
-
-#define USART1_FrequencyGet()    (uint32_t)(150000000UL)
-
-/****************************** USART1 API *********************************/
-
-void USART1_Initialize( void );
-
-USART_ERROR USART1_ErrorGet( void );
-
-bool USART1_SerialSetup( USART_SERIAL_SETUP *setup, uint32_t srcClkFreq );
-
-bool USART1_Write( void *buffer, const size_t size );
-
-bool USART1_Read( void *buffer, const size_t size );
-
-int USART1_ReadByte( void );
-
-void USART1_WriteByte( int data );
-
-bool USART1_TransmitterIsReady( void );
-
-bool USART1_TransmitComplete( void );
-
-bool USART1_ReceiverIsReady( void );
-
-
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-    }
-
+#pragma GCC diagnostic push
+#ifndef __cplusplus
+#pragma GCC diagnostic ignored "-Wnested-externs"
 #endif
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#pragma GCC diagnostic ignored "-Wattributes"
+#pragma GCC diagnostic ignored "-Wundef"
+#include "atsamv71q21b.h"
+#pragma GCC diagnostic pop
+#include "device_cache.h"
+#include "toolchain_specifics.h"
 
-// DOM-IGNORE-END
-#endif // PLIB_USART1_H
