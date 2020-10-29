@@ -108,7 +108,7 @@ void TC4_Timer16bitCounterSet( uint16_t count );
 
 bool TC4_TimerPeriodHasExpired( void );
 
-
+void TC4_TimerCommandSet(TC_COMMAND command);
 
 
 // DOM-IGNORE-BEGIN

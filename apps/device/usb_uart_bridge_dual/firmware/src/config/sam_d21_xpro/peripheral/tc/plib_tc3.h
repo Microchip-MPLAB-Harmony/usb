@@ -108,7 +108,7 @@ void TC3_Timer16bitCounterSet( uint16_t count );
 
 bool TC3_TimerPeriodHasExpired( void );
 
-
+void TC3_TimerCommandSet(TC_COMMAND command);
 
 
 // DOM-IGNORE-BEGIN

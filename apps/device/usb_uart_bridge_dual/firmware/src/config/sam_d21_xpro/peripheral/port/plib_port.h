@@ -65,54 +65,50 @@
 // *****************************************************************************
 // *****************************************************************************
 
-  
 /*** Macros for U2CTS pin ***/
 #define U2CTS_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 4)
 #define U2CTS_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 4)
 #define U2CTS_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 4)
-#define U2CTS_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 4)) & 0x01)
 #define U2CTS_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 4)
 #define U2CTS_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 4)
+#define U2CTS_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 4)) & 0x01)
 #define U2CTS_PIN                  PORT_PIN_PB04
 
 /*** Macros for U2RTS pin ***/
 #define U2RTS_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 6)
 #define U2RTS_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 6)
 #define U2RTS_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 6)
-#define U2RTS_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 6)) & 0x01)
 #define U2RTS_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 6)
 #define U2RTS_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 6)
+#define U2RTS_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 6)) & 0x01)
 #define U2RTS_PIN                  PORT_PIN_PB06
 
 /*** Macros for USB_VBUS_SENSE pin ***/
 #define USB_VBUS_SENSE_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 14)
 #define USB_VBUS_SENSE_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 14)
 #define USB_VBUS_SENSE_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 14)
-#define USB_VBUS_SENSE_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 14)) & 0x01)
 #define USB_VBUS_SENSE_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 14)
 #define USB_VBUS_SENSE_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 14)
+#define USB_VBUS_SENSE_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 14)) & 0x01)
 #define USB_VBUS_SENSE_PIN                  PORT_PIN_PA14
 
 /*** Macros for U1CTS pin ***/
 #define U1CTS_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 0)
 #define U1CTS_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 0)
 #define U1CTS_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 0)
-#define U1CTS_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 0)) & 0x01)
 #define U1CTS_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 0)
 #define U1CTS_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 0)
+#define U1CTS_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 0)) & 0x01)
 #define U1CTS_PIN                  PORT_PIN_PB00
 
 /*** Macros for U1RTS pin ***/
 #define U1RTS_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 2)
 #define U1RTS_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 2)
 #define U1RTS_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 2)
-#define U1RTS_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 2)) & 0x01)
 #define U1RTS_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 2)
 #define U1RTS_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 2)
+#define U1RTS_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 2)) & 0x01)
 #define U1RTS_PIN                  PORT_PIN_PB02
-
-
-
 // *****************************************************************************
 /* PORT Group
 
@@ -922,7 +918,7 @@ void PORT_GroupToggle(PORT_GROUP group, uint32_t mask);
     void PORT_GroupInputEnable(PORT_GROUP group, uint32_t mask)
 
   Summary:
-    Confgiures the selected IO pins of a group as input.
+    Configures the selected IO pins of a group as input.
 
   Description:
     This function configures the selected IO pins of a group as input. The pins
@@ -961,7 +957,7 @@ void PORT_GroupInputEnable(PORT_GROUP group, uint32_t mask);
     void PORT_GroupOutputEnable(PORT_GROUP group, uint32_t mask)
 
   Summary:
-    Confgiures the selected IO pins of a group as output.
+    Configures the selected IO pins of a group as output.
 
   Description:
     This function configures the selected IO pins of a group as output. The pins
