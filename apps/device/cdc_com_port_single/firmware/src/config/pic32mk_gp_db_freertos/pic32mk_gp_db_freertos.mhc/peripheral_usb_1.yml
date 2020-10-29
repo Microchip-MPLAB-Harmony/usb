@@ -1,0 +1,21 @@
+format_version: v1.0
+type: UniqueComponent
+attributes: {id: peripheral_usb_1}
+children:
+- type: Attachments
+  children:
+  - type: DirectCapability
+    attributes: {id: USB_1}
+    children:
+    - type: Attributes
+      children:
+      - type: String
+        attributes: {id: targetComponentID}
+        children:
+        - {type: Value, value: drv_usbfs_index_0}
+      - type: String
+        attributes: {id: targetAttachmentID}
+        children:
+        - {type: Value, value: usb_peripheral_dependency}
+- type: ElementPosition
+  attributes: {x: '3', y: '250', id: peripheral_usb_1}

@@ -83,7 +83,7 @@ void _DRV_USBFS_Tasks_0(  void *pvParameters  )
 TaskHandle_t xAPP_FREERTOS_Tasks;
 
 void _APP_FREERTOS_Tasks(  void *pvParameters  )
-{
+{   
     while(1)
     {
         APP_FREERTOS_Tasks();
@@ -125,14 +125,6 @@ void SYS_Tasks ( void )
         (TaskHandle_t*)NULL
     );
 
-    /* Create OS Thread for USB Driver Tasks. */
-    xTaskCreate( _DRV_USBFS_Tasks_0,
-        "DRV_USBFS_TASKS",
-        1024,
-        (void*)NULL,
-        1,
-        (TaskHandle_t*)NULL
-    );
 
 
 

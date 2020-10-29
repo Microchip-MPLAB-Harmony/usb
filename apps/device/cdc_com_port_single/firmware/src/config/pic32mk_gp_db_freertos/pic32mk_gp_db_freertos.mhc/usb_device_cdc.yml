@@ -1,0 +1,110 @@
+format_version: v1.0
+type: GeneratorComponent
+attributes: {id: usb_device_cdc}
+children:
+- type: Symbols
+  children:
+  - type: Integer
+    attributes: {id: CONFIG_USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: usb_device_cdc, value: '6'}
+- type: Instances
+  children:
+  - type: InstanceComponent
+    attributes: {instance: '0', id: usb_device_cdc}
+    children:
+    - type: Symbols
+      children:
+      - type: Integer
+        attributes: {id: CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER}
+        children:
+        - type: Values
+          children:
+          - type: Dynamic
+            attributes: {id: usb_device_cdc_0, value: '2'}
+      - type: Integer
+        attributes: {id: CONFIG_USB_DEVICE_FUNCTION_BULK_OUT_ENDPOINT_NUMBER}
+        children:
+        - type: Values
+          children:
+          - type: Dynamic
+            attributes: {id: usb_device_cdc_0, value: '2'}
+      - type: Integer
+        attributes: {id: CONFIG_USB_DEVICE_FUNCTION_INTERFACE_NUMBER}
+        children:
+        - type: Values
+          children:
+          - type: Dynamic
+            attributes: {id: usb_device_cdc_0, value: '0'}
+      - type: Integer
+        attributes: {id: CONFIG_USB_DEVICE_FUNCTION_INT_ENDPOINT_NUMBER}
+        children:
+        - type: Values
+          children:
+          - type: Dynamic
+            attributes: {id: usb_device_cdc_0, value: '1'}
+      - type: File
+        attributes: {id: USB_DEVICE_CDC_DESCRIPTOR_CLASS_CODE_FILE}
+        children:
+        - type: Attributes
+          children:
+          - type: String
+            attributes: {id: name}
+            children:
+            - {type: Value, value: usb_device_0.LIST_USB_DEVICE_DESCRIPTOR_CLASS_CODE_ENTRY}
+      - type: File
+        attributes: {id: USB_DEVICE_CDC_DESCRIPTOR_FS_FILE}
+        children:
+        - type: Attributes
+          children:
+          - type: String
+            attributes: {id: name}
+            children:
+            - {type: Value, value: usb_device_0.LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_FS_ENTRY}
+      - type: File
+        attributes: {id: USB_DEVICE_CDC_DESCRIPTOR_HS_FILE}
+        children:
+        - type: Attributes
+          children:
+          - type: String
+            attributes: {id: name}
+            children:
+            - {type: Value, value: usb_device_0.LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_HS_ENTRY}
+      - type: File
+        attributes: {id: USB_DEVICE_CDC_FUN_INIT_TABLE_FILE}
+        children:
+        - type: Attributes
+          children:
+          - type: String
+            attributes: {id: name}
+            children:
+            - {type: Value, value: usb_device_0.LIST_USB_DEVICE_FUNCTION_INIT_ENTRY}
+      - type: File
+        attributes: {id: USB_DEVICE_CDC_FUN_REG_TABLE_FILE}
+        children:
+        - type: Attributes
+          children:
+          - type: String
+            attributes: {id: name}
+            children:
+            - {type: Value, value: usb_device_0.LIST_USB_DEVICE_FUNCTION_ENTRY}
+    - type: Attachments
+      children:
+      - type: DirectDependency
+        attributes: {id: usb_device_dependency}
+        children:
+        - type: Attributes
+          children:
+          - type: String
+            attributes: {id: targetComponentID}
+            children:
+            - {type: Value, value: usb_device_0}
+          - type: String
+            attributes: {id: targetAttachmentID}
+            children:
+            - {type: Value, value: USB Device}
+- type: ElementPosition
+  attributes: {x: '368', y: '210', id: usb_device_cdc}
