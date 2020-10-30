@@ -48,7 +48,6 @@ static void OSCCTRL_Initialize(void)
 
     /* Configure External Oscillator */
     OSCCTRL_REGS->OSCCTRL_XOSCCTRL[1] = OSCCTRL_XOSCCTRL_STARTUP(0) | OSCCTRL_XOSCCTRL_IMULT(4) | OSCCTRL_XOSCCTRL_IPTAT(3) | OSCCTRL_XOSCCTRL_XTALEN_Msk | OSCCTRL_XOSCCTRL_ENABLE_Msk;
-
     while((OSCCTRL_REGS->OSCCTRL_STATUS & OSCCTRL_STATUS_XOSCRDY1_Msk) != OSCCTRL_STATUS_XOSCRDY1_Msk)
     {
         /* Waiting for the XOSC Ready state */
@@ -140,7 +139,7 @@ static void DFLL_Initialize(void)
 
 static void GCLK0_Initialize(void)
 {
-    
+
     /* selection of the CPU clock Division */
     MCLK_REGS->MCLK_CPUDIV = MCLK_CPUDIV_DIV(0x01);
 
@@ -207,13 +206,6 @@ void CLOCK_Initialize (void)
     {
         /* Wait for synchronization */
     }
-    /* Selection of the Generator and write Lock for SERCOM2_CORE */
-    GCLK_REGS->GCLK_PCHCTRL[23] = GCLK_PCHCTRL_GEN(0x0)  | GCLK_PCHCTRL_CHEN_Msk;
-
-    while ((GCLK_REGS->GCLK_PCHCTRL[23] & GCLK_PCHCTRL_CHEN_Msk) != GCLK_PCHCTRL_CHEN_Msk)
-    {
-        /* Wait for synchronization */
-    }
 
     /* Configure the AHB Bridge Clocks */
     MCLK_REGS->MCLK_AHBMASK = 0xffffff;
@@ -222,7 +214,7 @@ void CLOCK_Initialize (void)
     MCLK_REGS->MCLK_APBAMASK = 0x47ff;
 
     /* Configure the APBB Bridge Clocks */
-    MCLK_REGS->MCLK_APBBMASK = 0x18257;
+    MCLK_REGS->MCLK_APBBMASK = 0x18057;
 
 
 
