@@ -920,30 +920,6 @@ void DRV_USBHS_HOST_IRPCancel
             interruptWasEnabled = _DRV_USBHS_InterruptSourceDisable(hDriver->usbDrvCommonObj.interruptSource);
         }
 
-        if(irp->previous == NULL)
-        {
-            /* This means this was the first irp in the queue. Update the pipe
-             * queue head directly */
-
-            pipe->irpQueueHead = irp->next;
-            if(irp->next != NULL)
-            {
-                irp->next->previous = NULL;
-            }
-        }
-        else
-        {
-            /* Remove the IRP from the linked list */
-            irp->previous->next = irp->next;
-
-            if(irp->next != NULL)
-            {
-                /* This applies if this is not the last irp in the linked list
-                 * */
-                irp->next->previous = irp->previous;
-            }
-        }
-
         if(irp->status == USB_HOST_IRP_STATUS_IN_PROGRESS)
         {
             /* If the irp is already in progress then we set the temporary
@@ -955,6 +931,30 @@ void DRV_USBHS_HOST_IRPCancel
         }
         else
         {
+            
+            if(irp->previous == NULL)
+            {
+                /* This means this was the first irp in the queue. Update the pipe
+                * queue head directly */
+
+                pipe->irpQueueHead = irp->next;
+                if(irp->next != NULL)
+                {
+                    irp->next->previous = NULL;
+                }
+            }
+            else
+            {
+                /* Remove the IRP from the linked list */
+                irp->previous->next = irp->next;
+
+                if(irp->next != NULL)
+                {
+                    /* This applies if this is not the last irp in the linked list
+                     * */
+                    irp->next->previous = irp->previous;
+                }
+            }
             irp->status = USB_HOST_IRP_STATUS_ABORTED;
             if(irp->callback != NULL)
             {
