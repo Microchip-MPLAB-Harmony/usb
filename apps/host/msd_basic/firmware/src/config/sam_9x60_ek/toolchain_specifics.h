@@ -24,10 +24,14 @@
 #ifndef TOOLCHAIN_SPECIFICS_H
 #define TOOLCHAIN_SPECIFICS_H
 
+#ifdef __cplusplus  // Provide C++ Compatibility
+extern "C" {
+#endif
+
 
 #ifndef __NOP
 #define __NOP __arm926_nop
-static inline void __arm926_nop()
+static inline void __arm926_nop(void)
 {
     asm("nop");
 }
@@ -80,14 +84,22 @@ static inline void __arm926_isb(void)
 #ifndef   __WEAK
 #define __WEAK __attribute__((weak))
 #endif // __WEAK
-
 #include <sys/types.h>
+
 #define NO_INIT        __attribute__((section(".no_init")))
 #define SECTION(a)     __attribute__((__section__(a)))
 
 #define CACHE_LINE_SIZE    (32u)
 #define CACHE_ALIGN        __ALIGNED(CACHE_LINE_SIZE)
 
+#ifndef FORMAT_ATTRIBUTE
+   #define FORMAT_ATTRIBUTE(archetype, string_index, first_to_check)  __attribute__ ((format (archetype, string_index, first_to_check)))
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // end of header
 

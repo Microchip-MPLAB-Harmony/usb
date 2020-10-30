@@ -1,0 +1,14 @@
+configName: sam_9x60_ek
+folderName: ''
+format_version: v1.0
+frameworkPath: ../../../..
+processor: SAM9X60
+projectName: ''
+settings:
+  PackageFilter: bsp;core;csp;quick_docs;usb;
+  FORCE_OPTIMIZATION: 'false'
+  GENERATE_BACKUP: 'true'
+  TRUSTZONE: 'false'
+  CMSISPath: .\dev_packs\arm\CMSIS\5.7.0
+  MERGE_STRATEGY: USER_ALL
+  DFPPath: .\dev_packs\Microchip\SAM9X60_DFP\1.4.40\atdf\SAM9X60.atdf

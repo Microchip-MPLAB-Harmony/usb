@@ -59,7 +59,7 @@
 // *****************************************************************************
 
 /* Brief default interrupt handler for unused IRQs */
-void __attribute__((optimize("-O1"),section(".text.DefaultInterruptHandler"),long_call))DefaultInterruptHandler( void )
+void __attribute__((optimize("-O1"),section(".text.DefaultInterruptHandler"),long_call, noreturn))DefaultInterruptHandler( void )
 {
 #if defined(__DEBUG) || defined(__DEBUG_D)
     asm("BKPT");
@@ -67,13 +67,10 @@ void __attribute__((optimize("-O1"),section(".text.DefaultInterruptHandler"),lon
     while( 1 ){
     }
 }
+uint32_t spuriousEventCount = 0;
 void __attribute__((optimize("-O1"),section(".text.DefaultInterruptHandlerForSpurious"),long_call))DefaultInterruptHandlerForSpurious( void )
 {
-#if defined(__DEBUG) || defined(__DEBUG_D)
-    asm("BKPT");
-#endif
-    while( 1 ){
-    }
+   ++spuriousEventCount;
 }
 /*  Weak definitions for default handlers.  Users may override these with
     implementations of their own or provide alternate functions to the 
