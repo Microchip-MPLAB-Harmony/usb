@@ -78,18 +78,17 @@
                                             PIOD_REGS->PIO_MSKR = (1<<23); \
                                             PIOD_REGS->PIO_ODSR ^= (1<<23);\
                                         } while (0)
-#define GPIO_Get()               ((PIOD_REGS->PIO_PDSR >> 23) & 0x1)
 #define GPIO_OutputEnable()      do {\
                                             PIOD_REGS->PIO_MSKR = (1<<23); \
-										     PIOD_REGS->PIO_CFGR |=(1 << PIO_CFGR_DIR_Pos);\
+                                            PIOD_REGS->PIO_CFGR |=(1 << PIO_CFGR_DIR_Pos);\
                                         }while(0)
 #define GPIO_InputEnable()       do { \
                                             PIOD_REGS->PIO_MSKR = (1<<23); \
-										     PIOD_REGS->PIO_CFGR &= ~(1 << PIO_CFGR_DIR_Pos);\
+                                            PIOD_REGS->PIO_CFGR &= ~(1 << PIO_CFGR_DIR_Pos);\
                                         } while (0)
-#define GPIO_InterruptEnable()   (PIOD_REGS->PIO_IER = (1<<23))
-#define GPIO_InterruptDisable()  (PIOD_REGS->PIO_IDR = (1<<23))
+#define GPIO_Get()               ((PIOD_REGS->PIO_PDSR >> 23) & 0x1)
 #define GPIO_PIN                  PIO_PIN_PD23
+
 
 
 // *****************************************************************************
@@ -631,84 +630,6 @@ void PIO_PortInputEnable(PIO_PORT port, uint32_t mask);
     None.
 */
 void PIO_PortOutputEnable(PIO_PORT port, uint32_t mask);
-
-// *****************************************************************************
-/* Function:
-    void PIO_PortInterruptEnable(PIO_PORT port, uint32_t mask)
-
-  Summary:
-    Enables IO interrupt on selected IO pins of a port.
-
-  Description:
-    This function enables interrupt on selected IO pins of selected port.
-
-  Precondition:
-    None.
-
-  Parameters:
-    port       - One of the IO ports from the enum PIO_PORT
-
-    mask       - Is a 32 bit value in which positions of 0s and 1s decide
-                 which IO pins of the selected port will have interrupt
-                 enabled.  The bit positions of mask value which are set as 1,
-                 IO interrupt of corresponding IO pin of the selected port
-                 will be enabled.  The bit positions of mask value which are
-                 cleared to 0, IO interrupt of corresponding IO pin of the
-                 selected port will remain unchanged.
-
-  Returns:
-    None.
-
-  Example:
-    <code>
-
-    // Enable IO interrupt for PC5 and PC7 pins
-    PIO_PortInterruptEnable(PIO_PORT_C, 0x00A0);
-
-    </code>
-
-  Remarks:
-    None.
-*/
-void PIO_PortInterruptEnable(PIO_PORT port, uint32_t mask);
-
-// *****************************************************************************
-/* Function:
-    void PIO_PortInterruptDisable(PIO_PORT port, uint32_t mask)
-
-  Summary:
-    Disables IO interrupt on selected IO pins of a port.
-
-  Description:
-    This function disables IO interrupt on selected IO pins of selected port.
-
-  Precondition:
-    None.
-
-  Parameters:
-    port       - One of the IO ports from the enum PIO_PORT
-    mask       - Is a 32 bit value in which positions of 0s and 1s decide
-                 which IO pins of the selected port will have interrupt
-                 disabled.  The bit positions of mask value which are set as 1,
-                 IO interrupt of corresponding IO pin of the selected port
-                 will be disabled.  The bit positions of mask value which are
-                 cleared to 0, IO interrupt of corresponding IO pin of the
-                 selected port will remain unchanged.
-  Returns:
-    None.
-
-  Example:
-    <code>
-
-    // Disable IO interrupt for PB9 and PB1 pins
-    PIO_PortInterruptDisable(PIO_PORT_C, 0x0202);
-
-    </code>
-
-  Remarks:
-    None.
-*/
-void PIO_PortInterruptDisable(PIO_PORT port, uint32_t mask);
 
 
 // *****************************************************************************

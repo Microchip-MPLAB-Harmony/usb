@@ -334,3 +334,19 @@ size_t UART1_ReadCountGet( void )
     return uart1Obj.rxProcessedSize;
 }
 
+bool UART1_ReadAbort(void)
+{
+    if (uart1Obj.rxBusyStatus == true)
+    {
+        /* Disable Read, Overrun, Parity and Framing error interrupts */
+        UART1_REGS->UART_IDR = (UART_IDR_RXRDY_Msk | UART_IDR_FRAME_Msk | UART_IDR_PARE_Msk | UART_IDR_OVRE_Msk);
+
+        uart1Obj.rxBusyStatus = false;
+
+        /* If required application should read the num bytes processed prior to calling the read abort API */
+        uart1Obj.rxSize = uart1Obj.rxProcessedSize = 0;
+    }
+
+    return true;
+}
+

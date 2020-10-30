@@ -1,20 +1,22 @@
 /*******************************************************************************
-  UART1 PLIB
+  Device Header File
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    plib_uart1.h
+    device.h
 
   Summary:
-    UART1 PLIB Header File
+    This file includes the selected device from within the project.
+    The device will provide access to respective device packs.
 
   Description:
     None
 
 *******************************************************************************/
 
+// DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -37,61 +39,9 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
-
-#ifndef PLIB_UART1_H
-#define PLIB_UART1_H
-
-#include "plib_uart_common.h"
-
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-    extern "C" {
-
-#endif
 // DOM-IGNORE-END
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Interface
-// *****************************************************************************
-// *****************************************************************************
+#include "atsama5d27.h"
+#include "device_cache.h"
+#include "toolchain_specifics.h"
 
-#define UART1_FrequencyGet()    (uint32_t)(83000000UL)
-
-/****************************** UART1 API *********************************/
-
-void UART1_Initialize( void );
-
-UART_ERROR UART1_ErrorGet( void );
-
-bool UART1_SerialSetup( UART_SERIAL_SETUP *setup, uint32_t srcClkFreq );
-
-bool UART1_Write( void *buffer, const size_t size );
-
-bool UART1_Read( void *buffer, const size_t size );
-
-bool UART1_WriteIsBusy( void );
-
-bool UART1_ReadIsBusy( void );
-
-size_t UART1_WriteCountGet( void );
-
-size_t UART1_ReadCountGet( void );
-
-bool UART1_ReadAbort(void);
-
-void UART1_WriteCallbackRegister( UART_CALLBACK callback, uintptr_t context );
-
-void UART1_ReadCallbackRegister( UART_CALLBACK callback, uintptr_t context );
-
-
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-    }
-
-#endif
-
-// DOM-IGNORE-END
-#endif // PLIB_UART1_H
