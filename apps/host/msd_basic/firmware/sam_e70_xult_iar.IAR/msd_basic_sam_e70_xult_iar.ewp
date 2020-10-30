@@ -2350,6 +2350,21 @@
                         </group>
                     </group>
                     <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_e70_xult_iar\device.h</name>
+                    </file>
+                    <group>
+                        <name>osal</name>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_e70_xult_iar\osal\osal.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_e70_xult_iar\osal\osal_definitions.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_e70_xult_iar\osal\osal_impl_basic.h</name>
+                        </file>
+                    </group>
+                    <file>
                         <name>$PROJ_DIR$\..\src\config\sam_e70_xult_iar\user.h</name>
                     </file>
                     <file>
@@ -2361,9 +2376,6 @@
                 <name>packs</name>
                 <group>
                     <name>ATSAME70Q21B_DFP</name>
-                    <file>
-                        <name>$PROJ_DIR$\..\src\packs\ATSAME70Q21B_DFP\device.h</name>
-                    </file>
                     <group>
                         <name>component</name>
                         <file>
@@ -2520,20 +2532,14 @@
                                 <file>
                                     <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core\Include\mpu_armv7.h</name>
                                 </file>
+                                <file>
+                                    <name>$PROJ_DIR$\..\src\packs\CMSIS\CMSIS\Core\Include\cachel1_armv7.h</name>
+                                </file>
                             </group>
                         </group>
                     </group>
                 </group>
             </group>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e70_xult_iar\osal\osal.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e70_xult_iar\osal\osal_definitions.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_e70_xult_iar\osal\osal_impl_basic.h</name>
-            </file>
             <file>
                 <name>$PROJ_DIR$\..\src\app.h</name>
             </file>
