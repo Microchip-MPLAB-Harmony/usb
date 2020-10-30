@@ -240,7 +240,7 @@ typedef struct
     USB_SETUP_PACKET setupPacket;
 
     /* Timer handle required to track delays */
-    SYS_TMR_HANDLE timerHandle;
+    SYS_TIME_HANDLE timerHandle;
 
     /* Set to true if the port is enabled */
     bool isEnabled;
