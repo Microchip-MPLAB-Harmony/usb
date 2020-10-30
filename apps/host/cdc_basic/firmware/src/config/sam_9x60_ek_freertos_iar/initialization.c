@@ -104,16 +104,37 @@ void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
     }
 }
 
-
-DRV_USB_UHP_INIT drvUSBInit =
+DRV_USB_EHCI_INIT drvUSBEHCIInit =
 {
     /* Interrupt Source for USB module */
-    .interruptSource = (INT_SOURCE)ID_UHPHS_EHCI,
-    /* Enable High Speed Operation */
-    .operationSpeed = USB_SPEED_HIGH,
+    .interruptSource = (INT_SOURCE)22,
+
     /* USB base address */
-    .usbIDEHCI = ((uhphs_registers_t*)UHPHS_EHCI_ADDR),
-    .usbIDOHCI = ((UhpOhci*)UHPHS_OHCI_ADDR),
+    .usbID = ((uhphs_registers_t*)UHPHS_EHCI_ADDR),
+    
+    /* Ports Selection */ 
+    .bmPortSelect = 0x02,
+
+    /* USB Host Power Enable. USB Driver uses this function to Enable the VBUS */ 
+    .portPowerEnable = DRV_USB_VBUSPowerEnable,
+    
+    /* Root hub available current in milliamperes */    
+    .rootHubAvailableCurrent = 500,
+
+    .companionDriverIndex = DRV_USB_OHCI_INDEX_0
+
+};
+
+DRV_USB_OHCI_INIT drvUSBOHCIInit =
+{
+     /* Interrupt Source for USB module */
+    .interruptSource = (INT_SOURCE)22,
+
+    /* USB base address */
+    .usbID = ((UhpOhci *)UHPHS_OHCI_ADDR),
+
+     /* Ports Selection */ 
+    .bmPortSelect = 0x02,
     
     /* USB Host Power Enable. USB Driver uses this function to Enable the VBUS */ 
     .portPowerEnable = DRV_USB_VBUSPowerEnable,
@@ -208,6 +229,7 @@ static void SYSC_Disable( void )
 
 
 
+
 /*******************************************************************************
   Function:
     void SYS_Initialize ( void *data )
@@ -221,6 +243,7 @@ static void SYSC_Disable( void )
 void SYS_Initialize ( void* data )
 {
 	SYSC_Disable( );
+
 
   
     CLK_Initialize();
@@ -249,8 +272,9 @@ void SYS_Initialize ( void* data )
 
     sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);
 
-    /* Initialize USB Driver */ 
-    sysObj.drvUSBObject = DRV_USB_UHP_Initialize (DRV_USB_UHP_INDEX_0, (SYS_MODULE_INIT *) &drvUSBInit);
+     /* Initialize USB Driver */ 
+    sysObj.drvUSBEHCIObject = DRV_USB_EHCI_Initialize (DRV_USB_EHCI_INDEX_0, (SYS_MODULE_INIT *) &drvUSBEHCIInit);
+    sysObj.drvUSBOHCIObject = DRV_USB_OHCI_Initialize (DRV_USB_OHCI_INDEX_0, (SYS_MODULE_INIT *) &drvUSBOHCIInit);
 
 	/* Initialize the USB Host layer */
     sysObj.usbHostObject0 = USB_HOST_Initialize (( SYS_MODULE_INIT *)& usbHostInitData );	
