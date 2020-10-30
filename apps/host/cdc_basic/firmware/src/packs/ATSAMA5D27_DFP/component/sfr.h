@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2020-03-18T12:53:15Z */
+/* file generated from device description version 2020-05-04T06:27:45Z */
 #ifndef _SAMA5D2_SFR_COMPONENT_H_
 #define _SAMA5D2_SFR_COMPONENT_H_
 

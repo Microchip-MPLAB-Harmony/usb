@@ -220,7 +220,6 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>__FPU_PRESENT=1</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -1278,7 +1277,6 @@
                 <debug>0</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>__FPU_PRESENT=1</state>
                     <state>NDEBUG</state>
                 </option>
                 <option>
@@ -2139,26 +2137,23 @@
                             <group>
                                 <name>uhp</name>
                                 <file>
-                                    <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\driver\usb\uhp\drv_usb_uhp.h</name>
+                                    <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\driver\usb\uhp\drv_usb_ehci.h</name>
                                 </file>
                                 <group>
                                     <name>src</name>
                                     <file>
-                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\driver\usb\uhp\src\drv_usb_uhp_ehci_host.h</name>
+                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\driver\usb\uhp\src\drv_usb_ehci_local.h</name>
                                     </file>
                                     <file>
-                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\driver\usb\uhp\src\drv_usb_uhp_ohci_host.h</name>
+                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\driver\usb\uhp\src\drv_usb_ohci_local.h</name>
                                     </file>
                                     <file>
                                         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\driver\usb\uhp\src\drv_usb_uhp_ohci_registers.h</name>
                                     </file>
-                                    <file>
-                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\driver\usb\uhp\src\drv_usb_uhp_variant_mapping.h</name>
-                                    </file>
-                                    <file>
-                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\driver\usb\uhp\src\drv_usb_uhp_local.h</name>
-                                    </file>
                                 </group>
+                                <file>
+                                    <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\driver\usb\uhp\drv_usb_ohci.h</name>
+                                </file>
                             </group>
                         </group>
                         <file>
@@ -2181,6 +2176,12 @@
                         </file>
                         <file>
                             <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\usb\usb_hub.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\usb\usb_ehci.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\usb\usb_ohci.h</name>
                         </file>
                         <group>
                             <name>src</name>
@@ -2273,6 +2274,9 @@
                             </file>
                         </group>
                     </group>
+                    <file>
+                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\device.h</name>
+                    </file>
                     <group>
                         <name>system</name>
                         <file>
@@ -2318,6 +2322,18 @@
                             </file>
                         </group>
                     </group>
+                    <group>
+                        <name>osal</name>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\osal\osal.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\osal\osal_definitions.h</name>
+                        </file>
+                        <file>
+                            <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\osal\osal_impl_basic.h</name>
+                        </file>
+                    </group>
                     <file>
                         <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\user.h</name>
                     </file>
@@ -2330,9 +2346,6 @@
                 <name>packs</name>
                 <group>
                     <name>ATSAMA5D27_DFP</name>
-                    <file>
-                        <name>$PROJ_DIR$\..\src\packs\ATSAMA5D27_DFP\device.h</name>
-                    </file>
                     <group>
                         <name>component</name>
                         <file>
@@ -2519,15 +2532,6 @@
                 </group>
             </group>
             <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\osal\osal.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\osal\osal_definitions.h</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\osal\osal_impl_basic.h</name>
-            </file>
-            <file>
                 <name>$PROJ_DIR$\..\src\app.h</name>
             </file>
         </group>
@@ -2546,13 +2550,10 @@
                                 <group>
                                     <name>src</name>
                                     <file>
-                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\driver\usb\uhp\src\drv_usb_uhp.c</name>
+                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\driver\usb\uhp\src\drv_usb_ehci.c</name>
                                     </file>
                                     <file>
-                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\driver\usb\uhp\src\drv_usb_uhp_ehci_host.c</name>
-                                    </file>
-                                    <file>
-                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\driver\usb\uhp\src\drv_usb_uhp_ohci_host.c</name>
+                                        <name>$PROJ_DIR$\..\src\config\sam_a5d2_xult_iar\driver\usb\uhp\src\drv_usb_ohci.c</name>
                                     </file>
                                 </group>
                             </group>
