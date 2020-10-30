@@ -1,0 +1,14 @@
+configName: sam_a5d2_xult_freertos_iar
+folderName: ''
+format_version: v1.0
+frameworkPath: C:\Repos\H3
+processor: ATSAMA5D27
+projectName: cdc_basic_sam_a5d2_xult_freertos_iar
+settings:
+  PackageFilter: bsp;core;csp;quick_docs;usb;
+  FORCE_OPTIMIZATION: 'false'
+  GENERATE_BACKUP: 'true'
+  TRUSTZONE: 'false'
+  CMSISPath: .\dev_packs\arm\CMSIS\5.7.0
+  MERGE_STRATEGY: USER_ALL
+  DFPPath: .\dev_packs\Microchip\SAMA5D2_DFP\1.5.42\atdf\ATSAMA5D27.atdf

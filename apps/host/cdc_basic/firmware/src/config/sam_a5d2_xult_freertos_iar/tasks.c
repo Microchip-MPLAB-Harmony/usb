@@ -59,12 +59,14 @@
 // Section: RTOS "Tasks" Routine
 // *****************************************************************************
 // *****************************************************************************
-void _DRV_USB_UHP_Tasks(  void *pvParameters  )
+void _DRV_USB_HOST_Tasks(  void *pvParameters  )
 {
     while(1)
     {
-                 /* USB HS Driver Task Routine */
-        DRV_USB_UHP_Tasks(sysObj.drvUSBObject);
+        /* USB EHCI Task Routine */
+        DRV_USB_EHCI_Tasks(sysObj.drvUSBEHCIObject);
+       /* USB OHCI Task Routine */
+       DRV_USB_OHCI_Tasks(sysObj.drvUSBOHCIObject);
         vTaskDelay(1 / portTICK_PERIOD_MS);
     }
 }
@@ -73,7 +75,7 @@ void _USB_HOST_Tasks(  void *pvParameters  )
 {
     while(1)
     {
-				/* USB Host layer tasks routine */ 
+        /* USB Host layer tasks routine */ 
         USB_HOST_Tasks(sysObj.usbHostObject0);
         vTaskDelay(1 / portTICK_PERIOD_MS);
     }
@@ -83,7 +85,7 @@ void _USB_HOST_Tasks(  void *pvParameters  )
 TaskHandle_t xAPP_Tasks;
 
 void _APP_Tasks(  void *pvParameters  )
-{
+{   
     while(1)
     {
         APP_Tasks();
@@ -117,8 +119,8 @@ void SYS_Tasks ( void )
 
     /* Maintain Middleware & Other Libraries */
         /* Create OS Thread for USB Driver Tasks. */
-    xTaskCreate( _DRV_USB_UHP_Tasks,
-        "DRV_USB_UHP_TASKS",
+    xTaskCreate( _DRV_USB_HOST_Tasks,
+        "DRV_USB_HOST_TASKS",
         1024,
         (void*)NULL,
         1,

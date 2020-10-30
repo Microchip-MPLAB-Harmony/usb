@@ -1,20 +1,22 @@
 /*******************************************************************************
-  USB stack external dependencies file
+  Device Header File
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    drv_usb_external_dependencies.h
+    device.h
 
   Summary:
-    USB Driver external dependencies file
+    This file includes the selected device from within the project.
+    The device will provide access to respective device packs.
 
   Description:
-    USB Driver external dependencies file. 
+    None
+
 *******************************************************************************/
 
-//DOM-IGNORE-BEGIN
+// DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -36,33 +38,10 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *******************************************************************************/
-//DOM-IGNORE-END
+*******************************************************************************/
+// DOM-IGNORE-END
 
-#ifndef _DRV_USB_EXTERNAL_DEPENDENCIES_H
-#define _DRV_USB_EXTERNAL_DEPENDENCIES_H
+#include "atsama5d27.h"
+#include "device_cache.h"
+#include "toolchain_specifics.h"
 
-#include <string.h>
-#include "system/system_common.h"
-#include "configuration.h"
-#include "definitions.h"
-#include "system/system_module.h"
-
-#if  !defined(SYS_DEBUG_ENABLE) 
-
-    #if  !defined(SYS_DEBUG_PRINT)
-        #define SYS_DEBUG_PRINT(level, format, ...) 
-    #endif
-
-    #if  !defined(SYS_DEBUG_MESSAGE)
-        #define SYS_DEBUG_MESSAGE(a,b, ...)   
-    #endif
-
-    #if  !defined(SYS_DEBUG)
-        #define SYS_DEBUG(a,b)
-    #endif 
-#endif 
-#endif /* End of #ifndef _DRV_USB_EXTERNAL_DEPENDENCIES_H */ 
-/*******************************************************************************
- End of File
-*/
