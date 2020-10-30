@@ -1,15 +1,20 @@
- /*******************************************************************************
-  USB Host Initialization File
+/*******************************************************************************
+  Device Header File
+
+  Company:
+    Microchip Technology Inc.
 
   File Name:
-    usb_host_init_data.c
+    device.h
 
   Summary:
-    This file contains source code necessary to initialize USB Host Stack.
+    This file includes the selected device from within the project.
+    The device will provide access to respective device packs.
 
   Description:
-    This file contains source code necessary to initialize USB Host Stack.
- *******************************************************************************/
+    None
+
+*******************************************************************************/
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
@@ -33,41 +38,10 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *******************************************************************************/
+*******************************************************************************/
 // DOM-IGNORE-END
-#include "configuration.h"
-#include "definitions.h" 
 
+#include "sam9x60.h"
+#include "device_cache.h"
+#include "toolchain_specifics.h"
 
-const USB_HOST_TPL_ENTRY USBTPList[1] = 
-{
-	TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL(0x08, 0x06, 0x50, NULL,  USB_HOST_MSD_INTERFACE) ,
-
-
-};
-
-const USB_HOST_HCD hcdTable[2] = 
-{
-    {
-         /* EHCI Driver Index */ 
-        .drvIndex = DRV_USB_EHCI_INDEX_0,
-
-        /* Pointer to the USB Driver Functions. */
-        .hcdInterface = DRV_USB_EHCI_INTERFACE,
-    },
-    {
-        /* OHCI Driver Index */ 
-        .drvIndex = DRV_USB_OHCI_INDEX_0,
-
-         /* Pointer to the USB Driver Interface. */
-        .hcdInterface = DRV_USB_OHCI_INTERFACE
-    }
-};
-
-const USB_HOST_INIT usbHostInitData = 
-{
-    .nTPLEntries = 1 ,
-    .tplList = (USB_HOST_TPL_ENTRY *)USBTPList,
-    .hostControllerDrivers = (USB_HOST_HCD *)&hcdTable    
-};
-// </editor-fold>
