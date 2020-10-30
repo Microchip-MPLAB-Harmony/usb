@@ -1,7 +1,9 @@
-<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="65">
   <logicalFolder name="root" displayName="root" projectFiles="true">
-    <logicalFolder name="HeaderFiles" displayName="Header Files" projectFiles="true">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mz_das_sk" projectFiles="true">
           <logicalFolder name="f5" displayName="bsp" projectFiles="true">
@@ -139,20 +141,39 @@
       </logicalFolder>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="ExternalFiles" displayName="Important Files" projectFiles="true">
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="true">
+      <logicalFolder name="f1" displayName="pic32mz_das_sk.mhc" projectFiles="true">
+        <itemPath>..\src\config\pic32mz_das_sk\pic32mz_das_sk.mhc\BSP_PIC32MZ_DA_Starter_Kit.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_das_sk\pic32mz_das_sk.mhc\core.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_das_sk\pic32mz_das_sk.mhc\core_timer.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_das_sk\pic32mz_das_sk.mhc\dfp.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_das_sk\pic32mz_das_sk.mhc\drv_usbhs_v1.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_das_sk\pic32mz_das_sk.mhc\GraphSettings.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_das_sk\pic32mz_das_sk.mhc\HarmonyCore.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_das_sk\pic32mz_das_sk.mhc\project.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_das_sk\pic32mz_das_sk.mhc\settings.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_das_sk\pic32mz_das_sk.mhc\sys_fs.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_das_sk\pic32mz_das_sk.mhc\sys_time.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_das_sk\pic32mz_das_sk.mhc\usb_host.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_das_sk\pic32mz_das_sk.mhc\usb_host_msd.yml</itemPath>
+      </logicalFolder>
       <itemPath>Makefile</itemPath>
-      <itemPath>../src/config/pic32mz_das_sk/harmony.prj</itemPath>
-      <itemPath>../src/config/pic32mz_das_sk/pic32mz_das_sk.xml</itemPath>
       <itemPath>../src/config/pic32mz_das_sk/harmony-manifest-success.yml</itemPath>
     </logicalFolder>
-    <logicalFolder name="LinkerScript" displayName="Linker Files" projectFiles="true">
+    <logicalFolder name="LinkerScript"
+                   displayName="Linker Files"
+                   projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mz_das_sk" projectFiles="true">
           <itemPath>../src/config/pic32mz_das_sk/p32MZ2064DAS169.ld</itemPath>
         </logicalFolder>
       </logicalFolder>
     </logicalFolder>
-    <logicalFolder name="SourceFiles" displayName="Source Files" projectFiles="true">
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mz_das_sk" projectFiles="true">
           <logicalFolder name="f6" displayName="bsp" projectFiles="true">
@@ -242,11 +263,11 @@
       <toolsSet>
         <developmentServer>localhost</developmentServer>
         <targetDevice>PIC32MZ2064DAS169</targetDevice>
-        <targetHeader/>
-        <targetPluginBoard/>
-        <platformTool>PKOBSKDEPlatformTool</platformTool>
+        <targetHeader></targetHeader>
+        <targetPluginBoard></targetPluginBoard>
+        <platformTool>noID</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.41</languageToolchainVersion>
+        <languageToolchainVersion>2.50</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
@@ -264,16 +285,17 @@
         <loading>
           <useAlternateLoadableFile>false</useAlternateLoadableFile>
           <parseOnProdLoad>false</parseOnProdLoad>
-          <alternateLoadableFile/>
+          <alternateLoadableFile></alternateLoadableFile>
         </loading>
         <subordinates>
         </subordinates>
       </compileType>
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
-        <makeCustomizationPreStep/>
+        <makeUseCleanTarget>false</makeUseCleanTarget>
+        <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
-        <makeCustomizationPostStep/>
+        <makeCustomizationPostStep></makeCustomizationPostStep>
         <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
@@ -286,7 +308,8 @@
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value="../src;../src/config/pic32mz_das_sk;../src/packs/PIC32MZ2064DAS169_DFP;;../src/config/pic32mz_das_sk/system/fs/fat_fs/file_system;../src/config/pic32mz_das_sk/system/fs/fat_fs/hardware_access"/>
+        <property key="extra-include-directories"
+                  value="../src;../src/config/pic32mz_das_sk;../src/packs/PIC32MZ2064DAS169_DFP;../src/config/pic32mz_das_sk/system/fs/fat_fs/file_system;../src/config/pic32mz_das_sk/system/fs/fat_fs/hardware_access"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -303,7 +326,7 @@
         <property key="use-cci" value="false"/>
         <property key="use-iar" value="false"/>
         <property key="use-indirect-calls" value="false"/>
-      <appendMe value="-Wundef -Wshadow -Wpointer-arith -Wbad-function-cast -Wwrite-strings -Waggregate-return -Wstrict-prototypes -Wno-deprecated-declarations -Wredundant-decls -Wnested-externs -Winline -Wlong-long -Wunreachable-code -Wmissing-noreturn"/>
+        <appendMe value="-Wundef -Wshadow -Wpointer-arith -Wbad-function-cast -Wwrite-strings -Waggregate-return -Wstrict-prototypes -Wno-deprecated-declarations -Wredundant-decls -Wnested-externs -Winline -Wlong-long -Wunreachable-code -Wmissing-noreturn"/>
       </C32>
       <C32-AR>
         <property key="additional-options-chop-files" value="false"/>
@@ -382,7 +405,8 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exceptions" value="true"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value="../src;../src/config/pic32mz_das_sk;../src/packs/PIC32MZ2064DAS169_DFP;;../src/config/pic32mz_das_sk/system/fs/fat_fs/file_system;../src/config/pic32mz_das_sk/system/fs/fat_fs/hardware_access"/>
+        <property key="extra-include-directories"
+                  value="../src;../src/config/pic32mz_das_sk;../src/packs/PIC32MZ2064DAS169_DFP;../src/config/pic32mz_das_sk/system/fs/fat_fs/file_system;../src/config/pic32mz_das_sk/system/fs/fat_fs/hardware_access"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -480,7 +504,8 @@
         <property key="TIMER7" value="true"/>
         <property key="TIMER8" value="true"/>
         <property key="TIMER9" value="true"/>
-        <property key="ToolFirmwareFilePath" value="Press to browse for a specific firmware version"/>
+        <property key="ToolFirmwareFilePath"
+                  value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
         <property key="UART1" value="true"/>
         <property key="UART2" value="true"/>
@@ -500,7 +525,8 @@
         <property key="memories.flashdata" value="true"/>
         <property key="memories.id" value="true"/>
         <property key="memories.instruction.ram" value="true"/>
-        <property key="memories.instruction.ram.ranges" value="${memories.instruction.ram.ranges}"/>
+        <property key="memories.instruction.ram.ranges"
+                  value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="1d000000-1d1fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
@@ -588,7 +614,8 @@
         <property key="TIMER7" value="true"/>
         <property key="TIMER8" value="true"/>
         <property key="TIMER9" value="true"/>
-        <property key="ToolFirmwareFilePath" value="Press to browse for a specific firmware version"/>
+        <property key="ToolFirmwareFilePath"
+                  value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
         <property key="UART1" value="true"/>
         <property key="UART2" value="true"/>
@@ -607,7 +634,8 @@
         <property key="memories.flashdata" value="true"/>
         <property key="memories.id" value="true"/>
         <property key="memories.instruction.ram" value="true"/>
-        <property key="memories.instruction.ram.ranges" value="${memories.instruction.ram.ranges}"/>
+        <property key="memories.instruction.ram.ranges"
+                  value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="1d000000-1d003fff"/>
         <property key="poweroptions.powerenable" value="false"/>
@@ -616,7 +644,8 @@
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.pgmspeed" value="2"/>
         <property key="programoptions.preservedataflash" value="false"/>
-        <property key="programoptions.preservedataflash.ranges" value="${programoptions.preservedataflash.ranges}"/>
+        <property key="programoptions.preservedataflash.ranges"
+                  value="${programoptions.preservedataflash.ranges}"/>
         <property key="programoptions.preserveeeprom" value="false"/>
         <property key="programoptions.preserveeeprom.ranges" value=""/>
         <property key="programoptions.preserveprogram.ranges" value=""/>
@@ -632,7 +661,8 @@
       <PKOBSKDEPlatformTool>
         <property key="AutoSelectMemRanges" value="auto"/>
         <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>
-        <property key="ToolFirmwareFilePath" value="Press to browse for a specific firmware version"/>
+        <property key="ToolFirmwareFilePath"
+                  value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
         <property key="memories.configurationmemory" value="true"/>
         <property key="memories.dataflash" value="true"/>
@@ -646,7 +676,8 @@
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges" value=""/>
         <property key="programoptions.preserveeeprom" value="false"/>
-        <property key="programoptions.preserveeeprom.ranges" value="${memories.eedata.default}"/>
+        <property key="programoptions.preserveeeprom.ranges"
+                  value="${memories.eedata.default}"/>
         <property key="programoptions.preserveprogram.ranges" value=""/>
         <property key="programoptions.preserveprogramrange" value="false"/>
         <property key="programoptions.usehighvoltageonmclr" value="false"/>
