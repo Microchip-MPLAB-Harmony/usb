@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2020-03-18T12:52:54Z */
+/* file generated from device description version 2020-05-04T06:27:24Z */
 #ifndef _SAMA5D27_GPIO_H_
 #define _SAMA5D27_GPIO_H_
 
@@ -339,185 +339,185 @@
 #define MUX_PD3B_SAIC_FIQ                          _L_(1)       /**< SAIC signal line function value: SAIC_FIQ */
 #define PIO_PD3B_SAIC_FIQ                          (_U_(1) << 3) /**< SAIC signal: SAIC_FIQ */
 /* ========== PIO definition for CLASSD peripheral ========== */
-#define PIN_PA28F_CLASSD_CLASSD_L0                 _L_(28)      /**< CLASSD signal: CLASSD_CLASSD_L0 on PA28 mux F */
-#define MUX_PA28F_CLASSD_CLASSD_L0                 _L_(5)       /**< CLASSD signal line function value: CLASSD_CLASSD_L0 */
-#define PIO_PA28F_CLASSD_CLASSD_L0                 (_U_(1) << 28) /**< CLASSD signal: CLASSD_CLASSD_L0 */
-#define PIN_PA29F_CLASSD_CLASSD_L1                 _L_(29)      /**< CLASSD signal: CLASSD_CLASSD_L1 on PA29 mux F */
-#define MUX_PA29F_CLASSD_CLASSD_L1                 _L_(5)       /**< CLASSD signal line function value: CLASSD_CLASSD_L1 */
-#define PIO_PA29F_CLASSD_CLASSD_L1                 (_U_(1) << 29) /**< CLASSD signal: CLASSD_CLASSD_L1 */
-#define PIN_PA30F_CLASSD_CLASSD_L2                 _L_(30)      /**< CLASSD signal: CLASSD_CLASSD_L2 on PA30 mux F */
-#define MUX_PA30F_CLASSD_CLASSD_L2                 _L_(5)       /**< CLASSD signal line function value: CLASSD_CLASSD_L2 */
-#define PIO_PA30F_CLASSD_CLASSD_L2                 (_U_(1) << 30) /**< CLASSD signal: CLASSD_CLASSD_L2 */
-#define PIN_PA31F_CLASSD_CLASSD_L3                 _L_(31)      /**< CLASSD signal: CLASSD_CLASSD_L3 on PA31 mux F */
-#define MUX_PA31F_CLASSD_CLASSD_L3                 _L_(5)       /**< CLASSD signal line function value: CLASSD_CLASSD_L3 */
-#define PIO_PA31F_CLASSD_CLASSD_L3                 (_U_(1) << 31) /**< CLASSD signal: CLASSD_CLASSD_L3 */
-#define PIN_PB1F_CLASSD_CLASSD_R0                  _L_(33)      /**< CLASSD signal: CLASSD_CLASSD_R0 on PB1 mux F */
-#define MUX_PB1F_CLASSD_CLASSD_R0                  _L_(5)       /**< CLASSD signal line function value: CLASSD_CLASSD_R0 */
-#define PIO_PB1F_CLASSD_CLASSD_R0                  (_U_(1) << 1) /**< CLASSD signal: CLASSD_CLASSD_R0 */
-#define PIN_PB2F_CLASSD_CLASSD_R1                  _L_(34)      /**< CLASSD signal: CLASSD_CLASSD_R1 on PB2 mux F */
-#define MUX_PB2F_CLASSD_CLASSD_R1                  _L_(5)       /**< CLASSD signal line function value: CLASSD_CLASSD_R1 */
-#define PIO_PB2F_CLASSD_CLASSD_R1                  (_U_(1) << 2) /**< CLASSD signal: CLASSD_CLASSD_R1 */
-#define PIN_PB3F_CLASSD_CLASSD_R2                  _L_(35)      /**< CLASSD signal: CLASSD_CLASSD_R2 on PB3 mux F */
-#define MUX_PB3F_CLASSD_CLASSD_R2                  _L_(5)       /**< CLASSD signal line function value: CLASSD_CLASSD_R2 */
-#define PIO_PB3F_CLASSD_CLASSD_R2                  (_U_(1) << 3) /**< CLASSD signal: CLASSD_CLASSD_R2 */
-#define PIN_PB4F_CLASSD_CLASSD_R3                  _L_(36)      /**< CLASSD signal: CLASSD_CLASSD_R3 on PB4 mux F */
-#define MUX_PB4F_CLASSD_CLASSD_R3                  _L_(5)       /**< CLASSD signal line function value: CLASSD_CLASSD_R3 */
-#define PIO_PB4F_CLASSD_CLASSD_R3                  (_U_(1) << 4) /**< CLASSD signal: CLASSD_CLASSD_R3 */
+#define PIN_PA28F_CLASSD_L0                        _L_(28)      /**< CLASSD signal: CLASSD_L0 on PA28 mux F */
+#define MUX_PA28F_CLASSD_L0                        _L_(5)       /**< CLASSD signal line function value: CLASSD_L0 */
+#define PIO_PA28F_CLASSD_L0                        (_U_(1) << 28) /**< CLASSD signal: CLASSD_L0 */
+#define PIN_PA29F_CLASSD_L1                        _L_(29)      /**< CLASSD signal: CLASSD_L1 on PA29 mux F */
+#define MUX_PA29F_CLASSD_L1                        _L_(5)       /**< CLASSD signal line function value: CLASSD_L1 */
+#define PIO_PA29F_CLASSD_L1                        (_U_(1) << 29) /**< CLASSD signal: CLASSD_L1 */
+#define PIN_PA30F_CLASSD_L2                        _L_(30)      /**< CLASSD signal: CLASSD_L2 on PA30 mux F */
+#define MUX_PA30F_CLASSD_L2                        _L_(5)       /**< CLASSD signal line function value: CLASSD_L2 */
+#define PIO_PA30F_CLASSD_L2                        (_U_(1) << 30) /**< CLASSD signal: CLASSD_L2 */
+#define PIN_PA31F_CLASSD_L3                        _L_(31)      /**< CLASSD signal: CLASSD_L3 on PA31 mux F */
+#define MUX_PA31F_CLASSD_L3                        _L_(5)       /**< CLASSD signal line function value: CLASSD_L3 */
+#define PIO_PA31F_CLASSD_L3                        (_U_(1) << 31) /**< CLASSD signal: CLASSD_L3 */
+#define PIN_PB1F_CLASSD_R0                         _L_(33)      /**< CLASSD signal: CLASSD_R0 on PB1 mux F */
+#define MUX_PB1F_CLASSD_R0                         _L_(5)       /**< CLASSD signal line function value: CLASSD_R0 */
+#define PIO_PB1F_CLASSD_R0                         (_U_(1) << 1) /**< CLASSD signal: CLASSD_R0 */
+#define PIN_PB2F_CLASSD_R1                         _L_(34)      /**< CLASSD signal: CLASSD_R1 on PB2 mux F */
+#define MUX_PB2F_CLASSD_R1                         _L_(5)       /**< CLASSD signal line function value: CLASSD_R1 */
+#define PIO_PB2F_CLASSD_R1                         (_U_(1) << 2) /**< CLASSD signal: CLASSD_R1 */
+#define PIN_PB3F_CLASSD_R2                         _L_(35)      /**< CLASSD signal: CLASSD_R2 on PB3 mux F */
+#define MUX_PB3F_CLASSD_R2                         _L_(5)       /**< CLASSD signal line function value: CLASSD_R2 */
+#define PIO_PB3F_CLASSD_R2                         (_U_(1) << 3) /**< CLASSD signal: CLASSD_R2 */
+#define PIN_PB4F_CLASSD_R3                         _L_(36)      /**< CLASSD signal: CLASSD_R3 on PB4 mux F */
+#define MUX_PB4F_CLASSD_R3                         _L_(5)       /**< CLASSD signal line function value: CLASSD_R3 */
+#define PIO_PB4F_CLASSD_R3                         (_U_(1) << 4) /**< CLASSD signal: CLASSD_R3 */
 /* ========== PIO definition for FLEXCOM0 peripheral ========== */
-#define PIN_PB28C_FLEXCOM0_FLEXCOM0_IO0            _L_(60)      /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO0 on PB28 mux C */
-#define MUX_PB28C_FLEXCOM0_FLEXCOM0_IO0            _L_(2)       /**< FLEXCOM0 signal line function value: FLEXCOM0_FLEXCOM0_IO0 */
-#define PIO_PB28C_FLEXCOM0_FLEXCOM0_IO0            (_U_(1) << 28) /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO0 */
-#define PIN_PB29C_FLEXCOM0_FLEXCOM0_IO1            _L_(61)      /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO1 on PB29 mux C */
-#define MUX_PB29C_FLEXCOM0_FLEXCOM0_IO1            _L_(2)       /**< FLEXCOM0 signal line function value: FLEXCOM0_FLEXCOM0_IO1 */
-#define PIO_PB29C_FLEXCOM0_FLEXCOM0_IO1            (_U_(1) << 29) /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO1 */
-#define PIN_PB30C_FLEXCOM0_FLEXCOM0_IO2            _L_(62)      /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO2 on PB30 mux C */
-#define MUX_PB30C_FLEXCOM0_FLEXCOM0_IO2            _L_(2)       /**< FLEXCOM0 signal line function value: FLEXCOM0_FLEXCOM0_IO2 */
-#define PIO_PB30C_FLEXCOM0_FLEXCOM0_IO2            (_U_(1) << 30) /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO2 */
-#define PIN_PB31C_FLEXCOM0_FLEXCOM0_IO3            _L_(63)      /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO3 on PB31 mux C */
-#define MUX_PB31C_FLEXCOM0_FLEXCOM0_IO3            _L_(2)       /**< FLEXCOM0 signal line function value: FLEXCOM0_FLEXCOM0_IO3 */
-#define PIO_PB31C_FLEXCOM0_FLEXCOM0_IO3            (_U_(1) << 31) /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO3 */
-#define PIN_PC0C_FLEXCOM0_FLEXCOM0_IO4             _L_(64)      /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO4 on PC0 mux C */
-#define MUX_PC0C_FLEXCOM0_FLEXCOM0_IO4             _L_(2)       /**< FLEXCOM0 signal line function value: FLEXCOM0_FLEXCOM0_IO4 */
-#define PIO_PC0C_FLEXCOM0_FLEXCOM0_IO4             (_U_(1) << 0) /**< FLEXCOM0 signal: FLEXCOM0_FLEXCOM0_IO4 */
+#define PIN_PB28C_FLEXCOM0_IO0                     _L_(60)      /**< FLEXCOM0 signal: FLEXCOM0_IO0 on PB28 mux C */
+#define MUX_PB28C_FLEXCOM0_IO0                     _L_(2)       /**< FLEXCOM0 signal line function value: FLEXCOM0_IO0 */
+#define PIO_PB28C_FLEXCOM0_IO0                     (_U_(1) << 28) /**< FLEXCOM0 signal: FLEXCOM0_IO0 */
+#define PIN_PB29C_FLEXCOM0_IO1                     _L_(61)      /**< FLEXCOM0 signal: FLEXCOM0_IO1 on PB29 mux C */
+#define MUX_PB29C_FLEXCOM0_IO1                     _L_(2)       /**< FLEXCOM0 signal line function value: FLEXCOM0_IO1 */
+#define PIO_PB29C_FLEXCOM0_IO1                     (_U_(1) << 29) /**< FLEXCOM0 signal: FLEXCOM0_IO1 */
+#define PIN_PB30C_FLEXCOM0_IO2                     _L_(62)      /**< FLEXCOM0 signal: FLEXCOM0_IO2 on PB30 mux C */
+#define MUX_PB30C_FLEXCOM0_IO2                     _L_(2)       /**< FLEXCOM0 signal line function value: FLEXCOM0_IO2 */
+#define PIO_PB30C_FLEXCOM0_IO2                     (_U_(1) << 30) /**< FLEXCOM0 signal: FLEXCOM0_IO2 */
+#define PIN_PB31C_FLEXCOM0_IO3                     _L_(63)      /**< FLEXCOM0 signal: FLEXCOM0_IO3 on PB31 mux C */
+#define MUX_PB31C_FLEXCOM0_IO3                     _L_(2)       /**< FLEXCOM0 signal line function value: FLEXCOM0_IO3 */
+#define PIO_PB31C_FLEXCOM0_IO3                     (_U_(1) << 31) /**< FLEXCOM0 signal: FLEXCOM0_IO3 */
+#define PIN_PC0C_FLEXCOM0_IO4                      _L_(64)      /**< FLEXCOM0 signal: FLEXCOM0_IO4 on PC0 mux C */
+#define MUX_PC0C_FLEXCOM0_IO4                      _L_(2)       /**< FLEXCOM0 signal line function value: FLEXCOM0_IO4 */
+#define PIO_PC0C_FLEXCOM0_IO4                      (_U_(1) << 0) /**< FLEXCOM0 signal: FLEXCOM0_IO4 */
 /* ========== PIO definition for FLEXCOM1 peripheral ========== */
-#define PIN_PA24A_FLEXCOM1_FLEXCOM1_IO0            _L_(24)      /**< FLEXCOM1 signal: FLEXCOM1_FLEXCOM1_IO0 on PA24 mux A */
-#define MUX_PA24A_FLEXCOM1_FLEXCOM1_IO0            _L_(0)       /**< FLEXCOM1 signal line function value: FLEXCOM1_FLEXCOM1_IO0 */
-#define PIO_PA24A_FLEXCOM1_FLEXCOM1_IO0            (_U_(1) << 24) /**< FLEXCOM1 signal: FLEXCOM1_FLEXCOM1_IO0 */
-#define PIN_PA23A_FLEXCOM1_FLEXCOM1_IO1            _L_(23)      /**< FLEXCOM1 signal: FLEXCOM1_FLEXCOM1_IO1 on PA23 mux A */
-#define MUX_PA23A_FLEXCOM1_FLEXCOM1_IO1            _L_(0)       /**< FLEXCOM1 signal line function value: FLEXCOM1_FLEXCOM1_IO1 */
-#define PIO_PA23A_FLEXCOM1_FLEXCOM1_IO1            (_U_(1) << 23) /**< FLEXCOM1 signal: FLEXCOM1_FLEXCOM1_IO1 */
-#define PIN_PA22A_FLEXCOM1_FLEXCOM1_IO2            _L_(22)      /**< FLEXCOM1 signal: FLEXCOM1_FLEXCOM1_IO2 on PA22 mux A */
-#define MUX_PA22A_FLEXCOM1_FLEXCOM1_IO2            _L_(0)       /**< FLEXCOM1 signal line function value: FLEXCOM1_FLEXCOM1_IO2 */
-#define PIO_PA22A_FLEXCOM1_FLEXCOM1_IO2            (_U_(1) << 22) /**< FLEXCOM1 signal: FLEXCOM1_FLEXCOM1_IO2 */
-#define PIN_PA25A_FLEXCOM1_FLEXCOM1_IO3            _L_(25)      /**< FLEXCOM1 signal: FLEXCOM1_FLEXCOM1_IO3 on PA25 mux A */
-#define MUX_PA25A_FLEXCOM1_FLEXCOM1_IO3            _L_(0)       /**< FLEXCOM1 signal line function value: FLEXCOM1_FLEXCOM1_IO3 */
-#define PIO_PA25A_FLEXCOM1_FLEXCOM1_IO3            (_U_(1) << 25) /**< FLEXCOM1 signal: FLEXCOM1_FLEXCOM1_IO3 */
-#define PIN_PA26A_FLEXCOM1_FLEXCOM1_IO4            _L_(26)      /**< FLEXCOM1 signal: FLEXCOM1_FLEXCOM1_IO4 on PA26 mux A */
-#define MUX_PA26A_FLEXCOM1_FLEXCOM1_IO4            _L_(0)       /**< FLEXCOM1 signal line function value: FLEXCOM1_FLEXCOM1_IO4 */
-#define PIO_PA26A_FLEXCOM1_FLEXCOM1_IO4            (_U_(1) << 26) /**< FLEXCOM1 signal: FLEXCOM1_FLEXCOM1_IO4 */
+#define PIN_PA24A_FLEXCOM1_IO0                     _L_(24)      /**< FLEXCOM1 signal: FLEXCOM1_IO0 on PA24 mux A */
+#define MUX_PA24A_FLEXCOM1_IO0                     _L_(0)       /**< FLEXCOM1 signal line function value: FLEXCOM1_IO0 */
+#define PIO_PA24A_FLEXCOM1_IO0                     (_U_(1) << 24) /**< FLEXCOM1 signal: FLEXCOM1_IO0 */
+#define PIN_PA23A_FLEXCOM1_IO1                     _L_(23)      /**< FLEXCOM1 signal: FLEXCOM1_IO1 on PA23 mux A */
+#define MUX_PA23A_FLEXCOM1_IO1                     _L_(0)       /**< FLEXCOM1 signal line function value: FLEXCOM1_IO1 */
+#define PIO_PA23A_FLEXCOM1_IO1                     (_U_(1) << 23) /**< FLEXCOM1 signal: FLEXCOM1_IO1 */
+#define PIN_PA22A_FLEXCOM1_IO2                     _L_(22)      /**< FLEXCOM1 signal: FLEXCOM1_IO2 on PA22 mux A */
+#define MUX_PA22A_FLEXCOM1_IO2                     _L_(0)       /**< FLEXCOM1 signal line function value: FLEXCOM1_IO2 */
+#define PIO_PA22A_FLEXCOM1_IO2                     (_U_(1) << 22) /**< FLEXCOM1 signal: FLEXCOM1_IO2 */
+#define PIN_PA25A_FLEXCOM1_IO3                     _L_(25)      /**< FLEXCOM1 signal: FLEXCOM1_IO3 on PA25 mux A */
+#define MUX_PA25A_FLEXCOM1_IO3                     _L_(0)       /**< FLEXCOM1 signal line function value: FLEXCOM1_IO3 */
+#define PIO_PA25A_FLEXCOM1_IO3                     (_U_(1) << 25) /**< FLEXCOM1 signal: FLEXCOM1_IO3 */
+#define PIN_PA26A_FLEXCOM1_IO4                     _L_(26)      /**< FLEXCOM1 signal: FLEXCOM1_IO4 on PA26 mux A */
+#define MUX_PA26A_FLEXCOM1_IO4                     _L_(0)       /**< FLEXCOM1 signal line function value: FLEXCOM1_IO4 */
+#define PIO_PA26A_FLEXCOM1_IO4                     (_U_(1) << 26) /**< FLEXCOM1 signal: FLEXCOM1_IO4 */
 /* ========== PIO definition for FLEXCOM2 peripheral ========== */
-#define PIN_PA6E_FLEXCOM2_FLEXCOM2_IO0             _L_(6)       /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO0 on PA6 mux E */
-#define MUX_PA6E_FLEXCOM2_FLEXCOM2_IO0             _L_(4)       /**< FLEXCOM2 signal line function value: FLEXCOM2_FLEXCOM2_IO0 */
-#define PIO_PA6E_FLEXCOM2_FLEXCOM2_IO0             (_U_(1) << 6) /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO0 */
-#define PIN_PD26C_FLEXCOM2_FLEXCOM2_IO0            _L_(122)     /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO0 on PD26 mux C */
-#define MUX_PD26C_FLEXCOM2_FLEXCOM2_IO0            _L_(2)       /**< FLEXCOM2 signal line function value: FLEXCOM2_FLEXCOM2_IO0 */
-#define PIO_PD26C_FLEXCOM2_FLEXCOM2_IO0            (_U_(1) << 26) /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO0 */
-#define PIN_PA7E_FLEXCOM2_FLEXCOM2_IO1             _L_(7)       /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO1 on PA7 mux E */
-#define MUX_PA7E_FLEXCOM2_FLEXCOM2_IO1             _L_(4)       /**< FLEXCOM2 signal line function value: FLEXCOM2_FLEXCOM2_IO1 */
-#define PIO_PA7E_FLEXCOM2_FLEXCOM2_IO1             (_U_(1) << 7) /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO1 */
-#define PIN_PD27C_FLEXCOM2_FLEXCOM2_IO1            _L_(123)     /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO1 on PD27 mux C */
-#define MUX_PD27C_FLEXCOM2_FLEXCOM2_IO1            _L_(2)       /**< FLEXCOM2 signal line function value: FLEXCOM2_FLEXCOM2_IO1 */
-#define PIO_PD27C_FLEXCOM2_FLEXCOM2_IO1            (_U_(1) << 27) /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO1 */
-#define PIN_PA8E_FLEXCOM2_FLEXCOM2_IO2             _L_(8)       /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO2 on PA8 mux E */
-#define MUX_PA8E_FLEXCOM2_FLEXCOM2_IO2             _L_(4)       /**< FLEXCOM2 signal line function value: FLEXCOM2_FLEXCOM2_IO2 */
-#define PIO_PA8E_FLEXCOM2_FLEXCOM2_IO2             (_U_(1) << 8) /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO2 */
-#define PIN_PD28C_FLEXCOM2_FLEXCOM2_IO2            _L_(124)     /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO2 on PD28 mux C */
-#define MUX_PD28C_FLEXCOM2_FLEXCOM2_IO2            _L_(2)       /**< FLEXCOM2 signal line function value: FLEXCOM2_FLEXCOM2_IO2 */
-#define PIO_PD28C_FLEXCOM2_FLEXCOM2_IO2            (_U_(1) << 28) /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO2 */
-#define PIN_PA9E_FLEXCOM2_FLEXCOM2_IO3             _L_(9)       /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO3 on PA9 mux E */
-#define MUX_PA9E_FLEXCOM2_FLEXCOM2_IO3             _L_(4)       /**< FLEXCOM2 signal line function value: FLEXCOM2_FLEXCOM2_IO3 */
-#define PIO_PA9E_FLEXCOM2_FLEXCOM2_IO3             (_U_(1) << 9) /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO3 */
-#define PIN_PD29C_FLEXCOM2_FLEXCOM2_IO3            _L_(125)     /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO3 on PD29 mux C */
-#define MUX_PD29C_FLEXCOM2_FLEXCOM2_IO3            _L_(2)       /**< FLEXCOM2 signal line function value: FLEXCOM2_FLEXCOM2_IO3 */
-#define PIO_PD29C_FLEXCOM2_FLEXCOM2_IO3            (_U_(1) << 29) /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO3 */
-#define PIN_PA10E_FLEXCOM2_FLEXCOM2_IO4            _L_(10)      /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO4 on PA10 mux E */
-#define MUX_PA10E_FLEXCOM2_FLEXCOM2_IO4            _L_(4)       /**< FLEXCOM2 signal line function value: FLEXCOM2_FLEXCOM2_IO4 */
-#define PIO_PA10E_FLEXCOM2_FLEXCOM2_IO4            (_U_(1) << 10) /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO4 */
-#define PIN_PD30C_FLEXCOM2_FLEXCOM2_IO4            _L_(126)     /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO4 on PD30 mux C */
-#define MUX_PD30C_FLEXCOM2_FLEXCOM2_IO4            _L_(2)       /**< FLEXCOM2 signal line function value: FLEXCOM2_FLEXCOM2_IO4 */
-#define PIO_PD30C_FLEXCOM2_FLEXCOM2_IO4            (_U_(1) << 30) /**< FLEXCOM2 signal: FLEXCOM2_FLEXCOM2_IO4 */
+#define PIN_PA6E_FLEXCOM2_IO0                      _L_(6)       /**< FLEXCOM2 signal: FLEXCOM2_IO0 on PA6 mux E */
+#define MUX_PA6E_FLEXCOM2_IO0                      _L_(4)       /**< FLEXCOM2 signal line function value: FLEXCOM2_IO0 */
+#define PIO_PA6E_FLEXCOM2_IO0                      (_U_(1) << 6) /**< FLEXCOM2 signal: FLEXCOM2_IO0 */
+#define PIN_PD26C_FLEXCOM2_IO0                     _L_(122)     /**< FLEXCOM2 signal: FLEXCOM2_IO0 on PD26 mux C */
+#define MUX_PD26C_FLEXCOM2_IO0                     _L_(2)       /**< FLEXCOM2 signal line function value: FLEXCOM2_IO0 */
+#define PIO_PD26C_FLEXCOM2_IO0                     (_U_(1) << 26) /**< FLEXCOM2 signal: FLEXCOM2_IO0 */
+#define PIN_PA7E_FLEXCOM2_IO1                      _L_(7)       /**< FLEXCOM2 signal: FLEXCOM2_IO1 on PA7 mux E */
+#define MUX_PA7E_FLEXCOM2_IO1                      _L_(4)       /**< FLEXCOM2 signal line function value: FLEXCOM2_IO1 */
+#define PIO_PA7E_FLEXCOM2_IO1                      (_U_(1) << 7) /**< FLEXCOM2 signal: FLEXCOM2_IO1 */
+#define PIN_PD27C_FLEXCOM2_IO1                     _L_(123)     /**< FLEXCOM2 signal: FLEXCOM2_IO1 on PD27 mux C */
+#define MUX_PD27C_FLEXCOM2_IO1                     _L_(2)       /**< FLEXCOM2 signal line function value: FLEXCOM2_IO1 */
+#define PIO_PD27C_FLEXCOM2_IO1                     (_U_(1) << 27) /**< FLEXCOM2 signal: FLEXCOM2_IO1 */
+#define PIN_PA8E_FLEXCOM2_IO2                      _L_(8)       /**< FLEXCOM2 signal: FLEXCOM2_IO2 on PA8 mux E */
+#define MUX_PA8E_FLEXCOM2_IO2                      _L_(4)       /**< FLEXCOM2 signal line function value: FLEXCOM2_IO2 */
+#define PIO_PA8E_FLEXCOM2_IO2                      (_U_(1) << 8) /**< FLEXCOM2 signal: FLEXCOM2_IO2 */
+#define PIN_PD28C_FLEXCOM2_IO2                     _L_(124)     /**< FLEXCOM2 signal: FLEXCOM2_IO2 on PD28 mux C */
+#define MUX_PD28C_FLEXCOM2_IO2                     _L_(2)       /**< FLEXCOM2 signal line function value: FLEXCOM2_IO2 */
+#define PIO_PD28C_FLEXCOM2_IO2                     (_U_(1) << 28) /**< FLEXCOM2 signal: FLEXCOM2_IO2 */
+#define PIN_PA9E_FLEXCOM2_IO3                      _L_(9)       /**< FLEXCOM2 signal: FLEXCOM2_IO3 on PA9 mux E */
+#define MUX_PA9E_FLEXCOM2_IO3                      _L_(4)       /**< FLEXCOM2 signal line function value: FLEXCOM2_IO3 */
+#define PIO_PA9E_FLEXCOM2_IO3                      (_U_(1) << 9) /**< FLEXCOM2 signal: FLEXCOM2_IO3 */
+#define PIN_PD29C_FLEXCOM2_IO3                     _L_(125)     /**< FLEXCOM2 signal: FLEXCOM2_IO3 on PD29 mux C */
+#define MUX_PD29C_FLEXCOM2_IO3                     _L_(2)       /**< FLEXCOM2 signal line function value: FLEXCOM2_IO3 */
+#define PIO_PD29C_FLEXCOM2_IO3                     (_U_(1) << 29) /**< FLEXCOM2 signal: FLEXCOM2_IO3 */
+#define PIN_PA10E_FLEXCOM2_IO4                     _L_(10)      /**< FLEXCOM2 signal: FLEXCOM2_IO4 on PA10 mux E */
+#define MUX_PA10E_FLEXCOM2_IO4                     _L_(4)       /**< FLEXCOM2 signal line function value: FLEXCOM2_IO4 */
+#define PIO_PA10E_FLEXCOM2_IO4                     (_U_(1) << 10) /**< FLEXCOM2 signal: FLEXCOM2_IO4 */
+#define PIN_PD30C_FLEXCOM2_IO4                     _L_(126)     /**< FLEXCOM2 signal: FLEXCOM2_IO4 on PD30 mux C */
+#define MUX_PD30C_FLEXCOM2_IO4                     _L_(2)       /**< FLEXCOM2 signal line function value: FLEXCOM2_IO4 */
+#define PIO_PD30C_FLEXCOM2_IO4                     (_U_(1) << 30) /**< FLEXCOM2 signal: FLEXCOM2_IO4 */
 /* ========== PIO definition for FLEXCOM3 peripheral ========== */
-#define PIN_PA15E_FLEXCOM3_FLEXCOM3_IO0            _L_(15)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO0 on PA15 mux E */
-#define MUX_PA15E_FLEXCOM3_FLEXCOM3_IO0            _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO0 */
-#define PIO_PA15E_FLEXCOM3_FLEXCOM3_IO0            (_U_(1) << 15) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO0 */
-#define PIN_PB23E_FLEXCOM3_FLEXCOM3_IO0            _L_(55)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO0 on PB23 mux E */
-#define MUX_PB23E_FLEXCOM3_FLEXCOM3_IO0            _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO0 */
-#define PIO_PB23E_FLEXCOM3_FLEXCOM3_IO0            (_U_(1) << 23) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO0 */
-#define PIN_PC20E_FLEXCOM3_FLEXCOM3_IO0            _L_(84)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO0 on PC20 mux E */
-#define MUX_PC20E_FLEXCOM3_FLEXCOM3_IO0            _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO0 */
-#define PIO_PC20E_FLEXCOM3_FLEXCOM3_IO0            (_U_(1) << 20) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO0 */
-#define PIN_PA13E_FLEXCOM3_FLEXCOM3_IO1            _L_(13)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO1 on PA13 mux E */
-#define MUX_PA13E_FLEXCOM3_FLEXCOM3_IO1            _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO1 */
-#define PIO_PA13E_FLEXCOM3_FLEXCOM3_IO1            (_U_(1) << 13) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO1 */
-#define PIN_PB22E_FLEXCOM3_FLEXCOM3_IO1            _L_(54)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO1 on PB22 mux E */
-#define MUX_PB22E_FLEXCOM3_FLEXCOM3_IO1            _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO1 */
-#define PIO_PB22E_FLEXCOM3_FLEXCOM3_IO1            (_U_(1) << 22) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO1 */
-#define PIN_PC19E_FLEXCOM3_FLEXCOM3_IO1            _L_(83)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO1 on PC19 mux E */
-#define MUX_PC19E_FLEXCOM3_FLEXCOM3_IO1            _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO1 */
-#define PIO_PC19E_FLEXCOM3_FLEXCOM3_IO1            (_U_(1) << 19) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO1 */
-#define PIN_PA14E_FLEXCOM3_FLEXCOM3_IO2            _L_(14)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO2 on PA14 mux E */
-#define MUX_PA14E_FLEXCOM3_FLEXCOM3_IO2            _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO2 */
-#define PIO_PA14E_FLEXCOM3_FLEXCOM3_IO2            (_U_(1) << 14) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO2 */
-#define PIN_PB21E_FLEXCOM3_FLEXCOM3_IO2            _L_(53)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO2 on PB21 mux E */
-#define MUX_PB21E_FLEXCOM3_FLEXCOM3_IO2            _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO2 */
-#define PIO_PB21E_FLEXCOM3_FLEXCOM3_IO2            (_U_(1) << 21) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO2 */
-#define PIN_PC18E_FLEXCOM3_FLEXCOM3_IO2            _L_(82)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO2 on PC18 mux E */
-#define MUX_PC18E_FLEXCOM3_FLEXCOM3_IO2            _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO2 */
-#define PIO_PC18E_FLEXCOM3_FLEXCOM3_IO2            (_U_(1) << 18) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO2 */
-#define PIN_PA16E_FLEXCOM3_FLEXCOM3_IO3            _L_(16)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO3 on PA16 mux E */
-#define MUX_PA16E_FLEXCOM3_FLEXCOM3_IO3            _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO3 */
-#define PIO_PA16E_FLEXCOM3_FLEXCOM3_IO3            (_U_(1) << 16) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO3 */
-#define PIN_PB24E_FLEXCOM3_FLEXCOM3_IO3            _L_(56)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO3 on PB24 mux E */
-#define MUX_PB24E_FLEXCOM3_FLEXCOM3_IO3            _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO3 */
-#define PIO_PB24E_FLEXCOM3_FLEXCOM3_IO3            (_U_(1) << 24) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO3 */
-#define PIN_PC21E_FLEXCOM3_FLEXCOM3_IO3            _L_(85)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO3 on PC21 mux E */
-#define MUX_PC21E_FLEXCOM3_FLEXCOM3_IO3            _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO3 */
-#define PIO_PC21E_FLEXCOM3_FLEXCOM3_IO3            (_U_(1) << 21) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO3 */
-#define PIN_PA17E_FLEXCOM3_FLEXCOM3_IO4            _L_(17)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO4 on PA17 mux E */
-#define MUX_PA17E_FLEXCOM3_FLEXCOM3_IO4            _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO4 */
-#define PIO_PA17E_FLEXCOM3_FLEXCOM3_IO4            (_U_(1) << 17) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO4 */
-#define PIN_PB25E_FLEXCOM3_FLEXCOM3_IO4            _L_(57)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO4 on PB25 mux E */
-#define MUX_PB25E_FLEXCOM3_FLEXCOM3_IO4            _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO4 */
-#define PIO_PB25E_FLEXCOM3_FLEXCOM3_IO4            (_U_(1) << 25) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO4 */
-#define PIN_PC22E_FLEXCOM3_FLEXCOM3_IO4            _L_(86)      /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO4 on PC22 mux E */
-#define MUX_PC22E_FLEXCOM3_FLEXCOM3_IO4            _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_FLEXCOM3_IO4 */
-#define PIO_PC22E_FLEXCOM3_FLEXCOM3_IO4            (_U_(1) << 22) /**< FLEXCOM3 signal: FLEXCOM3_FLEXCOM3_IO4 */
+#define PIN_PA15E_FLEXCOM3_IO0                     _L_(15)      /**< FLEXCOM3 signal: FLEXCOM3_IO0 on PA15 mux E */
+#define MUX_PA15E_FLEXCOM3_IO0                     _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO0 */
+#define PIO_PA15E_FLEXCOM3_IO0                     (_U_(1) << 15) /**< FLEXCOM3 signal: FLEXCOM3_IO0 */
+#define PIN_PB23E_FLEXCOM3_IO0                     _L_(55)      /**< FLEXCOM3 signal: FLEXCOM3_IO0 on PB23 mux E */
+#define MUX_PB23E_FLEXCOM3_IO0                     _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO0 */
+#define PIO_PB23E_FLEXCOM3_IO0                     (_U_(1) << 23) /**< FLEXCOM3 signal: FLEXCOM3_IO0 */
+#define PIN_PC20E_FLEXCOM3_IO0                     _L_(84)      /**< FLEXCOM3 signal: FLEXCOM3_IO0 on PC20 mux E */
+#define MUX_PC20E_FLEXCOM3_IO0                     _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO0 */
+#define PIO_PC20E_FLEXCOM3_IO0                     (_U_(1) << 20) /**< FLEXCOM3 signal: FLEXCOM3_IO0 */
+#define PIN_PA13E_FLEXCOM3_IO1                     _L_(13)      /**< FLEXCOM3 signal: FLEXCOM3_IO1 on PA13 mux E */
+#define MUX_PA13E_FLEXCOM3_IO1                     _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO1 */
+#define PIO_PA13E_FLEXCOM3_IO1                     (_U_(1) << 13) /**< FLEXCOM3 signal: FLEXCOM3_IO1 */
+#define PIN_PB22E_FLEXCOM3_IO1                     _L_(54)      /**< FLEXCOM3 signal: FLEXCOM3_IO1 on PB22 mux E */
+#define MUX_PB22E_FLEXCOM3_IO1                     _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO1 */
+#define PIO_PB22E_FLEXCOM3_IO1                     (_U_(1) << 22) /**< FLEXCOM3 signal: FLEXCOM3_IO1 */
+#define PIN_PC19E_FLEXCOM3_IO1                     _L_(83)      /**< FLEXCOM3 signal: FLEXCOM3_IO1 on PC19 mux E */
+#define MUX_PC19E_FLEXCOM3_IO1                     _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO1 */
+#define PIO_PC19E_FLEXCOM3_IO1                     (_U_(1) << 19) /**< FLEXCOM3 signal: FLEXCOM3_IO1 */
+#define PIN_PA14E_FLEXCOM3_IO2                     _L_(14)      /**< FLEXCOM3 signal: FLEXCOM3_IO2 on PA14 mux E */
+#define MUX_PA14E_FLEXCOM3_IO2                     _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO2 */
+#define PIO_PA14E_FLEXCOM3_IO2                     (_U_(1) << 14) /**< FLEXCOM3 signal: FLEXCOM3_IO2 */
+#define PIN_PB21E_FLEXCOM3_IO2                     _L_(53)      /**< FLEXCOM3 signal: FLEXCOM3_IO2 on PB21 mux E */
+#define MUX_PB21E_FLEXCOM3_IO2                     _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO2 */
+#define PIO_PB21E_FLEXCOM3_IO2                     (_U_(1) << 21) /**< FLEXCOM3 signal: FLEXCOM3_IO2 */
+#define PIN_PC18E_FLEXCOM3_IO2                     _L_(82)      /**< FLEXCOM3 signal: FLEXCOM3_IO2 on PC18 mux E */
+#define MUX_PC18E_FLEXCOM3_IO2                     _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO2 */
+#define PIO_PC18E_FLEXCOM3_IO2                     (_U_(1) << 18) /**< FLEXCOM3 signal: FLEXCOM3_IO2 */
+#define PIN_PA16E_FLEXCOM3_IO3                     _L_(16)      /**< FLEXCOM3 signal: FLEXCOM3_IO3 on PA16 mux E */
+#define MUX_PA16E_FLEXCOM3_IO3                     _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO3 */
+#define PIO_PA16E_FLEXCOM3_IO3                     (_U_(1) << 16) /**< FLEXCOM3 signal: FLEXCOM3_IO3 */
+#define PIN_PB24E_FLEXCOM3_IO3                     _L_(56)      /**< FLEXCOM3 signal: FLEXCOM3_IO3 on PB24 mux E */
+#define MUX_PB24E_FLEXCOM3_IO3                     _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO3 */
+#define PIO_PB24E_FLEXCOM3_IO3                     (_U_(1) << 24) /**< FLEXCOM3 signal: FLEXCOM3_IO3 */
+#define PIN_PC21E_FLEXCOM3_IO3                     _L_(85)      /**< FLEXCOM3 signal: FLEXCOM3_IO3 on PC21 mux E */
+#define MUX_PC21E_FLEXCOM3_IO3                     _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO3 */
+#define PIO_PC21E_FLEXCOM3_IO3                     (_U_(1) << 21) /**< FLEXCOM3 signal: FLEXCOM3_IO3 */
+#define PIN_PA17E_FLEXCOM3_IO4                     _L_(17)      /**< FLEXCOM3 signal: FLEXCOM3_IO4 on PA17 mux E */
+#define MUX_PA17E_FLEXCOM3_IO4                     _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO4 */
+#define PIO_PA17E_FLEXCOM3_IO4                     (_U_(1) << 17) /**< FLEXCOM3 signal: FLEXCOM3_IO4 */
+#define PIN_PB25E_FLEXCOM3_IO4                     _L_(57)      /**< FLEXCOM3 signal: FLEXCOM3_IO4 on PB25 mux E */
+#define MUX_PB25E_FLEXCOM3_IO4                     _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO4 */
+#define PIO_PB25E_FLEXCOM3_IO4                     (_U_(1) << 25) /**< FLEXCOM3 signal: FLEXCOM3_IO4 */
+#define PIN_PC22E_FLEXCOM3_IO4                     _L_(86)      /**< FLEXCOM3 signal: FLEXCOM3_IO4 on PC22 mux E */
+#define MUX_PC22E_FLEXCOM3_IO4                     _L_(4)       /**< FLEXCOM3 signal line function value: FLEXCOM3_IO4 */
+#define PIO_PC22E_FLEXCOM3_IO4                     (_U_(1) << 22) /**< FLEXCOM3 signal: FLEXCOM3_IO4 */
 /* ========== PIO definition for FLEXCOM4 peripheral ========== */
-#define PIN_PC28B_FLEXCOM4_FLEXCOM4_IO0            _L_(92)      /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO0 on PC28 mux B */
-#define MUX_PC28B_FLEXCOM4_FLEXCOM4_IO0            _L_(1)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO0 */
-#define PIO_PC28B_FLEXCOM4_FLEXCOM4_IO0            (_U_(1) << 28) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO0 */
-#define PIN_PD12B_FLEXCOM4_FLEXCOM4_IO0            _L_(108)     /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO0 on PD12 mux B */
-#define MUX_PD12B_FLEXCOM4_FLEXCOM4_IO0            _L_(1)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO0 */
-#define PIO_PD12B_FLEXCOM4_FLEXCOM4_IO0            (_U_(1) << 12) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO0 */
-#define PIN_PD21C_FLEXCOM4_FLEXCOM4_IO0            _L_(117)     /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO0 on PD21 mux C */
-#define MUX_PD21C_FLEXCOM4_FLEXCOM4_IO0            _L_(2)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO0 */
-#define PIO_PD21C_FLEXCOM4_FLEXCOM4_IO0            (_U_(1) << 21) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO0 */
-#define PIN_PC29B_FLEXCOM4_FLEXCOM4_IO1            _L_(93)      /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO1 on PC29 mux B */
-#define MUX_PC29B_FLEXCOM4_FLEXCOM4_IO1            _L_(1)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO1 */
-#define PIO_PC29B_FLEXCOM4_FLEXCOM4_IO1            (_U_(1) << 29) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO1 */
-#define PIN_PD13B_FLEXCOM4_FLEXCOM4_IO1            _L_(109)     /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO1 on PD13 mux B */
-#define MUX_PD13B_FLEXCOM4_FLEXCOM4_IO1            _L_(1)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO1 */
-#define PIO_PD13B_FLEXCOM4_FLEXCOM4_IO1            (_U_(1) << 13) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO1 */
-#define PIN_PD22C_FLEXCOM4_FLEXCOM4_IO1            _L_(118)     /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO1 on PD22 mux C */
-#define MUX_PD22C_FLEXCOM4_FLEXCOM4_IO1            _L_(2)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO1 */
-#define PIO_PD22C_FLEXCOM4_FLEXCOM4_IO1            (_U_(1) << 22) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO1 */
-#define PIN_PC30B_FLEXCOM4_FLEXCOM4_IO2            _L_(94)      /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO2 on PC30 mux B */
-#define MUX_PC30B_FLEXCOM4_FLEXCOM4_IO2            _L_(1)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO2 */
-#define PIO_PC30B_FLEXCOM4_FLEXCOM4_IO2            (_U_(1) << 30) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO2 */
-#define PIN_PD14B_FLEXCOM4_FLEXCOM4_IO2            _L_(110)     /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO2 on PD14 mux B */
-#define MUX_PD14B_FLEXCOM4_FLEXCOM4_IO2            _L_(1)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO2 */
-#define PIO_PD14B_FLEXCOM4_FLEXCOM4_IO2            (_U_(1) << 14) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO2 */
-#define PIN_PD23C_FLEXCOM4_FLEXCOM4_IO2            _L_(119)     /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO2 on PD23 mux C */
-#define MUX_PD23C_FLEXCOM4_FLEXCOM4_IO2            _L_(2)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO2 */
-#define PIO_PD23C_FLEXCOM4_FLEXCOM4_IO2            (_U_(1) << 23) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO2 */
-#define PIN_PC31B_FLEXCOM4_FLEXCOM4_IO3            _L_(95)      /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO3 on PC31 mux B */
-#define MUX_PC31B_FLEXCOM4_FLEXCOM4_IO3            _L_(1)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO3 */
-#define PIO_PC31B_FLEXCOM4_FLEXCOM4_IO3            (_U_(1) << 31) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO3 */
-#define PIN_PD15B_FLEXCOM4_FLEXCOM4_IO3            _L_(111)     /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO3 on PD15 mux B */
-#define MUX_PD15B_FLEXCOM4_FLEXCOM4_IO3            _L_(1)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO3 */
-#define PIO_PD15B_FLEXCOM4_FLEXCOM4_IO3            (_U_(1) << 15) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO3 */
-#define PIN_PD24C_FLEXCOM4_FLEXCOM4_IO3            _L_(120)     /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO3 on PD24 mux C */
-#define MUX_PD24C_FLEXCOM4_FLEXCOM4_IO3            _L_(2)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO3 */
-#define PIO_PD24C_FLEXCOM4_FLEXCOM4_IO3            (_U_(1) << 24) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO3 */
-#define PIN_PD0B_FLEXCOM4_FLEXCOM4_IO4             _L_(96)      /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO4 on PD0 mux B */
-#define MUX_PD0B_FLEXCOM4_FLEXCOM4_IO4             _L_(1)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO4 */
-#define PIO_PD0B_FLEXCOM4_FLEXCOM4_IO4             (_U_(1) << 0) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO4 */
-#define PIN_PD16B_FLEXCOM4_FLEXCOM4_IO4            _L_(112)     /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO4 on PD16 mux B */
-#define MUX_PD16B_FLEXCOM4_FLEXCOM4_IO4            _L_(1)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO4 */
-#define PIO_PD16B_FLEXCOM4_FLEXCOM4_IO4            (_U_(1) << 16) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO4 */
-#define PIN_PD25C_FLEXCOM4_FLEXCOM4_IO4            _L_(121)     /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO4 on PD25 mux C */
-#define MUX_PD25C_FLEXCOM4_FLEXCOM4_IO4            _L_(2)       /**< FLEXCOM4 signal line function value: FLEXCOM4_FLEXCOM4_IO4 */
-#define PIO_PD25C_FLEXCOM4_FLEXCOM4_IO4            (_U_(1) << 25) /**< FLEXCOM4 signal: FLEXCOM4_FLEXCOM4_IO4 */
+#define PIN_PC28B_FLEXCOM4_IO0                     _L_(92)      /**< FLEXCOM4 signal: FLEXCOM4_IO0 on PC28 mux B */
+#define MUX_PC28B_FLEXCOM4_IO0                     _L_(1)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO0 */
+#define PIO_PC28B_FLEXCOM4_IO0                     (_U_(1) << 28) /**< FLEXCOM4 signal: FLEXCOM4_IO0 */
+#define PIN_PD12B_FLEXCOM4_IO0                     _L_(108)     /**< FLEXCOM4 signal: FLEXCOM4_IO0 on PD12 mux B */
+#define MUX_PD12B_FLEXCOM4_IO0                     _L_(1)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO0 */
+#define PIO_PD12B_FLEXCOM4_IO0                     (_U_(1) << 12) /**< FLEXCOM4 signal: FLEXCOM4_IO0 */
+#define PIN_PD21C_FLEXCOM4_IO0                     _L_(117)     /**< FLEXCOM4 signal: FLEXCOM4_IO0 on PD21 mux C */
+#define MUX_PD21C_FLEXCOM4_IO0                     _L_(2)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO0 */
+#define PIO_PD21C_FLEXCOM4_IO0                     (_U_(1) << 21) /**< FLEXCOM4 signal: FLEXCOM4_IO0 */
+#define PIN_PC29B_FLEXCOM4_IO1                     _L_(93)      /**< FLEXCOM4 signal: FLEXCOM4_IO1 on PC29 mux B */
+#define MUX_PC29B_FLEXCOM4_IO1                     _L_(1)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO1 */
+#define PIO_PC29B_FLEXCOM4_IO1                     (_U_(1) << 29) /**< FLEXCOM4 signal: FLEXCOM4_IO1 */
+#define PIN_PD13B_FLEXCOM4_IO1                     _L_(109)     /**< FLEXCOM4 signal: FLEXCOM4_IO1 on PD13 mux B */
+#define MUX_PD13B_FLEXCOM4_IO1                     _L_(1)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO1 */
+#define PIO_PD13B_FLEXCOM4_IO1                     (_U_(1) << 13) /**< FLEXCOM4 signal: FLEXCOM4_IO1 */
+#define PIN_PD22C_FLEXCOM4_IO1                     _L_(118)     /**< FLEXCOM4 signal: FLEXCOM4_IO1 on PD22 mux C */
+#define MUX_PD22C_FLEXCOM4_IO1                     _L_(2)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO1 */
+#define PIO_PD22C_FLEXCOM4_IO1                     (_U_(1) << 22) /**< FLEXCOM4 signal: FLEXCOM4_IO1 */
+#define PIN_PC30B_FLEXCOM4_IO2                     _L_(94)      /**< FLEXCOM4 signal: FLEXCOM4_IO2 on PC30 mux B */
+#define MUX_PC30B_FLEXCOM4_IO2                     _L_(1)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO2 */
+#define PIO_PC30B_FLEXCOM4_IO2                     (_U_(1) << 30) /**< FLEXCOM4 signal: FLEXCOM4_IO2 */
+#define PIN_PD14B_FLEXCOM4_IO2                     _L_(110)     /**< FLEXCOM4 signal: FLEXCOM4_IO2 on PD14 mux B */
+#define MUX_PD14B_FLEXCOM4_IO2                     _L_(1)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO2 */
+#define PIO_PD14B_FLEXCOM4_IO2                     (_U_(1) << 14) /**< FLEXCOM4 signal: FLEXCOM4_IO2 */
+#define PIN_PD23C_FLEXCOM4_IO2                     _L_(119)     /**< FLEXCOM4 signal: FLEXCOM4_IO2 on PD23 mux C */
+#define MUX_PD23C_FLEXCOM4_IO2                     _L_(2)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO2 */
+#define PIO_PD23C_FLEXCOM4_IO2                     (_U_(1) << 23) /**< FLEXCOM4 signal: FLEXCOM4_IO2 */
+#define PIN_PC31B_FLEXCOM4_IO3                     _L_(95)      /**< FLEXCOM4 signal: FLEXCOM4_IO3 on PC31 mux B */
+#define MUX_PC31B_FLEXCOM4_IO3                     _L_(1)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO3 */
+#define PIO_PC31B_FLEXCOM4_IO3                     (_U_(1) << 31) /**< FLEXCOM4 signal: FLEXCOM4_IO3 */
+#define PIN_PD15B_FLEXCOM4_IO3                     _L_(111)     /**< FLEXCOM4 signal: FLEXCOM4_IO3 on PD15 mux B */
+#define MUX_PD15B_FLEXCOM4_IO3                     _L_(1)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO3 */
+#define PIO_PD15B_FLEXCOM4_IO3                     (_U_(1) << 15) /**< FLEXCOM4 signal: FLEXCOM4_IO3 */
+#define PIN_PD24C_FLEXCOM4_IO3                     _L_(120)     /**< FLEXCOM4 signal: FLEXCOM4_IO3 on PD24 mux C */
+#define MUX_PD24C_FLEXCOM4_IO3                     _L_(2)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO3 */
+#define PIO_PD24C_FLEXCOM4_IO3                     (_U_(1) << 24) /**< FLEXCOM4 signal: FLEXCOM4_IO3 */
+#define PIN_PD0B_FLEXCOM4_IO4                      _L_(96)      /**< FLEXCOM4 signal: FLEXCOM4_IO4 on PD0 mux B */
+#define MUX_PD0B_FLEXCOM4_IO4                      _L_(1)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO4 */
+#define PIO_PD0B_FLEXCOM4_IO4                      (_U_(1) << 0) /**< FLEXCOM4 signal: FLEXCOM4_IO4 */
+#define PIN_PD16B_FLEXCOM4_IO4                     _L_(112)     /**< FLEXCOM4 signal: FLEXCOM4_IO4 on PD16 mux B */
+#define MUX_PD16B_FLEXCOM4_IO4                     _L_(1)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO4 */
+#define PIO_PD16B_FLEXCOM4_IO4                     (_U_(1) << 16) /**< FLEXCOM4 signal: FLEXCOM4_IO4 */
+#define PIN_PD25C_FLEXCOM4_IO4                     _L_(121)     /**< FLEXCOM4 signal: FLEXCOM4_IO4 on PD25 mux C */
+#define MUX_PD25C_FLEXCOM4_IO4                     _L_(2)       /**< FLEXCOM4 signal line function value: FLEXCOM4_IO4 */
+#define PIO_PD25C_FLEXCOM4_IO4                     (_U_(1) << 25) /**< FLEXCOM4 signal: FLEXCOM4_IO4 */
 /* ========== PIO definition for GMAC peripheral ========== */
 #define PIN_PB9F_GMAC_GCOL                         _L_(41)      /**< GMAC signal: GMAC_GCOL on PB9 mux F */
 #define MUX_PB9F_GMAC_GCOL                         _L_(5)       /**< GMAC signal line function value: GMAC_GCOL */
@@ -691,67 +691,67 @@
 #define MUX_PD2D_GMAC_GTXER                        _L_(3)       /**< GMAC signal line function value: GMAC_GTXER */
 #define PIO_PD2D_GMAC_GTXER                        (_U_(1) << 2) /**< GMAC signal: GMAC_GTXER */
 /* ========== PIO definition for I2SC0 peripheral ========== */
-#define PIN_PC1E_I2SC0_I2SC0_CK                    _L_(65)      /**< I2SC0 signal: I2SC0_I2SC0_CK on PC1 mux E */
-#define MUX_PC1E_I2SC0_I2SC0_CK                    _L_(4)       /**< I2SC0 signal line function value: I2SC0_I2SC0_CK */
-#define PIO_PC1E_I2SC0_I2SC0_CK                    (_U_(1) << 1) /**< I2SC0 signal: I2SC0_I2SC0_CK */
-#define PIN_PD19E_I2SC0_I2SC0_CK                   _L_(115)     /**< I2SC0 signal: I2SC0_I2SC0_CK on PD19 mux E */
-#define MUX_PD19E_I2SC0_I2SC0_CK                   _L_(4)       /**< I2SC0 signal line function value: I2SC0_I2SC0_CK */
-#define PIO_PD19E_I2SC0_I2SC0_CK                   (_U_(1) << 19) /**< I2SC0 signal: I2SC0_I2SC0_CK */
-#define PIN_PC4E_I2SC0_I2SC0_DI0                   _L_(68)      /**< I2SC0 signal: I2SC0_I2SC0_DI0 on PC4 mux E */
-#define MUX_PC4E_I2SC0_I2SC0_DI0                   _L_(4)       /**< I2SC0 signal line function value: I2SC0_I2SC0_DI0 */
-#define PIO_PC4E_I2SC0_I2SC0_DI0                   (_U_(1) << 4) /**< I2SC0 signal: I2SC0_I2SC0_DI0 */
-#define PIN_PD22E_I2SC0_I2SC0_DI0                  _L_(118)     /**< I2SC0 signal: I2SC0_I2SC0_DI0 on PD22 mux E */
-#define MUX_PD22E_I2SC0_I2SC0_DI0                  _L_(4)       /**< I2SC0 signal line function value: I2SC0_I2SC0_DI0 */
-#define PIO_PD22E_I2SC0_I2SC0_DI0                  (_U_(1) << 22) /**< I2SC0 signal: I2SC0_I2SC0_DI0 */
-#define PIN_PC5E_I2SC0_I2SC0_DO0                   _L_(69)      /**< I2SC0 signal: I2SC0_I2SC0_DO0 on PC5 mux E */
-#define MUX_PC5E_I2SC0_I2SC0_DO0                   _L_(4)       /**< I2SC0 signal line function value: I2SC0_I2SC0_DO0 */
-#define PIO_PC5E_I2SC0_I2SC0_DO0                   (_U_(1) << 5) /**< I2SC0 signal: I2SC0_I2SC0_DO0 */
-#define PIN_PD23E_I2SC0_I2SC0_DO0                  _L_(119)     /**< I2SC0 signal: I2SC0_I2SC0_DO0 on PD23 mux E */
-#define MUX_PD23E_I2SC0_I2SC0_DO0                  _L_(4)       /**< I2SC0 signal line function value: I2SC0_I2SC0_DO0 */
-#define PIO_PD23E_I2SC0_I2SC0_DO0                  (_U_(1) << 23) /**< I2SC0 signal: I2SC0_I2SC0_DO0 */
-#define PIN_PC2E_I2SC0_I2SC0_MCK                   _L_(66)      /**< I2SC0 signal: I2SC0_I2SC0_MCK on PC2 mux E */
-#define MUX_PC2E_I2SC0_I2SC0_MCK                   _L_(4)       /**< I2SC0 signal line function value: I2SC0_I2SC0_MCK */
-#define PIO_PC2E_I2SC0_I2SC0_MCK                   (_U_(1) << 2) /**< I2SC0 signal: I2SC0_I2SC0_MCK */
-#define PIN_PD20E_I2SC0_I2SC0_MCK                  _L_(116)     /**< I2SC0 signal: I2SC0_I2SC0_MCK on PD20 mux E */
-#define MUX_PD20E_I2SC0_I2SC0_MCK                  _L_(4)       /**< I2SC0 signal line function value: I2SC0_I2SC0_MCK */
-#define PIO_PD20E_I2SC0_I2SC0_MCK                  (_U_(1) << 20) /**< I2SC0 signal: I2SC0_I2SC0_MCK */
-#define PIN_PC3E_I2SC0_I2SC0_WS                    _L_(67)      /**< I2SC0 signal: I2SC0_I2SC0_WS on PC3 mux E */
-#define MUX_PC3E_I2SC0_I2SC0_WS                    _L_(4)       /**< I2SC0 signal line function value: I2SC0_I2SC0_WS */
-#define PIO_PC3E_I2SC0_I2SC0_WS                    (_U_(1) << 3) /**< I2SC0 signal: I2SC0_I2SC0_WS */
-#define PIN_PD21E_I2SC0_I2SC0_WS                   _L_(117)     /**< I2SC0 signal: I2SC0_I2SC0_WS on PD21 mux E */
-#define MUX_PD21E_I2SC0_I2SC0_WS                   _L_(4)       /**< I2SC0 signal line function value: I2SC0_I2SC0_WS */
-#define PIO_PD21E_I2SC0_I2SC0_WS                   (_U_(1) << 21) /**< I2SC0 signal: I2SC0_I2SC0_WS */
+#define PIN_PC1E_I2SC0_CK                          _L_(65)      /**< I2SC0 signal: I2SC0_CK on PC1 mux E */
+#define MUX_PC1E_I2SC0_CK                          _L_(4)       /**< I2SC0 signal line function value: I2SC0_CK */
+#define PIO_PC1E_I2SC0_CK                          (_U_(1) << 1) /**< I2SC0 signal: I2SC0_CK */
+#define PIN_PD19E_I2SC0_CK                         _L_(115)     /**< I2SC0 signal: I2SC0_CK on PD19 mux E */
+#define MUX_PD19E_I2SC0_CK                         _L_(4)       /**< I2SC0 signal line function value: I2SC0_CK */
+#define PIO_PD19E_I2SC0_CK                         (_U_(1) << 19) /**< I2SC0 signal: I2SC0_CK */
+#define PIN_PC4E_I2SC0_DI0                         _L_(68)      /**< I2SC0 signal: I2SC0_DI0 on PC4 mux E */
+#define MUX_PC4E_I2SC0_DI0                         _L_(4)       /**< I2SC0 signal line function value: I2SC0_DI0 */
+#define PIO_PC4E_I2SC0_DI0                         (_U_(1) << 4) /**< I2SC0 signal: I2SC0_DI0 */
+#define PIN_PD22E_I2SC0_DI0                        _L_(118)     /**< I2SC0 signal: I2SC0_DI0 on PD22 mux E */
+#define MUX_PD22E_I2SC0_DI0                        _L_(4)       /**< I2SC0 signal line function value: I2SC0_DI0 */
+#define PIO_PD22E_I2SC0_DI0                        (_U_(1) << 22) /**< I2SC0 signal: I2SC0_DI0 */
+#define PIN_PC5E_I2SC0_DO0                         _L_(69)      /**< I2SC0 signal: I2SC0_DO0 on PC5 mux E */
+#define MUX_PC5E_I2SC0_DO0                         _L_(4)       /**< I2SC0 signal line function value: I2SC0_DO0 */
+#define PIO_PC5E_I2SC0_DO0                         (_U_(1) << 5) /**< I2SC0 signal: I2SC0_DO0 */
+#define PIN_PD23E_I2SC0_DO0                        _L_(119)     /**< I2SC0 signal: I2SC0_DO0 on PD23 mux E */
+#define MUX_PD23E_I2SC0_DO0                        _L_(4)       /**< I2SC0 signal line function value: I2SC0_DO0 */
+#define PIO_PD23E_I2SC0_DO0                        (_U_(1) << 23) /**< I2SC0 signal: I2SC0_DO0 */
+#define PIN_PC2E_I2SC0_MCK                         _L_(66)      /**< I2SC0 signal: I2SC0_MCK on PC2 mux E */
+#define MUX_PC2E_I2SC0_MCK                         _L_(4)       /**< I2SC0 signal line function value: I2SC0_MCK */
+#define PIO_PC2E_I2SC0_MCK                         (_U_(1) << 2) /**< I2SC0 signal: I2SC0_MCK */
+#define PIN_PD20E_I2SC0_MCK                        _L_(116)     /**< I2SC0 signal: I2SC0_MCK on PD20 mux E */
+#define MUX_PD20E_I2SC0_MCK                        _L_(4)       /**< I2SC0 signal line function value: I2SC0_MCK */
+#define PIO_PD20E_I2SC0_MCK                        (_U_(1) << 20) /**< I2SC0 signal: I2SC0_MCK */
+#define PIN_PC3E_I2SC0_WS                          _L_(67)      /**< I2SC0 signal: I2SC0_WS on PC3 mux E */
+#define MUX_PC3E_I2SC0_WS                          _L_(4)       /**< I2SC0 signal line function value: I2SC0_WS */
+#define PIO_PC3E_I2SC0_WS                          (_U_(1) << 3) /**< I2SC0 signal: I2SC0_WS */
+#define PIN_PD21E_I2SC0_WS                         _L_(117)     /**< I2SC0 signal: I2SC0_WS on PD21 mux E */
+#define MUX_PD21E_I2SC0_WS                         _L_(4)       /**< I2SC0 signal line function value: I2SC0_WS */
+#define PIO_PD21E_I2SC0_WS                         (_U_(1) << 21) /**< I2SC0 signal: I2SC0_WS */
 /* ========== PIO definition for I2SC1 peripheral ========== */
-#define PIN_PA15D_I2SC1_I2SC1_CK                   _L_(15)      /**< I2SC1 signal: I2SC1_I2SC1_CK on PA15 mux D */
-#define MUX_PA15D_I2SC1_I2SC1_CK                   _L_(3)       /**< I2SC1 signal line function value: I2SC1_I2SC1_CK */
-#define PIO_PA15D_I2SC1_I2SC1_CK                   (_U_(1) << 15) /**< I2SC1 signal: I2SC1_I2SC1_CK */
-#define PIN_PB15D_I2SC1_I2SC1_CK                   _L_(47)      /**< I2SC1 signal: I2SC1_I2SC1_CK on PB15 mux D */
-#define MUX_PB15D_I2SC1_I2SC1_CK                   _L_(3)       /**< I2SC1 signal line function value: I2SC1_I2SC1_CK */
-#define PIO_PB15D_I2SC1_I2SC1_CK                   (_U_(1) << 15) /**< I2SC1 signal: I2SC1_I2SC1_CK */
-#define PIN_PA17D_I2SC1_I2SC1_DI0                  _L_(17)      /**< I2SC1 signal: I2SC1_I2SC1_DI0 on PA17 mux D */
-#define MUX_PA17D_I2SC1_I2SC1_DI0                  _L_(3)       /**< I2SC1 signal line function value: I2SC1_I2SC1_DI0 */
-#define PIO_PA17D_I2SC1_I2SC1_DI0                  (_U_(1) << 17) /**< I2SC1 signal: I2SC1_I2SC1_DI0 */
-#define PIN_PB17D_I2SC1_I2SC1_DI0                  _L_(49)      /**< I2SC1 signal: I2SC1_I2SC1_DI0 on PB17 mux D */
-#define MUX_PB17D_I2SC1_I2SC1_DI0                  _L_(3)       /**< I2SC1 signal line function value: I2SC1_I2SC1_DI0 */
-#define PIO_PB17D_I2SC1_I2SC1_DI0                  (_U_(1) << 17) /**< I2SC1 signal: I2SC1_I2SC1_DI0 */
-#define PIN_PA18D_I2SC1_I2SC1_DO0                  _L_(18)      /**< I2SC1 signal: I2SC1_I2SC1_DO0 on PA18 mux D */
-#define MUX_PA18D_I2SC1_I2SC1_DO0                  _L_(3)       /**< I2SC1 signal line function value: I2SC1_I2SC1_DO0 */
-#define PIO_PA18D_I2SC1_I2SC1_DO0                  (_U_(1) << 18) /**< I2SC1 signal: I2SC1_I2SC1_DO0 */
-#define PIN_PB18D_I2SC1_I2SC1_DO0                  _L_(50)      /**< I2SC1 signal: I2SC1_I2SC1_DO0 on PB18 mux D */
-#define MUX_PB18D_I2SC1_I2SC1_DO0                  _L_(3)       /**< I2SC1 signal line function value: I2SC1_I2SC1_DO0 */
-#define PIO_PB18D_I2SC1_I2SC1_DO0                  (_U_(1) << 18) /**< I2SC1 signal: I2SC1_I2SC1_DO0 */
-#define PIN_PA14D_I2SC1_I2SC1_MCK                  _L_(14)      /**< I2SC1 signal: I2SC1_I2SC1_MCK on PA14 mux D */
-#define MUX_PA14D_I2SC1_I2SC1_MCK                  _L_(3)       /**< I2SC1 signal line function value: I2SC1_I2SC1_MCK */
-#define PIO_PA14D_I2SC1_I2SC1_MCK                  (_U_(1) << 14) /**< I2SC1 signal: I2SC1_I2SC1_MCK */
-#define PIN_PB14D_I2SC1_I2SC1_MCK                  _L_(46)      /**< I2SC1 signal: I2SC1_I2SC1_MCK on PB14 mux D */
-#define MUX_PB14D_I2SC1_I2SC1_MCK                  _L_(3)       /**< I2SC1 signal line function value: I2SC1_I2SC1_MCK */
-#define PIO_PB14D_I2SC1_I2SC1_MCK                  (_U_(1) << 14) /**< I2SC1 signal: I2SC1_I2SC1_MCK */
-#define PIN_PA16D_I2SC1_I2SC1_WS                   _L_(16)      /**< I2SC1 signal: I2SC1_I2SC1_WS on PA16 mux D */
-#define MUX_PA16D_I2SC1_I2SC1_WS                   _L_(3)       /**< I2SC1 signal line function value: I2SC1_I2SC1_WS */
-#define PIO_PA16D_I2SC1_I2SC1_WS                   (_U_(1) << 16) /**< I2SC1 signal: I2SC1_I2SC1_WS */
-#define PIN_PB16D_I2SC1_I2SC1_WS                   _L_(48)      /**< I2SC1 signal: I2SC1_I2SC1_WS on PB16 mux D */
-#define MUX_PB16D_I2SC1_I2SC1_WS                   _L_(3)       /**< I2SC1 signal line function value: I2SC1_I2SC1_WS */
-#define PIO_PB16D_I2SC1_I2SC1_WS                   (_U_(1) << 16) /**< I2SC1 signal: I2SC1_I2SC1_WS */
+#define PIN_PA15D_I2SC1_CK                         _L_(15)      /**< I2SC1 signal: I2SC1_CK on PA15 mux D */
+#define MUX_PA15D_I2SC1_CK                         _L_(3)       /**< I2SC1 signal line function value: I2SC1_CK */
+#define PIO_PA15D_I2SC1_CK                         (_U_(1) << 15) /**< I2SC1 signal: I2SC1_CK */
+#define PIN_PB15D_I2SC1_CK                         _L_(47)      /**< I2SC1 signal: I2SC1_CK on PB15 mux D */
+#define MUX_PB15D_I2SC1_CK                         _L_(3)       /**< I2SC1 signal line function value: I2SC1_CK */
+#define PIO_PB15D_I2SC1_CK                         (_U_(1) << 15) /**< I2SC1 signal: I2SC1_CK */
+#define PIN_PA17D_I2SC1_DI0                        _L_(17)      /**< I2SC1 signal: I2SC1_DI0 on PA17 mux D */
+#define MUX_PA17D_I2SC1_DI0                        _L_(3)       /**< I2SC1 signal line function value: I2SC1_DI0 */
+#define PIO_PA17D_I2SC1_DI0                        (_U_(1) << 17) /**< I2SC1 signal: I2SC1_DI0 */
+#define PIN_PB17D_I2SC1_DI0                        _L_(49)      /**< I2SC1 signal: I2SC1_DI0 on PB17 mux D */
+#define MUX_PB17D_I2SC1_DI0                        _L_(3)       /**< I2SC1 signal line function value: I2SC1_DI0 */
+#define PIO_PB17D_I2SC1_DI0                        (_U_(1) << 17) /**< I2SC1 signal: I2SC1_DI0 */
+#define PIN_PA18D_I2SC1_DO0                        _L_(18)      /**< I2SC1 signal: I2SC1_DO0 on PA18 mux D */
+#define MUX_PA18D_I2SC1_DO0                        _L_(3)       /**< I2SC1 signal line function value: I2SC1_DO0 */
+#define PIO_PA18D_I2SC1_DO0                        (_U_(1) << 18) /**< I2SC1 signal: I2SC1_DO0 */
+#define PIN_PB18D_I2SC1_DO0                        _L_(50)      /**< I2SC1 signal: I2SC1_DO0 on PB18 mux D */
+#define MUX_PB18D_I2SC1_DO0                        _L_(3)       /**< I2SC1 signal line function value: I2SC1_DO0 */
+#define PIO_PB18D_I2SC1_DO0                        (_U_(1) << 18) /**< I2SC1 signal: I2SC1_DO0 */
+#define PIN_PA14D_I2SC1_MCK                        _L_(14)      /**< I2SC1 signal: I2SC1_MCK on PA14 mux D */
+#define MUX_PA14D_I2SC1_MCK                        _L_(3)       /**< I2SC1 signal line function value: I2SC1_MCK */
+#define PIO_PA14D_I2SC1_MCK                        (_U_(1) << 14) /**< I2SC1 signal: I2SC1_MCK */
+#define PIN_PB14D_I2SC1_MCK                        _L_(46)      /**< I2SC1 signal: I2SC1_MCK on PB14 mux D */
+#define MUX_PB14D_I2SC1_MCK                        _L_(3)       /**< I2SC1 signal line function value: I2SC1_MCK */
+#define PIO_PB14D_I2SC1_MCK                        (_U_(1) << 14) /**< I2SC1 signal: I2SC1_MCK */
+#define PIN_PA16D_I2SC1_WS                         _L_(16)      /**< I2SC1 signal: I2SC1_WS on PA16 mux D */
+#define MUX_PA16D_I2SC1_WS                         _L_(3)       /**< I2SC1 signal line function value: I2SC1_WS */
+#define PIO_PA16D_I2SC1_WS                         (_U_(1) << 16) /**< I2SC1 signal: I2SC1_WS */
+#define PIN_PB16D_I2SC1_WS                         _L_(48)      /**< I2SC1 signal: I2SC1_WS on PB16 mux D */
+#define MUX_PB16D_I2SC1_WS                         _L_(3)       /**< I2SC1 signal line function value: I2SC1_WS */
+#define PIO_PB16D_I2SC1_WS                         (_U_(1) << 16) /**< I2SC1 signal: I2SC1_WS */
 /* ========== PIO definition for ICE peripheral ========== */
 #define PIN_PA26C_ICE_NTRST                        _L_(26)      /**< ICE signal: ICE_NTRST on PA26 mux C */
 #define MUX_PA26C_ICE_NTRST                        _L_(2)       /**< ICE signal line function value: ICE_NTRST */
@@ -814,198 +814,198 @@
 #define MUX_PD30B_ICE_TMS                          _L_(1)       /**< ICE signal line function value: ICE_TMS */
 #define PIO_PD30B_ICE_TMS                          (_U_(1) << 30) /**< ICE signal: ICE_TMS */
 /* ========== PIO definition for ISC peripheral ========== */
-#define PIN_PB26F_ISC_ISC_D0                       _L_(58)      /**< ISC signal: ISC_ISC_D0 on PB26 mux F */
-#define MUX_PB26F_ISC_ISC_D0                       _L_(5)       /**< ISC signal line function value: ISC_ISC_D0 */
-#define PIO_PB26F_ISC_ISC_D0                       (_U_(1) << 26) /**< ISC signal: ISC_ISC_D0 */
-#define PIN_PC9C_ISC_ISC_D0                        _L_(73)      /**< ISC signal: ISC_ISC_D0 on PC9 mux C */
-#define MUX_PC9C_ISC_ISC_D0                        _L_(2)       /**< ISC signal line function value: ISC_ISC_D0 */
-#define PIO_PC9C_ISC_ISC_D0                        (_U_(1) << 9) /**< ISC signal: ISC_ISC_D0 */
-#define PIN_PD7E_ISC_ISC_D0                        _L_(103)     /**< ISC signal: ISC_ISC_D0 on PD7 mux E */
-#define MUX_PD7E_ISC_ISC_D0                        _L_(4)       /**< ISC signal line function value: ISC_ISC_D0 */
-#define PIO_PD7E_ISC_ISC_D0                        (_U_(1) << 7) /**< ISC signal: ISC_ISC_D0 */
-#define PIN_PB27F_ISC_ISC_D1                       _L_(59)      /**< ISC signal: ISC_ISC_D1 on PB27 mux F */
-#define MUX_PB27F_ISC_ISC_D1                       _L_(5)       /**< ISC signal line function value: ISC_ISC_D1 */
-#define PIO_PB27F_ISC_ISC_D1                       (_U_(1) << 27) /**< ISC signal: ISC_ISC_D1 */
-#define PIN_PC10C_ISC_ISC_D1                       _L_(74)      /**< ISC signal: ISC_ISC_D1 on PC10 mux C */
-#define MUX_PC10C_ISC_ISC_D1                       _L_(2)       /**< ISC signal line function value: ISC_ISC_D1 */
-#define PIO_PC10C_ISC_ISC_D1                       (_U_(1) << 10) /**< ISC signal: ISC_ISC_D1 */
-#define PIN_PD8E_ISC_ISC_D1                        _L_(104)     /**< ISC signal: ISC_ISC_D1 on PD8 mux E */
-#define MUX_PD8E_ISC_ISC_D1                        _L_(4)       /**< ISC signal line function value: ISC_ISC_D1 */
-#define PIO_PD8E_ISC_ISC_D1                        (_U_(1) << 8) /**< ISC signal: ISC_ISC_D1 */
-#define PIN_PB28F_ISC_ISC_D2                       _L_(60)      /**< ISC signal: ISC_ISC_D2 on PB28 mux F */
-#define MUX_PB28F_ISC_ISC_D2                       _L_(5)       /**< ISC signal line function value: ISC_ISC_D2 */
-#define PIO_PB28F_ISC_ISC_D2                       (_U_(1) << 28) /**< ISC signal: ISC_ISC_D2 */
-#define PIN_PC11C_ISC_ISC_D2                       _L_(75)      /**< ISC signal: ISC_ISC_D2 on PC11 mux C */
-#define MUX_PC11C_ISC_ISC_D2                       _L_(2)       /**< ISC signal line function value: ISC_ISC_D2 */
-#define PIO_PC11C_ISC_ISC_D2                       (_U_(1) << 11) /**< ISC signal: ISC_ISC_D2 */
-#define PIN_PD9E_ISC_ISC_D2                        _L_(105)     /**< ISC signal: ISC_ISC_D2 on PD9 mux E */
-#define MUX_PD9E_ISC_ISC_D2                        _L_(4)       /**< ISC signal line function value: ISC_ISC_D2 */
-#define PIO_PD9E_ISC_ISC_D2                        (_U_(1) << 9) /**< ISC signal: ISC_ISC_D2 */
-#define PIN_PB29F_ISC_ISC_D3                       _L_(61)      /**< ISC signal: ISC_ISC_D3 on PB29 mux F */
-#define MUX_PB29F_ISC_ISC_D3                       _L_(5)       /**< ISC signal line function value: ISC_ISC_D3 */
-#define PIO_PB29F_ISC_ISC_D3                       (_U_(1) << 29) /**< ISC signal: ISC_ISC_D3 */
-#define PIN_PC12C_ISC_ISC_D3                       _L_(76)      /**< ISC signal: ISC_ISC_D3 on PC12 mux C */
-#define MUX_PC12C_ISC_ISC_D3                       _L_(2)       /**< ISC signal line function value: ISC_ISC_D3 */
-#define PIO_PC12C_ISC_ISC_D3                       (_U_(1) << 12) /**< ISC signal: ISC_ISC_D3 */
-#define PIN_PD10E_ISC_ISC_D3                       _L_(106)     /**< ISC signal: ISC_ISC_D3 on PD10 mux E */
-#define MUX_PD10E_ISC_ISC_D3                       _L_(4)       /**< ISC signal line function value: ISC_ISC_D3 */
-#define PIO_PD10E_ISC_ISC_D3                       (_U_(1) << 10) /**< ISC signal: ISC_ISC_D3 */
-#define PIN_PB30F_ISC_ISC_D4                       _L_(62)      /**< ISC signal: ISC_ISC_D4 on PB30 mux F */
-#define MUX_PB30F_ISC_ISC_D4                       _L_(5)       /**< ISC signal line function value: ISC_ISC_D4 */
-#define PIO_PB30F_ISC_ISC_D4                       (_U_(1) << 30) /**< ISC signal: ISC_ISC_D4 */
-#define PIN_PC13C_ISC_ISC_D4                       _L_(77)      /**< ISC signal: ISC_ISC_D4 on PC13 mux C */
-#define MUX_PC13C_ISC_ISC_D4                       _L_(2)       /**< ISC signal line function value: ISC_ISC_D4 */
-#define PIO_PC13C_ISC_ISC_D4                       (_U_(1) << 13) /**< ISC signal: ISC_ISC_D4 */
-#define PIN_PD11E_ISC_ISC_D4                       _L_(107)     /**< ISC signal: ISC_ISC_D4 on PD11 mux E */
-#define MUX_PD11E_ISC_ISC_D4                       _L_(4)       /**< ISC signal line function value: ISC_ISC_D4 */
-#define PIO_PD11E_ISC_ISC_D4                       (_U_(1) << 11) /**< ISC signal: ISC_ISC_D4 */
-#define PIN_PD12F_ISC_ISC_D4                       _L_(108)     /**< ISC signal: ISC_ISC_D4 on PD12 mux F */
-#define MUX_PD12F_ISC_ISC_D4                       _L_(5)       /**< ISC signal line function value: ISC_ISC_D4 */
-#define PIO_PD12F_ISC_ISC_D4                       (_U_(1) << 12) /**< ISC signal: ISC_ISC_D4 */
-#define PIN_PB31F_ISC_ISC_D5                       _L_(63)      /**< ISC signal: ISC_ISC_D5 on PB31 mux F */
-#define MUX_PB31F_ISC_ISC_D5                       _L_(5)       /**< ISC signal line function value: ISC_ISC_D5 */
-#define PIO_PB31F_ISC_ISC_D5                       (_U_(1) << 31) /**< ISC signal: ISC_ISC_D5 */
-#define PIN_PC14C_ISC_ISC_D5                       _L_(78)      /**< ISC signal: ISC_ISC_D5 on PC14 mux C */
-#define MUX_PC14C_ISC_ISC_D5                       _L_(2)       /**< ISC signal line function value: ISC_ISC_D5 */
-#define PIO_PC14C_ISC_ISC_D5                       (_U_(1) << 14) /**< ISC signal: ISC_ISC_D5 */
-#define PIN_PD12E_ISC_ISC_D5                       _L_(108)     /**< ISC signal: ISC_ISC_D5 on PD12 mux E */
-#define MUX_PD12E_ISC_ISC_D5                       _L_(4)       /**< ISC signal line function value: ISC_ISC_D5 */
-#define PIO_PD12E_ISC_ISC_D5                       (_U_(1) << 12) /**< ISC signal: ISC_ISC_D5 */
-#define PIN_PD13F_ISC_ISC_D5                       _L_(109)     /**< ISC signal: ISC_ISC_D5 on PD13 mux F */
-#define MUX_PD13F_ISC_ISC_D5                       _L_(5)       /**< ISC signal line function value: ISC_ISC_D5 */
-#define PIO_PD13F_ISC_ISC_D5                       (_U_(1) << 13) /**< ISC signal: ISC_ISC_D5 */
-#define PIN_PC0F_ISC_ISC_D6                        _L_(64)      /**< ISC signal: ISC_ISC_D6 on PC0 mux F */
-#define MUX_PC0F_ISC_ISC_D6                        _L_(5)       /**< ISC signal line function value: ISC_ISC_D6 */
-#define PIO_PC0F_ISC_ISC_D6                        (_U_(1) << 0) /**< ISC signal: ISC_ISC_D6 */
-#define PIN_PC15C_ISC_ISC_D6                       _L_(79)      /**< ISC signal: ISC_ISC_D6 on PC15 mux C */
-#define MUX_PC15C_ISC_ISC_D6                       _L_(2)       /**< ISC signal line function value: ISC_ISC_D6 */
-#define PIO_PC15C_ISC_ISC_D6                       (_U_(1) << 15) /**< ISC signal: ISC_ISC_D6 */
-#define PIN_PD13E_ISC_ISC_D6                       _L_(109)     /**< ISC signal: ISC_ISC_D6 on PD13 mux E */
-#define MUX_PD13E_ISC_ISC_D6                       _L_(4)       /**< ISC signal line function value: ISC_ISC_D6 */
-#define PIO_PD13E_ISC_ISC_D6                       (_U_(1) << 13) /**< ISC signal: ISC_ISC_D6 */
-#define PIN_PD14F_ISC_ISC_D6                       _L_(110)     /**< ISC signal: ISC_ISC_D6 on PD14 mux F */
-#define MUX_PD14F_ISC_ISC_D6                       _L_(5)       /**< ISC signal line function value: ISC_ISC_D6 */
-#define PIO_PD14F_ISC_ISC_D6                       (_U_(1) << 14) /**< ISC signal: ISC_ISC_D6 */
-#define PIN_PC1F_ISC_ISC_D7                        _L_(65)      /**< ISC signal: ISC_ISC_D7 on PC1 mux F */
-#define MUX_PC1F_ISC_ISC_D7                        _L_(5)       /**< ISC signal line function value: ISC_ISC_D7 */
-#define PIO_PC1F_ISC_ISC_D7                        (_U_(1) << 1) /**< ISC signal: ISC_ISC_D7 */
-#define PIN_PC16C_ISC_ISC_D7                       _L_(80)      /**< ISC signal: ISC_ISC_D7 on PC16 mux C */
-#define MUX_PC16C_ISC_ISC_D7                       _L_(2)       /**< ISC signal line function value: ISC_ISC_D7 */
-#define PIO_PC16C_ISC_ISC_D7                       (_U_(1) << 16) /**< ISC signal: ISC_ISC_D7 */
-#define PIN_PD14E_ISC_ISC_D7                       _L_(110)     /**< ISC signal: ISC_ISC_D7 on PD14 mux E */
-#define MUX_PD14E_ISC_ISC_D7                       _L_(4)       /**< ISC signal line function value: ISC_ISC_D7 */
-#define PIO_PD14E_ISC_ISC_D7                       (_U_(1) << 14) /**< ISC signal: ISC_ISC_D7 */
-#define PIN_PD15F_ISC_ISC_D7                       _L_(111)     /**< ISC signal: ISC_ISC_D7 on PD15 mux F */
-#define MUX_PD15F_ISC_ISC_D7                       _L_(5)       /**< ISC signal line function value: ISC_ISC_D7 */
-#define PIO_PD15F_ISC_ISC_D7                       (_U_(1) << 15) /**< ISC signal: ISC_ISC_D7 */
-#define PIN_PC2F_ISC_ISC_D8                        _L_(66)      /**< ISC signal: ISC_ISC_D8 on PC2 mux F */
-#define MUX_PC2F_ISC_ISC_D8                        _L_(5)       /**< ISC signal line function value: ISC_ISC_D8 */
-#define PIO_PC2F_ISC_ISC_D8                        (_U_(1) << 2) /**< ISC signal: ISC_ISC_D8 */
-#define PIN_PC17C_ISC_ISC_D8                       _L_(81)      /**< ISC signal: ISC_ISC_D8 on PC17 mux C */
-#define MUX_PC17C_ISC_ISC_D8                       _L_(2)       /**< ISC signal line function value: ISC_ISC_D8 */
-#define PIO_PC17C_ISC_ISC_D8                       (_U_(1) << 17) /**< ISC signal: ISC_ISC_D8 */
-#define PIN_PD6E_ISC_ISC_D8                        _L_(102)     /**< ISC signal: ISC_ISC_D8 on PD6 mux E */
-#define MUX_PD6E_ISC_ISC_D8                        _L_(4)       /**< ISC signal line function value: ISC_ISC_D8 */
-#define PIO_PD6E_ISC_ISC_D8                        (_U_(1) << 6) /**< ISC signal: ISC_ISC_D8 */
-#define PIN_PD16F_ISC_ISC_D8                       _L_(112)     /**< ISC signal: ISC_ISC_D8 on PD16 mux F */
-#define MUX_PD16F_ISC_ISC_D8                       _L_(5)       /**< ISC signal line function value: ISC_ISC_D8 */
-#define PIO_PD16F_ISC_ISC_D8                       (_U_(1) << 16) /**< ISC signal: ISC_ISC_D8 */
-#define PIN_PC3F_ISC_ISC_D9                        _L_(67)      /**< ISC signal: ISC_ISC_D9 on PC3 mux F */
-#define MUX_PC3F_ISC_ISC_D9                        _L_(5)       /**< ISC signal line function value: ISC_ISC_D9 */
-#define PIO_PC3F_ISC_ISC_D9                        (_U_(1) << 3) /**< ISC signal: ISC_ISC_D9 */
-#define PIN_PC18C_ISC_ISC_D9                       _L_(82)      /**< ISC signal: ISC_ISC_D9 on PC18 mux C */
-#define MUX_PC18C_ISC_ISC_D9                       _L_(2)       /**< ISC signal line function value: ISC_ISC_D9 */
-#define PIO_PC18C_ISC_ISC_D9                       (_U_(1) << 18) /**< ISC signal: ISC_ISC_D9 */
-#define PIN_PD5E_ISC_ISC_D9                        _L_(101)     /**< ISC signal: ISC_ISC_D9 on PD5 mux E */
-#define MUX_PD5E_ISC_ISC_D9                        _L_(4)       /**< ISC signal line function value: ISC_ISC_D9 */
-#define PIO_PD5E_ISC_ISC_D9                        (_U_(1) << 5) /**< ISC signal: ISC_ISC_D9 */
-#define PIN_PD17F_ISC_ISC_D9                       _L_(113)     /**< ISC signal: ISC_ISC_D9 on PD17 mux F */
-#define MUX_PD17F_ISC_ISC_D9                       _L_(5)       /**< ISC signal line function value: ISC_ISC_D9 */
-#define PIO_PD17F_ISC_ISC_D9                       (_U_(1) << 17) /**< ISC signal: ISC_ISC_D9 */
-#define PIN_PB24F_ISC_ISC_D10                      _L_(56)      /**< ISC signal: ISC_ISC_D10 on PB24 mux F */
-#define MUX_PB24F_ISC_ISC_D10                      _L_(5)       /**< ISC signal line function value: ISC_ISC_D10 */
-#define PIO_PB24F_ISC_ISC_D10                      (_U_(1) << 24) /**< ISC signal: ISC_ISC_D10 */
-#define PIN_PC19C_ISC_ISC_D10                      _L_(83)      /**< ISC signal: ISC_ISC_D10 on PC19 mux C */
-#define MUX_PC19C_ISC_ISC_D10                      _L_(2)       /**< ISC signal line function value: ISC_ISC_D10 */
-#define PIO_PC19C_ISC_ISC_D10                      (_U_(1) << 19) /**< ISC signal: ISC_ISC_D10 */
-#define PIN_PD4E_ISC_ISC_D10                       _L_(100)     /**< ISC signal: ISC_ISC_D10 on PD4 mux E */
-#define MUX_PD4E_ISC_ISC_D10                       _L_(4)       /**< ISC signal line function value: ISC_ISC_D10 */
-#define PIO_PD4E_ISC_ISC_D10                       (_U_(1) << 4) /**< ISC signal: ISC_ISC_D10 */
-#define PIN_PD18F_ISC_ISC_D10                      _L_(114)     /**< ISC signal: ISC_ISC_D10 on PD18 mux F */
-#define MUX_PD18F_ISC_ISC_D10                      _L_(5)       /**< ISC signal line function value: ISC_ISC_D10 */
-#define PIO_PD18F_ISC_ISC_D10                      (_U_(1) << 18) /**< ISC signal: ISC_ISC_D10 */
-#define PIN_PB25F_ISC_ISC_D11                      _L_(57)      /**< ISC signal: ISC_ISC_D11 on PB25 mux F */
-#define MUX_PB25F_ISC_ISC_D11                      _L_(5)       /**< ISC signal line function value: ISC_ISC_D11 */
-#define PIO_PB25F_ISC_ISC_D11                      (_U_(1) << 25) /**< ISC signal: ISC_ISC_D11 */
-#define PIN_PC20C_ISC_ISC_D11                      _L_(84)      /**< ISC signal: ISC_ISC_D11 on PC20 mux C */
-#define MUX_PC20C_ISC_ISC_D11                      _L_(2)       /**< ISC signal line function value: ISC_ISC_D11 */
-#define PIO_PC20C_ISC_ISC_D11                      (_U_(1) << 20) /**< ISC signal: ISC_ISC_D11 */
-#define PIN_PD3E_ISC_ISC_D11                       _L_(99)      /**< ISC signal: ISC_ISC_D11 on PD3 mux E */
-#define MUX_PD3E_ISC_ISC_D11                       _L_(4)       /**< ISC signal line function value: ISC_ISC_D11 */
-#define PIO_PD3E_ISC_ISC_D11                       (_U_(1) << 3) /**< ISC signal: ISC_ISC_D11 */
-#define PIN_PD19F_ISC_ISC_D11                      _L_(115)     /**< ISC signal: ISC_ISC_D11 on PD19 mux F */
-#define MUX_PD19F_ISC_ISC_D11                      _L_(5)       /**< ISC signal line function value: ISC_ISC_D11 */
-#define PIO_PD19F_ISC_ISC_D11                      (_U_(1) << 19) /**< ISC signal: ISC_ISC_D11 */
-#define PIN_PC8F_ISC_ISC_FIELD                     _L_(72)      /**< ISC signal: ISC_ISC_FIELD on PC8 mux F */
-#define MUX_PC8F_ISC_ISC_FIELD                     _L_(5)       /**< ISC signal line function value: ISC_ISC_FIELD */
-#define PIO_PC8F_ISC_ISC_FIELD                     (_U_(1) << 8) /**< ISC signal: ISC_ISC_FIELD */
-#define PIN_PC25C_ISC_ISC_FIELD                    _L_(89)      /**< ISC signal: ISC_ISC_FIELD on PC25 mux C */
-#define MUX_PC25C_ISC_ISC_FIELD                    _L_(2)       /**< ISC signal line function value: ISC_ISC_FIELD */
-#define PIO_PC25C_ISC_ISC_FIELD                    (_U_(1) << 25) /**< ISC signal: ISC_ISC_FIELD */
-#define PIN_PD18E_ISC_ISC_FIELD                    _L_(114)     /**< ISC signal: ISC_ISC_FIELD on PD18 mux E */
-#define MUX_PD18E_ISC_ISC_FIELD                    _L_(4)       /**< ISC signal line function value: ISC_ISC_FIELD */
-#define PIO_PD18E_ISC_ISC_FIELD                    (_U_(1) << 18) /**< ISC signal: ISC_ISC_FIELD */
-#define PIN_PD23F_ISC_ISC_FIELD                    _L_(119)     /**< ISC signal: ISC_ISC_FIELD on PD23 mux F */
-#define MUX_PD23F_ISC_ISC_FIELD                    _L_(5)       /**< ISC signal line function value: ISC_ISC_FIELD */
-#define PIO_PD23F_ISC_ISC_FIELD                    (_U_(1) << 23) /**< ISC signal: ISC_ISC_FIELD */
-#define PIN_PC6F_ISC_ISC_HSYNC                     _L_(70)      /**< ISC signal: ISC_ISC_HSYNC on PC6 mux F */
-#define MUX_PC6F_ISC_ISC_HSYNC                     _L_(5)       /**< ISC signal line function value: ISC_ISC_HSYNC */
-#define PIO_PC6F_ISC_ISC_HSYNC                     (_U_(1) << 6) /**< ISC signal: ISC_ISC_HSYNC */
-#define PIN_PC23C_ISC_ISC_HSYNC                    _L_(87)      /**< ISC signal: ISC_ISC_HSYNC on PC23 mux C */
-#define MUX_PC23C_ISC_ISC_HSYNC                    _L_(2)       /**< ISC signal line function value: ISC_ISC_HSYNC */
-#define PIO_PC23C_ISC_ISC_HSYNC                    (_U_(1) << 23) /**< ISC signal: ISC_ISC_HSYNC */
-#define PIN_PD17E_ISC_ISC_HSYNC                    _L_(113)     /**< ISC signal: ISC_ISC_HSYNC on PD17 mux E */
-#define MUX_PD17E_ISC_ISC_HSYNC                    _L_(4)       /**< ISC signal line function value: ISC_ISC_HSYNC */
-#define PIO_PD17E_ISC_ISC_HSYNC                    (_U_(1) << 17) /**< ISC signal: ISC_ISC_HSYNC */
-#define PIN_PD22F_ISC_ISC_HSYNC                    _L_(118)     /**< ISC signal: ISC_ISC_HSYNC on PD22 mux F */
-#define MUX_PD22F_ISC_ISC_HSYNC                    _L_(5)       /**< ISC signal line function value: ISC_ISC_HSYNC */
-#define PIO_PD22F_ISC_ISC_HSYNC                    (_U_(1) << 22) /**< ISC signal: ISC_ISC_HSYNC */
-#define PIN_PC7F_ISC_ISC_MCK                       _L_(71)      /**< ISC signal: ISC_ISC_MCK on PC7 mux F */
-#define MUX_PC7F_ISC_ISC_MCK                       _L_(5)       /**< ISC signal line function value: ISC_ISC_MCK */
-#define PIO_PC7F_ISC_ISC_MCK                       (_U_(1) << 7) /**< ISC signal: ISC_ISC_MCK */
-#define PIN_PC24C_ISC_ISC_MCK                      _L_(88)      /**< ISC signal: ISC_ISC_MCK on PC24 mux C */
-#define MUX_PC24C_ISC_ISC_MCK                      _L_(2)       /**< ISC signal line function value: ISC_ISC_MCK */
-#define PIO_PC24C_ISC_ISC_MCK                      (_U_(1) << 24) /**< ISC signal: ISC_ISC_MCK */
-#define PIN_PD2E_ISC_ISC_MCK                       _L_(98)      /**< ISC signal: ISC_ISC_MCK on PD2 mux E */
-#define MUX_PD2E_ISC_ISC_MCK                       _L_(4)       /**< ISC signal line function value: ISC_ISC_MCK */
-#define PIO_PD2E_ISC_ISC_MCK                       (_U_(1) << 2) /**< ISC signal: ISC_ISC_MCK */
-#define PIN_PD11F_ISC_ISC_MCK                      _L_(107)     /**< ISC signal: ISC_ISC_MCK on PD11 mux F */
-#define MUX_PD11F_ISC_ISC_MCK                      _L_(5)       /**< ISC signal line function value: ISC_ISC_MCK */
-#define PIO_PD11F_ISC_ISC_MCK                      (_U_(1) << 11) /**< ISC signal: ISC_ISC_MCK */
-#define PIN_PC4F_ISC_ISC_PCK                       _L_(68)      /**< ISC signal: ISC_ISC_PCK on PC4 mux F */
-#define MUX_PC4F_ISC_ISC_PCK                       _L_(5)       /**< ISC signal line function value: ISC_ISC_PCK */
-#define PIO_PC4F_ISC_ISC_PCK                       (_U_(1) << 4) /**< ISC signal: ISC_ISC_PCK */
-#define PIN_PC21C_ISC_ISC_PCK                      _L_(85)      /**< ISC signal: ISC_ISC_PCK on PC21 mux C */
-#define MUX_PC21C_ISC_ISC_PCK                      _L_(2)       /**< ISC signal line function value: ISC_ISC_PCK */
-#define PIO_PC21C_ISC_ISC_PCK                      (_U_(1) << 21) /**< ISC signal: ISC_ISC_PCK */
-#define PIN_PD15E_ISC_ISC_PCK                      _L_(111)     /**< ISC signal: ISC_ISC_PCK on PD15 mux E */
-#define MUX_PD15E_ISC_ISC_PCK                      _L_(4)       /**< ISC signal line function value: ISC_ISC_PCK */
-#define PIO_PD15E_ISC_ISC_PCK                      (_U_(1) << 15) /**< ISC signal: ISC_ISC_PCK */
-#define PIN_PD20F_ISC_ISC_PCK                      _L_(116)     /**< ISC signal: ISC_ISC_PCK on PD20 mux F */
-#define MUX_PD20F_ISC_ISC_PCK                      _L_(5)       /**< ISC signal line function value: ISC_ISC_PCK */
-#define PIO_PD20F_ISC_ISC_PCK                      (_U_(1) << 20) /**< ISC signal: ISC_ISC_PCK */
-#define PIN_PC5F_ISC_ISC_VSYNC                     _L_(69)      /**< ISC signal: ISC_ISC_VSYNC on PC5 mux F */
-#define MUX_PC5F_ISC_ISC_VSYNC                     _L_(5)       /**< ISC signal line function value: ISC_ISC_VSYNC */
-#define PIO_PC5F_ISC_ISC_VSYNC                     (_U_(1) << 5) /**< ISC signal: ISC_ISC_VSYNC */
-#define PIN_PC22C_ISC_ISC_VSYNC                    _L_(86)      /**< ISC signal: ISC_ISC_VSYNC on PC22 mux C */
-#define MUX_PC22C_ISC_ISC_VSYNC                    _L_(2)       /**< ISC signal line function value: ISC_ISC_VSYNC */
-#define PIO_PC22C_ISC_ISC_VSYNC                    (_U_(1) << 22) /**< ISC signal: ISC_ISC_VSYNC */
-#define PIN_PD16E_ISC_ISC_VSYNC                    _L_(112)     /**< ISC signal: ISC_ISC_VSYNC on PD16 mux E */
-#define MUX_PD16E_ISC_ISC_VSYNC                    _L_(4)       /**< ISC signal line function value: ISC_ISC_VSYNC */
-#define PIO_PD16E_ISC_ISC_VSYNC                    (_U_(1) << 16) /**< ISC signal: ISC_ISC_VSYNC */
-#define PIN_PD21F_ISC_ISC_VSYNC                    _L_(117)     /**< ISC signal: ISC_ISC_VSYNC on PD21 mux F */
-#define MUX_PD21F_ISC_ISC_VSYNC                    _L_(5)       /**< ISC signal line function value: ISC_ISC_VSYNC */
-#define PIO_PD21F_ISC_ISC_VSYNC                    (_U_(1) << 21) /**< ISC signal: ISC_ISC_VSYNC */
+#define PIN_PB26F_ISC_D0                           _L_(58)      /**< ISC signal: ISC_D0 on PB26 mux F */
+#define MUX_PB26F_ISC_D0                           _L_(5)       /**< ISC signal line function value: ISC_D0 */
+#define PIO_PB26F_ISC_D0                           (_U_(1) << 26) /**< ISC signal: ISC_D0 */
+#define PIN_PC9C_ISC_D0                            _L_(73)      /**< ISC signal: ISC_D0 on PC9 mux C */
+#define MUX_PC9C_ISC_D0                            _L_(2)       /**< ISC signal line function value: ISC_D0 */
+#define PIO_PC9C_ISC_D0                            (_U_(1) << 9) /**< ISC signal: ISC_D0 */
+#define PIN_PD7E_ISC_D0                            _L_(103)     /**< ISC signal: ISC_D0 on PD7 mux E */
+#define MUX_PD7E_ISC_D0                            _L_(4)       /**< ISC signal line function value: ISC_D0 */
+#define PIO_PD7E_ISC_D0                            (_U_(1) << 7) /**< ISC signal: ISC_D0 */
+#define PIN_PB27F_ISC_D1                           _L_(59)      /**< ISC signal: ISC_D1 on PB27 mux F */
+#define MUX_PB27F_ISC_D1                           _L_(5)       /**< ISC signal line function value: ISC_D1 */
+#define PIO_PB27F_ISC_D1                           (_U_(1) << 27) /**< ISC signal: ISC_D1 */
+#define PIN_PC10C_ISC_D1                           _L_(74)      /**< ISC signal: ISC_D1 on PC10 mux C */
+#define MUX_PC10C_ISC_D1                           _L_(2)       /**< ISC signal line function value: ISC_D1 */
+#define PIO_PC10C_ISC_D1                           (_U_(1) << 10) /**< ISC signal: ISC_D1 */
+#define PIN_PD8E_ISC_D1                            _L_(104)     /**< ISC signal: ISC_D1 on PD8 mux E */
+#define MUX_PD8E_ISC_D1                            _L_(4)       /**< ISC signal line function value: ISC_D1 */
+#define PIO_PD8E_ISC_D1                            (_U_(1) << 8) /**< ISC signal: ISC_D1 */
+#define PIN_PB28F_ISC_D2                           _L_(60)      /**< ISC signal: ISC_D2 on PB28 mux F */
+#define MUX_PB28F_ISC_D2                           _L_(5)       /**< ISC signal line function value: ISC_D2 */
+#define PIO_PB28F_ISC_D2                           (_U_(1) << 28) /**< ISC signal: ISC_D2 */
+#define PIN_PC11C_ISC_D2                           _L_(75)      /**< ISC signal: ISC_D2 on PC11 mux C */
+#define MUX_PC11C_ISC_D2                           _L_(2)       /**< ISC signal line function value: ISC_D2 */
+#define PIO_PC11C_ISC_D2                           (_U_(1) << 11) /**< ISC signal: ISC_D2 */
+#define PIN_PD9E_ISC_D2                            _L_(105)     /**< ISC signal: ISC_D2 on PD9 mux E */
+#define MUX_PD9E_ISC_D2                            _L_(4)       /**< ISC signal line function value: ISC_D2 */
+#define PIO_PD9E_ISC_D2                            (_U_(1) << 9) /**< ISC signal: ISC_D2 */
+#define PIN_PB29F_ISC_D3                           _L_(61)      /**< ISC signal: ISC_D3 on PB29 mux F */
+#define MUX_PB29F_ISC_D3                           _L_(5)       /**< ISC signal line function value: ISC_D3 */
+#define PIO_PB29F_ISC_D3                           (_U_(1) << 29) /**< ISC signal: ISC_D3 */
+#define PIN_PC12C_ISC_D3                           _L_(76)      /**< ISC signal: ISC_D3 on PC12 mux C */
+#define MUX_PC12C_ISC_D3                           _L_(2)       /**< ISC signal line function value: ISC_D3 */
+#define PIO_PC12C_ISC_D3                           (_U_(1) << 12) /**< ISC signal: ISC_D3 */
+#define PIN_PD10E_ISC_D3                           _L_(106)     /**< ISC signal: ISC_D3 on PD10 mux E */
+#define MUX_PD10E_ISC_D3                           _L_(4)       /**< ISC signal line function value: ISC_D3 */
+#define PIO_PD10E_ISC_D3                           (_U_(1) << 10) /**< ISC signal: ISC_D3 */
+#define PIN_PB30F_ISC_D4                           _L_(62)      /**< ISC signal: ISC_D4 on PB30 mux F */
+#define MUX_PB30F_ISC_D4                           _L_(5)       /**< ISC signal line function value: ISC_D4 */
+#define PIO_PB30F_ISC_D4                           (_U_(1) << 30) /**< ISC signal: ISC_D4 */
+#define PIN_PC13C_ISC_D4                           _L_(77)      /**< ISC signal: ISC_D4 on PC13 mux C */
+#define MUX_PC13C_ISC_D4                           _L_(2)       /**< ISC signal line function value: ISC_D4 */
+#define PIO_PC13C_ISC_D4                           (_U_(1) << 13) /**< ISC signal: ISC_D4 */
+#define PIN_PD11E_ISC_D4                           _L_(107)     /**< ISC signal: ISC_D4 on PD11 mux E */
+#define MUX_PD11E_ISC_D4                           _L_(4)       /**< ISC signal line function value: ISC_D4 */
+#define PIO_PD11E_ISC_D4                           (_U_(1) << 11) /**< ISC signal: ISC_D4 */
+#define PIN_PD12F_ISC_D4                           _L_(108)     /**< ISC signal: ISC_D4 on PD12 mux F */
+#define MUX_PD12F_ISC_D4                           _L_(5)       /**< ISC signal line function value: ISC_D4 */
+#define PIO_PD12F_ISC_D4                           (_U_(1) << 12) /**< ISC signal: ISC_D4 */
+#define PIN_PB31F_ISC_D5                           _L_(63)      /**< ISC signal: ISC_D5 on PB31 mux F */
+#define MUX_PB31F_ISC_D5                           _L_(5)       /**< ISC signal line function value: ISC_D5 */
+#define PIO_PB31F_ISC_D5                           (_U_(1) << 31) /**< ISC signal: ISC_D5 */
+#define PIN_PC14C_ISC_D5                           _L_(78)      /**< ISC signal: ISC_D5 on PC14 mux C */
+#define MUX_PC14C_ISC_D5                           _L_(2)       /**< ISC signal line function value: ISC_D5 */
+#define PIO_PC14C_ISC_D5                           (_U_(1) << 14) /**< ISC signal: ISC_D5 */
+#define PIN_PD12E_ISC_D5                           _L_(108)     /**< ISC signal: ISC_D5 on PD12 mux E */
+#define MUX_PD12E_ISC_D5                           _L_(4)       /**< ISC signal line function value: ISC_D5 */
+#define PIO_PD12E_ISC_D5                           (_U_(1) << 12) /**< ISC signal: ISC_D5 */
+#define PIN_PD13F_ISC_D5                           _L_(109)     /**< ISC signal: ISC_D5 on PD13 mux F */
+#define MUX_PD13F_ISC_D5                           _L_(5)       /**< ISC signal line function value: ISC_D5 */
+#define PIO_PD13F_ISC_D5                           (_U_(1) << 13) /**< ISC signal: ISC_D5 */
+#define PIN_PC0F_ISC_D6                            _L_(64)      /**< ISC signal: ISC_D6 on PC0 mux F */
+#define MUX_PC0F_ISC_D6                            _L_(5)       /**< ISC signal line function value: ISC_D6 */
+#define PIO_PC0F_ISC_D6                            (_U_(1) << 0) /**< ISC signal: ISC_D6 */
+#define PIN_PC15C_ISC_D6                           _L_(79)      /**< ISC signal: ISC_D6 on PC15 mux C */
+#define MUX_PC15C_ISC_D6                           _L_(2)       /**< ISC signal line function value: ISC_D6 */
+#define PIO_PC15C_ISC_D6                           (_U_(1) << 15) /**< ISC signal: ISC_D6 */
+#define PIN_PD13E_ISC_D6                           _L_(109)     /**< ISC signal: ISC_D6 on PD13 mux E */
+#define MUX_PD13E_ISC_D6                           _L_(4)       /**< ISC signal line function value: ISC_D6 */
+#define PIO_PD13E_ISC_D6                           (_U_(1) << 13) /**< ISC signal: ISC_D6 */
+#define PIN_PD14F_ISC_D6                           _L_(110)     /**< ISC signal: ISC_D6 on PD14 mux F */
+#define MUX_PD14F_ISC_D6                           _L_(5)       /**< ISC signal line function value: ISC_D6 */
+#define PIO_PD14F_ISC_D6                           (_U_(1) << 14) /**< ISC signal: ISC_D6 */
+#define PIN_PC1F_ISC_D7                            _L_(65)      /**< ISC signal: ISC_D7 on PC1 mux F */
+#define MUX_PC1F_ISC_D7                            _L_(5)       /**< ISC signal line function value: ISC_D7 */
+#define PIO_PC1F_ISC_D7                            (_U_(1) << 1) /**< ISC signal: ISC_D7 */
+#define PIN_PC16C_ISC_D7                           _L_(80)      /**< ISC signal: ISC_D7 on PC16 mux C */
+#define MUX_PC16C_ISC_D7                           _L_(2)       /**< ISC signal line function value: ISC_D7 */
+#define PIO_PC16C_ISC_D7                           (_U_(1) << 16) /**< ISC signal: ISC_D7 */
+#define PIN_PD14E_ISC_D7                           _L_(110)     /**< ISC signal: ISC_D7 on PD14 mux E */
+#define MUX_PD14E_ISC_D7                           _L_(4)       /**< ISC signal line function value: ISC_D7 */
+#define PIO_PD14E_ISC_D7                           (_U_(1) << 14) /**< ISC signal: ISC_D7 */
+#define PIN_PD15F_ISC_D7                           _L_(111)     /**< ISC signal: ISC_D7 on PD15 mux F */
+#define MUX_PD15F_ISC_D7                           _L_(5)       /**< ISC signal line function value: ISC_D7 */
+#define PIO_PD15F_ISC_D7                           (_U_(1) << 15) /**< ISC signal: ISC_D7 */
+#define PIN_PC2F_ISC_D8                            _L_(66)      /**< ISC signal: ISC_D8 on PC2 mux F */
+#define MUX_PC2F_ISC_D8                            _L_(5)       /**< ISC signal line function value: ISC_D8 */
+#define PIO_PC2F_ISC_D8                            (_U_(1) << 2) /**< ISC signal: ISC_D8 */
+#define PIN_PC17C_ISC_D8                           _L_(81)      /**< ISC signal: ISC_D8 on PC17 mux C */
+#define MUX_PC17C_ISC_D8                           _L_(2)       /**< ISC signal line function value: ISC_D8 */
+#define PIO_PC17C_ISC_D8                           (_U_(1) << 17) /**< ISC signal: ISC_D8 */
+#define PIN_PD6E_ISC_D8                            _L_(102)     /**< ISC signal: ISC_D8 on PD6 mux E */
+#define MUX_PD6E_ISC_D8                            _L_(4)       /**< ISC signal line function value: ISC_D8 */
+#define PIO_PD6E_ISC_D8                            (_U_(1) << 6) /**< ISC signal: ISC_D8 */
+#define PIN_PD16F_ISC_D8                           _L_(112)     /**< ISC signal: ISC_D8 on PD16 mux F */
+#define MUX_PD16F_ISC_D8                           _L_(5)       /**< ISC signal line function value: ISC_D8 */
+#define PIO_PD16F_ISC_D8                           (_U_(1) << 16) /**< ISC signal: ISC_D8 */
+#define PIN_PC3F_ISC_D9                            _L_(67)      /**< ISC signal: ISC_D9 on PC3 mux F */
+#define MUX_PC3F_ISC_D9                            _L_(5)       /**< ISC signal line function value: ISC_D9 */
+#define PIO_PC3F_ISC_D9                            (_U_(1) << 3) /**< ISC signal: ISC_D9 */
+#define PIN_PC18C_ISC_D9                           _L_(82)      /**< ISC signal: ISC_D9 on PC18 mux C */
+#define MUX_PC18C_ISC_D9                           _L_(2)       /**< ISC signal line function value: ISC_D9 */
+#define PIO_PC18C_ISC_D9                           (_U_(1) << 18) /**< ISC signal: ISC_D9 */
+#define PIN_PD5E_ISC_D9                            _L_(101)     /**< ISC signal: ISC_D9 on PD5 mux E */
+#define MUX_PD5E_ISC_D9                            _L_(4)       /**< ISC signal line function value: ISC_D9 */
+#define PIO_PD5E_ISC_D9                            (_U_(1) << 5) /**< ISC signal: ISC_D9 */
+#define PIN_PD17F_ISC_D9                           _L_(113)     /**< ISC signal: ISC_D9 on PD17 mux F */
+#define MUX_PD17F_ISC_D9                           _L_(5)       /**< ISC signal line function value: ISC_D9 */
+#define PIO_PD17F_ISC_D9                           (_U_(1) << 17) /**< ISC signal: ISC_D9 */
+#define PIN_PB24F_ISC_D10                          _L_(56)      /**< ISC signal: ISC_D10 on PB24 mux F */
+#define MUX_PB24F_ISC_D10                          _L_(5)       /**< ISC signal line function value: ISC_D10 */
+#define PIO_PB24F_ISC_D10                          (_U_(1) << 24) /**< ISC signal: ISC_D10 */
+#define PIN_PC19C_ISC_D10                          _L_(83)      /**< ISC signal: ISC_D10 on PC19 mux C */
+#define MUX_PC19C_ISC_D10                          _L_(2)       /**< ISC signal line function value: ISC_D10 */
+#define PIO_PC19C_ISC_D10                          (_U_(1) << 19) /**< ISC signal: ISC_D10 */
+#define PIN_PD4E_ISC_D10                           _L_(100)     /**< ISC signal: ISC_D10 on PD4 mux E */
+#define MUX_PD4E_ISC_D10                           _L_(4)       /**< ISC signal line function value: ISC_D10 */
+#define PIO_PD4E_ISC_D10                           (_U_(1) << 4) /**< ISC signal: ISC_D10 */
+#define PIN_PD18F_ISC_D10                          _L_(114)     /**< ISC signal: ISC_D10 on PD18 mux F */
+#define MUX_PD18F_ISC_D10                          _L_(5)       /**< ISC signal line function value: ISC_D10 */
+#define PIO_PD18F_ISC_D10                          (_U_(1) << 18) /**< ISC signal: ISC_D10 */
+#define PIN_PB25F_ISC_D11                          _L_(57)      /**< ISC signal: ISC_D11 on PB25 mux F */
+#define MUX_PB25F_ISC_D11                          _L_(5)       /**< ISC signal line function value: ISC_D11 */
+#define PIO_PB25F_ISC_D11                          (_U_(1) << 25) /**< ISC signal: ISC_D11 */
+#define PIN_PC20C_ISC_D11                          _L_(84)      /**< ISC signal: ISC_D11 on PC20 mux C */
+#define MUX_PC20C_ISC_D11                          _L_(2)       /**< ISC signal line function value: ISC_D11 */
+#define PIO_PC20C_ISC_D11                          (_U_(1) << 20) /**< ISC signal: ISC_D11 */
+#define PIN_PD3E_ISC_D11                           _L_(99)      /**< ISC signal: ISC_D11 on PD3 mux E */
+#define MUX_PD3E_ISC_D11                           _L_(4)       /**< ISC signal line function value: ISC_D11 */
+#define PIO_PD3E_ISC_D11                           (_U_(1) << 3) /**< ISC signal: ISC_D11 */
+#define PIN_PD19F_ISC_D11                          _L_(115)     /**< ISC signal: ISC_D11 on PD19 mux F */
+#define MUX_PD19F_ISC_D11                          _L_(5)       /**< ISC signal line function value: ISC_D11 */
+#define PIO_PD19F_ISC_D11                          (_U_(1) << 19) /**< ISC signal: ISC_D11 */
+#define PIN_PC8F_ISC_FIELD                         _L_(72)      /**< ISC signal: ISC_FIELD on PC8 mux F */
+#define MUX_PC8F_ISC_FIELD                         _L_(5)       /**< ISC signal line function value: ISC_FIELD */
+#define PIO_PC8F_ISC_FIELD                         (_U_(1) << 8) /**< ISC signal: ISC_FIELD */
+#define PIN_PC25C_ISC_FIELD                        _L_(89)      /**< ISC signal: ISC_FIELD on PC25 mux C */
+#define MUX_PC25C_ISC_FIELD                        _L_(2)       /**< ISC signal line function value: ISC_FIELD */
+#define PIO_PC25C_ISC_FIELD                        (_U_(1) << 25) /**< ISC signal: ISC_FIELD */
+#define PIN_PD18E_ISC_FIELD                        _L_(114)     /**< ISC signal: ISC_FIELD on PD18 mux E */
+#define MUX_PD18E_ISC_FIELD                        _L_(4)       /**< ISC signal line function value: ISC_FIELD */
+#define PIO_PD18E_ISC_FIELD                        (_U_(1) << 18) /**< ISC signal: ISC_FIELD */
+#define PIN_PD23F_ISC_FIELD                        _L_(119)     /**< ISC signal: ISC_FIELD on PD23 mux F */
+#define MUX_PD23F_ISC_FIELD                        _L_(5)       /**< ISC signal line function value: ISC_FIELD */
+#define PIO_PD23F_ISC_FIELD                        (_U_(1) << 23) /**< ISC signal: ISC_FIELD */
+#define PIN_PC6F_ISC_HSYNC                         _L_(70)      /**< ISC signal: ISC_HSYNC on PC6 mux F */
+#define MUX_PC6F_ISC_HSYNC                         _L_(5)       /**< ISC signal line function value: ISC_HSYNC */
+#define PIO_PC6F_ISC_HSYNC                         (_U_(1) << 6) /**< ISC signal: ISC_HSYNC */
+#define PIN_PC23C_ISC_HSYNC                        _L_(87)      /**< ISC signal: ISC_HSYNC on PC23 mux C */
+#define MUX_PC23C_ISC_HSYNC                        _L_(2)       /**< ISC signal line function value: ISC_HSYNC */
+#define PIO_PC23C_ISC_HSYNC                        (_U_(1) << 23) /**< ISC signal: ISC_HSYNC */
+#define PIN_PD17E_ISC_HSYNC                        _L_(113)     /**< ISC signal: ISC_HSYNC on PD17 mux E */
+#define MUX_PD17E_ISC_HSYNC                        _L_(4)       /**< ISC signal line function value: ISC_HSYNC */
+#define PIO_PD17E_ISC_HSYNC                        (_U_(1) << 17) /**< ISC signal: ISC_HSYNC */
+#define PIN_PD22F_ISC_HSYNC                        _L_(118)     /**< ISC signal: ISC_HSYNC on PD22 mux F */
+#define MUX_PD22F_ISC_HSYNC                        _L_(5)       /**< ISC signal line function value: ISC_HSYNC */
+#define PIO_PD22F_ISC_HSYNC                        (_U_(1) << 22) /**< ISC signal: ISC_HSYNC */
+#define PIN_PC7F_ISC_MCK                           _L_(71)      /**< ISC signal: ISC_MCK on PC7 mux F */
+#define MUX_PC7F_ISC_MCK                           _L_(5)       /**< ISC signal line function value: ISC_MCK */
+#define PIO_PC7F_ISC_MCK                           (_U_(1) << 7) /**< ISC signal: ISC_MCK */
+#define PIN_PC24C_ISC_MCK                          _L_(88)      /**< ISC signal: ISC_MCK on PC24 mux C */
+#define MUX_PC24C_ISC_MCK                          _L_(2)       /**< ISC signal line function value: ISC_MCK */
+#define PIO_PC24C_ISC_MCK                          (_U_(1) << 24) /**< ISC signal: ISC_MCK */
+#define PIN_PD2E_ISC_MCK                           _L_(98)      /**< ISC signal: ISC_MCK on PD2 mux E */
+#define MUX_PD2E_ISC_MCK                           _L_(4)       /**< ISC signal line function value: ISC_MCK */
+#define PIO_PD2E_ISC_MCK                           (_U_(1) << 2) /**< ISC signal: ISC_MCK */
+#define PIN_PD11F_ISC_MCK                          _L_(107)     /**< ISC signal: ISC_MCK on PD11 mux F */
+#define MUX_PD11F_ISC_MCK                          _L_(5)       /**< ISC signal line function value: ISC_MCK */
+#define PIO_PD11F_ISC_MCK                          (_U_(1) << 11) /**< ISC signal: ISC_MCK */
+#define PIN_PC4F_ISC_PCK                           _L_(68)      /**< ISC signal: ISC_PCK on PC4 mux F */
+#define MUX_PC4F_ISC_PCK                           _L_(5)       /**< ISC signal line function value: ISC_PCK */
+#define PIO_PC4F_ISC_PCK                           (_U_(1) << 4) /**< ISC signal: ISC_PCK */
+#define PIN_PC21C_ISC_PCK                          _L_(85)      /**< ISC signal: ISC_PCK on PC21 mux C */
+#define MUX_PC21C_ISC_PCK                          _L_(2)       /**< ISC signal line function value: ISC_PCK */
+#define PIO_PC21C_ISC_PCK                          (_U_(1) << 21) /**< ISC signal: ISC_PCK */
+#define PIN_PD15E_ISC_PCK                          _L_(111)     /**< ISC signal: ISC_PCK on PD15 mux E */
+#define MUX_PD15E_ISC_PCK                          _L_(4)       /**< ISC signal line function value: ISC_PCK */
+#define PIO_PD15E_ISC_PCK                          (_U_(1) << 15) /**< ISC signal: ISC_PCK */
+#define PIN_PD20F_ISC_PCK                          _L_(116)     /**< ISC signal: ISC_PCK on PD20 mux F */
+#define MUX_PD20F_ISC_PCK                          _L_(5)       /**< ISC signal line function value: ISC_PCK */
+#define PIO_PD20F_ISC_PCK                          (_U_(1) << 20) /**< ISC signal: ISC_PCK */
+#define PIN_PC5F_ISC_VSYNC                         _L_(69)      /**< ISC signal: ISC_VSYNC on PC5 mux F */
+#define MUX_PC5F_ISC_VSYNC                         _L_(5)       /**< ISC signal line function value: ISC_VSYNC */
+#define PIO_PC5F_ISC_VSYNC                         (_U_(1) << 5) /**< ISC signal: ISC_VSYNC */
+#define PIN_PC22C_ISC_VSYNC                        _L_(86)      /**< ISC signal: ISC_VSYNC on PC22 mux C */
+#define MUX_PC22C_ISC_VSYNC                        _L_(2)       /**< ISC signal line function value: ISC_VSYNC */
+#define PIO_PC22C_ISC_VSYNC                        (_U_(1) << 22) /**< ISC signal: ISC_VSYNC */
+#define PIN_PD16E_ISC_VSYNC                        _L_(112)     /**< ISC signal: ISC_VSYNC on PD16 mux E */
+#define MUX_PD16E_ISC_VSYNC                        _L_(4)       /**< ISC signal line function value: ISC_VSYNC */
+#define PIO_PD16E_ISC_VSYNC                        (_U_(1) << 16) /**< ISC signal: ISC_VSYNC */
+#define PIN_PD21F_ISC_VSYNC                        _L_(117)     /**< ISC signal: ISC_VSYNC on PD21 mux F */
+#define MUX_PD21F_ISC_VSYNC                        _L_(5)       /**< ISC signal line function value: ISC_VSYNC */
+#define PIO_PD21F_ISC_VSYNC                        (_U_(1) << 21) /**< ISC signal: ISC_VSYNC */
 /* ========== PIO definition for LCDC peripheral ========== */
 #define PIN_PB11A_LCDC_LCDDAT0                     _L_(43)      /**< LCDC signal: LCDC_LCDDAT0 on PB11 mux A */
 #define MUX_PB11A_LCDC_LCDDAT0                     _L_(0)       /**< LCDC signal line function value: LCDC_LCDDAT0 */
@@ -1190,18 +1190,18 @@
 #define MUX_PC26D_MCAN1_CANTX1                     _L_(3)       /**< MCAN1 signal line function value: MCAN1_CANTX1 */
 #define PIO_PC26D_MCAN1_CANTX1                     (_U_(1) << 26) /**< MCAN1 signal: MCAN1_CANTX1 */
 /* ========== PIO definition for PDMIC peripheral ========== */
-#define PIN_PB12D_PDMIC_PDMIC_CLK                  _L_(44)      /**< PDMIC signal: PDMIC_PDMIC_CLK on PB12 mux D */
-#define MUX_PB12D_PDMIC_PDMIC_CLK                  _L_(3)       /**< PDMIC signal line function value: PDMIC_PDMIC_CLK */
-#define PIO_PB12D_PDMIC_PDMIC_CLK                  (_U_(1) << 12) /**< PDMIC signal: PDMIC_PDMIC_CLK */
-#define PIN_PB27D_PDMIC_PDMIC_CLK                  _L_(59)      /**< PDMIC signal: PDMIC_PDMIC_CLK on PB27 mux D */
-#define MUX_PB27D_PDMIC_PDMIC_CLK                  _L_(3)       /**< PDMIC signal line function value: PDMIC_PDMIC_CLK */
-#define PIO_PB27D_PDMIC_PDMIC_CLK                  (_U_(1) << 27) /**< PDMIC signal: PDMIC_PDMIC_CLK */
-#define PIN_PB11D_PDMIC_PDMIC_DAT                  _L_(43)      /**< PDMIC signal: PDMIC_PDMIC_DAT on PB11 mux D */
-#define MUX_PB11D_PDMIC_PDMIC_DAT                  _L_(3)       /**< PDMIC signal line function value: PDMIC_PDMIC_DAT */
-#define PIO_PB11D_PDMIC_PDMIC_DAT                  (_U_(1) << 11) /**< PDMIC signal: PDMIC_PDMIC_DAT */
-#define PIN_PB26D_PDMIC_PDMIC_DAT                  _L_(58)      /**< PDMIC signal: PDMIC_PDMIC_DAT on PB26 mux D */
-#define MUX_PB26D_PDMIC_PDMIC_DAT                  _L_(3)       /**< PDMIC signal line function value: PDMIC_PDMIC_DAT */
-#define PIO_PB26D_PDMIC_PDMIC_DAT                  (_U_(1) << 26) /**< PDMIC signal: PDMIC_PDMIC_DAT */
+#define PIN_PB12D_PDMIC_CLK                        _L_(44)      /**< PDMIC signal: PDMIC_CLK on PB12 mux D */
+#define MUX_PB12D_PDMIC_CLK                        _L_(3)       /**< PDMIC signal line function value: PDMIC_CLK */
+#define PIO_PB12D_PDMIC_CLK                        (_U_(1) << 12) /**< PDMIC signal: PDMIC_CLK */
+#define PIN_PB27D_PDMIC_CLK                        _L_(59)      /**< PDMIC signal: PDMIC_CLK on PB27 mux D */
+#define MUX_PB27D_PDMIC_CLK                        _L_(3)       /**< PDMIC signal line function value: PDMIC_CLK */
+#define PIO_PB27D_PDMIC_CLK                        (_U_(1) << 27) /**< PDMIC signal: PDMIC_CLK */
+#define PIN_PB11D_PDMIC_DAT                        _L_(43)      /**< PDMIC signal: PDMIC_DAT on PB11 mux D */
+#define MUX_PB11D_PDMIC_DAT                        _L_(3)       /**< PDMIC signal line function value: PDMIC_DAT */
+#define PIO_PB11D_PDMIC_DAT                        (_U_(1) << 11) /**< PDMIC signal: PDMIC_DAT */
+#define PIN_PB26D_PDMIC_DAT                        _L_(58)      /**< PDMIC signal: PDMIC_DAT on PB26 mux D */
+#define MUX_PB26D_PDMIC_DAT                        _L_(3)       /**< PDMIC signal line function value: PDMIC_DAT */
+#define PIO_PB26D_PDMIC_DAT                        (_U_(1) << 26) /**< PDMIC signal: PDMIC_DAT */
 /* ========== PIO definition for PMC peripheral ========== */
 #define PIN_PC8D_PMC_PCK0                          _L_(72)      /**< PMC signal: PMC_PCK0 on PC8 mux D */
 #define MUX_PC8D_PMC_PCK0                          _L_(3)       /**< PMC signal line function value: PMC_PCK0 */
@@ -1234,38 +1234,38 @@
 #define MUX_PD11B_PMC_PCK2                         _L_(1)       /**< PMC signal line function value: PMC_PCK2 */
 #define PIO_PD11B_PMC_PCK2                         (_U_(1) << 11) /**< PMC signal: PMC_PCK2 */
 /* ========== PIO definition for PTC peripheral ========== */
-#define PIN_PD3X1_PTC_PTC_X0                       _L_(99)      /**< PTC signal: PTC_PTC_X0 on PD3 mux X1 */
-#define PIO_PD3X1_PTC_PTC_X0                       (_U_(1) << 3) /**< PTC signal: PTC_PTC_X0 */
-#define PIN_PD4X1_PTC_PTC_X1                       _L_(100)     /**< PTC signal: PTC_PTC_X1 on PD4 mux X1 */
-#define PIO_PD4X1_PTC_PTC_X1                       (_U_(1) << 4) /**< PTC signal: PTC_PTC_X1 */
-#define PIN_PD5X1_PTC_PTC_X2                       _L_(101)     /**< PTC signal: PTC_PTC_X2 on PD5 mux X1 */
-#define PIO_PD5X1_PTC_PTC_X2                       (_U_(1) << 5) /**< PTC signal: PTC_PTC_X2 */
-#define PIN_PD6X1_PTC_PTC_X3                       _L_(102)     /**< PTC signal: PTC_PTC_X3 on PD6 mux X1 */
-#define PIO_PD6X1_PTC_PTC_X3                       (_U_(1) << 6) /**< PTC signal: PTC_PTC_X3 */
-#define PIN_PD7X1_PTC_PTC_X4                       _L_(103)     /**< PTC signal: PTC_PTC_X4 on PD7 mux X1 */
-#define PIO_PD7X1_PTC_PTC_X4                       (_U_(1) << 7) /**< PTC signal: PTC_PTC_X4 */
-#define PIN_PD8X1_PTC_PTC_X5                       _L_(104)     /**< PTC signal: PTC_PTC_X5 on PD8 mux X1 */
-#define PIO_PD8X1_PTC_PTC_X5                       (_U_(1) << 8) /**< PTC signal: PTC_PTC_X5 */
-#define PIN_PD9X1_PTC_PTC_X6                       _L_(105)     /**< PTC signal: PTC_PTC_X6 on PD9 mux X1 */
-#define PIO_PD9X1_PTC_PTC_X6                       (_U_(1) << 9) /**< PTC signal: PTC_PTC_X6 */
-#define PIN_PD10X1_PTC_PTC_X7                      _L_(106)     /**< PTC signal: PTC_PTC_X7 on PD10 mux X1 */
-#define PIO_PD10X1_PTC_PTC_X7                      (_U_(1) << 10) /**< PTC signal: PTC_PTC_X7 */
-#define PIN_PD11X1_PTC_PTC_Y0                      _L_(107)     /**< PTC signal: PTC_PTC_Y0 on PD11 mux X1 */
-#define PIO_PD11X1_PTC_PTC_Y0                      (_U_(1) << 11) /**< PTC signal: PTC_PTC_Y0 */
-#define PIN_PD12X1_PTC_PTC_Y1                      _L_(108)     /**< PTC signal: PTC_PTC_Y1 on PD12 mux X1 */
-#define PIO_PD12X1_PTC_PTC_Y1                      (_U_(1) << 12) /**< PTC signal: PTC_PTC_Y1 */
-#define PIN_PD13X1_PTC_PTC_Y2                      _L_(109)     /**< PTC signal: PTC_PTC_Y2 on PD13 mux X1 */
-#define PIO_PD13X1_PTC_PTC_Y2                      (_U_(1) << 13) /**< PTC signal: PTC_PTC_Y2 */
-#define PIN_PD14X1_PTC_PTC_Y3                      _L_(110)     /**< PTC signal: PTC_PTC_Y3 on PD14 mux X1 */
-#define PIO_PD14X1_PTC_PTC_Y3                      (_U_(1) << 14) /**< PTC signal: PTC_PTC_Y3 */
-#define PIN_PD15X1_PTC_PTC_Y4                      _L_(111)     /**< PTC signal: PTC_PTC_Y4 on PD15 mux X1 */
-#define PIO_PD15X1_PTC_PTC_Y4                      (_U_(1) << 15) /**< PTC signal: PTC_PTC_Y4 */
-#define PIN_PD16X1_PTC_PTC_Y5                      _L_(112)     /**< PTC signal: PTC_PTC_Y5 on PD16 mux X1 */
-#define PIO_PD16X1_PTC_PTC_Y5                      (_U_(1) << 16) /**< PTC signal: PTC_PTC_Y5 */
-#define PIN_PD17X1_PTC_PTC_Y6                      _L_(113)     /**< PTC signal: PTC_PTC_Y6 on PD17 mux X1 */
-#define PIO_PD17X1_PTC_PTC_Y6                      (_U_(1) << 17) /**< PTC signal: PTC_PTC_Y6 */
-#define PIN_PD18X1_PTC_PTC_Y7                      _L_(114)     /**< PTC signal: PTC_PTC_Y7 on PD18 mux X1 */
-#define PIO_PD18X1_PTC_PTC_Y7                      (_U_(1) << 18) /**< PTC signal: PTC_PTC_Y7 */
+#define PIN_PD3X1_PTC_X0                           _L_(99)      /**< PTC signal: PTC_X0 on PD3 mux X1 */
+#define PIO_PD3X1_PTC_X0                           (_U_(1) << 3) /**< PTC signal: PTC_X0 */
+#define PIN_PD4X1_PTC_X1                           _L_(100)     /**< PTC signal: PTC_X1 on PD4 mux X1 */
+#define PIO_PD4X1_PTC_X1                           (_U_(1) << 4) /**< PTC signal: PTC_X1 */
+#define PIN_PD5X1_PTC_X2                           _L_(101)     /**< PTC signal: PTC_X2 on PD5 mux X1 */
+#define PIO_PD5X1_PTC_X2                           (_U_(1) << 5) /**< PTC signal: PTC_X2 */
+#define PIN_PD6X1_PTC_X3                           _L_(102)     /**< PTC signal: PTC_X3 on PD6 mux X1 */
+#define PIO_PD6X1_PTC_X3                           (_U_(1) << 6) /**< PTC signal: PTC_X3 */
+#define PIN_PD7X1_PTC_X4                           _L_(103)     /**< PTC signal: PTC_X4 on PD7 mux X1 */
+#define PIO_PD7X1_PTC_X4                           (_U_(1) << 7) /**< PTC signal: PTC_X4 */
+#define PIN_PD8X1_PTC_X5                           _L_(104)     /**< PTC signal: PTC_X5 on PD8 mux X1 */
+#define PIO_PD8X1_PTC_X5                           (_U_(1) << 8) /**< PTC signal: PTC_X5 */
+#define PIN_PD9X1_PTC_X6                           _L_(105)     /**< PTC signal: PTC_X6 on PD9 mux X1 */
+#define PIO_PD9X1_PTC_X6                           (_U_(1) << 9) /**< PTC signal: PTC_X6 */
+#define PIN_PD10X1_PTC_X7                          _L_(106)     /**< PTC signal: PTC_X7 on PD10 mux X1 */
+#define PIO_PD10X1_PTC_X7                          (_U_(1) << 10) /**< PTC signal: PTC_X7 */
+#define PIN_PD11X1_PTC_Y0                          _L_(107)     /**< PTC signal: PTC_Y0 on PD11 mux X1 */
+#define PIO_PD11X1_PTC_Y0                          (_U_(1) << 11) /**< PTC signal: PTC_Y0 */
+#define PIN_PD12X1_PTC_Y1                          _L_(108)     /**< PTC signal: PTC_Y1 on PD12 mux X1 */
+#define PIO_PD12X1_PTC_Y1                          (_U_(1) << 12) /**< PTC signal: PTC_Y1 */
+#define PIN_PD13X1_PTC_Y2                          _L_(109)     /**< PTC signal: PTC_Y2 on PD13 mux X1 */
+#define PIO_PD13X1_PTC_Y2                          (_U_(1) << 13) /**< PTC signal: PTC_Y2 */
+#define PIN_PD14X1_PTC_Y3                          _L_(110)     /**< PTC signal: PTC_Y3 on PD14 mux X1 */
+#define PIO_PD14X1_PTC_Y3                          (_U_(1) << 14) /**< PTC signal: PTC_Y3 */
+#define PIN_PD15X1_PTC_Y4                          _L_(111)     /**< PTC signal: PTC_Y4 on PD15 mux X1 */
+#define PIO_PD15X1_PTC_Y4                          (_U_(1) << 15) /**< PTC signal: PTC_Y4 */
+#define PIN_PD16X1_PTC_Y5                          _L_(112)     /**< PTC signal: PTC_Y5 on PD16 mux X1 */
+#define PIO_PD16X1_PTC_Y5                          (_U_(1) << 16) /**< PTC signal: PTC_Y5 */
+#define PIN_PD17X1_PTC_Y6                          _L_(113)     /**< PTC signal: PTC_Y6 on PD17 mux X1 */
+#define PIO_PD17X1_PTC_Y6                          (_U_(1) << 17) /**< PTC signal: PTC_Y6 */
+#define PIN_PD18X1_PTC_Y7                          _L_(114)     /**< PTC signal: PTC_Y7 on PD18 mux X1 */
+#define PIO_PD18X1_PTC_Y7                          (_U_(1) << 18) /**< PTC signal: PTC_Y7 */
 /* ========== PIO definition for PWM peripheral ========== */
 #define PIN_PB3D_PWM_PWMEXTRG1                     _L_(35)      /**< PWM signal: PWM_PWMEXTRG1 on PB3 mux D */
 #define MUX_PB3D_PWM_PWMEXTRG1                     _L_(3)       /**< PWM signal line function value: PWM_PWMEXTRG1 */
@@ -1304,186 +1304,186 @@
 #define MUX_PB8C_PWM_PWML3                         _L_(2)       /**< PWM signal line function value: PWM_PWML3 */
 #define PIO_PB8C_PWM_PWML3                         (_U_(1) << 8) /**< PWM signal: PWM_PWML3 */
 /* ========== PIO definition for QSPI0 peripheral ========== */
-#define PIN_PA1B_QSPI0_QSPI0_CS                    _L_(1)       /**< QSPI0 signal: QSPI0_QSPI0_CS on PA1 mux B */
-#define MUX_PA1B_QSPI0_QSPI0_CS                    _L_(1)       /**< QSPI0 signal line function value: QSPI0_QSPI0_CS */
-#define PIO_PA1B_QSPI0_QSPI0_CS                    (_U_(1) << 1) /**< QSPI0 signal: QSPI0_QSPI0_CS */
-#define PIN_PA15C_QSPI0_QSPI0_CS                   _L_(15)      /**< QSPI0 signal: QSPI0_QSPI0_CS on PA15 mux C */
-#define MUX_PA15C_QSPI0_QSPI0_CS                   _L_(2)       /**< QSPI0 signal line function value: QSPI0_QSPI0_CS */
-#define PIO_PA15C_QSPI0_QSPI0_CS                   (_U_(1) << 15) /**< QSPI0 signal: QSPI0_QSPI0_CS */
-#define PIN_PA23F_QSPI0_QSPI0_CS                   _L_(23)      /**< QSPI0 signal: QSPI0_QSPI0_CS on PA23 mux F */
-#define MUX_PA23F_QSPI0_QSPI0_CS                   _L_(5)       /**< QSPI0 signal line function value: QSPI0_QSPI0_CS */
-#define PIO_PA23F_QSPI0_QSPI0_CS                   (_U_(1) << 23) /**< QSPI0 signal: QSPI0_QSPI0_CS */
-#define PIN_PA2B_QSPI0_QSPI0_IO0                   _L_(2)       /**< QSPI0 signal: QSPI0_QSPI0_IO0 on PA2 mux B */
-#define MUX_PA2B_QSPI0_QSPI0_IO0                   _L_(1)       /**< QSPI0 signal line function value: QSPI0_QSPI0_IO0 */
-#define PIO_PA2B_QSPI0_QSPI0_IO0                   (_U_(1) << 2) /**< QSPI0 signal: QSPI0_QSPI0_IO0 */
-#define PIN_PA16C_QSPI0_QSPI0_IO0                  _L_(16)      /**< QSPI0 signal: QSPI0_QSPI0_IO0 on PA16 mux C */
-#define MUX_PA16C_QSPI0_QSPI0_IO0                  _L_(2)       /**< QSPI0 signal line function value: QSPI0_QSPI0_IO0 */
-#define PIO_PA16C_QSPI0_QSPI0_IO0                  (_U_(1) << 16) /**< QSPI0 signal: QSPI0_QSPI0_IO0 */
-#define PIN_PA24F_QSPI0_QSPI0_IO0                  _L_(24)      /**< QSPI0 signal: QSPI0_QSPI0_IO0 on PA24 mux F */
-#define MUX_PA24F_QSPI0_QSPI0_IO0                  _L_(5)       /**< QSPI0 signal line function value: QSPI0_QSPI0_IO0 */
-#define PIO_PA24F_QSPI0_QSPI0_IO0                  (_U_(1) << 24) /**< QSPI0 signal: QSPI0_QSPI0_IO0 */
-#define PIN_PA3B_QSPI0_QSPI0_IO1                   _L_(3)       /**< QSPI0 signal: QSPI0_QSPI0_IO1 on PA3 mux B */
-#define MUX_PA3B_QSPI0_QSPI0_IO1                   _L_(1)       /**< QSPI0 signal line function value: QSPI0_QSPI0_IO1 */
-#define PIO_PA3B_QSPI0_QSPI0_IO1                   (_U_(1) << 3) /**< QSPI0 signal: QSPI0_QSPI0_IO1 */
-#define PIN_PA17C_QSPI0_QSPI0_IO1                  _L_(17)      /**< QSPI0 signal: QSPI0_QSPI0_IO1 on PA17 mux C */
-#define MUX_PA17C_QSPI0_QSPI0_IO1                  _L_(2)       /**< QSPI0 signal line function value: QSPI0_QSPI0_IO1 */
-#define PIO_PA17C_QSPI0_QSPI0_IO1                  (_U_(1) << 17) /**< QSPI0 signal: QSPI0_QSPI0_IO1 */
-#define PIN_PA25F_QSPI0_QSPI0_IO1                  _L_(25)      /**< QSPI0 signal: QSPI0_QSPI0_IO1 on PA25 mux F */
-#define MUX_PA25F_QSPI0_QSPI0_IO1                  _L_(5)       /**< QSPI0 signal line function value: QSPI0_QSPI0_IO1 */
-#define PIO_PA25F_QSPI0_QSPI0_IO1                  (_U_(1) << 25) /**< QSPI0 signal: QSPI0_QSPI0_IO1 */
-#define PIN_PA4B_QSPI0_QSPI0_IO2                   _L_(4)       /**< QSPI0 signal: QSPI0_QSPI0_IO2 on PA4 mux B */
-#define MUX_PA4B_QSPI0_QSPI0_IO2                   _L_(1)       /**< QSPI0 signal line function value: QSPI0_QSPI0_IO2 */
-#define PIO_PA4B_QSPI0_QSPI0_IO2                   (_U_(1) << 4) /**< QSPI0 signal: QSPI0_QSPI0_IO2 */
-#define PIN_PA18C_QSPI0_QSPI0_IO2                  _L_(18)      /**< QSPI0 signal: QSPI0_QSPI0_IO2 on PA18 mux C */
-#define MUX_PA18C_QSPI0_QSPI0_IO2                  _L_(2)       /**< QSPI0 signal line function value: QSPI0_QSPI0_IO2 */
-#define PIO_PA18C_QSPI0_QSPI0_IO2                  (_U_(1) << 18) /**< QSPI0 signal: QSPI0_QSPI0_IO2 */
-#define PIN_PA26F_QSPI0_QSPI0_IO2                  _L_(26)      /**< QSPI0 signal: QSPI0_QSPI0_IO2 on PA26 mux F */
-#define MUX_PA26F_QSPI0_QSPI0_IO2                  _L_(5)       /**< QSPI0 signal line function value: QSPI0_QSPI0_IO2 */
-#define PIO_PA26F_QSPI0_QSPI0_IO2                  (_U_(1) << 26) /**< QSPI0 signal: QSPI0_QSPI0_IO2 */
-#define PIN_PA5B_QSPI0_QSPI0_IO3                   _L_(5)       /**< QSPI0 signal: QSPI0_QSPI0_IO3 on PA5 mux B */
-#define MUX_PA5B_QSPI0_QSPI0_IO3                   _L_(1)       /**< QSPI0 signal line function value: QSPI0_QSPI0_IO3 */
-#define PIO_PA5B_QSPI0_QSPI0_IO3                   (_U_(1) << 5) /**< QSPI0 signal: QSPI0_QSPI0_IO3 */
-#define PIN_PA19C_QSPI0_QSPI0_IO3                  _L_(19)      /**< QSPI0 signal: QSPI0_QSPI0_IO3 on PA19 mux C */
-#define MUX_PA19C_QSPI0_QSPI0_IO3                  _L_(2)       /**< QSPI0 signal line function value: QSPI0_QSPI0_IO3 */
-#define PIO_PA19C_QSPI0_QSPI0_IO3                  (_U_(1) << 19) /**< QSPI0 signal: QSPI0_QSPI0_IO3 */
-#define PIN_PA27F_QSPI0_QSPI0_IO3                  _L_(27)      /**< QSPI0 signal: QSPI0_QSPI0_IO3 on PA27 mux F */
-#define MUX_PA27F_QSPI0_QSPI0_IO3                  _L_(5)       /**< QSPI0 signal line function value: QSPI0_QSPI0_IO3 */
-#define PIO_PA27F_QSPI0_QSPI0_IO3                  (_U_(1) << 27) /**< QSPI0 signal: QSPI0_QSPI0_IO3 */
-#define PIN_PA0B_QSPI0_QSPI0_SCK                   _L_(0)       /**< QSPI0 signal: QSPI0_QSPI0_SCK on PA0 mux B */
-#define MUX_PA0B_QSPI0_QSPI0_SCK                   _L_(1)       /**< QSPI0 signal line function value: QSPI0_QSPI0_SCK */
-#define PIO_PA0B_QSPI0_QSPI0_SCK                   (_U_(1) << 0) /**< QSPI0 signal: QSPI0_QSPI0_SCK */
-#define PIN_PA14C_QSPI0_QSPI0_SCK                  _L_(14)      /**< QSPI0 signal: QSPI0_QSPI0_SCK on PA14 mux C */
-#define MUX_PA14C_QSPI0_QSPI0_SCK                  _L_(2)       /**< QSPI0 signal line function value: QSPI0_QSPI0_SCK */
-#define PIO_PA14C_QSPI0_QSPI0_SCK                  (_U_(1) << 14) /**< QSPI0 signal: QSPI0_QSPI0_SCK */
-#define PIN_PA22F_QSPI0_QSPI0_SCK                  _L_(22)      /**< QSPI0 signal: QSPI0_QSPI0_SCK on PA22 mux F */
-#define MUX_PA22F_QSPI0_QSPI0_SCK                  _L_(5)       /**< QSPI0 signal line function value: QSPI0_QSPI0_SCK */
-#define PIO_PA22F_QSPI0_QSPI0_SCK                  (_U_(1) << 22) /**< QSPI0 signal: QSPI0_QSPI0_SCK */
+#define PIN_PA1B_QSPI0_CS                          _L_(1)       /**< QSPI0 signal: QSPI0_CS on PA1 mux B */
+#define MUX_PA1B_QSPI0_CS                          _L_(1)       /**< QSPI0 signal line function value: QSPI0_CS */
+#define PIO_PA1B_QSPI0_CS                          (_U_(1) << 1) /**< QSPI0 signal: QSPI0_CS */
+#define PIN_PA15C_QSPI0_CS                         _L_(15)      /**< QSPI0 signal: QSPI0_CS on PA15 mux C */
+#define MUX_PA15C_QSPI0_CS                         _L_(2)       /**< QSPI0 signal line function value: QSPI0_CS */
+#define PIO_PA15C_QSPI0_CS                         (_U_(1) << 15) /**< QSPI0 signal: QSPI0_CS */
+#define PIN_PA23F_QSPI0_CS                         _L_(23)      /**< QSPI0 signal: QSPI0_CS on PA23 mux F */
+#define MUX_PA23F_QSPI0_CS                         _L_(5)       /**< QSPI0 signal line function value: QSPI0_CS */
+#define PIO_PA23F_QSPI0_CS                         (_U_(1) << 23) /**< QSPI0 signal: QSPI0_CS */
+#define PIN_PA2B_QSPI0_IO0                         _L_(2)       /**< QSPI0 signal: QSPI0_IO0 on PA2 mux B */
+#define MUX_PA2B_QSPI0_IO0                         _L_(1)       /**< QSPI0 signal line function value: QSPI0_IO0 */
+#define PIO_PA2B_QSPI0_IO0                         (_U_(1) << 2) /**< QSPI0 signal: QSPI0_IO0 */
+#define PIN_PA16C_QSPI0_IO0                        _L_(16)      /**< QSPI0 signal: QSPI0_IO0 on PA16 mux C */
+#define MUX_PA16C_QSPI0_IO0                        _L_(2)       /**< QSPI0 signal line function value: QSPI0_IO0 */
+#define PIO_PA16C_QSPI0_IO0                        (_U_(1) << 16) /**< QSPI0 signal: QSPI0_IO0 */
+#define PIN_PA24F_QSPI0_IO0                        _L_(24)      /**< QSPI0 signal: QSPI0_IO0 on PA24 mux F */
+#define MUX_PA24F_QSPI0_IO0                        _L_(5)       /**< QSPI0 signal line function value: QSPI0_IO0 */
+#define PIO_PA24F_QSPI0_IO0                        (_U_(1) << 24) /**< QSPI0 signal: QSPI0_IO0 */
+#define PIN_PA3B_QSPI0_IO1                         _L_(3)       /**< QSPI0 signal: QSPI0_IO1 on PA3 mux B */
+#define MUX_PA3B_QSPI0_IO1                         _L_(1)       /**< QSPI0 signal line function value: QSPI0_IO1 */
+#define PIO_PA3B_QSPI0_IO1                         (_U_(1) << 3) /**< QSPI0 signal: QSPI0_IO1 */
+#define PIN_PA17C_QSPI0_IO1                        _L_(17)      /**< QSPI0 signal: QSPI0_IO1 on PA17 mux C */
+#define MUX_PA17C_QSPI0_IO1                        _L_(2)       /**< QSPI0 signal line function value: QSPI0_IO1 */
+#define PIO_PA17C_QSPI0_IO1                        (_U_(1) << 17) /**< QSPI0 signal: QSPI0_IO1 */
+#define PIN_PA25F_QSPI0_IO1                        _L_(25)      /**< QSPI0 signal: QSPI0_IO1 on PA25 mux F */
+#define MUX_PA25F_QSPI0_IO1                        _L_(5)       /**< QSPI0 signal line function value: QSPI0_IO1 */
+#define PIO_PA25F_QSPI0_IO1                        (_U_(1) << 25) /**< QSPI0 signal: QSPI0_IO1 */
+#define PIN_PA4B_QSPI0_IO2                         _L_(4)       /**< QSPI0 signal: QSPI0_IO2 on PA4 mux B */
+#define MUX_PA4B_QSPI0_IO2                         _L_(1)       /**< QSPI0 signal line function value: QSPI0_IO2 */
+#define PIO_PA4B_QSPI0_IO2                         (_U_(1) << 4) /**< QSPI0 signal: QSPI0_IO2 */
+#define PIN_PA18C_QSPI0_IO2                        _L_(18)      /**< QSPI0 signal: QSPI0_IO2 on PA18 mux C */
+#define MUX_PA18C_QSPI0_IO2                        _L_(2)       /**< QSPI0 signal line function value: QSPI0_IO2 */
+#define PIO_PA18C_QSPI0_IO2                        (_U_(1) << 18) /**< QSPI0 signal: QSPI0_IO2 */
+#define PIN_PA26F_QSPI0_IO2                        _L_(26)      /**< QSPI0 signal: QSPI0_IO2 on PA26 mux F */
+#define MUX_PA26F_QSPI0_IO2                        _L_(5)       /**< QSPI0 signal line function value: QSPI0_IO2 */
+#define PIO_PA26F_QSPI0_IO2                        (_U_(1) << 26) /**< QSPI0 signal: QSPI0_IO2 */
+#define PIN_PA5B_QSPI0_IO3                         _L_(5)       /**< QSPI0 signal: QSPI0_IO3 on PA5 mux B */
+#define MUX_PA5B_QSPI0_IO3                         _L_(1)       /**< QSPI0 signal line function value: QSPI0_IO3 */
+#define PIO_PA5B_QSPI0_IO3                         (_U_(1) << 5) /**< QSPI0 signal: QSPI0_IO3 */
+#define PIN_PA19C_QSPI0_IO3                        _L_(19)      /**< QSPI0 signal: QSPI0_IO3 on PA19 mux C */
+#define MUX_PA19C_QSPI0_IO3                        _L_(2)       /**< QSPI0 signal line function value: QSPI0_IO3 */
+#define PIO_PA19C_QSPI0_IO3                        (_U_(1) << 19) /**< QSPI0 signal: QSPI0_IO3 */
+#define PIN_PA27F_QSPI0_IO3                        _L_(27)      /**< QSPI0 signal: QSPI0_IO3 on PA27 mux F */
+#define MUX_PA27F_QSPI0_IO3                        _L_(5)       /**< QSPI0 signal line function value: QSPI0_IO3 */
+#define PIO_PA27F_QSPI0_IO3                        (_U_(1) << 27) /**< QSPI0 signal: QSPI0_IO3 */
+#define PIN_PA0B_QSPI0_SCK                         _L_(0)       /**< QSPI0 signal: QSPI0_SCK on PA0 mux B */
+#define MUX_PA0B_QSPI0_SCK                         _L_(1)       /**< QSPI0 signal line function value: QSPI0_SCK */
+#define PIO_PA0B_QSPI0_SCK                         (_U_(1) << 0) /**< QSPI0 signal: QSPI0_SCK */
+#define PIN_PA14C_QSPI0_SCK                        _L_(14)      /**< QSPI0 signal: QSPI0_SCK on PA14 mux C */
+#define MUX_PA14C_QSPI0_SCK                        _L_(2)       /**< QSPI0 signal line function value: QSPI0_SCK */
+#define PIO_PA14C_QSPI0_SCK                        (_U_(1) << 14) /**< QSPI0 signal: QSPI0_SCK */
+#define PIN_PA22F_QSPI0_SCK                        _L_(22)      /**< QSPI0 signal: QSPI0_SCK on PA22 mux F */
+#define MUX_PA22F_QSPI0_SCK                        _L_(5)       /**< QSPI0 signal line function value: QSPI0_SCK */
+#define PIO_PA22F_QSPI0_SCK                        (_U_(1) << 22) /**< QSPI0 signal: QSPI0_SCK */
 /* ========== PIO definition for QSPI1 peripheral ========== */
-#define PIN_PA11B_QSPI1_QSPI1_CS                   _L_(11)      /**< QSPI1 signal: QSPI1_QSPI1_CS on PA11 mux B */
-#define MUX_PA11B_QSPI1_QSPI1_CS                   _L_(1)       /**< QSPI1 signal line function value: QSPI1_QSPI1_CS */
-#define PIO_PA11B_QSPI1_QSPI1_CS                   (_U_(1) << 11) /**< QSPI1 signal: QSPI1_QSPI1_CS */
-#define PIN_PB6D_QSPI1_QSPI1_CS                    _L_(38)      /**< QSPI1 signal: QSPI1_QSPI1_CS on PB6 mux D */
-#define MUX_PB6D_QSPI1_QSPI1_CS                    _L_(3)       /**< QSPI1 signal line function value: QSPI1_QSPI1_CS */
-#define PIO_PB6D_QSPI1_QSPI1_CS                    (_U_(1) << 6) /**< QSPI1 signal: QSPI1_QSPI1_CS */
-#define PIN_PB15E_QSPI1_QSPI1_CS                   _L_(47)      /**< QSPI1 signal: QSPI1_QSPI1_CS on PB15 mux E */
-#define MUX_PB15E_QSPI1_QSPI1_CS                   _L_(4)       /**< QSPI1 signal line function value: QSPI1_QSPI1_CS */
-#define PIO_PB15E_QSPI1_QSPI1_CS                   (_U_(1) << 15) /**< QSPI1 signal: QSPI1_QSPI1_CS */
-#define PIN_PA7B_QSPI1_QSPI1_IO0                   _L_(7)       /**< QSPI1 signal: QSPI1_QSPI1_IO0 on PA7 mux B */
-#define MUX_PA7B_QSPI1_QSPI1_IO0                   _L_(1)       /**< QSPI1 signal line function value: QSPI1_QSPI1_IO0 */
-#define PIO_PA7B_QSPI1_QSPI1_IO0                   (_U_(1) << 7) /**< QSPI1 signal: QSPI1_QSPI1_IO0 */
-#define PIN_PB7D_QSPI1_QSPI1_IO0                   _L_(39)      /**< QSPI1 signal: QSPI1_QSPI1_IO0 on PB7 mux D */
-#define MUX_PB7D_QSPI1_QSPI1_IO0                   _L_(3)       /**< QSPI1 signal line function value: QSPI1_QSPI1_IO0 */
-#define PIO_PB7D_QSPI1_QSPI1_IO0                   (_U_(1) << 7) /**< QSPI1 signal: QSPI1_QSPI1_IO0 */
-#define PIN_PB16E_QSPI1_QSPI1_IO0                  _L_(48)      /**< QSPI1 signal: QSPI1_QSPI1_IO0 on PB16 mux E */
-#define MUX_PB16E_QSPI1_QSPI1_IO0                  _L_(4)       /**< QSPI1 signal line function value: QSPI1_QSPI1_IO0 */
-#define PIO_PB16E_QSPI1_QSPI1_IO0                  (_U_(1) << 16) /**< QSPI1 signal: QSPI1_QSPI1_IO0 */
-#define PIN_PA8B_QSPI1_QSPI1_IO1                   _L_(8)       /**< QSPI1 signal: QSPI1_QSPI1_IO1 on PA8 mux B */
-#define MUX_PA8B_QSPI1_QSPI1_IO1                   _L_(1)       /**< QSPI1 signal line function value: QSPI1_QSPI1_IO1 */
-#define PIO_PA8B_QSPI1_QSPI1_IO1                   (_U_(1) << 8) /**< QSPI1 signal: QSPI1_QSPI1_IO1 */
-#define PIN_PB8D_QSPI1_QSPI1_IO1                   _L_(40)      /**< QSPI1 signal: QSPI1_QSPI1_IO1 on PB8 mux D */
-#define MUX_PB8D_QSPI1_QSPI1_IO1                   _L_(3)       /**< QSPI1 signal line function value: QSPI1_QSPI1_IO1 */
-#define PIO_PB8D_QSPI1_QSPI1_IO1                   (_U_(1) << 8) /**< QSPI1 signal: QSPI1_QSPI1_IO1 */
-#define PIN_PB17E_QSPI1_QSPI1_IO1                  _L_(49)      /**< QSPI1 signal: QSPI1_QSPI1_IO1 on PB17 mux E */
-#define MUX_PB17E_QSPI1_QSPI1_IO1                  _L_(4)       /**< QSPI1 signal line function value: QSPI1_QSPI1_IO1 */
-#define PIO_PB17E_QSPI1_QSPI1_IO1                  (_U_(1) << 17) /**< QSPI1 signal: QSPI1_QSPI1_IO1 */
-#define PIN_PA9B_QSPI1_QSPI1_IO2                   _L_(9)       /**< QSPI1 signal: QSPI1_QSPI1_IO2 on PA9 mux B */
-#define MUX_PA9B_QSPI1_QSPI1_IO2                   _L_(1)       /**< QSPI1 signal line function value: QSPI1_QSPI1_IO2 */
-#define PIO_PA9B_QSPI1_QSPI1_IO2                   (_U_(1) << 9) /**< QSPI1 signal: QSPI1_QSPI1_IO2 */
-#define PIN_PB9D_QSPI1_QSPI1_IO2                   _L_(41)      /**< QSPI1 signal: QSPI1_QSPI1_IO2 on PB9 mux D */
-#define MUX_PB9D_QSPI1_QSPI1_IO2                   _L_(3)       /**< QSPI1 signal line function value: QSPI1_QSPI1_IO2 */
-#define PIO_PB9D_QSPI1_QSPI1_IO2                   (_U_(1) << 9) /**< QSPI1 signal: QSPI1_QSPI1_IO2 */
-#define PIN_PB18E_QSPI1_QSPI1_IO2                  _L_(50)      /**< QSPI1 signal: QSPI1_QSPI1_IO2 on PB18 mux E */
-#define MUX_PB18E_QSPI1_QSPI1_IO2                  _L_(4)       /**< QSPI1 signal line function value: QSPI1_QSPI1_IO2 */
-#define PIO_PB18E_QSPI1_QSPI1_IO2                  (_U_(1) << 18) /**< QSPI1 signal: QSPI1_QSPI1_IO2 */
-#define PIN_PA10B_QSPI1_QSPI1_IO3                  _L_(10)      /**< QSPI1 signal: QSPI1_QSPI1_IO3 on PA10 mux B */
-#define MUX_PA10B_QSPI1_QSPI1_IO3                  _L_(1)       /**< QSPI1 signal line function value: QSPI1_QSPI1_IO3 */
-#define PIO_PA10B_QSPI1_QSPI1_IO3                  (_U_(1) << 10) /**< QSPI1 signal: QSPI1_QSPI1_IO3 */
-#define PIN_PB10D_QSPI1_QSPI1_IO3                  _L_(42)      /**< QSPI1 signal: QSPI1_QSPI1_IO3 on PB10 mux D */
-#define MUX_PB10D_QSPI1_QSPI1_IO3                  _L_(3)       /**< QSPI1 signal line function value: QSPI1_QSPI1_IO3 */
-#define PIO_PB10D_QSPI1_QSPI1_IO3                  (_U_(1) << 10) /**< QSPI1 signal: QSPI1_QSPI1_IO3 */
-#define PIN_PB19E_QSPI1_QSPI1_IO3                  _L_(51)      /**< QSPI1 signal: QSPI1_QSPI1_IO3 on PB19 mux E */
-#define MUX_PB19E_QSPI1_QSPI1_IO3                  _L_(4)       /**< QSPI1 signal line function value: QSPI1_QSPI1_IO3 */
-#define PIO_PB19E_QSPI1_QSPI1_IO3                  (_U_(1) << 19) /**< QSPI1 signal: QSPI1_QSPI1_IO3 */
-#define PIN_PA6B_QSPI1_QSPI1_SCK                   _L_(6)       /**< QSPI1 signal: QSPI1_QSPI1_SCK on PA6 mux B */
-#define MUX_PA6B_QSPI1_QSPI1_SCK                   _L_(1)       /**< QSPI1 signal line function value: QSPI1_QSPI1_SCK */
-#define PIO_PA6B_QSPI1_QSPI1_SCK                   (_U_(1) << 6) /**< QSPI1 signal: QSPI1_QSPI1_SCK */
-#define PIN_PB5D_QSPI1_QSPI1_SCK                   _L_(37)      /**< QSPI1 signal: QSPI1_QSPI1_SCK on PB5 mux D */
-#define MUX_PB5D_QSPI1_QSPI1_SCK                   _L_(3)       /**< QSPI1 signal line function value: QSPI1_QSPI1_SCK */
-#define PIO_PB5D_QSPI1_QSPI1_SCK                   (_U_(1) << 5) /**< QSPI1 signal: QSPI1_QSPI1_SCK */
-#define PIN_PB14E_QSPI1_QSPI1_SCK                  _L_(46)      /**< QSPI1 signal: QSPI1_QSPI1_SCK on PB14 mux E */
-#define MUX_PB14E_QSPI1_QSPI1_SCK                  _L_(4)       /**< QSPI1 signal line function value: QSPI1_QSPI1_SCK */
-#define PIO_PB14E_QSPI1_QSPI1_SCK                  (_U_(1) << 14) /**< QSPI1 signal: QSPI1_QSPI1_SCK */
+#define PIN_PA11B_QSPI1_CS                         _L_(11)      /**< QSPI1 signal: QSPI1_CS on PA11 mux B */
+#define MUX_PA11B_QSPI1_CS                         _L_(1)       /**< QSPI1 signal line function value: QSPI1_CS */
+#define PIO_PA11B_QSPI1_CS                         (_U_(1) << 11) /**< QSPI1 signal: QSPI1_CS */
+#define PIN_PB6D_QSPI1_CS                          _L_(38)      /**< QSPI1 signal: QSPI1_CS on PB6 mux D */
+#define MUX_PB6D_QSPI1_CS                          _L_(3)       /**< QSPI1 signal line function value: QSPI1_CS */
+#define PIO_PB6D_QSPI1_CS                          (_U_(1) << 6) /**< QSPI1 signal: QSPI1_CS */
+#define PIN_PB15E_QSPI1_CS                         _L_(47)      /**< QSPI1 signal: QSPI1_CS on PB15 mux E */
+#define MUX_PB15E_QSPI1_CS                         _L_(4)       /**< QSPI1 signal line function value: QSPI1_CS */
+#define PIO_PB15E_QSPI1_CS                         (_U_(1) << 15) /**< QSPI1 signal: QSPI1_CS */
+#define PIN_PA7B_QSPI1_IO0                         _L_(7)       /**< QSPI1 signal: QSPI1_IO0 on PA7 mux B */
+#define MUX_PA7B_QSPI1_IO0                         _L_(1)       /**< QSPI1 signal line function value: QSPI1_IO0 */
+#define PIO_PA7B_QSPI1_IO0                         (_U_(1) << 7) /**< QSPI1 signal: QSPI1_IO0 */
+#define PIN_PB7D_QSPI1_IO0                         _L_(39)      /**< QSPI1 signal: QSPI1_IO0 on PB7 mux D */
+#define MUX_PB7D_QSPI1_IO0                         _L_(3)       /**< QSPI1 signal line function value: QSPI1_IO0 */
+#define PIO_PB7D_QSPI1_IO0                         (_U_(1) << 7) /**< QSPI1 signal: QSPI1_IO0 */
+#define PIN_PB16E_QSPI1_IO0                        _L_(48)      /**< QSPI1 signal: QSPI1_IO0 on PB16 mux E */
+#define MUX_PB16E_QSPI1_IO0                        _L_(4)       /**< QSPI1 signal line function value: QSPI1_IO0 */
+#define PIO_PB16E_QSPI1_IO0                        (_U_(1) << 16) /**< QSPI1 signal: QSPI1_IO0 */
+#define PIN_PA8B_QSPI1_IO1                         _L_(8)       /**< QSPI1 signal: QSPI1_IO1 on PA8 mux B */
+#define MUX_PA8B_QSPI1_IO1                         _L_(1)       /**< QSPI1 signal line function value: QSPI1_IO1 */
+#define PIO_PA8B_QSPI1_IO1                         (_U_(1) << 8) /**< QSPI1 signal: QSPI1_IO1 */
+#define PIN_PB8D_QSPI1_IO1                         _L_(40)      /**< QSPI1 signal: QSPI1_IO1 on PB8 mux D */
+#define MUX_PB8D_QSPI1_IO1                         _L_(3)       /**< QSPI1 signal line function value: QSPI1_IO1 */
+#define PIO_PB8D_QSPI1_IO1                         (_U_(1) << 8) /**< QSPI1 signal: QSPI1_IO1 */
+#define PIN_PB17E_QSPI1_IO1                        _L_(49)      /**< QSPI1 signal: QSPI1_IO1 on PB17 mux E */
+#define MUX_PB17E_QSPI1_IO1                        _L_(4)       /**< QSPI1 signal line function value: QSPI1_IO1 */
+#define PIO_PB17E_QSPI1_IO1                        (_U_(1) << 17) /**< QSPI1 signal: QSPI1_IO1 */
+#define PIN_PA9B_QSPI1_IO2                         _L_(9)       /**< QSPI1 signal: QSPI1_IO2 on PA9 mux B */
+#define MUX_PA9B_QSPI1_IO2                         _L_(1)       /**< QSPI1 signal line function value: QSPI1_IO2 */
+#define PIO_PA9B_QSPI1_IO2                         (_U_(1) << 9) /**< QSPI1 signal: QSPI1_IO2 */
+#define PIN_PB9D_QSPI1_IO2                         _L_(41)      /**< QSPI1 signal: QSPI1_IO2 on PB9 mux D */
+#define MUX_PB9D_QSPI1_IO2                         _L_(3)       /**< QSPI1 signal line function value: QSPI1_IO2 */
+#define PIO_PB9D_QSPI1_IO2                         (_U_(1) << 9) /**< QSPI1 signal: QSPI1_IO2 */
+#define PIN_PB18E_QSPI1_IO2                        _L_(50)      /**< QSPI1 signal: QSPI1_IO2 on PB18 mux E */
+#define MUX_PB18E_QSPI1_IO2                        _L_(4)       /**< QSPI1 signal line function value: QSPI1_IO2 */
+#define PIO_PB18E_QSPI1_IO2                        (_U_(1) << 18) /**< QSPI1 signal: QSPI1_IO2 */
+#define PIN_PA10B_QSPI1_IO3                        _L_(10)      /**< QSPI1 signal: QSPI1_IO3 on PA10 mux B */
+#define MUX_PA10B_QSPI1_IO3                        _L_(1)       /**< QSPI1 signal line function value: QSPI1_IO3 */
+#define PIO_PA10B_QSPI1_IO3                        (_U_(1) << 10) /**< QSPI1 signal: QSPI1_IO3 */
+#define PIN_PB10D_QSPI1_IO3                        _L_(42)      /**< QSPI1 signal: QSPI1_IO3 on PB10 mux D */
+#define MUX_PB10D_QSPI1_IO3                        _L_(3)       /**< QSPI1 signal line function value: QSPI1_IO3 */
+#define PIO_PB10D_QSPI1_IO3                        (_U_(1) << 10) /**< QSPI1 signal: QSPI1_IO3 */
+#define PIN_PB19E_QSPI1_IO3                        _L_(51)      /**< QSPI1 signal: QSPI1_IO3 on PB19 mux E */
+#define MUX_PB19E_QSPI1_IO3                        _L_(4)       /**< QSPI1 signal line function value: QSPI1_IO3 */
+#define PIO_PB19E_QSPI1_IO3                        (_U_(1) << 19) /**< QSPI1 signal: QSPI1_IO3 */
+#define PIN_PA6B_QSPI1_SCK                         _L_(6)       /**< QSPI1 signal: QSPI1_SCK on PA6 mux B */
+#define MUX_PA6B_QSPI1_SCK                         _L_(1)       /**< QSPI1 signal line function value: QSPI1_SCK */
+#define PIO_PA6B_QSPI1_SCK                         (_U_(1) << 6) /**< QSPI1 signal: QSPI1_SCK */
+#define PIN_PB5D_QSPI1_SCK                         _L_(37)      /**< QSPI1 signal: QSPI1_SCK on PB5 mux D */
+#define MUX_PB5D_QSPI1_SCK                         _L_(3)       /**< QSPI1 signal line function value: QSPI1_SCK */
+#define PIO_PB5D_QSPI1_SCK                         (_U_(1) << 5) /**< QSPI1 signal: QSPI1_SCK */
+#define PIN_PB14E_QSPI1_SCK                        _L_(46)      /**< QSPI1 signal: QSPI1_SCK on PB14 mux E */
+#define MUX_PB14E_QSPI1_SCK                        _L_(4)       /**< QSPI1 signal line function value: QSPI1_SCK */
+#define PIO_PB14E_QSPI1_SCK                        (_U_(1) << 14) /**< QSPI1 signal: QSPI1_SCK */
 /* ========== PIO definition for SDMMC0 peripheral ========== */
-#define PIN_PA11A_SDMMC0_SDMMC0_1V8SEL             _L_(11)      /**< SDMMC0 signal: SDMMC0_SDMMC0_1V8SEL on PA11 mux A */
-#define MUX_PA11A_SDMMC0_SDMMC0_1V8SEL             _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_SDMMC0_1V8SEL */
-#define PIO_PA11A_SDMMC0_SDMMC0_1V8SEL             (_U_(1) << 11) /**< SDMMC0 signal: SDMMC0_SDMMC0_1V8SEL */
-#define PIN_PA13A_SDMMC0_SDMMC0_CD                 _L_(13)      /**< SDMMC0 signal: SDMMC0_SDMMC0_CD on PA13 mux A */
-#define MUX_PA13A_SDMMC0_SDMMC0_CD                 _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_SDMMC0_CD */
-#define PIO_PA13A_SDMMC0_SDMMC0_CD                 (_U_(1) << 13) /**< SDMMC0 signal: SDMMC0_SDMMC0_CD */
-#define PIN_PA0A_SDMMC0_SDMMC0_CK                  _L_(0)       /**< SDMMC0 signal: SDMMC0_SDMMC0_CK on PA0 mux A */
-#define MUX_PA0A_SDMMC0_SDMMC0_CK                  _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_SDMMC0_CK */
-#define PIO_PA0A_SDMMC0_SDMMC0_CK                  (_U_(1) << 0) /**< SDMMC0 signal: SDMMC0_SDMMC0_CK */
-#define PIN_PA1A_SDMMC0_SDMMC0_CMD                 _L_(1)       /**< SDMMC0 signal: SDMMC0_SDMMC0_CMD on PA1 mux A */
-#define MUX_PA1A_SDMMC0_SDMMC0_CMD                 _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_SDMMC0_CMD */
-#define PIO_PA1A_SDMMC0_SDMMC0_CMD                 (_U_(1) << 1) /**< SDMMC0 signal: SDMMC0_SDMMC0_CMD */
-#define PIN_PA2A_SDMMC0_SDMMC0_DAT0                _L_(2)       /**< SDMMC0 signal: SDMMC0_SDMMC0_DAT0 on PA2 mux A */
-#define MUX_PA2A_SDMMC0_SDMMC0_DAT0                _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_SDMMC0_DAT0 */
-#define PIO_PA2A_SDMMC0_SDMMC0_DAT0                (_U_(1) << 2) /**< SDMMC0 signal: SDMMC0_SDMMC0_DAT0 */
-#define PIN_PA3A_SDMMC0_SDMMC0_DAT1                _L_(3)       /**< SDMMC0 signal: SDMMC0_SDMMC0_DAT1 on PA3 mux A */
-#define MUX_PA3A_SDMMC0_SDMMC0_DAT1                _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_SDMMC0_DAT1 */
-#define PIO_PA3A_SDMMC0_SDMMC0_DAT1                (_U_(1) << 3) /**< SDMMC0 signal: SDMMC0_SDMMC0_DAT1 */
-#define PIN_PA4A_SDMMC0_SDMMC0_DAT2                _L_(4)       /**< SDMMC0 signal: SDMMC0_SDMMC0_DAT2 on PA4 mux A */
-#define MUX_PA4A_SDMMC0_SDMMC0_DAT2                _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_SDMMC0_DAT2 */
-#define PIO_PA4A_SDMMC0_SDMMC0_DAT2                (_U_(1) << 4) /**< SDMMC0 signal: SDMMC0_SDMMC0_DAT2 */
-#define PIN_PA5A_SDMMC0_SDMMC0_DAT3                _L_(5)       /**< SDMMC0 signal: SDMMC0_SDMMC0_DAT3 on PA5 mux A */
-#define MUX_PA5A_SDMMC0_SDMMC0_DAT3                _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_SDMMC0_DAT3 */
-#define PIO_PA5A_SDMMC0_SDMMC0_DAT3                (_U_(1) << 5) /**< SDMMC0 signal: SDMMC0_SDMMC0_DAT3 */
-#define PIN_PA6A_SDMMC0_SDMMC0_DAT4                _L_(6)       /**< SDMMC0 signal: SDMMC0_SDMMC0_DAT4 on PA6 mux A */
-#define MUX_PA6A_SDMMC0_SDMMC0_DAT4                _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_SDMMC0_DAT4 */
-#define PIO_PA6A_SDMMC0_SDMMC0_DAT4                (_U_(1) << 6) /**< SDMMC0 signal: SDMMC0_SDMMC0_DAT4 */
-#define PIN_PA7A_SDMMC0_SDMMC0_DAT5                _L_(7)       /**< SDMMC0 signal: SDMMC0_SDMMC0_DAT5 on PA7 mux A */
-#define MUX_PA7A_SDMMC0_SDMMC0_DAT5                _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_SDMMC0_DAT5 */
-#define PIO_PA7A_SDMMC0_SDMMC0_DAT5                (_U_(1) << 7) /**< SDMMC0 signal: SDMMC0_SDMMC0_DAT5 */
-#define PIN_PA8A_SDMMC0_SDMMC0_DAT6                _L_(8)       /**< SDMMC0 signal: SDMMC0_SDMMC0_DAT6 on PA8 mux A */
-#define MUX_PA8A_SDMMC0_SDMMC0_DAT6                _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_SDMMC0_DAT6 */
-#define PIO_PA8A_SDMMC0_SDMMC0_DAT6                (_U_(1) << 8) /**< SDMMC0 signal: SDMMC0_SDMMC0_DAT6 */
-#define PIN_PA9A_SDMMC0_SDMMC0_DAT7                _L_(9)       /**< SDMMC0 signal: SDMMC0_SDMMC0_DAT7 on PA9 mux A */
-#define MUX_PA9A_SDMMC0_SDMMC0_DAT7                _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_SDMMC0_DAT7 */
-#define PIO_PA9A_SDMMC0_SDMMC0_DAT7                (_U_(1) << 9) /**< SDMMC0 signal: SDMMC0_SDMMC0_DAT7 */
-#define PIN_PA10A_SDMMC0_SDMMC0_RSTN               _L_(10)      /**< SDMMC0 signal: SDMMC0_SDMMC0_RSTN on PA10 mux A */
-#define MUX_PA10A_SDMMC0_SDMMC0_RSTN               _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_SDMMC0_RSTN */
-#define PIO_PA10A_SDMMC0_SDMMC0_RSTN               (_U_(1) << 10) /**< SDMMC0 signal: SDMMC0_SDMMC0_RSTN */
-#define PIN_PA12A_SDMMC0_SDMMC0_WP                 _L_(12)      /**< SDMMC0 signal: SDMMC0_SDMMC0_WP on PA12 mux A */
-#define MUX_PA12A_SDMMC0_SDMMC0_WP                 _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_SDMMC0_WP */
-#define PIO_PA12A_SDMMC0_SDMMC0_WP                 (_U_(1) << 12) /**< SDMMC0 signal: SDMMC0_SDMMC0_WP */
+#define PIN_PA11A_SDMMC0_1V8SEL                    _L_(11)      /**< SDMMC0 signal: SDMMC0_1V8SEL on PA11 mux A */
+#define MUX_PA11A_SDMMC0_1V8SEL                    _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_1V8SEL */
+#define PIO_PA11A_SDMMC0_1V8SEL                    (_U_(1) << 11) /**< SDMMC0 signal: SDMMC0_1V8SEL */
+#define PIN_PA13A_SDMMC0_CD                        _L_(13)      /**< SDMMC0 signal: SDMMC0_CD on PA13 mux A */
+#define MUX_PA13A_SDMMC0_CD                        _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_CD */
+#define PIO_PA13A_SDMMC0_CD                        (_U_(1) << 13) /**< SDMMC0 signal: SDMMC0_CD */
+#define PIN_PA0A_SDMMC0_CK                         _L_(0)       /**< SDMMC0 signal: SDMMC0_CK on PA0 mux A */
+#define MUX_PA0A_SDMMC0_CK                         _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_CK */
+#define PIO_PA0A_SDMMC0_CK                         (_U_(1) << 0) /**< SDMMC0 signal: SDMMC0_CK */
+#define PIN_PA1A_SDMMC0_CMD                        _L_(1)       /**< SDMMC0 signal: SDMMC0_CMD on PA1 mux A */
+#define MUX_PA1A_SDMMC0_CMD                        _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_CMD */
+#define PIO_PA1A_SDMMC0_CMD                        (_U_(1) << 1) /**< SDMMC0 signal: SDMMC0_CMD */
+#define PIN_PA2A_SDMMC0_DAT0                       _L_(2)       /**< SDMMC0 signal: SDMMC0_DAT0 on PA2 mux A */
+#define MUX_PA2A_SDMMC0_DAT0                       _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_DAT0 */
+#define PIO_PA2A_SDMMC0_DAT0                       (_U_(1) << 2) /**< SDMMC0 signal: SDMMC0_DAT0 */
+#define PIN_PA3A_SDMMC0_DAT1                       _L_(3)       /**< SDMMC0 signal: SDMMC0_DAT1 on PA3 mux A */
+#define MUX_PA3A_SDMMC0_DAT1                       _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_DAT1 */
+#define PIO_PA3A_SDMMC0_DAT1                       (_U_(1) << 3) /**< SDMMC0 signal: SDMMC0_DAT1 */
+#define PIN_PA4A_SDMMC0_DAT2                       _L_(4)       /**< SDMMC0 signal: SDMMC0_DAT2 on PA4 mux A */
+#define MUX_PA4A_SDMMC0_DAT2                       _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_DAT2 */
+#define PIO_PA4A_SDMMC0_DAT2                       (_U_(1) << 4) /**< SDMMC0 signal: SDMMC0_DAT2 */
+#define PIN_PA5A_SDMMC0_DAT3                       _L_(5)       /**< SDMMC0 signal: SDMMC0_DAT3 on PA5 mux A */
+#define MUX_PA5A_SDMMC0_DAT3                       _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_DAT3 */
+#define PIO_PA5A_SDMMC0_DAT3                       (_U_(1) << 5) /**< SDMMC0 signal: SDMMC0_DAT3 */
+#define PIN_PA6A_SDMMC0_DAT4                       _L_(6)       /**< SDMMC0 signal: SDMMC0_DAT4 on PA6 mux A */
+#define MUX_PA6A_SDMMC0_DAT4                       _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_DAT4 */
+#define PIO_PA6A_SDMMC0_DAT4                       (_U_(1) << 6) /**< SDMMC0 signal: SDMMC0_DAT4 */
+#define PIN_PA7A_SDMMC0_DAT5                       _L_(7)       /**< SDMMC0 signal: SDMMC0_DAT5 on PA7 mux A */
+#define MUX_PA7A_SDMMC0_DAT5                       _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_DAT5 */
+#define PIO_PA7A_SDMMC0_DAT5                       (_U_(1) << 7) /**< SDMMC0 signal: SDMMC0_DAT5 */
+#define PIN_PA8A_SDMMC0_DAT6                       _L_(8)       /**< SDMMC0 signal: SDMMC0_DAT6 on PA8 mux A */
+#define MUX_PA8A_SDMMC0_DAT6                       _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_DAT6 */
+#define PIO_PA8A_SDMMC0_DAT6                       (_U_(1) << 8) /**< SDMMC0 signal: SDMMC0_DAT6 */
+#define PIN_PA9A_SDMMC0_DAT7                       _L_(9)       /**< SDMMC0 signal: SDMMC0_DAT7 on PA9 mux A */
+#define MUX_PA9A_SDMMC0_DAT7                       _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_DAT7 */
+#define PIO_PA9A_SDMMC0_DAT7                       (_U_(1) << 9) /**< SDMMC0 signal: SDMMC0_DAT7 */
+#define PIN_PA10A_SDMMC0_RSTN                      _L_(10)      /**< SDMMC0 signal: SDMMC0_RSTN on PA10 mux A */
+#define MUX_PA10A_SDMMC0_RSTN                      _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_RSTN */
+#define PIO_PA10A_SDMMC0_RSTN                      (_U_(1) << 10) /**< SDMMC0 signal: SDMMC0_RSTN */
+#define PIN_PA12A_SDMMC0_WP                        _L_(12)      /**< SDMMC0 signal: SDMMC0_WP on PA12 mux A */
+#define MUX_PA12A_SDMMC0_WP                        _L_(0)       /**< SDMMC0 signal line function value: SDMMC0_WP */
+#define PIO_PA12A_SDMMC0_WP                        (_U_(1) << 12) /**< SDMMC0 signal: SDMMC0_WP */
 /* ========== PIO definition for SDMMC1 peripheral ========== */
-#define PIN_PA30E_SDMMC1_SDMMC1_CD                 _L_(30)      /**< SDMMC1 signal: SDMMC1_SDMMC1_CD on PA30 mux E */
-#define MUX_PA30E_SDMMC1_SDMMC1_CD                 _L_(4)       /**< SDMMC1 signal line function value: SDMMC1_SDMMC1_CD */
-#define PIO_PA30E_SDMMC1_SDMMC1_CD                 (_U_(1) << 30) /**< SDMMC1 signal: SDMMC1_SDMMC1_CD */
-#define PIN_PA22E_SDMMC1_SDMMC1_CK                 _L_(22)      /**< SDMMC1 signal: SDMMC1_SDMMC1_CK on PA22 mux E */
-#define MUX_PA22E_SDMMC1_SDMMC1_CK                 _L_(4)       /**< SDMMC1 signal line function value: SDMMC1_SDMMC1_CK */
-#define PIO_PA22E_SDMMC1_SDMMC1_CK                 (_U_(1) << 22) /**< SDMMC1 signal: SDMMC1_SDMMC1_CK */
-#define PIN_PA28E_SDMMC1_SDMMC1_CMD                _L_(28)      /**< SDMMC1 signal: SDMMC1_SDMMC1_CMD on PA28 mux E */
-#define MUX_PA28E_SDMMC1_SDMMC1_CMD                _L_(4)       /**< SDMMC1 signal line function value: SDMMC1_SDMMC1_CMD */
-#define PIO_PA28E_SDMMC1_SDMMC1_CMD                (_U_(1) << 28) /**< SDMMC1 signal: SDMMC1_SDMMC1_CMD */
-#define PIN_PA18E_SDMMC1_SDMMC1_DAT0               _L_(18)      /**< SDMMC1 signal: SDMMC1_SDMMC1_DAT0 on PA18 mux E */
-#define MUX_PA18E_SDMMC1_SDMMC1_DAT0               _L_(4)       /**< SDMMC1 signal line function value: SDMMC1_SDMMC1_DAT0 */
-#define PIO_PA18E_SDMMC1_SDMMC1_DAT0               (_U_(1) << 18) /**< SDMMC1 signal: SDMMC1_SDMMC1_DAT0 */
-#define PIN_PA19E_SDMMC1_SDMMC1_DAT1               _L_(19)      /**< SDMMC1 signal: SDMMC1_SDMMC1_DAT1 on PA19 mux E */
-#define MUX_PA19E_SDMMC1_SDMMC1_DAT1               _L_(4)       /**< SDMMC1 signal line function value: SDMMC1_SDMMC1_DAT1 */
-#define PIO_PA19E_SDMMC1_SDMMC1_DAT1               (_U_(1) << 19) /**< SDMMC1 signal: SDMMC1_SDMMC1_DAT1 */
-#define PIN_PA20E_SDMMC1_SDMMC1_DAT2               _L_(20)      /**< SDMMC1 signal: SDMMC1_SDMMC1_DAT2 on PA20 mux E */
-#define MUX_PA20E_SDMMC1_SDMMC1_DAT2               _L_(4)       /**< SDMMC1 signal line function value: SDMMC1_SDMMC1_DAT2 */
-#define PIO_PA20E_SDMMC1_SDMMC1_DAT2               (_U_(1) << 20) /**< SDMMC1 signal: SDMMC1_SDMMC1_DAT2 */
-#define PIN_PA21E_SDMMC1_SDMMC1_DAT3               _L_(21)      /**< SDMMC1 signal: SDMMC1_SDMMC1_DAT3 on PA21 mux E */
-#define MUX_PA21E_SDMMC1_SDMMC1_DAT3               _L_(4)       /**< SDMMC1 signal line function value: SDMMC1_SDMMC1_DAT3 */
-#define PIO_PA21E_SDMMC1_SDMMC1_DAT3               (_U_(1) << 21) /**< SDMMC1 signal: SDMMC1_SDMMC1_DAT3 */
-#define PIN_PA27E_SDMMC1_SDMMC1_RSTN               _L_(27)      /**< SDMMC1 signal: SDMMC1_SDMMC1_RSTN on PA27 mux E */
-#define MUX_PA27E_SDMMC1_SDMMC1_RSTN               _L_(4)       /**< SDMMC1 signal line function value: SDMMC1_SDMMC1_RSTN */
-#define PIO_PA27E_SDMMC1_SDMMC1_RSTN               (_U_(1) << 27) /**< SDMMC1 signal: SDMMC1_SDMMC1_RSTN */
-#define PIN_PA29E_SDMMC1_SDMMC1_WP                 _L_(29)      /**< SDMMC1 signal: SDMMC1_SDMMC1_WP on PA29 mux E */
-#define MUX_PA29E_SDMMC1_SDMMC1_WP                 _L_(4)       /**< SDMMC1 signal line function value: SDMMC1_SDMMC1_WP */
-#define PIO_PA29E_SDMMC1_SDMMC1_WP                 (_U_(1) << 29) /**< SDMMC1 signal: SDMMC1_SDMMC1_WP */
+#define PIN_PA30E_SDMMC1_CD                        _L_(30)      /**< SDMMC1 signal: SDMMC1_CD on PA30 mux E */
+#define MUX_PA30E_SDMMC1_CD                        _L_(4)       /**< SDMMC1 signal line function value: SDMMC1_CD */
+#define PIO_PA30E_SDMMC1_CD                        (_U_(1) << 30) /**< SDMMC1 signal: SDMMC1_CD */
+#define PIN_PA22E_SDMMC1_CK                        _L_(22)      /**< SDMMC1 signal: SDMMC1_CK on PA22 mux E */
+#define MUX_PA22E_SDMMC1_CK                        _L_(4)       /**< SDMMC1 signal line function value: SDMMC1_CK */
+#define PIO_PA22E_SDMMC1_CK                        (_U_(1) << 22) /**< SDMMC1 signal: SDMMC1_CK */
+#define PIN_PA28E_SDMMC1_CMD                       _L_(28)      /**< SDMMC1 signal: SDMMC1_CMD on PA28 mux E */
+#define MUX_PA28E_SDMMC1_CMD                       _L_(4)       /**< SDMMC1 signal line function value: SDMMC1_CMD */
+#define PIO_PA28E_SDMMC1_CMD                       (_U_(1) << 28) /**< SDMMC1 signal: SDMMC1_CMD */
+#define PIN_PA18E_SDMMC1_DAT0                      _L_(18)      /**< SDMMC1 signal: SDMMC1_DAT0 on PA18 mux E */
+#define MUX_PA18E_SDMMC1_DAT0                      _L_(4)       /**< SDMMC1 signal line function value: SDMMC1_DAT0 */
+#define PIO_PA18E_SDMMC1_DAT0                      (_U_(1) << 18) /**< SDMMC1 signal: SDMMC1_DAT0 */
+#define PIN_PA19E_SDMMC1_DAT1                      _L_(19)      /**< SDMMC1 signal: SDMMC1_DAT1 on PA19 mux E */
+#define MUX_PA19E_SDMMC1_DAT1                      _L_(4)       /**< SDMMC1 signal line function value: SDMMC1_DAT1 */
+#define PIO_PA19E_SDMMC1_DAT1                      (_U_(1) << 19) /**< SDMMC1 signal: SDMMC1_DAT1 */
+#define PIN_PA20E_SDMMC1_DAT2                      _L_(20)      /**< SDMMC1 signal: SDMMC1_DAT2 on PA20 mux E */
+#define MUX_PA20E_SDMMC1_DAT2                      _L_(4)       /**< SDMMC1 signal line function value: SDMMC1_DAT2 */
+#define PIO_PA20E_SDMMC1_DAT2                      (_U_(1) << 20) /**< SDMMC1 signal: SDMMC1_DAT2 */
+#define PIN_PA21E_SDMMC1_DAT3                      _L_(21)      /**< SDMMC1 signal: SDMMC1_DAT3 on PA21 mux E */
+#define MUX_PA21E_SDMMC1_DAT3                      _L_(4)       /**< SDMMC1 signal line function value: SDMMC1_DAT3 */
+#define PIO_PA21E_SDMMC1_DAT3                      (_U_(1) << 21) /**< SDMMC1 signal: SDMMC1_DAT3 */
+#define PIN_PA27E_SDMMC1_RSTN                      _L_(27)      /**< SDMMC1 signal: SDMMC1_RSTN on PA27 mux E */
+#define MUX_PA27E_SDMMC1_RSTN                      _L_(4)       /**< SDMMC1 signal line function value: SDMMC1_RSTN */
+#define PIO_PA27E_SDMMC1_RSTN                      (_U_(1) << 27) /**< SDMMC1 signal: SDMMC1_RSTN */
+#define PIN_PA29E_SDMMC1_WP                        _L_(29)      /**< SDMMC1 signal: SDMMC1_WP on PA29 mux E */
+#define MUX_PA29E_SDMMC1_WP                        _L_(4)       /**< SDMMC1 signal line function value: SDMMC1_WP */
+#define PIO_PA29E_SDMMC1_WP                        (_U_(1) << 29) /**< SDMMC1 signal: SDMMC1_WP */
 /* ========== PIO definition for SMC peripheral ========== */
 #define PIN_PB12B_SMC_A1                           _L_(44)      /**< SMC signal: SMC_A1 on PB12 mux B */
 #define MUX_PB12B_SMC_A1                           _L_(1)       /**< SMC signal line function value: SMC_A1 */
@@ -1792,109 +1792,109 @@
 #define MUX_PD7F_SMC_NWR1                          _L_(5)       /**< SMC signal line function value: SMC_NWR1 */
 #define PIO_PD7F_SMC_NWR1                          (_U_(1) << 7) /**< SMC signal: SMC_NWR1 */
 /* ========== PIO definition for SPI0 peripheral ========== */
-#define PIN_PA16A_SPI0_SPI0_MISO                   _L_(16)      /**< SPI0 signal: SPI0_SPI0_MISO on PA16 mux A */
-#define MUX_PA16A_SPI0_SPI0_MISO                   _L_(0)       /**< SPI0 signal line function value: SPI0_SPI0_MISO */
-#define PIO_PA16A_SPI0_SPI0_MISO                   (_U_(1) << 16) /**< SPI0 signal: SPI0_SPI0_MISO */
-#define PIN_PA31C_SPI0_SPI0_MISO                   _L_(31)      /**< SPI0 signal: SPI0_SPI0_MISO on PA31 mux C */
-#define MUX_PA31C_SPI0_SPI0_MISO                   _L_(2)       /**< SPI0 signal line function value: SPI0_SPI0_MISO */
-#define PIO_PA31C_SPI0_SPI0_MISO                   (_U_(1) << 31) /**< SPI0 signal: SPI0_SPI0_MISO */
-#define PIN_PA15A_SPI0_SPI0_MOSI                   _L_(15)      /**< SPI0 signal: SPI0_SPI0_MOSI on PA15 mux A */
-#define MUX_PA15A_SPI0_SPI0_MOSI                   _L_(0)       /**< SPI0 signal line function value: SPI0_SPI0_MOSI */
-#define PIO_PA15A_SPI0_SPI0_MOSI                   (_U_(1) << 15) /**< SPI0 signal: SPI0_SPI0_MOSI */
-#define PIN_PB0C_SPI0_SPI0_MOSI                    _L_(32)      /**< SPI0 signal: SPI0_SPI0_MOSI on PB0 mux C */
-#define MUX_PB0C_SPI0_SPI0_MOSI                    _L_(2)       /**< SPI0 signal line function value: SPI0_SPI0_MOSI */
-#define PIO_PB0C_SPI0_SPI0_MOSI                    (_U_(1) << 0) /**< SPI0 signal: SPI0_SPI0_MOSI */
-#define PIN_PA17A_SPI0_SPI0_NPCS0                  _L_(17)      /**< SPI0 signal: SPI0_SPI0_NPCS0 on PA17 mux A */
-#define MUX_PA17A_SPI0_SPI0_NPCS0                  _L_(0)       /**< SPI0 signal line function value: SPI0_SPI0_NPCS0 */
-#define PIO_PA17A_SPI0_SPI0_NPCS0                  (_U_(1) << 17) /**< SPI0 signal: SPI0_SPI0_NPCS0 */
-#define PIN_PA30C_SPI0_SPI0_NPCS0                  _L_(30)      /**< SPI0 signal: SPI0_SPI0_NPCS0 on PA30 mux C */
-#define MUX_PA30C_SPI0_SPI0_NPCS0                  _L_(2)       /**< SPI0 signal line function value: SPI0_SPI0_NPCS0 */
-#define PIO_PA30C_SPI0_SPI0_NPCS0                  (_U_(1) << 30) /**< SPI0 signal: SPI0_SPI0_NPCS0 */
-#define PIN_PA18A_SPI0_SPI0_NPCS1                  _L_(18)      /**< SPI0 signal: SPI0_SPI0_NPCS1 on PA18 mux A */
-#define MUX_PA18A_SPI0_SPI0_NPCS1                  _L_(0)       /**< SPI0 signal line function value: SPI0_SPI0_NPCS1 */
-#define PIO_PA18A_SPI0_SPI0_NPCS1                  (_U_(1) << 18) /**< SPI0 signal: SPI0_SPI0_NPCS1 */
-#define PIN_PA29C_SPI0_SPI0_NPCS1                  _L_(29)      /**< SPI0 signal: SPI0_SPI0_NPCS1 on PA29 mux C */
-#define MUX_PA29C_SPI0_SPI0_NPCS1                  _L_(2)       /**< SPI0 signal line function value: SPI0_SPI0_NPCS1 */
-#define PIO_PA29C_SPI0_SPI0_NPCS1                  (_U_(1) << 29) /**< SPI0 signal: SPI0_SPI0_NPCS1 */
-#define PIN_PA19A_SPI0_SPI0_NPCS2                  _L_(19)      /**< SPI0 signal: SPI0_SPI0_NPCS2 on PA19 mux A */
-#define MUX_PA19A_SPI0_SPI0_NPCS2                  _L_(0)       /**< SPI0 signal line function value: SPI0_SPI0_NPCS2 */
-#define PIO_PA19A_SPI0_SPI0_NPCS2                  (_U_(1) << 19) /**< SPI0 signal: SPI0_SPI0_NPCS2 */
-#define PIN_PA27C_SPI0_SPI0_NPCS2                  _L_(27)      /**< SPI0 signal: SPI0_SPI0_NPCS2 on PA27 mux C */
-#define MUX_PA27C_SPI0_SPI0_NPCS2                  _L_(2)       /**< SPI0 signal line function value: SPI0_SPI0_NPCS2 */
-#define PIO_PA27C_SPI0_SPI0_NPCS2                  (_U_(1) << 27) /**< SPI0 signal: SPI0_SPI0_NPCS2 */
-#define PIN_PA20A_SPI0_SPI0_NPCS3                  _L_(20)      /**< SPI0 signal: SPI0_SPI0_NPCS3 on PA20 mux A */
-#define MUX_PA20A_SPI0_SPI0_NPCS3                  _L_(0)       /**< SPI0 signal line function value: SPI0_SPI0_NPCS3 */
-#define PIO_PA20A_SPI0_SPI0_NPCS3                  (_U_(1) << 20) /**< SPI0 signal: SPI0_SPI0_NPCS3 */
-#define PIN_PA28C_SPI0_SPI0_NPCS3                  _L_(28)      /**< SPI0 signal: SPI0_SPI0_NPCS3 on PA28 mux C */
-#define MUX_PA28C_SPI0_SPI0_NPCS3                  _L_(2)       /**< SPI0 signal line function value: SPI0_SPI0_NPCS3 */
-#define PIO_PA28C_SPI0_SPI0_NPCS3                  (_U_(1) << 28) /**< SPI0 signal: SPI0_SPI0_NPCS3 */
-#define PIN_PA14A_SPI0_SPI0_SPCK                   _L_(14)      /**< SPI0 signal: SPI0_SPI0_SPCK on PA14 mux A */
-#define MUX_PA14A_SPI0_SPI0_SPCK                   _L_(0)       /**< SPI0 signal line function value: SPI0_SPI0_SPCK */
-#define PIO_PA14A_SPI0_SPI0_SPCK                   (_U_(1) << 14) /**< SPI0 signal: SPI0_SPI0_SPCK */
-#define PIN_PB1C_SPI0_SPI0_SPCK                    _L_(33)      /**< SPI0 signal: SPI0_SPI0_SPCK on PB1 mux C */
-#define MUX_PB1C_SPI0_SPI0_SPCK                    _L_(2)       /**< SPI0 signal line function value: SPI0_SPI0_SPCK */
-#define PIO_PB1C_SPI0_SPI0_SPCK                    (_U_(1) << 1) /**< SPI0 signal: SPI0_SPI0_SPCK */
+#define PIN_PA16A_SPI0_MISO                        _L_(16)      /**< SPI0 signal: SPI0_MISO on PA16 mux A */
+#define MUX_PA16A_SPI0_MISO                        _L_(0)       /**< SPI0 signal line function value: SPI0_MISO */
+#define PIO_PA16A_SPI0_MISO                        (_U_(1) << 16) /**< SPI0 signal: SPI0_MISO */
+#define PIN_PA31C_SPI0_MISO                        _L_(31)      /**< SPI0 signal: SPI0_MISO on PA31 mux C */
+#define MUX_PA31C_SPI0_MISO                        _L_(2)       /**< SPI0 signal line function value: SPI0_MISO */
+#define PIO_PA31C_SPI0_MISO                        (_U_(1) << 31) /**< SPI0 signal: SPI0_MISO */
+#define PIN_PA15A_SPI0_MOSI                        _L_(15)      /**< SPI0 signal: SPI0_MOSI on PA15 mux A */
+#define MUX_PA15A_SPI0_MOSI                        _L_(0)       /**< SPI0 signal line function value: SPI0_MOSI */
+#define PIO_PA15A_SPI0_MOSI                        (_U_(1) << 15) /**< SPI0 signal: SPI0_MOSI */
+#define PIN_PB0C_SPI0_MOSI                         _L_(32)      /**< SPI0 signal: SPI0_MOSI on PB0 mux C */
+#define MUX_PB0C_SPI0_MOSI                         _L_(2)       /**< SPI0 signal line function value: SPI0_MOSI */
+#define PIO_PB0C_SPI0_MOSI                         (_U_(1) << 0) /**< SPI0 signal: SPI0_MOSI */
+#define PIN_PA17A_SPI0_NPCS0                       _L_(17)      /**< SPI0 signal: SPI0_NPCS0 on PA17 mux A */
+#define MUX_PA17A_SPI0_NPCS0                       _L_(0)       /**< SPI0 signal line function value: SPI0_NPCS0 */
+#define PIO_PA17A_SPI0_NPCS0                       (_U_(1) << 17) /**< SPI0 signal: SPI0_NPCS0 */
+#define PIN_PA30C_SPI0_NPCS0                       _L_(30)      /**< SPI0 signal: SPI0_NPCS0 on PA30 mux C */
+#define MUX_PA30C_SPI0_NPCS0                       _L_(2)       /**< SPI0 signal line function value: SPI0_NPCS0 */
+#define PIO_PA30C_SPI0_NPCS0                       (_U_(1) << 30) /**< SPI0 signal: SPI0_NPCS0 */
+#define PIN_PA18A_SPI0_NPCS1                       _L_(18)      /**< SPI0 signal: SPI0_NPCS1 on PA18 mux A */
+#define MUX_PA18A_SPI0_NPCS1                       _L_(0)       /**< SPI0 signal line function value: SPI0_NPCS1 */
+#define PIO_PA18A_SPI0_NPCS1                       (_U_(1) << 18) /**< SPI0 signal: SPI0_NPCS1 */
+#define PIN_PA29C_SPI0_NPCS1                       _L_(29)      /**< SPI0 signal: SPI0_NPCS1 on PA29 mux C */
+#define MUX_PA29C_SPI0_NPCS1                       _L_(2)       /**< SPI0 signal line function value: SPI0_NPCS1 */
+#define PIO_PA29C_SPI0_NPCS1                       (_U_(1) << 29) /**< SPI0 signal: SPI0_NPCS1 */
+#define PIN_PA19A_SPI0_NPCS2                       _L_(19)      /**< SPI0 signal: SPI0_NPCS2 on PA19 mux A */
+#define MUX_PA19A_SPI0_NPCS2                       _L_(0)       /**< SPI0 signal line function value: SPI0_NPCS2 */
+#define PIO_PA19A_SPI0_NPCS2                       (_U_(1) << 19) /**< SPI0 signal: SPI0_NPCS2 */
+#define PIN_PA27C_SPI0_NPCS2                       _L_(27)      /**< SPI0 signal: SPI0_NPCS2 on PA27 mux C */
+#define MUX_PA27C_SPI0_NPCS2                       _L_(2)       /**< SPI0 signal line function value: SPI0_NPCS2 */
+#define PIO_PA27C_SPI0_NPCS2                       (_U_(1) << 27) /**< SPI0 signal: SPI0_NPCS2 */
+#define PIN_PA20A_SPI0_NPCS3                       _L_(20)      /**< SPI0 signal: SPI0_NPCS3 on PA20 mux A */
+#define MUX_PA20A_SPI0_NPCS3                       _L_(0)       /**< SPI0 signal line function value: SPI0_NPCS3 */
+#define PIO_PA20A_SPI0_NPCS3                       (_U_(1) << 20) /**< SPI0 signal: SPI0_NPCS3 */
+#define PIN_PA28C_SPI0_NPCS3                       _L_(28)      /**< SPI0 signal: SPI0_NPCS3 on PA28 mux C */
+#define MUX_PA28C_SPI0_NPCS3                       _L_(2)       /**< SPI0 signal line function value: SPI0_NPCS3 */
+#define PIO_PA28C_SPI0_NPCS3                       (_U_(1) << 28) /**< SPI0 signal: SPI0_NPCS3 */
+#define PIN_PA14A_SPI0_SPCK                        _L_(14)      /**< SPI0 signal: SPI0_SPCK on PA14 mux A */
+#define MUX_PA14A_SPI0_SPCK                        _L_(0)       /**< SPI0 signal line function value: SPI0_SPCK */
+#define PIO_PA14A_SPI0_SPCK                        (_U_(1) << 14) /**< SPI0 signal: SPI0_SPCK */
+#define PIN_PB1C_SPI0_SPCK                         _L_(33)      /**< SPI0 signal: SPI0_SPCK on PB1 mux C */
+#define MUX_PB1C_SPI0_SPCK                         _L_(2)       /**< SPI0 signal line function value: SPI0_SPCK */
+#define PIO_PB1C_SPI0_SPCK                         (_U_(1) << 1) /**< SPI0 signal: SPI0_SPCK */
 /* ========== PIO definition for SPI1 peripheral ========== */
-#define PIN_PA24D_SPI1_SPI1_MISO                   _L_(24)      /**< SPI1 signal: SPI1_SPI1_MISO on PA24 mux D */
-#define MUX_PA24D_SPI1_SPI1_MISO                   _L_(3)       /**< SPI1 signal line function value: SPI1_SPI1_MISO */
-#define PIO_PA24D_SPI1_SPI1_MISO                   (_U_(1) << 24) /**< SPI1 signal: SPI1_SPI1_MISO */
-#define PIN_PC3D_SPI1_SPI1_MISO                    _L_(67)      /**< SPI1 signal: SPI1_SPI1_MISO on PC3 mux D */
-#define MUX_PC3D_SPI1_SPI1_MISO                    _L_(3)       /**< SPI1 signal line function value: SPI1_SPI1_MISO */
-#define PIO_PC3D_SPI1_SPI1_MISO                    (_U_(1) << 3) /**< SPI1 signal: SPI1_SPI1_MISO */
-#define PIN_PD27A_SPI1_SPI1_MISO                   _L_(123)     /**< SPI1 signal: SPI1_SPI1_MISO on PD27 mux A */
-#define MUX_PD27A_SPI1_SPI1_MISO                   _L_(0)       /**< SPI1 signal line function value: SPI1_SPI1_MISO */
-#define PIO_PD27A_SPI1_SPI1_MISO                   (_U_(1) << 27) /**< SPI1 signal: SPI1_SPI1_MISO */
-#define PIN_PA23D_SPI1_SPI1_MOSI                   _L_(23)      /**< SPI1 signal: SPI1_SPI1_MOSI on PA23 mux D */
-#define MUX_PA23D_SPI1_SPI1_MOSI                   _L_(3)       /**< SPI1 signal line function value: SPI1_SPI1_MOSI */
-#define PIO_PA23D_SPI1_SPI1_MOSI                   (_U_(1) << 23) /**< SPI1 signal: SPI1_SPI1_MOSI */
-#define PIN_PC2D_SPI1_SPI1_MOSI                    _L_(66)      /**< SPI1 signal: SPI1_SPI1_MOSI on PC2 mux D */
-#define MUX_PC2D_SPI1_SPI1_MOSI                    _L_(3)       /**< SPI1 signal line function value: SPI1_SPI1_MOSI */
-#define PIO_PC2D_SPI1_SPI1_MOSI                    (_U_(1) << 2) /**< SPI1 signal: SPI1_SPI1_MOSI */
-#define PIN_PD26A_SPI1_SPI1_MOSI                   _L_(122)     /**< SPI1 signal: SPI1_SPI1_MOSI on PD26 mux A */
-#define MUX_PD26A_SPI1_SPI1_MOSI                   _L_(0)       /**< SPI1 signal line function value: SPI1_SPI1_MOSI */
-#define PIO_PD26A_SPI1_SPI1_MOSI                   (_U_(1) << 26) /**< SPI1 signal: SPI1_SPI1_MOSI */
-#define PIN_PA25D_SPI1_SPI1_NPCS0                  _L_(25)      /**< SPI1 signal: SPI1_SPI1_NPCS0 on PA25 mux D */
-#define MUX_PA25D_SPI1_SPI1_NPCS0                  _L_(3)       /**< SPI1 signal line function value: SPI1_SPI1_NPCS0 */
-#define PIO_PA25D_SPI1_SPI1_NPCS0                  (_U_(1) << 25) /**< SPI1 signal: SPI1_SPI1_NPCS0 */
-#define PIN_PC4D_SPI1_SPI1_NPCS0                   _L_(68)      /**< SPI1 signal: SPI1_SPI1_NPCS0 on PC4 mux D */
-#define MUX_PC4D_SPI1_SPI1_NPCS0                   _L_(3)       /**< SPI1 signal line function value: SPI1_SPI1_NPCS0 */
-#define PIO_PC4D_SPI1_SPI1_NPCS0                   (_U_(1) << 4) /**< SPI1 signal: SPI1_SPI1_NPCS0 */
-#define PIN_PD28A_SPI1_SPI1_NPCS0                  _L_(124)     /**< SPI1 signal: SPI1_SPI1_NPCS0 on PD28 mux A */
-#define MUX_PD28A_SPI1_SPI1_NPCS0                  _L_(0)       /**< SPI1 signal line function value: SPI1_SPI1_NPCS0 */
-#define PIO_PD28A_SPI1_SPI1_NPCS0                  (_U_(1) << 28) /**< SPI1 signal: SPI1_SPI1_NPCS0 */
-#define PIN_PA26D_SPI1_SPI1_NPCS1                  _L_(26)      /**< SPI1 signal: SPI1_SPI1_NPCS1 on PA26 mux D */
-#define MUX_PA26D_SPI1_SPI1_NPCS1                  _L_(3)       /**< SPI1 signal line function value: SPI1_SPI1_NPCS1 */
-#define PIO_PA26D_SPI1_SPI1_NPCS1                  (_U_(1) << 26) /**< SPI1 signal: SPI1_SPI1_NPCS1 */
-#define PIN_PC5D_SPI1_SPI1_NPCS1                   _L_(69)      /**< SPI1 signal: SPI1_SPI1_NPCS1 on PC5 mux D */
-#define MUX_PC5D_SPI1_SPI1_NPCS1                   _L_(3)       /**< SPI1 signal line function value: SPI1_SPI1_NPCS1 */
-#define PIO_PC5D_SPI1_SPI1_NPCS1                   (_U_(1) << 5) /**< SPI1 signal: SPI1_SPI1_NPCS1 */
-#define PIN_PD29A_SPI1_SPI1_NPCS1                  _L_(125)     /**< SPI1 signal: SPI1_SPI1_NPCS1 on PD29 mux A */
-#define MUX_PD29A_SPI1_SPI1_NPCS1                  _L_(0)       /**< SPI1 signal line function value: SPI1_SPI1_NPCS1 */
-#define PIO_PD29A_SPI1_SPI1_NPCS1                  (_U_(1) << 29) /**< SPI1 signal: SPI1_SPI1_NPCS1 */
-#define PIN_PA27D_SPI1_SPI1_NPCS2                  _L_(27)      /**< SPI1 signal: SPI1_SPI1_NPCS2 on PA27 mux D */
-#define MUX_PA27D_SPI1_SPI1_NPCS2                  _L_(3)       /**< SPI1 signal line function value: SPI1_SPI1_NPCS2 */
-#define PIO_PA27D_SPI1_SPI1_NPCS2                  (_U_(1) << 27) /**< SPI1 signal: SPI1_SPI1_NPCS2 */
-#define PIN_PC6D_SPI1_SPI1_NPCS2                   _L_(70)      /**< SPI1 signal: SPI1_SPI1_NPCS2 on PC6 mux D */
-#define MUX_PC6D_SPI1_SPI1_NPCS2                   _L_(3)       /**< SPI1 signal line function value: SPI1_SPI1_NPCS2 */
-#define PIO_PC6D_SPI1_SPI1_NPCS2                   (_U_(1) << 6) /**< SPI1 signal: SPI1_SPI1_NPCS2 */
-#define PIN_PD30A_SPI1_SPI1_NPCS2                  _L_(126)     /**< SPI1 signal: SPI1_SPI1_NPCS2 on PD30 mux A */
-#define MUX_PD30A_SPI1_SPI1_NPCS2                  _L_(0)       /**< SPI1 signal line function value: SPI1_SPI1_NPCS2 */
-#define PIO_PD30A_SPI1_SPI1_NPCS2                  (_U_(1) << 30) /**< SPI1 signal: SPI1_SPI1_NPCS2 */
-#define PIN_PA28D_SPI1_SPI1_NPCS3                  _L_(28)      /**< SPI1 signal: SPI1_SPI1_NPCS3 on PA28 mux D */
-#define MUX_PA28D_SPI1_SPI1_NPCS3                  _L_(3)       /**< SPI1 signal line function value: SPI1_SPI1_NPCS3 */
-#define PIO_PA28D_SPI1_SPI1_NPCS3                  (_U_(1) << 28) /**< SPI1 signal: SPI1_SPI1_NPCS3 */
-#define PIN_PC7D_SPI1_SPI1_NPCS3                   _L_(71)      /**< SPI1 signal: SPI1_SPI1_NPCS3 on PC7 mux D */
-#define MUX_PC7D_SPI1_SPI1_NPCS3                   _L_(3)       /**< SPI1 signal line function value: SPI1_SPI1_NPCS3 */
-#define PIO_PC7D_SPI1_SPI1_NPCS3                   (_U_(1) << 7) /**< SPI1 signal: SPI1_SPI1_NPCS3 */
-#define PIN_PA22D_SPI1_SPI1_SPCK                   _L_(22)      /**< SPI1 signal: SPI1_SPI1_SPCK on PA22 mux D */
-#define MUX_PA22D_SPI1_SPI1_SPCK                   _L_(3)       /**< SPI1 signal line function value: SPI1_SPI1_SPCK */
-#define PIO_PA22D_SPI1_SPI1_SPCK                   (_U_(1) << 22) /**< SPI1 signal: SPI1_SPI1_SPCK */
-#define PIN_PC1D_SPI1_SPI1_SPCK                    _L_(65)      /**< SPI1 signal: SPI1_SPI1_SPCK on PC1 mux D */
-#define MUX_PC1D_SPI1_SPI1_SPCK                    _L_(3)       /**< SPI1 signal line function value: SPI1_SPI1_SPCK */
-#define PIO_PC1D_SPI1_SPI1_SPCK                    (_U_(1) << 1) /**< SPI1 signal: SPI1_SPI1_SPCK */
-#define PIN_PD25A_SPI1_SPI1_SPCK                   _L_(121)     /**< SPI1 signal: SPI1_SPI1_SPCK on PD25 mux A */
-#define MUX_PD25A_SPI1_SPI1_SPCK                   _L_(0)       /**< SPI1 signal line function value: SPI1_SPI1_SPCK */
-#define PIO_PD25A_SPI1_SPI1_SPCK                   (_U_(1) << 25) /**< SPI1 signal: SPI1_SPI1_SPCK */
+#define PIN_PA24D_SPI1_MISO                        _L_(24)      /**< SPI1 signal: SPI1_MISO on PA24 mux D */
+#define MUX_PA24D_SPI1_MISO                        _L_(3)       /**< SPI1 signal line function value: SPI1_MISO */
+#define PIO_PA24D_SPI1_MISO                        (_U_(1) << 24) /**< SPI1 signal: SPI1_MISO */
+#define PIN_PC3D_SPI1_MISO                         _L_(67)      /**< SPI1 signal: SPI1_MISO on PC3 mux D */
+#define MUX_PC3D_SPI1_MISO                         _L_(3)       /**< SPI1 signal line function value: SPI1_MISO */
+#define PIO_PC3D_SPI1_MISO                         (_U_(1) << 3) /**< SPI1 signal: SPI1_MISO */
+#define PIN_PD27A_SPI1_MISO                        _L_(123)     /**< SPI1 signal: SPI1_MISO on PD27 mux A */
+#define MUX_PD27A_SPI1_MISO                        _L_(0)       /**< SPI1 signal line function value: SPI1_MISO */
+#define PIO_PD27A_SPI1_MISO                        (_U_(1) << 27) /**< SPI1 signal: SPI1_MISO */
+#define PIN_PA23D_SPI1_MOSI                        _L_(23)      /**< SPI1 signal: SPI1_MOSI on PA23 mux D */
+#define MUX_PA23D_SPI1_MOSI                        _L_(3)       /**< SPI1 signal line function value: SPI1_MOSI */
+#define PIO_PA23D_SPI1_MOSI                        (_U_(1) << 23) /**< SPI1 signal: SPI1_MOSI */
+#define PIN_PC2D_SPI1_MOSI                         _L_(66)      /**< SPI1 signal: SPI1_MOSI on PC2 mux D */
+#define MUX_PC2D_SPI1_MOSI                         _L_(3)       /**< SPI1 signal line function value: SPI1_MOSI */
+#define PIO_PC2D_SPI1_MOSI                         (_U_(1) << 2) /**< SPI1 signal: SPI1_MOSI */
+#define PIN_PD26A_SPI1_MOSI                        _L_(122)     /**< SPI1 signal: SPI1_MOSI on PD26 mux A */
+#define MUX_PD26A_SPI1_MOSI                        _L_(0)       /**< SPI1 signal line function value: SPI1_MOSI */
+#define PIO_PD26A_SPI1_MOSI                        (_U_(1) << 26) /**< SPI1 signal: SPI1_MOSI */
+#define PIN_PA25D_SPI1_NPCS0                       _L_(25)      /**< SPI1 signal: SPI1_NPCS0 on PA25 mux D */
+#define MUX_PA25D_SPI1_NPCS0                       _L_(3)       /**< SPI1 signal line function value: SPI1_NPCS0 */
+#define PIO_PA25D_SPI1_NPCS0                       (_U_(1) << 25) /**< SPI1 signal: SPI1_NPCS0 */
+#define PIN_PC4D_SPI1_NPCS0                        _L_(68)      /**< SPI1 signal: SPI1_NPCS0 on PC4 mux D */
+#define MUX_PC4D_SPI1_NPCS0                        _L_(3)       /**< SPI1 signal line function value: SPI1_NPCS0 */
+#define PIO_PC4D_SPI1_NPCS0                        (_U_(1) << 4) /**< SPI1 signal: SPI1_NPCS0 */
+#define PIN_PD28A_SPI1_NPCS0                       _L_(124)     /**< SPI1 signal: SPI1_NPCS0 on PD28 mux A */
+#define MUX_PD28A_SPI1_NPCS0                       _L_(0)       /**< SPI1 signal line function value: SPI1_NPCS0 */
+#define PIO_PD28A_SPI1_NPCS0                       (_U_(1) << 28) /**< SPI1 signal: SPI1_NPCS0 */
+#define PIN_PA26D_SPI1_NPCS1                       _L_(26)      /**< SPI1 signal: SPI1_NPCS1 on PA26 mux D */
+#define MUX_PA26D_SPI1_NPCS1                       _L_(3)       /**< SPI1 signal line function value: SPI1_NPCS1 */
+#define PIO_PA26D_SPI1_NPCS1                       (_U_(1) << 26) /**< SPI1 signal: SPI1_NPCS1 */
+#define PIN_PC5D_SPI1_NPCS1                        _L_(69)      /**< SPI1 signal: SPI1_NPCS1 on PC5 mux D */
+#define MUX_PC5D_SPI1_NPCS1                        _L_(3)       /**< SPI1 signal line function value: SPI1_NPCS1 */
+#define PIO_PC5D_SPI1_NPCS1                        (_U_(1) << 5) /**< SPI1 signal: SPI1_NPCS1 */
+#define PIN_PD29A_SPI1_NPCS1                       _L_(125)     /**< SPI1 signal: SPI1_NPCS1 on PD29 mux A */
+#define MUX_PD29A_SPI1_NPCS1                       _L_(0)       /**< SPI1 signal line function value: SPI1_NPCS1 */
+#define PIO_PD29A_SPI1_NPCS1                       (_U_(1) << 29) /**< SPI1 signal: SPI1_NPCS1 */
+#define PIN_PA27D_SPI1_NPCS2                       _L_(27)      /**< SPI1 signal: SPI1_NPCS2 on PA27 mux D */
+#define MUX_PA27D_SPI1_NPCS2                       _L_(3)       /**< SPI1 signal line function value: SPI1_NPCS2 */
+#define PIO_PA27D_SPI1_NPCS2                       (_U_(1) << 27) /**< SPI1 signal: SPI1_NPCS2 */
+#define PIN_PC6D_SPI1_NPCS2                        _L_(70)      /**< SPI1 signal: SPI1_NPCS2 on PC6 mux D */
+#define MUX_PC6D_SPI1_NPCS2                        _L_(3)       /**< SPI1 signal line function value: SPI1_NPCS2 */
+#define PIO_PC6D_SPI1_NPCS2                        (_U_(1) << 6) /**< SPI1 signal: SPI1_NPCS2 */
+#define PIN_PD30A_SPI1_NPCS2                       _L_(126)     /**< SPI1 signal: SPI1_NPCS2 on PD30 mux A */
+#define MUX_PD30A_SPI1_NPCS2                       _L_(0)       /**< SPI1 signal line function value: SPI1_NPCS2 */
+#define PIO_PD30A_SPI1_NPCS2                       (_U_(1) << 30) /**< SPI1 signal: SPI1_NPCS2 */
+#define PIN_PA28D_SPI1_NPCS3                       _L_(28)      /**< SPI1 signal: SPI1_NPCS3 on PA28 mux D */
+#define MUX_PA28D_SPI1_NPCS3                       _L_(3)       /**< SPI1 signal line function value: SPI1_NPCS3 */
+#define PIO_PA28D_SPI1_NPCS3                       (_U_(1) << 28) /**< SPI1 signal: SPI1_NPCS3 */
+#define PIN_PC7D_SPI1_NPCS3                        _L_(71)      /**< SPI1 signal: SPI1_NPCS3 on PC7 mux D */
+#define MUX_PC7D_SPI1_NPCS3                        _L_(3)       /**< SPI1 signal line function value: SPI1_NPCS3 */
+#define PIO_PC7D_SPI1_NPCS3                        (_U_(1) << 7) /**< SPI1 signal: SPI1_NPCS3 */
+#define PIN_PA22D_SPI1_SPCK                        _L_(22)      /**< SPI1 signal: SPI1_SPCK on PA22 mux D */
+#define MUX_PA22D_SPI1_SPCK                        _L_(3)       /**< SPI1 signal line function value: SPI1_SPCK */
+#define PIO_PA22D_SPI1_SPCK                        (_U_(1) << 22) /**< SPI1 signal: SPI1_SPCK */
+#define PIN_PC1D_SPI1_SPCK                         _L_(65)      /**< SPI1 signal: SPI1_SPCK on PC1 mux D */
+#define MUX_PC1D_SPI1_SPCK                         _L_(3)       /**< SPI1 signal line function value: SPI1_SPCK */
+#define PIO_PC1D_SPI1_SPCK                         (_U_(1) << 1) /**< SPI1 signal: SPI1_SPCK */
+#define PIN_PD25A_SPI1_SPCK                        _L_(121)     /**< SPI1 signal: SPI1_SPCK on PD25 mux A */
+#define MUX_PD25A_SPI1_SPCK                        _L_(0)       /**< SPI1 signal line function value: SPI1_SPCK */
+#define PIO_PD25A_SPI1_SPCK                        (_U_(1) << 25) /**< SPI1 signal: SPI1_SPCK */
 /* ========== PIO definition for SSC0 peripheral ========== */
 #define PIN_PB23C_SSC0_RD0                         _L_(55)      /**< SSC0 signal: SSC0_RD0 on PB23 mux C */
 #define MUX_PB23C_SSC0_RD0                         _L_(2)       /**< SSC0 signal line function value: SSC0_RD0 */

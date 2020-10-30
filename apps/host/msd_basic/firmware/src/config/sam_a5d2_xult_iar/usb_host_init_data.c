@@ -46,13 +46,22 @@ const USB_HOST_TPL_ENTRY USBTPList[1] =
 
 };
 
-const USB_HOST_HCD hcdTable = 
+const USB_HOST_HCD hcdTable[2] = 
 {
-    /* Index of the USB Driver used by the Host Layer */
-    .drvIndex = DRV_USB_UHP_INDEX_0,
+    {
+         /* EHCI Driver Index */ 
+        .drvIndex = DRV_USB_EHCI_INDEX_0,
 
-    /* Pointer to the USB Driver Functions. */
-    .hcdInterface = DRV_USB_UHP_HOST_INTERFACE,
+        /* Pointer to the USB Driver Functions. */
+        .hcdInterface = DRV_USB_EHCI_INTERFACE,
+    },
+    {
+        /* OHCI Driver Index */ 
+        .drvIndex = DRV_USB_OHCI_INDEX_0,
+
+         /* Pointer to the USB Driver Interface. */
+        .hcdInterface = DRV_USB_OHCI_INTERFACE
+    }
 };
 
 const USB_HOST_INIT usbHostInitData = 
