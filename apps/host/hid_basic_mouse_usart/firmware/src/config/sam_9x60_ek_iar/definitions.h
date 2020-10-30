@@ -48,7 +48,8 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "driver/usb/uhp/drv_usb_uhp.h"
+#include "driver/usb/uhp/drv_usb_ehci.h"
+#include "driver/usb/uhp/drv_usb_ohci.h"
 #include "usb/usb_chapter_9.h"
 #include "usb/usb_host.h"
 #include "bsp/bsp.h"
@@ -190,7 +191,8 @@ Remarks:
         
 typedef struct
 {
-    SYS_MODULE_OBJ  drvUSBObject;
+    SYS_MODULE_OBJ  drvUSBEHCIObject;
+    SYS_MODULE_OBJ  drvUSBOHCIObject;
 
 	SYS_MODULE_OBJ  usbHostObject0;
 

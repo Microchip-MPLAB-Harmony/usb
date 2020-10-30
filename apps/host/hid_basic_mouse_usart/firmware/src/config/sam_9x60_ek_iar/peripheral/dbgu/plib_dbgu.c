@@ -311,6 +311,23 @@ bool DBGU_Write(void *buffer, const size_t size)
     return status;
 }
 
+bool DBGU_ReadAbort(void)
+{
+    if (dbguObj.rxBusyStatus == true)
+    {        
+        /* Disable Read, Overrun, Parity and Framing error interrupts */
+        DBGU_REGS->DBGU_IDR = (DBGU_IDR_RXRDY_Msk | DBGU_IDR_FRAME_Msk | DBGU_IDR_PARE_Msk | DBGU_IDR_OVRE_Msk);
+        
+        dbguObj.rxBusyStatus = false;                                
+        
+		/* If required application should read the num bytes processed prior to calling the read abort API */
+        dbguObj.rxSize = 0;
+		dbguObj.rxProcessedSize = 0;
+    }
+    
+    return true;
+}
+
 void DBGU_WriteCallbackRegister(DBGU_CALLBACK callback, uintptr_t context)
 {
     dbguObj.txCallback = callback;
