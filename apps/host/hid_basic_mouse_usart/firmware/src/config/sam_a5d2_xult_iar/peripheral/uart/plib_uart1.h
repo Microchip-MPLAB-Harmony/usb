@@ -79,6 +79,8 @@ size_t UART1_WriteCountGet( void );
 
 size_t UART1_ReadCountGet( void );
 
+bool UART1_ReadAbort(void);
+
 void UART1_WriteCallbackRegister( UART_CALLBACK callback, uintptr_t context );
 
 void UART1_ReadCallbackRegister( UART_CALLBACK callback, uintptr_t context );
