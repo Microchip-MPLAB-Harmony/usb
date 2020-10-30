@@ -60,6 +60,8 @@
 /* ATSAMDA1J16B Devices have USB PADCAL values in OTP4_ADDR */ 
 #define DRV_USBFSV1_READ_PADCAL_VALUE (*((uint32_t *) OTP4_ADDR + 1) >> 13)
 
+/* ATSAMDA1J16B Devices has one interrupt vector for USB module */
+#define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE false
   
 #if (DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE == true)
     #define _DRV_USBFSV1_SYS_INT_SourceEnable(a, b, c, d);          \
