@@ -15,9 +15,7 @@
         "device": "ATSAMA5D27"
     }, 
     "compiler": {
-        "macros": [
-            "__FPU_PRESENT=1"
-        ], 
+        "macros": [], 
         "includes": [
             "..\\src", 
             "..\\src\\config\\sam_a5d2_xult_iar_freertos", 
