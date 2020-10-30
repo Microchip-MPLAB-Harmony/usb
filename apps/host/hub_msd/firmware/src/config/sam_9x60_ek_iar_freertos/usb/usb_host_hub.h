@@ -43,6 +43,7 @@
 #define _USB_HOST_HUB_H_
 //DOM-IGNORE-END
 
+#include "usb_hub.h"
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 
