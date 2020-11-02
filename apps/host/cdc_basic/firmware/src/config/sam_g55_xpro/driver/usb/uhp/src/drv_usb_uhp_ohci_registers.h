@@ -204,7 +204,7 @@ typedef union {
 #define UHP_OHCI_HCINTERRUPTSTATUS_Msk      _U_(0x4000007F)                                /**< (UHP_OHCI_HCINTERRUPTSTATUS) Register Mask  */
 
 
-/* -------- UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE : (UHP_OHCI Offset: 0x10) (R/W 32) UHP OHCI HcInterruptEnable Register -------- */
+/* -------- UHP_OHCI_HCINTERRUPTENABLE : (UHP_OHCI Offset: 0x10) (R/W 32) UHP OHCI HcInterruptEnable Register -------- */
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
 #if COMPONENT_TYPEDEF_STYLE == 'N'
 typedef union {
@@ -221,41 +221,41 @@ typedef union {
     uint32_t MIE:1;                     /**< bit:     31  Enable MasterInterruptEnable             */
   } bit;                                /**< Structure used for bit  access */
   uint32_t reg;                         /**< Type used for register access */
-} UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_Type;
+} UHP_OHCI_HCINTERRUPTENABLE_Type;
 #endif
 #endif /* !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__)) */
 
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_OFFSET (0x10)                                        /**<  (UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE) UHP OHCI HcInterruptEnable Register  Offset */
+#define UHP_OHCI_HCINTERRUPTENABLE_OFFSET (0x10)                                        /**<  (UHP_OHCI_HCINTERRUPTENABLE) UHP OHCI HcInterruptEnable Register  Offset */
 
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_SO_Pos 0                                              /**< (UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE) Enable SchedulingOverrun Position */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_SO_Msk (_U_(0x1) << UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_SO_Pos)  /**< (UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE) Enable SchedulingOverrun Mask */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_SO UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_SO_Msk     /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_SO_Msk instead */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_WDH_Pos 1                                              /**< (UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE) Enable WritebackDoneHead Position */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_WDH_Msk (_U_(0x1) << UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_WDH_Pos)  /**< (UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE) Enable WritebackDoneHead Mask */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_WDH UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_WDH_Msk    /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_WDH_Msk instead */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_SF_Pos 2                                              /**< (UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE) Enable StartofFrame Position */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_SF_Msk (_U_(0x1) << UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_SF_Pos)  /**< (UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE) Enable StartofFrame Mask */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_SF UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_SF_Msk     /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_SF_Msk instead */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_RD_Pos 3                                              /**< (UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE) Enable ResumeDetected Position */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_RD_Msk (_U_(0x1) << UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_RD_Pos)  /**< (UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE) Enable ResumeDetected Mask */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_RD UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_RD_Msk     /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_RD_Msk instead */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_UE_Pos 4                                              /**< (UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE) Enable UnrecoverableError Position */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_UE_Msk (_U_(0x1) << UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_UE_Pos)  /**< (UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE) Enable UnrecoverableError Mask */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_UE UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_UE_Msk     /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_UE_Msk instead */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_FNO_Pos 5                                              /**< (UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE) Enable FrameNumberOverflow Position */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_FNO_Msk (_U_(0x1) << UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_FNO_Pos)  /**< (UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE) Enable FrameNumberOverflow Mask */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_FNO UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_FNO_Msk    /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_FNO_Msk instead */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_RHSC_Pos 6                                              /**< (UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE) Enable RootHubStatusChange Position */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_RHSC_Msk (_U_(0x1) << UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_RHSC_Pos)  /**< (UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE) Enable RootHubStatusChange Mask */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_RHSC UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_RHSC_Msk   /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_RHSC_Msk instead */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_OC_Pos 30                                             /**< (UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE) Enable OwnershipChange Position */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_OC_Msk (_U_(0x1) << UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_OC_Pos)  /**< (UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE) Enable OwnershipChange Mask */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_OC UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_OC_Msk     /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_OC_Msk instead */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_MIE_Pos 31                                             /**< (UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE) Enable MasterInterruptEnable Position */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_MIE_Msk (_U_(0x1) << UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_MIE_Pos)  /**< (UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE) Enable MasterInterruptEnable Mask */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_MIE UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_MIE_Msk    /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_MIE_Msk instead */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_MASK _U_(0xC000007F)                                /**< \deprecated (UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE) Register MASK  (Use UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_Msk instead)  */
-#define UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_Msk _U_(0xC000007F)                                /**< (UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE) Register Mask  */
+#define UHP_OHCI_HCINTERRUPTENABLE_SO_Pos 0                                              /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable SchedulingOverrun Position */
+#define UHP_OHCI_HCINTERRUPTENABLE_SO_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_SO_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable SchedulingOverrun Mask */
+#define UHP_OHCI_HCINTERRUPTENABLE_SO UHP_OHCI_HCINTERRUPTENABLE_SO_Msk     /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTENABLE_SO_Msk instead */
+#define UHP_OHCI_HCINTERRUPTENABLE_WDH_Pos 1                                              /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable WritebackDoneHead Position */
+#define UHP_OHCI_HCINTERRUPTENABLE_WDH_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_WDH_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable WritebackDoneHead Mask */
+#define UHP_OHCI_HCINTERRUPTENABLE_WDH UHP_OHCI_HCINTERRUPTENABLE_WDH_Msk    /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTENABLE_WDH_Msk instead */
+#define UHP_OHCI_HCINTERRUPTENABLE_SF_Pos 2                                              /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable StartofFrame Position */
+#define UHP_OHCI_HCINTERRUPTENABLE_SF_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_SF_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable StartofFrame Mask */
+#define UHP_OHCI_HCINTERRUPTENABLE_SF UHP_OHCI_HCINTERRUPTENABLE_SF_Msk     /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTENABLE_SF_Msk instead */
+#define UHP_OHCI_HCINTERRUPTENABLE_RD_Pos 3                                              /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable ResumeDetected Position */
+#define UHP_OHCI_HCINTERRUPTENABLE_RD_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_RD_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable ResumeDetected Mask */
+#define UHP_OHCI_HCINTERRUPTENABLE_RD UHP_OHCI_HCINTERRUPTENABLE_RD_Msk     /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTENABLE_RD_Msk instead */
+#define UHP_OHCI_HCINTERRUPTENABLE_UE_Pos 4                                              /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable UnrecoverableError Position */
+#define UHP_OHCI_HCINTERRUPTENABLE_UE_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_UE_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable UnrecoverableError Mask */
+#define UHP_OHCI_HCINTERRUPTENABLE_UE UHP_OHCI_HCINTERRUPTENABLE_UE_Msk     /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTENABLE_UE_Msk instead */
+#define UHP_OHCI_HCINTERRUPTENABLE_FNO_Pos 5                                              /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable FrameNumberOverflow Position */
+#define UHP_OHCI_HCINTERRUPTENABLE_FNO_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_FNO_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable FrameNumberOverflow Mask */
+#define UHP_OHCI_HCINTERRUPTENABLE_FNO UHP_OHCI_HCINTERRUPTENABLE_FNO_Msk    /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTENABLE_FNO_Msk instead */
+#define UHP_OHCI_HCINTERRUPTENABLE_RHSC_Pos 6                                              /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable RootHubStatusChange Position */
+#define UHP_OHCI_HCINTERRUPTENABLE_RHSC_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_RHSC_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable RootHubStatusChange Mask */
+#define UHP_OHCI_HCINTERRUPTENABLE_RHSC UHP_OHCI_HCINTERRUPTENABLE_RHSC_Msk   /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTENABLE_RHSC_Msk instead */
+#define UHP_OHCI_HCINTERRUPTENABLE_OC_Pos 30                                             /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable OwnershipChange Position */
+#define UHP_OHCI_HCINTERRUPTENABLE_OC_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_OC_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable OwnershipChange Mask */
+#define UHP_OHCI_HCINTERRUPTENABLE_OC UHP_OHCI_HCINTERRUPTENABLE_OC_Msk     /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTENABLE_OC_Msk instead */
+#define UHP_OHCI_HCINTERRUPTENABLE_MIE_Pos 31                                             /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable MasterInterruptEnable Position */
+#define UHP_OHCI_HCINTERRUPTENABLE_MIE_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_MIE_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable MasterInterruptEnable Mask */
+#define UHP_OHCI_HCINTERRUPTENABLE_MIE UHP_OHCI_HCINTERRUPTENABLE_MIE_Msk    /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTENABLE_MIE_Msk instead */
+#define UHP_OHCI_HCINTERRUPTENABLE_MASK _U_(0xC000007F)                                /**< \deprecated (UHP_OHCI_HCINTERRUPTENABLE) Register MASK  (Use UHP_OHCI_HCINTERRUPTENABLE_Msk instead)  */
+#define UHP_OHCI_HCINTERRUPTENABLE_Msk _U_(0xC000007F)                                /**< (UHP_OHCI_HCINTERRUPTENABLE) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCINTERRUPTDISABLE : (UHP_OHCI Offset: 0x14) (R/W 32) UHP OHCI HcInterruptDisable Register -------- */
@@ -911,7 +911,7 @@ typedef struct {
   __IO uint32_t UHP_OHCI_HCCONTROL; /**< (UHP_OHCI Offset: 0x04) UHP OHCI HcControl Register */
   __IO uint32_t UHP_OHCI_HCCOMMANDSTATUS; /**< (UHP_OHCI Offset: 0x08) UHP_OHCI HcInterruptStatus Register */
   __IO uint32_t UHP_OHCI_HCINTERRUPTSTATUS; /**< (UHP_OHCI Offset: 0x0C) UHP OHCI HcInterruptStatus Register */
-  __IO uint32_t UHP_0HCI_HCINTERRUPTENABLE; /**< (UHP_OHCI Offset: 0x10) UHP OHCI HcInterruptEnable Register */
+  __IO uint32_t UHP_OHCI_HCINTERRUPTENABLE; /**< (UHP_OHCI Offset: 0x10) UHP OHCI HcInterruptEnable Register */
   __IO uint32_t UHP_OHCI_HCINTERRUPTDISABLE; /**< (UHP_OHCI Offset: 0x14) UHP OHCI HcInterruptDisable Register */
   __IO uint32_t UHP_OHCI_HCHCCA; /**< (UHP_OHCI Offset: 0x18) UHP OHCI HcHCCA Register */
   __IO uint32_t UHP_OHCI_HCPERIODCURRENTED; /**< (UHP_OHCI Offset: 0x1C) UHP OHCI HcPeriodCurrentED Register */
@@ -940,7 +940,7 @@ typedef struct {
   __IO UHP_OHCI_HCCONTROL_Type        UHP_OHCI_HCCONTROL; /**< Offset: 0x04 (R/W  32) UHP OHCI HcControl Register */
   __IO UHP_OHCI_HCCOMMANDSTATUS_Type  UHP_OHCI_HCCOMMANDSTATUS; /**< Offset: 0x08 (R/W  32) UHP_OHCI HcInterruptStatus Register */
   __IO UHP_OHCI_HCINTERRUPTSTATUS_Type UHP_OHCI_HCINTERRUPTSTATUS; /**< Offset: 0x0C (R/W  32) UHP OHCI HcInterruptStatus Register */
-  __IO UHP_OHCI_UHP_0HCI_HCINTERRUPTENABLE_Type UHP_0HCI_HCINTERRUPTENABLE; /**< Offset: 0x10 (R/W  32) UHP OHCI HcInterruptEnable Register */
+  __IO UHP_OHCI_HCINTERRUPTENABLE_Type UHP_OHCI_HCINTERRUPTENABLE; /**< Offset: 0x10 (R/W  32) UHP OHCI HcInterruptEnable Register */
   __IO UHP_OHCI_HCINTERRUPTDISABLE_Type UHP_OHCI_HCINTERRUPTDISABLE; /**< Offset: 0x14 (R/W  32) UHP OHCI HcInterruptDisable Register */
   __IO UHP_OHCI_HCHCCA_Type           UHP_OHCI_HCHCCA; /**< Offset: 0x18 (R/W  32) UHP OHCI HcHCCA Register */
   __IO UHP_OHCI_HCPERIODCURRENTED_Type UHP_OHCI_HCPERIODCURRENTED; /**< Offset: 0x1C (R/W  32) UHP OHCI HcPeriodCurrentED Register */

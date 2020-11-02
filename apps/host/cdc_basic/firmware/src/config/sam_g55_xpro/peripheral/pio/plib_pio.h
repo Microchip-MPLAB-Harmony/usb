@@ -62,6 +62,14 @@
 // *****************************************************************************
 
 
+/*** Macros for UHP_DP pin ***/
+#define UHP_DP_Get()               ((PIOA_REGS->PIO_PDSR >> 22) & 0x1)
+#define UHP_DP_PIN                  PIO_PIN_PA22
+
+/*** Macros for UHP_DM pin ***/
+#define UHP_DM_Get()               ((PIOA_REGS->PIO_PDSR >> 21) & 0x1)
+#define UHP_DM_PIN                  PIO_PIN_PA21
+
 
 // *****************************************************************************
 /* PIO Port

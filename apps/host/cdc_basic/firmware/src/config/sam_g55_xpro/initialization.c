@@ -102,14 +102,16 @@ void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
 }
 
 
-DRV_USB_UHP_INIT drvUSBInit =
+DRV_USB_OHCI_INIT drvUSBOHCIInit =
 {
     /* Interrupt Source for USB module */
     .interruptSource = (INT_SOURCE)UHP_IRQn,
-    /* Enable Full Speed Operation */
-    .operationSpeed = USB_SPEED_FULL,
+
     /* USB base address */
-    .usbIDOHCI = ((UhpOhci*)0x20400000),
+    .usbID = ((UhpOhci*)0x20400000),   
+
+     /* Ports Selection */ 
+    .bmPortSelect = 0x01,
     
     /* USB Host Power Enable. USB Driver uses this function to Enable the VBUS */ 
     .portPowerEnable = DRV_USB_VBUSPowerEnable,
@@ -176,8 +178,7 @@ void SYS_Initialize ( void* data )
 
 
 
-    FLEXCOM7_USART_Initialize();
-
+	BSP_Initialize();
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
 
   
@@ -186,13 +187,11 @@ void SYS_Initialize ( void* data )
     TC0_CH0_TimerInitialize(); 
      
     
-	BSP_Initialize();
 
 
     sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);
 
-    /* Initialize USB Driver */ 
-    sysObj.drvUSBObject = DRV_USB_UHP_Initialize (DRV_USB_UHP_INDEX_0, (SYS_MODULE_INIT *) &drvUSBInit);
+    sysObj.drvUSBOHCIObject = DRV_USB_OHCI_Initialize (DRV_USB_OHCI_INDEX_0, (SYS_MODULE_INIT *) &drvUSBOHCIInit);
 
 	/* Initialize the USB Host layer */
     sysObj.usbHostObject0 = USB_HOST_Initialize (( SYS_MODULE_INIT *)& usbHostInitData );	
