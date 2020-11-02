@@ -1,0 +1,40 @@
+format_version: v1.0
+type: UniqueComponent
+attributes: {id: drv_usbhs_v1}
+children:
+- type: Symbols
+  children:
+  - type: File
+    attributes: {id: DRV_USB_SOURCE_FILE_DEVICE}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: enabled}
+        children:
+        - {type: Value, value: 'true'}
+  - type: Boolean
+    attributes: {id: ENABLE_DRV_USB_DEVICE_SOURCE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: drv_usbhs_v1, value: 'true'}
+  - type: Boolean
+    attributes: {id: ENABLE_DRV_USB_HOST_SOURCE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: drv_usbhs_v1, value: 'true'}
+  - type: Combo
+    attributes: {id: USB_OPERATION_MODE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: drv_usbhs_v1, value: Host}
+      - type: User
+        attributes: {value: DualRole}
+- type: ElementPosition
+  attributes: {x: '12', y: '222', id: drv_usbhs_v1}

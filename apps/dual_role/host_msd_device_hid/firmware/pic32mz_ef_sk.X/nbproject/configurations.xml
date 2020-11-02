@@ -1,7 +1,9 @@
-<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="65">
   <logicalFolder name="root" displayName="root" projectFiles="true">
-    <logicalFolder name="HeaderFiles" displayName="Header Files" projectFiles="true">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mz_ef_sk" projectFiles="true">
           <logicalFolder name="f3" displayName="bsp" projectFiles="true">
@@ -147,20 +149,41 @@
       <itemPath>../src/mouse.h</itemPath>
       <itemPath>../src/app.h</itemPath>
     </logicalFolder>
-    <logicalFolder name="ExternalFiles" displayName="Important Files" projectFiles="true">
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="true">
+      <logicalFolder name="f1" displayName="pic32mz_ef_sk.mhc" projectFiles="true">
+        <itemPath>..\src\config\pic32mz_ef_sk\pic32mz_ef_sk.mhc\BSP_PIC32MZ_EF_Starter_Kit.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk\pic32mz_ef_sk.mhc\core.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk\pic32mz_ef_sk.mhc\core_timer.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk\pic32mz_ef_sk.mhc\dfp.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk\pic32mz_ef_sk.mhc\drv_usbhs_v1.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk\pic32mz_ef_sk.mhc\GraphSettings.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk\pic32mz_ef_sk.mhc\HarmonyCore.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk\pic32mz_ef_sk.mhc\project.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk\pic32mz_ef_sk.mhc\settings.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk\pic32mz_ef_sk.mhc\sys_fs.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk\pic32mz_ef_sk.mhc\sys_time.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk\pic32mz_ef_sk.mhc\usb_device.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk\pic32mz_ef_sk.mhc\usb_device_hid.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk\pic32mz_ef_sk.mhc\usb_host.yml</itemPath>
+        <itemPath>..\src\config\pic32mz_ef_sk\pic32mz_ef_sk.mhc\usb_host_msd.yml</itemPath>
+      </logicalFolder>
       <itemPath>Makefile</itemPath>
-      <itemPath>../src/config/pic32mz_ef_sk/harmony.prj</itemPath>
-      <itemPath>../src/config/pic32mz_ef_sk/pic32mz_ef_sk.xml</itemPath>
       <itemPath>../src/config/pic32mz_ef_sk/harmony-manifest-success.yml</itemPath>
     </logicalFolder>
-    <logicalFolder name="LinkerScript" displayName="Linker Files" projectFiles="true">
+    <logicalFolder name="LinkerScript"
+                   displayName="Linker Files"
+                   projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mz_ef_sk" projectFiles="true">
           <itemPath>../src/config/pic32mz_ef_sk/p32MZ2048EFH144.ld</itemPath>
         </logicalFolder>
       </logicalFolder>
     </logicalFolder>
-    <logicalFolder name="SourceFiles" displayName="Source Files" projectFiles="true">
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mz_ef_sk" projectFiles="true">
           <logicalFolder name="f4" displayName="bsp" projectFiles="true">
@@ -255,8 +278,8 @@
       <toolsSet>
         <developmentServer>localhost</developmentServer>
         <targetDevice>PIC32MZ2048EFH144</targetDevice>
-        <targetHeader/>
-        <targetPluginBoard/>
+        <targetHeader></targetHeader>
+        <targetPluginBoard></targetPluginBoard>
         <platformTool>PKOBSKDEPlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.00</languageToolchainVersion>
@@ -277,16 +300,17 @@
         <loading>
           <useAlternateLoadableFile>false</useAlternateLoadableFile>
           <parseOnProdLoad>false</parseOnProdLoad>
-          <alternateLoadableFile/>
+          <alternateLoadableFile></alternateLoadableFile>
         </loading>
         <subordinates>
         </subordinates>
       </compileType>
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
-        <makeCustomizationPreStep/>
+        <makeUseCleanTarget>false</makeUseCleanTarget>
+        <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
-        <makeCustomizationPostStep/>
+        <makeCustomizationPostStep></makeCustomizationPostStep>
         <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
@@ -298,7 +322,8 @@
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value=";../src/config/pic32mz_ef_sk/system/fs/fat_fs/file_system;../src/config/pic32mz_ef_sk/system/fs/fat_fs/hardware_access;../src;../src/config/pic32mz_ef_sk;../src/packs/PIC32MZ2048EFH144_DFP"/>
+        <property key="extra-include-directories"
+                  value=";../src/config/pic32mz_ef_sk/system/fs/fat_fs/file_system;../src/config/pic32mz_ef_sk/system/fs/fat_fs/hardware_access;../src;../src/config/pic32mz_ef_sk;../src/packs/PIC32MZ2048EFH144_DFP"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -313,7 +338,7 @@
         <property key="use-cci" value="false"/>
         <property key="use-iar" value="false"/>
         <property key="use-indirect-calls" value="false"/>
-      <appendMe value="-Wundef -Wshadow -Wpointer-arith -Wbad-function-cast -Wwrite-strings -Waggregate-return -Wstrict-prototypes -Wno-deprecated-declarations -Wredundant-decls -Wnested-externs -Winline -Wlong-long -Wunreachable-code -Wmissing-noreturn"/>
+        <appendMe value="-Wundef -Wshadow -Wpointer-arith -Wbad-function-cast -Wwrite-strings -Waggregate-return -Wstrict-prototypes -Wno-deprecated-declarations -Wredundant-decls -Wnested-externs -Winline -Wlong-long -Wunreachable-code -Wmissing-noreturn"/>
       </C32>
       <C32-AR>
         <property key="additional-options-chop-files" value="false"/>
@@ -383,7 +408,8 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exceptions" value="true"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value=";../src/config/pic32mz_ef_sk/system/fs/fat_fs/file_system;../src/config/pic32mz_ef_sk/system/fs/fat_fs/hardware_access;../src;../src/config/pic32mz_ef_sk;../src/packs/PIC32MZ2048EFH144_DFP"/>
+        <property key="extra-include-directories"
+                  value=";../src/config/pic32mz_ef_sk/system/fs/fat_fs/file_system;../src/config/pic32mz_ef_sk/system/fs/fat_fs/hardware_access;../src;../src/config/pic32mz_ef_sk;../src/packs/PIC32MZ2048EFH144_DFP"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -436,7 +462,8 @@
         <property key="TIMER3" value="true"/>
         <property key="TIMER4" value="true"/>
         <property key="TIMER5" value="true"/>
-        <property key="ToolFirmwareFilePath" value="Press to browse for a specific firmware version"/>
+        <property key="ToolFirmwareFilePath"
+                  value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
         <property key="UART1" value="true"/>
         <property key="UART2" value="true"/>
