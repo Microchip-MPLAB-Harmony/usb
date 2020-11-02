@@ -48,8 +48,10 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include <stdio.h>
-#include "peripheral/flexcom/usart/plib_flexcom7_usart.h"
+#include "driver/usb/uhp/drv_usb_ohci.h"
+#include "usb/usb_chapter_9.h"
+#include "usb/usb_host.h"
+#include "bsp/bsp.h"
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
@@ -58,13 +60,9 @@
 #include "usb/usb_cdc.h"
 #include "peripheral/efc/plib_efc.h"
 #include "peripheral/tc/plib_tc0.h"
-#include "system/time/sys_time.h"
-#include "driver/usb/uhp/drv_usb_uhp.h"
-#include "usb/usb_chapter_9.h"
-#include "usb/usb_host.h"
-#include "bsp/bsp.h"
 #include "FreeRTOS.h"
 #include "task.h"
+#include "system/time/sys_time.h"
 #include "system/int/sys_int.h"
 #include "system/cache/sys_cache.h"
 #include "osal/osal.h"
@@ -191,11 +189,11 @@ Remarks:
         
 typedef struct
 {
-    SYS_MODULE_OBJ  sysTime;
-    SYS_MODULE_OBJ  drvUSBObject;
+    SYS_MODULE_OBJ  drvUSBOHCIObject;
 
 	SYS_MODULE_OBJ  usbHostObject0;
 
+    SYS_MODULE_OBJ  sysTime;
 
 } SYSTEM_OBJECTS;
 

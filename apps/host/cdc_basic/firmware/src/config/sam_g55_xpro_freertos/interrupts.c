@@ -60,8 +60,10 @@
 
 extern uint32_t _stack;
 
+void Dummy_Handler(void);
+
 /* Brief default interrupt handler for unused IRQs.*/
-void __attribute__((optimize("-O1"),section(".text.Dummy_Handler"),long_call))Dummy_Handler(void)
+void __attribute__((optimize("-O1"),section(".text.Dummy_Handler"),long_call, noreturn))Dummy_Handler(void)
 {
 #if defined(__DEBUG) || defined(__DEBUG_D) && defined(__XC32)
     __builtin_software_breakpoint();
@@ -88,7 +90,7 @@ void RTT_Handler                ( void ) __attribute__((weak, alias("Dummy_Handl
 void WDT_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void PMC_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void EFC_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void FLEXCOM7_InterruptHandler  ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void FLEXCOM7_Handler           ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void FLEXCOM0_Handler           ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void FLEXCOM1_Handler           ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void PIOA_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -143,7 +145,7 @@ const DeviceVectors exception_table=
     .pfnWDT_Handler                = ( void * ) WDT_Handler,
     .pfnPMC_Handler                = ( void * ) PMC_Handler,
     .pfnEFC_Handler                = ( void * ) EFC_Handler,
-    .pfnFLEXCOM7_Handler           = ( void * ) FLEXCOM7_InterruptHandler,
+    .pfnFLEXCOM7_Handler           = ( void * ) FLEXCOM7_Handler,
     .pfnFLEXCOM0_Handler           = ( void * ) FLEXCOM0_Handler,
     .pfnFLEXCOM1_Handler           = ( void * ) FLEXCOM1_Handler,
     .pfnPIOA_Handler               = ( void * ) PIOA_Handler,

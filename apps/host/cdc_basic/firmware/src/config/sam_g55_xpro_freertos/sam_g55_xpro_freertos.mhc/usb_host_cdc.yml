@@ -1,0 +1,6 @@
+format_version: v1.0
+type: UniqueComponent
+attributes: {id: usb_host_cdc}
+children:
+- type: ElementPosition
+  attributes: {x: '293', y: '282', id: usb_host_cdc}

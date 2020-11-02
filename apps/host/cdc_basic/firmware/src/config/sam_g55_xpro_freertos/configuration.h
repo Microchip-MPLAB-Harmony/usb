@@ -80,13 +80,13 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 /* TIME System Service Configuration Options */
-#define SYS_TIME_INDEX_0                     0
-#define SYS_TIME_MAX_TIMERS                  5
-#define SYS_TIME_HW_COUNTER_WIDTH            16
-#define SYS_TIME_HW_COUNTER_PERIOD           65535U
-#define SYS_TIME_HW_COUNTER_HALF_PERIOD	     (SYS_TIME_HW_COUNTER_PERIOD>>1)
-#define SYS_TIME_CPU_CLOCK_FREQUENCY         119996416
-#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES      (188)
+#define SYS_TIME_INDEX_0                            (0)
+#define SYS_TIME_MAX_TIMERS                         (5)
+#define SYS_TIME_HW_COUNTER_WIDTH                   (16)
+#define SYS_TIME_HW_COUNTER_PERIOD                  (65535U)
+#define SYS_TIME_HW_COUNTER_HALF_PERIOD             (SYS_TIME_HW_COUNTER_PERIOD>>1)
+#define SYS_TIME_CPU_CLOCK_FREQUENCY                (119996416)
+#define SYS_TIME_COMPARE_UPDATE_EXECUTION_CYCLES    (188)
 
 
 
@@ -102,34 +102,28 @@ extern "C" {
 // Section: Middleware & Other Library Configuration
 // *****************************************************************************
 // *****************************************************************************
-/* Number of CDC Function driver instances in the application */
-#define USB_HOST_CDC_INSTANCES_NUMBER         1
 
-/* Number of CDC Attach Listeners */ 
-#define USB_HOST_CDC_ATTACH_LISTENERS_NUMBER        1
+/* EHCI Driver is not used */  
+#define DRV_USB_EHCI_INSTANCES_NUMBER                     0
+	
 
-/*** USB Driver Configuration ***/
 
-/* Maximum USB driver instances */
-#define DRV_USB_UHP_INSTANCES_NUMBER                         1
+/*** USB OHCI Driver Configurations ***/
 
-/* Interrupt mode enabled */
-#define DRV_USB_UHP_INTERRUPT_MODE                           true
-
-/* Number of NAKs to wait before returning transfer failure */ 
-#define DRV_USB_UHP_NAK_LIMIT                          2000 
-
-/* Maximum Number of pipes */
-#define DRV_USB_UHP_PIPES_NUMBER                       10  
+#define DRV_USB_OHCI_INSTANCES_NUMBER                        1
 
 /* Attach Debounce duration in milli Seconds */ 
-#define DRV_USB_UHP_ATTACH_DEBOUNCE_DURATION           500
+#define DRV_USB_OHCI_ATTACH_DEBOUNCE_DURATION           500
 
 /* Reset duration in milli Seconds */ 
-#define DRV_USB_UHP_RESET_DURATION                     100
+#define DRV_USB_OHCI_RESET_DURATION                     100
 
-/* Maximum Transfer Size */ 
-#define DRV_USB_UHP_NO_CACHE_BUFFER_LENGTH  512
+/* Maximum Control Transfer Size */
+#define DRV_USB_OHCI_CONTROL_TRANSFER_BUFFER_SIZE 512
+
+/* Maximum Non Control Transfer Size */ 
+#define DRV_USB_OHCI_TRANSFER_BUFFER_SIZE  512
+
 
 /* Alignment for buffers that are submitted to USB Driver*/ 
 #ifndef USB_ALIGN
@@ -143,12 +137,9 @@ extern "C" {
 // **************************************************************************
 
 /* Number of Endpoints used */
-#define DRV_USB_UHP_ENDPOINTS_NUMBER                        1
 
+/* Total number of devices to be supported */
 #define USB_HOST_DEVICES_NUMBER                             1
-
-/* Size of Endpoint 0 buffer */
-#define USB_DEVICE_EP0_BUFFER_SIZE                          64
 
 /* Target peripheral list entries */
 #define  USB_HOST_TPL_ENTRIES                               1 
@@ -163,8 +154,12 @@ extern "C" {
 /* Provides Host pipes number */
 #define USB_HOST_PIPES_NUMBER                               10
 
-/* Number of Host Layer Clients */
-#define USB_HOST_CLIENTS_NUMBER                             1   
+
+/* Number of CDC Function driver instances in the application */
+#define USB_HOST_CDC_INSTANCES_NUMBER         1
+
+/* Number of CDC Attach Listeners */ 
+#define USB_HOST_CDC_ATTACH_LISTENERS_NUMBER        1
 
 
 
