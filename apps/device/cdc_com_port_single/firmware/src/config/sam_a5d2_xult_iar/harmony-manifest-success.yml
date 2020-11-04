@@ -14,7 +14,7 @@ compiler: iar
 modules:
     - {name: "csp", version: "v3.8.1"}
     - {name: "core", version: "v3.8.1"}
-    - {name: "usb", version: "unknown"}
+    - {name: "usb", version: "v3.7.0"}
     - {name: "dev_packs", version: "v3.8.0"}
     - {name: "mhc", version: "v3.6.1"}
     - {name: "bsp", version: "v3.8.1"}

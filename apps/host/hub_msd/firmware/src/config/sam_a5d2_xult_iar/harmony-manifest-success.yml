@@ -4,18 +4,19 @@
 
 
 project: hub_msd
-creation_date: 2020-10-30T14:12:18.946+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2020-07-23T16:49:05.212+02:00[Europe/Paris]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 10
 mhc_mode: Standalone            # [IDE|Standalone|Headless]
 mplabx_version: NA        # if MPLAB X plugin only
 plugin_version: NA        # if MPLAB X plugin only
-compiler: iar
 
 modules:
-    - {name: "csp", version: "v3.8.1"}
-    - {name: "core", version: "v3.8.1"}
-    - {name: "usb", version: "unknown"}
-    - {name: "dev_packs", version: "v3.8.0"}
-    - {name: "mhc", version: "unknown"}
     - {name: "bsp", version: "v3.8.1"}
+    - {name: "CMSIS-FreeRTOS", version: "v10.3.1"}
+    - {name: "contentmanager", version: "v1.5.0"}
+    - {name: "core", version: "v3.8.1"}
+    - {name: "csp", version: "v3.8.1"}
+    - {name: "dev_packs", version: "v3.8.0"}
+    - {name: "mhc", version: "v3.6.1"}
+    - {name: "usb", version: "v3.7.0"}
 
