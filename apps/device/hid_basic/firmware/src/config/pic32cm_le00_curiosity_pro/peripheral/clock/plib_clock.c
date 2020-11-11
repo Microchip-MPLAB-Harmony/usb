@@ -44,52 +44,78 @@
 static void OSCCTRL_Initialize(void)
 {
     /**************** OSC16M IniTialization *************/
-    OSCCTRL_REGS->OSCCTRL_OSC16MCTRL = OSCCTRL_OSC16MCTRL_FSEL(0x0) | OSCCTRL_OSC16MCTRL_ENABLE_Msk;
+    OSCCTRL_REGS->OSCCTRL_OSC16MCTRL = OSCCTRL_OSC16MCTRL_FSEL(0x3) | OSCCTRL_OSC16MCTRL_ENABLE_Msk;
+/****************** XOSC Initialization   ********************************/
+
+
+/* Configure External Oscillator */
+    OSCCTRL_REGS->OSCCTRL_XOSCCTRL = OSCCTRL_XOSCCTRL_STARTUP(0x6) | OSCCTRL_XOSCCTRL_GAIN(2) | OSCCTRL_XOSCCTRL_ENABLE_Msk;
+
+while((OSCCTRL_REGS->OSCCTRL_STATUS & OSCCTRL_STATUS_XOSCRDY_Msk) != OSCCTRL_STATUS_XOSCRDY_Msk)
+{
+    /* Waiting for the XOSC Ready state */
+}
+
 }
 
 static void OSC32KCTRL_Initialize(void)
 {
+    /****************** XOSC32K initialization  ******************************/
+
+    /* Configure 32K External Oscillator */
+    OSC32KCTRL_REGS->OSC32KCTRL_XOSC32K = OSC32KCTRL_XOSC32K_STARTUP(0) | OSC32KCTRL_XOSC32K_ENABLE_Msk | OSC32KCTRL_XOSC32K_EN32K_Msk ;
+
+
+    while(!((OSC32KCTRL_REGS->OSC32KCTRL_STATUS & OSC32KCTRL_STATUS_XOSC32KRDY_Msk) == OSC32KCTRL_STATUS_XOSC32KRDY_Msk))
+    {
+        /* Waiting for the XOSC32K Ready state */
+    }
 	OSC32KCTRL_REGS->OSC32KCTRL_RTCCTRL = OSC32KCTRL_RTCCTRL_RTCSEL(0);
 }
 
-static void DFLL48M_Initialize(void)
+
+
+static void FDPLL_Initialize(void)
 {
-    /****************** DFLL Initialization  *********************************/
-    OSCCTRL_REGS->OSCCTRL_DFLLCTRL = 0 ;
-
-    while((OSCCTRL_REGS->OSCCTRL_STATUS & OSCCTRL_STATUS_DFLLRDY_Msk) != OSCCTRL_STATUS_DFLLRDY_Msk)
+	GCLK_REGS->GCLK_PCHCTRL[0] = GCLK_PCHCTRL_GEN(0x1)  | GCLK_PCHCTRL_CHEN_Msk;
+	while ((GCLK_REGS->GCLK_PCHCTRL[0] & GCLK_PCHCTRL_CHEN_Msk) != GCLK_PCHCTRL_CHEN_Msk)
     {
-        /* Waiting for the Ready state */
+        /* Wait for synchronization */
     }
 
-    /*Load Calibration Value*/
-    uint8_t calibCoarse = (uint8_t)(((*(uint32_t*)0x806020) >> 25 ) & 0x3f);
+    /****************** DPLL Initialization  *********************************/
 
-    OSCCTRL_REGS->OSCCTRL_DFLLVAL = OSCCTRL_DFLLVAL_COARSE(calibCoarse) | OSCCTRL_DFLLVAL_FINE(512);
+    /* Configure DPLL    */
+    OSCCTRL_REGS->OSCCTRL_DPLLCTRLB = OSCCTRL_DPLLCTRLB_FILTER(0) | OSCCTRL_DPLLCTRLB_LTIME(0)| OSCCTRL_DPLLCTRLB_REFCLK(2) ;
 
-    OSCCTRL_REGS->OSCCTRL_DFLLCTRL = 0 ;
 
-    while((OSCCTRL_REGS->OSCCTRL_STATUS & OSCCTRL_STATUS_DFLLRDY_Msk) != OSCCTRL_STATUS_DFLLRDY_Msk)
+    OSCCTRL_REGS->OSCCTRL_DPLLRATIO = OSCCTRL_DPLLRATIO_LDRFRAC(0) | OSCCTRL_DPLLRATIO_LDR(47);
+
+    while((OSCCTRL_REGS->OSCCTRL_DPLLSYNCBUSY & OSCCTRL_DPLLSYNCBUSY_DPLLRATIO_Msk) == OSCCTRL_DPLLSYNCBUSY_DPLLRATIO_Msk)
     {
-        /* Waiting for the Ready state */
+        /* Waiting for the synchronization */
     }
 
-    /* Configure DFLL    */
-    OSCCTRL_REGS->OSCCTRL_DFLLCTRL = OSCCTRL_DFLLCTRL_ENABLE_Msk | OSCCTRL_DFLLCTRL_USBCRM_Msk ;
+    /* Selection of the DPLL Enable */
+    OSCCTRL_REGS->OSCCTRL_DPLLCTRLA = OSCCTRL_DPLLCTRLA_ENABLE_Msk   ;
 
-    while((OSCCTRL_REGS->OSCCTRL_STATUS & OSCCTRL_STATUS_DFLLRDY_Msk) != OSCCTRL_STATUS_DFLLRDY_Msk)
+    while((OSCCTRL_REGS->OSCCTRL_DPLLSYNCBUSY & OSCCTRL_DPLLSYNCBUSY_ENABLE_Msk) == OSCCTRL_DPLLSYNCBUSY_ENABLE_Msk )
     {
-        /* Waiting for DFLL to be ready */
+        /* Waiting for the DPLL enable synchronization */
+    }
+
+    while((OSCCTRL_REGS->OSCCTRL_DPLLSTATUS & (OSCCTRL_DPLLSTATUS_LOCK_Msk | OSCCTRL_DPLLSTATUS_CLKRDY_Msk)) !=
+                (OSCCTRL_DPLLSTATUS_LOCK_Msk | OSCCTRL_DPLLSTATUS_CLKRDY_Msk))
+    {
+        /* Waiting for the Ready state */
     }
 }
-
-
 
 
 static void GCLK0_Initialize(void)
 {
     
-    GCLK_REGS->GCLK_GENCTRL[0] = GCLK_GENCTRL_DIV(1) | GCLK_GENCTRL_SRC(7) | GCLK_GENCTRL_GENEN_Msk;
+    GCLK_REGS->GCLK_GENCTRL[0] = GCLK_GENCTRL_DIV(1) | GCLK_GENCTRL_SRC(8) | GCLK_GENCTRL_GENEN_Msk;
 
     while((GCLK_REGS->GCLK_SYNCBUSY & GCLK_SYNCBUSY_GENCTRL0_Msk) == GCLK_SYNCBUSY_GENCTRL0_Msk)
     {
@@ -100,7 +126,7 @@ static void GCLK0_Initialize(void)
 
 static void GCLK1_Initialize(void)
 {
-    GCLK_REGS->GCLK_GENCTRL[1] = GCLK_GENCTRL_DIV(1) | GCLK_GENCTRL_SRC(5) | GCLK_GENCTRL_GENEN_Msk;
+    GCLK_REGS->GCLK_GENCTRL[1] = GCLK_GENCTRL_DIV(12) | GCLK_GENCTRL_SRC(0) | GCLK_GENCTRL_GENEN_Msk;
 
     while((GCLK_REGS->GCLK_SYNCBUSY & GCLK_SYNCBUSY_GENCTRL1_Msk) == GCLK_SYNCBUSY_GENCTRL1_Msk)
     {
@@ -117,8 +143,8 @@ void CLOCK_Initialize (void)
     OSC32KCTRL_Initialize();
 
 	SUPC_REGS->SUPC_VREGPLL = SUPC_VREGPLL_ENABLE_Msk;
-    DFLL48M_Initialize();
     GCLK1_Initialize();
+    FDPLL_Initialize();
     GCLK0_Initialize();
 
 

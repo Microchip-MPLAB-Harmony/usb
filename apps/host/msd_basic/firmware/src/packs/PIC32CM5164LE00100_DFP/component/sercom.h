@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2020-07-16T10:24:05Z */
+/* file generated from device description version 2020-08-25T15:51:45Z */
 #ifndef _PIC32CMLE00_SERCOM_COMPONENT_H_
 #define _PIC32CMLE00_SERCOM_COMPONENT_H_
 
@@ -769,12 +769,12 @@
 #define SERCOM_USART_EXT_CTRLB_LINCMD_Pos     _U_(24)                                              /**< (SERCOM_USART_EXT_CTRLB) LIN Command Position */
 #define SERCOM_USART_EXT_CTRLB_LINCMD_Msk     (_U_(0x3) << SERCOM_USART_EXT_CTRLB_LINCMD_Pos)      /**< (SERCOM_USART_EXT_CTRLB) LIN Command Mask */
 #define SERCOM_USART_EXT_CTRLB_LINCMD(value)  (SERCOM_USART_EXT_CTRLB_LINCMD_Msk & ((value) << SERCOM_USART_EXT_CTRLB_LINCMD_Pos))
-#define   SERCOM_USART_EXT_CTRLB_LINCMD_CMD0_Val _U_(0x0)                                             /**< (SERCOM_USART_EXT_CTRLB) Normal USART transmission  */
-#define   SERCOM_USART_EXT_CTRLB_LINCMD_CMD1_Val _U_(0x1)                                             /**< (SERCOM_USART_EXT_CTRLB) Break field is transmitted when DATA is written  */
-#define   SERCOM_USART_EXT_CTRLB_LINCMD_CMD2_Val _U_(0x2)                                             /**< (SERCOM_USART_EXT_CTRLB) Break, synch and identifier are automaticcaly transmitted when DATA is written with the identifier  */
-#define SERCOM_USART_EXT_CTRLB_LINCMD_CMD0    (SERCOM_USART_EXT_CTRLB_LINCMD_CMD0_Val << SERCOM_USART_EXT_CTRLB_LINCMD_Pos) /**< (SERCOM_USART_EXT_CTRLB) Normal USART transmission Position  */
-#define SERCOM_USART_EXT_CTRLB_LINCMD_CMD1    (SERCOM_USART_EXT_CTRLB_LINCMD_CMD1_Val << SERCOM_USART_EXT_CTRLB_LINCMD_Pos) /**< (SERCOM_USART_EXT_CTRLB) Break field is transmitted when DATA is written Position  */
-#define SERCOM_USART_EXT_CTRLB_LINCMD_CMD2    (SERCOM_USART_EXT_CTRLB_LINCMD_CMD2_Val << SERCOM_USART_EXT_CTRLB_LINCMD_Pos) /**< (SERCOM_USART_EXT_CTRLB) Break, synch and identifier are automaticcaly transmitted when DATA is written with the identifier Position  */
+#define   SERCOM_USART_EXT_CTRLB_LINCMD_NONE_Val _U_(0x0)                                             /**< (SERCOM_USART_EXT_CTRLB) Normal USART transmission  */
+#define   SERCOM_USART_EXT_CTRLB_LINCMD_SOFTWARE_CONTROL_TRANSMIT_CMD_Val _U_(0x1)                                             /**< (SERCOM_USART_EXT_CTRLB) Break field is transmitted when DATA is written  */
+#define   SERCOM_USART_EXT_CTRLB_LINCMD_AUTO_TRANSMIT_CMD_Val _U_(0x2)                                             /**< (SERCOM_USART_EXT_CTRLB) Break, sync and identifier are automatically transmitted when DATA is written with the identifier  */
+#define SERCOM_USART_EXT_CTRLB_LINCMD_NONE    (SERCOM_USART_EXT_CTRLB_LINCMD_NONE_Val << SERCOM_USART_EXT_CTRLB_LINCMD_Pos) /**< (SERCOM_USART_EXT_CTRLB) Normal USART transmission Position  */
+#define SERCOM_USART_EXT_CTRLB_LINCMD_SOFTWARE_CONTROL_TRANSMIT_CMD (SERCOM_USART_EXT_CTRLB_LINCMD_SOFTWARE_CONTROL_TRANSMIT_CMD_Val << SERCOM_USART_EXT_CTRLB_LINCMD_Pos) /**< (SERCOM_USART_EXT_CTRLB) Break field is transmitted when DATA is written Position  */
+#define SERCOM_USART_EXT_CTRLB_LINCMD_AUTO_TRANSMIT_CMD (SERCOM_USART_EXT_CTRLB_LINCMD_AUTO_TRANSMIT_CMD_Val << SERCOM_USART_EXT_CTRLB_LINCMD_Pos) /**< (SERCOM_USART_EXT_CTRLB) Break, sync and identifier are automatically transmitted when DATA is written with the identifier Position  */
 #define SERCOM_USART_EXT_CTRLB_Msk            _U_(0x03C32747)                                      /**< (SERCOM_USART_EXT_CTRLB) Register Mask  */
 
 
@@ -841,12 +841,12 @@
 #define SERCOM_USART_INT_CTRLB_LINCMD_Pos     _U_(24)                                              /**< (SERCOM_USART_INT_CTRLB) LIN Command Position */
 #define SERCOM_USART_INT_CTRLB_LINCMD_Msk     (_U_(0x3) << SERCOM_USART_INT_CTRLB_LINCMD_Pos)      /**< (SERCOM_USART_INT_CTRLB) LIN Command Mask */
 #define SERCOM_USART_INT_CTRLB_LINCMD(value)  (SERCOM_USART_INT_CTRLB_LINCMD_Msk & ((value) << SERCOM_USART_INT_CTRLB_LINCMD_Pos))
-#define   SERCOM_USART_INT_CTRLB_LINCMD_CMD0_Val _U_(0x0)                                             /**< (SERCOM_USART_INT_CTRLB) Normal USART transmission  */
-#define   SERCOM_USART_INT_CTRLB_LINCMD_CMD1_Val _U_(0x1)                                             /**< (SERCOM_USART_INT_CTRLB) Break field is transmitted when DATA is written  */
-#define   SERCOM_USART_INT_CTRLB_LINCMD_CMD2_Val _U_(0x2)                                             /**< (SERCOM_USART_INT_CTRLB) Break, synch and identifier are automaticcaly transmitted when DATA is written with the identifier  */
-#define SERCOM_USART_INT_CTRLB_LINCMD_CMD0    (SERCOM_USART_INT_CTRLB_LINCMD_CMD0_Val << SERCOM_USART_INT_CTRLB_LINCMD_Pos) /**< (SERCOM_USART_INT_CTRLB) Normal USART transmission Position  */
-#define SERCOM_USART_INT_CTRLB_LINCMD_CMD1    (SERCOM_USART_INT_CTRLB_LINCMD_CMD1_Val << SERCOM_USART_INT_CTRLB_LINCMD_Pos) /**< (SERCOM_USART_INT_CTRLB) Break field is transmitted when DATA is written Position  */
-#define SERCOM_USART_INT_CTRLB_LINCMD_CMD2    (SERCOM_USART_INT_CTRLB_LINCMD_CMD2_Val << SERCOM_USART_INT_CTRLB_LINCMD_Pos) /**< (SERCOM_USART_INT_CTRLB) Break, synch and identifier are automaticcaly transmitted when DATA is written with the identifier Position  */
+#define   SERCOM_USART_INT_CTRLB_LINCMD_NONE_Val _U_(0x0)                                             /**< (SERCOM_USART_INT_CTRLB) Normal USART transmission  */
+#define   SERCOM_USART_INT_CTRLB_LINCMD_SOFTWARE_CONTROL_TRANSMIT_CMD_Val _U_(0x1)                                             /**< (SERCOM_USART_INT_CTRLB) Break field is transmitted when DATA is written  */
+#define   SERCOM_USART_INT_CTRLB_LINCMD_AUTO_TRANSMIT_CMD_Val _U_(0x2)                                             /**< (SERCOM_USART_INT_CTRLB) Break, sync and identifier are automatically transmitted when DATA is written with the identifier  */
+#define SERCOM_USART_INT_CTRLB_LINCMD_NONE    (SERCOM_USART_INT_CTRLB_LINCMD_NONE_Val << SERCOM_USART_INT_CTRLB_LINCMD_Pos) /**< (SERCOM_USART_INT_CTRLB) Normal USART transmission Position  */
+#define SERCOM_USART_INT_CTRLB_LINCMD_SOFTWARE_CONTROL_TRANSMIT_CMD (SERCOM_USART_INT_CTRLB_LINCMD_SOFTWARE_CONTROL_TRANSMIT_CMD_Val << SERCOM_USART_INT_CTRLB_LINCMD_Pos) /**< (SERCOM_USART_INT_CTRLB) Break field is transmitted when DATA is written Position  */
+#define SERCOM_USART_INT_CTRLB_LINCMD_AUTO_TRANSMIT_CMD (SERCOM_USART_INT_CTRLB_LINCMD_AUTO_TRANSMIT_CMD_Val << SERCOM_USART_INT_CTRLB_LINCMD_Pos) /**< (SERCOM_USART_INT_CTRLB) Break, sync and identifier are automatically transmitted when DATA is written with the identifier Position  */
 #define SERCOM_USART_INT_CTRLB_Msk            _U_(0x03C32747)                                      /**< (SERCOM_USART_INT_CTRLB) Register Mask  */
 
 

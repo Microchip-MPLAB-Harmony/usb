@@ -4,18 +4,18 @@
 
 
 project: vendor
-creation_date: 2020-10-22T12:19:03.976+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2020-11-11T07:45:42.251+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 10
 mhc_mode: IDE            # [IDE|Standalone|Headless]
 mplabx_version: v5.45        # if MPLAB X plugin only
-plugin_version: v3.6.0        # if MPLAB X plugin only
-compiler: XC32 (2.10)
+plugin_version: v3.6.1        # if MPLAB X plugin only
+compiler: XC32 (2.41)
 
 modules:
-    - {name: "csp", version: "v3.8.0"}
-    - {name: "core", version: "v3.8.0"}
+    - {name: "csp", version: "v3.8.2"}
+    - {name: "core", version: "v3.8.1"}
     - {name: "usb", version: "unknown"}
     - {name: "dev_packs", version: "v3.8.0"}
-    - {name: "mhc", version: "v3.5.1"}
-    - {name: "bsp", version: "v3.8.0"}
+    - {name: "mhc", version: "v3.6.1"}
+    - {name: "bsp", version: "v3.8.1"}
 

@@ -233,9 +233,25 @@
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false">
+      <logicalFolder name="f1"
+                     displayName="pic32cm_le00_curiosity_pro.mhc"
+                     projectFiles="true">
+        <itemPath>..\src\config\pic32cm_le00_curiosity_pro\pic32cm_le00_curiosity_pro.mhc\BSP_PIC32CM_LE00_Curiosity_Pro.yml</itemPath>
+        <itemPath>..\src\config\pic32cm_le00_curiosity_pro\pic32cm_le00_curiosity_pro.mhc\cmsis.yml</itemPath>
+        <itemPath>..\src\config\pic32cm_le00_curiosity_pro\pic32cm_le00_curiosity_pro.mhc\core.yml</itemPath>
+        <itemPath>..\src\config\pic32cm_le00_curiosity_pro\pic32cm_le00_curiosity_pro.mhc\dfp.yml</itemPath>
+        <itemPath>..\src\config\pic32cm_le00_curiosity_pro\pic32cm_le00_curiosity_pro.mhc\drv_usbfs_v1.yml</itemPath>
+        <itemPath>..\src\config\pic32cm_le00_curiosity_pro\pic32cm_le00_curiosity_pro.mhc\evsys.yml</itemPath>
+        <itemPath>..\src\config\pic32cm_le00_curiosity_pro\pic32cm_le00_curiosity_pro.mhc\GraphSettings.yml</itemPath>
+        <itemPath>..\src\config\pic32cm_le00_curiosity_pro\pic32cm_le00_curiosity_pro.mhc\HarmonyCore.yml</itemPath>
+        <itemPath>..\src\config\pic32cm_le00_curiosity_pro\pic32cm_le00_curiosity_pro.mhc\nvmctrl.yml</itemPath>
+        <itemPath>..\src\config\pic32cm_le00_curiosity_pro\pic32cm_le00_curiosity_pro.mhc\pm.yml</itemPath>
+        <itemPath>..\src\config\pic32cm_le00_curiosity_pro\pic32cm_le00_curiosity_pro.mhc\project.yml</itemPath>
+        <itemPath>..\src\config\pic32cm_le00_curiosity_pro\pic32cm_le00_curiosity_pro.mhc\settings.yml</itemPath>
+        <itemPath>..\src\config\pic32cm_le00_curiosity_pro\pic32cm_le00_curiosity_pro.mhc\usb_device.yml</itemPath>
+        <itemPath>..\src\config\pic32cm_le00_curiosity_pro\pic32cm_le00_curiosity_pro.mhc\usb_device_cdc.yml</itemPath>
+      </logicalFolder>
       <itemPath>Makefile</itemPath>
-      <itemPath>../src/config/pic32cm_le00_curiosity_pro/harmony.prj</itemPath>
-      <itemPath>../src/config/pic32cm_le00_curiosity_pro/pic32cm_le00_curiosity_pro.xml</itemPath>
       <itemPath>../src/config/pic32cm_le00_curiosity_pro/harmony-manifest-success.yml</itemPath>
     </logicalFolder>
   </logicalFolder>
@@ -319,7 +335,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/pic32cm_le00_curiosity_pro;../src/packs/PIC32CM5164LE00100_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/"/>
+                  value="../src;../src/config/pic32cm_le00_curiosity_pro;../src/packs/PIC32CM5164LE00100_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -415,7 +431,7 @@
         <property key="exceptions" value="true"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/pic32cm_le00_curiosity_pro;../src/packs/PIC32CM5164LE00100_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/"/>
+                  value="../src;../src/config/pic32cm_le00_curiosity_pro;../src/packs/PIC32CM5164LE00100_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
