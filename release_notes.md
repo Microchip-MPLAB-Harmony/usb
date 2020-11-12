@@ -2,6 +2,42 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 # Microchip MPLAB Harmony 3 Release Notes
+## USB Release v3.7.0
+### NEW FEATURES
+- **New part support** - N/A
+
+- **New Features and Enhancements**
+    * Isochronous transfer support is added for USBFSV1 and USB Device Port drivers. Isochronous transfer support enables creating USB Device Audio applications for SAME5/D5/D2/L2x/D11/G55 Controllers. 
+    * Hardware periodic scheduler enabled for EHCI and OHCI Drivers. 
+    * USB Middleware and Drivers have been updated to build successfully with additional XC32 compiler switches.
+    * Added USB Host hub_msd demo for SAMD21 Xplained Pro Evaluation kit. 
+
+- **Development kit and demo application support** - The following table provides number of demo applications available for different development kits newly added in this release.
+
+    | Development Kits                                                                                                                               | Number of applications |
+    | ---                                                                                                                                            | --- |
+    | [SAM D21 Xplained Pro Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails.aspx?PartNO=ATSAMD21-XPRO)                     | 1  
+    
+### Bug fixes
+-   Resolved an issue with USBHS Host mode IRP Cancel function. 
+-   Resolved few issues with USB Code generation scripts.   
+
+### Known Issues
+
+The current known issues are as follows:
+
+- Isochronous transfers are not supported for SAM9X60 and SAMA5D2 MPUs both in Device mode and Host mode operations. 
+
+- IAR projects for SAM MCUs and MPUs build with warning messages. 
+
+### Development Tools
+
+* [MPLAB® X IDE v5.45](https://www.microchip.com/mplab/mplab-x-ide)
+* [MPLAB® XC32 C/C++ Compiler v2.50](https://www.microchip.com/mplab/compilers)
+* [IAR Embedded Workbench® for ARM® v8.5] (https://www.iar.com/iar-embedded-workbench/#!?architecture=Arm)
+* MPLAB® X IDE plug-ins:
+* MPLAB® Harmony Configurator (MHC) v3.6.1 and above.
+
 ## USB Release v3.6.1
 ### NEW FEATURES
 - **New part support** - N/A
