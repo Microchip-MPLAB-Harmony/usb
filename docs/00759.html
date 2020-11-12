@@ -116,10 +116,9 @@ Example</div>
 <div class="Element13"><div class="Element12"><pre class="Element12">
 <i><span style="color: #008000">// The following code example shows an example of how the</span></i>
 <i><span style="color: #008000">// USB_DEVICE_ControlStatus() function is called in response to the</span></i>
-<i><span style="color: #008000">// USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED and</span></i>
-<i><span style="color: #008000">// USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_SENT event to complete the control</span></i>
-<i><span style="color: #008000">// transfer. Here, the application code acknowledges the status stage of the</span></i>
-<i><span style="color: #008000">// control transfer.</span></i>
+<i><span style="color: #008000">// USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED event to complete the </span></i>
+<i><span style="color: #008000">// control transfer. Here, the application code acknowledges the status </span></i>
+<i><span style="color: #008000">// stage of the control transfer.</span></i>
 
 <strong><span style="color: #000080">void</span></strong> APP_USBDeviceControlTransferEventHandler
 (
@@ -156,12 +155,8 @@ Example</div>
         <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_SENT:
             
             <i><span style="color: #008000">// This means that data in the data stage of the control</span></i>
-            <i><span style="color: #008000">// read transfer has been sent. The application would typically</span></i>
-            <i><span style="color: #008000">// end the control transfer by calling the </span></i>
-            <i><span style="color: #008000">// USB_DEVICE_ControlStatus function with</span></i>
-            <i><span style="color: #008000">// USB_DEVICE_CONTROL_STATUS_OK flag (as shown in this example).</span></i>
-
-            USB_DEVICE_ControlStatus(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
+            <i><span style="color: #008000">// read transfer has been sent. This indicates that the control transfer is </span></i>
+            <i><span style="color: #008000">// completed. </span></i>
             <strong><span style="color: #000080">break</span></strong>;
 
         <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_CONTROL_TRANSFER_ABORTED:
