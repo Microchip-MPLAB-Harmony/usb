@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Package name="usb">
     <Dependencies>
-        <Dependency name="core" version="v3.7.1"/>
-        <Dependency name="bsp" version="v3.7.0"/>
+        <Dependency name="core" version="v3.8.1"/>
+        <Dependency name="bsp" version="v3.8.1"/>
     </Dependencies>
 </Package>
