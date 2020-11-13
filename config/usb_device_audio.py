@@ -86,7 +86,7 @@ def onAttachmentConnected(source, target):
 				if (audioDeviceType.getValue() == "Audio v2.0 USB Speaker") \
 				or (audioDeviceType.getValue() == "Audio v1.0 USB Speaker") \
 				or (audioDeviceType.getValue() == "Audio v1.0 USB Headset") \
-				or (audioDeviceType.getValue() == "Audio v1.0 USB Headset Multi Sampling rates") :		
+				or (audioDeviceType.getValue() == "Audio v1.0 USB Headset Multi Sampling rates") :	
 					epNumberOut.setValue(nEndpoints + 1)
 					epNumberIn.setValue(nEndpoints + 2)
 				elif (audioDeviceType.getValue() == "Audio v1.0 USB Microphone"):	
@@ -353,7 +353,7 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 	audioDeviceType = usbDeviceAudioComponent.createComboSymbol("CONFIG_USB_DEVICE_FUNCTION_AUDIO_DEVICE_TYPE", None, audioDeviceTypes)
 	audioDeviceType.setLabel("Audio Device Type")
 	audioDeviceType.setVisible(True)
-	audioDeviceType.setDefaultValue("Audio v1.0 USB Headset")
+	audioDeviceType.setDefaultValue("Audio v1.0 USB Speaker")
 	audioDeviceType.setDependencies(usbDeviceAudioDeviceTypeUpdate, ["CONFIG_USB_DEVICE_FUNCTION_AUDIO_DEVICE_TYPE"])
 	
 	# Audio Spec version
@@ -423,7 +423,7 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 	# Audio Function driver Data IN Endpoint Number   
 	epNumberIn = usbDeviceAudioComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_IN_ENDPOINT_NUMBER", None)
 	epNumberIn.setLabel("IN Endpoint Number")
-	epNumberIn.setVisible(True)
+	epNumberIn.setVisible(False)
 	epNumberIn.setMin(1)
 	epNumberIn.setMax(10)
 	epNumberIn.setDefaultValue(1)
@@ -435,7 +435,7 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 	epNumberOut.setVisible(True)
 	epNumberOut.setMin(1)
 	epNumberOut.setMax(10)
-	epNumberOut.setDefaultValue(2)
+	epNumberOut.setDefaultValue(1)
 	epNumberOut.setDependencies(usbDeviceAudioEpOutUpdate, ["CONFIG_USB_DEVICE_FUNCTION_AUDIO_DEVICE_TYPE"])
 	
 	# Audio Function save descriptor size

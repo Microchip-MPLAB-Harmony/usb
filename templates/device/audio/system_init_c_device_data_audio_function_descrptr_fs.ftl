@@ -153,7 +153,7 @@
     /*  USB Speaker Standard Endpoint Descriptor */
     0x09,                            // Size of the descriptor, in bytes (bLength)
     USB_DESCRIPTOR_ENDPOINT,         // ENDPOINT descriptor (bDescriptorType)
-    ${CONFIG_USB_DEVICE_FUNCTION_OUT_ENDPOINT_NUMBER} | USB_EP_DIRECTION_OUT,                            // Endpoint${CONFIG_USB_DEVICE_FUNCTION_INT_ENDPOINT_NUMBER}:OUT (bEndpointAddress)
+    ${CONFIG_USB_DEVICE_FUNCTION_OUT_ENDPOINT_NUMBER} | USB_EP_DIRECTION_OUT,                            // Endpoint${CONFIG_USB_DEVICE_FUNCTION_OUT_ENDPOINT_NUMBER}:OUT (bEndpointAddress)
     0x09,                            /* ?(bmAttributes) Isochronous,
                                       * Adaptive, data endpoint */
     (192),0x00,                      // ?(wMaxPacketSize) //48 * 4
