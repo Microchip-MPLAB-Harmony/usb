@@ -432,7 +432,7 @@ void APP_Tasks ( void )
 
                 USB_DEVICE_CDC_Write(COM2,
                         &appData.appCOMPortObjects[COM2].writeTransferHandle,
-                        com1ReadBuffer, appData.appCOMPortObjects[COM2].readDataLength,
+                        com1ReadBuffer, appData.appCOMPortObjects[COM1].readDataLength,
                         USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE);
 
             }
@@ -446,7 +446,7 @@ void APP_Tasks ( void )
 
                 USB_DEVICE_CDC_Write(COM1,
                         &appData.appCOMPortObjects[COM1].writeTransferHandle,
-                        com2ReadBuffer, appData.appCOMPortObjects[COM1].readDataLength,
+                        com2ReadBuffer, appData.appCOMPortObjects[COM2].readDataLength,
                         USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE);
 
             }
