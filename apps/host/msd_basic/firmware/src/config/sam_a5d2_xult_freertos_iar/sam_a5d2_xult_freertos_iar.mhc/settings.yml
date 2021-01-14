@@ -5,7 +5,7 @@ frameworkPath: C:\Repos\H3
 processor: ATSAMA5D27
 projectName: msd_basic_sam_a5d2_xult_freertos_iar
 settings:
-  PackageFilter: bsp;core;csp;quick_docs;usb;
+  PackageFilter: bootloader;bootloader_apps_usb;bsp;core;core_apps_pic32mx;core_apps_pic32mz_ef;core_apps_pic32mz_w1;core_apps_sam_d21_da1;core_apps_sam_d5x_e5x;crypto;csp;net;quick_docs;usb;
   FORCE_OPTIMIZATION: 'false'
   GENERATE_BACKUP: 'true'
   TRUSTZONE: 'false'

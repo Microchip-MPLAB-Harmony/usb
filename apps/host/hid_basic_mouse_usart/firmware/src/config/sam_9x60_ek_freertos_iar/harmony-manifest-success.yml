@@ -4,19 +4,19 @@
 
 
 project: hid_basic_mouse_usart
-creation_date: 2020-07-23T17:27:49.161+02:00[Europe/Paris]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2021-01-14T17:03:26.263+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 10
 mhc_mode: Standalone            # [IDE|Standalone|Headless]
+mhc_version: v3.6.5
 mplabx_version: NA        # if MPLAB X plugin only
 plugin_version: NA        # if MPLAB X plugin only
+compiler: iar
 
 modules:
+    - {name: "csp", version: "v3.8.1"}
+    - {name: "core", version: "v3.8.1"}
+    - {name: "usb", version: "unknown"}
+    - {name: "dev_packs", version: "v3.8.0"}
     - {name: "bsp", version: "v3.8.1"}
     - {name: "CMSIS-FreeRTOS", version: "v10.3.1"}
-    - {name: "contentmanager", version: "v1.5.0"}
-    - {name: "core", version: "v3.8.1"}
-    - {name: "csp", version: "v3.8.1"}
-    - {name: "dev_packs", version: "v3.8.0"}
-    - {name: "mhc", version: "v3.6.1"}
-    - {name: "usb", version: "v3.7.0"}
 

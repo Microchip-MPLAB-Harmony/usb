@@ -274,21 +274,21 @@
                    displayName="Important Files"
                    projectFiles="false">
       <logicalFolder name="f1" displayName="sam_9x60_ek.mhc" projectFiles="true">
-        <itemPath>..\src\config\sam_9x60_ek\sam_9x60_ek.mhc\BSP_SAM_9X60_Evaluation_Kit.yml</itemPath>
-        <itemPath>..\src\config\sam_9x60_ek\sam_9x60_ek.mhc\core.yml</itemPath>
-        <itemPath>..\src\config\sam_9x60_ek\sam_9x60_ek.mhc\dbgu.yml</itemPath>
-        <itemPath>..\src\config\sam_9x60_ek\sam_9x60_ek.mhc\dfp.yml</itemPath>
-        <itemPath>..\src\config\sam_9x60_ek\sam_9x60_ek.mhc\drv_usbhs_v1.yml</itemPath>
-        <itemPath>..\src\config\sam_9x60_ek\sam_9x60_ek.mhc\GraphSettings.yml</itemPath>
-        <itemPath>..\src\config\sam_9x60_ek\sam_9x60_ek.mhc\HarmonyCore.yml</itemPath>
-        <itemPath>..\src\config\sam_9x60_ek\sam_9x60_ek.mhc\project.yml</itemPath>
-        <itemPath>..\src\config\sam_9x60_ek\sam_9x60_ek.mhc\settings.yml</itemPath>
-        <itemPath>..\src\config\sam_9x60_ek\sam_9x60_ek.mhc\stdio.yml</itemPath>
-        <itemPath>..\src\config\sam_9x60_ek\sam_9x60_ek.mhc\sys_fs.yml</itemPath>
-        <itemPath>..\src\config\sam_9x60_ek\sam_9x60_ek.mhc\sys_time.yml</itemPath>
-        <itemPath>..\src\config\sam_9x60_ek\sam_9x60_ek.mhc\tc0.yml</itemPath>
-        <itemPath>..\src\config\sam_9x60_ek\sam_9x60_ek.mhc\usb_host.yml</itemPath>
-        <itemPath>..\src\config\sam_9x60_ek\sam_9x60_ek.mhc\usb_host_msd.yml</itemPath>
+        <itemPath>../src/config/sam_9x60_ek/sam_9x60_ek.mhc/BSP_SAM_9X60_Evaluation_Kit.yml</itemPath>
+        <itemPath>../src/config/sam_9x60_ek/sam_9x60_ek.mhc/core.yml</itemPath>
+        <itemPath>../src/config/sam_9x60_ek/sam_9x60_ek.mhc/dbgu.yml</itemPath>
+        <itemPath>../src/config/sam_9x60_ek/sam_9x60_ek.mhc/dfp.yml</itemPath>
+        <itemPath>../src/config/sam_9x60_ek/sam_9x60_ek.mhc/drv_usbhs_v1.yml</itemPath>
+        <itemPath>../src/config/sam_9x60_ek/sam_9x60_ek.mhc/GraphSettings.yml</itemPath>
+        <itemPath>../src/config/sam_9x60_ek/sam_9x60_ek.mhc/HarmonyCore.yml</itemPath>
+        <itemPath>../src/config/sam_9x60_ek/sam_9x60_ek.mhc/project.yml</itemPath>
+        <itemPath>../src/config/sam_9x60_ek/sam_9x60_ek.mhc/settings.yml</itemPath>
+        <itemPath>../src/config/sam_9x60_ek/sam_9x60_ek.mhc/stdio.yml</itemPath>
+        <itemPath>../src/config/sam_9x60_ek/sam_9x60_ek.mhc/sys_fs.yml</itemPath>
+        <itemPath>../src/config/sam_9x60_ek/sam_9x60_ek.mhc/sys_time.yml</itemPath>
+        <itemPath>../src/config/sam_9x60_ek/sam_9x60_ek.mhc/tc0.yml</itemPath>
+        <itemPath>../src/config/sam_9x60_ek/sam_9x60_ek.mhc/usb_host.yml</itemPath>
+        <itemPath>../src/config/sam_9x60_ek/sam_9x60_ek.mhc/usb_host_msd.yml</itemPath>
       </logicalFolder>
       <itemPath>Makefile</itemPath>
       <itemPath>..\src\config\sam_9x60_ek\harmony-manifest-success.yml</itemPath>
@@ -307,7 +307,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>noID</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>2.41</languageToolchainVersion>
+        <languageToolchainVersion>2.50</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>

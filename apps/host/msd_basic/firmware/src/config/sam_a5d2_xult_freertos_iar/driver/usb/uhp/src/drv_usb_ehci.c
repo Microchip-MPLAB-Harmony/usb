@@ -192,7 +192,7 @@ size_t _DRV_USB_EHCI_QTDBufferPointerSetup
     for(i = 0; ((i < nPages) && (i < 4)); i ++)
     {
         pageBoundary ++;
-        qTD->bufferPointer[1 + i] = pageBoundary;
+        qTD->bufferPointer[1 + i] = (pageBoundary << 12);
     }
 
     return nBytes;

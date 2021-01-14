@@ -5,10 +5,10 @@ frameworkPath: C:\jcb\usb\repo\H3
 processor: SAM9X60
 projectName: hub_msd_sam_9x60_ek_iar
 settings:
-  PackageFilter: bsp;core;csp;usb;usb;
+  PackageFilter: bootloader;bootloader_apps_usb;bsp;core;core_apps_pic32mx;core_apps_pic32mz_ef;core_apps_pic32mz_w1;core_apps_sam_d21_da1;core_apps_sam_d5x_e5x;crypto;csp;net;quick_docs;usb;
   FORCE_OPTIMIZATION: 'false'
   GENERATE_BACKUP: 'true'
   TRUSTZONE: 'false'
-  CMSISPath: .\dev_packs\arm\CMSIS\5.6.0
+  CMSISPath: .\dev_packs\arm\CMSIS\5.7.0
   MERGE_STRATEGY: USER_ALL
-  DFPPath: .\dev_packs\Microchip\SAM9X6_DFP\1.2.31\atdf\SAM9X60.atdf
+  DFPPath: .\dev_packs\Microchip\SAM9X60_DFP\1.4.40\atdf\SAM9X60.atdf

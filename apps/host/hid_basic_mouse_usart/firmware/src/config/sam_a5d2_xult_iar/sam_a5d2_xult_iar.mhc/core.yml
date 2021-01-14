@@ -169,14 +169,14 @@ children:
     - type: Values
       children:
       - type: Dynamic
-        attributes: {id: drv_usart_0, value: 'false'}
+        attributes: {id: core, value: 'false'}
   - type: Boolean
     attributes: {id: DMA_CH_NEEDED_FOR_UART1_Transmit}
     children:
     - type: Values
       children:
       - type: Dynamic
-        attributes: {id: drv_usart_0, value: 'false'}
+        attributes: {id: core, value: 'false'}
   - type: Integer
     attributes: {id: FLEXCOM0_GENERIC_CLOCK_FREQUENCY}
     children:

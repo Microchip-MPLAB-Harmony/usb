@@ -27,13 +27,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: A04EAA2BE800D005BE22FE2C3A7A34E3
-- generatedChecksum: 11AEE1382A1B12022ED509788AB56010
+- generatedChecksum: 8A8E4938415DD070559F68C41F72E26E
   logicalPath: config\sam_9x60_ek\driver\usb\uhp\src
   name: drv_usb_ehci.c
   physicalPath: driver\usb\uhp\src
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 11AEE1382A1B12022ED509788AB56010
+  userChecksum: 8A8E4938415DD070559F68C41F72E26E
 - generatedChecksum: 4C09380E3FB52DE559EDE86C6DA7EBA6
   logicalPath: config\sam_9x60_ek\driver\usb\uhp\src
   name: drv_usb_ohci.c
