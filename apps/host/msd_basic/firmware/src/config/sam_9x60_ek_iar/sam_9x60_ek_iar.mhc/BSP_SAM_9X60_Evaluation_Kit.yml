@@ -1,6 +1,0 @@
-format_version: v1.0
-type: UniqueComponent
-attributes: {id: BSP_SAM_9X60_Evaluation_Kit, bsp: 'true'}
-children:
-- type: ElementPosition
-  attributes: {x: '149', y: '41', id: BSP_SAM_9X60_Evaluation_Kit}

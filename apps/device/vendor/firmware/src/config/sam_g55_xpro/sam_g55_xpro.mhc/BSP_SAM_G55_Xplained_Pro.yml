@@ -1,6 +1,0 @@
-format_version: v1.0
-type: UniqueComponent
-attributes: {id: BSP_SAM_G55_Xplained_Pro, bsp: 'true'}
-children:
-- type: ElementPosition
-  attributes: {x: '150', y: '34', id: BSP_SAM_G55_Xplained_Pro}

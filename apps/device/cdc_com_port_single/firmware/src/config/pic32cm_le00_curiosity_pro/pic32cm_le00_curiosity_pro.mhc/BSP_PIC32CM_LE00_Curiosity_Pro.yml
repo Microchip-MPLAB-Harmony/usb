@@ -1,6 +1,0 @@
-format_version: v1.0
-type: UniqueComponent
-attributes: {id: BSP_PIC32CM_LE00_Curiosity_Pro, bsp: 'true'}
-children:
-- type: ElementPosition
-  attributes: {x: '139', y: '67', id: BSP_PIC32CM_LE00_Curiosity_Pro}

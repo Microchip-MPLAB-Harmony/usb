@@ -1,6 +1,0 @@
-format_version: v1.0
-type: UniqueComponent
-attributes: {id: BSP_SAM_A5D2_Xplained_Ultra, bsp: 'true'}
-children:
-- type: ElementPosition
-  attributes: {x: '150', y: '37', id: BSP_SAM_A5D2_Xplained_Ultra}
