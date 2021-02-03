@@ -2,6 +2,33 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 # Microchip MPLAB Harmony 3 Release Notes
+## USB Release v3.7.1
+### NEW FEATURES
+- **New part support** - N/A
+
+- **New Features and Enhancements** - N/A 
+
+- **Development kit and demo application support** - All the application examples from USB repos have been moved to separate repositories that are specific to their funtionality. Following Table gives the details of the repos.
+
+| Repository | USB functionality |
+| ---------- | -------------- |
+| [usb_apps_device](https://github.com/Microchip-MPLAB-Harmony/usb_apps_device) | Application examples for USB Device functionality |
+| [usb_apps_dual_role](https://github.com/Microchip-MPLAB-Harmony/usb_apps_dual_role) | Application examples for USB Dual Role functionality |
+| [usb_apps_host](https://github.com/Microchip-MPLAB-Harmony/usb_apps_host) | Application examples for for USB Host functionality |
+| [usb_apps_multi_controller](https://github.com/Microchip-MPLAB-Harmony/usb_apps_multi_controller) | Application examples for for USB Multi Controller functionality |
+
+### Bug fixes
+-   Resolved incorrect QTD Page Buffer Address assignment logic in EHCI Driver.
+
+### Known Issues
+
+-    Same as USB v3.7.0. 
+
+### Development Tools
+
+-    Same as USB v3.7.0. 
+
+# Microchip MPLAB Harmony 3 Release Notes
 ## USB Release v3.7.0
 ### NEW FEATURES
 - **New part support** - N/A
