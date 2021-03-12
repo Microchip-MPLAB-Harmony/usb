@@ -260,6 +260,9 @@ void DRV_USBFSV1_DEVICE_RemoteWakeupStart
     DRV_HANDLE handle
 )
 {
+    usb_registers_t * usbID;                        /* USB instance pointer */
+    DRV_USBFSV1_OBJ * hDriver;                      /* USB driver object pointer */
+
     /* Check if the handle is invalid, if so return without any action */
     if(DRV_HANDLE_INVALID == handle)
     {
@@ -267,7 +270,10 @@ void DRV_USBFSV1_DEVICE_RemoteWakeupStart
     }
     else
     {
-        //Not supported as of now - do nothing
+        hDriver = (DRV_USBFSV1_OBJ *) handle;
+        usbID = hDriver->usbID;
+        
+        usbID->USB_CTRLB |= USB_DEVICE_CTRLB_UPRSM_Msk;
     }
 }
 
@@ -293,7 +299,6 @@ void DRV_USBFSV1_DEVICE_RemoteWakeupStop
     DRV_HANDLE handle
 )
 {
-
     /* Check if the handle is invalid, if so return without any action */
     if(DRV_HANDLE_INVALID == handle)
     {
@@ -301,7 +306,8 @@ void DRV_USBFSV1_DEVICE_RemoteWakeupStop
     }
     else
     {
-        //Not supported as of now - do nothing
+        /* Do Nothing as this request is not applicable as there is no facility 
+         * to stop Remote Wakeup in this USB IP */
     }
 }
 
