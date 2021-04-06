@@ -602,15 +602,21 @@ PLIB_TEMPLATE bool USB_BufferReleasedToSW_PIC32
     USB_BUFFER_PING_PONG  bufferPingPong 
 )
 {
+    bool result = false; 
     short iBDTEntry; // Index of BDT entry
     pUSB_BDT_ENTRY pBDTEntry;
 
     iBDTEntry = USB_BDTIndexGet( ppMode, epValue, bufferDirection, bufferPingPong );
 
     pBDTEntry = (pUSB_BDT_ENTRY)pBDT + iBDTEntry;
-
-    return ( ~(bool)( pBDTEntry -> bufferStatus.usbOwnsBuffer ) );
-
+    
+    if (!(pBDTEntry->bufferStatus.usbOwnsBuffer))
+    {
+        /* This indicates that the UOWN bit is Zero, so CPU owns the buffer. 
+		   Return true */
+        result = true;
+    }
+    return (result);
 }
 
 
