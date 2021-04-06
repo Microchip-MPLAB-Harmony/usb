@@ -929,7 +929,7 @@ DRV_USBHSV1_HOST_PIPE_HANDLE DRV_USBHSV1_HOST_PipeSetup
                             else
                             {
                                 /* Configure address of Pipe */
-                                Wr_bitfield((&hDriver->usbID->USBHS_HSTADDR1)[(pipeIter)>>2], 0x7F << (((pipeIter)&0x03)<<3), deviceAddress);
+                                Wr_bitfield((&hDriver->usbID->USBHS_HSTADDR1)[(pipeIter)>>2], ((uint32_t)0x7F << (((pipeIter)&0x03)<<3)), deviceAddress);                                
 
                                 /* Always enable stall and error interrupts of control endpoint */
                                 /* Enable Stall Interrupt */
@@ -985,7 +985,7 @@ DRV_USBHSV1_HOST_PIPE_HANDLE DRV_USBHSV1_HOST_PipeSetup
                                 else
                                 {
                                     /* Configure address of Pipe */
-                                    Wr_bitfield((&hDriver->usbID->USBHS_HSTADDR1)[(pipeIter)>>2], 0x7F << (((pipeIter)&0x03)<<3), deviceAddress);
+                                    Wr_bitfield((&hDriver->usbID->USBHS_HSTADDR1)[(pipeIter)>>2], ((uint32_t)0x7F << (((pipeIter)&0x03)<<3)), deviceAddress);
 
                                     /* Enable Stall Interrupt */
                                     hDriver->usbID->USBHS_HSTPIPIER[pipeIter] = USBHS_HSTPIPIER_RXSTALLDES_Msk;
