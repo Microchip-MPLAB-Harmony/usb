@@ -1748,17 +1748,17 @@ void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
              * The port task routine will reach this state only if all change
              * sources have been cleared. */
 
-            if ((portInfo->portCommand & USB_HOST_PORT_COMMAND_RESET) == 1)
+            if ((portInfo->portCommand & USB_HOST_PORT_COMMAND_RESET) == USB_HOST_PORT_COMMAND_RESET )
             {
                 /* The port needs to be reset */
                 portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_PORT_RESET  ;
             }
-            else if ((portInfo->portCommand & USB_HOST_PORT_COMMAND_SUSPEND) == 1)
+            else if ((portInfo->portCommand & USB_HOST_PORT_COMMAND_SUSPEND) ==  USB_HOST_PORT_COMMAND_SUSPEND )
             {
                 /* The port needs to be suspended */
                 portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_PORT_SUSPEND  ;
             }
-            else if ((portInfo->portCommand & USB_HOST_PORT_COMMAND_RESUME) == 1)
+            else if ((portInfo->portCommand & USB_HOST_PORT_COMMAND_RESUME) == USB_HOST_PORT_COMMAND_RESUME )
             {
                 /* The port needs to be resumed */
                 portInfo->portTaskState = USB_HOST_HUB_PORT_TASK_STATE_PORT_RESUME  ;
