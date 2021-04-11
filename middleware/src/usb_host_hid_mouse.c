@@ -442,8 +442,8 @@ void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                     (mainItem.globalItem)->reportSize;
                             
                             /* Mouse button handling logic*/
-                            if(((0xFF00 & (mainItem.globalItem)->usagePage) 
-                                    == USB_HID_USAGE_PAGE_BUTTON) || 
+                            if((( (0xFF00 & (mainItem.globalItem)->usagePage) >> 8 )
+                                    ==  USB_HID_USAGE_PAGE_BUTTON   ) || 
                                     ((0x00FF & (mainItem.globalItem)->usagePage)
                                         == USB_HID_USAGE_PAGE_BUTTON))
                             {
@@ -626,7 +626,7 @@ void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                 } /* Individual usage based field */
                             } /* Button page */
 
-                            else if(((0xFF00 & (mainItem.globalItem)->usagePage)
+                            else if(( ((0xFF00 & (mainItem.globalItem)->usagePage) >> 8 )
                                         == USB_HID_USAGE_PAGE_GENERIC_DESKTOP_CONTROLS) || 
                                         ((0x00FF & (mainItem.globalItem)->usagePage)
                                         == USB_HID_USAGE_PAGE_GENERIC_DESKTOP_CONTROLS))
