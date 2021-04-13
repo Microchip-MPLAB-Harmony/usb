@@ -244,23 +244,6 @@ def instantiateComponent(usbDriverComponent, index):
 		
 		Database.setSymbolValue("core", "USB_CLOCK_ENABLE", True, 1)
 
-
-	# Enable dependent Harmony core components
-	if Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False: 
-		Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
-
-	if Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False:
-		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
-
-	if Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_INT") == False:
-		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_INT", True, 2)
-
-	if Database.getSymbolValue("HarmonyCore", "ENABLE_OSAL") == False: 
-		Database.setSymbolValue("HarmonyCore", "ENABLE_OSAL", True, 2)
-	
-	if Database.getSymbolValue("HarmonyCore", "ENABLE_APP_FILE") == False:
-		Database.setSymbolValue("HarmonyCore", "ENABLE_APP_FILE", True, 2)
-
 	configName = Variables.get("__CONFIGURATION_NAME")
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK"]):
 		sourcePath = "templates/driver/usbfs_multi/"
@@ -849,8 +832,7 @@ def instantiateComponent(usbDriverComponent, index):
 		
 		usb_UOEMonitor_Unsupported = usbDriverComponent.createFileSymbol(None, None)	
 		addFileName('usb_UOEMonitor_Unsupported.h', usbDriverComponent, usb_UOEMonitor_Unsupported, usbDriverPath + "usbfs/src/templates/", usbDriverProjectPath + "usbfs/src/templates", True, None)
-		
-
+	
 # all files go into src/
 def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callback):
 	configName1 = Variables.get("__CONFIGURATION_NAME")

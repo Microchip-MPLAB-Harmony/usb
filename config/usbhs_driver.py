@@ -287,21 +287,11 @@ def instantiateComponent(usbDriverComponent):
 		Database.setSymbolValue("core", "USB_DMA_INTERRUPT_HANDLER", "DRV_USBHS_DMAInterruptHandler")
 
 	
-	# Enable dependent Harmony core components
-	if Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False: 
-		Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
+	# Enable Driver common files 
+	Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":True})
 
-	if Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False: 
-		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
-
-	if Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_INT") == False: 
-		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_INT", True)
-
-	if Database.getSymbolValue("HarmonyCore", "ENABLE_OSAL") == False: 
-		Database.setSymbolValue("HarmonyCore", "ENABLE_OSAL", True)
-	
-	if Database.getSymbolValue("HarmonyCore", "ENABLE_APP_FILE") == False: 
-		Database.setSymbolValue("HarmonyCore", "ENABLE_APP_FILE", True)
+	# Enable System common files. 
+	Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
 	
 	configName = Variables.get("__CONFIGURATION_NAME")
 	
@@ -579,7 +569,10 @@ def instantiateComponent(usbDriverComponent):
 		usbhs_USBIDControl_Unsupported = usbDriverComponent.createFileSymbol(None, None)	
 		addFileName('usbhs_USBIDControl_Unsupported.h', usbDriverComponent, usbhs_USBIDControl_Unsupported, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
-		
+def destroyComponent(usbDriverComponent):
+	Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":False})
+	Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})
+	
 # all files go into src/
 def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callback):
 	configName1 = Variables.get("__CONFIGURATION_NAME")

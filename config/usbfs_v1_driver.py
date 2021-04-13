@@ -282,21 +282,11 @@ def instantiateComponent(usbDriverComponent):
 		Database.setSymbolValue("core", "USB_CLOCK_ENABLE", True)
 
 
-	# Enable dependent Harmony core components
-	if Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False: 
-		Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True)
+	# Enable Driver common files 
+	Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":True})
 
-	if Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False:
-		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True)
-
-	if Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_INT") == False:
-		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_INT", True)
-
-	if Database.getSymbolValue("HarmonyCore", "ENABLE_OSAL") == False: 
-		Database.setSymbolValue("HarmonyCore", "ENABLE_OSAL", True)
-	
-	if Database.getSymbolValue("HarmonyCore", "ENABLE_APP_FILE") == False:
-		Database.setSymbolValue("HarmonyCore", "ENABLE_APP_FILE", True)
+	# Enable System common files. 
+	Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
 
 	configName = Variables.get("__CONFIGURATION_NAME")
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX" , "PIC32MZ1025W"]):
@@ -875,6 +865,9 @@ def instantiateComponent(usbDriverComponent):
 		usb_UOEMonitor_Unsupported = usbDriverComponent.createFileSymbol(None, None)	
 		addFileName('usb_UOEMonitor_Unsupported.h', usbDriverComponent, usb_UOEMonitor_Unsupported, usbDriverPath + "usbfs/src/templates/", usbDriverProjectPath + "usbfs/src/templates", True, None)
 		
+def destroyComponent(usbDriverComponent):
+	Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":False})
+	Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})
 
 # all files go into src/
 def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callback):

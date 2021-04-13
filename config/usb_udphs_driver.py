@@ -146,21 +146,11 @@ def instantiateComponent(usbDriverComponent):
 	if Database.getSymbolValue("core", "UDPHS_CLOCK_ENABLE") == False:
 		Database.setSymbolValue("core", "UDPHS_CLOCK_ENABLE", True, 2)	
 				
-	# Enable dependent Harmony core components
-	if Database.getSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON") == False: 
-		Database.setSymbolValue("HarmonyCore", "ENABLE_DRV_COMMON", True, 2)
+	# Enable Driver common files 
+	Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":True})
 
-	if Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON") == False: 
-		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_COMMON", True, 2)
-
-	if Database.getSymbolValue("HarmonyCore", "ENABLE_SYS_INT") == False: 
-		Database.setSymbolValue("HarmonyCore", "ENABLE_SYS_INT", True, 2)
-
-	if Database.getSymbolValue("HarmonyCore", "ENABLE_OSAL") == False: 
-		Database.setSymbolValue("HarmonyCore", "ENABLE_OSAL", True, 2)
-	
-	if Database.getSymbolValue("HarmonyCore", "ENABLE_APP_FILE") == False: 
-		Database.setSymbolValue("HarmonyCore", "ENABLE_APP_FILE", True, 2)
+	# Enable System common files. 
+	Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
 	
 	configName = Variables.get("__CONFIGURATION_NAME")
 	
@@ -298,6 +288,11 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1DeviceSourceFile.setType("SOURCE")
 	drvUsbHsV1DeviceSourceFile.setOverwrite(True)
 			
+			
+def destroyComponent(usbDriverComponent):
+	Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":False})
+	Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})
+
 # all files go into src/
 def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callback):
 	configName1 = Variables.get("__CONFIGURATION_NAME")

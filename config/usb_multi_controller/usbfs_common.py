@@ -50,6 +50,12 @@ def instantiateComponent(usbPeripheralComponentCommon):
 	global usbPeripheralHostSupport
 	global usbPeripheralDeviceSupport
 	
+	# Enable "Generate Harmony Driver Common Files" option in MHC
+	Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":True})
+
+	# Enable "Generate Harmony System Service Common Files" option in MHC
+	Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
+	
 	configName = Variables.get("__CONFIGURATION_NAME")
 	
 	sourcePath = "templates/driver/usbfs_multi/"
@@ -145,4 +151,6 @@ def instantiateComponent(usbPeripheralComponentCommon):
 	drvUsbHsV1HostSourceFile.setOverwrite(True)
 	drvUsbIsrEntry = usbPeripheralComponentCommon.createListSymbol("LIST_DRV_USB_ISR_ENTRY", None)
 	
-	
+def destroyComponent(consoleComponent):
+	Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":False})
+	Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":False})	
