@@ -45,7 +45,11 @@
 /****************************************************
  * Class specific descriptor - HID Report descriptor
  ****************************************************/
+<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+uint8_t USB_ALIGN hid_rpt${CONFIG_USB_DEVICE_FUNCTION_INDEX}[] =
+<#else>
 const uint8_t hid_rpt${CONFIG_USB_DEVICE_FUNCTION_INDEX}[] =
+</#if>
 {
 <#if CONFIG_USB_DEVICE_HID_REPORT_DESCRIPTOR_TYPE == "Mouse">
 	0x05, 0x01, /* Usage Page (Generic Desktop)        */
