@@ -2,6 +2,34 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 # Microchip MPLAB Harmony 3 Release Notes
+## USB Release v3.7.2
+### NEW FEATURES
+- **New part support** - N/A
+
+- **New Features and Enhancements** - MPLAB® Harmony USB Host and Device stack firmware has been updated to operate with MPLAB® XC32 v3.x Compiler.  
+
+- **Development kit and demo application support** - N/A
+
+### Bug fixes
+-   Updated USB Host HID and Hub client drivers to fix compiler warnings.  
+-   Updated USBFS Driver to fix compiler warnings. 
+-   Updated USBHSV1 Driver to fix compiler warnings.
+-   Resolved HID Report descriptor generation issue for PIC32MZ W1 Devives. 
+-   Added volatile keyword in PIC32MZ USBHS PLIB function. 
+
+### Known Issues
+
+- SAM9X60 USB Host demo does not function as expected when compiled with -Os optimization with XC32 v3.0.  
+- IAR projects for SAM MCUs and MPUs build with warning messages. 
+
+### Development Tools
+
+-    [MPLAB® X IDE v5.45](https://www.microchip.com/mplab/mplab-x-ide)
+-    [MPLAB® XC32 C/C++ Compiler v3.00](https://www.microchip.com/mplab/compilers)
+-    [IAR Embedded Workbench® for ARM® v8.5] (https://www.iar.com/iar-embedded-workbench/#!?architecture=Arm)
+-   MPLAB® X IDE plug-ins:- MPLAB® Harmony Configurator (MHC) v3.7.1 and above.
+
+# Microchip MPLAB Harmony 3 Release Notes
 ## USB Release v3.7.1
 ### NEW FEATURES
 - **New part support** - N/A
