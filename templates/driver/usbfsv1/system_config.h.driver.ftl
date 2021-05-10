@@ -81,7 +81,7 @@
 </#if>
 
 /* Alignment for buffers that are submitted to USB Driver*/ 
-#define USB_ALIGN  CACHE_ALIGN
+#define USB_ALIGN  __ALIGNED(CACHE_LINE_SIZE)
 <#--
 /*******************************************************************************
  End of File
