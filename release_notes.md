@@ -19,17 +19,15 @@
 
 ### Known Issues
 
-- SAM9X60 USB Host demo does not function as expected when compiled with -Os optimization with XC32 v3.0.  
 - IAR projects for SAM MCUs and MPUs build with warning messages. 
 
 ### Development Tools
 
 -    [MPLAB® X IDE v5.45](https://www.microchip.com/mplab/mplab-x-ide)
 -    [MPLAB® XC32 C/C++ Compiler v3.00](https://www.microchip.com/mplab/compilers)
--    [IAR Embedded Workbench® for ARM® v8.5] (https://www.iar.com/iar-embedded-workbench/#!?architecture=Arm)
--   MPLAB® X IDE plug-ins:- MPLAB® Harmony Configurator (MHC) v3.7.1 and above.
+-    [IAR Embedded Workbench® for ARM® v8.5](https://www.iar.com/iar-embedded-workbench/#!?architecture=Arm)
+-   MPLAB® X IDE plug-ins:- MPLAB® Harmony 3 Launcher v3.6.4 or above
 
-# Microchip MPLAB Harmony 3 Release Notes
 ## USB Release v3.7.1
 ### NEW FEATURES
 - **New part support** - N/A
@@ -56,7 +54,6 @@
 
 -    Same as USB v3.7.0. 
 
-# Microchip MPLAB Harmony 3 Release Notes
 ## USB Release v3.7.0
 ### NEW FEATURES
 - **New part support** - N/A
