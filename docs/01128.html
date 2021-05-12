@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_HOST_AUDIO_V1_EntityObjectGet Function</title>
+<title>USB_HOST_AUDIO_V1_ENTITY_REQUEST_CALLBACK Type</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00225.html" target="topic">Library Interface</a> &gt; a) Audio Device Access Functions &gt; <a href="01128.html" target="topic">USB_HOST_AUDIO_V1_EntityObjectGet Function</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00225.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01128.html" target="topic">USB_HOST_AUDIO_V1_ENTITY_REQUEST_CALLBACK Type</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01126.html" target="topic">Previous</a> | <a href="00225.html" target="topic">Up</a> | <a href="01129.html" target="topic">Next</a></div>
+<a href="01124.html" target="topic">Previous</a> | <a href="00225.html" target="topic">Up</a> | <a href="01132.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_EntityObjectGet@USB_HOST_AUDIO_V1_OBJ@uint8_t@USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ* Topic Title: USB_HOST_AUDIO_V1_EntityObjectGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_ENTITY_REQUEST_CALLBACK Topic Title: USB_HOST_AUDIO_V1_ENTITY_REQUEST_CALLBACK Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_HOST_AUDIO_V1_EntityObjectGet Function</div>
+USB_HOST_AUDIO_V1_ENTITY_REQUEST_CALLBACK Type</div>
 </div>
 </div>
 
@@ -49,55 +49,20 @@ USB_HOST_AUDIO_V1_EntityObjectGet Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function retrieves the entity object for the entity ID.</p></div>
+USB Host Audio v1.0 Class driver Control Transfer Complete Callback Function Pointer type&nbsp;</p>
+<p class="Element10">
+This data type defines the required function signature of the USB Host Audio v1.0 class driver control transfer complete callback function. The client must provide a pointer to a control transfer complete callback function whose function signature (parameter and return value types) must match the types specified by this function pointer to receive notification when a control transfer has completed. The application should use the <a href="01130.html" target="topic">USB_HOST_AUDIO_V1_EntityRequestCallbackSet</a> function to register an entity control request callback. The Audio v1.0 client driver will call this function with the relevant event parameters. The descriptions of the event handler function parameters are as follows:</p>
+<ul class="Element630">
+<li class="Element600">audioObj - Audio v1.0 client driver object associated with this event</li>
+<li class="Element600">requestHandle - Request handle of the control transfer request that caused this event</li>
+<li class="Element600">result - Completion result of the control transfer. This will be USB_HOST_AUDIO_V1_RESULT_SUCCESS if the control transfer completed successfully, USB_HOST_AUDIO_V1_RESULT_FAILURE if an unknown failure occurred, or USB_HOST_AUDIO_V1_RESULT_REQUEST_STALLED if the request was stalled.</li>
+<li class="Element600">size - Size of the data stage that was transferred</li>
+<li class="Element600">context - Value identifying the context of the application that was provided when the USB_HOST_AUDIO_V1_ControlRequest function was called</li>
+</ul></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01150.html" target="topic">USB_HOST_AUDIO_V1_RESULT</a> <strong><span style="color: #000000">USB_HOST_AUDIO_V1_EntityObjectGet</span></strong>(
-    <a href="01147.html" target="topic">USB_HOST_AUDIO_V1_OBJ</a> <strong><span style="color: #000000">audioObj</span></strong>, 
-    uint8_t <strong><span style="color: #000000">entityId</span></strong>, 
-    <a href="01123.html" target="topic">USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ</a>* <strong><span style="color: #000000">entityObj</span></strong>
-);</pre></div></div>
-<a name="506172616D6574657273"></a><div class="Element14">
-Parameters</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element312">
-<div class="TableDiv">
-<table cellspacing="0" class="Table3">
-<tr>
-<td class="Element300" valign="top" width="35%">
-<div class="Element301">
-Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
-<div class="Element305">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-audioObj&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-USB Host Audio v1.0 Device object&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-entityId&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Entity ID&nbsp;</div></td></tr><tr>
-<td class="Element302" valign="top" width="35%">
-<div class="Element303">
-entityObject&nbsp;</div></td><td class="Element306" valign="top" width="65%">
-<div class="Element307">
-Audio control entity object&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52657475726E73"></a><div class="Element14">
-Returns</div>
-<div class="Element11">
-<div class="Element10">
-
-<ul class="Element630">
-<li class="Element600">USB_HOST_AUDIO_V1_RESULT_SUCCESS - The operation was successful</li>
-<li class="Element600">USB_HOST_AUDIO_V1_RESULT_FAILURE - The entity Id could not be found or an unknown failure occurred</li>
-</ul></div>
-</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">void</span></strong> (* <strong><span style="color: #000000">USB_HOST_AUDIO_V1_ENTITY_REQUEST_CALLBACK</span></strong>)(<a href="01148.html" target="topic">USB_HOST_AUDIO_V1_OBJ</a> audioObj, <a href="01149.html" target="topic">USB_HOST_AUDIO_V1_REQUEST_HANDLE</a> requestHandle, <a href="01151.html" target="topic">USB_HOST_AUDIO_V1_RESULT</a> result, size_t size, uintptr_t context);</pre></div></div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
@@ -110,7 +75,7 @@ None.</p></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00225.html" target="topic">Library Interface</a> &gt; a) Audio Device Access Functions &gt; <a href="01128.html" target="topic">USB_HOST_AUDIO_V1_EntityObjectGet Function</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00225.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01128.html" target="topic">USB_HOST_AUDIO_V1_ENTITY_REQUEST_CALLBACK Type</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -121,10 +86,10 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01126.html" target="topic">Previous</a> | <a href="00225.html" target="topic">Up</a> | <a href="01129.html" target="topic">Next</a></div>
+<a href="01124.html" target="topic">Previous</a> | <a href="00225.html" target="topic">Up</a> | <a href="01132.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_EntityObjectGet@USB_HOST_AUDIO_V1_OBJ@uint8_t@USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ* Topic Title: USB_HOST_AUDIO_V1_EntityObjectGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_ENTITY_REQUEST_CALLBACK Topic Title: USB_HOST_AUDIO_V1_ENTITY_REQUEST_CALLBACK Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00277.html" target="topic">USB CDC Device Library</a> &gt; <a href="00276.html" target="topic">Using the Library</a> &gt; <a href="00269.html" target="topic">How the Library Works</a> &gt; <a href="00272.html" target="topic">Library Initialization</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00277.html" target="topic">USB CDC Device Library</a> &gt; <a href="00276.html" target="topic">Using the Library</a> &gt; <a href="00269.html" target="topic">How the Library Works</a> &gt; <a href="00272.html" target="topic">Library Initialization</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -49,7 +49,7 @@ Library Initialization</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The CDC Function Driver instance for a USB device configuration is initialized by the Device Layer when the configuration is set by the host. This process does not require application intervention. Each instance of the CDC Function Driver should be registered with the Device<span style="color: #FFFFFF">_</span>layer through the <a href="00296.html" target="topic">Device Layer Function Driver Registration Table</a>. The CDC Function Driver does require a initialization data structure to be defined for each instance of the function driver. This initialization data structure should be of the type <a href="00720.html" target="topic">USB_DEVICE_CDC_INIT</a>. This data structure specifies the read and write queue sizes. The funcDriverInit member of the function driver registration table entry for the CDC Function Driver instance should be set to point to the corresponding initialization data structure. The <a href="00710.html" target="topic">USB_DEVICE_CDC_FUNCTION_DRIVER</a> object is a global object provided by the CDC Function Driver and points to the CDC Function Driver - Device Layer interface functions, which are required by the Device Layer. The following code an example of how multiple instances of CDC Function Driver can registered with the Device Layer. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of how two CDC function
+The CDC Function Driver instance for a USB device configuration is initialized by the Device Layer when the configuration is set by the host. This process does not require application intervention. Each instance of the CDC Function Driver should be registered with the Device<span style="color: #FFFFFF">_</span>layer through the <a href="00296.html" target="topic">Device Layer Function Driver Registration Table</a>. The CDC Function Driver does require a initialization data structure to be defined for each instance of the function driver. This initialization data structure should be of the type <a href="00721.html" target="topic">USB_DEVICE_CDC_INIT</a>. This data structure specifies the read and write queue sizes. The funcDriverInit member of the function driver registration table entry for the CDC Function Driver instance should be set to point to the corresponding initialization data structure. The <a href="00711.html" target="topic">USB_DEVICE_CDC_FUNCTION_DRIVER</a> object is a global object provided by the CDC Function Driver and points to the CDC Function Driver - Device Layer interface functions, which are required by the Device Layer. The following code an example of how multiple instances of CDC Function Driver can registered with the Device Layer. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of how two CDC function
  * driver instances can be registered with the Device Layer
  * via the Device Layer Function Driver Registration Table.
  * In this case Device Configuration 1 consists of two CDC
@@ -94,7 +94,7 @@ The CDC Function Driver instance for a USB device configuration is initialized b
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00277.html" target="topic">USB CDC Device Library</a> &gt; <a href="00276.html" target="topic">Using the Library</a> &gt; <a href="00269.html" target="topic">How the Library Works</a> &gt; <a href="00272.html" target="topic">Library Initialization</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00277.html" target="topic">USB CDC Device Library</a> &gt; <a href="00276.html" target="topic">Using the Library</a> &gt; <a href="00269.html" target="topic">How the Library Works</a> &gt; <a href="00272.html" target="topic">Library Initialization</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">

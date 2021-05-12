@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>usb_device_audio_v1_0_config_template.h</title>
+<title>usb_device_audio_v1_0.h</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00208.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00187.html" target="topic">Files</a> &gt; <a href="00633.html" target="topic">usb_device_audio_v1_0_config_template.h</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00208.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00187.html" target="topic">Files</a> &gt; <a href="00633.html" target="topic">usb_device_audio_v1_0.h</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00632.html" target="topic">Previous</a> | <a href="00187.html" target="topic">Up</a> | <a href="00209.html" target="topic">Next</a></div>
+<a href="00187.html" target="topic">Previous</a> | <a href="00187.html" target="topic">Up</a> | <a href="00634.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_device_audio_v1_0_config_template.h Topic Title: usb_device_audio_v1_0_config_template.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_device_audio_v1_0.h Topic Title: usb_device_audio_v1_0.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-usb_device_audio_v1_0_config_template.h</div>
+usb_device_audio_v1_0.h</div>
 </div>
 </div>
 
@@ -56,16 +56,99 @@ File Name</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-usb_device_audio_v1_0_config_template.h</p></div>
+usb_device_audio.h</p></div>
 </div>
 <a name="4465736372697074696F6E"></a><div class="Element14">
 Description</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-USB Device Audio Class Configuration Definitions&nbsp;</p>
+USB Device Audio Function Driver Interface&nbsp;</p>
 <p class="Element10">
-This file contains configurations macros needed to configure the Audio Function Driver. This file is a template file only. It should not be included by the application. The configuration macros defined in the file should be defined in the configuration specific system_config.h.</p></div>
+This file describes the USB Device Audio Function Driver interface. This file should be included by the application if it needs to use the Audio Function Driver API.</p></div>
+</div>
+<a name="456E756D65726174696F6E73"></a><div class="Element14">
+Enumerations</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00560.html" target="topic">USB_DEVICE_AUDIO_EVENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Audio Function Driver events.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00617.html" target="topic">USB_DEVICE_AUDIO_RESULT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Audio Function Driver USB Device Audio result enumeration.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="46756E6374696F6E73"></a><div class="Element14">
+Functions</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00605.html" target="topic">USB_DEVICE_AUDIO_EventHandlerSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function registers an event handler for the specified Audio function driver instance.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00616.html" target="topic">USB_DEVICE_AUDIO_Read</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function requests a data read from the USB Device Audio Function Driver Layer.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00628.html" target="topic">USB_DEVICE_AUDIO_StatusSend</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function requests a Status write to the USB Device Audio Function Driver Layer.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00632.html" target="topic">USB_DEVICE_AUDIO_TransferCancel</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function cancels a scheduled Audio Device data transfer.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00684.html" target="topic">USB_DEVICE_AUDIO_Write</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function requests a data write to the USB Device Audio Function Driver Layer.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 <a name="4D6163726F73"></a><div class="Element14">
 Macros</div>
@@ -86,44 +169,204 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element203">
 <img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00005.html" target="topic">_USB_DEVICE_AUDIO_V1_0_CONFIG_TEMPLATE_H_</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00004.html" target="topic">_USB_DEVICE_AUDIO_H</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This is macro _USB_DEVICE_AUDIO_V1_0_CONFIG_TEMPLATE_H_.&nbsp;</div></td></tr><tr>
+This is macro _USB_DEVICE_AUDIO_H.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00611.html" target="topic">USB_DEVICE_AUDIO_INSTANCES_NUMBER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00604.html" target="topic">USB_DEVICE_AUDIO_EVENT_RESPONSE_NONE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Specifies the number of Audio Function Driver instances.&nbsp;</div></td></tr><tr>
+USB Device Audio Function Driver event handler response type none.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00612.html" target="topic">USB_DEVICE_AUDIO_MAX_ALTERNATE_SETTING</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00606.html" target="topic">USB_DEVICE_AUDIO_FUNCTION_DRIVER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Specifies the maximum number of Alternate Settings per streaming interface.&nbsp;</div></td></tr><tr>
+USB Device Audio Function Driver function pointer.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00613.html" target="topic">USB_DEVICE_AUDIO_MAX_STREAMING_INTERFACES</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00631.html" target="topic">USB_DEVICE_AUDIO_TRANSFER_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Specifies the maximum number of Audio Streaming interfaces in an Audio Function Driver instance.&nbsp;</div></td></tr><tr>
+USB Device Audio Function Driver invalid transfer handle definition.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="53747275637475726573"></a><div class="Element14">
+Structures</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00614.html" target="topic">USB_DEVICE_AUDIO_QUEUE_DEPTH_COMBINED</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00590.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_INTERFACE_SETTING_CHANGED</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Specifies the combined queue size of all Audio function driver instances.&nbsp;</div></td></tr><tr>
+USB Device Audio Function Driver alternate interface setting event data.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00628.html" target="topic">USB_DEVICE_AUDIO_TRANSFER_ABORT_NOTIFY</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00593.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_READ_COMPLETE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-USB Audio Transfer abort notification enable&nbsp;</div></td></tr></table></div></div>
+USB Device Audio Function Driver audio read and write complete event data.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00594.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_STATUS_SEND_COMPLETE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Audio Function Driver Status Send complete event data.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00597.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_WRITE_COMPLETE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Audio Function Driver audio read and write complete event data.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00608.html" target="topic">USB_DEVICE_AUDIO_INIT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Audio Function Driver initialization data structure.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="5479706573"></a><div class="Element14">
+Types</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00579.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_CUR</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_CUR.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00580.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_MAX</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_MAX.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00581.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_MEM</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_MEM.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00582.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_MIN</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_MIN.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00583.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_RES</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_RES.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00584.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_CUR</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Audio Function Driver set and get request data.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00585.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MAX</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MAX.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00586.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MEM</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MEM.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00587.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MIN</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MIN.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00588.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_RES</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_RES.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00589.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_ENTITY_GET_STAT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is type USB_DEVICE_AUDIO_EVENT_DATA_ENTITY_GET_STAT.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00602.html" target="topic">USB_DEVICE_AUDIO_EVENT_HANDLER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Audio event handler function pointer type.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00603.html" target="topic">USB_DEVICE_AUDIO_EVENT_RESPONSE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Audio Function Driver event callback response type.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00607.html" target="topic">USB_DEVICE_AUDIO_INDEX</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Audio function driver index.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00630.html" target="topic">USB_DEVICE_AUDIO_TRANSFER_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Audio Function Driver transfer handle definition.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -131,7 +374,7 @@ USB Audio Transfer abort notification enable&nbsp;</div></td></tr></table></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00208.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00187.html" target="topic">Files</a> &gt; <a href="00633.html" target="topic">usb_device_audio_v1_0_config_template.h</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00208.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00187.html" target="topic">Files</a> &gt; <a href="00633.html" target="topic">usb_device_audio_v1_0.h</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -142,10 +385,10 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00632.html" target="topic">Previous</a> | <a href="00187.html" target="topic">Up</a> | <a href="00209.html" target="topic">Next</a></div>
+<a href="00187.html" target="topic">Previous</a> | <a href="00187.html" target="topic">Up</a> | <a href="00634.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_device_audio_v1_0_config_template.h Topic Title: usb_device_audio_v1_0_config_template.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_device_audio_v1_0.h Topic Title: usb_device_audio_v1_0.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

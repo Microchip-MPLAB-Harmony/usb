@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00307.html" target="topic">Using the Library</a> &gt; <a href="00297.html" target="topic">How the Library Works</a> &gt; <a href="00284.html" target="topic">BOS Descriptor Support</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00308.html" target="topic">Using the Library</a> &gt; <a href="00297.html" target="topic">How the Library Works</a> &gt; <a href="00284.html" target="topic">BOS Descriptor Support</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,7 +29,7 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00305.html" target="topic">Previous</a> | <a href="00297.html" target="topic">Up</a> | <a href="00301.html" target="topic">Next</a></div>
+<a href="00306.html" target="topic">Previous</a> | <a href="00297.html" target="topic">Up</a> | <a href="00305.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
 <a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER BOS Descriptor Support Topic Title: BOS Descriptor Support)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
@@ -51,16 +51,16 @@ BOS Descriptor Support</div>
 <p class="Element10">
 The USB 3.0 and the USB 2.0 LPM specifications define a new descriptor called the Binary Device Object Store (BOS) descriptor. This descriptor contains information about the capability of the device. When the bcdUSB value in the Device Descriptor is greater than 0x0200, the USB Host Operating System may request for the BOS descriptor.&nbsp;</p>
 <p class="Element10">
-The MPLAB Harmony USB Device Library allows the application to support the BOS descriptor requests. This support is enabled by adding the <a href="00684.html" target="topic">USB_DEVICE_BOS_DESCRIPTOR_SUPPORT_ENABLE</a> configuration macro in <span class="Element146">system_config.h</span>. The application must set the bosDescriptor member of the <a href="00891.html" target="topic">USB_DEVICE_INIT</a> data structure (this data structure is passed in the <a href="00907.html" target="topic">USB_DEVICE_Initialize</a> function) to point to the data to be returned in the data stage of the BOS descriptor request.&nbsp;</p>
+The MPLAB Harmony USB Device Library allows the application to support the BOS descriptor requests. This support is enabled by adding the <a href="00685.html" target="topic">USB_DEVICE_BOS_DESCRIPTOR_SUPPORT_ENABLE</a> configuration macro in the configuration<span class="Element146">.h </span>file. The application must set the bosDescriptor member of the <a href="00892.html" target="topic">USB_DEVICE_INIT</a> data structure (this data structure is passed in the <a href="00908.html" target="topic">USB_DEVICE_Initialize</a> function) to point to the data to be returned in the data stage of the BOS descriptor request.&nbsp;</p>
 <p class="Element10">
-If the <a href="00684.html" target="topic">USB_DEVICE_BOS_DESCRIPTOR_SUPPORT_ENABLE</a> configuration macro is not specified, the Device Layer will stall the Host request for the BOS descriptor.</p></div>
+If the <a href="00685.html" target="topic">USB_DEVICE_BOS_DESCRIPTOR_SUPPORT_ENABLE</a> configuration macro is not specified, the Device Layer will stall the Host request for the BOS descriptor.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00307.html" target="topic">Using the Library</a> &gt; <a href="00297.html" target="topic">How the Library Works</a> &gt; <a href="00284.html" target="topic">BOS Descriptor Support</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00308.html" target="topic">Using the Library</a> &gt; <a href="00297.html" target="topic">How the Library Works</a> &gt; <a href="00284.html" target="topic">BOS Descriptor Support</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -71,7 +71,7 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00305.html" target="topic">Previous</a> | <a href="00297.html" target="topic">Up</a> | <a href="00301.html" target="topic">Next</a></div>
+<a href="00306.html" target="topic">Previous</a> | <a href="00297.html" target="topic">Up</a> | <a href="00305.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
 <a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER BOS Descriptor Support Topic Title: BOS Descriptor Support)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>

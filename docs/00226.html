@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00226.html" target="topic">Obtaining an Audio Stream</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00226.html" target="topic">Obtaining an Audio Stream</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -49,7 +49,7 @@ Obtaining an Audio Stream</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Once application has identified which audio stream to use, application must open that audio stream by using <a href="01116.html" target="topic">USB_HOST_AUDIO_V1_0_StreamOpen</a> function. This function takes audio stream object <a href="01091.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_OBJ</a> as an argument which obtained by <a href="01114.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetFirst</a> and <a href="01115.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetNext</a> functions and returns audio stream handle <a href="01080.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_HANDLE</a>. If the open function fails, it returns an invalid handle (<a href="01080.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_HANDLE</a> _INVALID). Once opened successfully, a valid handle tracks the relationship between the client and the Audio Stream. This handle should be used with other Audio Stream functions.&nbsp;</p>
+Once application has identified which audio stream to use, application must open that audio stream by using <a href="01117.html" target="topic">USB_HOST_AUDIO_V1_0_StreamOpen</a> function. This function takes audio stream object <a href="01092.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_OBJ</a> as an argument which obtained by <a href="01115.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetFirst</a> and <a href="01116.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetNext</a> functions and returns audio stream handle <a href="01081.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_HANDLE</a>. If the open function fails, it returns an invalid handle (<a href="01081.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_HANDLE</a> _INVALID). Once opened successfully, a valid handle tracks the relationship between the client and the Audio Stream. This handle should be used with other Audio Stream functions.&nbsp;</p>
 <p class="Element10">
 An audio stream can be opened multiple times by different application clients. In an RTOS based application each client could running its own thread. Multiple clients can read write data to the one Audio stream. In such a case, the read and write requests are queued. The following code shows an example of how an Audio Stream is opened. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of opening an audio stream */</span></i>
 
@@ -223,7 +223,7 @@ USB_HOST_AUDIO_V1_0_STREAM_OBJ App_USBHostAudioSpeakerStreamFind
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00226.html" target="topic">Obtaining an Audio Stream</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00226.html" target="topic">Obtaining an Audio Stream</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">

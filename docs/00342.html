@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Configuring the Library</title>
+<title>Building the Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00324.html" target="topic">USB HID Device Library</a> &gt; <a href="00342.html" target="topic">Configuring the Library</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00325.html" target="topic">USB HID Device Library</a> &gt; <a href="00342.html" target="topic">Building the Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00352.html" target="topic">Previous</a> | <a href="00324.html" target="topic">Up</a> | <a href="00871.html" target="topic">Next</a></div>
+<a href="00873.html" target="topic">Previous</a> | <a href="00325.html" target="topic">Up</a> | <a href="00352.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HIDDEV Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HIDDEV Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Configuring the Library</div>
+Building the Library</div>
 </div>
 </div>
 
@@ -49,45 +49,80 @@ Configuring the Library</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The following configuration parameters must be defined while using the HID Function Driver. The configuration macros that implement these parameters must be located in the <span class="Element146">system_config.h</span> file in the application project and a compiler include path (to point to the folder that contains this file) should be specified.</p></div>
-</div>
-<a name="4D6163726F73"></a><div class="Element14">
-Macros</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
+The following three tables list and describe the header (<span class="Element146">.h</span>) and source (<span class="Element146">.c</span>) files that implement this library. The parent folder for these files is <span class="Element146">&lt;install-dir&gt;/framework/usb</span><span style="color: #0000FF">.</span>&nbsp;</p>
+<p class="Element10">
+<strong>Interface File(s)</strong>&nbsp;</p>
+<p class="Element10">
+This table lists and describes the header files that must be included (i.e., using <span class="Element146">#include</span>) by any code that uses this library. </p><div class="Element63">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table1">
 <tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
+<td class="Element65" valign="top" width="24%">
+<div class="Element66">
+Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="76%">
+<div class="Element66">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00871.html" target="topic">USB_DEVICE_HID_INSTANCES_NUMBER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Specifies the number of HID instances.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00872.html" target="topic">USB_DEVICE_HID_QUEUE_DEPTH_COMINED</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-DOM-IGONORE-BEGIN&nbsp;</div></td></tr></table></div></div>
-</div>
+<td class="Element67" valign="top" width="24%">
+<div class="Element68">
+<span class="Element146"><a href="00816.html" target="topic">usb_device_hid.h</a></span>&nbsp;</div></td><td class="Element67" valign="top" width="76%">
+<div class="Element68">
+This header file should be included in any <span class="Element146">.c</span> file that accesses the USB Device HID Function Driver API.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+<strong>Required File(s)</strong> </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element67" valign="top" width="10%" style="border:none;">
+<div class="Element68">
+<img src="MHC_Logo_Medium.png" border="0" alt="" title="">&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<div class="Element68">
+<span style="color: #008000"><strong><i>All of the required files listed in the following table are automatically added into the MPLAB X IDE project by the MHC when the library is selected for use.</i></strong></span>&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+This table lists and describes the source and header files that must <i>always</i> be included in the MPLAB X IDE project to build this library. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="26%">
+<div class="Element66">
+Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="74%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="26%">
+<div class="Element68">
+<span class="Element146">/src/dynamic/usb_device_hid.c</span>&nbsp;</div></td><td class="Element67" valign="top" width="74%">
+<div class="Element68">
+This file implements the HID Function driver interface and should be included in the project if the HID Device function is desired.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+<strong>Optional File(s)</strong>&nbsp;</p>
+<p class="Element10">
+This table lists and describes the source and header files that may optionally be included if required for the desired implementation. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="25%">
+<div class="Element66">
+Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="75%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="25%">
+<div class="Element68">
+N/A&nbsp;</div></td><td class="Element67" valign="top" width="75%">
+<div class="Element68">
+There are no optional files for this library.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+<strong>Module Dependencies</strong>&nbsp;</p>
+<p class="Element10">
+The USB HID Device Library depends on the following modules:</p>
+<ul class="Element630">
+<li class="Element600"><a href="00278.html" target="topic">USB Device Layer Library</a></li>
+</ul></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00324.html" target="topic">USB HID Device Library</a> &gt; <a href="00342.html" target="topic">Configuring the Library</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00325.html" target="topic">USB HID Device Library</a> &gt; <a href="00342.html" target="topic">Building the Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -98,10 +133,10 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00352.html" target="topic">Previous</a> | <a href="00324.html" target="topic">Up</a> | <a href="00871.html" target="topic">Next</a></div>
+<a href="00873.html" target="topic">Previous</a> | <a href="00325.html" target="topic">Up</a> | <a href="00352.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HIDDEV Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HIDDEV Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

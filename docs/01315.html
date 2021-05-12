@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_HOST_EVENT_RESPONSE Enumeration</title>
+<title>USB_HOST_EVENT_HANDLER Type</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00369.html" target="topic">USB Host Layer Library</a> &gt; <a href="00372.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="01315.html" target="topic">USB_HOST_EVENT_RESPONSE Enumeration</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00370.html" target="topic">USB Host Layer Library</a> &gt; <a href="00373.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="01315.html" target="topic">USB_HOST_EVENT_HANDLER Type</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01353.html" target="topic">Previous</a> | <a href="00372.html" target="topic">Up</a> | <a href="00001.html" target="topic">Next</a></div>
+<a href="01310.html" target="topic">Previous</a> | <a href="00373.html" target="topic">Up</a> | <a href="01319.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_EVENT_RESPONSE Topic Title: USB_HOST_EVENT_RESPONSE Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_EVENT_HANDLER Topic Title: USB_HOST_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_HOST_EVENT_RESPONSE Enumeration</div>
+USB_HOST_EVENT_HANDLER Type</div>
 </div>
 </div>
 
@@ -49,35 +49,19 @@ USB_HOST_EVENT_RESPONSE Enumeration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Host Layer Events Handler Function Response Type.&nbsp;</p>
+USB Host Layer Event Handler Function Pointer Type&nbsp;</p>
 <p class="Element10">
-This is the definition of the Host Layer Event Handler Response Type.</p></div>
+This data type defines the required function signature of the USB Host Layer Event handling callback function. The application must register a pointer to a Host Layer Event handling function who's function signature (parameter and return value types) match the types specified by this function pointer in order to receive event call backs from the Host Layer. The Host Layer will invoke this function with event relevant parameters. The description of the event handler function parameters is given here.&nbsp;</p>
+<p class="Element10">
+event - Type of event generated.&nbsp;</p>
+<p class="Element10">
+pData - This parameter should be type cast to an event specific pointer type based on the event that has occurred. Refer to the <a href="01310.html" target="topic">USB_HOST_EVENT</a> enumeration description for more details.&nbsp;</p>
+<p class="Element10">
+context - Value identifying the context of the application that was registered along with the event handling function.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
-  <strong><span style="color: #000000">USB_HOST_EVENT_RESPONSE_NONE</span></strong> = 0
-} USB_HOST_EVENT_RESPONSE;</pre></div></div>
-<a name="4D656D62657273"></a><div class="Element14">
-Members</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element272">
-<div class="TableDiv">
-<table cellspacing="0" class="Table4">
-<tr>
-<td class="Element260" valign="top" width="35%">
-<div class="Element261">
-Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
-<div class="Element265">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_EVENT_RESPONSE_NONE = 0&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Returning this value indicates no application response to the host event&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <a href="01316.html" target="topic">USB_HOST_EVENT_RESPONSE</a> (* <strong><span style="color: #000000">USB_HOST_EVENT_HANDLER</span></strong>)(<a href="01310.html" target="topic">USB_HOST_EVENT</a> event, <strong><span style="color: #000080">void</span></strong> * eventData, uintptr_t context);</pre></div></div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
@@ -90,7 +74,7 @@ None.</p></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00369.html" target="topic">USB Host Layer Library</a> &gt; <a href="00372.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="01315.html" target="topic">USB_HOST_EVENT_RESPONSE Enumeration</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00370.html" target="topic">USB Host Layer Library</a> &gt; <a href="00373.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="01315.html" target="topic">USB_HOST_EVENT_HANDLER Type</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -101,10 +85,10 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01353.html" target="topic">Previous</a> | <a href="00372.html" target="topic">Up</a> | <a href="00001.html" target="topic">Next</a></div>
+<a href="01310.html" target="topic">Previous</a> | <a href="00373.html" target="topic">Up</a> | <a href="01319.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_EVENT_RESPONSE Topic Title: USB_HOST_EVENT_RESPONSE Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_EVENT_HANDLER Topic Title: USB_HOST_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

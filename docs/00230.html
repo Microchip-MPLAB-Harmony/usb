@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00230.html" target="topic">Setting the Desired Audio Stream Sampling Rate</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00230.html" target="topic">Setting the Desired Audio Stream Sampling Rate</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -49,7 +49,7 @@ Setting the Desired Audio Stream Sampling Rate</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Sampling rate of an audio stream can be set using <a href="01118.html" target="topic">USB_HOST_AUDIO_V1_0_StreamSamplingRateSet</a> function. Supported sampling rates for an audio stream is returned as part of <a href="01082.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_INFO</a> by the <a href="01114.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetFirst</a> and USB_HOST_AUDIO_V1_0_StreamGetNextfunctions. Return values of these function indicates if the request has been placed successfully or failed. When the set sampling rate request is completed the stream event handler generates an event USB_HOST_AUDIO_V1_0_STREAM_EVENT_SAMPLING_RATE_SET_COMPLETE. The event data USB_HOST_AUDIO_V1_0_STREAM_EVENT_SAMPLING_RATE_SET_COMPLETE_DATA has request handle and the requestStatus which indicates the set sampling request was accepted by the device or failed. The following code shows an example of how sampling rates can be set in an audio stream. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of Set sampling rate to an audio stream */</span></i>
+Sampling rate of an audio stream can be set using <a href="01119.html" target="topic">USB_HOST_AUDIO_V1_0_StreamSamplingRateSet</a> function. Supported sampling rates for an audio stream is returned as part of <a href="01083.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_INFO</a> by the <a href="01115.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetFirst</a> and USB_HOST_AUDIO_V1_0_StreamGetNextfunctions. Return values of these function indicates if the request has been placed successfully or failed. When the set sampling rate request is completed the stream event handler generates an event USB_HOST_AUDIO_V1_0_STREAM_EVENT_SAMPLING_RATE_SET_COMPLETE. The event data USB_HOST_AUDIO_V1_0_STREAM_EVENT_SAMPLING_RATE_SET_COMPLETE_DATA has request handle and the requestStatus which indicates the set sampling request was accepted by the device or failed. The following code shows an example of how sampling rates can be set in an audio stream. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of Set sampling rate to an audio stream */</span></i>
 
 <i><span style="color: #008000">/* Specify the Audio Stream format details that this application supports */</span></i>
 <strong><span style="color: #000080">const</span></strong> APP_USB_HOST_AUDIO_STREAM_FORTMAT audioSpeakerStreamFormat =
@@ -319,7 +319,7 @@ USB_HOST_AUDIO_V1_0_STREAM_OBJ App_USBHostAudioSpeakerStreamFind
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00230.html" target="topic">Setting the Desired Audio Stream Sampling Rate</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00230.html" target="topic">Setting the Desired Audio Stream Sampling Rate</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">

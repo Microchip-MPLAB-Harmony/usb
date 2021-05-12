@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_DEVICE_TRANSFER_FLAGS Enumeration</title>
+<title>USB_DEVICE_Tasks Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00302.html" target="topic">Library Interface</a> &gt; g) Data Types and Constants &gt; <a href="01027.html" target="topic">USB_DEVICE_TRANSFER_FLAGS Enumeration</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00302.html" target="topic">Library Interface</a> &gt; a) System Interaction Functions &gt; <a href="01027.html" target="topic">USB_DEVICE_Tasks Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01009.html" target="topic">Previous</a> | <a href="00302.html" target="topic">Up</a> | <a href="01030.html" target="topic">Next</a></div>
+<a href="01023.html" target="topic">Previous</a> | <a href="00302.html" target="topic">Up</a> | <a href="00952.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_TRANSFER_FLAGS Topic Title: USB_DEVICE_TRANSFER_FLAGS Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_Tasks@SYS_MODULE_OBJ Topic Title: USB_DEVICE_Tasks Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_DEVICE_TRANSFER_FLAGS Enumeration</div>
+USB_DEVICE_Tasks Function</div>
 </div>
 </div>
 
@@ -49,40 +49,46 @@ USB_DEVICE_TRANSFER_FLAGS Enumeration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-USB Device Layer Transfer Flags&nbsp;</p>
-<p class="Element10">
-This enumeration defines the possible USB Device Layer Transfer Flags. These flags are specified in <a href="00772.html" target="topic">USB_DEVICE_EndpointWrite</a>() function to specify the handling of the transfer. Please refer to the description of the <a href="00772.html" target="topic">USB_DEVICE_EndpointWrite</a> function for examples.</p></div>
+This function must be periodically called by the user application. The USB Device layer calls all other function driver tasks in this function. It also generates and forwards events to its clients.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
-  <strong><span style="color: #000000">USB_DEVICE_TRANSFER_FLAGS_DATA_COMPLETE</span></strong>,
-  <strong><span style="color: #000000">USB_DEVICE_TRANSFER_FLAGS_MORE_DATA_PENDING</span></strong>
-} USB_DEVICE_TRANSFER_FLAGS;</pre></div></div>
-<a name="4D656D62657273"></a><div class="Element14">
-Members</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">USB_DEVICE_Tasks</span></strong>(
+    SYS_MODULE_OBJ <strong><span style="color: #000000">object</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element272">
-<div class="TableDiv">
-<table cellspacing="0" class="Table4">
-<tr>
-<td class="Element260" valign="top" width="35%">
-<div class="Element261">
-Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
-<div class="Element265">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_DEVICE_TRANSFER_FLAGS_DATA_COMPLETE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This flag indicates there is no further data to be sent in this transfer and that the transfer should end. If the size of the transfer is a multiple of the maximum packet size for related endpoint configuration, the device layer will send a zero length packet to indicate end of the transfer to the host.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_DEVICE_TRANSFER_FLAGS_MORE_DATA_PENDING&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-This flag indicates there is more data to be sent in this transfer. If the size of the transfer is a multiple of the maximum packet size for the related endpoint configuration, the device layer will not send a zero length packet. This flags should not be specified if the size of the transfer is is not a multiple of the maximum packet size or if the transfer is less than maximum packet size.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+Device layer must have been initialized by calling <a href="00908.html" target="topic">USB_DEVICE_Initialize</a>.</p></div>
 </div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+devLayerObj&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to the Device Layer Object that is returned from <a href="00908.html" target="topic">USB_DEVICE_Initialize</a>&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -91,12 +97,28 @@ Remarks</div>
 <p class="Element10">
 None.</p></div>
 </div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// The USB_DEVICE_Tasks() function should be placed in the </span></i>
+<i><span style="color: #008000">// SYS_Tasks() function of a MPLAB Harmony application.</span></i>
+
+SYS_MODULE_OBJ usbDeviceLayerObj; <i><span style="color: #008000">// Returned by USB_DEVICE_Initialize().</span></i>
+
+<strong><span style="color: #000080">void</span></strong> SYS_Tasks(<strong><span style="color: #000080">void</span></strong>)
+{
+    USB_DEVICE_Tasks(usbDeviceLayerObj);
+}
+</pre></div></div>
+</div>
+</div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00302.html" target="topic">Library Interface</a> &gt; g) Data Types and Constants &gt; <a href="01027.html" target="topic">USB_DEVICE_TRANSFER_FLAGS Enumeration</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00302.html" target="topic">Library Interface</a> &gt; a) System Interaction Functions &gt; <a href="01027.html" target="topic">USB_DEVICE_Tasks Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -107,10 +129,10 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01009.html" target="topic">Previous</a> | <a href="00302.html" target="topic">Up</a> | <a href="01030.html" target="topic">Next</a></div>
+<a href="01023.html" target="topic">Previous</a> | <a href="00302.html" target="topic">Up</a> | <a href="00952.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_TRANSFER_FLAGS Topic Title: USB_DEVICE_TRANSFER_FLAGS Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_Tasks@SYS_MODULE_OBJ Topic Title: USB_DEVICE_Tasks Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

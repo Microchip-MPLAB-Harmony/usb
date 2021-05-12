@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_HOST_AUDIO_V1_RESULT Enumeration</title>
+<title>USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID Macro</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00225.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01150.html" target="topic">USB_HOST_AUDIO_V1_RESULT Enumeration</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00225.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01150.html" target="topic">USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID Macro</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01148.html" target="topic">Previous</a> | <a href="00225.html" target="topic">Up</a> | <a href="01164.html" target="topic">Next</a></div>
+<a href="01147.html" target="topic">Previous</a> | <a href="00225.html" target="topic">Up</a> | <a href="01164.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_RESULT Topic Title: USB_HOST_AUDIO_V1_RESULT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID Topic Title: USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_HOST_AUDIO_V1_RESULT Enumeration</div>
+USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID Macro</div>
 </div>
 </div>
 
@@ -49,101 +49,13 @@ USB_HOST_AUDIO_V1_RESULT Enumeration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-USB Host Audio v1.0 Class Driver Result enumeration.&nbsp;</p>
+USB Host Audio v1.0 Client Driver Invalid Request Handle&nbsp;</p>
 <p class="Element10">
-This enumeration lists the possible USB Host Audio v1.0 Class Driver operation results. These values are returned by Audio v1.0 Class Driver functions.</p></div>
+This handle is returned by the Audio v1.0 Client driver command routines when the request could not be scheduled.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
-  <strong><span style="color: #000000">USB_HOST_AUDIO_V1_RESULT_FAILURE</span></strong>,
-  <strong><span style="color: #000000">USB_HOST_AUDIO_V1_RESULT_BUSY</span></strong>,
-  <strong><span style="color: #000000">USB_HOST_AUDIO_V1_RESULT_REQUEST_STALLED</span></strong>,
-  <strong><span style="color: #000000">USB_HOST_AUDIO_V1_RESULT_INVALID_PARAMETER</span></strong>,
-  <strong><span style="color: #000000">USB_HOST_AUDIO_V1_RESULT_DEVICE_UNKNOWN</span></strong>,
-  <strong><span style="color: #000000">USB_HOST_AUDIO_V1_RESULT_HANDLE_INVALID</span></strong>,
-  <strong><span style="color: #000000">USB_HOST_AUDIO_V1_RESULT_TRANSFER_ABORTED</span></strong>,
-  <strong><span style="color: #000000">USB_HOST_AUDIO_V1_RESULT_OBJ_INVALID</span></strong>,
-  <strong><span style="color: #000000">USB_HOST_AUDIO_V1_RESULT_END_OF_CONTROL_ENTITY</span></strong>,
-  <strong><span style="color: #000000">USB_HOST_AUDIO_V1_RESULT_END_OF_STREAMING_INTERFACE</span></strong>,
-  <strong><span style="color: #000000">USB_HOST_AUDIO_V1_RESULT_END_OF_INTERFACE_SETTINGS</span></strong>,
-  <strong><span style="color: #000000">USB_HOST_AUDIO_V1_RESULT_SUCCESS</span></strong>
-} USB_HOST_AUDIO_V1_RESULT;</pre></div></div>
-<a name="4D656D62657273"></a><div class="Element14">
-Members</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element272">
-<div class="TableDiv">
-<table cellspacing="0" class="Table4">
-<tr>
-<td class="Element260" valign="top" width="35%">
-<div class="Element261">
-Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
-<div class="Element265">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_AUDIO_V1_RESULT_FAILURE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-An unknown failure has occurred&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_AUDIO_V1_RESULT_BUSY&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-The transfer or request could not be scheduled because internal queues are full. The request or transfer should be retried&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_AUDIO_V1_RESULT_REQUEST_STALLED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-The request was stalled&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_AUDIO_V1_RESULT_INVALID_PARAMETER&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-A required parameter was invalid&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_AUDIO_V1_RESULT_DEVICE_UNKNOWN&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-The associated device does not exist in the system.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_AUDIO_V1_RESULT_HANDLE_INVALID&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-The specified handle is not valid&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_AUDIO_V1_RESULT_TRANSFER_ABORTED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-The transfer or requested was aborted&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_AUDIO_V1_RESULT_OBJ_INVALID&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-The specified Audio v1.0 object is invalid&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_AUDIO_V1_RESULT_END_OF_CONTROL_ENTITY&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-No more audio control entity&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_AUDIO_V1_RESULT_END_OF_STREAMING_INTERFACE&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-No more streaming interface settings present in the audio device&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_AUDIO_V1_RESULT_END_OF_INTERFACE_SETTINGS&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-No more interface alternate settings are present in the audio streaming interface&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_HOST_AUDIO_V1_RESULT_SUCCESS&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Indicates that the operation succeeded or the request was accepted and will be processed.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID</span></strong> ((<a href="01149.html" target="topic">USB_HOST_AUDIO_V1_REQUEST_HANDLE</a>)(-1))</pre></div></div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
@@ -156,7 +68,7 @@ None.</p></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00225.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01150.html" target="topic">USB_HOST_AUDIO_V1_RESULT Enumeration</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00225.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01150.html" target="topic">USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID Macro</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -167,10 +79,10 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01148.html" target="topic">Previous</a> | <a href="00225.html" target="topic">Up</a> | <a href="01164.html" target="topic">Next</a></div>
+<a href="01147.html" target="topic">Previous</a> | <a href="00225.html" target="topic">Up</a> | <a href="01164.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_RESULT Topic Title: USB_HOST_AUDIO_V1_RESULT Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID Topic Title: USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

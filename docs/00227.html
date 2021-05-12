@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00227.html" target="topic">Obtaining Audio v1.0 Device Audio Stream Details</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00227.html" target="topic">Obtaining Audio v1.0 Device Audio Stream Details</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -51,13 +51,13 @@ Obtaining Audio v1.0 Device Audio Stream Details</div>
 <p class="Element10">
 The application will need to know more details about an attached audio device like Number of Audio Stream Groups and audio format details of each audio stream in audio stream group. Application will need to search through all of the audio streams and find if a suitable audio stream is available before it can open a stream and start communicating.&nbsp;</p>
 <p class="Element10">
-<a href="01049.html" target="topic">USB_HOST_AUDIO_V1_0_NumberOfStreamGroupsGet</a> function can be used to know how many stream groups are available in the attached Audio device. This function takes <a href="01050.html" target="topic">USB_HOST_AUDIO_V1_0_OBJ</a> as an argument and returns uint8_t value as number of stream groups.&nbsp;</p>
+<a href="01050.html" target="topic">USB_HOST_AUDIO_V1_0_NumberOfStreamGroupsGet</a> function can be used to know how many stream groups are available in the attached Audio device. This function takes <a href="01051.html" target="topic">USB_HOST_AUDIO_V1_0_OBJ</a> as an argument and returns uint8_t value as number of stream groups.&nbsp;</p>
 <p class="Element10">
-<a href="01114.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetFirst</a> function can be used to find out audio format details of first audio stream in a Stream Groups. This function takes <a href="01050.html" target="topic">USB_HOST_AUDIO_V1_0_OBJ</a>, stream group index and pointer to the <a href="01082.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_INFO</a> as arguments. The stream index can any number between zero to number of stream groups returned by <a href="01049.html" target="topic">USB_HOST_AUDIO_V1_0_NumberOfStreamGroupsGet</a> function. The audio stream object returned as part of <a href="01091.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_OBJ</a> structure.&nbsp;</p>
+<a href="01115.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetFirst</a> function can be used to find out audio format details of first audio stream in a Stream Groups. This function takes <a href="01051.html" target="topic">USB_HOST_AUDIO_V1_0_OBJ</a>, stream group index and pointer to the <a href="01083.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_INFO</a> as arguments. The stream index can any number between zero to number of stream groups returned by <a href="01050.html" target="topic">USB_HOST_AUDIO_V1_0_NumberOfStreamGroupsGet</a> function. The audio stream object returned as part of <a href="01092.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_OBJ</a> structure.&nbsp;</p>
 <p class="Element10">
-<a href="01115.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetNext</a> function can be used to find details about subsequent audio streams. When there are no more audio streams available in the specified audio stream group this function return USB_HOST_AUDIO_V1_0_RESULT_END_OF_STREAM_LIST error. It is application’s responsibility to map and Audio Stream group and an audio stream.&nbsp;</p>
+<a href="01116.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetNext</a> function can be used to find details about subsequent audio streams. When there are no more audio streams available in the specified audio stream group this function return USB_HOST_AUDIO_V1_0_RESULT_END_OF_STREAM_LIST error. It is application’s responsibility to map and Audio Stream group and an audio stream.&nbsp;</p>
 <p class="Element10">
-If the application is looking for a audio stream with certain properties, application need compare audio stream properties with members of the <a href="01082.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_INFO</a> structure returned by <a href="01114.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetFirst</a> and <a href="01115.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetNext</a> functions. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of getting details about audio stream
+If the application is looking for a audio stream with certain properties, application need compare audio stream properties with members of the <a href="01083.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_INFO</a> structure returned by <a href="01115.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetFirst</a> and <a href="01116.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetNext</a> functions. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of getting details about audio stream
    in an attached Audio v1.0 device.*/</span></i>
 
 <i><span style="color: #008000">/* Specify the Audio Stream format details that this application supports */</span></i>
@@ -218,7 +218,7 @@ USB_HOST_AUDIO_V1_0_STREAM_OBJ App_USBHostAudioSpeakerStreamFind
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00227.html" target="topic">Obtaining Audio v1.0 Device Audio Stream Details</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00227.html" target="topic">Obtaining Audio v1.0 Device Audio Stream Details</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">

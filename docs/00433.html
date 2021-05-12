@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Library Interface</title>
+<title>Library Initialization</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00421.html" target="topic">Generic USB Device Library</a> &gt; <a href="00433.html" target="topic">Library Interface</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00422.html" target="topic">Generic USB Device Library</a> &gt; <a href="00436.html" target="topic">Using the Library</a> &gt; <a href="00431.html" target="topic">How the Library Works</a> &gt; <a href="00433.html" target="topic">Library Initialization</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00423.html" target="topic">Previous</a> | <a href="00421.html" target="topic">Up</a> | <a href="00394.html" target="topic">Next</a></div>
+<a href="00431.html" target="topic">Previous</a> | <a href="00431.html" target="topic">Up</a> | <a href="00430.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Library Initialization Topic Title: Library Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Library Interface</div>
+Library Initialization</div>
 </div>
 </div>
 
@@ -49,14 +49,33 @@ Library Interface</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The API for implementing the Generic USB Device is contained the USB Device Library. Please refer to the <a href="00302.html" target="topic">Library Interface</a> section in the USB Device Layer Library for more details.</p></div>
+Unlike the standard USB function drivers in the MPLAB Harmony USB Device Stack, in the case of a Generic USB Device, the USB Device Layer does not automatically enable or disable endpoints that belong to the Generic interface. This must be done by the application when the device is configured by the Host.&nbsp;</p>
+<p class="Element10">
+A USB Device can have multiple Generic interfaces. Each of these interfaces must have corresponding entries in the USB Device Layer function driver registration table. For Generic interfaces, the driver and funcDriverInit member of the function driver registration table entry should be set to NULL. The following code shows an example of how this is done. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example function driver registration table entry
+ * for a Generic USB Device Interface. Note that the function driver entry point
+ * member is NULL. This instructs the Device Layer to pass all interface related
+ * control transfers to the application. */</span></i>
+<strong><span style="color: #000080">const</span></strong> USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[1] =
+{
+    {
+         .configurationValue = 1 ,      <i><span style="color: #008000">// Configuration descriptor index</span></i>
+         .driver = NULL,                <i><span style="color: #008000">// No APIs exposed to the device layer</span></i>
+         .funcDriverIndex = 0 ,         <i><span style="color: #008000">// Zero Instance index</span></i>
+         .funcDriverInit = NULL,        <i><span style="color: #008000">// No init data</span></i>
+         .interfaceNumber = 0 ,         <i><span style="color: #008000">// Start interface number of this instance</span></i>
+         .numberOfInterfaces = 1 ,      <i><span style="color: #008000">// Total number of interfaces contained in this instance</span></i>
+         .speed = USB_SPEED_FULL|USB_SPEED_HIGH         <i><span style="color: #008000">// USB Speed</span></i>
+    }
+};</pre></div></div>
+<p class="Element10">
+The endpoint read and endpoint write queue sizes are specified by the queueSizeEndpointRead and queueSizeEndpointWrite members of the <a href="00892.html" target="topic">USB_DEVICE_INIT</a> device layer initialization data structure. These read and write queue sizes define the size of the read and write buffer object pools. Objects from these pools are then queued up at each read and write endpoint, when an endpoint read or write is requested. The total number of buffer objects is specified by the <a href="00764.html" target="topic">USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED</a> configuration constant.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00421.html" target="topic">Generic USB Device Library</a> &gt; <a href="00433.html" target="topic">Library Interface</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00422.html" target="topic">Generic USB Device Library</a> &gt; <a href="00436.html" target="topic">Using the Library</a> &gt; <a href="00431.html" target="topic">How the Library Works</a> &gt; <a href="00433.html" target="topic">Library Initialization</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -67,10 +86,10 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00423.html" target="topic">Previous</a> | <a href="00421.html" target="topic">Up</a> | <a href="00394.html" target="topic">Next</a></div>
+<a href="00431.html" target="topic">Previous</a> | <a href="00431.html" target="topic">Up</a> | <a href="00430.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Library Initialization Topic Title: Library Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_DEVICE_Status Function</title>
+<title>USB_DEVICE_StateGet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00302.html" target="topic">Library Interface</a> &gt; a) System Interaction Functions &gt; <a href="01022.html" target="topic">USB_DEVICE_Status Function</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00302.html" target="topic">Library Interface</a> &gt; d) Device Management Functions &gt; <a href="01022.html" target="topic">USB_DEVICE_StateGet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00760.html" target="topic">Previous</a> | <a href="00302.html" target="topic">Up</a> | <a href="01026.html" target="topic">Next</a></div>
+<a href="01009.html" target="topic">Previous</a> | <a href="00302.html" target="topic">Up</a> | <a href="00559.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_Status@SYS_MODULE_OBJ Topic Title: USB_DEVICE_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_StateGet@USB_DEVICE_HANDLE Topic Title: USB_DEVICE_StateGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_DEVICE_Status Function</div>
+USB_DEVICE_StateGet Function</div>
 </div>
 </div>
 
@@ -49,19 +49,19 @@ USB_DEVICE_Status Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function provides the current status of the USB device layer.</p></div>
+This function returns the current state of the USB device, as described in Chapter 9 of the USB 2.0 Specification.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100">SYS_STATUS <strong><span style="color: #000000">USB_DEVICE_Status</span></strong>(
-    SYS_MODULE_OBJ <strong><span style="color: #000000">object</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100">USB_DEVICE_STATE <strong><span style="color: #000000">USB_DEVICE_StateGet</span></strong>(
+    <a href="00814.html" target="topic">USB_DEVICE_HANDLE</a> <strong><span style="color: #000000">usbDeviceHandle</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <a href="00907.html" target="topic">USB_DEVICE_Initialize</a> function must have been called before calling this function.</p></div>
+The USB device layer must have been initialized and opened before calling this function.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -78,9 +78,9 @@ Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
-object&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+usbDeviceHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Driver object handle, returned from <a href="00907.html" target="topic">USB_DEVICE_Initialize</a>&nbsp;</div></td></tr></table></div></div>
+Pointer to the device layer handle that is returned from <a href="00952.html" target="topic">USB_DEVICE_Open</a>&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -88,9 +88,17 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-SYS_STATUS_READY - Indicates that the device is busy with a previous system level operation and cannot start another&nbsp;</p>
+USB_DEVICE_STATE_DETACHED - Device is not in any of the known states&nbsp;</p>
 <p class="Element10">
-SYS_STATUS_UNINITIALIZED - Indicates that the device layer is in a deinitialized state</p></div>
+USB_DEVICE_STATE_ATTACHED - Device is attached to the USB, but is not powered&nbsp;</p>
+<p class="Element10">
+USB_DEVICE_STATE_POWERED - Device is attached to the USB and powered, but has not been reset&nbsp;</p>
+<p class="Element10">
+USB_DEVICE_STATE_DEFAULT - Device is attached to the USB and powered and has been reset, but has not been assigned a unique address&nbsp;</p>
+<p class="Element10">
+USB_DEVICE_STATE_ADDRESS - Device is attached to the USB, powered, has been reset, and a unique device address has been assigned&nbsp;</p>
+<p class="Element10">
+USB_DEVICE_STATE_CONFIGURED - Device is attached to the USB, powered, has been reset, has a unique address, is configured, and is not suspended</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -103,19 +111,24 @@ None.</p></div>
 Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// This code example shows how the USB_DEVICE_Status function</span></i>
-<i><span style="color: #008000">// can be used to check if the USB Device Layer is ready</span></i>
-<i><span style="color: #008000">// for client operations. </span></i>
+<div class="Element13"><div class="Element12"><pre class="Element12">USB_DEVICE_STATE usbDevState;
 
-SYS_MODULE_OBJ      object;     <i><span style="color: #008000">// Returned from DRV_USB_Initialize</span></i>
-SYS_STATUS          status;
+<i><span style="color: #008000">// Get USB Device State.</span></i>
+usbDevState = USB_DEVICE_StateGet( usbDeviceHandle );
 
-status = USB_DEVICE_Status(object);
-
-<strong><span style="color: #000080">if</span></strong> (SYS_STATUS_READY != status)
+<strong><span style="color: #000080">switch</span></strong>(usbDevState)
 {
-    <i><span style="color: #008000">// Handle error</span></i>
-}</pre></div></div>
+    <strong><span style="color: #000080">case</span></strong> USB_DEVICE_STATE_ATTACHED:
+        <i><span style="color: #008000">// Add code here            </span></i>
+        <strong><span style="color: #000080">break</span></strong>;
+        
+    <strong><span style="color: #000080">case</span></strong> USB_DEVICE_STATE_POWERED:
+       <i><span style="color: #008000">// Add code here</span></i>
+       <strong><span style="color: #000080">break</span></strong>;     
+              
+    <strong><span style="color: #000080">default</span></strong>:
+        <strong><span style="color: #000080">break</span></strong>;
+ }     </pre></div></div>
 </div>
 </div>
 </div>
@@ -123,7 +136,7 @@ status = USB_DEVICE_Status(object);
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00302.html" target="topic">Library Interface</a> &gt; a) System Interaction Functions &gt; <a href="01022.html" target="topic">USB_DEVICE_Status Function</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00302.html" target="topic">Library Interface</a> &gt; d) Device Management Functions &gt; <a href="01022.html" target="topic">USB_DEVICE_StateGet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -134,10 +147,10 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00760.html" target="topic">Previous</a> | <a href="00302.html" target="topic">Up</a> | <a href="01026.html" target="topic">Next</a></div>
+<a href="01009.html" target="topic">Previous</a> | <a href="00302.html" target="topic">Up</a> | <a href="00559.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_Status@SYS_MODULE_OBJ Topic Title: USB_DEVICE_Status Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_StateGet@USB_DEVICE_HANDLE Topic Title: USB_DEVICE_StateGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

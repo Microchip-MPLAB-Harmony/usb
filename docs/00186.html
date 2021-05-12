@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00208.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00193.html" target="topic">Using the Library</a> &gt; <a href="00188.html" target="topic">How the Library Works</a> &gt; <a href="00186.html" target="topic">Event Handling</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00208.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00193.html" target="topic">Using the Library</a> &gt; <a href="00188.html" target="topic">How the Library Works</a> &gt; <a href="00186.html" target="topic">Event Handling</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -122,9 +122,9 @@ The Audio 1.0 Function Driver provides events to the application through the eve
 </ul><p class="Element10">
 The Audio Control Interface Request events and the related control transfer events typically require the application to respond with the Device Layer Control Transfer routines to complete the control transfer. Based on the generated event, the application may be required to:</p>
 <ul class="Element630">
-<li class="Element600">Respond with a <a href="00758.html" target="topic">USB_DEVICE_ControlSend</a> function, which is completes the data stage of a Control Read Transfer</li>
-<li class="Element600">Respond with a <a href="00757.html" target="topic">USB_DEVICE_ControlReceive</a> function, which provisions the data stage of a Control Write Transfer</li>
-<li class="Element600">Respond with a <a href="00759.html" target="topic">USB_DEVICE_ControlStatus</a> function, which completes the handshake stage of the Control Transfer. The application can either STALL or Acknowledge the handshake stage through the <a href="00759.html" target="topic">USB_DEVICE_ControlStatus</a> function.</li>
+<li class="Element600">Respond with a <a href="00759.html" target="topic">USB_DEVICE_ControlSend</a> function, which is completes the data stage of a Control Read Transfer</li>
+<li class="Element600">Respond with a <a href="00758.html" target="topic">USB_DEVICE_ControlReceive</a> function, which provisions the data stage of a Control Write Transfer</li>
+<li class="Element600">Respond with a <a href="00760.html" target="topic">USB_DEVICE_ControlStatus</a> function, which completes the handshake stage of the Control Transfer. The application can either STALL or Acknowledge the handshake stage through the <a href="00760.html" target="topic">USB_DEVICE_ControlStatus</a> function.</li>
 </ul><p class="Element10">
 The following table shows the CDC Function Driver Control Transfer related events and the required application control transfer actions. </p><div class="Element63">
 <div class="TableDiv">
@@ -139,22 +139,22 @@ Required Application Action&nbsp;</div></td></tr><tr>
 <div class="Element68">
 USB_DEVICE_AUDIO_EVENT_CONTROL_SET_CUR<br>USB_DEVICE_AUDIO_EVENT_CONTROL_SET_MIN<br>USB_DEVICE_AUDIO_EVENT_CONTROL_SET_MAX<br>USB_DEVICE_AUDIO_EVENT_CONTROL_SET_RES<br>USB_DEVICE_AUDIO_EVENT_CONTROL_SET_MEM&nbsp;</div></td><td class="Element67" valign="top" width="62%">
 <div class="Element68">
-Identify the control type using the associated event data. If a data stage is expected, use the <a href="00757.html" target="topic">USB_DEVICE_ControlReceive</a> function to receive expected data. If a data stage is not required or if the request is not supported, use the <a href="00759.html" target="topic">USB_DEVICE_ControlStatus</a> function to Acknowledge or Stall the request.&nbsp;</div></td></tr><tr>
+Identify the control type using the associated event data. If a data stage is expected, use the <a href="00758.html" target="topic">USB_DEVICE_ControlReceive</a> function to receive expected data. If a data stage is not required or if the request is not supported, use the <a href="00760.html" target="topic">USB_DEVICE_ControlStatus</a> function to Acknowledge or Stall the request.&nbsp;</div></td></tr><tr>
 <td class="Element67" valign="top" width="38%">
 <div class="Element68">
 USB_DEVICE_AUDIO_EVENT_CONTROL_GET_CUR<br>USB_DEVICE_AUDIO_EVENT_CONTROL_GET_MIN<br>USB_DEVICE_AUDIO_EVENT_CONTROL_GET_MAX<br>USB_DEVICE_AUDIO_EVENT_CONTROL_GET_RES<br>USB_DEVICE_AUDIO_EVENT_CONTROL_GET_MEM&nbsp;</div></td><td class="Element67" valign="top" width="62%">
 <div class="Element68">
-Identify the control type using the associated event data. Use the <a href="00758.html" target="topic">USB_DEVICE_ControlSend</a> function to send the expected data. If the request is not supported, use the <a href="00759.html" target="topic">USB_DEVICE_ControlStatus</a> function to Stall the request.&nbsp;</div></td></tr><tr>
+Identify the control type using the associated event data. Use the <a href="00759.html" target="topic">USB_DEVICE_ControlSend</a> function to send the expected data. If the request is not supported, use the <a href="00760.html" target="topic">USB_DEVICE_ControlStatus</a> function to Stall the request.&nbsp;</div></td></tr><tr>
 <td class="Element67" valign="top" width="38%">
 <div class="Element68">
 USB_DEVICE_AUDIO_EVENT_ENTITY_GET_STAT&nbsp;</div></td><td class="Element67" valign="top" width="62%">
 <div class="Element68">
-Identify the entity type using the associated event data. Use the <a href="00758.html" target="topic">USB_DEVICE_ControlSend</a> function to send the expected data. If the request is not supported, use the <a href="00759.html" target="topic">USB_DEVICE_ControlStatus</a> function to Stall the request.&nbsp;</div></td></tr><tr>
+Identify the entity type using the associated event data. Use the <a href="00759.html" target="topic">USB_DEVICE_ControlSend</a> function to send the expected data. If the request is not supported, use the <a href="00760.html" target="topic">USB_DEVICE_ControlStatus</a> function to Stall the request.&nbsp;</div></td></tr><tr>
 <td class="Element67" valign="top" width="38%">
 <div class="Element68">
 USB_DEVICE_AUDIO_CONTROL_TRANSFER_DATA_RECEIVED&nbsp;</div></td><td class="Element67" valign="top" width="62%">
 <div class="Element68">
-Acknowledge or stall using the <a href="00759.html" target="topic">USB_DEVICE_ControlStatus</a> function.&nbsp;</div></td></tr><tr>
+Acknowledge or stall using the <a href="00760.html" target="topic">USB_DEVICE_ControlStatus</a> function.&nbsp;</div></td></tr><tr>
 <td class="Element67" valign="top" width="38%">
 <div class="Element68">
 USB_DEVICE_AUDIO_CONTROL_TRANSFER_DATA_SENT&nbsp;</div></td><td class="Element67" valign="top" width="62%">
@@ -169,7 +169,7 @@ Interpret the setup packet and use the Device layer Control transfer functions t
 The application must analyze the wIndex field of the event data (received with the control transfer event) to identify the entity that is being addressed. The application must be aware of all entities included in the application and their IDs. Once identified, the application can then type cast the event data to entity type the specific control request type. For example, if the Host sends a control request to set the volume of the Audio device, the following occurs in this order:</p>
 <ol class="Element630">
 <li value="1" class="Element600">The Audio 1.0 Function Driver will generate a USB_DEVICE_AUDIO_EVENT_CONTROL_SET_CUR event.</li>
-<li value="2" class="Element600">The application must type cast the event data to a <a href="00583.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_CUR</a> type and check the entityID field.</li>
+<li value="2" class="Element600">The application must type cast the event data to a <a href="00584.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_CUR</a> type and check the entityID field.</li>
 <li value="3" class="Element600">The entityID field will be identified by the application as a Feature Unit.</li>
 <li value="4" class="Element600">The application must now type cast the event data type as a USB_AUDIO_FEATURE_UNIT_CONTROL_REQUEST data type and check the controlSelector field.</li>
 <li value="5" class="Element600">If the controlSelector field is a USB_AUDIO_VOLUME_CONTROL, the application can then call the USB_DEVICE_AUDIO_ControlReceive function to receive the new volume settings.</li>
@@ -187,7 +187,7 @@ Related Event Data Type&nbsp;</div></td></tr><tr>
 <div class="Element68">
 USB_DEVICE_AUDIO_EVENT_CONTROL_SET_CUR&nbsp;</div></td><td class="Element67" valign="top" width="50%">
 <div class="Element68">
-<a href="00583.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_CUR</a> *&nbsp;</div></td></tr><tr>
+<a href="00584.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_CUR</a> *&nbsp;</div></td></tr><tr>
 <td class="Element67" valign="top" width="50%">
 <div class="Element68">
 USB_DEVICE_AUDIO_EVENT_CONTROL_SET_MIN&nbsp;</div></td><td class="Element67" valign="top" width="50%">
@@ -257,7 +257,7 @@ USB_SETUP_PACKET *&nbsp;</div></td></tr><tr>
 <div class="Element68">
 USB_DEVICE_AUDIO_EVENT_WRITE_COMPLETE&nbsp;</div></td><td class="Element67" valign="top" width="50%">
 <div class="Element68">
-<a href="00596.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_WRITE_COMPLETE</a> *&nbsp;</div></td></tr><tr>
+<a href="00597.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_WRITE_COMPLETE</a> *&nbsp;</div></td></tr><tr>
 <td class="Element67" valign="top" width="50%">
 <div class="Element68">
 USB_DEVICE_AUDIO_EVENT_READ_COMPLETE&nbsp;</div></td><td class="Element67" valign="top" width="50%">
@@ -391,7 +391,7 @@ When the Audio 1.0 Function Driver receives an Audio Class Specific Control Tran
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00208.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00193.html" target="topic">Using the Library</a> &gt; <a href="00188.html" target="topic">How the Library Works</a> &gt; <a href="00186.html" target="topic">Event Handling</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00208.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00193.html" target="topic">Using the Library</a> &gt; <a href="00188.html" target="topic">How the Library Works</a> &gt; <a href="00186.html" target="topic">Event Handling</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">

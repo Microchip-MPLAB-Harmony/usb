@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00208.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00193.html" target="topic">Using the Library</a> &gt; <a href="00188.html" target="topic">How the Library Works</a> &gt; <a href="00182.html" target="topic">Initializing the Library</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00208.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00193.html" target="topic">Using the Library</a> &gt; <a href="00188.html" target="topic">How the Library Works</a> &gt; <a href="00182.html" target="topic">Initializing the Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -49,7 +49,7 @@ Initializing the Library</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The Audio 1.0 Function Driver instance for a USB device configuration is initialized by the Device Layer when the configuration is set by the host. This process does not require application intervention. Each instance of the Audio 1.0 Function Driver should be registered with the Device<span style="color: #FFFFFF">_</span>layer through the Device Layer Function Driver Registration Table. The Audio 1.0 Function Driver requires a initialization data structure to be specified. This is a <a href="00607.html" target="topic">USB_DEVICE_AUDIO_INIT</a> data type that specifies the size of the read and write queues. The funcDriverInit member of the function driver registration table entry of the Audio 1.0 Function Driver instance should point to this initialization data structure. The <a href="00605.html" target="topic">USB_DEVICE_AUDIO_FUNCTION_DRIVER</a> object is a global object provided by the Audio 1.0 Function Driver and provides the Device Layer with an entry point into the Audio 1.0 Function Driver. The following code shows an example of how the Audio 1.0 Function Driver can be registered with the Device Layer. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of how an Audio 1.0 Function Driver instances
+The Audio 1.0 Function Driver instance for a USB device configuration is initialized by the Device Layer when the configuration is set by the host. This process does not require application intervention. Each instance of the Audio 1.0 Function Driver should be registered with the Device<span style="color: #FFFFFF">_</span>layer through the Device Layer Function Driver Registration Table. The Audio 1.0 Function Driver requires a initialization data structure to be specified. This is a <a href="00608.html" target="topic">USB_DEVICE_AUDIO_INIT</a> data type that specifies the size of the read and write queues. The funcDriverInit member of the function driver registration table entry of the Audio 1.0 Function Driver instance should point to this initialization data structure. The <a href="00606.html" target="topic">USB_DEVICE_AUDIO_FUNCTION_DRIVER</a> object is a global object provided by the Audio 1.0 Function Driver and provides the Device Layer with an entry point into the Audio 1.0 Function Driver. The following code shows an example of how the Audio 1.0 Function Driver can be registered with the Device Layer. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of how an Audio 1.0 Function Driver instances
  * can be registered with the Device Layer via the Device Layer Function Driver
  * Registration Table.  In this case Device Configuration 1 consists of one
  * Audio 1.0 Function Driver instance. */</span></i>
@@ -93,7 +93,7 @@ The following figure illustrates the typical sequence that is followed in the ap
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00208.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00193.html" target="topic">Using the Library</a> &gt; <a href="00188.html" target="topic">How the Library Works</a> &gt; <a href="00182.html" target="topic">Initializing the Library</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00208.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00193.html" target="topic">Using the Library</a> &gt; <a href="00188.html" target="topic">How the Library Works</a> &gt; <a href="00182.html" target="topic">Initializing the Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">

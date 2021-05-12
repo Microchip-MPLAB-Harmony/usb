@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00277.html" target="topic">USB CDC Device Library</a> &gt; <a href="00276.html" target="topic">Using the Library</a> &gt; <a href="00269.html" target="topic">How the Library Works</a> &gt; <a href="00275.html" target="topic">Sending Data</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00277.html" target="topic">USB CDC Device Library</a> &gt; <a href="00276.html" target="topic">Using the Library</a> &gt; <a href="00269.html" target="topic">How the Library Works</a> &gt; <a href="00275.html" target="topic">Sending Data</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -49,21 +49,21 @@ Sending Data</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The application may need to send data or serial state notification to the USB CDC Host. This is done by using the <a href="00743.html" target="topic">USB_DEVICE_CDC_Write</a> and <a href="00737.html" target="topic">USB_DEVICE_CDC_SerialStateNotificationSend</a> functions, respectively.</p><div class="Element15">
+The application may need to send data or serial state notification to the USB CDC Host. This is done by using the <a href="00744.html" target="topic">USB_DEVICE_CDC_Write</a> and <a href="00738.html" target="topic">USB_DEVICE_CDC_SerialStateNotificationSend</a> functions, respectively.</p><div class="Element15">
 Sending Data to the USB Host</div>
 <p class="Element10">
-The application can send data to the Host by using the <a href="00743.html" target="topic">USB_DEVICE_CDC_Write</a> function. This function returns a transfer handle that allows the application to track the write request. The request is completed when the Host has requested the data. The completion of the write transfer is indicated by a USB_DEVICE_CDC_EVENT_WRITE_COMPLETE event. A write request could fail if the function driver instance transfer queue is full.&nbsp;</p>
+The application can send data to the Host by using the <a href="00744.html" target="topic">USB_DEVICE_CDC_Write</a> function. This function returns a transfer handle that allows the application to track the write request. The request is completed when the Host has requested the data. The completion of the write transfer is indicated by a USB_DEVICE_CDC_EVENT_WRITE_COMPLETE event. A write request could fail if the function driver instance transfer queue is full.&nbsp;</p>
 <p class="Element10">
-The <a href="00743.html" target="topic">USB_DEVICE_CDC_Write</a> function also allows the application to send data to the host without ending the transfer. This is done by specifying the USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_PENDING flag. The application can use this option when the data to be sent is not readily available or when the application is memory constrained. The combination of the transfer flag and the transfer size affects how the function driver sends the data to the host:</p>
+The <a href="00744.html" target="topic">USB_DEVICE_CDC_Write</a> function also allows the application to send data to the host without ending the transfer. This is done by specifying the USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_PENDING flag. The application can use this option when the data to be sent is not readily available or when the application is memory constrained. The combination of the transfer flag and the transfer size affects how the function driver sends the data to the host:</p>
 <ul class="Element630">
 <li class="Element600">If size is a multiple of maxPacketSize (the IN endpoint size), and the flag is set as USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE, the write function will append a Zero Length Packet (ZLP) to complete the transfer</li>
 <li class="Element600">If size is a multiple of maxPacketSize, and the flag is set as USB_DEVICE_CDC_TRANSFER_FLAGS_MORE_DATA_PENDING, the write function will not append a ZLP and therefore, will not complete the transfer</li>
 <li class="Element600">If size is greater than but not a multiple of maxPacketSize, and the flag is set as USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE, the write function schedules (length/maxPacketSize) packets and one packet for the residual data</li>
-<li class="Element600">If size if greater than but not a multiple of maxPacketSize, and the flag is set as USB_DEVICE_CDC_TRANSFER_FLAGS_MORE_DATA_PENDING, the write function returns an error code and sets the transferHandle parameter to <a href="00742.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID</a></li>
+<li class="Element600">If size if greater than but not a multiple of maxPacketSize, and the flag is set as USB_DEVICE_CDC_TRANSFER_FLAGS_MORE_DATA_PENDING, the write function returns an error code and sets the transferHandle parameter to <a href="00743.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID</a></li>
 <li class="Element600">If size is less than maxPacketSize, and the flag is set as USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE, the write function schedules one packet</li>
-<li class="Element600">If size is less than maxPacketSize, and the flag is set as USB_DEVICE_CDC_TRANSFER_FLAGS_MORE_DATA_PENDING, the write function returns an error code and sets the transferHandle parameter to <a href="00742.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID</a></li>
+<li class="Element600">If size is less than maxPacketSize, and the flag is set as USB_DEVICE_CDC_TRANSFER_FLAGS_MORE_DATA_PENDING, the write function returns an error code and sets the transferHandle parameter to <a href="00743.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID</a></li>
 </ul><p class="Element10">
-The following code shows a set of examples of various conditions attempting to send data with the <a href="00743.html" target="topic">USB_DEVICE_CDC_Write</a> command.&nbsp;</p>
+The following code shows a set of examples of various conditions attempting to send data with the <a href="00744.html" target="topic">USB_DEVICE_CDC_Write</a> command.&nbsp;</p>
 <p class="Element10">
 <strong>Example 1</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// This example assume that the maxPacketSize is 64.</span></i>
 USB_DEVICE_CDC_TRANSFER_HANDLE transferHandle;
@@ -178,7 +178,7 @@ result = USB_DEVICE_CDC_SerialStateDataSend(instanceIndex, &amp;transferHandle,
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00277.html" target="topic">USB CDC Device Library</a> &gt; <a href="00276.html" target="topic">Using the Library</a> &gt; <a href="00269.html" target="topic">How the Library Works</a> &gt; <a href="00275.html" target="topic">Sending Data</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00277.html" target="topic">USB CDC Device Library</a> &gt; <a href="00276.html" target="topic">Using the Library</a> &gt; <a href="00269.html" target="topic">How the Library Works</a> &gt; <a href="00275.html" target="topic">Sending Data</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">

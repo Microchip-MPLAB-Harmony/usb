@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_HOST_AUDIO_V1_0_StreamOpen Macro</title>
+<title>USB_HOST_AUDIO_V1_0_StreamGetNext Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00225.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01116.html" target="topic">USB_HOST_AUDIO_V1_0_StreamOpen Macro</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00225.html" target="topic">Library Interface</a> &gt; a) Audio Device Access Functions &gt; <a href="01116.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetNext Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01110.html" target="topic">Previous</a> | <a href="00225.html" target="topic">Up</a> | <a href="01146.html" target="topic">Next</a></div>
+<a href="01042.html" target="topic">Previous</a> | <a href="00225.html" target="topic">Up</a> | <a href="01118.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_0_StreamOpen Topic Title: USB_HOST_AUDIO_V1_0_StreamOpen Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_0_StreamGetNext@USB_HOST_AUDIO_V1_0_STREAM_OBJ@USB_HOST_AUDIO_V1_0_STREAM_INFO * Topic Title: USB_HOST_AUDIO_V1_0_StreamGetNext Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_HOST_AUDIO_V1_0_StreamOpen Macro</div>
+USB_HOST_AUDIO_V1_0_StreamGetNext Function</div>
 </div>
 </div>
 
@@ -49,17 +49,22 @@ USB_HOST_AUDIO_V1_0_StreamOpen Macro</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function will open the specified audio stream. Once opened, the audio stream can be accessed via the handle which this function returns. The audioStreamObj parameter is the value returned in the <a href="01114.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetFirst</a> or <a href="01115.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetNext</a> functions.</p></div>
+This function returns information about next audio stream in the specified Audio stream group. The <a href="01115.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetFirst</a> function should have been called at least once on the same audio stream group before calling this function. Then, calling this function repeatedly on the stream group will return information about the next audio stream in the stream group. When there are no more audio streams to report, the function returns USB_HOST_AUDIO_V1_0_RESULT_END_OF_STREAM_LIST.&nbsp;</p>
+<p class="Element10">
+Calling the <a href="01115.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetFirst</a> function on the stream group index after the USB_HOST_AUDIO_V1_0_StreamGetNext function has been called will cause the Audio v1.0 Client Driver to reset the audio stream group to point to the first stream in the stream group.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">USB_HOST_AUDIO_V1_0_StreamOpen</span></strong> <a href="01210.html" target="topic">USB_HOST_AUDIO_V1_StreamOpen</a></pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01054.html" target="topic">USB_HOST_AUDIO_V1_0_RESULT</a> <strong><span style="color: #000000">USB_HOST_AUDIO_V1_0_StreamGetNext</span></strong>(
+    <a href="01092.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_OBJ</a> <strong><span style="color: #000000">audioStreamObj</span></strong>, 
+    <a href="01083.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_INFO</a> * <strong><span style="color: #000000">streamInfo</span></strong>
+);</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The audio stream object should be valid.</p></div>
+The <a href="01115.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetFirst</a> function must have been called before calling this function.</p></div>
 </div>
 <a name="506172616D6574657273"></a><div class="Element14">
 Parameters</div>
@@ -78,15 +83,25 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element303">
 audioStreamObj&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Audio stream object&nbsp;</div></td></tr></table></div></div>
+Present audio stream object&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+streamInfo&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to the streamInfo object&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
 Returns</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-This function will return a valid handle if the audio stream could be opened successfully; otherwise, it will return USB_HOST_AUDIO_V1_0_STREAM_RESULT_HANDLE_INVALID. The function will return a valid handle if the stream is ready to be opened.</p></div>
+
+<ul class="Element630">
+<li class="Element600">USB_HOST_AUDIO_V1_0_STREAM_RESULT_SUCCESS - The operation was successful</li>
+<li class="Element600">USB_HOST_AUDIO_V1_0_RESULT_OBJ_INVALID - The specified Audio v1.0 client driver object does not exist</li>
+<li class="Element600">USB_HOST_AUDIO_V1_0_STREAM_RESULT_FAILURE - An unknown failure occurred</li>
+<li class="Element600">USB_HOST_AUDIO_V1_0_RESULT_END_OF_STREAM_LIST - There are no more audio streams in the stream group</li>
+</ul></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -100,7 +115,7 @@ None.</p></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00225.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01116.html" target="topic">USB_HOST_AUDIO_V1_0_StreamOpen Macro</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00225.html" target="topic">Library Interface</a> &gt; a) Audio Device Access Functions &gt; <a href="01116.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetNext Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -111,10 +126,10 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01110.html" target="topic">Previous</a> | <a href="00225.html" target="topic">Up</a> | <a href="01146.html" target="topic">Next</a></div>
+<a href="01042.html" target="topic">Previous</a> | <a href="00225.html" target="topic">Up</a> | <a href="01118.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_0_StreamOpen Topic Title: USB_HOST_AUDIO_V1_0_StreamOpen Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_0_StreamGetNext@USB_HOST_AUDIO_V1_0_STREAM_OBJ@USB_HOST_AUDIO_V1_0_STREAM_INFO * Topic Title: USB_HOST_AUDIO_V1_0_StreamGetNext Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

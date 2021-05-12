@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>usb_host_audio_v1_0.h</title>
+<title>usb_host.h</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00221.html" target="topic">Files</a> &gt; <a href="01036.html" target="topic">usb_host_audio_v1_0.h</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00370.html" target="topic">USB Host Layer Library</a> &gt; <a href="00361.html" target="topic">Files</a> &gt; <a href="01036.html" target="topic">usb_host.h</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00221.html" target="topic">Previous</a> | <a href="00221.html" target="topic">Up</a> | <a href="01228.html" target="topic">Next</a></div>
+<a href="00361.html" target="topic">Previous</a> | <a href="00361.html" target="topic">Up</a> | <a href="01286.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_host_audio_v1_0.h Topic Title: usb_host_audio_v1_0.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_host.h Topic Title: usb_host.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-usb_host_audio_v1_0.h</div>
+usb_host.h</div>
 </div>
 </div>
 
@@ -56,16 +56,16 @@ File Name</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-usb_host_audio_v1_0.h</p></div>
+usb_host.h</p></div>
 </div>
 <a name="4465736372697074696F6E"></a><div class="Element14">
 Description</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-USB Host Audio v1.0 Class Driver Interface Definition&nbsp;</p>
+USB Host Layer Interface Definition&nbsp;</p>
 <p class="Element10">
-This header file contains the function prototypes and definitions of the data types and constants that make up the interface to the USB Host Audio v1.0 Class Driver.</p></div>
+This header file contains the function prototypes and definitions of the data types and constants that make up the interface to the USB HOST layer.</p></div>
 </div>
 <a name="456E756D65726174696F6E73"></a><div class="Element14">
 Enumerations</div>
@@ -86,58 +86,170 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01053.html" target="topic">USB_HOST_AUDIO_V1_0_RESULT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00001.html" target="topic">\ .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL)</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-USB Host Audio v1.0 Class Driver audio result enumeration.&nbsp;</div></td></tr><tr>
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01065.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_EVENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00002.html" target="topic">\ .tplFlags.driverType = (TPL_FLAG_VID_PID)</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Identifies the possible events that the Audio v1.0 stream can generate.&nbsp;</div></td></tr><tr>
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01092.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_RESULT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00024.html" target="topic">0</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-USB Host Audio v1.0 stream result enumeration.&nbsp;</div></td></tr><tr>
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01131.html" target="topic">USB_HOST_AUDIO_V1_EVENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00025.html" target="topic">0x0000</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Identifies the possible events that the Audio v1.0 Class Driver attach event handler can generate.&nbsp;</div></td></tr><tr>
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01150.html" target="topic">USB_HOST_AUDIO_V1_RESULT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00026.html" target="topic">0xFF</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-USB Host Audio v1.0 Class Driver result enumeration.&nbsp;</div></td></tr><tr>
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01164.html" target="topic">USB_HOST_AUDIO_V1_STREAM_DIRECTION</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00027.html" target="topic">0xFF }</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-USB Host Audio v1.0 Class Driver stream direction.&nbsp;</div></td></tr><tr>
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01167.html" target="topic">USB_HOST_AUDIO_V1_STREAM_EVENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00028.html" target="topic">0xFFFF</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Identifies the possible events that the Audio v1.0 Stream can generate.&nbsp;</div></td></tr><tr>
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01182.html" target="topic">USB_HOST_AUDIO_V1_STREAM_EVENT_RESPONSE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00029.html" target="topic">0xFFFF }</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Returns the type of the USB Host Audio v1.0 stream event handler.&nbsp;</div></td></tr></table></div></div>
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00030.html" target="topic">1</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00141.html" target="topic">classCode</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00155.html" target="topic">false</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00171.html" target="topic">initData</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00172.html" target="topic">mask</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00173.html" target="topic">pid</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00174.html" target="topic">pid }</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00177.html" target="topic">subClassCode</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00179.html" target="topic">true</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01296.html" target="topic">USB_HOST_DEVICE_STRING</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Defines a defines types of strings that can be request through the <a href="01308.html" target="topic">USB_HOST_DeviceStringDescriptorGet</a>() function.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01310.html" target="topic">USB_HOST_EVENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Defines the different events that the USB Host Layer can generate.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01316.html" target="topic">USB_HOST_EVENT_RESPONSE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Host Layer Events Handler Function Response Type.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01398.html" target="topic">USB_HOST_RESULT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Host Results.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01418.html" target="topic">USB_HOST_TARGET_PERIPHERAL_LIST_ENTRY</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01420.html" target="topic">USB_HOST_TPL_ENTRY</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="01436.html" target="topic">vid</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Host Layer TPL Table Entry Matching Criteria flag&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="46756E6374696F6E73"></a><div class="Element14">
@@ -159,380 +271,121 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01041.html" target="topic">USB_HOST_AUDIO_V1_0_ControlRequest</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01224.html" target="topic">USB_HOST_BusEnable</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Schedules an Audio v1.0 control transfer.&nbsp;</div></td></tr><tr>
+Starts host operations.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01049.html" target="topic">USB_HOST_AUDIO_V1_0_NumberOfStreamGroupsGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01225.html" target="topic">USB_HOST_BusIsEnabled</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Gets the number of stream groups present in the attached Audio v1.0 Device.&nbsp;</div></td></tr><tr>
+Checks if the bus is enabled.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01111.html" target="topic">USB_HOST_AUDIO_V1_0_StreamDisable</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01226.html" target="topic">USB_HOST_BusIsSuspended</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Schedules an audio stream disable request for the specified audio stream.&nbsp;</div></td></tr><tr>
+Returns the suspend status of the bus.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01112.html" target="topic">USB_HOST_AUDIO_V1_0_StreamEnable</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01227.html" target="topic">USB_HOST_BusResume</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Schedules an audio stream enable request for the specified audio stream.&nbsp;</div></td></tr><tr>
+Resumes the bus.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01113.html" target="topic">USB_HOST_AUDIO_V1_0_StreamEventHandlerSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01228.html" target="topic">USB_HOST_BusSuspend</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Registers an event handler with the Audio v1.0 Client Driver stream.&nbsp;</div></td></tr><tr>
+Suspends the bus.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01114.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetFirst</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01288.html" target="topic">USB_HOST_Deinitialize</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Returns information about first audio stream in the specified audio stream group.&nbsp;</div></td></tr><tr>
+Deinitializes the specified instance of the USB Host Layer.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01115.html" target="topic">USB_HOST_AUDIO_V1_0_StreamGetNext</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01302.html" target="topic">USB_HOST_DeviceGetFirst</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Returns information about the next audio stream in the specified audio stream group.&nbsp;</div></td></tr><tr>
+Returns information about the first attached device on the bus.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01117.html" target="topic">USB_HOST_AUDIO_V1_0_StreamRead</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01303.html" target="topic">USB_HOST_DeviceGetNext</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Schedules an audio stream read request for the specified audio stream.&nbsp;</div></td></tr><tr>
+Returns information about the next device on the bus.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01118.html" target="topic">USB_HOST_AUDIO_V1_0_StreamSamplingRateSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01304.html" target="topic">USB_HOST_DeviceIsSuspended</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Schedules an audio stream set sampling rate request for the specified audio stream.&nbsp;</div></td></tr><tr>
+Returns the suspend state of the device is suspended.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01119.html" target="topic">USB_HOST_AUDIO_V1_0_StreamWrite</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01305.html" target="topic">USB_HOST_DeviceResume</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Schedules an audio stream write request for the specified audio stream.&nbsp;</div></td></tr><tr>
+Resumes the selected device&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01122.html" target="topic">USB_HOST_AUDIO_V1_AttachEventHandlerSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01307.html" target="topic">USB_HOST_DeviceSpeedGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Sets an attach/detach event handler.&nbsp;</div></td></tr><tr>
+Returns the speed at which this device is operating.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01124.html" target="topic">USB_HOST_AUDIO_V1_ControlEntityGetFirst</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01308.html" target="topic">USB_HOST_DeviceStringDescriptorGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Retrieves the handle to the first audio control entity&nbsp;</div></td></tr><tr>
+Retrieves specified string descriptor from the device&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01125.html" target="topic">USB_HOST_AUDIO_V1_ControlEntityGetNext</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01309.html" target="topic">USB_HOST_DeviceSuspend</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Retrieves the handle to the next audio control entity.&nbsp;</div></td></tr><tr>
+Suspends the specified device.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01126.html" target="topic">USB_HOST_AUDIO_V1_DeviceObjHandleGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01318.html" target="topic">USB_HOST_EventHandlerSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Returns the device object handle for this Audio v1.0 Device.&nbsp;</div></td></tr><tr>
+USB Host Layer Event Handler Callback Function set function.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01128.html" target="topic">USB_HOST_AUDIO_V1_EntityObjectGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01358.html" target="topic">USB_HOST_Initialize</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Retrieves the entity object for the entity ID.&nbsp;</div></td></tr><tr>
+Initializes the USB Host layer instance specified by the index.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01129.html" target="topic">USB_HOST_AUDIO_V1_EntityRequestCallbackSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01416.html" target="topic">USB_HOST_Status</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Registers an audio entity request callback function with the Audio v1.0 Client Driver.&nbsp;</div></td></tr><tr>
+Gets the current status of the USB Host Layer.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01130.html" target="topic">USB_HOST_AUDIO_V1_EntityTypeGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01419.html" target="topic">USB_HOST_Tasks</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Returns the entity type of the audio control entity.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01134.html" target="topic">USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns &quot;true&quot; if mute control exists for the specified channel of the feature unit.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01135.html" target="topic">USB_HOST_AUDIO_V1_FeatureUnitChannelMuteGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Schedules a get mute control request to the specified channel.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01136.html" target="topic">USB_HOST_AUDIO_V1_FeatureUnitChannelMuteSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Schedules a set mute control request to the specified channel.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01137.html" target="topic">USB_HOST_AUDIO_V1_FeatureUnitChannelNumbersGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the number of channels.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01138.html" target="topic">USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeExists</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns &quot;true&quot; if volume control exists for the specified channel of the feature unit.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01139.html" target="topic">USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Schedules a get current volume control request to the specified channel.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01140.html" target="topic">USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeRangeGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Schedules a control request to the Audio Device feature unit to get the range supported by the volume control on the specified channel.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01141.html" target="topic">USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Schedules a set current volume control request to the specified channel.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01142.html" target="topic">USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSubRangeNumbersGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Schedules a control request to an Audio Device feature unit to get the number of sub-ranges supported by the volume control on the specified channel.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01143.html" target="topic">USB_HOST_AUDIO_V1_FeatureUnitIDGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns ID of the Feature Unit.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01144.html" target="topic">USB_HOST_AUDIO_V1_FeatureUnitSourceIDGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the ID of the unit or terminal to which this feature unit is connected.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01191.html" target="topic">USB_HOST_AUDIO_V1_StreamClose</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Closes the audio stream.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01192.html" target="topic">USB_HOST_AUDIO_V1_StreamEventHandlerSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Registers an event handler with the Audio v1.0 Client Driver stream.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01197.html" target="topic">USB_HOST_AUDIO_V1_StreamingInterfaceBitResolutionGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the bit resolution of the specified streaming interface setting.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01198.html" target="topic">USB_HOST_AUDIO_V1_StreamingInterfaceChannelNumbersGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the number of channels of the specified streaming interface setting.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01199.html" target="topic">USB_HOST_AUDIO_V1_StreamingInterfaceDirectionGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the direction of the specified streaming interface setting.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01200.html" target="topic">USB_HOST_AUDIO_V1_StreamingInterfaceFormatTagGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the format tag of the specified streaming interface setting.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01201.html" target="topic">USB_HOST_AUDIO_V1_StreamingInterfaceGetFirst</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the first streaming interface object from the attached Audio Device.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01202.html" target="topic">USB_HOST_AUDIO_V1_StreamingInterfaceGetNext</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the next streaming interface object from the attached Audio Device.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01203.html" target="topic">USB_HOST_AUDIO_V1_StreamingInterfaceSamplingFrequenciesGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the sampling frequencies supported by the specified streaming interface setting.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01204.html" target="topic">USB_HOST_AUDIO_V1_StreamingInterfaceSamplingFrequencyTypeGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the sampling frequency type of the specified streaming interface setting.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01205.html" target="topic">USB_HOST_AUDIO_V1_StreamingInterfaceSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Schedules a SET_INTERFACE request to the specified audio stream.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01206.html" target="topic">USB_HOST_AUDIO_V1_StreamingInterfaceSettingGetFirst</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the first streaming interface setting object within an audio streaming interface.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01207.html" target="topic">USB_HOST_AUDIO_V1_StreamingInterfaceSettingGetNext</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Gets the next streaming interface setting object within an audio streaming interface.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01208.html" target="topic">USB_HOST_AUDIO_V1_StreamingInterfaceSubFrameSizeGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the sub-frame size of the specified streaming interface setting.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01209.html" target="topic">USB_HOST_AUDIO_V1_StreamingInterfaceTerminalLinkGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the terminal link of the specified streaming interface setting.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01210.html" target="topic">USB_HOST_AUDIO_V1_StreamOpen</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Opens the specified audio stream.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01211.html" target="topic">USB_HOST_AUDIO_V1_StreamRead</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Schedules an audio stream read request for the specified audio stream.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01212.html" target="topic">USB_HOST_AUDIO_V1_StreamSamplingFrequencyGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Schedules an audio stream get sampling rate request for the specified audio stream.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01213.html" target="topic">USB_HOST_AUDIO_V1_StreamSamplingFrequencySet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Schedules an audio stream set sampling rate request for the specified audio stream.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01214.html" target="topic">USB_HOST_AUDIO_V1_StreamWrite</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Schedules an audio stream write request for the specified audio stream.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01215.html" target="topic">USB_HOST_AUDIO_V1_TerminalAssociationGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the associated terminal ID of the audio control terminal.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01216.html" target="topic">USB_HOST_AUDIO_V1_TerminalIDGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the terminal ID of the audio control entity.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01217.html" target="topic">USB_HOST_AUDIO_V1_TerminalInputChannelConfigGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns a structure that describes the spatial location of the logical channels of in the terminal's output audio channel cluster.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01218.html" target="topic">USB_HOST_AUDIO_V1_TerminalInputChannelNumbersGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the number of logical output channels in the terminal's output audio channel cluster.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01219.html" target="topic">USB_HOST_AUDIO_V1_TerminalSourceIDGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the ID of the unit or terminal to which this terminal is connected.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01220.html" target="topic">USB_HOST_AUDIO_V1_TerminalTypeGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the terminal type of the audio control entity.&nbsp;</div></td></tr></table></div></div>
+Maintains the USB Host Layer state machine.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="4D6163726F73"></a><div class="Element14">
@@ -554,191 +407,37 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element203">
 <img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01038.html" target="topic">USB_HOST_AUDIO_V1_0_AttachEventHandlerSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01223.html" target="topic">USB_HOST_BUS_ALL</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Sets an attach/detach event handler.&nbsp;</div></td></tr><tr>
+USB Host Bus All&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01042.html" target="topic">USB_HOST_AUDIO_V1_0_DeviceObjHandleGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01295.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Returns the device object handle for this Audio v1.0 Device.&nbsp;</div></td></tr><tr>
+Defines an invalid USB Device Object Handle.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01043.html" target="topic">USB_HOST_AUDIO_V1_0_DIRECTION_IN</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01301.html" target="topic">USB_HOST_DEVICE_STRING_LANG_ID_DEFAULT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This is macro USB_HOST_AUDIO_V1_0_DIRECTION_IN.&nbsp;</div></td></tr><tr>
+Defines the default Lang ID to be used while obtaining the string.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01044.html" target="topic">USB_HOST_AUDIO_V1_0_DIRECTION_OUT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01397.html" target="topic">USB_HOST_REQUEST_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This is macro USB_HOST_AUDIO_V1_0_DIRECTION_OUT.&nbsp;</div></td></tr><tr>
+USB Host Request Invalid Handle&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01045.html" target="topic">USB_HOST_AUDIO_V1_0_EVENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01415.html" target="topic">USB_HOST_RESULT_MIN</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Identifies the possible events that the Audio v1.0 Class Driver can generate.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01046.html" target="topic">USB_HOST_AUDIO_V1_0_EVENT_ATTACH</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro USB_HOST_AUDIO_V1_0_EVENT_ATTACH.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01047.html" target="topic">USB_HOST_AUDIO_V1_0_EVENT_DETACH</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro USB_HOST_AUDIO_V1_0_EVENT_DETACH.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01048.html" target="topic">USB_HOST_AUDIO_V1_0_INTERFACE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB HOST Audio Client Driver interface.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01050.html" target="topic">USB_HOST_AUDIO_V1_0_OBJ</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the type of the Audio v1.0 Host client object.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01051.html" target="topic">USB_HOST_AUDIO_V1_0_REQUEST_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Host Audio v1.0 Client Driver request handle.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01052.html" target="topic">USB_HOST_AUDIO_V1_0_REQUEST_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Host Audio v1.0 Client Driver invalid request handle.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01064.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_DIRECTION</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Host Audio v1.0 Class Driver stream direction.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01076.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_EVENT_READ_COMPLETE_DATA</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro USB_HOST_AUDIO_V1_0_STREAM_EVENT_READ_COMPLETE_DATA.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01077.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_EVENT_RESPONSE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the type of the USB Audio v1.0 Host Client Driver event handler.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01078.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_EVENT_RESPONSE_NONE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Returns the type of the USB Host Audio v1.0 stream event handler.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01079.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_EVENT_WRITE_COMPLETE_DATA</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Host Audio v1.0 class stream transfer event data.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01080.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the type of the Audio v1.0 Host stream handle.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01081.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the type of the Audio v1.0 Host stream invalid handle.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01108.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_TRANSFER_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Host Audio v1.0 Class Driver transfer handle.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01109.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_TRANSFER_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Host Audio v1.0 Class Driver invalid transfer handle definition.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01110.html" target="topic">USB_HOST_AUDIO_V1_0_StreamClose</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Closes the audio stream.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01116.html" target="topic">USB_HOST_AUDIO_V1_0_StreamOpen</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Opens the specified audio stream.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01146.html" target="topic">USB_HOST_AUDIO_V1_INTERFACE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB HOST Audio v1.0 Client Driver interface.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01149.html" target="topic">USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Host Audio v1.0 Client Driver invalid request handle.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01163.html" target="topic">USB_HOST_AUDIO_V1_SAMPLING_FREQUENCIES_NUMBER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This structure defines USB Host audio stream information structure.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01188.html" target="topic">USB_HOST_AUDIO_V1_STREAM_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines Audio v1.0 Host stream invalid handle.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01190.html" target="topic">USB_HOST_AUDIO_V1_STREAM_TRANSFER_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Host Audio v1.0 Class Driver invalid stream data transfer handle.&nbsp;</div></td></tr></table></div></div>
+USB Host Result Minimum Constant.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="53747275637475726573"></a><div class="Element14">
@@ -760,58 +459,23 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01071.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_EVENT_DISABLE_COMPLETE_DATA</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01289.html" target="topic">USB_HOST_DEVICE_INFO</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-USB Host Audio v1.0 class stream control event data.&nbsp;</div></td></tr><tr>
+Defines the data type that is used by the <a href="01302.html" target="topic">USB_HOST_DeviceGetFirst</a>() and <a href="01303.html" target="topic">USB_HOST_DeviceGetNext</a>() functions.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01072.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_EVENT_ENABLE_COMPLETE_DATA</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01319.html" target="topic">USB_HOST_HCD</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-USB Host Audio v1.0 class stream control event data.&nbsp;</div></td></tr><tr>
+Defines the USB Host HCD Information object that is provided to the host layer.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01082.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_INFO</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01354.html" target="topic">USB_HOST_INIT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This is type USB_HOST_AUDIO_V1_0_STREAM_INFO.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01175.html" target="topic">USB_HOST_AUDIO_V1_STREAM_EVENT_INTERFACE_SET_COMPLETE_DATA</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Host Audio v1.0 class stream control event data.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01178.html" target="topic">USB_HOST_AUDIO_V1_STREAM_EVENT_READ_COMPLETE_DATA</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Host Audio v1.0 class stream data transfer event data.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01184.html" target="topic">USB_HOST_AUDIO_V1_STREAM_EVENT_SAMPLING_RATE_GET_COMPLETE_DATA</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Host Audio v1.0 class stream control event data.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01185.html" target="topic">USB_HOST_AUDIO_V1_STREAM_EVENT_SAMPLING_RATE_SET_COMPLETE_DATA</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Host Audio v1.0 class stream control event data.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01186.html" target="topic">USB_HOST_AUDIO_V1_STREAM_EVENT_WRITE_COMPLETE_DATA</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Host Audio v1.0 class stream data transfer event data.&nbsp;</div></td></tr></table></div></div>
+Defines the data required to initialize a USB Host Layer instance.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="5479706573"></a><div class="Element14">
@@ -833,100 +497,37 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01037.html" target="topic">USB_HOST_AUDIO_V1_0_ATTACH_EVENT_HANDLER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01222.html" target="topic">USB_HOST_BUS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-USB Host Audio v1.0 Client Driver attach event handler function pointer type.&nbsp;</div></td></tr><tr>
+Defines a USB Bus Data Type.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01040.html" target="topic">USB_HOST_AUDIO_V1_0_CONTROL_CALLBACK</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01294.html" target="topic">USB_HOST_DEVICE_OBJ_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-USB Host Audio v1.0 Class Driver control transfer complete callback function pointer type.&nbsp;</div></td></tr><tr>
+Handle to an attached USB Device.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01075.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_EVENT_HANDLER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01315.html" target="topic">USB_HOST_EVENT_HANDLER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-USB Host Audio v1.0 Class Driver stream event handler function pointer type.&nbsp;</div></td></tr><tr>
+USB Host Layer Event Handler Function Pointer Type&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01091.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_OBJ</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01396.html" target="topic">USB_HOST_REQUEST_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Defines the type of the Audio v1.0 Host stream object.&nbsp;</div></td></tr><tr>
+USB Host Request Handle Type&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="01120.html" target="topic">USB_HOST_AUDIO_V1_ATTACH_EVENT_HANDLER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="01417.html" target="topic">USB_HOST_STRING_REQUEST_COMPLETE_CALLBACK</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-USB Host Audio v1.0 Client Driver attach event handler function pointer type.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01123.html" target="topic">USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the type of the Audio v1.0 Host control entity object.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01127.html" target="topic">USB_HOST_AUDIO_V1_ENTITY_REQUEST_CALLBACK</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Host Audio v1.0 class driver control transfer complete callback function pointer type.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01147.html" target="topic">USB_HOST_AUDIO_V1_OBJ</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the type of the Audio v1.0 Host client object.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01148.html" target="topic">USB_HOST_AUDIO_V1_REQUEST_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Host Audio v1.0 Client Driver request handle.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01174.html" target="topic">USB_HOST_AUDIO_V1_STREAM_EVENT_HANDLER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Host Audio v1.0 Class Driver stream event handler function pointer type.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01187.html" target="topic">USB_HOST_AUDIO_V1_STREAM_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the type of the Audio v1.0 Host stream handle.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01189.html" target="topic">USB_HOST_AUDIO_V1_STREAM_TRANSFER_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Host Audio v1.0 Class Driver stream data transfer handle.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01194.html" target="topic">USB_HOST_AUDIO_V1_STREAMING_INTERFACE_OBJ</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the type of the Audio v1.0 Host streaming interface object.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01195.html" target="topic">USB_HOST_AUDIO_V1_STREAMING_INTERFACE_SETTING_OBJ</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the type of the Audio v1.0 Host streaming interface setting object.&nbsp;</div></td></tr></table></div></div>
+USB Host Device String Descriptor Request Complete Callback Function Type&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -934,7 +535,7 @@ Defines the type of the Audio v1.0 Host streaming interface setting object.&nbsp
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00221.html" target="topic">Files</a> &gt; <a href="01036.html" target="topic">usb_host_audio_v1_0.h</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00370.html" target="topic">USB Host Layer Library</a> &gt; <a href="00361.html" target="topic">Files</a> &gt; <a href="01036.html" target="topic">usb_host.h</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -945,10 +546,10 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00221.html" target="topic">Previous</a> | <a href="00221.html" target="topic">Up</a> | <a href="01228.html" target="topic">Next</a></div>
+<a href="00361.html" target="topic">Previous</a> | <a href="00361.html" target="topic">Up</a> | <a href="01286.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_host_audio_v1_0.h Topic Title: usb_host_audio_v1_0.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_host.h Topic Title: usb_host.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

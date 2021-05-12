@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00212.html" target="topic">Audio Data Streaming</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00212.html" target="topic">Audio Data Streaming</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -49,9 +49,9 @@ Audio Data Streaming</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The application can use the <a href="01117.html" target="topic">USB_HOST_AUDIO_V1_0_StreamRead</a> and <a href="01119.html" target="topic">USB_HOST_AUDIO_V1_0_StreamWrite</a> functions to transfer data to an Audio Stream. While calling these functions, the stream handle specifies the target Audio stream and the event handler function to which the events should be sent. It is possible for multiple clients to open the same audio stream and transfer data to the stream.&nbsp;</p>
+The application can use the <a href="01118.html" target="topic">USB_HOST_AUDIO_V1_0_StreamRead</a> and <a href="01120.html" target="topic">USB_HOST_AUDIO_V1_0_StreamWrite</a> functions to transfer data to an Audio Stream. While calling these functions, the stream handle specifies the target Audio stream and the event handler function to which the events should be sent. It is possible for multiple clients to open the same audio stream and transfer data to the stream.&nbsp;</p>
 <p class="Element10">
-Calling the <a href="01117.html" target="topic">USB_HOST_AUDIO_V1_0_StreamRead</a> and <a href="01119.html" target="topic">USB_HOST_AUDIO_V1_0_StreamWrite</a> functions while a read/write transfer is already in progress will cause the transfer result to be queued. If the transfer was successfully queued or scheduled, the <a href="01117.html" target="topic">USB_HOST_AUDIO_V1_0_StreamRead</a> and <a href="01119.html" target="topic">USB_HOST_AUDIO_V1_0_StreamWrite</a> functions will return a valid transfer handle. This transfer handle identifies the transfer request. The application clients can use the transfer handles to keep track of multiple queued transfers. When a transfer completes, the Audio stream handler generates an event. The following table shows the event and the event data associated with the event.&nbsp;</p>
+Calling the <a href="01118.html" target="topic">USB_HOST_AUDIO_V1_0_StreamRead</a> and <a href="01120.html" target="topic">USB_HOST_AUDIO_V1_0_StreamWrite</a> functions while a read/write transfer is already in progress will cause the transfer result to be queued. If the transfer was successfully queued or scheduled, the <a href="01118.html" target="topic">USB_HOST_AUDIO_V1_0_StreamRead</a> and <a href="01120.html" target="topic">USB_HOST_AUDIO_V1_0_StreamWrite</a> functions will return a valid transfer handle. This transfer handle identifies the transfer request. The application clients can use the transfer handles to keep track of multiple queued transfers. When a transfer completes, the Audio stream handler generates an event. The following table shows the event and the event data associated with the event.&nbsp;</p>
 <p class="Element10">
 <strong>Table 1: Read</strong> &nbsp;</p><div class="Element63">
 <div class="TableDiv">
@@ -61,7 +61,7 @@ Calling the <a href="01117.html" target="topic">USB_HOST_AUDIO_V1_0_StreamRead</
 <div class="Element68">
 Function&nbsp;</div></td><td class="Element67" valign="top" width="81%">
 <div class="Element68">
-<a href="01117.html" target="topic">USB_HOST_AUDIO_V1_0_StreamRead</a>&nbsp;</div></td></tr><tr>
+<a href="01118.html" target="topic">USB_HOST_AUDIO_V1_0_StreamRead</a>&nbsp;</div></td></tr><tr>
 <td class="Element67" valign="top" width="19%">
 <div class="Element68">
 Event&nbsp;</div></td><td class="Element67" valign="top" width="81%">
@@ -81,7 +81,7 @@ USB_HOST_AUDIO_V1_0_STREAM_EVENT_READ_COMPLETE _DATA&nbsp;</div></td></tr></tabl
 <div class="Element68">
 Function&nbsp;</div></td><td class="Element67" valign="top" width="81%">
 <div class="Element68">
-<a href="01119.html" target="topic">USB_HOST_AUDIO_V1_0_StreamWrite</a>&nbsp;</div></td></tr><tr>
+<a href="01120.html" target="topic">USB_HOST_AUDIO_V1_0_StreamWrite</a>&nbsp;</div></td></tr><tr>
 <td class="Element67" valign="top" width="19%">
 <div class="Element68">
 Event&nbsp;</div></td><td class="Element67" valign="top" width="81%">
@@ -424,7 +424,7 @@ USB_HOST_AUDIO_V1_0_STREAM_OBJ App_USBHostAudioSpeakerStreamFind
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00212.html" target="topic">Audio Data Streaming</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00212.html" target="topic">Audio Data Streaming</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">

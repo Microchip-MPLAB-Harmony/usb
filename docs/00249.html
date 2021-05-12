@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00245.html" target="topic">USB CDC Host Library</a> &gt; <a href="00252.html" target="topic">Using the Library</a> &gt; <a href="00243.html" target="topic">How the Library Works</a> &gt; <a href="00249.html" target="topic">Reading and Writing Data</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00245.html" target="topic">USB CDC Host Library</a> &gt; <a href="00252.html" target="topic">Using the Library</a> &gt; <a href="00243.html" target="topic">How the Library Works</a> &gt; <a href="00249.html" target="topic">Reading and Writing Data</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -49,9 +49,9 @@ Reading and Writing Data</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The application can use the <a href="01269.html" target="topic">USB_HOST_CDC_Read</a> and <a href="01284.html" target="topic">USB_HOST_CDC_Write</a> functions to transfer data to the attached CDC device. While calling these function, the client handle specifies the target CDC device and the event handler function to which the events should be sent. It is possible for multiple client to open the same instance of the CDC Host Client Driver instance and transfer data to the attached CDC Device.&nbsp;</p>
+The application can use the <a href="01270.html" target="topic">USB_HOST_CDC_Read</a> and <a href="01285.html" target="topic">USB_HOST_CDC_Write</a> functions to transfer data to the attached CDC device. While calling these function, the client handle specifies the target CDC device and the event handler function to which the events should be sent. It is possible for multiple client to open the same instance of the CDC Host Client Driver instance and transfer data to the attached CDC Device.&nbsp;</p>
 <p class="Element10">
-Calling the <a href="01269.html" target="topic">USB_HOST_CDC_Read</a> and <a href="01284.html" target="topic">USB_HOST_CDC_Write</a> functions while a read/write transfer is already in progress will cause the transfer result to be queued. If the transfer was successfully queued or scheduled, the <a href="01269.html" target="topic">USB_HOST_CDC_Read</a> and <a href="01284.html" target="topic">USB_HOST_CDC_Write</a> functions will return a valid transfer handle. This transfer handle identifies the transfer request. The application clients can use the transfer handles to keep track of multiple queued transfers. When a transfer completes, the CDC Host Client Driver generates an event. The following tables shows the event and the event data associated with the event.&nbsp;</p>
+Calling the <a href="01270.html" target="topic">USB_HOST_CDC_Read</a> and <a href="01285.html" target="topic">USB_HOST_CDC_Write</a> functions while a read/write transfer is already in progress will cause the transfer result to be queued. If the transfer was successfully queued or scheduled, the <a href="01270.html" target="topic">USB_HOST_CDC_Read</a> and <a href="01285.html" target="topic">USB_HOST_CDC_Write</a> functions will return a valid transfer handle. This transfer handle identifies the transfer request. The application clients can use the transfer handles to keep track of multiple queued transfers. When a transfer completes, the CDC Host Client Driver generates an event. The following tables shows the event and the event data associated with the event.&nbsp;</p>
 <p class="Element10">
 <strong>Table 1: Read</strong> &nbsp;</p><div class="Element63">
 <div class="TableDiv">
@@ -61,7 +61,7 @@ Calling the <a href="01269.html" target="topic">USB_HOST_CDC_Read</a> and <a hre
 <div class="Element68">
 Function&nbsp;</div></td><td class="Element67" valign="top" width="80%">
 <div class="Element68">
-<a href="01269.html" target="topic">USB_HOST_CDC_Read</a>&nbsp;</div></td></tr><tr>
+<a href="01270.html" target="topic">USB_HOST_CDC_Read</a>&nbsp;</div></td></tr><tr>
 <td class="Element67" valign="top" width="20%">
 <div class="Element68">
 Event&nbsp;</div></td><td class="Element67" valign="top" width="80%">
@@ -71,7 +71,7 @@ USB_HOST_CDC_EVENT_READ_COMPLETE&nbsp;</div></td></tr><tr>
 <div class="Element68">
 Event Data Type&nbsp;</div></td><td class="Element67" valign="top" width="80%">
 <div class="Element68">
-<a href="01254.html" target="topic">USB_HOST_CDC_EVENT_READ_COMPLETE_DATA</a>&nbsp;</div></td></tr></table></div></div>
+<a href="01255.html" target="topic">USB_HOST_CDC_EVENT_READ_COMPLETE_DATA</a>&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
 <strong>Table 2: Write</strong> </p><div class="Element63">
 <div class="TableDiv">
@@ -91,7 +91,7 @@ USB_HOST_CDC_EVENT_READ_COMPLETE&nbsp;</div></td></tr><tr>
 <div class="Element68">
 Event Data Type&nbsp;</div></td><td class="Element67" valign="top" width="80%">
 <div class="Element68">
-<a href="01254.html" target="topic">USB_HOST_CDC_EVENT_READ_COMPLETE_DATA</a>&nbsp;</div></td></tr></table></div></div>
+<a href="01255.html" target="topic">USB_HOST_CDC_EVENT_READ_COMPLETE_DATA</a>&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
 The event data contains information on the amount of data transferred, completion status and the transfer handle of the transfer. The following code shows an example of reading and writing data.&nbsp;</p>
 <p class="Element10">
@@ -213,7 +213,7 @@ USB_HOST_CDC_EVENT_RESPONSE APP_USBHostCDCEventHandler
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00245.html" target="topic">USB CDC Host Library</a> &gt; <a href="00252.html" target="topic">Using the Library</a> &gt; <a href="00243.html" target="topic">How the Library Works</a> &gt; <a href="00249.html" target="topic">Reading and Writing Data</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00245.html" target="topic">USB CDC Host Library</a> &gt; <a href="00252.html" target="topic">Using the Library</a> &gt; <a href="00243.html" target="topic">How the Library Works</a> &gt; <a href="00249.html" target="topic">Reading and Writing Data</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">

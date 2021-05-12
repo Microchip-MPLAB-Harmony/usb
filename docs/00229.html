@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00229.html" target="topic">Sending Class Specific Control Transfers</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00229.html" target="topic">Sending Class Specific Control Transfers</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -49,11 +49,11 @@ Sending Class Specific Control Transfers</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The Audio v1.0 Host Client Driver allows the application client to send Audio v1.0 Class specific commands to the connected device. These commands can be send using <a href="01041.html" target="topic">USB_HOST_AUDIO_V1_0_ControlRequest</a> function.&nbsp;</p>
+The Audio v1.0 Host Client Driver allows the application client to send Audio v1.0 Class specific commands to the connected device. These commands can be send using <a href="01042.html" target="topic">USB_HOST_AUDIO_V1_0_ControlRequest</a> function.&nbsp;</p>
 <p class="Element10">
 This function is non-blocking. The functions will return before the actual command execution is complete. The return value indicates if the command was scheduled successfully, or if the driver is busy and cannot accept commands, or if the command failed due to an unknown reason. If the command failed because the driver was busy, it can be retried. If scheduled successfully, the function will return a valid request handle. This request handle is unique and tracks the requested command.&nbsp;</p>
 <p class="Element10">
-When the command related control transfer has completed, the Audio v1.0 Host Client Driver generates a callback function. The call back function is one of the argument to the <a href="01041.html" target="topic">USB_HOST_AUDIO_V1_0_ControlRequest</a> function.&nbsp;</p>
+When the command related control transfer has completed, the Audio v1.0 Host Client Driver generates a callback function. The call back function is one of the argument to the <a href="01042.html" target="topic">USB_HOST_AUDIO_V1_0_ControlRequest</a> function.&nbsp;</p>
 <p class="Element10">
 The following code shows an example of sending a Audio v1.0 class specific commands. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example for Audio Control transfer */</span></i>
 <strong><span style="color: #000080">bool</span></strong> isAudioDeviceAttached = <strong><span style="color: #000080">false</span></strong>;
@@ -228,7 +228,7 @@ USB_HOST_AUDIO_V1_0_OBJ audioDeviceObj;
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00229.html" target="topic">Sending Class Specific Control Transfers</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00229.html" target="topic">Sending Class Specific Control Transfers</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">

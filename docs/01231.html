@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_HOST_CDC_ATTACH_EVENT_HANDLER Type</title>
+<title>USB_HOST_CDC_ACM_LineCodingSet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00245.html" target="topic">USB CDC Host Library</a> &gt; <a href="00246.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01231.html" target="topic">USB_HOST_CDC_ATTACH_EVENT_HANDLER Type</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00245.html" target="topic">USB CDC Host Library</a> &gt; <a href="00246.html" target="topic">Library Interface</a> &gt; c) CDC Class-specific Functions &gt; <a href="01231.html" target="topic">USB_HOST_CDC_ACM_LineCodingSet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01283.html" target="topic">Previous</a> | <a href="00246.html" target="topic">Up</a> | <a href="01246.html" target="topic">Next</a></div>
+<a href="01230.html" target="topic">Previous</a> | <a href="00246.html" target="topic">Up</a> | <a href="01254.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_ATTACH_EVENT_HANDLER Topic Title: USB_HOST_CDC_ATTACH_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_ACM_LineCodingSet@USB_HOST_CDC_HANDLE@USB_HOST_CDC_REQUEST_HANDLE *@USB_CDC_LINE_CODING * Topic Title: USB_HOST_CDC_ACM_LineCodingSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_HOST_CDC_ATTACH_EVENT_HANDLER Type</div>
+USB_HOST_CDC_ACM_LineCodingSet Function</div>
 </div>
 </div>
 
@@ -49,30 +49,28 @@ USB_HOST_CDC_ATTACH_EVENT_HANDLER Type</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-USB Host CDC Client Driver Attach Event Handler Function Pointer Type.&nbsp;</p>
-<p class="Element10">
-This data type defines the required function signature of the USB Host CDC Client Driver attach event handling callback function. The application must register a pointer to a CDC Client Driver attach events handling function whose function signature (parameter and return value types) match the types specified by this function pointer in order to receive attach event call backs from the CDC Client Driver. The client driver will invoke this function with event relevant parameters. The description of the event handler function parameters is given here.&nbsp;</p>
-<p class="Element10">
-cdcObjHandle - Handle of the client to which this event is directed.&nbsp;</p>
-<p class="Element10">
-context - Value identifying the context of the application that was registered along with the event handling function.</p></div>
+This function sends a request to the attached device to set its line coding. The function schedules a SET LINE CODING control transfer. If successful, the requestHandle parameter will contain a valid request handle, else it will contain <a href="01272.html" target="topic">USB_HOST_CDC_REQUEST_HANDLE_INVALID</a>. When completed, the CDC client driver will generate a USB_HOST_CDC_EVENT_ACM_SET_LINE_CODING_COMPLETE event.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">void</span></strong> (* <strong><span style="color: #000000">USB_HOST_CDC_ATTACH_EVENT_HANDLER</span></strong>)(<a href="01267.html" target="topic">USB_HOST_CDC_OBJ</a> cdcObjHandle, uintptr_t context);</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01273.html" target="topic">USB_HOST_CDC_RESULT</a> <strong><span style="color: #000000">USB_HOST_CDC_ACM_LineCodingSet</span></strong>(
+    <a href="01264.html" target="topic">USB_HOST_CDC_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <a href="01271.html" target="topic">USB_HOST_CDC_REQUEST_HANDLE</a> * <strong><span style="color: #000000">requestHandle</span></strong>, 
+    USB_CDC_LINE_CODING * <strong><span style="color: #000000">lineCoding</span></strong>
+);</pre></div></div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+Refer to usb_host_cdc_acm.h for usage information.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00245.html" target="topic">USB CDC Host Library</a> &gt; <a href="00246.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="01231.html" target="topic">USB_HOST_CDC_ATTACH_EVENT_HANDLER Type</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00245.html" target="topic">USB CDC Host Library</a> &gt; <a href="00246.html" target="topic">Library Interface</a> &gt; c) CDC Class-specific Functions &gt; <a href="01231.html" target="topic">USB_HOST_CDC_ACM_LineCodingSet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -83,10 +81,10 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01283.html" target="topic">Previous</a> | <a href="00246.html" target="topic">Up</a> | <a href="01246.html" target="topic">Next</a></div>
+<a href="01230.html" target="topic">Previous</a> | <a href="00246.html" target="topic">Up</a> | <a href="01254.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_ATTACH_EVENT_HANDLER Topic Title: USB_HOST_CDC_ATTACH_EVENT_HANDLER Type)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_ACM_LineCodingSet@USB_HOST_CDC_HANDLE@USB_HOST_CDC_REQUEST_HANDLE *@USB_CDC_LINE_CODING * Topic Title: USB_HOST_CDC_ACM_LineCodingSet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

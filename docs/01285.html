@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>usb_host_config_template.h</title>
+<title>USB_HOST_CDC_Write Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00369.html" target="topic">USB Host Layer Library</a> &gt; <a href="00360.html" target="topic">Files</a> &gt; <a href="01285.html" target="topic">usb_host_config_template.h</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00245.html" target="topic">USB CDC Host Library</a> &gt; <a href="00246.html" target="topic">Library Interface</a> &gt; b) Data Transfer Functions &gt; <a href="01285.html" target="topic">USB_HOST_CDC_Write Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01035.html" target="topic">Previous</a> | <a href="00360.html" target="topic">Up</a> | <a href="00210.html" target="topic">Next</a></div>
+<a href="01270.html" target="topic">Previous</a> | <a href="00246.html" target="topic">Up</a> | <a href="01282.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_host_config_template.h Topic Title: usb_host_config_template.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_Write@USB_HOST_CDC_HANDLE@USB_HOST_CDC_TRANSFER_HANDLE *@void *@size_t Topic Title: USB_HOST_CDC_Write Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-usb_host_config_template.h</div>
+USB_HOST_CDC_Write Function</div>
 </div>
 </div>
 
@@ -46,98 +46,90 @@ usb_host_config_template.h</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="436F6D70616E79"></a><div class="Element11">
+<a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Microchip Technology Inc.</p></div>
+This function will write data to the attached CDC device. The function will write size amount of bytes. If the request was accepted, transferHandle will contain a valid transfer handle, else it will contain <a href="01284.html" target="topic">USB_HOST_CDC_TRANSFER_HANDLE_INVALID</a>. The completion of the request will be indicated by the USB_HOST_CDC_EVENT_WRITE_COMPLETE event. The transfer handle will be returned in the event.</p></div>
 </div>
-<a name="46696C65204E616D65"></a><div class="Element14">
-File Name</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01273.html" target="topic">USB_HOST_CDC_RESULT</a> <strong><span style="color: #000000">USB_HOST_CDC_Write</span></strong>(
+    <a href="01264.html" target="topic">USB_HOST_CDC_HANDLE</a> <strong><span style="color: #000000">handle</span></strong>, 
+    <a href="01283.html" target="topic">USB_HOST_CDC_TRANSFER_HANDLE</a> * <strong><span style="color: #000000">transferHandle</span></strong>, 
+    <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">data</span></strong>, 
+    size_t <strong><span style="color: #000000">size</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-usb_host_config_template.h</p></div>
+The client handle should be valid.</p></div>
 </div>
-<a name="4465736372697074696F6E"></a><div class="Element14">
-Description</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
 <div class="Element11">
 <div class="Element10">
-<p class="Element10">
-USB Host Layer Configuration constants&nbsp;</p>
-<p class="Element10">
-This file contains USB host layer compile time options (macros) that are to be configured by the user. This file is a template file and must be used as an example only. This file must not be directly included in the project.</p></div>
-</div>
-<a name="4D6163726F73"></a><div class="Element14">
-Macros</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
+<div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table3">
 <tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00017.html" target="topic">_USB_HOST_CONFIG_TEMPLATE_H_</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro _USB_HOST_CONFIG_TEMPLATE_H_.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01286.html" target="topic">USB_HOST_CONTROLLERS_NUMBER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the number of USB Host Controllers that this Host Layer must manage.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01292.html" target="topic">USB_HOST_DEVICE_INTERFACES_NUMBER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the maximum number of interface that the attached device can contain in order for the USB Host Layer to process the device.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01305.html" target="topic">USB_HOST_DEVICES_NUMBER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the maximum number of devices to support.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01351.html" target="topic">USB_HOST_HUB_SUPPORT_ENABLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines if this USB Host application must support a Hub.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01352.html" target="topic">USB_HOST_HUB_TIER_LEVEL</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the maximum tier of connected hubs to be supported.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01394.html" target="topic">USB_HOST_PIPES_NUMBER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the maximum number of pipes that the application will need.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="01424.html" target="topic">USB_HOST_TRANSFERS_NUMBER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Defines the maximum number of transfers that host layer should handle.&nbsp;</div></td></tr></table></div></div>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+handle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+handle to the CDC device instance to which the request should be sent.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+transferHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to <a href="01283.html" target="topic">USB_HOST_CDC_TRANSFER_HANDLE</a> type of a variable. This will contain a valid transfer handle if the request was successful.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+data&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+pointer to the buffer containing the data to be written. The contents of the buffer should not be changed till the USB_HOST_CDC_EVENT_WRITE_COMPLETE event has occurred.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+size&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Number of bytes to write.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+USB_HOST_CDC_RESULT_SUCCESS - The operation was successful.&nbsp;</p>
+<p class="Element10">
+USB_HOST_CDC_RESULT_DEVICE_UNKNOWN - The device that this request was targeted to does not exist in the system.&nbsp;</p>
+<p class="Element10">
+USB_HOST_CDC_RESULT_BUSY - The request could not be scheduled at this time. The client should try again.&nbsp;</p>
+<p class="Element10">
+USB_HOST_CDC_RESULT_INVALID_PARAMETER - An input parameter was NULL.&nbsp;</p>
+<p class="Element10">
+USB_HOST_CDC_RESULT_FAILURE - An unknown failure occurred.&nbsp;</p>
+<p class="Element10">
+USB_HOST_CDC_RESULT_HANDLE_INVALID - The client handle is not valid.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"></pre></div></div>
 </div>
 </div>
 </div>
@@ -145,7 +137,7 @@ Defines the maximum number of transfers that host layer should handle.&nbsp;</di
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00369.html" target="topic">USB Host Layer Library</a> &gt; <a href="00360.html" target="topic">Files</a> &gt; <a href="01285.html" target="topic">usb_host_config_template.h</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00245.html" target="topic">USB CDC Host Library</a> &gt; <a href="00246.html" target="topic">Library Interface</a> &gt; b) Data Transfer Functions &gt; <a href="01285.html" target="topic">USB_HOST_CDC_Write Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -156,10 +148,10 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01035.html" target="topic">Previous</a> | <a href="00360.html" target="topic">Up</a> | <a href="00210.html" target="topic">Next</a></div>
+<a href="01270.html" target="topic">Previous</a> | <a href="00246.html" target="topic">Up</a> | <a href="01282.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_host_config_template.h Topic Title: usb_host_config_template.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_CDC_Write@USB_HOST_CDC_HANDLE@USB_HOST_CDC_TRANSFER_HANDLE *@void *@size_t Topic Title: USB_HOST_CDC_Write Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

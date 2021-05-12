@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>USB_DEVICE_AUDIO_V2_INIT Structure</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00661.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00209.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00205.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00661.html" target="topic">USB_DEVICE_AUDIO_V2_INIT Structure</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00660.html" target="topic">Previous</a> | <a href="00205.html" target="topic">Up</a> | <a href="00669.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_AUDIO_V2_INIT Topic Title: USB_DEVICE_AUDIO_V2_INIT Structure)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+USB_DEVICE_AUDIO_V2_INIT Structure</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+USB Device Audio v2.0 Function Driver Initialization Data Structure&nbsp;</p>
+<p class="Element10">
+This data structure must be defined for every instance of the Audio function driver. It is passed to the Audio v2.0 function driver, by the Device Layer, at the time of initialization. The funcDriverInit member of the Device Layer Function Driver registration table entry must point to this data structure for an instance of the Audio function driver.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">struct</span></strong> {
+  size_t <strong><span style="color: #000000">queueSizeRead</span></strong>;
+  size_t <strong><span style="color: #000000">queueSizeWrite</span></strong>;
+} USB_DEVICE_AUDIO_V2_INIT;</pre></div></div>
+<a name="4D656D62657273"></a><div class="Element14">
+Members</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element272">
+<div class="TableDiv">
+<table cellspacing="0" class="Table4">
+<tr>
+<td class="Element260" valign="top" width="35%">
+<div class="Element261">
+Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
+<div class="Element265">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+size_t queueSizeRead;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Size of the read queue for this instance</p>
+<ul class="Element630">
+<li class="Element600">of the Audio function driver</li>
+</ul><p class="Element267">
+&nbsp;</div></td></tr><tr>
+<td class="Element262" valign="top" width="35%">
+<div class="Element263">
+size_t queueSizeWrite;&nbsp;</div></td><td class="Element266" valign="top" width="65%">
+<div class="Element267">
+Size of the write queue for this instance</p>
+<ul class="Element630">
+<li class="Element600">of the Audio function driver</li>
+</ul><p class="Element267">
+&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The queue sizes that are specified in this data structure are also affected by the <a href="00667.html" target="topic">USB_DEVICE_AUDIO_V2_QUEUE_DEPTH_COMBINED</a> configuration macro.</p></div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00209.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00205.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00661.html" target="topic">USB_DEVICE_AUDIO_V2_INIT Structure</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00660.html" target="topic">Previous</a> | <a href="00205.html" target="topic">Up</a> | <a href="00669.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_AUDIO_V2_INIT Topic Title: USB_DEVICE_AUDIO_V2_INIT Structure)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

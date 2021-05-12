@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_DEVICE_CLIENT_STATUS Enumeration</title>
+<title>USB_DEVICE_CDC_Write Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00302.html" target="topic">Library Interface</a> &gt; g) Data Types and Constants &gt; <a href="00744.html" target="topic">USB_DEVICE_CLIENT_STATUS Enumeration</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00277.html" target="topic">USB CDC Device Library</a> &gt; <a href="00273.html" target="topic">Library Interface</a> &gt; a) Functions &gt; <a href="00744.html" target="topic">USB_DEVICE_CDC_Write Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00890.html" target="topic">Previous</a> | <a href="00302.html" target="topic">Up</a> | <a href="00750.html" target="topic">Next</a></div>
+<a href="00727.html" target="topic">Previous</a> | <a href="00273.html" target="topic">Up</a> | <a href="00738.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_CLIENT_STATUS Topic Title: USB_DEVICE_CLIENT_STATUS Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_CDC_Write@USB_DEVICE_CDC_INDEX@USB_DEVICE_CDC_TRANSFER_HANDLE *@void *@size_t@USB_DEVICE_CDC_TRANSFER_FLAGS Topic Title: USB_DEVICE_CDC_Write Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_DEVICE_CLIENT_STATUS Enumeration</div>
+USB_DEVICE_CDC_Write Function</div>
 </div>
 </div>
 
@@ -49,54 +49,223 @@ USB_DEVICE_CLIENT_STATUS Enumeration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-USB Device Layer Client Status&nbsp;</p>
+This function requests a data write to the USB Device CDC Function Driver Layer. The function places a requests with driver, the request will get serviced as data is requested by the USB Host. A handle to the request is returned in the transferHandle parameter. The termination of the request is indicated by the USB_DEVICE_CDC_EVENT_WRITE_COMPLETE event. The amount of data written and the transfer handle associated with the request is returned along with the event in writeCompleteData member of the pData parameter in the event handler. The transfer handle expires when event handler for the USB_DEVICE_CDC_EVENT_WRITE_COMPLETE exits. If the read request could not be accepted, the function returns an error code and transferHandle will contain the value <a href="00743.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID</a>.&nbsp;</p>
 <p class="Element10">
-This enumeration defines the possible status of the USB Device Layer Client. It is returned by the <a href="00747.html" target="topic">USB_DEVICE_ClientStatusGet</a> function.</p></div>
+The behavior of the write request depends on the flags and size parameter. If the application intends to send more data in a request, then it should use the USB_DEVICE_CDC_TRANSFER_FLAGS_MORE_DATA_PENDING flag. If there is no more data to be sent in the request, the application must use the USB_DEVICE_CDC_EVENT_WRITE_COMPLETE flag. This is explained in more detail here:&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<ul class="Element630">
+<li class="Element600">If size is a multiple of maxPacketSize and flag is set as</li>
+</ul><p class="Element10">
+USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE, the write function will append a Zero Length Packet (ZLP) to complete the transfer.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<ul class="Element630">
+<li class="Element600">If size is a multiple of maxPacketSize and flag is set as</li>
+</ul><p class="Element10">
+USB_DEVICE_CDC_TRANSFER_FLAGS_MORE_DATA_PENDING, the write function will not append a ZLP and hence will not complete the transfer.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<ul class="Element630">
+<li class="Element600">If size is greater than but not a multiple of maxPacketSize and flags is</li>
+</ul><p class="Element10">
+set as USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE, the write function returns an error code and sets the transferHandle parameter to <a href="00743.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID</a>.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<ul class="Element630">
+<li class="Element600">If size is greater than but not a multiple of maxPacketSize and flags is</li>
+</ul><p class="Element10">
+set as USB_DEVICE_CDC_TRANSFER_FLAGS_MORE_DATA_PENDING, the write function fails and return an error code and sets the transferHandle parameter to <a href="00743.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID</a>.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<ul class="Element630">
+<li class="Element600">If size is less than maxPacketSize and flag is set as</li>
+</ul><p class="Element10">
+USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE, the write function schedules one packet.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<ul class="Element630">
+<li class="Element600">If size is less than maxPacketSize and flag is set as</li>
+</ul><p class="Element10">
+USB_DEVICE_CDC_TRANSFER_FLAGS_MORE_DATA_PENDING, the write function returns an error code and sets the transferHandle parameter to <a href="00743.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID</a>.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<ul class="Element630">
+<li class="Element600">If size is 0 and the flag is set</li>
+</ul><p class="Element10">
+USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE, the function driver will schedule a Zero Length Packet.&nbsp;</p>
+<p class="Element10">
+Completion of the write transfer is indicated by the USB_DEVICE_CDC_EVENT_WRITE_COMPLETE event. The amount of data written along with the transfer handle is returned along with the event.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
-  <strong><span style="color: #000000">USB_DEVICE_CLIENT_STATUS_CLOSED</span></strong>,
-  <strong><span style="color: #000000">USB_DEVICE_CLIENT_STATUS_READY</span></strong>
-} USB_DEVICE_CLIENT_STATUS;</pre></div></div>
-<a name="4D656D62657273"></a><div class="Element14">
-Members</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00728.html" target="topic">USB_DEVICE_CDC_RESULT</a> <strong><span style="color: #000000">USB_DEVICE_CDC_Write</span></strong>(
+    <a href="00712.html" target="topic">USB_DEVICE_CDC_INDEX</a> <strong><span style="color: #000000">instanceIndex</span></strong>, 
+    <a href="00742.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE</a> * <strong><span style="color: #000000">transferHandle</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">data</span></strong>, 
+    size_t <strong><span style="color: #000000">size</span></strong>, 
+    <a href="00739.html" target="topic">USB_DEVICE_CDC_TRANSFER_FLAGS</a> <strong><span style="color: #000000">flags</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element272">
-<div class="TableDiv">
-<table cellspacing="0" class="Table4">
-<tr>
-<td class="Element260" valign="top" width="35%">
-<div class="Element261">
-Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
-<div class="Element265">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_DEVICE_CLIENT_STATUS_CLOSED&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Client is closed or the specified handle is invalid&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-USB_DEVICE_CLIENT_STATUS_READY&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-Client is ready&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+The function driver should have been configured.</p></div>
 </div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+instance&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+USB Device CDC Function Driver instance.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+transferHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to a <a href="00742.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE</a> type of variable. This variable will contain the transfer handle in case the write request was successful.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+data&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+pointer to the data buffer that contains the data to written.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+size&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Size of the data buffer. Refer to the description section for more details on how the size affects the transfer.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+flags&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Flags that indicate whether the transfer should continue or end. Refer to the description for more details.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+USB_DEVICE_CDC_RESULT_OK - The write request was successful. transferHandle contains a valid transfer handle.&nbsp;</p>
+<p class="Element10">
+USB_DEVICE_CDC_RESULT_ERROR_TRANSFER_QUEUE_FULL - internal request queue is full. The write request could not be added.&nbsp;</p>
+<p class="Element10">
+USB_DEVICE_CDC_RESULT_ERROR_TRANSFER_SIZE_INVALID - The specified transfer size and flag parameter are invalid.&nbsp;</p>
+<p class="Element10">
+USB_DEVICE_CDC_RESULT_ERROR_INSTANCE_NOT_CONFIGURED - The specified instance is not configured yet.&nbsp;</p>
+<p class="Element10">
+USB_DEVICE_CDC_RESULT_ERROR_INSTANCE_INVALID - The specified instance was not provisioned in the application and is invalid.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-None.</p></div>
+While the using the CDC Function Driver with the PIC32MZ USB module, the transmit buffer provided to the USB_DEVICE_CDC_Write function should be placed in coherent memory and aligned at a 16 byte boundary. This can be done by declaring the buffer using the __attribute__((coherent, aligned(16))) attribute. An example is shown here&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">uint8_t data[256] __attribute__((coherent, aligned(16)));</pre></div></div>
+</div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// Below is a set of examples showing various conditions trying to</span></i>
+<i><span style="color: #008000">// send data with the Write command.  </span></i>
+<i><span style="color: #008000">//</span></i>
+<i><span style="color: #008000">// This assumes that driver was opened successfully.</span></i>
+<i><span style="color: #008000">// Assume maxPacketSize is 64.</span></i>
+
+<a href="00742.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE</a> transferHandle;
+<a href="00728.html" target="topic">USB_DEVICE_CDC_RESULT</a> writeRequestHandle;
+<a href="00712.html" target="topic">USB_DEVICE_CDC_INDEX</a> instance;
+
+<i><span style="color: #008000">//-------------------------------------------------------</span></i>
+<i><span style="color: #008000">// In this example we want to send 34 bytes only.</span></i>
+
+writeRequestResult = USB_DEVICE_CDC_Write(instance,
+                        &amp;transferHandle, data, 34, 
+                        USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE);
+
+<strong><span style="color: #000080">if</span></strong>(USB_DEVICE_CDC_RESULT_OK != writeRequestResult)
+{
+    <i><span style="color: #008000">//Do Error handling here</span></i>
+}
+
+<i><span style="color: #008000">//-------------------------------------------------------</span></i>
+<i><span style="color: #008000">// In this example we want to send 64 bytes only.</span></i>
+<i><span style="color: #008000">// This will cause a ZLP to be sent.</span></i>
+
+writeRequestResult = USB_DEVICE_CDC_Write(instance,
+                        &amp;transferHandle, data, 64, 
+                        USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE);
+
+<strong><span style="color: #000080">if</span></strong>(USB_DEVICE_CDC_RESULT_OK != writeRequestResult)
+{
+    <i><span style="color: #008000">//Do Error handling here</span></i>
+}
+
+<i><span style="color: #008000">//-------------------------------------------------------</span></i>
+<i><span style="color: #008000">// This example will return an error because size is less</span></i>
+<i><span style="color: #008000">// than maxPacketSize and the flag indicates that more</span></i>
+<i><span style="color: #008000">// data is pending.</span></i>
+
+writeRequestResult = USB_DEVICE_CDC_Write(instanceHandle,
+                        &amp;transferHandle, data, 32, 
+                        USB_DEVICE_CDC_TRANSFER_FLAGS_MORE_DATA_PENDING);
+
+<i><span style="color: #008000">//-------------------------------------------------------</span></i>
+<i><span style="color: #008000">// In this example we want to place a request for a 70 byte transfer.</span></i>
+<i><span style="color: #008000">// The 70 bytes will be sent out in a 64 byte transaction and a 6 byte</span></i>
+<i><span style="color: #008000">// transaction completing the transfer.</span></i>
+
+writeRequestResult = USB_DEVICE_CDC_Write(instanceHandle,
+                        &amp;transferHandle, data, 70, 
+                        USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE);
+
+<strong><span style="color: #000080">if</span></strong>(USB_DEVICE_CDC_RESULT_OK != writeRequestResult)
+{
+    <i><span style="color: #008000">//Do Error handling here</span></i>
+}
+
+<i><span style="color: #008000">//-------------------------------------------------------</span></i>
+<i><span style="color: #008000">// In this example we want to place a request for a 70 bytes and the flag</span></i>
+<i><span style="color: #008000">// is set to data pending. This will result in an error. The size of data</span></i>
+<i><span style="color: #008000">// when the data pending flag is specified should be a multiple of the</span></i>
+<i><span style="color: #008000">// endpoint size.</span></i>
+
+writeRequestResult = USB_DEVICE_CDC_Write(instanceHandle,
+                        &amp;transferHandle, data, 70, 
+                        USB_DEVICE_CDC_TRANSFER_FLAGS_MORE_DATA_PENDING);
+
+<strong><span style="color: #000080">if</span></strong>(USB_DEVICE_CDC_RESULT_OK != writeRequestResult)
+{
+    <i><span style="color: #008000">//Do Error handling here</span></i>
+}
+
+<i><span style="color: #008000">// The completion of the write request will be indicated by the </span></i>
+<i><span style="color: #008000">// USB_DEVICE_CDC_EVENT_WRITE_COMPLETE event.</span></i>
+</pre></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00302.html" target="topic">Library Interface</a> &gt; g) Data Types and Constants &gt; <a href="00744.html" target="topic">USB_DEVICE_CLIENT_STATUS Enumeration</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00277.html" target="topic">USB CDC Device Library</a> &gt; <a href="00273.html" target="topic">Library Interface</a> &gt; a) Functions &gt; <a href="00744.html" target="topic">USB_DEVICE_CDC_Write Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -107,10 +276,10 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00890.html" target="topic">Previous</a> | <a href="00302.html" target="topic">Up</a> | <a href="00750.html" target="topic">Next</a></div>
+<a href="00727.html" target="topic">Previous</a> | <a href="00273.html" target="topic">Up</a> | <a href="00738.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_CLIENT_STATUS Topic Title: USB_DEVICE_CLIENT_STATUS Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_CDC_Write@USB_DEVICE_CDC_INDEX@USB_DEVICE_CDC_TRANSFER_HANDLE *@void *@size_t@USB_DEVICE_CDC_TRANSFER_FLAGS Topic Title: USB_DEVICE_CDC_Write Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

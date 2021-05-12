@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00215.html" target="topic">Audio Stream Event Handling</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00215.html" target="topic">Audio Stream Event Handling</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -53,7 +53,7 @@ The Audio v1.0 streams presents an event driven interface to the application. Th
 <p class="Element10">
 A request to send a command or transfer data typically completes after the command request or transfer function has exited. The application must then use the Audio stream event to track the completion of this command or data transfer request. In a case where multiple data transfers are queued, the transfer handles can be used to identify the transfer requests.&nbsp;</p>
 <p class="Element10">
-The application must use the <a href="01113.html" target="topic">USB_HOST_AUDIO_V1_0_StreamEventHandlerSet</a> function to register an audio stream handler. This event handler will be called when a command or data transfer event has occurred and should be registered before the request for command or a data transfer. The following code shows an example of registering an audio stream event handler. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of Audio stream event handling */</span></i>
+The application must use the <a href="01114.html" target="topic">USB_HOST_AUDIO_V1_0_StreamEventHandlerSet</a> function to register an audio stream handler. This event handler will be called when a command or data transfer event has occurred and should be registered before the request for command or a data transfer. The following code shows an example of registering an audio stream event handler. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of Audio stream event handling */</span></i>
 
 <i><span style="color: #008000">/* Specify the Audio Stream format details that this application supports */</span></i>
 <strong><span style="color: #000080">const</span></strong> APP_USB_HOST_AUDIO_STREAM_FORTMAT audioSpeakerStreamFormat =
@@ -271,7 +271,7 @@ USB_HOST_AUDIO_V1_0_STREAM_OBJ App_USBHostAudioSpeakerStreamFind
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00215.html" target="topic">Audio Stream Event Handling</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00215.html" target="topic">Audio Stream Event Handling</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">

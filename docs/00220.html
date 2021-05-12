@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00220.html" target="topic">Enabling Audio Stream</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00220.html" target="topic">Enabling Audio Stream</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -49,7 +49,7 @@ Enabling Audio Stream</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-An audio stream must be enabled before doing any data transfer operation. An audio stream enable or disable can be scheduled by using <a href="01112.html" target="topic">USB_HOST_AUDIO_V1_0_StreamEnable</a> or <a href="01112.html" target="topic">USB_HOST_AUDIO_V1_0_StreamEnable</a> functions. Return values of these function indicates if the request has been placed successfully or failed. When the audio stream enable request is completed, stream event handler generates an event USB_HOST_AUDIO_V1_0_STREAM_EVENT_ENABLE_COMPLETE. Similarly it generates an event USB_HOST_AUDIO_V1_0_STREAM_EVENT_DISABLE_COMPLETE when stream disable is complete. The event data <a href="01072.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_EVENT_ENABLE_COMPLETE_DATA</a> has details like request handle and termination status. The requestStatus member of the <a href="01072.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_EVENT_ENABLE_COMPLETE_DATA</a> indicates if the request was success or failed. When audio stream multiple audio streams with an audio stream group cannot be enabled at the same time. The following code shows an example of how an Audio Stream is enabled. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of enabling an audio stream */</span></i>
+An audio stream must be enabled before doing any data transfer operation. An audio stream enable or disable can be scheduled by using <a href="01113.html" target="topic">USB_HOST_AUDIO_V1_0_StreamEnable</a> or <a href="01113.html" target="topic">USB_HOST_AUDIO_V1_0_StreamEnable</a> functions. Return values of these function indicates if the request has been placed successfully or failed. When the audio stream enable request is completed, stream event handler generates an event USB_HOST_AUDIO_V1_0_STREAM_EVENT_ENABLE_COMPLETE. Similarly it generates an event USB_HOST_AUDIO_V1_0_STREAM_EVENT_DISABLE_COMPLETE when stream disable is complete. The event data <a href="01073.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_EVENT_ENABLE_COMPLETE_DATA</a> has details like request handle and termination status. The requestStatus member of the <a href="01073.html" target="topic">USB_HOST_AUDIO_V1_0_STREAM_EVENT_ENABLE_COMPLETE_DATA</a> indicates if the request was success or failed. When audio stream multiple audio streams with an audio stream group cannot be enabled at the same time. The following code shows an example of how an Audio Stream is enabled. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of enabling an audio stream */</span></i>
 
 <i><span style="color: #008000">/* Specify the Audio Stream format details that this application supports */</span></i>
 <strong><span style="color: #000080">const</span></strong> APP_USB_HOST_AUDIO_STREAM_FORTMAT audioSpeakerStreamFormat =
@@ -293,7 +293,7 @@ USB_HOST_AUDIO_V1_0_STREAM_OBJ App_USBHostAudioSpeakerStreamFind
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00370.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00220.html" target="topic">Enabling Audio Stream</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00210.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00232.html" target="topic">Using the Library</a> &gt; <a href="00222.html" target="topic">How the Library Works</a> &gt; <a href="00220.html" target="topic">Enabling Audio Stream</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">

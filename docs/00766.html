@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_DEVICE_EndpointIsEnabled Function</title>
+<title>USB_DEVICE_EndpointEnable Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00302.html" target="topic">Library Interface</a> &gt; e) Endpoint Management Functions &gt; <a href="00766.html" target="topic">USB_DEVICE_EndpointIsEnabled Function</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00302.html" target="topic">Library Interface</a> &gt; e) Endpoint Management Functions &gt; <a href="00766.html" target="topic">USB_DEVICE_EndpointEnable Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -29,12 +29,12 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00765.html" target="topic">Previous</a> | <a href="00302.html" target="topic">Up</a> | <a href="00768.html" target="topic">Next</a></div>
+<a href="00765.html" target="topic">Previous</a> | <a href="00302.html" target="topic">Up</a> | <a href="00767.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_EndpointIsEnabled@USB_DEVICE_HANDLE@USB_ENDPOINT_ADDRESS Topic Title: USB_DEVICE_EndpointIsEnabled Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_EndpointEnable@USB_DEVICE_HANDLE@uint8_t@USB_ENDPOINT_ADDRESS@USB_TRANSFER_TYPE@size_t Topic Title: USB_DEVICE_EndpointEnable Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_DEVICE_EndpointIsEnabled Function</div>
+USB_DEVICE_EndpointEnable Function</div>
 </div>
 </div>
 
@@ -49,13 +49,18 @@ USB_DEVICE_EndpointIsEnabled Function</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This function returns true if the endpoint is enabled. The application can use this function when handling Set Interface requests in case of Vendor or Custom USB devices.</p></div>
+This function enables a device endpoint for the specified transfer type and size. A Vendor specific device application may typically call this function in response to a Set Interface request from the host. Note that Device Layer will enable endpoints contained in Alternate Setting 0 of an interface, when the host configures the device. If there is only one alternate setting in an interface, the application may not need to call the USB_DEVICE_EndpointEnable function.&nbsp;</p>
+<p class="Element10">
+If the device supports multiple alternate settings in an Interface, the device application must then disable an endpoint (if it was enabled) before re-enabling it with the new settings.The application can use the <a href="00767.html" target="topic">USB_DEVICE_EndpointIsEnabled</a> function to check the status of the endpoint and <a href="00765.html" target="topic">USB_DEVICE_EndpointDisable</a> function to disable the endpoint.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">USB_DEVICE_EndpointIsEnabled</span></strong>(
-    <a href="00813.html" target="topic">USB_DEVICE_HANDLE</a> <strong><span style="color: #000000">usbDeviceHandle</span></strong>, 
-    USB_ENDPOINT_ADDRESS <strong><span style="color: #000000">endpoint</span></strong>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="01010.html" target="topic">USB_DEVICE_RESULT</a> <strong><span style="color: #000000">USB_DEVICE_EndpointEnable</span></strong>(
+    <a href="00814.html" target="topic">USB_DEVICE_HANDLE</a> <strong><span style="color: #000000">usbDeviceHandle</span></strong>, 
+    uint8_t <strong><span style="color: #000000">interface</span></strong>, 
+    USB_ENDPOINT_ADDRESS <strong><span style="color: #000000">endpoint</span></strong>, 
+    USB_TRANSFER_TYPE <strong><span style="color: #000000">transferType</span></strong>, 
+    size_t <strong><span style="color: #000000">size</span></strong>
 );</pre></div></div>
 <a name="507265636F6E646974696F6E73"></a><div class="Element14">
 Preconditions</div>
@@ -84,9 +89,24 @@ usbDeviceHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 USB Device Layer Handle.<br>&nbsp;</div></td></tr><tr>
 <td class="Element302" valign="top" width="35%">
 <div class="Element303">
+interface&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+This parameter is ignored in the PIC32 USB Device Stack implementation.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
 endpoint&nbsp;</div></td><td class="Element306" valign="top" width="65%">
 <div class="Element307">
-Endpoint to disable.&nbsp;</div></td></tr></table></div></div>
+Endpoint to enable.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+transferType&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Type of transfer that this is endpoint will support. This should match the type reported to the host<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+size&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Maximum endpoint size. This should match the value reported to the host.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 <a name="52657475726E73"></a><div class="Element14">
@@ -94,9 +114,9 @@ Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-true - The endpoint is enabled.&nbsp;</p>
+USB_DEVICE_RESULT_OK - The endpoint was enabled successfully.&nbsp;</p>
 <p class="Element10">
-false - The endpoint is not enabled or the specified endpoint is not provisioned in the system and is invalid.</p></div>
+USB_DEVICE_RESULT_ERROR_ENDPOINT_INVALID - The specified instance was not provisioned in the application and is invalid.</p></div>
 </div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
@@ -120,14 +140,14 @@ Example</div>
     <strong><span style="color: #000080">if</span></strong>(alternateSetting == 1)
     {
         <i><span style="color: #008000">// Check if the endpoint is already enabled.</span></i>
-        <strong><span style="color: #000080">if</span></strong>(USB_DEVICE_EndpointIsEnabled(usbDeviceHandle, (0x1|USB_EP_DIRECTION_IN)))
+        <strong><span style="color: #000080">if</span></strong>(<a href="00767.html" target="topic">USB_DEVICE_EndpointIsEnabled</a>(usbDeviceHandle, (0x1|USB_EP_DIRECTION_IN)))
         {
             <i><span style="color: #008000">// Disable the endpoint.</span></i>
-            <a href="00764.html" target="topic">USB_DEVICE_EndpointDisable</a>(usbDeviceHandle, (0x1|USB_EP_DIRECTION_IN));
+            <a href="00765.html" target="topic">USB_DEVICE_EndpointDisable</a>(usbDeviceHandle, (0x1|USB_EP_DIRECTION_IN));
         }
 
         <i><span style="color: #008000">// Re-enable the endpoint with new settings</span></i>
-        <a href="00765.html" target="topic">USB_DEVICE_EndpointEnable</a>(usbDeviceHandle, (0x1|USB_EP_DIRECTION_IN)
+        USB_DEVICE_EndpointEnable(usbDeviceHandle, 0, (0x1|USB_EP_DIRECTION_IN)
                     USB_TRANSFER_TYPE_BULK, 64);
     }
 }
@@ -139,7 +159,7 @@ Example</div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00302.html" target="topic">Library Interface</a> &gt; e) Endpoint Management Functions &gt; <a href="00766.html" target="topic">USB_DEVICE_EndpointIsEnabled Function</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00302.html" target="topic">Library Interface</a> &gt; e) Endpoint Management Functions &gt; <a href="00766.html" target="topic">USB_DEVICE_EndpointEnable Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -150,10 +170,10 @@ MPLAB Harmony USB Stack </div>
 <a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00765.html" target="topic">Previous</a> | <a href="00302.html" target="topic">Up</a> | <a href="00768.html" target="topic">Next</a></div>
+<a href="00765.html" target="topic">Previous</a> | <a href="00302.html" target="topic">Up</a> | <a href="00767.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_EndpointIsEnabled@USB_DEVICE_HANDLE@USB_ENDPOINT_ADDRESS Topic Title: USB_DEVICE_EndpointIsEnabled Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_EndpointEnable@USB_DEVICE_HANDLE@uint8_t@USB_ENDPOINT_ADDRESS@USB_TRANSFER_TYPE@size_t Topic Title: USB_DEVICE_EndpointEnable Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

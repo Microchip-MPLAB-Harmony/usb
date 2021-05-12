@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00307.html" target="topic">Using the Library</a> &gt; <a href="00297.html" target="topic">How the Library Works</a> &gt; <a href="00283.html" target="topic">Application Client Interaction</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00308.html" target="topic">Using the Library</a> &gt; <a href="00297.html" target="topic">How the Library Works</a> &gt; <a href="00283.html" target="topic">Application Client Interaction</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -49,9 +49,9 @@ Application Client Interaction</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Once initialized, Device Layer becomes ready for operation. The application must open the Device Layer by calling the <a href="00951.html" target="topic">USB_DEVICE_Open</a>() function. Opening the Device Layer makes the application a Device Layer client. The Device Layer returns a valid Device Layer Handle when opened successfully. It will return an invalid Device Layer Handle when the open function fails. The application in this case should try opening the Device Layer again. The application needs a valid Device Layer handle (a handle that is not invalid) to access the Device Layer functionality.&nbsp;</p>
+Once initialized, Device Layer becomes ready for operation. The application must open the Device Layer by calling the <a href="00952.html" target="topic">USB_DEVICE_Open</a>() function. Opening the Device Layer makes the application a Device Layer client. The Device Layer returns a valid Device Layer Handle when opened successfully. It will return an invalid Device Layer Handle when the open function fails. The application in this case should try opening the Device Layer again. The application needs a valid Device Layer handle (a handle that is not invalid) to access the Device Layer functionality.&nbsp;</p>
 <p class="Element10">
-The client must now register a Device Layer Event Handler with the Device Layer. This is a mandatory step. It enables USB Device Layer Events and is required for proper functioning of the USB Device Stack. The application must use the <a href="00804.html" target="topic">USB_DEVICE_EventHandlerSet</a>() function to register the event handler. The Application Event Handler should be of the type <a href="00801.html" target="topic">USB_DEVICE_EVENT_HANDLER</a>. The Device Layer, when an event needs to be generated, calls this event handler function with the event type and event relevant information. The application must register an event handler for proper functioning of the USB Device. Not registering an event handler may cause the USB Device to malfunction and become non-compliant.&nbsp;</p>
+The client must now register a Device Layer Event Handler with the Device Layer. This is a mandatory step. It enables USB Device Layer Events and is required for proper functioning of the USB Device Stack. The application must use the <a href="00805.html" target="topic">USB_DEVICE_EventHandlerSet</a>() function to register the event handler. The Application Event Handler should be of the type <a href="00802.html" target="topic">USB_DEVICE_EVENT_HANDLER</a>. The Device Layer, when an event needs to be generated, calls this event handler function with the event type and event relevant information. The application must register an event handler for proper functioning of the USB Device. Not registering an event handler may cause the USB Device to malfunction and become non-compliant.&nbsp;</p>
 <p class="Element10">
 The client can now attach the USB Device on the bus. The application must attach the in response to the USB_DEVICE_EVENT_POWER_DETECTED event. Attaching the device on the bus makes the device visible to the host (if it is already attached to the bus) and will cause the host to interact with the device.&nbsp;</p>
 <p class="Element10">
@@ -92,7 +92,7 @@ The following code shows an example of the application opening the Device Layer 
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00388.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00307.html" target="topic">Using the Library</a> &gt; <a href="00297.html" target="topic">How the Library Works</a> &gt; <a href="00283.html" target="topic">Application Client Interaction</a></div>
+<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00308.html" target="topic">Using the Library</a> &gt; <a href="00297.html" target="topic">How the Library Works</a> &gt; <a href="00283.html" target="topic">Application Client Interaction</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
