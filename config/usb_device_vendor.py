@@ -175,6 +175,7 @@ def usbDeviceVendorBufferQueueSize(usbSymbolSource, event):
 	if writeQSize != None:
 		if (event["id"] == "CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE"):
 			writeQSize = writeQSize - currentQSizeWrite  + event["value"]
+			currentQSizeWrite = event["value"]
 			args = {"nFunction": writeQSize}
 			res = Database.sendMessage("usb_device", "UPDATE_ENDPOINT_WRITE_QUEUE_SIZE", args)
 	args = {"vendorQueueDepth": readQSize + writeQSize}
