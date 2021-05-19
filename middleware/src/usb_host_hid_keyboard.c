@@ -572,7 +572,7 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                     (mainItem.globalItem)->reportSize;
                             
                             /* Keyboard keys handling logic*/
-                            if(((0xFF00 & (mainItem.globalItem)->usagePage) 
+                            if((((0xFF00 & (mainItem.globalItem)->usagePage)>>8) 
                                     == USB_HID_USAGE_PAGE_KEYBOARD_KEYPAD) || 
                                     ((0x00FF & (mainItem.globalItem)->usagePage)
                                         == USB_HID_USAGE_PAGE_KEYBOARD_KEYPAD))
