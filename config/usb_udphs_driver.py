@@ -43,8 +43,8 @@ def dependencyStatus(symbol, event):
 		symbol.setVisible(False)
 		
 def blUSBDriverSpeedChanged(symbol, event):
-	Database.clearSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED")
-	Database.setSymbolValue("usb_device", "CONFIG_USB_DEVICE_SPEED", event["value"], 2)
+	args = {"usbSpeed" : event["value"]}
+	Database.sendMessage("usb_device", "UPDATE_DEVICE_SPEED", args)
 
 def setVisible(symbol, event):
 	if (event["value"] == True):

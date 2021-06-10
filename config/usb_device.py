@@ -121,6 +121,7 @@ usbDeviceFunctionsNumberMax = 10
 usbDeviceFunctionsNumberDefaultValue = 2 
 usbDeviceFunctionsNumberValue = usbDeviceFunctionsNumberDefaultValue
 usbDeviceFunctionIndex = 20
+usbDeviceSpeed = None 
 
 # A List of USB Device Function Menu Symbols
 listUsbDeviceFunctionMenu = []
@@ -226,6 +227,8 @@ def handleMessage(messageID, args):
 	global usbDeviceEndpointsNumber
 	global usbDeviceVendorReadQueueSize
 	global usbDeviceVendorWriteQueueSize
+	global usbDeviceSpeed
+	
 	if (messageID == "UPDATE_FUNCTIONS_NUMBER"):
 		usbDeviceFunctionNumber.setValue(args["nFunction"])
 	elif (messageID == "UPDATE_IAD_ENABLE"):
@@ -240,6 +243,9 @@ def handleMessage(messageID, args):
 		usbDeviceVendorReadQueueSize.setValue(args["nFunction"])
 	elif (messageID == "UPDATE_ENDPOINT_WRITE_QUEUE_SIZE"): 
 		usbDeviceVendorWriteQueueSize.setValue(args["nFunction"])
+	elif (messageID == "UPDATE_DEVICE_SPEED"):
+		usbDeviceSpeed.setValue(args["usbSpeed"])
+		
 
 def instantiateComponent(usbDeviceComponent):	
 	global usbDeviceMsdSupport
@@ -252,46 +258,51 @@ def instantiateComponent(usbDeviceComponent):
 	global usbDeviceEndpointsNumber
 	global usbDeviceVendorReadQueueSize
 	global usbDeviceVendorWriteQueueSize
+	global usbDeviceSpeed
 	res = Database.activateComponents(["HarmonyCore"])
+	
+	# USB Device Speed 
+	usbDeviceSpeed = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_SPEED", None)
+	usbDeviceSpeed.setVisible(False)
+	usbDeviceSpeed.setUseSingleDynamicValue(True)
+	
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
 		res = Database.activateComponents(["drv_usbhs_v1"])
-		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
+		usbDeviceSpeed.setDefaultValue("High Speed")
 		driverIndex = "DRV_USBHSV1_INDEX_0"
 		driverInterface = "DRV_USBHSV1_DEVICE_INTERFACE"
 		
 	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX", "PIC32MM", "PIC32MZ1025W", "WFI32E01"]):
 		res = Database.activateComponents(["drv_usbfs_v1"])
-		speed = Database.getSymbolValue("drv_usbfs_v1", "USB_SPEED")
+		usbDeviceSpeed.setDefaultValue("Full Speed")
 		driverIndex = "DRV_USBFS_INDEX_0"
 		driverInterface = "DRV_USBFS_DEVICE_INTERFACE"
 		
 	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
 		res = Database.activateComponents(["drv_usbhs_v1"])
-		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
+		usbDeviceSpeed.setDefaultValue("High Speed")
 		driverIndex = "DRV_USBHS_INDEX_0"
 		driverInterface = "DRV_USBHS_DEVICE_INTERFACE"
 	
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMDA1","SAMD5", "SAME5", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMD11", "PIC32CM"]):
 		res = Database.activateComponents(["drv_usbfs_v1"])
-		speed = Database.getSymbolValue("drv_usbfs_v1", "USB_SPEED")
+		usbDeviceSpeed.setDefaultValue("Full Speed")
 		driverIndex = "DRV_USBFSV1_INDEX_0"
 		driverInterface = "DRV_USBFSV1_DEVICE_INTERFACE"
+		
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAM9X60", "SAMA7"]):
 		res = Database.activateComponents(["drv_usb_udphs"])
-		speed = Database.getSymbolValue("drv_usb_udphs", "USB_SPEED")
+		usbDeviceSpeed.setDefaultValue("High Speed")
 		driverIndex = "DRV_USB_UDPHS_INDEX_0"
 		driverInterface = "DRV_USB_UDPHS_DEVICE_INTERFACE"
+		
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMG55"]):
 		res = Database.activateComponents(["drv_usbdp"])
-		speed = Database.getSymbolValue("drv_usbdp", "USB_SPEED")
+		usbDeviceSpeed.setDefaultValue("Full Speed")
 		driverIndex = "DRV_USBDP_INDEX_0"
 		driverInterface = "DRV_USBDP_INTERFACE"
 		
-	# USB Device Speed 
-	usbDeviceSpeed = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_SPEED", None)
-	usbDeviceSpeed.setVisible(False)
-	usbDeviceSpeed.setDefaultValue(speed)
-	usbDeviceSpeed.setUseSingleDynamicValue(True)
+	
 	
 	# USB Driver Index - This symbol actually should get set from a Driver dependency connected callback. 
 	# This is temporary work around to initialize using hard coded values. 
