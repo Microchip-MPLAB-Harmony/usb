@@ -520,65 +520,6 @@ void DRV_USB_UDPHS_Tasks_ISR( SYS_MODULE_OBJ object )
 
 }/* end of DRV_USB_UDPHS_Tasks_ISR() */
 
-
-// *****************************************************************************
-/* Function:
-    bool DRV_USB_UDPHS_HOST_Resume(DRV_HANDLE handle)
-
-  Summary:
-    Dynamic implementation of DRV_USB_UDPHS_HOST_Resume
-    client interface function.
-
-  Description:
-    This is the dynamic implementation of DRV_USB_UDPHS_HOST_Resume client
-    interface function. Function resumes a suspended BUS.
-
-  Remarks:
-    See drv_usb_udphs.h for usage information.
-*/
-
-bool DRV_USB_UDPHS_HOST_Resume
-(
-    DRV_HANDLE handle
-)
-{
-    bool retVal = false;
-
-    /* Not yet Implemented */
-
-    return (retVal);
-
-}/* end of DRV_USB_UDPHS_HOST_Resume() */
-
-// *****************************************************************************
-/* Function:
-    bool DRV_USB_UDPHS_HOST_Suspend(DRV_HANDLE handle)
-
-  Summary:
-    Dynamic implementation of DRV_USB_UDPHS_HOST_Suspend
-    client interface function.
-
-  Description:
-    This is the dynamic implementation of DRV_USB_UDPHS_HOST_Suspend client
-    interface function. Function suspends USB BUS.
-
-  Remarks:
-    See drv_usb_udphs.h for usage information.
-*/
-
-bool DRV_USB_UDPHS_HOST_Suspend
-(
-    DRV_HANDLE handle
-)
-{
-    bool retVal = false;
-
-    /* Not yet Implemented */
-
-    return (retVal);
-
-}/* end of DRV_USB_UDPHS_HOST_Suspend() */
-
 // *****************************************************************************
 /* Function:
     void DRV_USB_UDPHS_ClientEventCallBackSet

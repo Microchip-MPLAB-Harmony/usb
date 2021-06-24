@@ -446,7 +446,7 @@ void DRV_USB_UDPHS_DEVICE_Detach(DRV_HANDLE handle)
     {
         hDriver = (DRV_USB_UDPHS_OBJ *) handle;
         usbID = hDriver->usbID;
-
+		
         if(false == hDriver->isInInterruptContext)
         {
             if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
@@ -466,10 +466,7 @@ void DRV_USB_UDPHS_DEVICE_Detach(DRV_HANDLE handle)
             /* Update the driver flag indicating detach */
             hDriver->isAttached = false;
             
-            DRV_USB_UDPHS_DEVICE_EndpointDisable((DRV_HANDLE)hDriver, DRV_USB_DEVICE_ENDPOINT_ALL);
-            
-
-		    /* Disable all endpoints */
+            /* Disable all endpoints */
 			for (count = 0; count < UDPHS_EPT_NUMBER; count++)
 		    {
 				usbID->UDPHS_EPT[count].UDPHS_EPTCFG &= ~UDPHS_EPTCFG_Msk;
