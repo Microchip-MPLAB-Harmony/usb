@@ -774,7 +774,7 @@ def blUSBDeviceFeatureEnableMicrosoftOsDescriptor(usbSymbolSource, event):
 def checkIfDiskImagefileNeeded (usbSymbolSource, event):
 	global usbDeviceMsdDiskImageFile
 	index = usbDeviceDemoList.index(event["value"])
-	if any(x in usbDeviceDemoList[index] for x in ["msd_basic_demo", "hid_msd_demo" , "cdc_msd_basic_demo" , "cdc_serial_emulator_msd_demo", "msd_multiple_luns_demo"]):
+	if any(x in usbDeviceDemoList[index] for x in ["msd_basic_demo", "hid_msd_demo" , "cdc_msd_basic_demo" , "cdc_serial_emulator_msd_demo"]):
 		usbSymbolSource.setValue(True, 2)
 		usbDeviceMsdDiskImageFile.setEnabled(True)
 	else:
