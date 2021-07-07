@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB MSD Host USB Pen Drive Tests</title>
+<title>Library Overview</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00253.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00137.html" target="topic">USB MSD Host USB Pen Drive Tests</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Host Libraries</a> &gt; <a href="00135.html" target="topic">USB CDC Host Library</a> &gt; <a href="00142.html" target="topic">Using the Library</a> &gt; <a href="00137.html" target="topic">Library Overview</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00127.html" target="topic">Previous</a> | <a href="00253.html" target="topic">Up</a> | <a href="00068.html" target="topic">Next</a></div>
+<a href="00123.html" target="topic">Previous</a> | <a href="00142.html" target="topic">Up</a> | <a href="00133.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB Pen Drive Tests Topic Title: USB MSD Host USB Pen Drive Tests)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Library Overview Topic Title: Library Overview)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB MSD Host USB Pen Drive Tests</div>
+Library Overview</div>
 </div>
 </div>
 
@@ -49,320 +49,30 @@ USB MSD Host USB Pen Drive Tests</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<strong>USB MSD Host USB Pen Drive Tests</strong>&nbsp;</p>
-<p class="Element10">
-The following table lists the commercially available USB pen drives, which have been tested to successfully enumerate with the MSD Host Driver in the MPLAB Harmony USB Host Stack. Note that if the USB pen drive you are using in not included in the table, this indicates that this USB pen drive has not been tested with the MSD Host Driver. However, the USB pen drive could still potentially work with MSD Host Driver. Some USB pen drives in this table did not have their manufacturer or model data available. The USB Pen drives were tested with the msd_basic USB Host demonstration in the latest version of the MPLAB Harmony USB Host Stack.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p><div class="Element63">
+The USB CDC Host Client Driver API is grouped functionally, as shown in the following table. </p><div class="Element63">
 <div class="TableDiv">
 <table cellspacing="0" class="Table1">
 <tr>
-<td class="Element75" valign="top" width="55%">
-<div class="Element76">
-Manufacturer&nbsp;</div></td><td class="Element75" valign="top" width="11%">
-<div class="Element76">
-Capacity&nbsp;</div></td><td class="Element75" valign="top" width="17%">
-<div class="Element76">
-VID&nbsp;</div></td><td class="Element75" valign="top" width="17%">
-<div class="Element76">
-PID&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Verico Tseres&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x8644&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x8003&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Hewlett Packard&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x03F0&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x5A07&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Freescale&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-1GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x2008&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x2018&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Imation Corp&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x0718&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x0704&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-ITE Tech Inc.&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x048D&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x0100&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Silicon Motion Inc - Taiwan&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-8GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x090C&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x1000&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Kingston Technology (Dell)&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x0951&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x16A7&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Verbatim Americas LLC&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-8GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x18A5&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x0245&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Apacer Technology&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-8GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x1005&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x0100&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Sony Corporation&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-8GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x054C&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x06B0&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Sony Coporation&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-8GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x054C&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x0862&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Silicon Motion Inc.&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-4GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x090C&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x1000&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-SanDisk Corporation&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x0781&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x0127&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Etron Technology Inc&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x1E4E&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x3257&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Verbatim Americas LLC&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-4GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x18A5&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x0100&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Appotech Limited&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-4GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x1908&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x1320&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Decorative Pen Drive&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-4GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0xABCD&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x1234&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Moser Baer India Ltd.&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x1EC9&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x0101&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Lexar Media Inc&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-4GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x05DC&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x1100&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Realtek Semiconductor Corp.&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x0BDA&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x0109&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Silicon Motion Inc. Taiwan&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-4/8/16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x090C&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x1000&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Kingston Technology Company&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x0951&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x1665&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Kingston Data Traveller&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-4GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x0951&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x1643&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Lexar Media Inc&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-32GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x05DC&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0xA838&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-SanDisk Corporation&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x0781&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x5583&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-SanDisk Corporation&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-8GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x0781&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x5571&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Toshiba Corporation&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-32GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x0930&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x6544&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Strontium&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-8GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x090C&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x1000&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Kingston Technology Company&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-16GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x0951&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x1666&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Phison Electronics Corp&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-32GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x13FE&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x6300&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Kingston Technology Company&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-32GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x0951&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x16A3&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-SSP&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-4GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x8644&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x800B&nbsp;</div></td></tr><tr>
-<td class="Element77" valign="top" width="55%">
-<div class="Element78">
-Toshiba Corporation&nbsp;</div></td><td class="Element77" valign="top" width="11%">
-<div class="Element78">
-2GB&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x0930&nbsp;</div></td><td class="Element77" valign="top" width="17%">
-<div class="Element78">
-0x6544&nbsp;</div></td></tr></table></div></div>
+<td class="Element65" valign="top" width="19%">
+<div class="Element66">
+Library Interface Section&nbsp;</div></td><td class="Element65" valign="top" width="81%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="19%">
+<div class="Element68">
+Client Access Functions&nbsp;</div></td><td class="Element67" valign="top" width="81%">
+<div class="Element68">
+These functions allow application clients to open, close the client and register event handlers. These functions are implemented in <span class="Element146">usb_host_cdc.c</span>.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="19%">
+<div class="Element68">
+Data Transfer Functions&nbsp;</div></td><td class="Element67" valign="top" width="81%">
+<div class="Element68">
+These functions allow the application client to transfer data to the attached device. These functions are implemented in <span class="Element146">usb_host_cdc.c</span>.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="19%">
+<div class="Element68">
+CDC Class-specific Command Functions&nbsp;</div></td><td class="Element67" valign="top" width="81%">
+<div class="Element68">
+These functions allow the application to send class specific control transfer requests to the application. These functions are implemented in <span class="Element146">usb_host_cdc_acm.c</span>.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -370,7 +80,7 @@ Toshiba Corporation&nbsp;</div></td><td class="Element77" valign="top" width="11
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00253.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00137.html" target="topic">USB MSD Host USB Pen Drive Tests</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Host Libraries</a> &gt; <a href="00135.html" target="topic">USB CDC Host Library</a> &gt; <a href="00142.html" target="topic">Using the Library</a> &gt; <a href="00137.html" target="topic">Library Overview</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -378,13 +88,13 @@ Toshiba Corporation&nbsp;</div></td><td class="Element77" valign="top" width="11
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00127.html" target="topic">Previous</a> | <a href="00253.html" target="topic">Up</a> | <a href="00068.html" target="topic">Next</a></div>
+<a href="00123.html" target="topic">Previous</a> | <a href="00142.html" target="topic">Up</a> | <a href="00133.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB Pen Drive Tests Topic Title: USB MSD Host USB Pen Drive Tests)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Library Overview Topic Title: Library Overview)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

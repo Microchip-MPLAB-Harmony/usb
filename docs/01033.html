@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB Common Driver Interface</title>
+<title>USB_HOST_AUDIO_V1_FeatureUnitIDGet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="01033.html" target="topic">USB Common Driver Interface</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Host Libraries</a> &gt; <a href="00100.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00115.html" target="topic">Library Interface</a> &gt; a) Audio Device Access Functions &gt; <a href="01033.html" target="topic">USB_HOST_AUDIO_V1_FeatureUnitIDGet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="01426.html" target="topic">Previous</a> | <a href="00389.html" target="topic">Up</a> | <a href="00143.html" target="topic">Next</a></div>
+<a href="01031.html" target="topic">Previous</a> | <a href="00115.html" target="topic">Up</a> | <a href="01034.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_drv_common Library Topic Title: USB Common Driver Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_FeatureUnitIDGet@USB_HOST_AUDIO_V1_OBJ@USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ Topic Title: USB_HOST_AUDIO_V1_FeatureUnitIDGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB Common Driver Interface</div>
+USB_HOST_AUDIO_V1_FeatureUnitIDGet Function</div>
 </div>
 </div>
 
@@ -49,34 +49,59 @@ USB Common Driver Interface</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This section describes the interface that a USB peripheral driver should implement in order to function with the Harmony USB Stack</p></div>
+This function returns the ID of the D of the Feature Unit. This function is only applicable to Feature Unit. Prior to calling this function Entity Object should be obtained by calling the <a href="01014.html" target="topic">USB_HOST_AUDIO_V1_ControlEntityGetFirst</a>, <a href="01015.html" target="topic">USB_HOST_AUDIO_V1_ControlEntityGetNext</a>, or <a href="01018.html" target="topic">USB_HOST_AUDIO_V1_EntityObjectGet</a> function.</p></div>
 </div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100">uint8_t <strong><span style="color: #000000">USB_HOST_AUDIO_V1_FeatureUnitIDGet</span></strong>(
+    <a href="01037.html" target="topic">USB_HOST_AUDIO_V1_OBJ</a> <strong><span style="color: #000000">audioObj</span></strong>, 
+    <a href="01013.html" target="topic">USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ</a> <strong><span style="color: #000000">entityObject</span></strong>
+);</pre></div></div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
+<div class="Element312">
 <div class="TableDiv">
-<table cellspacing="0" class="Table0">
+<table cellspacing="0" class="Table3">
 <tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
 Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00143.html" target="topic">Common Interface</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Provides information on the USB Driver interface that is common to all PIC32 devices.&nbsp;</div></td></tr></table></div></div>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+audioObj&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+USB Host Audio v1.0 device object.&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+entityObject&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Audio control entity Object&nbsp;</div></td></tr></table></div></div>
 </div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The ID of the feature unit.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="01033.html" target="topic">USB Common Driver Interface</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Host Libraries</a> &gt; <a href="00100.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00115.html" target="topic">Library Interface</a> &gt; a) Audio Device Access Functions &gt; <a href="01033.html" target="topic">USB_HOST_AUDIO_V1_FeatureUnitIDGet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -84,13 +109,13 @@ Provides information on the USB Driver interface that is common to all PIC32 dev
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="01426.html" target="topic">Previous</a> | <a href="00389.html" target="topic">Up</a> | <a href="00143.html" target="topic">Next</a></div>
+<a href="01031.html" target="topic">Previous</a> | <a href="00115.html" target="topic">Up</a> | <a href="01034.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_drv_common Library Topic Title: USB Common Driver Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_FeatureUnitIDGet@USB_HOST_AUDIO_V1_OBJ@USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ Topic Title: USB_HOST_AUDIO_V1_FeatureUnitIDGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

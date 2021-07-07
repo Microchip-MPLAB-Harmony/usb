@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>How the Library Works</title>
+<title>Library Initialization</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00208.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00193.html" target="topic">Using the Library</a> &gt; <a href="00188.html" target="topic">How the Library Works</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00167.html" target="topic">USB Device Layer Library</a> &gt; <a href="00197.html" target="topic">Using the Library</a> &gt; <a href="00186.html" target="topic">How the Library Works</a> &gt; <a href="00188.html" target="topic">Library Initialization</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00190.html" target="topic">Previous</a> | <a href="00193.html" target="topic">Up</a> | <a href="00182.html" target="topic">Next</a></div>
+<a href="00186.html" target="topic">Previous</a> | <a href="00186.html" target="topic">Up</a> | <a href="00193.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDDEV V1_0 How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Initializing the library Topic Title: Library Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-How the Library Works</div>
+Library Initialization</div>
 </div>
 </div>
 
@@ -48,7 +48,14 @@ How the Library Works</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-</div>
+<p class="Element10">
+The Device Layer initialization process requires the following components:</p>
+<ul class="Element630">
+<li class="Element600">USB Standard Descriptors that define the device functionality. The definitions of these descriptors are defined by the USB 2.0 and Device Class specification.</li>
+<li class="Element600">Device Master Descriptor Table</li>
+<li class="Element600">Function Driver Registration Table</li>
+</ul><p class="Element10">
+The USB Standard Descriptors that define the device functionality are discussed in detail in the USB 2.0 and Device Class Specifications. The reader is encouraged to refer to these specifications for a detailed understanding of this topic. The Device Layer does not impose any additional requirements on Device descriptors.</p></div>
 </div>
 <a name="546F70696373"></a><div class="Element14">
 Topics</div>
@@ -65,19 +72,24 @@ Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
 Description&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00182.html" target="topic">Initializing the Library</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00193.html" target="topic">Master Descriptor Table</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Describes how the USB Audio 1.0 Device driver is initialized.&nbsp;</div></td></tr><tr>
+Describes the USB Device Layer Master Descriptor Table.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00186.html" target="topic">Event Handling</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00185.html" target="topic">Function Driver Registration Table</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Describes Audio 1.0 Function Driver event handler registration and event handling.&nbsp;</div></td></tr><tr>
+This section explains how function drivers can be registered with the USB Device Layer using the Function Registration Table.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="35%">
 <div class="Element203">
-<a href="00192.html" target="topic">Transferring Data</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00187.html" target="topic">Initializing the Device Layer</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-Describes how to send/receive data to/from USB Host using this USB Audio 1.0 Device Driver.&nbsp;</div></td></tr></table></div></div>
+This section describes the USB Device Layer initialization.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00179.html" target="topic">Device Layer Task Routines</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes the Device Layer task routines.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -85,7 +97,7 @@ Describes how to send/receive data to/from USB Host using this USB Audio 1.0 Dev
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00208.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00193.html" target="topic">Using the Library</a> &gt; <a href="00188.html" target="topic">How the Library Works</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00167.html" target="topic">USB Device Layer Library</a> &gt; <a href="00197.html" target="topic">Using the Library</a> &gt; <a href="00186.html" target="topic">How the Library Works</a> &gt; <a href="00188.html" target="topic">Library Initialization</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -93,13 +105,13 @@ Describes how to send/receive data to/from USB Host using this USB Audio 1.0 Dev
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00190.html" target="topic">Previous</a> | <a href="00193.html" target="topic">Up</a> | <a href="00182.html" target="topic">Next</a></div>
+<a href="00186.html" target="topic">Previous</a> | <a href="00186.html" target="topic">Up</a> | <a href="00193.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDDEV V1_0 How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Initializing the library Topic Title: Library Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

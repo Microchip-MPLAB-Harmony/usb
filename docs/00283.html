@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Application Client Interaction</title>
+<title>Configuring the Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00308.html" target="topic">Using the Library</a> &gt; <a href="00297.html" target="topic">How the Library Works</a> &gt; <a href="00283.html" target="topic">Application Client Interaction</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00284.html" target="topic">USB MSD Device Library</a> &gt; <a href="00283.html" target="topic">Configuring the Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00290.html" target="topic">Previous</a> | <a href="00297.html" target="topic">Up</a> | <a href="00294.html" target="topic">Next</a></div>
+<a href="00301.html" target="topic">Previous</a> | <a href="00284.html" target="topic">Up</a> | <a href="00821.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Application Client Interaction Topic Title: Application Client Interaction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSD Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Application Client Interaction</div>
+Configuring the Library</div>
 </div>
 </div>
 
@@ -49,42 +49,44 @@ Application Client Interaction</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Once initialized, Device Layer becomes ready for operation. The application must open the Device Layer by calling the <a href="00952.html" target="topic">USB_DEVICE_Open</a>() function. Opening the Device Layer makes the application a Device Layer client. The Device Layer returns a valid Device Layer Handle when opened successfully. It will return an invalid Device Layer Handle when the open function fails. The application in this case should try opening the Device Layer again. The application needs a valid Device Layer handle (a handle that is not invalid) to access the Device Layer functionality.&nbsp;</p>
-<p class="Element10">
-The client must now register a Device Layer Event Handler with the Device Layer. This is a mandatory step. It enables USB Device Layer Events and is required for proper functioning of the USB Device Stack. The application must use the <a href="00805.html" target="topic">USB_DEVICE_EventHandlerSet</a>() function to register the event handler. The Application Event Handler should be of the type <a href="00802.html" target="topic">USB_DEVICE_EVENT_HANDLER</a>. The Device Layer, when an event needs to be generated, calls this event handler function with the event type and event relevant information. The application must register an event handler for proper functioning of the USB Device. Not registering an event handler may cause the USB Device to malfunction and become non-compliant.&nbsp;</p>
-<p class="Element10">
-The client can now attach the USB Device on the bus. The application must attach the in response to the USB_DEVICE_EVENT_POWER_DETECTED event. Attaching the device on the bus makes the device visible to the host (if it is already attached to the bus) and will cause the host to interact with the device.&nbsp;</p>
-<p class="Element10">
-The following code shows an example of the application opening the Device Layer and registering the event handler. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/******************************************************
- * Here the application tries to open the Device Layer
- * and then register an event handler and then attach
- * the device on the bus.
- ******************************************************/</span></i>
-<strong><span style="color: #000080">void</span></strong> APP_Tasks(<strong><span style="color: #000080">void</span></strong>)
-{
-    <strong><span style="color: #000080">switch</span></strong>(appData.state)
-    {
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_INIT:
-
-            <i><span style="color: #008000">/* Open the device layer */</span></i>
-            appData.deviceHandle = USB_DEVICE_Open( USB_DEVICE_INDEX_0,DRV_IO_INTENT_READWRITE );
-
-            <strong><span style="color: #000080">if</span></strong>(appData.deviceHandle != USB_DEVICE_HANDLE_INVALID)
-            {
-                <i><span style="color: #008000">/* Register a callback with device layer to get event notification */</span></i>
-                USB_DEVICE_EventHandlerSet(appData.deviceHandle, APP_USBDeviceEventCallBack, 0);
-
-                appData.state = APP_STATE_WAIT_FOR_CONFIGURATION;
-            }
-            <strong><span style="color: #000080">else</span></strong>
-            {
-                <i><span style="color: #008000">/* The Device Layer is not ready to be opened. We should try
-                 * again later. */</span></i>
-            }
-
-            <strong><span style="color: #000080">break</span></strong>;
-    }
-}</pre></div></div>
+The following configuration parameters must be defined while using the MSD Function Driver. The configuration macros that implement these parameters must be located in the <span class="Element146">system_config.h</span> file in the application project and a compiler include path (to point to the folder that contains this file) should be specified.</p></div>
+</div>
+<a name="4D6163726F73"></a><div class="Element14">
+Macros</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00821.html" target="topic">USB_DEVICE_MSD_INSTANCES_NUMBER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Number of MSD function Driver instances required in the USB Device.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00822.html" target="topic">USB_DEVICE_MSD_LUNS_NUMBER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Defines the number of LUNs per MSD function driver instance.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00012.html" target="topic">_USB_DEVICE_MSD_CONFIG_TEMPLATE_H_</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is macro _USB_DEVICE_MSD_CONFIG_TEMPLATE_H_.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -92,7 +94,7 @@ The following code shows an example of the application opening the Device Layer 
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00308.html" target="topic">Using the Library</a> &gt; <a href="00297.html" target="topic">How the Library Works</a> &gt; <a href="00283.html" target="topic">Application Client Interaction</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00284.html" target="topic">USB MSD Device Library</a> &gt; <a href="00283.html" target="topic">Configuring the Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -100,13 +102,13 @@ The following code shows an example of the application opening the Device Layer 
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00290.html" target="topic">Previous</a> | <a href="00297.html" target="topic">Up</a> | <a href="00294.html" target="topic">Next</a></div>
+<a href="00301.html" target="topic">Previous</a> | <a href="00284.html" target="topic">Up</a> | <a href="00821.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Application Client Interaction Topic Title: Application Client Interaction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSD Configuring the Library Topic Title: Configuring the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Running the Demonstration</title>
+<title>Introduction</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00253.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00113.html" target="topic">Host Demonstrations</a> &gt; <a href="00131.html" target="topic">msd_basic</a> &gt; <a href="00134.html" target="topic">Running the Demonstration</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Host Libraries</a> &gt; <a href="00135.html" target="topic">USB CDC Host Library</a> &gt; <a href="00134.html" target="topic">Introduction</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00133.html" target="topic">Previous</a> | <a href="00131.html" target="topic">Up</a> | <a href="00118.html" target="topic">Next</a></div>
+<a href="00135.html" target="topic">Previous</a> | <a href="00135.html" target="topic">Up</a> | <a href="00142.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB msd_basic_host_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Running the Demonstration</div>
+Introduction</div>
 </div>
 </div>
 
@@ -49,24 +49,24 @@ Running the Demonstration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This application demonstrates the use of the MSD Host Class Driver to write a file to USB Flash drive. The application uses the USB Host<span style="color: #FFFFFF">_</span>layer, MSD class driver and the MPLAB Harmony File System Framework to enumerate a USB Flash drive and to write a file to it.</p>
-<ol class="Element630">
-<li value="1" class="Element600">Open<span style="color: #FFFFFF">_</span>the project corresponding to the selected hardware. Refer to the <a href="00132.html" target="topic">Building the Application</a> section for details.</li>
-<li value="2" class="Element600">Build the code and program the device.</li>
-<li value="3" class="Element600">With the code running, attach a USB Flash drive to the Host connector on the desired starter kit.</li>
-<li value="4" class="Element600">The demonstration application will then create a file named <span class="Element146">file.txt</span>. It will then write the text &quot;Hello World&quot; to this file, and then close the file.</li>
-<li value="5" class="Element600">The LED on the selected hardware will indicate the status of the operation. Refer to the <a href="00133.html" target="topic">Configuring the Hardware</a> instruction for details.</li>
-<li value="6" class="Element600">The USB Flash drive can then be attached to a USB Host personal computer to verify the demonstration application operation.</li>
-<li value="7" class="Element600">Steps 3 through 6 can be repeated.</li>
-<li value="8" class="Element600">If the USB Flash drive already contains a file with the name <span class="Element146">file.txt</span>, the demonstration application will append the text &quot;Hello World&quot; to the end of the file contents.</li>
-</ol></div>
+The CDC Host Client Driver in the MPLAB Harmony USB Host Stack allows USB Host applications to support and interact with Communications Device Class (CDC) USB devices. The CDC Host Client Driver has the following features:</p>
+<ul class="Element630">
+<li class="Element600">Supports CDC ACM devices</li>
+<li class="Element600">Supports CDC device matching at both the device descriptor and interface descriptor level</li>
+<li class="Element600">Supports composite CDC devices (multiple CDC interfaces or CDC with other device classes)</li>
+<li class="Element600">Designed to support multi-client operation</li>
+<li class="Element600">RTOS ready</li>
+<li class="Element600">An event driver non-clocking application interaction model</li>
+<li class="Element600">Allows the application to send CDC ACM commands to the device</li>
+<li class="Element600">Supports queuing of read and write data transfers</li>
+</ul></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00253.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00113.html" target="topic">Host Demonstrations</a> &gt; <a href="00131.html" target="topic">msd_basic</a> &gt; <a href="00134.html" target="topic">Running the Demonstration</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Host Libraries</a> &gt; <a href="00135.html" target="topic">USB CDC Host Library</a> &gt; <a href="00134.html" target="topic">Introduction</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -74,13 +74,13 @@ This application demonstrates the use of the MSD Host Class Driver to write a fi
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00133.html" target="topic">Previous</a> | <a href="00131.html" target="topic">Up</a> | <a href="00118.html" target="topic">Next</a></div>
+<a href="00135.html" target="topic">Previous</a> | <a href="00135.html" target="topic">Up</a> | <a href="00142.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB msd_basic_host_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Configuring the Hardware</title>
+<title>How the Library Works</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00253.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00113.html" target="topic">Host Demonstrations</a> &gt; <a href="00131.html" target="topic">msd_basic</a> &gt; <a href="00133.html" target="topic">Configuring the Hardware</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Host Libraries</a> &gt; <a href="00135.html" target="topic">USB CDC Host Library</a> &gt; <a href="00142.html" target="topic">Using the Library</a> &gt; <a href="00133.html" target="topic">How the Library Works</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00132.html" target="topic">Previous</a> | <a href="00131.html" target="topic">Up</a> | <a href="00134.html" target="topic">Next</a></div>
+<a href="00137.html" target="topic">Previous</a> | <a href="00142.html" target="topic">Up</a> | <a href="00141.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB msd_basic_host_configure Topic Title: Configuring the Hardware)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Configuring the Hardware</div>
+How the Library Works</div>
 </div>
 </div>
 
@@ -49,135 +49,69 @@ Configuring the Hardware</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/DM320113');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAME70 Xplained Ultra</a></p>
+The CDC Host Client Driver provides the user application with an easy-to-use interface to the attached CDC device. The USB Host Layer initializes the CDC Host Client Driver when a device is attached. This process does not require application intervention.&nbsp;</p>
+<p class="Element10">
+The following sections describe the steps and methods required for the user application to interact with the attached devices:</p>
 <ul class="Element630">
-<li class="Element600">Jumper J203 must be shorted between PB08 and LED2(positions 1 and 2).</li>
-<li class="Element600">Use TARGET USB J200 connector on the board to connect the USB Device to the the USB Host. A USB micro AB to type A USB Host receptacle converter will be needed to connect the device.</li>
-<li class="Element600">LED3 indicates the file write is complete.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/atsamv71-xult');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAMV71 Xplained Ultra</a></p>
-<ul class="Element630">
-<li class="Element600">Jumper titled &quot;USB VBUS&quot; must be shorted between PC09 and LED1(positions 1 and 2)</li>
-<li class="Element600">Use TARGET USB connector on the board to connect the USB Device to the the USB Host. A USB micro AB to type A USB Host receptacle converter will be needed to connect the device.</li>
-<li class="Element600">LED0 indicates the file write is complete.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/ATSAMD21-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAMD21 Xplained PRO</a></p>
-<ul class="Element630">
-<li class="Element600">Jumper titled &quot;PA03 SELECT&quot; must be shorted between PA03 and USB_ID(positions 2 and 3)</li>
-<li class="Element600">Use &quot;TARGET USB&quot; connector on the board to connect the USB Device to the the USB Host. A USB micro AB to type A USB Host receptacle converter will be needed to connect the device.</li>
-<li class="Element600">LED0 indicates the file write is complete.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATSAME54-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAME54 Xplained PRO</a></p>
-<ul class="Element630">
-<li class="Element600">Use &quot;TARGET USB&quot; connector on the board to connect the USB Device to the the USB Host. A USB micro AB to type A USB Host receptacle converter will be needed to connect the device.</li>
-<li class="Element600">LED0 indicates the file write is complete.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/Developmenttools/ProductDetails/DM320007');"><img src="indicator_external_link.gif" border="0" alt="" title="">PIC32MZ Embedded Connectivity with FPU (EF) Starter Kit</a></p>
-<ul class="Element630">
-<li class="Element600">Connect the device to the Type A connector J5, which is located on the top side of the starter kit.</li>
-<li class="Element600">LED1 indicates the file write is complete.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/Developmenttools/ProductDetails/DM320209');"><img src="indicator_external_link.gif" border="0" alt="" title="">Curiosity PIC32MZ EF 2.0 Development Board</a></p>
-<ul class="Element630">
-<li class="Element600">Use &quot;TARGET USB&quot; connector (J201) on the board to connect the USB Device to the the USB Host. A USB micro AB to type A USB Host receptacle converter will be needed to connect the device.</li>
-<li class="Element600">LED1 indicates the file write is complete.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/DM320010-C');"><img src="indicator_external_link.gif" border="0" alt="" title="">PIC32MZ Embedded Graphics with Stacked DRAM (DA) Starter Kit</a></p>
-<ul class="Element630">
-<li class="Element600">Connect the device to the Type A connector J7, which is located on the top side of the starter kit.</li>
-<li class="Element600">LED1 indicates the file write is complete.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('http://ww1.microchip.com/downloads/en/DeviceDoc/SAMA5D2C-XULT-Users-Guide-DS50002691C.pdf');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAMA5D2 Xplained Ultra evaluation kit</a></p>
-<ul class="Element630">
-<li class="Element600">Setup the SD card
-<ul class="Element631">
-<li class="Element601">Download harmony MPU bootstrap loader from this <a href="#" onclick="openExternalLink('https://github.com/Microchip-MPLAB-Harmony/at91bootstrap/blob/master/boot.bin');"><img src="indicator_external_link.gif" border="0" alt="" title="">location</a></li>
-<li class="Element601">Copy the downloaded boot loader binary( boot.bin) and generated application binary (harmony.bin)into the SD card</li>
-<li class="Element601">Insert the SD card into the SDMMC1 slot on the board</li>
-</ul></li>
-<li class="Element600">Connect the Debug USB port on the board to the computer using a micro USB cable</li>
-<li class="Element600">Use &quot;A5-USB-B&quot; connector(J13 - Type A connector) on the board to connect the USB Device to the the USB Host.</li>
-<li class="Element600">RGB LED turning to Green indicates the file write is complete.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/dm320106');"><img src="indicator_external_link.gif" border="0" alt="" title="">PIC32MK General Purpose (GP) Development Board</a></p>
-<ul class="Element630">
-<li class="Element600">Connect the device to the Type A connector J5, which is located on the top side of the starter kit.</li>
-<li class="Element600">LED1 indicates the file write is complete.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/Developmenttools/ProductDetails/dm320103');"><img src="indicator_external_link.gif" border="0" alt="" title="">PIC32MX Curiosity Development Board</a></p>
-<ul class="Element630">
-<li class="Element600">Connect the device to theUSB micro-B port J12, which is located on the top side of the starter kit.</li>
-<li class="Element600">LED1 indicates the file write is complete.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATSAML21-XPRO-B');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM L21 Xplained Pro Evaluation Kit</a></p>
-<ul class="Element630">
-<li class="Element600">Use &quot;TARGET USB&quot; connector on the board to connect the USB Device to the USB Host. A USB micro AB to type A USB Host receptacle converter will be needed to connect the device.</li>
-<li class="Element600">LED0 indicates the file write is complete.</li>
-</ul><p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/DT100126');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM9X60 Evaluation Kit</a></p>
-<ul class="Element630">
-<li class="Element600">Setup the SD card
-<ul class="Element631">
-<li class="Element601">Download harmony MPU bootstrap loader from this <a href="#" onclick="openExternalLink('https://github.com/Microchip-MPLAB-Harmony/at91bootstrap/blob/sam9x60ek/boot.bin');"><img src="indicator_external_link.gif" border="0" alt="" title="">location</a></li>
-<li class="Element601">Copy the downloaded boot loader binary (boot.bin) and generated application binary (harmony.bin)into the SD card</li>
-<li class="Element601">Insert the SD card into the SDMMC connector J4 on the board</li>
-</ul></li>
-<li class="Element600">Connect the USB port J22 on board to the computer using a micro USB cable (to enable debug com port)</li>
-<li class="Element600">Jumpers J20, J21 and J13 must be open.</li>
-<li class="Element600">Jumper J2 and J3 must be shorted.</li>
-<li class="Element600">Use USB Type A connector (J8) on the board to connect the USB Device to the USB Host.</li>
-<li class="Element600">LED D1 indicates indicates the file write is complete.</li>
-<li class="Element600">Note: Reset push button on SAM9X60 EK is labeled as SW3</li>
-</ul><p class="Element10">
-<img src="sam9x60_evk.png" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>Curiosity PIC32MZ W1 Development Board</strong></p>
-<ul class="Element630">
-<li class="Element600">Jumper J205 must be shorted</li>
-<li class="Element600">Connect the device to the Type A connector J204.</li>
-<li class="Element600">The LED D204 indicates the file write is complete.</li>
-</ul><p class="Element10">
-<img src="pic32mzw1_host_msd.jpg" border="0" alt="" title="">&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/atsamg55-xpro');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAM G55 Xplained Pro evaluation kit</a></p>
-<ul class="Element630">
-<li class="Element600">Chip Erase Jumper must be open.</li>
-<li class="Element600">Use TARGET USB connector on the board to connect the USB Device to the USB Host. A USB micro AB to type A USB Host receptacle converter will be needed to connect the device.</li>
-<li class="Element600">LED0 indicates the file write is complete.</li>
+<li class="Element600">TPL Table Configuration for CDC Devices</li>
+<li class="Element600">Detecting Device Attach</li>
+<li class="Element600">Opening the CDC Host Client Driver</li>
+<li class="Element600">Sending Class-specific Control Transfers</li>
+<li class="Element600">Reading and Writing Data</li>
+<li class="Element600">Event Handling</li>
 </ul></div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00141.html" target="topic">TPL Table Configuration for CDC Devices</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Provides information on configuring the TPL table for CDC devices.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00130.html" target="topic">Detecting Device Attach</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes how to register an Attach Event Handler.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00138.html" target="topic">Opening the CDC Host Client Driver</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes how an application can open the CDC Host Client Driver.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00140.html" target="topic">Sending Class-specific Control Transfers</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes how the application client can send CDC Class-specific commands to the connected device.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00139.html" target="topic">Reading and Writing Data</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes how to transfer data to the attached CDC device.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00131.html" target="topic">Event Handling</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Describes how to set event handlers.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00253.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00113.html" target="topic">Host Demonstrations</a> &gt; <a href="00131.html" target="topic">msd_basic</a> &gt; <a href="00133.html" target="topic">Configuring the Hardware</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Host Libraries</a> &gt; <a href="00135.html" target="topic">USB CDC Host Library</a> &gt; <a href="00142.html" target="topic">Using the Library</a> &gt; <a href="00133.html" target="topic">How the Library Works</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -185,13 +119,13 @@ Configuring the Hardware</div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00132.html" target="topic">Previous</a> | <a href="00131.html" target="topic">Up</a> | <a href="00134.html" target="topic">Next</a></div>
+<a href="00137.html" target="topic">Previous</a> | <a href="00142.html" target="topic">Up</a> | <a href="00141.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB msd_basic_host_configure Topic Title: Configuring the Hardware)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST How the Library Works Topic Title: How the Library Works)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

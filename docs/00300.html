@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Introduction</title>
+<title>Building the Library</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00300.html" target="topic">Introduction</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00284.html" target="topic">USB MSD Device Library</a> &gt; <a href="00300.html" target="topic">Building the Library</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00278.html" target="topic">Previous</a> | <a href="00278.html" target="topic">Up</a> | <a href="00308.html" target="topic">Next</a></div>
+<a href="00012.html" target="topic">Previous</a> | <a href="00284.html" target="topic">Up</a> | <a href="00307.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSDDEV Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Introduction</div>
+Building the Library</div>
 </div>
 </div>
 
@@ -49,25 +49,77 @@ Introduction</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<span style="color: #000000">The MPLAB Harmony 3 USB Device Layer Library (also referred to as the Device Layer) is part of the MPLAB Harmony 3 USB Device Stack. Within the USB Device Stack, the Device Layer implementation is independent of the USB Controller Hardware. It responds to enumeration requests from the Hosts. It receives control transfers from the Host and responds to these control transfers in case of standard device requests. It dispatches all other control transfers to function drivers and the application. It provides the application and function drivers with API routines that allow them to respond and complete a control transfer, with a facility to defer the responses to a control transfer. The Device Layer also provides the application with events and functions that allow the application to track the state of the device.</span>&nbsp;</p>
+The following three tables list and describe the header (<span class="Element146">.h</span>) and source (<span class="Element146">.c</span>) files that implement this library. The parent folder for these files is <span class="Element146">&lt;install-dir&gt;/framework/usb</span><span style="color: #0000FF">.</span></p><div class="Element15">
+Interface File(s)</div>
 <p class="Element10">
-<span style="color: #000000">The Device Layer plays the role of a system in the MPLAB Harmony USB Device Stack. It initializes USB device function drivers which contained in the active configuration. The state machines of these function drivers is maintained by the Device Layer i.e. the Device Layer invokes the function driver tasks routines from within its own task routine. The Device Layer thus treats the function drivers as sub modules.</span>&nbsp;</p>
+This table lists and describes the header files that must be included (i.e., using <span class="Element146">#include</span>) by any code that uses this library. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="24%">
+<div class="Element66">
+Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="76%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="24%">
+<div class="Element68">
+<span class="Element146"><a href="00813.html" target="topic">usb_device_msd.h</a></span>&nbsp;</div></td><td class="Element67" valign="top" width="76%">
+<div class="Element68">
+This header file should be included in any <span class="Element146">.c</span> file that accesses the USB Device MSD Function Driver API.&nbsp;</div></td></tr></table></div></div>
+<div class="Element15">
+Required File(s)</div>
+<div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table2">
+<tr>
+<td class="Element67" valign="top" width="10%" style="border:none;">
+<div class="Element68">
+<img src="MHC_Logo_Medium.png" border="0" alt="" title="">&nbsp;</div></td><td class="Element67" valign="top" width="90%" style="border:none;">
+<div class="Element68">
+<span style="color: #008000"><strong><i>All of the required files listed in the following table are automatically added into the MPLAB X IDE project by the MHC when the library is selected for use.</i></strong></span>&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
-The device<span style="color: #FFFFFF">_</span>layer features the following:</p>
+This table lists and describes the source and header files that must <i>always</i> be included in the MPLAB X IDE project to build this library. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="26%">
+<div class="Element66">
+Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="74%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="26%">
+<div class="Element68">
+<span class="Element146">/src/dynamic/usb_device_msd.c</span>&nbsp;</div></td><td class="Element67" valign="top" width="74%">
+<div class="Element68">
+This file implements the MSD Function driver interface and should be included in the project if the MSD Device function is desired.&nbsp;</div></td></tr></table></div></div>
+<div class="Element15">
+Optional File(s)</div>
+<p class="Element10">
+This table lists and describes the source and header files that may optionally be included if required for the desired implementation. </p><div class="Element63">
+<div class="TableDiv">
+<table cellspacing="0" class="Table1">
+<tr>
+<td class="Element65" valign="top" width="25%">
+<div class="Element66">
+Source File Name&nbsp;</div></td><td class="Element65" valign="top" width="75%">
+<div class="Element66">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="25%">
+<div class="Element68">
+N/A&nbsp;</div></td><td class="Element67" valign="top" width="75%">
+<div class="Element68">
+There are no optional files for this library.&nbsp;</div></td></tr></table></div></div>
+<div class="Element15">
+Module Dependencies</div>
+<p class="Element10">
+The USB CDC Device Library depends on the following modules:</p>
 <ul class="Element630">
-<li class="Element600">Supports both USB Full-Speed and Hi-Speed operation.</li>
-<li class="Element600">Based on a modular and event-driven architecture.</li>
-<li class="Element600">Hardware independent architecture. API does not change across microcontrollers.</li>
-<li class="Element600">Supports the SAME7x and SAMD2x families of microcontrollers.</li>
-<li class="Element600">Supports composite USB devices.</li>
-<li class="Element600">Supports CDC, HID, MSD, Printer, Audio v1.0. Audio v2.0 and Generic/Vendor Devices.</li>
-<li class="Element600">All functions are non-blocking.</li>
-<li class="Element600">Operates readily with a RTOS.</li>
-<li class="Element600">Designed to integrate readily with other MPLAB Harmony middleware.</li>
-<li class="Element600">Completely interrupt driven.</li>
-<li class="Element600">Requires minimal application intervention while maintaining the USB Device state.</li>
-<li class="Element600">Allows implementation of a multi-configuration USB device.</li>
-<li class="Element600">In case of multiple UBS controllers, allows itself to be instantiated more than once.</li>
+<li class="Element600"><a href="00167.html" target="topic">USB Device Layer Library</a></li>
+</ul><p class="Element10">
+Based on application needs, the library may depend on the related storage media libraries, such as:</p>
+<ul class="Element630">
+<li class="Element600"><span class="Element145">Secure Digital (SD) Card Driver Library</span></li>
+<li class="Element600"><span class="Element145">NVM Driver Library</span></li>
 </ul></div>
 </div>
 </div>
@@ -75,7 +127,7 @@ The device<span style="color: #FFFFFF">_</span>layer features the following:</p>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00300.html" target="topic">Introduction</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00284.html" target="topic">USB MSD Device Library</a> &gt; <a href="00300.html" target="topic">Building the Library</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -83,13 +135,13 @@ The device<span style="color: #FFFFFF">_</span>layer features the following:</p>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00278.html" target="topic">Previous</a> | <a href="00278.html" target="topic">Up</a> | <a href="00308.html" target="topic">Next</a></div>
+<a href="00012.html" target="topic">Previous</a> | <a href="00284.html" target="topic">Up</a> | <a href="00307.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Introduction Topic Title: Introduction)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSDDEV Building the Library Topic Title: Building the Library)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

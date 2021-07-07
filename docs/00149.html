@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Driver Host USB Root Hub Port Interface</title>
+<title>Using Older Drivers With Windows 8</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="01033.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00143.html" target="topic">Common Interface</a> &gt; <a href="00147.html" target="topic">Driver Host Mode Client Functions</a> &gt; <a href="00149.html" target="topic">Driver Host USB Root Hub Port Interface</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00144.html" target="topic">Driver Signing and Windows 8 (for v1.08)</a> &gt; <a href="00149.html" target="topic">Using Older Drivers With Windows 8</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00148.html" target="topic">Previous</a> | <a href="00147.html" target="topic">Up</a> | <a href="00145.html" target="topic">Next</a></div>
+<a href="00145.html" target="topic">Previous</a> | <a href="00144.html" target="topic">Up</a> | <a href="00147.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver Host USB Root Hub Port Interface Topic Title: Driver Host USB Root Hub Port Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEV DRV WIN8 Using Older Drivers With Windows 8 Topic Title: Using Older Drivers With Windows 8)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Driver Host USB Root Hub Port Interface</div>
+Using Older Drivers With Windows 8</div>
 </div>
 </div>
 
@@ -49,58 +49,41 @@ Driver Host USB Root Hub Port Interface</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The <span class="Element146">rootHubPortInterface</span> member of the DRV_USB_ROOT_HUB_INTERFACE structure should point to the USB Driver Root Hub Port functions. The data type of this member is USB_HUB_INTERFACE. This data type is a structure containing function pointers pointing to the port control functions of the root hub. The USB Driver must assign the function pointers in this structure to the root hub port control functions. These same functions are also exported by a Hub Driver to the USB Host Stack, which allow the Host Stack to control a device regardless of whether it is connected to a root hub or an external hub. The port functions are valid only when a device is attached to the port. The behavior of these functions on a port to which no device is connected is not defined. Descriptions of the port control functions are provided, which include:</p>
-<ul class="Element630">
-<li class="Element600">Driver Host Hub Port Reset Function</li>
-<li class="Element600">Driver Host Hub Port Reset Completion Status Function</li>
-<li class="Element600">Driver Host Hub Port Suspend Function</li>
-<li class="Element600">Driver Host Hub Port Resume Function</li>
-<li class="Element600">Driver Host Hub Port Speed Get Function</li>
-</ul><div class="Element15">
-Driver Host Hub Port Reset Function</div>
+In general, USB driver packages that are designed for Windows 7 and prior operating system versions will also work in Windows 8, but there is one important exception to this. Starting with Windows 8 64-bit,  all drivers must contain a proper &quot;full  driver  package&quot; digital signature (prior operating systems only required an embedded signature  in the <span class="Element146">.sys</span> file, rather than the entire driver package including the <span class="Element146">.inf</span> file). The driver package signature exists as a <span class="Element146">.cat</span> file that comes with the driver package, and needs to be correctly referenced from within the <span class="Element146">.inf</span> file.  If either the <span class="Element146">.cat</span> file is entirely missing, or it is not being correctly  referenced from the <span class="Element146">.inf</span> file, Windows 8 will generate the following error message when the user attempts to install the driver: <i>The third party INF does not contain digital signature information</i>.&nbsp;</p>
 <p class="Element10">
-The <span class="Element146">hubPortReset</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Reset function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR (*hubPortReset)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
+If the <span class="Element146">.cat</span> file is present and is correctly referenced, but something in the driver package was modified since the signature was applied, a slightly different error message will occur: <i>The hash for the file is not present in the specified catalog file. The file is likely corrupt or the victim of tampering.</i>&nbsp;</p>
 <p class="Element10">
-The USB Driver Root Hub Port Reset function must follow this signature. This function starts reset signaling on the port. If the device is connected to the root hub, the USB Host Stack will set the <span class="Element146">hubAddress</span> parameter to the driver handle obtained through the driver Open function. The USB Host Stack uses the parent identifier provided by the root hub driver when the USB_HOST_DeviceEnumerate function was called to query the driver handle that is linked to this root hub. If the device is connected to an external hub, the <span class="Element146">hubAddress</span> parameter is directly set to the parent identifier.&nbsp;</p>
+In both cases, Windows 8 64-bit will not allow the driver package to be installed, even though it may technically be capable of functioning correctly. To correct this, the driver package must be properly signed with a full package signature. This signature may be either a WHQL signature (which is the best kind of signature), or a Microsoft Authenticode signature.&nbsp;</p>
 <p class="Element10">
-For the PIC32MX and PIC32MZ USB Drivers, the <span class="Element146">port</span> parameter is ignored. For an external hub, this must be set to the port to which the device is connected. The function returns USB_ERROR_NONE if the function was successful. If the reset signaling is already in progress on the port, calling this function has no effect. The USB Driver will itself time duration of the reset signal. This does not require USB Host Stack intervention. The USB Host Stack will call the port reset completion status function to check if the reset signaling has completed. Calling this function on a port which exists on an external hub will cause the hub driver to issue a control transfer to start the port reset procedure.</p><div class="Element15">
-Driver Host Hub Port Reset Completion Status Function</div>
+The  MPLAB Harmony USB CDC and WinUSB Application driver packages include a WHQL signature and can be installed successfully on Windows 8 32-bit and 64-bit (as well as prior operating systems). When the firmware is using the same VID/PID as the default value from the demonstration, the latest driver package from MPLAB Harmony should install directly.&nbsp;</p>
 <p class="Element10">
-The <span class="Element146">hubPortResetIsComplete</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Reset Completion Status function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12"><strong><span style="color: #000080">bool</span></strong> (*hubPortResetIsComplete)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
+When the application uses a customized <span class="Element146">.inf</span>  file (e.g., VID/PID and/or strings are different), it will not be possible to directly use the driver package from MPLAB Harmony. The reason for this is that any time anyone makes any changes to the driver package (including adding or deleting one character of whitespace in the <span class="Element146">.inf</span> file), this action will break and invalidate the driver package signature. Therefore, even if the <span class="Element146">.cat</span> file is present, the signature will be invalid (and will not install correctly).&nbsp;</p>
 <p class="Element10">
-The USB Driver Root Hub Port Reset Completion Status function must follow this signature. The USB Host Stack calls this function to check if the port reset sequence that was started on a port has completed. The function returns true if the reset signaling has completed. If the device is connected to the root hub, the USB Host Stack will set the <span class="Element146">hubAddress</span> parameter to the driver handle obtained through the driver Open function. If the device is connected to an external hub, the <span class="Element146">hubAddress</span> parameter is directly set to the parent identifier.&nbsp;</p>
+Therefore, if an application needs to use a custom-modified driver package, the only practical solution is to make the modifications, and then resign the driver package. A driver package can be signed with an Authenticode signature using the procedure described in <a href="00148.html" target="topic">Using  a Code Signing Certificate to Sign Driver Packages</a>.  A package signed  with the Microsoft Authenticode signature will install successfully on Windows 8, but will still produce a user prompt asking if they would like to trust the company that signed the driver package. This user dialog can be suppressed if the driver  package instead contains a WHQL signature.&nbsp;</p>
 <p class="Element10">
-For the PIC32MX and PIC32MZ USB Drivers, the <span class="Element146">port</span> parameter is ignored. For an external hub, this parameter must be set to the port to which the device is connected.</p><div class="Element15">
-Driver Host Hub Port Suspend Function</div>
-<p class="Element10">
-The <span class="Element146">hubPortSuspend</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Suspend function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR(*hubPortSuspend)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
-<p class="Element10">
-The USB Driver Root Hub Port Suspend function must follow this signature. The USB Host Stack calls this function to suspend the port. If the device is connected to the root hub, the USB Host Stack will set the <span class="Element146">hubAddress</span> parameter to the driver handle obtained through the driver Open function. If the device is connected to an external hub, the <span class="Element146">hubAddress</span> parameter is directly set to the parent identifier.&nbsp;</p>
-<p class="Element10">
-For the PIC32MX and PIC32MZ USB Drivers, the <span class="Element146">port</span> parameter is ignored. For an external hub, this parameter must be set to the port to which the device is connected. The function returns USB_ERROR_NONE if the request was successful. Calling this function on a suspended port will not have any effect.</p><div class="Element15">
-Driver Host Hub Port Resume Function</div>
-<p class="Element10">
-The <span class="Element146">hubPortResume</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Resume function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_ERROR(*hubPortResume)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
-<p class="Element10">
-The USB Driver Root Hub Port Resume function must follow this signature. The USB Host Stack calls this function to resume a suspended port. If the device is connected to the root hub, the USB Host Stack will set the <span class="Element146">hubAddress</span> parameter to the driver handle obtained through the driver Open function. If the device is connected to an external hub, the <span class="Element146">hubAddress</span> parameter is directly set to the parent identifier.&nbsp;</p>
-<p class="Element10">
-For the PIC32MX and PIC32MZ USB Drivers, the <span class="Element146">port</span> parameter is ignored. For an external hub, this parameter must be set to the port to which the device is connected. The function returns USB_ERROR_NONE if the request was successful. Calling this function on a port that is not suspended will not have any effect.</p><div class="Element15">
-Driver Host Hub Port Speed Get Function</div>
-<p class="Element10">
-The <span class="Element146">hubPortSpeedGet</span> member of the USB_HUB_INTERFACE structure should point to the USB Driver Root Hub Port Speed Get function. The signature of this function is as follows: </p><div class="Element13"><div class="Element12"><pre class="Element12">USB_SPEED(*hubPortSpeedGet)(uintptr_t hubAddress, uint8_t port);</pre></div></div>
-<p class="Element10">
-The USB Driver Root Hub Port Speed Get function must follow this signature. The USB Host Stack calls this function to obtain the USB speed of the device that is attached to the port. The Host Stack calls this function only after it has completed reset of the port. If the device is connected to the root hub, the USB Host Stack will set the <span class="Element146">hubAddress</span> parameter to the driver handle obtained through the driver Open function. If the device is connected to an external hub, the <span class="Element146">hubAddress</span> parameter is directly set to the parent identifier.&nbsp;</p>
-<p class="Element10">
-For the PIC32MX and PIC32MZ USB Drivers, the <span class="Element146">port</span> parameter is ignored. For an external hub, this parameter must be set to the port to which the device is connected. The function returns USB_SPEED_ERROR if the request was not successful. It will return the functional USB speed otherwise.&nbsp;</p>
-<p class="Element10">
-This concludes the section describing the USB Driver Host mode Client Functions. The USB Driver Device Mode Client Functions are discussed in the next section.</p></div>
+Although not very suitable for end-consumers, Windows 8 does have a feature that allows driver package signing enforcement to be temporarily disabled. This is particularly useful for development and testing purposes. The feature is hidden under several layers of menus and requires the following steps to enable:</p>
+<ol class="Element630">
+<li value="1" class="Element600">From the desktop, move the mouse to the lower right hand corner of the screen, to launch the charm bar.</li>
+<li value="2" class="Element600">Click the Settings “gear” icon.</li>
+<li value="3" class="Element600">Click the “Change PC Settings” option.</li>
+<li value="4" class="Element600">In the PC Settings menu on the left, select the “General” option.</li>
+<li value="5" class="Element600">In  the  right  hand  pane,  scroll  down  to  the  bottom  of  the  options  list.  Under  the  “Advanced  startup”  section,  click  the “Restart now” button. This does not directly reboot the computer, but launches a page that provides additional restart options.</li>
+<li value="6" class="Element600">In the “Choose an option” page, select the “Troubleshoot” option.</li>
+<li value="7" class="Element600">From the Troubleshoot menu, click “Advanced options”.</li>
+<li value="8" class="Element600">In the “Advanced options” dialog, click the “Startup Settings” option.</li>
+<li value="9" class="Element600">From the “Startup Settings” dialog, click the “Restart” button.</li>
+<li value="10" class="Element600">The computer should now begin a reboot cycle. During the boot up sequence, a special “Startup Settings” dialog screen should appear.</li>
+<li value="11" class="Element600">On the “Startup Settings” dialog, press the “F7” key, to select the “Disable driver signature enforcement” option.</li>
+<li value="12" class="Element600">Allow Windows 8 to finish booting.</li>
+</ol><p class="Element10">
+Once driver signing enforcement is disabled, unsigned driver packages can then be installed. After rebooting the PC, driver signing enforcement will be reenabled, but Windows 8 will continue to allow the installed unsigned driver(s) to be loaded for the hardware, without requiring the system to be repeatedly rebooted into the driver  signing enforcement disabled mode.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="01033.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00143.html" target="topic">Common Interface</a> &gt; <a href="00147.html" target="topic">Driver Host Mode Client Functions</a> &gt; <a href="00149.html" target="topic">Driver Host USB Root Hub Port Interface</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00144.html" target="topic">Driver Signing and Windows 8 (for v1.08)</a> &gt; <a href="00149.html" target="topic">Using Older Drivers With Windows 8</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -108,13 +91,13 @@ This concludes the section describing the USB Driver Host mode Client Functions.
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00148.html" target="topic">Previous</a> | <a href="00147.html" target="topic">Up</a> | <a href="00145.html" target="topic">Next</a></div>
+<a href="00145.html" target="topic">Previous</a> | <a href="00144.html" target="topic">Up</a> | <a href="00147.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON Driver Host USB Root Hub Port Interface Topic Title: Driver Host USB Root Hub Port Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEV DRV WIN8 Using Older Drivers With Windows 8 Topic Title: Using Older Drivers With Windows 8)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

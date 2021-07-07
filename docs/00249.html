@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Reading and Writing Data</title>
+<title>Event Handling</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00245.html" target="topic">USB CDC Host Library</a> &gt; <a href="00252.html" target="topic">Using the Library</a> &gt; <a href="00243.html" target="topic">How the Library Works</a> &gt; <a href="00249.html" target="topic">Reading and Writing Data</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Host Libraries</a> &gt; <a href="00259.html" target="topic">USB Host Layer Library</a> &gt; <a href="00264.html" target="topic">Using the Library</a> &gt; <a href="00257.html" target="topic">How the Library Works</a> &gt; <a href="00249.html" target="topic">Event Handling</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00250.html" target="topic">Previous</a> | <a href="00243.html" target="topic">Up</a> | <a href="00241.html" target="topic">Next</a></div>
+<a href="00255.html" target="topic">Previous</a> | <a href="00257.html" target="topic">Up</a> | <a href="00247.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Reading and Writing Data Topic Title: Reading and Writing Data)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST Event Handling Topic Title: Event Handling)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Reading and Writing Data</div>
+Event Handling</div>
 </div>
 </div>
 
@@ -49,171 +49,14 @@ Reading and Writing Data</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The application can use the <a href="01270.html" target="topic">USB_HOST_CDC_Read</a> and <a href="01285.html" target="topic">USB_HOST_CDC_Write</a> functions to transfer data to the attached CDC device. While calling these function, the client handle specifies the target CDC device and the event handler function to which the events should be sent. It is possible for multiple client to open the same instance of the CDC Host Client Driver instance and transfer data to the attached CDC Device.&nbsp;</p>
-<p class="Element10">
-Calling the <a href="01270.html" target="topic">USB_HOST_CDC_Read</a> and <a href="01285.html" target="topic">USB_HOST_CDC_Write</a> functions while a read/write transfer is already in progress will cause the transfer result to be queued. If the transfer was successfully queued or scheduled, the <a href="01270.html" target="topic">USB_HOST_CDC_Read</a> and <a href="01285.html" target="topic">USB_HOST_CDC_Write</a> functions will return a valid transfer handle. This transfer handle identifies the transfer request. The application clients can use the transfer handles to keep track of multiple queued transfers. When a transfer completes, the CDC Host Client Driver generates an event. The following tables shows the event and the event data associated with the event.&nbsp;</p>
-<p class="Element10">
-<strong>Table 1: Read</strong> &nbsp;</p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element67" valign="top" width="20%">
-<div class="Element68">
-Function&nbsp;</div></td><td class="Element67" valign="top" width="80%">
-<div class="Element68">
-<a href="01270.html" target="topic">USB_HOST_CDC_Read</a>&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="20%">
-<div class="Element68">
-Event&nbsp;</div></td><td class="Element67" valign="top" width="80%">
-<div class="Element68">
-USB_HOST_CDC_EVENT_READ_COMPLETE&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="20%">
-<div class="Element68">
-Event Data Type&nbsp;</div></td><td class="Element67" valign="top" width="80%">
-<div class="Element68">
-<a href="01255.html" target="topic">USB_HOST_CDC_EVENT_READ_COMPLETE_DATA</a>&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-<strong>Table 2: Write</strong> </p><div class="Element63">
-<div class="TableDiv">
-<table cellspacing="0" class="Table1">
-<tr>
-<td class="Element67" valign="top" width="20%">
-<div class="Element68">
-Function&nbsp;</div></td><td class="Element67" valign="top" width="80%">
-<div class="Element68">
-USB_HOST_CDC_ACM_LineCodingGet&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="20%">
-<div class="Element68">
-Event&nbsp;</div></td><td class="Element67" valign="top" width="80%">
-<div class="Element68">
-USB_HOST_CDC_EVENT_READ_COMPLETE&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="20%">
-<div class="Element68">
-Event Data Type&nbsp;</div></td><td class="Element67" valign="top" width="80%">
-<div class="Element68">
-<a href="01255.html" target="topic">USB_HOST_CDC_EVENT_READ_COMPLETE_DATA</a>&nbsp;</div></td></tr></table></div></div>
-<p class="Element10">
-The event data contains information on the amount of data transferred, completion status and the transfer handle of the transfer. The following code shows an example of reading and writing data.&nbsp;</p>
-<p class="Element10">
-<strong>Example:</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* In this code example, the USB_HOST_CDC_Read and the USB_HOST_CDC_Write
- * functions are used to read and write data. The event related to the read and
- * write operations are handled in the APP_USBHostCDCEventHandler function. */</span></i>
-
-USB_HOST_CDC_EVENT_RESPONSE APP_USBHostCDCEventHandler
-(
-    USB_HOST_CDC_HANDLE cdcHandle,
-    USB_HOST_CDC_EVENT event,
-    <strong><span style="color: #000080">void</span></strong> * eventData,
-    uintptr_t context
-)
-{
-    <i><span style="color: #008000">/* This function is called when a CDC Host event has occurred. A pointer to
-     * this function is registered after opening the device. */</span></i>
-
-    USB_HOST_CDC_EVENT_WRITE_COMPLETE_DATA * writeCompleteEventData;
-    USB_HOST_CDC_EVENT_READ_COMPLETE_DATA * readCompleteEventData;
-
-    <strong><span style="color: #000080">switch</span></strong>(event)
-    {
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_CDC_EVENT_WRITE_COMPLETE:
-
-            <i><span style="color: #008000">/* This means an application requested write has completed */</span></i>
-            appData.writeTransferDone = <strong><span style="color: #000080">true</span></strong>;
-            writeCompleteEventData = (USB_HOST_CDC_EVENT_WRITE_COMPLETE_DATA *)(eventData);
-            appData.writeTransferResult = writeCompleteEventData-&gt;result;
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> USB_HOST_CDC_EVENT_READ_COMPLETE:
-
-            <i><span style="color: #008000">/* This means an application requested write has completed */</span></i>
-            appData.readTransferDone = <strong><span style="color: #000080">true</span></strong>;
-            readCompleteEventData = (USB_HOST_CDC_EVENT_READ_COMPLETE_DATA *)(eventData);
-            appData.readTransferResult = readCompleteEventData-&gt;result;
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">default</span></strong>:
-            <strong><span style="color: #000080">break</span></strong>;
-    }
-
-    <strong><span style="color: #000080">return</span></strong>(USB_HOST_CDC_EVENT_RESPONE_NONE);
-}
-
-<strong><span style="color: #000080">void</span></strong> APP_Tasks(<strong><span style="color: #000080">void</span></strong>)
-{
-    <strong><span style="color: #000080">switch</span></strong>(appData.state)
-    {
-        <i><span style="color: #008000">/* The application states that wait for device attach and open the CDC
-         * Host Client Driver are not shown here for brevity */</span></i>
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_SEND_PROMPT_TO_DEVICE:
-
-            <i><span style="color: #008000">/* The prompt is sent to the device here. The write transfer done
-             * flag is updated in the event handler. */</span></i>
-
-            appData.writeTransferDone = <strong><span style="color: #000080">false</span></strong>;
-            result = USB_HOST_CDC_Write(appData.cdcHostHandle, NULL, prompt, 8);
-
-            <strong><span style="color: #000080">if</span></strong>(result == USB_HOST_CDC_RESULT_SUCCESS)
-            {
-                appData.state = APP_STATE_WAIT_FOR_PROMPT_SEND_COMPLETE;
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_WAIT_FOR_PROMPT_SEND_COMPLETE:
-
-            <i><span style="color: #008000">/* Here we check if the write transfer is done */</span></i>
-            <strong><span style="color: #000080">if</span></strong>(appData.writeTransferDone)
-            {
-                <strong><span style="color: #000080">if</span></strong>(appData.writeTransferResult == USB_HOST_CDC_RESULT_SUCCESS)
-                {
-                    <i><span style="color: #008000">/* Now to get data from the device */</span></i>
-                    appData.state = APP_STATE_GET_DATA_FROM_DEVICE;
-                }
-                <strong><span style="color: #000080">else</span></strong>
-                {
-                    <i><span style="color: #008000">/* Try sending the prompt again. */</span></i>
-                    appData.state = APP_STATE_SEND_PROMPT_TO_DEVICE;
-                }
-            }
-
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_GET_DATA_FROM_DEVICE:
-
-            <i><span style="color: #008000">/* Here we request data from the device */</span></i>
-            appData.readTransferDone = <strong><span style="color: #000080">false</span></strong>;
-            result = USB_HOST_CDC_Read(appData.cdcHostHandle, NULL, appData.inDataArray, 1);
-            <strong><span style="color: #000080">if</span></strong>(result == USB_HOST_CDC_RESULT_SUCCESS)
-            {
-                appData.state = APP_STATE_WAIT_FOR_DATA_FROM_DEVICE;
-            }
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_WAIT_FOR_DATA_FROM_DEVICE:
-
-            <i><span style="color: #008000">/* Wait for data from device. */</span></i>
-            <strong><span style="color: #000080">if</span></strong>(appData.readTransferDone)
-            {
-                <strong><span style="color: #000080">if</span></strong>(appData.readTransferResult == USB_HOST_CDC_RESULT_SUCCESS)
-                {
-                    <i><span style="color: #008000">/* Do something with the data here */</span></i>
-                }
-            }
-
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">default</span></strong>:
-            <strong><span style="color: #000080">break</span></strong>;
-    }
-}</pre></div></div>
-</div>
+The USB Host Layer provides general device related events to the application. The application must register an event handling function by using the <a href="01207.html" target="topic">USB_HOST_EventHandlerSet</a> function. A context specified at the time of calling this function, is returned in the event handler. The event handler must be registered before the bus is enabled. Refer to the description of USB_HOST_DEVICE_EVENT events for details on the available events.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00245.html" target="topic">USB CDC Host Library</a> &gt; <a href="00252.html" target="topic">Using the Library</a> &gt; <a href="00243.html" target="topic">How the Library Works</a> &gt; <a href="00249.html" target="topic">Reading and Writing Data</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Host Libraries</a> &gt; <a href="00259.html" target="topic">USB Host Layer Library</a> &gt; <a href="00264.html" target="topic">Using the Library</a> &gt; <a href="00257.html" target="topic">How the Library Works</a> &gt; <a href="00249.html" target="topic">Event Handling</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -221,13 +64,13 @@ USB_HOST_CDC_EVENT_RESPONSE APP_USBHostCDCEventHandler
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00250.html" target="topic">Previous</a> | <a href="00243.html" target="topic">Up</a> | <a href="00241.html" target="topic">Next</a></div>
+<a href="00255.html" target="topic">Previous</a> | <a href="00257.html" target="topic">Up</a> | <a href="00247.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Reading and Writing Data Topic Title: Reading and Writing Data)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST Event Handling Topic Title: Event Handling)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

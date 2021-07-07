@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Code Signing Certificates (Other Uses)</title>
+<title>USB Host Library Architecture</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00255.html" target="topic">Driver Signing and Windows 8 (for v1.08)</a> &gt; <a href="00254.html" target="topic">Code Signing Certificates (Other Uses)</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Host Libraries</a> &gt; <a href="00261.html" target="topic">USB Host Library - Getting Started</a> &gt; <a href="00254.html" target="topic">USB Host Library Architecture</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00257.html" target="topic">Previous</a> | <a href="00255.html" target="topic">Up</a> | <a href="00259.html" target="topic">Next</a></div>
+<a href="00252.html" target="topic">Previous</a> | <a href="00261.html" target="topic">Up</a> | <a href="00253.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEV DRV WIN8 Code Signing Certificates (Other Uses) Topic Title: Code Signing Certificates (Other Uses))&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST GS USB Host Library Architecture Topic Title: USB Host Library Architecture)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Code Signing Certificates (Other Uses)</div>
+USB Host Library Architecture</div>
 </div>
 </div>
 
@@ -49,16 +49,43 @@ Code Signing Certificates (Other Uses)</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-In addition to signing driver packages, a Microsoft Authenticode signing certificate can be used to sign certain other types of files, such as executable (<span class="Element146">.exe</span>) programs. Windows, especially Windows 8, does not trust unsigned executables as much as signed executables.  In Windows 8, an unsigned executable that has &quot;no history&quot; and has no reputation established with Microsoft will be treated as relatively untrustworthy, and is blocked from execution, unless the user manually overrides the operating system behavior, through an advanced options dialogue that is typically hard for new users to find.&nbsp;</p>
+The USB Host Library Architecture features a modular and layered architecture as illustrated in the following figure. </p><p class="Element10" style="text-align: center;">
+<strong>USB Host Library Architecture</strong>&nbsp;</p>
+<p class="Element10" style="text-align: center;">
+<img src="USB HOST GS Architecture.png" border="0" alt="" title=""></p><p class="Element10">
+As seen in the figure, the USB Device Library consists of the following three major components.</p><div class="Element15">
+Host Controller Driver (HCD)</div>
 <p class="Element10">
-Additionally, some virus scanning applications also rely on executable signatures, to help establish relative trustworthiness.  In some cases, unsigned executables, free of  malware/viruses, can still be blocked from execution by the virus scanning software, until a history/reputation is built up establishing the executable as trustworthy.  Signing  the executable with a Microsoft Authenticode signing certificate will generally make the executable more trustworthy and less likely to be (incorrectly) flagged as malware.</p></div>
+The HCD manages the state of the USB peripheral and provides the Host Layer with structured methods to access data on the USB. The HCD is a MPLAB Harmony driver and uses the MPLAB Harmony framework components (USB Peripheral Library and the Interrupt System Service) of its operation. The HCD is initialized in the system initialization routine and its tasks routine is invoked in the system tasks routine. It is accessed exclusively by the Host layer. The HCD provides the following services to the host layer:</p>
+<ul class="Element630">
+<li class="Element600">Establish and manage communication pipes between the host layer and the attached devices</li>
+<li class="Element600">Manage USB transfers</li>
+</ul><div class="Element15">
+Root Hub Driver</div>
+<p class="Element10">
+The Root Hub Driver models the USB peripheral as a Hub. It then allows the Host Layer to perform the same actions on the Root Hub port that would be performed on an external Hub’s port. The Root Hub Driver thus leads to an optimized implementation of Hub support in the Host Layer. The Root Hub Driver is hardware specific and is implemented as a part of the HCD. It provides the following services to the Host Layer</p>
+<ul class="Element630">
+<li class="Element600">Provides device attach and detach events</li>
+<li class="Element600">Allows the Host to suspend, resume, and reset the port</li>
+</ul><p class="Element10">
+The Root Hub Driver works in tandem with the HCD to provides the Host Layer with required USB protocol related means and methods to manage the attached USB device.</p><div class="Element15">
+Host Layer</div>
+<p class="Element10">
+The Host Layer receives attach and detach events from the Root Hub Driver. It enumerates attached devices based on information contained in the Target Peripheral List (TPL). It allows client drivers to access the attached device through Host Layer methods. This includes allowing the client driver to set the device configuration. Where the client driver does not set the device configuration, the Host Layer will set the device configuration.&nbsp;</p>
+<p class="Element10">
+The Host layer opens the HCD, instantiates the Root Hub Driver, then controls and communicates with the attached device. The user application can call the Host Layer API to get information on attached devices. It can also register a Host Layer Event handler to get device related events. The user application can additionally suspend or resume a device. The Host Layer also provides bus level control where the application can suspend or resume all devices connected to a USB.</p><div class="Element15">
+Client Driver</div>
+<p class="Element10">
+The USB Host Stack Client Drivers implement the support for different device classes as per the class specifications. Along with Host Layer, the client drivers are designed to support multiple device of the same type (where multiple devices are connected to the host through a hub or is a single device with multiple interfaces). A client driver abstracts intricate details of the class specification and provides a high level command and data interface to the application. Completion of requests is indicated by events. The application must register an event handler to receive these events.&nbsp;</p>
+<p class="Element10">
+The Client Driver may manage devices whose functionality is specified by USB VID and PID. In such cases, the client driver can set the device configuration. The client driver may manage a device whose functionality is defined by an interface class, subclass and protocol. In such a case, the configuration is set by the Host layer. The client driver can also manage devices whose functionality is defined by a combination of VID PID and class, sub-class and protocol.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00255.html" target="topic">Driver Signing and Windows 8 (for v1.08)</a> &gt; <a href="00254.html" target="topic">Code Signing Certificates (Other Uses)</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Host Libraries</a> &gt; <a href="00261.html" target="topic">USB Host Library - Getting Started</a> &gt; <a href="00254.html" target="topic">USB Host Library Architecture</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -66,13 +93,13 @@ Additionally, some virus scanning applications also rely on executable signature
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00257.html" target="topic">Previous</a> | <a href="00255.html" target="topic">Up</a> | <a href="00259.html" target="topic">Next</a></div>
+<a href="00252.html" target="topic">Previous</a> | <a href="00261.html" target="topic">Up</a> | <a href="00253.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEV DRV WIN8 Code Signing Certificates (Other Uses) Topic Title: Code Signing Certificates (Other Uses))&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HOST GS USB Host Library Architecture Topic Title: USB Host Library Architecture)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

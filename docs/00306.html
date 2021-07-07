@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>String Descriptor Table</title>
+<title>Library Initialization</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00308.html" target="topic">Using the Library</a> &gt; <a href="00297.html" target="topic">How the Library Works</a> &gt; <a href="00306.html" target="topic">String Descriptor Table</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00284.html" target="topic">USB MSD Device Library</a> &gt; <a href="00310.html" target="topic">Using the Library</a> &gt; <a href="00304.html" target="topic">How the Library Works</a> &gt; <a href="00306.html" target="topic">Library Initialization</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00289.html" target="topic">Previous</a> | <a href="00297.html" target="topic">Up</a> | <a href="00284.html" target="topic">Next</a></div>
+<a href="00304.html" target="topic">Previous</a> | <a href="00304.html" target="topic">Up</a> | <a href="00301.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER String Descriptor Table Topic Title: String Descriptor Table)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSDDEV Library Initialization Topic Title: Library Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-String Descriptor Table</div>
+Library Initialization</div>
 </div>
 </div>
 
@@ -49,260 +49,123 @@ String Descriptor Table</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The Device Layer allows the application to specify string descriptors via a String Descriptor Table. When the USB Host requests for a string by its index and language ID, the Device Layer looks for the corresponding string descriptor in the String Descriptor Table. There are two possible methods of specifying this String Descriptor Table, Basic and Advanced. These methods are discussed here.</p><div class="Element15">
-Basic String Descriptor Table</div>
+The MSD Function Driver instance for a USB Device configuration is initialized by the USB Device Layer when the Host sets that configuration. This process does not require application intervention. Each instance of the MSD Function Driver should be registered with the USB Device Layer through the <a href="00185.html" target="topic">Device Layer Function Driver Registration Table</a>. While registering the MSD Function Driver, the driver member of the Function Driver Registration Table entry should be set to <a href="00815.html" target="topic">USB_DEVICE_MSD_FUNCTION_DRIVER</a>. This is an opaque function driver entry point provided by the MSD Function Driver for the Device Layer to use.&nbsp;</p>
 <p class="Element10">
-The Basic String Descriptor Table should be used when the USB Device Application has equal number of string descriptors for each language string and the String Descriptor Indexes are continuous. This is the default method of specifying the String Descriptor Table. Each entry in the table contains the following information</p>
+The MSD Function Driver requires an initialization data structure to be defined for each instance of the function driver. This initialization data structure should be of the type <a href="00816.html" target="topic">USB_DEVICE_MSD_INIT</a>. This initialization data structure contains the following:</p>
 <ul class="Element630">
-<li class="Element600">The size of the entry</li>
-<li class="Element600">The descriptor type, which is always set to USB_DESCRIPTOR_STRING</li>
-<li class="Element600">The array containing the string</li>
+<li class="Element600">The number of Logical Unit Numbers (LUNs) in this MSD Function Driver instance</li>
+<li class="Element600">A pointer to the USB_MSD_CBW type data structure. This pointer is used by the MSD Function Driver to receive the Command Block Wrapper (CBW) from the Host. For a PIC32MZ device, this array should be placed in coherent memory and should be aligned on a 4-byte boundary.</li>
+<li class="Element600">A pointer to the USB_MSD_CSW type data structure. This pointer is used by the MSD Function Driver to send the Command Status Wrapper (CSW) to the Host. For a PIC32MZ device, this array should be placed in coherent memory and should be aligned on a 4-byte boundary.</li>
+<li class="Element600">A pointer to the array of media driver initialization data structure. There should be one structure for every LUN. This is a <a href="00833.html" target="topic">USB_DEVICE_MSD_MEDIA_INIT_DATA</a> type of data structure. There exists a one-to-one mapping between the LUN and the media driver initialization data structure.</li>
 </ul><p class="Element10">
-The first entry in the String Descriptor Table, at index 0 of the table, will always contain the Lang ID string. This string specifies the one language ID of the String Descriptor that this application intends to support. The subsequent entries in the String Descriptor Table contain the actual string descriptor. Each language must have an equal set of the string descriptors. The Device layer will associate each set of string descriptors with language ID specified in the language ID string descriptor. The following code shows an example of a Basic String Descriptor table.&nbsp;</p>
+The following figure shows a pictorial representation of the MSD Function Driver initialization data structure.&nbsp;</p>
 <p class="Element10">
-<strong>Example:</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of a Basic String Descriptor Table. In
- * this example, the table contains five entries. The first entry is the
- * language ID string. The second entry in the manufacturer string and the third
- * entry is the product string for language ID 0x0409. The fourth and the fifth
- * entry is the manufacture and product string, respectively for the language ID
- * 0x040C. */</span></i>
-
-<i><span style="color: #008000">/**************************************************************************
-*  Language ID string descriptor. Note that this contains two Language IDs.
-**************************************************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">struct</span></strong>
-{
-    uint8_t bLength;
-    uint8_t bDscType;
-    uint16_t string[1];
-}
-sd000 =
-{
-    <strong><span style="color: #000080">sizeof</span></strong>(sd000),          <i><span style="color: #008000">// Size of this descriptor in bytes</span></i>
-    USB_DESCRIPTOR_STRING,  <i><span style="color: #008000">// STRING descriptor type</span></i>
-    {0x0409, 0x040C}        <i><span style="color: #008000">// Language ID</span></i>
-};
-
-<i><span style="color: #008000">/*******************************************
- *  Manufacturer string descriptor
- *******************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">struct</span></strong>
-{
-    uint8_t bLength;        <i><span style="color: #008000">// Size of this descriptor in bytes</span></i>
-    uint8_t bDscType;       <i><span style="color: #008000">// STRING descriptor type</span></i>
-    uint16_t string[25];    <i><span style="color: #008000">// String</span></i>
-}
-sd001 =
-{
-    <strong><span style="color: #000080">sizeof</span></strong>(sd001),
-    USB_DESCRIPTOR_STRING,
-    {'M','i','c','r','o','c','h','i','p',' ',
-     'T','e','c','h','n','o','l','o','g','y',' ','I','n','c','.'}
-};
-
-<i><span style="color: #008000">/*******************************************
- *  Product string descriptor
- *******************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">struct</span></strong>
-{
-    uint8_t bLength;        <i><span style="color: #008000">// Size of this descriptor in bytes</span></i>
-    uint8_t bDscType;       <i><span style="color: #008000">// STRING descriptor type</span></i>
-    uint16_t string[22];    <i><span style="color: #008000">// String</span></i>
-}
-sd002 =
-{
-    <strong><span style="color: #000080">sizeof</span></strong>(sd002),
-    USB_DESCRIPTOR_STRING,
-    {'S','i','m','p','l','e',' ','C','D','C',' ','D','e','v','i','c','e',' ','D','e','m','o' }
-};
-
-<i><span style="color: #008000">/*******************************************
- *  Manufacturer string descriptor
- *******************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">struct</span></strong>
-{
-    uint8_t bLength;        <i><span style="color: #008000">// Size of this descriptor in bytes</span></i>
-    uint8_t bDscType;       <i><span style="color: #008000">// STRING descriptor type</span></i>
-    uint16_t string[25];    <i><span style="color: #008000">// String</span></i>
-}
-sd003 =
-{
-    <strong><span style="color: #000080">sizeof</span></strong>(sd003),
-    USB_DESCRIPTOR_STRING,
-    {'M','i','c','r','o','c','h','i','p',' ',
-     'T','e','c','h','n','o','l','o','g','y',' ','I','n','c','.'}
-};
-
-<i><span style="color: #008000">/*******************************************
- *  Product string descriptor
- *******************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">struct</span></strong>
-{
-    uint8_t bLength;        <i><span style="color: #008000">// Size of this descriptor in bytes</span></i>
-    uint8_t bDscType;       <i><span style="color: #008000">// STRING descriptor type</span></i>
-    uint16_t string[22];    <i><span style="color: #008000">// String</span></i>
-}
-sd004 =
-{
-    <strong><span style="color: #000080">sizeof</span></strong>(sd004),
-    USB_DESCRIPTOR_STRING,
-    {'S','i','m','p','l','e',' ','C','D','C',' ','D','e','v','i','c','e',' ','D','e','m','o' }
-};
-
-<i><span style="color: #008000">/***************************************
- * Array of string descriptors
- ***************************************/</span></i>
-USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[3]=
-{
-    <i><span style="color: #008000">/* This is the language ID string */</span></i>
-    (<strong><span style="color: #000080">const</span></strong> uint8_t *<strong><span style="color: #000080">const</span></strong>)&amp;sd000,
-
-    <i><span style="color: #008000">/* This string descriptor at index 1 will be returned when the host request
-     * for a string descriptor with index 1 and language ID 0x0409. */</span></i>
-    (<strong><span style="color: #000080">const</span></strong> uint8_t *<strong><span style="color: #000080">const</span></strong>)&amp;sd001,
-
-    <i><span style="color: #008000">/* This string descriptor at index 2 will be returned when the host request
-     * for a string descriptor with index 2 and language ID 0x0409. */</span></i>
-    (<strong><span style="color: #000080">const</span></strong> uint8_t *<strong><span style="color: #000080">const</span></strong>)&amp;sd002,
-
-    <i><span style="color: #008000">/* This string descriptor at index 3 will be returned when the host request
-     * for a string descriptor with index 1 and language ID 0x040C. */</span></i>
-    (<strong><span style="color: #000080">const</span></strong> uint8_t *<strong><span style="color: #000080">const</span></strong>)&amp;sd003,
-
-    <i><span style="color: #008000">/* This string descriptor at index 4 will be returned when the host request
-     * for a string descriptor with index 2 and language ID 0x040C. */</span></i>
-    (<strong><span style="color: #000080">const</span></strong> uint8_t *<strong><span style="color: #000080">const</span></strong>)&amp;sd004
-};</pre></div></div>
-<div class="Element15">
-Advanced String Descriptor Table</div>
+<img src="USB MSD Library Initialization.png" border="0" alt="" title="">&nbsp;</p>
 <p class="Element10">
-The Advanced String Descriptor Table should be used when the application needs to specify string descriptors with string indexes that are not continuous. One such example is the Microsoft OS String Descriptor. The index of this string descriptor is 0xEE. If the application were to use the Basic String Descriptor Table , this would require the String Descriptor Table to have at least 0xED entries (valid or invalid) before the entry for the Microsoft OS String Descriptor. This arrangement may not be optimal. Using the Ad Advanced String Descriptor Table mitigates this problem. The Advanced String Descriptor Table format is enabled only when <a href="01024.html" target="topic">USB_DEVICE_STRING_DESCRIPTOR_TABLE_ADVANCED_ENABLE</a> configuration option is specified in the <span class="Element146">system_config.h</span>. Each entry in the Advanced String Descriptor Table contains the following information:</p>
+The <a href="00833.html" target="topic">USB_DEVICE_MSD_MEDIA_INIT_DATA</a> data structure allows a media driver to be plugged into the MSD Function Driver. Any media driver that needs to be plugged into the MSD Function Driver needs to implement the interface (function pointer signatures) specified by the <a href="00823.html" target="topic">USB_DEVICE_MSD_MEDIA_FUNCTIONS</a> type. For every LUN, a SCSI Inquiry Response data structure needs to be made available.&nbsp;</p>
+<p class="Element10">
+Use the following guidelines while implementing the media driver:</p>
 <ul class="Element630">
-<li class="Element600">The index of the string descriptor</li>
-<li class="Element600">The language ID of the string descriptor</li>
-<li class="Element600">The size of the entry, which is two more than the length of the string</li>
-<li class="Element600">The descriptor type, which is always set to USB_DESCRIPTOR_STRING</li>
-<li class="Element600">The array containing the string</li>
+<li class="Element600">Read functions should be non-blocking</li>
+<li class="Element600">Write functions should be non-blocking</li>
+<li class="Element600">The media driver should provide an event to indicate when a block transfer has complete. It should allow the event handler to be registered.</li>
+<li class="Element600">Where required, the write function should erase and write to the storage area in one operation. The MSD Function Driver does not explicitly call the erase operation.</li>
+<li class="Element600">The media driver should provide a media geometry object when required. This media geometry object allows the MSD Function Driver to understand the media characteristics. This object is of the type, SYS_FS_MEDIA_GEOMETRY.</li>
 </ul><p class="Element10">
-The first such entry in the Advanced String Descriptor Table specifies the language ID string. The string index and the language ID of this entry should be zero. This first entry is then followed by the actual string descriptors. Unlike the Basic String Descriptor Table, the position of the string descriptor in the Advanced String Descriptor Table does not define the String Descriptor Index that the host must to use to identify the string.Instead, the index of the string is specified by the stringIndex member of the Advanced String Descriptor Table table entry. The following code shows an example of the Advanced String Descriptor table.&nbsp;</p>
-<p class="Element10">
-<strong>Example:</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of an Advanced String Descriptor Table.
- * The Advanced String Descriptor table should be used when multiple languages
- * are needed to be supported. In this example, two languages are supported*/</span></i>
+The following code shows an example of plugging the MPLAB Harmony NVM Driver into the MSD Function Driver. The coherency and alignment attributes that are applied to the sectorBuffer, msdCBW, and msdCBW data objects is needed for operation on PIC32MZ devices. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/***********************************************
+ * Sector buffer needed by for the MSD LUN.
+ ***********************************************/</span></i>
+uint8_t sectorBuffer[512] __attribute__((coherent)) __attribute__((aligned(4)));
 
-<i><span style="color: #008000">/**********************************************************
- * Language ID string descriptor. Note that stringIndex and
- * language ID are always 0 for this descriptor.
- ***********************************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">struct</span></strong> __attribute__ ((packed))
+<i><span style="color: #008000">/***********************************************
+ * CBW and CSW structure needed by the MSD
+ * function driver instance.
+ ***********************************************/</span></i>
+USB_MSD_CBW msdCBW __attribute__((coherent)) __attribute__((aligned(4)));
+USB_MSD_CSW msdCSW __attribute__((coherent)) __attribute__((aligned(4)));
+
+<i><span style="color: #008000">/***********************************************
+ * Because the PIC32MZ flash row size if 2048
+ * and the media sector size if 512 bytes, we
+ * have to allocate a buffer of size 2048
+ * to backup the row. A pointer to this row
+ * is passed in the media initialization data
+ * structure.
+ ***********************************************/</span></i>
+uint8_t flashRowBackupBuffer [DRV_NVM_ROW_SIZE];
+<i><span style="color: #008000">/*******************************************
+ * MSD Function Driver initialization
+ *******************************************/</span></i>
+
+USB_DEVICE_MSD_MEDIA_INIT_DATA msdMediaInit[1] =
 {
-    uint8_t stringIndex;    <i><span style="color: #008000">// Index of the string descriptor</span></i>
-    uint16_t languageID ;   <i><span style="color: #008000">// Language ID of this string.</span></i>
-    uint8_t bLength;        <i><span style="color: #008000">// Size of this descriptor in bytes</span></i>
-    uint8_t bDscType;       <i><span style="color: #008000">// STRING descriptor type</span></i>
-    uint16_t string[2];     <i><span style="color: #008000">// String</span></i>
-}
-sd000 =
-{
-    0,                      <i><span style="color: #008000">// Index of this string is 0</span></i>
-    0,                      <i><span style="color: #008000">// This field is always blank for String Index 0</span></i>
-    <strong><span style="color: #000080">sizeof</span></strong>(sd000)- 3,       <i><span style="color: #008000">// Should always be set to this.</span></i>
-    USB_DESCRIPTOR_STRING,
-    {0x0409, 0x040C}        <i><span style="color: #008000">// Language ID</span></i>
+    {
+        DRV_NVM_INDEX_0,
+        512,
+        sectorBuffer,
+        flashRowBackupBuffer,
+        (<strong><span style="color: #000080">void</span></strong> *)diskImage,
+        {
+            0x00,    <i><span style="color: #008000">// peripheral device is connected, direct access block device</span></i>
+            0x80,       <i><span style="color: #008000">// removable</span></i>
+            0x04,    <i><span style="color: #008000">// version = 00=&gt; does not conform to any standard, 4=&gt; SPC-2</span></i>
+            0x02,    <i><span style="color: #008000">// response is in format specified by SPC-2</span></i>
+            0x20,    <i><span style="color: #008000">// n-4 = 36-4=32= 0x20</span></i>
+            0x00,    <i><span style="color: #008000">// sccs etc.</span></i>
+            0x00,    <i><span style="color: #008000">// bque=1 and cmdque=0,indicates simple queuing 00 is obsolete,</span></i>
+                        <i><span style="color: #008000">// but as in case of other device, we are just using 00</span></i>
+            0x00,    <i><span style="color: #008000">// 00 obsolete, 0x80 for basic task queuing</span></i>
+            {
+                'M','i','c','r','o','c','h','p'
+            },
+            {
+                'M','a','s','s',' ','S','t','o','r','a','g','e',' ',' ',' ',' '
+            },
+            {
+                '0','0','0','1'
+            }
+        },
+        {
+            DRV_NVM_IsAttached,
+            DRV_NVM_BLOCK_Open,
+            DRV_NVM_BLOCK_Close,
+            DRV_NVM_GeometryGet,
+            DRV_NVM_BlockRead,
+            DRV_NVM_BlockEraseWrite,
+            DRV_NVM_IsWriteProtected,
+            DRV_NVM_BLOCK_EventHandlerSet,
+            DRV_NVM_BlockStartAddressSet
+        }
+    }
 };
-
-<i><span style="color: #008000">/******************************************************
- *  Manufacturer string descriptor for language 0x0409
- ******************************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">struct</span></strong> __attribute__ ((packed))
+<i><span style="color: #008000">/*******************************************
+ * MSD Function Driver initialization
+ *******************************************/</span></i>
+USB_DEVICE_MSD_INIT msdInit =
 {
-    uint8_t stringIndex;    <i><span style="color: #008000">// Index of the string descriptor</span></i>
-    uint16_t languageID ;   <i><span style="color: #008000">// Language ID of this string.</span></i>
-    uint8_t bLength;        <i><span style="color: #008000">// Size of this descriptor in bytes</span></i>
-    uint8_t bDscType;       <i><span style="color: #008000">// STRING descriptor type</span></i>
-    uint16_t string[25];    <i><span style="color: #008000">// String</span></i>
-}
-sd001 =
-{
-    1,      <i><span style="color: #008000">// Index of this string descriptor is 1.</span></i>
-    0x0409, <i><span style="color: #008000">// Language ID of this string descriptor is 0x0409 (English)</span></i>
-    <strong><span style="color: #000080">sizeof</span></strong>(sd001) - 3,
-    USB_DESCRIPTOR_STRING,
-    {'M','i','c','r','o','c','h','i','p',' ',
-    'T','e','c','h','n','o','l','o','g','y',' ','I','n','c','.'}
+    <i><span style="color: #008000">/* Number of LUNS */</span></i>
+    1,
+    <i><span style="color: #008000">/* Pointer to a CBW structure */</span></i>
+    &amp;msdCBW,
+    <i><span style="color: #008000">/* Pointer to a CSW structure */</span></i>
+    &amp;msdCSW,
+    <i><span style="color: #008000">/* Pointer to a table of Media Initialization data structures */</span></i>
+    &amp;msdMediaInit[0]
 };
-
-<i><span style="color: #008000">/******************************************************
- *  Manufacturer string descriptor for language 0x040C
- ******************************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">struct</span></strong> __attribute__ ((packed))
+<i><span style="color: #008000">/*****************************************************
+ * USB Device Function Registration Table
+ *****************************************************/</span></i>
+<strong><span style="color: #000080">const</span></strong> USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[1] =
 {
-    uint8_t stringIndex;    <i><span style="color: #008000">// Index of the string descriptor</span></i>
-    uint16_t languageID ;   <i><span style="color: #008000">// Language ID of this string.</span></i>
-    uint8_t bLength;        <i><span style="color: #008000">// Size of this descriptor in bytes</span></i>
-    uint8_t bDscType;       <i><span style="color: #008000">// STRING descriptor type</span></i>
-    uint16_t string[25];    <i><span style="color: #008000">// String</span></i>
-}
-sd002 =
-{
-    1,      <i><span style="color: #008000">// Index of this string descriptor is 1.</span></i>
-    0x040C, <i><span style="color: #008000">// Language ID of this string descriptor is 0x040C (French)</span></i>
-    <strong><span style="color: #000080">sizeof</span></strong>(sd001) - 3,
-    USB_DESCRIPTOR_STRING,
-    {'M','i','c','r','o','c','h','i','p',' ',
-    'T','e','c','h','n','o','l','o','g','y',' ','I','n','c','.'}
-};
-
-<i><span style="color: #008000">/************************************************
- *  Product string descriptor for language 0x409
- ************************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">struct</span></strong> __attribute__ ((packed))
-{
-    uint8_t stringIndex;    <i><span style="color: #008000">// Index of the string descriptor</span></i>
-    uint16_t languageID ;   <i><span style="color: #008000">// Language ID of this string.</span></i>
-    uint8_t bLength;        <i><span style="color: #008000">// Size of this descriptor in bytes</span></i>
-    uint8_t bDscType;       <i><span style="color: #008000">// STRING descriptor type</span></i>
-    uint16_t string[22];    <i><span style="color: #008000">// String</span></i>
-}
-sd003 =
-{
-    2,       <i><span style="color: #008000">// Index of this string descriptor is 2.</span></i>
-    0x0409,  <i><span style="color: #008000">// Language ID of this string descriptor is 0x0409 (English)</span></i>
-    <strong><span style="color: #000080">sizeof</span></strong>(sd002) - 3,
-    USB_DESCRIPTOR_STRING,
-    {'S','i','m','p','l','e',' ','C','D','C',' ','D','e','v','i','c','e',' ','D','e','m','o' }
-};
-
-<i><span style="color: #008000">/************************************************
- *  Product string descriptor for language 0x40C
- ************************************************/</span></i>
-<strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">struct</span></strong> __attribute__ ((packed))
-{
-    uint8_t stringIndex;    <i><span style="color: #008000">// Index of the string descriptor</span></i>
-    uint16_t languageID ;   <i><span style="color: #008000">// Language ID of this string.</span></i>
-    uint8_t bLength;        <i><span style="color: #008000">// Size of this descriptor in bytes</span></i>
-    uint8_t bDscType;       <i><span style="color: #008000">// STRING descriptor type</span></i>
-    uint16_t string[22];    <i><span style="color: #008000">// String</span></i>
-}
-sd004 =
-{
-    2,       <i><span style="color: #008000">// Index of this string descriptor is 2.</span></i>
-    0x0409,  <i><span style="color: #008000">// Language ID of this string descriptor is 0x040C (French)</span></i>
-    <strong><span style="color: #000080">sizeof</span></strong>(sd002) - 3,
-    USB_DESCRIPTOR_STRING,
-    {'S','i','m','p','l','e',' ','C','D','C',' ','D','e','v','i','c','e',' ','D','e','m','o' }
-};
-
-<i><span style="color: #008000">/***************************************************************
- * Array of string descriptors. The entry order does not matter.
- ***************************************************************/</span></i>
-USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[5]=
-{
-    (<strong><span style="color: #000080">const</span></strong> uint8_t *<strong><span style="color: #000080">const</span></strong>)&amp;sd000,
-    (<strong><span style="color: #000080">const</span></strong> uint8_t *<strong><span style="color: #000080">const</span></strong>)&amp;sd001,   <i><span style="color: #008000">// Manufacturer string for language 0x0409</span></i>
-    (<strong><span style="color: #000080">const</span></strong> uint8_t *<strong><span style="color: #000080">const</span></strong>)&amp;sd002,   <i><span style="color: #008000">// Manufacturer string for language 0x040C</span></i>
-    (<strong><span style="color: #000080">const</span></strong> uint8_t *<strong><span style="color: #000080">const</span></strong>)&amp;sd003,   <i><span style="color: #008000">// Product string for language 0x0409</span></i>
-    (<strong><span style="color: #000080">const</span></strong> uint8_t *<strong><span style="color: #000080">const</span></strong>)&amp;sd004,   <i><span style="color: #008000">// Product string for language 0x040C</span></i>
+    {
+        .speed = USB_SPEED_FULL | USB_SPEED_HIGH,   <i><span style="color: #008000">// Device Speed</span></i>
+        .configurationValue =  1,                   <i><span style="color: #008000">// Configuration value</span></i>
+        .interfaceNumber = 0,                       <i><span style="color: #008000">// Start interface number</span></i>
+        .numberOfInterfaces = 1,                    <i><span style="color: #008000">// Number of interfaces owned</span></i>
+        .funcDriverIndex = 0,                       <i><span style="color: #008000">// Function driver index</span></i>
+        .funcDriverInit = (<strong><span style="color: #000080">void</span></strong>*)&amp;msdInit,          <i><span style="color: #008000">// Pointer to initialization data structure</span></i>
+        .driver = USB_DEVICE_MSD_FUNCTION_DRIVER    <i><span style="color: #008000">// Pointer to function driver</span></i>
+    }
 };</pre></div></div>
 </div>
 </div>
@@ -311,7 +174,7 @@ USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[5]=
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00308.html" target="topic">Using the Library</a> &gt; <a href="00297.html" target="topic">How the Library Works</a> &gt; <a href="00306.html" target="topic">String Descriptor Table</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00284.html" target="topic">USB MSD Device Library</a> &gt; <a href="00310.html" target="topic">Using the Library</a> &gt; <a href="00304.html" target="topic">How the Library Works</a> &gt; <a href="00306.html" target="topic">Library Initialization</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -319,13 +182,13 @@ USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[5]=
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00289.html" target="topic">Previous</a> | <a href="00297.html" target="topic">Up</a> | <a href="00284.html" target="topic">Next</a></div>
+<a href="00304.html" target="topic">Previous</a> | <a href="00304.html" target="topic">Up</a> | <a href="00301.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER String Descriptor Table Topic Title: String Descriptor Table)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB MSDDEV Library Initialization Topic Title: Library Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

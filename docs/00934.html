@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_DEVICE_MSD_MEDIA_FUNCTIONS Structure</title>
+<title>USB_HOST_AUDIO_V1_0_DIRECTION_OUT Macro</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00395.html" target="topic">USB MSD Device Library</a> &gt; <a href="00418.html" target="topic">Library Interface</a> &gt; Data Types and Constants &gt; <a href="00934.html" target="topic">USB_DEVICE_MSD_MEDIA_FUNCTIONS Structure</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Host Libraries</a> &gt; <a href="00100.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00115.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="00934.html" target="topic">USB_HOST_AUDIO_V1_0_DIRECTION_OUT Macro</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00927.html" target="topic">Previous</a> | <a href="00418.html" target="topic">Up</a> | <a href="00944.html" target="topic">Next</a></div>
+<a href="00933.html" target="topic">Previous</a> | <a href="00115.html" target="topic">Up</a> | <a href="00936.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_MSD_MEDIA_FUNCTIONS Topic Title: USB_DEVICE_MSD_MEDIA_FUNCTIONS Structure)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_0_DIRECTION_OUT Topic Title: USB_HOST_AUDIO_V1_0_DIRECTION_OUT Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_DEVICE_MSD_MEDIA_FUNCTIONS Structure</div>
+USB_HOST_AUDIO_V1_0_DIRECTION_OUT Macro</div>
 </div>
 </div>
 
@@ -49,96 +49,17 @@ USB_DEVICE_MSD_MEDIA_FUNCTIONS Structure</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Media Driver Function Pointer Data Structure&nbsp;</p>
-<p class="Element10">
-This structure contains function pointers, pointing to the media driver functions. The MSD function driver calls these functions at run time to access the media. This data structure should be specified during compilation and is a part of the MSD function driver initialization data structure. It is processed by the function driver when the function driver is initialized by the Device Layer.</p></div>
+This is macro USB_HOST_AUDIO_V1_0_DIRECTION_OUT.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">struct</span></strong> <strong><span style="color: #000000">USB_DEVICE_MSD_MEDIA_FUNCTIONS</span></strong> {
-  <strong><span style="color: #000080">bool</span></strong> (* <strong><span style="color: #000000">isAttached</span></strong>)(<strong><span style="color: #000080">const</span></strong> DRV_HANDLE handle);
-  DRV_HANDLE (* <strong><span style="color: #000000">open</span></strong>)(<strong><span style="color: #000080">const</span></strong> SYS_MODULE_INDEX index, <strong><span style="color: #000080">const</span></strong> DRV_IO_INTENT intent);
-  <strong><span style="color: #000080">void</span></strong> (* <strong><span style="color: #000000">close</span></strong>)(DRV_HANDLE hClient);
-  SYS_MEDIA_GEOMETRY * (* <strong><span style="color: #000000">geometryGet</span></strong>)(DRV_HANDLE hClient);
-  <strong><span style="color: #000080">void</span></strong> (* <strong><span style="color: #000000">blockRead</span></strong>)(DRV_HANDLE handle, uintptr_t * blockOperationHandle, <strong><span style="color: #000080">void</span></strong> * data, uint32_t blockStart, uint32_t nBlocks);
-  <strong><span style="color: #000080">void</span></strong> (* <strong><span style="color: #000000">blockWrite</span></strong>)(DRV_HANDLE handle, uintptr_t * blockOperationHandle, <strong><span style="color: #000080">void</span></strong> * data, uint32_t blockStart, uint32_t nBlocks);
-  <strong><span style="color: #000080">bool</span></strong> (* <strong><span style="color: #000000">isWriteProtected</span></strong>)(DRV_HANDLE drvHandle);
-  <strong><span style="color: #000080">void</span></strong> (* <strong><span style="color: #000000">blockEventHandlerSet</span></strong>)(<strong><span style="color: #000080">const</span></strong> DRV_HANDLE drvHandle, <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">void</span></strong> * eventHandler, <strong><span style="color: #000080">const</span></strong> uintptr_t context);
-  <strong><span style="color: #000080">void</span></strong> (* <strong><span style="color: #000000">blockStartAddressSet</span></strong>)(<strong><span style="color: #000080">const</span></strong> DRV_HANDLE drvHandle, <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">void</span></strong> * addressOfStartBlock);
-};</pre></div></div>
-<a name="4D656D62657273"></a><div class="Element14">
-Members</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element272">
-<div class="TableDiv">
-<table cellspacing="0" class="Table4">
-<tr>
-<td class="Element260" valign="top" width="35%">
-<div class="Element261">
-Members&nbsp;</div></td><td class="Element264" valign="top" width="65%">
-<div class="Element265">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-bool (* isAttached)(const DRV_HANDLE handle);&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-In case of pluggable media, such as SD Card, this function returns true when the media is inserted, initialized and ready to be used. In case of non-pluggable media, such as Internal Flash memory, this function can return true when the media is ready to be used. The MSD host may not detect the media until this function returns true. This function pointer cannot be NULL&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-DRV_HANDLE (* open)(const SYS_MODULE_INDEX index, const DRV_IO_INTENT intent);&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-The MSD Function Driver calls this function to obtain a handle and gain access to functionality of the specified instance of the media driver. The MSD function driver will attempt to open the driver with DRV_IO_INTENT_READWRITE and DRV_IO_INTENT_NONBLOCKING. The MSD host may not detect the media until the MSD function driver obtains a valid driver handle. The function driver will use this handle in all other functions to communicate with the media driver. This function pointer cannot be NULL&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-void (* close)(DRV_HANDLE hClient);&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-The MSD function driver calls this function when the function driver gets deinitialized as result of device detach or a change in configuration. The MSD function driver will open the media driver again to obtain a fresh driver handle when it gets initialized again. This function pointer cannot be NULL.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-SYS_MEDIA_GEOMETRY * (* geometryGet)(DRV_HANDLE hClient);&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-The MSD function driver calls this function when the function driver needs to know the storage capacity of the media. The MSD function driver uses the size of read region and number of read blocks to report the media capacity to the MSD host. This function pointer cannot be NULL.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-void (* blockRead)(DRV_HANDLE handle, uintptr_t * blockOperationHandle, void * data, uint32_t blockStart, uint32_t nBlocks);&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-The MSD function driver calls this function when it needs to read a block of data. This function pointer cannot be NULL.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-void (* blockWrite)(DRV_HANDLE handle, uintptr_t * blockOperationHandle, void * data, uint32_t blockStart, uint32_t nBlocks);&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-The MSD function driver calls this function when it needs to write a block of data. This function pointer can be NULL if the media is write protected.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-bool (* isWriteProtected)(DRV_HANDLE drvHandle);&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-The MSD function driver calls this function to find out if the media is write-protected. This function pointer cannot be NULL.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-void (* blockEventHandlerSet)(const DRV_HANDLE drvHandle, const void * eventHandler, const uintptr_t context);&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-The MSD function driver calls this function to register an block event call back function with the media driver. This event call back will be called when a block related operation has completed. This function pointer should not be NULL.&nbsp;</div></td></tr><tr>
-<td class="Element262" valign="top" width="35%">
-<div class="Element263">
-void (* blockStartAddressSet)(const DRV_HANDLE drvHandle, const void * addressOfStartBlock);&nbsp;</div></td><td class="Element266" valign="top" width="65%">
-<div class="Element267">
-If not NULL and if the blockStartAddress parameter in the <a href="00944.html" target="topic">USB_DEVICE_MSD_MEDIA_INIT_DATA</a> data structure for this media is not 0, then the MSD function driver calls this function immediately after opening the media driver. For media such a NVM, where the storage media is a part of the program memory flash, this function sets the start of the storage area on the media. This function is not required for media such as SD Card.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="52656D61726B73"></a><div class="Element14">
-Remarks</div>
-<div class="Element11">
-<div class="Element10">
-<p class="Element10">
-None.</p></div>
-</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">USB_HOST_AUDIO_V1_0_DIRECTION_OUT</span></strong> USB_HOST_AUDIO_V1_DIRECTION_OUT</pre></div></div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00395.html" target="topic">USB MSD Device Library</a> &gt; <a href="00418.html" target="topic">Library Interface</a> &gt; Data Types and Constants &gt; <a href="00934.html" target="topic">USB_DEVICE_MSD_MEDIA_FUNCTIONS Structure</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Host Libraries</a> &gt; <a href="00100.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00115.html" target="topic">Library Interface</a> &gt; d) Data Types and Constants &gt; <a href="00934.html" target="topic">USB_HOST_AUDIO_V1_0_DIRECTION_OUT Macro</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -146,13 +67,13 @@ None.</p></div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00927.html" target="topic">Previous</a> | <a href="00418.html" target="topic">Up</a> | <a href="00944.html" target="topic">Next</a></div>
+<a href="00933.html" target="topic">Previous</a> | <a href="00115.html" target="topic">Up</a> | <a href="00936.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_MSD_MEDIA_FUNCTIONS Topic Title: USB_DEVICE_MSD_MEDIA_FUNCTIONS Structure)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_0_DIRECTION_OUT Topic Title: USB_HOST_AUDIO_V1_0_DIRECTION_OUT Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

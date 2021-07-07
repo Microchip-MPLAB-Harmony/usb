@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_CDC_DATA_INTERFACE_PROTOCOL Macro</title>
+<title>USB_DEVICE_ActiveConfigurationGet Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00277.html" target="topic">USB CDC Device Library</a> &gt; <a href="00273.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00446.html" target="topic">USB_CDC_DATA_INTERFACE_PROTOCOL Macro</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00167.html" target="topic">USB Device Layer Library</a> &gt; <a href="00191.html" target="topic">Library Interface</a> &gt; d) Device Management Functions &gt; <a href="00446.html" target="topic">USB_DEVICE_ActiveConfigurationGet Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00445.html" target="topic">Previous</a> | <a href="00273.html" target="topic">Up</a> | <a href="00447.html" target="topic">Next</a></div>
+<a href="00651.html" target="topic">Previous</a> | <a href="00191.html" target="topic">Up</a> | <a href="00447.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_CDC_DATA_INTERFACE_PROTOCOL Topic Title: USB_CDC_DATA_INTERFACE_PROTOCOL Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_ActiveConfigurationGet@USB_DEVICE_HANDLE Topic Title: USB_DEVICE_ActiveConfigurationGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_CDC_DATA_INTERFACE_PROTOCOL Macro</div>
+USB_DEVICE_ActiveConfigurationGet Function</div>
 </div>
 </div>
 
@@ -49,17 +49,76 @@ USB_CDC_DATA_INTERFACE_PROTOCOL Macro</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This is macro USB_CDC_DATA_INTERFACE_PROTOCOL.</p></div>
+This function returns the current active USB device configuration.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">USB_CDC_DATA_INTERFACE_PROTOCOL</span></strong> 0x00</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100">uint8_t <strong><span style="color: #000000">USB_DEVICE_ActiveConfigurationGet</span></strong>(
+    <a href="00703.html" target="topic">USB_DEVICE_HANDLE</a> <strong><span style="color: #000000">usbDeviceHandle</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+The USB Device Layer must have been initialized and opened before calling this function.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+usbDeviceHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to the Device Layer Handle that is returned from <a href="00841.html" target="topic">USB_DEVICE_Open</a>&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+Present active configuration.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// This code example shows how the</span></i>
+<i><span style="color: #008000">// USB_DEVICE_ActiveConfigurationGet function can be called to obtain</span></i>
+<i><span style="color: #008000">// the configuration that has been set by the host. Note that this</span></i>
+<i><span style="color: #008000">// information is also available in the macro USB_DEVICE_EVENT_CONFIGURED.</span></i>
+
+uint8_t currentConfiguration;
+<a href="00703.html" target="topic">USB_DEVICE_HANDLE</a> usbDeviceHandle;
+
+currentConfiguration = USB_DEVICE_ActiveConfigurationGet(usbDeviceHandle);
+</pre></div></div>
+</div>
+</div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00277.html" target="topic">USB CDC Device Library</a> &gt; <a href="00273.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00446.html" target="topic">USB_CDC_DATA_INTERFACE_PROTOCOL Macro</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00167.html" target="topic">USB Device Layer Library</a> &gt; <a href="00191.html" target="topic">Library Interface</a> &gt; d) Device Management Functions &gt; <a href="00446.html" target="topic">USB_DEVICE_ActiveConfigurationGet Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -67,13 +126,13 @@ C</div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00445.html" target="topic">Previous</a> | <a href="00273.html" target="topic">Up</a> | <a href="00447.html" target="topic">Next</a></div>
+<a href="00651.html" target="topic">Previous</a> | <a href="00191.html" target="topic">Up</a> | <a href="00447.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_CDC_DATA_INTERFACE_PROTOCOL Topic Title: USB_CDC_DATA_INTERFACE_PROTOCOL Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_ActiveConfigurationGet@USB_DEVICE_HANDLE Topic Title: USB_DEVICE_ActiveConfigurationGet Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

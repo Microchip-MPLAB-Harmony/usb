@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<title>USB_DEVICE_ControlStatus Function</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Doc-O-Matic" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <link rel="STYLESHEET" href="default.css" type="text/css" />
+
+<script type="text/javascript" src="scripts.js"></script>
+</head>
+<body class="Element700" onload="onBodyLoadEx('frames.html', 'topic', '00649.html');" onmousedown="onBodyMouseDown();">
+
+<!-- Begin Popups -->
+
+<!-- End Popups -->
+
+<!-- Begin Page Header -->
+<div class="Element710" id="areafixed">
+<div class="Element94">
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00167.html" target="topic">USB Device Layer Library</a> &gt; <a href="00191.html" target="topic">Library Interface</a> &gt; f) Control Transfer Functions &gt; <a href="00649.html" target="topic">USB_DEVICE_ControlStatus Function</a></div>
+<div class="Element92">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element1">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element2">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element90">
+<a href="00648.html" target="topic">Previous</a> | <a href="00191.html" target="topic">Up</a> | <a href="00664.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element96">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_ControlStatus@USB_DEVICE_HANDLE@USB_DEVICE_CONTROL_STATUS Topic Title: USB_DEVICE_ControlStatus Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table><div class="Element5">
+USB_DEVICE_ControlStatus Function</div>
+</div>
+</div>
+
+<!-- End Page Header -->
+
+<!-- Begin Client Area -->
+<div class="Element720" id="areascroll">
+<div class="Element721">
+
+<!-- Begin Page Content -->
+<a name="PageContent"></a><div class="Element58">
+<a name="4465736372697074696F6E"></a><div class="Element11">
+<div class="Element10">
+<p class="Element10">
+This function allows the application to complete the status stage of the of an on-going control transfer. The application must call this function when the data stage of the control transfer is complete or when a Setup Request has been received (in case of a zero data stage control transfer). The application can either accept the data stage/setup command or reject it. Calling this function with status set to USB_DEVICE_CONTROL_STATUS_OK will acknowledge the status stage of the control transfer. The control transfer can be stalled by setting the status parameter to USB_DEVICE_CONTROL_STATUS_ERROR.&nbsp;</p>
+<p class="Element10">
+The function can be called in the Application Control Transfer event handler or can be called after returning from this event handler. Calling this function after returning from the control transfer event handler defers the response to the event. This allows the application to analyze the event response outside the event handler. Note however, that there are timing considerations when responding to the control transfer. Exceeding the response time will cause the host to cancel the control transfer and may cause USB host to reject the device.&nbsp;</p>
+<p class="Element10">
+The application must be aware of events and associated control transfers that do or do not require data stages. Incorrect usage of the USB_DEVICE_ControlStatus function could cause the device function to be non-compliant.</p></div>
+</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00644.html" target="topic">USB_DEVICE_CONTROL_TRANSFER_RESULT</a> <strong><span style="color: #000000">USB_DEVICE_ControlStatus</span></strong>(
+    <a href="00703.html" target="topic">USB_DEVICE_HANDLE</a> <strong><span style="color: #000000">usbDeviceHandle</span></strong>, 
+    <a href="00641.html" target="topic">USB_DEVICE_CONTROL_STATUS</a> <strong><span style="color: #000000">status</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+Client handle should be valid. This function should only be called to complete an on-going control transfer.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+usbDeviceHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+USB device handle returned by <a href="00841.html" target="topic">USB_DEVICE_Open</a><br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+status&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+USB_DEVICE_CONTROL_STATUS_OK to acknowledge the status stage. USB_DEVICE_CONTROL_STATUS_ERROR to stall the status stage.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+USB_DEVICE_CONTROL_TRANSFER_RESULT_FAILED - If control transfer failed due to host aborting the previous control transfer.&nbsp;</p>
+<p class="Element10">
+USB_DEVICE_CONTROL_TRANSFER_RESULT_SUCCESS - The request was submitted successfully.</p></div>
+</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12">
+<i><span style="color: #008000">// The following code example shows an example of how the</span></i>
+<i><span style="color: #008000">// USB_DEVICE_ControlStatus() function is called in response to the</span></i>
+<i><span style="color: #008000">// USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED event to complete the </span></i>
+<i><span style="color: #008000">// control transfer. Here, the application code acknowledges the status </span></i>
+<i><span style="color: #008000">// stage of the control transfer.</span></i>
+
+<strong><span style="color: #000080">void</span></strong> APP_USBDeviceControlTransferEventHandler
+(
+    <a href="00664.html" target="topic">USB_DEVICE_EVENT</a> event,
+    <strong><span style="color: #000080">void</span></strong> * data, 
+    uintptr_t context
+)
+{
+    USB_SETUP_PACKET * setupPkt;
+
+    <strong><span style="color: #000080">switch</span></strong>(event)
+    {
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST:
+
+            setupPkt = (USB_SETUP_PACKET *)pData;
+            
+            <i><span style="color: #008000">// Submit a buffer to receive 32 bytes in the  control write transfer.</span></i>
+            <i><span style="color: #008000">// USB_DEVICE_ControlReceive(usbDeviceHandle, data, 32); </span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
+
+            <i><span style="color: #008000">// This means that data in the data stage of the control</span></i>
+            <i><span style="color: #008000">// write transfer has been received. The application can either</span></i>
+            <i><span style="color: #008000">// accept the received data by calling the</span></i>
+            <i><span style="color: #008000">// USB_DEVICE_ControlStatus function with</span></i>
+            <i><span style="color: #008000">// USB_DEVICE_CONTROL_STATUS_OK flag (as shown in this example)</span></i>
+            <i><span style="color: #008000">// or it can reject it by calling the USB_DEVICE_ControlStatus</span></i>
+            <i><span style="color: #008000">// function with USB_DEVICE_CONTROL_STATUS_ERROR flag. </span></i>
+
+            USB_DEVICE_ControlStatus(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_SENT:
+            
+            <i><span style="color: #008000">// This means that data in the data stage of the control</span></i>
+            <i><span style="color: #008000">// read transfer has been sent. This indicates that the control transfer is </span></i>
+            <i><span style="color: #008000">// completed. </span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> USB_DEVICE_EVENT_CONTROL_TRANSFER_ABORTED:
+
+            <i><span style="color: #008000">// This means the host has aborted the control transfer. The</span></i>
+            <i><span style="color: #008000">// application can reset its control transfer state machine.</span></i>
+        <strong><span style="color: #000080">break</span></strong>;
+    }
+} 
+</pre></div></div>
+</div>
+</div>
+</div>
+<!-- End Page Content -->
+
+<!-- Begin Page Footer -->
+<div class="Element95">
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00167.html" target="topic">USB Device Layer Library</a> &gt; <a href="00191.html" target="topic">Library Interface</a> &gt; f) Control Transfer Functions &gt; <a href="00649.html" target="topic">USB_DEVICE_ControlStatus Function</a></div>
+<div class="Element93">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr><td width="25%">
+<div class="Element3">
+MPLAB Harmony USB Stack </div>
+</td><td width="25%">
+<div class="Element4">
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
+</td><td width="25%">
+<div class="Element91">
+<a href="00648.html" target="topic">Previous</a> | <a href="00191.html" target="topic">Up</a> | <a href="00664.html" target="topic">Next</a></div>
+</td><td width="25%">
+<div class="Element97">
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_ControlStatus@USB_DEVICE_HANDLE@USB_DEVICE_CONTROL_STATUS Topic Title: USB_DEVICE_ControlStatus Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+</td></tr></table></div>
+
+<!-- End Page Footer -->
+</div>
+</div>
+
+<!-- End Client Area -->
+</body></html>

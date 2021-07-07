@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>usb_device_audio_v1_0.h</title>
+<title>USB_DEVICE_CDC_Write Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00208.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00187.html" target="topic">Files</a> &gt; <a href="00633.html" target="topic">usb_device_audio_v1_0.h</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00166.html" target="topic">USB CDC Device Library</a> &gt; <a href="00162.html" target="topic">Library Interface</a> &gt; a) Functions &gt; <a href="00633.html" target="topic">USB_DEVICE_CDC_Write Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00187.html" target="topic">Previous</a> | <a href="00187.html" target="topic">Up</a> | <a href="00634.html" target="topic">Next</a></div>
+<a href="00616.html" target="topic">Previous</a> | <a href="00162.html" target="topic">Up</a> | <a href="00627.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_device_audio_v1_0.h Topic Title: usb_device_audio_v1_0.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_CDC_Write@USB_DEVICE_CDC_INDEX@USB_DEVICE_CDC_TRANSFER_HANDLE *@void *@size_t@USB_DEVICE_CDC_TRANSFER_FLAGS Topic Title: USB_DEVICE_CDC_Write Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-usb_device_audio_v1_0.h</div>
+USB_DEVICE_CDC_Write Function</div>
 </div>
 </div>
 
@@ -46,327 +46,218 @@ usb_device_audio_v1_0.h</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="436F6D70616E79"></a><div class="Element11">
+<a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-Microchip Technology Inc.</p></div>
+This function requests a data write to the USB Device CDC Function Driver Layer. The function places a requests with driver, the request will get serviced as data is requested by the USB Host. A handle to the request is returned in the transferHandle parameter. The termination of the request is indicated by the USB_DEVICE_CDC_EVENT_WRITE_COMPLETE event. The amount of data written and the transfer handle associated with the request is returned along with the event in writeCompleteData member of the pData parameter in the event handler. The transfer handle expires when event handler for the USB_DEVICE_CDC_EVENT_WRITE_COMPLETE exits. If the read request could not be accepted, the function returns an error code and transferHandle will contain the value <a href="00632.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID</a>.&nbsp;</p>
+<p class="Element10">
+The behavior of the write request depends on the flags and size parameter. If the application intends to send more data in a request, then it should use the USB_DEVICE_CDC_TRANSFER_FLAGS_MORE_DATA_PENDING flag. If there is no more data to be sent in the request, the application must use the USB_DEVICE_CDC_EVENT_WRITE_COMPLETE flag. This is explained in more detail here:&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<ul class="Element630">
+<li class="Element600">If size is a multiple of maxPacketSize and flag is set as</li>
+</ul><p class="Element10">
+USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE, the write function will append a Zero Length Packet (ZLP) to complete the transfer.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<ul class="Element630">
+<li class="Element600">If size is a multiple of maxPacketSize and flag is set as</li>
+</ul><p class="Element10">
+USB_DEVICE_CDC_TRANSFER_FLAGS_MORE_DATA_PENDING, the write function will not append a ZLP and hence will not complete the transfer.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<ul class="Element630">
+<li class="Element600">If size is greater than but not a multiple of maxPacketSize and flags is</li>
+</ul><p class="Element10">
+set as USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE, the write function returns an error code and sets the transferHandle parameter to <a href="00632.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID</a>.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<ul class="Element630">
+<li class="Element600">If size is greater than but not a multiple of maxPacketSize and flags is</li>
+</ul><p class="Element10">
+set as USB_DEVICE_CDC_TRANSFER_FLAGS_MORE_DATA_PENDING, the write function fails and return an error code and sets the transferHandle parameter to <a href="00632.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID</a>.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<ul class="Element630">
+<li class="Element600">If size is less than maxPacketSize and flag is set as</li>
+</ul><p class="Element10">
+USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE, the write function schedules one packet.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<ul class="Element630">
+<li class="Element600">If size is less than maxPacketSize and flag is set as</li>
+</ul><p class="Element10">
+USB_DEVICE_CDC_TRANSFER_FLAGS_MORE_DATA_PENDING, the write function returns an error code and sets the transferHandle parameter to <a href="00632.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID</a>.&nbsp;</p>
+<p class="Element10">
+&nbsp;</p>
+<ul class="Element630">
+<li class="Element600">If size is 0 and the flag is set</li>
+</ul><p class="Element10">
+USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE, the function driver will schedule a Zero Length Packet.&nbsp;</p>
+<p class="Element10">
+Completion of the write transfer is indicated by the USB_DEVICE_CDC_EVENT_WRITE_COMPLETE event. The amount of data written along with the transfer handle is returned along with the event.</p></div>
 </div>
-<a name="46696C65204E616D65"></a><div class="Element14">
-File Name</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><a href="00617.html" target="topic">USB_DEVICE_CDC_RESULT</a> <strong><span style="color: #000000">USB_DEVICE_CDC_Write</span></strong>(
+    <a href="00601.html" target="topic">USB_DEVICE_CDC_INDEX</a> <strong><span style="color: #000000">instanceIndex</span></strong>, 
+    <a href="00631.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE</a> * <strong><span style="color: #000000">transferHandle</span></strong>, 
+    <strong><span style="color: #000080">const</span></strong> <strong><span style="color: #000080">void</span></strong> * <strong><span style="color: #000000">data</span></strong>, 
+    size_t <strong><span style="color: #000000">size</span></strong>, 
+    <a href="00628.html" target="topic">USB_DEVICE_CDC_TRANSFER_FLAGS</a> <strong><span style="color: #000000">flags</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-usb_device_audio.h</p></div>
+The function driver should have been configured.</p></div>
 </div>
-<a name="4465736372697074696F6E"></a><div class="Element14">
-Description</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+instance&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+USB Device CDC Function Driver instance.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+transferHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Pointer to a <a href="00631.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE</a> type of variable. This variable will contain the transfer handle in case the write request was successful.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+data&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+pointer to the data buffer that contains the data to written.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+size&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Size of the data buffer. Refer to the description section for more details on how the size affects the transfer.<br>&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+flags&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Flags that indicate whether the transfer should continue or end. Refer to the description for more details.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-USB Device Audio Function Driver Interface&nbsp;</p>
+USB_DEVICE_CDC_RESULT_OK - The write request was successful. transferHandle contains a valid transfer handle.&nbsp;</p>
 <p class="Element10">
-This file describes the USB Device Audio Function Driver interface. This file should be included by the application if it needs to use the Audio Function Driver API.</p></div>
+USB_DEVICE_CDC_RESULT_ERROR_TRANSFER_QUEUE_FULL - internal request queue is full. The write request could not be added.&nbsp;</p>
+<p class="Element10">
+USB_DEVICE_CDC_RESULT_ERROR_TRANSFER_SIZE_INVALID - The specified transfer size and flag parameter are invalid.&nbsp;</p>
+<p class="Element10">
+USB_DEVICE_CDC_RESULT_ERROR_INSTANCE_NOT_CONFIGURED - The specified instance is not configured yet.&nbsp;</p>
+<p class="Element10">
+USB_DEVICE_CDC_RESULT_ERROR_INSTANCE_INVALID - The specified instance was not provisioned in the application and is invalid.</p></div>
 </div>
-<a name="456E756D65726174696F6E73"></a><div class="Element14">
-Enumerations</div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00560.html" target="topic">USB_DEVICE_AUDIO_EVENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio Function Driver events.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00617.html" target="topic">USB_DEVICE_AUDIO_RESULT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio Function Driver USB Device Audio result enumeration.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+While the using the CDC Function Driver with the PIC32MZ USB module, the transmit buffer provided to the USB_DEVICE_CDC_Write function should be placed in coherent memory and aligned at a 16 byte boundary. This can be done by declaring the buffer using the __attribute__((coherent, aligned(16))) attribute. An example is shown here&nbsp;</p>
+<p class="Element10">
+&nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12">uint8_t data[256] __attribute__((coherent, aligned(16)));</pre></div></div>
 </div>
 </div>
-<a name="46756E6374696F6E73"></a><div class="Element14">
-Functions</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00605.html" target="topic">USB_DEVICE_AUDIO_EventHandlerSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This function registers an event handler for the specified Audio function driver instance.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00616.html" target="topic">USB_DEVICE_AUDIO_Read</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This function requests a data read from the USB Device Audio Function Driver Layer.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00628.html" target="topic">USB_DEVICE_AUDIO_StatusSend</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This function requests a Status write to the USB Device Audio Function Driver Layer.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00632.html" target="topic">USB_DEVICE_AUDIO_TransferCancel</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This function cancels a scheduled Audio Device data transfer.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00684.html" target="topic">USB_DEVICE_AUDIO_Write</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This function requests a data write to the USB Device Audio Function Driver Layer.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="4D6163726F73"></a><div class="Element14">
-Macros</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00004.html" target="topic">_USB_DEVICE_AUDIO_H</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is macro _USB_DEVICE_AUDIO_H.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00604.html" target="topic">USB_DEVICE_AUDIO_EVENT_RESPONSE_NONE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio Function Driver event handler response type none.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00606.html" target="topic">USB_DEVICE_AUDIO_FUNCTION_DRIVER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio Function Driver function pointer.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00631.html" target="topic">USB_DEVICE_AUDIO_TRANSFER_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio Function Driver invalid transfer handle definition.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="53747275637475726573"></a><div class="Element14">
-Structures</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00590.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_INTERFACE_SETTING_CHANGED</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio Function Driver alternate interface setting event data.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00593.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_READ_COMPLETE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio Function Driver audio read and write complete event data.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00594.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_STATUS_SEND_COMPLETE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio Function Driver Status Send complete event data.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00597.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_WRITE_COMPLETE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio Function Driver audio read and write complete event data.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00608.html" target="topic">USB_DEVICE_AUDIO_INIT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio Function Driver initialization data structure.&nbsp;</div></td></tr></table></div></div>
-</div>
-</div>
-<a name="5479706573"></a><div class="Element14">
-Types</div>
-<div class="Element11">
-<div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element201">
- &nbsp;</div></td><td class="Element200" valign="top" width="25%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00579.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_CUR</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_CUR.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00580.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_MAX</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_MAX.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00581.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_MEM</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_MEM.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00582.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_MIN</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_MIN.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00583.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_RES</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_RES.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00584.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_CUR</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio Function Driver set and get request data.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00585.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MAX</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MAX.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00586.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MEM</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MEM.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00587.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MIN</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MIN.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00588.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_RES</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_RES.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00589.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_ENTITY_GET_STAT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type USB_DEVICE_AUDIO_EVENT_DATA_ENTITY_GET_STAT.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00602.html" target="topic">USB_DEVICE_AUDIO_EVENT_HANDLER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio event handler function pointer type.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00603.html" target="topic">USB_DEVICE_AUDIO_EVENT_RESPONSE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio Function Driver event callback response type.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00607.html" target="topic">USB_DEVICE_AUDIO_INDEX</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio function driver index.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00630.html" target="topic">USB_DEVICE_AUDIO_TRANSFER_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio Function Driver transfer handle definition.&nbsp;</div></td></tr></table></div></div>
+<div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// Below is a set of examples showing various conditions trying to</span></i>
+<i><span style="color: #008000">// send data with the Write command.  </span></i>
+<i><span style="color: #008000">//</span></i>
+<i><span style="color: #008000">// This assumes that driver was opened successfully.</span></i>
+<i><span style="color: #008000">// Assume maxPacketSize is 64.</span></i>
+
+<a href="00631.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE</a> transferHandle;
+<a href="00617.html" target="topic">USB_DEVICE_CDC_RESULT</a> writeRequestHandle;
+<a href="00601.html" target="topic">USB_DEVICE_CDC_INDEX</a> instance;
+
+<i><span style="color: #008000">//-------------------------------------------------------</span></i>
+<i><span style="color: #008000">// In this example we want to send 34 bytes only.</span></i>
+
+writeRequestResult = USB_DEVICE_CDC_Write(instance,
+                        &amp;transferHandle, data, 34, 
+                        USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE);
+
+<strong><span style="color: #000080">if</span></strong>(USB_DEVICE_CDC_RESULT_OK != writeRequestResult)
+{
+    <i><span style="color: #008000">//Do Error handling here</span></i>
+}
+
+<i><span style="color: #008000">//-------------------------------------------------------</span></i>
+<i><span style="color: #008000">// In this example we want to send 64 bytes only.</span></i>
+<i><span style="color: #008000">// This will cause a ZLP to be sent.</span></i>
+
+writeRequestResult = USB_DEVICE_CDC_Write(instance,
+                        &amp;transferHandle, data, 64, 
+                        USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE);
+
+<strong><span style="color: #000080">if</span></strong>(USB_DEVICE_CDC_RESULT_OK != writeRequestResult)
+{
+    <i><span style="color: #008000">//Do Error handling here</span></i>
+}
+
+<i><span style="color: #008000">//-------------------------------------------------------</span></i>
+<i><span style="color: #008000">// This example will return an error because size is less</span></i>
+<i><span style="color: #008000">// than maxPacketSize and the flag indicates that more</span></i>
+<i><span style="color: #008000">// data is pending.</span></i>
+
+writeRequestResult = USB_DEVICE_CDC_Write(instanceHandle,
+                        &amp;transferHandle, data, 32, 
+                        USB_DEVICE_CDC_TRANSFER_FLAGS_MORE_DATA_PENDING);
+
+<i><span style="color: #008000">//-------------------------------------------------------</span></i>
+<i><span style="color: #008000">// In this example we want to place a request for a 70 byte transfer.</span></i>
+<i><span style="color: #008000">// The 70 bytes will be sent out in a 64 byte transaction and a 6 byte</span></i>
+<i><span style="color: #008000">// transaction completing the transfer.</span></i>
+
+writeRequestResult = USB_DEVICE_CDC_Write(instanceHandle,
+                        &amp;transferHandle, data, 70, 
+                        USB_DEVICE_CDC_TRANSFER_FLAGS_DATA_COMPLETE);
+
+<strong><span style="color: #000080">if</span></strong>(USB_DEVICE_CDC_RESULT_OK != writeRequestResult)
+{
+    <i><span style="color: #008000">//Do Error handling here</span></i>
+}
+
+<i><span style="color: #008000">//-------------------------------------------------------</span></i>
+<i><span style="color: #008000">// In this example we want to place a request for a 70 bytes and the flag</span></i>
+<i><span style="color: #008000">// is set to data pending. This will result in an error. The size of data</span></i>
+<i><span style="color: #008000">// when the data pending flag is specified should be a multiple of the</span></i>
+<i><span style="color: #008000">// endpoint size.</span></i>
+
+writeRequestResult = USB_DEVICE_CDC_Write(instanceHandle,
+                        &amp;transferHandle, data, 70, 
+                        USB_DEVICE_CDC_TRANSFER_FLAGS_MORE_DATA_PENDING);
+
+<strong><span style="color: #000080">if</span></strong>(USB_DEVICE_CDC_RESULT_OK != writeRequestResult)
+{
+    <i><span style="color: #008000">//Do Error handling here</span></i>
+}
+
+<i><span style="color: #008000">// The completion of the write request will be indicated by the </span></i>
+<i><span style="color: #008000">// USB_DEVICE_CDC_EVENT_WRITE_COMPLETE event.</span></i>
+</pre></div></div>
 </div>
 </div>
 </div>
@@ -374,7 +265,7 @@ USB Device Audio Function Driver transfer handle definition.&nbsp;</div></td></t
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00208.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00187.html" target="topic">Files</a> &gt; <a href="00633.html" target="topic">usb_device_audio_v1_0.h</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00166.html" target="topic">USB CDC Device Library</a> &gt; <a href="00162.html" target="topic">Library Interface</a> &gt; a) Functions &gt; <a href="00633.html" target="topic">USB_DEVICE_CDC_Write Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -382,13 +273,13 @@ USB Device Audio Function Driver transfer handle definition.&nbsp;</div></td></t
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00187.html" target="topic">Previous</a> | <a href="00187.html" target="topic">Up</a> | <a href="00634.html" target="topic">Next</a></div>
+<a href="00616.html" target="topic">Previous</a> | <a href="00162.html" target="topic">Up</a> | <a href="00627.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: usb_device_audio_v1_0.h Topic Title: usb_device_audio_v1_0.h)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_CDC_Write@USB_DEVICE_CDC_INDEX@USB_DEVICE_CDC_TRANSFER_HANDLE *@void *@size_t@USB_DEVICE_CDC_TRANSFER_FLAGS Topic Title: USB_DEVICE_CDC_Write Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

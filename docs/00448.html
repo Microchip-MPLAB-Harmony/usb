@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_CDC_DESCRIPTOR_TYPE Enumeration</title>
+<title>USB_DEVICE_Attach Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00277.html" target="topic">USB CDC Device Library</a> &gt; <a href="00273.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00448.html" target="topic">USB_CDC_DESCRIPTOR_TYPE Enumeration</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00167.html" target="topic">USB Device Layer Library</a> &gt; <a href="00191.html" target="topic">Library Interface</a> &gt; d) Device Management Functions &gt; <a href="00448.html" target="topic">USB_DEVICE_Attach Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00493.html" target="topic">Previous</a> | <a href="00273.html" target="topic">Up</a> | <a href="00478.html" target="topic">Next</a></div>
+<a href="00911.html" target="topic">Previous</a> | <a href="00191.html" target="topic">Up</a> | <a href="00651.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_CDC_DESCRIPTOR_TYPE Topic Title: USB_CDC_DESCRIPTOR_TYPE Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_Attach@USB_DEVICE_HANDLE Topic Title: USB_DEVICE_Attach Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_CDC_DESCRIPTOR_TYPE Enumeration</div>
+USB_DEVICE_Attach Function</div>
 </div>
 </div>
 
@@ -49,29 +49,93 @@ USB_CDC_DESCRIPTOR_TYPE Enumeration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-CDC descriptor type.&nbsp;</p>
-<p class="Element10">
-This enumeration identifies the descriptor types in the CDC.</p></div>
+This function will attach the device to the USB. It does this by enabling the pull up resistors on the D+ or D- lines. This function should be called after the USB device layer has generated the USB_DEVICE_EVENT_POWER_DETECTED event.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
-  <strong><span style="color: #000000">USB_CDC_DESC_CS_INTERFACE</span></strong> = 0x24,
-  <strong><span style="color: #000000">USB_CDC_DESC_CS_ENDPOINT</span></strong> = 0x25
-} USB_CDC_DESCRIPTOR_TYPE;</pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">void</span></strong> <strong><span style="color: #000000">USB_DEVICE_Attach</span></strong>(
+    <a href="00703.html" target="topic">USB_DEVICE_HANDLE</a> <strong><span style="color: #000000">usbDeviceHandle</span></strong>
+);</pre></div></div>
+<a name="507265636F6E646974696F6E73"></a><div class="Element14">
+Preconditions</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+Client handle should be valid. The device layer should have been initialized and an device layer event handler function should have been assigned.</p></div>
+</div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+usbDeviceHandle&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Client's USB device layer handle (returned from <a href="00841.html" target="topic">USB_DEVICE_Open</a>)&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+<p class="Element10">
+None.</p></div>
+</div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This value goes into the bDescriptorType of CDC functional descriptor.</p></div>
+None.</p></div>
+</div>
+<a name="4578616D706C65"></a><div class="Element14">
+Example</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element13"><div class="Element12"><pre class="Element12">
+<i><span style="color: #008000">// This code example shows the set </span></i>
+<i><span style="color: #008000">// of steps to follow before attaching the</span></i>
+<i><span style="color: #008000">// device on the bus. It is assumed that the</span></i>
+<i><span style="color: #008000">// device layer is already initialized.</span></i>
+
+<a href="00703.html" target="topic">USB_DEVICE_HANDLE</a> usbDeviceHandle;
+
+<i><span style="color: #008000">// Get an handle to the USB device layer.</span></i>
+usbDeviceHandle = <a href="00841.html" target="topic">USB_DEVICE_Open</a>( <a href="00775.html" target="topic">USB_DEVICE_INDEX_0</a>,
+                                                  DRV_IO_INTENT_READWRITE );
+
+<strong><span style="color: #000080">if</span></strong>(<a href="00704.html" target="topic">USB_DEVICE_HANDLE_INVALID</a> == usbDeviceHandle)
+{
+    <i><span style="color: #008000">// Failed to open handle.</span></i>
+    <i><span style="color: #008000">// Handle error.</span></i>
+}
+
+<i><span style="color: #008000">// Register an event handler call back function with device layer</span></i>
+<i><span style="color: #008000">// so that we are ready to receive events when the device is </span></i>
+<i><span style="color: #008000">// attached to the bus.</span></i>
+
+<a href="00694.html" target="topic">USB_DEVICE_EventHandlerSet</a>(usbDeviceHandle, APP_USBDeviceEventHandler, NULL);
+
+<i><span style="color: #008000">// Now, connect device to USB</span></i>
+USB_DEVICE_Attach(usbDeviceHandle);
+</pre></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00277.html" target="topic">USB CDC Device Library</a> &gt; <a href="00273.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00448.html" target="topic">USB_CDC_DESCRIPTOR_TYPE Enumeration</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00167.html" target="topic">USB Device Layer Library</a> &gt; <a href="00191.html" target="topic">Library Interface</a> &gt; d) Device Management Functions &gt; <a href="00448.html" target="topic">USB_DEVICE_Attach Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -79,13 +143,13 @@ This value goes into the bDescriptorType of CDC functional descriptor.</p></div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00493.html" target="topic">Previous</a> | <a href="00273.html" target="topic">Up</a> | <a href="00478.html" target="topic">Next</a></div>
+<a href="00911.html" target="topic">Previous</a> | <a href="00191.html" target="topic">Up</a> | <a href="00651.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_CDC_DESCRIPTOR_TYPE Topic Title: USB_CDC_DESCRIPTOR_TYPE Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_Attach@USB_DEVICE_HANDLE Topic Title: USB_DEVICE_Attach Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

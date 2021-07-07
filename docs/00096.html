@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Running the Demonstration</title>
+<title>Transferring Data</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00253.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00093.html" target="topic">Dual Role Demonstrations</a> &gt; <a href="00031.html" target="topic">host_msd_device_hid</a> &gt; <a href="00096.html" target="topic">Running the Demonstration</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00099.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00091.html" target="topic">How the Library Works</a> &gt; <a href="00096.html" target="topic">Transferring Data</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00095.html" target="topic">Previous</a> | <a href="00031.html" target="topic">Up</a> | <a href="00389.html" target="topic">Next</a></div>
+<a href="00088.html" target="topic">Previous</a> | <a href="00091.html" target="topic">Up</a> | <a href="00086.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB Dual Role Host_msd_device_hid run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDDEV V2_0 Transferring Data Topic Title: Transferring Data)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Running the Demonstration</div>
+Transferring Data</div>
 </div>
 </div>
 
@@ -49,27 +49,24 @@ Running the Demonstration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This application demonstrates the Dual Role capability of the MPLAB Harmony USB Stack. The application project includes both, the USB Host and Device Stacks. Both the stacks are initialized during application initialization. During operation, the application polls a switch on the starter kit to trigger a USB role switch. Note that the application cannot simultaneously operate as a host and device. The one USB role is exclusive of the other.&nbsp;</p>
+The USB Audio 2.0 Device Driver provides functions to send and receive data.</p><div class="Element15">
+Receiving Data</div>
 <p class="Element10">
-Prior to using this demonstration, it is recommended to review the MPLAB Harmony USB Release Notes for any known issues.&nbsp;</p>
+The <a href="00557.html" target="topic">USB_DEVICE_AUDIO_V2_Read</a> function schedules a data read. When the host transfers data to the device, the <span style="color: #000000">Audio 2.0 Function Driver</span> receives the data and invokes the USB_DEVICE_AUDIO_V2_EVENT_READ_COMPLETE event. This event indicates that audio data is now available in the application specified buffer.&nbsp;</p>
 <p class="Element10">
-&nbsp;</p>
-<ol class="Element630">
-<li value="1" class="Element600">Open the project and in MPLAB X IDE.</li>
-<li value="2" class="Element600">Build the code and program the device. The application initially will not operate in any USB role.</li>
-<li value="3" class="Element600">Press SW2 on the starter kit. This places the application in a USB Device mode.</li>
-<li value="4" class="Element600">Connect a USB cable between micro USB connector (J4) on the starter kit and a PC USB host. The application will emulate a USB HID mouse function. The cursor on the PC will rotate. Pressing SW1 will enable and disable the cursor movements. Exercise device plug-n-play operation to confirm USB Device operation</li>
-<li value="5" class="Element600">Now try switching the USB role to Host mode. Disconnect the USB cable between micro USB connector (J4) on the starter kit and a PC USB host. Press SW3 on the starter kit.</li>
-<li value="6" class="Element600">The application now will be in USB Host role. Connect a USB pen drive to the Type-A USB Host connector (J5) on the starter kit. The application will create a file (file.txt) on the pen drive. The completion of the operation is indicated by LED2 on the starter kit. Disconnect the pen driver and connect it to a PC to verify the contents of the file.</li>
-<li value="7" class="Element600">Repeat steps 3 through 6 to exercise the role switching capability.</li>
-</ol></div>
+The <span style="color: #000000">Audio 2.0 Function Driver</span> supports buffer queuing. The application can schedule multiple read requests. Each request is assigned a unique buffer handle, which is returned with the USB_DEVICE_AUDIO_V2_EVENT_READ_COMPLETE event. The application can use the buffer handle to track completion to queued requests. Using this feature allows the application to implement audio buffering schemes such as ping-pong buffering.</p><div class="Element15">
+Sending Data</div>
+<p class="Element10">
+The <a href="00572.html" target="topic">USB_DEVICE_AUDIO_V2_Write</a> schedules a data write. When the host sends a request for the data, the <span style="color: #000000">Audio 2.0 Function Driver</span> transfers the data and invokes the USB_DEVICE_AUDIO_V2_EVENT_WRITE_COMPLETE event.&nbsp;</p>
+<p class="Element10">
+The <span style="color: #000000">Audio 2.0 Function Driver</span> supports buffer queuing. The application can schedule multiple write requests. Each request is assigned a unique buffer handle, which is returned with the USB_DEVICE_AUDIO_V2_EVENT_WRITE_COMPLETE event. The application can use the buffer handle to track completion to queued requests. Using this feature allows the application to implement audio buffering schemes such as ping-pong buffering.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00253.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00093.html" target="topic">Dual Role Demonstrations</a> &gt; <a href="00031.html" target="topic">host_msd_device_hid</a> &gt; <a href="00096.html" target="topic">Running the Demonstration</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00099.html" target="topic">USB Audio 2.0 Device Library</a> &gt; <a href="00091.html" target="topic">How the Library Works</a> &gt; <a href="00096.html" target="topic">Transferring Data</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -77,13 +74,13 @@ Prior to using this demonstration, it is recommended to review the MPLAB Harmony
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00095.html" target="topic">Previous</a> | <a href="00031.html" target="topic">Up</a> | <a href="00389.html" target="topic">Next</a></div>
+<a href="00088.html" target="topic">Previous</a> | <a href="00091.html" target="topic">Up</a> | <a href="00086.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB Dual Role Host_msd_device_hid run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDDEV V2_0 Transferring Data Topic Title: Transferring Data)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -2,6 +2,29 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 # Microchip MPLAB Harmony 3 Release Notes
+
+## USB Release v3.8.0
+### NEW FEATURES
+- This release does not contain any new features or new parts support. 
+
+### Bug fixes
+- Resolved double mutex lock issue in UDPHS Driver. 
+- Resolved incorrect structure selection in the USB_DEVICE_CDC_SerialStateNotificationSend() function. 
+- Updated USBFSV1 Device mode driver to support Remote wakeup feature. 
+- Fixed issues in USB MHC scripts.  
+
+### Known Issues
+- IAR projects for SAM MCUs and MPUs build with warning messages. 
+- The USB_DEVICE_CDC_SerialStateNotificationSend() function does not support queuing. 
+
+### Development Tools
+
+-    [MPLAB® X IDE v5.50](https://www.microchip.com/mplab/mplab-x-ide)
+-    [MPLAB® XC32 C/C++ Compiler v3.00](https://www.microchip.com/mplab/compilers)
+-    [IAR Embedded Workbench® for ARM® v8.5](https://www.iar.com/iar-embedded-workbench/#!?architecture=Arm)
+-   MPLAB® X IDE plug-ins:- MPLAB® Harmony 3 Launcher v3.6.4 or above
+
+
 ## USB Release v3.7.2
 ### NEW FEATURES
 - **New part support** - N/A

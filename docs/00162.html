@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Glossary</title>
+<title>Library Interface</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00168.html" target="topic">Support</a> &gt; <a href="00162.html" target="topic">Glossary</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00166.html" target="topic">USB CDC Device Library</a> &gt; <a href="00162.html" target="topic">Library Interface</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00158.html" target="topic">Previous</a> | <a href="00168.html" target="topic">Up</a> | <a href="00178.html" target="topic">Next</a></div>
+<a href="00152.html" target="topic">Previous</a> | <a href="00166.html" target="topic">Up</a> | <a href="00599.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: HARMONY Glossary Topic Title: Glossary)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVCDC Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Glossary</div>
+Library Interface</div>
 </div>
 </div>
 
@@ -48,102 +48,393 @@ Glossary</div>
 <a name="PageContent"></a><div class="Element58">
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<div class="Element15">
-Glossary of MPLAB Harmony Terms</div>
-<div class="Element63">
+<p class="Element10">
+This section describes the Application Programming Interface (API) functions of the USB CDC Device Library.&nbsp;</p>
+<p class="Element10">
+Refer to each section for a detailed description.</p></div>
+</div>
+<a name="61292046756E6374696F6E73"></a><div class="Element14">
+a) Functions</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
 <div class="TableDiv">
-<table cellspacing="0" class="Table1">
+<table cellspacing="0" class="Table0">
 <tr>
-<td class="Element65" valign="top" width="3%">
-<div class="Element66">
-Term&nbsp;</div></td><td class="Element65" valign="top" width="97%">
-<div class="Element66">
-Definition&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="3%">
-<div class="Element68">
-Application&nbsp;</div></td><td class="Element67" valign="top" width="97%">
-<div class="Element68">
-One or more application modules define the overall behavior of a MPLAB Harmony system. Applications are either demonstrations or examples provided with the installation or are implemented by you, using MPLAB Harmony libraries to accomplish a desired task.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="3%">
-<div class="Element68">
-Client&nbsp;</div></td><td class="Element67" valign="top" width="97%">
-<div class="Element68">
-A client module is any module that uses the services (calls the interface functions) of another module.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="3%">
-<div class="Element68">
-Configuration&nbsp;</div></td><td class="Element67" valign="top" width="97%">
-<div class="Element68">
-A MPLAB Harmony configuration consists of static definitions (C language <span class="Element146">#define</span> statements), executable source code, and other definitions in a set of files that are necessary to create a working MPLAB Harmony system. (See the <span class="Element145">System Configurations</span> section for additional information.)&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="3%">
-<div class="Element68">
-Configuration Options&nbsp;</div></td><td class="Element67" valign="top" width="97%">
-<div class="Element68">
-Configuration options are the specific set of <span class="Element146">#define</span> statements that are required by any specific MPLAB Harmony library to specify certain parameters (such as buffer sizes, minimum and maximum values, etc.) build that library. Configuration options are defined in the <span class="Element146">system_config.h</span> system-wide configuration header.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="3%">
-<div class="Element68">
-Driver&nbsp;</div></td><td class="Element67" valign="top" width="97%">
-<div class="Element68">
-A &quot;driver&quot; (or device driver) is a MPLAB Harmony software module designed to control and provide access to a specific peripheral, either built into or external to the microcontroller.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="3%">
-<div class="Element68">
-Driver Index&nbsp;</div></td><td class="Element67" valign="top" width="97%">
-<div class="Element68">
-Dynamic MPLAB Harmony drivers (and other dynamic modules) can manage the more than one instance of the peripheral (and other resources) that they control. The &quot;driver index&quot; is a static index number (0, 1, 2,...) that identifies which instance of the driver is to be used.<br><img src="Note Icon.png" border="0" alt="" title=""><strong> Note:</strong> The driver index is not necessarily identical to the peripheral index. The association between these two is made when the driver is initialized.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="3%">
-<div class="Element68">
-Driver Instance&nbsp;</div></td><td class="Element67" valign="top" width="97%">
-<div class="Element68">
-An instance of a driver (or other module) consists of a complete set of the memory (and other resources) controlled by the driver's code. Selection of which set of resources to control is made using a driver index.<br><img src="Note Icon.png" border="0" alt="" title=""><strong> Note:</strong> Even though there may be multiple instances of the resources managed by a dynamic driver, there is only ever one instance of the actual object code. However, static drivers always maintain a 1:1 relationship between resource and code instances.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="3%">
-<div class="Element68">
-Framework&nbsp;</div></td><td class="Element67" valign="top" width="97%">
-<div class="Element68">
-The MPLAB Harmony framework consists of a set of libraries (and the rules and conventions used to create those libraries) that can be used to create MPLAB Harmony systems.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="3%">
-<div class="Element68">
-Handle&nbsp;</div></td><td class="Element67" valign="top" width="97%">
-<div class="Element68">
-A handle is a value that allows one software module to &quot;hold&quot; onto a specific instance of some object owned by another software module (analogous to the way a valet holds the handle of a suitcase), creating a link between the two software modules. A handle is an &quot;opaque&quot; value, meaning that the &quot;client&quot; module (the module that receives and holds the handle) must not attempt to interpret the contents or meaning of the handle value. The value of the handle is only meaningful to the &quot;server&quot; module (the module that provides the handle). Internal to the server module, the handle may represent a memory address or it may represent a zero-based index or any other value, as required by the &quot;server&quot; module to identify the &quot;object&quot; to which the client is linked by the handle.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="3%">
-<div class="Element68">
-Initialization Overrides&nbsp;</div></td><td class="Element67" valign="top" width="97%">
-<div class="Element68">
-Initialization overrides are configuration options that can be defined to statically override (at build time) parameters that are normally passed into the &quot;Initialize&quot; function of a driver or other MPLAB Harmony module. This mechanism allows you to statically initialize a module, instead of dynamically initializing the module.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="3%">
-<div class="Element68">
-Interface&nbsp;</div></td><td class="Element67" valign="top" width="97%">
-<div class="Element68">
-The interface to a module is the set of functions, data types, and other definitions that must be used to interact with that module.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="3%">
-<div class="Element68">
-Middleware&nbsp;</div></td><td class="Element67" valign="top" width="97%">
-<div class="Element68">
-The term &quot;middleware&quot; is used to describe any software that fits between the application and the device drivers within a MPLAB Harmony system. This term is used to describe libraries that use drivers to access a peripheral, and then implement communication protocols (such as TCP/IP, USB protocols, and graphics image processing), as well as other more complex processing, which is required to use certain peripherals, but is not actually part of controlling the peripheral itself.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="3%">
-<div class="Element68">
-Module&nbsp;</div></td><td class="Element67" valign="top" width="97%">
-<div class="Element68">
-A MPLAB Harmony software module is a closely related group of functions controlling a related set of resources (memory and registers) that can be initialized and maintained by the system. Most MPLAB Harmony modules provide an interface for client interaction. However, &quot;headless&quot; modules with no interface are possible.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="3%">
-<div class="Element68">
-Peripheral Index&nbsp;</div></td><td class="Element67" valign="top" width="97%">
-<div class="Element68">
-A peripheral index is a static label (usually an C language &quot;enum&quot; value) that is used to identify a specific instance of a peripheral.<br><img src="Note Icon.png" border="0" alt="" title=""><strong> Note:</strong> Unlike a driver index, which always starts at '0', a peripheral index may be internally represented as any number, letter, or even a base address and the user should not rely on the value itself, but only the label.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="3%">
-<div class="Element68">
-Peripheral Instance&nbsp;</div></td><td class="Element67" valign="top" width="97%">
-<div class="Element68">
-An instance of a peripheral is a complete set of the registers (and internal physical resources) necessary to provide the core functionality of a given type of peripheral (either built into or external to the microcontroller).<br><img src="Note Icon.png" border="0" alt="" title=""><strong> Note:</strong> A specific peripheral instance is identified using a peripheral index.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="3%">
-<div class="Element68">
-System&nbsp;</div></td><td class="Element67" valign="top" width="97%">
-<div class="Element68">
-A MPLAB Harmony system is a complete set of libraries, applications, and configuration items loaded and executing on a specific hardware platform (microcontroller, board, and external peripherals) or the source items necessary to build such a system.<br><img src="Note Icon.png" border="0" alt="" title=""><strong> Note:</strong> Since a system can multiple configurations, one MPLAB Harmony project may support multiple systems through multiple supported configurations. See the demonstration applications included in the installation for examples.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="3%">
-<div class="Element68">
-System Service&nbsp;</div></td><td class="Element67" valign="top" width="97%">
-<div class="Element68">
-A system service is a MPLAB Harmony module that provides access to and control of common system resources (memory and registers) with which other modules (drivers, middleware, libraries and application) may interact.<br><img src="Note Icon.png" border="0" alt="" title=""><strong> Note:</strong> System services, much like drivers, manage sharing of resources so as to avoid conflicts between modules that would otherwise occur if each module attempted to manage the share resource itself. But, unlike drivers, system services do not normally need to be &quot;opened&quot; to use them.&nbsp;</div></td></tr></table></div></div>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00599.html" target="topic">USB_DEVICE_CDC_EventHandlerSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function registers a event handler for the specified CDC function driver instance.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00616.html" target="topic">USB_DEVICE_CDC_Read</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function requests a data read from the USB Device CDC Function Driver Layer.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00633.html" target="topic">USB_DEVICE_CDC_Write</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function requests a data write to the USB Device CDC Function Driver Layer.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00627.html" target="topic">USB_DEVICE_CDC_SerialStateNotificationSend</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function schedules a request to send serial state notification to the host.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="6229204461746120547970657320616E6420436F6E7374616E7473"></a><div class="Element14">
+b) Data Types and Constants</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00588.html" target="topic">USB_DEVICE_CDC_EVENT_DATA_READ_COMPLETE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Read and Write Complete Event Data.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00591.html" target="topic">USB_DEVICE_CDC_EVENT_DATA_SERIAL_STATE_NOTIFICATION_COMPLETE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Read and Write Complete Event Data.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00592.html" target="topic">USB_DEVICE_CDC_EVENT_DATA_WRITE_COMPLETE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Read and Write Complete Event Data.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00610.html" target="topic">USB_DEVICE_CDC_INIT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Initialization Data Structure&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00589.html" target="topic">USB_DEVICE_CDC_EVENT_DATA_SEND_BREAK</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Send Break Event Data&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00577.html" target="topic">USB_DEVICE_CDC_EVENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Events&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00596.html" target="topic">USB_DEVICE_CDC_EVENT_HANDLER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Event Handler Function Pointer Type.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00597.html" target="topic">USB_DEVICE_CDC_EVENT_RESPONSE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Event Callback Response Type&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00601.html" target="topic">USB_DEVICE_CDC_INDEX</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Index&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00617.html" target="topic">USB_DEVICE_CDC_RESULT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver USB Device CDC Result enumeration.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00628.html" target="topic">USB_DEVICE_CDC_TRANSFER_FLAGS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Transfer Flags&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00631.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Transfer Handle Definition.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00598.html" target="topic">USB_DEVICE_CDC_EVENT_RESPONSE_NONE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Event Handler Response Type None.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00632.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Invalid Transfer Handle Definition.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00600.html" target="topic">USB_DEVICE_CDC_FUNCTION_DRIVER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device CDC Function Driver Function pointer&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00381.html" target="topic">USB_CDC_LINESTATE_CARRIER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Bit code information in line state&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00382.html" target="topic">USB_CDC_LINESTATE_DTR</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Bit code information in line state&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00337.html" target="topic">USB_CDC_DESCRIPTOR_TYPE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Identifies the descriptor types in the CDC.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00367.html" target="topic">USB_CDC_INF_PROTOCOL</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Identifies the protocol codes.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00378.html" target="topic">USB_CDC_INTERFACE_TYPE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Identifies the CDC interface type.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00383.html" target="topic">USB_CDC_NOTIFICATION</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Identifies the notification codes available for CDC.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00392.html" target="topic">USB_CDC_REQUEST</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Identifies the CDC specific request codes.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00340.html" target="topic">USB_CDC_FUNCTIONAL_DESCRIPTOR</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Identifies the CDC function header type.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00430.html" target="topic">USB_CDC_SUBCLASS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Identifies the subclass codes for communication interface.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00444.html" target="topic">USB_CDC_UNION_FUNCTIONAL_DESCRIPTOR_SUBORDINATE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is type USB_CDC_UNION_FUNCTIONAL_DESCRIPTOR_SUBORDINATE.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00032.html" target="topic">CS_INTERFACE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is macro CS_INTERFACE.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00327.html" target="topic">USB_CDC_ACM_SUPPORT_BREAK</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is macro USB_CDC_ACM_SUPPORT_BREAK.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00328.html" target="topic">USB_CDC_ACM_SUPPORT_COMM_FEATURE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is macro USB_CDC_ACM_SUPPORT_COMM_FEATURE.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00329.html" target="topic">USB_CDC_ACM_SUPPORT_LINE_CODING_LINE_STATE_AND_NOTIFICATION</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is macro USB_CDC_ACM_SUPPORT_LINE_CODING_LINE_STATE_AND_NOTIFICATION.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00330.html" target="topic">USB_CDC_ACM_SUPPORT_NETWORK_NOTIFICATION</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is macro USB_CDC_ACM_SUPPORT_NETWORK_NOTIFICATION.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00331.html" target="topic">USB_CDC_ACM_SUPPORT_NONE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Identifies the CDC ACM sub-class capabilities.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00332.html" target="topic">USB_CDC_CLASS_CODE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Identifies the CDC Interface Class, Subclass and protocol constants.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00333.html" target="topic">USB_CDC_COMMUNICATIONS_INTERFACE_CLASS_CODE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is macro USB_CDC_COMMUNICATIONS_INTERFACE_CLASS_CODE.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00334.html" target="topic">USB_CDC_DATA_INTERFACE_CLASS_CODE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is macro USB_CDC_DATA_INTERFACE_CLASS_CODE.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00335.html" target="topic">USB_CDC_DATA_INTERFACE_PROTOCOL</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is macro USB_CDC_DATA_INTERFACE_PROTOCOL.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00336.html" target="topic">USB_CDC_DATA_INTERFACE_SUBCLASS_CODE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is macro USB_CDC_DATA_INTERFACE_SUBCLASS_CODE.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00429.html" target="topic">USB_CDC_REQUEST_CLASS_SPECIFIC</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+CDC specific request&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00443.html" target="topic">USB_CDC_SUBCLASS_CODE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is macro USB_CDC_SUBCLASS_CODE.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00602.html" target="topic">USB_DEVICE_CDC_INDEX_0</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Use this to specify CDC Function Driver Instance 0&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00603.html" target="topic">USB_DEVICE_CDC_INDEX_1</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Use this to specify CDC Function Driver Instance 1&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00604.html" target="topic">USB_DEVICE_CDC_INDEX_2</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Use this to specify CDC Function Driver Instance 2&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00605.html" target="topic">USB_DEVICE_CDC_INDEX_3</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Use this to specify CDC Function Driver Instance 3&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00606.html" target="topic">USB_DEVICE_CDC_INDEX_4</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Use this to specify CDC Function Driver Instance 4&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00607.html" target="topic">USB_DEVICE_CDC_INDEX_5</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Use this to specify CDC Function Driver Instance 5&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00608.html" target="topic">USB_DEVICE_CDC_INDEX_6</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Use this to specify CDC Function Driver Instance 6&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00609.html" target="topic">USB_DEVICE_CDC_INDEX_7</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Use this to specify CDC Function Driver Instance 7&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -151,7 +442,7 @@ A system service is a MPLAB Harmony module that provides access to and control o
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00168.html" target="topic">Support</a> &gt; <a href="00162.html" target="topic">Glossary</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00166.html" target="topic">USB CDC Device Library</a> &gt; <a href="00162.html" target="topic">Library Interface</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -159,13 +450,13 @@ A system service is a MPLAB Harmony module that provides access to and control o
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00158.html" target="topic">Previous</a> | <a href="00168.html" target="topic">Up</a> | <a href="00178.html" target="topic">Next</a></div>
+<a href="00152.html" target="topic">Previous</a> | <a href="00166.html" target="topic">Up</a> | <a href="00599.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: HARMONY Glossary Topic Title: Glossary)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVCDC Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

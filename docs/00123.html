@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Running the Demonstration</title>
+<title>Abstraction Model</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00253.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00113.html" target="topic">Host Demonstrations</a> &gt; <a href="00125.html" target="topic">hub_msd</a> &gt; <a href="00123.html" target="topic">Running the Demonstration</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Host Libraries</a> &gt; <a href="00135.html" target="topic">USB CDC Host Library</a> &gt; <a href="00142.html" target="topic">Using the Library</a> &gt; <a href="00123.html" target="topic">Abstraction Model</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00122.html" target="topic">Previous</a> | <a href="00125.html" target="topic">Up</a> | <a href="00124.html" target="topic">Next</a></div>
+<a href="00142.html" target="topic">Previous</a> | <a href="00142.html" target="topic">Up</a> | <a href="00137.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB Host hub_msd_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Running the Demonstration</div>
+Abstraction Model</div>
 </div>
 </div>
 
@@ -49,34 +49,16 @@ Running the Demonstration</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
- &nbsp;</p>
+The CDC Host Client Driver interacts with the Host Layer to control the attached CDC device. The USB Host Layer attaches the CDC Host Client Driver to the CDC device when it meets the matching criteria specified in the USB Host TPL table. The CDC Host Client Driver abstracts the details of sending CDC class specific control transfer commands by providing easy to use non-blocking API to send these command. A command, when issued, is assigned a request handle. This request handle is returned in the event that is generated when the command has been processed, and can be used by the application to track the command. The class specific command functions are implemented in <span class="Element146">usb_host_cdc_acm.c</span>.&nbsp;</p>
 <p class="Element10">
-This application demonstrates the capability of the USB Host Stack to access and manage multiple USB Devices through a Hub. The demonstration application copies a file from one USB pen drive (i.e.,a USB Flash storage device) to another USB pen drive, where these pen drives are attached to a hub.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-1) Open the project in the MPLAB X IDE or IAR. Refer to Building the Application section for available demo projects.&nbsp;</p>
-<p class="Element10">
-2) Build the code and program the device.&nbsp;</p>
-<p class="Element10">
-3) Connect a hub to the Host connector on the desired board.&nbsp;</p>
-<p class="Element10">
-4) Connect a USB Pen drive containing an arbitrary file named &quot;<span class="Element146">file.txt</span>&quot; to a spare port on the hub.&nbsp;</p>
-<p class="Element10">
-5) Connect another USB pen drive to another spare port on the hub.&nbsp;</p>
-<p class="Element10">
-6) The application will copy the file &quot;<span class="Element146">file.txt&quot;</span> from the drive containing this file to the other drive. The copied file will be renamed as &quot;<span class="Element146">newfile.txt&quot;</span>. LED on the demonstration board will illuminate to indicate completion of the file transfer.&nbsp;</p>
-<p class="Element10">
-7) Disconnect the drives and confirm demonstration success by inserting them into a personal computer and verifying the file transfer completed as expected.&nbsp;</p>
-<p class="Element10">
-8) The demonstration application will always be in state where it waits for two pen drives to be connected to the hub and at least one of these pen drives contains a file named &quot;<span class="Element146">file.txt</span>&quot;.</p></div>
+While transferring data over the data interface, the CDC Host Client Driver abstracts details such as the bulk interface, endpoints and endpoint size. The CDC Host Client Driver internally (and without application intervention) validates the CDC class specific device descriptors and opens communication pipes. While transferring data, multiple read and write requests can be queued. Each such request gets assigned a transfer handle. The transfer handle for a transfer request is returned along with the completion event for that transfer request. The data transfer routines are implemented in <span class="Element146">usb_host_cdc.c</span>.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00253.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00113.html" target="topic">Host Demonstrations</a> &gt; <a href="00125.html" target="topic">hub_msd</a> &gt; <a href="00123.html" target="topic">Running the Demonstration</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Host Libraries</a> &gt; <a href="00135.html" target="topic">USB CDC Host Library</a> &gt; <a href="00142.html" target="topic">Using the Library</a> &gt; <a href="00123.html" target="topic">Abstraction Model</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -84,13 +66,13 @@ This application demonstrates the capability of the USB Host Stack to access and
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00122.html" target="topic">Previous</a> | <a href="00125.html" target="topic">Up</a> | <a href="00124.html" target="topic">Next</a></div>
+<a href="00142.html" target="topic">Previous</a> | <a href="00142.html" target="topic">Up</a> | <a href="00137.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB Host hub_msd_run Topic Title: Running the Demonstration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Abstraction Model Topic Title: Abstraction Model)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Configuring the Hardware</title>
+<title>Detecting Device Attach</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00253.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00068.html" target="topic">Device Demonstrations</a> &gt; <a href="00128.html" target="topic">msd_basic</a> &gt; <a href="00130.html" target="topic">Configuring the Hardware</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Host Libraries</a> &gt; <a href="00135.html" target="topic">USB CDC Host Library</a> &gt; <a href="00142.html" target="topic">Using the Library</a> &gt; <a href="00133.html" target="topic">How the Library Works</a> &gt; <a href="00130.html" target="topic">Detecting Device Attach</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00129.html" target="topic">Previous</a> | <a href="00128.html" target="topic">Up</a> | <a href="00135.html" target="topic">Next</a></div>
+<a href="00141.html" target="topic">Previous</a> | <a href="00133.html" target="topic">Up</a> | <a href="00138.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB msd_basic_configure Topic Title: Configuring the Hardware)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Detecting Device Attach Topic Title: Detecting Device Attach)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Configuring the Hardware</div>
+Detecting Device Attach</div>
 </div>
 </div>
 
@@ -49,32 +49,53 @@ Configuring the Hardware</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/Developmenttools/ProductDetails/DM320007');"><img src="indicator_external_link.gif" border="0" alt="" title="">PIC32MZ Embedded Connectivity with FPU (EF) Starter Kit</a></p>
-<ul class="Element630">
-<li class="Element600">LED1 indicates USB Device Configuration Set Complete event (the USB device functionality has been activated by the USB Host).</li>
-<li class="Element600">Use the micro-A/B port J4 (which is located on the bottom side of the board) to connect the USB Device to the USB Host PC.</li>
-</ul><p class="Element10">
-&nbsp;</p>
+The application will need to know when a CDC Device is attached. To receive this attach event from the CDC Host Client Driver, the application must register an Attach Event Handler by calling the <a href="01123.html" target="topic">USB_HOST_CDC_AttachEventHandlerSet</a> function. This function should be called before the <a href="01113.html" target="topic">USB_HOST_BusEnable</a> function is called, else the application may miss CDC attach events. It can be called multiple times to register multiple event handlers, each for different application clients that need to know about CDC Device Attach events.&nbsp;</p>
 <p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/DevelopmentTools/ProductDetails/ATSAMD21-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAMD21 Xplained PRO</a></p>
-<ul class="Element630">
-<li class="Element600">LED0 indicates USB Device Configuration Set Complete event (the USB device functionality has been activated by the USB Host).</li>
-<li class="Element600">Use TARGET USB connector on the board to connect the USB Device to the USB Host PC.</li>
-</ul><p class="Element10">
-&nbsp;</p>
+The total number of event handlers that can be registered is defined by <a href="01122.html" target="topic">USB_HOST_CDC_ATTACH_LISTENERS_NUMBER</a> configuration option in <span class="Element146">system_config.h</span>. When a device is attached, the CDC Host Client Driver will send the attach event to all the registered event handlers. In this event handler, the CDC Host Client Driver will pass a <a href="01157.html" target="topic">USB_HOST_CDC_OBJ</a> that can be opened to gain access to the device. The following code shows an example of how to register attach event handlers.&nbsp;</p>
 <p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/ATSAME54-XPRO');"><img src="indicator_external_link.gif" border="0" alt="" title="">SAME54 Xplained PRO</a></p>
-<ul class="Element630">
-<li class="Element600">LED0 indicates USB Device Configuration Set Complete event (the USB device functionality has been activated by the USB Host).</li>
-<li class="Element600">Use TARGET USB connector on the board to connect the USB Device to the USB Host PC.</li>
-</ul></div>
+<strong>Example:</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of CDC Attach Event Handler and how this
+ * attach event handler can be registered with the CDC Host Client Driver */</span></i>
+
+<strong><span style="color: #000080">void</span></strong> APP_USBHostCDCAttachEventListener(USB_HOST_CDC_OBJ cdcObj, uintptr_t context)
+{
+    <i><span style="color: #008000">/* This function gets called when the CDC device is attached. In this
+     * example we let the application know that a device is attached and we
+     * store the CDC device object. This object will be required to open the
+     * device. */</span></i>
+
+    appData.deviceIsAttached = <strong><span style="color: #000080">true</span></strong>;
+    appData.cdcObj = cdcObj;
+}
+
+
+<strong><span style="color: #000080">void</span></strong> APP_Tasks(<strong><span style="color: #000080">void</span></strong>)
+{
+    <strong><span style="color: #000080">switch</span></strong> (appData.state)
+    {
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_BUS_ENABLE:
+
+            <i><span style="color: #008000">/* In this state the application enables the USB Host Bus. Note
+             * how the CDC Attach event handler is registered before the bus
+             * is enabled. */</span></i>
+
+            USB_HOST_CDC_AttachEventHandlerSet(APP_USBHostCDCAttachEventListener, (uintptr_t) 0);
+            USB_HOST_BusEnable(0);
+            appData.state = APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE;
+            <strong><span style="color: #000080">break</span></strong>;
+
+        <strong><span style="color: #000080">case</span></strong> APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE:
+            <i><span style="color: #008000">/* Here we wait for the bus enable operation to complete. */</span></i>
+            <strong><span style="color: #000080">break</span></strong>;
+    }
+}</pre></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00253.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00068.html" target="topic">Device Demonstrations</a> &gt; <a href="00128.html" target="topic">msd_basic</a> &gt; <a href="00130.html" target="topic">Configuring the Hardware</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Host Libraries</a> &gt; <a href="00135.html" target="topic">USB CDC Host Library</a> &gt; <a href="00142.html" target="topic">Using the Library</a> &gt; <a href="00133.html" target="topic">How the Library Works</a> &gt; <a href="00130.html" target="topic">Detecting Device Attach</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -82,13 +103,13 @@ Configuring the Hardware</div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00129.html" target="topic">Previous</a> | <a href="00128.html" target="topic">Up</a> | <a href="00135.html" target="topic">Next</a></div>
+<a href="00141.html" target="topic">Previous</a> | <a href="00133.html" target="topic">Up</a> | <a href="00138.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS USB msd_basic_configure Topic Title: Configuring the Hardware)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Detecting Device Attach Topic Title: Detecting Device Attach)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

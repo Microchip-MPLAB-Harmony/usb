@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Configuring the Hardware</title>
+<title>USB Driver Device Mode Operation</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00253.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00136.html" target="topic">Multiple USB Controller Demonstrations</a> &gt; <a href="00041.html" target="topic">host_msd_dual</a> &gt; <a href="00043.html" target="topic">Configuring the Hardware</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00922.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00033.html" target="topic">Common Interface</a> &gt; <a href="00043.html" target="topic">USB Driver Device Mode Operation</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00042.html" target="topic">Previous</a> | <a href="00041.html" target="topic">Up</a> | <a href="00044.html" target="topic">Next</a></div>
+<a href="00044.html" target="topic">Previous</a> | <a href="00033.html" target="topic">Up</a> | <a href="00040.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS host_msd_dual_config Topic Title: Configuring the Hardware)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON USB Driver Device Mode Operation Topic Title: USB Driver Device Mode Operation)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Configuring the Hardware</div>
+USB Driver Device Mode Operation</div>
 </div>
 </div>
 
@@ -49,31 +49,54 @@ Configuring the Hardware</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/developmenttools/ProductDetails/dm320106');"><img src="indicator_external_link.gif" border="0" alt="" title="">PIC32MK General Purpose (GP) Development Board</a></p>
-<ul class="Element630">
-<li class="Element600">Switch S4 should be set to Host position.</li>
-<li class="Element600">Jumper J28 must be installed.</li>
-<li class="Element600">USB Micro B Connector J12 must be connected to a USB Host for powering the board.</li>
-<li class="Element600">LED 2 on the demonstration board will illuminate to indicate completion of the file transfer.</li>
-<li class="Element600">USB Flash drives should be attached to Connector J15 (Type C connector) and J14 (Type A connector) after programming the microcontroller.</li>
-</ul><p class="Element10">
-&nbsp;</p>
+The USB Driver operates can operate in the Device mode when it is initialized for Device mode or Dual Role operation. When operating in Device mode, the USB Driver is also referred to as the USB Controller Driver (USBCD). In Dual-Role mode, the USB Driver will switch to USBCD mode when the USB Driver Device Attach function is called.&nbsp;</p>
 <p class="Element10">
-<a href="#" onclick="openExternalLink('https://www.microchip.com/Developmenttools/ProductDetails/EV31E34A');"><img src="indicator_external_link.gif" border="0" alt="" title="">PIC32MK MCM Curiosity Pro</a></p>
-<ul class="Element630">
-<li class="Element600">Switch S200 should be set to Host position.</li>
-<li class="Element600">Jumper J204 must be installed.</li>
-<li class="Element600">USB Micro B Connector J203 must be connected to a USB Host for powering the board.</li>
-<li class="Element600">LED 2 on the demonstration board will illuminate to indicate completion of the file transfer.</li>
-<li class="Element600">USB Flash drives should be attached to Connector J202 (Type C connector) and J201 (Type A connector) after programming the microcontroller.</li>
-</ul></div>
+The USB Driver Client must perform these steps to operate the USB Driver in Device mode.</p>
+<ol class="Element630">
+<li value="1" class="Element600">Open the USB Driver to obtain the driver handle.</li>
+<li value="2" class="Element600">Set the event handler.</li>
+<li value="3" class="Element600">Wait for the application to attach the device to the bus.</li>
+<li value="4" class="Element600">Enable Endpoint 0 and respond to USB Host Enumeration requests.</li>
+<li value="5" class="Element600">Allow the application and function drivers to enable other endpoints and communicate with the Host.</li>
+</ol><p class="Element10">
+The following sections discuss these operations in more detail.</p></div>
+</div>
+<a name="546F70696373"></a><div class="Element14">
+Topics</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="35%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00040.html" target="topic">General Device Mode Operations</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Provides information on general Device mode operations.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00034.html" target="topic">Device Endpoint Operations</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Provides information on Device Endpoint operations.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="35%">
+<div class="Element203">
+<a href="00042.html" target="topic">Transferring Data to the Host</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Provides information on transferring data to the Host.&nbsp;</div></td></tr></table></div></div>
+</div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00253.html" target="topic">USB Demonstrations Help</a> &gt; <a href="00136.html" target="topic">Multiple USB Controller Demonstrations</a> &gt; <a href="00041.html" target="topic">host_msd_dual</a> &gt; <a href="00043.html" target="topic">Configuring the Hardware</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00922.html" target="topic">USB Common Driver Interface</a> &gt; <a href="00033.html" target="topic">Common Interface</a> &gt; <a href="00043.html" target="topic">USB Driver Device Mode Operation</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -81,13 +104,13 @@ Configuring the Hardware</div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00042.html" target="topic">Previous</a> | <a href="00041.html" target="topic">Up</a> | <a href="00044.html" target="topic">Next</a></div>
+<a href="00044.html" target="topic">Previous</a> | <a href="00033.html" target="topic">Up</a> | <a href="00040.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: APPS host_msd_dual_config Topic Title: Configuring the Hardware)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: DRV USB COMMON USB Driver Device Mode Operation Topic Title: USB Driver Device Mode Operation)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

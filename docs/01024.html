@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>USB_DEVICE_STRING_DESCRIPTOR_TABLE_ADVANCED_ENABLE Macro</title>
+<title>USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists Function</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00301.html" target="topic">Configuring the Library</a> &gt; <a href="01024.html" target="topic">USB_DEVICE_STRING_DESCRIPTOR_TABLE_ADVANCED_ENABLE Macro</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Host Libraries</a> &gt; <a href="00100.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00115.html" target="topic">Library Interface</a> &gt; a) Audio Device Access Functions &gt; <a href="01024.html" target="topic">USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists Function</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00774.html" target="topic">Previous</a> | <a href="00301.html" target="topic">Up</a> | <a href="01032.html" target="topic">Next</a></div>
+<a href="01020.html" target="topic">Previous</a> | <a href="00115.html" target="topic">Up</a> | <a href="01025.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_STRING_DESCRIPTOR_TABLE_ADVANCED_ENABLE Topic Title: USB_DEVICE_STRING_DESCRIPTOR_TABLE_ADVANCED_ENABLE Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists@USB_HOST_AUDIO_V1_OBJ@USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ@uint8_t Topic Title: USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-USB_DEVICE_STRING_DESCRIPTOR_TABLE_ADVANCED_ENABLE Macro</div>
+USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists Function</div>
 </div>
 </div>
 
@@ -49,26 +49,68 @@ USB_DEVICE_STRING_DESCRIPTOR_TABLE_ADVANCED_ENABLE Macro</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-USB Device Layer Advanced String Descriptor Table Entry Format Enable.&nbsp;</p>
-<p class="Element10">
-Specifyin this macro enables the Advanced String Descriptor Table Entry Format. The advanced format allows the application to specify the String Index and the language in the entry itself. In the basic format, this information is obtained by the virtue of the entry index of the String Descriptor in the String Descriptor Table. Using the Advanced format allows the application to specify strings with arbitrary strings indexes. In basic format, the string indexes are forced to be contiguous.</p></div>
+This function returns &quot;true&quot; if mute control exists on the specified channel of the feature unit. Channel 0 indicates Master mute control. This function is only applicable to a feature unit. Prior to calling this function the entity object should be obtained by calling <a href="01014.html" target="topic">USB_HOST_AUDIO_V1_ControlEntityGetFirst</a>, <a href="01015.html" target="topic">USB_HOST_AUDIO_V1_ControlEntityGetNext</a>, or <a href="01018.html" target="topic">USB_HOST_AUDIO_V1_EntityObjectGet</a>.</p></div>
 </div>
 <a name="43"></a><div class="Element99">
 C</div>
-<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">#define</span></strong> <strong><span style="color: #000000">USB_DEVICE_STRING_DESCRIPTOR_TABLE_ADVANCED_ENABLE</span></strong> </pre></div></div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">bool</span></strong> <strong><span style="color: #000000">USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists</span></strong>(
+    <a href="01037.html" target="topic">USB_HOST_AUDIO_V1_OBJ</a> <strong><span style="color: #000000">audioObj</span></strong>, 
+    <a href="01013.html" target="topic">USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ</a> <strong><span style="color: #000000">entityObject</span></strong>, 
+    uint8_t <strong><span style="color: #000000">channel</span></strong>
+);</pre></div></div>
+<a name="506172616D6574657273"></a><div class="Element14">
+Parameters</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element312">
+<div class="TableDiv">
+<table cellspacing="0" class="Table3">
+<tr>
+<td class="Element300" valign="top" width="35%">
+<div class="Element301">
+Parameters&nbsp;</div></td><td class="Element304" valign="top" width="65%">
+<div class="Element305">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+audioObj&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+USB Host Audio v1.0 Device object&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+entityObject&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Audio control entity object&nbsp;</div></td></tr><tr>
+<td class="Element302" valign="top" width="35%">
+<div class="Element303">
+channel&nbsp;</div></td><td class="Element306" valign="top" width="65%">
+<div class="Element307">
+Channel number&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="52657475726E73"></a><div class="Element14">
+Returns</div>
+<div class="Element11">
+<div class="Element10">
+
+<ul class="Element630">
+<li class="Element600">true - Mute control exists on the specified channel </li>
+<li class="Element600">false - Mute control does not exist on the specified channel </li>
+</ul></div>
+</div>
 <a name="52656D61726B73"></a><div class="Element14">
 Remarks</div>
 <div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The basic string descriptor entry format is selected by default. The advanced format must be enabled explicitly by specifying this macro.</p></div>
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00278.html" target="topic">USB Device Layer Library</a> &gt; <a href="00301.html" target="topic">Configuring the Library</a> &gt; <a href="01024.html" target="topic">USB_DEVICE_STRING_DESCRIPTOR_TABLE_ADVANCED_ENABLE Macro</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00260.html" target="topic">USB Host Libraries</a> &gt; <a href="00100.html" target="topic">USB Audio v1.0 Host Client Driver Library</a> &gt; <a href="00115.html" target="topic">Library Interface</a> &gt; a) Audio Device Access Functions &gt; <a href="01024.html" target="topic">USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists Function</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -76,13 +118,13 @@ The basic string descriptor entry format is selected by default. The advanced fo
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00774.html" target="topic">Previous</a> | <a href="00301.html" target="topic">Up</a> | <a href="01032.html" target="topic">Next</a></div>
+<a href="01020.html" target="topic">Previous</a> | <a href="00115.html" target="topic">Up</a> | <a href="01025.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_DEVICE_STRING_DESCRIPTOR_TABLE_ADVANCED_ENABLE Topic Title: USB_DEVICE_STRING_DESCRIPTOR_TABLE_ADVANCED_ENABLE Macro)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists@USB_HOST_AUDIO_V1_OBJ@USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ@uint8_t Topic Title: USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists Function)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

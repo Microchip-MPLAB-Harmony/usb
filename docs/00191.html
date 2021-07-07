@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00208.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00191.html" target="topic">Library Interface</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00167.html" target="topic">USB Device Layer Library</a> &gt; <a href="00191.html" target="topic">Library Interface</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,13 +26,13 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00184.html" target="topic">Previous</a> | <a href="00208.html" target="topic">Up</a> | <a href="00605.html" target="topic">Next</a></div>
+<a href="00174.html" target="topic">Previous</a> | <a href="00167.html" target="topic">Up</a> | <a href="00797.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDDEV V1_0 Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
 Library Interface</div>
 </div>
@@ -49,12 +49,12 @@ Library Interface</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-This section describes the Application Programming Interface (API) functions of the USB Device Audio 1.0 Library.&nbsp;</p>
+This section describes the Application Programming Interface (API) functions of the USB Device Layer Library.&nbsp;</p>
 <p class="Element10">
 Refer to each section for a detailed description.</p></div>
 </div>
-<a name="61292046756E6374696F6E73"></a><div class="Element14">
-a) Functions</div>
+<a name="61292053797374656D20496E746572616374696F6E2046756E6374696F6E73"></a><div class="Element14">
+a) System Interaction Functions</div>
 <div class="Element11">
 <div class="Element10">
 <div class="Element212">
@@ -72,41 +72,308 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00605.html" target="topic">USB_DEVICE_AUDIO_EventHandlerSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00797.html" target="topic">USB_DEVICE_Initialize</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This function registers an event handler for the specified Audio function driver instance.&nbsp;</div></td></tr><tr>
+Creates and initializes an instance of the USB device layer.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00616.html" target="topic">USB_DEVICE_AUDIO_Read</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00650.html" target="topic">USB_DEVICE_Deinitialize</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This function requests a data read from the USB Device Audio Function Driver Layer.&nbsp;</div></td></tr><tr>
+De-initializes the specified instance of the USB device layer.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00632.html" target="topic">USB_DEVICE_AUDIO_TransferCancel</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00912.html" target="topic">USB_DEVICE_Status</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This function cancels a scheduled Audio Device data transfer.&nbsp;</div></td></tr><tr>
+Provides the current status of the USB device layer&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00684.html" target="topic">USB_DEVICE_AUDIO_Write</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00916.html" target="topic">USB_DEVICE_Tasks</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This function requests a data write to the USB Device Audio Function Driver Layer.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00628.html" target="topic">USB_DEVICE_AUDIO_StatusSend</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This function requests a Status write to the USB Device Audio Function Driver Layer.&nbsp;</div></td></tr></table></div></div>
+USB Device layer calls all other function driver tasks in this function. It also generates and forwards events to its clients.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
-<a name="6229204461746120547970657320616E6420436F6E7374616E7473"></a><div class="Element14">
-b) Data Types and Constants</div>
+<a name="622920436C69656E7420436F72652046756E6374696F6E73"></a><div class="Element14">
+b) Client Core Functions</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00841.html" target="topic">USB_DEVICE_Open</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Opens the specified USB device layer instance and returns a handle to it.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00638.html" target="topic">USB_DEVICE_Close</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Closes an opened handle to an instance of the USB device layer.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00637.html" target="topic">USB_DEVICE_ClientStatusGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Returns the client specific status.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00694.html" target="topic">USB_DEVICE_EventHandlerSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Layer Event Handler Callback Function set function.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="63292044657669636520506F776572205374617465204D616E6167656D656E742046756E6374696F6E73"></a><div class="Element14">
+c) Device Power State Management Functions</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00845.html" target="topic">USB_DEVICE_PowerStateSet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Sets power state of the device.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00897.html" target="topic">USB_DEVICE_RemoteWakeupStatusGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Gets the &quot;Remote wake-up&quot; status of the device.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00799.html" target="topic">USB_DEVICE_IsSuspended</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Returns true if the device is in a suspended state.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00895.html" target="topic">USB_DEVICE_RemoteWakeupStart</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function will start the resume signaling.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00896.html" target="topic">USB_DEVICE_RemoteWakeupStartTimed</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function will start a self timed Remote Wake-up.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00898.html" target="topic">USB_DEVICE_RemoteWakeupStop</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function will stop the resume signaling.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="642920446576696365204D616E6167656D656E742046756E6374696F6E73"></a><div class="Element14">
+d) Device Management Functions</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00911.html" target="topic">USB_DEVICE_StateGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Returns the current state of the USB device.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00448.html" target="topic">USB_DEVICE_Attach</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function will attach the device to the USB.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00651.html" target="topic">USB_DEVICE_Detach</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function will detach the device from the USB.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00446.html" target="topic">USB_DEVICE_ActiveConfigurationGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Informs the client of the current USB device configuration set by the USB host.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00447.html" target="topic">USB_DEVICE_ActiveSpeedGet</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Informs the client of the current operation speed of the USB bus.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="652920456E64706F696E74204D616E6167656D656E742046756E6374696F6E73"></a><div class="Element14">
+e) Endpoint Management Functions</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00657.html" target="topic">USB_DEVICE_EndpointIsStalled</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function returns the stall status of the specified endpoint and direction.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00659.html" target="topic">USB_DEVICE_EndpointStall</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function stalls an endpoint in the specified direction.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00660.html" target="topic">USB_DEVICE_EndpointStallClear</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function clears the stall on an endpoint in the specified direction.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00654.html" target="topic">USB_DEVICE_EndpointDisable</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Disables a device endpoint.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00655.html" target="topic">USB_DEVICE_EndpointEnable</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Enables a device endpoint.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00656.html" target="topic">USB_DEVICE_EndpointIsEnabled</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Returns true if the endpoint is enabled.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00658.html" target="topic">USB_DEVICE_EndpointRead</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Reads data received from host on the requested endpoint.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00661.html" target="topic">USB_DEVICE_EndpointTransferCancel</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function cancels a transfer scheduled on an endpoint.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00662.html" target="topic">USB_DEVICE_EndpointWrite</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This function requests a data write to a USB Device Endpoint.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="662920436F6E74726F6C205472616E736665722046756E6374696F6E73"></a><div class="Element14">
+f) Control Transfer Functions</div>
+<div class="Element11">
+<div class="Element10">
+<div class="Element212">
+<div class="TableDiv">
+<table cellspacing="0" class="Table0">
+<tr>
+<td class="Element200" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element201">
+ &nbsp;</div></td><td class="Element200" valign="top" width="25%">
+<div class="Element201">
+Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
+<div class="Element205">
+Description&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00647.html" target="topic">USB_DEVICE_ControlReceive</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Receives data stage of the control transfer from host to device.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00648.html" target="topic">USB_DEVICE_ControlSend</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Sends data stage of the control transfer from device to host.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_method.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00649.html" target="topic">USB_DEVICE_ControlStatus</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Initiates status stage of the control transfer.&nbsp;</div></td></tr></table></div></div>
+</div>
+</div>
+<a name="6729204461746120547970657320616E6420436F6E7374616E7473"></a><div class="Element14">
+g) Data Types and Constants</div>
 <div class="Element11">
 <div class="Element10">
 <div class="Element212">
@@ -124,184 +391,226 @@ Description&nbsp;</div></td></tr><tr>
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00607.html" target="topic">USB_DEVICE_AUDIO_INDEX</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00664.html" target="topic">USB_DEVICE_EVENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-USB Device Audio function driver index.&nbsp;</div></td></tr><tr>
+USB Device Layer Events.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00630.html" target="topic">USB_DEVICE_AUDIO_TRANSFER_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00703.html" target="topic">USB_DEVICE_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-USB Device Audio Function Driver transfer handle definition.&nbsp;</div></td></tr><tr>
+Data type for USB device handle.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00560.html" target="topic">USB_DEVICE_AUDIO_EVENT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00641.html" target="topic">USB_DEVICE_CONTROL_STATUS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-USB Device Audio Function Driver events.&nbsp;</div></td></tr><tr>
+USB Device Layer Control Transfer Status Stage flags.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00617.html" target="topic">USB_DEVICE_AUDIO_RESULT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00644.html" target="topic">USB_DEVICE_CONTROL_TRANSFER_RESULT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-USB Device Audio Function Driver USB Device Audio result enumeration.&nbsp;</div></td></tr><tr>
+Enumerated data type identifying results of a control transfer.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00781.html" target="topic">USB_DEVICE_INIT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Initialization Structure&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00842.html" target="topic">USB_DEVICE_POWER_STATE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Enumerated data type that identifies if the device is self powered or bus powered .&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00892.html" target="topic">USB_DEVICE_REMOTE_WAKEUP_STATUS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Enumerated data type that identifies if the remote wakeup status of the device.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00631.html" target="topic">USB_DEVICE_AUDIO_TRANSFER_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00704.html" target="topic">USB_DEVICE_HANDLE_INVALID</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-USB Device Audio Function Driver invalid transfer handle definition.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00593.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_READ_COMPLETE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio Function Driver audio read and write complete event data.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00597.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_WRITE_COMPLETE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio Function Driver audio read and write complete event data.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00602.html" target="topic">USB_DEVICE_AUDIO_EVENT_HANDLER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio event handler function pointer type.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00603.html" target="topic">USB_DEVICE_AUDIO_EVENT_RESPONSE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio Function Driver event callback response type.&nbsp;</div></td></tr><tr>
+Constant that defines the value of an Invalid Device Handle.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00604.html" target="topic">USB_DEVICE_AUDIO_EVENT_RESPONSE_NONE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00775.html" target="topic">USB_DEVICE_INDEX_0</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-USB Device Audio Function Driver event handler response type none.&nbsp;</div></td></tr><tr>
+USB device layer index definitions.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00606.html" target="topic">USB_DEVICE_AUDIO_FUNCTION_DRIVER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00776.html" target="topic">USB_DEVICE_INDEX_1</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-USB Device Audio Function Driver function pointer.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00579.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_CUR</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_CUR.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00580.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_MAX</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_MAX.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00581.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_MEM</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_MEM.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00582.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_MIN</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_MIN.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00583.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_RES</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_GET_RES.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00584.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_CUR</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio Function Driver set and get request data.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00585.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MAX</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MAX.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00586.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MEM</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MEM.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00587.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MIN</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_MIN.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00588.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_RES</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type USB_DEVICE_AUDIO_EVENT_DATA_CONTROL_SET_RES.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00589.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_ENTITY_GET_STAT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-This is type USB_DEVICE_AUDIO_EVENT_DATA_ENTITY_GET_STAT.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00590.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_INTERFACE_SETTING_CHANGED</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio Function Driver alternate interface setting event data.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00608.html" target="topic">USB_DEVICE_AUDIO_INIT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio Function Driver initialization data structure.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
-<div class="Element203">
-<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
-<div class="Element203">
-<a href="00594.html" target="topic">USB_DEVICE_AUDIO_EVENT_DATA_STATUS_SEND_COMPLETE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-USB Device Audio Function Driver Status Send complete event data.&nbsp;</div></td></tr><tr>
+This is macro USB_DEVICE_INDEX_1.&nbsp;</div></td></tr><tr>
 <td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
 <div class="Element203">
 <img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
 <div class="Element203">
-<a href="00004.html" target="topic">_USB_DEVICE_AUDIO_H</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<a href="00777.html" target="topic">USB_DEVICE_INDEX_2</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
 <div class="Element207">
-This is macro _USB_DEVICE_AUDIO_H.&nbsp;</div></td></tr></table></div></div>
+This is macro USB_DEVICE_INDEX_2.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00778.html" target="topic">USB_DEVICE_INDEX_3</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is macro USB_DEVICE_INDEX_3.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00779.html" target="topic">USB_DEVICE_INDEX_4</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is macro USB_DEVICE_INDEX_4.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00780.html" target="topic">USB_DEVICE_INDEX_5</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is macro USB_DEVICE_INDEX_5.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00634.html" target="topic">USB_DEVICE_CLIENT_STATUS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Enumerated data type that identifies the USB Device Layer Client Status.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00640.html" target="topic">USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Pointer to an array that contains pointer to configuration descriptors.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00680.html" target="topic">USB_DEVICE_EVENT_DATA_CONFIGURED</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Set Configuration Event Data type.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00691.html" target="topic">USB_DEVICE_EVENT_HANDLER</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Layer Event Handler Function Pointer Type&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00692.html" target="topic">USB_DEVICE_EVENT_RESPONSE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Device Layer Event Handler function return type.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00695.html" target="topic">USB_DEVICE_FUNCTION_REGISTRATION_TABLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Function Registration Structure&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00800.html" target="topic">USB_DEVICE_MASTER_DESCRIPTOR</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Master Descriptor Structure.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00914.html" target="topic">USB_DEVICE_STRING_DESCRIPTORS_TABLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Pointer to an array that contains pointer to string descriptors.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00693.html" target="topic">USB_DEVICE_EVENT_RESPONSE_NONE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Device Layer Event Handler Function Response Type.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00682.html" target="topic">USB_DEVICE_EVENT_DATA_ENDPOINT_READ_COMPLETE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Layer Endpoint Read and Write Complete Event Data type.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00686.html" target="topic">USB_DEVICE_EVENT_DATA_ENDPOINT_WRITE_COMPLETE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Layer Endpoint Read and Write Complete Event Data type.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00687.html" target="topic">USB_DEVICE_EVENT_DATA_SOF</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Start Of Frame Event Data Type&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00689.html" target="topic">USB_DEVICE_EVENT_DATA_SYNCH_FRAME</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Synch Frame Event Data type.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00899.html" target="topic">USB_DEVICE_RESULT</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+USB Device Layer Results Enumeration&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00917.html" target="topic">USB_DEVICE_TRANSFER_FLAGS</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Enumerated data type that identifies the USB Device Layer Transfer Flags.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_structure.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00920.html" target="topic">USB_DEVICE_TRANSFER_HANDLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Data type for USB Device Endpoint Data Transfer Handle.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00011.html" target="topic">_USB_DEVICE_H</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+This is macro _USB_DEVICE_H.&nbsp;</div></td></tr><tr>
+<td class="Element202" valign="top" width="10%" style="white-space: nowrap;">
+<div class="Element203">
+<img src="indicator_interface.gif" border="0" alt="" title="">&nbsp;</div></td><td class="Element202" valign="top" width="25%">
+<div class="Element203">
+<a href="00812.html" target="topic">USB_DEVICE_MICROSOFT_OS_DESCRIPTOR_SUPPORT_ENABLE</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
+<div class="Element207">
+Specifies if the USB Device stack should support Microsoft OS Descriptor.&nbsp;</div></td></tr></table></div></div>
 </div>
 </div>
 </div>
@@ -309,7 +618,7 @@ This is macro _USB_DEVICE_AUDIO_H.&nbsp;</div></td></tr></table></div></div>
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00208.html" target="topic">USB Audio 1.0 Device Library</a> &gt; <a href="00191.html" target="topic">Library Interface</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00167.html" target="topic">USB Device Layer Library</a> &gt; <a href="00191.html" target="topic">Library Interface</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -317,13 +626,13 @@ This is macro _USB_DEVICE_AUDIO_H.&nbsp;</div></td></tr></table></div></div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00184.html" target="topic">Previous</a> | <a href="00208.html" target="topic">Up</a> | <a href="00605.html" target="topic">Next</a></div>
+<a href="00174.html" target="topic">Previous</a> | <a href="00167.html" target="topic">Up</a> | <a href="00797.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB AUDDEV V1_0 Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVLAYER Library Interface Topic Title: Library Interface)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

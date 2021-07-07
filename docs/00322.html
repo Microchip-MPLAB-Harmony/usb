@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Sending Data</title>
+<title>Library Initialization</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00281.html" target="topic">USB Device Printer Library</a> &gt; <a href="00323.html" target="topic">Using the Library</a> &gt; <a href="00316.html" target="topic">How the Library Works</a> &gt; <a href="00322.html" target="topic">Sending Data</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00311.html" target="topic">Generic USB Device Library</a> &gt; <a href="00325.html" target="topic">Using the Library</a> &gt; <a href="00320.html" target="topic">How the Library Works</a> &gt; <a href="00322.html" target="topic">Library Initialization</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00313.html" target="topic">Previous</a> | <a href="00316.html" target="topic">Up</a> | <a href="00321.html" target="topic">Next</a></div>
+<a href="00320.html" target="topic">Previous</a> | <a href="00320.html" target="topic">Up</a> | <a href="00319.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVPrinter Sending Data Topic Title: Sending Data)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Library Initialization Topic Title: Library Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Sending Data</div>
+Library Initialization</div>
 </div>
 </div>
 
@@ -49,146 +49,33 @@ Sending Data</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
- &nbsp;</p>
+Unlike the standard USB function drivers in the MPLAB Harmony USB Device Stack, in the case of a Generic USB Device, the USB Device Layer does not automatically enable or disable endpoints that belong to the Generic interface. This must be done by the application when the device is configured by the Host.&nbsp;</p>
 <p class="Element10">
-The application may need to send data to the USB Printer Host incase the Printer device supports Bi-directional interface type. This is done by using the <a href="01002.html" target="topic">USB_DEVICE_PRINTER_Write</a> function.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>Sending Data to the USB Host</strong>&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-The application can send data to the Host by using the USB_DEVICE_Printer_Write function. This function returns a transfer handle that allows the application to track the write request. The request is completed when the Host has requested the data. The completion of the write transfer is indicated by a USB_DEVICE_PRINTER_EVENT_WRITE_COMPLETE event.&nbsp;</p>
-<p class="Element10">
-A write request could fail if the function driver instance transfer queue is full.&nbsp;</p>
-<p class="Element10">
-The <a href="01002.html" target="topic">USB_DEVICE_PRINTER_Write</a> function also allows the application to send data to the host without ending the transfer. This is done by specifying the USB_DEVICE_PRINTER_TRANSFER_FLAGS_DATA_PENDING flag. The application can use this option when the data to be sent is not readily available or when the application is memory constrained. The combination of the transfer flag and the transfer size affects how the function driver sends the data to the host:&nbsp;</p>
-<p class="Element10">
-• If size is a multiple of maxPacketSize (the IN endpoint size), and the flag is set as&nbsp;</p>
-<p class="Element10">
-USB_DEVICE_PRINTER_TRANSFER_FLAGS_DATA_COMPLETE, the write function will append a Zero Length Packet (ZLP) to complete the transfer&nbsp;</p>
-<p class="Element10">
-• If size is a multiple of maxPacketSize, and the flag is set as&nbsp;</p>
-<p class="Element10">
-USB_DEVICE_PRINTER_TRANSFER_FLAGS_MORE_DATA_PENDING, the write function will not append a ZLP and therefore, will not complete the transfer&nbsp;</p>
-<p class="Element10">
-• If size is greater than but not a multiple of maxPacketSize, and the flag is set as&nbsp;</p>
-<p class="Element10">
-USB_DEVICE_PRINTER_TRANSFER_FLAGS_DATA_COMPLETE, the write function schedules length/maxPacketSize) packets and one packet for the residual data.&nbsp;</p>
-<p class="Element10">
-• If size if greater than but not a multiple of maxPacketSize, and the flag is set as&nbsp;</p>
-<p class="Element10">
-USB_DEVICE_PRINTER_TRANSFER_FLAGS_MORE_DATA_PENDING, the write function returns an error code and sets the transferHandle parameter to <a href="01001.html" target="topic">USB_DEVICE_PRINTER_TRANSFER_HANDLE_INVALID</a>&nbsp;</p>
-<p class="Element10">
-• If size is less than maxPacketSize, and the flag is set as USB_DEVICE_PRINTER_TRANSFER_FLAGS_DATA_COMPLETE, the write function schedules one packet&nbsp;</p>
-<p class="Element10">
-• If size is less than maxPacketSize, and the flag is set as USB_DEVICE_ PRINTER_TRANSFER_FLAGS_MORE_DATA_PENDING, the write function returns an error code and sets the transferHandle parameter to USB_DEVICE_ PRINTER _TRANSFER_HANDLE_INVALID&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-The following code shows a set of examples of various conditions attempting to send data with the <a href="01002.html" target="topic">USB_DEVICE_PRINTER_Write</a> function.&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>Example 1</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// This example assume that the maxPacketSize is 64.</span></i>
-USB_DEVICE_PRINTER_TRANSFER_HANDLE transferHandle;
-USB_DEVICE_PRINTER_INDEX instance;
-USB_DEVICE_PRINTER_RESULT writeRequestResult;
-uint8_t data[34];
-<i><span style="color: #008000">// In this example we want to send 34 bytes only.</span></i>
-writeRequestResult = USB_DEVICE_PRINTER_Write(instance,&amp;transferHandle, data, 34,
-USB_DEVICE_PRINTER_TRANSFER_FLAGS_DATA_COMPLETE);
-<strong><span style="color: #000080">if</span></strong>(USB_DEVICE_PRINTER_RESULT_OK != writeRequestResult)
+A USB Device can have multiple Generic interfaces. Each of these interfaces must have corresponding entries in the USB Device Layer function driver registration table. For Generic interfaces, the driver and funcDriverInit member of the function driver registration table entry should be set to NULL. The following code shows an example of how this is done. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example function driver registration table entry
+ * for a Generic USB Device Interface. Note that the function driver entry point
+ * member is NULL. This instructs the Device Layer to pass all interface related
+ * control transfers to the application. */</span></i>
+<strong><span style="color: #000080">const</span></strong> USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[1] =
 {
-<i><span style="color: #008000">//Do Error handling here</span></i>
-}</pre></div></div>
+    {
+         .configurationValue = 1 ,      <i><span style="color: #008000">// Configuration descriptor index</span></i>
+         .driver = NULL,                <i><span style="color: #008000">// No APIs exposed to the device layer</span></i>
+         .funcDriverIndex = 0 ,         <i><span style="color: #008000">// Zero Instance index</span></i>
+         .funcDriverInit = NULL,        <i><span style="color: #008000">// No init data</span></i>
+         .interfaceNumber = 0 ,         <i><span style="color: #008000">// Start interface number of this instance</span></i>
+         .numberOfInterfaces = 1 ,      <i><span style="color: #008000">// Total number of interfaces contained in this instance</span></i>
+         .speed = USB_SPEED_FULL|USB_SPEED_HIGH         <i><span style="color: #008000">// USB Speed</span></i>
+    }
+};</pre></div></div>
 <p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>Example 2</strong> </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">//-------------------------------------------------------</span></i>
-<i><span style="color: #008000">// In this example we want to send 64 bytes only.</span></i>
-<i><span style="color: #008000">// This will cause a ZLP to be sent.</span></i>
-USB_DEVICE_PRINTER_TRANSFER_HANDLE transferHandle;
-USB_DEVICE_PRINTER_INDEX instance;
-USB_DEVICE_PRINTER_RESULT writeRequestResult;
-uint8_t data[64];
-writeRequestResult = USB_DEVICE_PRINTER_Write(instance,&amp;transferHandle, data, 64,
-USB_DEVICE_PRINTER_TRANSFER_FLAGS_DATA_COMPLETE);
-<strong><span style="color: #000080">if</span></strong>(USB_DEVICE_PRINTER_RESULT_OK != writeRequestResult)
-{
-<i><span style="color: #008000">//Do Error handling here</span></i>
-}
-</pre></div></div>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>Example 3</strong> </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">//-------------------------------------------------------</span></i>
-<i><span style="color: #008000">// This example will return an error because size is less</span></i>
-<i><span style="color: #008000">// than maxPacketSize and the flag indicates that more</span></i>
-<i><span style="color: #008000">// data is pending.</span></i>
-USB_DEVICE_PRINTER_TRANSFER_HANDLE transferHandle;
-USB_DEVICE_PRINTER_INDEX instance;
-USB_DEVICE_PRINTER_RESULT writeRequestResult;
-uint8_t data[64];
-writeRequestResult = USB_DEVICE_PRINTER_Write(instance,&amp;transferHandle, data, 32,
-USB_DEVICE_PRINTER_TRANSFER_FLAGS_MORE_DATA_PENDING);</pre></div></div>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>Example 4</strong> </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">//-------------------------------------------------------</span></i>
-<i><span style="color: #008000">// In this example we want to place a request for a 70 byte transfer.</span></i>
-<i><span style="color: #008000">// The 70 bytes will be sent out in a 64 byte transaction and a 6 byte</span></i>
-<i><span style="color: #008000">// transaction completing the transfer.</span></i>
-
-USB_DEVICE_PRINTER_TRANSFER_HANDLE transferHandle;
-USB_DEVICE_PRINTER_INDEX instance;
-USB_DEVICE_PRINTER_RESULT writeRequestResult;
-uint8_t data[70];
-writeRequestResult = USB_DEVICE_PRINTER_Write(instance,&amp;transferHandle, data, 70,
-USB_DEVICE_PRINTER_TRANSFER_FLAGS_DATA_COMPLETE);
-
-<strong><span style="color: #000080">if</span></strong>(USB_DEVICE_PRINTER_RESULT_OK != writeRequestResult)
-{
-<i><span style="color: #008000">//Do Error handling here</span></i>
-}</pre></div></div>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-&nbsp;</p>
-<p class="Element10">
-<strong>Example 5</strong> </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">//-------------------------------------------------------</span></i>
-<i><span style="color: #008000">// In this example we want to place a request for a 70 bytes to be sent</span></i>
-<i><span style="color: #008000">// but that we don't end the transfer as more data is coming. 64 bytes</span></i>
-<i><span style="color: #008000">// of the 70 will be sent out and the USB_DEVICE_PRINTER_EVENT_WRITE_COMPLETE</span></i>
-<i><span style="color: #008000">// with 64 bytes. This indicates that the extra 6 bytes weren't</span></i>
-<i><span style="color: #008000">// sent because it would cause the end of the transfer. Thus the</span></i>
-<i><span style="color: #008000">// user needs to add these 6 bytes back to the buffer for the next group</span></i>
-<i><span style="color: #008000">// of data that needs to be sent out.</span></i>
-
-USB_DEVICE_PRINTER_TRANSFER_HANDLE transferHandle;
-USB_DEVICE_PRINTER_INDEX instance;
-USB_DEVICE_PRINTER_RESULT writeRequestResult;
-uint8_t data[70];
-writeRequestResult = USB_DEVICE_PRINTER_Write(instance,&amp;transferHandle, data, 70,
-USB_DEVICE_PRINTER_TRANSFER_FLAGS_MORE_DATA_PENDING);
-
-<strong><span style="color: #000080">if</span></strong>(USB_DEVICE_PRINTER_RESULT_OK != writeRequestResult)
-{
-<i><span style="color: #008000">//Do Error handling here</span></i>
-}
-<i><span style="color: #008000">// The completion of the write request will be indicated by the</span></i>
-<i><span style="color: #008000">// USB_DEVICE_PRINTER_EVENT_WRITE_COMPLETE event.</span></i></pre></div></div>
-</div>
+The endpoint read and endpoint write queue sizes are specified by the queueSizeEndpointRead and queueSizeEndpointWrite members of the <a href="00781.html" target="topic">USB_DEVICE_INIT</a> device layer initialization data structure. These read and write queue sizes define the size of the read and write buffer object pools. Objects from these pools are then queued up at each read and write endpoint, when an endpoint read or write is requested. The total number of buffer objects is specified by the <a href="00653.html" target="topic">USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED</a> configuration constant.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00281.html" target="topic">USB Device Printer Library</a> &gt; <a href="00323.html" target="topic">Using the Library</a> &gt; <a href="00316.html" target="topic">How the Library Works</a> &gt; <a href="00322.html" target="topic">Sending Data</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00311.html" target="topic">Generic USB Device Library</a> &gt; <a href="00325.html" target="topic">Using the Library</a> &gt; <a href="00320.html" target="topic">How the Library Works</a> &gt; <a href="00322.html" target="topic">Library Initialization</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -196,13 +83,13 @@ USB_DEVICE_PRINTER_TRANSFER_FLAGS_MORE_DATA_PENDING);
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00313.html" target="topic">Previous</a> | <a href="00316.html" target="topic">Up</a> | <a href="00321.html" target="topic">Next</a></div>
+<a href="00320.html" target="topic">Previous</a> | <a href="00320.html" target="topic">Up</a> | <a href="00319.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVPrinter Sending Data Topic Title: Sending Data)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Library Initialization Topic Title: Library Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

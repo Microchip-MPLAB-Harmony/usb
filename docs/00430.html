@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Event Handling</title>
+<title>USB_CDC_SUBCLASS Enumeration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00422.html" target="topic">Generic USB Device Library</a> &gt; <a href="00436.html" target="topic">Using the Library</a> &gt; <a href="00431.html" target="topic">How the Library Works</a> &gt; <a href="00430.html" target="topic">Event Handling</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00166.html" target="topic">USB CDC Device Library</a> &gt; <a href="00162.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00430.html" target="topic">USB_CDC_SUBCLASS Enumeration</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00433.html" target="topic">Previous</a> | <a href="00431.html" target="topic">Up</a> | <a href="00426.html" target="topic">Next</a></div>
+<a href="00340.html" target="topic">Previous</a> | <a href="00162.html" target="topic">Up</a> | <a href="00444.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Event Handling Topic Title: Event Handling)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_CDC_SUBCLASS Topic Title: USB_CDC_SUBCLASS Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Event Handling</div>
+USB_CDC_SUBCLASS Enumeration</div>
 </div>
 </div>
 
@@ -49,46 +49,39 @@ Event Handling</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The USB Device Layer generates two different types of events for a Generic USB Device.</p>
-<ul class="Element630">
-<li class="Element600">Control transfer events</li>
-<li class="Element600">Endpoint data transfer events</li>
-</ul><p class="Element10">
-While handing Device Layer events, it is recommended that computationally intensive operations or hardware access should not be performed with in the event handler. Doing so may affect the capability of the Device Stack to respond to changes on the USB and could cause the Device to become non-compliant.&nbsp;</p>
+CDC Communication interface subclass codes&nbsp;</p>
 <p class="Element10">
-A Generic USB Device application must handle the above events along with the other Device Layer events.</p></div>
+This enumeration identifies the possible subclass codes for CDC communication interface</p></div>
 </div>
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
+<a name="43"></a><div class="Element99">
+C</div>
+<div class="Element101"><div class="Element100"><pre class="Element100"><strong><span style="color: #000080">typedef</span></strong> <strong><span style="color: #000080">enum</span></strong> {
+  <strong><span style="color: #000000">USB_CDC_SUBCLASS_DIRECT_LINE_CONTROL_MODEL</span></strong> = 0x01,
+  <strong><span style="color: #000000">USB_CDC_SUBCLASS_ABSTRACT_CONTROL_MODEL</span></strong> = 0x02,
+  <strong><span style="color: #000000">USB_CDC_SUBCLASS_TELEPHONE_CONTROL_MODEL</span></strong> = 0x03,
+  <strong><span style="color: #000000">USB_CDC_SUBCLASS_MULTI_CHANNEL_CONTROL_MODEL</span></strong> = 0x04,
+  <strong><span style="color: #000000">USB_CDC_SUBCLASS_CAPI_CONTROL_MODEL</span></strong> = 0x05,
+  <strong><span style="color: #000000">USB_CDC_SUBCLASS_ETH_NW_CONTROL_MODEL</span></strong> = 0x06,
+  <strong><span style="color: #000000">USB_CDC_SUBCLASS_ATM_NW_CONTROL_MODEL</span></strong> = 0x07,
+  <strong><span style="color: #000000">USB_CDC_SUBCLASS_WL_HANDSET_CONTROL_MODEL</span></strong> = 0x08,
+  <strong><span style="color: #000000">USB_CDC_SUBCLASS_DEV_MANAGEMENT_CONTROL_MODEL</span></strong> = 0x09,
+  <strong><span style="color: #000000">USB_CDC_SUBCLASS_MOBILE_DL_CONTROL_MODEL</span></strong> = 0x0A,
+  <strong><span style="color: #000000">USB_CDC_SUBCLASS_OBEX</span></strong> = 0x0B,
+  <strong><span style="color: #000000">USB_CDC_SUBCLASS_ETH_EMULATION_MODEL</span></strong> = 0x0C
+} USB_CDC_SUBCLASS;</pre></div></div>
+<a name="52656D61726B73"></a><div class="Element14">
+Remarks</div>
 <div class="Element11">
 <div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00426.html" target="topic">Control Transfer Events</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Describes control transfer events and provides a code example.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00428.html" target="topic">Endpoint Data Transfer Events</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Describes endpoint data transfer events and provides a code example.&nbsp;</div></td></tr></table></div></div>
-</div>
+<p class="Element10">
+None.</p></div>
 </div>
 </div>
 <!-- End Page Content -->
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00279.html" target="topic">USB Device Libraries</a> &gt; <a href="00422.html" target="topic">Generic USB Device Library</a> &gt; <a href="00436.html" target="topic">Using the Library</a> &gt; <a href="00431.html" target="topic">How the Library Works</a> &gt; <a href="00430.html" target="topic">Event Handling</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00166.html" target="topic">USB CDC Device Library</a> &gt; <a href="00162.html" target="topic">Library Interface</a> &gt; b) Data Types and Constants &gt; <a href="00430.html" target="topic">USB_CDC_SUBCLASS Enumeration</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -96,13 +89,13 @@ Describes endpoint data transfer events and provides a code example.&nbsp;</div>
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00433.html" target="topic">Previous</a> | <a href="00431.html" target="topic">Up</a> | <a href="00426.html" target="topic">Next</a></div>
+<a href="00340.html" target="topic">Previous</a> | <a href="00162.html" target="topic">Up</a> | <a href="00444.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB VENDORDEV Event Handling Topic Title: Event Handling)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB_CDC_SUBCLASS Topic Title: USB_CDC_SUBCLASS Enumeration)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

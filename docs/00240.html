@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Detecting Device Attach</title>
+<title>Library Initialization</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00245.html" target="topic">USB CDC Host Library</a> &gt; <a href="00252.html" target="topic">Using the Library</a> &gt; <a href="00243.html" target="topic">How the Library Works</a> &gt; <a href="00240.html" target="topic">Detecting Device Attach</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00214.html" target="topic">USB HID Device Library</a> &gt; <a href="00244.html" target="topic">Using the Library</a> &gt; <a href="00237.html" target="topic">How the Library Works</a> &gt; <a href="00240.html" target="topic">Library Initialization</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00251.html" target="topic">Previous</a> | <a href="00243.html" target="topic">Up</a> | <a href="00248.html" target="topic">Next</a></div>
+<a href="00237.html" target="topic">Previous</a> | <a href="00237.html" target="topic">Up</a> | <a href="00234.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Detecting Device Attach Topic Title: Detecting Device Attach)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HIDDEV Library Initialization Topic Title: Library Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Detecting Device Attach</div>
+Library Initialization</div>
 </div>
 </div>
 
@@ -49,45 +49,65 @@ Detecting Device Attach</div>
 <a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
 <p class="Element10">
-The application will need to know when a CDC Device is attached. To receive this attach event from the CDC Host Client Driver, the application must register an Attach Event Handler by calling the <a href="01234.html" target="topic">USB_HOST_CDC_AttachEventHandlerSet</a> function. This function should be called before the <a href="01224.html" target="topic">USB_HOST_BusEnable</a> function is called, else the application may miss CDC attach events. It can be called multiple times to register multiple event handlers, each for different application clients that need to know about CDC Device Attach events.&nbsp;</p>
-<p class="Element10">
-The total number of event handlers that can be registered is defined by <a href="01233.html" target="topic">USB_HOST_CDC_ATTACH_LISTENERS_NUMBER</a> configuration option in <span class="Element146">system_config.h</span>. When a device is attached, the CDC Host Client Driver will send the attach event to all the registered event handlers. In this event handler, the CDC Host Client Driver will pass a <a href="01268.html" target="topic">USB_HOST_CDC_OBJ</a> that can be opened to gain access to the device. The following code shows an example of how to register attach event handlers.&nbsp;</p>
-<p class="Element10">
-<strong>Example:</strong> &nbsp;</p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of CDC Attach Event Handler and how this
- * attach event handler can be registered with the CDC Host Client Driver */</span></i>
+The HID Function Driver instance for a USB device configuration is initialized by the Device Layer when the configuration is set by the Host. This process does not require application intervention. Each instance of the HID Function be registered with the Device Layer through the <a href="00185.html" target="topic">Device Layer Function Driver Registration Table</a>. The HID function driver requires a initialization data structure that contains details about the report descriptor and the reports send/receive queue size associated with the specific instance of the HID Function Driver. The funcDriver member of the registration entry must be set to <a href="00746.html" target="topic">USB_DEVICE_HID_FUNCTION_DRIVER</a>. This object is a global object provided by the HID Function Driver and points to the HID Function Driver - Device Layer interface functions, which are required by the Device Layer. The following code shows an example of how a HID Function Driver instance (implementing a USB HID Mouse) can be registered with the Device Layer. </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">/* This code shows an example of registering a HID function driver
+ * with the Device Layer. While registering the function driver, an initialization
+ * data structure must be specified. In this example, hidInit is the HID function
+ * driver initialization data structure. */</span></i>
 
-<strong><span style="color: #000080">void</span></strong> APP_USBHostCDCAttachEventListener(USB_HOST_CDC_OBJ cdcObj, uintptr_t context)
+<i><span style="color: #008000">/* This hid_rpt01 report descriptor describes a 3 button 2
+ * axis mouse pointing device */</span></i>
+<strong><span style="color: #000080">const</span></strong> uint8_t hid_rpt01[]=
 {
-    <i><span style="color: #008000">/* This function gets called when the CDC device is attached. In this
-     * example we let the application know that a device is attached and we
-     * store the CDC device object. This object will be required to open the
-     * device. */</span></i>
+    0x06, 0x00, 0xFF,    <i><span style="color: #008000">// Usage Page = 0xFF00 (Vendor Defined Page 1)</span></i>
+    0x09, 0x01,          <i><span style="color: #008000">// Usage (Vendor Usage 1)</span></i>
+    0xA1, 0x01,          <i><span style="color: #008000">// Collection (Application)</span></i>
+    0x19, 0x01,          <i><span style="color: #008000">// Usage Minimum</span></i>
+    0x29, 0x40,          <i><span style="color: #008000">// Usage Maximum     //64 input usages total (0x01 to 0x40)</span></i>
+    0x15, 0x01,          <i><span style="color: #008000">// Logical Minimum (data bytes in the report may have minimum value = 0x00)</span></i>
+    0x25, 0x40,          <i><span style="color: #008000">// Logical Maximum (data bytes in the report may have maximum value = 0x00FF = unsigned 255)</span></i>
+    0x75, 0x08,          <i><span style="color: #008000">// Report Size: 8-bit field size</span></i>
+    0x95, 0x40,          <i><span style="color: #008000">// Report Count: Make sixty-four 8-bit fields (the next time the parser hits an &quot;Input&quot;, &quot;Output&quot;,</span></i>
+                         <i><span style="color: #008000">// or &quot;Feature&quot; item)</span></i>
+    0x81, 0x00,          <i><span style="color: #008000">// Input (Data, Array, Abs): Instantiates input packet fields based on the previous report size,</span></i>
+                         <i><span style="color: #008000">// count, logical min/max, and usage.</span></i>
+    0x19, 0x01,          <i><span style="color: #008000">// Usage Minimum</span></i>
+    0x29, 0x40,          <i><span style="color: #008000">// Usage Maximum     //64 output usages total (0x01 to 0x40)</span></i>
+    0x91, 0x00,          <i><span style="color: #008000">// Output (Data, Array, Abs): Instantiates output packet fields.  Uses same report size and</span></i>
+                         <i><span style="color: #008000">// count as &quot;Input&quot; fields, since nothing new or different was specified to the parser since</span></i>
+                         <i><span style="color: #008000">// the &quot;Input&quot; item.</span></i>
+    0xC0                 <i><span style="color: #008000">// End Collection</span></i>
+};
 
-    appData.deviceIsAttached = <strong><span style="color: #000080">true</span></strong>;
-    appData.cdcObj = cdcObj;
-}
+<i><span style="color: #008000">/* HID Function Driver Initialization data structure. This
+ * contains the size of the report descriptor and a pointer
+ * to the report descriptor. If there are multiple HID instances
+ * each with different report descriptors, multiple such data
+ * structures may be needed */</span></i>
 
-
-<strong><span style="color: #000080">void</span></strong> APP_Tasks(<strong><span style="color: #000080">void</span></strong>)
+USB_DEVICE_HID_INITIALIZATION hidInit =
 {
-    <strong><span style="color: #000080">switch</span></strong> (appData.state)
+    <strong><span style="color: #000080">sizeof</span></strong>(hid_rpt01), <i><span style="color: #008000">// Size of the report</span></i>
+    (uint8_t *)&amp;hid_rpt01 <i><span style="color: #008000">// Pointer to the report</span></i>
+    1, <i><span style="color: #008000">// Send queue size is 1. We will not queue up reports.</span></i>
+    0 <i><span style="color: #008000">// Receive queue size 0. We will not receive reports.</span></i>
+};
+
+<i><span style="color: #008000">/* The HID function driver instance is now registered with
+ * device layer through the function driver registration
+ * table. */</span></i>
+
+<strong><span style="color: #000080">const</span></strong> USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[1] =
+{
     {
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_BUS_ENABLE:
-
-            <i><span style="color: #008000">/* In this state the application enables the USB Host Bus. Note
-             * how the CDC Attach event handler is registered before the bus
-             * is enabled. */</span></i>
-
-            USB_HOST_CDC_AttachEventHandlerSet(APP_USBHostCDCAttachEventListener, (uintptr_t) 0);
-            USB_HOST_BusEnable(0);
-            appData.state = APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE;
-            <strong><span style="color: #000080">break</span></strong>;
-
-        <strong><span style="color: #000080">case</span></strong> APP_STATE_WAIT_FOR_BUS_ENABLE_COMPLETE:
-            <i><span style="color: #008000">/* Here we wait for the bus enable operation to complete. */</span></i>
-            <strong><span style="color: #000080">break</span></strong>;
-    }
-}</pre></div></div>
+         .speed = USB_SPEED_FULL|USB_SPEED_HIGH,    <i><span style="color: #008000">// Supported speed</span></i>
+         .configurationValue = 1,                   <i><span style="color: #008000">// To be initialized for Configuration 1</span></i>
+         .interfaceNumber = 0,                      <i><span style="color: #008000">// Starting interface number</span></i>
+         .numberOfInterfaces = 1,                   <i><span style="color: #008000">// Number of Interfaces</span></i>
+         .funcDriverIndex = 0,                      <i><span style="color: #008000">// Function Driver instance index is 0</span></i>
+         .funcDriverInit = &amp;hidInit,                <i><span style="color: #008000">// Function Driver Initialization</span></i>
+         .driver = USB_DEVICE_HID_FUNCTION_DRIVER   <i><span style="color: #008000">// Pointer to the function driver - Device Layer Interface functions</span></i>
+     }
+};</pre></div></div>
 </div>
 </div>
 </div>
@@ -95,7 +115,7 @@ The total number of event handlers that can be registered is defined by <a href=
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00389.html" target="topic">USB Libraries Help</a> &gt; <a href="00371.html" target="topic">USB Host Libraries</a> &gt; <a href="00245.html" target="topic">USB CDC Host Library</a> &gt; <a href="00252.html" target="topic">Using the Library</a> &gt; <a href="00243.html" target="topic">How the Library Works</a> &gt; <a href="00240.html" target="topic">Detecting Device Attach</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00214.html" target="topic">USB HID Device Library</a> &gt; <a href="00244.html" target="topic">Using the Library</a> &gt; <a href="00237.html" target="topic">How the Library Works</a> &gt; <a href="00240.html" target="topic">Library Initialization</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -103,13 +123,13 @@ The total number of event handlers that can be registered is defined by <a href=
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00251.html" target="topic">Previous</a> | <a href="00243.html" target="topic">Up</a> | <a href="00248.html" target="topic">Next</a></div>
+<a href="00237.html" target="topic">Previous</a> | <a href="00237.html" target="topic">Up</a> | <a href="00234.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB CDC HOST Detecting Device Attach Topic Title: Detecting Device Attach)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB HIDDEV Library Initialization Topic Title: Library Initialization)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
 <html>
 <head>
-<title>Help Features</title>
+<title>Receiving Data</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="generator" content="Doc-O-Matic" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
@@ -18,7 +18,7 @@
 <!-- Begin Page Header -->
 <div class="Element710" id="areafixed">
 <div class="Element94">
-<a href="00168.html" target="topic">Support</a> &gt; <a href="00163.html" target="topic">Help Features</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00166.html" target="topic">USB CDC Device Library</a> &gt; <a href="00165.html" target="topic">Using the Library</a> &gt; <a href="00158.html" target="topic">How the Library Works</a> &gt; <a href="00163.html" target="topic">Receiving Data</a></div>
 <div class="Element92">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -26,15 +26,15 @@
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element2">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element90">
-<a href="00161.html" target="topic">Previous</a> | <a href="00168.html" target="topic">Up</a> | <a href="00157.html" target="topic">Next</a></div>
+<a href="00164.html" target="topic">Previous</a> | <a href="00158.html" target="topic">Up</a> | <a href="00153.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element96">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: HARMONY Help Features Topic Title: Help Features)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVCDC Receiving Data Topic Title: Receiving Data)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table><div class="Element5">
-Help Features</div>
+Receiving Data</div>
 </div>
 </div>
 
@@ -46,34 +46,32 @@ Help Features</div>
 
 <!-- Begin Page Content -->
 <a name="PageContent"></a><div class="Element58">
-<a name="546F70696373"></a><div class="Element14">
-Topics</div>
-<div class="Element11">
+<a name="4465736372697074696F6E"></a><div class="Element11">
 <div class="Element10">
-<div class="Element212">
-<div class="TableDiv">
-<table cellspacing="0" class="Table0">
-<tr>
-<td class="Element200" valign="top" width="35%">
-<div class="Element201">
-Name&nbsp;</div></td><td class="Element204" valign="top" width="65%">
-<div class="Element205">
-Description&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00157.html" target="topic">CHM Help Features</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Provides detailed information on the features available in CHM Help files.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00164.html" target="topic">HTML Help Features</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Provides detailed information on the features available in the stand-alone HTML Help.&nbsp;</div></td></tr><tr>
-<td class="Element202" valign="top" width="35%">
-<div class="Element203">
-<a href="00166.html" target="topic">PDF Help Features</a>&nbsp;</div></td><td class="Element206" valign="top" width="65%">
-<div class="Element207">
-Provides detailed information on the features available in the PDF version of the Help.&nbsp;</div></td></tr></table></div></div>
+<p class="Element10">
+The application can receive data from the host by using the <a href="00616.html" target="topic">USB_DEVICE_CDC_Read</a> function. This function returns a transfer handle that allows the application to track the read request. The request is completed when the Host sends the required amount or less than required amount of data. The application must make sure that it allocates a buffer size that is at least the size or a multiple of the receive endpoint size. The return value of the function indicates the success of the request. A read request could fail if the function driver transfer queue is full. The completion of the read transfer is indicated by the USB_DEVICE_CDC_EVENT_READ_COMPLETE event. The request completes based on the amount of the data that was requested and size of the transaction initiated by the Host:</p>
+<ul class="Element630">
+<li class="Element600">If the size parameter is not a multiple of maxPacketSize or is '0', the function returns <a href="00632.html" target="topic">USB_DEVICE_CDC_TRANSFER_HANDLE_INVALID</a> in transferHandle and returns USB_DEVICE_CDC_RESULT_ERROR_TRANSFER_SIZE_INVALID as a return value</li>
+<li class="Element600">If the size parameter is a multiple of maxPacketSize and the Host sends less than maxPacketSize data in any transaction, the transfer completes and the function driver will issue a USB_DEVICE_CDC_EVENT_READ_COMPLETE event along with the USB_DEVICE_CDC_EVENT_READ_COMPLETE_DATA data structure</li>
+<li class="Element600">If the size parameter is a multiple of maxPacketSize and the Host sends maxPacketSize amount of data, and total data received does not exceed size, the function driver will wait for the next packet</li>
+</ul><p class="Element10">
+The following code shows an example of the <a href="00616.html" target="topic">USB_DEVICE_CDC_Read</a> function: </p><div class="Element13"><div class="Element12"><pre class="Element12"><i><span style="color: #008000">// Shows an example of how to read. This assumes that</span></i>
+<i><span style="color: #008000">// driver was opened successfully.</span></i>
+
+USB_DEVICE_CDC_TRANSFER_HANDLE transferHandle;
+USB_DEVICE_CDC_RESULT readRequestResult;
+USB_DEVICE_CDC_HANDLE instanceHandle;
+
+readRequestResult = USB_DEVICE_CDC_Read(instanceHandle,
+                        &amp;transferHandle, data, 128);
+
+<strong><span style="color: #000080">if</span></strong>(USB_DEVICE_CDC_RESULT_OK != readRequestResult)
+{
+    <i><span style="color: #008000">//Do Error handling here</span></i>
+}
+
+<i><span style="color: #008000">// The completion of the read request will be indicated by the</span></i>
+<i><span style="color: #008000">// USB_DEVICE_CDC_EVENT_READ_COMPLETE event.</span></i></pre></div></div>
 </div>
 </div>
 </div>
@@ -81,7 +79,7 @@ Provides detailed information on the features available in the PDF version of th
 
 <!-- Begin Page Footer -->
 <div class="Element95">
-<a href="00168.html" target="topic">Support</a> &gt; <a href="00163.html" target="topic">Help Features</a></div>
+<a href="00278.html" target="topic">USB Libraries Help</a> &gt; <a href="00168.html" target="topic">USB Device Libraries</a> &gt; <a href="00166.html" target="topic">USB CDC Device Library</a> &gt; <a href="00165.html" target="topic">Using the Library</a> &gt; <a href="00158.html" target="topic">How the Library Works</a> &gt; <a href="00163.html" target="topic">Receiving Data</a></div>
 <div class="Element93">
 <table width="100%" cellspacing="0" cellpadding="0">
 <tr><td width="25%">
@@ -89,13 +87,13 @@ Provides detailed information on the features available in the PDF version of th
 MPLAB Harmony USB Stack </div>
 </td><td width="25%">
 <div class="Element4">
-<a href="contents.html" target="tocidx">Contents</a> | <a href="00176.html" target="topic">Home</a></div>
+<a href="contents.html" target="tocidx">Contents</a> | <a href="00066.html" target="topic">Home</a></div>
 </td><td width="25%">
 <div class="Element91">
-<a href="00161.html" target="topic">Previous</a> | <a href="00168.html" target="topic">Up</a> | <a href="00157.html" target="topic">Next</a></div>
+<a href="00164.html" target="topic">Previous</a> | <a href="00158.html" target="topic">Up</a> | <a href="00153.html" target="topic">Next</a></div>
 </td><td width="25%">
 <div class="Element97">
-<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: HARMONY Help Features Topic Title: Help Features)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
+<a href="mailto:docerrors@microchip.com&subject=MPLAB Harmony Documentation Feedback (Topic ID: USB DEVCDC Receiving Data Topic Title: Receiving Data)&body=Thank you for your feedback! Please include a description of your feedback, and indicate whether you are reporting an an error in the documentation or an enhancement.">Documentation Feedback</a><br> <a href="http://support.microchip.com" target="_blank">Microchip Support</a></div>
 </td></tr></table></div>
 
 <!-- End Page Footer -->
