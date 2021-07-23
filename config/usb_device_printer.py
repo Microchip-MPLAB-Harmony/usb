@@ -160,7 +160,7 @@ def instantiateComponent(usbDevicePrinterComponent, index):
 		BulkOutMaxEpNumber = 15
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMDA1","SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMD11", "PIC32CM"]):
 		BulkOutMaxEpNumber = 7
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAM9X60"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAM9X60", "SAMA7"]):
 		BulkOutMaxEpNumber = 9
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAME70", "SAMS70", "SAMV70", "SAMV71"]):
 		BulkOutMaxEpNumber = 9

@@ -59,7 +59,7 @@ def loadModule():
                             usbControllersNumber += 1
                 else:
                     availablePeripherals.append(str(instances[instance].getAttribute("name")))
-    if any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAM9X60"]):
+    if any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAM9X60", "SAMA7"]):
         # Create USB High Speed Host Port Driver Component for SAMA5D2 & SAM9X60
         usbUhpHsDriverComponent =  Module.CreateComponent("drv_usbhs_v1", "USB Host Port HS Driver", "/Harmony/Drivers", "config/usb_uhphs_driver.py")
         usbUhpHsDriverComponent.addCapability("DRV_UHPHS", "DRV_UHPHS", True)
