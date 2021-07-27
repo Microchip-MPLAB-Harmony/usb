@@ -111,7 +111,7 @@ def instantiateComponent(usbDriverComponent):
         to generate a VBUS SENSE function. The GPIO pin name must be configured
         as in the below.'''
 	usbVbusSense.setDescription(helpText)
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX", "PIC32MM"]):
 		usbVbusSense.setVisible(False)
 		usbVbusSense.setDefaultValue(False)
 	else:
@@ -185,7 +185,7 @@ def instantiateComponent(usbDriverComponent):
 
 	if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
 		# no RTOS Task required for USBFS driver (PIC32MX/MK) if operating in Interrupt mode. MHC only support interrupt mode.
-		if not any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX"]):
+		if not any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX", "PIC32MM"]):
 			enable_rtos_settings = True
 		
 	# RTOS Settings
@@ -239,8 +239,20 @@ def instantiateComponent(usbDriverComponent):
 		Database.setSymbolValue("core", "USB_INTERRUPT_ENABLE", True)
 		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER_LOCK", True)
 		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER", "DRV_USBFS_USB_Handler")
-		Database.setSymbolValue("core", "USB1_CLOCK_ENABLE", True)
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX"]):
+		
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MM"]):
+	
+		Database.clearSymbolValue("core", "USB_INTERRUPT_ENABLE")
+		Database.clearSymbolValue("core", "USB_INTERRUPT_HANDLER_LOCK")
+		Database.clearSymbolValue("core", "USB_INTERRUPT_HANDLER")
+	
+		# Update USB General Interrupt Handler
+		Database.setSymbolValue("core", "USB_INTERRUPT_ENABLE", True)
+		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER_LOCK", True)
+		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER", "DRV_USBFS_USB_Handler")
+		Database.setSymbolValue("core", "USB_CLOCK_ENABLE", True)
+		
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX" ]):
 		Database.clearSymbolValue("core", "USB_1_INTERRUPT_ENABLE")
 		Database.clearSymbolValue("core", "USB_1_INTERRUPT_HANDLER_LOCK")
 		Database.clearSymbolValue("core", "USB_1_INTERRUPT_HANDLER")
@@ -253,9 +265,9 @@ def instantiateComponent(usbDriverComponent):
 		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK"]):	
 			Database.setSymbolValue("core", "USB1_CLOCK_ENABLE", True)
 		
-		if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MX"]):
+		if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MX" ]):
 			Database.setSymbolValue("core", "USB_CLOCK_ENABLE", True)
-	
+			
 
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD5", "SAME5"]):
 
@@ -289,7 +301,7 @@ def instantiateComponent(usbDriverComponent):
 	Database.sendMessage("HarmonyCore", "ENABLE_SYS_COMMON", {"isEnabled":True})
 
 	configName = Variables.get("__CONFIGURATION_NAME")
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX" , "PIC32MZ1025W"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX", "PIC32MM", "PIC32MZ1025W"]):
 		sourcePath = "templates/driver/usbfs/"
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD5", "SAME5", "SAMD21", "SAMDA1","SAML21","SAML22", "SAMD11", "PIC32CM"]):
 		sourcePath = "templates/driver/usbfsv1/"
@@ -405,7 +417,7 @@ def instantiateComponent(usbDriverComponent):
 		drvUsbHsV1LocalHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbfsv1/src")
 		drvUsbHsV1LocalHeaderFile.setType("HEADER")
 		drvUsbHsV1LocalHeaderFile.setOverwrite(True)
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX" ,"PIC32MZ1025W"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX", "PIC32MM", "PIC32MZ1025W"]):
 		drvUsbHeaderFile = usbDriverComponent.createFileSymbol(None, None)
 		drvUsbHeaderFile.setSourcePath(usbDriverPath + "drv_usb.h")
 		drvUsbHeaderFile.setOutputName("drv_usb.h")
@@ -493,7 +505,7 @@ def instantiateComponent(usbDriverComponent):
 		drvUsbHsV1HostSourceFile.setDependencies(blDrvUsbHsV1HostSourceFile, ["USB_OPERATION_MODE"])
 		
 		
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX","PIC32MZ1025W"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX", "PIC32MM", "PIC32MZ1025W"]):
 		drvUsbHsV1HostSourceFile = usbDriverComponent.createFileSymbol("DRV_USB_SOURCE_FILE_COMMON", None)
 		drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "usbfs/src/drv_usbfs.c")
 		drvUsbHsV1HostSourceFile.setOutputName("drv_usbfs.c")
@@ -522,7 +534,7 @@ def instantiateComponent(usbDriverComponent):
 		drvUsbHsV1HostSourceFile.setDependencies(blDrvUsbHsV1HostSourceFile, ["USB_OPERATION_MODE"])
 		
 	# Add USBHS PLIB files for PIC32MK
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX" ,"PIC32MZ1025W" ]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX", "PIC32MM", "PIC32MZ1025W"]):
 		plib_usbfs_h = usbDriverComponent.createFileSymbol(None, None)	
 		addFileName('plib_usbfs.h', usbDriverComponent, plib_usbfs_h, usbDriverPath + "usbfs/src/", usbDriverProjectPath + "usbfs/src", True, None)
 		

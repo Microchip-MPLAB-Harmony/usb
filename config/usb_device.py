@@ -259,7 +259,7 @@ def instantiateComponent(usbDeviceComponent):
 		driverIndex = "DRV_USBHSV1_INDEX_0"
 		driverInterface = "DRV_USBHSV1_DEVICE_INTERFACE"
 		
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX" , "PIC32MZ1025W"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX", "PIC32MM", "PIC32MZ1025W"]):
 		res = Database.activateComponents(["drv_usbfs_v1"])
 		speed = Database.getSymbolValue("drv_usbfs_v1", "USB_SPEED")
 		driverIndex = "DRV_USBFS_INDEX_0"

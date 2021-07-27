@@ -298,7 +298,7 @@ def instantiateComponent(usbDeviceComponent,index):
 		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
 		driverIndex = "DRV_USBHS_INDEX_0"
 		driverInterface = "DRV_USBHS_DEVICE_INTERFACE"
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX" , "PIC32MM"]):
 		res = Database.activateComponents(["drv_usbfs_index"])
 		speed = Database.getSymbolValue("drv_usbfs", "USB_SPEED")
 		driverIndex = "DRV_USBFS_INDEX_0"
@@ -559,7 +559,7 @@ def instantiateComponent(usbDeviceComponent,index):
 	
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK"]):
 		sourcePath = "templates/device/usbdevice_multi/"
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX" , "PIC32MM"]):
 		sourcePath = "templates/device/"
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD51", "SAME51", "SAME53", "SAME54" ,"SAMD20", "SAMD21", "SAMDA1","SAML21","SAML22", "PIC32CM"]):
 		sourcePath = "templates/device/"

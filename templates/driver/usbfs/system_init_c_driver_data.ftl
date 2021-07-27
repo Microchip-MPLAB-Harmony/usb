@@ -87,6 +87,12 @@ const DRV_USBFS_INIT drvUSBFSInit =
 	.interruptSource = INT_SOURCE_USB,
 </#if>
 
+<#if __PROCESSOR?matches("PIC32MM.*") == true>
+
+	/* Interrupt Source for USB module */
+	.interruptSource = INT_SOURCE_USB,
+</#if>
+
 <#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
 
 	/* Interrupt Source for USB module */

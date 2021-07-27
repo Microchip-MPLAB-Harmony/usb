@@ -62,7 +62,7 @@ def instantiateComponent(usbHostComponent):
 		driverInterface = "DRV_USBHSV1_HOST_INTERFACE"
 		args = {"operationMode":"Host"}
 		Database.sendMessage("drv_usbhs_v1", "UPDATE_OPERATION_MODE", args)
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX" ,"PIC32MZ1025W"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX", "PIC32MM", "PIC32MZ1025W"]):
 		res = Database.activateComponents(["drv_usbfs_v1"])
 		speed = Database.getSymbolValue("drv_usbfs_v1", "USB_SPEED")
 		driverIndex = "DRV_USBFS_INDEX_0"
@@ -164,7 +164,7 @@ def instantiateComponent(usbHostComponent):
 	usbHostPipesNumber.setDefaultValue(10)
 		
 	# USB Host Hub Support
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX" , "SAMA5D2", "SAM9X60" , "SAMD21", "SAMDA1", "SAMD5","SAMV70", "SAMV71","SAME70", "SAMS70" ,"PIC32MK" ,"SAME5", "SAML21" , "SAM9X60", "SAMG55" ]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX" , "PIC32MM", "SAMA5D2", "SAM9X60" , "SAMD21", "SAMDA1", "SAMD5","SAMV70", "SAMV71","SAME70", "SAMS70" ,"PIC32MK" ,"SAME5", "SAML21" , "SAM9X60", "SAMG55" ]):
 		usbHostHubsupport = usbHostComponent.createBooleanSymbol("CONFIG_USB_HOST_HUB_SUPPORT", None)
 		usbHostHubsupport.setLabel( "Hub support" )
 		usbHostHubsupport.setVisible( True)
@@ -291,7 +291,7 @@ def instantiateComponent(usbHostComponent):
 	
 	# system_config.h file for USB Host Layer    
 	################################################
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX" , "SAMA5D2", "SAM9X60" , "SAMD21", "SAMDA1", "SAMD5","SAMV70", "SAMV71","SAME70", "SAMS70" ,"PIC32MK" ,"SAME5", "SAML21" , "SAM9X60", "SAMG55" ]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX", "PIC32MM", "SAMA5D2", "SAM9X60" , "SAMD21", "SAMDA1", "SAMD5","SAMV70", "SAMV71","SAME70", "SAMS70" ,"PIC32MK" ,"SAME5", "SAML21" , "SAM9X60", "SAMG55" ]):
 		usbHostHubConfigFile = usbHostComponent.createFileSymbol("FILE_USB_HOST_HUB_CONFIG", None)
 		usbHostHubConfigFile.setType("STRING")
 		usbHostHubConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION")

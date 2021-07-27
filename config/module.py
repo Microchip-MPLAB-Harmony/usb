@@ -42,7 +42,7 @@ def loadModule():
     USBHostDriverCapabilityName = "DRV_USB" 
     availablePeripherals = []
     usbControllersNumber = 0
-    if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK" , "PIC32MX"]):
+    if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK" , "PIC32MX" , "PIC32MM"]):
         modules = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals").getChildren()
         for module in range(len(modules)):
             instances = modules[module].getChildren()
@@ -90,7 +90,7 @@ def loadModule():
         loadUSBDeviceMSD = True
         loadUSBDeviceVendor = True 
         loadUSBDevicePrinter = True 
-    elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21","SAMDA1", "SAMD5", "SAME5", "SAML21", "PIC32MX2", "PIC32MX3", "PIC32MX4", "PIC32MX5", "PIC32MX6", "PIC32MX7", "PIC32MZ1025W", "PIC32CM"]):
+    elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21","SAMDA1", "SAMD5", "SAME5", "SAML21", "PIC32MZ1025W", "PIC32CM"]):
         # Create USB Full Speed Driver Component
         usbDriverComponent =  Module.CreateComponent("drv_usbfs_v1", "USB Full Speed Driver", "/Harmony/Drivers", "config/usbfs_v1_driver.py")
         usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
@@ -167,6 +167,27 @@ def loadModule():
         loadUSBDeviceVendor = True
         loadUSBDevicePrinter = True 
 
+    elif any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MX2", "PIC32MX3", "PIC32MX4", "PIC32MX5", "PIC32MX6", "PIC32MX7", "PIC32MM"]):
+        if usbControllersNumber != None and usbControllersNumber > 0:
+            # Create USB Full Speed Driver Component
+            usbDriverComponent =  Module.CreateComponent("drv_usbfs_v1", "USB Full Speed Driver", "/Harmony/Drivers", "config/usbfs_v1_driver.py")
+            usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
+            usbDriverComponent.addDependency("drv_usb_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
+        
+            # Enable USB Library modules 
+            loadUSBHostLayer = True
+            loadUSBHostCDC = True
+            loadUSBHostMSD = True
+            loadUSBHostHID = True
+            loadUSBHostAudio = True 
+        
+            loadUSBDeviceLayer = True
+            loadUSBDeviceCDC = True
+            loadUSBDeviceHID = True
+            loadUSBDeviceAudio = True
+            loadUSBDeviceMSD = True
+            loadUSBDeviceVendor = True
+            loadUSBDevicePrinter = True
 
     elif any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK"]):
         if usbControllersNumber != None and usbControllersNumber > 0:

@@ -61,7 +61,7 @@ def instantiateComponent(usbPeripheralComponentCommon):
 	sourcePath = "templates/driver/usbfs_multi/"
 		
 	availablePeripherals = []
-	if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK" , "PIC32MX"]):
+	if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32MX", "PIC32MM"]):
 		modules = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals").getChildren()
 		for module in range(len(modules)):
 			instances = modules[module].getChildren()
@@ -109,7 +109,7 @@ def instantiateComponent(usbPeripheralComponentCommon):
 	usbDriverHostResetDuration.setDescription("Set USB Host Attach De-bounce duration")
 	usbDriverHostResetDuration.setDefaultValue(100)
 	
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX" ]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX", "PIC32MM"]):
 		plib_usbfs_header_h = usbPeripheralComponentCommon.createFileSymbol("PLIB_USBFS_HEADER_H", None)
 		plib_usbfs_header_h.setSourcePath( usbDriverPath + "usbfs/src/plib_usbfs_header.h.ftl")
 		plib_usbfs_header_h.setOutputName("plib_usbfs_header.h")
