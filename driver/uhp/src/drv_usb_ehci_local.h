@@ -56,9 +56,6 @@
 #include "driver/usb/uhp/drv_usb_ehci.h"
 #include <string.h>
 
-
-
-
 #define _DRV_USB_EHCI_NON_CACHED __attribute__((__section__(".region_nocache")))
 #define _DRV_USB_EHCI_POLLING_RATE(x) ((1 << (x-1))/8)
 /**********************************************
@@ -75,8 +72,8 @@
 
 
 /********************************************
- * PORTSC register access between SAM9x and
- * SAMA5D2 is different.
+ * PORTSC register access between SAMA7G5x,
+ * SAM9x and SAMA5D2 are different.
  *******************************************/
 
 #ifdef UHPHS_PORTSC_REG_OFST
@@ -92,14 +89,32 @@
     #define UHPHS_PORTSC_N_PP_Msk   UHPHS_PORTSC_PP_Msk
     #define UHPHS_PORTSC_N_PED_Msk  UHPHS_PORTSC_PED_Msk
 
-    #define PMC_UCKR_UPLLEN()   \
-    PMC_REGS->PMC_PCR = PMC_PCR_PID(hDriver->interruptSource);\
-    PMC_REGS->PMC_PCR = PMC_PCR_PID(hDriver->interruptSource) | PMC_PCR_CMD_Msk | PMC_PCR_EN_Msk | PMC_PCR_GCKCSS_UPLL_CLK;\
-    while ((PMC_REGS->PMC_PLL_ISR0 & PMC_PLL_ISR0_LOCKU_Msk) != PMC_PLL_ISR0_LOCKU_Msk)
-    
-    #define PMC_PCR_GCKCSS_UPLL_CLK  PMC_PCR_GCLKCSS(PMC_PCR_GCLKCSS_UPLL_Val) 
-    #define IS_LOCKU_ENABLE()  ((PMC_REGS->PMC_PLL_ISR0 & PMC_PLL_ISR0_LOCKU_Msk) == PMC_PLL_ISR0_LOCKU_Msk)
+#ifdef _SAMA7G54_H_
+        /* Specific to SAMA7G54 */
+        #define PMC_UCKR_UPLLEN() \
+            UDPHSA_REGS->UDPHS_CTRL &= ~UDPHS_CTRL_EN_UDPHS_Msk; \
+            for(i = 0; i < DRV_USB_EHCI_PORT_NUMBERS; i ++) \
+            { \
+                if(drvInit->bmPortSelect & (1 << i)) \
+                { \
+                    RSTC_REGS->RSTC_GRSTR &= ~(1 << (4+i)); \
+                } \
+            }
+
+        #define IS_LOCKU_ENABLE()  1
+#else
+        /* Specific to SAM9X60 */
+        #define PMC_PCR_GCKCSS_UPLL_CLK  PMC_PCR_GCLKCSS(PMC_PCR_GCLKCSS_UPLL_Val) 
+
+        #define PMC_UCKR_UPLLEN()   \
+            PMC_REGS->PMC_PCR = PMC_PCR_PID(hDriver->interruptSource);\
+            PMC_REGS->PMC_PCR = PMC_PCR_PID(hDriver->interruptSource) | PMC_PCR_CMD_Msk | PMC_PCR_EN_Msk | PMC_PCR_GCKCSS_UPLL_CLK;\
+            while ((PMC_REGS->PMC_PLL_ISR0 & PMC_PLL_ISR0_LOCKU_Msk) != PMC_PLL_ISR0_LOCKU_Msk)
+
+        #define IS_LOCKU_ENABLE()  ((PMC_REGS->PMC_PLL_ISR0 & PMC_PLL_ISR0_LOCKU_Msk) == PMC_PLL_ISR0_LOCKU_Msk)
 #endif
+
+#endif /* UHPHS_PORTSC_REG_OFST */
 
 #ifdef UHPHS_PORTSC_0_REG_OFST
 
@@ -122,9 +137,6 @@
       
     #define IS_LOCKU_ENABLE()  ((PMC_REGS->PMC_SR & PMC_SR_LOCKU_Msk) == PMC_SR_LOCKU_Msk)
 #endif
-    
-
-
 
 /*********************************************
  * These IRP states are used internally by the

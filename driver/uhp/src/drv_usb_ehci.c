@@ -62,7 +62,7 @@ DRV_USB_EHCI_OBJ gDrvUSBEHCIObj[DRV_USB_EHCI_INSTANCES_NUMBER];
 /********************************************************
  * The EHCI Driver Required Array. The one additional
  * queue head in the gDrvUSBEHCIQueueHead array
- * will be used as the head of reclaimation queue head 
+ * will be used as the head of reclamation queue head 
  * in the async list.
  ********************************************************/
 __ALIGNED(4096) _DRV_USB_EHCI_NON_CACHED uint32_t gDrvUSBEHCIPeriodicFrameList[DRV_USB_EHCI_INSTANCES_NUMBER][DRV_USB_EHCI_PERIODIC_LIST_SIZE];
@@ -126,7 +126,7 @@ DRV_USB_HOST_INTERFACE gDrvUSBEHCIInterface =
 
 uint16_t _DRV_USB_EHCI_GetUniqueKey (DRV_USB_EHCI_OBJ * hDriver)
 {
-    /* This function creates a unique key. It shoudl be called
+    /* This function creates a unique key. It should be called
      * from a thread safe scope. It should not be called in
      * an interrupt context. The value 0xFFFF and 0x0 cannot be
      * a unique key. */
@@ -184,7 +184,7 @@ size_t _DRV_USB_EHCI_QTDBufferPointerSetup
     /* This function loads the Buffer pointer in the qTD */
     qTD->bufferPointer[0] = (uint32_t)(transferBuffer);
 
-    /* Shifting by 12 bits gets us the 4096 page address. Fidning the difference
+    /* Shifting by 12 bits gets us the 4096 page address. Finding the difference
      * between the start and end address should give us the total number of
      * pages. */
     nPages = (endAddress >> 12) - (startAddress >> 12);
@@ -338,7 +338,7 @@ void _DRV_USB_EHCI_PortsTask(DRV_USB_EHCI_OBJ * hDriver)
     portSC = (volatile uint32_t *)((uint32_t)usbID + UHPHS_PORTSC_REG);
     
     /* This routine maintains the states of each port */
-    for (i = 0;i < DRV_USB_EHCI_PORT_NUMBERS; i ++)
+    for (i = 0; i < DRV_USB_EHCI_PORT_NUMBERS; i ++)
     {
         port = &hDriver->ports[i];
 
@@ -846,7 +846,7 @@ void _DRV_USB_EHCI_BulkTransferProcess(void * hPipe)
             {
                 /* Pipe was empty prior to IRP callback. If there was any
                  * IRP submitted in the IRP callback function, the IRPSubmit
-                 * functionw would have detected the empty queue and would have
+                 * function would have detected the empty queue and would have
                  * triggered the IRP. So we do not have to do anything. */
             }
         }
@@ -1069,7 +1069,7 @@ void _DRV_USB_EHCI_PipeCloseTask(DRV_USB_EHCI_OBJ * hDriver)
     int j = 0;
 
     pipe = hDriver->queueHeads;
-    for(i = 0;i < USB_HOST_PIPES_NUMBER; i ++)
+    for(i = 0; i < USB_HOST_PIPES_NUMBER; i ++)
     {
         if(pipe->inUse)
         {
@@ -1325,7 +1325,7 @@ SYS_MODULE_OBJ DRV_USB_EHCI_Initialize
                 hDriver->controlTransferQTD = & gDrvUSBEHCIControlTransferQTD[drvIndex][0];
 
                 /* Deallocate queue head and queue transfer descriptors */
-                for(i = 0;i < USB_HOST_TRANSFERS_NUMBER; i ++)
+                for(i = 0; i < USB_HOST_TRANSFERS_NUMBER; i ++)
                 {
                     hDriver->queueTransferDescriptors[i].inUse = false;
                     hDriver->queueTransferDescriptors[i].transferBuffer = &gDrvUSBEHCITransferBuffer[drvIndex][i][0];
@@ -1333,7 +1333,7 @@ SYS_MODULE_OBJ DRV_USB_EHCI_Initialize
                     hDriver->controlTransferQTD[i].dataBuffer = &gDrvUSBEHCIControlTransferBuffer[drvIndex][i][0];
                 }
 
-                for(i = 0;i < USB_HOST_PIPES_NUMBER; i ++)
+                for(i = 0; i < USB_HOST_PIPES_NUMBER; i ++)
                 {
                     hDriver->queueHeads[i].inUse = false;
                     hDriver->queueHeads[i].clientUniqueKey = 0xFFFF;
@@ -1354,7 +1354,7 @@ SYS_MODULE_OBJ DRV_USB_EHCI_Initialize
 
                 /* Check the port bit map and mark these ports
                  * as selected in the port data structures */
-                for(i = 0;i < DRV_USB_EHCI_PORT_NUMBERS; i ++)
+                for(i = 0; i < DRV_USB_EHCI_PORT_NUMBERS; i ++)
                 {
                     hDriver->ports[i].attachedDeviceObjHandle = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
                     hDriver->ports[i].selected = false;
@@ -1369,9 +1369,9 @@ SYS_MODULE_OBJ DRV_USB_EHCI_Initialize
                     hDriver->ports[i].timerHandle = SYS_TIME_HANDLE_INVALID;
                 }
 
-                /* Intialize the Async Schedule Head Queue Head. This simplifies
-                 * head of reclaimation management. This queue head will always
-                 * be the head of reclaimation. It is the last queue head in the
+                /* Initialize the Async Schedule Head Queue Head. This simplifies
+                 * head of reclamation management. This queue head will always
+                 * be the head of reclamation. It is the last queue head in the
                  * gDrvUSBEHCIQueueHead array and will not be used by the
                  * application. */
                 hDriver->asyncHeadQH = (USB_EHCI_QH *) &gDrvUSBEHCIQueueHead[drvIndex][USB_HOST_PIPES_NUMBER];
@@ -1420,7 +1420,7 @@ SYS_MODULE_OBJ DRV_USB_EHCI_Initialize
     This function deinitializes the USB EHCI driver instance. 
 
   Remarks:
-    A typicall USB application may not to called this function.
+    A typical USB application may not to called this function.
 */
 
 void DRV_USB_EHCI_Deinitialize
@@ -1777,7 +1777,7 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
                     if(hDriver->inInterruptContext == false)
                     {
                         /* This means we are not executed within an interrupt
-                         * context. Disable the interrup and grab the mutex. */
+                         * context. Disable the interrupt and grab the mutex. */
                         if(OSAL_MUTEX_Lock(&hDriver->mutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
                         {
                             interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptSource);
@@ -1790,7 +1790,7 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
                     }
                     else
                     {
-                        /* This means we are executed withing an interrupt
+                        /* This means we are executed within an interrupt
                          * context. So we know we will not be preempted by a
                          * thread or another USB interrupt. */
                     }
@@ -1813,7 +1813,7 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
                             controlTransfer = NULL;
 
                             /* For control transfers, look for control transfer qTDs */
-                            for (i = 0;i < USB_HOST_TRANSFERS_NUMBER; i++)
+                            for (i = 0; i < USB_HOST_TRANSFERS_NUMBER; i++)
                             {
                                 if(hDriver->controlTransferQTD[i].inUse == false)
                                 {
@@ -1867,7 +1867,7 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
                         else
                         {
                             /* Non control transfer handling */
-                            for (i = 0;i < USB_HOST_TRANSFERS_NUMBER; i++)
+                            for (i = 0; i < USB_HOST_TRANSFERS_NUMBER; i++)
                             {
                                 if(hDriver->queueTransferDescriptors[i].inUse == false)
                                 {
@@ -2038,10 +2038,10 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
                                                      * polling rate greater than 1. To this we must find the 
                                                      * first slot. The first slot must be within the first polling rate
                                                      * slots on the list. For example, with a polling rate of 8, the
-                                                     * first slot should in slots 0 tp 7. Additonally, we should 
-                                                     * find a slot that preferrably does not have another qH with
+                                                     * first slot should in slots 0 to 7. Additionally, we should 
+                                                     * find a slot that preferably does not have another qH with
                                                      * the same polling rate. This allows for spreading of the 
-                                                     * interupt queues as mentioned on page 93 of the specification.
+                                                     * interrupt queues as mentioned on page 93 of the specification.
                                                      * So we scan till we find a slot that has the least number of
                                                      * pipe with the same polling rate and then insert the qH into 
                                                      * that slot. */
@@ -2226,7 +2226,7 @@ void DRV_USB_EHCI_IRPCancel(USB_HOST_IRP * pInputIRP)
                     if(hDriver->inInterruptContext == false)
                     {
                         /* This means we are not executed within an interrupt
-                         * context. Disable the interrup and grab the mutex. */
+                         * context. Disable the interrupt and grab the mutex. */
                         if(OSAL_MUTEX_Lock(&hDriver->mutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
                         {
                             interruptWasEnabled = SYS_INT_SourceDisable(hDriver->interruptSource);
@@ -2449,7 +2449,7 @@ void DRV_USB_EHCI_PipeClose
 
                     /* We should first check if the pipe was inserted into 
                      * schedule. Pipe are inserted into the schedule only 
-                     * when atleast one transaction was submitted on the pipe
+                     * when at least one transaction was submitted on the pipe
                      * If the pipe was added to schedule, then we let the pipe
                      * close tasks handle this. */
 
@@ -2575,7 +2575,7 @@ DRV_USB_EHCI_PIPE_HANDLE DRV_USB_EHCI_PipeSetup
                     if(OSAL_MUTEX_Lock(&hDriver->mutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
                     {
                         /* Look for a free driver pipe object */
-                        for(i = 0;i < USB_HOST_PIPES_NUMBER; i ++)
+                        for(i = 0; i < USB_HOST_PIPES_NUMBER; i ++)
                         {
                             if(hDriver->queueHeads[i].inUse == false)
                             {
@@ -2592,7 +2592,7 @@ DRV_USB_EHCI_PIPE_HANDLE DRV_USB_EHCI_PipeSetup
                                  * first byte is an index into the pipe object
                                  * array. The second byte in an index into the
                                  * hardware instance object array and third and
-                                 * fourth byteare the client unique key. */
+                                 * fourth bytes are the client unique key. */
                                 pipeHandle = (DRV_USB_EHCI_PIPE_HANDLE)(((pipe->clientUniqueKey << 16) & 0xFFFF0000) | ((drvIndex & 0xFF) << 8) | (i & 0xFF));
 
                                 /* Clear up the qHead structure */
@@ -2890,7 +2890,7 @@ void DRV_USB_EHCI_EventsEnable
 
   Description:
     This function enables the Root Hub Operation. When enabled the root hub will
-    supply power to the port thus enablling device attach detection.
+    supply power to the port thus enabling device attach detection.
 
   Remarks:
     Refer to drv_usb_ehci.h for usage information.
@@ -2924,7 +2924,7 @@ void DRV_USB_EHCI_OperationEnable(DRV_HANDLE handle, bool enable)
             {
                 /* Disable the controller.Then disable the interrupts and clear
                  * the flags.  Clear the run bit and then wait till
-                 * the halted bit is set. We dont bother clearing the interrupt
+                 * the halted bit is set. We don't bother clearing the interrupt
                  * flags as these will be cleared on the controller reset in the
                  * enable operation.  */
 
@@ -3003,7 +3003,7 @@ bool DRV_USB_EHCI_OperationIsEnabled(DRV_HANDLE handle)
                     case DRV_USB_EHCI_OPERATION_ENABLE_START:
 
                         /* The state is entered when the OperationEnable
-                         * function is called with enable set to true. Intialize
+                         * function is called with enable set to true. Initialize
                          * the periodic frame list. Set all queue head pointers
                          * to the end of list marker */
                         for (i = 0; i < DRV_USB_EHCI_PERIODIC_LIST_SIZE; i ++)
@@ -3053,7 +3053,7 @@ bool DRV_USB_EHCI_OperationIsEnabled(DRV_HANDLE handle)
                         {
                             /* Reset has completed. Enable interrupts. Set the
                              * periodic and async schedule base addresses. Set
-                             * the async to an invaid QH. Enable required
+                             * the async to an invalid QH. Enable required
                              * interrupts.
                              * */
 
@@ -3109,7 +3109,7 @@ bool DRV_USB_EHCI_OperationIsEnabled(DRV_HANDLE handle)
                             SYS_INT_SourceEnable(hDriver->interruptSource);
 
                             /* We can also start the asynch schedule at this
-                             * point. The Asych List address points to the head
+                             * point. The Asynch List address points to the head
                              * queue */
                             usbID->UHPHS_USBCMD |= UHPHS_USBCMD_ASE_Msk;
 
@@ -3157,7 +3157,7 @@ bool DRV_USB_EHCI_OperationIsEnabled(DRV_HANDLE handle)
     
   Description:
     This function resets the root hub port. The reset duration is defined by
-    DRV_USB_EHCI_PORT_RESET_DURATION. The status of the reset signalling can be
+    DRV_USB_EHCI_PORT_RESET_DURATION. The status of the reset signaling can be
     checked using the DRV_USB_EHCI_PortResetIsComplete() function.
     
   Remarks:
@@ -3313,7 +3313,7 @@ bool DRV_USB_EHCI_PortResetIsComplete
             {
                 /* The isResetting flag is updated in the
                  * _DRV_USB_EHCI_PortsTask() function. That function will clear
-                 * this flafg when the reset is complete. */
+                 * this flag when the reset is complete. */
                 if(!hDriver->ports[nPort].isResetting)
                 {
                     returnValue = true;
@@ -3346,7 +3346,7 @@ bool DRV_USB_EHCI_PortResetIsComplete
 
   Description:
     This function resumes the root hub. The resume duration is defined by
-    DRV_USB_EHCI_RESUME_DURATION. The status of the resume signalling can
+    DRV_USB_EHCI_RESUME_DURATION. The status of the resume signaling can
     be checked using the DRV_USB_EHCI_PortResumeIsComplete() function.
 
   Remarks:
@@ -3431,7 +3431,7 @@ USB_SPEED DRV_USB_EHCI_BusSpeedGet(DRV_HANDLE handle)
     bus.
 
   Description:
-    This function returns the maximum amount of current that this root hubn can
+    This function returns the maximum amount of current that this root hub can
     provide on the bus.
 
   Remarks:
@@ -3625,7 +3625,7 @@ void DRV_USB_EHCI_EndpointToggleClear
 
   Remarks:
     This is a local function and should not be called directly by the
-    applciations.
+    applications.
 */
 
 void DRV_USB_EHCI_Tasks_ISR(SYS_MODULE_OBJ moduleObj)
@@ -3666,7 +3666,7 @@ void DRV_USB_EHCI_Tasks_ISR(SYS_MODULE_OBJ moduleObj)
 
         volatile uint32_t * portSC = (volatile uint32_t *)((uint32_t)usbID + UHPHS_PORTSC_REG);
         int i = 0;
-        
+
         for (i = 0; i < DRV_USB_EHCI_PORT_NUMBERS; i ++)
         {
             if(hDriver->ports[i].selected)
@@ -3691,7 +3691,7 @@ void DRV_USB_EHCI_Tasks_ISR(SYS_MODULE_OBJ moduleObj)
                         }
                         else if (hDriver->ports[i].portAttachState == DRV_USB_EHCI_PORT_ATTACH_STATE_WAIT_FOR_DETACH)
                         {
-                            /* The device was deatch and we are ready to handle
+                            /* The device was detach and we are ready to handle
                              * detach. Interrupt is disabled here and renabled
                              * in the port tasks routine */
                             USB_HOST_DeviceDenumerate(hDriver->ports[i].attachedDeviceObjHandle);
@@ -3725,7 +3725,7 @@ void DRV_USB_EHCI_Tasks_ISR(SYS_MODULE_OBJ moduleObj)
 
     if((usbsts & UHPHS_USBSTS_USBINT_Msk) == UHPHS_USBSTS_USBINT_Msk) 
     {
-        /* This is the USB Transactio Interrupt. Find out which the pipe on the
+        /* This is the USB Transaction Interrupt. Find out which the pipe on the
          * transaction has completed. We iterate through each pipe. If the qTD
          * active bit is clear, then we know that we have a transaction
          * complete. */
@@ -3776,7 +3776,7 @@ void DRV_USB_EHCI_Tasks_ISR(SYS_MODULE_OBJ moduleObj)
 
   Remarks:
     This is a local function and should not be called directly by the
-    applciations.
+    applications.
 */
 
 void UHPHS_Handler(void)

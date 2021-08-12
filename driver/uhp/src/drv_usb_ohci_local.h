@@ -107,7 +107,7 @@ typedef enum DRV_USB_OHCI_PORT_ATTACH_STATE
     /* Waiting for attach */
     DRV_USB_OHCI_PORT_ATTACH_STATE_WAITING_FOR_ATTACH = 0,
 
-    /* Start Attach Debounce */
+    /* Start Attach debounce */
     DRV_USB_OHCI_PORT_ATTACH_STATE_START_ATTACH_DEBOUNCE,
 
     /* Wait for the debounce to complete */
@@ -229,7 +229,7 @@ typedef struct
      * structure will be aligned on a 32 byte boundary */
     USB_OHCI_TD td;
 
-    /* True if structurre is in use */
+    /* True if structure is in use */
     bool inUse;
 
     /* Pointer to the IRP connected to this qTD */
@@ -253,7 +253,7 @@ typedef struct
      * structure as this structure will be aligned on an 16 byte boundary */
     USB_OHCI_ED ed;
 
-    /* We are using this bitmap as we dont want to unnecessarily increase the
+    /* We are using this bitmap as we don t want to unnecessarily increase the
      * size of this structure. Doing so would other wise force us to add
      * additional padding bytes to maintain alignment.  */
     struct
@@ -280,7 +280,7 @@ typedef struct
 } DRV_USB_OHCI_ED;
 
 /*************************************************
- * Definition of the multi TD strcuture needed
+ * Definition of the multi TD structure needed
  * for control transfers
  *************************************************/
 
@@ -289,10 +289,10 @@ typedef struct DRV_USB_OHCI_CONTROL_TD
     /* This QTD for the setup stage */
     USB_OHCI_TD setupTD;
 
-    /* This QTD needd for the optional data stage */
+    /* This QTD need for the optional data stage */
     USB_OHCI_TD dataTD;
 
-    /* This QTD needd for the handshake stage */
+    /* This QTD need for the handshake stage */
     USB_OHCI_TD handshakeTD;
 
     /* The driver setup buffer */
@@ -338,7 +338,7 @@ typedef struct DRV_USB_OHCI_OBJ
     /* Interrupt Source */
     INT_SOURCE interruptSource;
 
-    /* Data stucture to manage ports */
+    /* Data structure to manage ports */
     DRV_USB_OHCI_PORT_OBJ ports[DRV_USB_OHCI_PORTS_NUMBER];
 
     /* Identifier assigned by the host layer */

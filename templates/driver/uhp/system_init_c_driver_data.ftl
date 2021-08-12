@@ -55,14 +55,18 @@ void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
         /* Enable the VBUS */
 <#if core.DeviceFamily == "SAMA5D2">
         VBUS_AH_PowerEnable();
+<#elseif core.DeviceFamily == "SAMA7G5">
+        VBUS_AH_PC6_PowerEnable(); 
+        VBUS_AH_PC11_PowerEnable(); 
+        VBUS_AH_PB2_PowerEnable(); 
 <#elseif core.DeviceFamily == "SAM9X60">
         VBUS_AH_PD14_PowerEnable();
         VBUS_AH_PD15_PowerEnable();
         VBUS_AH_PD16_PowerEnable();
 <#elseif core.DeviceFamily == "SAM_G55">
-    <#if USB_HOST_VBUS_ENABLE == true>    
+    <#if USB_HOST_VBUS_ENABLE == true>
         VBUS_AH_PowerEnable();
-     </#if>	
+     </#if>
 </#if>
     }
     else
@@ -70,6 +74,10 @@ void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
         /* Disable the VBUS */
 <#if core.DeviceFamily == "SAMA5D2">
         VBUS_AH_PowerDisable();
+<#elseif core.DeviceFamily == "SAMA7G5">
+        VBUS_AH_PC6_PowerDisable(); 
+        VBUS_AH_PC11_PowerDisable(); 
+        VBUS_AH_PB2_PowerDisable(); 
 <#elseif core.DeviceFamily == "SAM9X60">
         VBUS_AH_PD14_PowerDisable();
         VBUS_AH_PD15_PowerDisable();
@@ -86,12 +94,13 @@ void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
     <#if USB_DRV_EHCI_MENU == true>
 DRV_USB_EHCI_INIT drvUSBEHCIInit =
 {
-<#if core.DeviceFamily == "SAMA5D2">
     /* Interrupt Source for USB module */
+<#if core.DeviceFamily == "SAMA5D2">
     .interruptSource = (INT_SOURCE)41,
 <#elseif core.DeviceFamily == "SAM9X60">
-    /* Interrupt Source for USB module */
     .interruptSource = (INT_SOURCE)22,
+<#elseif core.DeviceFamily == "SAMA7G5">
+    .interruptSource = (INT_SOURCE)UHPHS_IRQn,
 </#if>
 
     /* USB base address */
@@ -103,11 +112,10 @@ DRV_USB_EHCI_INIT drvUSBEHCIInit =
     /* USB Host Power Enable. USB Driver uses this function to Enable the VBUS */ 
     .portPowerEnable = DRV_USB_VBUSPowerEnable,
     
-    /* Root hub available current in milliamperes */    
+    /* Root hub available current in milliamperes */
     .rootHubAvailableCurrent = 500,
 
     .companionDriverIndex = DRV_USB_OHCI_INDEX_0
-
 };
     </#if>
 </#if>
@@ -116,24 +124,23 @@ DRV_USB_EHCI_INIT drvUSBEHCIInit =
     <#if USB_DRV_OHCI_MENU == true>
 DRV_USB_OHCI_INIT drvUSBOHCIInit =
 {
-<#if core.DeviceFamily == "SAMA5D2">
     /* Interrupt Source for USB module */
+<#if core.DeviceFamily == "SAMA5D2">
     .interruptSource = (INT_SOURCE)41,
 <#elseif core.DeviceFamily == "SAM9X60">
-     /* Interrupt Source for USB module */
     .interruptSource = (INT_SOURCE)22,
 <#elseif core.DeviceFamily == "SAM_G55">
-    /* Interrupt Source for USB module */
     .interruptSource = (INT_SOURCE)UHP_IRQn,
+<#elseif core.DeviceFamily == "SAMA7G5">
+    .interruptSource = (INT_SOURCE)UHPHS_IRQn,
 </#if>
-
-<#if core.DeviceFamily == "SAMA5D2" || core.DeviceFamily == "SAM9X60" >
-    /* USB base address */
-    .usbID = ((UhpOhci *)UHPHS_OHCI_ADDR),
-<#elseif core.DeviceFamily == "SAM_G55">
+<#if core.DeviceFamily == "SAM_G55">
     /* USB base address */
     .usbID = ((UhpOhci*)0x20400000),   
-</#if>	
+<#else>
+    /* USB base address */
+    .usbID = ((UhpOhci*)UHPHS_OHCI_ADDR),
+</#if>
 
      /* Ports Selection */ 
     .bmPortSelect = ${USB_DRV_HOST_OHCI_PORTS_SELECTION},

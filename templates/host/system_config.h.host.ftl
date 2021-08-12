@@ -58,14 +58,14 @@
 #define DRV_USBHSV1_ENDPOINTS_NUMBER                        1
 <#elseif CONFIG_USB_DRIVER_INTERFACE == "DRV_USBHS_HOST_INTERFACE">
 <#if drv_usbhs_v1.USB_OPERATION_MODE == "Host">
-#define DRV_USBHS_ENDPOINTS_NUMBER 							1
+#define DRV_USBHS_ENDPOINTS_NUMBER                          1
 </#if>
 <#elseif CONFIG_USB_DRIVER_INTERFACE == "DRV_USBFSV1_HOST_INTERFACE">
 #define DRV_USBFSV1_ENDPOINTS_NUMBER                        1
 <#elseif CONFIG_USB_DRIVER_INTERFACE == "DRV_USB_UHP_HOST_INTERFACE">
 #define DRV_USB_UHP_ENDPOINTS_NUMBER                        1
 <#elseif CONFIG_USB_DRIVER_INTERFACE == "DRV_USBFS_HOST_INTERFACE">
-#define DRV_USBFS_ENDPOINTS_NUMBER 							1
+#define DRV_USBFS_ENDPOINTS_NUMBER                          1
 </#if>
 
 <#if CONFIG_USB_HOST_HUB_SUPPORT?has_content == false>
@@ -83,7 +83,10 @@
 /* Maximum number of configurations supported per device */
 #define USB_HOST_DEVICE_INTERFACES_NUMBER                   ${CONFIG_USB_HOST_MAX_INTERFACES}    
 
-<#if (core.DeviceFamily?has_content == true) && (core.DeviceFamily == "SAMA5D2" || core.DeviceFamily == "SAM9X60") >
+<#if (core.DeviceFamily?has_content == true) 
+  && (core.DeviceFamily == "SAMA5D2"
+   || core.DeviceFamily == "SAM9X60"
+   || core.DeviceFamily == "SAMA7G5") >
 #define USB_HOST_CONTROLLERS_NUMBER                         2
 <#else>
 #define USB_HOST_CONTROLLERS_NUMBER                         1
