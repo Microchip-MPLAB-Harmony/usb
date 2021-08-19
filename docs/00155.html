@@ -115,39 +115,39 @@ The CDC Function Driver generates events to which the application must respond. 
 <div class="TableDiv">
 <table cellspacing="0" class="Table1">
 <tr>
-<td class="Element65" valign="top" width="39%">
+<td class="Element65" valign="top" width="38%">
 <div class="Element66">
-CDC Function Driver Control Transfer Event&nbsp;</div></td><td class="Element65" valign="top" width="61%">
+CDC Function Driver Control Transfer Event&nbsp;</div></td><td class="Element65" valign="top" width="62%">
 <div class="Element66">
 Required Application Action&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="39%">
+<td class="Element67" valign="top" width="38%">
 <div class="Element68">
-USB_DEVICE_CDC_EVENT_SET_LINE_CODING&nbsp;</div></td><td class="Element67" valign="top" width="61%">
+USB_DEVICE_CDC_EVENT_SET_LINE_CODING&nbsp;</div></td><td class="Element67" valign="top" width="62%">
 <div class="Element68">
 Call <a href="00647.html" target="topic">USB_DEVICE_ControlReceive</a> function with a buffer to receive the USB_CDC_LINE_CODING type data.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="39%">
+<td class="Element67" valign="top" width="38%">
 <div class="Element68">
-USB_DEVICE_CDC_EVENT_SET_LINE_CODING&nbsp;</div></td><td class="Element67" valign="top" width="61%">
+USB_DEVICE_CDC_EVENT_GET_LINE_CODING&nbsp;</div></td><td class="Element67" valign="top" width="62%">
 <div class="Element68">
 Call <a href="00648.html" target="topic">USB_DEVICE_ControlSend</a> function with a buffer that contains the current USB_CDC_LINE_CODING type data.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="39%">
+<td class="Element67" valign="top" width="38%">
 <div class="Element68">
-USB_DEVICE_CDC_EVENT_SET_CONTROL_LINE_STATE&nbsp;</div></td><td class="Element67" valign="top" width="61%">
-<div class="Element68">
-Acknowledge or stall using the <a href="00649.html" target="topic">USB_DEVICE_ControlStatus</a> function.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="39%">
-<div class="Element68">
-USB_DEVICE_CDC_EVENT_SET_CONTROL_LINE_STATE&nbsp;</div></td><td class="Element67" valign="top" width="61%">
+USB_DEVICE_CDC_EVENT_SET_CONTROL_LINE_STATE&nbsp;</div></td><td class="Element67" valign="top" width="62%">
 <div class="Element68">
 Acknowledge or stall using the <a href="00649.html" target="topic">USB_DEVICE_ControlStatus</a> function.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="39%">
+<td class="Element67" valign="top" width="38%">
 <div class="Element68">
-USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_SENT&nbsp;</div></td><td class="Element67" valign="top" width="61%">
+USB_DEVICE_CDC_EVENT_SEND_BREAK&nbsp;</div></td><td class="Element67" valign="top" width="62%">
+<div class="Element68">
+Acknowledge or stall using the <a href="00649.html" target="topic">USB_DEVICE_ControlStatus</a> function.&nbsp;</div></td></tr><tr>
+<td class="Element67" valign="top" width="38%">
+<div class="Element68">
+USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_SENT&nbsp;</div></td><td class="Element67" valign="top" width="62%">
 <div class="Element68">
 Action not required.&nbsp;</div></td></tr><tr>
-<td class="Element67" valign="top" width="39%">
+<td class="Element67" valign="top" width="38%">
 <div class="Element68">
-USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_RECEIVED&nbsp;</div></td><td class="Element67" valign="top" width="61%">
+USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_RECEIVED&nbsp;</div></td><td class="Element67" valign="top" width="62%">
 <div class="Element68">
 Acknowledge or stall using the <a href="00649.html" target="topic">USB_DEVICE_ControlStatus</a> function.&nbsp;</div></td></tr></table></div></div>
 <p class="Element10">
