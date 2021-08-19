@@ -417,7 +417,11 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
 /*******************************************
  *  MS OS string descriptor
  *******************************************/
+    <#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+    USB_ALIGN struct __attribute__ ((packed)) 
+	<#else>
     const struct __attribute__ ((packed))
+	</#if>
     {
         uint8_t stringIndex;    //Index of the string descriptor
         uint16_t languageID ;   // Language ID of this string.
