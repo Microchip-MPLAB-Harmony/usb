@@ -51,7 +51,7 @@
         .numberOfInterfaces = ${CONFIG_USB_DEVICE_FUNCTION_NUMBER_OF_INTERFACES},    /* Number of interfaces */
         .funcDriverIndex = ${CONFIG_USB_DEVICE_FUNCTION_INDEX},  /* Index of HID Function Driver */
         .driver = (void*)USB_DEVICE_HID_FUNCTION_DRIVER,    /* USB HID function data exposed to device layer */
-        .funcDriverInit = (void*)&hidInit0    /* Function driver init data */
+        .funcDriverInit = (void*)&hidInit${CONFIG_USB_DEVICE_FUNCTION_INDEX}    /* Function driver init data */
     },
 
 <#--
