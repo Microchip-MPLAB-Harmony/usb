@@ -69,6 +69,12 @@ def instantiateComponent(usbDeviceComponent):
 	
 	sourcePath = "templates/device/usbdevice_multi/"
 	
+	# USB Device Speed 
+	usbDeviceSpeed = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_SPEED", None)
+	usbDeviceSpeed.setVisible(False)
+	usbDeviceSpeed.setDefaultValue("Full Speed")
+	usbDeviceSpeed.setUseSingleDynamicValue(True)
+	
 	# USB Device Endpoint Number 
 	usbDeviceEndpointsNumber = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", None)
 	usbDeviceEndpointsNumber.setLabel("Number of Endpoints")	
