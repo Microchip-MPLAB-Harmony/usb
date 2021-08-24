@@ -417,6 +417,12 @@ typedef enum
 // Note: usb_processor.h is not included here.  It is included above to
 // provide processor-specific definitions of the Buffer Descriptor Table.
 
+//DOM-IGNORE-BEGIN
+#ifdef __cplusplus
+}
+#endif
+//DOM-IGNORE-END
+
 #endif//ndef _PLIB_USB_H
 
 /*******************************************************************************
