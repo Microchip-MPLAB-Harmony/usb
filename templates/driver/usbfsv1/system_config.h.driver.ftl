@@ -71,7 +71,7 @@
 #define DRV_USBFSV1_HOST_NAK_LIMIT                          2000 
 
 /* Maximum Number of pipes */
-#define DRV_USBFSV1_HOST_PIPES_NUMBER                       10 
+#define DRV_USBFSV1_HOST_PIPES_NUMBER                       ${usb_host.CONFIG_USB_HOST_PIPES_NUMBER}  
 
 /* Attach Debounce duration in milli Seconds */ 
 #define DRV_USBFSV1_HOST_ATTACH_DEBOUNCE_DURATION           ${USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION}
