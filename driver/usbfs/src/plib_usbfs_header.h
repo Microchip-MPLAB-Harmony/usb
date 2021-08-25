@@ -52,6 +52,11 @@
     #define PLIB_ASSERT(a,b)  
 #endif 
 
+#if defined(__32MX420F032H__) || defined(__32MX440F128H__) ||  defined(__32MX440F256H__) || defined(__32MX440F512H__) || defined(__32MX440F128L__) || defined(__32MX460F256L__) || defined(__32MX460F512L__)
+
+    #define USB_BUSY_FLAG_DOES_NOT_EXIST   
+#endif
+
 typedef enum {
 
     USB_ID_1 = _USB_BASE_ADDRESS,
@@ -107,7 +112,6 @@ typedef enum {
 #include "driver/usb/usbfs/src/templates/usb_OTG_VbusDischarge_Default.h"
 #include "driver/usb/usbfs/src/templates/usb_ActivityPending_Default.h"
 #include "driver/usb/usbfs/src/templates/usb_SleepEntryGuard_Default.h"
-#include "driver/usb/usbfs/src/templates/usb_ModuleBusy_Default.h"
 #include "driver/usb/usbfs/src/templates/usb_Suspend_Default.h"
 #include "driver/usb/usbfs/src/templates/usb_ModulePower_32Bit16Bit.h"
 #include "driver/usb/usbfs/src/templates/usb_GEN_InterruptStatus_Default.h"
@@ -137,7 +141,6 @@ typedef enum {
 #include "driver/usb/usbfs/src/templates/usb_BDTBaseAddress_Default.h"
 #include "driver/usb/usbfs/src/templates/usb_EyePattern_Default.h"
 #include "driver/usb/usbfs/src/templates/usb_StopInIdle_Default.h"
-#include "driver/usb/usbfs/src/templates/usb_AutomaticSuspend_Default.h"
 #include "driver/usb/usbfs/src/templates/usb_PingPongMode_Unsupported.h"
 #include "driver/usb/usbfs/src/templates/usb_UOEMonitor_Unsupported.h"
 #include "driver/usb/usbfs/src/templates/usb_OnChipPullup_Unsupported.h"
@@ -148,6 +151,11 @@ typedef enum {
 #include "driver/usb/usbfs/src/templates/usb_EPnTxRx_Default.h"
 #include "driver/usb/usbfs/src/templates/usb_EPnRxEnableEnhanced_PIC32.h"
 #include "driver/usb/usbfs/src/templates/usb_BDTFunctions_PIC32.h"
+#ifndef  USB_BUSY_FLAG_DOES_NOT_EXIST
+    #include "driver/usb/usbfs/src/templates/usb_ModuleBusy_Default.h"
+    #include "driver/usb/usbfs/src/templates/usb_AutomaticSuspend_Default.h"
+#endif
+
 
 /* Section 3 - PLIB dispatch function definitions */
 
@@ -320,16 +328,32 @@ PLIB_INLINE_API bool PLIB_USB_ExistsSleepEntryGuard(USB_MODULE_ID index)
 {
      return USB_ExistsSleepEntryGuard_Default(index);
 }
+#ifndef  USB_BUSY_FLAG_DOES_NOT_EXIST
+    PLIB_INLINE_API bool PLIB_USB_ModuleIsBusy(USB_MODULE_ID index)
+    {
+         return USB_ModuleIsBusy_Default(index);
+    }
 
-PLIB_INLINE_API bool PLIB_USB_ModuleIsBusy(USB_MODULE_ID index)
-{
-     return USB_ModuleIsBusy_Default(index);
-}
+    PLIB_INLINE_API bool PLIB_USB_ExistsModuleBusy(USB_MODULE_ID index)
+    {
+         return USB_ExistsModuleBusy_Default(index);
+    }
 
-PLIB_INLINE_API bool PLIB_USB_ExistsModuleBusy(USB_MODULE_ID index)
-{
-     return USB_ExistsModuleBusy_Default(index);
-}
+    PLIB_INLINE_API void PLIB_USB_AutoSuspendDisable(USB_MODULE_ID index)
+    {
+         USB_AutoSuspendDisable_Default(index);
+    }
+
+    PLIB_INLINE_API void PLIB_USB_AutoSuspendEnable(USB_MODULE_ID index)
+    {
+         USB_AutoSuspendEnable_Default(index);
+    }
+
+    PLIB_INLINE_API bool PLIB_USB_ExistsAutomaticSuspend(USB_MODULE_ID index)
+    {
+         return USB_ExistsAutomaticSuspend_Default(index);
+    }
+#endif
 
 PLIB_INLINE_API void PLIB_USB_SuspendEnable(USB_MODULE_ID index)
 {
@@ -761,20 +785,7 @@ PLIB_INLINE_API bool PLIB_USB_ExistsStopInIdle(USB_MODULE_ID index)
      return USB_ExistsStopInIdle_Default(index);
 }
 
-PLIB_INLINE_API void PLIB_USB_AutoSuspendDisable(USB_MODULE_ID index)
-{
-     USB_AutoSuspendDisable_Default(index);
-}
 
-PLIB_INLINE_API void PLIB_USB_AutoSuspendEnable(USB_MODULE_ID index)
-{
-     USB_AutoSuspendEnable_Default(index);
-}
-
-PLIB_INLINE_API bool PLIB_USB_ExistsAutomaticSuspend(USB_MODULE_ID index)
-{
-     return USB_ExistsAutomaticSuspend_Default(index);
-}
 
 PLIB_INLINE_API void _PLIB_UNSUPPORTED PLIB_USB_PingPongModeSelect(USB_MODULE_ID index, USB_PING_PONG_MODE ppConfig)
 {
