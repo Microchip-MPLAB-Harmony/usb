@@ -76,6 +76,57 @@
 
 #define DRV_USB_UDPHS_AUTO_ZLP_ENABLE                         false
 
+#ifdef __CORE_CA_H_GENERIC
+    #ifdef _SAMA7G54_H_
+        #define _DRV_USB_UDPHS_InitUTMI() \
+        {\
+            uint32_t i;\
+            uint32_t temp;\
+        \
+            /* Reset the USB port (by setting RSTC_GRSTR.USB_RSTx). */ \
+            RSTC_REGS->RSTC_GRSTR |= RSTC_GRSTR_USB_RST(1); \
+        \
+            /* Clear the COMMONONN bit. */ \
+            /* SFR_UTMI0Rx.COMMONONN */  \
+            *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) &= ~0x00000008; \
+            \
+            /* HS Transmitter pre-emphasis circuit sources 1x pre-emphasis current. */ \
+            *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) &= 0x01800000; \
+            *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) |= 0x00800000; \
+        \
+            /* Release the USB port reset (by clearing USB_RSTx). */ \
+            /* The PLL starts as soon as PHY reset is released in RSTC_GRSTR.USB_RSTx */ \
+            /* Release PHY reset in RSTC_GRSTR for each PHY (A, B, C) to be used. */ \
+            RSTC_REGS->RSTC_GRSTR &= ~RSTC_GRSTR_USB_RST(1); \
+        \
+            /* Wait for 45 us before any USB operation */ \
+            temp = 45 * (CPU_CLOCK_FREQUENCY/1000000)/6;   /* comments*/  \
+            for (i = 0; i < temp; i++) \
+            { \
+                asm("NOP"); \
+            } \
+        \
+            /* SFR->SFR_UTMI0R[0] and SFR_UTMI0R_VBUS; */ \
+            /* 1: The VBUS signal is valid, and the pull-up resistor on D+ is enabled. */ \
+            *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) |= 0x02000000; \
+        }
+    #else
+        #define _DRV_USB_UDPHS_InitUTMI() \
+        {\
+            uint32_t uckr;                   /* Shadow Register */  \
+        \
+            uckr = CKGR_UCKR_UPLLEN_Msk | CKGR_UCKR_UPLLCOUNT(0x3); \
+            /* enable the 480MHz UTMI PLL  */ \
+            PMC_REGS->CKGR_UCKR = uckr; \
+        \
+            /* wait until UPLL is locked */ \
+            while (!(PMC_REGS->PMC_SR & PMC_SR_LOCKU_Msk)); \
+        }
+    #endif  /* _SAMA7G54_H_ */
+#else
+    #define _DRV_USB_UDPHS_InitUTMI()
+#endif /* __CORE_CA_H_GENERIC */
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Data Type Definitions
