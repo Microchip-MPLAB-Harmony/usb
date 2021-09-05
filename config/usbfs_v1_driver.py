@@ -239,7 +239,8 @@ def instantiateComponent(usbDriverComponent):
 		Database.setSymbolValue("core", "USB_INTERRUPT_ENABLE", True)
 		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER_LOCK", True)
 		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER", "DRV_USBFS_USB_Handler")
-		
+		Database.setSymbolValue("core", "USB1_CLOCK_ENABLE", True)
+		Database.setSymbolValue("core", "USBPLL_ENABLE", True)
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MM"]):
 	
 		Database.clearSymbolValue("core", "USB_INTERRUPT_ENABLE")
