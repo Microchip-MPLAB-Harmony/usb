@@ -45,7 +45,7 @@
 /****************************************************
  * Class specific descriptor - HID Report descriptor
  ****************************************************/
-<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) >
 uint8_t USB_ALIGN hid_rpt${CONFIG_USB_DEVICE_FUNCTION_INDEX}[] =
 <#else>
 const uint8_t hid_rpt${CONFIG_USB_DEVICE_FUNCTION_INDEX}[] =

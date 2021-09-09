@@ -118,7 +118,7 @@ def onAttachmentConnected(source, target):
 			if nEndpoints != None:
 				epNumberInterrupt.setValue(nEndpoints + 1, 1)
 				epNumberBulkOut.setValue(nEndpoints + 2, 1)
-				if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1","SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMD11", "PIC32CM"]):
+				if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1","SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMD11", "PIC32CM", "PIC32MZ1025W", "WFI32E01"]):
 					epNumberBulkIn.setValue(nEndpoints + 2, 1)
 					args = {"nFunction":  nEndpoints + cdcEndpointsPic32}
 					res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
@@ -242,11 +242,11 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	
 	res = Database.activateComponents(["usb_device"])
 	
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-		MaxEpNumber = 7
-		BulkInDefaultEpNumber = 2
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX", "PIC32MK", "PIC32MM"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX", "PIC32MK", "PIC32MM", "PIC32MZ1025W", "WFI32E01"]):
 		MaxEpNumber = 15
+		BulkInDefaultEpNumber = 2
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+		MaxEpNumber = 7
 		BulkInDefaultEpNumber = 2
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMD11", "PIC32CM"]):
 		MaxEpNumber = 7

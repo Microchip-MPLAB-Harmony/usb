@@ -90,7 +90,7 @@ const USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[${CONFIG_USB_
  *  USB Device Descriptor 
  *******************************************/
 
-<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) >
 USB_DEVICE_DESCRIPTOR USB_ALIGN deviceDescriptor =
 <#else>
 const USB_DEVICE_DESCRIPTOR deviceDescriptor =
@@ -183,7 +183,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE highSpeedConfigDescSet[1] =
 /*******************************************
  *  USB Full Speed Configuration Descriptor
  *******************************************/
-<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) >
 uint8_t USB_ALIGN fullSpeedConfigurationDescriptor[]=
 <#else>
 const uint8_t fullSpeedConfigurationDescriptor[]=
@@ -222,7 +222,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
  *******************************************/
  <#assign stringDescriptorTableSize = stringDescriptorTableSize + 1>
  <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
-    <#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+    <#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) >
     USB_ALIGN struct __attribute__ ((packed)) 
 	<#else>
 	const struct __attribute__ ((packed))
@@ -243,7 +243,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
         {0x0409}                                            // Language ID
     };  
 <#else>
-	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+	<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) >
     USB_ALIGN struct 
 	<#else>
     const struct
@@ -265,7 +265,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
  *******************************************/
  <#assign stringDescriptorTableSize = stringDescriptorTableSize + 1>
  <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
-	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+	<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) >
     USB_ALIGN struct __attribute__ ((packed)) 
 	<#else>
     const struct __attribute__ ((packed))
@@ -288,7 +288,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
 		</#if>
     };
 <#else>
-	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+	<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) >
     USB_ALIGN struct 
 	<#else>
     const struct
@@ -314,7 +314,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
  *******************************************/
  <#assign stringDescriptorTableSize = stringDescriptorTableSize + 1>
 <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
-	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+	<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) >
     USB_ALIGN struct __attribute__ ((packed)) 
 	<#else>
 	const struct __attribute__ ((packed))
@@ -337,7 +337,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
 		</#if>
     }; 
 <#else>
-	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+	<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) >
     USB_ALIGN struct 
 	<#else>
 	const struct
@@ -368,7 +368,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
  * through "F".
  ******************************************************************************/
  <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
-	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+	<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) >
     USB_ALIGN struct __attribute__ ((packed)) 
 	<#else>
     const struct __attribute__ ((packed))
@@ -391,7 +391,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
 		</#if>
     };
 <#else>
-	<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+	<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) >
 	USB_ALIGN struct 
 	<#else>
     const struct
@@ -417,7 +417,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
 /*******************************************
  *  MS OS string descriptor
  *******************************************/
-    <#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+    <#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) >
     USB_ALIGN struct __attribute__ ((packed)) 
 	<#else>
     const struct __attribute__ ((packed))
@@ -474,7 +474,7 @@ USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[${stringDescriptorTableSiz
  * USB Device Layer Master Descriptor Table 
  *******************************************/
  
-<#if __PROCESSOR?matches("PIC32MZ1025W.*") == true>
+<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) >
 USB_DEVICE_MASTER_DESCRIPTOR USB_ALIGN usbMasterDescriptor =
 <#else>
 const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =

@@ -90,7 +90,7 @@ def loadModule():
         loadUSBDeviceMSD = True
         loadUSBDeviceVendor = True 
         loadUSBDevicePrinter = True 
-    elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21","SAMDA1", "SAMD5", "SAME5", "SAML21", "PIC32MZ1025W", "PIC32CM"]):
+    elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21","SAMDA1", "SAMD5", "SAME5", "SAML21", "PIC32MZ1025W", "WFI32E01", "PIC32CM"]):
         # Create USB Full Speed Driver Component
         usbDriverComponent =  Module.CreateComponent("drv_usbfs_v1", "USB Full Speed Driver", "/Harmony/Drivers", "config/usbfs_v1_driver.py")
         usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)

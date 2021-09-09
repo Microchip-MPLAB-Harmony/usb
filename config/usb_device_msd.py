@@ -87,7 +87,7 @@ def onAttachmentConnected(source, target):
 	# Update Total Endpoints used 
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if readValue != None:
-			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1","SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMD11", "PIC32CM"]):
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1","SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMD11", "PIC32CM", "PIC32MZ1025W", "WFI32E01"]):
 				args = {"nFunction": readValue + msdEndpointsPic32 }
 				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 				usbDeviceMsdEPNumberBulkIn.setValue(readValue + 1, 1)
@@ -137,7 +137,7 @@ def onAttachmentDisconnected(source, target):
 			
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if readValue != None:
-			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMD11", "PIC32CM"]):
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMD11", "PIC32CM", "PIC32MZ1025W", "WFI32E01"]):
 				args = {"nFunction":readValue - msdEndpointsPic32 }
 				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 			else:
@@ -172,9 +172,9 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 	# Auto load USB Device Layer 
 	res = Database.activateComponents(["usb_device"])
 
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX", "PIC32MK", "PIC32MM", "PIC32MZ1025W", "WFI32E01"]):
 		BulkInDefaultEpNumber = 1
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX", "PIC32MK", "PIC32MM"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
 		BulkInDefaultEpNumber = 1
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMDA1","SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMD11", "PIC32CM"]):
 		BulkInDefaultEpNumber = 1
