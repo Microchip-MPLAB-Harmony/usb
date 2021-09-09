@@ -72,7 +72,7 @@
 <#elseif __PROCESSOR?matches("ATSAMD1.*") == true>
 /* ${__PROCESSOR} Devices have USB PADCAL values in OTP4_ADDR */ 
 #define DRV_USBFSV1_READ_PADCAL_VALUE (*((uint32_t *) OTP4_ADDR + 1) >> 13)
-<#elseif __PROCESSOR?matches("ATSAML2.*") == true>
+<#elseif __PROCESSOR?matches("ATSAML2.*") == true || __PROCESSOR?matches("ATSAMR2.*") == true || __PROCESSOR?matches("ATSAMR3.*") == true>
 /* ${__PROCESSOR} Devices have USB PADCAL values in OTP4_ADDR */ 
 #define DRV_USBFSV1_READ_PADCAL_VALUE (*((uint32_t *) OTP4_ADDR) >> 13)
 </#if>
@@ -83,7 +83,7 @@
 <#elseif __PROCESSOR?matches("ATSAMD5.*") == true>
 /* SAMD5x Family Devices has Four interrupt vectors for USB module */ 
 #define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE true
-<#elseif __PROCESSOR?matches("ATSAMD2.*") || __PROCESSOR?matches("ATSAML2.*") == true>
+<#elseif __PROCESSOR?matches("ATSAMD2.*") || __PROCESSOR?matches("ATSAML2.*") == true || __PROCESSOR?matches("ATSAMR2.*") == true || __PROCESSOR?matches("ATSAMR3.*") == true>
 /* ${__PROCESSOR} Devices has one interrupt vector for USB module */
 #define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE false
 <#elseif __PROCESSOR?matches("ATSAMD1.*") == true>
