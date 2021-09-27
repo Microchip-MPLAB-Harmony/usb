@@ -25,6 +25,7 @@ usbDebugLogs = 1
 usbHostTplEntryNumber = None
 usbHostHubSaveValue = None 
 usbHostControllerNumber = None
+usbHostPipesNumber = None
 
 def genRtosTask(symbol, event):
 	if event["value"] != "BareMetal":
@@ -56,6 +57,7 @@ def instantiateComponent(usbHostComponent):
 	global usbHostTplEntryNumber
 	global usbHostHubSaveValue
 	global usbHostControllerNumber
+	global usbHostPipesNumber
 	
 	res = Database.activateComponents(["HarmonyCore"])
 	res = Database.activateComponents(["sys_time"])
@@ -137,6 +139,15 @@ def instantiateComponent(usbHostComponent):
 	usbHostMaxControllersNumber.setVisible(False)
 	usbHostMaxControllersNumber.setDescription("Maximum Number of Controllers")
 	usbHostMaxControllersNumber.setDefaultValue(2)
+	
+	# USB Host Pipes Number 
+	usbHostPipesNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_PIPES_NUMBER", None)
+	usbHostPipesNumber.setLabel("Number of Pipes")
+	usbHostPipesNumber.setVisible(True)
+        helpText = '''Configures the maximum number of Pipes required for the application.'''
+	usbHostPipesNumber.setDescription(helpText)
+	usbHostPipesNumber.setMin(0)
+	usbHostPipesNumber.setDefaultValue(10)
 	
 	# USB Host Hub Support
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX" , "PIC32MM", "SAMA5D2" ,"PIC32MK", "SAMA7"]):
