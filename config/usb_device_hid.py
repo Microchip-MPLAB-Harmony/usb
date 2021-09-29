@@ -160,8 +160,8 @@ def instantiateComponent(usbDeviceHidComponent, index):
 		MaxIntEpNumber = 15
 		IntOutDefaultEpNumber = 1
 	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-		MaxEpNumber = 7
-		BulkInDefaultEpNumber = 1
+		MaxIntEpNumber = 7
+		IntOutDefaultEpNumber = 1
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMDA1","SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMD11", "PIC32CM"]):
 		MaxIntEpNumber = 7
 		IntOutDefaultEpNumber = 1
