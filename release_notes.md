@@ -3,6 +3,24 @@
 
 # Microchip MPLAB Harmony 3 Release Notes
 
+## USB Release v3.8.1
+### NEW FEATURES
+- This release introduces support for [PIC32MM](hhttps://www.microchip.com/en-us/products/microcontrollers-and-microprocessors/32-bit-mcus/pic32-32-bit-mcus/pic32mm), [PIC32MX420F/440F/460F ](https://www.microchip.com/en-us/products/microcontrollers-and-microprocessors/32-bit-mcus/pic32-32-bit-mcus/pic32mx), [WFI32E01](https://www.microchip.com/en-us/product/WFI32E01PE), [SAM R21](https://www.microchip.com/wwwproducts/en/ATSAMR21G18A), [SAM R30](https://www.microchip.com/en-us/products/wireless-connectivity/sub-ghz/sam-r30), and [SAM R34/R35](https://www.microchip.com/en-us/products/wireless-connectivity/lora-technology/sam-r34-r35) families of 32-bit microcontrollers. 
+
+### Bug fixes
+ - Fixed issues in USB MHC scripts.
+
+### Known Issues
+- IAR projects for SAM MCUs and MPUs builds with warning messages. 
+- The USB_DEVICE_CDC_SerialStateNotificationSend() function does not support queuing. 
+
+### Development Tools
+
+-    [MPLAB® X IDE v5.50](https://www.microchip.com/mplab/mplab-x-ide)
+-    [MPLAB® XC32 C/C++ Compiler v3.01](https://www.microchip.com/mplab/compilers)
+-    [IAR Embedded Workbench® for ARM® v8.5](https://www.iar.com/iar-embedded-workbench/#!?architecture=Arm)
+-   MPLAB® X IDE plug-ins:- MPLAB® Harmony 3 Launcher v3.6.4 or above
+
 ## USB Release v3.8.0
 ### NEW FEATURES
 - This release does not contain any new features or new parts support. 
