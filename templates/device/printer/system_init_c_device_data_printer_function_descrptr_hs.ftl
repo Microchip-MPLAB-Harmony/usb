@@ -60,7 +60,7 @@
     USB_DESCRIPTOR_ENDPOINT,                                // Endpoint Descriptor
     ${CONFIG_USB_DEVICE_FUNCTION_BULK_OUT_ENDPOINT_NUMBER} | USB_EP_DIRECTION_OUT,                               // EndpointAddress ( EP${CONFIG_USB_DEVICE_FUNCTION_BULK_OUT_ENDPOINT_NUMBER} OUT )
     USB_TRANSFER_TYPE_BULK,                                 // Attributes type of EP (BULK)
-    0x40, 0x00,                                             // Max packet size of this EP
+    0x00, 0x02,                                             // Max packet size of this EP
     0x00,                                                   // Interval (in ms)
 <#--
 /*******************************************************************************
