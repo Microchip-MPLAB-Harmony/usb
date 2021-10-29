@@ -189,13 +189,12 @@ def instantiateComponent(usbHostComponent):
 		usbHostHubDriverInstance.setDependencies(hubSupportSetVisible, ["CONFIG_USB_HOST_HUB_SUPPORT"])	
 		
 		# USB Host Max Number of Devices  
-		usbHostDeviceNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_DEVICE_NUMNBER", usbHostHubsupport)
+		usbHostDeviceNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_DEVICE_NUMNBER", None)
 		usbHostDeviceNumber.setLabel("Maximum Number of Devices")
-		usbHostDeviceNumber.setVisible(False)
+		usbHostDeviceNumber.setVisible(True)
 		usbHostDeviceNumber.setDescription("Maximum Number of Devices that will be attached to this Host")
 		usbHostDeviceNumber.setDefaultValue(1)
 		usbHostDeviceNumber.setUseSingleDynamicValue(True)
-		usbHostDeviceNumber.setDependencies(hubSupportSetVisible, ["CONFIG_USB_HOST_HUB_SUPPORT"])
 			
 			
 	##############################################################
