@@ -201,7 +201,9 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 
 	
 	# Auto load USB Device Layer 
-	res = Database.activateComponents(["usb_device"])
+	value = Database.getComponentByID("usb_device")
+	if (value == None):
+		res = Database.activateComponents(["usb_device"])
 
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
 		BulkInDefaultEpNumber = 1

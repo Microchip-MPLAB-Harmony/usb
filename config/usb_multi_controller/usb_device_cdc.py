@@ -201,7 +201,7 @@ def onAttachmentDisconnected(source, target):
 		interfaceNumber = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 		if interfaceNumber != None: 
 			args = {"nFunction":   interfaceNumber - 2}
-			res = Database.sendMessage("remoteID", "UPDATE_INTERFACES_NUMBER", args)
+			res = Database.sendMessage(remoteID, "UPDATE_INTERFACES_NUMBER", args)
 			
 		nCDCInstances = Database.getSymbolValue("usb_device_cdc", "CONFIG_USB_DEVICE_CDC_INSTANCES")
 		if nCDCInstances != None:
@@ -280,7 +280,9 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	global usbDeviceCdcDescriptorFsFile
 	global usbDeviceCdcDescriptorClassCodeFile
 	
-	res = Database.activateComponents(["usb_device"])
+	value = Database.getComponentByID("usb_device")
+	if (value == None):
+		res = Database.activateComponents(["usb_device"])
 	
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
 		MaxEpNumber = 7

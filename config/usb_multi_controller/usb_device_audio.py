@@ -268,7 +268,9 @@ def usbDeviceAudioDeviceTypeUpdate(usbSymbolSource, event):
 		
 def instantiateComponent(usbDeviceAudioComponent, index):
 
-	res = Database.activateComponents(["usb_device"])
+	value = Database.getComponentByID("usb_device")
+	if (value == None):
+		res = Database.activateComponents(["usb_device"])
 	
 	global indexFunction
 	global configValue
