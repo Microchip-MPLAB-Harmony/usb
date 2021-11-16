@@ -1317,8 +1317,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_IdleTimeSet
     if(NULL != requestHandle)
     {
         /* Initialize requestHandle only if NOT NULL */
-        requestHandle =
-            (USB_HOST_HID_REQUEST_HANDLE *)USB_HOST_HID_REQUEST_HANDLE_INVALID;
+        *requestHandle = USB_HOST_HID_REQUEST_HANDLE_INVALID;
     }
     if((USB_HOST_HID_OBJ_HANDLE_INVALID == handle) || (NULL == requestHandle))
     {
@@ -1388,8 +1387,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_IdleTimeSet
                     if(USB_HOST_RESULT_SUCCESS == result)
                     {
                         /* Request submission was successful */
-                        requestHandle =
-                            (USB_HOST_HID_REQUEST_HANDLE *)transferHandle;
+                        *requestHandle = transferHandle;
                         status = USB_HOST_HID_RESULT_SUCCESS;
                     }
                     else
@@ -1474,8 +1472,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ProtocolSet
     if(NULL != requestHandle)
     {
         /* Initialize requestHandle only if NOT NULL */
-        requestHandle =
-            (USB_HOST_HID_REQUEST_HANDLE *)USB_HOST_HID_REQUEST_HANDLE_INVALID;
+        *requestHandle = USB_HOST_HID_REQUEST_HANDLE_INVALID;
     }
     if((USB_HOST_HID_OBJ_HANDLE_INVALID == handle) || (NULL == requestHandle))
     {
@@ -1543,8 +1540,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ProtocolSet
                     if(USB_HOST_RESULT_SUCCESS == result)
                     {
                         /* Request submission was successful */
-                        requestHandle =
-                                (USB_HOST_HID_REQUEST_HANDLE *)transferHandle;
+                        *requestHandle = transferHandle;
                         status = USB_HOST_HID_RESULT_SUCCESS;
                     }
                     else
@@ -1630,14 +1626,14 @@ USB_HOST_HID_RESULT USB_HOST_HID_ProtocolGet
         /* Update the requestHandle only if not NULL */
         if(NULL != requestHandle)
         {
-            requestHandle = (USB_HOST_HID_REQUEST_HANDLE *)USB_HOST_HID_REQUEST_HANDLE_INVALID;
+            *requestHandle = USB_HOST_HID_REQUEST_HANDLE_INVALID;
         }
         status = USB_HOST_HID_RESULT_PARAMETER_INVALID;
     }
     else
     {
         /* Initialize requestHandle only if Parameters are valid */
-        requestHandle = (USB_HOST_HID_REQUEST_HANDLE *)USB_HOST_HID_REQUEST_HANDLE_INVALID;
+        *requestHandle = USB_HOST_HID_REQUEST_HANDLE_INVALID;
 
         /* Obtain the instance number of the HID driver instance which owns this handle */
         instanceNumber = _USB_HOST_HID_ObjectHandleToHIDIndex(handle);
@@ -1695,8 +1691,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ProtocolGet
                     if(USB_HOST_RESULT_SUCCESS == result)
                     {
                         /* Request submission was successful */
-                        requestHandle =
-                                (USB_HOST_HID_REQUEST_HANDLE *)transferHandle;
+                        *requestHandle = transferHandle;
                         status = USB_HOST_HID_RESULT_SUCCESS;
                     }
                     else
@@ -1786,16 +1781,14 @@ USB_HOST_HID_RESULT USB_HOST_HID_IdleTimeGet
         /* Update requestHandle only if not NULL */
         if(NULL != requestHandle)
         {
-            requestHandle = (USB_HOST_HID_REQUEST_HANDLE *)
-                    USB_HOST_HID_REQUEST_HANDLE_INVALID;
+            *requestHandle = USB_HOST_HID_REQUEST_HANDLE_INVALID;
         }
         status = USB_HOST_HID_RESULT_PARAMETER_INVALID;
     }
     else
     {
         /* Initialize requestHandle only if Parameters are valid */
-        requestHandle =
-                (USB_HOST_HID_REQUEST_HANDLE *)USB_HOST_HID_REQUEST_HANDLE_INVALID;
+        *requestHandle =  USB_HOST_HID_REQUEST_HANDLE_INVALID;
         
         /* Obtain instance number of HID driver instance which owns this handle */
         instanceNumber = _USB_HOST_HID_ObjectHandleToHIDIndex(handle);
@@ -1855,8 +1848,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_IdleTimeGet
                     if(USB_HOST_RESULT_SUCCESS == result)
                     {
                         /* Request submission was successful */
-                        requestHandle =
-                                (USB_HOST_HID_REQUEST_HANDLE *)transferHandle;
+                        *requestHandle = transferHandle;
                         status = USB_HOST_HID_RESULT_SUCCESS;
                     }
                     else
@@ -2060,15 +2052,14 @@ USB_HOST_HID_RESULT USB_HOST_HID_ReportSend
         /* Update requestHandle only if not NULL */
         if(NULL != requestHandle)
         {
-            requestHandle = (USB_HOST_HID_REQUEST_HANDLE *)USB_HOST_HID_REQUEST_HANDLE_INVALID;
+            *requestHandle = USB_HOST_HID_REQUEST_HANDLE_INVALID;
         }
         status = USB_HOST_HID_RESULT_PARAMETER_INVALID;
     }
     else
     {
         /* Initialize requestHandle only if Parameters are valid */
-        requestHandle =
-                (USB_HOST_HID_REQUEST_HANDLE *)USB_HOST_HID_REQUEST_HANDLE_INVALID;
+        *requestHandle = USB_HOST_HID_REQUEST_HANDLE_INVALID;
         
         /* Obtain instance number of HID driver instance which owns this handle */
         instanceNumber = _USB_HOST_HID_ObjectHandleToHIDIndex(handle);
@@ -2103,7 +2094,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ReportSend
                         ))
                 {
                     /* Request submission was successful */
-                    requestHandle = (USB_HOST_HID_REQUEST_HANDLE *)transferHandle;
+                    *requestHandle = transferHandle;
                     status = USB_HOST_HID_RESULT_SUCCESS;
                 }
                 else
@@ -2163,8 +2154,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ReportSend
                     if(USB_HOST_RESULT_SUCCESS == result)
                     {
                         /* Request submission was successful */
-                        requestHandle =
-                                (USB_HOST_HID_REQUEST_HANDLE *)transferHandle;
+                        *requestHandle = transferHandle;
                         status = USB_HOST_HID_RESULT_SUCCESS;
                     }
                     else
@@ -2255,15 +2245,14 @@ USB_HOST_HID_RESULT USB_HOST_HID_ReportGet
         /* Update requestHandle only if not NULL */
         if(NULL != requestHandle)
         {
-            requestHandle = (USB_HOST_HID_REQUEST_HANDLE *)USB_HOST_HID_REQUEST_HANDLE_INVALID;
+			*requestHandle = USB_HOST_HID_REQUEST_HANDLE_INVALID;
         }
         status = USB_HOST_HID_RESULT_PARAMETER_INVALID;
     }
     else
     {
         /* Initialize requestHandle only if Parameters are valid */
-        requestHandle =
-                (USB_HOST_HID_REQUEST_HANDLE *)USB_HOST_HID_REQUEST_HANDLE_INVALID;
+        *requestHandle = USB_HOST_HID_REQUEST_HANDLE_INVALID;
         
         /* Obtain instance number of HID driver instance which owns this handle */
         instanceNumber = _USB_HOST_HID_ObjectHandleToHIDIndex(handle);
@@ -2323,8 +2312,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ReportGet
                     if(USB_HOST_RESULT_SUCCESS == result)
                     {
                         /* Request submission was successful */
-                        requestHandle =
-                                (USB_HOST_HID_REQUEST_HANDLE *)transferHandle;
+                        *requestHandle = transferHandle;
                         status = USB_HOST_HID_RESULT_SUCCESS;
                     }
                     else
