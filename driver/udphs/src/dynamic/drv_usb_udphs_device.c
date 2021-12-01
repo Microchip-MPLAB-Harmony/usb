@@ -48,11 +48,18 @@
 #include "driver/usb/udphs/src/drv_usb_udphs_local.h"
 #include "driver/usb/udphs/drv_usb_udphs.h"
 
-/* Array of endpoint objects. Two objects per endpoint */
-DRV_USB_UDPHS_DEVICE_ENDPOINT_OBJ gDrvUSBControlEndpoints[DRV_USB_UDPHS_INSTANCES_NUMBER] [2];
+#define NO_CACHE __attribute__((__section__(".region_nocache")))
 
 /* Array of endpoint objects. Two objects per endpoint */
-DRV_USB_UDPHS_DEVICE_ENDPOINT_OBJ gDrvUSBNonControlEndpoints[DRV_USB_UDPHS_INSTANCES_NUMBER] [DRV_USB_UDPHS_ENDPOINTS_NUMBER - 1];
+__ALIGNED(32) DRV_USB_UDPHS_DEVICE_ENDPOINT_OBJ gDrvUSBControlEndpoints[DRV_USB_UDPHS_INSTANCES_NUMBER] [2];
+
+/* Array of endpoint objects. Two objects per endpoint */
+__ALIGNED(32) NO_CACHE DRV_USB_UDPHS_DEVICE_ENDPOINT_OBJ gDrvUSBNonControlEndpoints[DRV_USB_UDPHS_INSTANCES_NUMBER] [DRV_USB_UDPHS_ENDPOINTS_NUMBER - 1];
+
+/* This structure describes the features supported by each hardware endpoint. 
+   This structure initialization is as per the UDPHS Endpoint description table 
+   in the product datasheet. */ 
+uint32_t gDrvUsbUdphsDeviceEndpointFeatureDescription; 
 
 /******************************************************************************
  * This structure is a pointer to a set of USB Driver Device mode functions.
@@ -115,7 +122,6 @@ void _DRV_USB_UDPHS_DEVICE_Initialize
 )
 
 {
-
     udphs_registers_t * usbID;      /* USB instance pointer */
     uint8_t count;                  /* Loop Counter */
 
@@ -136,11 +142,16 @@ void _DRV_USB_UDPHS_DEVICE_Initialize
     }
 
     usbID->UDPHS_CTRL = UDPHS_CTRL_EN_UDPHS_Msk;
-
+ 
     /* Point the objects for control endpoint. It is a bidirectional
      * endpoint, so only one object is needed */
     drvObj->deviceEndpointObj[0] = &gDrvUSBControlEndpoints[index][0];
 
+    /* DMA endpoint capable */
+    gDrvUsbUdphsDeviceEndpointFeatureDescription  = _DRV_USB_UDPHS_EPT_DMA;
+    /* 3 banks endpoints capable (<<16) */
+    gDrvUsbUdphsDeviceEndpointFeatureDescription |= _DRV_USB_UDPHS_EPT_BK;
+    
     /* Point the objects for non control endpoints.
      * They are unidirectional endpoints, so multidimensional
      * array with one object per endpoint direction */
@@ -148,39 +159,48 @@ void _DRV_USB_UDPHS_DEVICE_Initialize
     for(count = 1; count < DRV_USB_UDPHS_ENDPOINTS_NUMBER ; count++)
     {
         drvObj->deviceEndpointObj[count] = &gDrvUSBNonControlEndpoints[index][count - 1];
-
-		usbID->UDPHS_DMA[count].UDPHS_DMACONTROL = 0;
     }
 
-	/* Configure the pull-up on D+ and disconnect it */
-	usbID->UDPHS_CTRL |= UDPHS_CTRL_DETACH_Msk;
-	usbID->UDPHS_CTRL |= UDPHS_CTRL_PULLD_DIS_Msk;
+    /* Configure the pull-up on D+ and disconnect it */
+    usbID->UDPHS_CTRL |= UDPHS_CTRL_DETACH_Msk;
+    usbID->UDPHS_CTRL |= UDPHS_CTRL_PULLD_DIS_Msk;
 
-	/* Reset IP */
-	usbID->UDPHS_CTRL &= ~UDPHS_CTRL_EN_UDPHS_Msk;
-	usbID->UDPHS_CTRL |= UDPHS_CTRL_EN_UDPHS_Msk;
+    /* Reset IP */
+    usbID->UDPHS_CTRL &= ~UDPHS_CTRL_EN_UDPHS_Msk;
+    usbID->UDPHS_CTRL |= UDPHS_CTRL_EN_UDPHS_Msk;
 
     /* Disable all endpoints */
-	for (count = 0; count < UDPHS_EPT_NUMBER; count++)
+    for (count = 0; count < UDPHS_EPT_NUMBER; count++)
     {
-		usbID->UDPHS_EPT[count].UDPHS_EPTCFG &= ~UDPHS_EPTCFG_Msk;
-		usbID->UDPHS_EPT[count].UDPHS_EPTCTLDIS = UDPHS_EPTCTLDIS_Msk;
+        usbID->UDPHS_EPT[count].UDPHS_EPTCFG &= ~UDPHS_EPTCFG_Msk;
+        usbID->UDPHS_EPT[count].UDPHS_EPTCTLDIS = UDPHS_EPTCTLDIS_Msk;
     }
 
-	/* Reset DMA */
-	for (count = 1; count < UDPHS_DMA_NUMBER; count++)
+    /* Reset DMA */
+
+    /* With OR without DMA */
+    for(count = 1; count <= DRV_USB_UDPHS_ENDPOINTS_NUMBER; count++ )
     {
-		/* DMA stop */
-		usbID->UDPHS_DMA[count].UDPHS_DMACONTROL = 0;
-
-		/* Reset DMA channel (Buffer count and Control field) */
-		usbID->UDPHS_DMA[count].UDPHS_DMACONTROL = UDPHS_DMACONTROL_LDNXT_DSC_Msk;
-
-		/* Clear DMA channel status (read to clear) */
-		usbID->UDPHS_DMA[count].UDPHS_DMASTATUS = usbID->UDPHS_DMA[count].UDPHS_DMASTATUS;
-	}
-
-	usbID->UDPHS_CLRINT = UDPHS_CLRINT_Msk;
+        if(( gDrvUsbUdphsDeviceEndpointFeatureDescription & (1 << count)) == (1 << count))
+        {
+            /* RESET endpoint canal DMA: */
+            /* DMA stop channel command */
+            UDPHS_REGS->UDPHS_DMA[count].UDPHS_DMACONTROL = 0; /* STOP command */
+            /* Disable endpoint */
+            UDPHS_REGS->UDPHS_EPT[count].UDPHS_EPTCTLDIS |= 0XFFFFFFFF;
+            /* Reset endpoint config */
+            UDPHS_REGS->UDPHS_EPT[count].UDPHS_EPTCFG = 0;
+            /* Reset DMA channel (Buff count and Control field) */
+            UDPHS_REGS->UDPHS_DMA[count].UDPHS_DMACONTROL = 0x02; /* NON STOP command */
+            /* Reset DMA channel 0 (STOP) */
+            UDPHS_REGS->UDPHS_DMA[count].UDPHS_DMACONTROL = 0; /* STOP command */
+            /* Clear DMA channel status ( read the register for clear it ) */
+            UDPHS_REGS->UDPHS_DMA[count].UDPHS_DMASTATUS = UDPHS_REGS->UDPHS_DMA[count].UDPHS_DMASTATUS;
+            /* Clear DMA address */
+            UDPHS_REGS->UDPHS_DMA[count].UDPHS_DMAADDRESS = 0;
+        }
+    }
+    usbID->UDPHS_CLRINT = UDPHS_CLRINT_Msk;
 
     drvObj->status = SYS_STATUS_READY;
 
@@ -214,7 +234,7 @@ void DRV_USB_UDPHS_DEVICE_AddressSet
 {
 
     udphs_registers_t * usbID;          /* USB instance pointer */
-    DRV_USB_UDPHS_OBJ * hDriver;          /* USB driver object pointer */
+    DRV_USB_UDPHS_OBJ * hDriver;        /* USB driver object pointer */
 
     /* Check if the handle is invalid, if so return without any action */
     if(DRV_HANDLE_INVALID == handle)
@@ -387,12 +407,12 @@ void DRV_USB_UDPHS_DEVICE_Attach
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB UDPHS Driver: Invalid Driver Handle in DRV_USB_UDPHS_DEVICE_Attach().");
     }
     else
-	{
+    {
         hDriver = (DRV_USB_UDPHS_OBJ *) handle;
         usbID = hDriver->usbID;
 
-		usbID->UDPHS_CTRL |= UDPHS_CTRL_PULLD_DIS_Msk;
-		usbID->UDPHS_CTRL &= ~UDPHS_CTRL_DETACH_Msk;
+        usbID->UDPHS_CTRL |= UDPHS_CTRL_PULLD_DIS_Msk;
+        usbID->UDPHS_CTRL &= ~UDPHS_CTRL_DETACH_Msk;
     }
 
 }/* end of DRV_USB_UDPHS_DEVICE_Attach() */
@@ -435,7 +455,7 @@ void DRV_USB_UDPHS_DEVICE_Detach(DRV_HANDLE handle)
     {
         hDriver = (DRV_USB_UDPHS_OBJ *) handle;
         usbID = hDriver->usbID;
-		
+        
         if(false == hDriver->isInInterruptContext)
         {
             if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
@@ -456,20 +476,20 @@ void DRV_USB_UDPHS_DEVICE_Detach(DRV_HANDLE handle)
             hDriver->isAttached = false;
             
             /* Disable all endpoints */
-			for (count = 0; count < UDPHS_EPT_NUMBER; count++)
-		    {
-				usbID->UDPHS_EPT[count].UDPHS_EPTCFG &= ~UDPHS_EPTCFG_Msk;
-				usbID->UDPHS_EPT[count].UDPHS_EPTCTLDIS = UDPHS_EPTCTLDIS_Msk;
-		    }
+            for (count = 0; count < UDPHS_EPT_NUMBER; count++)
+            {
+                usbID->UDPHS_EPT[count].UDPHS_EPTCFG &= ~UDPHS_EPTCFG_Msk;
+                usbID->UDPHS_EPT[count].UDPHS_EPTCTLDIS = UDPHS_EPTCTLDIS_Msk;
+            }
 
-			/* Configure the pull-up on D+ and disconnect it */
-			usbID->UDPHS_CTRL |= UDPHS_CTRL_DETACH_Msk;
-			usbID->UDPHS_CTRL |= UDPHS_CTRL_PULLD_DIS_Msk;
+            /* Configure the pull-up on D+ and disconnect it */
+            usbID->UDPHS_CTRL |= UDPHS_CTRL_DETACH_Msk;
+            usbID->UDPHS_CTRL |= UDPHS_CTRL_PULLD_DIS_Msk;
 
-			/* Reset IP */
-			usbID->UDPHS_CTRL &= ~UDPHS_CTRL_EN_UDPHS_Msk;
-			usbID->UDPHS_CTRL |= UDPHS_CTRL_EN_UDPHS_Msk;
-			
+            /* Reset IP */
+            usbID->UDPHS_CTRL &= ~UDPHS_CTRL_EN_UDPHS_Msk;
+            usbID->UDPHS_CTRL |= UDPHS_CTRL_EN_UDPHS_Msk;
+            
         }
         if(false == hDriver->isInInterruptContext)
         {
@@ -723,16 +743,16 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_EndpointEnable
         if(retVal == USB_ERROR_NONE)
         {
 
-            /* There are two endpoint objects for a control endpoint.
-             * Enable the first endpoint object */
-
-            _DRV_USB_UDPHS_DEVICE_EndpointObjectEnable
-            (
-                endpointObj, endpointSize, endpointType, USB_DATA_DIRECTION_HOST_TO_DEVICE
-            );
-
             if(endpoint == 0)
             {
+                /* There are two endpoint objects for a control endpoint.
+                 * Enable the first endpoint object */
+
+                _DRV_USB_UDPHS_DEVICE_EndpointObjectEnable
+                (
+                    endpointObj, endpointSize, endpointType, USB_DATA_DIRECTION_HOST_TO_DEVICE
+                );
+
                 endpointObj++;
 
                  /* Enable the second endpoint object */
@@ -741,6 +761,31 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_EndpointEnable
                 (
                     endpointObj, endpointSize, endpointType, USB_DATA_DIRECTION_DEVICE_TO_HOST
                 );
+                /* Bank Count */
+                regEPTCFG |= UDPHS_EPTCFG_BK_NUMBER(bankCount);
+
+                /* Endpoint Direction */
+                regEPTCFG |= UDPHS_EPTCFG_EPT_DIR(0);
+            }
+            else
+            {
+                /* Non control endpoint */
+                _DRV_USB_UDPHS_DEVICE_EndpointObjectEnable
+                (
+                    endpointObj, endpointSize, endpointType, (USB_DATA_DIRECTION)direction
+                );
+
+                /* Bank Count */
+                if(( (gDrvUsbUdphsDeviceEndpointFeatureDescription>>16) & (1 << endpoint)) == (1 << endpoint))
+                {
+                    regEPTCFG |= UDPHS_EPTCFG_BK_NUMBER( 3 );
+                }
+                else
+                {
+                    regEPTCFG |= UDPHS_EPTCFG_BK_NUMBER( 2 );
+                }
+                /* Endpoint Direction */
+                regEPTCFG |= UDPHS_EPTCFG_EPT_DIR(direction);
             }
 
             /* Endpoint Size */
@@ -748,20 +793,6 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_EndpointEnable
 
             /* Endpoint Type */
             regEPTCFG |= UDPHS_EPTCFG_EPT_TYPE(endpointType);
-
-            /* Bank Count */
-            regEPTCFG |= UDPHS_EPTCFG_BK_NUMBER(bankCount);
-
-            if(endpoint == 0)
-            {
-                /* Endpoint Direction */
-                regEPTCFG |= UDPHS_EPTCFG_EPT_DIR(0);
-            }
-            else
-            {
-                /* Endpoint Direction */
-                regEPTCFG |= UDPHS_EPTCFG_EPT_DIR(direction);
-            }
 
             /* Copy the configuration to the EPTCFG register */
             usbID->UDPHS_EPT[endpoint].UDPHS_EPTCFG = regEPTCFG;
@@ -779,18 +810,32 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_EndpointEnable
                 }
                 else
                 {
-                    if(direction == USB_DATA_DIRECTION_DEVICE_TO_HOST)
+                    if((gDrvUsbUdphsDeviceEndpointFeatureDescription & (1 << endpoint)) != (1 << endpoint))
                     {
-                        usbID->UDPHS_EPT[endpoint].UDPHS_EPTCTLENB = (UDPHS_EPTCTLENB_TX_COMPLT_Msk);
-                    }
-                    else
-                    {
-                        usbID->UDPHS_EPT[endpoint].UDPHS_EPTCTLENB = (UDPHS_EPTCTLENB_RXRDY_TXKL_Msk);
+                        /* No DMA */
+                        if(direction == USB_DATA_DIRECTION_DEVICE_TO_HOST)
+                        {
+                            usbID->UDPHS_EPT[endpoint].UDPHS_EPTCTLENB = (UDPHS_EPTCTLENB_TX_COMPLT_Msk);
+                        }
+                        else
+                        {
+                            usbID->UDPHS_EPT[endpoint].UDPHS_EPTCTLENB = (UDPHS_EPTCTLENB_RXRDY_TXKL_Msk);
+                        }
                     }
                 }
 
-                /* Enable the Endpoint Interrupt */
-                usbID->UDPHS_IEN |= UDPHS_IEN_EPT_0_Msk << (endpoint);
+                if((gDrvUsbUdphsDeviceEndpointFeatureDescription & (1 << endpoint)) == (1 << endpoint))
+                {
+                    /* DMA capable */
+                    usbID->UDPHS_EPT[endpoint].UDPHS_EPTCTLENB = UDPHS_EPTCTLENB_AUTO_VALID_Msk
+                                                               | UDPHS_EPTCTLENB_EPT_ENABL_Msk;
+                }
+                else
+                {
+                    /* No DMA */
+                    /* Enable the Endpoint Interrupt */
+                    usbID->UDPHS_IEN |= UDPHS_IEN_EPT_0_Msk << (endpoint);
+                }
             }
             else
             {
@@ -1381,6 +1426,7 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_IRPSubmit
     uint8_t direction;                              /* Endpoint Direction */
     uint8_t endpoint;                               /* Endpoint Number */
     uint16_t count;                                 /* Loop Counter */
+    uint32_t dmaMaxTransfer;
     uint16_t offset;                                /* Buffer Offset */
     volatile uint8_t * fifoAddPtr;                  /* pointer variable for local use */
     uint8_t * data;                                 /* pointer to irp data array */
@@ -1390,7 +1436,8 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_IRPSubmit
     uint16_t byteCount = 0;                         /* To hold received byte count */
     bool interruptWasEnabled = false;               /* To track interrupt state */
     USB_ERROR retVal = USB_ERROR_NONE;              /* Return value */
-
+    uint32_t i;
+    uint32_t remainder;
 
     if(DRV_HANDLE_INVALID == handle)
     {
@@ -1552,14 +1599,14 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_IRPSubmit
 
                                     fifoAddPtr = ENDPOINT_FIFO_ADDRESS(0);
 
-                                	data = (uint8_t *)irp->data;
+                                    data = (uint8_t *)irp->data;
 
                                     __DMB();
 
-	                                for(count = 0; count < 8; count++)
-	                                {
-	                                    *((uint8_t *)(data + count)) = *fifoAddPtr++;
-	                                }
+                                    for(count = 0; count < 8; count++)
+                                    {
+                                        *((uint8_t *)(data + count)) = *fifoAddPtr++;
+                                    }
 
                                     __DMB();
 
@@ -1790,117 +1837,248 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_IRPSubmit
                     else
                     {
                         /* Non zero endpoint irp */
-                        if(direction == USB_DATA_DIRECTION_DEVICE_TO_HOST)
+                        if(( gDrvUsbUdphsDeviceEndpointFeatureDescription & (1 << endpoint)) == (1 << endpoint))
                         {
-
-                            /* Data IN stage of control transfer.
-                             * Driver is waiting for an IRP from the client and has
-                             * received it. Determine the transaction size. */
-                            if(irp->nPendingBytes < endpointObj->maxPacketSize)
+                            /* DMA capable */
+                            __DSB();
+                            __ISB();
+                            dmaMaxTransfer = irp->size/(64*1024);
+                            remainder = irp->size %(64*1024);
+                           
+                            if( irp->size %(64*1024) != 0 )
                             {
-                                /* This is the last transaction in the transfer. */
-                                byteCount = irp->nPendingBytes;
+                                dmaMaxTransfer++;
+                            }
+                            
+                            if(direction == USB_DATA_DIRECTION_DEVICE_TO_HOST)
+                            {
+                                /* DMA, direction device to host */
+                                if( dmaMaxTransfer > DRV_USB_UDPHS_DMA_MAX_TRANSFER_SIZE )
+                                {
+                                    /* Transfer size is limited */
+                                    retVal = USB_ERROR_PARAMETER_INVALID;
+                                }
+                                else
+                                {
+                                    byteCount = irp->size;
+                                    data = (uint8_t *)irp->data;
+
+                                    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)irp->data, irp->size);
+
+                                    for( i=0; i < dmaMaxTransfer; i++ )
+                                    {
+                                        endpointObj->dmaTransferDescriptor[i].bufferAddress = (void*)&data[64*1024*i];
+                                        
+                                        if( i == (dmaMaxTransfer - 1) )
+                                        {
+                                            /* Last */
+                                            endpointObj->dmaTransferDescriptor[i].nextDescriptorAddress = NULL;
+                                            endpointObj->dmaTransferDescriptor[i].dmaControl = 
+                                                         (UDPHS_DMACONTROL_BUFF_LENGTH( remainder )
+                                                        | UDPHS_DMACONTROL_END_B_EN_Msk
+                                                        | UDPHS_DMACONTROL_END_BUFFIT_Msk
+                                                        | UDPHS_DMACONTROL_CHANN_ENB_Msk);
+                                        }
+                                        else
+                                        {
+                                            endpointObj->dmaTransferDescriptor[i].nextDescriptorAddress =
+                                                        (void*) &endpointObj->dmaTransferDescriptor[i+1];
+                                            endpointObj->dmaTransferDescriptor[i].dmaControl = 
+                                                         (UDPHS_DMACONTROL_BUFF_LENGTH( 0 )
+                                                        | UDPHS_DMACONTROL_LDNXT_DSC_Msk
+                                                        | UDPHS_DMACONTROL_CHANN_ENB_Msk);
+                                        }
+                                    }
+
+                                    /* Clean cache to flush the data from the cache to the main memory */
+                                    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)endpointObj, sizeof(endpointObj));
+
+                                    /* Write in UDPHS_DMANXTDSCx the address of the descriptor to be used first */
+                                    usbID->UDPHS_DMA[endpoint].UDPHS_DMANXTDSC = (uint32_t)endpointObj->dmaTransferDescriptor;
+
+                                    /* Write '1' in the LDNXT_DSC bit of UDPHS_DMACONTROLx */
+                                    usbID->UDPHS_DMA[endpoint].UDPHS_DMACONTROL = UDPHS_DMACONTROL_LDNXT_DSC_Msk;
+
+                                    /* DMA Interrupt enable */
+                                    usbID->UDPHS_IEN |=  (UDPHS_IEN_DMA_1_Msk << (endpoint-1));
+                                }
                             }
                             else
                             {
-                                /* This is first or a continuing transaction in the
-                                 * transfer and the transaction size must be
-                                 * maxPacketSize */
+                                /* DMA, direction host to device */
+                                if( dmaMaxTransfer > DRV_USB_UDPHS_DMA_MAX_TRANSFER_SIZE )
+                                {
+                                    /* Transfer size is limited */
+                                    retVal = USB_ERROR_PARAMETER_INVALID;
+                                }
+                                else
+                                {
+                                    if((irp->nPendingBytes + byteCount) > irp->size)
+                                    {
+                                        /* This is not acceptable as it may corrupt the ram location */
+                                        byteCount = irp->size - irp->nPendingBytes;
+                                    }
+                                    SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)irp->data, irp->size);
 
-                                byteCount = endpointObj->maxPacketSize;
+                                    data = (uint8_t *)irp->data;
+
+                                    for( i=0; i < dmaMaxTransfer; i++ )
+                                    {
+                                        endpointObj->dmaTransferDescriptor[i].bufferAddress = (void*)&data[64*1024*i];
+                                        
+                                        if( i == (dmaMaxTransfer - 1) )
+                                        {
+                                            /* Last */
+                                            endpointObj->dmaTransferDescriptor[i].nextDescriptorAddress = NULL;
+                                            endpointObj->dmaTransferDescriptor[i].dmaControl = 
+                                                     (UDPHS_DMACONTROL_BUFF_LENGTH( remainder )
+                                                        | UDPHS_DMACONTROL_END_TR_EN_Msk
+                                                        | UDPHS_DMACONTROL_END_TR_IT_Msk
+                                                        | UDPHS_DMACONTROL_END_B_EN_Msk
+                                                        | UDPHS_DMACONTROL_END_BUFFIT_Msk
+                                                        | UDPHS_DMACONTROL_CHANN_ENB_Msk);
+                                        }
+                                        else
+                                        {
+                                            endpointObj->dmaTransferDescriptor[i].nextDescriptorAddress =
+                                                        (void*) &endpointObj->dmaTransferDescriptor[i+1];
+                                            endpointObj->dmaTransferDescriptor[i].dmaControl = 
+                                                         (UDPHS_DMACONTROL_BUFF_LENGTH( 0 )
+                                                        | UDPHS_DMACONTROL_END_TR_EN_Msk
+                                                        | UDPHS_DMACONTROL_END_TR_IT_Msk
+                                                        | UDPHS_DMACONTROL_LDNXT_DSC_Msk
+                                                        | UDPHS_DMACONTROL_CHANN_ENB_Msk);
+                                        }
+                                    }
+
+                                    /* Clean cache to flush the data from the cache to the main memory */
+                                    SYS_CACHE_CleanDCache_by_Addr((uint32_t *)endpointObj, sizeof(endpointObj));
+
+                                    /* DMA Interrupt enable */
+                                    usbID->UDPHS_IEN |=  (UDPHS_IEN_DMA_1_Msk << (endpoint-1));
+
+                                    /* Write in UDPHS_DMANXTDSCx the address of the descriptor to be used first */
+                                    usbID->UDPHS_DMA[endpoint].UDPHS_DMANXTDSC = (uint32_t)endpointObj->dmaTransferDescriptor;
+
+                                    /* Write '1' in the LDNXT_DSC bit of UDPHS_DMACONTROLx */
+                                    usbID->UDPHS_DMA[endpoint].UDPHS_DMACONTROL = UDPHS_DMACONTROL_LDNXT_DSC_Msk;
+                                }
                             }
-
-                            fifoAddPtr = ENDPOINT_FIFO_ADDRESS(endpoint);
-
-                            offset = irp->size - irp->nPendingBytes;
-
-                            data = (uint8_t *)irp->data;
-
-                            data = (uint8_t *)(data + offset);
-
-                            __DMB();
-
-                            for(count = 0; count < byteCount; count++)
-                            {
-                                *fifoAddPtr++ = *((uint8_t *)(data + count));
-                            }
-
-                            __DMB();
-
-                            irp->nPendingBytes -= byteCount;
-
-                            /* Clear the flag and enable the interrupt. The rest of
-                             * the IRP should really get processed in the ISR.
-                             * */
-                            usbID->UDPHS_EPT[endpoint].UDPHS_EPTCLRSTA = UDPHS_EPTCLRSTA_TX_COMPLT_Msk;
-
-                            usbID->UDPHS_EPT[endpoint].UDPHS_EPTCTLENB = UDPHS_EPTCTLENB_TX_COMPLT_Msk;
-
-                            usbID->UDPHS_EPT[endpoint].UDPHS_EPTSETSTA = UDPHS_EPTSETSTA_TXRDY_Msk;
-
                         }
                         else
                         {
-                            /* direction is Host to Device */
-                            if((usbID->UDPHS_EPT[endpoint].UDPHS_EPTSTA & UDPHS_EPTSTA_RXRDY_TXKL_Msk) == UDPHS_EPTSTA_RXRDY_TXKL_Msk)
+                            /* Interrupt */
+                            if(direction == USB_DATA_DIRECTION_DEVICE_TO_HOST)
                             {
+                                /* Data IN stage of control transfer.
+                                 * Driver is waiting for an IRP from the client and has
+                                 * received it. Determine the transaction size. */
+                                if(irp->nPendingBytes < endpointObj->maxPacketSize)
+                                {
+                                    /* This is the last transaction in the transfer. */
+                                    byteCount = irp->nPendingBytes;
+                                }
+                                else
+                                {
+                                    /* This is first or a continuing transaction in the
+                                     * transfer and the transaction size must be
+                                     * maxPacketSize */
+
+                                    byteCount = endpointObj->maxPacketSize;
+                                }
 
                                 fifoAddPtr = ENDPOINT_FIFO_ADDRESS(endpoint);
 
-                                byteCount = ((usbID->UDPHS_EPT[endpoint].UDPHS_EPTSTA & UDPHS_EPTSTA_BYTE_COUNT_Msk) >> UDPHS_EPTSTA_BYTE_COUNT_Pos);
+                                offset = irp->size - irp->nPendingBytes;
 
                                 data = (uint8_t *)irp->data;
 
-                                data = (uint8_t *)&data[irp->nPendingBytes];
-
-                                if((irp->nPendingBytes + byteCount) > irp->size)
-                                {
-                                    /* This is not acceptable as it may corrupt the ram location */
-                                    byteCount = irp->size - irp->nPendingBytes;
-                                }
+                                data = (uint8_t *)(data + offset);
 
                                 __DMB();
 
                                 for(count = 0; count < byteCount; count++)
                                 {
-                                    *((uint8_t *)(data + count)) = *fifoAddPtr++;
+                                    *fifoAddPtr++ = *((uint8_t *)(data + count));
                                 }
 
                                 __DMB();
 
-                                irp->nPendingBytes += byteCount;
+                                irp->nPendingBytes -= byteCount;
 
-                                if((irp->nPendingBytes < irp->size) && (byteCount >= endpointObj->maxPacketSize))
+                                /* Clear the flag and enable the interrupt. The rest of
+                                 * the IRP should really get processed in the ISR.
+                                 * */
+                                usbID->UDPHS_EPT[endpoint].UDPHS_EPTCLRSTA = UDPHS_EPTCLRSTA_TX_COMPLT_Msk;
+
+                                usbID->UDPHS_EPT[endpoint].UDPHS_EPTCTLENB = UDPHS_EPTCTLENB_TX_COMPLT_Msk;
+
+                                usbID->UDPHS_EPT[endpoint].UDPHS_EPTSETSTA = UDPHS_EPTSETSTA_TXRDY_Msk;
+
+                            }
+                            else
+                            {
+                                /* direction is Host to Device */
+                                if((usbID->UDPHS_EPT[endpoint].UDPHS_EPTSTA & UDPHS_EPTSTA_RXRDY_TXKL_Msk) == UDPHS_EPTSTA_RXRDY_TXKL_Msk)
                                 {
 
-                                    usbID->UDPHS_EPT[endpoint].UDPHS_EPTCLRSTA = UDPHS_EPTCLRSTA_RXRDY_TXKL_Msk;
+                                    fifoAddPtr = ENDPOINT_FIFO_ADDRESS(endpoint);
 
-                                    usbID->UDPHS_EPT[endpoint].UDPHS_EPTCTLENB = UDPHS_EPTCTLENB_RXRDY_TXKL_Msk;
-                                }
-                                else
-                                {
-                                    if(irp->nPendingBytes >= irp->size)
+                                    byteCount = ((usbID->UDPHS_EPT[endpoint].UDPHS_EPTSTA & UDPHS_EPTSTA_BYTE_COUNT_Msk) >> UDPHS_EPTSTA_BYTE_COUNT_Pos);
+
+                                    data = (uint8_t *)irp->data;
+
+                                    data = (uint8_t *)&data[irp->nPendingBytes];
+
+                                    if((irp->nPendingBytes + byteCount) > irp->size)
                                     {
-                                        irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
+                                        /* This is not acceptable as it may corrupt the ram location */
+                                        byteCount = irp->size - irp->nPendingBytes;
+                                    }
+
+                                    __DMB();
+
+                                    for(count = 0; count < byteCount; count++)
+                                    {
+                                        *((uint8_t *)(data + count)) = *fifoAddPtr++;
+                                    }
+
+                                    __DMB();
+
+                                    irp->nPendingBytes += byteCount;
+
+                                    if((irp->nPendingBytes < irp->size) && (byteCount >= endpointObj->maxPacketSize))
+                                    {
+
+                                        usbID->UDPHS_EPT[endpoint].UDPHS_EPTCLRSTA = UDPHS_EPTCLRSTA_RXRDY_TXKL_Msk;
+
+                                        usbID->UDPHS_EPT[endpoint].UDPHS_EPTCTLENB = UDPHS_EPTCTLENB_RXRDY_TXKL_Msk;
                                     }
                                     else
                                     {
-                                        /* Short Packet */
-                                        irp->status = USB_DEVICE_IRP_STATUS_COMPLETED_SHORT;
+                                        if(irp->nPendingBytes >= irp->size)
+                                        {
+                                            irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
+                                        }
+                                        else
+                                        {
+                                            /* Short Packet */
+                                            irp->status = USB_DEVICE_IRP_STATUS_COMPLETED_SHORT;
+                                        }
+
+                                        endpointObj->irpQueue = irp->next;
+
+                                        irp->size = irp->nPendingBytes;
+
+                                        if(irp->callback != NULL)
+                                        {
+                                            irp->callback((USB_DEVICE_IRP *)irp);
+                                        }
+
+                                        usbID->UDPHS_EPT[endpoint].UDPHS_EPTCLRSTA = UDPHS_EPTCLRSTA_RXRDY_TXKL_Msk;
+
+                                        usbID->UDPHS_EPT[endpoint].UDPHS_EPTCTLENB = UDPHS_EPTCTLENB_RXRDY_TXKL_Msk;
                                     }
-
-                                    endpointObj->irpQueue = irp->next;
-
-                                    irp->size = irp->nPendingBytes;
-
-                                    if(irp->callback != NULL)
-                                    {
-                                        irp->callback((USB_DEVICE_IRP *)irp);
-                                    }
-
-                                    usbID->UDPHS_EPT[endpoint].UDPHS_EPTCLRSTA = UDPHS_EPTCLRSTA_RXRDY_TXKL_Msk;
-
-                                    usbID->UDPHS_EPT[endpoint].UDPHS_EPTCTLENB = UDPHS_EPTCTLENB_RXRDY_TXKL_Msk;
                                 }
                             }
                         }/* End of non zero RX IRP submit */
@@ -2219,6 +2397,92 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_IRPCancel
 
 }/* End of DRV_USB_UDPHS_DEVICE_IRPCancel() */
 
+
+// *****************************************************************************
+/* Function:
+      void _DRV_USB_UDPHS_DEVICE_Tasks_ISR_DMA(DRV_USB_UDPHS_OBJ * hDriver)
+
+  Summary:
+    Dynamic implementation of _DRV_USB_UDPHS_DEVICE_Tasks_ISR ISR_DMA handler
+    function.
+
+  Description:
+    This is the dynamic implementation of _DRV_USB_UDPHS_DEVICE_Tasks_ISR ISR_DMA
+    handler function for USB device.
+
+  Remarks:
+    This is a local function and should not be called directly by the
+    application.
+ */
+
+void _DRV_USB_UDPHS_DEVICE_Tasks_ISR_DMA(DRV_USB_UDPHS_OBJ * hDriver, uint8_t NumEndpoint)
+{
+    udphs_registers_t * usbID;
+    DRV_USB_UDPHS_DEVICE_ENDPOINT_OBJ * endpointObj;
+    USB_DEVICE_IRP_LOCAL * irp;
+    uint32_t dmaStatus;
+    uint32_t byteCount;
+   static uint32_t receivedSize;
+
+    usbID = hDriver->usbID;
+
+    /* Get the pointer to the endpoint object */
+    endpointObj = hDriver->deviceEndpointObj[NumEndpoint];
+    irp = endpointObj->irpQueue;
+
+    dmaStatus = usbID->UDPHS_DMA[NumEndpoint].UDPHS_DMASTATUS;
+
+    /* BUFF_COUNT holds the number of un-transmitted bytes.
+     * BUFF_COUNT is equal to zero in case of good transfer */
+    byteCount = (dmaStatus & UDPHS_DMASTATUS_BUFF_COUNT_Msk) >> UDPHS_DMASTATUS_BUFF_COUNT_Pos;
+
+    if( byteCount == 0 )
+    {
+        irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
+        usbID->UDPHS_IEN &=  ~(UDPHS_IEN_DMA_1_Msk << (NumEndpoint-1));
+    }
+
+    if( endpointObj->endpointDirection == USB_DATA_DIRECTION_HOST_TO_DEVICE )
+    {
+        /* Data moves from host to device */
+        receivedSize = usbID->UDPHS_DMA[NumEndpoint].UDPHS_DMAADDRESS - (uint32_t)(irp->data);
+        irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
+        irp->size = receivedSize;
+        irp->nPendingBytes = 0;
+    }
+    else
+    {
+        /* Data moves from device to host */
+
+        /* Received size of data */
+        receivedSize = usbID->UDPHS_DMA[NumEndpoint].UDPHS_DMAADDRESS - (uint32_t)(irp->data);
+
+        if(byteCount == 0 )
+        {
+            irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
+
+            irp->nPendingBytes = 0;
+        }
+        else
+        {
+            /* Transfer not fisnish */
+            irp->nPendingBytes -= byteCount;
+        }
+    }
+
+
+    /* Callback */
+    if (irp->nPendingBytes == 0)
+    {       
+        endpointObj->irpQueue = irp->next;
+        if(irp->callback != NULL)
+        {
+            irp->callback((USB_DEVICE_IRP *)irp);
+        }        
+    }
+}
+
+
 // *****************************************************************************
 /* Function:
       void _DRV_USB_UDPHS_DEVICE_Tasks_ISR(DRV_USB_UDPHS_OBJ * hDriver)
@@ -2245,7 +2509,7 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_IRPCancel
 
 void _DRV_USB_UDPHS_DEVICE_Tasks_ISR
 (
-	DRV_USB_UDPHS_OBJ * hDriver
+    DRV_USB_UDPHS_OBJ * hDriver
 )
 
 {
@@ -2275,7 +2539,7 @@ void _DRV_USB_UDPHS_DEVICE_Tasks_ISR
     }
     else
     {
-    	usbID = hDriver->usbID;
+        usbID = hDriver->usbID;
 
         /* Check for SOF Interrupt Enable and SOF Interrupt Flag */
         if((UDPHS_IEN_INT_SOF_Msk == (UDPHS_IEN_INT_SOF_Msk & usbID->UDPHS_IEN)) && (UDPHS_INTSTA_INT_SOF_Msk == (UDPHS_INTSTA_INT_SOF_Msk & usbID->UDPHS_INTSTA)))
@@ -2300,13 +2564,13 @@ void _DRV_USB_UDPHS_DEVICE_Tasks_ISR
             hDriver->pEventCallBack(hDriver->hClientArg, (DRV_USB_EVENT)DRV_USB_UDPHS_EVENT_IDLE_DETECT, NULL);
 
             /* Disable Suspend Interrupt */
-			usbID->UDPHS_IEN &= ~UDPHS_IEN_DET_SUSPD_Msk;
+            usbID->UDPHS_IEN &= ~UDPHS_IEN_DET_SUSPD_Msk;
 
             /* Enable Wakeup Interrupt */
-			usbID->UDPHS_IEN |= UDPHS_IEN_WAKE_UP_Msk |	UDPHS_IEN_ENDOFRSM_Msk;
+            usbID->UDPHS_IEN |= UDPHS_IEN_WAKE_UP_Msk |    UDPHS_IEN_ENDOFRSM_Msk;
 
             /* Acknowledge the suspend interrupt */
-			usbID->UDPHS_CLRINT = UDPHS_CLRINT_DET_SUSPD_Msk | UDPHS_CLRINT_WAKE_UP_Msk;
+            usbID->UDPHS_CLRINT = UDPHS_CLRINT_DET_SUSPD_Msk | UDPHS_CLRINT_WAKE_UP_Msk;
 
         }
 
@@ -2318,23 +2582,23 @@ void _DRV_USB_UDPHS_DEVICE_Tasks_ISR
             hDriver->pEventCallBack(hDriver->hClientArg, (DRV_USB_EVENT)DRV_USB_UDPHS_EVENT_RESUME_DETECT, NULL);
 
             /* Acknowledge the interrupt */
-			usbID->UDPHS_CLRINT = UDPHS_CLRINT_WAKE_UP_Msk | UDPHS_CLRINT_ENDOFRSM_Msk | UDPHS_CLRINT_DET_SUSPD_Msk;
+            usbID->UDPHS_CLRINT = UDPHS_CLRINT_WAKE_UP_Msk | UDPHS_CLRINT_ENDOFRSM_Msk | UDPHS_CLRINT_DET_SUSPD_Msk;
 
             /* Disable Wakeup Interrupt */
-			usbID->UDPHS_IEN &= ~UDPHS_IEN_WAKE_UP_Msk;
+            usbID->UDPHS_IEN &= ~UDPHS_IEN_WAKE_UP_Msk;
 
             /* Enable Suspend Interrupt */
-			usbID->UDPHS_IEN |= UDPHS_IEN_ENDOFRSM_Msk | UDPHS_IEN_DET_SUSPD_Msk;
+            usbID->UDPHS_IEN |= UDPHS_IEN_ENDOFRSM_Msk | UDPHS_IEN_DET_SUSPD_Msk;
 
         }
 
         /* Check for Upstream Reset Interrupt Enable and Upstream Reset Interrupt Flag */
         if((UDPHS_IEN_UPSTR_RES_Msk == (UDPHS_IEN_UPSTR_RES_Msk & usbID->UDPHS_IEN)) && (UDPHS_INTSTA_UPSTR_RES_Msk == (UDPHS_INTSTA_UPSTR_RES_Msk & usbID->UDPHS_INTSTA)))
         {
-			/* Acknowledge interrupt */
-			usbID->UDPHS_CLRINT = UDPHS_CLRINT_UPSTR_RES_Msk;
+            /* Acknowledge interrupt */
+            usbID->UDPHS_CLRINT = UDPHS_CLRINT_UPSTR_RES_Msk;
 
-		}
+        }
 
         /* Check for End Of Reset Interrupt Enable and End Of Reset Interrupt Flag */
         if((UDPHS_IEN_ENDRESET_Msk == (UDPHS_IEN_ENDRESET_Msk & usbID->UDPHS_IEN)) && (UDPHS_INTSTA_ENDRESET_Msk == (UDPHS_INTSTA_ENDRESET_Msk & usbID->UDPHS_INTSTA)))
@@ -2357,14 +2621,14 @@ void _DRV_USB_UDPHS_DEVICE_Tasks_ISR
             hDriver->pEventCallBack(hDriver->hClientArg, (DRV_USB_EVENT)DRV_USB_UDPHS_EVENT_RESET_DETECT, NULL);
 
             /* Acknowledge the End of Reset interrupt */
-			usbID->UDPHS_CLRINT = UDPHS_CLRINT_ENDRESET_Msk;
+            usbID->UDPHS_CLRINT = UDPHS_CLRINT_ENDRESET_Msk;
 
             /* Acknowledge the Wakeup and Suspend interrupt */
-			usbID->UDPHS_CLRINT = UDPHS_CLRINT_WAKE_UP_Msk | UDPHS_CLRINT_DET_SUSPD_Msk;
+            usbID->UDPHS_CLRINT = UDPHS_CLRINT_WAKE_UP_Msk | UDPHS_CLRINT_DET_SUSPD_Msk;
 
             /* Enable Suspend Interrupt */
-			usbID->UDPHS_IEN |= UDPHS_IEN_DET_SUSPD_Msk;
-			usbID->UDPHS_IEN |= UDPHS_IEN_INT_SOF_Msk;
+            usbID->UDPHS_IEN |= UDPHS_IEN_DET_SUSPD_Msk;
+            usbID->UDPHS_IEN |= UDPHS_IEN_INT_SOF_Msk;
         }
 
 
@@ -2739,181 +3003,117 @@ void _DRV_USB_UDPHS_DEVICE_Tasks_ISR
                 usbID->UDPHS_EPT[0].UDPHS_EPTCTLDIS = UDPHS_EPTCTLDIS_RXRDY_TXKL_Msk;
             }
         }
+
         for(eptIndex = 1; eptIndex < DRV_USB_UDPHS_ENDPOINTS_NUMBER; eptIndex++)
         {
-            /* This means this is non-EP0 interrupt. Read the endpoint status
-             * register. */
-
-            if(((usbID->UDPHS_IEN & (UDPHS_IEN_EPT_0_Msk << eptIndex)) == 0) ||
-               ((usbID->UDPHS_INTSTA & (UDPHS_INTSTA_EPT_0_Msk << eptIndex)) == 0))
+            if(( gDrvUsbUdphsDeviceEndpointFeatureDescription & (1 << eptIndex)) == (1 << eptIndex))
             {
-                continue;
-            }
-
-            if(((usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCTL & UDPHS_EPTCTL_RXRDY_TXKL_Msk) == UDPHS_EPTCTL_RXRDY_TXKL_Msk) &&
-               ((usbID->UDPHS_EPT[eptIndex].UDPHS_EPTSTA & UDPHS_EPTSTA_RXRDY_TXKL_Msk) == UDPHS_EPTSTA_RXRDY_TXKL_Msk))
-            {
-
-                /* Get the pointer to the endpoint 0 object */
-                endpointObj = hDriver->deviceEndpointObj[eptIndex];
-
-                if(endpointObj->irpQueue == NULL)
+                /* DMA Capable */
+                /* Check if endpoint has a pending interrupt */
+                if( usbID->UDPHS_INTSTA & (UDPHS_INTSTA_DMA_1_Msk << (eptIndex-1) ) )
                 {
-                    usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCTLDIS = UDPHS_EPTCTLDIS_RXRDY_TXKL_Msk;
+                    _DRV_USB_UDPHS_DEVICE_Tasks_ISR_DMA( hDriver, eptIndex );
                 }
-                else
+            }
+            else
+            {
+                /* No DMA */
+                /* This means this is non-EP0 interrupt */
+                /* Read the endpoint status register. */
+                if(((usbID->UDPHS_IEN & (UDPHS_IEN_EPT_0_Msk << eptIndex)) == 0) ||
+                   ((usbID->UDPHS_INTSTA & (UDPHS_INTSTA_EPT_0_Msk << eptIndex)) == 0))
                 {
-                    irp = endpointObj->irpQueue;
+                    continue;
+                }
 
-                    fifoAddPtr = ENDPOINT_FIFO_ADDRESS(eptIndex);
+                if(((usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCTL & UDPHS_EPTCTL_RXRDY_TXKL_Msk) == UDPHS_EPTCTL_RXRDY_TXKL_Msk) &&
+                   ((usbID->UDPHS_EPT[eptIndex].UDPHS_EPTSTA & UDPHS_EPTSTA_RXRDY_TXKL_Msk) == UDPHS_EPTSTA_RXRDY_TXKL_Msk))
+                {
 
-                    byteCount = ((usbID->UDPHS_EPT[eptIndex].UDPHS_EPTSTA & UDPHS_EPTSTA_BYTE_COUNT_Msk) >> UDPHS_EPTSTA_BYTE_COUNT_Pos);
+                    /* Get the pointer to the endpoint 0 object */
+                    endpointObj = hDriver->deviceEndpointObj[eptIndex];
 
-                    data = (uint8_t *)irp->data;
-
-                    data = (uint8_t *)&data[irp->nPendingBytes];
-
-                    if((irp->nPendingBytes + byteCount) > irp->size)
+                    if(endpointObj->irpQueue == NULL)
                     {
-                        /* This is not acceptable as it may corrupt the ram location */
-                        byteCount = irp->size - irp->nPendingBytes;
-                    }
-
-                    __DMB();
-
-                    for(count = 0; count < byteCount; count++)
-                    {
-                        *((uint8_t *)(data + count)) = *fifoAddPtr++;
-                    }
-
-                    __DMB();
-
-                    irp->nPendingBytes += byteCount;
-
-                    if((irp->nPendingBytes < irp->size) && (byteCount >= endpointObj->maxPacketSize))
-                    {
-                        usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCLRSTA = UDPHS_EPTCLRSTA_RXRDY_TXKL_Msk;
-
-                        usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCTLENB = UDPHS_EPTCTLENB_RXRDY_TXKL_Msk;
+                        usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCTLDIS = UDPHS_EPTCTLDIS_RXRDY_TXKL_Msk;
                     }
                     else
                     {
-                        if(irp->nPendingBytes >= irp->size)
-                        {
-                            irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
-                        }
-                        else
-                        {
-                            /* Short Packet */
-                            irp->status = USB_DEVICE_IRP_STATUS_COMPLETED_SHORT;
-                        }
-
-                        endpointObj->irpQueue = irp->next;
-
-                        irp->size = irp->nPendingBytes;
-
-                        if(irp->callback != NULL)
-                        {
-                            irp->callback((USB_DEVICE_IRP *)irp);
-                        }
-
-                        usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCLRSTA = UDPHS_EPTCLRSTA_RXRDY_TXKL_Msk;
-
-                        usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCTLENB = UDPHS_EPTCTLENB_RXRDY_TXKL_Msk;
-                    }
-                }
-            }
-
-            if(((usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCTL & UDPHS_EPTCTL_TX_COMPLT_Msk) == UDPHS_EPTCTL_TX_COMPLT_Msk) &&
-               ((usbID->UDPHS_EPT[eptIndex].UDPHS_EPTSTA & UDPHS_EPTSTA_TX_COMPLT_Msk) == UDPHS_EPTSTA_TX_COMPLT_Msk))
-            {
-
-                /* Get the pointer to the endpoint 0 object */
-                endpointObj = hDriver->deviceEndpointObj[eptIndex];
-
-                if(endpointObj->irpQueue != NULL)
-                {
-                    irp = endpointObj->irpQueue;
-
-                    if(irp->nPendingBytes != 0)
-                    {
-                        if(irp->nPendingBytes < endpointObj->maxPacketSize)
-                        {
-                            /* This is the last transaction in the transfer. */
-                            byteCount = irp->nPendingBytes;
-                        }
-                        else
-                        {
-                            /* This is first or a continuing transaction in the
-                             * transfer and the transaction size must be
-                             * maxPacketSize */
-
-                            byteCount = endpointObj->maxPacketSize;
-                        }
+                        irp = endpointObj->irpQueue;
 
                         fifoAddPtr = ENDPOINT_FIFO_ADDRESS(eptIndex);
 
+                        byteCount = ((usbID->UDPHS_EPT[eptIndex].UDPHS_EPTSTA & UDPHS_EPTSTA_BYTE_COUNT_Msk) >> UDPHS_EPTSTA_BYTE_COUNT_Pos);
+
                         data = (uint8_t *)irp->data;
 
-                        data = (uint8_t *)&data[irp->size - irp->nPendingBytes];
+                        data = (uint8_t *)&data[irp->nPendingBytes];
+
+                        if((irp->nPendingBytes + byteCount) > irp->size)
+                        {
+                            /* This is not acceptable as it may corrupt the ram location */
+                            byteCount = irp->size - irp->nPendingBytes;
+                        }
 
                         __DMB();
 
                         for(count = 0; count < byteCount; count++)
                         {
-                            *fifoAddPtr++ = *((uint8_t *)(data + count));
+                            *((uint8_t *)(data + count)) = *fifoAddPtr++;
                         }
 
                         __DMB();
 
-                        irp->nPendingBytes -= byteCount;
+                        irp->nPendingBytes += byteCount;
 
-                        /* Clear the flag and enable the interrupt. The rest of
-                         * the IRP should really get processed in the ISR.
-                         * */
-
-                        usbID->UDPHS_EPT[eptIndex].UDPHS_EPTSETSTA = UDPHS_EPTSETSTA_TXRDY_Msk;
-
-                        usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCLRSTA = UDPHS_EPTCLRSTA_TX_COMPLT_Msk;
-
-                        usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCTLENB = UDPHS_EPTCTLENB_TX_COMPLT_Msk;
-                    }
-                    else if((irp->flags & USB_DEVICE_IRP_FLAG_SEND_ZLP) == USB_DEVICE_IRP_FLAG_SEND_ZLP)
-                    {
-
-                        irp->flags &= ~USB_DEVICE_IRP_FLAG_SEND_ZLP;
-
-                        usbID->UDPHS_EPT[eptIndex].UDPHS_EPTSETSTA = UDPHS_EPTSETSTA_TXRDY_Msk;
-
-                        usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCLRSTA = UDPHS_EPTCLRSTA_TX_COMPLT_Msk;
-
-                        usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCTLENB = UDPHS_EPTCTLENB_TX_COMPLT_Msk;
-                    }
-                    else
-                    {
-
-                        irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
-
-                        endpointObj->irpQueue = irp->next;
-
-                        if(irp->callback != NULL)
+                        if((irp->nPendingBytes < irp->size) && (byteCount >= endpointObj->maxPacketSize))
                         {
-                            irp->callback((USB_DEVICE_IRP *)irp);
+                            usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCLRSTA = UDPHS_EPTCLRSTA_RXRDY_TXKL_Msk;
+
+                            usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCTLENB = UDPHS_EPTCTLENB_RXRDY_TXKL_Msk;
                         }
-
-                        if(irp->next != NULL)
+                        else
                         {
+                            if(irp->nPendingBytes >= irp->size)
+                            {
+                                irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
+                            }
+                            else
+                            {
+                                /* Short Packet */
+                                irp->status = USB_DEVICE_IRP_STATUS_COMPLETED_SHORT;
+                            }
 
-                            irp->flags &= ~USB_DEVICE_IRP_FLAG_DATA_PENDING;
+                            endpointObj->irpQueue = irp->next;
 
-                            irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
+                            irp->size = irp->nPendingBytes;
 
-                            irp = irp->next;
+                            if(irp->callback != NULL)
+                            {
+                                irp->callback((USB_DEVICE_IRP *)irp);
+                            }
 
-                            endpointObj->irpQueue = irp;
+                            usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCLRSTA = UDPHS_EPTCLRSTA_RXRDY_TXKL_Msk;
 
-                            irp->status = USB_DEVICE_IRP_STATUS_IN_PROGRESS;
+                            usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCTLENB = UDPHS_EPTCTLENB_RXRDY_TXKL_Msk;
+                        }
+                    }
+                }
 
+                // TX endpoints
+                if(((usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCTL & UDPHS_EPTCTL_TX_COMPLT_Msk) == UDPHS_EPTCTL_TX_COMPLT_Msk) &&
+                   ((usbID->UDPHS_EPT[eptIndex].UDPHS_EPTSTA & UDPHS_EPTSTA_TX_COMPLT_Msk) == UDPHS_EPTSTA_TX_COMPLT_Msk))
+                {
+
+                    /* Get the pointer to the endpoint 0 object */
+                    endpointObj = hDriver->deviceEndpointObj[eptIndex];
+
+                    if(endpointObj->irpQueue != NULL)
+                    {
+                        irp = endpointObj->irpQueue;
+
+                        if(irp->nPendingBytes != 0)
+                        {
                             if(irp->nPendingBytes < endpointObj->maxPacketSize)
                             {
                                 /* This is the last transaction in the transfer. */
@@ -2931,6 +3131,8 @@ void _DRV_USB_UDPHS_DEVICE_Tasks_ISR
                             fifoAddPtr = ENDPOINT_FIFO_ADDRESS(eptIndex);
 
                             data = (uint8_t *)irp->data;
+
+                            data = (uint8_t *)&data[irp->size - irp->nPendingBytes];
 
                             __DMB();
 
@@ -2953,14 +3155,89 @@ void _DRV_USB_UDPHS_DEVICE_Tasks_ISR
 
                             usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCTLENB = UDPHS_EPTCTLENB_TX_COMPLT_Msk;
                         }
+                        else if((irp->flags & USB_DEVICE_IRP_FLAG_SEND_ZLP) == USB_DEVICE_IRP_FLAG_SEND_ZLP)
+                        {
+
+                            irp->flags &= ~USB_DEVICE_IRP_FLAG_SEND_ZLP;
+
+                            usbID->UDPHS_EPT[eptIndex].UDPHS_EPTSETSTA = UDPHS_EPTSETSTA_TXRDY_Msk;
+
+                            usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCLRSTA = UDPHS_EPTCLRSTA_TX_COMPLT_Msk;
+
+                            usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCTLENB = UDPHS_EPTCTLENB_TX_COMPLT_Msk;
+                        }
                         else
                         {
-                            usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCTLDIS = UDPHS_EPTCTLDIS_TX_COMPLT_Msk;
 
+                            irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
+
+                            endpointObj->irpQueue = irp->next;
+
+                            if(irp->callback != NULL)
+                            {
+                                irp->callback((USB_DEVICE_IRP *)irp);
+                            }
+
+                            if(irp->next != NULL)
+                            {
+
+                                irp->flags &= ~USB_DEVICE_IRP_FLAG_DATA_PENDING;
+
+                                irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
+
+                                irp = irp->next;
+
+                                endpointObj->irpQueue = irp;
+
+                                irp->status = USB_DEVICE_IRP_STATUS_IN_PROGRESS;
+
+                                if(irp->nPendingBytes < endpointObj->maxPacketSize)
+                                {
+                                    /* This is the last transaction in the transfer. */
+                                    byteCount = irp->nPendingBytes;
+                                }
+                                else
+                                {
+                                    /* This is first or a continuing transaction in the
+                                     * transfer and the transaction size must be
+                                     * maxPacketSize */
+
+                                    byteCount = endpointObj->maxPacketSize;
+                                }
+
+                                fifoAddPtr = ENDPOINT_FIFO_ADDRESS(eptIndex);
+
+                                data = (uint8_t *)irp->data;
+
+                                __DMB();
+
+                                for(count = 0; count < byteCount; count++)
+                                {
+                                    *fifoAddPtr++ = *((uint8_t *)(data + count));
+                                }
+
+                                __DMB();
+
+                                irp->nPendingBytes -= byteCount;
+
+                                /* Clear the flag and enable the interrupt. The rest of
+                                 * the IRP should really get processed in the ISR.
+                                 * */
+
+                                usbID->UDPHS_EPT[eptIndex].UDPHS_EPTSETSTA = UDPHS_EPTSETSTA_TXRDY_Msk;
+
+                                usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCLRSTA = UDPHS_EPTCLRSTA_TX_COMPLT_Msk;
+
+                                usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCTLENB = UDPHS_EPTCTLENB_TX_COMPLT_Msk;
+                            }
+                            else
+                            {
+                                usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCTLDIS = UDPHS_EPTCTLDIS_TX_COMPLT_Msk;
+
+                            }
                         }
                     }
                 }
-
             }
         }
     }

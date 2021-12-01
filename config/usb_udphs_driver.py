@@ -79,7 +79,16 @@ def instantiateComponent(usbDriverComponent):
 	usbSpeed.setDescription(helpText)
 	usbSpeed.setDefaultValue("High Speed")
 	usbSpeed.setDependencies(blUSBDriverSpeedChanged, ["USB_SPEED"])
-		
+
+	# USB Driver: DMA Maximum Transfer Size
+	usbDMATransferSize = usbDriverComponent.createComboSymbol("USB_DMA_MAXIMUM_TRANSFER", None)
+	usbDMATransferSize.setLabel("USB DMA Maximum Transfer Size")
+	usbDMATransferSize.setVisible(True)
+	helpText = '''Set maximum size for a DMA transfer, multiple of 64KB'''
+	usbDMATransferSize.setDescription(helpText)
+	usbDMATransferSize.setDefaultValue("2")
+
+	# USB Driver: USB VBUS Sense
 	usbVbusSense = usbDriverComponent.createBooleanSymbol("USB_DEVICE_VBUS_SENSE", None)
 	usbVbusSense.setLabel("Enable VBUS Sense")
         helpText = '''A Self Powered USB Device firmware must have some means to detect VBUS from Host. A GPIO pin can be 

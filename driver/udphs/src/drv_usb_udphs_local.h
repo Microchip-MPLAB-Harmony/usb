@@ -127,6 +127,26 @@
     #define _DRV_USB_UDPHS_InitUTMI()
 #endif /* __CORE_CA_H_GENERIC */
 
+#if defined (_SAMA7G54_H_)
+    /* A7G5 DMA 1 to 7 */
+    #define _DRV_USB_UDPHS_EPT_DMA              0x000000FE
+    /* A7G5 3 banks for endpoints 1,2 */
+    #define _DRV_USB_UDPHS_EPT_BK               0x00060000
+#elif defined(_SAMA5D27_H_)
+    /* A5D2 DMA 1 to 7 */
+    #define _DRV_USB_UDPHS_EPT_DMA              0x000000FE
+    /* A5D2 3 banks for endpoints 1,2 */
+    #define _DRV_USB_UDPHS_EPT_BK               0x00060000
+#elif defined(_SAM9X60_H_)
+    /* 9X60 DMA 1 to 6 */
+    #define _DRV_USB_UDPHS_EPT_DMA              0x0000007E
+    /* 9X60 3 banks for endpoints 3, 4, 5, 6 */
+    #define _DRV_USB_UDPHS_EPT_BK               0x00780000
+#else
+#error Missing device
+#endif
+
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Data Type Definitions
@@ -208,13 +228,30 @@ typedef enum
 }
 DRV_USB_UDPHS_DEVICE_ENDPOINT_STATE;
 
+
+/************************************************
+ * Endpoint DMA Transfer descriptor structure. 
+ ************************************************/
+typedef struct __attribute__ ((packed))
+{
+    void *   nextDescriptorAddress;
+    void *   bufferAddress;
+    uint32_t  dmaControl;
+    uint32_t  dmaStatus;
+} DRV_USB_UDPHS_DMA_TRANSFER_DESCRIPTOR;
+
+
 /************************************************
  * Endpoint data structure. This data structure
  * holds the IRP queue and other flags associated
  * with functioning of the endpoint.
  ************************************************/
-typedef struct
+typedef struct __attribute__ ((packed))
 {
+    /* DMA endpoint transfer descriptor */
+    /* This structure must be align, do not move */
+    DRV_USB_UDPHS_DMA_TRANSFER_DESCRIPTOR dmaTransferDescriptor[DRV_USB_UDPHS_DMA_MAX_TRANSFER_SIZE];
+
     /* This is the IRP queue for
      * the endpoint */
     USB_DEVICE_IRP_LOCAL * irpQueue;
@@ -228,12 +265,13 @@ typedef struct
     /* Endpoint state bitmap */
     DRV_USB_UDPHS_DEVICE_ENDPOINT_STATE endpointState;
 
-	/* This gives the Endpoint Direction */
-	USB_DATA_DIRECTION endpointDirection;
+    /* This gives the Endpoint Direction */
+    USB_DATA_DIRECTION endpointDirection;
 
+    uint8_t padding[7];
 }
 DRV_USB_UDPHS_DEVICE_ENDPOINT_OBJ;
-
+ 
 /********************************************
  * This enumeration list the possible status
  * valus of a token once it has completed.
@@ -262,8 +300,8 @@ typedef enum
     DRV_USB_UDPHS_DEVICE_EP0_STATE_WAITING_FOR_RX_STATUS_IRP_FROM_CLIENT,
     DRV_USB_UDPHS_DEVICE_EP0_STATE_WAITING_FOR_TX_DATA_IRP_FROM_CLIENT,
     DRV_USB_UDPHS_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_IRP_FROM_CLIENT,
-	DRV_USB_UDPHS_DEVICE_EP0_STATE_WAITING_FOR_RX_STATUS_COMPLETE,
-	DRV_USB_UDPHS_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_COMPLETE,
+    DRV_USB_UDPHS_DEVICE_EP0_STATE_WAITING_FOR_RX_STATUS_COMPLETE,
+    DRV_USB_UDPHS_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_COMPLETE,
     DRV_USB_UDPHS_DEVICE_EP0_STATE_TX_DATA_STAGE_IN_PROGRESS,
     DRV_USB_UDPHS_DEVICE_EP0_STATE_RX_DATA_STAGE_IN_PROGRESS,
 }
@@ -293,6 +331,9 @@ typedef enum
 
 typedef struct _DRV_USB_UDPHS_OBJ_STRUCT
 {
+    /* This is array of device endpoint objects pointers */
+    DRV_USB_UDPHS_DEVICE_ENDPOINT_OBJ * deviceEndpointObj[DRV_USB_UDPHS_ENDPOINTS_NUMBER];
+
     /* Indicates this object is in use */
     bool inUse;
 
@@ -344,8 +385,8 @@ typedef struct _DRV_USB_UDPHS_OBJ_STRUCT
     /* Current VBUS level when running in device mode */
     DRV_USB_VBUS_LEVEL vbusLevel;
 
-	/* Callback to determine the Vbus level */
-	DRV_USB_UDPHS_VBUS_COMPARATOR vbusComparator;
+    /* Callback to determine the Vbus level */
+    DRV_USB_UDPHS_VBUS_COMPARATOR vbusComparator;
 
     /* Sent session invalid event to the client */
     bool sessionInvalidEventSent;
@@ -356,9 +397,6 @@ typedef struct _DRV_USB_UDPHS_OBJ_STRUCT
     /* Set if device if D+ pull up is enabled. */
     bool isAttached;
 
-	/* This is array of device endpoint objects pointers */
-	DRV_USB_UDPHS_DEVICE_ENDPOINT_OBJ * deviceEndpointObj[DRV_USB_UDPHS_ENDPOINTS_NUMBER];
-
     /* True if Root Hub Operation is enabled */
     bool operationEnabled;
 
@@ -366,15 +404,15 @@ typedef struct _DRV_USB_UDPHS_OBJ_STRUCT
 
 
 #ifndef SYS_DEBUG_PRINT
-	#define SYS_DEBUG_PRINT(level, format, ...)
+    #define SYS_DEBUG_PRINT(level, format, ...)
 #endif
 
 #ifndef SYS_DEBUG_MESSAGE
-	#define SYS_DEBUG_MESSAGE(a,b, ...)
+    #define SYS_DEBUG_MESSAGE(a,b, ...)
 #endif
 
 #ifndef SYS_DEBUG
-	#define SYS_DEBUG(a,b)
+    #define SYS_DEBUG(a,b)
 #endif
 
 void _DRV_USB_UDPHS_DEVICE_Initialize(DRV_USB_UDPHS_OBJ * drvObj, SYS_MODULE_INDEX index);

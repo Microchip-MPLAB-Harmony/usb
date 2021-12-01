@@ -50,6 +50,10 @@
 #ifndef USB_ALIGN
 #define USB_ALIGN __ALIGNED(4096)
 #endif 
+
+/* Set maximum size for a DMA transfer, multiple of 64KB */
+#define DRV_USB_UDPHS_DMA_MAX_TRANSFER_SIZE                 ${USB_DMA_MAXIMUM_TRANSFER}
+
 <#--
 /*******************************************************************************
  End of File
