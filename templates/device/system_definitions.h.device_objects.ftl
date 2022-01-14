@@ -42,7 +42,7 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
 -->
-	SYS_MODULE_OBJ  usbDevObject0;
+    SYS_MODULE_OBJ  usbDevObject0;
 <#--
 /*******************************************************************************
  End of File

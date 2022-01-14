@@ -509,15 +509,14 @@ def instantiateComponent(usbDeviceComponent,index):
 	
 	# USB Device max power 
 	usbDeviceConfigDescritorMaxPower = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_MAX_POWER", usbDeviceConfigurations)
-	usbDeviceConfigDescritorMaxPower.setLabel("Maximum Power")
+	usbDeviceConfigDescritorMaxPower.setLabel("Maximum Power (mA)")
 	usbDeviceConfigDescritorMaxPower.setVisible(True)
 	helpText = '''Maximum power consumption of the USB device from the bus in this specific
-					configuration when the device is fully operational. Expressed in 2 mA units 
-					(i.e., 50 = 100 mA).'''
+					configuration when the device is fully operational.'''
 	usbDeviceConfigDescritorMaxPower.setDescription(helpText)
-	usbDeviceVendorWriteQueueSize.setMin(0)
-	usbDeviceVendorWriteQueueSize.setMax(250)
-	usbDeviceConfigDescritorMaxPower.setDefaultValue(50)
+	usbDeviceConfigDescritorMaxPower.setMin(1)
+	usbDeviceConfigDescritorMaxPower.setMax(250)
+	usbDeviceConfigDescritorMaxPower.setDefaultValue(100)
 	
 	configName = Variables.get("__CONFIGURATION_NAME")
 	

@@ -43,10 +43,9 @@
  *******************************************************************************/
 -->
 
-	 /* Initialize the USB device layer */
+    /* Initialize the USB device layer */
     sysObj.usbDevObject${INDEX?string} = USB_DEVICE_Initialize (USB_DEVICE_INDEX_${INDEX?string} , ( SYS_MODULE_INIT* ) & usbDevInitData${INDEX?string});
-	
-	
+
 <#--
 /*******************************************************************************
  End of File

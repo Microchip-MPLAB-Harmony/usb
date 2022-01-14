@@ -310,10 +310,10 @@ typedef struct
 
      /* Context associated with this client */
     uintptr_t context;
-	
+
     /* This points to the size of the current control transfer */
     uint16_t controlTransferDataStageSize;
-    
+
     /* Set to true if all members of this structure
        have been initialized once */
     bool isMutexEndpointIrpInitialized;
@@ -446,8 +446,8 @@ uint16_t _USB_DEVICE_GetStringDescriptorRequestProcessAdvanced
 ); 
 void _USB_DEVICE_Other_Speed_Descriptor_Request
 (
-	USB_DEVICE_OBJ * usbDeviceThisInstance, 
-	USB_SETUP_PACKET * setupPkt
+    USB_DEVICE_OBJ * usbDeviceThisInstance, 
+    USB_SETUP_PACKET * setupPkt
 );
 void _USB_DEVICE_DeInitializeAllFunctionDrivers
 (

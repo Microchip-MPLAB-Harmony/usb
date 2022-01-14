@@ -43,8 +43,8 @@
  *******************************************************************************/
 -->
 <#if CONFIG_USB_DEVICE_FUNCTION_USE_IAD == true>
-	
-	/* Descriptor for Function - CDC     */ 
+
+    /* Descriptor for Function - CDC     */
     /* Interface Association Descriptor: CDC Function*/
     0x08,   // Size of this descriptor in bytes
     0x0B,   // Interface association descriptor type
@@ -55,7 +55,7 @@
     0x01,   // bInterfaceProtocol of the first interface
     0x00,   // Interface string index
 </#if>
-	/* Interface Descriptor */
+    /* Interface Descriptor */
 
     0x09,                                                   // Size of this descriptor in bytes
     USB_DESCRIPTOR_INTERFACE,                               // Descriptor Type is Interface descriptor

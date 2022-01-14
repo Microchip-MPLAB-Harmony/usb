@@ -47,11 +47,11 @@
     <#lt>{
     <#lt>    while(1)
     <#lt>    {
-				 /* USB Device layer tasks routine */
+            /* USB Device layer tasks routine */
     <#lt>        USB_DEVICE_Tasks(sysObj.usbDevObject${INDEX?string});
-             <#if USB_DEVICE_RTOS_USE_DELAY >
+            <#if USB_DEVICE_RTOS_USE_DELAY >
     <#lt>        vTaskDelay(${USB_DEVICE_RTOS_DELAY} / portTICK_PERIOD_MS);
-             </#if>
+            </#if>
     <#lt>    }
     <#lt>}
 </#if>

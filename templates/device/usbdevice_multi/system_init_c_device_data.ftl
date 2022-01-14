@@ -73,7 +73,7 @@
 /**************************************************
  * USB Device Function Driver Init Data
  **************************************************/
-	${LIST_USB_DEVICE_FUNCTION_INIT_ENTRY}
+${LIST_USB_DEVICE_FUNCTION_INIT_ENTRY}
 /**************************************************
  * USB Device Layer Function Driver Registration 
  * Table
@@ -107,14 +107,14 @@ const USB_DEVICE_DESCRIPTOR deviceDescriptor${INDEX?string} =
 </#if>
     USB_DEVICE_EP0_BUFFER_SIZE,                             // Max packet size for EP0, see configuration.h
     ${CONFIG_USB_DEVICE_VENDOR_ID_IDX0},                                                 // Vendor ID
-    ${CONFIG_USB_DEVICE_PRODUCT_ID_IDX0},                                                 // Product ID				
+    ${CONFIG_USB_DEVICE_PRODUCT_ID_IDX0},                                                 // Product ID                
     0x0100,                                                 // Device release number in BCD format
     0x01,                                                   // Manufacturer string index
     0x02,                                                   // Product string index
 <#if CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_ENABLE == true>
     0x03,                                                   // Device serial number string index
 <#else>
-	0x00,                                                   // Device serial number string index
+    0x00,                                                   // Device serial number string index
 </#if>
     0x01                                                    // Number of possible configurations
 };
@@ -130,11 +130,11 @@ const USB_DEVICE_QUALIFIER deviceQualifierDescriptor1 =
     USB_DESCRIPTOR_DEVICE_QUALIFIER,                        // Device Qualifier Type
     0x0200,                                                 // USB Specification Release number
 <#if CONFIG_USB_DEVICE_DESCRIPTOR_IAD_ENABLE == true>
-	0xEF,                                                   // Class Code
+    0xEF,                                                   // Class Code
     0x02,                                                   // Subclass code
     0x01,                                                   // Protocol code
 <#elseif CONFIG_USB_DEVICE_FUNCTIONS_NUMBER == 1>
-	${LIST_USB_DEVICE_DESCRIPTOR_CLASS_CODE_ENTRY}
+    ${LIST_USB_DEVICE_DESCRIPTOR_CLASS_CODE_ENTRY}
 <#else>
     0x00,                                                   // Class Code
     0x00,                                                   // Subclass code
@@ -145,14 +145,12 @@ const USB_DEVICE_QUALIFIER deviceQualifierDescriptor1 =
     0x00                                                    // Reserved for future use.
 };
 
-
 /*******************************************
  *  USB High Speed Configuration Descriptor
  *******************************************/
- 
 const uint8_t highSpeedConfigurationDescriptor[]=
 {
-	/* Configuration Descriptor */
+    /* Configuration Descriptor */
 
     0x09,                                                   // Size of this descriptor in bytes
     USB_DESCRIPTOR_CONFIGURATION,                           // Descriptor Type
@@ -161,8 +159,8 @@ const uint8_t highSpeedConfigurationDescriptor[]=
     0x01,                                               // Index value of this configuration
     0x00,                                               // Configuration string index
     USB_ATTRIBUTE_DEFAULT<#if CONFIG_USB_DEVICE_ATTRIBUTE_SELF_POWERED == true> | USB_ATTRIBUTE_SELF_POWERED</#if><#if CONFIG_USB_DEVICE_ATTRIBUTE_REMOTE_WAKEUP == true> | USB_ATTRIBUTE_REMOTE_WAKEUP</#if>, // Attributes
-    ${CONFIG_USB_DEVICE_MAX_POWER},
-	
+    ${CONFIG_USB_DEVICE_MAX_POWER/2},                                                 // Maximum power consumption (mA) /2
+    
 ${LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_HS_ENTRY}
 };
 
@@ -180,7 +178,7 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE highSpeedConfigDescSet[1] =
  *******************************************/
 const uint8_t fullSpeedConfigurationDescriptor${INDEX?string}[]=
 {
-	/* Configuration Descriptor */
+    /* Configuration Descriptor */
 
     0x09,                                                   // Size of this descriptor in bytes
     USB_DESCRIPTOR_CONFIGURATION,                           // Descriptor Type
@@ -189,8 +187,7 @@ const uint8_t fullSpeedConfigurationDescriptor${INDEX?string}[]=
     0x01,                                                   // Index value of this configuration
     0x00,                                                   // Configuration string index
     USB_ATTRIBUTE_DEFAULT<#if CONFIG_USB_DEVICE_ATTRIBUTE_SELF_POWERED == true> | USB_ATTRIBUTE_SELF_POWERED</#if><#if CONFIG_USB_DEVICE_ATTRIBUTE_REMOTE_WAKEUP == true> | USB_ATTRIBUTE_REMOTE_WAKEUP</#if>, // Attributes
-    ${CONFIG_USB_DEVICE_MAX_POWER},
-	
+    ${CONFIG_USB_DEVICE_MAX_POWER/2},                                                 // Maximum power consumption (mA) /2    
 ${LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_FS_ENTRY}
 };
 
@@ -213,74 +210,78 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet${INDEX?string}
  *******************************************/
  <#assign stringDescriptorTableSize = stringDescriptorTableSize + 1>
  <#if usb_device.CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
-    const struct __attribute__ ((packed))
-    {
-        uint8_t stringIndex;                                //Index of the string descriptor
-        uint16_t languageID ;                               // Language ID of this string.
-        uint8_t bLength;                                    // Size of this descriptor in bytes
-        uint8_t bDscType;                                   // STRING descriptor type 
-        uint16_t string[1];                                 // String
-    }
-    sd000_${INDEX?string} =
-    {
-        0,                                                  // Index of this string is 0
-        0,                                                  // This field is always blank for String Index 0
-        sizeof(sd000_${INDEX?string})-sizeof(sd000_${INDEX?string}.stringIndex)-sizeof(sd000_${INDEX?string}.languageID),
-        USB_DESCRIPTOR_STRING,
-        {0x0409}                                            // Language ID
-    };  
+const struct __attribute__ ((packed))
+{
+    uint8_t stringIndex;                                //Index of the string descriptor
+    uint16_t languageID ;                               // Language ID of this string.
+    uint8_t bLength;                                    // Size of this descriptor in bytes
+    uint8_t bDscType;                                   // STRING descriptor type 
+    uint16_t string[1];                                 // String
+}
+
+sd000_${INDEX?string} =
+{
+    0,                                                  // Index of this string is 0
+    0,                                                  // This field is always blank for String Index 0
+    sizeof(sd000_${INDEX?string})-sizeof(sd000_${INDEX?string}.stringIndex)-sizeof(sd000_${INDEX?string}.languageID),
+    USB_DESCRIPTOR_STRING,
+    {0x0409}                                            // Language ID
+};  
+
 <#else>
-    const struct
-    {
-        uint8_t bLength;
-        uint8_t bDscType;
-        uint16_t string[1];
-    }
-    sd000_${INDEX?string} =
-    {
-        sizeof(sd000_${INDEX?string}),                                      // Size of this descriptor in bytes
-        USB_DESCRIPTOR_STRING,                              // STRING descriptor type
-        {0x0409}                                            // Language ID
-    };
+const struct
+{
+    uint8_t bLength;
+    uint8_t bDscType;
+    uint16_t string[1];
+}
+
+sd000_${INDEX?string} =
+{
+    sizeof(sd000_${INDEX?string}),                                      // Size of this descriptor in bytes
+    USB_DESCRIPTOR_STRING,                              // STRING descriptor type
+    {0x0409}                                            // Language ID
+};
 </#if>
 /*******************************************
  *  Manufacturer string descriptor
  *******************************************/
  <#assign stringDescriptorTableSize = stringDescriptorTableSize + 1>
  <#if usb_device.CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
-    const struct __attribute__ ((packed))
-    {
-        uint8_t stringIndex;                                //Index of the string descriptor
-        uint16_t languageID ;                               // Language ID of this string.
-        uint8_t bLength;                                    // Size of this descriptor in bytes
-        uint8_t bDscType;                                   // STRING descriptor type
-        uint16_t string[${CONFIG_USB_DEVICE_MANUFACTURER_STRING?length}];                                // String
-    }
-    sd001_${INDEX?string} =
-    {
-        1,                                                  // Index of this string descriptor is 1. 
-        0x0409,                                             // Language ID of this string descriptor is 0x0409 (English)
-        sizeof(sd001_${INDEX?string})-sizeof(sd001_${INDEX?string}.stringIndex)-sizeof(sd001_${INDEX?string}.languageID),
-        USB_DESCRIPTOR_STRING,
-		<#if CONFIG_USB_DEVICE_MANUFACTURER_STRING?length gt 0 >
-        {<#list 1..CONFIG_USB_DEVICE_MANUFACTURER_STRING?length as index>'${CONFIG_USB_DEVICE_MANUFACTURER_STRING?substring(index-1,index)}'<#if index_has_next>,</#if></#list>}
-		</#if>
-    };
+const struct __attribute__ ((packed))
+{
+    uint8_t stringIndex;                                //Index of the string descriptor
+    uint16_t languageID ;                               // Language ID of this string.
+    uint8_t bLength;                                    // Size of this descriptor in bytes
+    uint8_t bDscType;                                   // STRING descriptor type
+    uint16_t string[${CONFIG_USB_DEVICE_MANUFACTURER_STRING?length}];                                // String
+}
+
+sd001_${INDEX?string} =
+{
+    1,                                                  // Index of this string descriptor is 1. 
+    0x0409,                                             // Language ID of this string descriptor is 0x0409 (English)
+    sizeof(sd001_${INDEX?string})-sizeof(sd001_${INDEX?string}.stringIndex)-sizeof(sd001_${INDEX?string}.languageID),
+    USB_DESCRIPTOR_STRING,
+<#if CONFIG_USB_DEVICE_MANUFACTURER_STRING?length gt 0 >
+    {<#list 1..CONFIG_USB_DEVICE_MANUFACTURER_STRING?length as index>'${CONFIG_USB_DEVICE_MANUFACTURER_STRING?substring(index-1,index)}'<#if index_has_next>,</#if></#list>}
+</#if>
+};
 <#else>
-    const struct
-    {
-        uint8_t bLength;                                    // Size of this descriptor in bytes
-        uint8_t bDscType;                                   // STRING descriptor type
-        uint16_t string[${CONFIG_USB_DEVICE_MANUFACTURER_STRING?length}];                                // String
-    }
-    sd001_${INDEX?string} =
-    {
-        sizeof(sd001_${INDEX?string}),
-        USB_DESCRIPTOR_STRING,
-		<#if CONFIG_USB_DEVICE_MANUFACTURER_STRING?length gt 0 >
-        {<#list 1..CONFIG_USB_DEVICE_MANUFACTURER_STRING?length as index>'${CONFIG_USB_DEVICE_MANUFACTURER_STRING?substring(index-1,index)}'<#if index_has_next>,</#if></#list>}
-		</#if>
-		
+const struct
+{
+    uint8_t bLength;                                    // Size of this descriptor in bytes
+    uint8_t bDscType;                                   // STRING descriptor type
+    uint16_t string[${CONFIG_USB_DEVICE_MANUFACTURER_STRING?length}];                                // String
+}
+
+sd001_${INDEX?string} =
+{
+    sizeof(sd001_${INDEX?string}),
+    USB_DESCRIPTOR_STRING,
+<#if CONFIG_USB_DEVICE_MANUFACTURER_STRING?length gt 0 >
+    {<#list 1..CONFIG_USB_DEVICE_MANUFACTURER_STRING?length as index>'${CONFIG_USB_DEVICE_MANUFACTURER_STRING?substring(index-1,index)}'<#if index_has_next>,</#if></#list>}
+</#if>     
     };
 </#if>
 
@@ -289,39 +290,41 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet${INDEX?string}
  *******************************************/
  <#assign stringDescriptorTableSize = stringDescriptorTableSize + 1>
 <#if usb_device.CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
-    const struct __attribute__ ((packed))
-    {
-        uint8_t stringIndex;                                //Index of the string descriptor
-        uint16_t languageID ;                               // Language ID of this string.
-        uint8_t bLength;                                    // Size of this descriptor in bytes
-        uint8_t bDscType;                                   // STRING descriptor type 
-        uint16_t string[${CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR?length}];                                // String
-    }
-    sd002_${INDEX?string} =
-    {
-        2,                                                  // Index of this string descriptor is 2. 
-        0x0409,                                             // Language ID of this string descriptor is 0x0409 (English)
-        sizeof(sd002_${INDEX?string})-sizeof(sd002_${INDEX?string}.stringIndex)-sizeof(sd002_${INDEX?string}.languageID),
-        USB_DESCRIPTOR_STRING,
-		<#if CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR?length gt 0 >
-        {<#list 1..CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR?length as index>'${CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR?substring(index-1,index)}'<#if index_has_next>,</#if></#list>} 
-		</#if>
-    }; 
+const struct __attribute__ ((packed))
+{
+    uint8_t stringIndex;                                //Index of the string descriptor
+    uint16_t languageID ;                               // Language ID of this string.
+    uint8_t bLength;                                    // Size of this descriptor in bytes
+    uint8_t bDscType;                                   // STRING descriptor type 
+    uint16_t string[${CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR?length}];                                // String
+}
+
+sd002_${INDEX?string} =
+{
+    2,                                                  // Index of this string descriptor is 2. 
+    0x0409,                                             // Language ID of this string descriptor is 0x0409 (English)
+    sizeof(sd002_${INDEX?string})-sizeof(sd002_${INDEX?string}.stringIndex)-sizeof(sd002_${INDEX?string}.languageID),
+    USB_DESCRIPTOR_STRING,
+<#if CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR?length gt 0 >
+    {<#list 1..CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR?length as index>'${CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR?substring(index-1,index)}'<#if index_has_next>,</#if></#list>} 
+</#if>
+}; 
 <#else>
-    const struct
-    {
-        uint8_t bLength;                                    // Size of this descriptor in bytes
-        uint8_t bDscType;                                   // STRING descriptor type
-        uint16_t string[${CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR?length}];                                // String
-    }
-    sd002_${INDEX?string} =
-    {
-        sizeof(sd002_${INDEX?string}),
-        USB_DESCRIPTOR_STRING,
-		<#if CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR?length gt 0 >
-		{<#list 1..CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR?length as index>'${CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR?substring(index-1,index)}'<#if index_has_next>,</#if></#list>}
-		</#if>
-    }; 
+const struct
+{
+    uint8_t bLength;                                    // Size of this descriptor in bytes
+    uint8_t bDscType;                                   // STRING descriptor type
+    uint16_t string[${CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR?length}];                                // String
+}
+
+sd002_${INDEX?string} =
+{
+    sizeof(sd002_${INDEX?string}),
+    USB_DESCRIPTOR_STRING,
+<#if CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR?length gt 0 >
+    {<#list 1..CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR?length as index>'${CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR?substring(index-1,index)}'<#if index_has_next>,</#if></#list>}
+</#if>
+}; 
 </#if>
 <#if CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_ENABLE == true>
 <#assign stringDescriptorTableSize = stringDescriptorTableSize + 1>
@@ -336,23 +339,24 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet${INDEX?string}
  ******************************************************************************/
  <#if usb_device.CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
 const struct __attribute__ ((packed))
-    {
-        uint8_t stringIndex;                                //Index of the string descriptor
-        uint16_t languageID ;                               // Language ID of this string.
-        uint8_t bLength;                                    // Size of this descriptor in bytes
-        uint8_t bDscType;                                   // STRING descriptor type 
-        uint16_t string[${CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?length}];                                // String
-    }
-    serialNumberStringDescriptor_${INDEX?string} =
-    {
-        3,                                                  // Index of this string descriptor is 3. 
-        0x0409,                                             // Language ID of this string descriptor is 0x0409 (English)
-        sizeof(serialNumberStringDescriptor_${INDEX?string})-sizeof(serialNumberStringDescriptor_${INDEX?string}.stringIndex)-sizeof(serialNumberStringDescriptor_${INDEX?string}.languageID),
-        USB_DESCRIPTOR_STRING,
-		<#if CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?length gt 0 >
-        {<#list 1..CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?length as index>'${CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?substring(index-1,index)}'<#if index_has_next>,</#if></#list>}
-		</#if>
-    };
+{
+    uint8_t stringIndex;                                //Index of the string descriptor
+    uint16_t languageID ;                               // Language ID of this string.
+    uint8_t bLength;                                    // Size of this descriptor in bytes
+    uint8_t bDscType;                                   // STRING descriptor type 
+    uint16_t string[${CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?length}];                                // String
+}
+
+serialNumberStringDescriptor_${INDEX?string} =
+{
+    3,                                                  // Index of this string descriptor is 3. 
+    0x0409,                                             // Language ID of this string descriptor is 0x0409 (English)
+    sizeof(serialNumberStringDescriptor_${INDEX?string})-sizeof(serialNumberStringDescriptor_${INDEX?string}.stringIndex)-sizeof(serialNumberStringDescriptor_${INDEX?string}.languageID),
+    USB_DESCRIPTOR_STRING,
+<#if CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?length gt 0 >
+    {<#list 1..CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?length as index>'${CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?substring(index-1,index)}'<#if index_has_next>,</#if></#list>}
+</#if>
+};
 <#else>
 const struct
 {
@@ -364,9 +368,10 @@ serialNumberStringDescriptor_${INDEX?string} =
 {
     sizeof(serialNumberStringDescriptor_${INDEX?string}),
     USB_DESCRIPTOR_STRING,
-	<#if CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?length gt 0 >
-        {<#list 1..CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?length as index>'${CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?substring(index-1,index)}'<#if index_has_next>,</#if></#list>}
-	</#if>
+<#if CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?length gt 0 >
+    {<#list 1..CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?length as index>'${CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?substring(index-1,index)}'<#if index_has_next>,</#if></#list>}
+</#if>
+
 };
 </#if>
 </#if>
@@ -375,26 +380,27 @@ serialNumberStringDescriptor_${INDEX?string} =
 /*******************************************
  *  MS OS string descriptor
  *******************************************/
-    const struct __attribute__ ((packed))
-    {
-        uint8_t stringIndex;    //Index of the string descriptor
-        uint16_t languageID ;   // Language ID of this string.
-        uint8_t bLength;        // Size of this descriptor in bytes
-        uint8_t bDscType;       // STRING descriptor type 
-        uint16_t string[18];    // String
-    }
-    microSoftOsDescriptor_${INDEX?string} =
-    {
-        0xEE,       /* This value is per Microsoft OS Descriptor documentation */  
-        0x0000,  /* Language ID is 0x0000 as per Microsoft Documentation */  
-        18, /* Size is 18 Bytes as Microsoft documentation */  
-        USB_DESCRIPTOR_STRING,
-        /* Vendor code to retrieve OS feature descriptors.  */ 
-        /* qwSignature = MSFT100 */ 
-        /* Vendor Code = User Defined Value */
-        {'M','S','F','T','1','0','0',0x0100 | USB_DEVICE_MICROSOFT_OS_DESCRIPTOR_VENDOR_CODE} 
-    };
+const struct __attribute__ ((packed))
+{
+    uint8_t stringIndex;    //Index of the string descriptor
+    uint16_t languageID ;   // Language ID of this string.
+    uint8_t bLength;        // Size of this descriptor in bytes
+    uint8_t bDscType;       // STRING descriptor type 
+    uint16_t string[18];    // String
+}
+microSoftOsDescriptor_${INDEX?string} =
+{
+    0xEE,       /* This value is per Microsoft OS Descriptor documentation */  
+    0x0000,  /* Language ID is 0x0000 as per Microsoft Documentation */  
+    18, /* Size is 18 Bytes as Microsoft documentation */  
+    USB_DESCRIPTOR_STRING,
+    /* Vendor code to retrieve OS feature descriptors.  */ 
+    /* qwSignature = MSFT100 */ 
+    /* Vendor Code = User Defined Value */
+    {'M','S','F','T','1','0','0',0x0100 | USB_DEVICE_MICROSOFT_OS_DESCRIPTOR_VENDOR_CODE} 
+};
 </#if>
+
 /***************************************
  * Array of string descriptors
  ***************************************/
@@ -404,22 +410,22 @@ USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors${INDEX?string}[${stringDes
     (uint8_t *)&sd000_${INDEX?string},
     (uint8_t *)&sd001_${INDEX?string},
     (uint8_t *)&sd002_${INDEX?string},
-	<#if CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_ENABLE == true>
+    <#if CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_ENABLE == true>
     (uint8_t *)&serialNumberStringDescriptor_${INDEX?string}
-	</#if>
-	<#if CONFIG_USB_DEVICE_FEATURE_ENABLE_MICROSOFT_OS_DESCRIPTOR == true>
-	(uint8_t *)&microSoftOsDescriptor_${INDEX?string}
-	</#if>
+    </#if>
+    <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_MICROSOFT_OS_DESCRIPTOR == true>
+    (uint8_t *)&microSoftOsDescriptor_${INDEX?string}
+    </#if>
  <#else>
     (const uint8_t *const)&sd000_${INDEX?string},
     (const uint8_t *const)&sd001_${INDEX?string},
     (const uint8_t *const)&sd002_${INDEX?string},
-	<#if CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_ENABLE == true>
+    <#if CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_ENABLE == true>
     (const uint8_t *const)&serialNumberStringDescriptor_${INDEX?string},
-	</#if>
-	<#if usb_device.CONFIG_USB_DEVICE_FEATURE_ENABLE_MICROSOFT_OS_DESCRIPTOR == true>
-	(const uint8_t *const)&microSoftOsDescriptor_${INDEX?string},
-	</#if>
+    </#if>
+    <#if usb_device.CONFIG_USB_DEVICE_FEATURE_ENABLE_MICROSOFT_OS_DESCRIPTOR == true>
+    (const uint8_t *const)&microSoftOsDescriptor_${INDEX?string},
+    </#if>
 </#if>
 };
 
@@ -430,24 +436,24 @@ const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor${INDEX?string} =
 {
     &deviceDescriptor${INDEX?string},                                      // Full speed descriptor
     1,                                                      // Total number of full speed configurations available
-    fullSpeedConfigDescSet${INDEX?string},                                 // Pointer to array of full speed configurations descriptors
+    fullSpeedConfigDescSet${INDEX?string},                // Pointer to array of full speed configurations descriptors
 <#if CONFIG_USB_DEVICE_SPEED == "High Speed">
-    &deviceDescriptor${INDEX?string},                                      // High speed device descriptor
+    &deviceDescriptor${INDEX?string},                     // High speed device descriptor
     1,                                                      // Total number of high speed configurations available
     highSpeedConfigDescSet,                                 // Pointer to array of high speed configurations descriptors
 <#else>
-	NULL, 
-	0,
-	NULL,
+    NULL, 
+    0,
+    NULL,
 </#if>
-	${stringDescriptorTableSize},  													// Total number of string descriptors available.
-    stringDescriptors${INDEX?string},                                      // Pointer to array of string descriptors.
+    ${stringDescriptorTableSize},                                                      // Total number of string descriptors available.
+    stringDescriptors${INDEX?string},                     // Pointer to array of string descriptors.
 <#if CONFIG_USB_DEVICE_SPEED == "High Speed">
     &deviceQualifierDescriptor1,                            // Pointer to full speed dev qualifier.
     &deviceQualifierDescriptor1                             // Pointer to high speed dev qualifier.
 <#else>
-	NULL, 
-	NULL
+    NULL, 
+    NULL
 </#if>
 };
 
@@ -461,7 +467,7 @@ const USB_DEVICE_INIT usbDevInitData${INDEX?string} =
     /* Number of function drivers registered to this instance of the
        USB device layer */
     .registeredFuncCount = ${CONFIG_USB_DEVICE_FUNCTIONS_NUMBER},
-	
+    
     /* Function driver table registered to this instance of the USB device layer*/
     .registeredFunctions = (USB_DEVICE_FUNCTION_REGISTRATION_TABLE*)funcRegistrationTable${INDEX?string},
 
@@ -469,24 +475,24 @@ const USB_DEVICE_INIT usbDevInitData${INDEX?string} =
     .usbMasterDescriptor = (USB_DEVICE_MASTER_DESCRIPTOR*)&usbMasterDescriptor${INDEX?string},
 
     /* USB Device Speed */
-	<#if CONFIG_USB_DEVICE_SPEED == "High Speed">
+    <#if CONFIG_USB_DEVICE_SPEED == "High Speed">
     .deviceSpeed =  USB_SPEED_HIGH,   
-	<#else>
-	.deviceSpeed =  USB_SPEED_FULL,
+    <#else>
+    .deviceSpeed =  USB_SPEED_FULL,
     </#if>
-	
-	/* Index of the USB Driver to be used by this Device Layer Instance */
+    
+    /* Index of the USB Driver to be used by this Device Layer Instance */
     .driverIndex = ${USB_DEVICE_INDEX?string},
 
     /* Pointer to the USB Driver Functions. */
     .usbDriverInterface = ${CONFIG_USB_DRIVER_INTERFACE},
-	
+    
  <#if CONFIG_USB_DEVICE_ENDPOINT_READ_QUEUE_SIZE gt 0 || CONFIG_USB_DEVICE_ENDPOINT_WRITE_QUEUE_SIZE gt 0>
-	/* Specify queue size for vendor endpoint read */
+    /* Specify queue size for vendor endpoint read */
     .queueSizeEndpointRead = ${CONFIG_USB_DEVICE_ENDPOINT_READ_QUEUE_SIZE},
     
     /* Specify queue size for vendor endpoint write */
-    .queueSizeEndpointWrite= ${CONFIG_USB_DEVICE_ENDPOINT_WRITE_QUEUE_SIZE},
+    .queueSizeEndpointWrite= ${CONFIG_USB_DEVICE_ENDPOINT_WRITE_QUEUE_SIZE}
 </#if>
 };
 // </editor-fold>
