@@ -185,6 +185,7 @@ def instantiateComponent(usbHostComponent):
 		usbHostHubDriverInstance.setLabel( "Number of Hub Client Driver Instances" )
 		usbHostHubDriverInstance.setDescription("Enter the number of HUB Class Driver instances required in the application.")
 		usbHostHubDriverInstance.setVisible(False)
+		usbHostHubDriverInstance.setMin(1)
 		usbHostHubDriverInstance.setDefaultValue(1)
 		usbHostHubDriverInstance.setDependencies(hubSupportSetVisible, ["CONFIG_USB_HOST_HUB_SUPPORT"])	
 		
@@ -192,7 +193,16 @@ def instantiateComponent(usbHostComponent):
 		usbHostDeviceNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_DEVICE_NUMNBER", None)
 		usbHostDeviceNumber.setLabel("Maximum Number of Devices")
 		usbHostDeviceNumber.setVisible(True)
-		usbHostDeviceNumber.setDescription("Maximum Number of Devices that will be attached to this Host")
+		usbHostDeviceNumber.setMin(1)
+		usbHostDeviceNumber.setMax(128)
+                helpText = '''This configuration constant defines the maximum number of devices that this 
+                USB Host application must support. The value of this constant should be
+                at least 1. Multiple devices can be supported if Hub support is enabled 
+                or if the root hub has multiple ports. The Hub itself will be treated as a device. 
+                Example - If the USB Host application must support one USB Pen Drive and one USB
+                Serial COM port (CDC Device), then this constant should be set to 3 (one
+                additional device will be the Hub).'''
+                usbHostDeviceNumber.setDescription(helpText)
 		usbHostDeviceNumber.setDefaultValue(1)
 		usbHostDeviceNumber.setUseSingleDynamicValue(True)
 			
