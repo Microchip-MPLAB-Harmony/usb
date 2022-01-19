@@ -81,12 +81,13 @@ def instantiateComponent(usbDriverComponent):
 	usbSpeed.setDependencies(blUSBDriverSpeedChanged, ["USB_SPEED"])
 
 	# USB Driver: DMA Maximum Transfer Size
-	usbDMATransferSize = usbDriverComponent.createComboSymbol("USB_DMA_MAXIMUM_TRANSFER", None)
+	usbDMATransferSize = usbDriverComponent.createIntegerSymbol("USB_DMA_MAXIMUM_TRANSFER", None)
 	usbDMATransferSize.setLabel("USB DMA Maximum Transfer Size")
 	usbDMATransferSize.setVisible(True)
+	usbDMATransferSize.setMin(1)
 	helpText = '''Set maximum size for a DMA transfer, multiple of 64KB'''
 	usbDMATransferSize.setDescription(helpText)
-	usbDMATransferSize.setDefaultValue("2")
+	usbDMATransferSize.setDefaultValue(2)
 
 	# USB Driver: USB VBUS Sense
 	usbVbusSense = usbDriverComponent.createBooleanSymbol("USB_DEVICE_VBUS_SENSE", None)
