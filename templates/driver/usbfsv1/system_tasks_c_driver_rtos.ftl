@@ -42,7 +42,16 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
 -->
-
-<#--
-This file intentially left blank.
--->
+<#if HarmonyCore.SELECT_RTOS == "FreeRTOS">
+    <#lt>void _DRV_USBFSV1_Tasks(  void *pvParameters  )
+    <#lt>{
+    <#lt>    while(1)
+    <#lt>    {
+				 /* USB FS Driver Task Routine */
+    <#lt>        DRV_USBFSV1_Tasks(sysObj.drvUSBFSV1Object);
+             <#if USB_DRIVER_RTOS_USE_DELAY >
+    <#lt>        vTaskDelay(${USB_DRIVER_RTOS_DELAY} / portTICK_PERIOD_MS);
+             </#if>
+    <#lt>    }
+    <#lt>}
+</#if>

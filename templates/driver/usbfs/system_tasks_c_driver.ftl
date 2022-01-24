@@ -42,10 +42,9 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
 -->
-<#if HarmonyCore.SELECT_RTOS == "BareMetal">
-    /* USB FS Driver Task Routine */ 
-    DRV_USBFS_Tasks(sysObj.drvUSBFSObject);
-</#if>
+<#--
+This file intentially left blank. 
+-->
 <#--
 /*******************************************************************************
  End of File

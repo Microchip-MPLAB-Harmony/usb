@@ -188,6 +188,40 @@ def instantiateComponent(usbDriverComponent):
 		if not any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX", "PIC32MM"]):
 			enable_rtos_settings = True
 
+	# RTOS Settings
+	usbDriverRTOSMenu = usbDriverComponent.createMenuSymbol(None, None)
+	usbDriverRTOSMenu.setLabel("RTOS settings")
+	usbDriverRTOSMenu.setDescription("RTOS settings")
+	usbDriverRTOSMenu.setVisible(enable_rtos_settings)
+	usbDriverRTOSMenu.setDependencies(showRTOSMenu, ["HarmonyCore.SELECT_RTOS"])
+
+	usbDriverRTOSTask = usbDriverComponent.createComboSymbol("USB_DRIVER_RTOS", usbDriverRTOSMenu, ["Standalone"])
+	usbDriverRTOSTask.setLabel("Run Library Tasks As")
+	usbDriverRTOSTask.setDefaultValue("Standalone")
+	usbDriverRTOSTask.setVisible(False)
+
+	usbDriverRTOSStackSize = usbDriverComponent.createIntegerSymbol("USB_DRIVER_RTOS_STACK_SIZE", usbDriverRTOSMenu)
+	usbDriverRTOSStackSize.setLabel("Stack Size")
+	usbDriverRTOSStackSize.setDefaultValue(1024)
+	usbDriverRTOSStackSize.setReadOnly(True)
+	usbDriverRTOSStackSize.setMin(0)
+
+	usbDriverRTOSTaskPriority = usbDriverComponent.createIntegerSymbol("USB_DRIVER_RTOS_TASK_PRIORITY", usbDriverRTOSMenu)
+	usbDriverRTOSTaskPriority.setLabel("Task Priority")
+	usbDriverRTOSTaskPriority.setDefaultValue(1)
+	usbDriverRTOSTaskPriority.setMin(0)
+
+	usbDriverRTOSTaskDelay = usbDriverComponent.createBooleanSymbol("USB_DRIVER_RTOS_USE_DELAY", usbDriverRTOSMenu)
+	usbDriverRTOSTaskDelay.setLabel("Use Task Delay?")
+	usbDriverRTOSTaskDelay.setDefaultValue(True)
+
+	usbDriverRTOSTaskDelayVal = usbDriverComponent.createIntegerSymbol("USB_DRIVER_RTOS_DELAY", usbDriverRTOSMenu)
+	usbDriverRTOSTaskDelayVal.setLabel("Task Delay")
+	usbDriverRTOSTaskDelayVal.setDefaultValue(10)
+	usbDriverRTOSTaskDelayVal.setMin(1)
+	usbDriverRTOSTaskDelayVal.setVisible((usbDriverRTOSTaskDelay.getValue() == True))
+	usbDriverRTOSTaskDelayVal.setDependencies(setVisible, ["USB_DRIVER_RTOS_USE_DELAY"])
+
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMDA1", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMD11", "PIC32CM"]):
 		# Update USB General Interrupt Handler
 		Database.setSymbolValue("core", "USB_INTERRUPT_ENABLE", True)
@@ -330,6 +364,14 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverSystemTasksFile.setOutputName("core.LIST_SYSTEM_TASKS_C_CALL_LIB_TASKS")
 	usbDriverSystemTasksFile.setSourcePath(sourcePath +"system_tasks_c_driver.ftl")
 	usbDriverSystemTasksFile.setMarkup(True)
+
+	usbDriverSystemTasksFileRTOS = usbDriverComponent.createFileSymbol("USB_DRIVER_SYS_RTOS_TASK", None)
+	usbDriverSystemTasksFileRTOS.setType("STRING")
+	usbDriverSystemTasksFileRTOS.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS")
+	usbDriverSystemTasksFileRTOS.setSourcePath(sourcePath +"system_tasks_c_driver_rtos.ftl")
+	usbDriverSystemTasksFileRTOS.setMarkup(True)
+	usbDriverSystemTasksFileRTOS.setEnabled(enable_rtos_settings)
+	usbDriverSystemTasksFileRTOS.setDependencies(genRtosTask, ["Harmony.SELECT_RTOS"])
 
 	################################################
 	# USB Driver Header files
