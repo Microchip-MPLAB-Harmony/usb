@@ -311,10 +311,25 @@ void DRV_USBFS_DEVICE_Detach(DRV_HANDLE handle)
         /* Update the driver flag indicating detach */
         ((DRV_USBFS_OBJ *)handle)->isAttached = false;
 
-        /* Clear all the interrupts */
+        /* Clear all the USB interrupt flags */
         PLIB_USB_InterruptFlagClear(((DRV_USBFS_OBJ *)handle)->usbID, USB_INT_ALL);
-
-        /* Reset the operationg mode */
+        
+        /* Disable all the USB interrupts */
+        PLIB_USB_InterruptDisable(((DRV_USBFS_OBJ *)handle)->usbID, (USB_INT_ALL)); 
+        
+        /* Clear all USB Error Interrupt flags */
+        PLIB_USB_ErrorInterruptFlagClear(((DRV_USBFS_OBJ *)handle)->usbID, USB_ERR_INT_ALL);
+        
+        /* Disable all USB Error interrupts */
+        PLIB_USB_ErrorInterruptDisable(((DRV_USBFS_OBJ *)handle)->usbID, USB_ERR_INT_ALL);   
+        
+        /* Clear the interrupt flags excep Session Valid interrupt flag */
+        PLIB_USB_OTG_InterruptFlagClear(((DRV_USBFS_OBJ *)handle)->usbID, (USB_OTG_INT_ALL & (~ USB_OTG_INT_SESSION_VALID)));
+        
+        /* Disable all interrupts except Session Valid Interrupt Enable */
+        PLIB_USB_OTG_InterruptDisable(((DRV_USBFS_OBJ *)handle)->usbID, (USB_OTG_INT_ALL & (~ USB_OTG_INT_SESSION_VALID))); 
+        
+        /* Reset the operating mode */
         PLIB_USB_OperatingModeSelect(((DRV_USBFS_OBJ *)handle)->usbID, USB_OPMODE_NONE);
     }
     else
@@ -2306,5 +2321,4 @@ void _DRV_USBFS_DEVICE_Tasks_ISR(DRV_USBFS_OBJ * hDriver)
         }
     }
 }
-
 
