@@ -137,6 +137,16 @@
     #define _DRV_USB_UDPHS_EPT_DMA              0x000000FE
     /* A5D2 3 banks for endpoints 1,2 */
     #define _DRV_USB_UDPHS_EPT_BK               0x00060000
+#elif defined (_SAMA5D27CD1G_H_)
+    /* A5D2_SOM DMA 1 to 7 */
+    #define _DRV_USB_UDPHS_EPT_DMA              0x000000FE
+    /* A5D2_SOM 3 banks for endpoints 1,2 */
+    #define _DRV_USB_UDPHS_EPT_BK               0x00060000
+#elif defined (_SAMA5D27CLD2G_H_)
+    /* A5D2_WLSOM1 DMA 1 to 7 */
+    #define _DRV_USB_UDPHS_EPT_DMA              0x000000FE
+    /* A5D2_WLSOM1 3 banks for endpoints 1,2 */
+    #define _DRV_USB_UDPHS_EPT_BK               0x00060000
 #elif defined(_SAM9X60_H_)
     /* 9X60 DMA 1 to 6 */
     #define _DRV_USB_UDPHS_EPT_DMA              0x0000007E
