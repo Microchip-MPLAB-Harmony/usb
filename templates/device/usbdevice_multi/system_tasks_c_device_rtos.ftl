@@ -43,7 +43,7 @@
  *******************************************************************************/
 -->
 <#if HarmonyCore.SELECT_RTOS == "FreeRTOS">
-    <#lt>void _USB_DEVICE_Tasks(  void *pvParameters  )
+    <#lt>void _USB_DEVICE_Tasks_${INDEX?string}(  void *pvParameters  )
     <#lt>{
     <#lt>    while(1)
     <#lt>    {
