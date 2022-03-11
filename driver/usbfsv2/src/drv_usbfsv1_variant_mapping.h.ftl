@@ -60,6 +60,9 @@
 <#if __PROCESSOR?matches("ATSAME5.*") == true>
 /* SAME5x Devices have USB PADCAL values in SW0_ADDR */ 
 #define DRV_USBFSV1_READ_PADCAL_VALUE (*((uint32_t *) SW0_ADDR + 1))
+<#elseif __PROCESSOR?matches("PIC32CX.*") == true>
+/* Pic32cx Devices have USB PADCAL values in SW0_ADDR */ 
+#define DRV_USBFSV1_READ_PADCAL_VALUE (*((uint32_t *) SW0_ADDR + 1))
 <#elseif __PROCESSOR?matches("ATSAMD5.*") == true>
 /* SAMD5x Devices have USB PADCAL values in SW0_ADDR */ 
 #define DRV_USBFSV1_READ_PADCAL_VALUE (*((uint32_t *) SW0_ADDR + 1))
@@ -79,6 +82,9 @@
 
 <#if __PROCESSOR?matches("ATSAME5.*") == true>
 /* SAME5x Family Devices has Four interrupt vectors for USB module */ 
+#define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE true
+<#elseif __PROCESSOR?matches("PIC32CX.*") == true>
+/* PIC32CX Family Devices has Four interrupt vectors for USB module */ 
 #define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE true
 <#elseif __PROCESSOR?matches("ATSAMD5.*") == true>
 /* SAMD5x Family Devices has Four interrupt vectors for USB module */ 

@@ -79,7 +79,7 @@ def onAttachmentConnected(source, target):
 		
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if readValue != None:
-			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMD11", "PIC32CM", "PIC32MZ1025W", "WFI32E01"]):
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMD11", "PIC32CM", "PIC32MZ1025W", "WFI32E01", "PIC32CX"]):
 				args = {"nFunction":  readValue + hidEndpointsPic32}
 				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 				epNumberInterruptIn.setValue(readValue + 1, 1)
@@ -115,7 +115,7 @@ def onAttachmentDisconnected(source, target):
 		
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if readValue != None:
-			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMD11", "PIC32CM", "WFI32E01"]):
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMD11", "PIC32CM", "WFI32E01", "PIC32CX"]):
 				args = {"nFunction": readValue - hidEndpointsPic32 }
 				res = Database.sendMessage("usb_device", "UPDATE_ENDPOINTS_NUMBER", args)
 			else:
@@ -162,7 +162,7 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
 		MaxIntEpNumber = 7
 		IntOutDefaultEpNumber = 1
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMDA1","SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMD11", "PIC32CM"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMDA1","SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMD11", "PIC32CM", "PIC32CX"]):
 		MaxIntEpNumber = 7
 		IntOutDefaultEpNumber = 1
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAM9X60", "SAMA7"]):

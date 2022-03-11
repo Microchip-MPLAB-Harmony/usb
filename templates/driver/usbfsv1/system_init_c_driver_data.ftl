@@ -108,7 +108,7 @@ void _DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
 
 const DRV_USBFSV1_INIT drvUSBInit =
 {
-	<#if (__PROCESSOR?matches("ATSAME5.*") == true) || (__PROCESSOR?matches("ATSAMD5.*") == true) >
+	<#if (__PROCESSOR?matches("ATSAME5.*") == true) || (__PROCESSOR?matches("ATSAMD5.*") == true) || (__PROCESSOR?matches("PIC32CX.*") == true) >
 	/* Interrupt Source for USB module */
 	.interruptSource = USB_OTHER_IRQn,
  
