@@ -2,6 +2,6 @@
 <Package name="usb">
     <Dependencies>
         <Dependency name="core" version="v3.10.0"/>
-        <Dependency name="bsp" version="v3.10.0"/>
+        <Dependency name="bsp" version="v3.11.0"/>
     </Dependencies>
 </Package>
