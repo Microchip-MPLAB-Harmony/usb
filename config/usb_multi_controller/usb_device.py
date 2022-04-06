@@ -440,7 +440,7 @@ def instantiateComponent(usbDeviceComponent,index):
 	usbDeviceSerialNumberString.setVisible(False)
         helpText = '''Enter Device Serial Number here. The Serial Number will be added as a String descriptor table.'''
 	usbDeviceProductString.setDescription(helpText)
-	usbDeviceSerialNumberString.setDefaultValue("12345678999")
+	usbDeviceSerialNumberString.setDefaultValue("123456789012")
 	usbDeviceSerialNumberString.setDependencies(blUSBDeviceEnableSerialNumberString,["CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_ENABLE"])
 		
 
