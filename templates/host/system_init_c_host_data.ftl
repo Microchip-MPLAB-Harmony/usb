@@ -71,6 +71,7 @@ ${LIST_USB_HOST_TPL_ENTRY}
 <#if (core.DeviceFamily?has_content == true) 
     && (core.DeviceFamily == "SAMA5D2" 
      || core.DeviceFamily == "SAM9X60"
+     || core.DeviceFamily == "SAM9X7"
      || core.DeviceFamily == "SAMA7G5") >
 const USB_HOST_HCD hcdTable[2] = 
 {

@@ -192,11 +192,23 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX", "PIC32MK" , "PIC32MM"]):
 		MaxIntEpNumber = 15
 		IntOutDefaultEpNumber = 1
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21","SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "PIC32CM", "PIC32CX"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
 		MaxIntEpNumber = 7
 		IntOutDefaultEpNumber = 1
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAME70", "SAMS70", "SAMV70", "SAMV71", "SAMA7"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMDA1","SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMD11", "PIC32CM", "PIC32CX"]):
+		MaxIntEpNumber = 7
+		IntOutDefaultEpNumber = 1
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAM9X60", "SAM9X7"]):
+		MaxIntEpNumber = 6
+		IntOutDefaultEpNumber = 2	
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAMA7"]):
+		MaxIntEpNumber = 15
+		IntOutDefaultEpNumber = 2
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAME70", "SAMS70", "SAMV70", "SAMV71"]):
 		MaxIntEpNumber = 9
+		IntOutDefaultEpNumber = 2
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMG55"]):
+		MaxIntEpNumber = 5
 		IntOutDefaultEpNumber = 2
 	
 	# Index of this function 

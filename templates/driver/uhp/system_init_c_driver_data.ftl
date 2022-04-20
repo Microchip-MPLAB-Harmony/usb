@@ -63,6 +63,9 @@ void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
         VBUS_AH_PD14_PowerEnable();
         VBUS_AH_PD15_PowerEnable();
         VBUS_AH_PD16_PowerEnable();
+<#elseif core.DeviceFamily == "SAM9X7">
+        VBUS_AH_PC27_PowerEnable();
+        VBUS_AH_PC29_PowerEnable();
 <#elseif core.DeviceFamily == "SAM_G55">
     <#if USB_HOST_VBUS_ENABLE == true>
         VBUS_AH_PowerEnable();
@@ -82,6 +85,9 @@ void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
         VBUS_AH_PD14_PowerDisable();
         VBUS_AH_PD15_PowerDisable();
         VBUS_AH_PD16_PowerDisable();
+<#elseif core.DeviceFamily == "SAM9X7">
+        VBUS_AH_PC27_PowerDisable();
+        VBUS_AH_PC29_PowerDisable();
 <#elseif core.DeviceFamily == "SAM_G55">
     <#if USB_HOST_VBUS_ENABLE == true>
        VBUS_AH_PowerDisable();
@@ -95,13 +101,7 @@ void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
 DRV_USB_EHCI_INIT drvUSBEHCIInit =
 {
     /* Interrupt Source for USB module */
-<#if core.DeviceFamily == "SAMA5D2">
-    .interruptSource = (INT_SOURCE)41,
-<#elseif core.DeviceFamily == "SAM9X60">
-    .interruptSource = (INT_SOURCE)22,
-<#elseif core.DeviceFamily == "SAMA7G5">
     .interruptSource = (INT_SOURCE)UHPHS_IRQn,
-</#if>
 
     /* USB base address */
     .usbID = ((uhphs_registers_t*)UHPHS_EHCI_ADDR),
@@ -125,15 +125,12 @@ DRV_USB_EHCI_INIT drvUSBEHCIInit =
 DRV_USB_OHCI_INIT drvUSBOHCIInit =
 {
     /* Interrupt Source for USB module */
-<#if core.DeviceFamily == "SAMA5D2">
-    .interruptSource = (INT_SOURCE)41,
-<#elseif core.DeviceFamily == "SAM9X60">
-    .interruptSource = (INT_SOURCE)22,
-<#elseif core.DeviceFamily == "SAM_G55">
+<#if core.DeviceFamily == "SAM_G55">
     .interruptSource = (INT_SOURCE)UHP_IRQn,
-<#elseif core.DeviceFamily == "SAMA7G5">
+<#else>
     .interruptSource = (INT_SOURCE)UHPHS_IRQn,
 </#if>
+
 <#if core.DeviceFamily == "SAM_G55">
     /* USB base address */
     .usbID = ((UhpOhci*)UHP_BASE_ADDRESS),

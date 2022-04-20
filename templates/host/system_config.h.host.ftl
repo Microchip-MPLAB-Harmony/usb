@@ -80,6 +80,7 @@
 <#if (core.DeviceFamily?has_content == true) 
   && (core.DeviceFamily == "SAMA5D2"
    || core.DeviceFamily == "SAM9X60"
+   || core.DeviceFamily == "SAM9X7"
    || core.DeviceFamily == "SAMA7G5") >
 #define USB_HOST_CONTROLLERS_NUMBER                         2
 <#else>

@@ -116,7 +116,7 @@ usbDeviceConfigDscrptrSize = None
 usbDeviceInterfacesNumber = None
 usbDeviceVendorReadQueueSize = None
 usbDeviceVendorWriteQueueSize = None
-usbDeviceEndpointsNumber = None 
+usbDeviceEndpointsNumber = None
 usbDeviceFunctionsNumberMax = 10
 usbDeviceFunctionsNumberDefaultValue = 2 
 usbDeviceFunctionsNumberValue = usbDeviceFunctionsNumberDefaultValue
@@ -139,6 +139,7 @@ listUsbDeviceNumberOfInterfaces = []
 usbDeviceMsdSupport = None
 usbDeviceMsdDiskImageFile = None
 usbDeviceMsdDiskImageFileAdd = None 
+
 def genRtosTask(symbol, event):
 	if event["value"] != "BareMetal":
 		symbol.setEnabled(True)
@@ -269,12 +270,11 @@ def instantiateComponent(usbDeviceComponent,index):
 	global usbDeviceIadEnable
 	global usbDeviceConfigDscrptrSize
 	global usbDeviceInterfacesNumber
-	
+	global usbDeviceEndpointsNumber
 	global usbDeviceVendorReadQueueSize
 	global usbDeviceVendorWriteQueueSize
 	global usbDevicelayerInstance
 	global usbDevicelayerIndex
-	global usbDeviceEndpointsNumber
 	global usbDeviceSpeed
 	
 	res = Database.activateComponents(["HarmonyCore"])
@@ -301,6 +301,27 @@ def instantiateComponent(usbDeviceComponent,index):
 		driverInterface = "DRV_USBFS_DEVICE_INTERFACE"
 
 
+		
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+		res = Database.activateComponents(["drv_usbhs_v1"])
+		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
+		driverIndex = "DRV_USBHS_INDEX_0"
+		driverInterface = "DRV_USBHS_DEVICE_INTERFACE"
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX" , "PIC32MM"]):
+		res = Database.activateComponents(["drv_usbfs_index"])
+		speed = Database.getSymbolValue("drv_usbfs", "USB_SPEED")
+		driverIndex = "DRV_USBFS_INDEX_0"
+		driverInterface = "DRV_USBFS_DEVICE_INTERFACE"
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMDA1", "SAMD5", "SAME5", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "PIC32CM", "PIC32CX"]):
+		res = Database.activateComponents(["drv_usbfs_v1"])
+		speed = Database.getSymbolValue("drv_usbfs_v1", "USB_SPEED")
+		driverIndex = "DRV_USBFSV1_INDEX_0"
+		driverInterface = "DRV_USBFSV1_DEVICE_INTERFACE"
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAM9X60", "SAM9X7", "SAMA7"]):
+		res = Database.activateComponents(["drv_usb_udphs"])
+		speed = Database.getSymbolValue("drv_usb_udphs", "USB_SPEED")
+		driverIndex = "DRV_USB_UDPHS_INDEX_0"
+		driverInterface = "DRV_USB_UDPHS_DEVICE_INTERFACE"
 		
 	# USB Device Speed 
 	usbDeviceSpeed = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_SPEED", None)
@@ -527,11 +548,13 @@ def instantiateComponent(usbDeviceComponent,index):
 
 	usbDeviceRTOSStackSize = usbDeviceComponent.createIntegerSymbol("USB_DEVICE_RTOS_STACK_SIZE", usbDeviceRTOSMenu)
 	usbDeviceRTOSStackSize.setLabel("Stack Size")
+	usbDeviceRTOSStackSize.setMin(0)
 	usbDeviceRTOSStackSize.setDefaultValue(1024)
 	usbDeviceRTOSStackSize.setReadOnly(True)
 
 	usbDeviceRTOSTaskPriority = usbDeviceComponent.createIntegerSymbol("USB_DEVICE_RTOS_TASK_PRIORITY", usbDeviceRTOSMenu)
 	usbDeviceRTOSTaskPriority.setLabel("Task Priority")
+	usbDeviceRTOSTaskPriority.setMin(0)
 	usbDeviceRTOSTaskPriority.setDefaultValue(1)
 
 	usbDeviceRTOSTaskDelay = usbDeviceComponent.createBooleanSymbol("USB_DEVICE_RTOS_USE_DELAY", usbDeviceRTOSMenu)
@@ -540,6 +563,7 @@ def instantiateComponent(usbDeviceComponent,index):
 
 	usbDeviceRTOSTaskDelayVal = usbDeviceComponent.createIntegerSymbol("USB_DEVICE_RTOS_DELAY", usbDeviceRTOSMenu)
 	usbDeviceRTOSTaskDelayVal.setLabel("Task Delay")
+	usbDeviceRTOSTaskDelayVal.setMin(0)
 	usbDeviceRTOSTaskDelayVal.setDefaultValue(10) 
 	usbDeviceRTOSTaskDelayVal.setVisible((usbDeviceRTOSTaskDelay.getValue() == True))
 	usbDeviceRTOSTaskDelayVal.setDependencies(setVisible, ["USB_DEVICE_RTOS_USE_DELAY"])

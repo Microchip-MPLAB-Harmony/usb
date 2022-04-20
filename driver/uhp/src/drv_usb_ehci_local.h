@@ -100,9 +100,8 @@
                     RSTC_REGS->RSTC_GRSTR &= ~(1 << (4+i)); \
                 } \
             }
-
         #define IS_LOCKU_ENABLE()  1
-#else
+#elif defined(_SAM9X60_H_)
         /* Specific to SAM9X60 */
         #define PMC_PCR_GCKCSS_UPLL_CLK  PMC_PCR_GCLKCSS(PMC_PCR_GCLKCSS_UPLL_Val) 
 
@@ -112,6 +111,22 @@
             while ((PMC_REGS->PMC_PLL_ISR0 & PMC_PLL_ISR0_LOCKU_Msk) != PMC_PLL_ISR0_LOCKU_Msk)
 
         #define IS_LOCKU_ENABLE()  ((PMC_REGS->PMC_PLL_ISR0 & PMC_PLL_ISR0_LOCKU_Msk) == PMC_PLL_ISR0_LOCKU_Msk)
+#elif defined(_SAM9X70_H_) || defined(_SAM9X72_H_) || defined(_SAM9X75_H_)
+        /* Specific to SAM9X7 */
+        #define PMC_UCKR_UPLLEN()   \
+            UDPHS_REGS->UDPHS_CTRL &= ~UDPHS_CTRL_EN_UDPHS_Msk; \
+            PMC_REGS->PMC_PLL_ACR = PMC_PLL_ACR_UTMIBG_Msk; \
+            for(i = 0; i < 800; i ++) \
+            { \
+                __NOP(); \
+            } \
+            PMC_REGS->PMC_PLL_ACR = PMC_PLL_ACR_UTMIVR_Msk; \
+            for(i = 0; i < 800; i ++) \
+            { \
+                __NOP(); \
+            } \
+            PMC_REGS->PMC_PLL_UPDT = PMC_PLL_UPDT_UPDATE_Msk;
+        #define IS_LOCKU_ENABLE()  1
 #endif
 
 #endif /* UHPHS_PORTSC_REG_OFST */

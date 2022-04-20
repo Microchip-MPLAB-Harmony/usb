@@ -26,7 +26,7 @@
 #define _DA78_UHP_OHCI_COMPONENT_         /**< \deprecated  Backward compatibility for ASF */
 
 #ifndef _UINT32_ 
-  #define _UINT32_ uint32_t
+#  define _UINT32_(x)  ((uint32_t)(x))
 #endif
 
 /** \addtogroup PIC32CZ_DA78 USB Host Full Speed Port
