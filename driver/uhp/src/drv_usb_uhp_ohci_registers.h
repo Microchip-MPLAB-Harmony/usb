@@ -54,10 +54,10 @@ typedef union {
 #define UHP_OHCI_HCREVISION_OFFSET          (0x00)                                        /**<  (UHP_OHCI_HCREVISION) UHP OHCI Revision Register  Offset */
 
 #define UHP_OHCI_HCREVISION_REV_Pos         0                                              /**< (UHP_OHCI_HCREVISION) Revision Position */
-#define UHP_OHCI_HCREVISION_REV_Msk         (_U_(0xF) << UHP_OHCI_HCREVISION_REV_Pos)      /**< (UHP_OHCI_HCREVISION) Revision Mask */
+#define UHP_OHCI_HCREVISION_REV_Msk         (_UINT32_(0xF) << UHP_OHCI_HCREVISION_REV_Pos)      /**< (UHP_OHCI_HCREVISION) Revision Mask */
 #define UHP_OHCI_HCREVISION_REV(value)      (UHP_OHCI_HCREVISION_REV_Msk & ((value) << UHP_OHCI_HCREVISION_REV_Pos))
-#define UHP_OHCI_HCREVISION_MASK            _U_(0x0F)                                      /**< \deprecated (UHP_OHCI_HCREVISION) Register MASK  (Use UHP_OHCI_HCREVISION_Msk instead)  */
-#define UHP_OHCI_HCREVISION_Msk             _U_(0x0F)                                      /**< (UHP_OHCI_HCREVISION) Register Mask  */
+#define UHP_OHCI_HCREVISION_MASK            _UINT32_(0x0F)                                      /**< \deprecated (UHP_OHCI_HCREVISION) Register MASK  (Use UHP_OHCI_HCREVISION_Msk instead)  */
+#define UHP_OHCI_HCREVISION_Msk             _UINT32_(0x0F)                                      /**< (UHP_OHCI_HCREVISION) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCCONTROL : (UHP_OHCI Offset: 0x04) (R/W 32) UHP OHCI HcControl Register -------- */
@@ -84,34 +84,34 @@ typedef union {
 #define UHP_OHCI_HCCONTROL_OFFSET           (0x04)                                        /**<  (UHP_OHCI_HCCONTROL) UHP OHCI HcControl Register  Offset */
 
 #define UHP_OHCI_HCCONTROL_CBSR_Pos         0                                              /**< (UHP_OHCI_HCCONTROL) ControlBulkServiceRatio Position */
-#define UHP_OHCI_HCCONTROL_CBSR_Msk         (_U_(0x3) << UHP_OHCI_HCCONTROL_CBSR_Pos)      /**< (UHP_OHCI_HCCONTROL) ControlBulkServiceRatio Mask */
+#define UHP_OHCI_HCCONTROL_CBSR_Msk         (_UINT32_(0x3) << UHP_OHCI_HCCONTROL_CBSR_Pos)      /**< (UHP_OHCI_HCCONTROL) ControlBulkServiceRatio Mask */
 #define UHP_OHCI_HCCONTROL_CBSR(value)      (UHP_OHCI_HCCONTROL_CBSR_Msk & ((value) << UHP_OHCI_HCCONTROL_CBSR_Pos))
 #define UHP_OHCI_HCCONTROL_PLE_Pos          2                                              /**< (UHP_OHCI_HCCONTROL) PeriodicListEnable Position */
-#define UHP_OHCI_HCCONTROL_PLE_Msk          (_U_(0x1) << UHP_OHCI_HCCONTROL_PLE_Pos)       /**< (UHP_OHCI_HCCONTROL) PeriodicListEnable Mask */
+#define UHP_OHCI_HCCONTROL_PLE_Msk          (_UINT32_(0x1) << UHP_OHCI_HCCONTROL_PLE_Pos)       /**< (UHP_OHCI_HCCONTROL) PeriodicListEnable Mask */
 #define UHP_OHCI_HCCONTROL_PLE              UHP_OHCI_HCCONTROL_PLE_Msk                     /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCCONTROL_PLE_Msk instead */
 #define UHP_OHCI_HCCONTROL_IE_Pos           3                                              /**< (UHP_OHCI_HCCONTROL) IsochronousEnable Position */
-#define UHP_OHCI_HCCONTROL_IE_Msk           (_U_(0x1) << UHP_OHCI_HCCONTROL_IE_Pos)        /**< (UHP_OHCI_HCCONTROL) IsochronousEnable Mask */
+#define UHP_OHCI_HCCONTROL_IE_Msk           (_UINT32_(0x1) << UHP_OHCI_HCCONTROL_IE_Pos)        /**< (UHP_OHCI_HCCONTROL) IsochronousEnable Mask */
 #define UHP_OHCI_HCCONTROL_IE               UHP_OHCI_HCCONTROL_IE_Msk                      /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCCONTROL_IE_Msk instead */
 #define UHP_OHCI_HCCONTROL_CLE_Pos          4                                              /**< (UHP_OHCI_HCCONTROL) ControlListEnable Position */
-#define UHP_OHCI_HCCONTROL_CLE_Msk          (_U_(0x1) << UHP_OHCI_HCCONTROL_CLE_Pos)       /**< (UHP_OHCI_HCCONTROL) ControlListEnable Mask */
+#define UHP_OHCI_HCCONTROL_CLE_Msk          (_UINT32_(0x1) << UHP_OHCI_HCCONTROL_CLE_Pos)       /**< (UHP_OHCI_HCCONTROL) ControlListEnable Mask */
 #define UHP_OHCI_HCCONTROL_CLE              UHP_OHCI_HCCONTROL_CLE_Msk                     /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCCONTROL_CLE_Msk instead */
 #define UHP_OHCI_HCCONTROL_BLE_Pos          5                                              /**< (UHP_OHCI_HCCONTROL) BulkListEnable Position */
-#define UHP_OHCI_HCCONTROL_BLE_Msk          (_U_(0x1) << UHP_OHCI_HCCONTROL_BLE_Pos)       /**< (UHP_OHCI_HCCONTROL) BulkListEnable Mask */
+#define UHP_OHCI_HCCONTROL_BLE_Msk          (_UINT32_(0x1) << UHP_OHCI_HCCONTROL_BLE_Pos)       /**< (UHP_OHCI_HCCONTROL) BulkListEnable Mask */
 #define UHP_OHCI_HCCONTROL_BLE              UHP_OHCI_HCCONTROL_BLE_Msk                     /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCCONTROL_BLE_Msk instead */
 #define UHP_OHCI_HCCONTROL_HCFS_Pos         6                                              /**< (UHP_OHCI_HCCONTROL) HostControllerFunctionalState Position */
-#define UHP_OHCI_HCCONTROL_HCFS_Msk         (_U_(0x3) << UHP_OHCI_HCCONTROL_HCFS_Pos)      /**< (UHP_OHCI_HCCONTROL) HostControllerFunctionalState Mask */
+#define UHP_OHCI_HCCONTROL_HCFS_Msk         (_UINT32_(0x3) << UHP_OHCI_HCCONTROL_HCFS_Pos)      /**< (UHP_OHCI_HCCONTROL) HostControllerFunctionalState Mask */
 #define UHP_OHCI_HCCONTROL_HCFS(value)      (UHP_OHCI_HCCONTROL_HCFS_Msk & ((value) << UHP_OHCI_HCCONTROL_HCFS_Pos))
 #define UHP_OHCI_HCCONTROL_IR_Pos           8                                              /**< (UHP_OHCI_HCCONTROL) InterruptRouting Position */
-#define UHP_OHCI_HCCONTROL_IR_Msk           (_U_(0x1) << UHP_OHCI_HCCONTROL_IR_Pos)        /**< (UHP_OHCI_HCCONTROL) InterruptRouting Mask */
+#define UHP_OHCI_HCCONTROL_IR_Msk           (_UINT32_(0x1) << UHP_OHCI_HCCONTROL_IR_Pos)        /**< (UHP_OHCI_HCCONTROL) InterruptRouting Mask */
 #define UHP_OHCI_HCCONTROL_IR               UHP_OHCI_HCCONTROL_IR_Msk                      /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCCONTROL_IR_Msk instead */
 #define UHP_OHCI_HCCONTROL_RWC_Pos          9                                              /**< (UHP_OHCI_HCCONTROL) RemoteWakeupConnected Position */
-#define UHP_OHCI_HCCONTROL_RWC_Msk          (_U_(0x1) << UHP_OHCI_HCCONTROL_RWC_Pos)       /**< (UHP_OHCI_HCCONTROL) RemoteWakeupConnected Mask */
+#define UHP_OHCI_HCCONTROL_RWC_Msk          (_UINT32_(0x1) << UHP_OHCI_HCCONTROL_RWC_Pos)       /**< (UHP_OHCI_HCCONTROL) RemoteWakeupConnected Mask */
 #define UHP_OHCI_HCCONTROL_RWC              UHP_OHCI_HCCONTROL_RWC_Msk                     /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCCONTROL_RWC_Msk instead */
 #define UHP_OHCI_HCCONTROL_RWE_Pos          10                                             /**< (UHP_OHCI_HCCONTROL) RemoteWakeupEnable Position */
-#define UHP_OHCI_HCCONTROL_RWE_Msk          (_U_(0x1) << UHP_OHCI_HCCONTROL_RWE_Pos)       /**< (UHP_OHCI_HCCONTROL) RemoteWakeupEnable Mask */
+#define UHP_OHCI_HCCONTROL_RWE_Msk          (_UINT32_(0x1) << UHP_OHCI_HCCONTROL_RWE_Pos)       /**< (UHP_OHCI_HCCONTROL) RemoteWakeupEnable Mask */
 #define UHP_OHCI_HCCONTROL_RWE              UHP_OHCI_HCCONTROL_RWE_Msk                     /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCCONTROL_RWE_Msk instead */
-#define UHP_OHCI_HCCONTROL_MASK             _U_(0x7FF)                                     /**< \deprecated (UHP_OHCI_HCCONTROL) Register MASK  (Use UHP_OHCI_HCCONTROL_Msk instead)  */
-#define UHP_OHCI_HCCONTROL_Msk              _U_(0x7FF)                                     /**< (UHP_OHCI_HCCONTROL) Register Mask  */
+#define UHP_OHCI_HCCONTROL_MASK             _UINT32_(0x7FF)                                     /**< \deprecated (UHP_OHCI_HCCONTROL) Register MASK  (Use UHP_OHCI_HCCONTROL_Msk instead)  */
+#define UHP_OHCI_HCCONTROL_Msk              _UINT32_(0x7FF)                                     /**< (UHP_OHCI_HCCONTROL) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCCOMMANDSTATUS : (UHP_OHCI Offset: 0x08) (R/W 32) UHP_OHCI HcInterruptStatus Register -------- */
@@ -135,22 +135,22 @@ typedef union {
 #define UHP_OHCI_HCCOMMANDSTATUS_OFFSET     (0x08)                                        /**<  (UHP_OHCI_HCCOMMANDSTATUS) UHP_OHCI HcInterruptStatus Register  Offset */
 
 #define UHP_OHCI_HCCOMMANDSTATUS_HCR_Pos    0                                              /**< (UHP_OHCI_HCCOMMANDSTATUS) HostControllerReset Position */
-#define UHP_OHCI_HCCOMMANDSTATUS_HCR_Msk    (_U_(0x1) << UHP_OHCI_HCCOMMANDSTATUS_HCR_Pos)  /**< (UHP_OHCI_HCCOMMANDSTATUS) HostControllerReset Mask */
+#define UHP_OHCI_HCCOMMANDSTATUS_HCR_Msk    (_UINT32_(0x1) << UHP_OHCI_HCCOMMANDSTATUS_HCR_Pos)  /**< (UHP_OHCI_HCCOMMANDSTATUS) HostControllerReset Mask */
 #define UHP_OHCI_HCCOMMANDSTATUS_HCR        UHP_OHCI_HCCOMMANDSTATUS_HCR_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCCOMMANDSTATUS_HCR_Msk instead */
 #define UHP_OHCI_HCCOMMANDSTATUS_CLF_Pos    1                                              /**< (UHP_OHCI_HCCOMMANDSTATUS) ControlListFilled Position */
-#define UHP_OHCI_HCCOMMANDSTATUS_CLF_Msk    (_U_(0x1) << UHP_OHCI_HCCOMMANDSTATUS_CLF_Pos)  /**< (UHP_OHCI_HCCOMMANDSTATUS) ControlListFilled Mask */
+#define UHP_OHCI_HCCOMMANDSTATUS_CLF_Msk    (_UINT32_(0x1) << UHP_OHCI_HCCOMMANDSTATUS_CLF_Pos)  /**< (UHP_OHCI_HCCOMMANDSTATUS) ControlListFilled Mask */
 #define UHP_OHCI_HCCOMMANDSTATUS_CLF        UHP_OHCI_HCCOMMANDSTATUS_CLF_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCCOMMANDSTATUS_CLF_Msk instead */
 #define UHP_OHCI_HCCOMMANDSTATUS_BLF_Pos    2                                              /**< (UHP_OHCI_HCCOMMANDSTATUS) BulkListFilled Position */
-#define UHP_OHCI_HCCOMMANDSTATUS_BLF_Msk    (_U_(0x1) << UHP_OHCI_HCCOMMANDSTATUS_BLF_Pos)  /**< (UHP_OHCI_HCCOMMANDSTATUS) BulkListFilled Mask */
+#define UHP_OHCI_HCCOMMANDSTATUS_BLF_Msk    (_UINT32_(0x1) << UHP_OHCI_HCCOMMANDSTATUS_BLF_Pos)  /**< (UHP_OHCI_HCCOMMANDSTATUS) BulkListFilled Mask */
 #define UHP_OHCI_HCCOMMANDSTATUS_BLF        UHP_OHCI_HCCOMMANDSTATUS_BLF_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCCOMMANDSTATUS_BLF_Msk instead */
 #define UHP_OHCI_HCCOMMANDSTATUS_OCR_Pos    3                                              /**< (UHP_OHCI_HCCOMMANDSTATUS) OwnershipChangeRequest Position */
-#define UHP_OHCI_HCCOMMANDSTATUS_OCR_Msk    (_U_(0x1) << UHP_OHCI_HCCOMMANDSTATUS_OCR_Pos)  /**< (UHP_OHCI_HCCOMMANDSTATUS) OwnershipChangeRequest Mask */
+#define UHP_OHCI_HCCOMMANDSTATUS_OCR_Msk    (_UINT32_(0x1) << UHP_OHCI_HCCOMMANDSTATUS_OCR_Pos)  /**< (UHP_OHCI_HCCOMMANDSTATUS) OwnershipChangeRequest Mask */
 #define UHP_OHCI_HCCOMMANDSTATUS_OCR        UHP_OHCI_HCCOMMANDSTATUS_OCR_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCCOMMANDSTATUS_OCR_Msk instead */
 #define UHP_OHCI_HCCOMMANDSTATUS_SOC_Pos    16                                             /**< (UHP_OHCI_HCCOMMANDSTATUS) SchedulingOverrunCount Position */
-#define UHP_OHCI_HCCOMMANDSTATUS_SOC_Msk    (_U_(0x3) << UHP_OHCI_HCCOMMANDSTATUS_SOC_Pos)  /**< (UHP_OHCI_HCCOMMANDSTATUS) SchedulingOverrunCount Mask */
+#define UHP_OHCI_HCCOMMANDSTATUS_SOC_Msk    (_UINT32_(0x3) << UHP_OHCI_HCCOMMANDSTATUS_SOC_Pos)  /**< (UHP_OHCI_HCCOMMANDSTATUS) SchedulingOverrunCount Mask */
 #define UHP_OHCI_HCCOMMANDSTATUS_SOC(value) (UHP_OHCI_HCCOMMANDSTATUS_SOC_Msk & ((value) << UHP_OHCI_HCCOMMANDSTATUS_SOC_Pos))
-#define UHP_OHCI_HCCOMMANDSTATUS_MASK       _U_(0x3000F)                                   /**< \deprecated (UHP_OHCI_HCCOMMANDSTATUS) Register MASK  (Use UHP_OHCI_HCCOMMANDSTATUS_Msk instead)  */
-#define UHP_OHCI_HCCOMMANDSTATUS_Msk        _U_(0x3000F)                                   /**< (UHP_OHCI_HCCOMMANDSTATUS) Register Mask  */
+#define UHP_OHCI_HCCOMMANDSTATUS_MASK       _UINT32_(0x3000F)                                   /**< \deprecated (UHP_OHCI_HCCOMMANDSTATUS) Register MASK  (Use UHP_OHCI_HCCOMMANDSTATUS_Msk instead)  */
+#define UHP_OHCI_HCCOMMANDSTATUS_Msk        _UINT32_(0x3000F)                                   /**< (UHP_OHCI_HCCOMMANDSTATUS) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCINTERRUPTSTATUS : (UHP_OHCI Offset: 0x0c) (R/W 32) UHP OHCI HcInterruptStatus Register -------- */
@@ -177,31 +177,31 @@ typedef union {
 #define UHP_OHCI_HCINTERRUPTSTATUS_OFFSET   (0x0C)                                        /**<  (UHP_OHCI_HCINTERRUPTSTATUS) UHP OHCI HcInterruptStatus Register  Offset */
 
 #define UHP_OHCI_HCINTERRUPTSTATUS_SO_Pos   0                                              /**< (UHP_OHCI_HCINTERRUPTSTATUS) SchedulingOverrun Position */
-#define UHP_OHCI_HCINTERRUPTSTATUS_SO_Msk   (_U_(0x1) << UHP_OHCI_HCINTERRUPTSTATUS_SO_Pos)  /**< (UHP_OHCI_HCINTERRUPTSTATUS) SchedulingOverrun Mask */
+#define UHP_OHCI_HCINTERRUPTSTATUS_SO_Msk   (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTSTATUS_SO_Pos)  /**< (UHP_OHCI_HCINTERRUPTSTATUS) SchedulingOverrun Mask */
 #define UHP_OHCI_HCINTERRUPTSTATUS_SO       UHP_OHCI_HCINTERRUPTSTATUS_SO_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTSTATUS_SO_Msk instead */
 #define UHP_OHCI_HCINTERRUPTSTATUS_WDH_Pos  1                                              /**< (UHP_OHCI_HCINTERRUPTSTATUS) WritebackDoneHead Position */
-#define UHP_OHCI_HCINTERRUPTSTATUS_WDH_Msk  (_U_(0x1) << UHP_OHCI_HCINTERRUPTSTATUS_WDH_Pos)  /**< (UHP_OHCI_HCINTERRUPTSTATUS) WritebackDoneHead Mask */
+#define UHP_OHCI_HCINTERRUPTSTATUS_WDH_Msk  (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTSTATUS_WDH_Pos)  /**< (UHP_OHCI_HCINTERRUPTSTATUS) WritebackDoneHead Mask */
 #define UHP_OHCI_HCINTERRUPTSTATUS_WDH      UHP_OHCI_HCINTERRUPTSTATUS_WDH_Msk             /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTSTATUS_WDH_Msk instead */
 #define UHP_OHCI_HCINTERRUPTSTATUS_SF_Pos   2                                              /**< (UHP_OHCI_HCINTERRUPTSTATUS) StartofFrame Position */
-#define UHP_OHCI_HCINTERRUPTSTATUS_SF_Msk   (_U_(0x1) << UHP_OHCI_HCINTERRUPTSTATUS_SF_Pos)  /**< (UHP_OHCI_HCINTERRUPTSTATUS) StartofFrame Mask */
+#define UHP_OHCI_HCINTERRUPTSTATUS_SF_Msk   (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTSTATUS_SF_Pos)  /**< (UHP_OHCI_HCINTERRUPTSTATUS) StartofFrame Mask */
 #define UHP_OHCI_HCINTERRUPTSTATUS_SF       UHP_OHCI_HCINTERRUPTSTATUS_SF_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTSTATUS_SF_Msk instead */
 #define UHP_OHCI_HCINTERRUPTSTATUS_RD_Pos   3                                              /**< (UHP_OHCI_HCINTERRUPTSTATUS) ResumeDetected Position */
-#define UHP_OHCI_HCINTERRUPTSTATUS_RD_Msk   (_U_(0x1) << UHP_OHCI_HCINTERRUPTSTATUS_RD_Pos)  /**< (UHP_OHCI_HCINTERRUPTSTATUS) ResumeDetected Mask */
+#define UHP_OHCI_HCINTERRUPTSTATUS_RD_Msk   (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTSTATUS_RD_Pos)  /**< (UHP_OHCI_HCINTERRUPTSTATUS) ResumeDetected Mask */
 #define UHP_OHCI_HCINTERRUPTSTATUS_RD       UHP_OHCI_HCINTERRUPTSTATUS_RD_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTSTATUS_RD_Msk instead */
 #define UHP_OHCI_HCINTERRUPTSTATUS_UE_Pos   4                                              /**< (UHP_OHCI_HCINTERRUPTSTATUS) UnrecoverableError Position */
-#define UHP_OHCI_HCINTERRUPTSTATUS_UE_Msk   (_U_(0x1) << UHP_OHCI_HCINTERRUPTSTATUS_UE_Pos)  /**< (UHP_OHCI_HCINTERRUPTSTATUS) UnrecoverableError Mask */
+#define UHP_OHCI_HCINTERRUPTSTATUS_UE_Msk   (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTSTATUS_UE_Pos)  /**< (UHP_OHCI_HCINTERRUPTSTATUS) UnrecoverableError Mask */
 #define UHP_OHCI_HCINTERRUPTSTATUS_UE       UHP_OHCI_HCINTERRUPTSTATUS_UE_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTSTATUS_UE_Msk instead */
 #define UHP_OHCI_HCINTERRUPTSTATUS_FNO_Pos  5                                              /**< (UHP_OHCI_HCINTERRUPTSTATUS) FrameNumberOverflow Position */
-#define UHP_OHCI_HCINTERRUPTSTATUS_FNO_Msk  (_U_(0x1) << UHP_OHCI_HCINTERRUPTSTATUS_FNO_Pos)  /**< (UHP_OHCI_HCINTERRUPTSTATUS) FrameNumberOverflow Mask */
+#define UHP_OHCI_HCINTERRUPTSTATUS_FNO_Msk  (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTSTATUS_FNO_Pos)  /**< (UHP_OHCI_HCINTERRUPTSTATUS) FrameNumberOverflow Mask */
 #define UHP_OHCI_HCINTERRUPTSTATUS_FNO      UHP_OHCI_HCINTERRUPTSTATUS_FNO_Msk             /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTSTATUS_FNO_Msk instead */
 #define UHP_OHCI_HCINTERRUPTSTATUS_RHSC_Pos 6                                              /**< (UHP_OHCI_HCINTERRUPTSTATUS) RootHubStatusChange Position */
-#define UHP_OHCI_HCINTERRUPTSTATUS_RHSC_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTSTATUS_RHSC_Pos)  /**< (UHP_OHCI_HCINTERRUPTSTATUS) RootHubStatusChange Mask */
+#define UHP_OHCI_HCINTERRUPTSTATUS_RHSC_Msk (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTSTATUS_RHSC_Pos)  /**< (UHP_OHCI_HCINTERRUPTSTATUS) RootHubStatusChange Mask */
 #define UHP_OHCI_HCINTERRUPTSTATUS_RHSC     UHP_OHCI_HCINTERRUPTSTATUS_RHSC_Msk            /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTSTATUS_RHSC_Msk instead */
 #define UHP_OHCI_HCINTERRUPTSTATUS_OC_Pos   30                                             /**< (UHP_OHCI_HCINTERRUPTSTATUS) OwnershipChange Position */
-#define UHP_OHCI_HCINTERRUPTSTATUS_OC_Msk   (_U_(0x1) << UHP_OHCI_HCINTERRUPTSTATUS_OC_Pos)  /**< (UHP_OHCI_HCINTERRUPTSTATUS) OwnershipChange Mask */
+#define UHP_OHCI_HCINTERRUPTSTATUS_OC_Msk   (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTSTATUS_OC_Pos)  /**< (UHP_OHCI_HCINTERRUPTSTATUS) OwnershipChange Mask */
 #define UHP_OHCI_HCINTERRUPTSTATUS_OC       UHP_OHCI_HCINTERRUPTSTATUS_OC_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTSTATUS_OC_Msk instead */
-#define UHP_OHCI_HCINTERRUPTSTATUS_MASK     _U_(0x4000007F)                                /**< \deprecated (UHP_OHCI_HCINTERRUPTSTATUS) Register MASK  (Use UHP_OHCI_HCINTERRUPTSTATUS_Msk instead)  */
-#define UHP_OHCI_HCINTERRUPTSTATUS_Msk      _U_(0x4000007F)                                /**< (UHP_OHCI_HCINTERRUPTSTATUS) Register Mask  */
+#define UHP_OHCI_HCINTERRUPTSTATUS_MASK     _UINT32_(0x4000007F)                                /**< \deprecated (UHP_OHCI_HCINTERRUPTSTATUS) Register MASK  (Use UHP_OHCI_HCINTERRUPTSTATUS_Msk instead)  */
+#define UHP_OHCI_HCINTERRUPTSTATUS_Msk      _UINT32_(0x4000007F)                                /**< (UHP_OHCI_HCINTERRUPTSTATUS) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCINTERRUPTENABLE : (UHP_OHCI Offset: 0x10) (R/W 32) UHP OHCI HcInterruptEnable Register -------- */
@@ -228,34 +228,34 @@ typedef union {
 #define UHP_OHCI_HCINTERRUPTENABLE_OFFSET (0x10)                                        /**<  (UHP_OHCI_HCINTERRUPTENABLE) UHP OHCI HcInterruptEnable Register  Offset */
 
 #define UHP_OHCI_HCINTERRUPTENABLE_SO_Pos 0                                              /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable SchedulingOverrun Position */
-#define UHP_OHCI_HCINTERRUPTENABLE_SO_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_SO_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable SchedulingOverrun Mask */
+#define UHP_OHCI_HCINTERRUPTENABLE_SO_Msk (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_SO_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable SchedulingOverrun Mask */
 #define UHP_OHCI_HCINTERRUPTENABLE_SO UHP_OHCI_HCINTERRUPTENABLE_SO_Msk     /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTENABLE_SO_Msk instead */
 #define UHP_OHCI_HCINTERRUPTENABLE_WDH_Pos 1                                              /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable WritebackDoneHead Position */
-#define UHP_OHCI_HCINTERRUPTENABLE_WDH_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_WDH_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable WritebackDoneHead Mask */
+#define UHP_OHCI_HCINTERRUPTENABLE_WDH_Msk (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_WDH_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable WritebackDoneHead Mask */
 #define UHP_OHCI_HCINTERRUPTENABLE_WDH UHP_OHCI_HCINTERRUPTENABLE_WDH_Msk    /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTENABLE_WDH_Msk instead */
 #define UHP_OHCI_HCINTERRUPTENABLE_SF_Pos 2                                              /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable StartofFrame Position */
-#define UHP_OHCI_HCINTERRUPTENABLE_SF_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_SF_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable StartofFrame Mask */
+#define UHP_OHCI_HCINTERRUPTENABLE_SF_Msk (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_SF_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable StartofFrame Mask */
 #define UHP_OHCI_HCINTERRUPTENABLE_SF UHP_OHCI_HCINTERRUPTENABLE_SF_Msk     /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTENABLE_SF_Msk instead */
 #define UHP_OHCI_HCINTERRUPTENABLE_RD_Pos 3                                              /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable ResumeDetected Position */
-#define UHP_OHCI_HCINTERRUPTENABLE_RD_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_RD_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable ResumeDetected Mask */
+#define UHP_OHCI_HCINTERRUPTENABLE_RD_Msk (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_RD_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable ResumeDetected Mask */
 #define UHP_OHCI_HCINTERRUPTENABLE_RD UHP_OHCI_HCINTERRUPTENABLE_RD_Msk     /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTENABLE_RD_Msk instead */
 #define UHP_OHCI_HCINTERRUPTENABLE_UE_Pos 4                                              /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable UnrecoverableError Position */
-#define UHP_OHCI_HCINTERRUPTENABLE_UE_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_UE_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable UnrecoverableError Mask */
+#define UHP_OHCI_HCINTERRUPTENABLE_UE_Msk (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_UE_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable UnrecoverableError Mask */
 #define UHP_OHCI_HCINTERRUPTENABLE_UE UHP_OHCI_HCINTERRUPTENABLE_UE_Msk     /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTENABLE_UE_Msk instead */
 #define UHP_OHCI_HCINTERRUPTENABLE_FNO_Pos 5                                              /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable FrameNumberOverflow Position */
-#define UHP_OHCI_HCINTERRUPTENABLE_FNO_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_FNO_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable FrameNumberOverflow Mask */
+#define UHP_OHCI_HCINTERRUPTENABLE_FNO_Msk (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_FNO_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable FrameNumberOverflow Mask */
 #define UHP_OHCI_HCINTERRUPTENABLE_FNO UHP_OHCI_HCINTERRUPTENABLE_FNO_Msk    /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTENABLE_FNO_Msk instead */
 #define UHP_OHCI_HCINTERRUPTENABLE_RHSC_Pos 6                                              /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable RootHubStatusChange Position */
-#define UHP_OHCI_HCINTERRUPTENABLE_RHSC_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_RHSC_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable RootHubStatusChange Mask */
+#define UHP_OHCI_HCINTERRUPTENABLE_RHSC_Msk (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_RHSC_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable RootHubStatusChange Mask */
 #define UHP_OHCI_HCINTERRUPTENABLE_RHSC UHP_OHCI_HCINTERRUPTENABLE_RHSC_Msk   /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTENABLE_RHSC_Msk instead */
 #define UHP_OHCI_HCINTERRUPTENABLE_OC_Pos 30                                             /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable OwnershipChange Position */
-#define UHP_OHCI_HCINTERRUPTENABLE_OC_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_OC_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable OwnershipChange Mask */
+#define UHP_OHCI_HCINTERRUPTENABLE_OC_Msk (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_OC_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable OwnershipChange Mask */
 #define UHP_OHCI_HCINTERRUPTENABLE_OC UHP_OHCI_HCINTERRUPTENABLE_OC_Msk     /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTENABLE_OC_Msk instead */
 #define UHP_OHCI_HCINTERRUPTENABLE_MIE_Pos 31                                             /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable MasterInterruptEnable Position */
-#define UHP_OHCI_HCINTERRUPTENABLE_MIE_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_MIE_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable MasterInterruptEnable Mask */
+#define UHP_OHCI_HCINTERRUPTENABLE_MIE_Msk (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTENABLE_MIE_Pos)  /**< (UHP_OHCI_HCINTERRUPTENABLE) Enable MasterInterruptEnable Mask */
 #define UHP_OHCI_HCINTERRUPTENABLE_MIE UHP_OHCI_HCINTERRUPTENABLE_MIE_Msk    /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTENABLE_MIE_Msk instead */
-#define UHP_OHCI_HCINTERRUPTENABLE_MASK _U_(0xC000007F)                                /**< \deprecated (UHP_OHCI_HCINTERRUPTENABLE) Register MASK  (Use UHP_OHCI_HCINTERRUPTENABLE_Msk instead)  */
-#define UHP_OHCI_HCINTERRUPTENABLE_Msk _U_(0xC000007F)                                /**< (UHP_OHCI_HCINTERRUPTENABLE) Register Mask  */
+#define UHP_OHCI_HCINTERRUPTENABLE_MASK _UINT32_(0xC000007F)                                /**< \deprecated (UHP_OHCI_HCINTERRUPTENABLE) Register MASK  (Use UHP_OHCI_HCINTERRUPTENABLE_Msk instead)  */
+#define UHP_OHCI_HCINTERRUPTENABLE_Msk _UINT32_(0xC000007F)                                /**< (UHP_OHCI_HCINTERRUPTENABLE) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCINTERRUPTDISABLE : (UHP_OHCI Offset: 0x14) (R/W 32) UHP OHCI HcInterruptDisable Register -------- */
@@ -282,34 +282,34 @@ typedef union {
 #define UHP_OHCI_HCINTERRUPTDISABLE_OFFSET  (0x14)                                        /**<  (UHP_OHCI_HCINTERRUPTDISABLE) UHP OHCI HcInterruptDisable Register  Offset */
 
 #define UHP_OHCI_HCINTERRUPTDISABLE_SO_Pos  0                                              /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable SchedulingOverrun Position */
-#define UHP_OHCI_HCINTERRUPTDISABLE_SO_Msk  (_U_(0x1) << UHP_OHCI_HCINTERRUPTDISABLE_SO_Pos)  /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable SchedulingOverrun Mask */
+#define UHP_OHCI_HCINTERRUPTDISABLE_SO_Msk  (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTDISABLE_SO_Pos)  /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable SchedulingOverrun Mask */
 #define UHP_OHCI_HCINTERRUPTDISABLE_SO      UHP_OHCI_HCINTERRUPTDISABLE_SO_Msk             /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTDISABLE_SO_Msk instead */
 #define UHP_OHCI_HCINTERRUPTDISABLE_WDH_Pos 1                                              /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable WritebackDoneHead Position */
-#define UHP_OHCI_HCINTERRUPTDISABLE_WDH_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTDISABLE_WDH_Pos)  /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable WritebackDoneHead Mask */
+#define UHP_OHCI_HCINTERRUPTDISABLE_WDH_Msk (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTDISABLE_WDH_Pos)  /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable WritebackDoneHead Mask */
 #define UHP_OHCI_HCINTERRUPTDISABLE_WDH     UHP_OHCI_HCINTERRUPTDISABLE_WDH_Msk            /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTDISABLE_WDH_Msk instead */
 #define UHP_OHCI_HCINTERRUPTDISABLE_SF_Pos  2                                              /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable StartofFrame Position */
-#define UHP_OHCI_HCINTERRUPTDISABLE_SF_Msk  (_U_(0x1) << UHP_OHCI_HCINTERRUPTDISABLE_SF_Pos)  /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable StartofFrame Mask */
+#define UHP_OHCI_HCINTERRUPTDISABLE_SF_Msk  (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTDISABLE_SF_Pos)  /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable StartofFrame Mask */
 #define UHP_OHCI_HCINTERRUPTDISABLE_SF      UHP_OHCI_HCINTERRUPTDISABLE_SF_Msk             /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTDISABLE_SF_Msk instead */
 #define UHP_OHCI_HCINTERRUPTDISABLE_RD_Pos  3                                              /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable ResumeDetected Position */
-#define UHP_OHCI_HCINTERRUPTDISABLE_RD_Msk  (_U_(0x1) << UHP_OHCI_HCINTERRUPTDISABLE_RD_Pos)  /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable ResumeDetected Mask */
+#define UHP_OHCI_HCINTERRUPTDISABLE_RD_Msk  (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTDISABLE_RD_Pos)  /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable ResumeDetected Mask */
 #define UHP_OHCI_HCINTERRUPTDISABLE_RD      UHP_OHCI_HCINTERRUPTDISABLE_RD_Msk             /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTDISABLE_RD_Msk instead */
 #define UHP_OHCI_HCINTERRUPTDISABLE_UE_Pos  4                                              /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable UnrecoverableError Position */
-#define UHP_OHCI_HCINTERRUPTDISABLE_UE_Msk  (_U_(0x1) << UHP_OHCI_HCINTERRUPTDISABLE_UE_Pos)  /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable UnrecoverableError Mask */
+#define UHP_OHCI_HCINTERRUPTDISABLE_UE_Msk  (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTDISABLE_UE_Pos)  /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable UnrecoverableError Mask */
 #define UHP_OHCI_HCINTERRUPTDISABLE_UE      UHP_OHCI_HCINTERRUPTDISABLE_UE_Msk             /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTDISABLE_UE_Msk instead */
 #define UHP_OHCI_HCINTERRUPTDISABLE_FNO_Pos 5                                              /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable FrameNumberOverflow Position */
-#define UHP_OHCI_HCINTERRUPTDISABLE_FNO_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTDISABLE_FNO_Pos)  /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable FrameNumberOverflow Mask */
+#define UHP_OHCI_HCINTERRUPTDISABLE_FNO_Msk (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTDISABLE_FNO_Pos)  /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable FrameNumberOverflow Mask */
 #define UHP_OHCI_HCINTERRUPTDISABLE_FNO     UHP_OHCI_HCINTERRUPTDISABLE_FNO_Msk            /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTDISABLE_FNO_Msk instead */
 #define UHP_OHCI_HCINTERRUPTDISABLE_RHSC_Pos 6                                              /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable RootHubStatusChange Position */
-#define UHP_OHCI_HCINTERRUPTDISABLE_RHSC_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTDISABLE_RHSC_Pos)  /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable RootHubStatusChange Mask */
+#define UHP_OHCI_HCINTERRUPTDISABLE_RHSC_Msk (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTDISABLE_RHSC_Pos)  /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable RootHubStatusChange Mask */
 #define UHP_OHCI_HCINTERRUPTDISABLE_RHSC    UHP_OHCI_HCINTERRUPTDISABLE_RHSC_Msk           /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTDISABLE_RHSC_Msk instead */
 #define UHP_OHCI_HCINTERRUPTDISABLE_OC_Pos  30                                             /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable OwnershipChange Position */
-#define UHP_OHCI_HCINTERRUPTDISABLE_OC_Msk  (_U_(0x1) << UHP_OHCI_HCINTERRUPTDISABLE_OC_Pos)  /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable OwnershipChange Mask */
+#define UHP_OHCI_HCINTERRUPTDISABLE_OC_Msk  (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTDISABLE_OC_Pos)  /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable OwnershipChange Mask */
 #define UHP_OHCI_HCINTERRUPTDISABLE_OC      UHP_OHCI_HCINTERRUPTDISABLE_OC_Msk             /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTDISABLE_OC_Msk instead */
 #define UHP_OHCI_HCINTERRUPTDISABLE_MIE_Pos 31                                             /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable MasterInterruptEnable Position */
-#define UHP_OHCI_HCINTERRUPTDISABLE_MIE_Msk (_U_(0x1) << UHP_OHCI_HCINTERRUPTDISABLE_MIE_Pos)  /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable MasterInterruptEnable Mask */
+#define UHP_OHCI_HCINTERRUPTDISABLE_MIE_Msk (_UINT32_(0x1) << UHP_OHCI_HCINTERRUPTDISABLE_MIE_Pos)  /**< (UHP_OHCI_HCINTERRUPTDISABLE) Disable MasterInterruptEnable Mask */
 #define UHP_OHCI_HCINTERRUPTDISABLE_MIE     UHP_OHCI_HCINTERRUPTDISABLE_MIE_Msk            /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCINTERRUPTDISABLE_MIE_Msk instead */
-#define UHP_OHCI_HCINTERRUPTDISABLE_MASK    _U_(0xC000007F)                                /**< \deprecated (UHP_OHCI_HCINTERRUPTDISABLE) Register MASK  (Use UHP_OHCI_HCINTERRUPTDISABLE_Msk instead)  */
-#define UHP_OHCI_HCINTERRUPTDISABLE_Msk     _U_(0xC000007F)                                /**< (UHP_OHCI_HCINTERRUPTDISABLE) Register Mask  */
+#define UHP_OHCI_HCINTERRUPTDISABLE_MASK    _UINT32_(0xC000007F)                                /**< \deprecated (UHP_OHCI_HCINTERRUPTDISABLE) Register MASK  (Use UHP_OHCI_HCINTERRUPTDISABLE_Msk instead)  */
+#define UHP_OHCI_HCINTERRUPTDISABLE_Msk     _UINT32_(0xC000007F)                                /**< (UHP_OHCI_HCINTERRUPTDISABLE) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCHCCA : (UHP_OHCI Offset: 0x18) (R/W 32) UHP OHCI HcHCCA Register -------- */
@@ -328,10 +328,10 @@ typedef union {
 #define UHP_OHCI_HCHCCA_OFFSET              (0x18)                                        /**<  (UHP_OHCI_HCHCCA) UHP OHCI HcHCCA Register  Offset */
 
 #define UHP_OHCI_HCHCCA_HCCA_Pos            8                                              /**< (UHP_OHCI_HCHCCA) base address of the Host Controller Communication Area Position */
-#define UHP_OHCI_HCHCCA_HCCA_Msk            (_U_(0xFFFFFF) << UHP_OHCI_HCHCCA_HCCA_Pos)    /**< (UHP_OHCI_HCHCCA) base address of the Host Controller Communication Area Mask */
+#define UHP_OHCI_HCHCCA_HCCA_Msk            (_UINT32_(0xFFFFFF) << UHP_OHCI_HCHCCA_HCCA_Pos)    /**< (UHP_OHCI_HCHCCA) base address of the Host Controller Communication Area Mask */
 #define UHP_OHCI_HCHCCA_HCCA(value)         (UHP_OHCI_HCHCCA_HCCA_Msk & ((value) << UHP_OHCI_HCHCCA_HCCA_Pos))
-#define UHP_OHCI_HCHCCA_MASK                _U_(0xFFFFFF00)                                /**< \deprecated (UHP_OHCI_HCHCCA) Register MASK  (Use UHP_OHCI_HCHCCA_Msk instead)  */
-#define UHP_OHCI_HCHCCA_Msk                 _U_(0xFFFFFF00)                                /**< (UHP_OHCI_HCHCCA) Register Mask  */
+#define UHP_OHCI_HCHCCA_MASK                _UINT32_(0xFFFFFF00)                                /**< \deprecated (UHP_OHCI_HCHCCA) Register MASK  (Use UHP_OHCI_HCHCCA_Msk instead)  */
+#define UHP_OHCI_HCHCCA_Msk                 _UINT32_(0xFFFFFF00)                                /**< (UHP_OHCI_HCHCCA) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCPERIODCURRENTED : (UHP_OHCI Offset: 0x1c) (R/W 32) UHP OHCI HcPeriodCurrentED Register -------- */
@@ -350,10 +350,10 @@ typedef union {
 #define UHP_OHCI_HCPERIODCURRENTED_OFFSET   (0x1C)                                        /**<  (UHP_OHCI_HCPERIODCURRENTED) UHP OHCI HcPeriodCurrentED Register  Offset */
 
 #define UHP_OHCI_HCPERIODCURRENTED_PCED_Pos 4                                              /**< (UHP_OHCI_HCPERIODCURRENTED) PeriodCurrentED Position */
-#define UHP_OHCI_HCPERIODCURRENTED_PCED_Msk (_U_(0xFFFFFFF) << UHP_OHCI_HCPERIODCURRENTED_PCED_Pos)  /**< (UHP_OHCI_HCPERIODCURRENTED) PeriodCurrentED Mask */
+#define UHP_OHCI_HCPERIODCURRENTED_PCED_Msk (_UINT32_(0xFFFFFFF) << UHP_OHCI_HCPERIODCURRENTED_PCED_Pos)  /**< (UHP_OHCI_HCPERIODCURRENTED) PeriodCurrentED Mask */
 #define UHP_OHCI_HCPERIODCURRENTED_PCED(value) (UHP_OHCI_HCPERIODCURRENTED_PCED_Msk & ((value) << UHP_OHCI_HCPERIODCURRENTED_PCED_Pos))
-#define UHP_OHCI_HCPERIODCURRENTED_MASK     _U_(0xFFFFFFF0)                                /**< \deprecated (UHP_OHCI_HCPERIODCURRENTED) Register MASK  (Use UHP_OHCI_HCPERIODCURRENTED_Msk instead)  */
-#define UHP_OHCI_HCPERIODCURRENTED_Msk      _U_(0xFFFFFFF0)                                /**< (UHP_OHCI_HCPERIODCURRENTED) Register Mask  */
+#define UHP_OHCI_HCPERIODCURRENTED_MASK     _UINT32_(0xFFFFFFF0)                                /**< \deprecated (UHP_OHCI_HCPERIODCURRENTED) Register MASK  (Use UHP_OHCI_HCPERIODCURRENTED_Msk instead)  */
+#define UHP_OHCI_HCPERIODCURRENTED_Msk      _UINT32_(0xFFFFFFF0)                                /**< (UHP_OHCI_HCPERIODCURRENTED) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCCONTROLHEADED : (UHP_OHCI Offset: 0x20) (R/W 32) UHP OHCI HcControlHeadED Register -------- */
@@ -372,10 +372,10 @@ typedef union {
 #define UHP_OHCI_HCCONTROLHEADED_OFFSET     (0x20)                                        /**<  (UHP_OHCI_HCCONTROLHEADED) UHP OHCI HcControlHeadED Register  Offset */
 
 #define UHP_OHCI_HCCONTROLHEADED_CHED_Pos   4                                              /**< (UHP_OHCI_HCCONTROLHEADED) ControlHeadED Position */
-#define UHP_OHCI_HCCONTROLHEADED_CHED_Msk   (_U_(0xFFFFFFF) << UHP_OHCI_HCCONTROLHEADED_CHED_Pos)  /**< (UHP_OHCI_HCCONTROLHEADED) ControlHeadED Mask */
+#define UHP_OHCI_HCCONTROLHEADED_CHED_Msk   (_UINT32_(0xFFFFFFF) << UHP_OHCI_HCCONTROLHEADED_CHED_Pos)  /**< (UHP_OHCI_HCCONTROLHEADED) ControlHeadED Mask */
 #define UHP_OHCI_HCCONTROLHEADED_CHED(value) (UHP_OHCI_HCCONTROLHEADED_CHED_Msk & ((value) << UHP_OHCI_HCCONTROLHEADED_CHED_Pos))
-#define UHP_OHCI_HCCONTROLHEADED_MASK       _U_(0xFFFFFFF0)                                /**< \deprecated (UHP_OHCI_HCCONTROLHEADED) Register MASK  (Use UHP_OHCI_HCCONTROLHEADED_Msk instead)  */
-#define UHP_OHCI_HCCONTROLHEADED_Msk        _U_(0xFFFFFFF0)                                /**< (UHP_OHCI_HCCONTROLHEADED) Register Mask  */
+#define UHP_OHCI_HCCONTROLHEADED_MASK       _UINT32_(0xFFFFFFF0)                                /**< \deprecated (UHP_OHCI_HCCONTROLHEADED) Register MASK  (Use UHP_OHCI_HCCONTROLHEADED_Msk instead)  */
+#define UHP_OHCI_HCCONTROLHEADED_Msk        _UINT32_(0xFFFFFFF0)                                /**< (UHP_OHCI_HCCONTROLHEADED) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCCONTROLCURRENTED : (UHP_OHCI Offset: 0x24) (R/W 32) UHP OHCI HcControlCurrentED Register -------- */
@@ -394,10 +394,10 @@ typedef union {
 #define UHP_OHCI_HCCONTROLCURRENTED_OFFSET  (0x24)                                        /**<  (UHP_OHCI_HCCONTROLCURRENTED) UHP OHCI HcControlCurrentED Register  Offset */
 
 #define UHP_OHCI_HCCONTROLCURRENTED_CCED_Pos 4                                              /**< (UHP_OHCI_HCCONTROLCURRENTED) ControlCurrentED Position */
-#define UHP_OHCI_HCCONTROLCURRENTED_CCED_Msk (_U_(0xFFFFFFF) << UHP_OHCI_HCCONTROLCURRENTED_CCED_Pos)  /**< (UHP_OHCI_HCCONTROLCURRENTED) ControlCurrentED Mask */
+#define UHP_OHCI_HCCONTROLCURRENTED_CCED_Msk (_UINT32_(0xFFFFFFF) << UHP_OHCI_HCCONTROLCURRENTED_CCED_Pos)  /**< (UHP_OHCI_HCCONTROLCURRENTED) ControlCurrentED Mask */
 #define UHP_OHCI_HCCONTROLCURRENTED_CCED(value) (UHP_OHCI_HCCONTROLCURRENTED_CCED_Msk & ((value) << UHP_OHCI_HCCONTROLCURRENTED_CCED_Pos))
-#define UHP_OHCI_HCCONTROLCURRENTED_MASK    _U_(0xFFFFFFF0)                                /**< \deprecated (UHP_OHCI_HCCONTROLCURRENTED) Register MASK  (Use UHP_OHCI_HCCONTROLCURRENTED_Msk instead)  */
-#define UHP_OHCI_HCCONTROLCURRENTED_Msk     _U_(0xFFFFFFF0)                                /**< (UHP_OHCI_HCCONTROLCURRENTED) Register Mask  */
+#define UHP_OHCI_HCCONTROLCURRENTED_MASK    _UINT32_(0xFFFFFFF0)                                /**< \deprecated (UHP_OHCI_HCCONTROLCURRENTED) Register MASK  (Use UHP_OHCI_HCCONTROLCURRENTED_Msk instead)  */
+#define UHP_OHCI_HCCONTROLCURRENTED_Msk     _UINT32_(0xFFFFFFF0)                                /**< (UHP_OHCI_HCCONTROLCURRENTED) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCBULKHEADED : (UHP_OHCI Offset: 0x28) (R/W 32) UHP OHCI HcBulkHeadED Register -------- */
@@ -416,10 +416,10 @@ typedef union {
 #define UHP_OHCI_HCBULKHEADED_OFFSET        (0x28)                                        /**<  (UHP_OHCI_HCBULKHEADED) UHP OHCI HcBulkHeadED Register  Offset */
 
 #define UHP_OHCI_HCBULKHEADED_BHED_Pos      4                                              /**< (UHP_OHCI_HCBULKHEADED) BulkHeadED Position */
-#define UHP_OHCI_HCBULKHEADED_BHED_Msk      (_U_(0xFFFFFFF) << UHP_OHCI_HCBULKHEADED_BHED_Pos)  /**< (UHP_OHCI_HCBULKHEADED) BulkHeadED Mask */
+#define UHP_OHCI_HCBULKHEADED_BHED_Msk      (_UINT32_(0xFFFFFFF) << UHP_OHCI_HCBULKHEADED_BHED_Pos)  /**< (UHP_OHCI_HCBULKHEADED) BulkHeadED Mask */
 #define UHP_OHCI_HCBULKHEADED_BHED(value)   (UHP_OHCI_HCBULKHEADED_BHED_Msk & ((value) << UHP_OHCI_HCBULKHEADED_BHED_Pos))
-#define UHP_OHCI_HCBULKHEADED_MASK          _U_(0xFFFFFFF0)                                /**< \deprecated (UHP_OHCI_HCBULKHEADED) Register MASK  (Use UHP_OHCI_HCBULKHEADED_Msk instead)  */
-#define UHP_OHCI_HCBULKHEADED_Msk           _U_(0xFFFFFFF0)                                /**< (UHP_OHCI_HCBULKHEADED) Register Mask  */
+#define UHP_OHCI_HCBULKHEADED_MASK          _UINT32_(0xFFFFFFF0)                                /**< \deprecated (UHP_OHCI_HCBULKHEADED) Register MASK  (Use UHP_OHCI_HCBULKHEADED_Msk instead)  */
+#define UHP_OHCI_HCBULKHEADED_Msk           _UINT32_(0xFFFFFFF0)                                /**< (UHP_OHCI_HCBULKHEADED) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCBULKCURRENTED : (UHP_OHCI Offset: 0x2c) (R/W 32) UHP OHCI HcBulkCurrentED Register -------- */
@@ -438,10 +438,10 @@ typedef union {
 #define UHP_OHCI_HCBULKCURRENTED_OFFSET     (0x2C)                                        /**<  (UHP_OHCI_HCBULKCURRENTED) UHP OHCI HcBulkCurrentED Register  Offset */
 
 #define UHP_OHCI_HCBULKCURRENTED_BCED_Pos   4                                              /**< (UHP_OHCI_HCBULKCURRENTED) BulkCurrentED Position */
-#define UHP_OHCI_HCBULKCURRENTED_BCED_Msk   (_U_(0xFFFFFFF) << UHP_OHCI_HCBULKCURRENTED_BCED_Pos)  /**< (UHP_OHCI_HCBULKCURRENTED) BulkCurrentED Mask */
+#define UHP_OHCI_HCBULKCURRENTED_BCED_Msk   (_UINT32_(0xFFFFFFF) << UHP_OHCI_HCBULKCURRENTED_BCED_Pos)  /**< (UHP_OHCI_HCBULKCURRENTED) BulkCurrentED Mask */
 #define UHP_OHCI_HCBULKCURRENTED_BCED(value) (UHP_OHCI_HCBULKCURRENTED_BCED_Msk & ((value) << UHP_OHCI_HCBULKCURRENTED_BCED_Pos))
-#define UHP_OHCI_HCBULKCURRENTED_MASK       _U_(0xFFFFFFF0)                                /**< \deprecated (UHP_OHCI_HCBULKCURRENTED) Register MASK  (Use UHP_OHCI_HCBULKCURRENTED_Msk instead)  */
-#define UHP_OHCI_HCBULKCURRENTED_Msk        _U_(0xFFFFFFF0)                                /**< (UHP_OHCI_HCBULKCURRENTED) Register Mask  */
+#define UHP_OHCI_HCBULKCURRENTED_MASK       _UINT32_(0xFFFFFFF0)                                /**< \deprecated (UHP_OHCI_HCBULKCURRENTED) Register MASK  (Use UHP_OHCI_HCBULKCURRENTED_Msk instead)  */
+#define UHP_OHCI_HCBULKCURRENTED_Msk        _UINT32_(0xFFFFFFF0)                                /**< (UHP_OHCI_HCBULKCURRENTED) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCDONEHEAD : (UHP_OHCI Offset: 0x30) (R/W 32) UHP OHCI HcDoneHead Register -------- */
@@ -460,10 +460,10 @@ typedef union {
 #define UHP_OHCI_HCDONEHEAD_OFFSET          (0x30)                                        /**<  (UHP_OHCI_HCDONEHEAD) UHP OHCI HcDoneHead Register  Offset */
 
 #define UHP_OHCI_HCDONEHEAD_DH_Pos          4                                              /**< (UHP_OHCI_HCDONEHEAD) DoneHead Position */
-#define UHP_OHCI_HCDONEHEAD_DH_Msk          (_U_(0xFFFFFFF) << UHP_OHCI_HCDONEHEAD_DH_Pos)  /**< (UHP_OHCI_HCDONEHEAD) DoneHead Mask */
+#define UHP_OHCI_HCDONEHEAD_DH_Msk          (_UINT32_(0xFFFFFFF) << UHP_OHCI_HCDONEHEAD_DH_Pos)  /**< (UHP_OHCI_HCDONEHEAD) DoneHead Mask */
 #define UHP_OHCI_HCDONEHEAD_DH(value)       (UHP_OHCI_HCDONEHEAD_DH_Msk & ((value) << UHP_OHCI_HCDONEHEAD_DH_Pos))
-#define UHP_OHCI_HCDONEHEAD_MASK            _U_(0xFFFFFFF0)                                /**< \deprecated (UHP_OHCI_HCDONEHEAD) Register MASK  (Use UHP_OHCI_HCDONEHEAD_Msk instead)  */
-#define UHP_OHCI_HCDONEHEAD_Msk             _U_(0xFFFFFFF0)                                /**< (UHP_OHCI_HCDONEHEAD) Register Mask  */
+#define UHP_OHCI_HCDONEHEAD_MASK            _UINT32_(0xFFFFFFF0)                                /**< \deprecated (UHP_OHCI_HCDONEHEAD) Register MASK  (Use UHP_OHCI_HCDONEHEAD_Msk instead)  */
+#define UHP_OHCI_HCDONEHEAD_Msk             _UINT32_(0xFFFFFFF0)                                /**< (UHP_OHCI_HCDONEHEAD) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCFMINTERVAL : (UHP_OHCI Offset: 0x34) (R/W 32) UHP OHCI HcFmInterval Register -------- */
@@ -484,16 +484,16 @@ typedef union {
 #define UHP_OHCI_HCFMINTERVAL_OFFSET        (0x34)                                        /**<  (UHP_OHCI_HCFMINTERVAL) UHP OHCI HcFmInterval Register  Offset */
 
 #define UHP_OHCI_HCFMINTERVAL_FI_Pos        0                                              /**< (UHP_OHCI_HCFMINTERVAL) FrameInterval Position */
-#define UHP_OHCI_HCFMINTERVAL_FI_Msk        (_U_(0x3FFF) << UHP_OHCI_HCFMINTERVAL_FI_Pos)  /**< (UHP_OHCI_HCFMINTERVAL) FrameInterval Mask */
+#define UHP_OHCI_HCFMINTERVAL_FI_Msk        (_UINT32_(0x3FFF) << UHP_OHCI_HCFMINTERVAL_FI_Pos)  /**< (UHP_OHCI_HCFMINTERVAL) FrameInterval Mask */
 #define UHP_OHCI_HCFMINTERVAL_FI(value)     (UHP_OHCI_HCFMINTERVAL_FI_Msk & ((value) << UHP_OHCI_HCFMINTERVAL_FI_Pos))
 #define UHP_OHCI_HCFMINTERVAL_FSMPS_Pos     16                                             /**< (UHP_OHCI_HCFMINTERVAL) FSLargestDataPacket Position */
-#define UHP_OHCI_HCFMINTERVAL_FSMPS_Msk     (_U_(0x7FFF) << UHP_OHCI_HCFMINTERVAL_FSMPS_Pos)  /**< (UHP_OHCI_HCFMINTERVAL) FSLargestDataPacket Mask */
+#define UHP_OHCI_HCFMINTERVAL_FSMPS_Msk     (_UINT32_(0x7FFF) << UHP_OHCI_HCFMINTERVAL_FSMPS_Pos)  /**< (UHP_OHCI_HCFMINTERVAL) FSLargestDataPacket Mask */
 #define UHP_OHCI_HCFMINTERVAL_FSMPS(value)  (UHP_OHCI_HCFMINTERVAL_FSMPS_Msk & ((value) << UHP_OHCI_HCFMINTERVAL_FSMPS_Pos))
 #define UHP_OHCI_HCFMINTERVAL_FIT_Pos       31                                             /**< (UHP_OHCI_HCFMINTERVAL) FrameIntervalToggle Position */
-#define UHP_OHCI_HCFMINTERVAL_FIT_Msk       (_U_(0x1) << UHP_OHCI_HCFMINTERVAL_FIT_Pos)    /**< (UHP_OHCI_HCFMINTERVAL) FrameIntervalToggle Mask */
+#define UHP_OHCI_HCFMINTERVAL_FIT_Msk       (_UINT32_(0x1) << UHP_OHCI_HCFMINTERVAL_FIT_Pos)    /**< (UHP_OHCI_HCFMINTERVAL) FrameIntervalToggle Mask */
 #define UHP_OHCI_HCFMINTERVAL_FIT           UHP_OHCI_HCFMINTERVAL_FIT_Msk                  /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCFMINTERVAL_FIT_Msk instead */
-#define UHP_OHCI_HCFMINTERVAL_MASK          _U_(0xFFFF3FFF)                                /**< \deprecated (UHP_OHCI_HCFMINTERVAL) Register MASK  (Use UHP_OHCI_HCFMINTERVAL_Msk instead)  */
-#define UHP_OHCI_HCFMINTERVAL_Msk           _U_(0xFFFF3FFF)                                /**< (UHP_OHCI_HCFMINTERVAL) Register Mask  */
+#define UHP_OHCI_HCFMINTERVAL_MASK          _UINT32_(0xFFFF3FFF)                                /**< \deprecated (UHP_OHCI_HCFMINTERVAL) Register MASK  (Use UHP_OHCI_HCFMINTERVAL_Msk instead)  */
+#define UHP_OHCI_HCFMINTERVAL_Msk           _UINT32_(0xFFFF3FFF)                                /**< (UHP_OHCI_HCFMINTERVAL) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCFMREMAINING : (UHP_OHCI Offset: 0x38) (R/W 32) UHP OHCI HcFmRemaining Register -------- */
@@ -513,13 +513,13 @@ typedef union {
 #define UHP_OHCI_HCFMREMAINING_OFFSET       (0x38)                                        /**<  (UHP_OHCI_HCFMREMAINING) UHP OHCI HcFmRemaining Register  Offset */
 
 #define UHP_OHCI_HCFMREMAINING_FR_Pos       0                                              /**< (UHP_OHCI_HCFMREMAINING) FrameRemaining Position */
-#define UHP_OHCI_HCFMREMAINING_FR_Msk       (_U_(0x3FFF) << UHP_OHCI_HCFMREMAINING_FR_Pos)  /**< (UHP_OHCI_HCFMREMAINING) FrameRemaining Mask */
+#define UHP_OHCI_HCFMREMAINING_FR_Msk       (_UINT32_(0x3FFF) << UHP_OHCI_HCFMREMAINING_FR_Pos)  /**< (UHP_OHCI_HCFMREMAINING) FrameRemaining Mask */
 #define UHP_OHCI_HCFMREMAINING_FR(value)    (UHP_OHCI_HCFMREMAINING_FR_Msk & ((value) << UHP_OHCI_HCFMREMAINING_FR_Pos))
 #define UHP_OHCI_HCFMREMAINING_FRT_Pos      31                                             /**< (UHP_OHCI_HCFMREMAINING) FrameRemainingToggle Position */
-#define UHP_OHCI_HCFMREMAINING_FRT_Msk      (_U_(0x1) << UHP_OHCI_HCFMREMAINING_FRT_Pos)   /**< (UHP_OHCI_HCFMREMAINING) FrameRemainingToggle Mask */
+#define UHP_OHCI_HCFMREMAINING_FRT_Msk      (_UINT32_(0x1) << UHP_OHCI_HCFMREMAINING_FRT_Pos)   /**< (UHP_OHCI_HCFMREMAINING) FrameRemainingToggle Mask */
 #define UHP_OHCI_HCFMREMAINING_FRT          UHP_OHCI_HCFMREMAINING_FRT_Msk                 /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCFMREMAINING_FRT_Msk instead */
-#define UHP_OHCI_HCFMREMAINING_MASK         _U_(0x80003FFF)                                /**< \deprecated (UHP_OHCI_HCFMREMAINING) Register MASK  (Use UHP_OHCI_HCFMREMAINING_Msk instead)  */
-#define UHP_OHCI_HCFMREMAINING_Msk          _U_(0x80003FFF)                                /**< (UHP_OHCI_HCFMREMAINING) Register Mask  */
+#define UHP_OHCI_HCFMREMAINING_MASK         _UINT32_(0x80003FFF)                                /**< \deprecated (UHP_OHCI_HCFMREMAINING) Register MASK  (Use UHP_OHCI_HCFMREMAINING_Msk instead)  */
+#define UHP_OHCI_HCFMREMAINING_Msk          _UINT32_(0x80003FFF)                                /**< (UHP_OHCI_HCFMREMAINING) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCFMNUMBER : (UHP_OHCI Offset: 0x3c) (R/W 32) UHP OHCI HcFmNumber Register -------- */
@@ -538,10 +538,10 @@ typedef union {
 #define UHP_OHCI_HCFMNUMBER_OFFSET          (0x3C)                                        /**<  (UHP_OHCI_HCFMNUMBER) UHP OHCI HcFmNumber Register  Offset */
 
 #define UHP_OHCI_HCFMNUMBER_FN_Pos          0                                              /**< (UHP_OHCI_HCFMNUMBER) FrameNumber Position */
-#define UHP_OHCI_HCFMNUMBER_FN_Msk          (_U_(0xFFFF) << UHP_OHCI_HCFMNUMBER_FN_Pos)    /**< (UHP_OHCI_HCFMNUMBER) FrameNumber Mask */
+#define UHP_OHCI_HCFMNUMBER_FN_Msk          (_UINT32_(0xFFFF) << UHP_OHCI_HCFMNUMBER_FN_Pos)    /**< (UHP_OHCI_HCFMNUMBER) FrameNumber Mask */
 #define UHP_OHCI_HCFMNUMBER_FN(value)       (UHP_OHCI_HCFMNUMBER_FN_Msk & ((value) << UHP_OHCI_HCFMNUMBER_FN_Pos))
-#define UHP_OHCI_HCFMNUMBER_MASK            _U_(0xFFFF)                                    /**< \deprecated (UHP_OHCI_HCFMNUMBER) Register MASK  (Use UHP_OHCI_HCFMNUMBER_Msk instead)  */
-#define UHP_OHCI_HCFMNUMBER_Msk             _U_(0xFFFF)                                    /**< (UHP_OHCI_HCFMNUMBER) Register Mask  */
+#define UHP_OHCI_HCFMNUMBER_MASK            _UINT32_(0xFFFF)                                    /**< \deprecated (UHP_OHCI_HCFMNUMBER) Register MASK  (Use UHP_OHCI_HCFMNUMBER_Msk instead)  */
+#define UHP_OHCI_HCFMNUMBER_Msk             _UINT32_(0xFFFF)                                    /**< (UHP_OHCI_HCFMNUMBER) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCPERIODICSTART : (UHP_OHCI Offset: 0x40) (R/W 32) UHP OHCI HcPeriodicStart Register -------- */
@@ -560,10 +560,10 @@ typedef union {
 #define UHP_OHCI_HCPERIODICSTART_OFFSET     (0x40)                                        /**<  (UHP_OHCI_HCPERIODICSTART) UHP OHCI HcPeriodicStart Register  Offset */
 
 #define UHP_OHCI_HCPERIODICSTART_PS_Pos     0                                              /**< (UHP_OHCI_HCPERIODICSTART) PeriodicStart Position */
-#define UHP_OHCI_HCPERIODICSTART_PS_Msk     (_U_(0x3FFF) << UHP_OHCI_HCPERIODICSTART_PS_Pos)  /**< (UHP_OHCI_HCPERIODICSTART) PeriodicStart Mask */
+#define UHP_OHCI_HCPERIODICSTART_PS_Msk     (_UINT32_(0x3FFF) << UHP_OHCI_HCPERIODICSTART_PS_Pos)  /**< (UHP_OHCI_HCPERIODICSTART) PeriodicStart Mask */
 #define UHP_OHCI_HCPERIODICSTART_PS(value)  (UHP_OHCI_HCPERIODICSTART_PS_Msk & ((value) << UHP_OHCI_HCPERIODICSTART_PS_Pos))
-#define UHP_OHCI_HCPERIODICSTART_MASK       _U_(0x3FFF)                                    /**< \deprecated (UHP_OHCI_HCPERIODICSTART) Register MASK  (Use UHP_OHCI_HCPERIODICSTART_Msk instead)  */
-#define UHP_OHCI_HCPERIODICSTART_Msk        _U_(0x3FFF)                                    /**< (UHP_OHCI_HCPERIODICSTART) Register Mask  */
+#define UHP_OHCI_HCPERIODICSTART_MASK       _UINT32_(0x3FFF)                                    /**< \deprecated (UHP_OHCI_HCPERIODICSTART) Register MASK  (Use UHP_OHCI_HCPERIODICSTART_Msk instead)  */
+#define UHP_OHCI_HCPERIODICSTART_Msk        _UINT32_(0x3FFF)                                    /**< (UHP_OHCI_HCPERIODICSTART) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCLSTHRESHOLD : (UHP_OHCI Offset: 0x44) (R/W 32) UHP OHCI HcLSThreshold Register -------- */
@@ -582,10 +582,10 @@ typedef union {
 #define UHP_OHCI_HCLSTHRESHOLD_OFFSET       (0x44)                                        /**<  (UHP_OHCI_HCLSTHRESHOLD) UHP OHCI HcLSThreshold Register  Offset */
 
 #define UHP_OHCI_HCLSTHRESHOLD_LST_Pos      0                                              /**< (UHP_OHCI_HCLSTHRESHOLD) LSThreshold Position */
-#define UHP_OHCI_HCLSTHRESHOLD_LST_Msk      (_U_(0xFFF) << UHP_OHCI_HCLSTHRESHOLD_LST_Pos)  /**< (UHP_OHCI_HCLSTHRESHOLD) LSThreshold Mask */
+#define UHP_OHCI_HCLSTHRESHOLD_LST_Msk      (_UINT32_(0xFFF) << UHP_OHCI_HCLSTHRESHOLD_LST_Pos)  /**< (UHP_OHCI_HCLSTHRESHOLD) LSThreshold Mask */
 #define UHP_OHCI_HCLSTHRESHOLD_LST(value)   (UHP_OHCI_HCLSTHRESHOLD_LST_Msk & ((value) << UHP_OHCI_HCLSTHRESHOLD_LST_Pos))
-#define UHP_OHCI_HCLSTHRESHOLD_MASK         _U_(0xFFF)                                     /**< \deprecated (UHP_OHCI_HCLSTHRESHOLD) Register MASK  (Use UHP_OHCI_HCLSTHRESHOLD_Msk instead)  */
-#define UHP_OHCI_HCLSTHRESHOLD_Msk          _U_(0xFFF)                                     /**< (UHP_OHCI_HCLSTHRESHOLD) Register Mask  */
+#define UHP_OHCI_HCLSTHRESHOLD_MASK         _UINT32_(0xFFF)                                     /**< \deprecated (UHP_OHCI_HCLSTHRESHOLD) Register MASK  (Use UHP_OHCI_HCLSTHRESHOLD_Msk instead)  */
+#define UHP_OHCI_HCLSTHRESHOLD_Msk          _UINT32_(0xFFF)                                     /**< (UHP_OHCI_HCLSTHRESHOLD) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCRHDESCRIPTORA : (UHP_OHCI Offset: 0x48) (R/W 32) UHP OHCI HcRhDescriptorA Register -------- */
@@ -610,28 +610,28 @@ typedef union {
 #define UHP_OHCI_HCRHDESCRIPTORA_OFFSET     (0x48)                                        /**<  (UHP_OHCI_HCRHDESCRIPTORA) UHP OHCI HcRhDescriptorA Register  Offset */
 
 #define UHP_OHCI_HCRHDESCRIPTORA_NDP_Pos    0                                              /**< (UHP_OHCI_HCRHDESCRIPTORA) NumberDownstreamPorts Position */
-#define UHP_OHCI_HCRHDESCRIPTORA_NDP_Msk    (_U_(0xFF) << UHP_OHCI_HCRHDESCRIPTORA_NDP_Pos)  /**< (UHP_OHCI_HCRHDESCRIPTORA) NumberDownstreamPorts Mask */
+#define UHP_OHCI_HCRHDESCRIPTORA_NDP_Msk    (_UINT32_(0xFF) << UHP_OHCI_HCRHDESCRIPTORA_NDP_Pos)  /**< (UHP_OHCI_HCRHDESCRIPTORA) NumberDownstreamPorts Mask */
 #define UHP_OHCI_HCRHDESCRIPTORA_NDP(value) (UHP_OHCI_HCRHDESCRIPTORA_NDP_Msk & ((value) << UHP_OHCI_HCRHDESCRIPTORA_NDP_Pos))
 #define UHP_OHCI_HCRHDESCRIPTORA_PSM_Pos    8                                              /**< (UHP_OHCI_HCRHDESCRIPTORA) PowerSwitchingMode Position */
-#define UHP_OHCI_HCRHDESCRIPTORA_PSM_Msk    (_U_(0x1) << UHP_OHCI_HCRHDESCRIPTORA_PSM_Pos)  /**< (UHP_OHCI_HCRHDESCRIPTORA) PowerSwitchingMode Mask */
+#define UHP_OHCI_HCRHDESCRIPTORA_PSM_Msk    (_UINT32_(0x1) << UHP_OHCI_HCRHDESCRIPTORA_PSM_Pos)  /**< (UHP_OHCI_HCRHDESCRIPTORA) PowerSwitchingMode Mask */
 #define UHP_OHCI_HCRHDESCRIPTORA_PSM        UHP_OHCI_HCRHDESCRIPTORA_PSM_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHDESCRIPTORA_PSM_Msk instead */
 #define UHP_OHCI_HCRHDESCRIPTORA_NPS_Pos    9                                              /**< (UHP_OHCI_HCRHDESCRIPTORA) NoPowerSwitching Position */
-#define UHP_OHCI_HCRHDESCRIPTORA_NPS_Msk    (_U_(0x1) << UHP_OHCI_HCRHDESCRIPTORA_NPS_Pos)  /**< (UHP_OHCI_HCRHDESCRIPTORA) NoPowerSwitching Mask */
+#define UHP_OHCI_HCRHDESCRIPTORA_NPS_Msk    (_UINT32_(0x1) << UHP_OHCI_HCRHDESCRIPTORA_NPS_Pos)  /**< (UHP_OHCI_HCRHDESCRIPTORA) NoPowerSwitching Mask */
 #define UHP_OHCI_HCRHDESCRIPTORA_NPS        UHP_OHCI_HCRHDESCRIPTORA_NPS_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHDESCRIPTORA_NPS_Msk instead */
 #define UHP_OHCI_HCRHDESCRIPTORA_DT_Pos     10                                             /**< (UHP_OHCI_HCRHDESCRIPTORA) DeviceType Position */
-#define UHP_OHCI_HCRHDESCRIPTORA_DT_Msk     (_U_(0x1) << UHP_OHCI_HCRHDESCRIPTORA_DT_Pos)  /**< (UHP_OHCI_HCRHDESCRIPTORA) DeviceType Mask */
+#define UHP_OHCI_HCRHDESCRIPTORA_DT_Msk     (_UINT32_(0x1) << UHP_OHCI_HCRHDESCRIPTORA_DT_Pos)  /**< (UHP_OHCI_HCRHDESCRIPTORA) DeviceType Mask */
 #define UHP_OHCI_HCRHDESCRIPTORA_DT         UHP_OHCI_HCRHDESCRIPTORA_DT_Msk                /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHDESCRIPTORA_DT_Msk instead */
 #define UHP_OHCI_HCRHDESCRIPTORA_OCPM_Pos   11                                             /**< (UHP_OHCI_HCRHDESCRIPTORA) OverCurrentProtectionMode Position */
-#define UHP_OHCI_HCRHDESCRIPTORA_OCPM_Msk   (_U_(0x1) << UHP_OHCI_HCRHDESCRIPTORA_OCPM_Pos)  /**< (UHP_OHCI_HCRHDESCRIPTORA) OverCurrentProtectionMode Mask */
+#define UHP_OHCI_HCRHDESCRIPTORA_OCPM_Msk   (_UINT32_(0x1) << UHP_OHCI_HCRHDESCRIPTORA_OCPM_Pos)  /**< (UHP_OHCI_HCRHDESCRIPTORA) OverCurrentProtectionMode Mask */
 #define UHP_OHCI_HCRHDESCRIPTORA_OCPM       UHP_OHCI_HCRHDESCRIPTORA_OCPM_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHDESCRIPTORA_OCPM_Msk instead */
 #define UHP_OHCI_HCRHDESCRIPTORA_NOCP_Pos   12                                             /**< (UHP_OHCI_HCRHDESCRIPTORA) NoOverCurrentProtection Position */
-#define UHP_OHCI_HCRHDESCRIPTORA_NOCP_Msk   (_U_(0x1) << UHP_OHCI_HCRHDESCRIPTORA_NOCP_Pos)  /**< (UHP_OHCI_HCRHDESCRIPTORA) NoOverCurrentProtection Mask */
+#define UHP_OHCI_HCRHDESCRIPTORA_NOCP_Msk   (_UINT32_(0x1) << UHP_OHCI_HCRHDESCRIPTORA_NOCP_Pos)  /**< (UHP_OHCI_HCRHDESCRIPTORA) NoOverCurrentProtection Mask */
 #define UHP_OHCI_HCRHDESCRIPTORA_NOCP       UHP_OHCI_HCRHDESCRIPTORA_NOCP_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHDESCRIPTORA_NOCP_Msk instead */
 #define UHP_OHCI_HCRHDESCRIPTORA_POTPGT_Pos 24                                             /**< (UHP_OHCI_HCRHDESCRIPTORA) PowerOnToPowerGoodTime Position */
-#define UHP_OHCI_HCRHDESCRIPTORA_POTPGT_Msk (_U_(0xFF) << UHP_OHCI_HCRHDESCRIPTORA_POTPGT_Pos)  /**< (UHP_OHCI_HCRHDESCRIPTORA) PowerOnToPowerGoodTime Mask */
+#define UHP_OHCI_HCRHDESCRIPTORA_POTPGT_Msk (_UINT32_(0xFF) << UHP_OHCI_HCRHDESCRIPTORA_POTPGT_Pos)  /**< (UHP_OHCI_HCRHDESCRIPTORA) PowerOnToPowerGoodTime Mask */
 #define UHP_OHCI_HCRHDESCRIPTORA_POTPGT(value) (UHP_OHCI_HCRHDESCRIPTORA_POTPGT_Msk & ((value) << UHP_OHCI_HCRHDESCRIPTORA_POTPGT_Pos))
-#define UHP_OHCI_HCRHDESCRIPTORA_MASK       _U_(0xFF001FFF)                                /**< \deprecated (UHP_OHCI_HCRHDESCRIPTORA) Register MASK  (Use UHP_OHCI_HCRHDESCRIPTORA_Msk instead)  */
-#define UHP_OHCI_HCRHDESCRIPTORA_Msk        _U_(0xFF001FFF)                                /**< (UHP_OHCI_HCRHDESCRIPTORA) Register Mask  */
+#define UHP_OHCI_HCRHDESCRIPTORA_MASK       _UINT32_(0xFF001FFF)                                /**< \deprecated (UHP_OHCI_HCRHDESCRIPTORA) Register MASK  (Use UHP_OHCI_HCRHDESCRIPTORA_Msk instead)  */
+#define UHP_OHCI_HCRHDESCRIPTORA_Msk        _UINT32_(0xFF001FFF)                                /**< (UHP_OHCI_HCRHDESCRIPTORA) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCRHDESCRIPTORB : (UHP_OHCI Offset: 0x4c) (R/W 32) UHP OHCI HcRhDescriptorB Register -------- */
@@ -650,10 +650,10 @@ typedef union {
 #define UHP_OHCI_HCRHDESCRIPTORB_OFFSET     (0x4C)                                        /**<  (UHP_OHCI_HCRHDESCRIPTORB) UHP OHCI HcRhDescriptorB Register  Offset */
 
 #define UHP_OHCI_HCRHDESCRIPTORB_PPCM_Pos   16                                             /**< (UHP_OHCI_HCRHDESCRIPTORB) PortPowerControlMask Position */
-#define UHP_OHCI_HCRHDESCRIPTORB_PPCM_Msk   (_U_(0xFFFF) << UHP_OHCI_HCRHDESCRIPTORB_PPCM_Pos)  /**< (UHP_OHCI_HCRHDESCRIPTORB) PortPowerControlMask Mask */
+#define UHP_OHCI_HCRHDESCRIPTORB_PPCM_Msk   (_UINT32_(0xFFFF) << UHP_OHCI_HCRHDESCRIPTORB_PPCM_Pos)  /**< (UHP_OHCI_HCRHDESCRIPTORB) PortPowerControlMask Mask */
 #define UHP_OHCI_HCRHDESCRIPTORB_PPCM(value) (UHP_OHCI_HCRHDESCRIPTORB_PPCM_Msk & ((value) << UHP_OHCI_HCRHDESCRIPTORB_PPCM_Pos))
-#define UHP_OHCI_HCRHDESCRIPTORB_MASK       _U_(0xFFFF0000)                                /**< \deprecated (UHP_OHCI_HCRHDESCRIPTORB) Register MASK  (Use UHP_OHCI_HCRHDESCRIPTORB_Msk instead)  */
-#define UHP_OHCI_HCRHDESCRIPTORB_Msk        _U_(0xFFFF0000)                                /**< (UHP_OHCI_HCRHDESCRIPTORB) Register Mask  */
+#define UHP_OHCI_HCRHDESCRIPTORB_MASK       _UINT32_(0xFFFF0000)                                /**< \deprecated (UHP_OHCI_HCRHDESCRIPTORB) Register MASK  (Use UHP_OHCI_HCRHDESCRIPTORB_Msk instead)  */
+#define UHP_OHCI_HCRHDESCRIPTORB_Msk        _UINT32_(0xFFFF0000)                                /**< (UHP_OHCI_HCRHDESCRIPTORB) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCRHSTATUS : (UHP_OHCI Offset: 0x50) (R/W 32) UHP OHCI HcRhStatus Register -------- */
@@ -678,25 +678,25 @@ typedef union {
 #define UHP_OHCI_HCRHSTATUS_OFFSET          (0x50)                                        /**<  (UHP_OHCI_HCRHSTATUS) UHP OHCI HcRhStatus Register  Offset */
 
 #define UHP_OHCI_HCRHSTATUS_LPS_Pos         0                                              /**< (UHP_OHCI_HCRHSTATUS) LocalPowerStatus Position */
-#define UHP_OHCI_HCRHSTATUS_LPS_Msk         (_U_(0x1) << UHP_OHCI_HCRHSTATUS_LPS_Pos)      /**< (UHP_OHCI_HCRHSTATUS) LocalPowerStatus Mask */
+#define UHP_OHCI_HCRHSTATUS_LPS_Msk         (_UINT32_(0x1) << UHP_OHCI_HCRHSTATUS_LPS_Pos)      /**< (UHP_OHCI_HCRHSTATUS) LocalPowerStatus Mask */
 #define UHP_OHCI_HCRHSTATUS_LPS             UHP_OHCI_HCRHSTATUS_LPS_Msk                    /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHSTATUS_LPS_Msk instead */
 #define UHP_OHCI_HCRHSTATUS_OCI_Pos         1                                              /**< (UHP_OHCI_HCRHSTATUS) OverCurrentIndicator Position */
-#define UHP_OHCI_HCRHSTATUS_OCI_Msk         (_U_(0x1) << UHP_OHCI_HCRHSTATUS_OCI_Pos)      /**< (UHP_OHCI_HCRHSTATUS) OverCurrentIndicator Mask */
+#define UHP_OHCI_HCRHSTATUS_OCI_Msk         (_UINT32_(0x1) << UHP_OHCI_HCRHSTATUS_OCI_Pos)      /**< (UHP_OHCI_HCRHSTATUS) OverCurrentIndicator Mask */
 #define UHP_OHCI_HCRHSTATUS_OCI             UHP_OHCI_HCRHSTATUS_OCI_Msk                    /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHSTATUS_OCI_Msk instead */
 #define UHP_OHCI_HCRHSTATUS_DRWE_Pos        15                                             /**< (UHP_OHCI_HCRHSTATUS) DeviceRemoteWakeupEnable Position */
-#define UHP_OHCI_HCRHSTATUS_DRWE_Msk        (_U_(0x1) << UHP_OHCI_HCRHSTATUS_DRWE_Pos)     /**< (UHP_OHCI_HCRHSTATUS) DeviceRemoteWakeupEnable Mask */
+#define UHP_OHCI_HCRHSTATUS_DRWE_Msk        (_UINT32_(0x1) << UHP_OHCI_HCRHSTATUS_DRWE_Pos)     /**< (UHP_OHCI_HCRHSTATUS) DeviceRemoteWakeupEnable Mask */
 #define UHP_OHCI_HCRHSTATUS_DRWE            UHP_OHCI_HCRHSTATUS_DRWE_Msk                   /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHSTATUS_DRWE_Msk instead */
 #define UHP_OHCI_HCRHSTATUS_LPSC_Pos        16                                             /**< (UHP_OHCI_HCRHSTATUS) LocalPowerStatusChange Position */
-#define UHP_OHCI_HCRHSTATUS_LPSC_Msk        (_U_(0x1) << UHP_OHCI_HCRHSTATUS_LPSC_Pos)     /**< (UHP_OHCI_HCRHSTATUS) LocalPowerStatusChange Mask */
+#define UHP_OHCI_HCRHSTATUS_LPSC_Msk        (_UINT32_(0x1) << UHP_OHCI_HCRHSTATUS_LPSC_Pos)     /**< (UHP_OHCI_HCRHSTATUS) LocalPowerStatusChange Mask */
 #define UHP_OHCI_HCRHSTATUS_LPSC            UHP_OHCI_HCRHSTATUS_LPSC_Msk                   /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHSTATUS_LPSC_Msk instead */
 #define UHP_OHCI_HCRHSTATUS_CCIC_Pos        17                                             /**< (UHP_OHCI_HCRHSTATUS) OverCurrentIndicatorChange Position */
-#define UHP_OHCI_HCRHSTATUS_CCIC_Msk        (_U_(0x1) << UHP_OHCI_HCRHSTATUS_CCIC_Pos)     /**< (UHP_OHCI_HCRHSTATUS) OverCurrentIndicatorChange Mask */
+#define UHP_OHCI_HCRHSTATUS_CCIC_Msk        (_UINT32_(0x1) << UHP_OHCI_HCRHSTATUS_CCIC_Pos)     /**< (UHP_OHCI_HCRHSTATUS) OverCurrentIndicatorChange Mask */
 #define UHP_OHCI_HCRHSTATUS_CCIC            UHP_OHCI_HCRHSTATUS_CCIC_Msk                   /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHSTATUS_CCIC_Msk instead */
 #define UHP_OHCI_HCRHSTATUS_CRWE_Pos        31                                             /**< (UHP_OHCI_HCRHSTATUS) ClearRemoteWakeupEnable Position */
-#define UHP_OHCI_HCRHSTATUS_CRWE_Msk        (_U_(0x1) << UHP_OHCI_HCRHSTATUS_CRWE_Pos)     /**< (UHP_OHCI_HCRHSTATUS) ClearRemoteWakeupEnable Mask */
+#define UHP_OHCI_HCRHSTATUS_CRWE_Msk        (_UINT32_(0x1) << UHP_OHCI_HCRHSTATUS_CRWE_Pos)     /**< (UHP_OHCI_HCRHSTATUS) ClearRemoteWakeupEnable Mask */
 #define UHP_OHCI_HCRHSTATUS_CRWE            UHP_OHCI_HCRHSTATUS_CRWE_Msk                   /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHSTATUS_CRWE_Msk instead */
-#define UHP_OHCI_HCRHSTATUS_MASK            _U_(0x80038003)                                /**< \deprecated (UHP_OHCI_HCRHSTATUS) Register MASK  (Use UHP_OHCI_HCRHSTATUS_Msk instead)  */
-#define UHP_OHCI_HCRHSTATUS_Msk             _U_(0x80038003)                                /**< (UHP_OHCI_HCRHSTATUS) Register Mask  */
+#define UHP_OHCI_HCRHSTATUS_MASK            _UINT32_(0x80038003)                                /**< \deprecated (UHP_OHCI_HCRHSTATUS) Register MASK  (Use UHP_OHCI_HCRHSTATUS_Msk instead)  */
+#define UHP_OHCI_HCRHSTATUS_Msk             _UINT32_(0x80038003)                                /**< (UHP_OHCI_HCRHSTATUS) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCRHPORTSTATUS0 : (UHP_OHCI Offset: 0x54) (R/W 32) UHP OHCI HcRhPortStatus 0 Register -------- */
@@ -728,43 +728,43 @@ typedef union {
 #define UHP_OHCI_HCRHPORTSTATUS0_OFFSET     (0x54)                                        /**<  (UHP_OHCI_HCRHPORTSTATUS0) UHP OHCI HcRhPortStatus 0 Register  Offset */
 
 #define UHP_OHCI_HCRHPORTSTATUS0_CCS_Pos    0                                              /**< (UHP_OHCI_HCRHPORTSTATUS0) CurrentConnectStatus Position */
-#define UHP_OHCI_HCRHPORTSTATUS0_CCS_Msk    (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_CCS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) CurrentConnectStatus Mask */
+#define UHP_OHCI_HCRHPORTSTATUS0_CCS_Msk    (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_CCS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) CurrentConnectStatus Mask */
 #define UHP_OHCI_HCRHPORTSTATUS0_CCS        UHP_OHCI_HCRHPORTSTATUS0_CCS_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS0_CCS_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS0_PES_Pos    1                                              /**< (UHP_OHCI_HCRHPORTSTATUS0) PortEnableStatus Position */
-#define UHP_OHCI_HCRHPORTSTATUS0_PES_Msk    (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_PES_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) PortEnableStatus Mask */
+#define UHP_OHCI_HCRHPORTSTATUS0_PES_Msk    (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_PES_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) PortEnableStatus Mask */
 #define UHP_OHCI_HCRHPORTSTATUS0_PES        UHP_OHCI_HCRHPORTSTATUS0_PES_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS0_PES_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS0_PSS_Pos    2                                              /**< (UHP_OHCI_HCRHPORTSTATUS0) PortSuspendStatus Position */
-#define UHP_OHCI_HCRHPORTSTATUS0_PSS_Msk    (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_PSS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) PortSuspendStatus Mask */
+#define UHP_OHCI_HCRHPORTSTATUS0_PSS_Msk    (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_PSS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) PortSuspendStatus Mask */
 #define UHP_OHCI_HCRHPORTSTATUS0_PSS        UHP_OHCI_HCRHPORTSTATUS0_PSS_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS0_PSS_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS0_POCI_Pos   3                                              /**< (UHP_OHCI_HCRHPORTSTATUS0) PortOverCurrentIndicator Position */
-#define UHP_OHCI_HCRHPORTSTATUS0_POCI_Msk   (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_POCI_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) PortOverCurrentIndicator Mask */
+#define UHP_OHCI_HCRHPORTSTATUS0_POCI_Msk   (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_POCI_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) PortOverCurrentIndicator Mask */
 #define UHP_OHCI_HCRHPORTSTATUS0_POCI       UHP_OHCI_HCRHPORTSTATUS0_POCI_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS0_POCI_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS0_PRS_Pos    4                                              /**< (UHP_OHCI_HCRHPORTSTATUS0) PortResetStatus Position */
-#define UHP_OHCI_HCRHPORTSTATUS0_PRS_Msk    (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_PRS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) PortResetStatus Mask */
+#define UHP_OHCI_HCRHPORTSTATUS0_PRS_Msk    (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_PRS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) PortResetStatus Mask */
 #define UHP_OHCI_HCRHPORTSTATUS0_PRS        UHP_OHCI_HCRHPORTSTATUS0_PRS_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS0_PRS_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS0_PPS_Pos    8                                              /**< (UHP_OHCI_HCRHPORTSTATUS0) PortPowerStatus Position */
-#define UHP_OHCI_HCRHPORTSTATUS0_PPS_Msk    (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_PPS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) PortPowerStatus Mask */
+#define UHP_OHCI_HCRHPORTSTATUS0_PPS_Msk    (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_PPS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) PortPowerStatus Mask */
 #define UHP_OHCI_HCRHPORTSTATUS0_PPS        UHP_OHCI_HCRHPORTSTATUS0_PPS_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS0_PPS_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS0_LSDA_Pos   9                                              /**< (UHP_OHCI_HCRHPORTSTATUS0) LowSpeedDeviceAttached Position */
-#define UHP_OHCI_HCRHPORTSTATUS0_LSDA_Msk   (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_LSDA_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) LowSpeedDeviceAttached Mask */
+#define UHP_OHCI_HCRHPORTSTATUS0_LSDA_Msk   (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_LSDA_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) LowSpeedDeviceAttached Mask */
 #define UHP_OHCI_HCRHPORTSTATUS0_LSDA       UHP_OHCI_HCRHPORTSTATUS0_LSDA_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS0_LSDA_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS0_CSC_Pos    16                                             /**< (UHP_OHCI_HCRHPORTSTATUS0) ConnectStatusChange Position */
-#define UHP_OHCI_HCRHPORTSTATUS0_CSC_Msk    (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_CSC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) ConnectStatusChange Mask */
+#define UHP_OHCI_HCRHPORTSTATUS0_CSC_Msk    (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_CSC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) ConnectStatusChange Mask */
 #define UHP_OHCI_HCRHPORTSTATUS0_CSC        UHP_OHCI_HCRHPORTSTATUS0_CSC_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS0_CSC_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS0_PESC_Pos   17                                             /**< (UHP_OHCI_HCRHPORTSTATUS0) PortEnableStatusChange Position */
-#define UHP_OHCI_HCRHPORTSTATUS0_PESC_Msk   (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_PESC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) PortEnableStatusChange Mask */
+#define UHP_OHCI_HCRHPORTSTATUS0_PESC_Msk   (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_PESC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) PortEnableStatusChange Mask */
 #define UHP_OHCI_HCRHPORTSTATUS0_PESC       UHP_OHCI_HCRHPORTSTATUS0_PESC_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS0_PESC_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS0_PSSC_Pos   18                                             /**< (UHP_OHCI_HCRHPORTSTATUS0) PortSuspendStatusChange Position */
-#define UHP_OHCI_HCRHPORTSTATUS0_PSSC_Msk   (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_PSSC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) PortSuspendStatusChange Mask */
+#define UHP_OHCI_HCRHPORTSTATUS0_PSSC_Msk   (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_PSSC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) PortSuspendStatusChange Mask */
 #define UHP_OHCI_HCRHPORTSTATUS0_PSSC       UHP_OHCI_HCRHPORTSTATUS0_PSSC_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS0_PSSC_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS0_OCIC_Pos   19                                             /**< (UHP_OHCI_HCRHPORTSTATUS0) PortOverCurrentIndicatorChange Position */
-#define UHP_OHCI_HCRHPORTSTATUS0_OCIC_Msk   (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_OCIC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) PortOverCurrentIndicatorChange Mask */
+#define UHP_OHCI_HCRHPORTSTATUS0_OCIC_Msk   (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_OCIC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) PortOverCurrentIndicatorChange Mask */
 #define UHP_OHCI_HCRHPORTSTATUS0_OCIC       UHP_OHCI_HCRHPORTSTATUS0_OCIC_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS0_OCIC_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS0_PRSC_Pos   20                                             /**< (UHP_OHCI_HCRHPORTSTATUS0) PortResetStatusChange Position */
-#define UHP_OHCI_HCRHPORTSTATUS0_PRSC_Msk   (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_PRSC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) PortResetStatusChange Mask */
+#define UHP_OHCI_HCRHPORTSTATUS0_PRSC_Msk   (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS0_PRSC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS0) PortResetStatusChange Mask */
 #define UHP_OHCI_HCRHPORTSTATUS0_PRSC       UHP_OHCI_HCRHPORTSTATUS0_PRSC_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS0_PRSC_Msk instead */
-#define UHP_OHCI_HCRHPORTSTATUS0_MASK       _U_(0x1F031F)                                  /**< \deprecated (UHP_OHCI_HCRHPORTSTATUS0) Register MASK  (Use UHP_OHCI_HCRHPORTSTATUS0_Msk instead)  */
-#define UHP_OHCI_HCRHPORTSTATUS0_Msk        _U_(0x1F031F)                                  /**< (UHP_OHCI_HCRHPORTSTATUS0) Register Mask  */
+#define UHP_OHCI_HCRHPORTSTATUS0_MASK       _UINT32_(0x1F031F)                                  /**< \deprecated (UHP_OHCI_HCRHPORTSTATUS0) Register MASK  (Use UHP_OHCI_HCRHPORTSTATUS0_Msk instead)  */
+#define UHP_OHCI_HCRHPORTSTATUS0_Msk        _UINT32_(0x1F031F)                                  /**< (UHP_OHCI_HCRHPORTSTATUS0) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCRHPORTSTATUS1 : (UHP_OHCI Offset: 0x58) (R/W 32) UHP OHCI HcRhPortStatus 1 Register -------- */
@@ -796,43 +796,43 @@ typedef union {
 #define UHP_OHCI_HCRHPORTSTATUS1_OFFSET     (0x58)                                        /**<  (UHP_OHCI_HCRHPORTSTATUS1) UHP OHCI HcRhPortStatus 1 Register  Offset */
 
 #define UHP_OHCI_HCRHPORTSTATUS1_CCS_Pos    0                                              /**< (UHP_OHCI_HCRHPORTSTATUS1) CurrentConnectStatus Position */
-#define UHP_OHCI_HCRHPORTSTATUS1_CCS_Msk    (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_CCS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) CurrentConnectStatus Mask */
+#define UHP_OHCI_HCRHPORTSTATUS1_CCS_Msk    (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_CCS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) CurrentConnectStatus Mask */
 #define UHP_OHCI_HCRHPORTSTATUS1_CCS        UHP_OHCI_HCRHPORTSTATUS1_CCS_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS1_CCS_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS1_PES_Pos    1                                              /**< (UHP_OHCI_HCRHPORTSTATUS1) PortEnableStatus Position */
-#define UHP_OHCI_HCRHPORTSTATUS1_PES_Msk    (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_PES_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) PortEnableStatus Mask */
+#define UHP_OHCI_HCRHPORTSTATUS1_PES_Msk    (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_PES_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) PortEnableStatus Mask */
 #define UHP_OHCI_HCRHPORTSTATUS1_PES        UHP_OHCI_HCRHPORTSTATUS1_PES_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS1_PES_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS1_PSS_Pos    2                                              /**< (UHP_OHCI_HCRHPORTSTATUS1) PortSuspendStatus Position */
-#define UHP_OHCI_HCRHPORTSTATUS1_PSS_Msk    (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_PSS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) PortSuspendStatus Mask */
+#define UHP_OHCI_HCRHPORTSTATUS1_PSS_Msk    (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_PSS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) PortSuspendStatus Mask */
 #define UHP_OHCI_HCRHPORTSTATUS1_PSS        UHP_OHCI_HCRHPORTSTATUS1_PSS_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS1_PSS_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS1_POCI_Pos   3                                              /**< (UHP_OHCI_HCRHPORTSTATUS1) PortOverCurrentIndicator Position */
-#define UHP_OHCI_HCRHPORTSTATUS1_POCI_Msk   (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_POCI_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) PortOverCurrentIndicator Mask */
+#define UHP_OHCI_HCRHPORTSTATUS1_POCI_Msk   (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_POCI_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) PortOverCurrentIndicator Mask */
 #define UHP_OHCI_HCRHPORTSTATUS1_POCI       UHP_OHCI_HCRHPORTSTATUS1_POCI_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS1_POCI_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS1_PRS_Pos    4                                              /**< (UHP_OHCI_HCRHPORTSTATUS1) PortResetStatus Position */
-#define UHP_OHCI_HCRHPORTSTATUS1_PRS_Msk    (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_PRS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) PortResetStatus Mask */
+#define UHP_OHCI_HCRHPORTSTATUS1_PRS_Msk    (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_PRS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) PortResetStatus Mask */
 #define UHP_OHCI_HCRHPORTSTATUS1_PRS        UHP_OHCI_HCRHPORTSTATUS1_PRS_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS1_PRS_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS1_PPS_Pos    8                                              /**< (UHP_OHCI_HCRHPORTSTATUS1) PortPowerStatus Position */
-#define UHP_OHCI_HCRHPORTSTATUS1_PPS_Msk    (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_PPS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) PortPowerStatus Mask */
+#define UHP_OHCI_HCRHPORTSTATUS1_PPS_Msk    (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_PPS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) PortPowerStatus Mask */
 #define UHP_OHCI_HCRHPORTSTATUS1_PPS        UHP_OHCI_HCRHPORTSTATUS1_PPS_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS1_PPS_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS1_LSDA_Pos   9                                              /**< (UHP_OHCI_HCRHPORTSTATUS1) LowSpeedDeviceAttached Position */
-#define UHP_OHCI_HCRHPORTSTATUS1_LSDA_Msk   (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_LSDA_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) LowSpeedDeviceAttached Mask */
+#define UHP_OHCI_HCRHPORTSTATUS1_LSDA_Msk   (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_LSDA_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) LowSpeedDeviceAttached Mask */
 #define UHP_OHCI_HCRHPORTSTATUS1_LSDA       UHP_OHCI_HCRHPORTSTATUS1_LSDA_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS1_LSDA_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS1_CSC_Pos    16                                             /**< (UHP_OHCI_HCRHPORTSTATUS1) ConnectStatusChange Position */
-#define UHP_OHCI_HCRHPORTSTATUS1_CSC_Msk    (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_CSC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) ConnectStatusChange Mask */
+#define UHP_OHCI_HCRHPORTSTATUS1_CSC_Msk    (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_CSC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) ConnectStatusChange Mask */
 #define UHP_OHCI_HCRHPORTSTATUS1_CSC        UHP_OHCI_HCRHPORTSTATUS1_CSC_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS1_CSC_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS1_PESC_Pos   17                                             /**< (UHP_OHCI_HCRHPORTSTATUS1) PortEnableStatusChange Position */
-#define UHP_OHCI_HCRHPORTSTATUS1_PESC_Msk   (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_PESC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) PortEnableStatusChange Mask */
+#define UHP_OHCI_HCRHPORTSTATUS1_PESC_Msk   (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_PESC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) PortEnableStatusChange Mask */
 #define UHP_OHCI_HCRHPORTSTATUS1_PESC       UHP_OHCI_HCRHPORTSTATUS1_PESC_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS1_PESC_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS1_PSSC_Pos   18                                             /**< (UHP_OHCI_HCRHPORTSTATUS1) PortSuspendStatusChange Position */
-#define UHP_OHCI_HCRHPORTSTATUS1_PSSC_Msk   (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_PSSC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) PortSuspendStatusChange Mask */
+#define UHP_OHCI_HCRHPORTSTATUS1_PSSC_Msk   (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_PSSC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) PortSuspendStatusChange Mask */
 #define UHP_OHCI_HCRHPORTSTATUS1_PSSC       UHP_OHCI_HCRHPORTSTATUS1_PSSC_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS1_PSSC_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS1_OCIC_Pos   19                                             /**< (UHP_OHCI_HCRHPORTSTATUS1) PortOverCurrentIndicatorChange Position */
-#define UHP_OHCI_HCRHPORTSTATUS1_OCIC_Msk   (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_OCIC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) PortOverCurrentIndicatorChange Mask */
+#define UHP_OHCI_HCRHPORTSTATUS1_OCIC_Msk   (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_OCIC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) PortOverCurrentIndicatorChange Mask */
 #define UHP_OHCI_HCRHPORTSTATUS1_OCIC       UHP_OHCI_HCRHPORTSTATUS1_OCIC_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS1_OCIC_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS1_PRSC_Pos   20                                             /**< (UHP_OHCI_HCRHPORTSTATUS1) PortResetStatusChange Position */
-#define UHP_OHCI_HCRHPORTSTATUS1_PRSC_Msk   (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_PRSC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) PortResetStatusChange Mask */
+#define UHP_OHCI_HCRHPORTSTATUS1_PRSC_Msk   (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS1_PRSC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS1) PortResetStatusChange Mask */
 #define UHP_OHCI_HCRHPORTSTATUS1_PRSC       UHP_OHCI_HCRHPORTSTATUS1_PRSC_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS1_PRSC_Msk instead */
-#define UHP_OHCI_HCRHPORTSTATUS1_MASK       _U_(0x1F031F)                                  /**< \deprecated (UHP_OHCI_HCRHPORTSTATUS1) Register MASK  (Use UHP_OHCI_HCRHPORTSTATUS1_Msk instead)  */
-#define UHP_OHCI_HCRHPORTSTATUS1_Msk        _U_(0x1F031F)                                  /**< (UHP_OHCI_HCRHPORTSTATUS1) Register Mask  */
+#define UHP_OHCI_HCRHPORTSTATUS1_MASK       _UINT32_(0x1F031F)                                  /**< \deprecated (UHP_OHCI_HCRHPORTSTATUS1) Register MASK  (Use UHP_OHCI_HCRHPORTSTATUS1_Msk instead)  */
+#define UHP_OHCI_HCRHPORTSTATUS1_Msk        _UINT32_(0x1F031F)                                  /**< (UHP_OHCI_HCRHPORTSTATUS1) Register Mask  */
 
 
 /* -------- UHP_OHCI_HCRHPORTSTATUS2 : (UHP_OHCI Offset: 0x5c) (R/W 32) UHP OHCI HcRhPortStatus 2 Register -------- */
@@ -864,43 +864,43 @@ typedef union {
 #define UHP_OHCI_HCRHPORTSTATUS2_OFFSET     (0x5C)                                        /**<  (UHP_OHCI_HCRHPORTSTATUS2) UHP OHCI HcRhPortStatus 2 Register  Offset */
 
 #define UHP_OHCI_HCRHPORTSTATUS2_CCS_Pos    0                                              /**< (UHP_OHCI_HCRHPORTSTATUS2) CurrentConnectStatus Position */
-#define UHP_OHCI_HCRHPORTSTATUS2_CCS_Msk    (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_CCS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) CurrentConnectStatus Mask */
+#define UHP_OHCI_HCRHPORTSTATUS2_CCS_Msk    (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_CCS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) CurrentConnectStatus Mask */
 #define UHP_OHCI_HCRHPORTSTATUS2_CCS        UHP_OHCI_HCRHPORTSTATUS2_CCS_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS2_CCS_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS2_PES_Pos    1                                              /**< (UHP_OHCI_HCRHPORTSTATUS2) PortEnableStatus Position */
-#define UHP_OHCI_HCRHPORTSTATUS2_PES_Msk    (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_PES_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) PortEnableStatus Mask */
+#define UHP_OHCI_HCRHPORTSTATUS2_PES_Msk    (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_PES_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) PortEnableStatus Mask */
 #define UHP_OHCI_HCRHPORTSTATUS2_PES        UHP_OHCI_HCRHPORTSTATUS2_PES_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS2_PES_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS2_PSS_Pos    2                                              /**< (UHP_OHCI_HCRHPORTSTATUS2) PortSuspendStatus Position */
-#define UHP_OHCI_HCRHPORTSTATUS2_PSS_Msk    (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_PSS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) PortSuspendStatus Mask */
+#define UHP_OHCI_HCRHPORTSTATUS2_PSS_Msk    (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_PSS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) PortSuspendStatus Mask */
 #define UHP_OHCI_HCRHPORTSTATUS2_PSS        UHP_OHCI_HCRHPORTSTATUS2_PSS_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS2_PSS_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS2_POCI_Pos   3                                              /**< (UHP_OHCI_HCRHPORTSTATUS2) PortOverCurrentIndicator Position */
-#define UHP_OHCI_HCRHPORTSTATUS2_POCI_Msk   (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_POCI_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) PortOverCurrentIndicator Mask */
+#define UHP_OHCI_HCRHPORTSTATUS2_POCI_Msk   (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_POCI_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) PortOverCurrentIndicator Mask */
 #define UHP_OHCI_HCRHPORTSTATUS2_POCI       UHP_OHCI_HCRHPORTSTATUS2_POCI_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS2_POCI_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS2_PRS_Pos    4                                              /**< (UHP_OHCI_HCRHPORTSTATUS2) PortResetStatus Position */
-#define UHP_OHCI_HCRHPORTSTATUS2_PRS_Msk    (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_PRS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) PortResetStatus Mask */
+#define UHP_OHCI_HCRHPORTSTATUS2_PRS_Msk    (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_PRS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) PortResetStatus Mask */
 #define UHP_OHCI_HCRHPORTSTATUS2_PRS        UHP_OHCI_HCRHPORTSTATUS2_PRS_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS2_PRS_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS2_PPS_Pos    8                                              /**< (UHP_OHCI_HCRHPORTSTATUS2) PortPowerStatus Position */
-#define UHP_OHCI_HCRHPORTSTATUS2_PPS_Msk    (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_PPS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) PortPowerStatus Mask */
+#define UHP_OHCI_HCRHPORTSTATUS2_PPS_Msk    (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_PPS_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) PortPowerStatus Mask */
 #define UHP_OHCI_HCRHPORTSTATUS2_PPS        UHP_OHCI_HCRHPORTSTATUS2_PPS_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS2_PPS_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS2_LSDA_Pos   9                                              /**< (UHP_OHCI_HCRHPORTSTATUS2) LowSpeedDeviceAttached Position */
-#define UHP_OHCI_HCRHPORTSTATUS2_LSDA_Msk   (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_LSDA_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) LowSpeedDeviceAttached Mask */
+#define UHP_OHCI_HCRHPORTSTATUS2_LSDA_Msk   (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_LSDA_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) LowSpeedDeviceAttached Mask */
 #define UHP_OHCI_HCRHPORTSTATUS2_LSDA       UHP_OHCI_HCRHPORTSTATUS2_LSDA_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS2_LSDA_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS2_CSC_Pos    16                                             /**< (UHP_OHCI_HCRHPORTSTATUS2) ConnectStatusChange Position */
-#define UHP_OHCI_HCRHPORTSTATUS2_CSC_Msk    (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_CSC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) ConnectStatusChange Mask */
+#define UHP_OHCI_HCRHPORTSTATUS2_CSC_Msk    (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_CSC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) ConnectStatusChange Mask */
 #define UHP_OHCI_HCRHPORTSTATUS2_CSC        UHP_OHCI_HCRHPORTSTATUS2_CSC_Msk               /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS2_CSC_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS2_PESC_Pos   17                                             /**< (UHP_OHCI_HCRHPORTSTATUS2) PortEnableStatusChange Position */
-#define UHP_OHCI_HCRHPORTSTATUS2_PESC_Msk   (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_PESC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) PortEnableStatusChange Mask */
+#define UHP_OHCI_HCRHPORTSTATUS2_PESC_Msk   (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_PESC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) PortEnableStatusChange Mask */
 #define UHP_OHCI_HCRHPORTSTATUS2_PESC       UHP_OHCI_HCRHPORTSTATUS2_PESC_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS2_PESC_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS2_PSSC_Pos   18                                             /**< (UHP_OHCI_HCRHPORTSTATUS2) PortSuspendStatusChange Position */
-#define UHP_OHCI_HCRHPORTSTATUS2_PSSC_Msk   (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_PSSC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) PortSuspendStatusChange Mask */
+#define UHP_OHCI_HCRHPORTSTATUS2_PSSC_Msk   (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_PSSC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) PortSuspendStatusChange Mask */
 #define UHP_OHCI_HCRHPORTSTATUS2_PSSC       UHP_OHCI_HCRHPORTSTATUS2_PSSC_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS2_PSSC_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS2_OCIC_Pos   19                                             /**< (UHP_OHCI_HCRHPORTSTATUS2) PortOverCurrentIndicatorChange Position */
-#define UHP_OHCI_HCRHPORTSTATUS2_OCIC_Msk   (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_OCIC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) PortOverCurrentIndicatorChange Mask */
+#define UHP_OHCI_HCRHPORTSTATUS2_OCIC_Msk   (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_OCIC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) PortOverCurrentIndicatorChange Mask */
 #define UHP_OHCI_HCRHPORTSTATUS2_OCIC       UHP_OHCI_HCRHPORTSTATUS2_OCIC_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS2_OCIC_Msk instead */
 #define UHP_OHCI_HCRHPORTSTATUS2_PRSC_Pos   20                                             /**< (UHP_OHCI_HCRHPORTSTATUS2) PortResetStatusChange Position */
-#define UHP_OHCI_HCRHPORTSTATUS2_PRSC_Msk   (_U_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_PRSC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) PortResetStatusChange Mask */
+#define UHP_OHCI_HCRHPORTSTATUS2_PRSC_Msk   (_UINT32_(0x1) << UHP_OHCI_HCRHPORTSTATUS2_PRSC_Pos)  /**< (UHP_OHCI_HCRHPORTSTATUS2) PortResetStatusChange Mask */
 #define UHP_OHCI_HCRHPORTSTATUS2_PRSC       UHP_OHCI_HCRHPORTSTATUS2_PRSC_Msk              /**< \deprecated Old style mask definition for 1 bit bitfield. Use UHP_OHCI_HCRHPORTSTATUS2_PRSC_Msk instead */
-#define UHP_OHCI_HCRHPORTSTATUS2_MASK       _U_(0x1F031F)                                  /**< \deprecated (UHP_OHCI_HCRHPORTSTATUS2) Register MASK  (Use UHP_OHCI_HCRHPORTSTATUS2_Msk instead)  */
-#define UHP_OHCI_HCRHPORTSTATUS2_Msk        _U_(0x1F031F)                                  /**< (UHP_OHCI_HCRHPORTSTATUS2) Register Mask  */
+#define UHP_OHCI_HCRHPORTSTATUS2_MASK       _UINT32_(0x1F031F)                                  /**< \deprecated (UHP_OHCI_HCRHPORTSTATUS2) Register MASK  (Use UHP_OHCI_HCRHPORTSTATUS2_Msk instead)  */
+#define UHP_OHCI_HCRHPORTSTATUS2_Msk        _UINT32_(0x1F031F)                                  /**< (UHP_OHCI_HCRHPORTSTATUS2) Register Mask  */
 
 
 #if !(defined(__ASSEMBLER__) || defined(__IAR_SYSTEMS_ASM__))
