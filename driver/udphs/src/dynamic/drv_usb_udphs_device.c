@@ -1159,7 +1159,10 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_EndpointStall
         if(retVal == USB_ERROR_NONE)
         {
             endpointObj->endpointState |= DRV_USB_UDPHS_DEVICE_ENDPOINT_STATE_STALLED;
-
+            
+            /* Force a Stall to the Endpoint */
+            usbID->UDPHS_EPT[endpoint].UDPHS_EPTSETSTA =  UDPHS_EPTSETSTA_FRCESTALL_Msk;
+            
             _DRV_USB_UDPHS_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_ABORTED_ENDPOINT_HALT);
 
             if(endpoint == 0)
@@ -1171,9 +1174,6 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_EndpointStall
 
                 _DRV_USB_UDPHS_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_ABORTED_ENDPOINT_HALT);
             }
-
-            /* Force a Stall to the Endpoint */
-            usbID->UDPHS_EPT[endpoint].UDPHS_EPTSETSTA = UDPHS_EPTSETSTA_FRCESTALL_Msk;
 
             /* Restore the interrupt enable status if this was modified. */
             if(hDriver->isInInterruptContext == false)
@@ -1297,6 +1297,9 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_EndpointStallClear
 
             /* Clear the STALL request */
             usbID->UDPHS_EPT[endpoint].UDPHS_EPTCLRSTA = UDPHS_EPTCLRSTA_TOGGLESQ_Msk;
+            
+            /* Kill any pending transaction in the FIFO */ 
+            usbID->UDPHS_EPT[endpoint].UDPHS_EPTSETSTA = UDPHS_EPTSETSTA_RXRDY_TXKL_Msk; 
 
             /* Restore the interrupt enable status if this was modified. */
             if(hDriver->isInInterruptContext == false)
