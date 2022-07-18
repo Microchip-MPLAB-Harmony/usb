@@ -3,6 +3,28 @@
 
 # Microchip MPLAB Harmony 3 Release Notes
 
+## USB Release v3.10.0
+### NEW FEATURES
+- Added support for a new product. 
+
+### Bug fixes
+  - Updated the USB Device mode driver for MPUs (UDPHS) to flush any pending transaction before performing a STALL clear. 
+  - Updated the USB Device mode code generator scripts to generate a 12 character serial number string descriptor as default. 
+  - Updated the USB Device mode code generator user interface to input Power consumption in milliAmperes. 
+  - Updated the USB Host OHCI driver to use an updated macro from the Device Family Packs (DFP). 
+  
+### Known Issues
+- IAR projects for SAM MCUs and MPUs builds with warning messages. 
+- The USB_DEVICE_CDC_SerialStateNotificationSend() function does not support queuing. 
+
+### Development Tools
+
+-    [MPLAB® X IDE v6.00](https://www.microchip.com/mplab/mplab-x-ide)
+-    [MPLAB® XC32 C/C++ Compiler v4.10](https://www.microchip.com/mplab/compilers)
+-    [IAR Embedded Workbench® for ARM® v8.5](https://www.iar.com/iar-embedded-workbench/#!?architecture=Arm)
+-    MPLAB® X IDE plug-ins:- MPLAB® Code Configurator (MCC) v5.1.9 or above
+
+
 
 ## USB Release v3.9.0
 ### NEW FEATURES
