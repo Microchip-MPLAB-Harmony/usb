@@ -49,7 +49,7 @@ void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
        In MHC Pin Settings select the pin used as VBUS Power Enable as output and 
        name it to "VBUS_AH". If you a see a build error from this function either 
        you have not configured the VBUS Power Enable in MHC pin settings or the 
-       Pin name entered in MHC is not "VBUS_AH". */ 
+       Pin name entered in MHC is not "VBUS_AH". */
     if (enable == true)
     {
         /* Enable the VBUS */
@@ -109,7 +109,7 @@ DRV_USB_EHCI_INIT drvUSBEHCIInit =
     /* Ports Selection */ 
     .bmPortSelect = ${USB_DRV_HOST_EHCI_PORTS_SELECTION},
 
-    /* USB Host Power Enable. USB Driver uses this function to Enable the VBUS */ 
+    /* USB Host Power Enable. USB Driver uses this function to Enable the VBUS */
     .portPowerEnable = DRV_USB_VBUSPowerEnable,
     
     /* Root hub available current in milliamperes */
@@ -136,7 +136,7 @@ DRV_USB_OHCI_INIT drvUSBOHCIInit =
 </#if>
 <#if core.DeviceFamily == "SAM_G55">
     /* USB base address */
-    .usbID = ((UhpOhci*)0x20400000),   
+    .usbID = ((UhpOhci*)UHP_BASE_ADDRESS),
 <#else>
     /* USB base address */
     .usbID = ((UhpOhci*)UHPHS_OHCI_ADDR),
@@ -145,10 +145,10 @@ DRV_USB_OHCI_INIT drvUSBOHCIInit =
      /* Ports Selection */ 
     .bmPortSelect = ${USB_DRV_HOST_OHCI_PORTS_SELECTION},
     
-    /* USB Host Power Enable. USB Driver uses this function to Enable the VBUS */ 
+    /* USB Host Power Enable. USB Driver uses this function to Enable the VBUS */
     .portPowerEnable = DRV_USB_VBUSPowerEnable,
     
-    /* Root hub available current in milliamperes */    
+    /* Root hub available current in milliamperes */
     .rootHubAvailableCurrent = 500
 };
     </#if>
