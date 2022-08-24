@@ -2425,63 +2425,66 @@ void _DRV_USB_UDPHS_DEVICE_Tasks_ISR_DMA(DRV_USB_UDPHS_OBJ * hDriver, uint8_t Nu
     USB_DEVICE_IRP_LOCAL * irp;
     uint32_t dmaStatus;
     uint32_t byteCount;
-   static uint32_t receivedSize;
+    static uint32_t receivedSize;
 
     usbID = hDriver->usbID;
 
     /* Get the pointer to the endpoint object */
     endpointObj = hDriver->deviceEndpointObj[NumEndpoint];
     irp = endpointObj->irpQueue;
-
-    dmaStatus = usbID->UDPHS_DMA[NumEndpoint].UDPHS_DMASTATUS;
-
-    /* BUFF_COUNT holds the number of un-transmitted bytes.
-     * BUFF_COUNT is equal to zero in case of good transfer */
-    byteCount = (dmaStatus & UDPHS_DMASTATUS_BUFF_COUNT_Msk) >> UDPHS_DMASTATUS_BUFF_COUNT_Pos;
-
-    if( byteCount == 0 )
+    
+    if (irp != NULL)
     {
-        irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
-        usbID->UDPHS_IEN &=  ~(UDPHS_IEN_DMA_1_Msk << (NumEndpoint-1));
-    }
+        dmaStatus = usbID->UDPHS_DMA[NumEndpoint].UDPHS_DMASTATUS;
 
-    if( endpointObj->endpointDirection == USB_DATA_DIRECTION_HOST_TO_DEVICE )
-    {
-        /* Data moves from host to device */
-        receivedSize = usbID->UDPHS_DMA[NumEndpoint].UDPHS_DMAADDRESS - (uint32_t)(irp->data);
-        irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
-        irp->size = receivedSize;
-        irp->nPendingBytes = 0;
-    }
-    else
-    {
-        /* Data moves from device to host */
+        /* BUFF_COUNT holds the number of un-transmitted bytes.
+         * BUFF_COUNT is equal to zero in case of good transfer */
+        byteCount = (dmaStatus & UDPHS_DMASTATUS_BUFF_COUNT_Msk) >> UDPHS_DMASTATUS_BUFF_COUNT_Pos;
 
-        /* Received size of data */
-        receivedSize = usbID->UDPHS_DMA[NumEndpoint].UDPHS_DMAADDRESS - (uint32_t)(irp->data);
-
-        if(byteCount == 0 )
+        if( byteCount == 0 )
         {
             irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
+            usbID->UDPHS_IEN &=  ~(UDPHS_IEN_DMA_1_Msk << (NumEndpoint-1));
+        }
 
+        if( endpointObj->endpointDirection == USB_DATA_DIRECTION_HOST_TO_DEVICE )
+        {
+            /* Data moves from host to device */
+            receivedSize = usbID->UDPHS_DMA[NumEndpoint].UDPHS_DMAADDRESS - (uint32_t)(irp->data);
+            irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
+            irp->size = receivedSize;
             irp->nPendingBytes = 0;
         }
         else
-        {
-            /* Transfer not fisnish */
-            irp->nPendingBytes -= byteCount;
+        { 
+            /* Data moves from device to host */
+
+            /* Received size of data */
+            receivedSize = usbID->UDPHS_DMA[NumEndpoint].UDPHS_DMAADDRESS - (uint32_t)(irp->data);
+
+            if(byteCount == 0 )
+            {
+                irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
+
+                irp->nPendingBytes = 0;
+            }
+            else
+            {
+                /* Transfer not fisnish */
+                irp->nPendingBytes -= byteCount;
+            }
         }
-    }
 
 
-    /* Callback */
-    if (irp->nPendingBytes == 0)
-    {       
-        endpointObj->irpQueue = irp->next;
-        if(irp->callback != NULL)
-        {
-            irp->callback((USB_DEVICE_IRP *)irp);
-        }        
+        /* Callback */
+        if (irp->nPendingBytes == 0)
+        {       
+            endpointObj->irpQueue = irp->next;
+            if(irp->callback != NULL)
+            {
+                irp->callback((USB_DEVICE_IRP *)irp);
+            }        
+        }
     }
 }
 
