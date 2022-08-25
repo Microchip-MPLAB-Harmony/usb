@@ -120,11 +120,12 @@ const USB_DEVICE_DESCRIPTOR deviceDescriptor${INDEX?string} =
 };
 
 <#if CONFIG_USB_DEVICE_SPEED == "High Speed">
+
 /*******************************************
  *  USB Device Qualifier Descriptor for this
  *  demo.
  *******************************************/
-const USB_DEVICE_QUALIFIER deviceQualifierDescriptor1 =
+const USB_DEVICE_QUALIFIER deviceQualifierDescriptor${INDEX?string} =
 {
     0x0A,                                                   // Size of this descriptor in bytes
     USB_DESCRIPTOR_DEVICE_QUALIFIER,                        // Device Qualifier Type
@@ -148,7 +149,7 @@ const USB_DEVICE_QUALIFIER deviceQualifierDescriptor1 =
 /*******************************************
  *  USB High Speed Configuration Descriptor
  *******************************************/
-const uint8_t highSpeedConfigurationDescriptor[]=
+const uint8_t highSpeedConfigurationDescriptor${INDEX?string}[]=
 {
     /* Configuration Descriptor */
 
@@ -167,9 +168,9 @@ ${LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_HS_ENTRY}
 /*******************************************
  * Array of High speed config descriptors
  *******************************************/
-USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE highSpeedConfigDescSet[1] =
+USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE highSpeedConfigDescSet${INDEX?string}[1] =
 {
-    highSpeedConfigurationDescriptor
+    highSpeedConfigurationDescriptor${INDEX?string}
 };
 </#if>
 
@@ -440,7 +441,7 @@ const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor${INDEX?string} =
 <#if CONFIG_USB_DEVICE_SPEED == "High Speed">
     &deviceDescriptor${INDEX?string},                     // High speed device descriptor
     1,                                                      // Total number of high speed configurations available
-    highSpeedConfigDescSet,                                 // Pointer to array of high speed configurations descriptors
+    highSpeedConfigDescSet${INDEX?string},                                 // Pointer to array of high speed configurations descriptors
 <#else>
     NULL, 
     0,
@@ -449,8 +450,8 @@ const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor${INDEX?string} =
     ${stringDescriptorTableSize},                                                      // Total number of string descriptors available.
     stringDescriptors${INDEX?string},                     // Pointer to array of string descriptors.
 <#if CONFIG_USB_DEVICE_SPEED == "High Speed">
-    &deviceQualifierDescriptor1,                            // Pointer to full speed dev qualifier.
-    &deviceQualifierDescriptor1                             // Pointer to high speed dev qualifier.
+    &deviceQualifierDescriptor${INDEX?string},                            // Pointer to full speed dev qualifier.
+    &deviceQualifierDescriptor${INDEX?string}                             // Pointer to high speed dev qualifier.
 <#else>
     NULL, 
     NULL
