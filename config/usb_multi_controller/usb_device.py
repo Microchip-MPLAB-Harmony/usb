@@ -109,7 +109,7 @@ usbDeviceProductStringList = [
 "Generic Text Printer Demo",
 "Simple WinUSB Device Demo" 
 ]
-
+usbDeviceSpeed = None
 usbDeviceFunctionNumber = None
 usbDeviceIadEnable = None
 usbDeviceConfigDscrptrSize = None
@@ -169,6 +169,7 @@ def onAttachmentConnected(source, target):
 	global usbDeviceInterfacesNumber
 	global usbDeviceVendorReadQueueSize
 	global usbDeviceVendorWriteQueueSize
+	global usbDeviceSpeed
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
 	remoteComponent = target["component"]
@@ -176,18 +177,18 @@ def onAttachmentConnected(source, target):
 	remoteID_instance = remoteID[:-1]
 	connectID = source["id"]
 	targetID = target["id"]
-	
-	
+
+
 	if (connectID == "usb_driver_dependency"):
 		usbControllerInstance = ownerComponent.getSymbolByID("USB_DEVICE_INDEX")
 		usbControllerInstance.clearValue()
 		usbControllerInstance.setValue(remoteID.upper())
-		
-		
+
+
 	if (remoteID == "usb_device_cdc"):
 		nfunction = usbDeviceFunctionNumber.getValue()
 		usbDeviceFunctionNumber.setValue(nfunction + 1)
-		
+
 	if (remoteID == "usb_device_msd"):
 		usbDeviceMsdSupport.setValue(True, 2)
 	if (remoteID_instance == "usb_device_msd_") or (remoteID_instance == "usb_device_vendor_") or (remoteID_instance == "usb_device_audio_") or (remoteID_instance == "usb_device_hid_") or (remoteID_instance == "usb_device_printer_"):
@@ -203,8 +204,7 @@ def onAttachmentConnected(source, target):
 					res = Database.sendMessage("usb_device_cdc_0", "UPDATE_CDC_IAD_ENABLE", args)
 					localConfigDescriptorSize = usbDeviceConfigDscrptrSize.getValue() 
 					usbDeviceConfigDscrptrSize.setValue(localConfigDescriptorSize + 8)
-			
-		
+
 def onAttachmentDisconnected(source, target):
 	global usbDeviceMsdSupport
 	global usbDeviceCDCFunctionCount
@@ -241,6 +241,7 @@ def handleMessage(messageID, args):
 	global usbDeviceVendorWriteQueueSize
 	global numEndpoints
 	global usbDeviceEndpointsNumber
+	global usbDeviceSpeed
 		
 	if (messageID == "UPDATE_ENDPOINTS_NUMBER"):	
 		#numEndpoints =  usbDeviceEndpointsNumber.getValue()	
@@ -257,6 +258,8 @@ def handleMessage(messageID, args):
 		usbDeviceVendorReadQueueSize.setValue(args["nFunction"])
 	elif (messageID == "UPDATE_ENDPOINT_WRITE_QUEUE_SIZE"): 
 		usbDeviceVendorWriteQueueSize.setValue(args["nFunction"])
+	elif (messageID == "USB_DEVICE_UPDATE_SPEED"):
+		usbDeviceSpeed.setValue(args["usbDriverSpeed"])
 
 def instantiateComponent(usbDeviceComponent,index):	
 	global usbDeviceMsdSupport
@@ -272,15 +275,19 @@ def instantiateComponent(usbDeviceComponent,index):
 	global usbDevicelayerInstance
 	global usbDevicelayerIndex
 	global usbDeviceEndpointsNumber
-	
-	
+	global usbDeviceSpeed
 	
 	res = Database.activateComponents(["HarmonyCore"])
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
-		res = Database.activateComponents(["drv_usbhs_v1"])
-		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
-		driverIndex = "DRV_USBHSV1_INDEX_0"
-		driverInterface = "DRV_USBHSV1_DEVICE_INTERFACE"
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32CZ"]):
+		usbDevicelayerIndex = usbDeviceComponent.createIntegerSymbol("INDEX", None)
+		usbDevicelayerIndex.setVisible(False)
+		usbDevicelayerIndex.setDefaultValue(index)
+		usbDevicelayerInstance = usbDeviceComponent.createStringSymbol("USB_DEVICE_INDEX", None)
+		usbDevicelayerInstance.setLabel("USB Controller instance")
+		usbDevicelayerInstance.setReadOnly(True)
+		res = Database.activateComponents(["drv_usbhs_index"])
+		driverIndex = "DRV_USBHS_INDEX_0"
+		driverInterface = "DRV_USBHS_DEVICE_INTERFACE"
 	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK"]):
 		usbDevicelayerIndex = usbDeviceComponent.createIntegerSymbol("INDEX", None)
 		usbDevicelayerIndex.setVisible(False)
@@ -292,32 +299,13 @@ def instantiateComponent(usbDeviceComponent,index):
 		speed = Database.getSymbolValue("drv_usbfs_index", "USB_SPEED")
 		driverIndex = "DRV_USBFS_INDEX_0"
 		driverInterface = "DRV_USBFS_DEVICE_INTERFACE"
-		
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-		res = Database.activateComponents(["drv_usbhs_v1"])
-		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
-		driverIndex = "DRV_USBHS_INDEX_0"
-		driverInterface = "DRV_USBHS_DEVICE_INTERFACE"
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX" , "PIC32MM"]):
-		res = Database.activateComponents(["drv_usbfs_index"])
-		speed = Database.getSymbolValue("drv_usbfs", "USB_SPEED")
-		driverIndex = "DRV_USBFS_INDEX_0"
-		driverInterface = "DRV_USBFS_DEVICE_INTERFACE"
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMDA1", "SAMD5", "SAME5", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "PIC32CM", "PIC32CX"]):
-		res = Database.activateComponents(["drv_usbfs_v1"])
-		speed = Database.getSymbolValue("drv_usbfs_v1", "USB_SPEED")
-		driverIndex = "DRV_USBFSV1_INDEX_0"
-		driverInterface = "DRV_USBFSV1_DEVICE_INTERFACE"
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAMA7"]):
-		res = Database.activateComponents(["drv_usb_udphs"])
-		speed = Database.getSymbolValue("drv_usb_udphs", "USB_SPEED")
-		driverIndex = "DRV_USB_UDPHS_INDEX_0"
-		driverInterface = "DRV_USB_UDPHS_DEVICE_INTERFACE"
+
+
 		
 	# USB Device Speed 
 	usbDeviceSpeed = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_SPEED", None)
 	usbDeviceSpeed.setVisible(False)
-	#usbDeviceSpeed.setDefaultValue(speed)
+	usbDeviceSpeed.setDefaultValue("Full Speed")
 	usbDeviceSpeed.setUseSingleDynamicValue(True)
 	
 	# USB Driver Index - This symbol actually should get set from a Driver dependency connected callback. 
@@ -556,7 +544,7 @@ def instantiateComponent(usbDeviceComponent,index):
 	usbDeviceRTOSTaskDelayVal.setVisible((usbDeviceRTOSTaskDelay.getValue() == True))
 	usbDeviceRTOSTaskDelayVal.setDependencies(setVisible, ["USB_DEVICE_RTOS_USE_DELAY"])
 	
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32CZ"]):
 		sourcePath = "templates/device/usbdevice_multi/"
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX" , "PIC32MM"]):
 		sourcePath = "templates/device/"

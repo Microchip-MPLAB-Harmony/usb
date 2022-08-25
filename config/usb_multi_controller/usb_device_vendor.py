@@ -91,7 +91,7 @@ def onAttachmentConnected(source, target):
 			
 		nEndpoints = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if nEndpoints != None:
-			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "PIC32CM", "PIC32CX"]):
+			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "PIC32CM", "PIC32CX"]):
 				args = {"nFunction":  nEndpoints + VENDOR_ENDPOINTS_PIC32 }
 				res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
 				epNumberBulkOut.setValue(nEndpoints + 1, 1)
@@ -154,7 +154,7 @@ def onAttachmentDisconnected(source, target):
 	
 	endpointNumber = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 	if endpointNumber != None:
-		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22" , "SAMR21", "SAMR30", "SAMR34", "SAMR35", "PIC32CM", "PIC32CX"]):
+		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22" , "SAMR21", "SAMR30", "SAMR34", "SAMR35", "PIC32CM", "PIC32CX"]):
 			args = {"nFunction":endpointNumber -  VENDOR_ENDPOINTS_PIC32 }
 			res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
 		else:
@@ -228,7 +228,7 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	if (value == None):
 		res = Database.activateComponents(["usb_device"])
 	
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CZ"]):
 		MaxEpNumber = 7
 		BulkInDefaultEpNumber = 1
 	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX", "PIC32MK", "PIC32MM"]):
