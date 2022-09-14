@@ -276,7 +276,7 @@ def loadModule():
         if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ"]):
             usbDeviceComponent =  Module.CreateGeneratorComponent("usb_device", "USB Device Layer", "/USB/Device Stack", "config/usb_multi_controller/usb_device_common.py", "config/usb_multi_controller/usb_device.py")
             usbDeviceComponent.addDependency("usb_driver_dependency", "DRV_USB", False, True)
-            usbDeviceComponent.addCapability("USB Device", "USB_DEVICE")
+            usbDeviceComponent.addMultiCapability("usb_device", "USB_DEVICE", "USB_DEVICE")
         else: 
             usbDeviceComponent = Module.CreateSharedComponent("usb_device", "USB Device Layer", "/USB/Device Stack", "config/usb_device.py")
             usbDeviceComponent.addDependency("usb_driver_dependency", USBDeviceDriverCapabilityName, True, True)
