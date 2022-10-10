@@ -26,6 +26,7 @@ hidInterfacesNumber = 1
 hidDescriptorSize = 32
 hidEndpointsPic32 = 1
 hidEndpointsSAM = 2
+hidFunctionsNumber = 1
 
 usbDeviceHidReportList = ["Mouse", "Keyboard", "Joystick", "Custom"]
 
@@ -46,7 +47,6 @@ usbDeviceHidDescriptorFsFile = None
 usbDeviceHidDescriptorClassCodeFile = None
 
 def onAttachmentConnected(source, target):
-	print ("HID Function Driver: Attached")
 	global hidInterfacesNumber
 	global hidDescriptorSize 
 	
@@ -77,33 +77,27 @@ def onAttachmentConnected(source, target):
 	if (dependencyID == "usb_device_dependency"):
 		readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 		if readValue != None: 
-			args = {"nFunction":readValue + 1}
+			args = {"nFunction": hidFunctionsNumber}
 			res = Database.sendMessage(remoteID, "UPDATE_FUNCTIONS_NUMBER", args)
 		
 		readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 		if readValue != None: 
-			args = {"nFunction": readValue + hidDescriptorSize}
+			args = {"nFunction": hidDescriptorSize}
 			res = Database.sendMessage(remoteID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 		
 		readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 		if readValue != None: 
-			args = {"nFunction": readValue + hidInterfacesNumber}
+			args = {"nFunction": hidInterfacesNumber}
 			res = Database.sendMessage(remoteID, "UPDATE_INTERFACES_NUMBER", args)
-			startInterfaceNumber.setValue(readValue, 1)
+			startInterfaceNumber.setValue(Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_INTERFACES_NUMBER") - hidInterfacesNumber, 1)
 		
 		readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if readValue != None:
-			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1", "SAMDA1","SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "PIC32CM", "PIC32CX"]):
-				args = {"nFunction":  readValue + hidEndpointsPic32}
-				res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
-				epNumberInterruptIn.setValue(readValue + 1, 1)
-				epNumberInterruptOut.setValue(readValue + 1, 1)
-			else:
-				args = {"nFunction":  readValue + hidEndpointsSAM}
-				res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
-				epNumberInterruptIn.setValue(readValue + 1, 1)
-				epNumberInterruptOut.setValue(readValue + 2, 1)
-		
+			args = {"nFunction":  hidEndpointsPic32}
+			res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
+			epNumberInterruptIn.setValue(Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER"), 1)
+			epNumberInterruptOut.setValue(Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER"), 1)
+
 		usbDeviceHidFunInitFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_INIT_ENTRY")
 		usbDeviceHidFunRegTableFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_ENTRY")
 		usbDeviceHidDescriptorHsFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_HS_ENTRY")
@@ -113,8 +107,8 @@ def onAttachmentConnected(source, target):
 def onAttachmentDisconnected(source, target):
 	global hidEndpointsPic32
 	global hidEndpointsSAM
-	
-	print ("HID Function Driver: Detached")
+	global hidInterfacesNumber
+	global hidDescriptorSize
 	ownerComponent = source["component"]
 	dependencyID = source["id"]
 	remoteComponent = target["component"]
@@ -123,29 +117,25 @@ def onAttachmentDisconnected(source, target):
 	if (dependencyID == "usb_device_dependency"):
 		readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 		if readValue != None: 
-			args = {"nFunction":readValue - 1}
+			args = {"nFunction": 0 - hidFunctionsNumber}
 			res = Database.sendMessage(remoteID, "UPDATE_FUNCTIONS_NUMBER", args)
 		
 		readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 		if readValue != None: 
-			args = {"nFunction": readValue - hidDescriptorSize }
+			args = {"nFunction": 0 - hidDescriptorSize }
 			res = Database.sendMessage(remoteID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
-		
+
 		readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 		if readValue != None: 
-			rgs = {"nFunction":   readValue - hidInterfacesNumber}
+			args = {"nFunction":   0 - hidInterfacesNumber}
 			res = Database.sendMessage(remoteID, "UPDATE_INTERFACES_NUMBER", args)
-		
+
 		readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if readValue != None:
-			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "PIC32CM", "PIC32CX"]):
-				args = {"nFunction": readValue - hidEndpointsPic32 }
-				res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
-			else:
-				args = {"nFunction":  readValue - hidEndpointsSAM }
-				res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
-				
-			
+			args = {"nFunction": 0 - hidEndpointsPic32 }
+			res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
+
+
 def destroyComponent(component):
 	print ("HID Function Driver: Destroyed")
 	
@@ -233,7 +223,7 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	startInterfaceNumber.setVisible(True)
 	startInterfaceNumber.setMin(0)
 	startInterfaceNumber.setDefaultValue(0)
-	startInterfaceNumber.setReadOnly(True)
+	startInterfaceNumber.setReadOnly(False)
 	
 	# Adding Number of Interfaces
 	numberOfInterfaces = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_NUMBER_OF_INTERFACES", None)
@@ -242,6 +232,7 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	numberOfInterfaces.setMin(1)
 	numberOfInterfaces.setMax(16)
 	numberOfInterfaces.setDefaultValue(1)
+	numberOfInterfaces.setReadOnly(True)
 	
 	# USB HID Report Descriptor 
 	usbDeviceHidReportType = usbDeviceHidComponent.createComboSymbol("CONFIG_USB_DEVICE_HID_REPORT_DESCRIPTOR_TYPE", None, usbDeviceHidReportList)

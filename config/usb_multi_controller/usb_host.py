@@ -26,6 +26,7 @@ usbHostTplEntryNumber = None
 usbHostHubSaveValue = None 
 usbHostControllerNumber = None
 usbHostPipesNumber = None
+usbHostControllerNumberLocal = 0
 
 def genRtosTask(symbol, event):
 	if event["value"] != "BareMetal":
@@ -58,7 +59,9 @@ def instantiateComponent(usbHostComponent):
 	global usbHostHubSaveValue
 	global usbHostControllerNumber
 	global usbHostPipesNumber
-	
+	global usbHostControllerNumberLocal
+
+	usbHostControllerNumberLocal = 0
 	res = Database.activateComponents(["HarmonyCore"])
 	res = Database.activateComponents(["sys_time"])
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
@@ -126,7 +129,7 @@ def instantiateComponent(usbHostComponent):
 	usbHostTransfersNumber.setDefaultValue(10)
 	usbHostTransfersNumber.setDependencies(blUsbHostMaxInterfaceNumber, ["USB_OPERATION_MODE"])
 
-	usbHostDeviceNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_DEVICES_NUMNBER", None)
+	usbHostDeviceNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_DEVICES_NUMBER", None)
 	usbHostDeviceNumber.setLabel("Maximum Number of Devices")
 	usbHostDeviceNumber.setVisible(True)
 	usbHostDeviceNumber.setDescription("Maximum Number of Devices that will be attached to this Host")
@@ -170,15 +173,6 @@ def instantiateComponent(usbHostComponent):
 		usbHostHubDriverInstance.setVisible(False)
 		usbHostHubDriverInstance.setDefaultValue(1)
 		usbHostHubDriverInstance.setDependencies(hubSupportSetVisible, ["CONFIG_USB_HOST_HUB_SUPPORT"])	
-		
-		# USB Host Max Number of Devices  
-		usbHostDeviceNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_DEVICE_NUMNBER", usbHostHubsupport)
-		usbHostDeviceNumber.setLabel("Maximum Number of Devices")
-		usbHostDeviceNumber.setVisible(False)
-		usbHostDeviceNumber.setDescription("Maximum Number of Devices that will be attached to this Host")
-		usbHostDeviceNumber.setDefaultValue(1)
-		usbHostDeviceNumber.setUseSingleDynamicValue(True)
-		usbHostDeviceNumber.setDependencies(hubSupportSetVisible, ["CONFIG_USB_HOST_HUB_SUPPORT"])
 			
 			
 	##############################################################
@@ -403,51 +397,52 @@ def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callbac
 		
 def onAttachmentConnected(source, target):
 	global usbHostControllerNumber
+	global usbHostControllerNumberLocal
 	localComponent = source["component"]
 	remoteComponent = target["component"]
 	remoteID = remoteComponent.getID()
 	connectID = source["id"]
 	targetID = target["id"]
 	if (connectID == "usb_driver_dependency"):
-		readValue = usbHostControllerNumber.getValue()
-		usbHostControllerNumber.setValue(readValue + 1)
-			
+		usbHostControllerNumberLocal += 1
+		usbHostControllerNumber.setValue(usbHostControllerNumberLocal)
+
 def onAttachmentDisconnected(source, target):
-	
+	global usbHostControllerNumber
+	global usbHostControllerNumberLocal
 	localComponent = source["component"]
 	remoteComponent = target["component"]
 	remoteID = remoteComponent.getID()
 	connectID = source["id"]
 	targetID = target["id"]
 	if (connectID == "usb_driver_dependency"):
-		readValue = usbHostControllerNumber.getValue()
-		if readValue != None:
-			usbHostControllerNumber.setValue(readValue - 1)
+		usbHostControllerNumberLocal -= 1
+		usbHostControllerNumber.setValue(usbHostControllerNumberLocal)
 
 	
 def hubSupportSetVisible(usbSymbolSource, event):
-	if (event["value"] == True):		
+	if (event["value"] == True):
 		usbSymbolSource.setVisible(True)
 	else:
 		usbSymbolSource.setVisible(False)
 
 def hubSupportSetEnable(usbSymbolSource, event):
-	if (event["value"] == True):		
+	if (event["value"] == True):
 		usbSymbolSource.setEnabled(True)
 	else:
 		usbSymbolSource.setEnabled(False)
-		
-			
-def hubUpdateTPL(usbSymbolSource, event):	
+
+
+def hubUpdateTPL(usbSymbolSource, event):
 	global usbHostTplEntryNumber
 	global usbHostHubSaveValue
-	if (event["value"] == True) and usbHostHubSaveValue.getValue() == False:		
+	if (event["value"] == True) and usbHostHubSaveValue.getValue() == False:
 		readValue = usbHostTplEntryNumber.getValue()
 		if readValue != None:
 			usbHostTplEntryNumber.setValue(readValue + 1)
-	elif (event["value"] == False) and usbHostHubSaveValue.getValue() == True:	
+	elif (event["value"] == False) and usbHostHubSaveValue.getValue() == True:
 		readValue = usbHostTplEntryNumber.getValue()
 		if readValue != None:
 			usbHostTplEntryNumber.setValue(readValue - 1)
-	usbHostHubSaveValue.setValue(event["value"])		
-	
+	usbHostHubSaveValue.setValue(event["value"])
+

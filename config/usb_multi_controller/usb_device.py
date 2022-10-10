@@ -21,6 +21,11 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
+#constants 
+USB_DEVICE_CONFIG_DESCRIPTOR_DEFAULT_VALUE = 9 
+usbDeviceFunctionsNumberMax = 10
+usbDeviceFunctionsNumberDefaultValue = 2 
+
 # Global definitions  
 usbDebugLogs = 1 
  
@@ -117,11 +122,18 @@ usbDeviceInterfacesNumber = None
 usbDeviceVendorReadQueueSize = None
 usbDeviceVendorWriteQueueSize = None
 usbDeviceEndpointsNumber = None
-usbDeviceFunctionsNumberMax = 10
-usbDeviceFunctionsNumberDefaultValue = 2 
 usbDeviceFunctionsNumberValue = usbDeviceFunctionsNumberDefaultValue
-usbDeviceFunctionIndex = 20
 numEndpoints = 1
+
+#Duplicate variables for symbols updated by other modules 
+usbDeviceFunctionsNumberLocal = 0
+usbDeviceConfigDscrptrSizeLocal = USB_DEVICE_CONFIG_DESCRIPTOR_DEFAULT_VALUE
+usbDeviceInterfaceNumberLocal = 0
+usbDeviceEndpointsNumberLocal = 0
+usbDeviceVendorReadQueueSizeLocal = 0
+usbDeviceVendorWriteQueueSizeLocal = 0
+
+
 
 usbDevicelayerInstance = None
 usbDevicelayerIndex = None 
@@ -171,6 +183,10 @@ def onAttachmentConnected(source, target):
 	global usbDeviceVendorReadQueueSize
 	global usbDeviceVendorWriteQueueSize
 	global usbDeviceSpeed
+	global usbDeviceConfigDscrptrSizeLocal
+	global usbDeviceVendorReadQueueSizeLocal
+	global usbDeviceVendorWriteQueueSizeLocal
+
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
 	remoteComponent = target["component"]
@@ -203,12 +219,16 @@ def onAttachmentConnected(source, target):
 					usbDeviceIadEnable.setValue(True)
 					args = {"iadEnable":True}
 					res = Database.sendMessage("usb_device_cdc_0", "UPDATE_CDC_IAD_ENABLE", args)
-					localConfigDescriptorSize = usbDeviceConfigDscrptrSize.getValue() 
-					usbDeviceConfigDscrptrSize.setValue(localConfigDescriptorSize + 8)
+					usbDeviceConfigDscrptrSizeLocal += 8 
+					usbDeviceConfigDscrptrSize.setValue(usbDeviceConfigDscrptrSizeLocal)
 
 def onAttachmentDisconnected(source, target):
 	global usbDeviceMsdSupport
 	global usbDeviceCDCFunctionCount
+	global usbDeviceConfigDscrptrSizeLocal
+	global usbDeviceVendorReadQueueSizeLocal
+	global usbDeviceVendorWriteQueueSizeLocal
+
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
 	remoteComponent = target["component"]
@@ -229,8 +249,8 @@ def onAttachmentDisconnected(source, target):
 					usbDeviceIadEnable.setValue(False)
 					args = {"iadEnable":False}
 					res = Database.sendMessage("usb_device_cdc_0", "UPDATE_CDC_IAD_ENABLE", args)
-					localConfigDescriptorSize = usbDeviceConfigDscrptrSize.getValue() 
-					usbDeviceConfigDscrptrSize.setValue(localConfigDescriptorSize - 8)
+					usbDeviceConfigDscrptrSizeLocal -= 8 
+					usbDeviceConfigDscrptrSize.setValue(usbDeviceConfigDscrptrSizeLocal)
 
 	
 def handleMessage(messageID, args):	
@@ -243,22 +263,33 @@ def handleMessage(messageID, args):
 	global numEndpoints
 	global usbDeviceEndpointsNumber
 	global usbDeviceSpeed
-		
-	if (messageID == "UPDATE_ENDPOINTS_NUMBER"):	
-		#numEndpoints =  usbDeviceEndpointsNumber.getValue()	
-		usbDeviceEndpointsNumber.setValue( args["nFunction"])
+	global usbDeviceFunctionsNumberLocal
+	global usbDeviceConfigDscrptrSizeLocal
+	global usbDeviceInterfaceNumberLocal
+	global usbDeviceEndpointsNumberLocal
+	global usbDeviceVendorReadQueueSizeLocal
+	global usbDeviceVendorWriteQueueSizeLocal
+
+	if (messageID == "UPDATE_ENDPOINTS_NUMBER"):
+		usbDeviceEndpointsNumberLocal += args["nFunction"]
+		usbDeviceEndpointsNumber.setValue( usbDeviceEndpointsNumberLocal)
 	elif (messageID == "UPDATE_FUNCTIONS_NUMBER"):
-		usbDeviceFunctionNumber.setValue(args["nFunction"])
+		usbDeviceFunctionsNumberLocal += args["nFunction"]
+		usbDeviceFunctionNumber.setValue(usbDeviceFunctionsNumberLocal)
 	elif (messageID == "UPDATE_IAD_ENABLE"):
 		usbDeviceIadEnable.setValue(args["nFunction"])
 	elif (messageID == "UPDATE_CONFIG_DESCRPTR_SIZE"): 
-		usbDeviceConfigDscrptrSize.setValue(args["nFunction"])
+		usbDeviceConfigDscrptrSizeLocal += args["nFunction"]
+		usbDeviceConfigDscrptrSize.setValue(usbDeviceConfigDscrptrSizeLocal)
 	elif (messageID == "UPDATE_INTERFACES_NUMBER"): 
-		usbDeviceInterfacesNumber.setValue(args["nFunction"])
+		usbDeviceInterfaceNumberLocal += args["nFunction"]
+		usbDeviceInterfacesNumber.setValue(usbDeviceInterfaceNumberLocal)
 	elif (messageID == "UPDATE_ENDPOINT_READ_QUEUE_SIZE"): 
-		usbDeviceVendorReadQueueSize.setValue(args["nFunction"])
-	elif (messageID == "UPDATE_ENDPOINT_WRITE_QUEUE_SIZE"): 
-		usbDeviceVendorWriteQueueSize.setValue(args["nFunction"])
+		usbDeviceVendorReadQueueSizeLocal += (args["nFunction"])
+		usbDeviceVendorReadQueueSize.setValue(usbDeviceVendorReadQueueSizeLocal)
+	elif (messageID == "UPDATE_ENDPOINT_WRITE_QUEUE_SIZE"):
+		usbDeviceVendorWriteQueueSizeLocal += (args["nFunction"])    
+		usbDeviceVendorWriteQueueSize.setValue(usbDeviceVendorWriteQueueSizeLocal)
 	elif (messageID == "USB_DEVICE_UPDATE_SPEED"):
 		usbDeviceSpeed.setValue(args["usbDriverSpeed"])
 
@@ -276,7 +307,9 @@ def instantiateComponent(usbDeviceComponent,index):
 	global usbDevicelayerInstance
 	global usbDevicelayerIndex
 	global usbDeviceSpeed
-	
+	global usbDeviceFunctionsNumberLocal
+
+	usbDeviceFunctionsNumberLocal = 0 
 	res = Database.activateComponents(["HarmonyCore"])
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32CZ"]):
 		usbDevicelayerIndex = usbDeviceComponent.createIntegerSymbol("INDEX", None)
@@ -365,18 +398,18 @@ def instantiateComponent(usbDeviceComponent,index):
 	usbDeviceFunctionNumber.setVisible(True)
 	usbDeviceFunctionNumber.setDescription(helpText)
 	usbDeviceFunctionNumber.setMin(0)
-	usbDeviceFunctionNumber.setDefaultValue(0)
+	usbDeviceFunctionNumber.setValue(0)
 	usbDeviceFunctionNumber.setUseSingleDynamicValue(True)
 	#usbDeviceFunctionNumber.setReadOnly(True)
 	
 	# USB Device Endpoint Number 
 	usbDeviceEndpointsNumber = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", None)
-	usbDeviceEndpointsNumber.setLabel("Number of Endpoints")	
+	usbDeviceEndpointsNumber.setLabel("Number of Endpoints")
 	usbDeviceEndpointsNumber.setVisible(False)
 	usbDeviceEndpointsNumber.setMin(0)
-	usbDeviceEndpointsNumber.setDefaultValue(0)
+	usbDeviceEndpointsNumber.setValue(0)
 	usbDeviceEndpointsNumber.setUseSingleDynamicValue(True)
-	usbDeviceEndpointsNumber.setReadOnly(True)	
+	usbDeviceEndpointsNumber.setReadOnly(True)
 	
 	# USB Device Vendor ID 
 	usbDeviceVendorId = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_VENDOR_ID_IDX0", None)
@@ -455,7 +488,8 @@ def instantiateComponent(usbDeviceComponent,index):
 
 	# USB Device IAD Enable 
 	usbDeviceIadEnable = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_DESCRIPTOR_IAD_ENABLE", None)
-	usbDeviceIadEnable.setVisible(False)
+	usbDeviceIadEnable.setLabel("Enable Interface Association Descriptor(IAD)")
+	usbDeviceIadEnable.setVisible(True)
 	usbDeviceIadEnable.setDefaultValue(False)
 	usbDeviceIadEnable.setUseSingleDynamicValue(True)
 	

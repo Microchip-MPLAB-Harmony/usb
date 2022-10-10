@@ -74,42 +74,38 @@ def onAttachmentConnected(source, target):
 		#Log.writeDebugMessage ("USB Device Vendor Function Driver: Attachment connected")
 		
 		# Update Number of Functions in USB Device, Increment the value by One. 
-		args = {"nFunction":nFunctions + 1}
+		args = {"nFunction": 1}
 		res = Database.sendMessage(remoteID, "UPDATE_FUNCTIONS_NUMBER", args)
 		
 		configDescriptorSize = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 		descriptorSize =  VENDOR_DESCRIPTOR_SIZE
 		if configDescriptorSize != None: 
-			args = {"nFunction": configDescriptorSize + descriptorSize }
+			args = {"nFunction": descriptorSize }
 			res = Database.sendMessage(remoteID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 	
 		nInterfaces = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 		if nInterfaces != None: 
-			args = {"nFunction": nInterfaces + VENDOR_INTERFACES_NUMBER }
+			args = {"nFunction": VENDOR_INTERFACES_NUMBER }
 			res = Database.sendMessage(remoteID, "UPDATE_INTERFACES_NUMBER", args)
-			startInterfaceNumber.setValue(nInterfaces, 1)
+			nInterfaces = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
+			startInterfaceNumber.setValue(nInterfaces - VENDOR_INTERFACES_NUMBER , 1)
 			
 		nEndpoints = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if nEndpoints != None:
-			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "PIC32CM", "PIC32CX"]):
-				args = {"nFunction":  nEndpoints + VENDOR_ENDPOINTS_PIC32 }
-				res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
-				epNumberBulkOut.setValue(nEndpoints + 1, 1)
-				epNumberBulkIn.setValue(nEndpoints + 1, 1)
-			else:
-				args = {"nFunction":  nEndpoints + VENDOR_ENDPOINTS_SAM }
-				res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
-				epNumberBulkOut.setValue(nEndpoints + 1, 1)
-				epNumberBulkIn.setValue(nEndpoints + 2, 1)
-			
+			args = {"nFunction": VENDOR_ENDPOINTS_PIC32 }
+			res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
+			nEndpoints = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+			epNumberBulkOut.setValue(nEndpoints, 1)
+			epNumberBulkIn.setValue(nEndpoints, 1)
+
 		readQSize = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINT_READ_QUEUE_SIZE")
 		if readQSize!= None:
-			args = {"nFunction":  readQSize + queueSizeRead.getValue()}
+			args = {"nFunction":  queueSizeRead.getValue()}
 			res = Database.sendMessage(remoteID, "UPDATE_ENDPOINT_READ_QUEUE_SIZE", args)
 		
 		writeQSize = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINT_WRITE_QUEUE_SIZE")
 		if writeQSize!= None:
-			args = {"nFunction":  writeQSize + queueSizeWrite.getValue()}
+			args = {"nFunction":  queueSizeWrite.getValue()}
 			res = Database.sendMessage(remoteID, "UPDATE_ENDPOINT_WRITE_QUEUE_SIZE", args)
 		
 		usbDeviceVendorDescriptorClassCodeFile.setOutputName(remoteID + ".LIST_USB_DEVICE_DESCRIPTOR_CLASS_CODE_ENTRY")
@@ -121,7 +117,6 @@ def onAttachmentConnected(source, target):
 
 def onAttachmentDisconnected(source, target):
 
-	print ("Vendor Function Driver: Detached")
 	global VENDOR_INTERFACES_NUMBER
 	global VENDOR_DESCRIPTOR_SIZE
 	global configValue
@@ -148,25 +143,21 @@ def onAttachmentDisconnected(source, target):
 	
 	nFunctions = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 	if nFunctions != None: 
-		nFunctions = nFunctions - 1
+		nFunctions = 0 - 1
 		args = {"nFunction":nFunctions}
 		res = Database.sendMessage(remoteID, "UPDATE_FUNCTIONS_NUMBER", args)
 	
 	endpointNumber = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 	if endpointNumber != None:
-		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22" , "SAMR21", "SAMR30", "SAMR34", "SAMR35", "PIC32CM", "PIC32CX"]):
-			args = {"nFunction":endpointNumber -  VENDOR_ENDPOINTS_PIC32 }
-			res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
-		else:
-			args = {"nFunction":endpointNumber -  VENDOR_ENDPOINTS_SAM }
-			res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
-	
-	
+		args = {"nFunction":0 -  VENDOR_ENDPOINTS_PIC32 }
+		res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
+
+
 	interfaceNumber = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 	if interfaceNumber != None:
-		args = {"nFunction":  interfaceNumber - 1}
+		args = {"nFunction":  0 - 1}
 		res = Database.sendMessage(remoteID, "UPDATE_INTERFACES_NUMBER", args)
-			
+
 	nVendorInstances = Database.getSymbolValue("usb_device_vendor", "CONFIG_USB_DEVICE_VENDOR_INSTANCES")
 	if nVendorInstances != None:
 		nVendorInstances = nVendorInstances - 1
@@ -176,11 +167,21 @@ def onAttachmentDisconnected(source, target):
 	configDescriptorSize = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 	if configDescriptorSize != None: 
 		descriptorSize =  VENDOR_DESCRIPTOR_SIZE
-		args = {"nFunction": configDescriptorSize - descriptorSize}
+		args = {"nFunction": 0 - descriptorSize}
 		res = Database.sendMessage(remoteID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 		
 		
 	
+	readQSize = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINT_READ_QUEUE_SIZE")
+	if readQSize!= None:
+		args = {"nFunction":  0 - queueSizeRead.getValue()}
+		res = Database.sendMessage(remoteID, "UPDATE_ENDPOINT_READ_QUEUE_SIZE", args)
+
+	writeQSize = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINT_WRITE_QUEUE_SIZE")
+	if writeQSize!= None:
+		args = {"nFunction":  0 - queueSizeWrite.getValue()}
+		res = Database.sendMessage(remoteID, "UPDATE_ENDPOINT_WRITE_QUEUE_SIZE", args)
+
 def destroyComponent(component):
 	print ("Vendor Function: Destroyed")
 			
@@ -275,7 +276,7 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	startInterfaceNumber.setVisible(True)
 	startInterfaceNumber.setMin(0)
 	startInterfaceNumber.setDefaultValue(0)
-	startInterfaceNumber.setReadOnly(True)
+	startInterfaceNumber.setReadOnly(False)
 	
 	
 	# Adding Number of Interfaces
@@ -285,7 +286,7 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	numberOfInterfaces.setMin(1)
 	numberOfInterfaces.setMax(16)
 	numberOfInterfaces.setDefaultValue(1)
-	numberOfInterfaces.setReadOnly(True)
+	numberOfInterfaces.setReadOnly(False)
 	
 	# Vendor Function driver Read Queue Size 
 	queueSizeRead = usbDeviceVendorComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE", None)

@@ -78,6 +78,7 @@ def onAttachmentConnected(source, target):
 	global usbHostControllerEntryFile
 	global usbDriverHsConnectedListUpperLayer
 	global usbSpeed
+	global usbOpMode
 	localComponent = source["component"]
 
 	# This is the Capability of the local Component 
@@ -98,6 +99,9 @@ def onAttachmentConnected(source, target):
 
 	if (remoteID == "usb_host"):
 		usbHostControllerEntryFile.setEnabled(True)
+		usbOpMode.setValue("Host")
+	if remoteID.startswith("usb_device"):
+		usbOpMode.setValue("Device")
 	if connectID == "usb_peripheral_dependency":
 		usbPLIB = localComponent.getSymbolByID("DRV_USB_PLIB")
 		usbPLIB.clearValue()
@@ -137,14 +141,14 @@ def onAttachmentDisconnected(source, target):
 	if connectID == "usb_peripheral_dependency":
 		usbPLIB = localComponent.getSymbolByID("DRV_USB_PLIB")
 		if usbPLIB.getValue() == "PERIPHERAL_USB_0":
-			Database.clearSymbolValue("core", "USB_1_INTERRUPT_ENABLE")
-			Database.clearSymbolValue("core", "USB_1_INTERRUPT_HANDLER_LOCK")
-			Database.clearSymbolValue("core", "USB_1_INTERRUPT_HANDLER")
+			Database.clearSymbolValue("core", "USBHS0_INTERRUPT_ENABLE")
+			Database.clearSymbolValue("core", "USBHS0_INTERRUPT_HANDLER_LOCK")
+			Database.clearSymbolValue("core", "USBHS0_INTERRUPT_HANDLER")
 		elif usbPLIB.getValue() == "PERIPHERAL_USB_1":
 			# Update USB General Interrupt Handler
-			Database.clearSymbolValue("core", "USB_2_INTERRUPT_ENABLE")
-			Database.clearSymbolValue("core", "USB_2_INTERRUPT_HANDLER_LOCK")
-			Database.clearSymbolValue("core", "USB_2_INTERRUPT_HANDLER")
+			Database.clearSymbolValue("core", "USBHS1_INTERRUPT_ENABLE")
+			Database.clearSymbolValue("core", "USBHS1_INTERRUPT_HANDLER_LOCK")
+			Database.clearSymbolValue("core", "USBHS1_INTERRUPT_HANDLER")
 			
 def blUsbOperatioMode(symbol, event):
 	args = {"operationMode":event["value"]}
@@ -174,8 +178,11 @@ def setVisible(symbol, event):
 		symbol.setVisible(False)
 
 def showRTOSMenu(symbol, event):
-	# no RTOS Task required for USBHS driver if operating in Interrupt mode. MHC only support interrupt mode. 
 	show_rtos_menu = False
+
+	if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
+		show_rtos_menu = True
+	symbol.setVisible(show_rtos_menu)
 
 def instantiateComponent(usbDriverComponent, index):
 	global usbOpMode
@@ -261,30 +268,7 @@ def instantiateComponent(usbDriverComponent, index):
         usbHostVbusEnableFunctionName.setDescription(helpText)
 	usbHostVbusEnableFunctionName.setVisible(True)
 	usbHostVbusEnableFunctionName.setDependencies(blUsbHostVbusEnablePinName, ["USB_HOST_VBUS_ENABLE"])
-	
-	# USB Driver Host mode Attach de-bounce duration 
-	usbDriverHostAttachDebounce = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION", usbOpMode)
-	usbDriverHostAttachDebounce.setLabel("Attach De-bounce Duration (mSec)")
-	usbDriverHostAttachDebounce.setVisible(False)
-        helpText = '''Specify the time duration (in milliseconds) that the driver should wait after detecting the
-        attach interrupt and before polling the attach interrupt again to check if the attach condition still exists.
-        A longer duration slows down the Host Device Attach detection but allows for stable operation.'''
-	usbDriverHostAttachDebounce.setDescription(helpText)
-	usbDriverHostAttachDebounce.setDefaultValue(500)
-	usbDriverHostAttachDebounce.setMin(0)
-	usbDriverHostAttachDebounce.setDependencies(blUSBDriverOperationModeChanged, ["USB_OPERATION_MODE"])
-	
-	# USB Driver Host mode Reset Duration
-	usbDriverHostResetDuration = usbDriverComponent.createIntegerSymbol("USB_DRV_HOST_RESET_DUARTION", usbOpMode)
-	usbDriverHostResetDuration.setLabel("Reset Duration (mSec)")
-	usbDriverHostResetDuration.setVisible(False)
-        helpText = '''Specify the duration of the USB Bus Reset Signal. A value of 100 millisecond works 
-        well. There may be cases where some USB devices require a shorter or longer reset duration time.'''
-	usbDriverHostResetDuration.setDescription(helpText)
-	usbDriverHostResetDuration.setDefaultValue(100)
-	usbDriverHostResetDuration.setMin(0)
-	usbDriverHostResetDuration.setDependencies(blUSBDriverOperationModeChanged, ["USB_OPERATION_MODE"])
-	
+
 	# USB Driver Index - This symbol actually should get set from a Driver dependency connected callback. 
 	# This is temporary work around to initialize using hard coded values. 
 	usbDeviceDriverIndex = usbDriverComponent.createStringSymbol("CONFIG_USB_DRIVER_INDEX", None)

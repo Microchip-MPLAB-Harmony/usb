@@ -21,6 +21,7 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 # USB Device MSD global 
+msdFunctionsNumber = 1
 msdInterfacesNumber = 1
 msdDescriptorSize = 23
 msdEndpointsNumber = 2
@@ -67,6 +68,9 @@ def onAttachmentConnected(source, target):
 	global usbDeviceMsdDescriptorHsFile
 	global usbDeviceMsdDescriptorFsFile
 	global usbDeviceMsdDescriptorClassCodeFile
+	global msdFunctionsNumber
+	global msdDescriptorSize
+	global msdInterfacesNumber
 
 	
 	dependencyID = source["id"]
@@ -77,43 +81,38 @@ def onAttachmentConnected(source, target):
 	
 	
 	if (dependencyID == "usb_device_dependency"):
-		readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
-		args = {"nFunction":readValue + 1}
+		args = {"nFunction":msdFunctionsNumber}
 		res = Database.sendMessage(remoteID, "UPDATE_FUNCTIONS_NUMBER", args)
 		
 		# Update Total configuration descriptor size 
 		readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 		if readValue != None:
-			args = {"nFunction": readValue + msdDescriptorSize}
+			args = {"nFunction": msdDescriptorSize}
 			res = Database.sendMessage(remoteID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 	
 		# Update Total Interfaces number 
 		readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 		if readValue != None:
-			args = {"nFunction":    readValue + 1}
+			args = {"nFunction": msdInterfacesNumber}
 			res = Database.sendMessage(remoteID, "UPDATE_INTERFACES_NUMBER", args)
-			startInterfaceNumber.setValue(readValue, 1)
+			readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
+			startInterfaceNumber.setValue(readValue - msdInterfacesNumber, 1)
 	
 	# Update Total Endpoints used 
 		readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if readValue != None:
-			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1","SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "PIC32CM", "PIC32CX"]):
-				args = {"nFunction": readValue + msdEndpointsPic32 }
-				res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
-				usbDeviceMsdEPNumberBulkIn.setValue(readValue + 1, 1)
-				usbDeviceMsdEPNumberBulkOut.setValue(readValue + 1, 1)	
-			else:
-				args = {"nFunction": readValue + msdEndpointsSAM }
-				res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
-				usbDeviceMsdEPNumberBulkIn.setValue(readValue + 1, 1)
-				usbDeviceMsdEPNumberBulkOut.setValue(readValue + 2, 1)
+			args = {"nFunction": msdEndpointsPic32 }
+			res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
+			readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+			usbDeviceMsdEPNumberBulkIn.setValue(readValue, 1)
+			usbDeviceMsdEPNumberBulkOut.setValue(readValue, 1)
 		usbDeviceMsdFunInitFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_INIT_ENTRY")
 		usbDeviceMsdFunRegTableFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_ENTRY")
 		usbDeviceMsdDescriptorHsFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_HS_ENTRY")
 		usbDeviceMsdDescriptorFsFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_FS_ENTRY")
 		usbDeviceMsdDescriptorClassCodeFile.setOutputName(remoteID + ".LIST_USB_DEVICE_DESCRIPTOR_CLASS_CODE_ENTRY") 
-		
-		
+
+
 def onAttachmentDisconnected(source, target):
 	global indexFunction
 	global configValue
@@ -132,6 +131,9 @@ def onAttachmentDisconnected(source, target):
 	global usbDeviceMsdDescriptorHsFile
 	global usbDeviceMsdDescriptorFsFile
 	global usbDeviceMsdDescriptorClassCodeFile
+	global msdFunctionsNumber
+	global msdDescriptorSize
+	global msdInterfacesNumber
 
 	
 	dependencyID = source["id"]
@@ -143,33 +145,27 @@ def onAttachmentDisconnected(source, target):
 	if  dependencyID == "usb_device_dependency":
 		readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 		if readValue!= None:
-			args = {"nFunction":readValue - 1}
+			args = {"nFunction":0 - msdFunctionsNumber}
 			res = Database.sendMessage(remoteID, "UPDATE_FUNCTIONS_NUMBER", args)
 		
 		# Update Total configuration descriptor size 
 		readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 		if readValue != None:
-			args = {"nFunction":  readValue - msdDescriptorSize}
+			args = {"nFunction":  0 - msdDescriptorSize}
 			res = Database.sendMessage(remoteID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
-	
+
 		# Update Total Interfaces number 
 		readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 		if readValue != None:
-			args = {"nFunction":   readValue - 1}
+			args = {"nFunction":   0 - msdInterfacesNumber}
 			res = Database.sendMessage(remoteID, "UPDATE_INTERFACES_NUMBER", args)
-			startInterfaceNumber.setValue(readValue, 1)
-			
+
 		readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if readValue != None:
-			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "PIC32CM", "PIC32CX"]):
-				args = {"nFunction":readValue - msdEndpointsPic32 }
-				res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
-			else:
-				args = {"nFunction":readValue - msdEndpointsSAM  }
-				res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
-			
+			args = {"nFunction":0 - msdEndpointsPic32 }
+			res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
 
-	
+
 def destroyComponent(component):
 	print ("MSD Function Driver: Destroyed")
 
@@ -238,7 +234,7 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 	# Adding Start Interface number 
 	startInterfaceNumber = usbDeviceMsdComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INTERFACE_NUMBER", None)
 	startInterfaceNumber.setLabel("Start Interface Number")
-	startInterfaceNumber.setVisible(False)
+	startInterfaceNumber.setVisible(True)
 	startInterfaceNumber.setMin(0)
 	startInterfaceNumber.setDefaultValue(0)
 	

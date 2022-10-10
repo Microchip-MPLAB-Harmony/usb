@@ -63,42 +63,36 @@ def onAttachmentConnected(source, target):
 	nFunctions = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 
 	if nFunctions != None: 
-		#Log.writeDebugMessage ("USB Device Printer Function Driver: Attachment connected")
-		
 		# Update Number of Functions in USB Device, Increment the value by One. 
-		args = {"nFunction":nFunctions + 1}
+		args = {"nFunction": 1}
 		res = Database.sendMessage(remoteID, "UPDATE_FUNCTIONS_NUMBER", args)
 	
 		configDescriptorSize = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 		if configDescriptorSize != None: 
-			args = {"nFunction":  configDescriptorSize + printerDescriptorSize}
+			args = {"nFunction":printerDescriptorSize}
 			res = Database.sendMessage(remoteID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 	
 		# Update Total Interfaces number 
 		nInterfaces = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 		if nInterfaces != None: 
-			args = {"nFunction":  nInterfaces + printerInterfacesNumber}
+			args = {"nFunction":  printerInterfacesNumber}
 			res = Database.sendMessage(remoteID, "UPDATE_INTERFACES_NUMBER", args)
-			startInterfaceNumber.setValue(nInterfaces, 1)
-			
-	# Update Total Endpoints used 
+			nInterfaces = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
+			startInterfaceNumber.setValue(nInterfaces - printerInterfacesNumber, 1)
+
+		# Update Total Endpoints used 
 		nEndpoints = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 		if nEndpoints != None:
-
-			epNumberBulkOut.setValue(nEndpoints + 1, 1)
-			if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "PIC32CM", "PIC32CX"]):
-				args = {"nFunction": nEndpoints + printerEndpointsPic32}
-				res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
-			else:
-				args = {"nFunction": nEndpoints + printerEndpointsSAM}
-				res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
-				
+			args = {"nFunction": printerEndpointsPic32}
+			res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
+			readValue = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
+			epNumberBulkOut.setValue(readValue, 1)
 		usbDevicePrinterDescriptorClassCodeFile.setOutputName(remoteID + ".LIST_USB_DEVICE_DESCRIPTOR_CLASS_CODE_ENTRY")
 		usbDevicePrinterDescriptorFsFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_FS_ENTRY")
 		usbDevicePrinterDescriptorHsFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_HS_ENTRY")
 		usbDevicePrinterFunRegTableFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_ENTRY")
 		usbDevicePrinterFunInitFile.setOutputName(remoteID + ".LIST_USB_DEVICE_FUNCTION_INIT_ENTRY")
-			
+
 
 def onAttachmentDisconnected(source, target):
 
@@ -124,37 +118,32 @@ def onAttachmentDisconnected(source, target):
 	
 	nFunctions = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 	if nFunctions != None: 
-		nFunctions = nFunctions - 1
-		args = {"nFunction": nFunctions}
+		args = {"nFunction": 0 - 1}
 		res = Database.sendMessage(remoteID, "UPDATE_FUNCTIONS_NUMBER", args)
 	
 	endpointNumber = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
 	if endpointNumber != None:
-		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CZ", "PIC32MX", "PIC32MM", "PIC32MK", "SAMD21", "SAMDA1","SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "PIC32CM", "PIC32CX"]):
-			args = {"nFunction": endpointNumber -  printerEndpointsPic32 }
-			res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
-		else:
-			args = {"nFunction": endpointNumber -  printerEndpointsSAM }
-			res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
+		args = {"nFunction": 0 -  printerEndpointsPic32 }
+		res = Database.sendMessage(remoteID, "UPDATE_ENDPOINTS_NUMBER", args)
 	
 	# Update Total Interfaces number
 	interfaceNumber = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 	if interfaceNumber != None: 
-		args = {"nFunction":   interfaceNumber - 2}
+		args = {"nFunction":   0 - interfaceNumber}
 		res = Database.sendMessage(remoteID, "UPDATE_INTERFACES_NUMBER", args)
 
-	# Update Total configuration descriptor size 	
+	# Update Total configuration descriptor size 
 	configDescriptorSize = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 	if configDescriptorSize != None: 
-		args = {"nFunction": configDescriptorSize - printerDescriptorSize }
+		args = {"nFunction": 0 - printerDescriptorSize }
 		res = Database.sendMessage(remoteID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 		
 	
 def destroyComponent(component):
 	print ("Printer Function Driver: Destroyed")
-			
-		
-	
+
+
+
 def usbDevicePrinterBufferQueueSize(usbSymbolSource, event):
 	global currentQSizeRead
 	global currentQSizeWrite
@@ -227,7 +216,7 @@ def instantiateComponent(usbDevicePrinterComponent, index):
 	startInterfaceNumber.setVisible(True)
 	startInterfaceNumber.setMin(0)
 	startInterfaceNumber.setDefaultValue(0)
-	startInterfaceNumber.setReadOnly(True)
+	startInterfaceNumber.setReadOnly(False)
 
 	# Adding Number of Interfaces
 	numberOfInterfaces = usbDevicePrinterComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_NUMBER_OF_INTERFACES", None)
@@ -235,6 +224,7 @@ def instantiateComponent(usbDevicePrinterComponent, index):
 	numberOfInterfaces.setVisible(True)
 	numberOfInterfaces.setMin(1)
 	numberOfInterfaces.setMax(16)
+	numberOfInterfaces.setReadOnly(True)
 	numberOfInterfaces.setDefaultValue(printerInterfacesNumber)
 	
 	# Printer Function driver Read Queue Size 

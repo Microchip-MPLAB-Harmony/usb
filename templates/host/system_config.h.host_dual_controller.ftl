@@ -53,37 +53,29 @@
 // *****************************************************************************
 // **************************************************************************
 
-
-
-<#if CONFIG_USB_HOST_HUB_SUPPORT?has_content == false>
-#define USB_HOST_DEVICES_NUMBER                             ${CONFIG_USB_HOST_DEVICES_NUMNBER} 
-<#elseif CONFIG_USB_HOST_HUB_SUPPORT == false>
 /* Total number of devices to be supported */
-#define USB_HOST_DEVICES_NUMBER                             ${CONFIG_USB_HOST_DEVICES_NUMNBER} 
+<#if CONFIG_USB_HOST_HUB_SUPPORT?has_content == false>
+#define USB_HOST_DEVICES_NUMBER                             ${CONFIG_USB_HOST_DEVICES_NUMBER} 
+<#elseif CONFIG_USB_HOST_HUB_SUPPORT == false>
+#define USB_HOST_DEVICES_NUMBER                             ${CONFIG_USB_HOST_DEVICES_NUMBER} 
 <#else>
-#define USB_HOST_DEVICES_NUMBER                             ${CONFIG_USB_HOST_DEVICES_NUMNBER} 
+#define USB_HOST_DEVICES_NUMBER                             ${CONFIG_USB_HOST_DEVICES_NUMBER} 
 </#if>
 
-/* Size of Endpoint 0 buffer */
-#define USB_DEVICE_EP0_BUFFER_SIZE                          64
-
-/* Target peripheral list entries */
+/* Number of Target peripheral list (TPL) entries. */
 #define  USB_HOST_TPL_ENTRIES                               ${CONFIG_USB_HOST_TPL_ENTRY_NUMBER} 
 
-/* Maximum number of configurations supported per device */
+/* Maximum number of interfaces per device. */
 #define USB_HOST_DEVICE_INTERFACES_NUMBER                   ${CONFIG_USB_HOST_MAX_INTERFACES}  
 
-#define USB_HOST_CONTROLLERS_NUMBER            	            ${CONFIG_USB_HOST_ATTACHED_CONTROLLERS_NUMBER}  
+/* Number of USB Controllers. */
+#define USB_HOST_CONTROLLERS_NUMBER                         ${CONFIG_USB_HOST_ATTACHED_CONTROLLERS_NUMBER}  
 
+/* The maximum number of simultaneous transfers that can be submitted. */ 
+#define USB_HOST_TRANSFERS_NUMBER                           ${CONFIG_USB_HOST_TRANSFERS_NUMBER}
 
-
-#define USB_HOST_TRANSFERS_NUMBER                           10
-
-/* Provides Host pipes number */
-#define USB_HOST_PIPES_NUMBER                               10
-
-/* Number of Host Layer Clients */
-#define USB_HOST_CLIENTS_NUMBER                             1   
+/* The maximum number of pipes that the USB Host layer can utilize. */
+#define USB_HOST_PIPES_NUMBER                               ${CONFIG_USB_HOST_PIPES_NUMBER}
 <#--
 /*******************************************************************************
  End of File

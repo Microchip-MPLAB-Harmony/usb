@@ -25,19 +25,28 @@
 usbDebugLogs = 1 
 usbPeripheralHostSupport = None 
 usbPeripheralDeviceSupport = None
+usbDriverHostAttachDebounce = None
+usbDriverHostResetDuration = None
+
 usbDriverPath = "driver/"
 usbDriverProjectPath = "/driver/usb/"
 def handleMessage(messageID, args):	
 	global usbPeripheralHostSupport
 	global usbPeripheralDeviceSupport
+	global usbDriverHostResetDuration
+	global usbDriverHostAttachDebounce
 	if (messageID == "UPDATE_OPERATION_MODE_COMMON"):
 		opModeId0 = Database.getSymbolValue("drv_usbhs_index_0", "USB_OPERATION_MODE")
 		opModeId1 = Database.getSymbolValue("drv_usbhs_index_1", "USB_OPERATION_MODE")
 
-		if ((opModeId0 != None) and  (opModeId0 == "Host")) or ((opModeId1 != None) and  (opModeId1 == "Host")):
+		if ((opModeId0 != None) and  ((opModeId0 == "Host") or (opModeId0 == "Dual Role"))) or ((opModeId1 != None) and  ((opModeId1 == "Host") or (opModeId1 == "Dual Role"))):
 			usbPeripheralHostSupport.setValue(True)
+			usbDriverHostAttachDebounce.setVisible(True)
+			usbDriverHostResetDuration.setVisible(True)
 		else:
 			usbPeripheralHostSupport.setValue(False)
+			usbDriverHostAttachDebounce.setVisible(False)
+			usbDriverHostResetDuration.setVisible(False)
 		if ((opModeId0 != None) and  (opModeId0 == "Device")) or ((opModeId1 != None) and  (opModeId1 == "Device")):
 			usbPeripheralDeviceSupport.setValue(True)
 		else:
@@ -49,7 +58,9 @@ def instantiateComponent(usbPeripheralComponentCommon):
 	global usbPeripheralInstnces
 	global usbPeripheralHostSupport
 	global usbPeripheralDeviceSupport
-	
+	global usbDriverHostResetDuration
+	global usbDriverHostAttachDebounce
+
 	# Enable "Generate Harmony Driver Common Files" option in MHC
 	Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":True})
 
@@ -85,14 +96,14 @@ def instantiateComponent(usbPeripheralComponentCommon):
 	# USB Driver Host mode Attach de-bounce duration
 	usbDriverHostAttachDebounce = usbPeripheralComponentCommon.createIntegerSymbol("USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION", None)
 	usbDriverHostAttachDebounce.setLabel("USB Host Attach De-bounce Duration (mSec)")
-	usbDriverHostAttachDebounce.setVisible(True)
+	usbDriverHostAttachDebounce.setVisible(False)
 	usbDriverHostAttachDebounce.setDescription("Set USB Host Attach De-bounce duration")
 	usbDriverHostAttachDebounce.setDefaultValue(500)
 	
 	# USB Driver Host mode Reset Duration
 	usbDriverHostResetDuration = usbPeripheralComponentCommon.createIntegerSymbol("USB_DRV_HOST_RESET_DUARTION", None)
 	usbDriverHostResetDuration.setLabel("USB Host Reset Duration (mSec)")
-	usbDriverHostResetDuration.setVisible(True)
+	usbDriverHostResetDuration.setVisible(False)
 	usbDriverHostResetDuration.setDescription("Set USB Host Attach De-bounce duration")
 	usbDriverHostResetDuration.setDefaultValue(100)
 	
