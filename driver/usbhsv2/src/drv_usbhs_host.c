@@ -64,7 +64,7 @@ DRV_USB_HOST_INTERFACE gDrvUSBHSHostInterface =
     .hostIRPCancel = DRV_USBHS_HOST_IRPCancel,
     .hostPipeSetup = DRV_USBHS_HOST_PipeSetup,
     .hostPipeClose = DRV_USBHS_HOST_PipeClose,
-	.endpointToggleClear = DRV_USBHS_HOST_EndpointToggleClear,
+    .endpointToggleClear = DRV_USBHS_HOST_EndpointToggleClear,
     .hostEventsDisable = DRV_USBHS_HOST_EventsDisable,
     .hostEventsEnable = DRV_USBHS_HOST_EventsEnable,
     .rootHubInterface.rootHubPortInterface.hubPortReset = DRV_USBHS_HOST_ROOT_HUB_PortReset,
@@ -325,18 +325,18 @@ void _DRV_USBHS_HOST_ResetStateMachine
                 }
                 else
                 {
-					/* For Low Speed devices, though we de assert Reset signaling above but isResetting
-					 * flag is not set to false here. In this way we make sure that
-					 * USB Host layer does not start submitting transfer requests
-					 * before USB module is not completely ready for enumeration.
-					 * The USB module is made to enter Suspend mode after Bus reset
-					 * de assert and is resumed after some time. In Suspend state
-					 * the USB lines are in forced idle state and therefore does not
-					 * detect any noise in line state lines from USB PHY.  By this
-					 * way we negate devices which have quick pull up on D+/D-
-					 * lines. */ 
-					
-					/* Enable Suspend */
+                    /* For Low Speed devices, though we de assert Reset signaling above but isResetting
+                     * flag is not set to false here. In this way we make sure that
+                     * USB Host layer does not start submitting transfer requests
+                     * before USB module is not completely ready for enumeration.
+                     * The USB module is made to enter Suspend mode after Bus reset
+                     * de assert and is resumed after some time. In Suspend state
+                     * the USB lines are in forced idle state and therefore does not
+                     * detect any noise in line state lines from USB PHY.  By this
+                     * way we negate devices which have quick pull up on D+/D-
+                     * lines. */ 
+
+                    /* Enable Suspend */
                     PLIB_USBHS_SuspendEnable(hDriver->usbDrvCommonObj.usbID);
 
                     hDriver->usbDrvHostObj.timerHandle = SYS_TIME_CallbackRegisterMS(_DRV_USBHS_HOST_TimerCallback, (uintptr_t ) hDriver, 100, SYS_TIME_SINGLE );
@@ -378,7 +378,7 @@ void _DRV_USBHS_HOST_ResetStateMachine
                 /* Clear the flag */
                 hDriver->usbDrvHostObj.isResetting = false;
 
-               	/* This means the device attached at Low speed */
+                /* This means the device attached at Low speed */
                 hDriver->usbDrvCommonObj.deviceSpeed = USB_SPEED_LOW;
             }
             break;
@@ -686,6 +686,18 @@ void _DRV_USBHS_HOST_Initialize
     /* Initialize the device handle */
     drvObj->usbDrvHostObj.attachedDeviceObjHandle = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
 
+    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_ENABLE(1);
+    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_SYNCBUSY & USBHS_SYNCBUSY_ENABLE_Msk) == USBHS_SYNCBUSY_ENABLE_Msk)
+    {
+    }
+    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYRDY_Msk) == USBHS_STATUS_PHYRDY_Msk)
+    {
+    }
+    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_IDOVEN(1); 
+    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_IDVAL(0);
+    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_PHY24 |= (1<<1);
+    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_PHY44 |= USBHS_PHY44_PLLDAMP(0x03);  
+    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_PHY20 |= USBHS_PHY20_RSVD(0x08);  
     if(DRV_USBHS_OPMODE_DUAL_ROLE != drvObj->usbDrvCommonObj.operationMode)
     {
         /* Disable all interrupts. Interrupts will be enabled when the root hub is
@@ -2667,8 +2679,6 @@ void DRV_USBHS_HOST_ROOT_HUB_OperationEnable
             {
                 if(DRV_USBHS_OPMODE_DUAL_ROLE == pUSBDrvObj->usbDrvCommonObj.operationMode)
                 {
-                    /* For Host the ID pin needs to be pull down */
-                    PLIB_PORTS_ChangeNoticePullDownPerPortEnable( PORTS_ID_0, PORT_CHANNEL_F, PORTS_BIT_POS_3 );
                     pUSBDrvObj->usbDrvCommonObj.isDeviceRoleActive = false;
                 }
                 
@@ -2706,12 +2716,7 @@ void DRV_USBHS_HOST_ROOT_HUB_OperationEnable
                     
                 }
                                
-                if( (DRV_USBHS_OPMODE_DUAL_ROLE == pUSBDrvObj->usbDrvCommonObj.operationMode) &&
-                        (true == pUSBDrvObj->usbDrvCommonObj.isHostRoleActive) )
-                {
-                    /* Disable CN Pull ups only if it was enabled */
-                    PLIB_PORTS_ChangeNoticePullDownPerPortDisable( PORTS_ID_0, PORT_CHANNEL_F, PORTS_BIT_POS_3 );
-                }
+                
 
                 _DRV_USBHS_NonPersistentInterruptSourceClear(pUSBDrvObj->usbDrvCommonObj.interruptSource);
                 _DRV_USBHS_NonPersistentInterruptSourceClear(pUSBDrvObj->usbDrvCommonObj.interruptSourceUSBDma);
@@ -2790,10 +2795,11 @@ bool DRV_USBHS_HOST_ROOT_HUB_OperationIsEnabled
             /* This function sets the session bit if the VBUS voltage level is
              * correct and then returns true. */
 
-            if((USBHS_VBUS_VALID == PLIB_USBHS_VBUSLevelGet(usbID)) && (0 == USBEOFRSTbits.SOFRST))
+            if((USBHS_VBUS_VALID == PLIB_USBHS_VBUSLevelGet(usbID)) && ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_SYNCBUSY & USBHS_SYNCBUSY_SWRST_Msk) == 0))
             {
                 SYS_INT_SourceStatusClear(hDriver->usbDrvCommonObj.interruptSource);
                 
+               ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_INTENSET = USBHS_INTENSET_DMA_Msk | USBHS_INTENSET_USB_Msk;  
                 /* Enable the attach and detach interrupt and EP0 interrupt. */
                 PLIB_USBHS_InterruptEnableSet(hDriver->usbDrvCommonObj.usbID, 
                         (USBHS_GENINT_BABBLE|USBHS_GENINT_VBUSERR|USBHS_GENINT_DEVCONN|USBHS_GENINT_DEVDISCONN), 0x1, 0x0);

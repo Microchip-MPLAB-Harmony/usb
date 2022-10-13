@@ -500,7 +500,7 @@ void _DRV_USBHS_DEVICE_Initialize
         PLIB_USBHS_InterruptEnableSet(usbID,(USBHS_GEN_INTERRUPT)0x0, (USBHS_EPTXRX_INTERRUPT)0x0, (USBHS_EPTXRX_INTERRUPT)0x0);
     }
 
-    	
+
     ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_ENABLE(1);
     
     while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_SYNCBUSY & USBHS_SYNCBUSY_ENABLE_Msk) == USBHS_SYNCBUSY_ENABLE_Msk)
@@ -1024,7 +1024,7 @@ uint16_t DRV_USBHS_DEVICE_SOFNumberGet
   Summary:
     This function enables an endpoint for the specified direction and endpoint
     size.
-	
+
   Description:
     This function enables an endpoint for the specified direction and endpoint
     size. The function will enable the endpoint for communication in one
@@ -1237,7 +1237,7 @@ USB_ERROR DRV_USBHS_DEVICE_EndpointEnable
     
   Summary:
     This function disables an endpoint.
-	
+
   Description:
     This function disables an endpoint. If the endpoint type is a control
     endpoint type, both directions are disabled. For non-control endpoints, the
@@ -1443,7 +1443,7 @@ USB_ERROR DRV_USBHS_DEVICE_EndpointDisable
   Summary:
     This function returns the enable/disable status of the specified endpoint
     and direction.
-	
+
   Description:
     This function returns the enable/disable status of the specified endpoint
     and direction.
@@ -1561,7 +1561,7 @@ bool DRV_USBHS_DEVICE_EndpointIsStalled
   Summary:
     This function submits an I/O Request Packet (IRP) for processing to the
     Hi-Speed USB Driver.
-	
+
   Description:
     This function submits an I/O Request Packet (IRP) for processing to the USB
     Driver. The IRP allows a client to send and receive data from the USB Host.
@@ -2233,7 +2233,7 @@ USB_ERROR DRV_USBHS_DEVICE_IRPCancelAll
     
   Summary:
     Cancels the specified IRP.
-	
+
   Description:
     This function attempts to cancel the specified IRP. If the IRP is queued and
     its processing has not started, it will be cancelled successfully. If the
@@ -3537,7 +3537,7 @@ uint8_t _DRV_USBHS_DEVICE_Get_FreeDMAChannel
   
   Summary:
     This function enables the specified USB 2.0 Test Mode.
-	
+
   Description:
     This function causes the device to enter the specified USB 2.0 defined test
     mode. It is called in response to Set Feature command from the host. The
@@ -3620,7 +3620,7 @@ USB_ERROR DRV_USBHS_DEVICE_TestModeEnter
   
   Summary:
     This function disables the specified USB 2.0 Test Mode.
-	
+
   Description:
     This function causes the device to stop the specified USB 2.0 defined test
     mode. This function can be called after calling the

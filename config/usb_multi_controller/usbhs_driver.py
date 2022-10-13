@@ -63,6 +63,8 @@ def blUSBDriverOpModeChanged(symbol, event):
 	elif (event["value"] == "DualRole"):
 		addDrvUsbDeviceFile.setValue(True)
 		addDrvUsbHostFile.setValue(True)
+	args = {"operationMode":event["value"]}
+	res = Database.sendMessage("drv_usbhs_index", "UPDATE_OPERATION_MODE_COMMON", args)
 
 def genRtosTask(symbol, event):
 	if event["value"] != "BareMetal":
@@ -180,6 +182,8 @@ def instantiateComponent(usbDriverComponent, index):
 	global drvUsbHsV1DeviceSourceFile
 	global usbHostControllerEntryFile
 	global usbSpeed
+	global addDrvUsbDeviceFile
+	global addDrvUsbHostFile
 	usbDriverSourcePath = "ubshs"
 	
 	usbDriverIndex = usbDriverComponent.createIntegerSymbol("INDEX", None)
