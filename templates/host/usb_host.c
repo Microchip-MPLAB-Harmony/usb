@@ -139,8 +139,8 @@ void _USB_HOST_TimerCallback(uintptr_t context)
 {
     USB_HOST_BUS_OBJ * busObj = ((USB_HOST_BUS_OBJ *)(context));
     busObj->timerExpired = true;
-	SYS_TIME_TimerDestroy (busObj->busOperationsTimerHandle);
-	busObj->busOperationsTimerHandle = SYS_TIME_HANDLE_INVALID;
+    SYS_TIME_TimerDestroy (busObj->busOperationsTimerHandle);
+    busObj->busOperationsTimerHandle = SYS_TIME_HANDLE_INVALID;
 }
 
 // *****************************************************************************

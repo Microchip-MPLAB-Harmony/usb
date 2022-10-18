@@ -45,7 +45,7 @@
 /* Number of HUB Function driver instances in the application */
 #define USB_HOST_HUB_SUPPORT                  true
 #define USB_HOST_HUB_INSTANCES_NUMBER         ${CONFIG_USB_HOST_HUB_NUMBER_OF_INSTANCES}
-#define USB_HOST_HUB_PORTS_NUMBER			  4
+#define USB_HOST_HUB_PORTS_NUMBER             4
 <#--
 /*******************************************************************************
  End of File

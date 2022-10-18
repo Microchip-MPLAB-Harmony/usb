@@ -23,8 +23,8 @@
  *******************************************************************************/
  -->
 <#if (CONFIG_USB_HOST_HID_NUMBER_OF_INSTANCES?has_content == true)  
-		&& (CONFIG_USB_HOST_HID_NUMBER_OF_INSTANCES?number >= 1)>
-	TPL_INTERFACE_CLASS(0x03,&hidInitData,  USB_HOST_HID_INTERFACE) ,
+&& (CONFIG_USB_HOST_HID_NUMBER_OF_INSTANCES?number >= 1)>
+    TPL_INTERFACE_CLASS(0x03,&hidInitData,  USB_HOST_HID_INTERFACE) ,
 </#if>
 <#--
 /*******************************************************************************

@@ -43,7 +43,7 @@
  * USB Driver Initialization
  ******************************************************/
 <#if (USB_OPERATION_MODE == "DualRole") && (USB_HOST_VBUS_ENABLE == true) ||
-	  (USB_OPERATION_MODE == "Host") && (USB_HOST_VBUS_ENABLE == true)>
+  (USB_OPERATION_MODE == "Host") && (USB_HOST_VBUS_ENABLE == true)>
 
 void DRV_USB_VBUSPowerEnable${INDEX?string}(uint8_t port, bool enable)
 {

@@ -23,8 +23,8 @@
  *******************************************************************************/
  -->
 <#if (CONFIG_USB_HOST_HUB_NUMBER_OF_INSTANCES?has_content == true)  
-		&& (CONFIG_USB_HOST_HUB_NUMBER_OF_INSTANCES?number >= 1)>
-	TPL_INTERFACE_CLASS_SUBCLASS(0x09, 0x00, NULL,  USB_HOST_HUB_INTERFACE),
+&& (CONFIG_USB_HOST_HUB_NUMBER_OF_INSTANCES?number >= 1)>
+    TPL_INTERFACE_CLASS_SUBCLASS(0x09, 0x00, NULL,  USB_HOST_HUB_INTERFACE),
 </#if>
 <#--
 /*******************************************************************************

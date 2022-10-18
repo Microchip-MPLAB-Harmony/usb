@@ -71,7 +71,7 @@ USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY usageDriverTableEntry[${CONFIG_USB_HID_TOT
     },
 </#if>
 <#if CONFIG_USB_HOST_USE_MOUSE == true>
-	{
+    {
         .usage = (USB_HID_USAGE_PAGE_GENERIC_DESKTOP_CONTROLS << 16) | USB_HID_USAGE_MOUSE,
         .initializeData = NULL,
         .interface = &usageDriverInterfaceMouse
@@ -87,8 +87,8 @@ USB_HOST_HID_INIT hidInitData =
     .usageDriverTable = usageDriverTableEntry
 <#else>
 
-	/* No usage drivers added. At least one Usage driver must be added */ 
-	.usageDriverTable = NULL
+    /* No usage drivers added. At least one Usage driver must be added */ 
+    .usageDriverTable = NULL
 </#if>
 };
 

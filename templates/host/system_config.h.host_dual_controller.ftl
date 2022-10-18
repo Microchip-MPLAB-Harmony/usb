@@ -73,7 +73,7 @@
 /* Maximum number of configurations supported per device */
 #define USB_HOST_DEVICE_INTERFACES_NUMBER                   ${CONFIG_USB_HOST_MAX_INTERFACES}  
 
-#define USB_HOST_CONTROLLERS_NUMBER            				${CONFIG_USB_HOST_ATTACHED_CONTROLLERS_NUMBER}  
+#define USB_HOST_CONTROLLERS_NUMBER            	            ${CONFIG_USB_HOST_ATTACHED_CONTROLLERS_NUMBER}  
 
 
 

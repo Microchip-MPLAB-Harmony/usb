@@ -23,11 +23,11 @@
  *******************************************************************************/
  -->
     {
-    /* Index of the USB Driver used by the Host Layer */
-    .drvIndex = ${CONFIG_USB_DRIVER_INDEX},
+        /* Index of the USB Driver used by the Host Layer */
+        .drvIndex = ${CONFIG_USB_DRIVER_INDEX},
 
-    /* Pointer to the USB Driver Functions. */
-    .hcdInterface = ${CONFIG_USB_DRIVER_INTERFACE},
+        /* Pointer to the USB Driver Functions. */
+        .hcdInterface = ${CONFIG_USB_DRIVER_INTERFACE},
     },
 <#--
 /*******************************************************************************
