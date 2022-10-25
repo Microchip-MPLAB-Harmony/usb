@@ -75,9 +75,9 @@ def loadModule():
                 usbPeripheralComponent2 =  Module.CreateComponent("peripheral_usb_1", "USBHS1", "/USB/Peripherals/USB", "config/usb_multi_controller/usb_peripheral.py")
                 usbPeripheralComponent2.addCapability("USBHS1", "USBHS")
 
-            # Create USB Full Speed Driver Component
+            # Create USB High Speed Driver Component
             usbDriverComponent =  Module.CreateGeneratorComponent("drv_usbhs_index", "USB High Speed Driver", "/USB/Drivers", "config/usb_multi_controller/usbhs_common.py", "config/usb_multi_controller/usbhs_driver.py")
-            usbDriverComponent.addCapability("DRV_USB", "DRV_USB")
+            usbDriverComponent.addMultiCapability("DRV_USB", "DRV_USB", "DRV_USB")
             usbDriverComponent.addDependency("usb_peripheral_dependency", "USBHS", False, True)
 
             # Enable USB Library modules 
