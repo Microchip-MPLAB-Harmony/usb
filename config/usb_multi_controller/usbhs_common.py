@@ -33,16 +33,16 @@ def handleMessage(messageID, args):
 	if (messageID == "UPDATE_OPERATION_MODE_COMMON"):
 		opModeId0 = Database.getSymbolValue("drv_usbhs_index_0", "USB_OPERATION_MODE")
 		opModeId1 = Database.getSymbolValue("drv_usbhs_index_1", "USB_OPERATION_MODE")
-		
+
 		if ((opModeId0 != None) and  (opModeId0 == "Host")) or ((opModeId1 != None) and  (opModeId1 == "Host")):
 			usbPeripheralHostSupport.setValue(True)
-		else:	
+		else:
 			usbPeripheralHostSupport.setValue(False)
 		if ((opModeId0 != None) and  (opModeId0 == "Device")) or ((opModeId1 != None) and  (opModeId1 == "Device")):
 			usbPeripheralDeviceSupport.setValue(True)
-		else:	
+		else:
 			usbPeripheralDeviceSupport.setValue(False)
-			
+
 
 
 def instantiateComponent(usbPeripheralComponentCommon):

@@ -302,6 +302,39 @@ def instantiateComponent(usbDriverComponent, index):
 	if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
 		enable_rtos_settings = True
 
+	# RTOS Settings 
+	usbDriverRTOSMenu = usbDriverComponent.createMenuSymbol(None, None)
+	usbDriverRTOSMenu.setLabel("RTOS settings")
+	usbDriverRTOSMenu.setDescription("RTOS settings")
+	usbDriverRTOSMenu.setVisible(enable_rtos_settings)
+	usbDriverRTOSMenu.setDependencies(showRTOSMenu, ["HarmonyCore.SELECT_RTOS"])
+
+	usbDriverRTOSTask = usbDriverComponent.createComboSymbol("USB_DRIVER_RTOS", usbDriverRTOSMenu, ["Standalone"])
+	usbDriverRTOSTask.setLabel("Run Library Tasks As")
+	usbDriverRTOSTask.setDefaultValue("Standalone")
+	usbDriverRTOSTask.setVisible(False)
+
+	usbDriverRTOSStackSize = usbDriverComponent.createIntegerSymbol("USB_DRIVER_RTOS_STACK_SIZE", usbDriverRTOSMenu)
+	usbDriverRTOSStackSize.setLabel("Stack Size")
+	usbDriverRTOSStackSize.setDefaultValue(1024)
+	usbDriverRTOSStackSize.setMin(0)
+	usbDriverRTOSStackSize.setReadOnly(True)
+
+	usbDriverRTOSTaskPriority = usbDriverComponent.createIntegerSymbol("USB_DRIVER_RTOS_TASK_PRIORITY", usbDriverRTOSMenu)
+	usbDriverRTOSTaskPriority.setLabel("Task Priority")
+	usbDriverRTOSTaskPriority.setDefaultValue(1)
+	usbDriverRTOSTaskPriority.setMin(0)
+
+	usbDriverRTOSTaskDelay = usbDriverComponent.createBooleanSymbol("USB_DRIVER_RTOS_USE_DELAY", usbDriverRTOSMenu)
+	usbDriverRTOSTaskDelay.setLabel("Use Task Delay?")
+	usbDriverRTOSTaskDelay.setDefaultValue(True)
+
+	usbDriverRTOSTaskDelayVal = usbDriverComponent.createIntegerSymbol("USB_DRIVER_RTOS_DELAY", usbDriverRTOSMenu)
+	usbDriverRTOSTaskDelayVal.setLabel("Task Delay")
+	usbDriverRTOSTaskDelayVal.setDefaultValue(10) 
+	usbDriverRTOSTaskDelayVal.setMin(0)
+	usbDriverRTOSTaskDelayVal.setVisible((usbDriverRTOSTaskDelay.getValue() == True))
+	usbDriverRTOSTaskDelayVal.setDependencies(setVisible, ["USB_DRIVER_RTOS_USE_DELAY"])
 	
 	configName = Variables.get("__CONFIGURATION_NAME")
 
@@ -376,6 +409,13 @@ def instantiateComponent(usbDriverComponent, index):
 	usbDriverIsrFile.setOutputName("drv_usbhs_index.LIST_DRV_USB_ISR_ENTRY")
 	usbDriverIsrFile.setSourcePath( sourcePath + "drv_usb_isr.ftl")
 	usbDriverIsrFile.setMarkup(True)
+	usbDriverSystemTasksFileRTOS = usbDriverComponent.createFileSymbol("USB_DRIVER_SYS_RTOS_TASK", None)
+	usbDriverSystemTasksFileRTOS.setType("STRING")
+	usbDriverSystemTasksFileRTOS.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS")
+	usbDriverSystemTasksFileRTOS.setSourcePath(sourcePath + "system_tasks_c_driver_rtos.ftl")
+	usbDriverSystemTasksFileRTOS.setMarkup(True)
+	usbDriverSystemTasksFileRTOS.setEnabled(enable_rtos_settings)
+	usbDriverSystemTasksFileRTOS.setDependencies(genRtosTask, ["Harmony.SELECT_RTOS"])
 	
 	################################################
 	# USB Driver Header files
