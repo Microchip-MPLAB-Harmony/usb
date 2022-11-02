@@ -781,14 +781,13 @@ void _DRV_USBHS_DEVICE_AttachStateMachine
     //if(0 == USBHS->CONTROL.SOFTRST.reg  )
     if  ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_SYNCBUSY & USBHS_SYNCBUSY_SWRST_Msk) == 0)
     {
-        _DRV_USBHS_NonPersistentInterruptSourceClear(hDriver->usbDrvCommonObj.interruptSource);
-        _DRV_USBHS_NonPersistentInterruptSourceClear(hDriver->usbDrvCommonObj.interruptSourceUSBDma);
 
         hDriver->usbDrvCommonObj.isProcessingAttach = false;
 
         /* Disable all endpoint interrupts Enable the reset, the SOF, resume and
          * suspend interrupt */
-        if(DRV_USBHS_OPMODE_DUAL_ROLE == hDriver->usbDrvCommonObj.operationMode)
+        if((DRV_USBHS_OPMODE_DUAL_ROLE == hDriver->usbDrvCommonObj.operationMode) ||
+              (DRV_USBHS_OPMODE_DEVICE == hDriver->usbDrvCommonObj.operationMode))   
         {
             PLIB_USBHS_InterruptEnableSet(hDriver->usbDrvCommonObj.usbID, (USBHS_GEN_INTERRUPT)0xF, (USBHS_EPTXRX_INTERRUPT)0x0, (USBHS_EPTXRX_INTERRUPT)0x0);
         }
