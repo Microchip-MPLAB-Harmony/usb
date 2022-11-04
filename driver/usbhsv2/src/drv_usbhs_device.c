@@ -508,11 +508,11 @@ void _DRV_USBHS_DEVICE_Initialize
         
     }
    
-    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_SYNCBUSY & USBHS_STATUS_PHYRDY_Msk) == USBHS_STATUS_PHYRDY_Msk)
+    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYRDY_Msk) == 0)
     {
         
     }
-    // Force Device mode with ID pin override
+    /* Force Device mode with ID pin override */ 
     ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_IDOVEN(1); 
     ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_IDVAL(1);
     ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_PHY24 |= (1<<1);
