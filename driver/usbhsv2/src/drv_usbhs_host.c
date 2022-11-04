@@ -3282,8 +3282,7 @@ USB_SPEED DRV_USBHS_HOST_ROOT_HUB_PortSpeedGet
 /* Function:
     void DRV_USBHS_HOST_EndpointToggleClear
     (
-        DRV_HANDLE client,
-        USB_ENDPOINT endpointAndDirection
+        DRV_USBHS_HOST_PIPE_HANDLE pipeHandle
     )
 
   Summary:
@@ -3303,27 +3302,27 @@ void DRV_USBHS_HOST_EndpointToggleClear
     DRV_USBHS_HOST_PIPE_HANDLE pipeHandle
 )
 {
-    USBHS_MODULE_ID usbID = USBHS_ID_0;
+    USBHS_MODULE_ID usbID = USBHS_NUMBER_OF_MODULES;
     USB_DATA_DIRECTION  direction = USB_DATA_DIRECTION_DEVICE_TO_HOST;
-    DRV_USBHS_HOST_PIPE_OBJ * pPipe = NULL;
+    DRV_USBHS_HOST_PIPE_OBJ * pipe = NULL;
     DRV_USBHS_OBJ * hDriver = NULL;
 
     if ((pipeHandle != DRV_USBHS_HOST_PIPE_HANDLE_INVALID) && ((DRV_USBHS_HOST_PIPE_HANDLE)NULL != pipeHandle))
     {
-        pPipe = (DRV_USBHS_HOST_PIPE_OBJ *)pipeHandle;
-        hDriver = ((DRV_USBHS_CLIENT_OBJ *)(pPipe->hClient))->hDriver;
+        pipe = (DRV_USBHS_HOST_PIPE_OBJ *)pipeHandle;
+        hDriver = ((DRV_USBHS_CLIENT_OBJ *)(pipe->hClient))->hDriver;
         usbID = hDriver->usbDrvCommonObj.usbID;
-        direction = (pPipe->endpointAndDirection & 0x80) >> 7;
+        direction = (pipe->endpointAndDirection & 0x80) >> 7;
         
         if(USB_DATA_DIRECTION_HOST_TO_DEVICE == direction)
         {
             /* Clear the Data Toggle for TX Endpoint */
-            PLIB_USBHS_HostTxEndpointDataToggleClear(usbID, pPipe->hostEndpoint);
+            PLIB_USBHS_HostTxEndpointDataToggleClear(usbID, pipe->hostEndpoint);
         }
         else
         {
             /* Clear the Data Toggle for RX Endpoint */
-            PLIB_USBHS_HostRxEndpointDataToggleClear(usbID, pPipe->hostEndpoint);
+            PLIB_USBHS_HostRxEndpointDataToggleClear(usbID, pipe->hostEndpoint);
         }
     }
     else
