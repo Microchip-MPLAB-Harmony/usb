@@ -73,11 +73,17 @@ void DRV_USB_VBUSPowerEnable${INDEX?string}(uint8_t port, bool enable)
 
 const DRV_USBHS_INIT drvUSBHSInit${INDEX?string} =
 {
+
+<#if (DRV_USB_PLIB == "PERIPHERAL_USB_0")>
+<#assign PeripheralIndex = 0>
+<#elseif (DRV_USB_PLIB == "PERIPHERAL_USB_1")>
+<#assign PeripheralIndex = 1>
+</#if>
     /* Interrupt Source for USB module */
-    .interruptSource = USBHS${INDEX?string}_IRQn,
+    .interruptSource = USBHS${PeripheralIndex?string}_IRQn,
 
     /* Interrupt Source for USB module */
-    .interruptSourceUSBDma = USBHS${INDEX?string}_IRQn,
+    .interruptSourceUSBDma = USBHS${PeripheralIndex?string}_IRQn,
 
     /* System module initialization */
     .moduleInit = {0},
@@ -108,7 +114,7 @@ const DRV_USBHS_INIT drvUSBHSInit${INDEX?string} =
     .suspendInSleep = false,
 
     /* Identifies peripheral (PLIB-level) ID */
-    .usbID = USBHS_ID_${INDEX?string},
+    .usbID = USBHS_ID_${PeripheralIndex?string},
     
 <#if (USB_OPERATION_MODE == "Host") ||  (USB_OPERATION_MODE == "DualRole")> 
     <#if (USB_HOST_VBUS_ENABLE == true)> 
