@@ -500,28 +500,32 @@ void _DRV_USBHS_DEVICE_Initialize
         PLIB_USBHS_InterruptEnableSet(usbID,(USBHS_GEN_INTERRUPT)0x0, (USBHS_EPTXRX_INTERRUPT)0x0, (USBHS_EPTXRX_INTERRUPT)0x0);
     }
 
+    /* IDVAL is the source of ID */
+    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_IDOVEN(1); 
 
+    /* ID override value is 1 (B plug) */
+    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_IDVAL(1);
+
+    /* Enable module */
     ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_ENABLE(1);
-    
+
+    /* Software must poll this bit to know when the operation completes. */
     while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_SYNCBUSY & USBHS_SYNCBUSY_ENABLE_Msk) == USBHS_SYNCBUSY_ENABLE_Msk)
     {
-        
     }
-   
+    /* PHY is in on (operational power state) */
+    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYON_Msk ) == 0)
+    {
+    }
+    /* PHY is ready for USB activity */
     while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYRDY_Msk) == 0)
     {
-        
     }
-    /* Force Device mode with ID pin override */ 
-    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_IDOVEN(1); 
-    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_IDVAL(1);
+    
+    /* PHY24.OTGOFF controls OTG threshold detection.
+     * When OTGOFF=1, OTG VBUS monitoring (vbus valid, A valid, B valid, session end)
+     * is powered off */
     ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_PHY24 |= (1<<1);
-
-    /* Configure the register 0044[1]=1 to increases the PLL damping factor */ 
-    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_PHY44 |= USBHS_PHY44_PLLDAMP(0x03);  
-   
-    /* Change the refclk 24 MHZ to 12 MHZ, configure the PLL feedback divider register 0020[3]=1 */ 
-    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_PHY20 |= USBHS_PHY20_RSVD(0x08);    
 
     
     /* Allocate 64 bytes of the FIFO for endpoint 0 */

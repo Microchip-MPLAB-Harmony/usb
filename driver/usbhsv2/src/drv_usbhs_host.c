@@ -686,18 +686,33 @@ void _DRV_USBHS_HOST_Initialize
     /* Initialize the device handle */
     drvObj->usbDrvHostObj.attachedDeviceObjHandle = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
 
+    /* IDVAL is the source of ID */
+    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_IDOVEN(1); 
+
+    /* ID override value is 0 (A plug) */
+    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA &= ~USBHS_CTRLA_IDVAL(1);
+
+    /* Enable module */
     ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_ENABLE(1);
+
+    /* Software must poll this bit to know when the operation completes. */
     while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_SYNCBUSY & USBHS_SYNCBUSY_ENABLE_Msk) == USBHS_SYNCBUSY_ENABLE_Msk)
     {
     }
+    /* PHY is in on (operational power state) */
+    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYON_Msk ) == 0)
+    {
+    }
+    /* PHY is ready for USB activity */
     while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYRDY_Msk) == 0)
     {
     }
-    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_IDOVEN(1); 
-    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_IDVAL(0);
+    
+    /* PHY24.OTGOFF controls OTG threshold detection.
+     * When OTGOFF=1, OTG VBUS monitoring (vbus valid, A valid, B valid, session end)
+     * is powered off */
     ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_PHY24 |= (1<<1);
-    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_PHY44 |= USBHS_PHY44_PLLDAMP(0x03);  
-    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_PHY20 |= USBHS_PHY20_RSVD(0x08);  
+
     if(DRV_USBHS_OPMODE_DUAL_ROLE != drvObj->usbDrvCommonObj.operationMode)
     {
         /* Disable all interrupts. Interrupts will be enabled when the root hub is
