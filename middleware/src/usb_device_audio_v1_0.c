@@ -314,6 +314,21 @@ void _USB_DEVICE_AUDIO_SetupPacketHandler
                             /* If number of Endpoints is Two, then it is sure
                              * that this alternate setting reports a Isochronous
                              * Sync Endpoint. Enable the Sync Endpoint. */
+                             ep = pCurAlternateStng->isoSyncEp.epAddr;
+                             maxPacketSize
+                             = pCurAlternateStng->isoSyncEp.epMaxPacketSize;
+                             endpointEnableResult = USB_DEVICE_EndpointEnable
+                             (
+                                usbDeviceHandle ,
+                                0,
+                                ep ,
+                                USB_TRANSFER_TYPE_ISOCHRONOUS ,
+                                maxPacketSize
+                             );
+                             if (endpointEnableResult != USB_ERROR_NONE)
+                             {
+                                 SYS_ASSERT (false, "Endpoint not Enabled");
+                             }
                         }
 
                         /* Change Audio Instance object state to Initialized */ 
@@ -345,6 +360,13 @@ void _USB_DEVICE_AUDIO_SetupPacketHandler
                                 /* If number of Endpoints is Two, then it is sure
                                 * that this alternate setting reports a Isochronous
                                 * Sync Endpoint. Disable the Sync Endpoint. */
+                                ep = pPrevAlternateStng->isoSyncEp.epAddr;
+                                USB_DEVICE_IRPCancelAll(usbDeviceHandle,  ep);
+                                USB_DEVICE_EndpointDisable
+                                (
+                                    usbDeviceHandle,
+                                    pPrevAlternateStng->isoSyncEp.epAddr
+                                );
                             }
                             curInfCollection->streamInf[streamIntfcIndex].state
                                 = USB_DEVICE_AUDIO_STRMNG_INTFC_NOT_INITIALIZED;
@@ -674,8 +696,8 @@ void _USB_DEVICE_AUDIO_Initialize
                        /* Save Max Packet Size */ 
                        audioInstance->infCollection.intEp.epMaxPacketSize = pEPDesc->wMaxPacketSize; 
 
-                       /* Set the flag to true */ 	
-                       audioInstance->infCollection.isIntEpExists = true; 	
+                       /* Set the flag to true */     
+                       audioInstance->infCollection.isIntEpExists = true;     
 
                        /* Enable the endpoint */
                        endpointEnableResult = USB_DEVICE_EndpointEnable(
@@ -708,6 +730,10 @@ void _USB_DEVICE_AUDIO_Initialize
 
                 /* Save max packet size */
                 maxPacketSize = ( ( USB_ENDPOINT_DESCRIPTOR* ) pDescriptor )->wMaxPacketSize;
+                if (maxPacketSize < 8)
+                {
+                    maxPacketSize = 8; 
+                }
        
                 if (pEPDesc->usageType == USB_USAGE_DATA_ENDPOINT)
                 {
