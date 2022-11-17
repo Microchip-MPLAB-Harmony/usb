@@ -56,7 +56,7 @@ uint8_t sectorBuffer[512 * USB_DEVICE_MSD_NUM_SECTOR_BUFFERS] USB_ALIGN;
 USB_MSD_CBW msdCBW${CONFIG_USB_DEVICE_FUNCTION_INDEX} USB_ALIGN;
 USB_MSD_CSW msdCSW${CONFIG_USB_DEVICE_FUNCTION_INDEX} USB_ALIGN;
 <#assign ROW_BUFFER_ENABLE = false>
-<#if __PROCESSOR?contains("PIC32MZ") == true>
+<#if (__PROCESSOR?contains("PIC32MZ") == true) || (__PROCESSOR?contains("PIC32CZ") == true)>
     <#list 0..4 as i>
         <#assign MSD_ENABLE = "CONFIG_USB_DEVICE_FUNCTION_MSD_LUN_IDX" + i>
         <#if .vars[MSD_ENABLE]?has_content>
@@ -69,14 +69,10 @@ USB_MSD_CSW msdCSW${CONFIG_USB_DEVICE_FUNCTION_INDEX} USB_ALIGN;
         </#if>
     </#list>
     <#if ROW_BUFFER_ENABLE == true>
-/***********************************************
- * Because the PIC32MZ flash row size if 2048
- * and the media sector size if 512 bytes, we
- * have to allocate a buffer of size 2048
- * to backup the row. A pointer to this row
- * is passed in the media initialization data
- * structure.
- ***********************************************/
+/***************************************************************************
+ * The USB Device MSD function driver will use this buffer to cache the data 
+ * received from the USB Host before sending it to the media. 
+ ****************************************************************************/
 uint8_t flashRowBackupBuffer [DRV_MEMORY_DEVICE_PROGRAM_SIZE] USB_ALIGN;
     </#if>
 </#if>
@@ -103,7 +99,7 @@ USB_DEVICE_MSD_MEDIA_INIT_DATA USB_ALIGN  msdMediaInit${CONFIG_USB_DEVICE_FUNCTI
                     </#if>
         512,
         sectorBuffer,
-                    <#if ROW_BUFFER_ENABLE == true && __PROCESSOR?contains("PIC32MZ") == true >
+                    <#if ROW_BUFFER_ENABLE == true >
         flashRowBackupBuffer,
                     <#else>
         NULL,
