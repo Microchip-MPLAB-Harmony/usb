@@ -58,10 +58,10 @@
 /**************************************
  * Allocate a global pool of IRPs
  **************************************/
-USB_DEVICE_IRP gUSBDeviceHIDIRP[USB_DEVICE_HID_QUEUE_DEPTH_COMBINED];
+static USB_DEVICE_IRP gUSBDeviceHIDIRP[USB_DEVICE_HID_QUEUE_DEPTH_COMBINED];
 
 /* Create a variable for holding HID IRP mutex Handle and status */
-USB_DEVICE_HID_COMMON_DATA_OBJ gUSBDeviceHidCommonDataObj;
+static USB_DEVICE_HID_COMMON_DATA_OBJ gUSBDeviceHidCommonDataObj;
 // *****************************************************************************
 /* HID Device function driver function structure
 
@@ -79,25 +79,25 @@ const USB_DEVICE_FUNCTION_DRIVER hidFuncDriver =
 {
     
     /* HID init function */
-    .initializeByDescriptor = &_USB_DEVICE_HID_InitializeByDescriptorType,
+    .initializeByDescriptor = &F_USB_DEVICE_HID_InitializeByDescriptorType,
 
     /* HID de-init function */
-    .deInitialize           = &_USB_DEVICE_HID_DeInitialize,
+    .deInitialize           = &F_USB_DEVICE_HID_DeInitialize,
 		
      /* EP0 activity callback */
-    .controlTransferNotification = &_USB_DEVICE_HID_ControlTransferHandler,
+    .controlTransferNotification = &F_USB_DEVICE_HID_ControlTransferHandler,
 
     /* HID tasks function */
     .tasks                  = NULL,
 
      /* HID Global Initialize */
-    .globalInitialize = _USB_DEVICE_HID_GlobalInitialize
+    .globalInitialize = F_USB_DEVICE_HID_GlobalInitialize
 };
 
 /***************************************
  * Array of USB HID Instances
  ****************************************/
-USB_DEVICE_HID_INSTANCE gUsbDeviceHidInstance[USB_DEVICE_HID_INSTANCES_NUMBER];
+static USB_DEVICE_HID_INSTANCE gUsbDeviceHidInstance[USB_DEVICE_HID_INSTANCES_NUMBER];
 // *****************************************************************************
 // *****************************************************************************
 // Section: File Scope Functions
@@ -106,8 +106,12 @@ USB_DEVICE_HID_INSTANCE gUsbDeviceHidInstance[USB_DEVICE_HID_INSTANCES_NUMBER];
 
 
 // ******************************************************************************
+/* MISRA C-2012 Rule 10.4 False Positive:7 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block fp:4 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"  
 /* Function:
-    void _USB_DEVICE_HID_GlobalInitialize ( void )
+    void F_USB_DEVICE_HID_GlobalInitialize ( void )
 
   Summary:
     This function initializes resourses required common to all instances of CDC
@@ -120,7 +124,7 @@ USB_DEVICE_HID_INSTANCE gUsbDeviceHidInstance[USB_DEVICE_HID_INSTANCES_NUMBER];
   Remarks:
     This is local function and should not be called directly by the application.
 */
-void _USB_DEVICE_HID_GlobalInitialize (void)
+void F_USB_DEVICE_HID_GlobalInitialize (void)
 {
     OSAL_RESULT osal_err;
     
@@ -141,8 +145,12 @@ void _USB_DEVICE_HID_GlobalInitialize (void)
     }
 }
 // ******************************************************************************
+/* MISRA C-2012 Rule 11.3 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" 
 /* Function:
-    void _USB_DEVICE_HID_InitializeByDescriptorType
+    void F_USB_DEVICE_HID_InitializeByDescriptorType
     (
         SYS_MODULE_INDEX iHID,
         USB_DEVICE_HANDLE usbDeviceHandle,
@@ -163,7 +171,7 @@ void _USB_DEVICE_HID_GlobalInitialize (void)
     This is a local function and should not be called directly by the application.
 */
 
-void _USB_DEVICE_HID_InitializeByDescriptorType
+void F_USB_DEVICE_HID_InitializeByDescriptorType
 (
     SYS_MODULE_INDEX iHID,
     USB_DEVICE_HANDLE usbDeviceHandle,
@@ -192,16 +200,16 @@ void _USB_DEVICE_HID_InitializeByDescriptorType
             /* Device layer has configured and opened an endpoint.
                We just have to save the endpoint and arm if necessary.*/
 
-            if( epDescriptor->transferType == USB_TRANSFER_TYPE_INTERRUPT )
+            if( epDescriptor->transferType == (uint8_t)USB_TRANSFER_TYPE_INTERRUPT )
             {
-                if(epDescriptor->dirn == USB_DATA_DIRECTION_DEVICE_TO_HOST)
+                if(epDescriptor->dirn == (uint8_t)USB_DATA_DIRECTION_DEVICE_TO_HOST)
                 {
                     /* Save the Tx endpoint information. */
                     hidInstance->endpointTx = epDescriptor->bEndpointAddress;
                     hidInstance->endpointTxSize =  epDescriptor->wMaxPacketSize;
 
                     /* Open the endpoint. */
-                    USB_DEVICE_EndpointEnable(usbDeviceHandle,0,
+                    (void) USB_DEVICE_EndpointEnable(usbDeviceHandle,0,
                             hidInstance->endpointTx, USB_TRANSFER_TYPE_INTERRUPT, epDescriptor->wMaxPacketSize);
 
                     /* Indicate that TX endpoint is ready. */
@@ -217,7 +225,7 @@ void _USB_DEVICE_HID_InitializeByDescriptorType
                     hidInstance->endpointRxSize =  epDescriptor->wMaxPacketSize;
 
                     /* Open the endpoint. */
-                    USB_DEVICE_EndpointEnable(usbDeviceHandle,0,
+                    (void) USB_DEVICE_EndpointEnable(usbDeviceHandle,0,
                             hidInstance->endpointRx, USB_TRANSFER_TYPE_INTERRUPT, epDescriptor->wMaxPacketSize);
 
                     /* Indicate that the RX endpoint is ready. */
@@ -246,13 +254,17 @@ void _USB_DEVICE_HID_InitializeByDescriptorType
             break;
 
         default:
+            /* Do Nothing */
             break;
     }
 }
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 // ******************************************************************************
 /* Function:
-    void _USB_DEVICE_HID_ReportSendCallBack(USB_DEVICE_IRP * handle)
+    void F_USB_DEVICE_HID_ReportSendCallBack(USB_DEVICE_IRP * handle)
 
   Summary:
     Callback function that gets called after the report is sent
@@ -266,7 +278,7 @@ void _USB_DEVICE_HID_InitializeByDescriptorType
     application.
 */
 
-void _USB_DEVICE_HID_ReportSendCallBack(USB_DEVICE_IRP * irpTx)
+void F_USB_DEVICE_HID_ReportSendCallBack(USB_DEVICE_IRP * irpTx)
 {
     /* This function is called when a Report Send IRP has
      * terminated */
@@ -321,8 +333,8 @@ void _USB_DEVICE_HID_ReportSendCallBack(USB_DEVICE_IRP * irpTx)
 /* Function:
     USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportSend
     (   
-        USB_DEVICE_HID_INDEX iHID,
-        USB_DEVICE_HID_TRANSFER_HANDLE * transferHandle,
+        USB_DEVICE_HID_INDEX instanceIndex,
+        USB_DEVICE_HID_TRANSFER_HANDLE * handle,
         uint8_t * buffer, 
         size_t size
     )
@@ -341,8 +353,8 @@ void _USB_DEVICE_HID_ReportSendCallBack(USB_DEVICE_IRP * irpTx)
 
 USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportSend
 (
-    USB_DEVICE_HID_INDEX iHID,
-    USB_DEVICE_HID_TRANSFER_HANDLE * transferHandle,
+    USB_DEVICE_HID_INDEX instanceIndex,
+    USB_DEVICE_HID_TRANSFER_HANDLE * handle,
     void * buffer, 
     size_t size
 )
@@ -355,20 +367,20 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportSend
 	OSAL_CRITSECT_DATA_TYPE status;
     
     /* Set the transfer handle to invalid */
-    *transferHandle = USB_DEVICE_HID_TRANSFER_HANDLE_INVALID;
+    *handle = USB_DEVICE_HID_TRANSFER_HANDLE_INVALID;
 
     /* Check if we have a valid instance index */
-    if(iHID > USB_DEVICE_HID_INSTANCES_NUMBER)
+    if(instanceIndex >= (uint32_t)USB_DEVICE_HID_INSTANCES_NUMBER)
     {
         SYS_ASSERT(false, "HID instance is not valid");
         return USB_DEVICE_HID_RESULT_ERROR_INSTANCE_INVALID ;
     }
 
     /* Create a local reference */
-    thisHIDInstance = &gUsbDeviceHidInstance[iHID];
+    thisHIDInstance = &gUsbDeviceHidInstance[instanceIndex];
 
     /* Check if the endpoint was configured */
-    if(!thisHIDInstance->flags.interruptEpTxReady )
+    if(thisHIDInstance->flags.interruptEpTxReady == 0U)
     {
         SYS_ASSERT(false, "HID Transmit endpoint not configured");
         return USB_DEVICE_HID_RESULT_ERROR_INSTANCE_NOT_CONFIGURED;
@@ -391,7 +403,7 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportSend
     }
 
     // Check which IRP is free
-    for(count = 0; count < USB_DEVICE_HID_QUEUE_DEPTH_COMBINED; count++)
+    for(count = 0; count < (uint32_t)USB_DEVICE_HID_QUEUE_DEPTH_COMBINED; count++)
     {
          if(gUSBDeviceHIDIRP[count].status
                  <= USB_DEVICE_IRP_STATUS_COMPLETED_SHORT)
@@ -402,9 +414,9 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportSend
              irp =&gUSBDeviceHIDIRP[count];
              irp->size = size;
              irp->data = buffer;
-             irp->callback = &_USB_DEVICE_HID_ReportSendCallBack;
-             irp->userData = iHID;
-             (*transferHandle) = ( USB_DEVICE_HID_TRANSFER_HANDLE )irp;
+             irp->callback = &F_USB_DEVICE_HID_ReportSendCallBack;
+             irp->userData = instanceIndex;
+             (*handle) = ( USB_DEVICE_HID_TRANSFER_HANDLE )irp;
 			 status = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
              thisHIDInstance->currentTxQueueSize ++;
 			 OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, status);
@@ -421,7 +433,7 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportSend
 				status = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
                 thisHIDInstance->currentTxQueueSize --;
 				OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, status);
-                *transferHandle = USB_DEVICE_HID_TRANSFER_HANDLE_INVALID;
+                *handle = USB_DEVICE_HID_TRANSFER_HANDLE_INVALID;
             }
 
              /*Release mutex, done with shared resource*/
@@ -451,7 +463,7 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportSend
 /* Function:
     USB_DEVICE_HID_RESULT USB_DEVICE_HID_TransferCancel
     (
-        USB_DEVICE_HID_INDEX iHID,
+        USB_DEVICE_HID_INDEX instanceIndex,
         USB_DEVICE_HID_TRANSFER_HANDLE transferHandle
     )
 
@@ -467,7 +479,7 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportSend
 
 USB_DEVICE_HID_RESULT USB_DEVICE_HID_TransferCancel
 (
-    USB_DEVICE_HID_INDEX iHID,
+    USB_DEVICE_HID_INDEX instanceIndex,
     USB_DEVICE_HID_TRANSFER_HANDLE transferHandle
 )
 {
@@ -479,16 +491,16 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_TransferCancel
     /* End of local variables */
     
     /* Check if we have a valid instance index */
-    if(iHID >= USB_DEVICE_HID_INSTANCES_NUMBER)
+    if(instanceIndex >= (uint32_t)USB_DEVICE_HID_INSTANCES_NUMBER)
     {
         SYS_ASSERT(false, "HID instance is not valid");
         returnValue = USB_DEVICE_HID_RESULT_ERROR_INSTANCE_INVALID;
     }
     else
     {
-        hidInstance = &gUsbDeviceHidInstance[iHID];
+        hidInstance = &gUsbDeviceHidInstance[instanceIndex];
         
-        for(count = 0; count < USB_DEVICE_HID_QUEUE_DEPTH_COMBINED; count++)
+        for(count = 0; count < (uint32_t)USB_DEVICE_HID_QUEUE_DEPTH_COMBINED; count++)
         {
             if((transferHandle) ==
                     (USB_DEVICE_HID_TRANSFER_HANDLE)&gUSBDeviceHIDIRP[count])
@@ -507,7 +519,7 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_TransferCancel
             }
         }
 
-        if(count == USB_DEVICE_HID_QUEUE_DEPTH_COMBINED)
+        if(count == (uint32_t)USB_DEVICE_HID_QUEUE_DEPTH_COMBINED)
         {
             /* HID function driver does not own this Transfer Handle.
              * The input parameter was invalid */
@@ -527,7 +539,7 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_TransferCancel
 
 // ******************************************************************************
 /* Function:
-    void _USB_DEVICE_HID_ReportReceiveCallBack(void * handle)
+    void F_USB_DEVICE_HID_ReportReceiveCallBack(void * handle)
 
   Summary:
     Callback function that gets called after the report is received
@@ -540,9 +552,9 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_TransferCancel
     This is a local function and should not be called directly by the application.
 */
 
-void _USB_DEVICE_HID_ReportReceiveCallBack(USB_DEVICE_IRP * irpRx)
+void F_USB_DEVICE_HID_ReportReceiveCallBack(USB_DEVICE_IRP * irpRx)
 {
-    SYS_MODULE_INDEX iHID = irpRx->userData;
+    SYS_MODULE_INDEX iHID = (uint16_t)irpRx->userData;
     USB_DEVICE_HID_INSTANCE * thisHIDInstance = &gUsbDeviceHidInstance[iHID];
     USB_DEVICE_HID_EVENT_DATA_REPORT_RECEIVED reportReceivedData;
 
@@ -551,7 +563,7 @@ void _USB_DEVICE_HID_ReportReceiveCallBack(USB_DEVICE_IRP * irpRx)
 
     /* Check if an application event handler callback is
      * avaialable and then send the event to the application. */
-    if(thisHIDInstance->appCallBack)
+    if(thisHIDInstance->appCallBack != NULL)
     {
         reportReceivedData.length = irpRx->size;
         reportReceivedData.handle =
@@ -594,8 +606,8 @@ void _USB_DEVICE_HID_ReportReceiveCallBack(USB_DEVICE_IRP * irpRx)
 /* Function:
     USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportReceive
     (
-        USB_DEVICE_HID_INDEX iHID,
-        USB_DEVICE_HID_TRANSFER_HANDLE * transferHandle,
+        USB_DEVICE_HID_INDEX instanceIndex,
+        USB_DEVICE_HID_TRANSFER_HANDLE * handle,
         void * buffer, 
         size_t size
     )
@@ -614,8 +626,8 @@ void _USB_DEVICE_HID_ReportReceiveCallBack(USB_DEVICE_IRP * irpRx)
 
 USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportReceive
 (
-    USB_DEVICE_HID_INDEX iHID,
-    USB_DEVICE_HID_TRANSFER_HANDLE * transferHandle,
+    USB_DEVICE_HID_INDEX instanceIndex,
+    USB_DEVICE_HID_TRANSFER_HANDLE * handle,
     void * buffer, 
     size_t size
 )
@@ -629,20 +641,20 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportReceive
 	OSAL_CRITSECT_DATA_TYPE status;
 
     /* Set the transfer handle to invalid */
-    *transferHandle = USB_DEVICE_HID_TRANSFER_HANDLE_INVALID;
+    *handle = USB_DEVICE_HID_TRANSFER_HANDLE_INVALID;
 
     /* Check if we have a valid instance index */
-    if(iHID > USB_DEVICE_HID_INSTANCES_NUMBER)
+    if(instanceIndex >= (uint32_t)USB_DEVICE_HID_INSTANCES_NUMBER)
     {
         SYS_ASSERT(false, "HID instance is not valid");
         return USB_DEVICE_HID_RESULT_ERROR_INSTANCE_INVALID ;
     }
 
     /* Create a local reference */
-    thisHIDInstance = &gUsbDeviceHidInstance[iHID];
+    thisHIDInstance = &gUsbDeviceHidInstance[instanceIndex];
 
     /* Check if the endpoint was configured */
-    if(!thisHIDInstance->flags.interruptEpRxReady )
+    if(thisHIDInstance->flags.interruptEpRxReady == 0U)
     {
         SYS_ASSERT(false, "HID Receive endpoint not configured");
         return USB_DEVICE_HID_RESULT_ERROR_INSTANCE_NOT_CONFIGURED;
@@ -665,7 +677,7 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportReceive
     }
 
     /* Search for a free IRP*/
-    for(count = 0; count < USB_DEVICE_HID_QUEUE_DEPTH_COMBINED; count++)
+    for(count = 0; count < (uint32_t)USB_DEVICE_HID_QUEUE_DEPTH_COMBINED; count++)
     {
          if( gUSBDeviceHIDIRP[count].status <=
                  USB_DEVICE_IRP_STATUS_COMPLETED_SHORT)
@@ -674,13 +686,13 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportReceive
               * and then submit it*/
              irp = &gUSBDeviceHIDIRP[count];
              irp->size = size;
-             irp->callback = &_USB_DEVICE_HID_ReportReceiveCallBack;
+             irp->callback = &F_USB_DEVICE_HID_ReportReceiveCallBack;
              irp->data = buffer;
-             irp->userData = iHID;
+             irp->userData = instanceIndex;
 			 status = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
              thisHIDInstance->currentRxQueueSize ++;
 			 OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, status);
-             (* transferHandle) = ( USB_DEVICE_HID_TRANSFER_HANDLE )irp;
+             (* handle) = ( USB_DEVICE_HID_TRANSFER_HANDLE )irp;
              hidReceiveError = USB_DEVICE_IRPSubmit( thisHIDInstance->devLayerHandle,
                                            thisHIDInstance->endpointRx,
                                            irp);
@@ -692,7 +704,7 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportReceive
 				status = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
                 thisHIDInstance->currentRxQueueSize --;
 				OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, status);
-                *transferHandle = USB_DEVICE_HID_TRANSFER_HANDLE_INVALID;
+                *handle = USB_DEVICE_HID_TRANSFER_HANDLE_INVALID;
             }
 
             /*Release mutex, done with shared resource*/
@@ -718,10 +730,12 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportReceive
     return USB_DEVICE_HID_RESULT_ERROR_TRANSFER_QUEUE_FULL;
 }
 
-
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 /******************************************************************************
   Function:
-    void _USB_DEVICE_HID_ControlTransferHandler
+    void F_USB_DEVICE_HID_ControlTransferHandler
     (
         USB_DEVICE_CONTROL_TRANSFER_HANDLE controlHandle,
         SYS_MODULE_INDEX iHID,
@@ -740,7 +754,7 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportReceive
 
 */
 
-void _USB_DEVICE_HID_ControlTransferHandler
+void F_USB_DEVICE_HID_ControlTransferHandler
 (
     SYS_MODULE_INDEX iHID,
     USB_DEVICE_EVENT controlEvent,
@@ -755,20 +769,21 @@ void _USB_DEVICE_HID_ControlTransferHandler
     USB_DEVICE_HID_EVENT_DATA_SET_IDLE setIdle;
     USB_DEVICE_HID_EVENT_DATA_GET_REPORT getReport;
     USB_DEVICE_HID_EVENT_DATA_SET_REPORT setReport;
+    USB_HID_REQUESTS hidRequest = (USB_HID_REQUESTS)setupPkt->bRequest; 
     
     hidThisInstance = &gUsbDeviceHidInstance[iHID] ;
 
     if(controlEvent == USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST)
     {
         hidThisInstance->ignoreControlEvents = false;
-        if(( setupPkt->Recipient == 0x01) &&
-                ((setupPkt->RequestType == 0)))
+        if(( setupPkt->Recipient == 0x01U) &&
+                ((setupPkt->RequestType == 0U)))
         {
             switch(setupPkt->bRequest)
             {
                 case USB_REQUEST_GET_DESCRIPTOR:
 
-                    if (setupPkt->bDescriptorType == USB_HID_DESCRIPTOR_TYPES_HID)
+                    if (setupPkt->bDescriptorType == (uint8_t)USB_HID_DESCRIPTOR_TYPES_HID)
                     {
                         /* The HID Get Descriptor request is handled by the
                          * function driver itself. This event is not sent to the
@@ -783,10 +798,10 @@ void _USB_DEVICE_HID_ControlTransferHandler
                             length = setupPkt->wLength ;
                         }
                         
-                        USB_DEVICE_ControlSend(hidThisInstance->devLayerHandle, hidThisInstance->hidDescriptor, length);
+                        (void) USB_DEVICE_ControlSend(hidThisInstance->devLayerHandle, hidThisInstance->hidDescriptor, length);
 
                     }
-                    else if (setupPkt->bDescriptorType == USB_HID_DESCRIPTOR_TYPES_REPORT)
+                    else if (setupPkt->bDescriptorType == (uint8_t)USB_HID_DESCRIPTOR_TYPES_REPORT)
                     {
                         /* The HID Get Descriptor request is handled by the
                          * function driver itself. This event is not sent to the
@@ -801,9 +816,12 @@ void _USB_DEVICE_HID_ControlTransferHandler
                             length = setupPkt->wLength ;
                         }
                         
-                        USB_DEVICE_ControlSend(hidThisInstance->devLayerHandle, hidThisInstance->hidFuncInit->hidReportDescriptor, length);
+                        (void) USB_DEVICE_ControlSend(hidThisInstance->devLayerHandle, hidThisInstance->hidFuncInit->hidReportDescriptor, length);
                     }
-                    
+                    else
+                    {
+                        /* Do Nothing */
+                    }                    
                     /* Ignore further control transfer events. */
                     hidThisInstance->ignoreControlEvents = true;
                     break;
@@ -811,24 +829,24 @@ void _USB_DEVICE_HID_ControlTransferHandler
                 case USB_REQUEST_SET_INTERFACE:
 
                      altSetting = setupPkt->W_Value.byte.LB;
-                     USB_DEVICE_ControlStatus( hidThisInstance->devLayerHandle, USB_DEVICE_CONTROL_STATUS_OK);
+                     (void) USB_DEVICE_ControlStatus( hidThisInstance->devLayerHandle, USB_DEVICE_CONTROL_STATUS_OK);
                      break; 
 
                 case USB_REQUEST_GET_INTERFACE:
 
-                     USB_DEVICE_ControlSend( hidThisInstance->devLayerHandle, &altSetting, 1);
+                     (void) USB_DEVICE_ControlSend( hidThisInstance->devLayerHandle, &altSetting, 1);
                      break;
 
                 default:
-                    USB_DEVICE_ControlStatus( hidThisInstance->devLayerHandle, USB_DEVICE_CONTROL_STATUS_ERROR);
+                    (void) USB_DEVICE_ControlStatus( hidThisInstance->devLayerHandle, USB_DEVICE_CONTROL_STATUS_ERROR);
                     break; 
             }                   
         }
-        else if( (setupPkt->RequestType == 1) &&
-                (setupPkt->Recipient == 1)&&
+        else if( (setupPkt->RequestType == 1U) &&
+                (setupPkt->Recipient == 1U)&&
                 ( hidThisInstance->appCallBack != NULL ) )
         {
-            switch( setupPkt->bRequest )
+            switch(hidRequest)
             {
                 case  USB_HID_REQUESTS_GET_REPORT:
 
@@ -884,14 +902,14 @@ void _USB_DEVICE_HID_ControlTransferHandler
                 default:
                     
                     /* Stall anything that we cannot handle */
-                    USB_DEVICE_ControlStatus( hidThisInstance->devLayerHandle, USB_DEVICE_CONTROL_STATUS_ERROR);
+                    (void) USB_DEVICE_ControlStatus( hidThisInstance->devLayerHandle, USB_DEVICE_CONTROL_STATUS_ERROR);
                     break;
             }
         }
         else
         {
             /* Stall anything that we cannot handle */
-            USB_DEVICE_ControlStatus( hidThisInstance->devLayerHandle,  USB_DEVICE_CONTROL_STATUS_ERROR);
+            (void) USB_DEVICE_ControlStatus( hidThisInstance->devLayerHandle,  USB_DEVICE_CONTROL_STATUS_ERROR);
         }
     }
     else if ((hidThisInstance->ignoreControlEvents == false) &&
@@ -900,11 +918,15 @@ void _USB_DEVICE_HID_ControlTransferHandler
         /* These are control transfer related events */
         hidThisInstance->appCallBack(iHID, (USB_DEVICE_HID_EVENT)controlEvent, NULL, hidThisInstance->userData);
     }
+    else
+    {
+        /* Do Nothing */
+    }
 }
 
 // ******************************************************************************
 /* Function:
-    void _USB_DEVICE_HID_DeInitialize(SYS_MODULE_INDEX iHID)
+    void F_USB_DEVICE_HID_DeInitialize(SYS_MODULE_INDEX iHID)
 
   Summary:
      Deinitializes an instance of the HID.
@@ -916,22 +938,22 @@ void _USB_DEVICE_HID_ControlTransferHandler
     This is a local function and should not be called directly by the application.
 */
 
-void _USB_DEVICE_HID_DeInitialize(SYS_MODULE_INDEX iHID)
+void F_USB_DEVICE_HID_DeInitialize(SYS_MODULE_INDEX iHID)
 {
     USB_DEVICE_HID_INSTANCE * hidInstance = &gUsbDeviceHidInstance[iHID];
 
-    if (hidInstance->flags.interruptEpTxReady)
+    if (hidInstance->flags.interruptEpTxReady != 0U)
     {
-        USB_DEVICE_IRPCancelAll( hidInstance->devLayerHandle,
+        (void) USB_DEVICE_IRPCancelAll( hidInstance->devLayerHandle,
                                 hidInstance->endpointTx );
-        USB_DEVICE_EndpointDisable(  hidInstance->devLayerHandle,
+        (void) USB_DEVICE_EndpointDisable(  hidInstance->devLayerHandle,
                                 hidInstance->endpointTx);
     }
-    if (hidInstance->flags.interruptEpRxReady)
+    if (hidInstance->flags.interruptEpRxReady != 0U)
     {
-         USB_DEVICE_IRPCancelAll( hidInstance->devLayerHandle,
+        (void) USB_DEVICE_IRPCancelAll( hidInstance->devLayerHandle,
                                 hidInstance->endpointRx );
-        USB_DEVICE_EndpointDisable(  hidInstance->devLayerHandle,
+        (void) USB_DEVICE_EndpointDisable(  hidInstance->devLayerHandle,
                                 hidInstance->endpointRx);
     }
     hidInstance->flags.allFlags = 0;   
@@ -941,7 +963,7 @@ void _USB_DEVICE_HID_DeInitialize(SYS_MODULE_INDEX iHID)
 /* Function:
     USB_DEVICE_HID_RESULT USB_DEVICE_HID_EventHandlerSet 
     (
-        USB_DEVICE_HID_INDEX iHID ,
+        USB_DEVICE_HID_INDEX instanceIndex ,
         USB_DEVICE_HID_EVENT_HANDLER eventHandler
         uintptr_t context
     )
@@ -958,15 +980,15 @@ void _USB_DEVICE_HID_DeInitialize(SYS_MODULE_INDEX iHID)
 
 USB_DEVICE_HID_RESULT USB_DEVICE_HID_EventHandlerSet
 (
-    USB_DEVICE_HID_INDEX iHID ,
+    USB_DEVICE_HID_INDEX instanceIndex ,
     USB_DEVICE_HID_EVENT_HANDLER eventHandler,
-    uintptr_t userData
+    uintptr_t context
 )
 {
     USB_DEVICE_HID_INSTANCE * thisHIDInstance;
 
     /* Check if we have a valid instance */
-    if(iHID > USB_DEVICE_HID_INSTANCES_NUMBER)
+    if(instanceIndex >= (uint32_t)USB_DEVICE_HID_INSTANCES_NUMBER)
     {
         SYS_ASSERT(false, "Invalid HID Instance");
         return USB_DEVICE_HID_RESULT_ERROR_INSTANCE_INVALID ;
@@ -979,10 +1001,10 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_EventHandlerSet
         return USB_DEVICE_HID_RESULT_ERROR_PARAMETER_INVALID;
     }
 
-    thisHIDInstance = &gUsbDeviceHidInstance[iHID];
+    thisHIDInstance = &gUsbDeviceHidInstance[instanceIndex];
 
     thisHIDInstance->appCallBack = eventHandler;
-    thisHIDInstance->userData = userData;
+    thisHIDInstance->userData = context;
     
     return USB_DEVICE_HID_RESULT_OK;    
 }

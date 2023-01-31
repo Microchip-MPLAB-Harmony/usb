@@ -54,6 +54,11 @@
 #endif
 // DOM-IGNORE-END  
 
+/* MISRA C-2012 Rule 5.4 deviated:10 Deviation record ID -  H3_MISRAC_2012_R_5_4_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:10 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1" 
+
 /* HID Class code */
 #define USB_HID_CLASS_CODE               0x03
 
@@ -65,12 +70,12 @@
 /*
  * Macro defines the tag corresponding to Output item.
  */
-#define USB_HID_MAIN_ITEM_TAG_OUTPUT                      9
+#define USB_HID_MAIN_ITEM_TAG_OUTPUT                      9U
 
 /*
  * Macro defines the tag corresponding to Feature item.
  */
-#define USB_HID_MAIN_ITEM_TAG_FEATURE                     11
+#define USB_HID_MAIN_ITEM_TAG_FEATURE                     11U
 
 /*
  * Macro defines the tag corresponding to Collection item.
@@ -193,9 +198,13 @@
 #define USB_HID_LOCAL_ITEM_TAG_DELIMITER                  10
 
 #define USB_HID_USAGE_MOUSE 2
-#define USAGE_X 0x30
-#define USAGE_Y 0x31
-#define USAGE_Z 0x32
+#define USAGE_X 0x30U
+#define USAGE_Y 0x31U
+#define USAGE_Z 0x32U
+
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.4"
+/* MISRAC 2012 deviation block end */
 
 typedef enum
 {
@@ -289,6 +298,8 @@ typedef enum
     /* Reserved                                                         = 0x04-0xFF */
 } USB_HID_REPORT_TYPE;
 
+/* MISRA C-2012 Rule 5.2 deviated:57 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+#pragma coverity compliance block deviate:57 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"  
 
 
 typedef enum
@@ -316,6 +327,10 @@ typedef enum
 	USB_HID_COLLECTION_USAGE_MODIFIER
 } USB_HID_COLLECTION_TYPE;
 
+/* MISRA C-2012 Rule 6.1 deviated:33 Deviation record ID -  H3_MISRAC_2012_R_6_1_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:33 "MISRA C-2012 Rule 6.1" "H3_MISRAC_2012_R_6_1_DR_1" 
 
 typedef struct
 {
@@ -361,6 +376,10 @@ typedef struct
     uint32_t reserved1 : 23;
     
 } USB_HID_FEATURE_ITEM_OPTIONAL_DATA;
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 6.1"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 typedef struct
 {
@@ -2232,6 +2251,9 @@ typedef enum
     /* Reserved                                                         = 0xF2-0xFF */
 } USB_HID_BATTERY_SYSTEM;
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }

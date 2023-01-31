@@ -40,8 +40,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _USB_DEVICE_HID_LOCAL_H_
-#define _USB_DEVICE_HID_LOCAL_H_
+#ifndef USB_DEVICE_HID_LOCAL_H
+#define USB_DEVICE_HID_LOCAL_H
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
@@ -57,6 +57,10 @@
 // *****************************************************************************
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 11.3 deviated:4 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 6.1" "H3_MISRAC_2012_R_6_1_DR_1" 
 /* HID flags.
 
   Summary:
@@ -69,7 +73,7 @@
     This structure is internal to the HID function driver.
 */
 
-typedef union _USB_DEVICE_HID_FLAGS
+typedef union U_USB_DEVICE_HID_FLAGS
 {
     struct
     {
@@ -81,6 +85,10 @@ typedef union _USB_DEVICE_HID_FLAGS
 
 } USB_DEVICE_HID_FLAGS;
 
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 6.1"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* HID Instance structure.
 
@@ -143,7 +151,7 @@ typedef struct
 // *****************************************************************************
 // *****************************************************************************
 
-void _USB_DEVICE_HID_InitializeByDescriptorType
+void F_USB_DEVICE_HID_InitializeByDescriptorType
 (
     SYS_MODULE_INDEX iHID,
     USB_DEVICE_HANDLE usbDeviceHandle,
@@ -154,19 +162,19 @@ void _USB_DEVICE_HID_InitializeByDescriptorType
     uint8_t * pDescriptor
 );
 
-void _USB_DEVICE_HID_ReportSendCallBack(USB_DEVICE_IRP * irpTx);
+void F_USB_DEVICE_HID_ReportSendCallBack(USB_DEVICE_IRP * irpTx);
 
-void _USB_DEVICE_HID_ReportReceiveCallBack(USB_DEVICE_IRP * irpRx);
+void F_USB_DEVICE_HID_ReportReceiveCallBack(USB_DEVICE_IRP * irpRx);
 
-void _USB_DEVICE_HID_ControlTransferHandler
+void F_USB_DEVICE_HID_ControlTransferHandler
 (
     SYS_MODULE_INDEX iHID,
     USB_DEVICE_EVENT controlEvent,
     USB_SETUP_PACKET * setupPkt
 );
 
-void _USB_DEVICE_HID_DeInitialize(SYS_MODULE_INDEX iHID);
+void F_USB_DEVICE_HID_DeInitialize(SYS_MODULE_INDEX iHID);
 
-void _USB_DEVICE_HID_GlobalInitialize (void); 
+void F_USB_DEVICE_HID_GlobalInitialize (void); 
 
 #endif
