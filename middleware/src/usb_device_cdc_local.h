@@ -39,8 +39,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _USB_DEVICE_CDC_LOCAL_H
-#define _USB_DEVICE_CDC_LOCAL_H
+#ifndef M_USB_DEVICE_CDC_LOCAL_H
+#define M_USB_DEVICE_CDC_LOCAL_H
 
 
 // *****************************************************************************
@@ -208,7 +208,7 @@ typedef struct
 
 //******************************************************************************
 /* Function:
-    static void _USB_DEVICE_CDC_ControlTransferHandler
+    static void F_USB_DEVICE_CDC_ControlTransferHandler
     (
         SYS_MODULE_INDEX iCDC ,
         USB_DEVICE_CONTROL_TRANSFER_EVENT controlTransferEvent,
@@ -225,17 +225,17 @@ typedef struct
     Called by the device layer.
  */
 
-void _USB_DEVICE_CDC_ControlTransferHandler
+void F_USB_DEVICE_CDC_ControlTransferHandler
 (
     SYS_MODULE_INDEX iCDC ,
     USB_DEVICE_EVENT controlTransferEvent,
-    USB_SETUP_PACKET * setupPacket
+    USB_SETUP_PACKET * setupRequest
 );
 
 
 //******************************************************************************
 /* Function:
-    void USB_DEVICE_CDC_Initialization ( SYS_MODULE_INDEX iCDC ,
+    void F_USB_DEVICE_CDC_Initialization ( SYS_MODULE_INDEX iCDC ,
                                      DRV_HANDLE deviceHandle ,
                                      void* funcDriverInitData ,
                                      uint8_t infNum ,
@@ -252,15 +252,15 @@ void _USB_DEVICE_CDC_ControlTransferHandler
     Called by the device layer per instance.
  */
 
-void _USB_DEVICE_CDC_Initialization
+void F_USB_DEVICE_CDC_Initialization 
 (
-    SYS_MODULE_INDEX iCDC ,
-    DRV_HANDLE deviceHandle ,
-    void* funcDriverInitData ,
-    uint8_t infNum ,
-    uint8_t altSetting ,
-    uint8_t descType ,
-    uint8_t * pDesc 
+	SYS_MODULE_INDEX iCDC ,
+	USB_DEVICE_HANDLE deviceHandle ,
+	void* initData ,
+  	uint8_t infNum ,
+  	uint8_t altSetting ,
+	uint8_t descType ,
+	uint8_t * pDesc 
 );
 
 
@@ -287,7 +287,7 @@ void _USB_DEVICE_CDC_Initialization
 
   Example:
     <code>
-    // Called by the device layer.
+   
     </code>
 
   Remarks:
@@ -295,11 +295,11 @@ void _USB_DEVICE_CDC_Initialization
     called explicitly.
  */
 
-void _USB_DEVICE_CDC_Deinitialization ( SYS_MODULE_INDEX iCDC );
+void F_USB_DEVICE_CDC_Deinitialization ( SYS_MODULE_INDEX iCDC );
 
 // ******************************************************************************
 /* Function:
-    void _USB_DEVICE_CDC_GlobalInitialize ( void )
+    void F_USB_DEVICE_CDC_GlobalInitialize ( void )
 
   Summary:
     This function initializes resourses required common to all instances of CDC
@@ -320,18 +320,18 @@ void _USB_DEVICE_CDC_Deinitialization ( SYS_MODULE_INDEX iCDC );
 
   Example:
     <code>
-    // Called by the device layer.
+    
     </code>
 
   Remarks:
     This is local function and should not be called directly by the application.
 */
-void _USB_DEVICE_CDC_GlobalInitialize (void);
+void F_USB_DEVICE_CDC_GlobalInitialize (void);
 
 
 //******************************************************************************
 /* Function:
-   void _USB_DEVICE_CDC_ACMSetUpPacketHandler
+   void F_USB_DEVICE_CDC_ACMSetUpPacketHandler
    (
         SYS_MODULE_INDEX iCDC ,
         USB_DEVICE_CDC_INSTANCE * thisCDCDevice,
@@ -347,18 +347,18 @@ void _USB_DEVICE_CDC_GlobalInitialize (void);
   Remarks:
     Called by the CDC function driver.
  */
-void _USB_DEVICE_CDC_ACMSetUpPacketHandler
+void F_USB_DEVICE_CDC_ACMSetUpPacketHandler
 (
     SYS_MODULE_INDEX iCDC ,
     USB_DEVICE_CDC_INSTANCE * thisCDCDevice,
-    USB_SETUP_PACKET * controlTransferEventData
+    USB_SETUP_PACKET * setupRequest
 );
 
 
 
 //******************************************************************************
 /* Function:
-    void _USB_DEVICE_CDC_WriteIRPCallback (USB_DEVICE_IRP * irp )
+    void F_USB_DEVICE_CDC_WriteIRPCallback (USB_DEVICE_IRP * irp )
 
   Summary:
     TX data callback.
@@ -370,12 +370,12 @@ void _USB_DEVICE_CDC_ACMSetUpPacketHandler
     Called by the controller driver 
  */
 
-void _USB_DEVICE_CDC_WriteIRPCallback (USB_DEVICE_IRP * irp );
+void F_USB_DEVICE_CDC_WriteIRPCallback (USB_DEVICE_IRP * irp );
 
 
 //******************************************************************************
 /* Function:
-    void _USB_DEVICE_CDC_ReadIRPCallback (USB_DEVICE_IRP * irp )
+    void F_USB_DEVICE_CDC_ReadIRPCallback (USB_DEVICE_IRP * irp )
 
   Summary:
     RX data callback.
@@ -386,10 +386,31 @@ void _USB_DEVICE_CDC_WriteIRPCallback (USB_DEVICE_IRP * irp );
   Remarks:
     Called by the controller driver
  */
+/* MISRA C-2012 Rule 8.6 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_8_6_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
 
-void _USB_DEVICE_CDC_ReadIRPCallback (USB_DEVICE_IRP * irp );
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1"
+
+void F_USB_DEVICE_CDC_ReadIRPCallback (USB_DEVICE_IRP * irp );
+
+void F_USB_DEVICE_CDC_SerialStateSendIRPCallback (USB_DEVICE_IRP * irp );
+
+void F_USB_DEVICE_CDC_EndpointDisable
+(
+	USB_DEVICE_HANDLE deviceHandle, 
+	USB_DEVICE_CDC_ENDPOINT * deviceCDCEndpoint
+);
+
+uint16_t USB_DEVICE_CDC_ReadPacketSizeGet ( USB_DEVICE_CDC_INDEX iCDC );
+
+uint16_t USB_DEVICE_CDC_WritePacketSizeGet ( USB_DEVICE_CDC_INDEX iCDC );
 
 extern USB_DEVICE_FUNCTION_DRIVER cdcFuncDriver;
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 #ifdef __cplusplus  // Provide C++ Compatibility
 
@@ -397,7 +418,7 @@ extern USB_DEVICE_FUNCTION_DRIVER cdcFuncDriver;
 
 #endif
 
-#endif // _USB_DEVICE_CDC_LOCAL_H
+#endif // USB_DEVICE_CDC_LOCAL_H
 
 /*******************************************************************************
  End of File

@@ -42,8 +42,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _USB_CDC_H
-#define _USB_CDC_H
+#ifndef M_USB_CDC_H
+#define M_USB_CDC_H
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -81,8 +81,8 @@
 
 #define USB_CDC_CLASS_CODE                              0x02
 #define USB_CDC_SUBCLASS_CODE                           0x00
-#define USB_CDC_COMMUNICATIONS_INTERFACE_CLASS_CODE     0x02
-#define USB_CDC_DATA_INTERFACE_CLASS_CODE               0x0A
+#define USB_CDC_COMMUNICATIONS_INTERFACE_CLASS_CODE     0x02U
+#define USB_CDC_DATA_INTERFACE_CLASS_CODE               0x0AU
 #define USB_CDC_DATA_INTERFACE_SUBCLASS_CODE            0x00
 #define USB_CDC_DATA_INTERFACE_PROTOCOL                 0x00
 #define CS_INTERFACE                                    0x24
@@ -94,7 +94,7 @@
 #define USB_CDC_LINESTATE_DTR                           1
 
 /* CDC specific request */
-#define USB_CDC_REQUEST_CLASS_SPECIFIC                  0x20
+#define USB_CDC_REQUEST_CLASS_SPECIFIC                  0x20U
 
 /* CDC Line Coding specific macro definitions */
 #define USB_CDC_LINE_CODING_STOP_1_BIT                  0x00
@@ -409,6 +409,11 @@ typedef struct __attribute__ ((packed))
     Need to be packed always.
 */
 
+/* MISRA C-2012 Rule 6.1 deviated:11 Deviation record ID -  H3_MISRAC_2012_R_6_1_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:11 "MISRA C-2012 Rule 6.1" "H3_MISRAC_2012_R_6_1_DR_1"    
+
 typedef struct __attribute__ ((packed))
 {
     /* indicates to DCE(device/modem) if DTE(host) is present or not*/
@@ -445,6 +450,9 @@ typedef struct __attribute__ ((packed))
     uint8_t             :8;
 
 } USB_CDC_SERIAL_STATE;
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 6.1"    
+/* MISRAC 2012 deviation block end */
 
 // *****************************************************************************
 /* CDC serial state response.
@@ -539,6 +547,9 @@ typedef struct __attribute__ ((packed))
     Need to be packed always.
 */
 
+/* MISRA C-2012 Rule 5.2 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"    
+
 typedef struct __attribute__ ((packed))
 {
     /* Size of this descriptor in bytes */
@@ -556,6 +567,10 @@ typedef struct __attribute__ ((packed))
 } USB_CDC_UNION_FUNCTIONAL_DESCRIPTOR_HEADER;
 
 typedef uint8_t USB_CDC_UNION_FUNCTIONAL_DESCRIPTOR_SUBORDINATE;
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 // *****************************************************************************
 /* CDC ACM functional descriptor.
