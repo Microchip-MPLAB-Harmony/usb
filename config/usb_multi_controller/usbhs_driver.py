@@ -203,7 +203,7 @@ def instantiateComponent(usbDriverComponent, index):
 	usbPLIB.setLabel("USB Peripheral used")
 	usbPLIB.setReadOnly(True)
 	
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CZ"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CZ", "PIC32CK"]):
 		res = Database.activateComponents(["sys_time"])
 
 	# USB Driver Speed selection
@@ -322,7 +322,7 @@ def instantiateComponent(usbDriverComponent, index):
 	
 	configName = Variables.get("__CONFIGURATION_NAME")
 
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32CZ"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32CZ", "PIC32CK"]):
 		sourcePath = "templates/driver/usbhs_multi/"
 
 	################################################

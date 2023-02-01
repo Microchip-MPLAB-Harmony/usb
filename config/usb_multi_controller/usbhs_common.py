@@ -71,7 +71,7 @@ def instantiateComponent(usbPeripheralComponentCommon):
 	
 	sourcePath = "templates/driver/usbhs_multi/"
 
-	if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32CZ"]):
+	if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32CZ", "PIC32CK"]):
 		modules = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals").getChildren()
 		for module in range(len(modules)):
 			if (modules[module].getAttribute("name")) == "USBHS":

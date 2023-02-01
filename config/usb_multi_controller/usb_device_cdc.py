@@ -32,7 +32,8 @@ indexFunction = None
 configValue = None 
 startInterfaceNumber = None 
 numberOfInterfaces = None 
-useIad = None 
+useIad = None
+useIadLocal = None 
 epNumberInterrupt = None
 epNumberBulkOut = None
 epNumberBulkIn = None
@@ -56,15 +57,17 @@ def handleMessage(messageID, args):
 def blIadEnable(source, event):
 	global isConnectedToDeviceLayer
 	global connectedDeviceLayerID
+	global useIadLocal
 	if isConnectedToDeviceLayer == True: 
 		args = {"nFunction":event["value"]}
 		res = Database.sendMessage(connectedDeviceLayerID, "UPDATE_IAD_ENABLE", args)
-		if event["value"] == True:
+		if event["value"] == True and useIadLocal == 0:
 			args = {"nFunction": 8}
-		else:
+			useIadLocal = 1
+		elif event["value"] == False and useIadLocal == 1:
 			args = {"nFunction": 0 - 8}
+			useIadLocal = 0
 		res = Database.sendMessage(connectedDeviceLayerID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
-
 
 
 
@@ -121,10 +124,7 @@ def onAttachmentConnected(source, target):
 			configDescriptorSize = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 			if configDescriptorSize != None: 
 				iadEnableSymbol = ownerComponent.getSymbolByID("CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
-				if iadEnableSymbol.getValue() == True:
-					descriptorSize =  cdcDescriptorSize + 8
-				else:
-					descriptorSize =  cdcDescriptorSize
+				descriptorSize =  cdcDescriptorSize
 				args = {"nFunction": descriptorSize}
 				res = Database.sendMessage(remoteID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 				args = {"nFunction":iadEnableSymbol.getValue()}
@@ -269,24 +269,20 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	global usbDeviceCdcDescriptorClassCodeFile
 	global isConnectedToDeviceLayer
 	global connectedDeviceLayerID
+	global useIadLocal
 
 	isConnectedToDeviceLayer = False
 	connectedDeviceLayerID = None 
+	useIadLocal = 0
 
 	value = Database.getComponentByID("usb_device")
 	if (value == None):
 		res = Database.activateComponents(["usb_device"])
 	
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CZ"]):
-		MaxEpNumber = 7
-		BulkInDefaultEpNumber = 2
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX", "PIC32MK", "PIC32MM"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX", "PIC32MK", "PIC32MM"]):
 		MaxEpNumber = 15
 		BulkInDefaultEpNumber = 2
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-		MaxEpNumber = 7
-		BulkInDefaultEpNumber = 2
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMD11", "PIC32CM", "PIC32CX"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CZ", "PIC32CK", "SAMD21", "SAMDA1", "SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMD11", "PIC32CM", "PIC32CX"]):
 		MaxEpNumber = 7
 		BulkInDefaultEpNumber = 2
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAM9X60", "SAM9X7"]):

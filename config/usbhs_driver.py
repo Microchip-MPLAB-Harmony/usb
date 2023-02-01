@@ -31,7 +31,9 @@ usbOpMode = None
 drvUsbHsV1DeviceSourceFile = None 
 drvUsbHsV1HostSourceFile = None 
 addDrvUsbDeviceFile = None 
-addDrvUsbHostFile = None 
+addDrvUsbHostFile = None
+usbSpeed = None 
+usbHostControllerEntryFile = None
 
 
 def genRtosTask(symbol, event):
@@ -85,17 +87,40 @@ def showRTOSMenu(symbol, event):
 	if (Database.getSymbolValue("HarmonyCore", "SELECT_RTOS") != "BareMetal"):
 		show_rtos_menu = True
 	symbol.setVisible(show_rtos_menu)
-	
+
+# This function is called when the Driver component is connected 
+def onAttachmentConnected(source, target):
+	global usbSpeed
+	global usbHostControllerEntryFile
+
+	# This is the Capability of the local Component 
+	connectID = source["id"]
+
+	# Dependency ID of the remote component 
+	targetID = target["id"]
+	remoteComponent = target["component"]
+	remoteID = remoteComponent.getID()
+	if (connectID == "DRV_USB" and targetID == "usb_driver_dependency"):
+		# This indicates an upper layer component (USB Host or Device) is connected 
+		# Save the remoteID component. 
+        # Notify the USB Device Layer about the speed 
+		args = {"usbDriverSpeed":usbSpeed.getValue()}
+		res = Database.sendMessage(remoteID, "USB_DEVICE_UPDATE_SPEED", args)
+		usbHostControllerEntryFile.setEnabled(True)
+
+
 def instantiateComponent(usbDriverComponent):	
 	global usbOpMode
 	global drvUsbHsV1DeviceSourceFile
 	global drvUsbHsV1HostSourceFile
 	global addDrvUsbDeviceFile
 	global addDrvUsbHostFile
+	global usbSpeed
+	global usbHostControllerEntryFile
 	
 	res = Database.activateComponents(["HarmonyCore"])
 	
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CK"]):
 		res = Database.activateComponents(["sys_time"])
 	
 	# USB Driver Speed selection 	
@@ -286,6 +311,15 @@ def instantiateComponent(usbDriverComponent):
 		Database.setSymbolValue("core", "USB_DMA_INTERRUPT_HANDLER_LOCK", True)
 		Database.setSymbolValue("core", "USB_DMA_INTERRUPT_HANDLER", "DRV_USBHS_DMAInterruptHandler")
 
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32CK"]):
+		# Update USBHS0 General Interrupt Handler
+		Database.clearSymbolValue("core", "USBHS_INTERRUPT_ENABLE")
+		Database.clearSymbolValue("core", "USBHS_INTERRUPT_HANDLER_LOCK")
+		Database.clearSymbolValue("core", "USBHS_INTERRUPT_HANDLER")
+		Database.setSymbolValue("core", "USBHS_INTERRUPT_ENABLE", True, 2)
+		Database.setSymbolValue("core", "USBHS_INTERRUPT_HANDLER_LOCK", True, 2)
+		Database.setSymbolValue("core", "USBHS_INTERRUPT_HANDLER", "DRV_USBHS_Handler", 2)
+		Database.setSymbolValue("core", "USBHS_CLOCK_ENABLE", True, 1)
 	
 	# Enable Driver common files 
 	Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":True})
@@ -297,7 +331,7 @@ def instantiateComponent(usbDriverComponent):
 	
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
 		sourcePath = "templates/driver/usbhsv1/"
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CK"]):
 		sourcePath = "templates/driver/usbhs/"
 	
 	################################################
@@ -333,6 +367,17 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverSystemInitDataFile.setSourcePath(sourcePath + "system_init_c_driver_data.ftl")
 	usbDriverSystemInitDataFile.setMarkup(True)
 	
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32CK"]):
+		##############################################################
+		# Controller entry
+		##############################################################
+		usbHostControllerEntryFile = usbDriverComponent.createFileSymbol("USB_HOST_CONTROLLER_ENTRY_FILE", None)
+		usbHostControllerEntryFile.setType("STRING")
+		usbHostControllerEntryFile.setOutputName("usb_host.LIST_USB_HOST_CONTROLLER_ENTRY")
+		usbHostControllerEntryFile.setSourcePath(sourcePath +"system_init_c_host_controller_function.ftl")
+		usbHostControllerEntryFile.setMarkup(True)
+		usbHostControllerEntryFile.setEnabled(False)
+
 	usbDriverSystemInitCallsFile = usbDriverComponent.createFileSymbol(None, None)
 	usbDriverSystemInitCallsFile.setType("STRING")
 	usbDriverSystemInitCallsFile.setOutputName("core.LIST_SYSTEM_INIT_C_INITIALIZE_MIDDLEWARE")
@@ -385,14 +430,19 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbExternalDependenciesFile.setType("HEADER")
 	drvUsbExternalDependenciesFile.setOverwrite(True)
 	
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+		sourcePathDriver = usbDriverPath + "usbhs/"
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32CK"]):
+		sourcePathDriver = usbDriverPath + "usbhsv2/"
+  
 	drvUsbHsV1HeaderFile = usbDriverComponent.createFileSymbol(None, None)
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
 		drvUsbHsV1HeaderFile.setSourcePath(usbDriverPath + "usbhsv1/drv_usbhsv1.h")
 		drvUsbHsV1HeaderFile.setOutputName("drv_usbhsv1.h")
 		drvUsbHsV1HeaderFile.setDestPath(usbDriverProjectPath+ "usbhsv1")
 		drvUsbHsV1HeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath+ "usbhsv1")
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-		drvUsbHsV1HeaderFile.setSourcePath(usbDriverPath + "usbhs/drv_usbhs.h")
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CK"]):
+		drvUsbHsV1HeaderFile.setSourcePath(sourcePathDriver + "drv_usbhs.h")
 		drvUsbHsV1HeaderFile.setOutputName("drv_usbhs.h")
 		drvUsbHsV1HeaderFile.setDestPath(usbDriverProjectPath+ "usbhs")
 		drvUsbHsV1HeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath+ "usbhs")
@@ -405,8 +455,8 @@ def instantiateComponent(usbDriverComponent):
 		drvUsbHsV1VarMapHeaderFile.setOutputName("drv_usbhsv1_variant_mapping.h")
 		drvUsbHsV1VarMapHeaderFile.setDestPath(usbDriverProjectPath + "usbhsv1/src")
 		drvUsbHsV1VarMapHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbhsv1/src")
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-		drvUsbHsV1VarMapHeaderFile.setSourcePath(usbDriverPath + "usbhs/src/drv_usbhs_variant_mapping.h")
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CK"]):
+		drvUsbHsV1VarMapHeaderFile.setSourcePath(sourcePathDriver + "src/drv_usbhs_variant_mapping.h")
 		drvUsbHsV1VarMapHeaderFile.setOutputName("drv_usbhs_variant_mapping.h")
 		drvUsbHsV1VarMapHeaderFile.setDestPath(usbDriverProjectPath + "usbhs/src")
 		drvUsbHsV1VarMapHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbhs/src")
@@ -420,8 +470,8 @@ def instantiateComponent(usbDriverComponent):
 		drvUsbHsV1LocalHeaderFile.setOutputName("drv_usbhsv1_local.h")
 		drvUsbHsV1LocalHeaderFile.setDestPath(usbDriverProjectPath + "usbhsv1/src")
 		drvUsbHsV1LocalHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbhsv1/src")
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-		drvUsbHsV1LocalHeaderFile.setSourcePath(usbDriverPath + "usbhs/src/drv_usbhs_local.h")
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CK"]):
+		drvUsbHsV1LocalHeaderFile.setSourcePath(sourcePathDriver + "src/drv_usbhs_local.h")
 		drvUsbHsV1LocalHeaderFile.setOutputName("drv_usbhs_local.h")
 		drvUsbHsV1LocalHeaderFile.setDestPath(usbDriverProjectPath + "usbhs/src")
 		drvUsbHsV1LocalHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbhs/src")
@@ -449,8 +499,8 @@ def instantiateComponent(usbDriverComponent):
 		drvUsbHsV1SourceFile.setOutputName("drv_usbhsv1.c")
 		drvUsbHsV1SourceFile.setDestPath(usbDriverProjectPath + "usbhsv1/src")
 		drvUsbHsV1SourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbhsv1/src/")
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-		drvUsbHsV1SourceFile.setSourcePath(usbDriverPath + "usbhs/src/drv_usbhs.c")
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CK"]):
+		drvUsbHsV1SourceFile.setSourcePath(sourcePathDriver + "src/drv_usbhs.c")
 		drvUsbHsV1SourceFile.setOutputName("drv_usbhs.c")
 		drvUsbHsV1SourceFile.setDestPath(usbDriverProjectPath + "usbhs/src")
 		drvUsbHsV1SourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbhs/src/")
@@ -463,8 +513,8 @@ def instantiateComponent(usbDriverComponent):
 		drvUsbHsV1DeviceSourceFile.setOutputName("drv_usbhsv1_device.c")
 		drvUsbHsV1DeviceSourceFile.setDestPath(usbDriverProjectPath + "usbhsv1/src")
 		drvUsbHsV1DeviceSourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbhsv1/src/")
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-		drvUsbHsV1DeviceSourceFile.setSourcePath(usbDriverPath + "usbhs/src/drv_usbhs_device.c")
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CK"]):
+		drvUsbHsV1DeviceSourceFile.setSourcePath(sourcePathDriver + "src/drv_usbhs_device.c")
 		drvUsbHsV1DeviceSourceFile.setOutputName("drv_usbhs_device.c")
 		drvUsbHsV1DeviceSourceFile.setDestPath(usbDriverProjectPath + "usbhs/src")
 		drvUsbHsV1DeviceSourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbhs/src/")
@@ -479,8 +529,8 @@ def instantiateComponent(usbDriverComponent):
 		drvUsbHsV1HostSourceFile.setOutputName("drv_usbhsv1_host.c")
 		drvUsbHsV1HostSourceFile.setDestPath(usbDriverProjectPath + "usbhsv1/src")
 		drvUsbHsV1HostSourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbhsv1/src/")
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-		drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "usbhs/src/drv_usbhs_host.c")
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CK"]):
+		drvUsbHsV1HostSourceFile.setSourcePath(sourcePathDriver + "src/drv_usbhs_host.c")
 		drvUsbHsV1HostSourceFile.setOutputName("drv_usbhs_host.c")
 		drvUsbHsV1HostSourceFile.setDestPath(usbDriverProjectPath + "usbhs/src")
 		drvUsbHsV1HostSourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbhs/src/")
@@ -490,84 +540,95 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1HostSourceFile.setDependencies(blDrvUsbHsV1HostSourceFile, ["ENABLE_DRV_USB_HOST_SOURCE"])
 
 	# Add USBHS PLIB files for PIC32MZ 
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CK"]):
 		plib_usbhs_h = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('plib_usbhs.h', usbDriverComponent, plib_usbhs_h, usbDriverPath + "usbhs/src/", usbDriverProjectPath + "usbhs/src", True, None)
+		addFileName('plib_usbhs.h', usbDriverComponent, plib_usbhs_h, sourcePathDriver + "src/", usbDriverProjectPath + "usbhs/src", True, None)
 		
 		plib_usbhs_header_h = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('plib_usbhs_header.h', usbDriverComponent, plib_usbhs_header_h, usbDriverPath + "usbhs/src/", usbDriverProjectPath + "usbhs/src", True, None)
-	
+		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
+			addFileName('plib_usbhs_header.h', usbDriverComponent, plib_usbhs_header_h, sourcePathDriver + "src/", usbDriverProjectPath + "usbhs/src", True, None)
+		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32CK"]):
+			#addFileName('plib_usbhs_header.h', usbDriverComponent, plib_usbhs_header_h, usbDriverPath + "usbhs/" + "src/", usbDriverProjectPath + "usbhs/src", True, None)
+			configNameTemp = Variables.get("__CONFIGURATION_NAME")
+			plib_usbhs_header_h.setProjectPath("config/" + configNameTemp + usbDriverProjectPath + "usbhs/src")
+			plib_usbhs_header_h.setSourcePath(sourcePathDriver + "src/" + 'plib_usbhs_header_pic32ck.h')
+			plib_usbhs_header_h.setOutputName('plib_usbhs_header.h')
+			plib_usbhs_header_h.setDestPath(usbDriverProjectPath + "usbhs/src")
+			plib_usbhs_header_h.setType("HEADER")
+			plib_usbhs_header_h.setEnabled(True)
+
+
 		usbhs_registers_h = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_registers.h', usbDriverComponent, usbhs_registers_h, usbDriverPath + "usbhs/src/", usbDriverProjectPath + "usbhs/src", True, None)
+		addFileName('usbhs_registers.h', usbDriverComponent, usbhs_registers_h, sourcePathDriver + "src/", usbDriverProjectPath + "usbhs/src", True, None)
 		
 		usbhs_registers_h_templates = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_registers.h', usbDriverComponent, usbhs_registers_h_templates, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_registers.h', usbDriverComponent, usbhs_registers_h_templates, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 		
 		usbhs_ClockResetControl_Default = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_ClockResetControl_Default.h', usbDriverComponent, usbhs_ClockResetControl_Default, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_ClockResetControl_Default.h', usbDriverComponent, usbhs_ClockResetControl_Default, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 		usbhs_ClockResetControl_Unsupported = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_ClockResetControl_Unsupported.h', usbDriverComponent, usbhs_ClockResetControl_Unsupported, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_ClockResetControl_Unsupported.h', usbDriverComponent, usbhs_ClockResetControl_Unsupported, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 		usbhs_EndpointFIFO_Default = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_EndpointFIFO_Default.h', usbDriverComponent, usbhs_EndpointFIFO_Default, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_EndpointFIFO_Default.h', usbDriverComponent, usbhs_EndpointFIFO_Default, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 		usbhs_EndpointFIFO_Unsupported = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_EndpointFIFO_Unsupported.h', usbDriverComponent, usbhs_EndpointFIFO_Unsupported, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_EndpointFIFO_Unsupported.h', usbDriverComponent, usbhs_EndpointFIFO_Unsupported, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 		usbhs_EndpointOperations_Default = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_EndpointOperations_Default.h', usbDriverComponent, usbhs_EndpointOperations_Default, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_EndpointOperations_Default.h', usbDriverComponent, usbhs_EndpointOperations_Default, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 		usbhs_EndpointOperations_Unsupported = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_EndpointOperations_Unsupported.h', usbDriverComponent, usbhs_EndpointOperations_Unsupported, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_EndpointOperations_Unsupported.h', usbDriverComponent, usbhs_EndpointOperations_Unsupported, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 		usbhs_EP0Status_Default = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_EP0Status_Default.h', usbDriverComponent, usbhs_EP0Status_Default, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_EP0Status_Default.h', usbDriverComponent, usbhs_EP0Status_Default, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 		usbhs_EP0Status_Unsupported = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_EP0Status_Unsupported.h', usbDriverComponent, usbhs_EP0Status_Unsupported, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_EP0Status_Unsupported.h', usbDriverComponent, usbhs_EP0Status_Unsupported, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 		usbhs_HighSpeedSupport_Default = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_HighSpeedSupport_Default.h', usbDriverComponent, usbhs_HighSpeedSupport_Default, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_HighSpeedSupport_Default.h', usbDriverComponent, usbhs_HighSpeedSupport_Default, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 		usbhs_HighSpeedSupport_Unsupported = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_HighSpeedSupport_Unsupported.h', usbDriverComponent, usbhs_HighSpeedSupport_Unsupported, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_HighSpeedSupport_Unsupported.h', usbDriverComponent, usbhs_HighSpeedSupport_Unsupported, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 		usbhs_Interrupts_Default = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_Interrupts_Default.h', usbDriverComponent, usbhs_Interrupts_Default, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_Interrupts_Default.h', usbDriverComponent, usbhs_Interrupts_Default, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 		usbhs_Interrupts_Unsupported = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_Interrupts_Unsupported.h', usbDriverComponent, usbhs_Interrupts_Unsupported, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_Interrupts_Unsupported.h', usbDriverComponent, usbhs_Interrupts_Unsupported, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 		usbhs_ModuleControl_Default = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_ModuleControl_Default.h', usbDriverComponent, usbhs_ModuleControl_Default, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_ModuleControl_Default.h', usbDriverComponent, usbhs_ModuleControl_Default, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 		usbhs_ModuleControl_Unsupported = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_ModuleControl_Unsupported.h', usbDriverComponent, usbhs_ModuleControl_Unsupported, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_ModuleControl_Unsupported.h', usbDriverComponent, usbhs_ModuleControl_Unsupported, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 		usbhs_RxEPStatus_Default = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_RxEPStatus_Default.h', usbDriverComponent, usbhs_RxEPStatus_Default, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_RxEPStatus_Default.h', usbDriverComponent, usbhs_RxEPStatus_Default, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 		usbhs_RxEPStatus_Unsupported = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_RxEPStatus_Unsupported.h', usbDriverComponent, usbhs_RxEPStatus_Unsupported, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_RxEPStatus_Unsupported.h', usbDriverComponent, usbhs_RxEPStatus_Unsupported, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 		usbhs_SoftReset_Default = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_SoftReset_Default.h', usbDriverComponent, usbhs_SoftReset_Default, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_SoftReset_Default.h', usbDriverComponent, usbhs_SoftReset_Default, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 		usbhs_SoftReset_Unsupported = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_SoftReset_Unsupported.h', usbDriverComponent, usbhs_SoftReset_Unsupported, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_SoftReset_Unsupported.h', usbDriverComponent, usbhs_SoftReset_Unsupported, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 		usbhs_TxEPStatus_Default = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_TxEPStatus_Default.h', usbDriverComponent, usbhs_TxEPStatus_Default, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_TxEPStatus_Default.h', usbDriverComponent, usbhs_TxEPStatus_Default, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 		usbhs_TxEPStatus_Unsupported = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_TxEPStatus_Unsupported.h', usbDriverComponent, usbhs_TxEPStatus_Unsupported, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_TxEPStatus_Unsupported.h', usbDriverComponent, usbhs_TxEPStatus_Unsupported, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 		usbhs_USBIDControl_Default = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_USBIDControl_Default.h', usbDriverComponent, usbhs_USBIDControl_Default, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_USBIDControl_Default.h', usbDriverComponent, usbhs_USBIDControl_Default, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 		usbhs_USBIDControl_Unsupported = usbDriverComponent.createFileSymbol(None, None)	
-		addFileName('usbhs_USBIDControl_Unsupported.h', usbDriverComponent, usbhs_USBIDControl_Unsupported, usbDriverPath + "usbhs/src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
+		addFileName('usbhs_USBIDControl_Unsupported.h', usbDriverComponent, usbhs_USBIDControl_Unsupported, sourcePathDriver + "src/templates/", usbDriverProjectPath + "usbhs/src/templates", True, None)
 	
 def destroyComponent(usbDriverComponent):
 	Database.sendMessage("HarmonyCore", "ENABLE_DRV_COMMON", {"isEnabled":False})

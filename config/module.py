@@ -59,6 +59,44 @@ def loadModule():
                             usbControllersNumber += 1
                 else:
                     availablePeripherals.append(str(instances[instance].getAttribute("name")))
+
+    if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32CK"]):
+        modules = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals").getChildren()
+        for module in range(len(modules)):
+            if (modules[module].getAttribute("name")) == "USB":
+                instancesFS = modules[module].getChildren()
+                usbControllersNumberFS = len(instancesFS)
+            if (modules[module].getAttribute("name")) == "USBHS":
+                instancesHS = modules[module].getChildren()
+                usbControllersNumberHS = len(instancesHS)
+
+        if usbControllersNumberFS != None and usbControllersNumberFS > 0:
+            # Create USB Full Speed Driver Component 
+            usbDriverComponentFS =  Module.CreateComponent("drv_usbfs", "USB Full Speed Driver", "/USB/Drivers", "config/usbfs_v1_driver.py")
+            usbDriverComponentFS.addCapability("DRV_USB", "DRV_USB")
+            usbDriverComponentFS.addDependency("drv_usb_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
+
+        if usbControllersNumberHS != None and usbControllersNumberHS > 0:
+            # Create USB High Speed Driver Component
+            usbDriverComponentHS =  Module.CreateComponent("drv_usbhs", "USB High Speed Driver", "/USB/Drivers", "config/usbhs_driver.py")
+            usbDriverComponentHS.addMultiCapability("DRV_USB", "DRV_USB", "DRV_USB")
+            usbDriverComponentHS.addDependency("drv_usb_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
+
+        # Enable USB Library modules 
+        loadUSBHostLayer = True
+        loadUSBHostCDC = True
+        loadUSBHostMSD = True
+        loadUSBHostHID = True
+        loadUSBHostAudio = True 
+
+        loadUSBDeviceLayer = True
+        loadUSBDeviceCDC = True
+        loadUSBDeviceHID = True
+        loadUSBDeviceAudio = True
+        loadUSBDeviceMSD = True
+        loadUSBDeviceVendor = True
+        loadUSBDevicePrinter = True
+
     if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32CZ"]):
         modules = ATDF.getNode("/avr-tools-device-file/devices/device/peripherals").getChildren()
         for module in range(len(modules)):
@@ -273,7 +311,7 @@ def loadModule():
         
     # Create USB Device Layer Component
     if  loadUSBDeviceLayer == True:
-        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ"]):
+        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"]):
             usbDeviceComponent =  Module.CreateGeneratorComponent("usb_device", "USB Device Layer", "/USB/Device Stack", "config/usb_multi_controller/usb_device_common.py", "config/usb_multi_controller/usb_device.py")
             usbDeviceComponent.addDependency("usb_driver_dependency", "DRV_USB", False, True)
             usbDeviceComponent.addMultiCapability("usb_device", "USB_DEVICE", "USB_DEVICE")
@@ -284,7 +322,7 @@ def loadModule():
     
     # Create USB Device CDC Function driver Component 
     if loadUSBDeviceCDC == True:
-        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ"]):
+        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"]):
             usbDeviceCdcComponent = Module.CreateGeneratorComponent("usb_device_cdc", "CDC Function Driver", "/USB/Device Stack", "config/usb_device_cdc_common.py", "config/usb_multi_controller/usb_device_cdc.py")
             usbDeviceCdcComponent.addDependency("usb_device_dependency", "USB_DEVICE", False, True)
             usbDeviceCdcComponent.addCapability("USB Device", "USB_DEVICE_CDC")
@@ -295,7 +333,7 @@ def loadModule():
     
     # Create USB Device Vendor Component 
     if loadUSBDeviceVendor == True:
-        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ"]):
+        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"]):
             usbDeviceVendorComponent = Module.CreateGeneratorComponent("usb_device_vendor", "Vendor Function", "/USB/Device Stack", "config/usb_device_vendor_common.py", "config/usb_multi_controller/usb_device_vendor.py")
             usbDeviceVendorComponent.addDependency("usb_device_dependency", "USB_DEVICE" , False, True)
             usbDeviceVendorComponent.addCapability("USB Device", "USB_DEVICE_VENDOR")
@@ -306,7 +344,7 @@ def loadModule():
     
     # Create USB Device Audio Component 
     if loadUSBDeviceAudio == True:
-        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ"]):
+        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"]):
             usbDeviceAudioComponent = Module.CreateGeneratorComponent("usb_device_audio", "Audio Function Driver", "/USB/Device Stack", "config/usb_device_audio_common.py", "config/usb_multi_controller/usb_device_audio.py")
             usbDeviceAudioComponent.addDependency("usb_device_dependency", "USB_DEVICE" , False, True)
             usbDeviceAudioComponent.addCapability("USB Device", "USB_DEVICE_AUDIO")
@@ -317,7 +355,7 @@ def loadModule():
         
     # Create USB Device HID Component 
     if loadUSBDeviceHID == True:
-        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ"]):
+        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"]):
             usbDeviceHidComponent = Module.CreateGeneratorComponent("usb_device_hid", "HID Function Driver", "/USB/Device Stack", "config/usb_device_hid_common.py", "config/usb_multi_controller/usb_device_hid.py")
             usbDeviceHidComponent.addDependency("usb_device_dependency", "USB_DEVICE" , False, True)
             usbDeviceHidComponent.addCapability("USB Device", "USB_DEVICE_HID")
@@ -328,7 +366,7 @@ def loadModule():
     
     # Create USB Device MSD Component 
     if loadUSBDeviceMSD == True:
-        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ"]):
+        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"]):
             usbDeviceMsdComponent = Module.CreateGeneratorComponent("usb_device_msd", "MSD Function Driver", "/USB/Device Stack", "config/usb_device_msd_common.py", "config/usb_multi_controller/usb_device_msd.py")
             usbDeviceMsdComponent.addDependency("usb_device_dependency", "USB_DEVICE", False, True)
             usbDeviceMsdComponent.addMultiDependency("usb_device_msd_media_dependency", "DRV_MEDIA", None, True)
@@ -341,7 +379,7 @@ def loadModule():
 
     # Create USB Device Printer Component 
     if loadUSBDevicePrinter == True:
-        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ"]):
+        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"]):
             usbDevicePrinterComponent = Module.CreateGeneratorComponent("usb_device_printer", "Printer Function Driver", "/USB/Device Stack", "config/usb_device_printer_common.py", "config/usb_multi_controller/usb_device_printer.py")
             usbDevicePrinterComponent.addDependency("usb_device_dependency", "USB_DEVICE", False, True)
             usbDevicePrinterComponent.addCapability("USB Device", "USB_DEVICE_PRINTER") 
@@ -352,7 +390,7 @@ def loadModule():
     
     # Create USB Host Layer Component   
     if loadUSBHostLayer == True:
-        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ"]):
+        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"]):
             usbHostComponent = Module.CreateSharedComponent("usb_host", "Host Layer", "/USB/Host Stack", "config/usb_multi_controller/usb_host.py")
             usbHostComponent.addMultiDependency("usb_driver_dependency", "DRV_USB", None, True)
             usbHostComponent.addDependency("usb_host_tmr_dependency", "SYS_TIME", True, True)

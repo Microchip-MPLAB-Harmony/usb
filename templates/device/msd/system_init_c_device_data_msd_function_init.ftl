@@ -56,7 +56,7 @@ uint8_t sectorBuffer[512 * USB_DEVICE_MSD_NUM_SECTOR_BUFFERS] USB_ALIGN;
 USB_MSD_CBW msdCBW${CONFIG_USB_DEVICE_FUNCTION_INDEX} USB_ALIGN;
 USB_MSD_CSW msdCSW${CONFIG_USB_DEVICE_FUNCTION_INDEX} USB_ALIGN;
 <#assign ROW_BUFFER_ENABLE = false>
-<#if (__PROCESSOR?contains("PIC32MZ") == true) || (__PROCESSOR?contains("PIC32CZ") == true)>
+<#if (__PROCESSOR?contains("PIC32MZ") == true) || (__PROCESSOR?contains("PIC32CZ") == true) || (__PROCESSOR?contains("PIC32CK") == true)>
     <#list 0..4 as i>
         <#assign MSD_ENABLE = "CONFIG_USB_DEVICE_FUNCTION_MSD_LUN_IDX" + i>
         <#if .vars[MSD_ENABLE]?has_content>

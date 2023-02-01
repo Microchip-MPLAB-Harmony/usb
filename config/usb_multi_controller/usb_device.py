@@ -199,7 +199,10 @@ def onAttachmentConnected(source, target):
 	if (connectID == "usb_driver_dependency"):
 		usbControllerInstance = ownerComponent.getSymbolByID("USB_DEVICE_INDEX")
 		usbControllerInstance.clearValue()
-		usbControllerInstance.setValue(remoteID.upper())
+		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32CK"]):
+			usbControllerInstance.setValue(remoteID.upper() + "_INDEX_0")
+		else:
+			usbControllerInstance.setValue(remoteID.upper())
 
 
 	if (remoteID == "usb_device_cdc"):
@@ -311,7 +314,7 @@ def instantiateComponent(usbDeviceComponent,index):
 
 	usbDeviceFunctionsNumberLocal = 0 
 	res = Database.activateComponents(["HarmonyCore"])
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32CZ"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32CZ", "PIC32CK"]):
 		usbDevicelayerIndex = usbDeviceComponent.createIntegerSymbol("INDEX", None)
 		usbDevicelayerIndex.setVisible(False)
 		usbDevicelayerIndex.setDefaultValue(index)
@@ -602,7 +605,7 @@ def instantiateComponent(usbDeviceComponent,index):
 	usbDeviceRTOSTaskDelayVal.setVisible((usbDeviceRTOSTaskDelay.getValue() == True))
 	usbDeviceRTOSTaskDelayVal.setDependencies(setVisible, ["USB_DEVICE_RTOS_USE_DELAY"])
 	
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32CZ"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32CZ", "PIC32CK"]):
 		sourcePath = "templates/device/usbdevice_multi/"
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX" , "PIC32MM"]):
 		sourcePath = "templates/device/"

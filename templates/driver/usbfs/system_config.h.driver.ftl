@@ -51,21 +51,21 @@
 #define DRV_USBFS_INTERRUPT_MODE                          true
 
 <#if (USB_OPERATION_MODE?has_content)
-	  && (USB_OPERATION_MODE == "Device")>
+  && (USB_OPERATION_MODE == "Device")>
 
 /* Enables Device Support */
 #define DRV_USBFS_DEVICE_SUPPORT                          true
-	
+
 /* Disable Host Support */
 #define DRV_USBFS_HOST_SUPPORT                            false
 
 
 <#elseif (USB_OPERATION_MODE?has_content)
-	  && (USB_OPERATION_MODE == "Host")>
+  && (USB_OPERATION_MODE == "Host")>
 
 /* Disable Device Support */
 #define DRV_USBFS_DEVICE_SUPPORT                          false
-	
+
 /* Enable Host Support */
 #define DRV_USBFS_HOST_SUPPORT                            true
 
@@ -81,6 +81,19 @@
 /* Reset duration in milli Seconds */ 
 #define DRV_USBFS_HOST_RESET_DURATION                     ${USB_DRV_HOST_RESET_DUARTION}
 
+</#if>
+
+<#if (__PROCESSOR?contains("PIC32CK") == true)>
+    <#assign drv_usb_endpoint_number = 0>
+        <#if (usb_device_0.CONFIG_USB_DEVICE_ENDPOINTS_NUMBER)?has_content == true>
+            <#assign drv_usb_endpoint_number = usb_device_0.CONFIG_USB_DEVICE_ENDPOINTS_NUMBER>
+        </#if>
+        <#if (usb_device_1.CONFIG_USB_DEVICE_ENDPOINTS_NUMBER)?has_content == true>
+            <#if usb_device_1.CONFIG_USB_DEVICE_ENDPOINTS_NUMBER gt drv_usb_endpoint_number>
+                <#assign drv_usb_endpoint_number = usb_device_1.CONFIG_USB_DEVICE_ENDPOINTS_NUMBER>
+            </#if>
+        </#if>
+#define DRV_USBFS_ENDPOINTS_NUMBER                        ${drv_usb_endpoint_number + 1}
 </#if>
 
 /* Alignment for buffers that are submitted to USB Driver*/ 

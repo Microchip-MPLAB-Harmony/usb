@@ -37,7 +37,6 @@ def instantiateComponent(usbPrinterComponentCommon):
 
 	global usbDevicePrinterInstnces
 	global usbDevicePrinterQueuDepth 
-	print ("usb_device_printer_common.py")
 	usbDevicePrinterInstnces = usbPrinterComponentCommon.createIntegerSymbol("CONFIG_USB_DEVICE_PRINTER_INSTANCES", None)
 	usbDevicePrinterInstnces.setLabel("Number of Instances")
 	usbDevicePrinterInstnces.setMin(1)

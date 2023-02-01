@@ -21,20 +21,18 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
 def onAttachmentConnected(source, target):
+	dependencyID = source["id"]
 	ownerComponent = source["component"]
-	print("USB HOST Audio Client Driver: USB Host Layer Connected")
-	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
-	if readValue != None:
-		args = {"nTpl":readValue + 1 }
-		res = Database.sendMessage("usb_host", "UPDATE_TPL_ENTRY_NUMBER", args)
+	if (dependencyID == "usb_host_dependency"):
+		args = {"nTpl":1}
+		res = Database.sendMessage("usb_host", "INCREMENT_TPL_ENTRY_NUMBER", args)
 	
 def onAttachmentDisconnected(source, target):
+	dependencyID = source["id"]
 	ownerComponent = source["component"]
-	print("USB HOST Audio Client Driver: USB Host Layer Disconnected")
-	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
-	if readValue != None:
-		args = {"nTpl":readValue - 1 }
-		res = Database.sendMessage("usb_host", "UPDATE_TPL_ENTRY_NUMBER", args)
+	if (dependencyID == "usb_host_dependency"):
+		args = {"nTpl":1}
+		res = Database.sendMessage("usb_host", "DECREMENT_TPL_ENTRY_NUMBER", args)
 		
 def destroyComponent(component):	
 	print("USB HOST Audio Client Driver: Destroyed")

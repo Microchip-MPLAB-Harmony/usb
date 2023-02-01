@@ -1,25 +1,5 @@
 <#--
 /*******************************************************************************
-  USB Device Freemarker Template File
-
-  Company:
-    Microchip Technology Inc.
-
-  File Name:
-    system_init_c_device_calls.ftl
-
-  Summary:
-    USB Device Freemarker Template File
-
-  Description:
-    This file contains configurations necessary to run the system.  It
-    implements the "SYS_Initialize" function, configuration bits, and allocates
-    any necessary global system resources, such as the systemObjects structure
-    that contains the object handles to all the MPLAB Harmony module objects in
-    the system.
-*******************************************************************************/
-
-/*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
@@ -41,12 +21,16 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
--->
-    /* Initialize USB Driver */ 
-    sysObj.drvUSBHSObject${INDEX?string} = DRV_USBHS_Initialize(DRV_USBHS_INDEX_${INDEX?string}, (SYS_MODULE_INIT *) &drvUSBHSInit${INDEX?string});	
+ -->
+    {
+        /* Index of the USB Driver used by the Host Layer */
+        .drvIndex = DRV_USBHS_INDEX_0,
+
+        /* Pointer to the USB Driver Functions. */
+        .hcdInterface = DRV_USBHS_HOST_INTERFACE,
+    },
 <#--
 /*******************************************************************************
  End of File
 */
 -->
-

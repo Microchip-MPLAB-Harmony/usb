@@ -27,6 +27,7 @@ usbHostHubSaveValue = None
 usbHostControllerNumber = None
 usbHostPipesNumber = None
 usbHostControllerNumberLocal = 0
+usbHostTplEntryNumberLocal = 0
 
 def genRtosTask(symbol, event):
 	if event["value"] != "BareMetal":
@@ -50,8 +51,15 @@ def showRTOSMenu(symbol, event):
 
 def handleMessage(messageID, args):	
 	global usbHostTplEntryNumber
+	global usbHostTplEntryNumberLocal
 	if (messageID == "UPDATE_TPL_ENTRY_NUMBER"):
 		usbHostTplEntryNumber.setValue(args["nTpl"])
+	if (messageID == "INCREMENT_TPL_ENTRY_NUMBER"):
+		usbHostTplEntryNumberLocal += 1
+		usbHostTplEntryNumber.setValue(usbHostTplEntryNumberLocal)
+	if (messageID == "DECREMENT_TPL_ENTRY_NUMBER"):
+		usbHostTplEntryNumberLocal -= 1
+		usbHostTplEntryNumber.setValue(usbHostTplEntryNumberLocal)
 
 
 def instantiateComponent(usbHostComponent):
@@ -60,8 +68,10 @@ def instantiateComponent(usbHostComponent):
 	global usbHostControllerNumber
 	global usbHostPipesNumber
 	global usbHostControllerNumberLocal
+	global usbHostTplEntryNumberLocal
 
 	usbHostControllerNumberLocal = 0
+	usbHostTplEntryNumberLocal = 0
 	res = Database.activateComponents(["HarmonyCore"])
 	res = Database.activateComponents(["sys_time"])
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
@@ -71,7 +81,7 @@ def instantiateComponent(usbHostComponent):
 		driverInterface = "DRV_USBHSV1_HOST_INTERFACE"
 		args = {"operationMode":"Host"}
 		Database.sendMessage("drv_usbhs_v1", "UPDATE_OPERATION_MODE", args)
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CZ"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CZ", "PIC32CK"]):
 		res = Database.activateComponents(["drv_usbhs_v1"])
 		speed = Database.getSymbolValue("drv_usbhs_v1", "USB_SPEED")
 		driverIndex = "DRV_USBHS_INDEX_0"
@@ -153,7 +163,7 @@ def instantiateComponent(usbHostComponent):
 	usbHostPipesNumber.setDefaultValue(10)
 	
 	# USB Host Hub Support
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CZ", "PIC32MX" , "PIC32MM", "SAMA5D2" ,"PIC32MK", "SAMA7"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CZ", "PIC32CK", "PIC32MX" , "PIC32MM", "SAMA5D2" ,"PIC32MK", "SAMA7"]):
 		usbHostHubsupport = usbHostComponent.createBooleanSymbol("CONFIG_USB_HOST_HUB_SUPPORT", None)
 		usbHostHubsupport.setLabel( "Hub support" )
 		usbHostHubsupport.setVisible( True)
@@ -265,7 +275,7 @@ def instantiateComponent(usbHostComponent):
 	
 	# system_config.h file for USB Host Layer    
 	################################################
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32CZ", "PIC32MZ" , "PIC32MX", "PIC32MM"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32CZ", "PIC32CK", "PIC32MZ" , "PIC32MX", "PIC32MM"]):
 		usbHostHubConfigFile = usbHostComponent.createFileSymbol("FILE_USB_HOST_HUB_CONFIG", None)
 		usbHostHubConfigFile.setType("STRING")
 		usbHostHubConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION")

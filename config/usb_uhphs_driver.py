@@ -441,7 +441,7 @@ def blUSBDriverOHCI(usbSymbolSource, event):
 	usbSymbolSource.setVisible(event["value"])
 		
 def onDependentComponentAdded(ownerComponent, dependencyID, dependentComponent):
-	print(ownerComponent, dependencyID, dependentComponent)
+	pass
 	
 def blUsbVbusPinName(usbSymbolSource, event):
 	if (event["value"] == True):

@@ -176,13 +176,9 @@ def instantiateComponent(usbDevicePrinterComponent, index):
 	if (value == None):
 		res = Database.activateComponents(["usb_device"])
 	
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CZ"]):
-		BulkOutMaxEpNumber = 7
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX", "PIC32MK", "PIC32MM"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MX", "PIC32MK", "PIC32MM"]):
 		BulkOutMaxEpNumber = 15
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ"]):
-		BulkOutMaxEpNumber = 7
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMDA1","SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMD11", "PIC32CM", "PIC32CX"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CZ", "PIC32CK", "SAMD21", "SAMDA1","SAMD51", "SAME51", "SAME53", "SAME54", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMD11", "PIC32CM", "PIC32CX"]):
 		BulkOutMaxEpNumber = 7
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAM9X60", "SAM9X7"]):
 		BulkOutMaxEpNumber = 6
