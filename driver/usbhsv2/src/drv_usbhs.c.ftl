@@ -74,7 +74,7 @@ DRV_USBHS_DEVICE_ENDPOINT_OBJ gDrvUSBEndpoints [DRV_USBHS_INSTANCES_NUMBER] [DRV
     
   Summary:
     Initializes the Hi-Speed USB Driver.
-	
+
   Description:
     This function initializes the Hi-Speed USB Driver, making it ready for
     clients to open. The driver initialization does not complete when this
@@ -208,7 +208,7 @@ void DRV_USBHS_Tasks
         {
             case DRV_USBHS_TASK_STATE_STARTING_DELAY:
 
-                /* On PI32MZ DA and EF devices, enable the global USB interrupt
+                /* On PIC32MZ DA and EF devices, enable the global USB interrupt
                  * in the USBCRCON register. */
                 _DRV_USBHS_CLOCK_CONTROL_GLOBAL_USB_INT_ENABLE(usbID);
 
@@ -219,15 +219,15 @@ void DRV_USBHS_Tasks
                 hDriver->usbDrvCommonObj.state = DRV_USBHS_TASK_STATE_WAITING_FOR_IS_SOFTRESET_COMPLETE;
                 
                 break;
-				
-		    case DRV_USBHS_TASK_STATE_WAITING_FOR_IS_SOFTRESET_COMPLETE :
+
+            case DRV_USBHS_TASK_STATE_WAITING_FOR_IS_SOFTRESET_COMPLETE :
                 if (((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_SYNCBUSY & USBHS_SYNCBUSY_ENABLE_Msk) == 0)
-                    && ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_SYNCBUSY & USBHS_STATUS_PHYRDY_Msk) == 0))
-				{
-					/* Reset completed so Move to the next state */
+                    && ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYRDY_Msk) == 0))
+                {
+                    /* Reset completed so Move to the next state */
                     hDriver->usbDrvCommonObj.state = DRV_USBHS_TASK_STATE_MODULE_INIT;
-				}
-			    break;
+                }
+                break;
 
             case DRV_USBHS_TASK_STATE_MODULE_INIT:
 
@@ -235,9 +235,9 @@ void DRV_USBHS_Tasks
 
                 switch(hDriver->usbDrvCommonObj.operationMode)
                 {
-					case DRV_USBHS_OPMODE_DUAL_ROLE:
+                    case DRV_USBHS_OPMODE_DUAL_ROLE:
                         /* Device Initialization */
-						_DRV_USBHS_DEVICE_INIT(hDriver, object);
+                        _DRV_USBHS_DEVICE_INIT(hDriver, object);
                         /* Host Initialization */
                         _DRV_USBHS_HOST_INIT(hDriver, object);
 
@@ -514,7 +514,7 @@ SYS_STATUS DRV_USBHS_Status
     
   Summary:
     Opens the specified Hi-Speed USB Driver instance and returns a handle to it.
-	
+
   Description:
     This function opens the specified Hi-Speed USB Driver instance and provides a
     handle that must be provided to all other client-level operations to
@@ -821,7 +821,7 @@ void DRV_USBHS_Tasks_ISR_USBDMA
   Summary:
     This function sets up the event callback function that is invoked by the USB
     controller driver to notify the client of USB bus events.
-	
+
   Description:
     This function sets up the event callback function that is invoked by the USB
     controller driver to notify the client of USB bus events. The callback is
@@ -894,3 +894,4 @@ void DRV_USBHS_ClientEventCallBackSet
 }
 
 ${LIST_DRV_USB_ISR_ENTRY}
+
