@@ -147,7 +147,7 @@
     #define _DRV_USB_UDPHS_EPT_DMA              0x000000FE
     /* A5D2_WLSOM1 3 banks for endpoints 1,2 */
     #define _DRV_USB_UDPHS_EPT_BK               0x00060000
-#elif defined(_SAM9X60_H_)
+#elif defined(_SAM9X60_H_) || defined(_SAM9X60D1G_H_) || defined(_SAM9X60D5M_H_) || defined(_SAM9X60D6K_H_)
     /* 9X60 DMA 1 to 6 */
     #define _DRV_USB_UDPHS_EPT_DMA              0x0000007E
     /* 9X60 3 banks for endpoints 3, 4, 5, 6 */
