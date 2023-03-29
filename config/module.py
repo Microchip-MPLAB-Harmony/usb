@@ -133,7 +133,7 @@ def loadModule():
             loadUSBDeviceVendor = True
             loadUSBDevicePrinter = True
 
-    if any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAM9X60", "SAMA7"]):
+    if any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAM9X60", "SAM9X7", "SAMA7"]):
         # Create USB High Speed Host Port Driver Component for SAMA5D2 & SAM9X60
         usbUhpHsDriverComponent =  Module.CreateComponent("drv_usbhs_v1", "USB Host Port HS Driver", "/USB/Drivers", "config/usb_uhphs_driver.py")
         usbUhpHsDriverComponent.addCapability("DRV_UHPHS", "DRV_UHPHS", True)
