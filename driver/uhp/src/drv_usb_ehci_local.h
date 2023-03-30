@@ -101,7 +101,7 @@
                 } \
             }
         #define IS_LOCKU_ENABLE()  1
-#elif defined(_SAM9X60_H_)
+#elif defined(_SAM9X60_H_) || defined(_SAM9X60D1G_H_) || defined(_SAM9X60D5M_H_) || defined(_SAM9X60D6K_H_)
         /* Specific to SAM9X60 */
         #define PMC_PCR_GCKCSS_UPLL_CLK  PMC_PCR_GCLKCSS(PMC_PCR_GCLKCSS_UPLL_Val) 
 
