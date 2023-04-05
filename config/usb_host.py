@@ -23,6 +23,7 @@
 
 usbHostTplEntryNumber = None
 usbHostHubSaveValue = None 
+usbHostTplEntryNumberLocal = 0
 
 def genRtosTask(symbol, event):
 	if event["value"] != "BareMetal":
@@ -47,12 +48,21 @@ def showRTOSMenu(symbol, event):
 
 def handleMessage(messageID, args):	
 	global usbHostTplEntryNumber
+	global usbHostTplEntryNumberLocal
 	if (messageID == "UPDATE_TPL_ENTRY_NUMBER"):
 		usbHostTplEntryNumber.setValue(args["nTpl"])
+	if (messageID == "INCREMENT_TPL_ENTRY_NUMBER"):
+		usbHostTplEntryNumberLocal += 1
+		usbHostTplEntryNumber.setValue(usbHostTplEntryNumberLocal)
+	if (messageID == "DECREMENT_TPL_ENTRY_NUMBER"):
+		usbHostTplEntryNumberLocal -= 1
+		usbHostTplEntryNumber.setValue(usbHostTplEntryNumberLocal)
 	
 def instantiateComponent(usbHostComponent):
 	global usbHostTplEntryNumber
 	global usbHostHubSaveValue
+
+	usbHostTplEntryNumberLocal = 0
 	res = Database.activateComponents(["HarmonyCore"])
 	res = Database.activateComponents(["sys_time"])
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):

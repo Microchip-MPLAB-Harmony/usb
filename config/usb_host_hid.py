@@ -60,10 +60,7 @@ def onAttachmentDisconnected(source, target):
 		res = Database.sendMessage("usb_host", "DECREMENT_TPL_ENTRY_NUMBER", args)
 		
 def destroyComponent(component):	
-	readValue = Database.getSymbolValue("usb_host", "CONFIG_USB_HOST_TPL_ENTRY_NUMBER")
-	if readValue != None:
-		args = {"nTpl": readValue - 1}
-		res = Database.sendMessage("usb_host", "UPDATE_TPL_ENTRY_NUMBER", args)
+	pass
 		
 def mouseEnable(symbol, event):
 	global usbHostHidClientDriverTotalUsageInst
