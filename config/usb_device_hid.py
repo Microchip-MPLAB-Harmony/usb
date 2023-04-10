@@ -93,6 +93,7 @@ def onAttachmentConnected(source, target):
 def onAttachmentDisconnected(source, target):
 	global hidEndpointsPic32
 	global hidEndpointsSAM
+	global hidInterfacesNumber
 	
 	print ("HID Function Driver: Detached")
 	ownerComponent = source["component"]
@@ -110,7 +111,7 @@ def onAttachmentDisconnected(source, target):
 		
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 		if readValue != None: 
-			rgs = {"nFunction":   readValue - hidInterfacesNumber}
+			args = {"nFunction":   readValue - hidInterfacesNumber}
 			res = Database.sendMessage("usb_device", "UPDATE_INTERFACES_NUMBER", args)
 		
 		readValue = Database.getSymbolValue("usb_device", "CONFIG_USB_DEVICE_ENDPOINTS_NUMBER")
