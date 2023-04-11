@@ -3,7 +3,23 @@
 
 # Microchip MPLAB Harmony 3 Release Notes
 
-## USB Release v3.10.0-E1
+## USB Release v3.11.0-E2
+### NEW FEATURES
+- This engineering release adds support for the PIC32CZ-GC01 family of devices: 
+
+### Bug fixes
+- Resolved an issue in the USBHS driver for PIC32CZ CA80 family devices.   
+  
+### Known Issues
+- The USB stack is not tested with USBHS and USBFS drivers added together in the same project for the PIC32CZ-GC01 family of devices.
+
+### Development Tools
+
+-    [MPLAB® X IDE v6.05](https://www.microchip.com/mplab/mplab-x-ide)
+-    [MPLAB® XC32 C/C++ Compiler v4.20](https://www.microchip.com/mplab/compilers)
+-    MPLAB® X IDE plug-ins:- MPLAB® Code Configurator (MCC) v5.3.0 or above
+
+## USB Release v3.11.0-E1
 ### NEW FEATURES
 - This engineering release adds support for the PIC32CZ-CA family of devices: 
 
