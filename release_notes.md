@@ -5,13 +5,13 @@
 
 ## USB Release v3.11.0-E2
 ### NEW FEATURES
-- This engineering release adds support for the PIC32CZ-GC01 family of devices: 
+- This engineering release adds support for the PIC32CK-GC01 family of devices: 
 
 ### Bug fixes
 - Resolved an issue in the USBHS driver for PIC32CZ CA80 family devices.   
   
 ### Known Issues
-- The USB stack is not tested with USBHS and USBFS drivers added together in the same project for the PIC32CZ-GC01 family of devices.
+- The USB stack is not tested with USBHS and USBFS drivers added together in the same project for the PIC32CK-GC01 family of devices.
 
 ### Development Tools
 
