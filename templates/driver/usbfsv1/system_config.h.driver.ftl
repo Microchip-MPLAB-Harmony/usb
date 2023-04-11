@@ -63,7 +63,7 @@
 
 /* Disable Device Support */
 #define DRV_USBFSV1_DEVICE_SUPPORT                          false
-	
+
 /* Enable Host Support */
 #define DRV_USBFSV1_HOST_SUPPORT                            true
 
@@ -80,8 +80,25 @@
 #define DRV_USBFSV1_HOST_RESET_DURATION                     ${USB_DRV_HOST_RESET_DUARTION}
 </#if>
 
+<#if (__PROCESSOR?contains("PIC32CK") == true)>
+    <#assign drv_usb_endpoint_number = 0>
+    <#if (usb_device_0.CONFIG_USB_DEVICE_ENDPOINTS_NUMBER)?has_content == true>
+        <#assign drv_usb_endpoint_number = usb_device_0.CONFIG_USB_DEVICE_ENDPOINTS_NUMBER>
+    </#if>
+    <#if (usb_device_1.CONFIG_USB_DEVICE_ENDPOINTS_NUMBER)?has_content == true>
+        <#if usb_device_1.CONFIG_USB_DEVICE_ENDPOINTS_NUMBER gt drv_usb_endpoint_number>
+            <#assign drv_usb_endpoint_number = usb_device_1.CONFIG_USB_DEVICE_ENDPOINTS_NUMBER>
+        </#if>
+    </#if>
+#define DRV_USBFSV1_ENDPOINTS_NUMBER                        ${drv_usb_endpoint_number + 1}
+    <#if (drv_usbhs.USB_SPEED)?has_content == false>
 /* Alignment for buffers that are submitted to USB Driver*/ 
 #define USB_ALIGN  __ALIGNED(CACHE_LINE_SIZE)
+    </#if>
+<#else>
+/* Alignment for buffers that are submitted to USB Driver*/ 
+#define USB_ALIGN  __ALIGNED(CACHE_LINE_SIZE)
+</#if>
 <#--
 /*******************************************************************************
  End of File

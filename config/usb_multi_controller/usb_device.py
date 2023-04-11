@@ -124,6 +124,7 @@ usbDeviceVendorWriteQueueSize = None
 usbDeviceEndpointsNumber = None
 usbDeviceFunctionsNumberValue = usbDeviceFunctionsNumberDefaultValue
 numEndpoints = 1
+usbDeviceDriverInterface = None
 
 #Duplicate variables for symbols updated by other modules 
 usbDeviceFunctionsNumberLocal = 0
@@ -186,6 +187,7 @@ def onAttachmentConnected(source, target):
 	global usbDeviceConfigDscrptrSizeLocal
 	global usbDeviceVendorReadQueueSizeLocal
 	global usbDeviceVendorWriteQueueSizeLocal
+	global usbDeviceDriverInterface
 
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
@@ -200,7 +202,14 @@ def onAttachmentConnected(source, target):
 		usbControllerInstance = ownerComponent.getSymbolByID("USB_DEVICE_INDEX")
 		usbControllerInstance.clearValue()
 		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32CK"]):
-			usbControllerInstance.setValue(remoteID.upper() + "_INDEX_0")
+			if remoteID.upper() == "DRV_USBFS":
+				usbControllerInstance.setValue("DRV_USBFSV1_INDEX_0")
+				usbDeviceDriverInterface.setValue("DRV_USBFSV1_DEVICE_INTERFACE")
+			elif remoteID.upper() == "DRV_USBHS":
+				usbControllerInstance.setValue("DRV_USBHS_INDEX_0")
+				usbDeviceDriverInterface.setValue("DRV_USBHS_DEVICE_INTERFACE")
+			else:
+				print("USB Device Layer: There is an error occured")
 		else:
 			usbControllerInstance.setValue(remoteID.upper())
 
@@ -311,6 +320,7 @@ def instantiateComponent(usbDeviceComponent,index):
 	global usbDevicelayerIndex
 	global usbDeviceSpeed
 	global usbDeviceFunctionsNumberLocal
+	global usbDeviceDriverInterface
 
 	usbDeviceFunctionsNumberLocal = 0 
 	res = Database.activateComponents(["HarmonyCore"])
