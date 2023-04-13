@@ -456,16 +456,16 @@ def hubSupportSetEnable(usbSymbolSource, event):
 		usbSymbolSource.setEnabled(False)
 		
 			
-def hubUpdateTPL(usbSymbolSource, event):	
+def hubUpdateTPL(usbSymbolSource, event):
 	global usbHostTplEntryNumber
 	global usbHostHubSaveValue
-	if (event["value"] == True) and usbHostHubSaveValue.getValue() == False:		
-		readValue = usbHostTplEntryNumber.getValue()
-		if readValue != None:
-			usbHostTplEntryNumber.setValue(readValue + 1)
-	elif (event["value"] == False) and usbHostHubSaveValue.getValue() == True:	
-		readValue = usbHostTplEntryNumber.getValue()
-		if readValue != None:
-			usbHostTplEntryNumber.setValue(readValue - 1)
-	usbHostHubSaveValue.setValue(event["value"])		
+	global usbHostTplEntryNumberLocal
+	if (event["value"] == True) and usbHostHubSaveValue.getValue() == False:
+		usbHostTplEntryNumberLocal += 1
+		usbHostTplEntryNumber.setValue(usbHostTplEntryNumberLocal)
+	elif (event["value"] == False) and usbHostHubSaveValue.getValue() == True:
+		usbHostTplEntryNumberLocal -= 1
+		usbHostTplEntryNumber.setValue(usbHostTplEntryNumberLocal)
+	usbHostHubSaveValue.setValue(event["value"])
 	
+
