@@ -53,7 +53,19 @@ uint8_t sectorBuffer[512 * USB_DEVICE_MSD_NUM_SECTOR_BUFFERS] USB_ALIGN;
  * CBW and CSW structure needed by for the MSD
  * function driver instance.
  ***********************************************/
-USB_MSD_CBW msdCBW${CONFIG_USB_DEVICE_FUNCTION_INDEX} USB_ALIGN;
+<#assign usb_fs_device = ["SAMD21","SAMDA1","SAMD5", "SAME5","SAML21", "SAML22",  "SAMD11", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "PIC32CM", "PIC32CX", "SAMG55", "PIC32MK", "PIC32MX", "PIC32MM", "PIC32MZ1025W", "WFI32E01" ]>
+<#--  ** List of highspeed devices <#assign usb_hs_device = ["SAMV70", "SAMV71","SAME70", "SAMS70","SAMA5D2", "SAM9X60","SAM9X7", "SAMA7","PIC32MZ", "PIC32CZ","PIC32CK"]> -->
+<#assign flag = false> 
+<#list usb_fs_device as device>
+<#if __PROCESSOR?contains(device) >
+<#assign flag = true> 
+</#if>
+</#list>
+<#if flag == true>
+uint8_t msdCBW${CONFIG_USB_DEVICE_FUNCTION_INDEX}[64] USB_ALIGN; 
+<#else>
+uint8_t msdCBW${CONFIG_USB_DEVICE_FUNCTION_INDEX}[512] USB_ALIGN;
+</#if>
 USB_MSD_CSW msdCSW${CONFIG_USB_DEVICE_FUNCTION_INDEX} USB_ALIGN;
 <#assign ROW_BUFFER_ENABLE = false>
 <#if (__PROCESSOR?contains("PIC32MZ") == true) || (__PROCESSOR?contains("PIC32CZ") == true) || (__PROCESSOR?contains("PIC32CK") == true)>
@@ -170,7 +182,7 @@ USB_DEVICE_MSD_MEDIA_INIT_DATA USB_ALIGN  msdMediaInit${CONFIG_USB_DEVICE_FUNCTI
 const USB_DEVICE_MSD_INIT msdInit${CONFIG_USB_DEVICE_FUNCTION_INDEX} =
 {
     .numberOfLogicalUnits = ${CONFIG_USB_DEVICE_FUNCTION_MSD_LUN},
-    .msdCBW = &msdCBW${CONFIG_USB_DEVICE_FUNCTION_INDEX},
+    .msdCBW = (USB_MSD_CBW*)&msdCBW${CONFIG_USB_DEVICE_FUNCTION_INDEX},
     .msdCSW = &msdCSW${CONFIG_USB_DEVICE_FUNCTION_INDEX},
     .mediaInit = &msdMediaInit${CONFIG_USB_DEVICE_FUNCTION_INDEX}[0]
 };
