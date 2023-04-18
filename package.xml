@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Package name="usb">
     <Dependencies>
-        <Dependency name="csp" version="v3.15.0-E1"/>
-        <Dependency name="core" version="v3.11.1"/>
-        <Dependency name="bsp" version="v3.15.0-E1"/>
+        <Dependency name="csp" version="v3.16.0"/>
+        <Dependency name="core" version="v3.12.0"/>
+        <Dependency name="bsp" version="v3.15.0"/>
     </Dependencies>
 </Package>
