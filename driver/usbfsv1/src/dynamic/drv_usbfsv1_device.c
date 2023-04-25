@@ -1820,9 +1820,10 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
 
                                             byteCount = endpointObj->maxPacketSize;
                                         }
-                                        
-                                        memcpy((uint8_t *)hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[1].USB_ADDR, (uint8_t *)irp->data, byteCount);
-
+                                        if(byteCount > 0U)
+                                        {
+                                            memcpy((uint8_t *)hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[1].USB_ADDR, (uint8_t *)irp->data, byteCount);
+                                        }
                                         irp->nPendingBytes -= byteCount;
 
                                         hDriver->endpoint0State = DRV_USBFSV1_DEVICE_EP0_STATE_TX_DATA_STAGE_IN_PROGRESS;
