@@ -172,7 +172,7 @@ void _USB_DEVICE_AUDIO_ControlTransferHandler
                 iAudio,
                 USB_DEVICE_AUDIO_EVENT_CONTROL_TRANSFER_DATA_RECEIVED,
                 NULL,
-                0
+                thisAudioInstance->userData
             );        
             break;
 
@@ -183,7 +183,7 @@ void _USB_DEVICE_AUDIO_ControlTransferHandler
                 iAudio,
                 USB_DEVICE_AUDIO_EVENT_CONTROL_TRANSFER_DATA_SENT,
                 NULL,
-                0
+                thisAudioInstance->userData
             );
             break;
         default:
@@ -387,7 +387,7 @@ void _USB_DEVICE_AUDIO_SetupPacketHandler
                         iAudio,
                         USB_DEVICE_AUDIO_EVENT_INTERFACE_SETTING_CHANGED,
                         &interfaceInfo,
-                        0
+                        audioInstance->userData
                     );
                 }
                 /* Send an Acknowledgement to the Host */ 
@@ -466,7 +466,7 @@ void _USB_DEVICE_AUDIO_SetupPacketHandler
             /* Inform the application about the request */
             /* The application needs to handle both EP and entity specific 
                requests */
-           audioInstance->appEventCallBack ( iAudio, event, setupPkt, 0);
+           audioInstance->appEventCallBack ( iAudio, event, setupPkt, audioInstance->userData);
         }        
     }/* End of else if */ 
 }/* End of function _USB_DEVICE_AUDIO_SetupPacketHandler */ 
