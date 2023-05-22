@@ -499,28 +499,8 @@ void _DRV_USBHS_DEVICE_Initialize
         /* Disable all interrupts */
         PLIB_USBHS_InterruptEnableSet(usbID,(USBHS_GEN_INTERRUPT)0x0, (USBHS_EPTXRX_INTERRUPT)0x0, (USBHS_EPTXRX_INTERRUPT)0x0);
     }
+    _DRV_USBHS_CLOCK_CONTROL_SETUP_DEVICE_MODE(usbID );  
 
-    /* IDVAL is the source of ID */
-    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_IDOVEN(1); 
-
-    /* ID override value is 1 (B plug) */
-    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_IDVAL(1);
-
-    /* Enable module */
-    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_ENABLE(1);
-
-    /* Software must poll this bit to know when the operation completes. */
-    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_SYNCBUSY & USBHS_SYNCBUSY_ENABLE_Msk) == USBHS_SYNCBUSY_ENABLE_Msk)
-    {
-    }
-    /* PHY is in on (operational power state) */
-    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYON_Msk ) == 0)
-    {
-    }
-    /* PHY is ready for USB activity */
-    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYRDY_Msk) == 0)
-    {
-    }
     
     /* PHY24.OTGOFF controls OTG threshold detection.
      * When OTGOFF=1, OTG VBUS monitoring (vbus valid, A valid, B valid, session end)
@@ -710,6 +690,7 @@ void DRV_USBHS_DEVICE_RemoteWakeupStop
     }
 }
 
+
 // *****************************************************************************
 /* Function:
     void DRV_USBHS_DEVICE_Attach(DRV_HANDLE handle);
@@ -794,6 +775,7 @@ void _DRV_USBHS_DEVICE_AttachStateMachine
               (DRV_USBHS_OPMODE_DEVICE == hDriver->usbDrvCommonObj.operationMode))   
         {
             PLIB_USBHS_InterruptEnableSet(hDriver->usbDrvCommonObj.usbID, (USBHS_GEN_INTERRUPT)0xF, (USBHS_EPTXRX_INTERRUPT)0x0, (USBHS_EPTXRX_INTERRUPT)0x0);
+            ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_INTENSET = USBHS_INTENSET_DMA_Msk | USBHS_INTENSET_USB_Msk;
         }
         
         _DRV_USBHS_PersistentInterruptSourceClear(hDriver->usbDrvCommonObj.interruptSource);

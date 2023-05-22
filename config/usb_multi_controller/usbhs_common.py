@@ -47,7 +47,7 @@ def handleMessage(messageID, args):
 			usbPeripheralHostSupport.setValue(False)
 			usbDriverHostAttachDebounce.setVisible(False)
 			usbDriverHostResetDuration.setVisible(False)
-		if ((opModeId0 != None) and  (opModeId0 == "Device")) or ((opModeId1 != None) and  (opModeId1 == "Device")):
+		if ((opModeId0 != None) and  ((opModeId0 == "Device") or (opModeId0 == "Dual Role"))) or ((opModeId1 != None) and  ((opModeId1 == "Device") or (opModeId1 == "Dual Role"))):
 			usbPeripheralDeviceSupport.setValue(True)
 		else:
 			usbPeripheralDeviceSupport.setValue(False)

@@ -700,6 +700,8 @@ uint8_t _DRV_USBHS_HOST_GetFreeDMAChannel
     bool endpointDir,
     uint8_t iEndpoint
 );
+void  L_DRV_USBHS_Setup_Device_Mode( USBHS_MODULE_ID usbID );
+void  L_DRV_USBHS_Setup_Host_Mode ( USBHS_MODULE_ID usbID);
 
 DRV_HANDLE _DRV_USBHS_DriverInstanceToClientMatch(DRV_USBHS_OBJ * hDriver, uint8_t matchIndex);
 

@@ -23,7 +23,7 @@
 # Global definitions  
 listUsbSpeed = ["High Speed", "Full Speed"]
 #listUsbSpeed = ["DRV_USBHSV1_DEVICE_SPEEDCONF_NORMAL", "DRV_USBHSV1_DEVICE_SPEEDCONF_LOW_POWER"]
-listUsbOperationMode = ["Device", "Host", "DualRole"]
+listUsbOperationMode = ["Device", "Host", "Dual Role"]
 usbDebugLogs = 1 
 usbDriverPath = "driver/"
 usbDriverProjectPath = "/driver/usb/"
@@ -61,7 +61,7 @@ def blUSBDriverOpModeChanged(symbol, event):
 	elif (event["value"] == "Host"):
 		addDrvUsbDeviceFile.setValue(False)
 		addDrvUsbHostFile.setValue(True)
-	elif (event["value"] == "DualRole"):
+	elif (event["value"] == "Dual Role"):
 		addDrvUsbDeviceFile.setValue(True)
 		addDrvUsbHostFile.setValue(True)
 		
@@ -145,7 +145,7 @@ def instantiateComponent(usbDriverComponent):
 	usbOpMode.setVisible(True)
         helpText = '''This configuration controls the operational mode of the USB controller. If set to Host, the controller
         operates in USB Host mode. If configured as Device, the controller operates as USB Device. If configured for 
-        DualRole, the application can switch the role of controller between Host and Device during the operations of the 
+        Dual Role, the application can switch the role of controller between Host and Device during the operations of the 
         controller. When configured for Dual Role, application must explicitly set the startup operation mode (Device or Host)
         of the controller using available USB Device and Host Stack API.'''
 	usbOpMode.setDescription(helpText)

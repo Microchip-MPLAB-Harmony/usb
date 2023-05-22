@@ -672,46 +672,28 @@ unsigned int _DRV_USBHS_HOST_IRPReceiveFIFOUnload
     return (count);
 }
 
+
+
 void _DRV_USBHS_HOST_Initialize
 (
     DRV_USBHS_OBJ * drvObj, 
     SYS_MODULE_INDEX index
 )
 {
-    USBHS_MODULE_ID usbID = drvObj->usbDrvCommonObj.usbID;
 
+	USBHS_MODULE_ID usbID = drvObj->usbDrvCommonObj.usbID;
+
+        /* Initialize the device handle */
+    drvObj->usbDrvHostObj.attachedDeviceObjHandle = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
     /* No device attached */
     drvObj->usbDrvHostObj.deviceAttached = false;
 
-    /* Initialize the device handle */
-    drvObj->usbDrvHostObj.attachedDeviceObjHandle = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
-
-    /* IDVAL is the source of ID */
-    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_IDOVEN(1); 
-
-    /* ID override value is 0 (A plug) */
-    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA &= ~USBHS_CTRLA_IDVAL(1);
-
-    /* Enable module */
-    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_ENABLE(1);
-
-    /* Software must poll this bit to know when the operation completes. */
-    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_SYNCBUSY & USBHS_SYNCBUSY_ENABLE_Msk) == USBHS_SYNCBUSY_ENABLE_Msk)
-    {
-    }
-    /* PHY is in on (operational power state) */
-    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYON_Msk ) == 0)
-    {
-    }
-    /* PHY is ready for USB activity */
-    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYRDY_Msk) == 0)
-    {
-    }
+  
     
     /* PHY24.OTGOFF controls OTG threshold detection.
      * When OTGOFF=1, OTG VBUS monitoring (vbus valid, A valid, B valid, session end)
      * is powered off */
-    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_PHY24 |= (1<<1);
+   ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_PHY24 |= (1<<1);
 
     if(DRV_USBHS_OPMODE_DUAL_ROLE != drvObj->usbDrvCommonObj.operationMode)
     {
@@ -2759,6 +2741,7 @@ void DRV_USBHS_HOST_ROOT_HUB_OperationEnable
                     pUSBDrvObj->usbDrvCommonObj.isHostRoleActive = false;
                     pUSBDrvObj->usbDrvCommonObj.isDeviceRoleActive = true;
                     pUSBDrvObj->usbDrvCommonObj.hostModeClient = NULL;
+                    _DRV_USBHS_CLOCK_CONTROL_SETUP_DEVICE_MODE(usbID);
                 }
             }
         }

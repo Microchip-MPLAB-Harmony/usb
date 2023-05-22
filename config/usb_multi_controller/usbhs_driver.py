@@ -54,15 +54,17 @@ def blUsbHostVbusEnablePinName(usbSymbolSource, event):
 def blUSBDriverOpModeChanged(symbol, event):
 	global addDrvUsbDeviceFile
 	global addDrvUsbHostFile
+	global usbOpMode
 	if (event["value"] == "Device"):
 		addDrvUsbDeviceFile.setValue(True)
 		addDrvUsbHostFile.setValue(False)
 	elif (event["value"] == "Host"):
 		addDrvUsbDeviceFile.setValue(False)
 		addDrvUsbHostFile.setValue(True)
-	elif (event["value"] == "DualRole"):
+	elif (event["value"] == "Dual Role"):
 		addDrvUsbDeviceFile.setValue(True)
 		addDrvUsbHostFile.setValue(True)
+	usbOpMode.setValue(event["value"])
 	args = {"operationMode":event["value"]}
 	res = Database.sendMessage("drv_usbhs_index", "UPDATE_OPERATION_MODE_COMMON", args)
 
@@ -228,7 +230,7 @@ def instantiateComponent(usbDriverComponent, index):
 	usbOpMode.setVisible(True)
         helpText = '''This configuration controls the operational mode of the USB controller. If set to Host, the controller
         operates in USB Host mode. If configured as Device, the controller operates as USB Device. If configured for 
-        DualRole, the application can switch the role of controller between Host and Device during the operations of the 
+        Dual Role, the application can switch the role of controller between Host and Device during the operations of the 
         controller. When configured for Dual Role, application must explicitly set the startup operation mode (Device or Host)
         of the controller using available USB Device and Host Stack API.'''
 	usbOpMode.setDescription(helpText)
@@ -586,7 +588,7 @@ def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callbac
 		symbol.setDependencies(callback, ["USB_OPERATION_MODE"])
 
 def blDrvUsbHsV1DeviceSourceFile (usbSymbolSource, event):
-	if (event["value"] == "Device"):
+	if (event["value"] == "Device") or (event["value"] == "Dual Role"):
 		usbSymbolSource.setEnabled(True)
 	elif (event["value"] == "Host"):
 		usbSymbolSource.setEnabled(False)
@@ -594,7 +596,7 @@ def blDrvUsbHsV1DeviceSourceFile (usbSymbolSource, event):
 def blDrvUsbHsV1HostSourceFile (usbSymbolSource, event):
 	if (event["value"] == "Device"):
 		usbSymbolSource.setEnabled(False)
-	elif (event["value"] == "Host"):
+	elif (event["value"] == "Host") or (event["value"] == "Dual Role"):
 		usbSymbolSource.setEnabled(True)
 
 def blUSBDriverOperationModeDevice(usbSymbolSource, event):

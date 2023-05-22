@@ -84,7 +84,7 @@
 
 
 <#elseif (USB_OPERATION_MODE?has_content)
-  && (USB_OPERATION_MODE == "DualRole")>
+  && (USB_OPERATION_MODE == "Dual Role")>
   
 /* Enables Device Support */
 #define DRV_USBHS_DEVICE_SUPPORT                          true	

@@ -893,5 +893,100 @@ void DRV_USBHS_ClientEventCallBackSet
     }
 }
 
+// *****************************************************************************
+/* Function:
+    void L_DRV_USBHS_Setup_Host_Mode( USBHS_MODULE_ID usbID )
+
+  Summary:
+    This function will enable the USBHS driver into host mode functionlity.
+
+  Description:
+    This function is used to enter USBHS driver in host mode.
+
+  Remarks:
+    
+*/
+
+void L_DRV_USBHS_Setup_Host_Mode (  USBHS_MODULE_ID usbID )
+{  
+    /*Disable module */
+    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA &= ~USBHS_CTRLA_ENABLE(1);
+    
+    /* Software must poll this bit to know when the operation completes. */
+    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_SYNCBUSY & USBHS_SYNCBUSY_ENABLE_Msk) == USBHS_SYNCBUSY_ENABLE_Msk)
+    {
+    }
+
+    /* IDVAL is the source of ID */
+    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_IDOVEN(1); 
+
+    /* ID override value is 0 (A plug) */
+   ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA &= ~USBHS_CTRLA_IDVAL(1);
+
+    /* Enable module */
+    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_ENABLE(1);
+
+    /* Software must poll this bit to know when the operation completes. */
+    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_SYNCBUSY & USBHS_SYNCBUSY_ENABLE_Msk) == USBHS_SYNCBUSY_ENABLE_Msk)
+    {
+    }
+    /* PHY is in on (operational power state) */
+    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYON_Msk ) == 0)
+    {
+    }
+    /* PHY is ready for USB activity */
+    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYRDY_Msk) == 0)
+    {
+    }
+    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_PHY24 |= (1<<1);
+}
+
+// *****************************************************************************
+/* Function:
+    void L_DRV_USBHS_Setup_Device_Mode( USBHS_MODULE_ID usbID )
+
+  Summary:
+    This function will enable the USBHS driver into device mode functionlity.
+
+  Description:
+    This function is used to enter USBHS driver in device mode.
+
+  Remarks:
+    
+*/
+
+
+void L_DRV_USBHS_Setup_Device_Mode( USBHS_MODULE_ID usbID )
+{
+    /*Disable module */
+    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA &= ~USBHS_CTRLA_ENABLE(1);
+    
+     /* Software must poll this bit to know when the operation completes. */
+    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_SYNCBUSY & USBHS_SYNCBUSY_ENABLE_Msk) == USBHS_SYNCBUSY_ENABLE_Msk)
+    {
+    }
+   ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_IDOVEN(1); 
+
+    /* ID override value is 1 (B plug) */
+    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_IDVAL(1);
+
+    /* Enable module */
+    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_ENABLE(1);
+
+    /* Software must poll this bit to know when the operation completes. */
+    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_SYNCBUSY & USBHS_SYNCBUSY_ENABLE_Msk) == USBHS_SYNCBUSY_ENABLE_Msk)
+    {
+    }
+    /* PHY is in on (operational power state) */
+    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYON_Msk ) == 0)
+    {
+    }
+    /* PHY is ready for USB activity */
+    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYRDY_Msk) == 0)
+    {
+    }
+    
+}
+
 ${LIST_DRV_USB_ISR_ENTRY}
 

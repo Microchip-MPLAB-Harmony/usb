@@ -90,7 +90,7 @@ def instantiateComponent(usbDriverComponent):
         helpText = '''This configuration controls the operational mode of the
         USB controller. If set to Host, the controller operates in USB Host
         mode. If configured as Device, the controller operates as USB Device.
-        If configured for DualRole, the application can switch the role of
+        If configured for Dual Role, the application can switch the role of
         controller between Host and Device during the operations of the
         controller. When configured for Dual Role, application must explicitly
         set the startup operation mode (Device or Host) of the controller using
