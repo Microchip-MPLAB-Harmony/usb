@@ -24,7 +24,8 @@
 #constants 
 USB_DEVICE_CONFIG_DESCRIPTOR_DEFAULT_VALUE = 9 
 usbDeviceFunctionsNumberMax = 10
-usbDeviceFunctionsNumberDefaultValue = 2 
+usbDeviceFunctionsNumberDefaultValue = 2
+usbDeviceFunctionDriverList = [] 
 
 # Global definitions  
 usbDebugLogs = 1 
@@ -135,7 +136,6 @@ usbDeviceVendorReadQueueSizeLocal = 0
 usbDeviceVendorWriteQueueSizeLocal = 0
 
 
-
 usbDevicelayerInstance = None
 usbDevicelayerIndex = None 
 
@@ -152,7 +152,6 @@ listUsbDeviceNumberOfInterfaces = []
 usbDeviceMsdSupport = None
 usbDeviceMsdDiskImageFile = None
 usbDeviceMsdDiskImageFileAdd = None 
-
 def genRtosTask(symbol, event):
 	if event["value"] != "BareMetal":
 		symbol.setEnabled(True)
@@ -188,7 +187,7 @@ def onAttachmentConnected(source, target):
 	global usbDeviceVendorReadQueueSizeLocal
 	global usbDeviceVendorWriteQueueSizeLocal
 	global usbDeviceDriverInterface
-
+	global usbDeviceFunctionDriverList
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
 	remoteComponent = target["component"]
@@ -196,7 +195,6 @@ def onAttachmentConnected(source, target):
 	remoteID_instance = remoteID[:-1]
 	connectID = source["id"]
 	targetID = target["id"]
-
 
 	if (connectID == "usb_driver_dependency"):
 		usbControllerInstance = ownerComponent.getSymbolByID("USB_DEVICE_INDEX")
@@ -213,26 +211,10 @@ def onAttachmentConnected(source, target):
 		else:
 			usbControllerInstance.setValue(remoteID.upper())
 
-
-	if (remoteID == "usb_device_cdc"):
-		nfunction = usbDeviceFunctionNumber.getValue()
-		usbDeviceFunctionNumber.setValue(nfunction + 1)
-
 	if (remoteID == "usb_device_msd"):
 		usbDeviceMsdSupport.setValue(True, 2)
-	if (remoteID_instance == "usb_device_msd_") or (remoteID_instance == "usb_device_vendor_") or (remoteID_instance == "usb_device_audio_") or (remoteID_instance == "usb_device_hid_") or (remoteID_instance == "usb_device_printer_"):
-		if (usbDeviceFunctionNumber.getValue() > 1):
-			# Check if there are more than One CDC Function connected
-			# We have more than One function connected. Enable IAD 
-			# Enable cdc_0 IAD if not enabled. 
-			isIadEnabled = Database.getSymbolValue("usb_device_cdc_0", "CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
-			if isIadEnabled != None:
-				if isIadEnabled == False:
-					usbDeviceIadEnable.setValue(True)
-					args = {"iadEnable":True}
-					res = Database.sendMessage("usb_device_cdc_0", "UPDATE_CDC_IAD_ENABLE", args)
-					usbDeviceConfigDscrptrSizeLocal += 8 
-					usbDeviceConfigDscrptrSize.setValue(usbDeviceConfigDscrptrSizeLocal)
+	if (connectID == "usb_device"):
+		usbDeviceFunctionDriverList.append(remoteID)
 
 def onAttachmentDisconnected(source, target):
 	global usbDeviceMsdSupport
@@ -240,6 +222,8 @@ def onAttachmentDisconnected(source, target):
 	global usbDeviceConfigDscrptrSizeLocal
 	global usbDeviceVendorReadQueueSizeLocal
 	global usbDeviceVendorWriteQueueSizeLocal
+	global usbDeviceFunctionDriverList
+	global usbDeviceIadEnable
 
 	dependencyID = source["id"]
 	ownerComponent = source["component"]
@@ -250,20 +234,15 @@ def onAttachmentDisconnected(source, target):
 	remoteID_instance = remoteID[:-1]
 	if (remoteID == "usb_device_msd"):
 		usbDeviceMsdSupport.setValue(False, 2)
-	if (remoteID_instance == "usb_device_msd_") or (remoteID_instance == "usb_device_vendor_") or (remoteID_instance == "usb_device_audio_") or (remoteID_instance == "usb_device_hid_") or (remoteID_instance == "usb_device_printer_"):
-		if (usbDeviceFunctionNumber.getValue() == 1):
-			# Check if there are more than One CDC Function connected
-			# We have more than One function connected. Enable IAD 
-			# Enable cdc_0 IAD if not enabled. 
-			isIadEnabled = Database.getSymbolValue("usb_device_cdc_0", "CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
-			if isIadEnabled != None:
-				if isIadEnabled == True:
-					usbDeviceIadEnable.setValue(False)
-					args = {"iadEnable":False}
-					res = Database.sendMessage("usb_device_cdc_0", "UPDATE_CDC_IAD_ENABLE", args)
-					usbDeviceConfigDscrptrSizeLocal -= 8 
-					usbDeviceConfigDscrptrSize.setValue(usbDeviceConfigDscrptrSizeLocal)
-
+	if (connectID == "usb_device"):
+		usbDeviceFunctionDriverList.remove(remoteID)
+	isIadEnabled = False
+	for function in usbDeviceFunctionDriverList:
+		isIadEnabled = Database.getSymbolValue(function, "CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
+		if isIadEnabled == True: 
+			break
+	if isIadEnabled == False:
+		usbDeviceIadEnable.setValue(False)
 	
 def handleMessage(messageID, args):	
 	global usbDeviceFunctionNumber
@@ -281,7 +260,7 @@ def handleMessage(messageID, args):
 	global usbDeviceEndpointsNumberLocal
 	global usbDeviceVendorReadQueueSizeLocal
 	global usbDeviceVendorWriteQueueSizeLocal
-
+	global usbDeviceFunctionDriverList
 	if (messageID == "UPDATE_ENDPOINTS_NUMBER"):
 		usbDeviceEndpointsNumberLocal += args["nFunction"]
 		usbDeviceEndpointsNumber.setValue( usbDeviceEndpointsNumberLocal)
@@ -289,7 +268,17 @@ def handleMessage(messageID, args):
 		usbDeviceFunctionsNumberLocal += args["nFunction"]
 		usbDeviceFunctionNumber.setValue(usbDeviceFunctionsNumberLocal)
 	elif (messageID == "UPDATE_IAD_ENABLE"):
-		usbDeviceIadEnable.setValue(args["nFunction"])
+		if(args["nFunction"]==True):
+			usbDeviceIadEnable.setValue(True)
+		elif(args["nFunction"]==False): 
+			isIadEnabled = False
+			for function in usbDeviceFunctionDriverList:
+				isIadEnabled = Database.getSymbolValue(function, "CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
+				if isIadEnabled == True: 
+					break
+			if isIadEnabled == False:
+				usbDeviceIadEnable.setValue(False)
+
 	elif (messageID == "UPDATE_CONFIG_DESCRPTR_SIZE"): 
 		usbDeviceConfigDscrptrSizeLocal += args["nFunction"]
 		usbDeviceConfigDscrptrSize.setValue(usbDeviceConfigDscrptrSizeLocal)
@@ -390,7 +379,8 @@ def instantiateComponent(usbDeviceComponent,index):
 	
 	#Configuration descriptor size
 	usbDeviceConfigDscrptrSize = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE", None)
-	usbDeviceConfigDscrptrSize.setVisible(False)
+	usbDeviceConfigDscrptrSize.setLabel("Configuration Descriptor Size")
+	usbDeviceConfigDscrptrSize.setVisible(True)
 	usbDeviceConfigDscrptrSize.setMin(0)
 	usbDeviceConfigDscrptrSize.setDefaultValue(9)
 	usbDeviceConfigDscrptrSize.setUseSingleDynamicValue(True)

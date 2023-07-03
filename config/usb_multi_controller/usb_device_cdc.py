@@ -33,7 +33,7 @@ configValue = None
 startInterfaceNumber = None 
 numberOfInterfaces = None 
 useIad = None
-useIadLocal = None 
+useIadPrev = None
 epNumberInterrupt = None
 epNumberBulkOut = None
 epNumberBulkIn = None
@@ -57,17 +57,21 @@ def handleMessage(messageID, args):
 def blIadEnable(source, event):
 	global isConnectedToDeviceLayer
 	global connectedDeviceLayerID
-	global useIadLocal
+	global useIadPrev
+
 	if isConnectedToDeviceLayer == True: 
-		args = {"nFunction":event["value"]}
-		res = Database.sendMessage(connectedDeviceLayerID, "UPDATE_IAD_ENABLE", args)
-		if event["value"] == True and useIadLocal == 0:
+		if event["value"] == True and useIadPrev.getValue() == False:
+			useIadPrev.setValue(True)
+			args = {"nFunction":True}
+			res = Database.sendMessage(connectedDeviceLayerID, "UPDATE_IAD_ENABLE", args)
 			args = {"nFunction": 8}
-			useIadLocal = 1
-		elif event["value"] == False and useIadLocal == 1:
+			res = Database.sendMessage(connectedDeviceLayerID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
+		elif event["value"] == False and useIadPrev.getValue() == True:
+			useIadPrev.setValue(False)
+			args = {"nFunction":False}
+			res = Database.sendMessage(connectedDeviceLayerID, "UPDATE_IAD_ENABLE", args)
 			args = {"nFunction": 0 - 8}
-			useIadLocal = 0
-		res = Database.sendMessage(connectedDeviceLayerID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
+			res = Database.sendMessage(connectedDeviceLayerID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
 
 
 
@@ -93,7 +97,8 @@ def onAttachmentConnected(source, target):
 	global usbDeviceCdcDescriptorClassCodeFile
 	global isConnectedToDeviceLayer
 	global connectedDeviceLayerID
-	
+	global useIadPrev
+
 	print ("CDC Function Driver: Attached")
 	
 	dependencyID = source["id"]
@@ -106,6 +111,7 @@ def onAttachmentConnected(source, target):
 	
 	if (remoteIDtrimmed == "usb_device_"):
 		isConnectedToDeviceLayer = True
+		useIadPrev.setValue(useIad.getValue())
 		connectedDeviceLayerID = remoteID
 		# Read number of functions from USB Device Layer 
 		nFunctions = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
@@ -124,11 +130,15 @@ def onAttachmentConnected(source, target):
 			configDescriptorSize = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE")
 			if configDescriptorSize != None: 
 				iadEnableSymbol = ownerComponent.getSymbolByID("CONFIG_USB_DEVICE_FUNCTION_USE_IAD")
-				descriptorSize =  cdcDescriptorSize
+				iadSymbolValue = useIad.getValue()
+				if (iadSymbolValue == True):
+					descriptorSize =  cdcDescriptorSize + 8
+				else:
+					descriptorSize =  cdcDescriptorSize
 				args = {"nFunction": descriptorSize}
 				res = Database.sendMessage(remoteID, "UPDATE_CONFIG_DESCRPTR_SIZE", args)
-				args = {"nFunction":iadEnableSymbol.getValue()}
-				res = Database.sendMessage(connectedDeviceLayerID, "UPDATE_IAD_ENABLE", args)
+				args = {"nFunction": iadSymbolValue}
+				res = Database.sendMessage(remoteID, "UPDATE_IAD_ENABLE", args)
 
 			nInterfaces = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_INTERFACES_NUMBER")
 			if nInterfaces != None: 
@@ -185,7 +195,7 @@ def onAttachmentDisconnected(source, target):
 	if (remoteIDtrimmed == "usb_device_"):
 
 		isConnectedToDeviceLayer = False
-		connectedDeviceLayerID = None 
+		connectedDeviceLayerID = None
 		nFunctions = Database.getSymbolValue(remoteID, "CONFIG_USB_DEVICE_FUNCTIONS_NUMBER")
 		if nFunctions != None: 
 			args = {"nFunction": 0 - cdcFunctionsNumber}
@@ -218,6 +228,8 @@ def onAttachmentDisconnected(source, target):
 		if configDescriptorSize != None: 
 			if useIad.getValue() == True:
 				descriptorSize =  cdcDescriptorSize + 8
+				args = {"nFunction": False}
+				res = Database.sendMessage(remoteID, "UPDATE_IAD_ENABLE", args)
 			else:
 				descriptorSize =  cdcDescriptorSize
 			args = {"nFunction": 0 - descriptorSize}
@@ -255,6 +267,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	global startInterfaceNumber
 	global numberOfInterfaces
 	global useIad
+	global useIadPrev
 	global currentQSizeRead
 	global currentQSizeWrite
 	global currentQSizeSerialStateNotification
@@ -269,11 +282,9 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	global usbDeviceCdcDescriptorClassCodeFile
 	global isConnectedToDeviceLayer
 	global connectedDeviceLayerID
-	global useIadLocal
 
 	isConnectedToDeviceLayer = False
 	connectedDeviceLayerID = None 
-	useIadLocal = 0
 
 	value = Database.getComponentByID("usb_device")
 	if (value == None):
@@ -339,6 +350,11 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	useIad.setDefaultValue(False)
 	useIad.setUseSingleDynamicValue(True)
 	useIad.setDependencies(blIadEnable, ["CONFIG_USB_DEVICE_FUNCTION_USE_IAD"])
+    
+	#To store the previous state of IAD Checkbox
+	useIadPrev = usbDeviceCdcComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FUNCTION_USE_IAD_PREVIOUS_STATE", None)
+	useIadPrev.setVisible(False)
+	useIadPrev.setDefaultValue(False)
 
 	# CDC Function driver Read Queue Size 
 	queueSizeRead = usbDeviceCdcComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE", None)
