@@ -20,20 +20,6 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
-def onAttachmentConnected(source, target):
-	dependencyID = source["id"]
-	ownerComponent = source["component"]
-	if (dependencyID == "usb_host_dependency"):
-		args = {"nTpl":1}
-		res = Database.sendMessage("usb_host", "INCREMENT_TPL_ENTRY_NUMBER", args)
-	
-def onAttachmentDisconnected(source, target):
-	dependencyID = source["id"]
-	ownerComponent = source["component"]
-	if (dependencyID == "usb_host_dependency"):
-		args = {"nTpl":1}
-		res = Database.sendMessage("usb_host", "DECREMENT_TPL_ENTRY_NUMBER", args)
-
 def destroyComponent(component):	
 	print("USB HOST CDC Client Driver: Destroyed")
 	

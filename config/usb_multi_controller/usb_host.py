@@ -28,7 +28,7 @@ usbHostControllerNumber = None
 usbHostPipesNumber = None
 usbHostControllerNumberLocal = 0
 usbHostTplEntryNumberLocal = 0
-
+usbDeviceFunctionDriverList = []
 def genRtosTask(symbol, event):
 	if event["value"] != "BareMetal":
 		symbol.setEnabled(True)
@@ -52,15 +52,6 @@ def showRTOSMenu(symbol, event):
 def handleMessage(messageID, args):	
 	global usbHostTplEntryNumber
 	global usbHostTplEntryNumberLocal
-	if (messageID == "UPDATE_TPL_ENTRY_NUMBER"):
-		usbHostTplEntryNumber.setValue(args["nTpl"])
-	if (messageID == "INCREMENT_TPL_ENTRY_NUMBER"):
-		usbHostTplEntryNumberLocal += 1
-		usbHostTplEntryNumber.setValue(usbHostTplEntryNumberLocal)
-	if (messageID == "DECREMENT_TPL_ENTRY_NUMBER"):
-		usbHostTplEntryNumberLocal -= 1
-		usbHostTplEntryNumber.setValue(usbHostTplEntryNumberLocal)
-
 
 def instantiateComponent(usbHostComponent):
 	global usbHostTplEntryNumber
@@ -174,7 +165,6 @@ def instantiateComponent(usbHostComponent):
 		usbHostHubSaveValue.setLabel( "Hub support" )
 		usbHostHubSaveValue.setVisible( False)
 		usbHostHubSaveValue.setDefaultValue(False)
-		
 		
 		# USB Host Hub Client Driver instances
 		usbHostHubDriverInstance = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_HUB_NUMBER_OF_INSTANCES", usbHostHubsupport)
@@ -406,6 +396,7 @@ def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callbac
 		symbol.setDependencies(callback, ["CONFIG_USB_HOST_HUB_SUPPORT"])
 		
 def onAttachmentConnected(source, target):
+	global usbDeviceFunctionDriverList
 	global usbHostControllerNumber
 	global usbHostControllerNumberLocal
 	localComponent = source["component"]
@@ -413,6 +404,9 @@ def onAttachmentConnected(source, target):
 	remoteID = remoteComponent.getID()
 	connectID = source["id"]
 	targetID = target["id"]
+	if (connectID == "usb_host"):
+		usbDeviceFunctionDriverList.append(remoteID)
+		usbHostTplEntryNumber.setValue(len(usbDeviceFunctionDriverList))
 	if (connectID == "usb_driver_dependency"):
 		usbHostControllerNumberLocal += 1
 		usbHostControllerNumber.setValue(usbHostControllerNumberLocal)
@@ -420,6 +414,8 @@ def onAttachmentConnected(source, target):
 def onAttachmentDisconnected(source, target):
 	global usbHostControllerNumber
 	global usbHostControllerNumberLocal
+	global usbDeviceFunctionDriverList
+
 	localComponent = source["component"]
 	remoteComponent = target["component"]
 	remoteID = remoteComponent.getID()
@@ -428,8 +424,10 @@ def onAttachmentDisconnected(source, target):
 	if (connectID == "usb_driver_dependency"):
 		usbHostControllerNumberLocal -= 1
 		usbHostControllerNumber.setValue(usbHostControllerNumberLocal)
+	if (connectID == "usb_host"):
+		usbDeviceFunctionDriverList.remove(remoteID)
+		usbHostTplEntryNumber.setValue(len(usbDeviceFunctionDriverList))
 
-	
 def hubSupportSetVisible(usbSymbolSource, event):
 	if (event["value"] == True):
 		usbSymbolSource.setVisible(True)
@@ -447,11 +445,13 @@ def hubUpdateTPL(usbSymbolSource, event):
 	global usbHostTplEntryNumber
 	global usbHostHubSaveValue
 	global usbHostTplEntryNumberLocal
-	if (event["value"] == True) and usbHostHubSaveValue.getValue() == False:
-		usbHostTplEntryNumberLocal += 1
-		usbHostTplEntryNumber.setValue(usbHostTplEntryNumberLocal)
-	elif (event["value"] == False) and usbHostHubSaveValue.getValue() == True:
-		usbHostTplEntryNumberLocal -= 1
-		usbHostTplEntryNumber.setValue(usbHostTplEntryNumberLocal)
-	usbHostHubSaveValue.setValue(event["value"])
+	global usbDeviceFunctionDriverList
+	if event["value"] == True: 
+		if "hub" not in usbDeviceFunctionDriverList:
+			usbDeviceFunctionDriverList.append("hub")
+	if event["value"] == False: 
+		if "hub" in usbDeviceFunctionDriverList:
+			usbDeviceFunctionDriverList.remove("hub")
+	usbHostTplEntryNumber.setValue(len(usbDeviceFunctionDriverList))
+
 
