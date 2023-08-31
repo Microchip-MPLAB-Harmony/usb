@@ -257,6 +257,132 @@ typedef enum
 } USB_HOST_DEVICE_INTERFACE_EVENT;
 
 // *****************************************************************************
+/* USB Host Client Driver Interface Assign Function Pointer Type
+
+  Summary:
+    Define the USB Host Client Driver Interface Assign Function Pointer Type
+
+  Description:
+    This type defines the type of function pointer that a client driver must
+    register with the host layer to handle the Interface Assign operation.
+
+  Remarks
+    None.
+*/
+
+typedef void (*USB_HOST_INTERFACE_ASSIGN)
+(
+    USB_HOST_DEVICE_INTERFACE_HANDLE * interfaces,
+    USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
+    size_t nInterfaces,
+    uint8_t * descriptor
+);
+
+// *****************************************************************************
+/* USB Host Client Driver Device Assign Function Pointer Type
+
+  Summary:
+    Define the USB Host Client Driver Device Assign Function Pointer Type
+
+  Description:
+    This type defines the type of function pointer that a client driver must
+    register with the host layer to handle the Device Assign operation.
+
+  Remarks
+    None.
+*/
+
+typedef void (*USB_HOST_DEVICE_ASSIGN)
+(
+    USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle,
+    USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
+    USB_DEVICE_DESCRIPTOR * deviceDescriptor
+);
+
+// *****************************************************************************
+/* USB Host Client Driver Device Release Function Pointer Type
+
+  Summary:
+    Define the USB Host Client Driver Device Release Function Pointer Type
+
+  Description:
+    This type defines the type of function pointer that a client driver must
+    register with the host layer to handle the Device Release operation.
+
+  Remarks
+    None.
+*/
+
+typedef void (*USB_HOST_DEVICE_RELEASE)
+(
+    USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle
+);
+
+// *****************************************************************************
+/* USB Host Client Driver Interface Release Function Pointer Type
+
+  Summary:
+    Define the USB Host Client Driver Interface Release Function Pointer Type
+
+  Description:
+    This type defines the type of function pointer that a client driver must
+    register with the host layer to handle the Interface Release operation.
+
+  Remarks
+    None.
+*/
+
+typedef void (*USB_HOST_INTERFACE_RELEASE)
+(
+    USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle
+);
+
+// *****************************************************************************
+/* USB Host Client Driver Interface Event Handler Function Pointer Type
+
+  Summary:
+    Define the USB Host Client Driver Interface Event Handler Function Pointer Type
+
+  Description:
+    This type defines the type of function pointer that a client driver must
+    register with the host layer to handle the Interface Events.
+
+  Remarks
+    None.
+*/
+
+typedef USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE (*USB_HOST_DEVICE_INTERFACE_EVENT_HANDLER)
+(
+    USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle,
+    USB_HOST_DEVICE_INTERFACE_EVENT event,
+    void * eventData,
+    uintptr_t context
+);
+
+// *****************************************************************************
+/* USB Host Client Driver Device Event Handler Function Pointer Type
+
+  Summary:
+    Define the USB Host Client Driver Device Event Handler Function Pointer Type
+
+  Description:
+    This type defines the type of function pointer that a client driver must
+    register with the host layer to handle the Device Events.
+
+  Remarks
+    None.
+*/
+
+typedef USB_HOST_DEVICE_EVENT_RESPONSE (*USB_HOST_DEVICE_EVENT_HANDLER)
+(
+    USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle,
+    USB_HOST_DEVICE_EVENT event,
+    void * eventData,
+    uintptr_t context
+);
+
+
+// *****************************************************************************
 /* USB Host Client Driver Interface
 
   Summary:

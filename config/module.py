@@ -27,7 +27,8 @@ def loadModule():
     loadUSBHostCDC = False
     loadUSBHostMSD = False
     loadUSBHostHID = False
-    loadUSBHostAudio = False 
+    loadUSBHostAudio = False
+    loadUSBHostGeneric = False	
     
     loadUSBDeviceLayer = False
     loadUSBDeviceCDC = False
@@ -87,7 +88,8 @@ def loadModule():
         loadUSBHostCDC = True
         loadUSBHostMSD = True
         loadUSBHostHID = True
-        loadUSBHostAudio = True 
+        loadUSBHostAudio = True
+        loadUSBHostGeneric = True
 
         loadUSBDeviceLayer = True
         loadUSBDeviceCDC = True
@@ -123,7 +125,8 @@ def loadModule():
             loadUSBHostCDC = True
             loadUSBHostMSD = True
             loadUSBHostHID = True
-            loadUSBHostAudio = True 
+            loadUSBHostAudio = True
+            loadUSBHostGeneric = True
 
             loadUSBDeviceLayer = True
             loadUSBDeviceCDC = True
@@ -147,6 +150,7 @@ def loadModule():
         loadUSBHostCDC = True
         loadUSBHostMSD = True
         loadUSBHostHID = True 
+        loadUSBHostGeneric = True
         
         # Create USB Device Port High Speed (UDPHS) Driver Component for SAMA5D2 & SAM9X60
         usbDevicePortHighSpeedDriverComponent =  Module.CreateComponent("drv_usb_udphs", "USB UDPHS Device Driver", "/USB/Drivers", "config/usb_udphs_driver.py")
@@ -176,6 +180,7 @@ def loadModule():
         loadUSBHostMSD = True
         loadUSBHostHID = True
         loadUSBHostAudio = True 
+        loadUSBHostGeneric = True
     
         loadUSBDeviceLayer = True
         loadUSBDeviceCDC = True
@@ -201,7 +206,8 @@ def loadModule():
         loadUSBHostMSD = True
         loadUSBHostHID = True
         loadUSBHostAudio = True 
-		
+        loadUSBHostGeneric = True
+
         # Create USB Device Port (UDP) Full Speed Driver Component for SAMG55
         usbUdpDriverComponent =  Module.CreateComponent("drv_usbdp", "USB UDP Device Driver", "/USB/Drivers", "config/usbdp_driver.py")
         usbUdpDriverComponent.addCapability("DRV_USBDP", "DRV_USBDP",True)
@@ -231,7 +237,8 @@ def loadModule():
         loadUSBHostCDC = True
         loadUSBHostMSD = True
         loadUSBHostHID = True
-        loadUSBHostAudio = True 
+        loadUSBHostAudio = True
+        loadUSBHostGeneric = True
     
         loadUSBDeviceLayer = True
         loadUSBDeviceCDC = True
@@ -254,6 +261,7 @@ def loadModule():
             loadUSBHostMSD = True
             loadUSBHostHID = True
             loadUSBHostAudio = True 
+            loadUSBHostGeneric = True
         
             loadUSBDeviceLayer = True
             loadUSBDeviceCDC = True
@@ -285,6 +293,7 @@ def loadModule():
             loadUSBHostMSD = True
             loadUSBHostHID = True
             loadUSBHostAudio = True 
+            loadUSBHostGeneric = True
         
             loadUSBDeviceLayer = True
             loadUSBDeviceCDC = True
@@ -421,4 +430,8 @@ def loadModule():
     if loadUSBHostAudio == True:
         usbHostAudioComponent = Module.CreateComponent("usb_host_audio", "Audio Client Driver", "/USB/Host Stack", "config/usb_host_audio.py")
         usbHostAudioComponent.addDependency("usb_host_dependency", "USB_HOST", True, True)
-        
+
+    # Create USB Host Stack Generic Component 
+    if loadUSBHostGeneric == True:  
+        usbHostGenericComponent = Module.CreateComponent("usb_host_generic", "Generic Client Driver", "/USB/Host Stack", "config/usb_host_generic.py")
+        usbHostGenericComponent.addDependency("usb_host_dependency", "USB_HOST", True, True)
