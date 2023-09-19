@@ -3,6 +3,42 @@
 
 # Microchip MPLAB Harmony 3 Release Notes
 
+## USB Release v3.11.0
+### NEW FEATURES
+- Added USB Host Generic Driver Framework.
+- USB Device Audio v1.0 function driver has been updated to add support for Asynch Isochronous Endpoints.
+
+### Bug fixes
+- The USB Device MSD Function driver initialize data code generation script has been updated to resolve a buffer overflow issue.
+- USB Device Mode Driver for MPU products (UDPHS Module) has been updated to resolve an exception by checking for a NULL pointer in the ISR.
+- USB configuration scripts for MCC have been updated to resolve multiple issues.
+- USB Device Mode Driver for PIC32CZ products has been updated to resolve the issue with the remote wakeup feature.
+  
+### Known Issues
+- All Harmony USB projects for SAMA5 family products must be compiled to generate ARM instructions. The XC32 compiler switch -marm must be used. Thumb instructions are not supported yet.
+
+### Development Tools
+
+-    [MPLAB® X IDE v6.15](https://www.microchip.com/mplab/mplab-x-ide)
+-    [MPLAB® XC32 C/C++ Compiler v4.30](https://www.microchip.com/mplab/compilers)
+-    MPLAB® X IDE plug-ins:- MPLAB® Code Configurator (MCC) v5.3.7 or above
+
+## USB Release v3.11.0-E1
+### NEW FEATURES
+- This engineering release adds support for the PIC32CZ-CA family of devices: 
+
+### Bug fixes
+  - The USB Device layer has been updated to exit suspend mode when an SOF event is received from the USB driver. 
+  
+### Known Issues
+- Same as v3.10.0
+
+### Development Tools
+
+-    [MPLAB® X IDE v6.05](https://www.microchip.com/mplab/mplab-x-ide)
+-    [MPLAB® XC32 C/C++ Compiler v4.20](https://www.microchip.com/mplab/compilers)
+-    MPLAB® X IDE plug-ins:- MPLAB® Code Configurator (MCC) v5.2.2 or above
+
 ## USB Release v3.11.0-E2
 ### NEW FEATURES
 - This engineering release adds support for the PIC32CK-GC01 family of devices: 
