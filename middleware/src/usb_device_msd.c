@@ -56,12 +56,6 @@ static USB_DEVICE_MSD_INSTANCE gUSBDeviceMSDInstance [USB_DEVICE_INSTANCES_NUMBE
 
 static SCSI_SENSE_DATA gUSBDeviceMSDSenseData[USB_DEVICE_MSD_LUNS_NUMBER] USB_ALIGN;
 
-/***************************************
- * USB device MSD init objects.
- ***************************************/
-
-USB_DEVICE_MSD_INIT gUSBDeviceMSDInit[USB_DEVICE_MSD_INSTANCES_NUMBER];
-
 /****************************************
  * MSD Device function driver structure
  ****************************************/
@@ -69,21 +63,21 @@ USB_DEVICE_MSD_INIT gUSBDeviceMSDInit[USB_DEVICE_MSD_INSTANCES_NUMBER];
 USB_DEVICE_FUNCTION_DRIVER msdFunctionDriver = 
 {
     /* MSD init function */
-    .initializeByDescriptor = _USB_DEVICE_MSD_InitializeByDescriptorType ,
+    .initializeByDescriptor = F_USB_DEVICE_MSD_InitializeByDescriptorType ,
 
     /* MSD de-init function */
-    .deInitialize = _USB_DEVICE_MSD_Deinitialization , 
+    .deInitialize = F_USB_DEVICE_MSD_Deinitialization , 
       
     /* MSD set-up packet handler */
-    .controlTransferNotification = _USB_DEVICE_MSD_ControlTransferHandler ,
+    .controlTransferNotification = F_USB_DEVICE_MSD_ControlTransferHandler ,
 
     /* MSD tasks function */
-    .tasks = _USB_DEVICE_MSD_Tasks
+    .tasks = F_USB_DEVICE_MSD_Tasks
 };
 
 // ******************************************************************************
 /* Function:
-    void _USB_DEVICE_MSD_InitializeEndpoint
+    void F_USB_DEVICE_MSD_InitializeEndpoint
     (
         USB_DEVICE_MSD_INSTANCE * msdInstance,
         DRV_HANDLE usbDevHandle,
@@ -101,27 +95,27 @@ USB_DEVICE_FUNCTION_DRIVER msdFunctionDriver =
     application.
 */
 
-void _USB_DEVICE_MSD_InitializeEndpoint
+void F_USB_DEVICE_MSD_InitializeEndpoint
 (
     USB_DEVICE_MSD_INSTANCE * msdInstance,
     DRV_HANDLE usbDevHandle,
     USB_ENDPOINT_DESCRIPTOR * epDescriptor
 )
 {
-    /* This function is called from _USB_DEVICE_MSD_InitializeByDescriptorType
+    /* This function is called from F_USB_DEVICE_MSD_InitializeByDescriptorType
      * when the descriptor type is an endpoint. The bulk endpoints associated 
      * with this interface are enabled in this function */
 
-    if( epDescriptor->transferType == USB_TRANSFER_TYPE_BULK )
+    if( epDescriptor->transferType == (uint8_t)USB_TRANSFER_TYPE_BULK )
     {
-        if(epDescriptor->dirn == USB_DATA_DIRECTION_DEVICE_TO_HOST)
+        if(epDescriptor->dirn == (uint8_t)USB_DATA_DIRECTION_DEVICE_TO_HOST)
         {
             /* Save the TX endpoint information */
             msdInstance->bulkEndpointTx = epDescriptor->bEndpointAddress;
             msdInstance->bulkEndpointTxSize =  epDescriptor->wMaxPacketSize;
             
             /* Enable the TX endpoint */
-            USB_DEVICE_EndpointEnable(usbDevHandle, 0, msdInstance->bulkEndpointTx, (USB_TRANSFER_TYPE) epDescriptor->transferType, epDescriptor->wMaxPacketSize);
+            (void) USB_DEVICE_EndpointEnable(usbDevHandle, 0, msdInstance->bulkEndpointTx, (USB_TRANSFER_TYPE) epDescriptor->transferType, epDescriptor->wMaxPacketSize);
         }
         else
         {
@@ -130,7 +124,7 @@ void _USB_DEVICE_MSD_InitializeEndpoint
             msdInstance->bulkEndpointRxSize = epDescriptor->wMaxPacketSize;
 
             /* Enable the endpoint */
-            USB_DEVICE_EndpointEnable(usbDevHandle, 0, msdInstance->bulkEndpointRx, (USB_TRANSFER_TYPE) epDescriptor->transferType, epDescriptor->wMaxPacketSize);
+            (void) USB_DEVICE_EndpointEnable(usbDevHandle, 0, msdInstance->bulkEndpointRx, (USB_TRANSFER_TYPE) epDescriptor->transferType, epDescriptor->wMaxPacketSize);
 
             /* Now since device layer has already opened the bulk endpoint we can submit an
              * IRP to receive the CBW. */
@@ -145,7 +139,7 @@ void _USB_DEVICE_MSD_InitializeEndpoint
 
 // *****************************************************************************
 /* Function:
-    void _USB_DEVICE_MSD_InitializeInterface
+    void F_USB_DEVICE_MSD_InitializeInterface
     (
         USB_DEVICE_MSD_OBJ * msdDeviceObj,
         DRV_HANDLE usbDeviceHandle,
@@ -164,7 +158,7 @@ void _USB_DEVICE_MSD_InitializeEndpoint
     applicaiton.
 */
 
-void _USB_DEVICE_MSD_InitializeInterface
+void F_USB_DEVICE_MSD_InitializeInterface
 (
     USB_DEVICE_MSD_INSTANCE * msdDeviceObj,
     DRV_HANDLE usbDeviceHandle,
@@ -172,10 +166,10 @@ void _USB_DEVICE_MSD_InitializeInterface
     USB_INTERFACE_DESCRIPTOR * intfDesc
 )
 {
-    /* This function is called from _USB_DEVICE_MSD_InitializeByDescriptorType
+    /* This function is called from F_USB_DEVICE_MSD_InitializeByDescriptorType
      * when the descriptor type is interface */
 
-    int count;
+    uint32_t count;
     USB_DEVICE_MSD_INIT * msdInitializationData;
 
     /* Access the MSD Function Driver Initialization data */
@@ -196,7 +190,7 @@ void _USB_DEVICE_MSD_InitializeInterface
         msdDeviceObj->mediaDynamicData[count].mediaHandle = DRV_HANDLE_INVALID;
         /* Initialize the Sense data pointer */
         msdDeviceObj->mediaDynamicData[count].senseData = &gUSBDeviceMSDSenseData[count];
-        _USB_DEVICE_MSD_ResetSenseData (msdDeviceObj->mediaDynamicData[count].senseData);
+        F_USB_DEVICE_MSD_ResetSenseData (msdDeviceObj->mediaDynamicData[count].senseData);
 
         SYS_ASSERT(msdDeviceObj->mediaData->mediaFunctions[count].open != NULL, "This function pointer cannot be NULL");
         SYS_ASSERT(msdDeviceObj->mediaData->mediaFunctions[count].close != NULL, "This function pointer cannot be NULL");
@@ -217,8 +211,8 @@ void _USB_DEVICE_MSD_InitializeInterface
     msdDeviceObj->irpTx.userData = (uintptr_t)msdDeviceObj;
     msdDeviceObj->irpRx.status = USB_DEVICE_IRP_STATUS_COMPLETED;
     msdDeviceObj->irpTx.status = USB_DEVICE_IRP_STATUS_COMPLETED;
-    msdDeviceObj->irpTx.callback = &_USB_DEVICE_MSD_CallBackBulkTxTransfer;
-    msdDeviceObj->irpRx.callback = &_USB_DEVICE_MSD_CallBackBulkRxTransfer;
+    msdDeviceObj->irpTx.callback = &F_USB_DEVICE_MSD_CallBackBulkTxTransfer;
+    msdDeviceObj->irpRx.callback = &F_USB_DEVICE_MSD_CallBackBulkRxTransfer;
 
     /* The Host may set an alternate inteface on this instance. Intialize the
      * alternate setting to zero */
@@ -226,8 +220,12 @@ void _USB_DEVICE_MSD_InitializeInterface
 }
 
 // ******************************************************************************
+/* MISRA C-2012 Rule 11.3 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" 
 /* Function:
-    void _USB_DEVICE_MSD_InitializeByDescriptorType
+    void F_USB_DEVICE_MSD_InitializeByDescriptorType
     (
         SYS_MODULE_INDEX iMSD, 
         DRV_HANDLE usbDeviceHandle,
@@ -251,7 +249,7 @@ void _USB_DEVICE_MSD_InitializeInterface
     application.
 */
 
-void _USB_DEVICE_MSD_InitializeByDescriptorType
+void F_USB_DEVICE_MSD_InitializeByDescriptorType
 (
     SYS_MODULE_INDEX iMSD, 
     DRV_HANDLE usbDeviceHandle,
@@ -274,14 +272,14 @@ void _USB_DEVICE_MSD_InitializeByDescriptorType
         case USB_DESCRIPTOR_ENDPOINT:
             
             /* Device layer came across an MSD endpoint. Initialize the endpoint */
-            _USB_DEVICE_MSD_InitializeEndpoint(msdDeviceObj, usbDeviceHandle,(USB_ENDPOINT_DESCRIPTOR *)pDescriptor);
+            F_USB_DEVICE_MSD_InitializeEndpoint(msdDeviceObj, usbDeviceHandle,(USB_ENDPOINT_DESCRIPTOR *)pDescriptor);
             break;
 
         case USB_DESCRIPTOR_INTERFACE:
 
             /* Device Layer came across an MSD interface. Initialize the
              * interface */
-            _USB_DEVICE_MSD_InitializeInterface(msdDeviceObj, usbDeviceHandle, funcDriverInit, (USB_INTERFACE_DESCRIPTOR *)pDescriptor);
+            F_USB_DEVICE_MSD_InitializeInterface(msdDeviceObj, usbDeviceHandle, funcDriverInit, (USB_INTERFACE_DESCRIPTOR *)pDescriptor);
             break;
 
         default:
@@ -290,9 +288,11 @@ void _USB_DEVICE_MSD_InitializeByDescriptorType
     }
 }
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+/* MISRAC 2012 deviation block end */
 // ******************************************************************************
 /* Function: 
-   void _USB_DEVICE_MSD_ControlTransferHandler
+   void F_USB_DEVICE_MSD_ControlTransferHandler
     (
         SYS_MODULE_INDEX MSDIndex,
         USB_DEVICE_EVENT transferState,
@@ -312,7 +312,7 @@ void _USB_DEVICE_MSD_InitializeByDescriptorType
     application.
 */
 
-void _USB_DEVICE_MSD_ControlTransferHandler
+void F_USB_DEVICE_MSD_ControlTransferHandler
 (
     SYS_MODULE_INDEX MSDIndex,
     USB_DEVICE_EVENT controlTransferEvent,
@@ -320,10 +320,11 @@ void _USB_DEVICE_MSD_ControlTransferHandler
 )
 {
     USB_DEVICE_MSD_INSTANCE * msdThisInstance = &gUSBDeviceMSDInstance[MSDIndex] ;
+    USB_MSD_COMMAND msdCommand = (USB_MSD_COMMAND)setupPkt->bRequest;
 
     if(controlTransferEvent == USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST)
     {
-        if(( setupPkt->Recipient == 0x01) && (setupPkt->RequestType == 0x00))
+        if(( setupPkt->Recipient == 0x01U) && (setupPkt->RequestType == 0x00U))
         {
             /* This means the recipient of the control transfer is interface
              * and this is a standard request type */
@@ -335,40 +336,41 @@ void _USB_DEVICE_MSD_ControlTransferHandler
                     /* If the host does a Set Interface, we simply acknowledge
                      * it. We also remember the interface that was set */
                     msdThisInstance->alternateSetting = setupPkt->W_Value.byte.LB;
-                    USB_DEVICE_ControlStatus( msdThisInstance->hUsbDevHandle, USB_DEVICE_CONTROL_STATUS_OK);
+                    (void) USB_DEVICE_ControlStatus( msdThisInstance->hUsbDevHandle, USB_DEVICE_CONTROL_STATUS_OK);
                     break;
 
                 case USB_REQUEST_GET_INTERFACE:
 
                     /* The host is requesting for the current interface setting
                      * number. Return the one that the host set */
-                    USB_DEVICE_ControlSend( msdThisInstance->hUsbDevHandle, &msdThisInstance->alternateSetting, 1);
+                    (void) USB_DEVICE_ControlSend( msdThisInstance->hUsbDevHandle, &msdThisInstance->alternateSetting, 1);
                     break;
 
                 default:
+                     /* Do Nothing */
                     break; 
             }
         }
-        else if( setupPkt->bmRequestType & USB_MSD_REQUEST_CLASS_SPECIFIC )
+        else if(( setupPkt->bmRequestType & (uint8_t)USB_MSD_REQUEST_CLASS_SPECIFIC ) != 0U)
         {
             /* We have got setup request */
-            switch ( setupPkt->bRequest )
+            switch (msdCommand)
             {
                 case USB_MSD_GET_MAX_LUN:
 
                     /* First make sure all request parameters are correct:
                      * MSD BOT specs require wValue to be == 0x0000, and wLengh == 1 */
-                    if((setupPkt->wValue != 0) || (setupPkt->wLength != 1))
+                    if((setupPkt->wValue != 0U) || (setupPkt->wLength != 1U))
                     {
-                        USB_DEVICE_ControlStatus( msdThisInstance->hUsbDevHandle,
+                        (void) USB_DEVICE_ControlStatus( msdThisInstance->hUsbDevHandle,
                                 USB_DEVICE_CONTROL_STATUS_ERROR );
                         return ;
                     }
 
                     /* Return the number of LUNs in this device less one. */
 
-                    msdThisInstance->msdBuffer  = msdThisInstance->numberOfLogicalUnits - 1;
-                    USB_DEVICE_ControlSend( msdThisInstance->hUsbDevHandle, &msdThisInstance->msdBuffer, 1 );
+                    msdThisInstance->msdBuffer  = (uint8_t)(msdThisInstance->numberOfLogicalUnits - 1U);
+                    (void) USB_DEVICE_ControlSend( msdThisInstance->hUsbDevHandle, &msdThisInstance->msdBuffer, 1 );
 
                     break;
 
@@ -376,9 +378,9 @@ void _USB_DEVICE_MSD_ControlTransferHandler
 
                     /* First make sure all request parameters are correct:
                      * MSD BOT specs require wValue to be == 0x0000, and wLength == 0 */
-                   if((setupPkt->wValue != 0) || (setupPkt->wLength != 0))
+                   if((setupPkt->wValue != 0U) || (setupPkt->wLength != 0U))
                     {
-                        USB_DEVICE_ControlStatus( msdThisInstance->hUsbDevHandle,
+                        (void) USB_DEVICE_ControlStatus( msdThisInstance->hUsbDevHandle,
                                 USB_DEVICE_CONTROL_STATUS_ERROR );
                         return ;
                     }
@@ -386,29 +388,33 @@ void _USB_DEVICE_MSD_ControlTransferHandler
                    /* Cancel all the IRPs on the BULK IN and OUT Endpoints. 
                       Stall both the endpoints.
                       */
-                   USB_DEVICE_IRPCancelAll(msdThisInstance->hUsbDevHandle, msdThisInstance->bulkEndpointTx);
-                   USB_DEVICE_IRPCancelAll(msdThisInstance->hUsbDevHandle, msdThisInstance->bulkEndpointRx);
+                   (void) USB_DEVICE_IRPCancelAll(msdThisInstance->hUsbDevHandle, msdThisInstance->bulkEndpointTx);
+                   (void) USB_DEVICE_IRPCancelAll(msdThisInstance->hUsbDevHandle, msdThisInstance->bulkEndpointRx);
 
                    USB_DEVICE_EndpointStall(msdThisInstance->hUsbDevHandle, msdThisInstance->bulkEndpointTx);
                    USB_DEVICE_EndpointStall(msdThisInstance->hUsbDevHandle, msdThisInstance->bulkEndpointRx);
 
                    msdThisInstance->msdMainState = USB_DEVICE_MSD_STATE_WAIT_FOR_CBW;
-                   USB_DEVICE_ControlStatus( msdThisInstance->hUsbDevHandle, USB_DEVICE_CONTROL_STATUS_OK );
+                   (void) USB_DEVICE_ControlStatus( msdThisInstance->hUsbDevHandle, USB_DEVICE_CONTROL_STATUS_OK );
                    break;
 
                 default:
 
                    /* Stall other requests. */
-                   USB_DEVICE_ControlStatus( msdThisInstance->hUsbDevHandle, USB_DEVICE_CONTROL_STATUS_ERROR );
+                   (void) USB_DEVICE_ControlStatus( msdThisInstance->hUsbDevHandle, USB_DEVICE_CONTROL_STATUS_ERROR );
                    break;
             } 
+        }
+        else
+        {
+            /* Do Nothing */
         }
     }
 }
 
 // ******************************************************************************
 /* Function:
-    void _USB_DEVICE_MSD_CallBackBulkRxTransfer( void * handle )
+    void F_USB_DEVICE_MSD_CallBackBulkRxTransfer( void * handle )
 
   Summary:
     This is a callback function that gets called by controller driver,
@@ -423,14 +429,14 @@ void _USB_DEVICE_MSD_ControlTransferHandler
     application.
 */
 
-void _USB_DEVICE_MSD_CallBackBulkRxTransfer( USB_DEVICE_IRP *  handle )
+void F_USB_DEVICE_MSD_CallBackBulkRxTransfer( USB_DEVICE_IRP *  handle )
 {
     /* Code to be add if required in a future release */
 }
 
 // ******************************************************************************
 /* Function:
-    void _USB_DEVICE_MSD_CallBackBulkTxTransfer( void *  handle )
+    void F_USB_DEVICE_MSD_CallBackBulkTxTransfer( void *  handle )
 
   Summary:
     This is a callback function that gets called by controller driver,
@@ -445,14 +451,14 @@ void _USB_DEVICE_MSD_CallBackBulkRxTransfer( USB_DEVICE_IRP *  handle )
     application.
 */
 
-void _USB_DEVICE_MSD_CallBackBulkTxTransfer( USB_DEVICE_IRP *  handle )
+void F_USB_DEVICE_MSD_CallBackBulkTxTransfer( USB_DEVICE_IRP *  handle )
 {
     /* Code to be add if required in a future release */
 }
 
 // ******************************************************************************
 /* Function:
-    void _USB_DEVICE_MSD_PostDataStageRoutine ( SYS_MODULE_INDEX iMSD )
+    void F_USB_DEVICE_MSD_PostDataStageRoutine ( SYS_MODULE_INDEX iMSD )
 
   Summary:
     Do some post data stage routines (Before we initiate CSW).
@@ -465,7 +471,7 @@ void _USB_DEVICE_MSD_CallBackBulkTxTransfer( USB_DEVICE_IRP *  handle )
     application.
 */
 
-bool _USB_DEVICE_MSD_PostDataStageRoutine
+bool F_USB_DEVICE_MSD_PostDataStageRoutine
 (
     SYS_MODULE_INDEX iMSD
 )
@@ -485,8 +491,8 @@ bool _USB_DEVICE_MSD_PostDataStageRoutine
     /* Update the Residue length in the CSW */
     msdInstance->msdCSW->dCSWDataResidue = residueLength;
 
-    if ((msdInstance->msdCSW->bCSWStatus == USB_MSD_CSW_COMMAND_PASSED) &&
-            residueLength)
+    if ((msdInstance->msdCSW->bCSWStatus == (uint8_t)USB_MSD_CSW_COMMAND_PASSED) &&
+            (residueLength != 0U))
     {
         /* The device has sent less data than the host had expected. The transfer
         was successful. But stall the IN EP. */
@@ -494,10 +500,10 @@ bool _USB_DEVICE_MSD_PostDataStageRoutine
         isStalled = true;
     }
 
-    if ((msdInstance->msdCSW->bCSWStatus == USB_MSD_CSW_COMMAND_FAILED) &&
-            (msdInstance->msdCBW->dCBWDataTransferLength))
+    if ((msdInstance->msdCSW->bCSWStatus == (uint8_t)USB_MSD_CSW_COMMAND_FAILED) &&
+            ((msdInstance->msdCBW->dCBWDataTransferLength) != 0U))
     {
-        if (msdInstance->msdCBW->bmCBWFlags.value & USB_MSD_CBW_DIRECTION_BITMASK)
+        if ((msdInstance->msdCBW->bmCBWFlags.value & (uint8_t)USB_MSD_CBW_DIRECTION_BITMASK) != 0U)
         {
             USB_DEVICE_EndpointStall(msdInstance->hUsbDevHandle, msdInstance->bulkEndpointTx);
             isStalled = true;
@@ -511,7 +517,7 @@ bool _USB_DEVICE_MSD_PostDataStageRoutine
     return isStalled;
 }
 
-void _USB_DEVICE_MSD_SendDataToUsb 
+void F_USB_DEVICE_MSD_SendDataToUsb 
 (
     SYS_MODULE_INDEX iMSD,
     uint8_t *data,
@@ -523,12 +529,17 @@ void _USB_DEVICE_MSD_SendDataToUsb
     msdInstance->irpTx.size = length;
     msdInstance->irpTx.flags = USB_DEVICE_IRP_FLAG_DATA_PENDING;
 
-    USB_DEVICE_IRPSubmit(msdInstance->hUsbDevHandle, msdInstance->bulkEndpointTx, &msdInstance->irpTx);
+    (void) USB_DEVICE_IRPSubmit(msdInstance->hUsbDevHandle, msdInstance->bulkEndpointTx, &msdInstance->irpTx);
 }
 
 // ******************************************************************************
+/* MISRA C-2012 Rule 16.1, and 16.3 deviated below. Deviation record ID -  
+    H3_MISRAC_2012_R_16_1_DR_1, H3_MISRAC_2012_R_16_3_DR_1 */
+#pragma coverity compliance block \
+(deviate:3 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )
 /* Function:
-    void _USB_DEVICE_MSD_Tasks ( SYS_MODULE_INDEX iMSD )
+    void F_USB_DEVICE_MSD_Tasks ( SYS_MODULE_INDEX iMSD )
 
   Summary:
     This function handles the main MSD state machine.
@@ -542,12 +553,12 @@ void _USB_DEVICE_MSD_SendDataToUsb
     application.
 */
 
-void _USB_DEVICE_MSD_Tasks 
+void F_USB_DEVICE_MSD_Tasks 
 (
     SYS_MODULE_INDEX iMSD
 )
 {
-    uint8_t commandStatus = USB_MSD_CSW_COMMAND_PASSED; 
+    uint8_t commandStatus = (uint8_t)USB_MSD_CSW_COMMAND_PASSED; 
     USB_DEVICE_MSD_INSTANCE * msdObj = &gUSBDeviceMSDInstance[iMSD];
 
     switch (msdObj->msdMainState)
@@ -574,7 +585,7 @@ void _USB_DEVICE_MSD_Tasks
                     msdObj->irpRx.size = msdObj->bulkEndpointRxSize;
                     msdObj->irpRx.flags = USB_DEVICE_IRP_FLAG_DATA_PENDING;
 
-                    USB_DEVICE_IRPSubmit (msdObj->hUsbDevHandle, msdObj->bulkEndpointRx, &msdObj->irpRx);
+                    (void) USB_DEVICE_IRPSubmit (msdObj->hUsbDevHandle, msdObj->bulkEndpointRx, &msdObj->irpRx);
                     msdObj->msdMainState = USB_DEVICE_MSD_STATE_CBW;
                 }
                 break;
@@ -587,19 +598,23 @@ void _USB_DEVICE_MSD_Tasks
                         && (!USB_DEVICE_EndpointIsStalled(msdObj->hUsbDevHandle, msdObj->bulkEndpointRx)))
                 {
                     /* Received the CBW from the HOST. Check whether the CBW is valid and meaningful. */
-                    msdObj->msdMainState = _USB_DEVICE_MSD_VerifyCommand (iMSD, &commandStatus);
+                    msdObj->msdMainState = F_USB_DEVICE_MSD_VerifyCommand (iMSD, &commandStatus);
 
                     if (msdObj->msdMainState == USB_DEVICE_MSD_STATE_PROCESS_CBW)
                     {
-                        msdObj->msdMainState = _USB_DEVICE_MSD_ProcessNonRWCommand(iMSD, &commandStatus);
+                        msdObj->msdMainState = F_USB_DEVICE_MSD_ProcessNonRWCommand(iMSD, &commandStatus);
                     }
                     else if (msdObj->msdMainState == USB_DEVICE_MSD_STATE_DATA_IN)
                     {
-                        msdObj->msdMainState = _USB_DEVICE_MSD_ProcessRead(iMSD, &commandStatus);
+                        msdObj->msdMainState = F_USB_DEVICE_MSD_ProcessRead(iMSD, &commandStatus);
                     }
                     else if (msdObj->msdMainState == USB_DEVICE_MSD_STATE_DATA_OUT)
                     {
-                        msdObj->msdMainState = _USB_DEVICE_MSD_ProcessWrite(iMSD, &commandStatus);
+                        msdObj->msdMainState = F_USB_DEVICE_MSD_ProcessWrite(iMSD, &commandStatus);
+                    }
+                    else
+                    {
+                        /* Do Nothing */
                     }
 
                     msdObj->msdCSW->bCSWStatus = commandStatus;
@@ -611,6 +626,10 @@ void _USB_DEVICE_MSD_Tasks
                      * IRP. */
 
                     msdObj->msdMainState = USB_DEVICE_MSD_STATE_WAIT_FOR_CBW;
+                }
+                else
+                {
+                    /* Do nothing */
                 }
                 break;
             }
@@ -624,7 +643,7 @@ void _USB_DEVICE_MSD_Tasks
                     /* This means we have to send or have to continue sending data.
                      * Check if we have any/more data to send. The return value of
                      * this function indicates what the next state should be. */
-                    msdObj->msdMainState = _USB_DEVICE_MSD_ProcessRead(iMSD, &commandStatus);
+                    msdObj->msdMainState = F_USB_DEVICE_MSD_ProcessRead(iMSD, &commandStatus);
                     msdObj->msdCSW->bCSWStatus = commandStatus;
                 }
                 break;
@@ -636,7 +655,7 @@ void _USB_DEVICE_MSD_Tasks
                         && (!USB_DEVICE_EndpointIsStalled(msdObj->hUsbDevHandle, msdObj->bulkEndpointRx)))
                 {
                     /* Check if we have any/more data to receive. */
-                    msdObj->msdMainState = _USB_DEVICE_MSD_ProcessWrite(iMSD, &commandStatus);
+                    msdObj->msdMainState = F_USB_DEVICE_MSD_ProcessWrite(iMSD, &commandStatus);
                     /* Update the CSW command status */
                     msdObj->msdCSW->bCSWStatus = commandStatus;
                 }
@@ -647,7 +666,7 @@ void _USB_DEVICE_MSD_Tasks
             {
                 if (msdObj->irpTx.status <= USB_DEVICE_IRP_STATUS_COMPLETED_SHORT)
                 {
-                    _USB_DEVICE_MSD_PostDataStageRoutine(iMSD);
+                    (void) F_USB_DEVICE_MSD_PostDataStageRoutine(iMSD);
                     msdObj->msdMainState = USB_DEVICE_MSD_STATE_SEND_CSW;
                 }
                 else
@@ -665,7 +684,7 @@ void _USB_DEVICE_MSD_Tasks
                     msdObj->irpTx.data = (void *)msdObj->msdCSW;
                     msdObj->irpTx.size = sizeof(USB_MSD_CSW);
                     msdObj->irpTx.flags = USB_DEVICE_IRP_FLAG_DATA_PENDING;
-                    USB_DEVICE_IRPSubmit (msdObj->hUsbDevHandle, msdObj->bulkEndpointTx, &msdObj->irpTx);
+                    (void) USB_DEVICE_IRPSubmit (msdObj->hUsbDevHandle, msdObj->bulkEndpointTx, &msdObj->irpTx);
 
                     msdObj->msdMainState = USB_DEVICE_MSD_STATE_WAIT_FOR_CBW;
                 }
@@ -674,13 +693,19 @@ void _USB_DEVICE_MSD_Tasks
 
             case USB_DEVICE_MSD_STATE_IDLE:
             default:
+                /* Do Nothing */
                 break;
     }
 }
 
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 // ******************************************************************************
 /* Function:
-    void _USB_DEVICE_MSD_BlockEventHandler
+    void F_USB_DEVICE_MSD_BlockEventHandler
     (
         SYS_FS_MEDIA_BLOCK_EVENT event,
         SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE commandHandle,
@@ -700,7 +725,7 @@ void _USB_DEVICE_MSD_Tasks
     application.
 */
 
-void _USB_DEVICE_MSD_BlockEventHandler
+void F_USB_DEVICE_MSD_BlockEventHandler
 (
     SYS_MEDIA_BLOCK_EVENT event,
     SYS_MEDIA_BLOCK_COMMAND_HANDLE commandHandle,
@@ -716,13 +741,16 @@ void _USB_DEVICE_MSD_BlockEventHandler
         case SYS_MEDIA_EVENT_BLOCK_COMMAND_ERROR:
             mediaDynamicData->mediaState = USB_DEVICE_MSD_MEDIA_OPERATION_ERROR;
             break;
+        default:
+            /* Do Nothing */
+            break;
     }
  }
 
 
 // ******************************************************************************
 /* Function:
-    void _USB_DEVICE_MSD_CheckAndUpdateMediaState
+    void F_USB_DEVICE_MSD_CheckAndUpdateMediaState
     (
         SYS_MODULE_INDEX iMSD,
         uint8_t logicalUnit
@@ -741,15 +769,15 @@ void _USB_DEVICE_MSD_BlockEventHandler
     application.
 */
 
-void _USB_DEVICE_MSD_CheckAndUpdateMediaState
+void F_USB_DEVICE_MSD_CheckAndUpdateMediaState
 (
     SYS_MODULE_INDEX iMSD,
     uint8_t logicalUnit
 )
 {
-    /* This function is called by the _USB_DEVICE_MSD_VerifyCommand() 
+    /* This function is called by the F_USB_DEVICE_MSD_VerifyCommand() 
      * function. The mediaPresent flag in this function is checked
-     * by the _USB_DEVICE_MSD_ProcessNonRWCommand() function to decide
+     * by the F_USB_DEVICE_MSD_ProcessNonRWCommand() function to decide
      * whether it should be continue processing the command */
 
     USB_DEVICE_MSD_MEDIA_FUNCTIONS * mediaFunctions;
@@ -772,7 +800,7 @@ void _USB_DEVICE_MSD_CheckAndUpdateMediaState
     if( mediaDynamicData->mediaHandle == DRV_HANDLE_INVALID )
     {
         /* Try to open the media */
-        drvHandle = mediaFunctions->open( mediaInstanceIndex, DRV_IO_INTENT_READWRITE| DRV_IO_INTENT_NONBLOCKING);
+        drvHandle = mediaFunctions->open( mediaInstanceIndex, (uint32_t)DRV_IO_INTENT_READWRITE| (uint32_t)DRV_IO_INTENT_NONBLOCKING);
 
         /* If the driver could be opened, then we need to do a few things */
         if (drvHandle != DRV_HANDLE_INVALID)
@@ -781,11 +809,11 @@ void _USB_DEVICE_MSD_CheckAndUpdateMediaState
             mediaDynamicData->mediaHandle = drvHandle;
 
             /* Get the sector size */
-            if(msdThisInstance->mediaData[logicalUnit].sectorSize != 0)
+            if(msdThisInstance->mediaData[logicalUnit].sectorSize != 0U)
             {
                 /* This means the sector size is specified in the media init table
                  * */
-                mediaDynamicData->sectorSize = msdThisInstance->mediaData[logicalUnit].sectorSize;
+                mediaDynamicData->sectorSize = (uint16_t)msdThisInstance->mediaData[logicalUnit].sectorSize;
             }
 
             /* Set the block start address if available */
@@ -796,7 +824,7 @@ void _USB_DEVICE_MSD_CheckAndUpdateMediaState
             }
 
             /* We should set an event handler with the media driver */
-            mediaFunctions->blockEventHandlerSet(drvHandle, (const void *)_USB_DEVICE_MSD_BlockEventHandler, (uintptr_t)mediaDynamicData);
+            mediaFunctions->blockEventHandlerSet(drvHandle, (const void *)F_USB_DEVICE_MSD_BlockEventHandler, (uintptr_t)mediaDynamicData);
             
             /* Get a pointer to the media geomtery */
             mediaDynamicData->mediaGeometry = mediaFunctions->geometryGet(drvHandle);
@@ -820,7 +848,7 @@ void _USB_DEVICE_MSD_CheckAndUpdateMediaState
 
 // ******************************************************************************
 /* Function:
-    USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_VerifyCommand
+    USB_DEVICE_MSD_STATE F_USB_DEVICE_MSD_VerifyCommand
     (
         SYS_MODULE_INDEX iMSD,
         uint8_t *commandStatus
@@ -837,7 +865,7 @@ void _USB_DEVICE_MSD_CheckAndUpdateMediaState
     application.
 */
 
-USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_VerifyCommand
+USB_DEVICE_MSD_STATE F_USB_DEVICE_MSD_VerifyCommand
 (
     SYS_MODULE_INDEX iMSD,
     uint8_t *commandStatus
@@ -855,7 +883,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_VerifyCommand
     USB_DEVICE_MSD_MEDIA_FUNCTIONS * mediaFunctions;
     USB_DEVICE_MSD_MEDIA_DYNAMIC_DATA * mediaDynamicData;
 
-    *commandStatus = USB_MSD_CSW_COMMAND_PASSED; 
+    *commandStatus = (uint8_t)USB_MSD_CSW_COMMAND_PASSED; 
     /* Obtain the pointer to the CBW data structure */
     lCBW = (USB_MSD_CBW *)msdInstance->msdCBW;
 
@@ -882,29 +910,29 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_VerifyCommand
     }
 
     /* Check and update the media state */
-    _USB_DEVICE_MSD_CheckAndUpdateMediaState(iMSD, lCBW->bCBWLUN);
+    F_USB_DEVICE_MSD_CheckAndUpdateMediaState(iMSD, lCBW->bCBWLUN);
 
     /* See if last command was request sense. If so host has already read the
      * sense data. Now we should reset sense data. */
     if (msdInstance->mediaDynamicData[logicalUnit].resetSenseData)
     {
         msdInstance->mediaDynamicData[logicalUnit].resetSenseData = false;
-        _USB_DEVICE_MSD_ResetSenseData(msdInstance-> mediaDynamicData[logicalUnit].senseData);
+        F_USB_DEVICE_MSD_ResetSenseData(msdInstance-> mediaDynamicData[logicalUnit].senseData);
     }
 
     mediaDynamicData = &msdInstance->mediaDynamicData[logicalUnit];
     mediaFunctions = &msdInstance->mediaData[logicalUnit].mediaFunctions;
 
     /* Find the number of bytes to be transferred. */
-    length = ((lCBW->CBWCB[7] << 8) | lCBW->CBWCB[8]);
+    length = (((uint32_t)lCBW->CBWCB[7] << 8) | lCBW->CBWCB[8]);
     length <<= 9;
     
     /* Do one time error checking for the read/write commands. */
-    if ((lCBW->CBWCB[0] == SCSI_READ_10) || (lCBW->CBWCB[0] == SCSI_WRITE_10))
+    if ((lCBW->CBWCB[0] == (uint8_t)SCSI_READ_10) || (lCBW->CBWCB[0] == (uint8_t)SCSI_WRITE_10))
     {
         if (mediaDynamicData->mediaPresent == false)
         {
-            *commandStatus = USB_MSD_CSW_COMMAND_FAILED; 
+            *commandStatus = (uint8_t)USB_MSD_CSW_COMMAND_FAILED; 
             return USB_DEVICE_MSD_STATE_CSW;
         }
 
@@ -912,31 +940,31 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_VerifyCommand
         to be transferred for read and write commands. */
         if (lCBW->dCBWDataTransferLength != length)
         {
-            *commandStatus = USB_MSD_CSW_COMMAND_FAILED; 
+            *commandStatus = (uint8_t)USB_MSD_CSW_COMMAND_FAILED; 
             return USB_DEVICE_MSD_STATE_CSW;
         }
 
         /* zero block transfer. */
-        if (lCBW->dCBWDataTransferLength == 0)
+        if (lCBW->dCBWDataTransferLength == 0U)
         {
-            *commandStatus = USB_MSD_CSW_COMMAND_PASSED; 
+            *commandStatus = (uint8_t)USB_MSD_CSW_COMMAND_PASSED; 
             return USB_DEVICE_MSD_STATE_CSW;
         }
 
-        if (lCBW->CBWCB[0] == SCSI_READ_10)
+        if (lCBW->CBWCB[0] == (uint8_t)SCSI_READ_10)
         {
-            if (!(lCBW->bmCBWFlags.value & USB_MSD_CBW_DIRECTION_BITMASK))
+            if ((lCBW->bmCBWFlags.value & (uint8_t)USB_MSD_CBW_DIRECTION_BITMASK) == 0U)
             {
-                *commandStatus = USB_MSD_CSW_COMMAND_FAILED; 
+                *commandStatus = (uint8_t)USB_MSD_CSW_COMMAND_FAILED; 
                 return USB_DEVICE_MSD_STATE_CSW;
             }
             return USB_DEVICE_MSD_STATE_DATA_IN;
         }
         else
         {
-            if (lCBW->bmCBWFlags.value & USB_MSD_CBW_DIRECTION_BITMASK)
+            if ((lCBW->bmCBWFlags.value & (uint8_t)USB_MSD_CBW_DIRECTION_BITMASK) != 0U)
             {
-                *commandStatus = USB_MSD_CSW_COMMAND_FAILED; 
+                *commandStatus = (uint8_t)USB_MSD_CSW_COMMAND_FAILED; 
                 return USB_DEVICE_MSD_STATE_CSW;
             }
 
@@ -944,12 +972,12 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_VerifyCommand
             {
                 /* Media is write protected. Set sense keys so the host knows
                  * what caused the error. */
-                mediaDynamicData->senseData->SenseKey = SCSI_SENSE_DATA_PROTECT;
-                mediaDynamicData->senseData->ASC = SCSI_ASC_WRITE_PROTECTED;
-                mediaDynamicData->senseData->ASCQ = SCSI_ASCQ_WRITE_PROTECTED;
+                mediaDynamicData->senseData->SenseKey = (uint8_t)SCSI_SENSE_DATA_PROTECT;
+                mediaDynamicData->senseData->ASC = (uint8_t)SCSI_ASC_WRITE_PROTECTED;
+                mediaDynamicData->senseData->ASCQ = (uint8_t)SCSI_ASCQ_WRITE_PROTECTED;
 
                 /* Indicate in CSW that command failed. */
-                *commandStatus = USB_MSD_CSW_COMMAND_FAILED; 
+                *commandStatus = (uint8_t)USB_MSD_CSW_COMMAND_FAILED; 
                 return USB_DEVICE_MSD_STATE_CSW;
             }
 
@@ -962,7 +990,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_VerifyCommand
 
 // ******************************************************************************
 /* Function:
-    void  _USB_DEVICE_MSD_GetBlockAddressAndLength
+    void  F_USB_DEVICE_MSD_GetBlockAddressAndLength
     (
         USB_MSD_CBW * lCBW,
         USB_DEVICE_MSD_DWORD_VAL * logicalBlockAddress,
@@ -982,7 +1010,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_VerifyCommand
     application.
 */
 
-void  _USB_DEVICE_MSD_GetBlockAddressAndLength
+void  F_USB_DEVICE_MSD_GetBlockAddressAndLength
 (
     USB_MSD_CBW * lCBW,
     USB_DEVICE_MSD_DWORD_VAL * logicalBlockAddress,
@@ -1000,7 +1028,7 @@ void  _USB_DEVICE_MSD_GetBlockAddressAndLength
 
 // ******************************************************************************
 /* Function:
-    void  _USB_DEVICE_MSD_SaveBlockAddressAndLength
+    void  F_USB_DEVICE_MSD_SaveBlockAddressAndLength
     (
         USB_MSD_CBW * lCBW,
         USB_DEVICE_MSD_DWORD_VAL * logicalBlockAddress,
@@ -1020,7 +1048,7 @@ void  _USB_DEVICE_MSD_GetBlockAddressAndLength
     application.
 */
 
-void  _USB_DEVICE_MSD_SaveBlockAddressAndLength
+void  F_USB_DEVICE_MSD_SaveBlockAddressAndLength
 (
     USB_MSD_CBW * lCBW,
     USB_DEVICE_MSD_DWORD_VAL * logicalBlockAddress,
@@ -1041,7 +1069,7 @@ void  _USB_DEVICE_MSD_SaveBlockAddressAndLength
 
 }    
 
-USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessRead
+USB_DEVICE_MSD_STATE F_USB_DEVICE_MSD_ProcessRead
 (
     SYS_MODULE_INDEX iMSD,
     uint8_t *commandStatus
@@ -1078,11 +1106,11 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessRead
     msdBuffer = msdInstance->mediaData[logicalUnit].sectorBuffer;
     drvHandle = mediaDynamicData->mediaHandle;
 
-    *commandStatus = USB_MSD_CSW_COMMAND_PASSED;
+    *commandStatus = (uint8_t)USB_MSD_CSW_COMMAND_PASSED;
     logicalBlockAddress.Val = 0;
     logicalBlockLength.Val = 0;
 
-    _USB_DEVICE_MSD_GetBlockAddressAndLength(lCBW, &logicalBlockAddress, &logicalBlockLength);
+    F_USB_DEVICE_MSD_GetBlockAddressAndLength(lCBW, &logicalBlockAddress, &logicalBlockLength);
 
     if (mediaDynamicData->mediaState == USB_DEVICE_MSD_MEDIA_OPERATION_COMPLETE)
     {
@@ -1091,11 +1119,11 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessRead
         {
             msdInstance->rxTxTotalDataByteCount += mediaDynamicData->sectorSize;
             msdInstance->irpTx.size = mediaDynamicData->sectorSize;
-            msdInstance->irpTx.data = (void *)&msdBuffer[msdInstance->numPendingIrps * 512];
+            msdInstance->irpTx.data = (void *)&msdBuffer[msdInstance->numPendingIrps * 512U];
             msdInstance->irpTx.flags = USB_DEVICE_IRP_FLAG_DATA_PENDING;
 
             /* Submit the endpoint */
-            USB_DEVICE_IRPSubmit( msdInstance->hUsbDevHandle, msdInstance->bulkEndpointTx, &msdInstance->irpTx);
+            (void) USB_DEVICE_IRPSubmit( msdInstance->hUsbDevHandle, msdInstance->bulkEndpointTx, &msdInstance->irpTx);
             msdInstance->numPendingIrps ++;
 
             /* There is still data to be transferred. Continue to be in the IN state. */
@@ -1107,7 +1135,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessRead
         msdInstance->bufferOffset = 0;
 
         mediaDynamicData->mediaState = USB_DEVICE_MSD_MEDIA_OPERATION_IDLE;
-        if (logicalBlockLength.Val == 0)
+        if (logicalBlockLength.Val == 0U)
         {
             /* End the data stage and move to CSW state */
             return USB_DEVICE_MSD_STATE_CSW;
@@ -1119,13 +1147,13 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessRead
         mediaDynamicData->mediaState = USB_DEVICE_MSD_MEDIA_OPERATION_PENDING;
 
         /* Find the amount of buffering available with the MSD driver. */
-        if (logicalBlockLength.Val > _DRV_MSD_NUM_SECTORS_BUFFERING)
+        if (logicalBlockLength.Val > (uint32_t)M_DRV_MSD_NUM_SECTORS_BUFFERING)
         {
-            msdInstance->bufferOffset = _DRV_MSD_NUM_SECTORS_BUFFERING;
+            msdInstance->bufferOffset = M_DRV_MSD_NUM_SECTORS_BUFFERING;
         }
         else
         {
-            msdInstance->bufferOffset = logicalBlockLength.Val;
+            msdInstance->bufferOffset = (uint8_t)logicalBlockLength.Val;
         }
 
         /* Find the media read block size */
@@ -1141,7 +1169,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessRead
         if (mediaReadWriteHandle == SYS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID)
         {
             /* Media Read Failed. */
-            *commandStatus = USB_MSD_CSW_COMMAND_FAILED;
+            *commandStatus = (uint8_t)USB_MSD_CSW_COMMAND_FAILED;
             return USB_DEVICE_MSD_STATE_CSW;
         }
 
@@ -1150,20 +1178,24 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessRead
         logicalBlockLength.Val -= msdInstance->bufferOffset;
         logicalBlockAddress.Val += msdInstance->bufferOffset;
 
-        _USB_DEVICE_MSD_SaveBlockAddressAndLength(lCBW, &logicalBlockAddress, &logicalBlockLength);
+        F_USB_DEVICE_MSD_SaveBlockAddressAndLength(lCBW, &logicalBlockAddress, &logicalBlockLength);
 
         msdInstance->numPendingIrps = 0;
     }
     else if (mediaDynamicData->mediaState == USB_DEVICE_MSD_MEDIA_OPERATION_ERROR)
     {
-        *commandStatus = USB_MSD_CSW_COMMAND_FAILED;
+        *commandStatus = (uint8_t)USB_MSD_CSW_COMMAND_FAILED;
         return USB_DEVICE_MSD_STATE_CSW;
+    }
+    else
+    {
+        /* Do nothing */
     }
 
     return USB_DEVICE_MSD_STATE_DATA_IN;
 }
 
-USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessWrite
+USB_DEVICE_MSD_STATE F_USB_DEVICE_MSD_ProcessWrite
 (
     SYS_MODULE_INDEX iMSD,
     uint8_t * commandStatus
@@ -1206,7 +1238,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessWrite
     writeBlockBackupBuffer = msdInstance->mediaData[logicalUnit].blockBuffer;
 
     /* Assume that the command will pass */ 
-    *commandStatus = USB_MSD_CSW_COMMAND_PASSED; 
+    *commandStatus = (uint8_t)USB_MSD_CSW_COMMAND_PASSED; 
 
     /* Reset some of the local variables */
     logicalBlockAddress.Val = 0;
@@ -1216,7 +1248,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessWrite
     /* Media is not write protected. Go ahead writing the media 
      * Get the logical block address, transfer length fields from
      * Command Block Wrapper */
-    _USB_DEVICE_MSD_GetBlockAddressAndLength(lCBW, &logicalBlockAddress, &logicalBlockLength);
+    F_USB_DEVICE_MSD_GetBlockAddressAndLength(lCBW, &logicalBlockAddress, &logicalBlockLength);
 
     /* This is the media write block size in bytes. We will need to make
      * a translation from media block size to the sector size */
@@ -1229,20 +1261,20 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessWrite
     }
     else
     {
-        sectorsPerBlock = mediaWriteBlockSize/mediaDynamicData->sectorSize;
+        sectorsPerBlock = (uint8_t)(mediaWriteBlockSize/mediaDynamicData->sectorSize);
     }
 
     memoryBlock = logicalBlockAddress.Val/sectorsPerBlock;
 
     if (mediaDynamicData->mediaState == USB_DEVICE_MSD_MEDIA_OPERATION_COMPLETE)
     {
-        if (logicalBlockLength.Val == 0)
+        if (logicalBlockLength.Val == 0U)
         {
             /* Done writing all the blocks. Move on to the CSW Stage. */
             return USB_DEVICE_MSD_STATE_CSW;
         }
 
-        if (msdInstance->numSectorsToWrite == 0)
+        if (msdInstance->numSectorsToWrite == 0U)
         {
             /* The amount of data as computed in the previous iteration is transferred.
                There is still data to be transferred. Compute the next set of data to be transferred.
@@ -1253,33 +1285,37 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessWrite
     else if (mediaDynamicData->mediaState == USB_DEVICE_MSD_MEDIA_OPERATION_ERROR)
     {
         /* There was an error while writing the data. */
-        (*commandStatus) = USB_MSD_CSW_COMMAND_FAILED;
+        (*commandStatus) = (uint8_t)USB_MSD_CSW_COMMAND_FAILED;
         return USB_DEVICE_MSD_STATE_CSW;
+    }
+    else
+    {
+        /* Do Nothing */
     }
 
     /* operation state is idle */
     if (mediaDynamicData->mediaState == USB_DEVICE_MSD_MEDIA_OPERATION_IDLE)
     {
         /* This is the initial condition. Number of sectors to be written in this block is zero. */
-        if (msdInstance->numSectorsToWrite == 0)
+        if (msdInstance->numSectorsToWrite == 0U)
         {
             /* Find the number of sectors to be written in this block */
-            if (sectorsPerBlock == 1)
+            if (sectorsPerBlock == 1U)
             {
                 /* Media sector size and the USB MSD Sector size are the same. */
-                if (logicalBlockLength.Val > _DRV_MSD_NUM_SECTORS_BUFFERING)
+                if (logicalBlockLength.Val > (uint32_t)M_DRV_MSD_NUM_SECTORS_BUFFERING)
                 {
                     /* The number of blocks to be transferred is more than the buffer size
                        available at the MSD. Read buffer size worth of data from the USB Host.
                        Mark this as the number of blocks to be written to the media. */
-                    msdInstance->numUsbSectors = _DRV_MSD_NUM_SECTORS_BUFFERING;
+                    msdInstance->numUsbSectors = M_DRV_MSD_NUM_SECTORS_BUFFERING;
                 }
                 else
                 {
                     /* The number of blocks to be transferred is less than the buffer size available
                        at the MSD. Read all requested number of blocks from the USB Host.
                        Mark this as the number of blocks to be written to the media. */
-                    msdInstance->numUsbSectors = logicalBlockLength.Val;
+                    msdInstance->numUsbSectors = (uint8_t)logicalBlockLength.Val;
                 }
             }
             else
@@ -1287,7 +1323,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessWrite
                 /* Media sector and the USB MSD Sector size is not the same. Use the 
                    the read-modify-write concept if a partial media sector is to be 
                    updated. */
-                uint8_t sectorOffsetInBlock = (logicalBlockAddress.Val - (memoryBlock * sectorsPerBlock));
+                uint8_t sectorOffsetInBlock = (uint8_t)(logicalBlockAddress.Val - (memoryBlock * sectorsPerBlock));
                 uint8_t numRemainingSectorsInBlock = sectorsPerBlock - sectorOffsetInBlock;
 
                 if (logicalBlockLength.Val > numRemainingSectorsInBlock)
@@ -1295,9 +1331,9 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessWrite
                     /* Number of sectors to be written > numRemainingSectorsInBlock
                        number of sectors to read from usb = numRemainingSectorsInBlock
                        number of sectors to be written in this block = numRemainingSectorsInBlock */
-                    if (numRemainingSectorsInBlock > _DRV_MSD_NUM_SECTORS_BUFFERING)
+                    if (numRemainingSectorsInBlock > (uint8_t)M_DRV_MSD_NUM_SECTORS_BUFFERING)
                     {
-                        msdInstance->numUsbSectors = _DRV_MSD_NUM_SECTORS_BUFFERING;
+                        msdInstance->numUsbSectors = M_DRV_MSD_NUM_SECTORS_BUFFERING;
                     }
                     else
                     {
@@ -1311,13 +1347,13 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessWrite
                        Read all the sectors from the USB.
                        Update the number of sectors to be written to the media. */
 
-                    if (logicalBlockLength.Val > _DRV_MSD_NUM_SECTORS_BUFFERING)
+                    if (logicalBlockLength.Val > (uint32_t)M_DRV_MSD_NUM_SECTORS_BUFFERING)
                     {
-                        msdInstance->numUsbSectors = _DRV_MSD_NUM_SECTORS_BUFFERING;
+                        msdInstance->numUsbSectors = M_DRV_MSD_NUM_SECTORS_BUFFERING;
                     }
                     else
                     {
-                        msdInstance->numUsbSectors = logicalBlockLength.Val;
+                        msdInstance->numUsbSectors = (uint8_t)logicalBlockLength.Val;
                     }
                 }
             }
@@ -1326,17 +1362,17 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessWrite
             msdInstance->bufferOffset = 0;
         }
 
-        if (msdInstance->numUsbSectors > 0)
+        if (msdInstance->numUsbSectors > 0U)
         {
             /* There is still data that needs to be read from the USB. 
                Find the correct offset in the buffer for the new data.
              */
-            msdInstance->irpRx.data = (void *)&msdBuffer[msdInstance->bufferOffset * 512];
+            msdInstance->irpRx.data = (void *)&msdBuffer[msdInstance->bufferOffset * 512U];
             msdInstance->irpRx.size = mediaDynamicData->sectorSize;
             msdInstance->irpRx.flags = USB_DEVICE_IRP_FLAG_DATA_PENDING;
 
             /* Submit IRP to receive more data */
-            USB_DEVICE_IRPSubmit (msdInstance->hUsbDevHandle, msdInstance->bulkEndpointRx, &msdInstance->irpRx);
+            (void) USB_DEVICE_IRPSubmit (msdInstance->hUsbDevHandle, msdInstance->bulkEndpointRx, &msdInstance->irpRx);
 
             /* Increment the data buffer offset */
             msdInstance->bufferOffset++;
@@ -1347,7 +1383,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessWrite
         {
             /* There is no need to use the read-modify-write cycle if the media sector size
                and the usb msd sector size are the same or if the whole of the media sector is being programmed. */
-            if ((sectorsPerBlock == 1) || (sectorsPerBlock == msdInstance->numSectorsToWrite))
+            if ((sectorsPerBlock == 1U) || (sectorsPerBlock == msdInstance->numSectorsToWrite))
             {
                 /* set the operation status to complete */
                 mediaDynamicData->mediaState = USB_DEVICE_MSD_MEDIA_OPERATION_COMPLETE;
@@ -1365,7 +1401,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessWrite
                 if (mediaReadWriteHandle == SYS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID)
                 {
                     /* Media read failed. */
-                    *commandStatus = USB_MSD_CSW_COMMAND_FAILED;
+                    *commandStatus = (uint8_t)USB_MSD_CSW_COMMAND_FAILED;
                     return USB_DEVICE_MSD_STATE_CSW;
                 }
             }
@@ -1377,16 +1413,19 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessWrite
         uint8_t *data;
         uint32_t blockAddress;
         uint32_t numBlocks;
+        uint8_t tempNumBlocks;
+        uint16_t tempRxTxCount;
 
-        if ((sectorsPerBlock == 1) || (sectorsPerBlock == msdInstance->numSectorsToWrite))
+        if ((sectorsPerBlock == 1U) || (sectorsPerBlock == msdInstance->numSectorsToWrite))
         {
             data = msdBuffer;
-            numBlocks = msdInstance->numSectorsToWrite / sectorsPerBlock;
+            tempNumBlocks = (msdInstance->numSectorsToWrite / sectorsPerBlock);
+            numBlocks = (uint32_t)tempNumBlocks;
         }
         else
         {
             uint16_t i = 0;
-            uint16_t sectorOffsetWithinBlock = (logicalBlockAddress.Val - (memoryBlock * sectorsPerBlock)) * mediaDynamicData->sectorSize;
+            uint16_t sectorOffsetWithinBlock = (uint16_t)((logicalBlockAddress.Val - (memoryBlock * sectorsPerBlock)) * mediaDynamicData->sectorSize);
             /*
                find the offset in the write block buffer
                update with the data from the usb
@@ -1422,19 +1461,20 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessWrite
         if (mediaReadWriteHandle == SYS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID)
         {
             /* Media write failed. */
-            *commandStatus = USB_MSD_CSW_COMMAND_FAILED;
+            *commandStatus = (uint8_t)USB_MSD_CSW_COMMAND_FAILED;
             return USB_DEVICE_MSD_STATE_CSW;
         }
 
         /* Update the total byte count */
-        msdInstance->rxTxTotalDataByteCount += (msdInstance->numSectorsToWrite * 512);
+        tempRxTxCount = (msdInstance->numSectorsToWrite * 512U);
+        msdInstance->rxTxTotalDataByteCount += (uint32_t)tempRxTxCount;
 
         /* Updated the block address and the length values */
         logicalBlockAddress.Val += msdInstance->numSectorsToWrite;
         logicalBlockLength.Val -= msdInstance->numSectorsToWrite;
 
         /* Save back the updated address and logical block */
-        _USB_DEVICE_MSD_SaveBlockAddressAndLength(lCBW, &logicalBlockAddress, &logicalBlockLength);
+        F_USB_DEVICE_MSD_SaveBlockAddressAndLength(lCBW, &logicalBlockAddress, &logicalBlockLength);
 
         msdInstance->numSectorsToWrite = 0;
     }
@@ -1444,7 +1484,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessWrite
 
 // *****************************************************************************
 /* Function:
-    USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessNonRWCommand
+    USB_DEVICE_MSD_STATE F_USB_DEVICE_MSD_ProcessNonRWCommand
     (
         SYS_MODULE_INDEX iMSD,
         uint8_t * commandStatus
@@ -1461,7 +1501,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessWrite
     application.
 */
 
-USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessNonRWCommand
+USB_DEVICE_MSD_STATE F_USB_DEVICE_MSD_ProcessNonRWCommand
 (
     SYS_MODULE_INDEX iMSD,
     uint8_t * commandStatus
@@ -1500,28 +1540,28 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessNonRWCommand
     msdBuffer = msdInstance->mediaData[logicalUnit].sectorBuffer;
 
     /* Assume that the command will pass */ 
-    (* commandStatus) = USB_MSD_CSW_COMMAND_PASSED; 
+    (* commandStatus) = (uint8_t)USB_MSD_CSW_COMMAND_PASSED; 
 
     drvHandle = mediaDynamicData->mediaHandle;
 
     /* Process the command */
     switch(lCBW->CBWCB[0])
     {
-        case SCSI_INQUIRY:
+        case (uint8_t)SCSI_INQUIRY:
             {
                 uint8_t inquiryLen = 0;
-                if ((lCBW->dCBWDataTransferLength == 0) ||
-                        (!(lCBW->bmCBWFlags.value & USB_MSD_CBW_DIRECTION_BITMASK)))
+                if ((lCBW->dCBWDataTransferLength == 0U) ||
+                        ((lCBW->bmCBWFlags.value & (uint8_t)USB_MSD_CBW_DIRECTION_BITMASK) == 0U))
                 {
                     /* Fail the command if
                        1. Host does not want to receive any data.
                        2. If the data transfer direction is not IN.
                        */
-                    (*commandStatus) = USB_MSD_CSW_COMMAND_FAILED; 
+                    (*commandStatus) = (uint8_t)USB_MSD_CSW_COMMAND_FAILED; 
                     break;
                 }
 
-                inquiryLen = sizeof(SCSI_INQUIRY_RESPONSE);
+                inquiryLen = (uint8_t)sizeof(SCSI_INQUIRY_RESPONSE);
                 if (inquiryLen > lCBW->dCBWDataTransferLength)
                 {
                     /* Transfer the amount of data that the host is expecting. */
@@ -1535,30 +1575,30 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessNonRWCommand
 
                 msdInstance->rxTxTotalDataByteCount = length;
 
-                _USB_DEVICE_MSD_SendDataToUsb (iMSD,
+                F_USB_DEVICE_MSD_SendDataToUsb (iMSD,
                         (uint8_t *)&msdInstance->mediaData[logicalUnit].inquiryResponse,
-                        length);
+                        (uint16_t)length);
             }
             break;
 
-        case SCSI_MODE_SENSE:
+        case (uint8_t)SCSI_MODE_SENSE:
             {
                 uint8_t modeSenseLen = 0;
-                if ((lCBW->dCBWDataTransferLength == 0) ||
-                        (!(lCBW->bmCBWFlags.value & USB_MSD_CBW_DIRECTION_BITMASK)))
+                if ((lCBW->dCBWDataTransferLength == 0U) ||
+                        ((lCBW->bmCBWFlags.value & (uint8_t)USB_MSD_CBW_DIRECTION_BITMASK) == 0U))
                 {
                     /* Fail the command if
                        1. Host does not want to receive any data.
                        2. If the data transfer direction is not IN.
                        */
-                    (*commandStatus) = USB_MSD_CSW_COMMAND_FAILED; 
+                    (*commandStatus) = (uint8_t)USB_MSD_CSW_COMMAND_FAILED; 
                     break;
                 }
 
                 if (mediaDynamicData->mediaPresent == false)
                 {
                     /* Fail the command if the media is not present. */
-                    (*commandStatus) = USB_MSD_CSW_COMMAND_FAILED;
+                    (*commandStatus) = (uint8_t)USB_MSD_CSW_COMMAND_FAILED;
                     break;
                 }
 
@@ -1577,7 +1617,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessNonRWCommand
                 msdInstance->rxTxTotalDataByteCount = length;
 
                 /* Pad the bytes with zeroes first */
-                memset(msdBuffer, 0, length);
+                (void) memset(msdBuffer, 0, length);
 
                 /* Add required information */
                 msdBuffer[0] = 0x03;
@@ -1592,33 +1632,33 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessNonRWCommand
 
                 msdBuffer[3]= 0x00;
 
-                _USB_DEVICE_MSD_SendDataToUsb (iMSD, &msdBuffer[0], length);
+                F_USB_DEVICE_MSD_SendDataToUsb (iMSD, &msdBuffer[0], (uint16_t)length);
             }
             break;
 
-        case SCSI_REQUEST_SENSE:
+        case (uint8_t)SCSI_REQUEST_SENSE:
             {
                 uint8_t requestSenseLen = 0;
                 if(mediaDynamicData->mediaPresent == false)
                 {
                     /* Media is not present */
-                    mediaDynamicData->senseData->SenseKey = SCSI_SENSE_NOT_READY;
-                    mediaDynamicData->senseData->ASC = SCSI_ASC_MEDIUM_NOT_PRESENT;
-                    mediaDynamicData->senseData->ASCQ = SCSI_ASCQ_MEDIUM_NOT_PRESENT;
+                    mediaDynamicData->senseData->SenseKey = (uint8_t)SCSI_SENSE_NOT_READY;
+                    mediaDynamicData->senseData->ASC = (uint8_t)SCSI_ASC_MEDIUM_NOT_PRESENT;
+                    mediaDynamicData->senseData->ASCQ = (uint8_t)SCSI_ASCQ_MEDIUM_NOT_PRESENT;
                 }
 
-                if ((lCBW->dCBWDataTransferLength == 0) ||
-                        (!(lCBW->bmCBWFlags.value & USB_MSD_CBW_DIRECTION_BITMASK)))
+                if ((lCBW->dCBWDataTransferLength == 0U) ||
+                        ((lCBW->bmCBWFlags.value & (uint8_t)USB_MSD_CBW_DIRECTION_BITMASK) == 0U))
                 {
                     /* Fail the command if
                        1. Host does not want to receive any data.
                        2. If the data transfer direction is not IN.
                        */
-                    (*commandStatus) = USB_MSD_CSW_COMMAND_FAILED; 
+                    (*commandStatus) = (uint8_t)USB_MSD_CSW_COMMAND_FAILED; 
                     break;
                 }
 
-                requestSenseLen = sizeof(SCSI_SENSE_DATA);
+                requestSenseLen = (uint8_t)sizeof(SCSI_SENSE_DATA);
                 if (requestSenseLen > lCBW->dCBWDataTransferLength)
                 {
                     /* Transfer the amount of data that the host is expecting. */
@@ -1632,7 +1672,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessNonRWCommand
 
                 msdInstance->rxTxTotalDataByteCount = length;
 
-                _USB_DEVICE_MSD_SendDataToUsb (iMSD, (uint8_t *)mediaDynamicData->senseData, length);
+                F_USB_DEVICE_MSD_SendDataToUsb (iMSD, (uint8_t *)mediaDynamicData->senseData, (uint16_t)length);
 
                 /* Now the host is reading the sense data, we are good to reset in
                  * the next CBW stage */
@@ -1640,44 +1680,44 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessNonRWCommand
             }
             break;
 
-        case SCSI_TEST_UNIT_READY:
+        case (uint8_t)SCSI_TEST_UNIT_READY:
             {
-                if (lCBW->dCBWDataTransferLength != 0)
+                if (lCBW->dCBWDataTransferLength != 0U)
                 {
                     /* Fail the command if
                        1. Host is expecting to receive data.
                        */
-                    (* commandStatus) = USB_MSD_CSW_COMMAND_FAILED; 
+                    (* commandStatus) = (uint8_t)USB_MSD_CSW_COMMAND_FAILED; 
                     break;
                 }
 
                 if (mediaDynamicData->mediaPresent == false)
                 {
                     /* Fail the command if the media is not present. */
-                    (* commandStatus) = USB_MSD_CSW_COMMAND_FAILED; 
+                    (* commandStatus) = (uint8_t)USB_MSD_CSW_COMMAND_FAILED; 
                     break;
                 }
             }
             break;
 
-        case SCSI_READ_CAPACITY:
+        case (uint8_t)SCSI_READ_CAPACITY:
             {
                 uint8_t readCapacityLen = 0;
-                if ((lCBW->dCBWDataTransferLength == 0) ||
-                        (!(lCBW->bmCBWFlags.value & USB_MSD_CBW_DIRECTION_BITMASK)))
+                if ((lCBW->dCBWDataTransferLength == 0U) ||
+                        ((lCBW->bmCBWFlags.value & (uint8_t)USB_MSD_CBW_DIRECTION_BITMASK) == 0U))
                 {
                     /* Fail the command if
                        1. Host does not want to receive any data.
                        2. If the data transfer direction is not IN.
                        */
-                    (*commandStatus) = USB_MSD_CSW_COMMAND_FAILED; 
+                    (*commandStatus) = (uint8_t)USB_MSD_CSW_COMMAND_FAILED; 
                     break;
                 }
 
                 if (mediaDynamicData->mediaPresent == false)
                 {
                     /* Fail the command if the media is not present. */
-                    (*commandStatus) = USB_MSD_CSW_COMMAND_FAILED;
+                    (*commandStatus) = (uint8_t)USB_MSD_CSW_COMMAND_FAILED;
                     break;
                 }
 
@@ -1697,7 +1737,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessNonRWCommand
 
                 /* Get the information from the physical media */
                 mediaGeometry = mediaDynamicData->mediaGeometry;
-                if(mediaGeometry->numWriteRegions != 0)
+                if(mediaGeometry->numWriteRegions != 0U)
                 {
                     /* If there is a write region then return
                      * the size of the write region. The size of
@@ -1706,12 +1746,12 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessNonRWCommand
                     if (mediaGeometry->geometryTable[1].numBlocks > mediaDynamicData->sectorSize)
                     {
                         capacity.Val = ((mediaGeometry->geometryTable[1].numBlocks / mediaDynamicData->sectorSize) *
-                                mediaGeometry->geometryTable[1].blockSize) - 1;
+                                mediaGeometry->geometryTable[1].blockSize) - 1U;
                     }
                     else
                     {
                         capacity.Val = (((mediaGeometry->geometryTable[1].numBlocks * mediaGeometry->geometryTable[1].blockSize) / 
-                                mediaDynamicData->sectorSize) - 1);
+                                mediaDynamicData->sectorSize) - 1U);
                     }
                 }
                 else
@@ -1722,17 +1762,17 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessNonRWCommand
                     if (mediaGeometry->geometryTable[0].numBlocks > mediaDynamicData->sectorSize)
                     {
                         capacity.Val = ((mediaGeometry->geometryTable[0].numBlocks / mediaDynamicData->sectorSize) *
-                                mediaGeometry->geometryTable[0].blockSize) - 1;
+                                mediaGeometry->geometryTable[0].blockSize) - 1U;
                     }
                     else
                     {
                         capacity.Val = (((mediaGeometry->geometryTable[0].numBlocks * mediaGeometry->geometryTable[0].blockSize) / 
-                                mediaDynamicData->sectorSize) - 1);
+                                mediaDynamicData->sectorSize) - 1U);
                     }
                 }
 
                 /* Sector size was udpated when the media was opened in
-                 * the _USB_DEVICE_MSD_CheckAndUpdateMediaState() function */
+                 * the F_USB_DEVICE_MSD_CheckAndUpdateMediaState() function */
                 sectorSize.Val = mediaDynamicData->sectorSize;
 
                 /* Copy the data to the buffer.  Host expects the response in big
@@ -1747,32 +1787,32 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessNonRWCommand
                 msdBuffer[6] = sectorSize.v[1];
                 msdBuffer[7] = sectorSize.v[0];
                 
-                _USB_DEVICE_MSD_SendDataToUsb (iMSD, &msdBuffer[0], length);
+                F_USB_DEVICE_MSD_SendDataToUsb (iMSD, &msdBuffer[0], (uint16_t)length);
             }
             break;
 
-        case SCSI_VERIFY:
-        case SCSI_STOP_START:
+        case (uint8_t)SCSI_VERIFY:
+        case (uint8_t)SCSI_STOP_START:
             if(mediaDynamicData->mediaPresent == false)
             {
-                (*commandStatus) = USB_MSD_CSW_COMMAND_FAILED;
+                (*commandStatus) = (uint8_t)USB_MSD_CSW_COMMAND_FAILED;
             }
             break;
 
-        case SCSI_PREVENT_ALLOW_MEDIUM_REMOVAL:
-            mediaDynamicData->senseData->SenseKey = SCSI_SENSE_ILLEGAL_REQUEST;
-            mediaDynamicData->senseData->ASC = SCSI_ASC_INVALID_COMMAND_OPCODE;
-            mediaDynamicData->senseData->ASCQ = SCSI_ASCQ_INVALID_COMMAND_OPCODE;
-            (* commandStatus) = USB_MSD_CSW_COMMAND_FAILED;
+        case (uint8_t)SCSI_PREVENT_ALLOW_MEDIUM_REMOVAL:
+            mediaDynamicData->senseData->SenseKey = (uint8_t)SCSI_SENSE_ILLEGAL_REQUEST;
+            mediaDynamicData->senseData->ASC = (uint8_t)SCSI_ASC_INVALID_COMMAND_OPCODE;
+            mediaDynamicData->senseData->ASCQ = (uint8_t)SCSI_ASCQ_INVALID_COMMAND_OPCODE;
+            (* commandStatus) = (uint8_t)USB_MSD_CSW_COMMAND_FAILED;
             break;
 
         default:
-            _USB_DEVICE_MSD_ResetSenseData(mediaDynamicData->senseData);
+            F_USB_DEVICE_MSD_ResetSenseData(mediaDynamicData->senseData);
             // Set sense data.
-            mediaDynamicData->senseData->SenseKey = SCSI_SENSE_ILLEGAL_REQUEST;
-            mediaDynamicData->senseData->ASC = SCSI_ASC_INVALID_COMMAND_OPCODE;
-            mediaDynamicData->senseData->ASCQ = SCSI_ASCQ_INVALID_COMMAND_OPCODE;
-            (*commandStatus) = USB_MSD_CSW_COMMAND_FAILED;
+            mediaDynamicData->senseData->SenseKey = (uint8_t)SCSI_SENSE_ILLEGAL_REQUEST;
+            mediaDynamicData->senseData->ASC = (uint8_t)SCSI_ASC_INVALID_COMMAND_OPCODE;
+            mediaDynamicData->senseData->ASCQ = (uint8_t)SCSI_ASCQ_INVALID_COMMAND_OPCODE;
+            (*commandStatus) = (uint8_t)USB_MSD_CSW_COMMAND_FAILED;
             break;
     }
 
@@ -1781,7 +1821,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessNonRWCommand
 
 // *****************************************************************************
 /* Function:
-    void    _USB_DEVICE_MSD_Deinitialization (SYS_MODULE_INDEX iMSD)
+    void    F_USB_DEVICE_MSD_Deinitialization (SYS_MODULE_INDEX iMSD)
 
   Summary:
     MSD function driver deinitialization.
@@ -1796,7 +1836,7 @@ USB_DEVICE_MSD_STATE _USB_DEVICE_MSD_ProcessNonRWCommand
  
 */
 
-void _USB_DEVICE_MSD_Deinitialization ( SYS_MODULE_INDEX iMSD )
+void F_USB_DEVICE_MSD_Deinitialization ( SYS_MODULE_INDEX iMSD )
 {
     USB_DEVICE_MSD_INSTANCE * msdInstance;
     USB_DEVICE_MSD_MEDIA_FUNCTIONS * mediaFunctions;
@@ -1815,19 +1855,19 @@ void _USB_DEVICE_MSD_Deinitialization ( SYS_MODULE_INDEX iMSD )
         }
     }
     /* Cancel all RX IRPs */
-    USB_DEVICE_IRPCancelAll( msdInstance->hUsbDevHandle, msdInstance->bulkEndpointRx );
+    (void) USB_DEVICE_IRPCancelAll( msdInstance->hUsbDevHandle, msdInstance->bulkEndpointRx );
     
     /* Cancel all TX IRPs */
-    USB_DEVICE_IRPCancelAll( msdInstance->hUsbDevHandle, msdInstance->bulkEndpointTx );
+    (void) USB_DEVICE_IRPCancelAll( msdInstance->hUsbDevHandle, msdInstance->bulkEndpointTx );
 
     /* Close the endpoint */
-    USB_DEVICE_EndpointDisable( msdInstance->hUsbDevHandle, msdInstance->bulkEndpointRx );
-    USB_DEVICE_EndpointDisable( msdInstance->hUsbDevHandle, msdInstance->bulkEndpointTx );
+    (void) USB_DEVICE_EndpointDisable( msdInstance->hUsbDevHandle, msdInstance->bulkEndpointRx );
+    (void) USB_DEVICE_EndpointDisable( msdInstance->hUsbDevHandle, msdInstance->bulkEndpointTx );
 }
 
 // ******************************************************************************
 /* Function:
-     void _USB_DEVICE_MSD_ResetSenseData ( USB_DEVICE_MSD_SENSE_DATA * senseData )
+     void F_USB_DEVICE_MSD_ResetSenseData ( USB_DEVICE_MSD_SENSE_DATA * senseData )
 
   Summary:
     MSD function driver deinitialization.
@@ -1841,12 +1881,12 @@ void _USB_DEVICE_MSD_Deinitialization ( SYS_MODULE_INDEX iMSD )
     application.
 */
 
-void _USB_DEVICE_MSD_ResetSenseData( SCSI_SENSE_DATA * senseData )
+void F_USB_DEVICE_MSD_ResetSenseData( SCSI_SENSE_DATA * senseData )
 {
-   	senseData->ResponseCode = SCSI_SENSE_CURRENT;
+   	senseData->ResponseCode = (uint8_t)SCSI_SENSE_CURRENT;
 	senseData->VALID = 0;			// no data in the information field
 	senseData->Obsolete = 0x0;
-	senseData->SenseKey = SCSI_SENSE_NO_SENSE;
+	senseData->SenseKey = (uint8_t)SCSI_SENSE_NO_SENSE;
 	senseData->ILI = 0;
 	senseData->EOM = 0;
 	senseData->FILEMARK = 0;

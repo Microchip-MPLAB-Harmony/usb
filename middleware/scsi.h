@@ -40,8 +40,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _SCSI_H_
-#define _SCSI_H_
+#ifndef SCSI_H
+#define SCSI_H
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -265,6 +265,13 @@ typedef struct __attribute__((packed))
 } SCSI_INQUIRY_RESPONSE;
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 6.1 deviated:10 and 21.2 deviate:1. 
+   Deviation record ID -  H3_MISRAC_2012_R_6_1_DR_1 and H3_MISRAC_2012_R_21_2_DR_1*/
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:10 "MISRA C-2012 Rule 6.1" "H3_MISRAC_2012_R_6_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 21.2" "H3_MISRAC_2012_R_21_2_DR_1" )  
 /* SCSI Sense Data structure.
 
   Summary:
@@ -339,6 +346,11 @@ typedef union __attribute__((packed))
     // 18 Bytes Request Sense Fixed Format
 
 } SCSI_SENSE_DATA;
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 6.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 21.2"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
