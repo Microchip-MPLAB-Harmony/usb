@@ -42,8 +42,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _USB_PRINTER_H
-#define _USB_PRINTER_H
+#ifndef USB_PRINTER_H
+#define USB_PRINTER_H
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -81,11 +81,11 @@
 
 /* Base class for printers */
 /* Do not modify this value */
-#define USB_PRINTER_INTERFACE_CLASS_CODE            0x07
+#define USB_PRINTER_INTERFACE_CLASS_CODE            0x07U
         
 /* Subclass codes for Printer devices */        
 /* Do not modify this value */
-#define USB_PRINTER_INTERFACE_SUBCLASS_CODE         0x01
+#define USB_PRINTER_INTERFACE_SUBCLASS_CODE         0x01U
         
 /* Printer Interface Type */
 /* 
@@ -96,7 +96,7 @@
 #define USB_PRINTER_INTERFACE_PROTOCOL              0x01
 
 /* bmRequestType for Printer class specific request */
-#define USB_PRINTER_REQUEST_CLASS_SPECIFIC          0x21
+#define USB_PRINTER_REQUEST_CLASS_SPECIFIC          0x21U
 
 // *****************************************************************************
 // *****************************************************************************

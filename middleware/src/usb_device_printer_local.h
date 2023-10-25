@@ -39,8 +39,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _USB_DEVICE_PRINTER_LOCAL_H
-#define _USB_DEVICE_PRINTER_LOCAL_H
+#ifndef USB_DEVICE_PRINTER_LOCAL_H
+#define USB_DEVICE_PRINTER_LOCAL_H
 
 
 // *****************************************************************************
@@ -240,7 +240,7 @@ typedef struct
 
 //******************************************************************************
 /* Function:
-    static void _USB_DEVICE_PRINTER_ControlTransferHandler
+    static void F_USB_DEVICE_PRINTER_ControlTransferHandler
     (
         SYS_MODULE_INDEX iPRN ,
         USB_DEVICE_CONTROL_TRANSFER_EVENT controlTransferEvent,
@@ -257,7 +257,7 @@ typedef struct
     Called by the device layer.
  */
 
-void _USB_DEVICE_PRINTER_ControlTransferHandler
+void F_USB_DEVICE_PRINTER_ControlTransferHandler
 (
     SYS_MODULE_INDEX iPRN ,
     USB_DEVICE_EVENT controlTransferEvent,
@@ -267,7 +267,7 @@ void _USB_DEVICE_PRINTER_ControlTransferHandler
 
 //******************************************************************************
 /* Function:
-    void _USB_DEVICE_PRINTER_Initialization ( SYS_MODULE_INDEX iPRN ,
+    void F_USB_DEVICE_PRINTER_Initialization ( SYS_MODULE_INDEX iPRN ,
                                      DRV_HANDLE deviceHandle ,
                                      void* funcDriverInitData ,
                                      uint8_t infNum ,
@@ -284,7 +284,7 @@ void _USB_DEVICE_PRINTER_ControlTransferHandler
     Called by the device layer per instance.
  */
 
-void _USB_DEVICE_PRINTER_Initialization
+void F_USB_DEVICE_PRINTER_Initialization
 (
     SYS_MODULE_INDEX iPRN ,
     DRV_HANDLE deviceHandle ,
@@ -299,7 +299,7 @@ void _USB_DEVICE_PRINTER_Initialization
 // *****************************************************************************
 
 /* Function:
-    void	_USB_DEVICE_PRINTER_Deinitialization (SYS_MODULE_INDEX iPRN)
+    void	F_USB_DEVICE_PRINTER_Deinitialization (SYS_MODULE_INDEX iPRN)
 
   Summary:
     Printer function driver deinitialization.
@@ -319,7 +319,7 @@ void _USB_DEVICE_PRINTER_Initialization
 
   Example:
     <code>
-    // Called by the device layer.
+    Called by the device layer.
     </code>
 
   Remarks:
@@ -327,11 +327,11 @@ void _USB_DEVICE_PRINTER_Initialization
     called explicitly.
  */
 
-void _USB_DEVICE_PRINTER_Deinitialization ( SYS_MODULE_INDEX iPRN );
+void F_USB_DEVICE_PRINTER_Deinitialization ( SYS_MODULE_INDEX iPRN );
 
 // ******************************************************************************
 /* Function:
-    void _USB_DEVICE_PRINTER_GlobalInitialize ( void )
+    void F_USB_DEVICE_PRINTER_GlobalInitialize ( void )
 
   Summary:
     This function initializes resourses required common to all instances of 
@@ -353,17 +353,17 @@ void _USB_DEVICE_PRINTER_Deinitialization ( SYS_MODULE_INDEX iPRN );
 
   Example:
     <code>
-    // Called by the device layer.
+    Called by the device layer.
     </code>
 
   Remarks:
     This is local function and should not be called directly by the application.
 */
-void _USB_DEVICE_PRINTER_GlobalInitialize (void);
+void F_USB_DEVICE_PRINTER_GlobalInitialize (void);
 
 //******************************************************************************
 /* Function:
-    void _USB_DEVICE_PRINTER_WriteIRPCallback (USB_DEVICE_IRP * irp )
+    void F_USB_DEVICE_PRINTER_WriteIRPCallback (USB_DEVICE_IRP * irp )
 
   Summary:
     TX data callback.
@@ -375,12 +375,12 @@ void _USB_DEVICE_PRINTER_GlobalInitialize (void);
     Called by the controller driver 
  */
 
-void _USB_DEVICE_PRINTER_WriteIRPCallback (USB_DEVICE_IRP * irp );
+void F_USB_DEVICE_PRINTER_WriteIRPCallback (USB_DEVICE_IRP * irp );
 
 
 //******************************************************************************
 /* Function:
-    void _USB_DEVICE_PRINTER_ReadIRPCallback (USB_DEVICE_IRP * irp )
+    void F_USB_DEVICE_PRINTER_ReadIRPCallback (USB_DEVICE_IRP * irp )
 
   Summary:
     RX data callback.
@@ -392,7 +392,7 @@ void _USB_DEVICE_PRINTER_WriteIRPCallback (USB_DEVICE_IRP * irp );
     Called by the controller driver
  */
 
-void _USB_DEVICE_PRINTER_ReadIRPCallback (USB_DEVICE_IRP * irp );
+void F_USB_DEVICE_PRINTER_ReadIRPCallback (USB_DEVICE_IRP * irp );
 
 #ifdef __cplusplus  // Provide C++ Compatibility
 

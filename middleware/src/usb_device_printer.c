@@ -73,19 +73,19 @@ const USB_DEVICE_FUNCTION_DRIVER printerFunctionDriver =
 {
 
     /* Printer init function */
-    .initializeByDescriptor         = _USB_DEVICE_PRINTER_Initialization ,
+    .initializeByDescriptor         = F_USB_DEVICE_PRINTER_Initialization ,
 
     /* Printer de-init function */
-    .deInitialize                   = _USB_DEVICE_PRINTER_Deinitialization ,
+    .deInitialize                   = F_USB_DEVICE_PRINTER_Deinitialization ,
 
     /* EP0 activity callback */
-    .controlTransferNotification    = _USB_DEVICE_PRINTER_ControlTransferHandler,
+    .controlTransferNotification    = F_USB_DEVICE_PRINTER_ControlTransferHandler,
 
     /* Printer tasks function */
     .tasks                          = NULL,
 
     /* Printer Global Initialize */
-    .globalInitialize = _USB_DEVICE_PRINTER_GlobalInitialize
+    .globalInitialize = F_USB_DEVICE_PRINTER_GlobalInitialize
 };
 
 // *****************************************************************************
@@ -102,10 +102,10 @@ const USB_DEVICE_FUNCTION_DRIVER printerFunctionDriver =
     This array is private to the USB stack.
 */
 
-USB_DEVICE_IRP gUSBDevicePrinterIRP[USB_DEVICE_PRINTER_QUEUE_DEPTH_COMBINED];
+static USB_DEVICE_IRP gUSBDevicePrinterIRP[USB_DEVICE_PRINTER_QUEUE_DEPTH_COMBINED];
 
 /* Create a variable for holding Printer IRP mutex Handle and status */
-USB_DEVICE_PRINTER_COMMON_DATA_OBJ gUSBDevicePrinterCommonDataObj;
+static USB_DEVICE_PRINTER_COMMON_DATA_OBJ gUSBDevicePrinterCommonDataObj;
  
 
 // *****************************************************************************
@@ -122,7 +122,7 @@ USB_DEVICE_PRINTER_COMMON_DATA_OBJ gUSBDevicePrinterCommonDataObj;
     This structure is private to the PRINTER.
 */
 
-USB_DEVICE_PRINTER_INSTANCE gUSBDevicePRINTERInstance[USB_DEVICE_PRINTER_INSTANCES_NUMBER];
+static USB_DEVICE_PRINTER_INSTANCE gUSBDevicePRINTERInstance[USB_DEVICE_PRINTER_INSTANCES_NUMBER];
 
 // *****************************************************************************
 // *****************************************************************************
@@ -135,8 +135,12 @@ USB_DEVICE_PRINTER_INSTANCE gUSBDevicePRINTERInstance[USB_DEVICE_PRINTER_INSTANC
 // *****************************************************************************
 // *****************************************************************************
 // ******************************************************************************
+/* MISRA C-2012 Rule 10.4 False Positive:7 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block fp:7 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" 
 /* Function:
-    void _USB_DEVICE_PRINTER_GlobalInitialize ( void )
+    void F_USB_DEVICE_PRINTER_GlobalInitialize ( void )
 
   Summary:
     This function initializes resources required for printer 
@@ -149,7 +153,7 @@ USB_DEVICE_PRINTER_INSTANCE gUSBDevicePRINTERInstance[USB_DEVICE_PRINTER_INSTANC
   Remarks:
     This is local function and should not be called directly by the application.
 */
-void _USB_DEVICE_PRINTER_GlobalInitialize (void)
+void F_USB_DEVICE_PRINTER_GlobalInitialize (void)
 {
     OSAL_RESULT osal_err;
     
@@ -171,8 +175,13 @@ void _USB_DEVICE_PRINTER_GlobalInitialize (void)
 }
 
 // ******************************************************************************
+/* MISRA C-2012 Rule 11.3 deviate:2, and 11.8 deviate:1. Deviation record ID -  
+    H3_MISRAC_2012_R_11_3_DR_1, H3_MISRAC_2012_R_11_8_DR_1 */
+#pragma coverity compliance block \
+(deviate:2 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
 /* Function:
-    void _USB_DEVICE_PRINTER_Initialization 
+    void F_USB_DEVICE_PRINTER_Initialization 
 
   Summary:
     USB Device printer function called by the device layer during Set Configuration
@@ -185,11 +194,11 @@ void _USB_DEVICE_PRINTER_GlobalInitialize (void)
   Remarks:
     This is local function and should not be called directly by the application.
 */
-void _USB_DEVICE_PRINTER_Initialization 
+void F_USB_DEVICE_PRINTER_Initialization 
 ( 
     SYS_MODULE_INDEX iPRN ,
-    USB_DEVICE_HANDLE deviceHandle ,
-    void* initData ,
+    DRV_HANDLE deviceHandle ,
+    void* funcDriverInitData  ,
     uint8_t infNum ,
     uint8_t altSetting ,
     uint8_t descType ,
@@ -202,10 +211,10 @@ void _USB_DEVICE_PRINTER_Initialization
     USB_ENDPOINT_DESCRIPTOR *pEPDesc;
     USB_INTERFACE_DESCRIPTOR *pInfDesc;
     USB_DEVICE_PRINTER_INIT *prnInitializationData;
-	int count; 
+	uint32_t count; 
 
     /* Check the validity of the function driver index */
-    if (iPRN >= USB_DEVICE_PRINTER_INSTANCES_NUMBER)
+    if (iPRN >= (uint16_t)USB_DEVICE_PRINTER_INSTANCES_NUMBER)
     {
         /* Assert on invalid Printer index */
         SYS_DEBUG(0, "USB Device Printer: Invalid index");
@@ -213,7 +222,7 @@ void _USB_DEVICE_PRINTER_Initialization
     }
 
     prnInstance = &gUSBDevicePRINTERInstance[iPRN];
-    prnInitializationData = (USB_DEVICE_PRINTER_INIT *)initData;
+    prnInitializationData = (USB_DEVICE_PRINTER_INIT *)funcDriverInitData ;
     prnInstance->queueSizeWrite = prnInitializationData->queueSizeWrite;
     prnInstance->queueSizeRead = prnInitializationData->queueSizeRead;
     prnInstance->currentQSizeWrite = 0;
@@ -229,9 +238,9 @@ void _USB_DEVICE_PRINTER_Initialization
                 /* Remember the USB Device Layer handle */
                 prnInstance->deviceHandle = deviceHandle;
 
-                if( pEPDesc->transferType == USB_TRANSFER_TYPE_BULK )
+                if( pEPDesc->transferType == (uint32_t)USB_TRANSFER_TYPE_BULK )
                 {
-                    if(pEPDesc->dirn == USB_DATA_DIRECTION_DEVICE_TO_HOST)
+                    if(pEPDesc->dirn == (uint32_t)USB_DATA_DIRECTION_DEVICE_TO_HOST)
                     {
                         if(prnInstance->interfaceType != USB_DEVICE_PRINTER_UNIDIRECTIONAL)
                         {
@@ -240,7 +249,7 @@ void _USB_DEVICE_PRINTER_Initialization
                             prnInstance->bulkEndpointTx.maxPacketSize =  pEPDesc->wMaxPacketSize;
                             
                             /* Enable the TX endpoint */
-                            USB_DEVICE_EndpointEnable(deviceHandle, 0, pEPDesc->bEndpointAddress, pEPDesc->transferType, pEPDesc->wMaxPacketSize);
+                            (void) USB_DEVICE_EndpointEnable(deviceHandle, 0, pEPDesc->bEndpointAddress, (USB_TRANSFER_TYPE)pEPDesc->transferType, pEPDesc->wMaxPacketSize);
                             /* Indicate that the endpoint is configured */
                             prnInstance->bulkEndpointTx.isConfigured = true;
                         }
@@ -256,7 +265,7 @@ void _USB_DEVICE_PRINTER_Initialization
                         prnInstance->bulkEndpointRx.maxPacketSize = pEPDesc->wMaxPacketSize;
 
                         /* Enable the endpoint */
-                        USB_DEVICE_EndpointEnable(deviceHandle, 0, pEPDesc->bEndpointAddress, pEPDesc->transferType,pEPDesc->wMaxPacketSize);
+                        (void) USB_DEVICE_EndpointEnable(deviceHandle, 0, pEPDesc->bEndpointAddress, (USB_TRANSFER_TYPE)pEPDesc->transferType,pEPDesc->wMaxPacketSize);
                         /* Indicate that the endpoint is configured */
                         prnInstance->bulkEndpointRx.isConfigured = true;
                         /* Now the device layer has opened the bulk endpoint */
@@ -277,15 +286,15 @@ void _USB_DEVICE_PRINTER_Initialization
                         ( pInfDesc->bInterfaceSubClass == USB_PRINTER_INTERFACE_SUBCLASS_CODE ) )
                 {
                     /* Save the interface type */
-                    if ( pInfDesc->bInterfaceProtocol == 0x1 )
+                    if ( pInfDesc->bInterfaceProtocol == 0x1U )
                     {
                         prnInstance->interfaceType = USB_DEVICE_PRINTER_UNIDIRECTIONAL;
                     }
-                    else if ( pInfDesc->bInterfaceProtocol == 0x2 )
+                    else if ( pInfDesc->bInterfaceProtocol == 0x2U )
                     {
                         prnInstance->interfaceType = USB_DEVICE_PRINTER_BIDIRECTIONAL;
                     }
-                    else if ( pInfDesc->bInterfaceProtocol == 0x3 )
+                    else if ( pInfDesc->bInterfaceProtocol == 0x3U )
                     {
                         prnInstance->interfaceType = USB_DEVICE_PRINTER_IEEE1284_4;
                     }
@@ -329,7 +338,7 @@ void _USB_DEVICE_PRINTER_Initialization
 
 // ******************************************************************************
 /* Function:
-    void _USB_DEVICE_PRINTER_Deinitialization ( SYS_MODULE_INDEX iPRN )
+    void F_USB_DEVICE_PRINTER_Deinitialization ( SYS_MODULE_INDEX iPRN )
  
   Summary:
     De-initializes the function driver instance.
@@ -341,7 +350,7 @@ void _USB_DEVICE_PRINTER_Initialization
     This is local function and should not be called directly by the application.
 */
 
-void _USB_DEVICE_PRINTER_Deinitialization ( SYS_MODULE_INDEX iPRN )
+void F_USB_DEVICE_PRINTER_Deinitialization ( SYS_MODULE_INDEX iPRN )
 {
     /* Cancel all IRPs on the owned endpoints and then 
      * disable the endpoint */
@@ -350,7 +359,7 @@ void _USB_DEVICE_PRINTER_Deinitialization ( SYS_MODULE_INDEX iPRN )
 
     prnInstance = &gUSBDevicePRINTERInstance[iPRN];
 
-    if(iPRN >= USB_DEVICE_PRINTER_INSTANCES_NUMBER)
+    if(iPRN >= (uint16_t)USB_DEVICE_PRINTER_INSTANCES_NUMBER)
     {
         /* Assert on invalid Printer index */
         SYS_DEBUG(0, "USB Device Printer: Invalid index");
@@ -358,20 +367,20 @@ void _USB_DEVICE_PRINTER_Deinitialization ( SYS_MODULE_INDEX iPRN )
     } 
 
      /* Cancel all RX IRPs and close the OUT endpoint */
-    USB_DEVICE_IRPCancelAll( prnInstance->deviceHandle, prnInstance->bulkEndpointRx.address );
-    USB_DEVICE_EndpointDisable( prnInstance->deviceHandle, prnInstance->bulkEndpointRx.address );
+    (void) USB_DEVICE_IRPCancelAll( prnInstance->deviceHandle, prnInstance->bulkEndpointRx.address );
+    (void) USB_DEVICE_EndpointDisable( prnInstance->deviceHandle, prnInstance->bulkEndpointRx.address );
     
     if(prnInstance->interfaceType != USB_DEVICE_PRINTER_UNIDIRECTIONAL)
     {
         /* Cancel all TX IRPs and close the IN endpoint*/
-        USB_DEVICE_IRPCancelAll( prnInstance->deviceHandle, prnInstance->bulkEndpointTx.address );
-        USB_DEVICE_EndpointDisable( prnInstance->deviceHandle, prnInstance->bulkEndpointTx.address );
+        (void) USB_DEVICE_IRPCancelAll( prnInstance->deviceHandle, prnInstance->bulkEndpointTx.address );
+        (void) USB_DEVICE_EndpointDisable( prnInstance->deviceHandle, prnInstance->bulkEndpointTx.address );
     }
 }
 
 // ******************************************************************************
 /* Function:
-    void _USB_DEVICE_PRINTER_ControlTransferHandler 
+    void F_USB_DEVICE_PRINTER_ControlTransferHandler 
     (
         SYS_MODULE_INDEX iPRN ,
         USB_DEVICE_EVENT controlTransferEvent,
@@ -390,17 +399,17 @@ void _USB_DEVICE_PRINTER_Deinitialization ( SYS_MODULE_INDEX iPRN )
     This is local function and should not be called directly by the application.
 */
 
-void _USB_DEVICE_PRINTER_ControlTransferHandler 
+void F_USB_DEVICE_PRINTER_ControlTransferHandler 
 (
     SYS_MODULE_INDEX iPRN ,
     USB_DEVICE_EVENT controlTransferEvent,
-    USB_SETUP_PACKET * setupRequest
+    USB_SETUP_PACKET * setupPacket
 )
 {
     USB_DEVICE_PRINTER_INSTANCE * prnInstance;
     
     /* Check the validity of the function driver index */
-    if (iPRN >= USB_DEVICE_PRINTER_INSTANCES_NUMBER)
+    if (iPRN >= (uint16_t)USB_DEVICE_PRINTER_INSTANCES_NUMBER)
     {
         /* Assert on invalid Printer index */
         SYS_DEBUG(0, "USB Device Printer: Invalid index");
@@ -412,51 +421,52 @@ void _USB_DEVICE_PRINTER_ControlTransferHandler
 
     if(controlTransferEvent == USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST)
     {
-        if(( setupRequest->Recipient == 0x01) && (setupRequest->RequestType == 0x00))
+        if(( setupPacket->Recipient == 0x01U) && (setupPacket->RequestType == 0x00U))
         {
             /* This means the recipient of the control transfer is interface
              * and this is a standard request type */
 
-            switch(setupRequest->bRequest)
+            switch(setupPacket->bRequest)
             {
                 case USB_REQUEST_SET_INTERFACE:
 
                     /* If the host does a Set Interface, we simply acknowledge
                      * it. We also remember the interface that was set */
-                    prnInstance->alternateSetting = setupRequest->W_Value.byte.LB;
-                    USB_DEVICE_ControlStatus( prnInstance->deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
+                    prnInstance->alternateSetting = setupPacket->W_Value.byte.LB;
+                    (void) USB_DEVICE_ControlStatus( prnInstance->deviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
                     break;
 
                 case USB_REQUEST_GET_INTERFACE:
 
                     /* The host is requesting for the current interface setting
                      * number. Return the one that the host set */
-                    USB_DEVICE_ControlSend( prnInstance->deviceHandle, &prnInstance->alternateSetting, 1);
+                    (void) USB_DEVICE_ControlSend( prnInstance->deviceHandle, &prnInstance->alternateSetting, 1);
                     break;
 
                 default:
+                    /* Do Nothing */
                     break; 
             }
         }
-        else if( setupRequest->bmRequestType & USB_PRINTER_REQUEST_CLASS_SPECIFIC )
+        else if(( setupPacket->bmRequestType & USB_PRINTER_REQUEST_CLASS_SPECIFIC ) != 0U)
         {
             /* We have got setup request */
-            switch ( setupRequest->bRequest )
+            switch ( setupPacket->bRequest )
             {
-                case USB_PRINTER_GET_DEVICE_ID:
+                case (uint8_t)USB_PRINTER_GET_DEVICE_ID:
 
                     /* Return the device ID string that is compatible with IEEE 1284. */
-                    USB_DEVICE_ControlSend( prnInstance->deviceHandle, &prnInstance->deviceIDString, prnInstance->deviceIDLength );
+                    (void) USB_DEVICE_ControlSend( prnInstance->deviceHandle, &prnInstance->deviceIDString, prnInstance->deviceIDLength );
 
                     break;
 
-                case USB_PRINTER_GET_PORT_STATUS:
+                case (uint8_t)USB_PRINTER_GET_PORT_STATUS:
 
                     /* First make sure all request parameters are correct as per the Class Definition for Printing Devices
                      * wValue to be == 0x0000, and wLengh == 1 */
-                    if((setupRequest->wValue != 0) || (setupRequest->wLength != 1))
+                    if((setupPacket->wValue != 0U) || (setupPacket->wLength != 1U))
                     {
-                        USB_DEVICE_ControlStatus( prnInstance->deviceHandle,
+                        (void) USB_DEVICE_ControlStatus( prnInstance->deviceHandle,
                                 USB_DEVICE_CONTROL_STATUS_ERROR );
                         return ;
                     }
@@ -473,18 +483,18 @@ void _USB_DEVICE_PRINTER_ControlTransferHandler
 
                     break;
 
-                case  USB_PRINTER_SOFT_RESET:
+                case  (uint8_t)USB_PRINTER_SOFT_RESET:
 
                     /* First make sure all request parameters are correct */
-                   if((setupRequest->wValue != 0) || (setupRequest->wLength != 0))
+                   if((setupPacket->wValue != 0U) || (setupPacket->wLength != 0U))
                     {
-                        USB_DEVICE_ControlStatus( prnInstance->deviceHandle,
+                        (void) USB_DEVICE_ControlStatus( prnInstance->deviceHandle,
                                 USB_DEVICE_CONTROL_STATUS_ERROR );
                         return ;
                     }
 
                     /* Cancel all the IRPs */ 
-                    USB_DEVICE_IRPCancelAll(prnInstance->deviceHandle, prnInstance->bulkEndpointRx.address);
+                    (void) USB_DEVICE_IRPCancelAll(prnInstance->deviceHandle, prnInstance->bulkEndpointRx.address);
                     if(USB_DEVICE_EndpointIsStalled(prnInstance->deviceHandle, prnInstance->bulkEndpointRx.address))
                     {
                        /* Clear stalled OUT endpoint */
@@ -494,7 +504,7 @@ void _USB_DEVICE_PRINTER_ControlTransferHandler
                     if(prnInstance->interfaceType != USB_DEVICE_PRINTER_UNIDIRECTIONAL)
                     {
                         /* Cancel all the IRPs */
-                        USB_DEVICE_IRPCancelAll(prnInstance->deviceHandle, prnInstance->bulkEndpointTx.address);
+                        (void) USB_DEVICE_IRPCancelAll(prnInstance->deviceHandle, prnInstance->bulkEndpointTx.address);
                         if(USB_DEVICE_EndpointIsStalled(prnInstance->deviceHandle, prnInstance->bulkEndpointTx.address))
                         {
                             /* Clear stalled IN endpoint */
@@ -502,22 +512,26 @@ void _USB_DEVICE_PRINTER_ControlTransferHandler
                         }
                     }
 
-                    USB_DEVICE_ControlStatus( prnInstance->deviceHandle, USB_DEVICE_CONTROL_STATUS_OK );
+                    (void) USB_DEVICE_ControlStatus( prnInstance->deviceHandle, USB_DEVICE_CONTROL_STATUS_OK );
                    break;
 
                 default:
 
                    /* Stall other requests. */
-                   USB_DEVICE_ControlStatus( prnInstance->deviceHandle, USB_DEVICE_CONTROL_STATUS_ERROR );
+                   (void) USB_DEVICE_ControlStatus( prnInstance->deviceHandle, USB_DEVICE_CONTROL_STATUS_ERROR );
                    break;
             } 
+        }
+        else
+        {
+            /* Do Nothing */
         }
     }
 }
 
 // ******************************************************************************
 /* Function:
-    void _USB_DEVICE_PRINTER_ReadIRPCallback (USB_DEVICE_IRP * irp )
+    void F_USB_DEVICE_PRINTER_ReadIRPCallback (USB_DEVICE_IRP * irp )
  
   Summary:
     IRP call back for Data Read IRPs.
@@ -529,7 +543,7 @@ void _USB_DEVICE_PRINTER_ControlTransferHandler
     This is local function and should not be called directly by the application.
 */
 
-void _USB_DEVICE_PRINTER_ReadIRPCallback (USB_DEVICE_IRP * irp )
+void F_USB_DEVICE_PRINTER_ReadIRPCallback (USB_DEVICE_IRP * irp )
 {
     USB_DEVICE_PRINTER_INSTANCE * prnInstance;
 
@@ -575,7 +589,7 @@ void _USB_DEVICE_PRINTER_ReadIRPCallback (USB_DEVICE_IRP * irp )
     prnInstance->currentQSizeRead --;
 
     /* valid application event handler present? */
-    if ( prnInstance->appEventCallBack )
+    if ( prnInstance->appEventCallBack  != NULL)
     {
         /* inform the application */
         prnInstance->appEventCallBack ( (USB_DEVICE_PRINTER_INDEX)(irp->userData) , 
@@ -587,7 +601,7 @@ void _USB_DEVICE_PRINTER_ReadIRPCallback (USB_DEVICE_IRP * irp )
 
 // ******************************************************************************
 /* Function:
-    void _USB_DEVICE_PRINTER_WriteIRPCallback (USB_DEVICE_IRP * irp )
+    void F_USB_DEVICE_PRINTER_WriteIRPCallback (USB_DEVICE_IRP * irp )
  
   Summary:
     IRP call back for Data Write IRPs.
@@ -599,7 +613,7 @@ void _USB_DEVICE_PRINTER_ReadIRPCallback (USB_DEVICE_IRP * irp )
     This is local function and should not be called directly by the application.
 */
 
-void _USB_DEVICE_PRINTER_WriteIRPCallback (USB_DEVICE_IRP * irp )
+void F_USB_DEVICE_PRINTER_WriteIRPCallback (USB_DEVICE_IRP * irp )
 {
     USB_DEVICE_PRINTER_INSTANCE * prnInstance;
 
@@ -645,7 +659,7 @@ void _USB_DEVICE_PRINTER_WriteIRPCallback (USB_DEVICE_IRP * irp )
     prnInstance->currentQSizeWrite --;
 
     /* valid application event handler present? */
-    if ( prnInstance->appEventCallBack )
+    if ( prnInstance->appEventCallBack != NULL)
     {
         /* inform the application */
         prnInstance->appEventCallBack ( (USB_DEVICE_PRINTER_INDEX)(irp->userData) , 
@@ -699,13 +713,13 @@ void _USB_DEVICE_PRINTER_WriteIRPCallback (USB_DEVICE_IRP * irp )
 
 USB_DEVICE_PRINTER_RESULT USB_DEVICE_PRINTER_Read 
 (
-    USB_DEVICE_PRINTER_INDEX iPRN ,
+    USB_DEVICE_PRINTER_INDEX instanceIndex ,
     USB_DEVICE_PRINTER_TRANSFER_HANDLE * transferHandle ,
     void * data , size_t size
 )
 {
-    unsigned int cnt;
-    unsigned int remainder;
+    uint32_t cnt;
+    uint32_t remainderValue;
     USB_DEVICE_IRP * irp;
     USB_DEVICE_PRINTER_ENDPOINT * endpoint;
     USB_DEVICE_PRINTER_INSTANCE * prnInstance;
@@ -715,14 +729,14 @@ USB_DEVICE_PRINTER_RESULT USB_DEVICE_PRINTER_Read
 
     /* Check the validity of the function driver index */
     
-    if (  iPRN >= USB_DEVICE_PRINTER_INSTANCES_NUMBER  )
+    if (  instanceIndex >= (uint32_t)USB_DEVICE_PRINTER_INSTANCES_NUMBER  )
     {
         /* Invalid PRINTER index */
         SYS_ASSERT(false, "Invalid PRINTER Device Index");
         return USB_DEVICE_PRINTER_RESULT_ERROR_INSTANCE_INVALID;
     }
 
-    prnInstance = &gUSBDevicePRINTERInstance[iPRN];
+    prnInstance = &gUSBDevicePRINTERInstance[instanceIndex];
     endpoint = &prnInstance->bulkEndpointRx;
     *transferHandle = USB_DEVICE_PRINTER_TRANSFER_HANDLE_INVALID;
 
@@ -735,9 +749,9 @@ USB_DEVICE_PRINTER_RESULT USB_DEVICE_PRINTER_Read
     }
 
     /* For read the size should be a multiple of endpoint size*/
-    remainder = size % endpoint->maxPacketSize;
+    remainderValue = size % endpoint->maxPacketSize;
 
-    if((size == 0) || (remainder != 0))
+    if((size == 0U) || (remainderValue != 0U))
     {
         /* Size is not valid */
         SYS_ASSERT(false, "Invalid size in IRP read");
@@ -771,8 +785,8 @@ USB_DEVICE_PRINTER_RESULT USB_DEVICE_PRINTER_Read
             irp = &gUSBDevicePrinterIRP[cnt];
             irp->data = data;
             irp->size = size;
-            irp->userData = (uintptr_t) iPRN;
-            irp->callback = _USB_DEVICE_PRINTER_ReadIRPCallback;
+            irp->userData = (uintptr_t) instanceIndex;
+            irp->callback = F_USB_DEVICE_PRINTER_ReadIRPCallback;
             
             /* Prevent other tasks pre-empting this sequence of code */ 
             IntState = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
@@ -804,7 +818,7 @@ USB_DEVICE_PRINTER_RESULT USB_DEVICE_PRINTER_Read
                 return (USB_DEVICE_PRINTER_RESULT_ERROR);
             }
             
-            return(irpError);
+            return((USB_DEVICE_PRINTER_RESULT)irpError);
         }
     }
     
@@ -846,14 +860,14 @@ USB_DEVICE_PRINTER_RESULT USB_DEVICE_PRINTER_Read
 
 USB_DEVICE_PRINTER_RESULT USB_DEVICE_PRINTER_Write 
 (
-    USB_DEVICE_PRINTER_INDEX iPRN ,
+    USB_DEVICE_PRINTER_INDEX instanceIndex ,
     USB_DEVICE_PRINTER_TRANSFER_HANDLE * transferHandle ,
     const void * data , size_t size ,
     USB_DEVICE_PRINTER_TRANSFER_FLAGS flags 
 )
 {
-    unsigned int cnt;
-    unsigned int remainder;
+    uint32_t cnt;
+    uint32_t remainderValue;
     USB_DEVICE_IRP * irp;
     USB_DEVICE_IRP_FLAG irpFlag = 0;
     USB_DEVICE_PRINTER_INSTANCE * prnInstance;
@@ -864,7 +878,7 @@ USB_DEVICE_PRINTER_RESULT USB_DEVICE_PRINTER_Write
 
     /* Check the validity of the function driver index */
     
-    if (  iPRN >= USB_DEVICE_PRINTER_INSTANCES_NUMBER  )
+    if (  instanceIndex >= (uint32_t)USB_DEVICE_PRINTER_INSTANCES_NUMBER  )
     {
         /* Invalid Printer index */
         SYS_ASSERT(false, "Invalid PRINTER Device Index");
@@ -875,7 +889,7 @@ USB_DEVICE_PRINTER_RESULT USB_DEVICE_PRINTER_Write
      * and the transmit endpoint */
 
     * transferHandle = USB_DEVICE_PRINTER_TRANSFER_HANDLE_INVALID;
-    prnInstance = &gUSBDevicePRINTERInstance[iPRN];
+    prnInstance = &gUSBDevicePRINTERInstance[instanceIndex];
     endpoint = &prnInstance->bulkEndpointTx;
 
     if(!(endpoint->isConfigured))
@@ -885,7 +899,7 @@ USB_DEVICE_PRINTER_RESULT USB_DEVICE_PRINTER_Write
         return (USB_DEVICE_PRINTER_RESULT_ERROR_INSTANCE_NOT_CONFIGURED);
     }
 
-    if(size == 0) 
+    if(size == 0U) 
     {
         /* Size cannot be zero */
         return (USB_DEVICE_PRINTER_RESULT_ERROR_TRANSFER_SIZE_INVALID);
@@ -893,7 +907,7 @@ USB_DEVICE_PRINTER_RESULT USB_DEVICE_PRINTER_Write
 
     /* Check the flag */
 
-    if(flags & USB_DEVICE_PRINTER_TRANSFER_FLAGS_MORE_DATA_PENDING)
+    if(((uint32_t)flags & (uint32_t)USB_DEVICE_PRINTER_TRANSFER_FLAGS_MORE_DATA_PENDING) != 0U)
     {
         if(size < endpoint->maxPacketSize)
         {
@@ -903,18 +917,22 @@ USB_DEVICE_PRINTER_RESULT USB_DEVICE_PRINTER_Write
             return(USB_DEVICE_PRINTER_RESULT_ERROR_TRANSFER_SIZE_INVALID);
         }
 
-        remainder = size % endpoint->maxPacketSize;
+        remainderValue = size % endpoint->maxPacketSize;
         
-        if(remainder != 0)
+        if(remainderValue != 0U)
         {
-            size -= remainder;
+            size -= remainderValue;
         }
 
         irpFlag = USB_DEVICE_IRP_FLAG_DATA_PENDING;
     }
-    else if(flags & USB_DEVICE_PRINTER_TRANSFER_FLAGS_DATA_COMPLETE)
+    else if(((uint32_t)flags & (uint32_t)USB_DEVICE_PRINTER_TRANSFER_FLAGS_DATA_COMPLETE) != 0U)
     {
         irpFlag = USB_DEVICE_IRP_FLAG_DATA_COMPLETE;
+    }
+    else
+    {
+        /* Do Nothing */
     }
 
     if(prnInstance->currentQSizeWrite >= prnInstance->queueSizeWrite)
@@ -943,8 +961,8 @@ USB_DEVICE_PRINTER_RESULT USB_DEVICE_PRINTER_Write
             irp->data   = (void *)data;
             irp->size   = size;
 
-            irp->userData   = (uintptr_t) iPRN;
-            irp->callback   = _USB_DEVICE_PRINTER_WriteIRPCallback;
+            irp->userData   = (uintptr_t) instanceIndex;
+            irp->callback   = F_USB_DEVICE_PRINTER_WriteIRPCallback;
             irp->flags      = irpFlag;
 
             /* Prevent other tasks pre-empting this sequence of code */ 
@@ -977,7 +995,7 @@ USB_DEVICE_PRINTER_RESULT USB_DEVICE_PRINTER_Write
                 return (USB_DEVICE_PRINTER_RESULT_ERROR);
             }
 
-            return(irpError);
+            return((USB_DEVICE_PRINTER_RESULT)irpError);
         }
     }
     
@@ -992,26 +1010,32 @@ USB_DEVICE_PRINTER_RESULT USB_DEVICE_PRINTER_Write
     return(USB_DEVICE_PRINTER_RESULT_ERROR_TRANSFER_QUEUE_FULL);
 }
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
+
 USB_DEVICE_PRINTER_RESULT USB_DEVICE_PRINTER_EventHandlerSet 
 (
-    USB_DEVICE_PRINTER_INDEX iPRN ,
+    USB_DEVICE_PRINTER_INDEX instanceIndex  ,
     USB_DEVICE_PRINTER_EVENT_HANDLER eventHandler,
-    uintptr_t userData
+    uintptr_t context
 )
 {
     /* Check the validity of the function driver index */
-    if (( iPRN >= USB_DEVICE_PRINTER_INSTANCES_NUMBER ) )
+    if (( instanceIndex  >= (uint32_t)USB_DEVICE_PRINTER_INSTANCES_NUMBER ) )
     {
         /* invalid Printer index */
         return USB_DEVICE_PRINTER_RESULT_ERROR_INSTANCE_INVALID;
     }
 
     /* Check if the given event handler is valid */
-    if ( eventHandler )
+    if ( eventHandler != NULL)
     {
         /* update the event handler for this instance */
-        gUSBDevicePRINTERInstance[iPRN].appEventCallBack = eventHandler;
-        gUSBDevicePRINTERInstance[iPRN].userData = userData;
+        gUSBDevicePRINTERInstance[instanceIndex ].appEventCallBack = eventHandler;
+        gUSBDevicePRINTERInstance[instanceIndex ].userData = context;
 
         /* return success */
         return USB_DEVICE_PRINTER_RESULT_OK;

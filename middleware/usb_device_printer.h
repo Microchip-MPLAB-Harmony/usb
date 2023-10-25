@@ -41,8 +41,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _USB_DEVICE_PRINTER_H
-#define _USB_DEVICE_PRINTER_H
+#ifndef USB_DEVICE_PRINTER_H
+#define USB_DEVICE_PRINTER_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -83,6 +83,14 @@
 // *****************************************************************************
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 3.1 deviate:3, and 5.2 deviate:11. Deviation record ID -  
+    H3_MISRAC_2012_R_3_1_DR_1, H3_MISRAC_2012_R_5_2_DR_1 and H3_MISRAC_2012_R_5_5_DR_1*/
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:3 "MISRA C-2012 Rule 3.1" "H3_MISRAC_2012_R_3_1_DR_1" )\
+(deviate:11 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 5.5" "H3_MISRAC_2012_R_5_5_DR_1" )
 /* USB Device Printer Function Driver Index Constants
 
   Summary:
@@ -984,6 +992,12 @@ typedef struct
     uint8_t deviceID_String[USB_DEVICE_PRINTER_DEVICE_ID_STRING_LENGTH];
 
 } USB_DEVICE_PRINTER_INIT;
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 3.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.5"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
