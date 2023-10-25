@@ -39,8 +39,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _USB_DEVICE_AUDIO_V2_LOCAL_H
-#define _USB_DEVICE_AUDIO_V2_LOCAL_H
+#ifndef USB_DEVICE_AUDIO_V2_LOCAL_H
+#define USB_DEVICE_AUDIO_V2_LOCAL_H
 
 
 // *****************************************************************************
@@ -55,6 +55,13 @@
 
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 5.2 deviate:4, and 6.1 deviate:1. Deviation record ID -  
+    H3_MISRAC_2012_R_5_2_DR_1, H3_MISRAC_2012_R_6_1_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:3 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 6.1" "H3_MISRAC_2012_R_6_1_DR_1" )
 /* Audio flags.
 
   Summary:
@@ -110,7 +117,7 @@ typedef enum
     This structure is internal to the Audio function driver.
 */
 
-typedef union _USB_DEVICE_AUDIO_V2_FLAGS
+typedef union U_USB_DEVICE_AUDIO_V2_FLAGS
 {
     struct
     {
@@ -374,7 +381,7 @@ extern USB_DEVICE_AUDIO_V2_COMMON_DATA_OBJ gUSBDeviceAudioV2CommonDataObj;
 // Section: Prototypes for Local functions. 
 // *****************************************************************************
 // *****************************************************************************
-USB_DEVICE_AUDIO_V2_RESULT _USB_DEVICE_AUDIO_V2_Transfer
+USB_DEVICE_AUDIO_V2_RESULT F_USB_DEVICE_AUDIO_V2_Transfer
 (
     USB_DEVICE_AUDIO_V2_INDEX iAudio,
     USB_DEVICE_AUDIO_V2_TRANSFER_HANDLE *transferHandle,
@@ -384,9 +391,9 @@ USB_DEVICE_AUDIO_V2_RESULT _USB_DEVICE_AUDIO_V2_Transfer
     USB_DEVICE_AUDIO_V2_TRANSFER_DIRECTION direction
 );
 
-void _USB_DEVICE_AUDIO_V2_TransferIRPCallBack ( USB_DEVICE_IRP * irp );
+void F_USB_DEVICE_AUDIO_V2_TransferIRPCallBack ( USB_DEVICE_IRP * irp );
 
-void _USB_DEVICE_AUDIO_V2_Initialize
+void F_USB_DEVICE_AUDIO_V2_Initialize
 (
     SYS_MODULE_INDEX iAudio,
     DRV_HANDLE usbDeviceHandle,
@@ -397,7 +404,7 @@ void _USB_DEVICE_AUDIO_V2_Initialize
     uint8_t * pDescriptor
 );
 
-void _USB_DEVICE_AUDIO_V2_ControlTransferHandler
+void F_USB_DEVICE_AUDIO_V2_ControlTransferHandler
 (
     SYS_MODULE_INDEX iAudio,
     USB_DEVICE_EVENT controlEvent,
@@ -405,14 +412,19 @@ void _USB_DEVICE_AUDIO_V2_ControlTransferHandler
 );
 
 
-void _USB_DEVICE_AUDIO_V2_Deinitialize ( SYS_MODULE_INDEX funcDriverIndex );
+void F_USB_DEVICE_AUDIO_V2_Deinitialize ( SYS_MODULE_INDEX funcDriverIndex );
 
-void _USB_DEVICE_AUDIO_V2_SetupPacketHandler
+void F_USB_DEVICE_AUDIO_V2_SetupPacketHandler
 (
     USB_DEVICE_AUDIO_V2_INDEX iAudio ,
     USB_SETUP_PACKET* controlEventData
 );
-void _USB_DEVICE_AUDIO_V2_GlobalInitialize (void);
+void F_USB_DEVICE_AUDIO_V2_GlobalInitialize (void);
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 6.1"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 #endif
 
  /************ End of file *************************************/

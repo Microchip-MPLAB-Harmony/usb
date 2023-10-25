@@ -39,8 +39,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _USB_AUDIO_v2_0_H_
-#define _USB_AUDIO_v2_0_H_
+#ifndef USB_AUDIO_v2_0_H_
+#define USB_AUDIO_v2_0_H_
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -65,7 +65,7 @@
 #define  USB_AUDIO_V2_CLASS_CODE USB_AUDIO_V2
 
 /* A.4 Audio Interface class code */
-#define USB_AUDIO_V2 0x01
+#define USB_AUDIO_V2 0x01U
 
 // *****************************************************************************
 // *****************************************************************************
@@ -73,6 +73,14 @@
 // *****************************************************************************
 // *****************************************************************************
 /* Appendix A. Audio Device Class Codes from the USB Audio 2.0 specification */
+/* MISRA C-2012 Rule 5.2 deviate:10, Rule 5.4 deviate:2 and 6.1 deviate:16. Deviation record ID -  
+    H3_MISRAC_2012_R_5_2_DR_1, H3_MISRAC_2012_R_5_4_DR_1,H3_MISRAC_2012_R_6_1_DR_1*/
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:10 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1" )\
+(deviate:16 "MISRA C-2012 Rule 6.1" "H3_MISRAC_2012_R_6_1_DR_1" )
 
 /*A.3 Audio Function Protocol code*/
 typedef enum
@@ -1648,8 +1656,8 @@ typedef struct
 
 /* A.14 Audio Class-Specific Request Codes */
 #define AUDIO_V2_REQUEST_CODE_UNDEFINED      0x00
-#define AUDIO_V2_CUR                         0x01
-#define AUDIO_V2_RANGE                       0x02
+#define AUDIO_V2_CUR                         0x01U
+#define AUDIO_V2_RANGE                       0x02U
 #define AUDIO_V2_MEM                         0x03
 
 /* A.15 Encoder Type Codes */
@@ -1742,6 +1750,12 @@ typedef struct
 /* 0x08 to 0x4000000 Reserved */
 #define AUDIO_V2_TYPE_1_RAW_DATA             0x80 /* TODO */
 //DOM-IGNORE-END
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.4"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 6.1"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

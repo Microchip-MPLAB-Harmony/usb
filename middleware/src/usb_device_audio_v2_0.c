@@ -55,7 +55,7 @@
 
 /*******************************************************************************
    Function:
-    void _USB_DEVICE_AUDIO_V2_IRPCancelAll(USB_DEVICE_AUDIO_V2_INDEX iAudio )
+    void F_USB_DEVICE_AUDIO_V2_IRPCancelAll(USB_DEVICE_AUDIO_V2_INDEX iAudio )
    Summary:
     This function cancels all pending Read and Write requests placed to
     USB Device Audio function driver.
@@ -76,7 +76,7 @@
      None
  */
 
-void _USB_DEVICE_AUDIO_V2_IRPCancelAll(USB_DEVICE_AUDIO_V2_INDEX iAudio );
+void F_USB_DEVICE_AUDIO_V2_IRPCancelAll(USB_DEVICE_AUDIO_V2_INDEX iAudio );
 
 /*******************************************************************************
   AUDIO Device function driver structure
@@ -95,19 +95,19 @@ const USB_DEVICE_FUNCTION_DRIVER audioV2FunctionDriver =
 {
 
     /* AUDIO init function */
-    .initializeByDescriptor             = &_USB_DEVICE_AUDIO_V2_Initialize ,
+    .initializeByDescriptor             = &F_USB_DEVICE_AUDIO_V2_Initialize ,
 
     /* AUDIO de-init function */
-    .deInitialize           = &_USB_DEVICE_AUDIO_V2_Deinitialize ,
+    .deInitialize           = &F_USB_DEVICE_AUDIO_V2_Deinitialize ,
 
     /* AUDIO set-up packet handler */
-    .controlTransferNotification     = &_USB_DEVICE_AUDIO_V2_ControlTransferHandler,
+    .controlTransferNotification     = &F_USB_DEVICE_AUDIO_V2_ControlTransferHandler,
 
     /* AUDIO tasks function */
     .tasks                  = NULL,
 
     /* Audio Global Initialize function */
-    .globalInitialize = _USB_DEVICE_AUDIO_V2_GlobalInitialize
+    .globalInitialize = F_USB_DEVICE_AUDIO_V2_GlobalInitialize
         
 };
 
@@ -117,11 +117,11 @@ const USB_DEVICE_FUNCTION_DRIVER audioV2FunctionDriver =
 
 /*******************************************************************************
    Function:
-   void _USB_DEVICE_AUDIO_V2_ControlTransferHandler
+   void F_USB_DEVICE_AUDIO_V2_ControlTransferHandler
    (
        SYS_MODULE_INDEX iAudio,
        USB_DEVICE_EVENT controlEvent,
-       USB_SETUP_PACKET * setupRequest
+       USB_SETUP_PACKET * controlEventData
    )
 
   Summary:
@@ -137,11 +137,11 @@ const USB_DEVICE_FUNCTION_DRIVER audioV2FunctionDriver =
     application.
 */
 
-void _USB_DEVICE_AUDIO_V2_ControlTransferHandler
+void F_USB_DEVICE_AUDIO_V2_ControlTransferHandler
 (
     SYS_MODULE_INDEX iAudio,
     USB_DEVICE_EVENT controlEvent,
-    USB_SETUP_PACKET * setupRequest
+    USB_SETUP_PACKET * controlEventData
 )
 {
     /* Obtain pointer to the Audio Instance that is being addressed*/
@@ -160,7 +160,7 @@ void _USB_DEVICE_AUDIO_V2_ControlTransferHandler
     {
         case USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST:
             /* A new SETUP packet received from Host*/
-            _USB_DEVICE_AUDIO_V2_SetupPacketHandler(iAudio,setupRequest);
+            F_USB_DEVICE_AUDIO_V2_SetupPacketHandler(iAudio,controlEventData);
             break;
 
         case USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
@@ -186,16 +186,17 @@ void _USB_DEVICE_AUDIO_V2_ControlTransferHandler
             );
             break;
         default:
+            /* Do Nothing */
             break;
     }
 }
 
 /*******************************************************************************
    Function:
-   void _USB_DEVICE_AUDIO_V2_SetupPacketHandler
+   void F_USB_DEVICE_AUDIO_V2_SetupPacketHandler
    (
        USB_DEVICE_AUDIO_V2_INDEX iAudio ,
-       USB_SETUP_PACKET * setupPkt
+       USB_SETUP_PACKET * controlEventData
    )
 
   Summary:
@@ -209,10 +210,10 @@ void _USB_DEVICE_AUDIO_V2_ControlTransferHandler
     application.
 */
 
-void _USB_DEVICE_AUDIO_V2_SetupPacketHandler
+void F_USB_DEVICE_AUDIO_V2_SetupPacketHandler
 (
     USB_DEVICE_AUDIO_V2_INDEX iAudio ,
-    USB_SETUP_PACKET * setupPkt
+    USB_SETUP_PACKET * controlEventData
 )
 {
     uint8_t audioControlInterfaceId;
@@ -245,22 +246,22 @@ void _USB_DEVICE_AUDIO_V2_SetupPacketHandler
     usbDeviceHandle = gUsbDeviceAudioV2Instance[iAudio].devLayerHandle;
     
     /* Check if the request is a standard interface request*/
-    if (  (setupPkt->RequestType == USB_SETUP_REQUEST_TYPE_STANDARD)
-       && (setupPkt->Recipient == USB_SETUP_REQUEST_RECIPIENT_INTERFACE))
+    if (  (controlEventData->RequestType == (uint8_t)USB_SETUP_REQUEST_TYPE_STANDARD)
+       && (controlEventData->Recipient == (uint8_t)USB_SETUP_REQUEST_RECIPIENT_INTERFACE))
 
     {
         /* We have received Standard Set request */
 
         /* retrieve interface number from the Setup packet */
-        interfaceId = setupPkt->bIntfID;
+        interfaceId = controlEventData->bIntfID;
 
         /* retrieve audio Control interface number*/
         audioControlInterfaceId = curInfCollection->bControlInterfaceNum;
         
-        switch(setupPkt->bRequest)
+        switch(controlEventData->bRequest)
         {
             case USB_REQUEST_SET_INTERFACE:
-                curAlternateSetting = setupPkt->bAltID;
+                curAlternateSetting = controlEventData->bAltID;
                 if (interfaceId == audioControlInterfaceId)
                 {
                     /*SET INTERFACE command was received to Audio Control
@@ -271,7 +272,7 @@ void _USB_DEVICE_AUDIO_V2_SetupPacketHandler
                 {
                     /*An Audio Streaming interface has received SET INTERFACE
                       command */
-                    streamIntfcIndex = interfaceId - audioControlInterfaceId - 1;
+                    streamIntfcIndex = interfaceId - audioControlInterfaceId - 1U;
 
                     /* Get pointer to the current audio streaming interface */
                     pStreamingInterface = 
@@ -285,7 +286,7 @@ void _USB_DEVICE_AUDIO_V2_SetupPacketHandler
                      * Alternate setting */
                     noOfEndpoints = pCurAlternateStng->numEndPoints;
 
-                    if ((noOfEndpoints) && (curAlternateSetting))
+                    if ((noOfEndpoints != 0U) && (curAlternateSetting != 0U))
                     {
                         /* We have to enable the endpoint only if this alternate
                         * setting has at least one endpoint and the alternate
@@ -300,7 +301,7 @@ void _USB_DEVICE_AUDIO_V2_SetupPacketHandler
 
                         /* maxpacket size should be adjusted to upper power of
                         *  two. As per the PIC32MZ USB module requirement.*/
-                        if (maxPacketSize)
+                        if (maxPacketSize != 0U)
                         {
                             while(adjustedMaxPacketSize < maxPacketSize)
                             {
@@ -313,7 +314,7 @@ void _USB_DEVICE_AUDIO_V2_SetupPacketHandler
                         }
 
                         /* Enable Isochronous Data Endpoint */
-                        endpointEnableResult = USB_DEVICE_EndpointEnable
+                        endpointEnableResult = (USB_ERROR)USB_DEVICE_EndpointEnable
                         (
                             usbDeviceHandle ,
                             0,
@@ -326,7 +327,7 @@ void _USB_DEVICE_AUDIO_V2_SetupPacketHandler
                             SYS_ASSERT (false, "Endpoint not Enabled");
                         }
 
-                        if (noOfEndpoints == 2)
+                        if (noOfEndpoints == 2U)
                         {
                             adjustedMaxPacketSize =1;
 
@@ -343,7 +344,7 @@ void _USB_DEVICE_AUDIO_V2_SetupPacketHandler
 
                              /* maxpacket size should be adjusted to upper power of
                              two. As per the PIC32MZ USB module requirement.*/
-                             if (maxPacketSize)
+                             if (maxPacketSize != 0U)
                              {
                                    while(adjustedMaxPacketSize < maxPacketSize)
                                    {
@@ -355,7 +356,7 @@ void _USB_DEVICE_AUDIO_V2_SetupPacketHandler
                                    adjustedMaxPacketSize = 0;
                               }
                                /* Enable Isochronous Data Endpoint */
-                               endpointEnableResult = USB_DEVICE_EndpointEnable
+                               endpointEnableResult = (USB_ERROR)USB_DEVICE_EndpointEnable
                                (
                                    usbDeviceHandle ,
                                    0,
@@ -391,8 +392,8 @@ void _USB_DEVICE_AUDIO_V2_SetupPacketHandler
                             ep = pPrevAlternateStng->isoDataEp.epAddr;
 
                             /* Disable the Endpoint */
-                            USB_DEVICE_IRPCancelAll(usbDeviceHandle,  ep);
-                            endpointDisableResult = USB_DEVICE_EndpointDisable
+                            (void) USB_DEVICE_IRPCancelAll(usbDeviceHandle,  ep);
+                            endpointDisableResult = (USB_ERROR)USB_DEVICE_EndpointDisable
                                                     (
                                                         usbDeviceHandle,
                                                         ep
@@ -403,7 +404,7 @@ void _USB_DEVICE_AUDIO_V2_SetupPacketHandler
                             }
 
 
-                            if (pPrevAlternateStng->numEndPoints == 2)
+                            if (pPrevAlternateStng->numEndPoints == 2U)
                             {
                                 /* If number of Endpoints is Two, then it is sure
                                 * that this alternate setting reports a Isochronous
@@ -411,9 +412,8 @@ void _USB_DEVICE_AUDIO_V2_SetupPacketHandler
 								ep = pPrevAlternateStng->isoSyncEp.epAddr;
 
                                 /* Disable the Endpoint */
-                                USB_DEVICE_IRPCancelAll(usbDeviceHandle,  ep);
-                                endpointDisableResult = 
-                                        USB_DEVICE_EndpointDisable
+                                (void) USB_DEVICE_IRPCancelAll(usbDeviceHandle,  ep);
+                                endpointDisableResult =(USB_ERROR)USB_DEVICE_EndpointDisable
                                         (
                                             usbDeviceHandle,
                                             pPrevAlternateStng->isoSyncEp.epAddr
@@ -445,7 +445,7 @@ void _USB_DEVICE_AUDIO_V2_SetupPacketHandler
                     );
                 }
                 /* Send an Acknowledgement to the Host */ 
-                USB_DEVICE_ControlStatus( usbDeviceHandle,
+                (void) USB_DEVICE_ControlStatus( usbDeviceHandle,
                                 USB_DEVICE_CONTROL_STATUS_OK);
             break;
             case USB_REQUEST_GET_INTERFACE:
@@ -455,50 +455,59 @@ void _USB_DEVICE_AUDIO_V2_SetupPacketHandler
                 }
                 else
                 {
-                    streamIntfcIndex = interfaceId - audioControlInterfaceId - 1;
+                    streamIntfcIndex = interfaceId - audioControlInterfaceId - 1U;
                     curAlternateSetting
                     = curInfCollection->streamInf[streamIntfcIndex].activeSetting;
                 }
 
-                USB_DEVICE_ControlSend( usbDeviceHandle,
+                (void) USB_DEVICE_ControlSend( usbDeviceHandle,
                         (void *)&curAlternateSetting, 1);
                 break;
             default:
+                /* Do Nothing */
                 break;
 
         }      
-    }/* end of if((setupPkt->bmRequestType == */
-    else if ( (setupPkt->RequestType == USB_SETUP_REQUEST_TYPE_CLASS )
-            && (setupPkt->Recipient == USB_SETUP_REQUEST_RECIPIENT_INTERFACE))
+    }/* end of if((controlEventData->bmRequestType == */
+    else if ( (controlEventData->RequestType == (uint8_t)USB_SETUP_REQUEST_TYPE_CLASS )
+            && (controlEventData->Recipient == (uint8_t)USB_SETUP_REQUEST_RECIPIENT_INTERFACE))
     {
-        if ( audioInstance->appEventCallBack)
+        if ( audioInstance->appEventCallBack != NULL)
         {
             /* inform the application about the request */
             /* the application needs to handle both EP and entity specific 
             *  requests */
 
-            if(setupPkt->bRequest == AUDIO_V2_CUR)
+            if(controlEventData->bRequest == AUDIO_V2_CUR)
             {
                 audioInstance->appEventCallBack
                 (
                     iAudio,
                     USB_DEVICE_AUDIO_V2_CUR_ENTITY_SETTINGS_RECEIVED,
-                    setupPkt,
+                    controlEventData,
                     0
                 );
             }
-            else if(setupPkt->bRequest == AUDIO_V2_RANGE)
+            else if(controlEventData->bRequest == AUDIO_V2_RANGE)
             {
                 audioInstance->appEventCallBack
                 (
                     iAudio,
                     USB_DEVICE_AUDIO_V2_RANGE_ENTITY_SETTINGS_RECEIVED,
-                    setupPkt,
+                    controlEventData,
                     0
                 );
 
             }
+            else
+            {
+                /* Do Nothing */
+            }
         }        
+    }
+    else
+    {
+        /* Do Nothing */
     }
 }
 
@@ -507,7 +516,7 @@ void _USB_DEVICE_AUDIO_V2_SetupPacketHandler
 
 /*******************************************************************************
   Function:
-    void _USB_DEVICE_AUDIO_V2_GlobalInitialize ( void )
+    void F_USB_DEVICE_AUDIO_V2_GlobalInitialize ( void )
 
   Summary:
     This function initializes resourses required common to all instances of AUDIO
@@ -521,7 +530,7 @@ void _USB_DEVICE_AUDIO_V2_SetupPacketHandler
     This is local function and should not be called directly by the application.
 */
 
-void _USB_DEVICE_AUDIO_V2_GlobalInitialize (void)
+void F_USB_DEVICE_AUDIO_V2_GlobalInitialize (void)
 {
     OSAL_RESULT osal_err;
 
@@ -532,7 +541,7 @@ void _USB_DEVICE_AUDIO_V2_GlobalInitialize (void)
         osal_err = 
                OSAL_MUTEX_Create(&gUSBDeviceAudioV2CommonDataObj.mutexAUDIOIRP);
 
-        if(osal_err != OSAL_RESULT_TRUE)
+        if(osal_err != (OSAL_RESULT)OSAL_RESULT_TRUE)
         {
             /*do not proceed lock was not created, let user know about error*/
             return;
@@ -543,11 +552,15 @@ void _USB_DEVICE_AUDIO_V2_GlobalInitialize (void)
     }
 }
 
+/* MISRA C-2012 Rule 11.3 deviated:4 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:4 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" 
 /*******************************************************************************
    This function is called by the device layer. It gets called multiple times as 
 *  and when the USB device layer starts parsing the descriptors */
 
-void _USB_DEVICE_AUDIO_V2_Initialize
+void F_USB_DEVICE_AUDIO_V2_Initialize
 (
     SYS_MODULE_INDEX iAudio, 
     DRV_HANDLE usbDeviceHandle,
@@ -602,7 +615,7 @@ void _USB_DEVICE_AUDIO_V2_Initialize
                 /*Check if it is an Audio Control Interface descriptor*/
                 switch (pStdInfDesc->bInterfaceSubClass)
                 {
-                    case USB_AUDIO_V2_AUDIOCONTROL:
+                    case (uint8_t)USB_AUDIO_V2_AUDIOCONTROL:
                         audioInstance->flags.allFlags = 0;
                         /* The program control reached here means that the 
                          * device layer has detected an Standard Audio Control 
@@ -620,12 +633,11 @@ void _USB_DEVICE_AUDIO_V2_Initialize
                          * Interface. If there are endpoints present as part of 
                          * AC interface descriptor that must be an 
                          * Interrupt endpoint.*/
-                        curInfCollection->isIntEpExists = 
-                                                     pStdInfDesc->bNumEndPoints;
+                        curInfCollection->isIntEpExists = ( pStdInfDesc->bNumEndPoints != 0U);
                         break;
                 
                 
-                    case USB_AUDIO_V2_AUDIOSTREAMING:
+                    case (uint8_t)USB_AUDIO_V2_AUDIOSTREAMING:
                         /* We have received an Audio Streaming Interface 
                          * descriptor. Save the interface number to an array of 
                          * Audio streaming interfaces. For an audio function the
@@ -638,34 +650,36 @@ void _USB_DEVICE_AUDIO_V2_Initialize
                                         curInfCollection-> bControlInterfaceNum;
                         //find out audio streaming interface array index.
                         strmIntrfcIndex = 
-                                      interfaceNumber-audioControlInterfaceId-1;
+                                      interfaceNumber-audioControlInterfaceId-1U;
 
                         /*save no of endpoints present in the streaming 
                          * interface*/
                         curAlternateStng 
                         = &(audioInstance->infCollection.streamInf[strmIntrfcIndex].alterntSetting[alternateSetting]); 
-                        curAlternateStng->numEndPoints = 
-                                                     pStdInfDesc->bNumEndPoints;
+                        curAlternateStng->numEndPoints = pStdInfDesc->bNumEndPoints;
                         break;
                     default :
+                        /* Do Nothing */
                         break; 
                 }
             }
         break; 
     
         /* Class Specific Audio Control Interface Descriptor. */ 
-        case USB_AUDIO_V2_CS_INTERFACE:
+        case (uint8_t)USB_AUDIO_V2_CS_INTERFACE:
             /* if we have already received Audio Control Interface related 
              * descriptors then ignore all further Class specific descriptors */ 
-            if (audioInstance->flags.audioControlInterfaceReady ==  true)
+            if (audioInstance->flags.audioControlInterfaceReady ==  1U)
+            {
                 return;
+            }
             pCsInfDesc = (USB_AUDIO_V2_CS_AC_INTERFACE_HEADER_DESCRIPTOR*) pDescriptor;
 
             /* check if this Class specific descriptor belongs to an AC 
              * Interface*/
             if (interfaceNumber == audioInstance->infCollection.bControlInterfaceNum)
             {
-                if  (USB_AUDIO_V2_HEADER == pCsInfDesc->bDescriptorSubtype)
+                if  ((uint8_t)USB_AUDIO_V2_HEADER == pCsInfDesc->bDescriptorSubtype)
                 {
                     SYS_ASSERT((pCsInfDesc->bInCollection != USB_DEVICE_AUDIO_V2_MAX_STREAMING_INTERFACES ),
                         "Maximum number of streaming interfaces defined does not match descriptor value");
@@ -688,17 +702,17 @@ void _USB_DEVICE_AUDIO_V2_Initialize
 
                     /* save audio specification number. */
                     audioInstance->infCollection.bcdADC = pCsInfDesc->bcdADC;
-                    audioInstance->flags.audioControlInterfaceReady = true;
+                    audioInstance->flags.audioControlInterfaceReady = 1;
                 } 
             } 
             break; 
 
-        case USB_DESCRIPTOR_ENDPOINT:
+        case (uint8_t)USB_DESCRIPTOR_ENDPOINT:
             /* we have received an Endpoint descriptor from device Layer*/
             pEPDesc = ( USB_ENDPOINT_DESCRIPTOR* ) pDescriptor;
             audioControlInterfaceId = 
                               audioInstance->infCollection.bControlInterfaceNum;
-            strmIntrfcIndex = interfaceNumber - audioControlInterfaceId - 1;
+            strmIntrfcIndex = interfaceNumber - audioControlInterfaceId - 1U;
        
             // check if this Endpoint belongs to an audio Streaming interface
             if ((interfaceNumber == audioInstance->infCollection.streamInf[strmIntrfcIndex].interfaceNum))
@@ -730,6 +744,10 @@ void _USB_DEVICE_AUDIO_V2_Initialize
                     audioInstance->infCollection.streamInf[strmIntrfcIndex].alterntSetting[alternateSetting].isoSyncEp.epMaxPacketSize 
                             = maxPacketSize;
                 }
+                else
+                {
+                    /* Do Nothing */
+                }
             }
             break;
 
@@ -739,24 +757,27 @@ void _USB_DEVICE_AUDIO_V2_Initialize
     }
 }
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 /*******************************************************************************/
 
-void _USB_DEVICE_AUDIO_V2_Deinitialize ( SYS_MODULE_INDEX iAudio )
+void F_USB_DEVICE_AUDIO_V2_Deinitialize ( SYS_MODULE_INDEX funcDriverIndex  )
 {
     /* Cancel all IRPs on the owned endpoints and then
      * disable the endpoint */
 
-    if(iAudio >= USB_DEVICE_AUDIO_V2_INSTANCES_NUMBER)
+    if(funcDriverIndex  >= USB_DEVICE_AUDIO_V2_INSTANCES_NUMBER)
     {
         SYS_ASSERT(false," Invalid instance");
         return;
     }
-   _USB_DEVICE_AUDIO_V2_IRPCancelAll(iAudio);
+   F_USB_DEVICE_AUDIO_V2_IRPCancelAll(funcDriverIndex );
 }
 
 /*******************************************************************************/
 
-void _USB_DEVICE_AUDIO_V2_TransferIRPCallBack ( USB_DEVICE_IRP * irp )
+void F_USB_DEVICE_AUDIO_V2_TransferIRPCallBack ( USB_DEVICE_IRP * irp )
 {
    /* This function is called when a Audio Read IRP has
     * terminated */
@@ -773,7 +794,7 @@ void _USB_DEVICE_AUDIO_V2_TransferIRPCallBack ( USB_DEVICE_IRP * irp )
      * bits.Mask the upper 16 bits to the Audio IRP index associated with this 
      * IRP */
 
-    cnt = (uint8_t)(irp->userData & 0xFFFF);
+    cnt = (uint8_t)(irp->userData & 0xFFFFU);
 
     /* get a pointer to the Audio IRP data */
     audioIrpData = &gUSBDeviceAudioV2IrpData[cnt];
@@ -789,7 +810,7 @@ void _USB_DEVICE_AUDIO_V2_TransferIRPCallBack ( USB_DEVICE_IRP * irp )
     readEventData.handle = ( USB_DEVICE_AUDIO_V2_TRANSFER_HANDLE ) irp->userData;
 
     /* update the size written */
-    readEventData.length = irp->size;
+    readEventData.length = (uint16_t)irp->size;
     
     /* Get transfer status */
     if ((irp->status == USB_DEVICE_IRP_STATUS_COMPLETED) 
@@ -830,7 +851,7 @@ void _USB_DEVICE_AUDIO_V2_TransferIRPCallBack ( USB_DEVICE_IRP * irp )
     }
 
     /* Send an event to the application */ 
-    if (thisAudioInstance->appEventCallBack)
+    if (thisAudioInstance->appEventCallBack != NULL)
     {
         thisAudioInstance->appEventCallBack(iAudio,
                                             event,
@@ -839,7 +860,7 @@ void _USB_DEVICE_AUDIO_V2_TransferIRPCallBack ( USB_DEVICE_IRP * irp )
     }
 }
 
-void _USB_DEVICE_AUDIO_V2_IRPCancelAll(USB_DEVICE_AUDIO_V2_INDEX iAudio)
+void F_USB_DEVICE_AUDIO_V2_IRPCancelAll(USB_DEVICE_AUDIO_V2_INDEX iAudio)
 {
     USB_DEVICE_AUDIO_V2_INSTANCE * thisAudioInstance = &gUsbDeviceAudioV2Instance[iAudio];
     uint8_t noOfStreamingInterface; 
@@ -861,34 +882,34 @@ void _USB_DEVICE_AUDIO_V2_IRPCancelAll(USB_DEVICE_AUDIO_V2_INDEX iAudio)
         /* Find out active alternate setting*/
         activeInterfaceSetting = streamingInterface->activeSetting;
 
-        if (streamingInterface->alterntSetting[activeInterfaceSetting].numEndPoints)
+        if (streamingInterface->alterntSetting[activeInterfaceSetting].numEndPoints != 0U)
         {
             /* Retrieve Isochronous Data Endpoint address */
             endpointAddress = 
                   streamingInterface->alterntSetting[activeInterfaceSetting].isoDataEp.epAddr;
 
             /* Double if this not Endpoint 0*/
-            if (endpointAddress !=0)
+            if (endpointAddress !=0U)
             {
               /* Cancel all IRPs on this Endpoint */
-              USB_DEVICE_IRPCancelAll
+              (void) USB_DEVICE_IRPCancelAll
                       (
                           gUsbDeviceAudioV2Instance[iAudio].devLayerHandle,  
                           endpointAddress
                       );
             }
           
-            if (streamingInterface->alterntSetting[activeInterfaceSetting].numEndPoints == 2)
+            if (streamingInterface->alterntSetting[activeInterfaceSetting].numEndPoints == 2U)
             {
                 /*If there are Two Endpoints, second Endpoint is a Sync Endpoint*/
                 endpointAddress = 
                         streamingInterface->alterntSetting[activeInterfaceSetting].isoSyncEp.epAddr;
 
                 /* Double if this not Endpoint 0*/
-                if (endpointAddress !=0)
+                if (endpointAddress !=0U)
                 {
                   /* Cancel all IRPs on this Endpoint */
-                  USB_DEVICE_IRPCancelAll
+                  (void) USB_DEVICE_IRPCancelAll
                           (
                               gUsbDeviceAudioV2Instance[iAudio].devLayerHandle,  
                               endpointAddress

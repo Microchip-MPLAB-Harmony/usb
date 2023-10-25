@@ -121,13 +121,13 @@ USB_DEVICE_AUDIO_V2_IRP_DATA
     Private to the USB Audio Function Driver.
  */
 
-uint32_t gUSBDeviceAudioUniqueBufferID = 0;
+static uint32_t gUSBDeviceAudioUniqueBufferID = 0;
 
 /*******************************************************************************
   Function:
     USB_DEVICE_AUDIO_V2_RESULT USB_DEVICE_AUDIO_V2_EventHandlerSet
     (
-        USB_DEVICE_AUDIO_V2_INDEX instance ,
+        USB_DEVICE_AUDIO_V2_INDEX instanceIndex  ,
         USB_DEVICE_AUDIO_V2_EVENT_HANDLER eventHandler ,
         uintptr_t context
     );
@@ -143,17 +143,17 @@ uint32_t gUSBDeviceAudioUniqueBufferID = 0;
 
 USB_DEVICE_AUDIO_V2_RESULT USB_DEVICE_AUDIO_V2_EventHandlerSet
 (
-    USB_DEVICE_AUDIO_V2_INDEX iAudio ,
+    USB_DEVICE_AUDIO_V2_INDEX instanceIndex  ,
     USB_DEVICE_AUDIO_V2_EVENT_HANDLER eventHandler ,
-    uintptr_t userData
+    uintptr_t context
 )
 {
     USB_DEVICE_AUDIO_V2_RESULT error = USB_DEVICE_AUDIO_V2_RESULT_ERROR_PARAMETER_INVALID;
 
     if(eventHandler != NULL)
     {
-        gUsbDeviceAudioV2Instance[iAudio].appEventCallBack = eventHandler;
-        gUsbDeviceAudioV2Instance[iAudio].userData = userData;
+        gUsbDeviceAudioV2Instance[instanceIndex ].appEventCallBack = eventHandler;
+        gUsbDeviceAudioV2Instance[instanceIndex ].userData = context;
         error = USB_DEVICE_AUDIO_V2_RESULT_OK;
     }
     return error;
@@ -162,8 +162,8 @@ USB_DEVICE_AUDIO_V2_RESULT USB_DEVICE_AUDIO_V2_EventHandlerSet
 /*******************************************************************************
   Function:
     USB_DEVICE_AUDIO_V2_RESULT USB_DEVICE_AUDIO_V2_Read 
-                                      ( USB_DEVICE_AUDIO_V2_INDEX iAudio ,
-                                        uint8_t interfaceNum ,
+                                      ( USB_DEVICE_AUDIO_V2_INDEX instanceIndex ,
+                                        uint8_t interfaceNumber ,
                                         void * data ,
                                         size_t size )
 
@@ -176,9 +176,9 @@ USB_DEVICE_AUDIO_V2_RESULT USB_DEVICE_AUDIO_V2_EventHandlerSet
     specified instance of the USB device layer.
 
   Parameters:
-    USB_DEVICE_AUDIO_V2_INDEX iAudio    - Audio function driver Index number
+    USB_DEVICE_AUDIO_V2_INDEX instanceIndex    - Audio function driver Index number
  
-    uint8_t interfaceNum    - Audio streaming or Control Interface number
+    uint8_t interfaceNumber    - Audio streaming or Control Interface number
   
     data - pointer to the data buffer where read data will be stored.
     size - Size of the data buffer. Refer to the description section for more
@@ -191,16 +191,16 @@ USB_DEVICE_AUDIO_V2_RESULT USB_DEVICE_AUDIO_V2_EventHandlerSet
 
 USB_DEVICE_AUDIO_V2_RESULT USB_DEVICE_AUDIO_V2_Read
 (
-    USB_DEVICE_AUDIO_V2_INDEX iAudio ,
+    USB_DEVICE_AUDIO_V2_INDEX instanceIndex ,
     USB_DEVICE_AUDIO_V2_TRANSFER_HANDLE* transferHandle,
-    uint8_t interfaceNum ,
+    uint8_t interfaceNumber ,
     void * data ,
     size_t size
 )
 {
         USB_DEVICE_AUDIO_V2_RESULT audioResult;
         USB_DEVICE_AUDIO_V2_INSTANCE * thisAudioDevice;
-        thisAudioDevice = &gUsbDeviceAudioV2Instance[iAudio];
+        thisAudioDevice = &gUsbDeviceAudioV2Instance[instanceIndex];
 
          /* Make sure that we are with in the queue size for this instance */
         if(thisAudioDevice->currentQSizeRead >= thisAudioDevice->queueSizeRead)
@@ -208,8 +208,8 @@ USB_DEVICE_AUDIO_V2_RESULT USB_DEVICE_AUDIO_V2_Read
             SYS_ASSERT(false, "Read Queue is full");
             return(USB_DEVICE_AUDIO_V2_RESULT_ERROR_TRANSFER_QUEUE_FULL);
         }
-	audioResult =   _USB_DEVICE_AUDIO_V2_Transfer(iAudio, transferHandle, 
-                           interfaceNum, data, size, USB_DEVICE_AUDIO_V2_READ );
+	audioResult =   F_USB_DEVICE_AUDIO_V2_Transfer(instanceIndex, transferHandle, 
+                           interfaceNumber, data, size, USB_DEVICE_AUDIO_V2_READ );
         return audioResult; 
 }
 
@@ -220,8 +220,8 @@ USB_DEVICE_AUDIO_V2_RESULT USB_DEVICE_AUDIO_V2_Read
 ********************************************************************************
   Function:
     USB_ERROR USB_DEVICE_AUDIO_V2_Write 
-                          ( USB_DEVICE_AUDIO_V2_INDEX iAudio ,
-                            uint8_t interfaceNum ,
+                          ( USB_DEVICE_AUDIO_V2_INDEX instanceIndex ,
+                            uint8_t interfaceNumber ,
                             USB_DEVICE_AUDIO_V2_DATA_BUFFER_OBJECT* bufferObj )
 
   Summary:
@@ -233,9 +233,9 @@ USB_DEVICE_AUDIO_V2_RESULT USB_DEVICE_AUDIO_V2_Read
     the specified instance of the USB device layer.
 
    Parameters:
-    USB_DEVICE_AUDIO_V2_INDEX iAudio    - Audio function driver Index number
+    USB_DEVICE_AUDIO_V2_INDEX instanceIndex    - Audio function driver Index number
  
-    uint8_t interfaceNum    - Audio streaming or Control Interface number
+    uint8_t interfaceNumber    - Audio streaming or Control Interface number
  
     USB_DEVICE_AUDIO_V2_DATA_BUFFER_OBJECT* bufferObj - pointer to the buffer 
     where received data is to be stored.
@@ -247,16 +247,16 @@ USB_DEVICE_AUDIO_V2_RESULT USB_DEVICE_AUDIO_V2_Read
 
 USB_DEVICE_AUDIO_V2_RESULT USB_DEVICE_AUDIO_V2_Write
 (
-    USB_DEVICE_AUDIO_V2_INDEX iAudio ,
+    USB_DEVICE_AUDIO_V2_INDEX instanceIndex ,
     USB_DEVICE_AUDIO_V2_TRANSFER_HANDLE* transferHandle,
-    uint8_t interfaceNum ,
+    uint8_t interfaceNumber ,
     void * data ,
     size_t size
 )
 {
     USB_DEVICE_AUDIO_V2_RESULT audioResult;
     USB_DEVICE_AUDIO_V2_INSTANCE * thisAudioDevice;
-    thisAudioDevice = &gUsbDeviceAudioV2Instance[iAudio];
+    thisAudioDevice = &gUsbDeviceAudioV2Instance[instanceIndex];
 
      /* Make sure that we are with in the queue size for this instance */
     if(thisAudioDevice->currentQSizeWrite >= thisAudioDevice->queueSizeWrite)
@@ -264,8 +264,8 @@ USB_DEVICE_AUDIO_V2_RESULT USB_DEVICE_AUDIO_V2_Write
         SYS_ASSERT(false, "Write Queue is full");
         return(USB_DEVICE_AUDIO_V2_RESULT_ERROR_TRANSFER_QUEUE_FULL);
     }
-	audioResult =   _USB_DEVICE_AUDIO_V2_Transfer(iAudio, transferHandle, 
-                          interfaceNum, data, size, USB_DEVICE_AUDIO_V2_WRITE );
+	audioResult =   F_USB_DEVICE_AUDIO_V2_Transfer(instanceIndex, transferHandle, 
+                          interfaceNumber, data, size, USB_DEVICE_AUDIO_V2_WRITE );
     return audioResult;
 }
 /*******************************************************************************/
@@ -273,7 +273,7 @@ USB_DEVICE_AUDIO_V2_RESULT USB_DEVICE_AUDIO_V2_Write
 
 /*******************************************************************************
   Function:
-    USB_DEVICE_AUDIO_V2_RESULT _USB_DEVICE_AUDIO_V2_Transfer
+    USB_DEVICE_AUDIO_V2_RESULT F_USB_DEVICE_AUDIO_V2_Transfer
 	(
 		USB_DEVICE_AUDIO_V2_INDEX iAudio,
 		USB_DEVICE_AUDIO_V2_TRANSFER_HANDLE *transferHandle,
@@ -289,7 +289,7 @@ USB_DEVICE_AUDIO_V2_RESULT USB_DEVICE_AUDIO_V2_Write
 
 ********************************************************************************/
 
-USB_DEVICE_AUDIO_V2_RESULT _USB_DEVICE_AUDIO_V2_Transfer
+USB_DEVICE_AUDIO_V2_RESULT F_USB_DEVICE_AUDIO_V2_Transfer
 (
     USB_DEVICE_AUDIO_V2_INDEX iAudio,
     USB_DEVICE_AUDIO_V2_TRANSFER_HANDLE *transferHandle,
@@ -355,12 +355,12 @@ USB_DEVICE_AUDIO_V2_RESULT _USB_DEVICE_AUDIO_V2_Transfer
     audioControlIntrfcID = thisAudioInstance->infCollection.bControlInterfaceNum;
 
     /*Find out the array streaming interface */
-    streamInfIndex = interfaceNum - audioControlIntrfcID- 1;
+    streamInfIndex = interfaceNum - audioControlIntrfcID- 1U;
 
     /*Retrieve the active alternate setting of the interface from Audio Instance object */
     activeAlternateSetting = thisAudioInstance->infCollection.streamInf[streamInfIndex].activeSetting;
 
-    if (activeAlternateSetting == 0)
+    if (activeAlternateSetting == 0U)
     {
         SYS_ASSERT ( false , "alternate setting 0 does not allow Data Payload" );
         return USB_DEVICE_AUDIO_V2_RESULT_ERROR_INSTANCE_NOT_CONFIGURED;
@@ -381,40 +381,48 @@ USB_DEVICE_AUDIO_V2_RESULT _USB_DEVICE_AUDIO_V2_Transfer
     if (direction == USB_DEVICE_AUDIO_V2_WRITE) 
     {
         /* Check if the sync endpoint if valid*/
-        if ((syncEndpoint & 0x0F) && (syncEndpoint & (uint8_t )0x80))
+        if (((syncEndpoint & 0x0FU) != 0U) && ((syncEndpoint & (uint8_t )0x80) != 0U))
         {
             tempEndpointInstance = 
                 &(thisAudioInstance->infCollection.streamInf[streamInfIndex].alterntSetting[activeAlternateSetting].isoSyncEp);
         }
         
         /* Check if the data endpoint if valid*/
-        else if ((dataEndpoint & 0x0F) && (dataEndpoint & (uint8_t )0x80))
+        else if (((dataEndpoint & 0x0FU)!= 0U) && ((dataEndpoint & (uint8_t )0x80) != 0U))
         {
             tempEndpointInstance = 
                 &(thisAudioInstance->infCollection.streamInf[streamInfIndex].alterntSetting[activeAlternateSetting].isoDataEp);
+        }
+        else
+        {
+            /* Do Nothing */
         }
     }
     
     else 
     {
         /* Check if the sync endpoint if valid*/
-        if((syncEndpoint & 0x0F) && (!(syncEndpoint & (uint8_t )0x80)))
+        if(((syncEndpoint & 0x0FU) != 0U) && ((syncEndpoint & (uint8_t )0x80) == 0U))
         {
             tempEndpointInstance = 
                 &(thisAudioInstance->infCollection.streamInf[streamInfIndex].alterntSetting[activeAlternateSetting].isoSyncEp);
         }
 
         /* Check if the data endpoint if valid*/
-        else if ((dataEndpoint & 0x0F) && (!(dataEndpoint & (uint8_t )0x80)))
+        else if (((dataEndpoint & 0x0FU) != 0U) && ((dataEndpoint & (uint8_t )0x80) == 0U))
         {
             tempEndpointInstance = 
                 &(thisAudioInstance->infCollection.streamInf[streamInfIndex].alterntSetting[activeAlternateSetting].isoDataEp);
+        }
+        else
+        {
+            /* Do Nothing */
         }
     }
  
     /*Obtain mutex to get access to a shared resource, check return value*/
     osalError = OSAL_MUTEX_Lock(&gUSBDeviceAudioV2CommonDataObj.mutexAUDIOIRP, OSAL_WAIT_FOREVER);
-    if(osalError != OSAL_RESULT_TRUE)
+    if(osalError != (OSAL_RESULT)OSAL_RESULT_TRUE)
     {
       /*Do not proceed lock was not obtained, or error occurred, let user know about error*/
       return (USB_DEVICE_AUDIO_V2_RESULT_ERROR);
@@ -436,8 +444,8 @@ USB_DEVICE_AUDIO_V2_RESULT _USB_DEVICE_AUDIO_V2_Transfer
 
             gUSBDeviceAudioUniqueBufferID ++;
             gUSBDeviceAudioUniqueBufferID = 
-                    (gUSBDeviceAudioUniqueBufferID == 0xFFFF) ? 
-                                             0 : gUSBDeviceAudioUniqueBufferID ;
+                    (gUSBDeviceAudioUniqueBufferID == 0xFFFFU) ? 
+                                             0U : gUSBDeviceAudioUniqueBufferID ;
 
         
             /* Retrieve endpoint address */
@@ -461,7 +469,7 @@ USB_DEVICE_AUDIO_V2_RESULT _USB_DEVICE_AUDIO_V2_Transfer
             audioIrpData->iAudio = iAudio;
 
             /* Provide function address to call back when IRP is complete */
-            irp->callback = _USB_DEVICE_AUDIO_V2_TransferIRPCallBack;
+            irp->callback = F_USB_DEVICE_AUDIO_V2_TransferIRPCallBack;
 
             /* Save array index. We will need this to retrieve data when we get 
              * IRP call back */
@@ -507,19 +515,19 @@ USB_DEVICE_AUDIO_V2_RESULT _USB_DEVICE_AUDIO_V2_Transfer
             /*Release mutex, done with shared resource*/
             osalError = OSAL_MUTEX_Unlock(
                                  &gUSBDeviceAudioV2CommonDataObj.mutexAUDIOIRP);
-            if(osalError != OSAL_RESULT_TRUE)
+            if(osalError != (OSAL_RESULT)OSAL_RESULT_TRUE)
             {
                 /*Do not proceed, unlock was not complete, or error occurred, 
                  * let user know about error*/
                 return (USB_DEVICE_AUDIO_V2_RESULT_ERROR);
             }
 
-            return(irpErr);
+            return((USB_DEVICE_AUDIO_V2_RESULT)irpErr);
 	}
     }
     /*Release mutex, done with shared resource*/
     osalError = OSAL_MUTEX_Unlock(&gUSBDeviceAudioV2CommonDataObj.mutexAUDIOIRP);
-    if(osalError != OSAL_RESULT_TRUE)
+    if(osalError != (OSAL_RESULT)OSAL_RESULT_TRUE)
     {
 	/*Do not proceed, unlock was not complete, or error occurred, 
      * let user know about error*/
