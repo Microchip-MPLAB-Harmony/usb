@@ -41,8 +41,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _USB_DEVICE_AUDIO_H
-#define _USB_DEVICE_AUDIO_H
+#ifndef USB_DEVICE_AUDIO_H
+#define USB_DEVICE_AUDIO_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -74,6 +74,16 @@
 // *****************************************************************************
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 3.1 deviate:6, 5.2 deviate:25, 5.5 deviate:2 and 8.6 deviate:1. 
+   Deviation record ID - H3_MISRAC_2012_R_3_1_DR_1, H3_MISRAC_2012_R_5_2_DR_1, 
+   H3_MISRAC_2012_R_5_5_DR_1, H3_MISRAC_2012_R_8_6_DR_1   */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:6 "MISRA C-2012 Rule 3.1" "H3_MISRAC_2012_R_3_1_DR_1" )\
+(deviate:25 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 5.5" "H3_MISRAC_2012_R_5_5_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )
 /* USB Device Audio Function Driver Index
 
   Summary:
@@ -1310,6 +1320,13 @@ typedef struct
     size_t queueSizeStatusSend;    
 
 } USB_DEVICE_AUDIO_INIT;
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 3.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.5"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

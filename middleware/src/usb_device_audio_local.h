@@ -39,9 +39,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _USB_DEVICE_AUDIO_LOCAL_H
-#define _USB_DEVICE_AUDIO_LOCAL_H
-
+#ifndef USB_DEVICE_AUDIO_LOCAL_H
+#define USB_DEVICE_AUDIO_LOCAL_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -54,6 +53,16 @@
 #include "usb/usb_device_audio_v1_0.h"
 
 
+/* MISRA C-2012 Rule 5.1 deviate:2, Rule 5.2 deviate:2, Rule 6.1 deviate:1, Rule 8.6 deviate:1 
+   Deviation record ID - H3_MISRAC_2012_R_5_1_DR_1, H3_MISRAC_2012_R_5_2_DR_1 
+   H3_MISRAC_2012_R_6_1_DR_1,and H3_MISRAC_2012_R_8_6_DR_1*/
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:2 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 6.1" "H3_MISRAC_2012_R_6_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )
 // *****************************************************************************
 /* Audio flags.
 
@@ -110,7 +119,7 @@ typedef enum
     This structure is internal to the Audio function driver.
 */
 
-typedef union _USB_DEVICE_AUDIO_FLAGS
+typedef union U_USB_DEVICE_AUDIO_FLAGS
 {
     struct
     {
@@ -293,22 +302,22 @@ typedef struct
     USB_DEVICE_AUDIO_FLAGS flags;
 
     /* Transmit Queue Size*/
-    unsigned int queueSizeWrite;
+    uint32_t queueSizeWrite;
 
     /* Receive Queue Size */
-    unsigned int queueSizeRead;
+    uint32_t queueSizeRead;
 
     /* Status Send Queue Size */
-    unsigned int queueSizeStatusSend;
+    uint32_t queueSizeStatusSend;
     
      /* Current Queue Size Write */
-    volatile unsigned int currentQSizeWrite;
+    volatile uint32_t currentQSizeWrite;
 
      /* Current Queue Size Read */
-    volatile unsigned int currentQSizeRead;
+    volatile uint32_t currentQSizeRead;
 
     /* Current Queue Size Status Send */ 
-    volatile unsigned int currentQSizeStatusSend; 
+    volatile uint32_t currentQSizeStatusSend; 
 
 }USB_DEVICE_AUDIO_INSTANCE;
 
@@ -380,7 +389,7 @@ extern USB_DEVICE_AUDIO_COMMON_DATA_OBJ gUSBDeviceAudioCommonDataObj;
 // Section: Prototypes for Local functions. 
 // *****************************************************************************
 // *****************************************************************************
-USB_DEVICE_AUDIO_RESULT _USB_DEVICE_AUDIO_Transfer
+USB_DEVICE_AUDIO_RESULT F_USB_DEVICE_AUDIO_Transfer
 (
     USB_DEVICE_AUDIO_INDEX iAudio,
     USB_DEVICE_AUDIO_TRANSFER_HANDLE *transferHandle,
@@ -390,10 +399,10 @@ USB_DEVICE_AUDIO_RESULT _USB_DEVICE_AUDIO_Transfer
     USB_DEVICE_AUDIO_TRANSFER_DIRECTION direction
 );
 
-void _USB_DEVICE_AUDIO_TransferIRPCallBack ( USB_DEVICE_IRP * irp );
-void _USB_DEVICE_AUDIO_StatusSendIRPCallBack ( USB_DEVICE_IRP * irp ); 
+void F_USB_DEVICE_AUDIO_TransferIRPCallBack ( USB_DEVICE_IRP * irp );
+void F_USB_DEVICE_AUDIO_StatusSendIRPCallBack ( USB_DEVICE_IRP * irp ); 
 
-void _USB_DEVICE_AUDIO_Initialize
+void F_USB_DEVICE_AUDIO_Initialize
 (
     SYS_MODULE_INDEX iAudio,
     DRV_HANDLE usbDeviceHandle,
@@ -404,7 +413,7 @@ void _USB_DEVICE_AUDIO_Initialize
     uint8_t * pDescriptor
 );
 
-void _USB_DEVICE_AUDIO_ControlTransferHandler
+void F_USB_DEVICE_AUDIO_ControlTransferHandler
 (
     SYS_MODULE_INDEX iAudio,
     USB_DEVICE_EVENT controlEvent,
@@ -412,27 +421,33 @@ void _USB_DEVICE_AUDIO_ControlTransferHandler
 );
 
 
-void _USB_DEVICE_AUDIO_Deinitialize ( SYS_MODULE_INDEX funcDriverIndex );
+void F_USB_DEVICE_AUDIO_Deinitialize ( SYS_MODULE_INDEX funcDriverIndex );
 
-void _USB_DEVICE_AUDIO_SetupPacketHandler
+void F_USB_DEVICE_AUDIO_SetupPacketHandler
 (
     USB_DEVICE_AUDIO_INDEX iAudio ,
     USB_SETUP_PACKET* controlEventData
 );
-void _USB_DEVICE_AUDIO_GlobalInitialize (void);
+void F_USB_DEVICE_AUDIO_GlobalInitialize (void);
+void F_USB_DEVICE_AUDIO_TransferAbortAllow(USB_DEVICE_IRP * irp); 
+void F_USB_DEVICE_AUDIO_TransferAbortPrevent(USB_DEVICE_IRP * irp); 
+void F_USB_DEVICE_AUDIO_StatusSendAbortAllow(USB_DEVICE_IRP * irp); 
+void F_USB_DEVICE_AUDIO_StatusSendAbortPrevent(USB_DEVICE_IRP * irp); 
 
-void _USB_DEVICE_AUDIO_TransferAbortAllow(USB_DEVICE_IRP * irp); 
-void _USB_DEVICE_AUDIO_TransferAbortPrevent(USB_DEVICE_IRP * irp); 
-void _USB_DEVICE_AUDIO_StatusSendAbortAllow(USB_DEVICE_IRP * irp); 
-void _USB_DEVICE_AUDIO_StatusSendAbortPrevent(USB_DEVICE_IRP * irp); 
 
 #if defined USB_DEVICE_AUDIO_TRANSFER_ABORT_NOTIFY 
-    #define _USB_DEVICE_AUDIO_TransferCompleteCallback(x) _USB_DEVICE_AUDIO_TransferAbortAllow(x)
-    #define _USB_DEVICE_AUDIO_StatusSendCompleteCallback(x) _USB_DEVICE_AUDIO_StatusSendAbortAllow(x)
+    #define M_USB_DEVICE_AUDIO_TransferCompleteCallback(x) F_USB_DEVICE_AUDIO_TransferAbortAllow(x)
+    #define M_USB_DEVICE_AUDIO_StatusSendCompleteCallback(x) F_USB_DEVICE_AUDIO_StatusSendAbortAllow(x)
 #else
-    #define _USB_DEVICE_AUDIO_TransferCompleteCallback(x) _USB_DEVICE_AUDIO_TransferAbortPrevent(x)
-    #define _USB_DEVICE_AUDIO_StatusSendCompleteCallback(x) _USB_DEVICE_AUDIO_StatusSendAbortPrevent(x)
+    #define M_USB_DEVICE_AUDIO_TransferCompleteCallback(x) F_USB_DEVICE_AUDIO_TransferAbortPrevent(x)
+    #define M_USB_DEVICE_AUDIO_StatusSendCompleteCallback(x) F_USB_DEVICE_AUDIO_StatusSendAbortPrevent(x)
 #endif
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 6.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 #endif
  /************ End of file *************************************/

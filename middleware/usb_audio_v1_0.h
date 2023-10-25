@@ -39,8 +39,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _USB_AUDIO_H_
-#define _USB_AUDIO_H_
+#ifndef USB_AUDIO_H_
+#define USB_AUDIO_H_
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -74,7 +74,7 @@
   Remarks:
     None.
 */
-#define  USB_AUDIO_CLASS_CODE 0x01
+#define  USB_AUDIO_CLASS_CODE 0x01U
 
 // *****************************************************************************
 // *****************************************************************************
@@ -183,6 +183,13 @@ typedef enum
 USB_AUDIO_V1_ENTITY_TYPE; 
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 5.2 deviate:26 , and 6.1 deviate:7. Deviation record ID -  
+    H3_MISRAC_2012_R_5_2_DR_1, H3_MISRAC_2012_R_6_1_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:3 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 6.1" "H3_MISRAC_2012_R_6_1_DR_1" )
 /* Audio Class Specific Terminal Types. 
 
   Summary:
@@ -1522,6 +1529,11 @@ typedef struct __attribute__((packed))
 	uint16_t wRES; 
 	
 } USB_AUDIO_VOLUME_CONTROL_RANGE; 
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 6.1"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
