@@ -47,6 +47,7 @@
 // *****************************************************************************
 
 #include "driver/usb/uhp/src/drv_usb_ehci_local.h"
+#include "interrupts.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -57,7 +58,7 @@
 /*****************************************
  *  The Driver Hardware Instance Object.
  *****************************************/
-DRV_USB_EHCI_OBJ gDrvUSBEHCIObj[DRV_USB_EHCI_INSTANCES_NUMBER];
+static DRV_USB_EHCI_OBJ gDrvUSBEHCIObj[DRV_USB_EHCI_INSTANCES_NUMBER];
 
 /********************************************************
  * The EHCI Driver Required Array. The one additional
@@ -65,12 +66,12 @@ DRV_USB_EHCI_OBJ gDrvUSBEHCIObj[DRV_USB_EHCI_INSTANCES_NUMBER];
  * will be used as the head of reclamation queue head 
  * in the async list.
  ********************************************************/
-__ALIGNED(4096) _DRV_USB_EHCI_NON_CACHED uint32_t gDrvUSBEHCIPeriodicFrameList[DRV_USB_EHCI_INSTANCES_NUMBER][DRV_USB_EHCI_PERIODIC_LIST_SIZE];
-__ALIGNED(64) _DRV_USB_EHCI_NON_CACHED DRV_USB_EHCI_QH gDrvUSBEHCIQueueHead[DRV_USB_EHCI_INSTANCES_NUMBER][USB_HOST_PIPES_NUMBER + 1];
-__ALIGNED(64) _DRV_USB_EHCI_NON_CACHED DRV_USB_EHCI_QTD gDrvUSBEHCIQueueTransferDescriptor[DRV_USB_EHCI_INSTANCES_NUMBER][USB_HOST_TRANSFERS_NUMBER];
-__ALIGNED(64) _DRV_USB_EHCI_NON_CACHED DRV_USB_EHCI_CONTROL_TRANSFER_QTD gDrvUSBEHCIControlTransferQTD[DRV_USB_EHCI_INSTANCES_NUMBER][USB_HOST_TRANSFERS_NUMBER];
-_DRV_USB_EHCI_NON_CACHED uint8_t gDrvUSBEHCITransferBuffer[DRV_USB_EHCI_INSTANCES_NUMBER][USB_HOST_TRANSFERS_NUMBER][DRV_USB_EHCI_TRANSFER_BUFFER_SIZE];
-_DRV_USB_EHCI_NON_CACHED uint8_t gDrvUSBEHCIControlTransferBuffer[DRV_USB_EHCI_INSTANCES_NUMBER][USB_HOST_TRANSFERS_NUMBER][DRV_USB_EHCI_CONTROL_TRANSFER_BUFFER_SIZE];
+static __ALIGNED(4096) M_DRV_USB_EHCI_NON_CACHED uint32_t gDrvUSBEHCIPeriodicFrameList[DRV_USB_EHCI_INSTANCES_NUMBER][DRV_USB_EHCI_PERIODIC_LIST_SIZE];
+static __ALIGNED(64) M_DRV_USB_EHCI_NON_CACHED DRV_USB_EHCI_QH gDrvUSBEHCIQueueHead[DRV_USB_EHCI_INSTANCES_NUMBER][USB_HOST_PIPES_NUMBER + 1];
+static __ALIGNED(64) M_DRV_USB_EHCI_NON_CACHED DRV_USB_EHCI_QTD gDrvUSBEHCIQueueTransferDescriptor[DRV_USB_EHCI_INSTANCES_NUMBER][USB_HOST_TRANSFERS_NUMBER];
+static __ALIGNED(64) M_DRV_USB_EHCI_NON_CACHED DRV_USB_EHCI_CONTROL_TRANSFER_QTD gDrvUSBEHCIControlTransferQTD[DRV_USB_EHCI_INSTANCES_NUMBER][USB_HOST_TRANSFERS_NUMBER];
+static M_DRV_USB_EHCI_NON_CACHED uint8_t gDrvUSBEHCITransferBuffer[DRV_USB_EHCI_INSTANCES_NUMBER][USB_HOST_TRANSFERS_NUMBER][DRV_USB_EHCI_TRANSFER_BUFFER_SIZE];
+static M_DRV_USB_EHCI_NON_CACHED uint8_t gDrvUSBEHCIControlTransferBuffer[DRV_USB_EHCI_INSTANCES_NUMBER][USB_HOST_TRANSFERS_NUMBER][DRV_USB_EHCI_CONTROL_TRANSFER_BUFFER_SIZE];
 
 /***********************************
  * Driver Host Common Interface
@@ -110,7 +111,7 @@ DRV_USB_HOST_INTERFACE gDrvUSBEHCIInterface =
 
 // *****************************************************************************
 /* Function:
-    uint16_t _DRV_USB_EHCI_GetUniqueKey (DRV_USB_EHCI_OBJ * hDriver)
+    uint16_t F_DRV_USB_EHCI_GetUniqueKey (DRV_USB_EHCI_OBJ * hDriver)
 
   Summary:
     Returns a unique key that is used to create driver and pipe handles.
@@ -124,14 +125,14 @@ DRV_USB_HOST_INTERFACE gDrvUSBEHCIInterface =
     application.
 */
 
-uint16_t _DRV_USB_EHCI_GetUniqueKey (DRV_USB_EHCI_OBJ * hDriver)
+uint16_t F_DRV_USB_EHCI_GetUniqueKey (DRV_USB_EHCI_OBJ * hDriver)
 {
     /* This function creates a unique key. It should be called
      * from a thread safe scope. It should not be called in
      * an interrupt context. The value 0xFFFF and 0x0 cannot be
      * a unique key. */
     
-    if((hDriver->uniqueKey == 0xFFFF) || (hDriver->uniqueKey == 0x0))
+    if((hDriver->uniqueKey == 0xFFFFU) || (hDriver->uniqueKey == 0x0U))
     {
         hDriver->uniqueKey = 1;
     }
@@ -145,7 +146,7 @@ uint16_t _DRV_USB_EHCI_GetUniqueKey (DRV_USB_EHCI_OBJ * hDriver)
 
 // *****************************************************************************
 /* Function:
-    size_t _DRV_USB_EHCI_QTDBufferPointerSetup
+    size_t F_DRV_USB_EHCI_QTDBufferPointerSetup
     (
         USB_EHCI_QTD * transfer,
         uint8_t * transferBuffer,
@@ -165,7 +166,7 @@ uint16_t _DRV_USB_EHCI_GetUniqueKey (DRV_USB_EHCI_OBJ * hDriver)
     application.
 */
 
-size_t _DRV_USB_EHCI_QTDBufferPointerSetup
+size_t F_DRV_USB_EHCI_QTDBufferPointerSetup
 (
     USB_EHCI_QTD * qTD,
     uint8_t * transferBuffer,
@@ -176,7 +177,7 @@ size_t _DRV_USB_EHCI_QTDBufferPointerSetup
     uint32_t endAddress = 0;
     uint32_t pageBoundary = 0;
     uint32_t nPages = 0;
-    int i = 0;
+    uint32_t i = 0;
 
     nBytes = (nBytes > DRV_USB_EHCI_MAX_QTD_NBYTES) ? DRV_USB_EHCI_MAX_QTD_NBYTES : nBytes;
     endAddress = startAddress + nBytes;
@@ -189,10 +190,10 @@ size_t _DRV_USB_EHCI_QTDBufferPointerSetup
      * pages. */
     nPages = (endAddress >> 12) - (startAddress >> 12);
     pageBoundary = startAddress >> 12;
-    for(i = 0; ((i < nPages) && (i < 4)); i ++)
+    for(i = 0; ((i < nPages) && (i < 4U)); i ++)
     {
         pageBoundary ++;
-        qTD->bufferPointer[1 + i] = (pageBoundary << 12);
+        qTD->bufferPointer[1U + i] = (pageBoundary << 12);
     }
 
     return nBytes;
@@ -200,7 +201,7 @@ size_t _DRV_USB_EHCI_QTDBufferPointerSetup
 
 // *****************************************************************************
 /* Function:
-    size_t _DRV_USB_EHCI_ControlTransferQTD
+    size_t F_DRV_USB_EHCI_ControlTransferQTD
     (
         DRV_USB_EHCI_CONTROL_TRANSFER_QTD * transfer
         USB_SPEED speed
@@ -217,7 +218,7 @@ size_t _DRV_USB_EHCI_QTDBufferPointerSetup
     application.
 */
 
-size_t _DRV_USB_EHCI_ControlTransferQTD
+size_t F_DRV_USB_EHCI_ControlTransferQTD
 (
     DRV_USB_EHCI_CONTROL_TRANSFER_QTD * transfer,
     USB_SPEED speed
@@ -232,26 +233,26 @@ size_t _DRV_USB_EHCI_ControlTransferQTD
     size_t nBytes = 0;
 
     /* Get the direction of the control transfer */
-    direction = ((((uint8_t*)irp->setup)[0] & 0x80) == 0) ? USB_DATA_DIRECTION_HOST_TO_DEVICE: direction; 
+    direction = ((((uint8_t*)irp->setup)[0] & 0x80U) == 0U) ? USB_DATA_DIRECTION_HOST_TO_DEVICE: direction; 
     
     /* Clear up the QTDs */
-    memset(setupQTD, 0, sizeof(USB_EHCI_QTD));
-    memset(dataQTD, 0, sizeof(USB_EHCI_QTD));
-    memset(handshakeQTD, 0, sizeof(USB_EHCI_QTD));
+    (void) memset(setupQTD, 0, sizeof(USB_EHCI_QTD));
+    (void) memset(dataQTD, 0, sizeof(USB_EHCI_QTD));
+    (void) memset(handshakeQTD, 0, sizeof(USB_EHCI_QTD));
 
     /* Transfer data from user to driver buffer */
-    memcpy(transfer->setupBuffer, irp->setup, 8);
+    (void) memcpy(transfer->setupBuffer, (uint8_t *)irp->setup, 8);
         
     /* Prepare the setup QTD */
     setupQTD->altNextQtd.terminate = 1;
-    setupQTD->qTDToken.bytesToTransfer = _DRV_USB_EHCI_QTDBufferPointerSetup(setupQTD, transfer->setupBuffer, 8);
+    setupQTD->qTDToken.bytesToTransfer = (uint16_t)F_DRV_USB_EHCI_QTDBufferPointerSetup(setupQTD, transfer->setupBuffer, 8);
     setupQTD->qTDToken.ioc = 0;
     setupQTD->qTDToken.dt = 0;
     setupQTD->qTDToken.cErr = 3;
     setupQTD->qTDToken.pid = USB_EHCI_TOKEN_TYPE_SETUP;
     setupQTD->qTDToken.active = 1;
 
-    if((irp->data != NULL) && (irp->size != 0))
+    if((irp->data != NULL) && (irp->size != 0U))
     {
         /* If data is moving from device to host, then use the alternate QTD to
          * move to handshake stage in case of short packet */
@@ -269,12 +270,12 @@ size_t _DRV_USB_EHCI_ControlTransferQTD
              * buffer. No alternate QTD in case of
              * OUT direction. */
            
-            memcpy(transfer->dataBuffer, irp->data, nBytes);
+            (void) memcpy(transfer->dataBuffer, (uint8_t *)irp->data, nBytes);
             dataQTD->qTDToken.pid = USB_EHCI_TOKEN_TYPE_OUT;
             dataQTD->altNextQtd.terminate = 1;
         }
 
-        dataQTD->qTDToken.bytesToTransfer = _DRV_USB_EHCI_QTDBufferPointerSetup(dataQTD, transfer->dataBuffer, nBytes);
+        dataQTD->qTDToken.bytesToTransfer = (uint16_t)F_DRV_USB_EHCI_QTDBufferPointerSetup(dataQTD, transfer->dataBuffer, nBytes);
         dataQTD->qTDToken.ioc = 0;
         dataQTD->qTDToken.dt = 1;
         dataQTD->qTDToken.cErr = 3;
@@ -312,7 +313,7 @@ size_t _DRV_USB_EHCI_ControlTransferQTD
 
 // *****************************************************************************
 /* Function:
-    void _DRV_USB_EHCI_PortsTask(DRV_USB_EHCI_OBJ * hDriver)
+    void F_DRV_USB_EHCI_PortsTask(DRV_USB_EHCI_OBJ * hDriver)
 
   Summary:
     This function checks each for status change and handles these changes.
@@ -326,14 +327,14 @@ size_t _DRV_USB_EHCI_ControlTransferQTD
     application.
 */
 
-void _DRV_USB_EHCI_PortsTask(DRV_USB_EHCI_OBJ * hDriver)
+void F_DRV_USB_EHCI_PortsTask(DRV_USB_EHCI_OBJ * hDriver)
 {
     /* This function checks the status of ports registers */
 
     uhphs_registers_t * usbID = hDriver->usbID;
     DRV_USB_EHCI_PORT_OBJ * port = NULL;
     volatile uint32_t * portSC = NULL;
-    int i = 0;
+    uint32_t i = 0, tempPortsc;
 
     portSC = (volatile uint32_t *)((uint32_t)usbID + UHPHS_PORTSC_REG);
     
@@ -353,9 +354,9 @@ void _DRV_USB_EHCI_PortsTask(DRV_USB_EHCI_OBJ * hDriver)
                     /* Check if we have attach. The interruptHasOccurred flag
                      * allows the state machine to synchronize with the
                      * interrupt. */
-
-                    if ((port->interruptHasOccurred) && ((portSC[i] & UHPHS_PORTSC_N_CSC_Msk) != 0)
-                        && ((portSC[i] & UHPHS_PORTSC_N_CCS_Msk) != 0))
+                    tempPortsc = portSC[i];
+                    if ((port->interruptHasOccurred) && ((tempPortsc & UHPHS_PORTSC_N_CSC_Msk) != 0U)
+                        && ((tempPortsc & UHPHS_PORTSC_N_CCS_Msk) != 0U))
                     {
                         /* This means that an device attach interrupt has
                          * occurred. The port change interrupt is presently
@@ -389,7 +390,7 @@ void _DRV_USB_EHCI_PortsTask(DRV_USB_EHCI_OBJ * hDriver)
                         
                         port->timerHandle = SYS_TIME_HANDLE_INVALID;
 
-                        if(portSC[i] & UHPHS_PORTSC_N_CCS_Msk)
+                        if((portSC[i] & UHPHS_PORTSC_N_CCS_Msk) != 0U)
                         {
                             /* Device is still connected. Check the line state */
                             if(((portSC[i] & UHPHS_PORTSC_N_LS_Msk) >> UHPHS_PORTSC_N_LS_Pos) == USB_EHCI_QH_SPEED_LOW)
@@ -459,11 +460,11 @@ void _DRV_USB_EHCI_PortsTask(DRV_USB_EHCI_OBJ * hDriver)
 
                     /* Here we wait for the port reset bit to read 0 and then
                      * check if the port enable bit is set. */
-                    if((portSC[i] & UHPHS_PORTSC_N_PR_Msk) == 0)
+                    if((portSC[i] & UHPHS_PORTSC_N_PR_Msk) == 0U)
                     {
                         /* Reset bit is clear. If the port is enabled, then this
                          * is a high speed device */
-                        if((portSC[i] & UHPHS_PORTSC_N_PED_Msk) != 0)
+                        if((portSC[i] & UHPHS_PORTSC_N_PED_Msk) != 0U)
                         {
                             /* Port is enabled. We can enumerate the device with
                              * the EHCI controller. */
@@ -480,7 +481,7 @@ void _DRV_USB_EHCI_PortsTask(DRV_USB_EHCI_OBJ * hDriver)
                              * hence the device should not be enumerated.*/
                             if(port->attachedDeviceObjHandle == USB_HOST_DEVICE_OBJ_HANDLE_INVALID)
                             {
-                                port->attachedDeviceObjHandle = USB_HOST_DeviceEnumerate(hDriver->usbHostDeviceInfo, i);
+                                port->attachedDeviceObjHandle = USB_HOST_DeviceEnumerate(hDriver->usbHostDeviceInfo, (uint8_t)i);
                             }
                             
                             port->isResetting = false;
@@ -522,7 +523,8 @@ void _DRV_USB_EHCI_PortsTask(DRV_USB_EHCI_OBJ * hDriver)
                 case DRV_USB_EHCI_PORT_ATTACH_STATE_WAIT_FOR_DETACH:
 
                     /* In this state we wait for detach */
-                    if(port->interruptHasOccurred && ((portSC[i] & UHPHS_PORTSC_N_CCS_Msk) == 0))
+                    tempPortsc = portSC[i];
+                    if(port->interruptHasOccurred && ((tempPortsc & UHPHS_PORTSC_N_CCS_Msk) == 0U))
                     {
                        /* We have a device disconnect. Reset the state machine
                         * to wait for the device attach.  */
@@ -544,6 +546,7 @@ void _DRV_USB_EHCI_PortsTask(DRV_USB_EHCI_OBJ * hDriver)
 
                     break;
                 default:
+                    /* Do Nothing */
                     break;
             }
         }
@@ -552,7 +555,7 @@ void _DRV_USB_EHCI_PortsTask(DRV_USB_EHCI_OBJ * hDriver)
 
 // *****************************************************************************
 /* Function:
-    bool _DRV_USB_EHCI_CheckQHForError
+    bool F_DRV_USB_EHCI_CheckQHForError
     (
         USB_EHCI_QH * qH, 
         USB_HOST_IRP_STATUS * status
@@ -571,7 +574,7 @@ void _DRV_USB_EHCI_PortsTask(DRV_USB_EHCI_OBJ * hDriver)
     application.
 */
 
-bool _DRV_USB_EHCI_CheckQHForError
+bool F_DRV_USB_EHCI_CheckQHForError
 (
     USB_EHCI_QH * qH, 
     USB_HOST_IRP_STATUS * status
@@ -579,9 +582,9 @@ bool _DRV_USB_EHCI_CheckQHForError
 {
     bool returnValue = false;
 
-    if(qH->qTDToken.halted == 1)
+    if(qH->qTDToken.halted == 1U)
     {
-        if((qH->qTDToken.cErr == 0) || (qH->qTDToken.babble == 1))
+        if((qH->qTDToken.cErr == 0U) || (qH->qTDToken.babble == 1U))
         {
             /* An error has occurred on the bus */
             *status = USB_HOST_IRP_STATUS_ERROR_DATA; 
@@ -600,7 +603,7 @@ bool _DRV_USB_EHCI_CheckQHForError
 
 // *****************************************************************************
 /* Function:
-    bool _DRV_USB_EHCI_CheckQTDForError
+    bool F_DRV_USB_EHCI_CheckQTDForError
     (
         USB_EHCI_QTD * qTD, 
         USB_HOST_IRP_STATUS * status
@@ -619,7 +622,7 @@ bool _DRV_USB_EHCI_CheckQHForError
     application.
 */
 
-bool _DRV_USB_EHCI_CheckQTDForError
+bool F_DRV_USB_EHCI_CheckQTDForError
 (
     USB_EHCI_QTD * qTD, 
     USB_HOST_IRP_STATUS * status
@@ -627,9 +630,9 @@ bool _DRV_USB_EHCI_CheckQTDForError
 {
     bool returnValue = false;
 
-    if(qTD->qTDToken.halted == 1)
+    if(qTD->qTDToken.halted == 1U)
     {
-        if((qTD->qTDToken.cErr == 0) || (qTD->qTDToken.babble == 1))
+        if((qTD->qTDToken.cErr == 0U) || (qTD->qTDToken.babble == 1U))
         {
             /* An error has occurred on the bus */
             *status = USB_HOST_IRP_STATUS_ERROR_DATA; 
@@ -648,7 +651,7 @@ bool _DRV_USB_EHCI_CheckQTDForError
 
 // *****************************************************************************
 /* Function:
-    size_t _DRV_USB_EHCI_DataQTD
+    size_t F_DRV_USB_EHCI_DataQTD
     (
         DRV_USB_EHCI_QTD * transfer,
         USB_DATA_DIRECTION direction
@@ -666,7 +669,7 @@ bool _DRV_USB_EHCI_CheckQTDForError
     application.
 */
 
-size_t _DRV_USB_EHCI_DataQTD
+size_t F_DRV_USB_EHCI_DataQTD
 (
     DRV_USB_EHCI_QTD * transfer,
     USB_DATA_DIRECTION direction
@@ -675,14 +678,14 @@ size_t _DRV_USB_EHCI_DataQTD
     USB_EHCI_QTD * qTD = &transfer->qTD;
     USB_HOST_IRP_LOCAL * irp = transfer->irp;
 
-    memset(qTD, 0, sizeof(USB_EHCI_QTD));
+    (void) memset(qTD, 0, sizeof(USB_EHCI_QTD));
     qTD->nextQtd.terminate = 1;
     qTD->altNextQtd.terminate = 1;
     qTD->qTDToken.ioc = 1;
     qTD->qTDToken.dt = 0;
     qTD->qTDToken.cErr = 3;
 
-    qTD->qTDToken.bytesToTransfer = _DRV_USB_EHCI_QTDBufferPointerSetup(qTD, transfer->transferBuffer, (irp->size - irp->completedBytes));
+    qTD->qTDToken.bytesToTransfer = (uint16_t)F_DRV_USB_EHCI_QTDBufferPointerSetup(qTD, transfer->transferBuffer, (irp->size - irp->completedBytes));
         
     /* Check the transfer direction */
     if(direction == USB_DATA_DIRECTION_DEVICE_TO_HOST)
@@ -692,7 +695,7 @@ size_t _DRV_USB_EHCI_DataQTD
     else
     {
         qTD->qTDToken.pid = USB_EHCI_TOKEN_TYPE_OUT;
-        memcpy(transfer->transferBuffer, ((uint8_t *)(irp->data) + irp->completedBytes), qTD->qTDToken.bytesToTransfer); 
+        (void) memcpy(transfer->transferBuffer, ((uint8_t *)(irp->data) + irp->completedBytes), qTD->qTDToken.bytesToTransfer); 
     }
 
     qTD->qTDToken.active = 1;
@@ -700,8 +703,15 @@ size_t _DRV_USB_EHCI_DataQTD
 }
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 11.3 deviate:17 and Rule 11.8 deviate:1 Deviation record ID -  
+    H3_MISRAC_2012_R_11_1_DR_1, H3_MISRAC_2012_R_11_8_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:17 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
 /* Function:
-    void _DRV_USB_EHCI_BulkTransferProcess(DRV_USB_EHCI_OBJ * hDriver)
+    void F_DRV_USB_EHCI_BulkTransferProcess(DRV_USB_EHCI_OBJ * hDriver)
 
   Summary:
     This function processes Bulk transfers.
@@ -715,7 +725,7 @@ size_t _DRV_USB_EHCI_DataQTD
     application.
 */
 
-void _DRV_USB_EHCI_BulkTransferProcess(void * hPipe)
+void F_DRV_USB_EHCI_BulkTransferProcess(void * hPipe)
 {
 
     /* This function is called when a transaction or transfer interrupt has
@@ -730,7 +740,7 @@ void _DRV_USB_EHCI_BulkTransferProcess(void * hPipe)
     USB_EHCI_QTD * qTD = NULL;
     bool pipeWasEmpty = false;
 
-    if(pipe->inUse)
+    if(pipe->inUse != 0U)
     {
         /* Get the transfer at the head of the queue */
         transfer = pipe->currentQTD;
@@ -746,7 +756,7 @@ void _DRV_USB_EHCI_BulkTransferProcess(void * hPipe)
         }
         else
         {
-            if(_DRV_USB_EHCI_CheckQTDForError(qTD, &irp->status) == true)
+            if(F_DRV_USB_EHCI_CheckQTDForError(qTD, &irp->status) == true)
             {
                 /* There was an error while executing this qTD.  We must end the
                  * IRP. Clear the halted bit on the pipe. */
@@ -755,12 +765,12 @@ void _DRV_USB_EHCI_BulkTransferProcess(void * hPipe)
             }
             else
             {
-                if(pipe->direction == USB_DATA_DIRECTION_DEVICE_TO_HOST)
+                if(pipe->direction == (uint32_t)USB_DATA_DIRECTION_DEVICE_TO_HOST)
                 {
                     /* If we have received data from the device, this needs to
                      * copied from the transfer buffer to the application
                      * buffer. */
-                    memcpy(((uint8_t *)irp->data + irp->completedBytes), transfer->transferBuffer, (irp->scheduledBytes - qTD->qTDToken.bytesToTransfer));
+                    (void) memcpy(((uint8_t *)irp->data + irp->completedBytes), transfer->transferBuffer, (irp->scheduledBytes - qTD->qTDToken.bytesToTransfer));
                 }
 
                 /* Update the complete byte count */
@@ -780,15 +790,15 @@ void _DRV_USB_EHCI_BulkTransferProcess(void * hPipe)
                      * to continue sending more data or we received a short
                      * packet. */
 
-                    if(qTD->qTDToken.bytesToTransfer == 0)
+                    if(qTD->qTDToken.bytesToTransfer == 0U)
                     {
                         /* This means we have more data to send Form the qTD and
                          * add it to the pipe */
 
-                        irp->scheduledBytes = _DRV_USB_EHCI_DataQTD(transfer, (USB_DATA_DIRECTION)pipe->direction);
+                        irp->scheduledBytes = F_DRV_USB_EHCI_DataQTD(transfer, (USB_DATA_DIRECTION)pipe->direction);
                         pipe->qH.nextQTD.pointer = qTD; 
                     }
-                    else if ((pipe->direction == USB_DATA_DIRECTION_DEVICE_TO_HOST) && 
+                    else if ((pipe->direction == (uint32_t)USB_DATA_DIRECTION_DEVICE_TO_HOST) && 
                             (irp->scheduledBytes > qTD->qTDToken.bytesToTransfer))
                     {
                         /* This means we got less data than we asked for, which
@@ -797,6 +807,10 @@ void _DRV_USB_EHCI_BulkTransferProcess(void * hPipe)
                          * host. This means we should end the transfer. */
                         irp->status = USB_HOST_IRP_STATUS_COMPLETED_SHORT;
                         endIRP = true;
+                    }
+                    else
+                    {
+                        /* Do Nothing */
                     }
                 }
             }
@@ -838,7 +852,7 @@ void _DRV_USB_EHCI_BulkTransferProcess(void * hPipe)
                 transfer = pipe->currentQTD;
                 irp = transfer->irp;
                 irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
-                irp->scheduledBytes = _DRV_USB_EHCI_DataQTD(transfer, (USB_DATA_DIRECTION)pipe->direction);
+                irp->scheduledBytes = F_DRV_USB_EHCI_DataQTD(transfer, (USB_DATA_DIRECTION)pipe->direction);
                 irp->tempState = DRV_USB_EHCI_IRP_STATE_IDLE;
                 pipe->qH.nextQTD.pointer = &transfer->qTD;
             }
@@ -855,7 +869,7 @@ void _DRV_USB_EHCI_BulkTransferProcess(void * hPipe)
 
 // *****************************************************************************
 /* Function:
-    void _DRV_USB_EHCI_ControlTransferProcess
+    void F_DRV_USB_EHCI_ControlTransferProcess
     (
         DRV_USB_EHCI_QH * transfer
     )
@@ -872,7 +886,7 @@ void _DRV_USB_EHCI_BulkTransferProcess(void * hPipe)
     application.
 */
 
-void _DRV_USB_EHCI_ControlTransferProcess(void * pPipe)
+void F_DRV_USB_EHCI_ControlTransferProcess(void * pPipe)
 {
     /* This function is called when a transaction or transfer interrupt has
      * occurred. The function will specifically process control transfers. It
@@ -885,7 +899,7 @@ void _DRV_USB_EHCI_ControlTransferProcess(void * pPipe)
     USB_DATA_DIRECTION direction = USB_DATA_DIRECTION_HOST_TO_DEVICE;
     bool pipeWasEmpty = false;
 
-    if(pipe->inUse)
+    if(pipe->inUse != 0U)
     {
 
         /* Get the transfer at the head of the queue */
@@ -898,7 +912,7 @@ void _DRV_USB_EHCI_ControlTransferProcess(void * pPipe)
              * This means that qTD has completed. This a control transfer.
              * Get the current state of the control transfer.  */
             irp = transfer->irp;
-            direction = ((((uint8_t *)(irp->setup))[0] & 0x80) == 0x80) ? USB_DATA_DIRECTION_DEVICE_TO_HOST: USB_DATA_DIRECTION_HOST_TO_DEVICE;
+            direction = ((((uint8_t *)(irp->setup))[0] & 0x80U) == 0x80U) ? USB_DATA_DIRECTION_DEVICE_TO_HOST: USB_DATA_DIRECTION_HOST_TO_DEVICE;
 
             if(irp->tempState == DRV_USB_EHCI_IRP_STATE_ABORTED)
             {
@@ -911,15 +925,15 @@ void _DRV_USB_EHCI_ControlTransferProcess(void * pPipe)
             {
                 /* This means that the setup token was sent. Check if there
                  * was any error. We can check the halted bit */
-                if(_DRV_USB_EHCI_CheckQHForError(&pipe->qH, &irp->status) == 0)
+                if(F_DRV_USB_EHCI_CheckQHForError(&pipe->qH, &irp->status) == false)
                 { 
-                    if (irp->size > 0)
+                    if (irp->size > 0U)
                     {
                         if(direction == USB_DATA_DIRECTION_DEVICE_TO_HOST)
                         {
                             /* Data received from the device is in the transfer
                              * buffer. Copy this to the user buffer. */
-                            memcpy(((uint8_t *)irp->data + irp->completedBytes), transfer->dataBuffer, (irp->scheduledBytes - transfer->dataQTD.qTDToken.bytesToTransfer));
+                            (void) memcpy(((uint8_t *)irp->data + irp->completedBytes), transfer->dataBuffer, (irp->scheduledBytes - transfer->dataQTD.qTDToken.bytesToTransfer));
                         }
 
                         /* Update the complete byte count */
@@ -972,7 +986,7 @@ void _DRV_USB_EHCI_ControlTransferProcess(void * pPipe)
                 transfer = (DRV_USB_EHCI_CONTROL_TRANSFER_QTD *)pipe->currentQTD;
                 irp = transfer->irp;
                 irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
-                irp->scheduledBytes = _DRV_USB_EHCI_ControlTransferQTD(transfer, (USB_SPEED)pipe->speed);
+                irp->scheduledBytes = F_DRV_USB_EHCI_ControlTransferQTD(transfer, (USB_SPEED)pipe->speed);
                 pipe->qH.nextQTD.pointer = &transfer->setupQTD;
             }
         }
@@ -981,7 +995,7 @@ void _DRV_USB_EHCI_ControlTransferProcess(void * pPipe)
 
 // *****************************************************************************
 /* Function:
-    void _DRV_USB_EHCI_PeriodicListRemove
+    void F_DRV_USB_EHCI_PeriodicListRemove
     (
         DRV_USB_EHCI_OBJ * hDriver,
         int slotindex,
@@ -999,7 +1013,7 @@ void _DRV_USB_EHCI_ControlTransferProcess(void * pPipe)
     application.
 */
 
-void _DRV_USB_EHCI_PeriodicListRemove
+void F_DRV_USB_EHCI_PeriodicListRemove
 (
     DRV_USB_EHCI_OBJ * hDriver,
     int slotindex,
@@ -1019,7 +1033,7 @@ void _DRV_USB_EHCI_PeriodicListRemove
         {
             /* The qH is not at the start of the list. Traverse the list */
             currentQH = USB_EHCI_PERIODIC_LIST_QH(hDriver->periodicList[slotindex]);
-            while(1)
+            while(true)
             {
                 if(currentQH->horizontalQH.value32 == USB_EHCI_END_OF_LIST)
                 {
@@ -1043,8 +1057,10 @@ void _DRV_USB_EHCI_PeriodicListRemove
 }
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 10.4 False Positive:8 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
+#pragma coverity compliance block fp:8 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" 
 /* Function:
-    void _DRV_USB_EHCI_PipeCloseTask(DRV_USB_EHCI_OBJ * hDriver);
+    void F_DRV_USB_EHCI_PipeCloseTask(DRV_USB_EHCI_OBJ * hDriver);
 
   Summary:
     This function handles pipe closures. 
@@ -1058,22 +1074,24 @@ void _DRV_USB_EHCI_PeriodicListRemove
     application.
 */
 
-void _DRV_USB_EHCI_PipeCloseTask(DRV_USB_EHCI_OBJ * hDriver)
+void F_DRV_USB_EHCI_PipeCloseTask(DRV_USB_EHCI_OBJ * hDriver)
 {
     DRV_USB_EHCI_QH * pipe;
     uhphs_registers_t * usbID = hDriver->usbID;
     USB_EHCI_QH * pQHeadNext = NULL;
     USB_EHCI_QH * pQHeadPrevious = NULL;
-    int pollingRate = 0;
-    int i = 0;
-    int j = 0;
+    uint32_t pollingRate = 0;
+    uint32_t i = 0;
+    uint32_t j = 0;
+    uint8_t tempPipeClosingState; 
 
     pipe = hDriver->queueHeads;
     for(i = 0; i < USB_HOST_PIPES_NUMBER; i ++)
     {
-        if(pipe->inUse)
+        if(pipe->inUse != 0U)
         {
-            switch(pipe->pipeClosingState)
+            tempPipeClosingState = (uint8_t)pipe->pipeClosingState;
+            switch((DRV_USB_EHCI_PIPE_CLOSE_STATE)tempPipeClosingState)
             {
                 case DRV_USB_EHCI_PIPE_CLOSE_IDLE:
                     
@@ -1089,7 +1107,7 @@ void _DRV_USB_EHCI_PipeCloseTask(DRV_USB_EHCI_OBJ * hDriver)
                     {
                         /* This means we can proceed with closing the pipe */
                        hDriver->pipeIsClosing = true;
-                       pipe->pipeClosingState = DRV_USB_EHCI_PIPE_CLOSE_QHEAD_DEACTIVATE_WAIT; 
+                       pipe->pipeClosingState = (uint8_t)DRV_USB_EHCI_PIPE_CLOSE_QHEAD_DEACTIVATE_WAIT; 
                     }
 
                     break;
@@ -1098,26 +1116,26 @@ void _DRV_USB_EHCI_PipeCloseTask(DRV_USB_EHCI_OBJ * hDriver)
 
                     /* In this state check if the qhead active bit has cleared
                      * */
-                    if(pipe->qH.qTDToken.active == 0)
+                    if(pipe->qH.qTDToken.active == 0U)
                     {
                         /* qhead is deactivated. Proceed to remove queue head */
-                        pipe->pipeClosingState = DRV_USB_EHCI_PIPE_CLOSE_REMOVE_QHEAD;
+                        pipe->pipeClosingState = (uint8_t)DRV_USB_EHCI_PIPE_CLOSE_REMOVE_QHEAD;
                     }
 
                     break;
 
                 case DRV_USB_EHCI_PIPE_CLOSE_REMOVE_QHEAD:
 
-                    if(pipe->pipeType == USB_TRANSFER_TYPE_INTERRUPT)
+                    if(pipe->pipeType == (uint32_t)USB_TRANSFER_TYPE_INTERRUPT)
                     {
                         /* Check if this is a 1 millisecond interval pipe. Then
                          * we must always start from slot 0 */
-                        pollingRate = _DRV_USB_EHCI_POLLING_RATE(pipe->bInterval);
-                        if(pollingRate == 1)
+                        pollingRate = M_DRV_USB_EHCI_POLLING_RATE(pipe->bInterval);
+                        if(pollingRate == 1U)
                         {
                             for(j = 0; j < DRV_USB_EHCI_PERIODIC_LIST_SIZE; j ++)
                             {
-                                _DRV_USB_EHCI_PeriodicListRemove(hDriver, j, pipe);
+                                F_DRV_USB_EHCI_PeriodicListRemove(hDriver, (int32_t)j, pipe);
                             }
 
                             /* As we are modifying the hDriver object from one thread
@@ -1126,14 +1144,14 @@ void _DRV_USB_EHCI_PipeCloseTask(DRV_USB_EHCI_OBJ * hDriver)
                             if(OSAL_MUTEX_Lock(&hDriver->mutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
                             {
                                 /* Decrement the polling rate 1 count */
-                                if(hDriver->nextSlotToUse[pipe->bInterval] != 0)
+                                if(hDriver->nextSlotToUse[pipe->bInterval] != 0U)
                                 {
                                     hDriver->nextSlotToUse[pipe->bInterval] --;
                                 }
                              
                                 /* Decrement the micro frame usage count */
                                 hDriver->microFrameUsage[pipe->microFrameIndex] --;
-                                OSAL_MUTEX_Unlock(&hDriver->mutex);
+                                (void) OSAL_MUTEX_Unlock(&hDriver->mutex);
                             }
                             else
                             {
@@ -1147,7 +1165,7 @@ void _DRV_USB_EHCI_PipeCloseTask(DRV_USB_EHCI_OBJ * hDriver)
                              * start looking from */
                             for(j = pipe->startSlot; j < DRV_USB_EHCI_PERIODIC_LIST_SIZE; j += pollingRate)
                             {
-                                _DRV_USB_EHCI_PeriodicListRemove(hDriver, j, pipe);
+                                F_DRV_USB_EHCI_PeriodicListRemove(hDriver, (int32_t)j, pipe);
                             }
                            
                             if(OSAL_MUTEX_Lock(&hDriver->mutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
@@ -1157,7 +1175,7 @@ void _DRV_USB_EHCI_PipeCloseTask(DRV_USB_EHCI_OBJ * hDriver)
 
                                 /* Decrement the micro frame usage count */
                                 hDriver->microFrameUsage[pipe->microFrameIndex] --;
-                                OSAL_MUTEX_Unlock(&hDriver->mutex);
+                                (void) OSAL_MUTEX_Unlock(&hDriver->mutex);
                             }
                             else
                             {
@@ -1168,34 +1186,34 @@ void _DRV_USB_EHCI_PipeCloseTask(DRV_USB_EHCI_OBJ * hDriver)
                         /* Clear the Frame rollover interrupt and then wait for
                          * this interrupt before we release the pipe back  */
                         usbID->UHPHS_USBSTS = UHPHS_USBSTS_FLR_Msk;
-                        pipe->pipeClosingState = DRV_USB_EHCI_PIPE_CLOSE_WAIT_FRAME_ROLLOVER;
+                        pipe->pipeClosingState = (uint8_t)DRV_USB_EHCI_PIPE_CLOSE_WAIT_FRAME_ROLLOVER;
                     }
                     else
                     {
                         /* For Async schedule, we will disable the schedule first */
                         usbID->UHPHS_USBCMD &= (~UHPHS_USBCMD_ASE_Msk);
-                        pipe->pipeClosingState = DRV_USB_EHCI_PIPE_CLOSE_WAIT_ASYNC_DISABLE;
+                        pipe->pipeClosingState = (uint8_t)DRV_USB_EHCI_PIPE_CLOSE_WAIT_ASYNC_DISABLE;
                     }
                     
                     break;
 
                 case DRV_USB_EHCI_PIPE_CLOSE_WAIT_ASYNC_DISABLE:
 
-                    if((usbID->UHPHS_USBCMD & UHPHS_USBCMD_ASE_Msk) == 0)
+                    if((usbID->UHPHS_USBCMD & UHPHS_USBCMD_ASE_Msk) == 0U)
                     {
                         /* Async schedule is disabled. Remove the pipe from the schedule */
 
-                        pQHeadNext = (USB_EHCI_QH *)((uint32_t)(pipe->qH.horizontalQH.pointer) & 0xFFFFFFE0);
+                        pQHeadNext = (USB_EHCI_QH *)((uint32_t)(pipe->qH.horizontalQH.pointer) & 0xFFFFFFE0U);
 
                         /* To find the previous qHead, we start with this
                          * qhead and traverse the async schedule. Start with
                          * the next qH continue till we find a qH whose
                          * horizontal pointer points to this qH. */
 
-                        pQHeadPrevious = (USB_EHCI_QH *)((uint32_t)(pipe->qH.horizontalQH.pointer) & 0xFFFFFFE0);
-                        while((USB_EHCI_QH *)((uint32_t)pQHeadPrevious->horizontalQH.pointer & 0xFFFFFFE0) != &(pipe->qH))
+                        pQHeadPrevious = (USB_EHCI_QH *)((uint32_t)(pipe->qH.horizontalQH.pointer) & 0xFFFFFFE0U);
+                        while((USB_EHCI_QH *)((uint32_t)pQHeadPrevious->horizontalQH.pointer & 0xFFFFFFE0U) != &(pipe->qH))
                         {
-                            pQHeadPrevious = (USB_EHCI_QH*)((uint32_t)pQHeadPrevious->horizontalQH.pointer & 0xFFFFFFE0);
+                            pQHeadPrevious = (USB_EHCI_QH*)((uint32_t)pQHeadPrevious->horizontalQH.pointer & 0xFFFFFFE0U);
                         }
 
                         /* Update the horizontal pointers. Set the Interrupt
@@ -1203,21 +1221,21 @@ void _DRV_USB_EHCI_PipeCloseTask(DRV_USB_EHCI_OBJ * hDriver)
                         pQHeadPrevious->horizontalQH.pointer = pipe->qH.horizontalQH.pointer;
                         pipe->qH.horizontalQH.pointer = pQHeadNext->horizontalQH.pointer;
                         usbID->UHPHS_USBCMD |= UHPHS_USBCMD_ASE_Msk;
-                        pipe->pipeClosingState = DRV_USB_EHCI_PIPE_CLOSE_WAIT_ASYNC_ENABLE;
+                        pipe->pipeClosingState = (uint8_t)DRV_USB_EHCI_PIPE_CLOSE_WAIT_ASYNC_ENABLE;
                     }
 
                     break;
 
                 case DRV_USB_EHCI_PIPE_CLOSE_WAIT_FRAME_ROLLOVER:
 
-                    if((usbID->UHPHS_USBSTS & UHPHS_USBSTS_FLR_Msk) != 0)
+                    if((usbID->UHPHS_USBSTS & UHPHS_USBSTS_FLR_Msk) != 0U)
                     {
                         /* We have frame rollover. Release the pipe */
                         hDriver->pipeIsClosing = false;
-                        pipe->pipeClosingState = DRV_USB_EHCI_PIPE_CLOSE_IDLE;
+                        pipe->pipeClosingState = (uint8_t)DRV_USB_EHCI_PIPE_CLOSE_IDLE;
                         pipe->clientUniqueKey = 0xFFFF;
                         pipe->pipeInQueue = 0;
-                        pipe->inUse = false;
+                        pipe->inUse = 0; /* False */
                     }
                     break;
 
@@ -1225,19 +1243,21 @@ void _DRV_USB_EHCI_PipeCloseTask(DRV_USB_EHCI_OBJ * hDriver)
 
                     /* Check if the Async Schedule has advanced. If so then we
                      * know that the pipe close is complete. */
-                    if((usbID->UHPHS_USBSTS & UHPHS_USBSTS_ASS_Msk) != 0)
+                    if((usbID->UHPHS_USBSTS & UHPHS_USBSTS_ASS_Msk) != 0U)
                     {
                         /* Async schedule is enabled. Pipe closing is complete.
                          * Release the pipe object and driver level flag */
                         hDriver->pipeIsClosing = false;
-                        pipe->pipeClosingState = DRV_USB_EHCI_PIPE_CLOSE_IDLE;
+                        pipe->pipeClosingState = (uint8_t)DRV_USB_EHCI_PIPE_CLOSE_IDLE;
                         pipe->clientUniqueKey = 0xFFFF;
                         pipe->pipeInQueue = 0;
-                        pipe->inUse = false;
+                        /* Make the "inUse" flag Â false. */
+                        pipe->inUse = 0;
                     }
 
                     break;
                 default:
+                    /* Do Nothing */
                     break;
             }
         }
@@ -1283,7 +1303,7 @@ SYS_MODULE_OBJ DRV_USB_EHCI_Initialize
     SYS_MODULE_OBJ returnValue = SYS_MODULE_OBJ_INVALID;
     DRV_USB_EHCI_OBJ * hDriver = NULL;
     DRV_USB_EHCI_INIT * drvInit = (DRV_USB_EHCI_INIT *)init;
-    int i;
+    uint32_t i;
 
     if(drvIndex < DRV_USB_EHCI_INSTANCES_NUMBER)
     {
@@ -1316,7 +1336,7 @@ SYS_MODULE_OBJ DRV_USB_EHCI_Initialize
                 hDriver->rootHubAvailableCurrent = drvInit->rootHubAvailableCurrent;
                 
                 /* Enable the module clock */
-                PMC_UCKR_UPLLEN();
+                PMC_UCKR_UPLLEN()
 
                 /* Assign the frame list to this instance */
                 hDriver->periodicList = &gDrvUSBEHCIPeriodicFrameList[drvIndex][0];
@@ -1335,19 +1355,20 @@ SYS_MODULE_OBJ DRV_USB_EHCI_Initialize
 
                 for(i = 0; i < USB_HOST_PIPES_NUMBER; i ++)
                 {
-                    hDriver->queueHeads[i].inUse = false;
+                    /* Make the "inUse" flag  false. */ 
+                    hDriver->queueHeads[i].inUse = 0;
                     hDriver->queueHeads[i].clientUniqueKey = 0xFFFF;
                 }
 
                 /* Initialize the micro frame usage counter. This will be used
                  * for periodic transfers. */
-                for(i = 0; i < 8; i ++)
+                for(i = 0; i < 8U; i ++)
                 {
                     hDriver->microFrameUsage[i] = 0;
                 }
 
                 /* Set the next periodic lot to use for all bInterval to be slot 0 */
-                for(i = 0; i < 16; i ++)
+                for(i = 0; i < 16U; i ++)
                 {
                     hDriver->nextSlotToUse[i] = 0;
                 }
@@ -1360,7 +1381,7 @@ SYS_MODULE_OBJ DRV_USB_EHCI_Initialize
                     hDriver->ports[i].selected = false;
                     hDriver->ports[i].isResetting = false;
                     hDriver->ports[i].portAttachState = DRV_USB_EHCI_PORT_ATTACH_STATE_WAITING_FOR_ATTACH;
-                    if(drvInit->bmPortSelect & (1 << i))
+                    if((drvInit->bmPortSelect & (1UL << i)) != 0U)
                     {
                         hDriver->ports[i].selected = true;
                     }
@@ -1375,7 +1396,7 @@ SYS_MODULE_OBJ DRV_USB_EHCI_Initialize
                  * gDrvUSBEHCIQueueHead array and will not be used by the
                  * application. */
                 hDriver->asyncHeadQH = (USB_EHCI_QH *) &gDrvUSBEHCIQueueHead[drvIndex][USB_HOST_PIPES_NUMBER];
-                memset(hDriver->asyncHeadQH, 0, sizeof(USB_EHCI_QH));
+                (void) memset(hDriver->asyncHeadQH, 0, sizeof(USB_EHCI_QH));
                 hDriver->asyncHeadQH->horizontalQH.pointer = (USB_EHCI_QH *)(hDriver->asyncHeadQH);
                 hDriver->asyncHeadQH->horizontalQH.type = USB_EHCI_QH_TYPE_QH;
                 hDriver->asyncHeadQH->mult = 1;
@@ -1448,18 +1469,21 @@ void DRV_USB_EHCI_Deinitialize
             usbID->UHPHS_USBCMD &= (~UHPHS_USBCMD_ASE_Msk);
             usbID->UHPHS_USBCMD &= (~UHPHS_USBCMD_PSE_Msk);
 
-            while(((usbID->UHPHS_USBSTS & UHPHS_USBSTS_ASS_Msk) == UHPHS_USBSTS_ASS_Msk)
-                    && ((usbID->UHPHS_USBSTS & UHPHS_USBSTS_PSS_Msk)) == UHPHS_USBSTS_PSS_Msk)
+            while(((usbID->UHPHS_USBSTS & UHPHS_USBSTS_ASS_Msk) == (UHPHS_USBSTS_ASS_Msk))
+                    && ((usbID->UHPHS_USBSTS & UHPHS_USBSTS_PSS_Msk)) == (UHPHS_USBSTS_PSS_Msk))
             {
                 /* Wait till the schedules disable */
             }
 
             /* Stop the HC and wait the Halt status bit gets set */
             usbID->UHPHS_USBCMD &= (~UHPHS_USBCMD_RS_Msk);
-            while((usbID->UHPHS_USBSTS & UHPHS_USBSTS_HCHLT_Msk) != UHPHS_USBSTS_HCHLT_Msk);
+            while((usbID->UHPHS_USBSTS & UHPHS_USBSTS_HCHLT_Msk) != UHPHS_USBSTS_HCHLT_Msk)
+            {
+                /* Do Nothing */
+            }
 
             /* Disable the interrupts and clear the interrupt flag */
-            SYS_INT_SourceDisable(hDriver->interruptSource);
+            (void) SYS_INT_SourceDisable(hDriver->interruptSource);
 
             /* Clear all the module interrupts */
             usbID->UHPHS_USBSTS = UHPHS_USBSTS_Msk;
@@ -1484,7 +1508,7 @@ void DRV_USB_EHCI_Deinitialize
 
 // *****************************************************************************
 /* Function:
-    SYS_STATUS DRV_USB_EHCI_Status( const SYS_MODULE_OBJ object )
+    SYS_STATUS DRV_USB_EHCI_Status( SYS_MODULE_OBJ object )
 
   Summary:
     Provides the current status of the USB Driver module.
@@ -1498,7 +1522,7 @@ void DRV_USB_EHCI_Deinitialize
 
 SYS_STATUS DRV_USB_EHCI_Status
 (
-    const SYS_MODULE_OBJ object
+    SYS_MODULE_OBJ object
 )
 {
     SYS_STATUS returnValue = SYS_STATUS_UNINITIALIZED;
@@ -1520,7 +1544,7 @@ SYS_STATUS DRV_USB_EHCI_Status
     DRV_HANDLE DRV_USB_EHCI_Open
     (
         const SYS_MODULE_INDEX drvIndex,
-        const DRV_IO_INTENT ioIntent 
+        const DRV_IO_INTENT intent   
     )
 
   Summary:
@@ -1541,7 +1565,7 @@ SYS_STATUS DRV_USB_EHCI_Status
 DRV_HANDLE DRV_USB_EHCI_Open
 (
     const SYS_MODULE_INDEX drvIndex,
-    const DRV_IO_INTENT ioIntent
+    const DRV_IO_INTENT intent  
 )
 {
     DRV_HANDLE handle = DRV_HANDLE_INVALID;
@@ -1562,10 +1586,10 @@ DRV_HANDLE DRV_USB_EHCI_Open
                      * unique key and the lower 16 bits are the driver object instance 
                      * index. */
 
-                    hDriver->clientUniqueKey = _DRV_USB_EHCI_GetUniqueKey(hDriver);
-                    handle = (DRV_HANDLE)(((hDriver->uniqueKey << 16) & 0xFFFF0000) | (drvIndex & 0xFFFF));
+                    hDriver->clientUniqueKey = F_DRV_USB_EHCI_GetUniqueKey(hDriver);
+                    handle = (DRV_HANDLE)((((uint32_t)hDriver->uniqueKey << 16) & 0xFFFF0000U) | (drvIndex & 0xFFFFU));
                     hDriver->isOpened = true;
-                    OSAL_MUTEX_Unlock(&hDriver->mutex);
+                    (void) OSAL_MUTEX_Unlock(&hDriver->mutex);
                 }
                 else
                 {
@@ -1611,8 +1635,8 @@ void DRV_USB_EHCI_Close
 )
 {
     DRV_USB_EHCI_OBJ * hDriver = NULL;
-    uint16_t drvIndex = (uint16_t)(handle & 0xFFFF);
-    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000) >> 16);
+    uint16_t drvIndex = (uint16_t)(handle & 0xFFFFU);
+    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000U) >> 16);
 
     if (drvIndex < DRV_USB_EHCI_INSTANCES_NUMBER)
     {
@@ -1664,19 +1688,15 @@ void DRV_USB_EHCI_Tasks(SYS_MODULE_OBJ object)
                 
                 case DRV_USB_EHCI_TASK_STATE_WAIT_FOR_CLOCK:
 
-                    /* Wait for PLLA,UPLL stabilization LOCK bit in PMC_SR     */
-                    if(IS_LOCKU_ENABLE())
-                    {
-                        hDriver->status = SYS_STATUS_READY;
-                        hDriver->taskState = DRV_USB_EHCI_TASK_STATE_RUNNING;
-                    }
-
+                    /* Advance the USB Driver state based on PLLA, UPLL stabilization LOCK bit in PMC_SR */
+                    M_DRV_USB_EHCI_AdvanceState(hDriver, SYS_STATUS_READY, DRV_USB_EHCI_TASK_STATE_RUNNING);
+        
                     break;
 
                 case DRV_USB_EHCI_TASK_STATE_RUNNING:
 
-                    _DRV_USB_EHCI_PipeCloseTask(hDriver);
-                    _DRV_USB_EHCI_PortsTask(hDriver);
+                    F_DRV_USB_EHCI_PipeCloseTask(hDriver);
+                    F_DRV_USB_EHCI_PortsTask(hDriver);
                     break;
 
                    
@@ -1724,25 +1744,25 @@ void DRV_USB_EHCI_Tasks(SYS_MODULE_OBJ object)
 USB_ERROR DRV_USB_EHCI_IRPSubmit
 (
     DRV_USB_EHCI_PIPE_HANDLE  hPipe,
-    USB_HOST_IRP * pInputIRP
+    USB_HOST_IRP * pinputIRP
 )
 {
     USB_ERROR returnValue = USB_ERROR_NONE;
-    uint16_t clientUniqueKey = (uint16_t)((hPipe & 0xFFFF0000) >> 16);
-    uint16_t pipeObjIndex = (uint16_t)(hPipe & 0xFF);
-    int drvIndex = (int)((hPipe & 0xFF00) >> 8);
+    uint16_t clientUniqueKey = (uint16_t)((hPipe & 0xFFFF0000U) >> 16);
+    uint16_t pipeObjIndex = (uint16_t)(hPipe & 0xFFU);
+    uint32_t drvIndex = ((hPipe & 0xFF00U) >> 8);
     DRV_USB_EHCI_QH * pipe = NULL;
     USB_EHCI_QH * currentQH = NULL;
     bool slotFound = false;
     DRV_USB_EHCI_QTD * transfer = NULL;
     DRV_USB_EHCI_QTD * currentQTD = NULL;
-    USB_HOST_IRP_LOCAL * pIRP = (USB_HOST_IRP_LOCAL *)pInputIRP;
+    USB_HOST_IRP_LOCAL * pIRP = (USB_HOST_IRP_LOCAL *)pinputIRP;
     DRV_USB_EHCI_OBJ * hDriver = NULL;
     bool interruptWasEnabled = false;
     DRV_USB_EHCI_CONTROL_TRANSFER_QTD * controlTransfer;
     uhphs_registers_t * usbID  = NULL;
-    int i = 0;
-    int nextListIndex = 0;
+    uint32_t i = 0;
+    int32_t nextListIndex = 0;
     uint8_t bInterval = 0;
     uint32_t pollingRate = 0;
     USB_EHCI_QH * previousQH = NULL;
@@ -1763,7 +1783,7 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
             returnValue = USB_ERROR_HOST_PIPE_INVALID;
             usbID = hDriver->usbID;
 
-            if((pipe->clientUniqueKey == clientUniqueKey) && (pipe->pipeClosingState == DRV_USB_EHCI_PIPE_CLOSE_IDLE))
+            if((pipe->clientUniqueKey == clientUniqueKey) && (pipe->pipeClosingState == (uint32_t)DRV_USB_EHCI_PIPE_CLOSE_IDLE))
             {
                 returnValue = USB_ERROR_HOST_ARGUMENTS_INVALID;
                 if(pIRP != NULL) 
@@ -1808,7 +1828,7 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
                          * queue. */
                         pIRP->status = USB_HOST_IRP_STATUS_PENDING;
 
-                        if(pipe->pipeType == USB_TRANSFER_TYPE_CONTROL)
+                        if(pipe->pipeType == (uint32_t)USB_TRANSFER_TYPE_CONTROL)
                         {
                             controlTransfer = NULL;
 
@@ -1831,11 +1851,11 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
                                 /* Check if the pipe queue is empty */
                                 if(pipe->currentQTD == NULL)
                                 {
-                                    pIRP->scheduledBytes = _DRV_USB_EHCI_ControlTransferQTD(controlTransfer, (USB_SPEED)pipe->speed);
+                                    pIRP->scheduledBytes = F_DRV_USB_EHCI_ControlTransferQTD(controlTransfer, (USB_SPEED)pipe->speed);
                                     pIRP->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
                                     pipe->currentQTD = (DRV_USB_EHCI_QTD *)controlTransfer;
                                     pipe->qH.nextQTD.pointer = &controlTransfer->setupQTD;
-                                    if(pipe->pipeInQueue == 0)
+                                    if(pipe->pipeInQueue == 0U)
                                     {
                                         /* This means pipe is not in async schedule. Add it */
                                         currentQH = (USB_EHCI_QH *)usbID->UHPHS_ASYNCLISTADDR;
@@ -1901,15 +1921,15 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
 
                                     pipe->currentQTD = transfer;
                                     pIRP->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
-                                    pIRP->scheduledBytes = _DRV_USB_EHCI_DataQTD(transfer, (USB_DATA_DIRECTION)pipe->direction);
+                                    pIRP->scheduledBytes = F_DRV_USB_EHCI_DataQTD(transfer, (USB_DATA_DIRECTION)pipe->direction);
                                     pipe->qH.nextQTD.pointer = &transfer->qTD;
                                     
                                     /* Check if the pipe is inserted into the schedule */
-                                    if(pipe->pipeInQueue == 0)
+                                    if(pipe->pipeInQueue == 0U)
                                     {
                                         /* Pipe should be added to the schedule. If this is a bulk pipe
                                          * then it should be added to the async schedule. */
-                                        if(pipe->pipeType == USB_TRANSFER_TYPE_BULK)
+                                        if(pipe->pipeType == (uint32_t)USB_TRANSFER_TYPE_BULK)
                                         {
                                             /* This means pipe is not in async schedule. Add it */
                                             currentQH = (USB_EHCI_QH *)usbID->UHPHS_ASYNCLISTADDR;
@@ -1924,17 +1944,17 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
                                             nextListIndex = 0;
                                             slotFound = false;
                                             bInterval = pipe->bInterval;
-                                            pollingRate = (1 << (bInterval - 1))/8;
+                                            pollingRate = (1UL << (bInterval - 1U))/8U;
 
                                             /* Now we scan the periodic frame list to find  a place where we can insert
                                              * the queue head. The trivial case is when the list is empty and the queue
                                              * head can be inserted into the very first slot. This means the list is 
                                              * completely empty */
 
-                                            if(hDriver->periodicList[0] == USB_EHCI_END_OF_LIST)
+                                            if(hDriver->periodicList[0] == (uint32_t)USB_EHCI_END_OF_LIST)
                                             {
                                                 slotFound = true;
-                                                pipe->startSlot = hDriver->nextSlotToUse[pipe->bInterval]; 
+                                                pipe->startSlot = (uint16_t)hDriver->nextSlotToUse[pipe->bInterval]; 
                                                 hDriver->nextSlotToUse[bInterval] ++;
 
                                                 for(i = 0; i < DRV_USB_EHCI_PERIODIC_LIST_SIZE; i ++)
@@ -1944,8 +1964,8 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
                                                     hDriver->periodicList[nextListIndex] = USB_EHCI_PERIODIC_LIST_ENTRY(pipe, USB_EHCI_QH_TYPE_QH) ;
 
                                                     /* Insert the qH at the next polling interval */
-                                                    nextListIndex += pollingRate;
-                                                    if (nextListIndex >= DRV_USB_EHCI_PERIODIC_LIST_SIZE)
+                                                    nextListIndex += (int32_t)pollingRate;
+                                                    if ((uint32_t)nextListIndex >= DRV_USB_EHCI_PERIODIC_LIST_SIZE)
                                                     { 
                                                         break;
                                                     }
@@ -1954,7 +1974,7 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
 
                                             if(!slotFound)
                                             {
-                                                if(bInterval == 4)
+                                                if(bInterval == 4U)
                                                 {
                                                     /* A 1 millisecond poll rate qH will always start at slot 0 */
                                                     pipe->startSlot = 0; 
@@ -1966,7 +1986,7 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
                                                      * the queue. If the list already contains a 1 millisecond qH then 
                                                      * this should come to the right of this qH. */
 
-                                                    if(hDriver->nextSlotToUse[bInterval] > 0)
+                                                    if(hDriver->nextSlotToUse[bInterval] > 0U)
                                                     {
                                                         /* The list already contains a 1 millisecond pipe. Insert this pipe to 
                                                          * the right side of the pipe. */
@@ -2030,6 +2050,7 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
 
                                                         hDriver->nextSlotToUse[bInterval] ++;
                                                         slotFound = true;
+                                                        (void) slotFound;
                                                     }
                                                 }
                                                 else
@@ -2051,9 +2072,9 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
                                                      * nextSlotToUse counter and if we have reached the end of the 
                                                      * polling rate window */
 
-                                                    pipe->startSlot = hDriver->nextSlotToUse[bInterval];
+                                                    pipe->startSlot = (uint16_t)hDriver->nextSlotToUse[bInterval];
                                                     hDriver->nextSlotToUse[bInterval] ++;
-                                                    hDriver->nextSlotToUse[bInterval] = (hDriver->nextSlotToUse[bInterval] >= pollingRate) ? 0 : hDriver->nextSlotToUse[bInterval];
+                                                    hDriver->nextSlotToUse[bInterval] = (hDriver->nextSlotToUse[bInterval] >= pollingRate) ? 0U : hDriver->nextSlotToUse[bInterval];
 
                                                     for(i = pipe->startSlot; i < DRV_USB_EHCI_PERIODIC_LIST_SIZE; (i += pollingRate))
                                                     {
@@ -2065,7 +2086,7 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
                                                             pipe->qH.horizontalQH.value32 = USB_EHCI_END_OF_LIST;
                                                             hDriver->periodicList[i] = USB_EHCI_PERIODIC_LIST_ENTRY(pipe, USB_EHCI_QH_TYPE_QH);
                                                         }
-                                                        else if(pollingRate >= _DRV_USB_EHCI_POLLING_RATE(((DRV_USB_EHCI_QH *)currentQH)->bInterval))
+                                                        else if(pollingRate >= M_DRV_USB_EHCI_POLLING_RATE(((DRV_USB_EHCI_QH *)currentQH)->bInterval))
                                                         {
                                                             /* This qH should be placed at the beginning of the list */
                                                             pipe->qH.horizontalQH.value32 = USB_EHCI_PERIODIC_LIST_ENTRY(currentQH, USB_EHCI_QH_TYPE_QH);
@@ -2086,7 +2107,7 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
                                                                     break;
                                                                 }
 
-                                                                if(pollingRate >= _DRV_USB_EHCI_POLLING_RATE(((DRV_USB_EHCI_QH *)currentQH)->bInterval))
+                                                                if(pollingRate >= M_DRV_USB_EHCI_POLLING_RATE(((DRV_USB_EHCI_QH *)currentQH)->bInterval))
                                                                 {
                                                                     /* We have found the place to insert the qH */
                                                                     pipe->qH.horizontalQH.value32 = USB_EHCI_PERIODIC_LIST_ENTRY(currentQH, USB_EHCI_QH_TYPE_QH);
@@ -2140,7 +2161,7 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
                                 SYS_INT_SourceEnable(hDriver->interruptSource);
                             }
 
-                            OSAL_MUTEX_Unlock(&hDriver->mutex);
+                            (void) OSAL_MUTEX_Unlock(&hDriver->mutex);
                         }
                         else
                         {
@@ -2191,16 +2212,16 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
     See drv_usb_ehci.h for usage information.
 */
  
-void DRV_USB_EHCI_IRPCancel(USB_HOST_IRP * pInputIRP)
+void DRV_USB_EHCI_IRPCancel(USB_HOST_IRP * inputIRP)
 {
-    USB_HOST_IRP_LOCAL * irp = (USB_HOST_IRP_LOCAL *)pInputIRP;
+    USB_HOST_IRP_LOCAL * irp = (USB_HOST_IRP_LOCAL *)inputIRP;
     DRV_USB_EHCI_PIPE_HANDLE hPipe = DRV_USB_EHCI_PIPE_HANDLE_INVALID;
     DRV_USB_EHCI_OBJ * hDriver = NULL;
     DRV_USB_EHCI_QH * pipe = NULL;
     bool interruptWasEnabled = false;
     uint16_t clientUniqueKey = 0;
     uint16_t pipeObjIndex = 0;
-    int drvIndex = 0;
+    uint32_t drvIndex = 0;
     DRV_USB_EHCI_QTD * currentQTD = NULL;
     DRV_USB_EHCI_CONTROL_TRANSFER_QTD * controlQTD = NULL;
     DRV_USB_EHCI_QTD * qTD = NULL;
@@ -2210,9 +2231,9 @@ void DRV_USB_EHCI_IRPCancel(USB_HOST_IRP * pInputIRP)
     {
         /* Get the pipe to which IRP belongs */
         hPipe = irp->pipe;
-        clientUniqueKey = (uint16_t)((hPipe & 0xFFFF0000) >> 16);
-        pipeObjIndex = (uint16_t)(hPipe & 0xFF);
-        drvIndex = (int)((hPipe & 0xFF00) >> 8);
+        clientUniqueKey = (uint16_t)((hPipe & 0xFFFF0000U) >> 16);
+        pipeObjIndex = (uint16_t)(hPipe & 0xFFU);
+        drvIndex = ((hPipe & 0xFF00U) >> 8);
 
         if(pipeObjIndex < USB_HOST_PIPES_NUMBER)
         {
@@ -2221,7 +2242,7 @@ void DRV_USB_EHCI_IRPCancel(USB_HOST_IRP * pInputIRP)
                 hDriver = &gDrvUSBEHCIObj[drvIndex];
                 pipe = &hDriver->queueHeads[pipeObjIndex];
 
-                if((pipe->clientUniqueKey == clientUniqueKey) && (pipe->pipeClosingState == DRV_USB_EHCI_PIPE_CLOSE_IDLE))
+                if((pipe->clientUniqueKey == clientUniqueKey) && (pipe->pipeClosingState == (uint32_t)DRV_USB_EHCI_PIPE_CLOSE_IDLE))
                 {
                     if(hDriver->inInterruptContext == false)
                     {
@@ -2252,7 +2273,7 @@ void DRV_USB_EHCI_IRPCancel(USB_HOST_IRP * pInputIRP)
                          * the pipe that this is IRP is associated with.
                          * Find the IRP in this pipe. */
 
-                        if(pipe->pipeType == USB_TRANSFER_TYPE_CONTROL)
+                        if(pipe->pipeType == (uint32_t)USB_TRANSFER_TYPE_CONTROL)
                         {
                             /* If this is a control transfer pipe, then we have to deal
                              * with control QTDs */
@@ -2320,7 +2341,7 @@ void DRV_USB_EHCI_IRPCancel(USB_HOST_IRP * pInputIRP)
                             SYS_INT_SourceEnable(hDriver->interruptSource);
                         }
 
-                        OSAL_MUTEX_Unlock(&hDriver->mutex);
+                        (void) OSAL_MUTEX_Unlock(&hDriver->mutex);
                     }
                     else
                     {
@@ -2350,7 +2371,7 @@ void DRV_USB_EHCI_IRPCancel(USB_HOST_IRP * pInputIRP)
 
   Summary:
     Closes an open pipe.
-	
+    
   Description:
     This function closes an open pipe. Any IRPs scheduled on the pipe will be
     aborted and IRP callback functions will be called with the status as
@@ -2363,12 +2384,12 @@ void DRV_USB_EHCI_IRPCancel(USB_HOST_IRP * pInputIRP)
 
 void DRV_USB_EHCI_PipeClose
 (
-    DRV_USB_EHCI_PIPE_HANDLE hPipe
+    DRV_USB_EHCI_PIPE_HANDLE pipeHandle
 )
 {
-    uint16_t clientUniqueKey = (uint16_t)((hPipe & 0xFFFF0000) >> 16);
-    uint16_t pipeObjIndex = (uint16_t)(hPipe & 0xFF);
-    int drvIndex = (int)((hPipe & 0xFF00) >> 8);
+    uint16_t clientUniqueKey = (uint16_t)((pipeHandle & 0xFFFF0000U) >> 16);
+    uint16_t pipeObjIndex = (uint16_t)(pipeHandle & 0xFFU);
+    uint32_t drvIndex = ((pipeHandle & 0xFF00U) >> 8);
     DRV_USB_EHCI_QH * pipe = NULL;
     DRV_USB_EHCI_OBJ * hDriver = NULL;
     bool thereWasAnError = false; 
@@ -2406,12 +2427,12 @@ void DRV_USB_EHCI_PipeClose
                 if(!thereWasAnError)
                 {
 
-                    if(pipe->pipeType == USB_TRANSFER_TYPE_INTERRUPT)
+                    if(pipe->pipeType == (uint32_t)USB_TRANSFER_TYPE_INTERRUPT)
                     {
                         /* Check if the QH head is active, if so then set the
                          * inactivate bit */
 
-                        if(pipe->qH.qTDToken.active == 1)
+                        if(pipe->qH.qTDToken.active == 1U)
                         {
                             pipe->qH.i = 1;
                         }
@@ -2453,18 +2474,19 @@ void DRV_USB_EHCI_PipeClose
                      * If the pipe was added to schedule, then we let the pipe
                      * close tasks handle this. */
 
-                    if(!pipe->pipeInQueue)
+                    if(pipe->pipeInQueue == 0U)
                     {
-                        pipe->pipeClosingState = DRV_USB_EHCI_PIPE_CLOSE_IDLE;
+                        pipe->pipeClosingState = (uint8_t)DRV_USB_EHCI_PIPE_CLOSE_IDLE;
                         pipe->clientUniqueKey = 0xFFFF;
                         pipe->pipeInQueue = 0;
                         hDriver->microFrameUsage[pipe->microFrameIndex]--;
-                        pipe->inUse = false;
+                        /* Make the "inUse" flag false.*/
+                        pipe->inUse = 0;
                     }
                     else
                     {
                         /* The rest of the pipe closure will have to happen in the task routine. */
-                        pipe->pipeClosingState = DRV_USB_EHCI_PIPE_CLOSE_REQUEST_PENDING;
+                        pipe->pipeClosingState = (uint8_t)DRV_USB_EHCI_PIPE_CLOSE_REQUEST_PENDING;
                     }
                 }
 
@@ -2476,7 +2498,7 @@ void DRV_USB_EHCI_PipeClose
                         SYS_INT_SourceEnable(hDriver->interruptSource);
                     }
 
-                    OSAL_MUTEX_Unlock(&hDriver->mutex);
+                    (void) OSAL_MUTEX_Unlock(&hDriver->mutex);
                 }
             }
             else
@@ -2512,7 +2534,7 @@ void DRV_USB_EHCI_PipeClose
 
   Summary:
     Open a pipe with the specified attributes.
-	
+    
   Description:
     This function opens a communication pipe between the Host and the device
     endpoint. The transfer type and other attributes are specified through the
@@ -2525,7 +2547,7 @@ void DRV_USB_EHCI_PipeClose
 
 DRV_USB_EHCI_PIPE_HANDLE DRV_USB_EHCI_PipeSetup 
 (
-    DRV_HANDLE handle,
+    DRV_HANDLE client,
     uint8_t deviceAddress, 
     USB_ENDPOINT endpointAndDirection,
     uint8_t hubAddress,
@@ -2537,16 +2559,16 @@ DRV_USB_EHCI_PIPE_HANDLE DRV_USB_EHCI_PipeSetup
 )
 {
     DRV_USB_EHCI_PIPE_HANDLE pipeHandle = DRV_USB_EHCI_PIPE_HANDLE_INVALID;
-    uint16_t drvIndex = (uint16_t)(handle & 0xFFFF);
-    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000) >> 16);
+    uint16_t drvIndex = (uint16_t)(client & 0xFFFFU);
+    uint16_t clientUniqueKey = (uint16_t)((client & 0xFFFF0000U) >> 16);
     DRV_USB_EHCI_OBJ * hDriver = NULL;
     DRV_USB_EHCI_QH * pipe = NULL;
-    int i = 0;
+    uint32_t i = 0;
     uint8_t microFrameIndex = 0;
-    int interval = 0;
-    int pollingRate = 0;
-    int minUsageValue = 0;
-    int minUsageIndex = 0;
+    int32_t interval = 0;
+    uint32_t pollingRate = 0;
+    int32_t minUsageValue = 0;
+    uint32_t minUsageIndex = 0;
       
     
     if(drvIndex < DRV_USB_EHCI_INSTANCES_NUMBER)
@@ -2564,53 +2586,54 @@ DRV_USB_EHCI_PIPE_HANDLE DRV_USB_EHCI_PipeSetup
                  * minimum has to be 8 bytes.  */
                 if(pipeType != USB_TRANSFER_TYPE_CONTROL)
                 {
-                    if(wMaxPacketSize < 8)
+                    if(wMaxPacketSize < 8U)
                     {
                         wMaxPacketSize = 8;
                     }
                 }
 
-                if((wMaxPacketSize >= 8) && (wMaxPacketSize <= 1024))
+                if((wMaxPacketSize >= 8U) && (wMaxPacketSize <= 1024U))
                 {
                     if(OSAL_MUTEX_Lock(&hDriver->mutex, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
                     {
                         /* Look for a free driver pipe object */
                         for(i = 0; i < USB_HOST_PIPES_NUMBER; i ++)
                         {
-                            if(hDriver->queueHeads[i].inUse == false)
+                            if(hDriver->queueHeads[i].inUse == 0U)
                             {
                                 /* We found a free queue head. Allocate this */
-                                hDriver->queueHeads[i].inUse = true;
+                                /* Make the "inUse" flag false.*/
+                                hDriver->queueHeads[i].inUse = 1;
                                 pipe = &hDriver->queueHeads[i];
-                                pipe->pipeType = pipeType;
-                                pipe->clientUniqueKey = _DRV_USB_EHCI_GetUniqueKey(hDriver);
+                                pipe->pipeType = (uint8_t)pipeType;
+                                pipe->clientUniqueKey = (uint8_t)F_DRV_USB_EHCI_GetUniqueKey(hDriver);
                                 pipe->currentQTD = NULL;
-                                pipe->pipeClosingState = DRV_USB_EHCI_PIPE_CLOSE_IDLE;
-                                pipe->speed = speed;
+                                pipe->pipeClosingState = (uint8_t)DRV_USB_EHCI_PIPE_CLOSE_IDLE;
+                                pipe->speed = (uint8_t)speed;
 
                                 /* The pipe handle is a composite value. The
                                  * first byte is an index into the pipe object
                                  * array. The second byte in an index into the
                                  * hardware instance object array and third and
                                  * fourth bytes are the client unique key. */
-                                pipeHandle = (DRV_USB_EHCI_PIPE_HANDLE)(((pipe->clientUniqueKey << 16) & 0xFFFF0000) | ((drvIndex & 0xFF) << 8) | (i & 0xFF));
+                                pipeHandle = (DRV_USB_EHCI_PIPE_HANDLE)((((uint32_t)pipe->clientUniqueKey << 16) & 0xFFFF0000U) | ((drvIndex & 0xFFU) << 8) | (i & 0xFFU));
 
                                 /* Clear up the qHead structure */
-                                memset(&pipe->qH, 0, sizeof(USB_EHCI_QH));
+                                (void) memset(&pipe->qH, 0, sizeof(USB_EHCI_QH));
 
                                 /* Configure the qH data structure. Refer to
                                  * section 3.6 of the specification. */
                                 pipe->qH.horizontalQH.terminate = 1;
                                 pipe->qH.deviceAddress = deviceAddress;
                                 pipe->qH.i = 0;
-                                pipe->qH.endpt = endpointAndDirection & 0xF;
+                                pipe->qH.endpt = (uint8_t)(endpointAndDirection & 0xFU);
                                 pipe->qH.mult = 1;
                                 pipe->qH.nextQTD.terminate = 1;
                                 pipe->qH.alternateNextQtd.terminate = 1;
                                 pipe->qH.maxPacketSize = wMaxPacketSize;
                                 pipe->qH.eps = USB_EHCI_QH_SPEED_HIGH;
                                 pipe->qH.hubAddress = hubAddress;
-                                pipe->qH.port = (hubAddress != 0) ? hubPort : 0;
+                                pipe->qH.port = (hubAddress != 0U) ? hubPort : 0U;
                                 pipe->qH.rl = 0;
 
                                 if(speed == USB_SPEED_FULL)
@@ -2621,20 +2644,24 @@ DRV_USB_EHCI_PIPE_HANDLE DRV_USB_EHCI_PipeSetup
                                 {
                                     pipe->qH.eps = USB_EHCI_QH_SPEED_LOW;
                                 }
+                                else
+                                {
+                                    /* Do Nothing */
+                                }
 
-                                if(pipe->pipeType == USB_TRANSFER_TYPE_CONTROL)
+                                if(pipe->pipeType == (uint32_t)USB_TRANSFER_TYPE_CONTROL)
                                 {
                                     /* In case of a control transfer, we let
                                      * the qTD decide the datatoggle. The queue
                                      * handling function is the function that
                                      * is called when the interrupt occurs. For
                                      * this pipe it will be the
-                                     * _DRV_USB_EHCI_ControlTransferProcess
+                                     * F_DRV_USB_EHCI_ControlTransferProcess
                                      * function. Pipe direction is obtained
                                      * from the IRP setup packet. */
 
                                     pipe->qH.dtc = 1;
-                                    pipe->queueHandler = _DRV_USB_EHCI_ControlTransferProcess;
+                                    pipe->queueHandler = F_DRV_USB_EHCI_ControlTransferProcess;
 
                                     if(speed != USB_SPEED_HIGH)
                                     {
@@ -2648,15 +2675,15 @@ DRV_USB_EHCI_PIPE_HANDLE DRV_USB_EHCI_PipeSetup
                                      * the pipe direction in the direction
                                      * field. */
 
-                                    pipe->queueHandler = _DRV_USB_EHCI_BulkTransferProcess;
+                                    pipe->queueHandler = F_DRV_USB_EHCI_BulkTransferProcess;
                                     pipe->qH.dtc = 0;
-                                    if((endpointAndDirection & 0x80) != 0)
+                                    if((endpointAndDirection & 0x80U) != 0U)
                                     {
-                                        pipe->direction = USB_DATA_DIRECTION_DEVICE_TO_HOST;
+                                        pipe->direction = (uint8_t)USB_DATA_DIRECTION_DEVICE_TO_HOST;
                                     }
                                     else
                                     {
-                                        pipe->direction = USB_DATA_DIRECTION_HOST_TO_DEVICE;
+                                        pipe->direction = (uint8_t)USB_DATA_DIRECTION_HOST_TO_DEVICE;
                                     }
                                 }
 
@@ -2667,13 +2694,17 @@ DRV_USB_EHCI_PIPE_HANDLE DRV_USB_EHCI_PipeSetup
                                        /* We can only handle polling rates between 1 and 1024 milliseconds */
                                         pipe->bInterval = bInterval;
 
-                                        if(bInterval < 4)
+                                        if(bInterval < 4U)
                                         {
                                             pipe->bInterval = 4;
                                         }
-                                        else if(bInterval > 14)
+                                        else if(bInterval > 14U)
                                         {
                                             pipe->bInterval = 14;
+                                        }
+                                        else
+                                        {
+                                            /* Do Nothing */
                                         }
 
                                         /* We will use the 6 and 7th microframe
@@ -2684,8 +2715,8 @@ DRV_USB_EHCI_PIPE_HANDLE DRV_USB_EHCI_PipeSetup
                                          * in the array corresponds to the
                                          * microFrameUsage*/
 
-                                        microFrameIndex = (hDriver->microFrameUsage[6] <= hDriver->microFrameUsage[7]) ? 6 : 7;
-                                        pipe->qH.sMask = (1 << microFrameIndex);
+                                        microFrameIndex = (hDriver->microFrameUsage[6] <= hDriver->microFrameUsage[7]) ? 6U : 7U;
+                                        pipe->qH.sMask = (uint8_t)(1UL << microFrameIndex);
                                         pipe->microFrameIndex = microFrameIndex;
                                         hDriver->microFrameUsage[microFrameIndex] ++;
                                     }
@@ -2696,11 +2727,11 @@ DRV_USB_EHCI_PIPE_HANDLE DRV_USB_EHCI_PipeSetup
                                          * us a value of 1 millisecond. */
 
                                         interval = 4;
-                                        pollingRate = _DRV_USB_EHCI_POLLING_RATE(interval);
+                                        pollingRate = M_DRV_USB_EHCI_POLLING_RATE((uint32_t)interval);
                                         while(pollingRate < bInterval)
                                         {
                                             interval ++;
-                                            pollingRate = _DRV_USB_EHCI_POLLING_RATE(interval);
+                                            pollingRate = M_DRV_USB_EHCI_POLLING_RATE((uint32_t)interval);
                                             if(interval == 14)
                                             {
                                                 /* We support pollingRate of upto 1.024 seconds */
@@ -2716,30 +2747,33 @@ DRV_USB_EHCI_PIPE_HANDLE DRV_USB_EHCI_PipeSetup
                                         }
 
                                         /* Save the interval in the pipe object */
-                                        pipe->bInterval = interval;
+                                        pipe->bInterval = (uint8_t)interval;
 
                                         /* For low and full speed pipes, we have to set the S and C masks. Find the
                                          * a slot with lowest usage */
-                                        minUsageValue = hDriver->microFrameUsage[0];
+                                        minUsageValue = (int32_t)hDriver->microFrameUsage[0];
                                         minUsageIndex = 0;
-                                        for(i = 0; i < 3; i ++)
+                                        if(i < DRV_USB_EHCI_MAX_NUMBER_MFRAME_PER_MS)
                                         {
-                                            if(hDriver->microFrameUsage[i] < minUsageValue)
+                                            uint32_t j;
+                                            for(j = 0; j < 3U; j++)
                                             {
-                                                minUsageValue = hDriver->microFrameUsage[i];
-                                                minUsageIndex = i;
+                                                if(hDriver->microFrameUsage[i] < (uint32_t)minUsageValue)
+                                                {
+                                                    minUsageValue = (int32_t)hDriver->microFrameUsage[i];
+                                                    minUsageIndex = i;
+                                                }
                                             }
                                         }
-
                                         /* We now have the microframe with the lowest usage.
                                          * Set up the S mask and the C mask. For example if
                                          * S mask is in microframe 0, then C mask should be
                                          * microframes 1,2 and 3. */
 
                                         hDriver->microFrameUsage[minUsageIndex] ++;
-                                        pipe->microFrameIndex = minUsageIndex;
-                                        pipe->qH.sMask = (1 << minUsageIndex);
-                                        pipe->qH.cMask = (7 << (minUsageIndex + 1));
+                                        pipe->microFrameIndex = (uint8_t)minUsageIndex;
+                                        pipe->qH.sMask = (uint8_t)(1UL << minUsageIndex);
+                                        pipe->qH.cMask = (uint8_t)(7UL << (minUsageIndex + 1U));
                                     }
                                 }
 
@@ -2756,7 +2790,7 @@ DRV_USB_EHCI_PIPE_HANDLE DRV_USB_EHCI_PipeSetup
                         }
 
                         /* Release the mutex */
-                        OSAL_MUTEX_Unlock(&hDriver->mutex);
+                        (void) OSAL_MUTEX_Unlock(&hDriver->mutex);
                     }
                     else
                     {
@@ -2786,6 +2820,8 @@ DRV_USB_EHCI_PIPE_HANDLE DRV_USB_EHCI_PipeSetup
     return(pipeHandle);
 }
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+/* MISRAC 2012 deviation block end */
 // ****************************************************************************
 /* Function:
     bool DRV_USB_EHCI_EventDisable
@@ -2810,8 +2846,8 @@ bool DRV_USB_EHCI_EventsDisable
 )
 {
     bool result = false;
-    uint16_t drvIndex = (uint16_t)(handle & 0xFFFF);
-    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000) >> 16);
+    uint16_t drvIndex = (uint16_t)(handle & 0xFFFFU);
+    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000U) >> 16);
 
     if(drvIndex < DRV_USB_EHCI_INSTANCES_NUMBER)
     {
@@ -2858,8 +2894,8 @@ void DRV_USB_EHCI_EventsEnable
     bool eventContext
 )
 {
-    uint16_t drvIndex = (uint16_t)(handle & 0xFFFF);
-    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000) >> 16);
+    uint16_t drvIndex = (uint16_t)(handle & 0xFFFFU);
+    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000U) >> 16);
 
     if(drvIndex < DRV_USB_EHCI_INSTANCES_NUMBER)
     {
@@ -2898,8 +2934,8 @@ void DRV_USB_EHCI_EventsEnable
 
 void DRV_USB_EHCI_OperationEnable(DRV_HANDLE handle, bool enable)
 {
-    uint16_t drvIndex = (uint16_t)(handle & 0xFFFF);
-    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000) >> 16);
+    uint16_t drvIndex = (uint16_t)(handle & 0xFFFFU);
+    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000U) >> 16);
     DRV_USB_EHCI_OBJ * hDriver = NULL;
     uhphs_registers_t * usbID = NULL;
 
@@ -2940,11 +2976,14 @@ void DRV_USB_EHCI_OperationEnable(DRV_HANDLE handle, bool enable)
                  * state machine increase complexity, the while loop is used in
                  * the current implementation. */
 
-                while(usbID->UHPHS_USBSTS & UHPHS_USBSTS_HCHLT_Msk);
+                while((usbID->UHPHS_USBSTS & UHPHS_USBSTS_HCHLT_Msk) != 0U)
+                {
+                    /* Do Nothing */
+                }
                 hDriver->operationEnabled = false;
                 hDriver->operationEnableState = DRV_USB_EHCI_OPERATION_ENABLE_DISABLE;
-                SYS_INT_SourceDisable(hDriver->interruptSource);
-                SYS_INT_SourceStatusClear(hDriver->interruptSource);
+                (void) SYS_INT_SourceDisable(hDriver->interruptSource);
+                (void) SYS_INT_SourceStatusClear(hDriver->interruptSource);
             }
         }
         else
@@ -2976,11 +3015,11 @@ void DRV_USB_EHCI_OperationEnable(DRV_HANDLE handle, bool enable)
 bool DRV_USB_EHCI_OperationIsEnabled(DRV_HANDLE handle)
 {
     bool returnValue = false;
-    uint16_t drvIndex = (uint16_t)(handle & 0xFFFF);
-    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000) >> 16);
+    uint16_t drvIndex = (uint16_t)(handle & 0xFFFFU);
+    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000U) >> 16);
     DRV_USB_EHCI_OBJ * hDriver = NULL;
     uhphs_registers_t * usbID = NULL;
-    int i;
+    uint32_t i;
 
     if(drvIndex < DRV_USB_EHCI_INSTANCES_NUMBER)
     {
@@ -3049,7 +3088,7 @@ bool DRV_USB_EHCI_OperationIsEnabled(DRV_HANDLE handle)
                     case DRV_USB_EHCI_OPERATION_ENABLE_WAIT_RESET:
 
                         /* Check if the reset has completed */
-                        if((usbID->UHPHS_USBCMD & UHPHS_USBCMD_HCRESET_Msk) == 0)
+                        if((usbID->UHPHS_USBCMD & UHPHS_USBCMD_HCRESET_Msk) == 0U)
                         {
                             /* Reset has completed. Enable interrupts. Set the
                              * periodic and async schedule base addresses. Set
@@ -3078,7 +3117,7 @@ bool DRV_USB_EHCI_OperationIsEnabled(DRV_HANDLE handle)
                     case DRV_USB_EHCI_OPERATION_ENABLE_WAIT_RUN:
 
                         /* Check if the HC has moved out of Halted State */
-                        if((usbID->UHPHS_USBSTS & UHPHS_USBSTS_HCHLT_Msk) == 0)
+                        if((usbID->UHPHS_USBSTS & UHPHS_USBSTS_HCHLT_Msk) == 0U)
                         {
                             /* HC is running.Make HC the owner of all ports and
                              * then enable the port power. We
@@ -3125,7 +3164,8 @@ bool DRV_USB_EHCI_OperationIsEnabled(DRV_HANDLE handle)
 
                     case DRV_USB_EHCI_OPERATION_ENABLE_IDLE:
                         /* Operation has been enabled */
-                    default:
+                    default: 
+                        /* Do Nothing */
                         break;
                 }
             }
@@ -3164,11 +3204,11 @@ bool DRV_USB_EHCI_OperationIsEnabled(DRV_HANDLE handle)
     Refer to drv_usb_ehci.h for usage information.
 */
 
-USB_ERROR DRV_USB_EHCI_PortReset(DRV_HANDLE handle, uint8_t nPort)
+USB_ERROR DRV_USB_EHCI_PortReset(DRV_HANDLE handle, uint8_t port )
 {
     USB_ERROR returnValue = USB_ERROR_PARAMETER_INVALID;
-    uint16_t drvIndex = (uint16_t)(handle & 0xFFFF);
-    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000) >> 16);
+    uint16_t drvIndex = (uint16_t)(handle & 0xFFFFU);
+    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000U) >> 16);
     DRV_USB_EHCI_OBJ * hDriver = NULL;
     
     if(drvIndex < DRV_USB_EHCI_INSTANCES_NUMBER)
@@ -3176,16 +3216,16 @@ USB_ERROR DRV_USB_EHCI_PortReset(DRV_HANDLE handle, uint8_t nPort)
         hDriver = &gDrvUSBEHCIObj[drvIndex];
         if(hDriver->clientUniqueKey == clientUniqueKey)
         {
-            if((nPort < DRV_USB_EHCI_PORT_NUMBERS) && (hDriver->ports[nPort].selected))
+            if((port  < DRV_USB_EHCI_PORT_NUMBERS) && (hDriver->ports[port ].selected))
             {
                 returnValue = USB_ERROR_NONE;
 
-                if(!hDriver->ports[nPort].isResetting)
+                if(!hDriver->ports[port ].isResetting)
                 {
                     /* Start port resetting only if the port is not already
                      * being reset. The actual reset takes place in the
-                     * _DRV_USB_EHCI_PortsTask function. */
-                    hDriver->ports[nPort].isResetting = true;
+                     * F_DRV_USB_EHCI_PortsTask function. */
+                    hDriver->ports[port ].isResetting = true;
                 }
                 else
                 {
@@ -3228,11 +3268,11 @@ USB_ERROR DRV_USB_EHCI_PortReset(DRV_HANDLE handle, uint8_t nPort)
     Refer to drv_usb_ehci.h for usage information.
 */
 
-USB_SPEED DRV_USB_EHCI_PortSpeedGet(DRV_HANDLE handle, uint8_t nPort)
+USB_SPEED DRV_USB_EHCI_PortSpeedGet(DRV_HANDLE handle, uint8_t port)
 {
     USB_SPEED returnValue = USB_SPEED_ERROR;
-    uint16_t drvIndex = (uint16_t)(handle & 0xFFFF);
-    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000) >> 16);
+    uint16_t drvIndex = (uint16_t)(handle & 0xFFFFU);
+    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000U) >> 16);
     volatile uint32_t * portSC = NULL;
     DRV_USB_EHCI_OBJ * hDriver = NULL;
     
@@ -3246,9 +3286,9 @@ USB_SPEED DRV_USB_EHCI_PortSpeedGet(DRV_HANDLE handle, uint8_t nPort)
 
         if(hDriver->clientUniqueKey == clientUniqueKey)
         {
-            if((nPort < DRV_USB_EHCI_PORT_NUMBERS) && (ports[nPort].selected))
+            if((port < DRV_USB_EHCI_PORT_NUMBERS) && (ports[port].selected))
             {
-                if((portSC[nPort] & UHPHS_PORTSC_N_PED_Msk) != 0)
+                if((portSC[port] & UHPHS_PORTSC_N_PED_Msk) != 0U)
                 {
                     /* This indicates that port is enabled and that can happen
                      * only when a high speed device is connected. */
@@ -3295,12 +3335,12 @@ USB_SPEED DRV_USB_EHCI_PortSpeedGet(DRV_HANDLE handle, uint8_t nPort)
 bool DRV_USB_EHCI_PortResetIsComplete
 (
     DRV_HANDLE handle,
-    uint8_t nPort
+    uint8_t port
 )
 {
     bool returnValue = false;
-    uint16_t drvIndex = (uint16_t)(handle & 0xFFFF);
-    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000) >> 16);
+    uint16_t drvIndex = (uint16_t)(handle & 0xFFFFU);
+    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000U) >> 16);
     DRV_USB_EHCI_OBJ * hDriver = NULL;
 
     if(drvIndex < DRV_USB_EHCI_INSTANCES_NUMBER)
@@ -3309,12 +3349,12 @@ bool DRV_USB_EHCI_PortResetIsComplete
 
         if(hDriver->clientUniqueKey == clientUniqueKey)
         {
-            if((nPort < DRV_USB_EHCI_PORT_NUMBERS) && (hDriver->ports[nPort].selected))
+            if((port < DRV_USB_EHCI_PORT_NUMBERS) && (hDriver->ports[port].selected))
             {
                 /* The isResetting flag is updated in the
-                 * _DRV_USB_EHCI_PortsTask() function. That function will clear
+                 * F_DRV_USB_EHCI_PortsTask() function. That function will clear
                  * this flag when the reset is complete. */
-                if(!hDriver->ports[nPort].isResetting)
+                if(!hDriver->ports[port].isResetting)
                 {
                     returnValue = true;
                 }
@@ -3399,8 +3439,8 @@ USB_SPEED DRV_USB_EHCI_BusSpeedGet(DRV_HANDLE handle)
 {
     /* Validate the handle */
     USB_SPEED returnValue = USB_SPEED_ERROR;
-    uint16_t drvIndex = (uint16_t)(handle & 0xFFFF);
-    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000) >> 16);
+    uint16_t drvIndex = (uint16_t)(handle & 0xFFFFU);
+    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000U) >> 16);
 
     if(drvIndex < DRV_USB_EHCI_INSTANCES_NUMBER)
     {
@@ -3441,8 +3481,8 @@ USB_SPEED DRV_USB_EHCI_BusSpeedGet(DRV_HANDLE handle)
 uint32_t DRV_USB_EHCI_MaximumCurrentGet(DRV_HANDLE handle)
 {
     uint32_t returnValue = 0;
-    uint16_t drvIndex = (uint16_t)(handle & 0xFFFF);
-    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000) >> 16);
+    uint16_t drvIndex = (uint16_t)(handle & 0xFFFFU);
+    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000U) >> 16);
 
     if(drvIndex < DRV_USB_EHCI_INSTANCES_NUMBER)
     {
@@ -3480,8 +3520,8 @@ uint32_t DRV_USB_EHCI_MaximumCurrentGet(DRV_HANDLE handle)
 uint8_t DRV_USB_EHCI_PortNumbersGet(DRV_HANDLE handle)
 {
     uint8_t returnValue = 0;
-    uint16_t drvIndex = (uint16_t)(handle & 0xFFFF);
-    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000) >> 16);
+    uint16_t drvIndex = (uint16_t)(handle & 0xFFFFU);
+    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000U) >> 16);
 
     if(drvIndex < DRV_USB_EHCI_INSTANCES_NUMBER)
     {
@@ -3532,8 +3572,8 @@ void DRV_USB_EHCI_RootHubInitialize
     USB_HOST_DEVICE_OBJ_HANDLE usbHostDeviceInfo
 )
 {
-    uint16_t drvIndex = (uint16_t)(handle & 0xFFFF);
-    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000) >> 16);
+    uint16_t drvIndex = (uint16_t)(handle & 0xFFFFU);
+    uint16_t clientUniqueKey = (uint16_t)((handle & 0xFFFF0000U) >> 16);
 
     if(drvIndex < DRV_USB_EHCI_INSTANCES_NUMBER)
     {
@@ -3575,12 +3615,12 @@ void DRV_USB_EHCI_RootHubInitialize
 
 void DRV_USB_EHCI_EndpointToggleClear
 (
-    DRV_USB_EHCI_PIPE_HANDLE hPipe
+    DRV_USB_EHCI_PIPE_HANDLE pipeHandle
 )
 {
-    uint16_t clientUniqueKey = (uint16_t)((hPipe & 0xFFFF0000) >> 16);
-    uint16_t pipeObjIndex = (uint16_t)(hPipe & 0xFF);
-    int drvIndex = (int)((hPipe & 0xFF00) >> 8);
+    uint16_t clientUniqueKey = (uint16_t)((pipeHandle & 0xFFFF0000U) >> 16);
+    uint16_t pipeObjIndex = (uint16_t)(pipeHandle & 0xFFU);
+    uint32_t drvIndex = ((pipeHandle & 0xFF00U) >> 8);
     DRV_USB_EHCI_QH * pipe = NULL;
     DRV_USB_EHCI_OBJ * hDriver = NULL;
 
@@ -3593,7 +3633,7 @@ void DRV_USB_EHCI_EndpointToggleClear
             hDriver = &gDrvUSBEHCIObj[drvIndex];
             pipe = &hDriver->queueHeads[pipeObjIndex];
             
-            if((pipe->clientUniqueKey == clientUniqueKey) && (pipe->pipeClosingState == DRV_USB_EHCI_PIPE_CLOSE_IDLE))
+            if((pipe->clientUniqueKey == clientUniqueKey) && (pipe->pipeClosingState == (uint32_t)DRV_USB_EHCI_PIPE_CLOSE_IDLE))
             {
                 pipe->qH.qTDToken.dt = 0;
             }
@@ -3615,7 +3655,7 @@ void DRV_USB_EHCI_EndpointToggleClear
 
 // ****************************************************************************
 /* Function:
-    void DRV_USB_EHCI_Tasks_ISR(SYS_MODULE_OBJ moduleObj);
+    void DRV_USB_EHCI_Tasks_ISR(SYS_MODULE_OBJ object );
 
   Summary:
     Interrupt handler for the EHCI controller.
@@ -3628,12 +3668,12 @@ void DRV_USB_EHCI_EndpointToggleClear
     applications.
 */
 
-void DRV_USB_EHCI_Tasks_ISR(SYS_MODULE_OBJ moduleObj)
+void DRV_USB_EHCI_Tasks_ISR(SYS_MODULE_OBJ object )
 {
     /* EHCI Driver Interrupt routine */
 
     DRV_USB_EHCI_OBJ * hDriver = NULL;
-    uint32_t index = (uint32_t)(moduleObj);
+    uint32_t index = (uint32_t)(object);
     hDriver = &gDrvUSBEHCIObj[index];
     volatile uhphs_registers_t * usbID = NULL;
 
@@ -3646,7 +3686,7 @@ void DRV_USB_EHCI_Tasks_ISR(SYS_MODULE_OBJ moduleObj)
      * status bit. */
     uint32_t usbsts = usbID->UHPHS_USBSTS;
     usbID->UHPHS_USBSTS = usbsts;
-    usbsts &= (usbID->UHPHS_USBINTR & 0x3F);
+    usbsts &= (usbID->UHPHS_USBINTR & 0x3FU);
 
     if((usbsts & UHPHS_USBSTS_IAA_Msk) == UHPHS_USBSTS_IAA_Msk) 
     {
@@ -3665,7 +3705,7 @@ void DRV_USB_EHCI_Tasks_ISR(SYS_MODULE_OBJ moduleObj)
          * detected. */
 
         volatile uint32_t * portSC = (volatile uint32_t *)((uint32_t)usbID + UHPHS_PORTSC_REG);
-        int i = 0;
+        uint32_t i = 0;
 
         for (i = 0; i < DRV_USB_EHCI_PORT_NUMBERS; i ++)
         {
@@ -3677,7 +3717,7 @@ void DRV_USB_EHCI_Tasks_ISR(SYS_MODULE_OBJ moduleObj)
                     /* There has been a change in the connection status. Check
                      * current status. */
 
-                    if((portSC[i] & UHPHS_PORTSC_N_CCS_Msk) == 0)
+                    if((portSC[i] & UHPHS_PORTSC_N_CCS_Msk) == 0U)
                     {
                         /* Device is not present */
                         if (hDriver->ports[i].portAttachState == DRV_USB_EHCI_PORT_ATTACH_STATE_WAITING_FOR_ATTACH)
@@ -3698,6 +3738,10 @@ void DRV_USB_EHCI_Tasks_ISR(SYS_MODULE_OBJ moduleObj)
                             hDriver->ports[i].attachedDeviceObjHandle = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
                             hDriver->ports[i].interruptHasOccurred = true;
                             usbID->UHPHS_USBINTR &= (~UHPHS_USBINTR_PCIE_Msk);
+                        }
+                        else
+                        {
+                            /* Do Nothing */
                         }
                         
                         /* Clear the connect change status detect bit */
@@ -3730,19 +3774,19 @@ void DRV_USB_EHCI_Tasks_ISR(SYS_MODULE_OBJ moduleObj)
          * active bit is clear, then we know that we have a transaction
          * complete. */
         DRV_USB_EHCI_QH * pipe = NULL;
-        int i = 0;
+        uint32_t i = 0;
 
         for(i = 0; i < USB_HOST_PIPES_NUMBER; i ++)
         {
             pipe = &hDriver->queueHeads[i];
 
-            if((pipe->inUse) && (pipe->currentQTD != NULL))
+            if((pipe->inUse != 0U) && (pipe->currentQTD != NULL))
             {
-                if(pipe->pipeType == USB_TRANSFER_TYPE_CONTROL)
+                if(pipe->pipeType == (uint32_t)USB_TRANSFER_TYPE_CONTROL)
                 {
                     /* Control transfers use a multi control transfer QTD. */
                     DRV_USB_EHCI_CONTROL_TRANSFER_QTD * currentQTD = (DRV_USB_EHCI_CONTROL_TRANSFER_QTD *)pipe->currentQTD;
-                    if(currentQTD->handshakeQTD.qTDToken.active == 0)
+                    if(currentQTD->handshakeQTD.qTDToken.active == 0U)
                     {
                         pipe->queueHandler(pipe);
                     }
@@ -3751,7 +3795,7 @@ void DRV_USB_EHCI_Tasks_ISR(SYS_MODULE_OBJ moduleObj)
                 {
                     /* Bulk and Interrupt transfers */
                     DRV_USB_EHCI_QTD * currentQTD = pipe->currentQTD;
-                    if(currentQTD->qTD.qTDToken.active == 0)
+                    if(currentQTD->qTD.qTDToken.active == 0U)
                     {
                         pipe->queueHandler(pipe);
                     }
@@ -3785,7 +3829,10 @@ void UHPHS_Handler(void)
     DRV_USB_OHCI_Tasks_ISR(sysObj.drvUSBOHCIObject);
 }
 
-
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 
 

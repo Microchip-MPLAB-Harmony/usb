@@ -39,8 +39,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_USB_EXTERNAL_DEPENDENCIES_H
-#define _DRV_USB_EXTERNAL_DEPENDENCIES_H
+#ifndef DRV_USB_EXTERNAL_DEPENDENCIES_H
+#define DRV_USB_EXTERNAL_DEPENDENCIES_H
 
 #include <string.h>
 #include "system/system_common.h"
@@ -62,7 +62,7 @@
         #define SYS_DEBUG(a,b)
     #endif 
 #endif 
-#endif /* End of #ifndef _DRV_USB_EXTERNAL_DEPENDENCIES_H */ 
+#endif /* End of #ifndef DRV_USB_EXTERNAL_DEPENDENCIES_H */ 
 /*******************************************************************************
  End of File
 */

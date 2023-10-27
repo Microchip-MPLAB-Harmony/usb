@@ -6,10 +6,10 @@
     
   File Name:
     drv_usb_ehci.h
-	
+    
   Summary:
     USB OHCI Driver Interface File.
-	
+    
   Description:
     The USB OHCI driver provides a simple interface to manage the OHCI
     controller on SAM microprocessors. This file defines the interface
@@ -42,8 +42,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_USB_OHCI_H
-#define _DRV_USB_OHCI_H
+#ifndef DRV_USB_OHCI_H
+#define DRV_USB_OHCI_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -295,17 +295,17 @@ typedef struct
     
   Summary:
     Initializes the USB Driver.
-	
+    
   Description:
     This function initializes the USB Driver, making it ready for clients to
     open. The driver initialization does not complete when this function
     returns. The DRV_USB_OHCI_Tasks function must called periodically to
     complete the driver initialization. The DRV_USB_OHCI_Open function will fail
     if the driver was not initialized or if initialization has not completed.
-	
+    
   Precondition:
     None.
-	
+    
   Parameters:
     drvIndex - Ordinal number of driver instance to be initialized. This should
     be set to DRV_USB_OHCI_INDEX_0 if driver instance 0 needs to be initialized.
@@ -313,21 +313,21 @@ typedef struct
     init - Pointer to a data structure containing data necessary to
     initialize the driver. This should be a DRV_USB_OHCI_INIT structure reference
     typecast to SYS_MODULE_INIT reference. 
-				
+                
   Returns:
     * SYS_MODULE_OBJ_INVALID - The driver initialization failed.
     * A valid System Module Object - The driver initialization was able to
       start. It may have not completed and requires the DRV_USB_OHCI_Tasks
       function to be called periodically. This value will never be the same as
       SYS_MODULE_OBJ_INVALID. 
-	
+    
   Example:
     <code>
     
     DRV_USB_OHCI_Initialize(DRV_USB_OHCI_INDEX_0, (SYS_MODULE_INIT *) &usbInitData);
     
     </code>
-	
+    
   Remarks:
     This routine must be called before any other USB driver routine is called.
     This routine should only be called once during system initialization unless
@@ -341,6 +341,10 @@ SYS_MODULE_OBJ DRV_USB_OHCI_Initialize
 );
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 3.1 deviated:23 Deviation record ID -  H3_MISRAC_2012_R_3_1_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:23 "MISRA C-2012 Rule 3.1" "H3_MISRAC_2012_R_3_1_DR_1" 
 /* Function:
     SYS_STATUS DRV_USB_OHCI_Status ( SYS_MODULE_OBJ object )
 
@@ -481,7 +485,7 @@ void DRV_USB_OHCI_Tasks_ISR( SYS_MODULE_OBJ object );
     
   Summary:
     Opens the specified USB Driver instance and returns a handle to it.
-	
+    
   Description:
     This function opens the specified USB Driver instance and provides a handle
     that must be provided to all other client-level operations to identify the
@@ -489,11 +493,11 @@ void DRV_USB_OHCI_Tasks_ISR( SYS_MODULE_OBJ object );
     ignored.  A driver instance can only support one client. Trying to open a
     driver that has an existing client will result in an unsuccessful function
     call.
-	
+    
   Precondition:
     Function DRV_USB_OHCI_Initialize must have been called before calling this
     function.
-	
+    
   Parameters:
     drvIndex - Identifies the driver instance to be opened. As an example, this
     value can be set to DRV_USB_OHCI_INDEX_0 if instance 0 of the driver has to be
@@ -501,7 +505,7 @@ void DRV_USB_OHCI_Tasks_ISR( SYS_MODULE_OBJ object );
     
     intent - Should always be 
     (DRV_IO_INTENT_EXCLUSIVE|DRV_IO_INTENT_READWRITE| DRV_IO_INTENT_NON_BLOCKING).
-				
+                
   Returns:
     * DRV_HANDLE_INVALID - The driver could not be opened successfully.This can
       happen if the driver initialization was not complete or if an internal
@@ -509,7 +513,7 @@ void DRV_USB_OHCI_Tasks_ISR( SYS_MODULE_OBJ object );
     * A Valid Driver Handle - This is an arbitrary value and is returned if the
       function was successful. This value will never be the same as
       DRV_HANDLE_INVALID. 
-	
+    
   Example:
     <code>
 
@@ -525,7 +529,7 @@ void DRV_USB_OHCI_Tasks_ISR( SYS_MODULE_OBJ object );
     }
     
     </code>
-	
+    
   Remarks:
     The handle returned is valid until the DRV_USB_OHCI_Close function is called.
     The function will typically return DRV_HANDLE_INVALID if the driver was not
@@ -582,21 +586,21 @@ void DRV_USB_OHCI_Close( DRV_HANDLE handle );
     
   Summary:
     Cancels the specified IRP.
-	
+    
   Description:
     This function attempts to cancel the specified IRP. If the IRP is queued and
     its processing has not started, it will be cancelled successfully. If the
     IRP in progress, the ongoing transaction will be allowed to complete. 
-	
+    
   Precondition:
     None.
-	
+    
   Parameters:
     inputIRP - Pointer to the IRP to cancel.
-	
+    
   Returns:
     None.
-	
+    
   Example:
     <code>
 
@@ -607,7 +611,7 @@ void DRV_USB_OHCI_Close( DRV_HANDLE handle );
     DRV_USB_OHCI_IRPCancel(&irp);
 
     </code>
-	
+    
   Remarks:
     None.                                                                  
 */
@@ -623,22 +627,22 @@ void DRV_USB_OHCI_IRPCancel(USB_HOST_IRP * inputIRP);
     
   Summary:
     Closes an open pipe.
-	
+    
   Description:
     This function closes an open pipe. Any IRPs scheduled on the pipe will be
     aborted and IRP callback functions will be called with the status as
     DRV_USB_HOST_IRP_STATE_ABORTED. The pipe handle will become invalid and the
     pipe will not accept IRPs.
-	
+    
   Precondition:
     The pipe handle should be valid.
-	
+    
   Parameters:
     pipeHandle - Handle to the pipe to close.
-	
+    
   Returns:
     None.
-	
+    
   Example:
     <code>
     // This code shows how an open Host pipe can be closed.
@@ -649,7 +653,7 @@ void DRV_USB_OHCI_IRPCancel(USB_HOST_IRP * inputIRP);
     // Close the pipe.
     DRV_USB_OHCI_PipeClose(pipeHandle);
     </code>
-	
+    
   Remarks:
     None.                                                                  
 */
@@ -668,22 +672,22 @@ void DRV_USB_OHCI_PipeClose
     
   Summary:
     Disables Host mode events.
-	
+    
   Description:
     This function disables the Host mode events. This function is called by the
     Host Layer when it wants to execute code atomically. 
-	
+    
   Precondition:
     The handle should be valid.
-	
+    
   Parameters:
     handle - Client's driver handle (returned from DRV_USB_OHCI_Open function).
-	
+    
   Returns:
     * true - Driver event generation was enabled when this function was called.
     * false - Driver event generation was not enabled when this function was
       called. 
-	
+    
   Example:
     <code>
     // This code shows how the DRV_USB_OHCI_EventsDisable and
@@ -702,7 +706,7 @@ void DRV_USB_OHCI_PipeClose
     DRV_USB_OHCI_EventsEnable(driverHandle, eventsWereEnabled);
 
     </code>
-	
+    
   Remarks:
     None.
 */
@@ -722,23 +726,23 @@ bool DRV_USB_OHCI_EventsDisable
     
   Summary:
     Restores the events to the specified the original value.
-	
+    
   Description:
     This function will restore the enable disable state of the events.  The
     eventRestoreContext parameter should be equal to the value returned by the
     DRV_USB_OHCI_EventsDisable function.
-	
+    
   Precondition:
     The handle should be valid.
-	
+    
   Parameters:
     handle - Handle to the driver (returned from DRV_USB_OHCI_Open function).
     eventRestoreContext - Value returned by the DRV_USB_OHCI_EventsDisable
     function.
-	
+    
   Returns:
     None.
-	
+    
   Example:
     <code>
     // This code shows how the DRV_USB_OHCI_EventsDisable and
@@ -757,7 +761,7 @@ bool DRV_USB_OHCI_EventsDisable
     DRV_USB_OHCI_EventsEnable(driverHandle, eventsWereEnabled);
 
     </code>
-	
+    
   Remarks:
     None.
 */
@@ -778,35 +782,35 @@ void DRV_USB_OHCI_EventsEnable
     
   Summary:
     Submits an IRP on a pipe.
-	
+    
   Description:
     This function submits an IRP on the specified pipe. The IRP will be added to
     the queue and will be processed in turn. The data will be transferred on the
     bus based on the USB bus scheduling rules. When the IRP has been processed,
     the callback function specified in the IRP will be called. The IRP status
     will be updated to reflect the completion status of the IRP. 
-	
+    
   Precondition:
     The pipe handle should be valid.
-	
+    
   Parameters:
     hPipe - Handle to the pipe to which the IRP has to be submitted.
 
     pInputIRP - Pointer to the IRP.
-	
+    
   Returns:
     * USB_ERROR_NONE - The IRP was submitted successfully.
     * USB_ERROR_PARAMETER_INVALID - The pipe handle is not valid.
     * USB_ERROR_OSAL_FUNCTION - An error occurred in an OSAL function called in
       this function.
-	
+    
   Example:
     <code>
 
     result = DRV_USB_OHCI_IRPSubmit(controlPipeHandle, &irp);
 
     </code>
-	
+    
   Remarks:
     An IRP can also be submitted in an IRP callback function.                                                                  
 */
@@ -834,16 +838,16 @@ USB_ERROR DRV_USB_OHCI_IRPSubmit
     
   Summary:
     Open a pipe with the specified attributes.
-	
+    
   Description:
     This function opens a communication pipe between the Host and the device
     endpoint. The transfer type and other attributes are specified through the
     function parameters. The driver does not check for available bus bandwidth,
     which should be done by the application (the USB Host Layer in this case)
-	
+    
   Precondition:
     The driver handle should be valid.
-	
+    
   Parameters:
     client - Handle to the driver (returned from DRV_USB_OHCI_Open function).
     
@@ -873,7 +877,7 @@ USB_ERROR DRV_USB_OHCI_IRPSubmit
     * A valid Pipe Handle - The pipe was created successfully. This is an
       arbitrary value and will never be the same as
       DRV_USB_OHCI_PIPE_HANDLE_INVALID.
-	
+    
   Example:
     <code>
     // This code shows how the DRV_USB_OHCI_PipeSetup function is called for
@@ -896,7 +900,7 @@ USB_ERROR DRV_USB_OHCI_IRPSubmit
     }
 
     </code>
-	
+    
   Remarks:
     None.                                                                  
 */
@@ -926,23 +930,23 @@ DRV_USB_OHCI_PIPE_HANDLE DRV_USB_OHCI_PipeSetup
     
   Summary:
     Resets the specified root hub port.
-	
+    
   Description:
     This function resets the root hub port. The reset duration is defined by
     DRV_USB_OHCI_RESET_DURATION. The status of the reset signaling can be
     checked using the DRV_USB_OHCI_PortResetIsComplete function.
-	
+    
   Precondition:
     None.
-	
+    
   Parameters:
     handle - Handle to the driver (returned from DRV_USB_OHCI_Open function).
 
     port - Port to reset.
-	
+    
   Returns:
     None.
-	
+    
   Example:
     <code>
     // This code shows how the DRV_USB_OHCI_PortReset and the
@@ -963,7 +967,7 @@ DRV_USB_OHCI_PIPE_HANDLE DRV_USB_OHCI_PipeSetup
     }
 
     </code>
-	
+    
   Remarks:
     None.
 */
@@ -1035,25 +1039,25 @@ bool DRV_USB_OHCI_PortResetIsComplete(DRV_HANDLE handle, uint8_t port );
     
   Summary:
     Resumes the specified root hub port.
-	
+    
   Description:
     This function resumes the root hub. The resume duration is defined by
     DRV_USB_OHCI_RESUME_DURATION. The status of the resume signaling can
     be checked using the DRV_USB_OHCI_PortResumeIsComplete function.
-	
+    
   Precondition:
     None.
-	
+    
   Parameters:
     handle - Handle to the driver (returned from DRV_USB_OHCI_Open function).
 
     port - Port to resume.
-	
+    
   Returns:
     * USB_ERROR_NONE - The function executed successfully.
     * USB_ERROR_PARAMETER_INVALID - The driver handle is not valid or the port
       number does not exist.
-	
+    
   Example:
     <code>
     // This code shows how the DRV_USB_OHCI_PortResume function is
@@ -1065,7 +1069,7 @@ bool DRV_USB_OHCI_PortResetIsComplete(DRV_HANDLE handle, uint8_t port );
     DRV_USB_OHCI_PortResume(driverHandle, 0);
 
     </code>
-	
+    
   Remarks:
     The root hub on this particular hardware only contains one port - port 0.                                                                  
 */
@@ -1078,23 +1082,23 @@ USB_ERROR DRV_USB_OHCI_PortResume(DRV_HANDLE handle, uint8_t port);
     
   Summary:
     Suspends the specified root hub port.
-	
+    
   Description:
     This function suspends the root hub port. 
-	
+    
   Precondition:
     None.
-	
+    
   Parameters:
     handle - Handle to the driver (returned from DRV_USB_OHCI_Open function).
 
     port - Port to suspend.
-	
+    
   Returns:
     * USB_ERROR_NONE - The function executed successfully.
     * USB_ERROR_PARAMETER_INVALID - The driver handle is not valid or the port
       number does not exist.
-	
+    
   Example:
     <code>
     // This code shows how the DRV_USB_OHCI_PortSuspend function is
@@ -1106,7 +1110,7 @@ USB_ERROR DRV_USB_OHCI_PortResume(DRV_HANDLE handle, uint8_t port);
     DRV_USB_OHCI_PortSuspend(driverHandle, 0);
 
     </code>
-	
+    
   Remarks:
     The root hub on this particular hardware only contains one port - port 0.                                                                  
 */
@@ -1123,24 +1127,24 @@ USB_ERROR DRV_USB_OHCI_PortSuspend(DRV_HANDLE handle, uint8_t port);
     
   Summary:
     Returns the speed of at which the port is operating.
-	
+    
   Description:
     This function returns the speed at which the port is operating.
-	
+    
   Precondition:
     None.
-	
+    
   Parameters:
     handle - Handle to the driver (returned from DRV_USB_OHCI_Open function).
 
     port - Port number of the port to be analyzed..
-	
+    
   Returns:
     * USB_SPEED_ERROR - This value is returned  if the driver handle is not
       or if the speed information is not available or if the specified port is
       not valid.
     * USB_SPEED_HIGH - A Full Speed device has been connected to the port.
-	
+    
   Example:
     <code>
     // This code shows how the DRV_USB_OHCI_PortSpeedGet function is
@@ -1153,7 +1157,7 @@ USB_ERROR DRV_USB_OHCI_PortSuspend(DRV_HANDLE handle, uint8_t port);
     speed = DRV_USB_OHCI_PortSpeedGet(driverHandle, 0);
 
     </code>
-	
+    
   Remarks:
     The root hub on this particular hardware only contains one port - port 0.                                                                  
 */
@@ -1167,21 +1171,21 @@ USB_SPEED DRV_USB_OHCI_PortSpeedGet(DRV_HANDLE handle, uint8_t port);
   Summary:
     This function returns the operating speed of the bus to which this root hub
     is connected.
-	
+    
   Description:
     This function returns the operating speed of the bus to which this root hub
     is connected.
  
   Precondition:
     None.
-	
+    
   Parameters:
     handle - Handle to the driver (returned from DRV_USB_OHCI_Open function).
 
   Returns:
     * USB_SPEED_HIGH - The Root hub is connected to a bus that is operating at
       High Speed.
-	
+    
   Example:
     <code>
     // This code shows how the DRV_USB_OHCI_BusSpeedGet function is
@@ -1193,7 +1197,7 @@ USB_SPEED DRV_USB_OHCI_PortSpeedGet(DRV_HANDLE handle, uint8_t port);
 
     speed = DRV_USB_OHCI_BusSpeedGet(driverHandle);
     </code>
-	
+    
   Remarks:
     None.
 */
@@ -1207,20 +1211,20 @@ USB_SPEED DRV_USB_OHCI_BusSpeedGet(DRV_HANDLE handle);
   Summary:
     Returns the maximum amount of current that this root hub can provide on the
     bus.
-	
+    
   Description:
     This function returns the maximum amount of current that this root hub can
     provide on the bus.
-	
+    
   Precondition:
     None.
-	
+    
   Parameters:
     handle - Handle to the driver (returned from DRV_USB_OHCI_Open function).
 
   Returns:
     Returns the maximum current (in milliamperes) that the root hub can supply. 
-	
+    
   Example:
     <code>
     // This code shows how the DRV_USB_OHCI_MaximumCurrentGet
@@ -1232,7 +1236,7 @@ USB_SPEED DRV_USB_OHCI_BusSpeedGet(DRV_HANDLE handle);
 
     currentMilliAmperes = DRV_USB_OHCI_MaximumCurrentGet(driverHandle);
     </code>
-	
+    
   Remarks:
     None.
 */
@@ -1451,7 +1455,7 @@ void DRV_USB_OHCI_RootHubInitialize
   Description:
     Facilitates in resetting of endpoint data toggle to 0 for Non Control
     endpoints.
-	
+    
   Precondition:
     None.
 
@@ -1494,7 +1498,7 @@ void DRV_USB_OHCI_EndpointToggleClear
   Description:
     This function is called by the EHCI driver to check if the companion OHCI
     controller is ready to accept ownership of a port.
-	
+    
   Precondition:
     None.
 
@@ -1520,6 +1524,10 @@ bool DRV_USB_OHCI_IsCompanionControllerReady
     SYS_MODULE_INDEX drvIndex
 );
 
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 3.1"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files (continued)

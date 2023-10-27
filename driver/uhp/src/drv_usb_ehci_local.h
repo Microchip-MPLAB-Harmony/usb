@@ -40,8 +40,8 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_USB_EHCI_LOCAL_H
-#define _DRV_USB_EHCI_LOCAL_H
+#ifndef DRV_USB_EHCI_LOCAL_H
+#define DRV_USB_EHCI_LOCAL_H
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -56,19 +56,20 @@
 #include "driver/usb/uhp/drv_usb_ehci.h"
 #include <string.h>
 
-#define _DRV_USB_EHCI_NON_CACHED __attribute__((__section__(".region_nocache")))
-#define _DRV_USB_EHCI_POLLING_RATE(x) ((1 << (x-1))/8)
+#define M_DRV_USB_EHCI_NON_CACHED __attribute__((__section__(".region_nocache")))
+#define M_DRV_USB_EHCI_POLLING_RATE(x) (((1UL) << ((x)-(1U)))/(8U))
 /**********************************************
  * Defines the size of the periodic frame list
  **********************************************/
-#define DRV_USB_EHCI_PERIODIC_LIST_SIZE 1024
-#define DRV_USB_EHCI_PORT_NUMBERS 3
+#define DRV_USB_EHCI_PERIODIC_LIST_SIZE    1024U
+#define DRV_USB_EHCI_PORT_NUMBERS          3U
+#define DRV_USB_EHCI_MAX_NUMBER_MFRAME_PER_MS 8
 
 /************************************************
  * Maximum bytes per qTD. See section 3.5 of
  * of the specification.
  ************************************************/
-#define DRV_USB_EHCI_MAX_QTD_NBYTES 20480
+#define DRV_USB_EHCI_MAX_QTD_NBYTES 20480U
 
 
 /********************************************
@@ -95,12 +96,13 @@
             UDPHSA_REGS->UDPHS_CTRL &= ~UDPHS_CTRL_EN_UDPHS_Msk; \
             for(i = 0; i < DRV_USB_EHCI_PORT_NUMBERS; i ++) \
             { \
-                if(drvInit->bmPortSelect & (1 << i)) \
+                if((drvInit->bmPortSelect & (1UL << i)) != 0U) \
                 { \
-                    RSTC_REGS->RSTC_GRSTR &= ~(1 << (4+i)); \
+                    RSTC_REGS->RSTC_GRSTR &= ~(1UL << (4+i)); \
                 } \
             }
-        #define IS_LOCKU_ENABLE()  1
+        #define M_DRV_USB_EHCI_AdvanceState(handle, drvStatus, drvState)    ((handle)->status) = (drvStatus);\
+                                                                            ((handle)->taskState) = (drvState);
 #elif defined(_SAM9X60_H_) || defined(_SAM9X60D1G_H_) || defined(_SAM9X60D5M_H_) || defined(_SAM9X60D6K_H_)
         /* Specific to SAM9X60 */
         #define PMC_PCR_GCKCSS_UPLL_CLK  PMC_PCR_GCLKCSS(PMC_PCR_GCLKCSS_UPLL_Val) 
@@ -108,9 +110,13 @@
         #define PMC_UCKR_UPLLEN()   \
             PMC_REGS->PMC_PCR = PMC_PCR_PID(hDriver->interruptSource);\
             PMC_REGS->PMC_PCR = PMC_PCR_PID(hDriver->interruptSource) | PMC_PCR_CMD_Msk | PMC_PCR_EN_Msk | PMC_PCR_GCKCSS_UPLL_CLK;\
-            while ((PMC_REGS->PMC_PLL_ISR0 & PMC_PLL_ISR0_LOCKU_Msk) != PMC_PLL_ISR0_LOCKU_Msk)
+            while ((PMC_REGS->PMC_PLL_ISR0 & PMC_PLL_ISR0_LOCKU_Msk) != PMC_PLL_ISR0_LOCKU_Msk) { /* Do Nothing */  }
 
-        #define IS_LOCKU_ENABLE()  ((PMC_REGS->PMC_PLL_ISR0 & PMC_PLL_ISR0_LOCKU_Msk) == PMC_PLL_ISR0_LOCKU_Msk)
+        #define M_DRV_USB_EHCI_AdvanceState(handle, drvStatus, drvState)   if(((PMC_REGS->PMC_PLL_ISR0 & PMC_PLL_ISR0_LOCKU_Msk) == PMC_PLL_ISR0_LOCKU_Msk))\
+                                                                           {\
+                                                                               ((handle)->status) = (drvStatus);\
+                                                                               ((handle)->taskState) = (drvState);\
+                                                                           }
 #elif defined(_SAM9X70_H_) || defined(_SAM9X72_H_) || defined(_SAM9X75_H_)
         /* Specific to SAM9X7 */
         #define PMC_UCKR_UPLLEN()   \
@@ -126,7 +132,8 @@
                 __NOP(); \
             } \
             PMC_REGS->PMC_PLL_UPDT = PMC_PLL_UPDT_UPDATE_Msk;
-        #define IS_LOCKU_ENABLE()  1
+        #define M_DRV_USB_EHCI_AdvanceState(handle, drvStatus, drvState)    ((handle)->status) = (drvStatus);\
+                                                                            ((handle)->taskState) = (drvState);
 #endif
 
 #endif /* UHPHS_PORTSC_REG_OFST */
@@ -148,9 +155,13 @@
     PMC_REGS->CKGR_UCKR = CKGR_UCKR_UPLLCOUNT_Msk | CKGR_UCKR_UPLLEN_Msk;\
     PMC_REGS->PMC_PCR = PMC_PCR_PID(hDriver->interruptSource);\
     PMC_REGS->PMC_PCR = PMC_PCR_PID(hDriver->interruptSource) | PMC_PCR_CMD_Msk | PMC_PCR_EN_Msk | PMC_PCR_GCKCSS_UPLL_CLK;\
-    while ((PMC_REGS->PMC_SR & PMC_SR_LOCKU_Msk) != PMC_SR_LOCKU_Msk)
+    while ((PMC_REGS->PMC_SR & PMC_SR_LOCKU_Msk) != PMC_SR_LOCKU_Msk) { /* Do Nothing */ }
       
-    #define IS_LOCKU_ENABLE()  ((PMC_REGS->PMC_SR & PMC_SR_LOCKU_Msk) == PMC_SR_LOCKU_Msk)
+    #define M_DRV_USB_EHCI_AdvanceState(handle, drvStatus, drvState)  if (((PMC_REGS->PMC_SR & PMC_SR_LOCKU_Msk) == PMC_SR_LOCKU_Msk))\
+                                                                      {\
+                                                                          ((handle)->status) = (drvStatus);\
+                                                                          ((handle)->taskState) = (drvState);\
+                                                                      }
 #endif
 
 /*********************************************
@@ -158,6 +169,11 @@
  * HCD to track completion of a host IRP. This
  * is not the same as the public IRP status
  *********************************************/
+ /* MISRA C-2012 Rule 5.2 deviated:14 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:14 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" 
+
 typedef enum DRV_USB_EHCI_IRP_STATE
 {
     DRV_USB_EHCI_IRP_STATE_IDLE = 0,
@@ -176,7 +192,7 @@ typedef enum DRV_USB_EHCI_IRP_STATE
 /*********************************************
  * This is the local USB Host IRP object
  ********************************************/
-typedef struct USB_HOST_IRP_LOCAL
+typedef struct S_USB_HOST_IRP_LOCAL_
 {
     /* Points to the 8 byte setup command
      * packet in case this is a IRP is 
@@ -188,7 +204,7 @@ typedef struct USB_HOST_IRP_LOCAL
     void * data;
     
     /* Size of the data buffer */
-    unsigned int size;
+    uint32_t size;
     
     /* Status of the IRP */ 
     USB_HOST_IRP_STATUS status;
@@ -203,7 +219,7 @@ typedef struct USB_HOST_IRP_LOCAL
      * when IRP is terminated. Can be 
      * NULL, in which case the function
      * will not be called. */
-    void (*callback)(struct _USB_HOST_IRP * irp);
+    void (*callback)(struct S_USB_HOST_IRP * irp);
 
     /****************************************
      * These members of the IRP should not be
@@ -337,7 +353,7 @@ typedef enum DRV_USB_EHCI_PIPE_CLOSE_STATE
 /***********************************************
  * The EHCI Driver Queue Structure. 
  ***********************************************/
-typedef struct _DRV_USB_EHCI_QH 
+typedef struct S_DRV_USB_EHCI_QH 
 {
     /* The actual EHCI Queue head. This should be the first member in the
      * structure as this structure will be aligned on an 64 byte boundary */
@@ -457,7 +473,9 @@ typedef enum DRV_USB_EHCI_OPERATION_ENABLE_STATE
 
 } DRV_USB_EHCI_OPERATION_ENABLE_STATE;
 
-
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 /***********************************************
  * The EHCI Driver Object Structure. 
  ***********************************************/
@@ -537,7 +555,7 @@ typedef struct DRV_USB_EHCI_OBJ
 
     /* Microframe slot usage counter. Array of 8 for eight microframes. Needed
      * for interrupt pipes. */
-    uint8_t microFrameUsage[8];
+    uint8_t microFrameUsage[DRV_USB_EHCI_MAX_NUMBER_MFRAME_PER_MS];
 
     /* Next periodic slot to use */
     uint32_t nextSlotToUse[16];
@@ -547,6 +565,47 @@ typedef struct DRV_USB_EHCI_OBJ
 
 } DRV_USB_EHCI_OBJ;
 
+size_t F_DRV_USB_EHCI_QTDBufferPointerSetup
+(
+    USB_EHCI_QTD * qTD,
+    uint8_t * transferBuffer,
+    size_t nBytes
+);
+size_t F_DRV_USB_EHCI_ControlTransferQTD
+(
+    DRV_USB_EHCI_CONTROL_TRANSFER_QTD * transfer,
+    USB_SPEED speed
+);
+void F_DRV_USB_EHCI_PortsTask(DRV_USB_EHCI_OBJ * hDriver);
+bool F_DRV_USB_EHCI_CheckQHForError
+(
+    USB_EHCI_QH * qH, 
+    USB_HOST_IRP_STATUS * status
+);
+bool F_DRV_USB_EHCI_CheckQTDForError
+(
+    USB_EHCI_QTD * qTD, 
+    USB_HOST_IRP_STATUS * status
+);
+size_t F_DRV_USB_EHCI_DataQTD
+(
+    DRV_USB_EHCI_QTD * transfer,
+    USB_DATA_DIRECTION direction
+);
+void F_DRV_USB_EHCI_BulkTransferProcess(void * hPipe);
+void F_DRV_USB_EHCI_ControlTransferProcess(void * pPipe);
+void F_DRV_USB_EHCI_PeriodicListRemove
+(
+    DRV_USB_EHCI_OBJ * hDriver,
+    int slotindex,
+    DRV_USB_EHCI_QH * pipe
+);
+void F_DRV_USB_EHCI_PipeCloseTask(DRV_USB_EHCI_OBJ * hDriver);
+uint16_t F_DRV_USB_EHCI_GetUniqueKey (DRV_USB_EHCI_OBJ * hDriver);
+void DRV_USB_EHCI_Deinitialize
+(
+    const SYS_MODULE_OBJ object
+);
 
 #endif
 

@@ -40,8 +40,8 @@
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_USB_OHCI_LOCAL_H
-#define _DRV_USB_OHCI_LOCAL_H
+#ifndef DRV_USB_OHCI_LOCAL_H
+#define DRV_USB_OHCI_LOCAL_H
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -56,15 +56,21 @@
 #include "driver/usb/uhp/drv_usb_ohci.h"
 #include <string.h>
 
-#define DRV_USB_OHCI_PORTS_NUMBER 3
+/* MISRA C-2012 Rule 5.2 deviated:10 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:10 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"   
+
+
+#define M_DRV_USB_OHCI_PORTS_NUMBER 3U
 /*************************************
  * Driver non cached memory
  ************************************/
-#define DRV_USB_OHCI_MAXIMUM_OVERHEAD 210
+#define DRV_USB_OHCI_MAXIMUM_OVERHEAD 210U
 #define DRV_USB_OHCI_PRDSTRT (12000 * 90/100)
-#define _DRV_USB_OHCI_NON_CACHED __attribute__((__section__(".region_nocache")))
-#define _DRV_USB_OHCI_DRV_TO_ED_HEADP(x) ((uint32_t)(x) >> 4)
-#define _DRV_USB_OHCI_ED_TO_DRV_HEADP(x) ((uint32_t)(x) << 4)
+#define M_DRV_USB_OHCI_NON_CACHED __attribute__((__section__(".region_nocache")))
+#define M_DRV_USB_OHCI_DRV_TO_ED_HEADP(x) ((uint32_t)(x) >> 4)
+#define M_DRV_USB_OHCI_ED_TO_DRV_HEADP(x) ((uint32_t)(x) << 4)
 #define DRV_USB_OHCI_POST_PORT_ENABLE_DELAY 10
 #define DRV_USB_OHCI_TRANSFERS_NUMBER (USB_HOST_TRANSFERS_NUMBER + USB_HOST_PIPES_NUMBER)
 
@@ -88,7 +94,7 @@ typedef enum DRV_USB_OHCI_IRP_STATE
 typedef enum DRV_USB_OHCI_PIPE_CLOSING_STATE
 {
     /* Pipe is not closing */
-    DRV_USB_OHCI_PIPE_CLOSING_STATE_IDLE = 0,
+    DRV_USB_OHCI_PIPE_CLOSING_STATE_IDLE = 0U,
 
     /* Pipe is marked for closing */
     DRV_USB_OHCI_PIPE_CLOSING_STATE_CLOSE_REQUESTED,
@@ -176,7 +182,10 @@ typedef struct DRV_USB_OHCI_PORT_OBJ
 /*********************************************
  * This is the local USB Host IRP object
  ********************************************/
-typedef struct USB_HOST_IRP_LOCAL
+ /* MISRA C-2012 Rule 5.6 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_5_6_DR_1 */
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 5.6" "H3_MISRAC_2012_R_5_6_DR_1"    
+
+typedef struct S_USB_HOST_IRP_LOCAL
 {
     /* Points to the 8 byte setup command
      * packet in case this is a IRP is 
@@ -188,7 +197,7 @@ typedef struct USB_HOST_IRP_LOCAL
     void * data;
     
     /* Size of the data buffer */
-    unsigned int size;
+    uint32_t size;
     
     /* Status of the IRP */ 
     USB_HOST_IRP_STATUS status;
@@ -203,7 +212,7 @@ typedef struct USB_HOST_IRP_LOCAL
      * when IRP is terminated. Can be 
      * NULL, in which case the function
      * will not be called. */
-    void (*callback)(struct _USB_HOST_IRP * irp);
+    void (*callback)(struct S_USB_HOST_IRP * irp);
 
     /****************************************
      * These members of the IRP should not be
@@ -219,6 +228,8 @@ typedef struct USB_HOST_IRP_LOCAL
 
 } USB_HOST_IRP_LOCAL;
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.6"
+/* MISRAC 2012 deviation block end */
 /*********************************************
  * The OHCI Driver Transfer Descriptor.
  *********************************************/
@@ -339,7 +350,7 @@ typedef struct DRV_USB_OHCI_OBJ
     INT_SOURCE interruptSource;
 
     /* Data structure to manage ports */
-    DRV_USB_OHCI_PORT_OBJ ports[DRV_USB_OHCI_PORTS_NUMBER];
+    DRV_USB_OHCI_PORT_OBJ ports[M_DRV_USB_OHCI_PORTS_NUMBER];
 
     /* Identifier assigned by the host layer */
     USB_HOST_DEVICE_OBJ_HANDLE usbHostDeviceInfo;
@@ -390,9 +401,40 @@ typedef struct DRV_USB_OHCI_OBJ
     DRV_USB_OHCI_OPERATION_ENABLE_STATE operationEnableState;
 
     /* SOF Count tracker */
-    int sofCount;
+    int32_t sofCount;
 
 } DRV_USB_OHCI_OBJ;
+
+
+void F_DRV_USB_OHCI_PeriodicListRemove 
+(
+    DRV_USB_OHCI_OBJ * hDriver,
+    int slotIndex,
+    DRV_USB_OHCI_ED * edToRemove
+);
+uint8_t F_DRV_USB_OHCI_GetPollingIndex (uint8_t pollingRate);
+uint16_t F_DRV_USB_OHCI_GetUniqueKey (DRV_USB_OHCI_OBJ * hDriver);
+void F_DRV_USB_OHCI_PipeCloseTask(DRV_USB_OHCI_OBJ * hDriver);
+void F_DRV_USB_OHCI_PortsTask(DRV_USB_OHCI_OBJ * hDriver);
+size_t F_DRV_USB_OHCI_DataTransferTD
+(
+    DRV_USB_OHCI_TD * transfer,
+    USB_DATA_DIRECTION direction
+);
+size_t F_DRV_USB_OHCI_ControlTransferTD
+(
+    DRV_USB_OHCI_CONTROL_TD * transfer
+);
+void F_DRV_USB_OHCI_DataTransferProcess(void * pipeObj, void * driver);
+void F_DRV_USB_OHCI_ControlTransferProcess(void * pipeObj, void * driver);
+void DRV_USB_OHCI_Deinitialize
+(
+    const SYS_MODULE_OBJ object
+);
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 #endif
 
