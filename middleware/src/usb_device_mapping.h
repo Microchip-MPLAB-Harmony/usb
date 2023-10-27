@@ -40,8 +40,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _USB_DEVICE_MAPPING_H
-#define _USB_DEVICE_MAPPING_H
+#ifndef USB_DEVICE_MAPPING_H
+#define USB_DEVICE_MAPPING_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -69,9 +69,9 @@
 // *****************************************************************************
 // *****************************************************************************
 #if defined USB_DEVICE_SOF_EVENT_ENABLE
-    #define _USB_DEVICE_SOFEventEnable()  eventType
+    #define M_USB_DEVICE_SOFEventEnable()  eventType
 #else
-    #define _USB_DEVICE_SOFEventEnable()  0
+    #define M_USB_DEVICE_SOFEventEnable()  0
 #endif
 
 // *****************************************************************************
@@ -83,18 +83,18 @@
     /* This means that the application has included the endpoint functions and
      * is most probably implementing a custom device. We need the following
      * functions to be included in the code. */
-    #define _USB_DEVICE_Initialize_Endpoint_Q(x,y,z) _USB_DEVICE_Initialize_Endpoint_Q_Size(x,y,z)
-    #define _USB_DEVICE_EndpointCurrentQueueSizeReset(x)  _USB_DEVICE_EndpointQueueSizeReset(x)
-    #define _USB_DEVICE_EndpointMutexCreate(x)       _USB_DEVICE_EndpointMutexCreateFunction(x)
-    #define _USB_DEVICE_EndpointMutexDelete(x)       _USB_DEVICE_EndpointMutexDeleteFunction(x)
+    #define M_USB_DEVICE_Initialize_Endpoint_Q(x,y,z) F_USB_DEVICE_Initialize_Endpoint_Q_Size(x,y,z)
+    #define M_USB_DEVICE_EndpointCurrentQueueSizeReset(x)  F_USB_DEVICE_EndpointQueueSizeReset(x)
+    #define M_USB_DEVICE_EndpointMutexCreate(x)       F_USB_DEVICE_EndpointMutexCreateFunction(x)
+    #define M_USB_DEVICE_EndpointMutexDelete(x)       F_USB_DEVICE_EndpointMutexDeleteFunction(x)
 #else
     /* If the endpoint functions are not called in the code, then the following
      * function are not needed and map to nothing */
-    #define _USB_DEVICE_Initialize_Endpoint_Q(x,y,z)
-    #define _USB_DEVICE_EndpointMutexCreate(x)
-    #define _USB_DEVICE_EndpointCurrentQueueSizeReset(x)
-    #define _USB_DEVICE_EndpointMutexDelete(x)
-    #define _USB_DEVICE_EndpointDeclareOsalResult(x)
+    #define M_USB_DEVICE_Initialize_Endpoint_Q(x,y,z)
+    #define M_USB_DEVICE_EndpointMutexCreate(x)
+    #define M_USB_DEVICE_EndpointCurrentQueueSizeReset(x)
+    #define M_USB_DEVICE_EndpointMutexDelete(x)
+    #define M_USB_DEVICE_EndpointDeclareOsalResult(x)
 #endif 
 
 // *****************************************************************************
@@ -103,9 +103,9 @@
 // *****************************************************************************
 // *****************************************************************************
 #ifdef USB_DEVICE_SET_DESCRIPTOR_EVENT_ENABLE
-    #define _USB_DEVICE_Handle_Set_Descriptor_Request(x,y,z) _USB_DEVICE_RedirectControlXfrToClient(x,y,z)
+    #define M_USB_DEVICE_Handle_Set_Descriptor_Request(x,y,z) F_USB_DEVICE_RedirectControlXfrToClient(x,y,z)
 #else
-    #define _USB_DEVICE_Handle_Set_Descriptor_Request(x,y,z) sendStatus = true
+    #define M_USB_DEVICE_Handle_Set_Descriptor_Request(x,y,z) sendStatus = true
 #endif
 
 // *****************************************************************************
@@ -114,9 +114,9 @@
 // *****************************************************************************
 // *****************************************************************************
 #ifdef USB_DEVICE_SYNCH_FRAME_EVENT_ENABLE
-    #define _USB_DEVICE_Handle_Synch_Frame_Request(x,y,z) _USB_DEVICE_ForwardControlXfrToFunction(x,y,z)
+    #define M_USB_DEVICE_Handle_Synch_Frame_Request(x,y,z) F_USB_DEVICE_ForwardControlXfrToFunction(x,y,z)
 #else
-    #define _USB_DEVICE_Handle_Synch_Frame_Request(x,y,z) USB_DEVICE_ControlStatus((USB_DEVICE_HANDLE)x, USB_DEVICE_CONTROL_STATUS_ERROR )
+    #define M_USB_DEVICE_Handle_Synch_Frame_Request(x,y,z) USB_DEVICE_ControlStatus((USB_DEVICE_HANDLE)x, USB_DEVICE_CONTROL_STATUS_ERROR )
 #endif
 
 // *****************************************************************************
@@ -125,14 +125,14 @@
 // *****************************************************************************
 // *****************************************************************************
 #ifdef USB_DEVICE_BOS_DESCRIPTOR_SUPPORT_ENABLE 
-    #define _USB_DEVICE_GetBosDescriptorRequest(pBosDesc, data, size)  if (pBosDesc != NULL)\
+    #define M_USB_DEVICE_GetBosDescriptorRequest(pBosDesc, data, size)  if (pBosDesc != NULL)\
                                                                                  {\
                                                                                      data = (uint8_t *)(pBosDesc);\
                                                                                      size = ((USB_BOS_DESCRIPTOR *)pBosDesc)->wTotalLength;\
                                                                                  }\
 
 #else
-    #define _USB_DEVICE_GetBosDescriptorRequest(x, y, z)
+    #define M_USB_DEVICE_GetBosDescriptorRequest(x, y, z)
 #endif
 
 // *****************************************************************************
@@ -141,9 +141,9 @@
 // *****************************************************************************
 // *****************************************************************************
 #ifdef USB_DEVICE_STRING_DESCRIPTOR_TABLE_ADVANCED_ENABLE
-    #define _USB_DEVICE_GetStringDescriptorRequest(x,y,z)  _USB_DEVICE_GetStringDescriptorRequestProcessAdvanced(x,y,z)
+    #define M_USB_DEVICE_GetStringDescriptorRequest(x,y,z)  F_USB_DEVICE_GetStringDescriptorRequestProcessAdvanced(x,y,z)
 #else
-    #define _USB_DEVICE_GetStringDescriptorRequest(x,y,z) _USB_DEVICE_GetStringDescriptorRequestProcess(x,y,z)
+    #define M_USB_DEVICE_GetStringDescriptorRequest(x,y,z) F_USB_DEVICE_GetStringDescriptorRequestProcess(x,y,z)
 #endif
 
 // *****************************************************************************
@@ -152,9 +152,9 @@
 // *****************************************************************************
 // *****************************************************************************
 #ifdef USB_DEVICE_MICROSOFT_OS_DESCRIPTOR_SUPPORT_ENABLE
-	#define _USB_DEVICE_VendorInterfaceRequestProcess(x,y,z)  _USB_DEVICE_RedirectControlXfrToClient(x,USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST,z);
+	#define M_USB_DEVICE_VendorInterfaceRequestProcess(x,y,z)  F_USB_DEVICE_RedirectControlXfrToClient(x,USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST,z);
 #else
-	#define _USB_DEVICE_VendorInterfaceRequestProcess(x,y,z)  _USB_DEVICE_ForwardControlXfrToFunction(x,y,z)
+	#define M_USB_DEVICE_VendorInterfaceRequestProcess(x,y,z)  F_USB_DEVICE_ForwardControlXfrToFunction(x,y,z)
 #endif 
 
 // *****************************************************************************
@@ -162,30 +162,39 @@
 // Section: Enabling Other Speed Descriptor request. 
 // *****************************************************************************
 // *****************************************************************************
+/* MISRA C-2012 Rule 5.4 deviated:6 Deviation record ID -  H3_MISRAC_2012_R_5_4_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+
+#pragma coverity compliance block deviate:6 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1"
+
 /* Following macros are needed to Support Other Speed Descriptor request */ 
 #if defined(DRV_USBHS_INSTANCES_NUMBER) || defined (DRV_USBHSV1_INSTANCES_NUMBER) || defined (DRV_USB_UDPHS_INSTANCES_NUMBER)
-    #define _USB_DEVICE_DECLARE_IRP(x) USB_DEVICE_IRP x 
-    #define _USB_DEVICE_DECLARE_EP0_BUFFER(x) uint8_t x[USB_DEVICE_EP0_BUFFER_SIZE]
-    #define _USB_DEVICE_OtherSpeedDescriptorRequestService(x,y) _USB_DEVICE_Other_Speed_Descriptor_Request(x,y)
-    #define _USB_DEVICE_OtherSpeedDescriptorRequestIrpFill(mIrp,mData,mSize,mCallback,mUserData)         (mIrp)->data = mData;\
-                                                                                                                (mIrp)->size = mSize;\
-                                                                                                                (mIrp)->callback = mCallback;\
-                                                                                                                (mIrp)->userData = mUserData;
-    #define _USB_DEVICE_OtherSpeedDescriptorRequestIrpFlagsUpdate(mIrp, mFlags)                                  (mIrp)->flags = mFlags;                                                                                                             
-    #define _USB_DEVICE_OtherSpeedDescriptorRequestCopyData(dest,source,size)                                   memcpy(dest,source, size)
-    #define _USB_DEVICE_OtherSpeedDescriptorRequestEditDescriptorType(buffer, index, type)                      buffer[index] = type; 
-    #define _USB_DEVICE_OtherSpeedDescriptorRequestIrpSubmit(mCDHandle,mEp,mIrp)        (void)usbDeviceThisInstance->driverInterface->deviceIRPSubmit( mCDHandle, mEp, mIrp);                           
+    #define M_USB_DEVICE_DECLARE_IRP(x) USB_DEVICE_IRP x 
+    #define M_USB_DEVICE_DECLARE_EP0_BUFFER(x) uint8_t x[USB_DEVICE_EP0_BUFFER_SIZE]
+    #define M_USB_DEVICE_OtherSpeedDescriptorRequestService(x,y) F_USB_DEVICE_Other_Speed_Descriptor_Request(x,y)
+    #define M_USB_DEVICE_OtherSpeedDescriptorRequestIrpFill(mIrp,mData,mSize,mCallback,mUserData)         ((mIrp)->data) = (mData);\
+                                                                                                                ((mIrp)->size) = (mSize);\
+                                                                                                                ((mIrp)->callback) = (mCallback);\
+                                                                                                                ((mIrp)->userData) = (mUserData);
+    #define M_USB_DEVICE_OtherSpeedDescriptorRequestIrpFlagsUpdate(mIrp, mFlags)                                  ((mIrp)->flags) = (mFlags);                                                                                                             
+    #define M_USB_DEVICE_OtherSpeedDescriptorRequestCopyData(dest,source,size)                             (void) memcpy(dest,source, size)
+    #define M_USB_DEVICE_OtherSpeedDescriptorRequestEditDescriptorType(buffer, index, type)                      (buffer[index]) = (type); 
+    #define M_USB_DEVICE_OtherSpeedDescriptorRequestIrpSubmit(mCDHandle,mEp,mIrp)        (void)usbDeviceThisInstance->driverInterface->deviceIRPSubmit( mCDHandle, mEp, mIrp);                           
 #else
-    #define _USB_DEVICE_DECLARE_IRP(x)
-    #define _USB_DEVICE_DECLARE_EP0_BUFFER(x)
-    #define _USB_DEVICE_OtherSpeedDescriptorRequestService(x,y) _USB_DEVICE_Other_Speed_Descriptor_Request(x,y)
-    #define _USB_DEVICE_OtherSpeedDescriptorRequestIrpFill(mIrp,mData,mSize,mCallback,mUserData)                                                                                                        
-    #define _USB_DEVICE_OtherSpeedDescriptorRequestIrpFlagsUpdate(mIrp, mFlags)                                  
-    #define _USB_DEVICE_OtherSpeedDescriptorRequestCopyData(dest,source,size)                                   
-    #define _USB_DEVICE_OtherSpeedDescriptorRequestEditDescriptorType(buffer, index, type)                      
-    #define _USB_DEVICE_OtherSpeedDescriptorRequestIrpSubmit(mCDHandle,mEp,mIrp)        
+    #define M_USB_DEVICE_DECLARE_IRP(x)
+    #define M_USB_DEVICE_DECLARE_EP0_BUFFER(x)
+    #define M_USB_DEVICE_OtherSpeedDescriptorRequestService(x,y) F_USB_DEVICE_Other_Speed_Descriptor_Request(x,y)
+    #define M_USB_DEVICE_OtherSpeedDescriptorRequestIrpFill(mIrp,mData,mSize,mCallback,mUserData)                                                                                                        
+    #define M_USB_DEVICE_OtherSpeedDescriptorRequestIrpFlagsUpdate(mIrp, mFlags)                                  
+    #define M_USB_DEVICE_OtherSpeedDescriptorRequestCopyData(dest,source,size)                                   
+    #define M_USB_DEVICE_OtherSpeedDescriptorRequestEditDescriptorType(buffer, index, type)                      
+    #define M_USB_DEVICE_OtherSpeedDescriptorRequestIrpSubmit(mCDHandle,mEp,mIrp)        
 #endif 
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.4"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 // *****************************************************************************
 // Section: USB Device Descriptor Macros. 
@@ -200,13 +209,13 @@
     <code>
         const uint8_t configDescriptor1[]=
         {
-            0x09,                           // Size of this descriptor in bytes
-            USB_DESCRIPTOR_CONFIGURATION,   // CONFIGURATION descriptor type
-            USB_DEVICE_16bitTo8bitArrange(0x0022), // Total length of data for
-                                                    // this cfg  
+            0x09,                           
+            USB_DESCRIPTOR_CONFIGURATION,  
+            USB_DEVICE_16bitTo8bitArrange(0x0022), 
+                                                    
     </code>
 */
-#define USB_DEVICE_16bitTo8bitArrange(a) (a&0xFF),((a>>8)&0xFF)
+#define USB_DEVICE_16bitTo8bitArrange(a) ((a)&(0xFF)),(((a)>>(8))&(0xFF))
 
 /* The USB_DEVICE_32bitTo8bitArrange() macro is implemented for 
    convenience.  Since the configuration descriptor array is a uint8_t 
@@ -214,7 +223,7 @@
    USB_DEVICE_32bitTo8bitArrange() macro breaks up a uint32_t into
    the appropriate uint8_t entries in LSB.
 */
-#define USB_DEVICE_32bitTo8bitArrange(a) (a&0xFF),((a>>8)&0xFF),((a>>16)&0xFF),((a>>24)&0xFF)
+#define USB_DEVICE_32bitTo8bitArrange(a) ((a)&(0xFF)),(((a)>>(8))&(0xFF)),(((a)>>(16))&(0xFF)),(((a)>>(24))&(0xFF))
 
 /* The USB_DEVICE_8bitArrange() macro is implemented for convenience.
    The USB_DEVICE_8bitArrange() macro provides a consistent macro for
@@ -224,7 +233,7 @@
 */
 #define USB_DEVICE_8bitArrange(a) (a)
 
-#endif // #ifndef _USB_DEVICE_MAPPING_H
+#endif // #ifndef USB_DEVICE_MAPPING_H
 
 /*******************************************************************************
  End of File

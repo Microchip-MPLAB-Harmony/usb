@@ -39,8 +39,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _USB_EXTERNAL_DEPENDENCIES_H
-#define _USB_EXTERNAL_DEPENDENCIES_H
+#ifndef USB_EXTERNAL_DEPENDENCIES_H
+#define USB_EXTERNAL_DEPENDENCIES_H
 
 #include <string.h>
 #include "system/system_common.h"

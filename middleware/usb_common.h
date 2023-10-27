@@ -41,8 +41,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _USB_COMMON_H_
-#define _USB_COMMON_H_
+#ifndef USB_COMMON_H_
+#define USB_COMMON_H_
 
 #include <limits.h>
 
@@ -53,6 +53,50 @@
 
 #endif
 // DOM-IGNORE-END  
+
+// *****************************************************************************
+/* USB Device IRP Flags
+
+  Summary:
+    USB Device IRP flags enumeration
+
+  Description:
+    This enumeration defines the possible flags that can be specified while 
+    adding the IRP.
+
+  Remarks:
+    Not all flags are applicable in all conditions. Refer to API documentation
+    for more details
+*/
+
+
+/* This is a null value used to initialize the variable
+ * that holds the status of this flag. 
+ */
+#define    USB_DEVICE_IRP_FLAG_NONE         (0x0U)
+
+/* Using this flag indicates that there is no
+ * more data pending in the IRP. When data moves
+ * from device to host, and if the IRP size is
+ * a multiple of endpoint size, specifying this
+ * flag sends the ZLP. The size is not a 
+ * multiple of endpoint size, no ZLP will be sent. 
+ */
+ 
+#define    USB_DEVICE_IRP_FLAG_DATA_COMPLETE   (0x1U)
+
+/* In case of data moving from device to host, and if the
+ * size parameter of the IRP is an exact multiple of the
+ * endpoint maximum packet size, specifying this flag, does
+ * send the ZLP. If the size is less than endpoint size, 
+ * specifying this flag will return an error. If the size
+ * is more than endpoint size but not a multiple, only
+ * endpoint multiple size of data is sent.
+ */
+
+#define    USB_DEVICE_IRP_FLAG_DATA_PENDING     (0x2U)
+
+typedef uint32_t USB_DEVICE_IRP_FLAG;
 
 // *****************************************************************************
 /* USB Device IRP Status Enumeration
@@ -67,6 +111,11 @@
     The application that schedules the IRP can check the status member of the
     USB Device IRP at any time to obtain current status of the IRP.
 */
+
+/* MISRA C-2012 Rule 5.2 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:4 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"    
 
 typedef enum
 {
@@ -104,6 +153,10 @@ typedef enum
 
 } USB_DEVICE_IRP_STATUS;
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
+
 // *****************************************************************************
 /* USB Host IRP Status Enumeration
 
@@ -118,7 +171,7 @@ typedef enum
     USB Host IRP at any time to obtain current status of the IRP.
 */
 
-typedef enum _USB_HOST_IRP_STATUS
+typedef enum E_USB_HOST_IRP_STATUS
 {
     /* IRP was terminated due to an unknown error */
     USB_HOST_IRP_STATUS_ERROR_UNKNOWN = -6,
@@ -154,47 +207,6 @@ typedef enum _USB_HOST_IRP_STATUS
     USB_HOST_IRP_STATUS_IN_PROGRESS = 3,
    
 } USB_HOST_IRP_STATUS;
-
-// *****************************************************************************
-/* USB Device IRP Flags
-
-  Summary:
-    USB Device IRP flags enumeration
-
-  Description:
-    This enumeration defines the possible flags that can be specified while 
-    adding the IRP.
-
-  Remarks:
-    Not all flags are applicable in all conditions. Refer to API documentation
-    for more details
-*/
-
-typedef enum
-{
-    /* This is a null value used to initialize the variable
-     * that holds the status of this flag. */
-    USB_DEVICE_IRP_FLAG_NONE = 0x0,
-
-    /* Using this flag indicates that there is no
-     * more data pending in the IRP. When data moves
-     * from device to host, and if the IRP size is
-     * a multiple of endpoint size, specifying this
-     * flag sends the ZLP. The size is not a 
-     * multiple of endpoint size, no ZLP will be sent. */
-    USB_DEVICE_IRP_FLAG_DATA_COMPLETE = 0x1,
-
-    /* In case of data moving from device to host, and if the
-     * size parameter of the IRP is an exact multiple of the
-     * endpoint maximum packet size, specifying this flag, does
-     * send the ZLP. If the size is less than endpoint size, 
-     * specifying this flag will return an error. If the size
-     * is more than endpoint size but not a multiple, only
-     * endpoint multiple size of data is sent.*/
-
-    USB_DEVICE_IRP_FLAG_DATA_PENDING = 0x2
-
-} USB_DEVICE_IRP_FLAG;
 
 // *****************************************************************************
 /* USB Host IRP Flags
@@ -287,7 +299,7 @@ typedef uint8_t USB_ENDPOINT;
     None.
 */
 
-typedef struct _USB_DEVICE_IRP 
+typedef struct S_USB_DEVICE_IRP 
 {
     /* Pointer to the data buffer */
     void * data;
@@ -300,7 +312,7 @@ typedef struct _USB_DEVICE_IRP
 
     /* IRP Callback. If this is NULL,
      * then there is no callback generated */
-    void (*callback)(struct _USB_DEVICE_IRP * irp);
+    void (*callback)(struct S_USB_DEVICE_IRP * irp);
 
     /* Request specific flags */
     USB_DEVICE_IRP_FLAG flags;
@@ -329,7 +341,7 @@ typedef struct _USB_DEVICE_IRP
     None.
 */
 
-typedef struct _USB_HOST_IRP
+typedef struct S_USB_HOST_IRP
 {
     /* Points to the 8 byte setup command
      * packet in case this is a IRP is 
@@ -356,7 +368,7 @@ typedef struct _USB_HOST_IRP
      * when IRP is terminated. Can be 
      * NULL, in which case the function
      * will not be called. */
-    void (*callback)(struct _USB_HOST_IRP * irp);
+    void (*callback)(struct S_USB_HOST_IRP * irp);
 
     /****************************************
      * These members of the IRP should not be

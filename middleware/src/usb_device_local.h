@@ -40,8 +40,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _USB_DEVICE_LOCAL_H
-#define _USB_DEVICE_LOCAL_H
+#ifndef USB_DEVICE_LOCAL_H
+#define USB_DEVICE_LOCAL_H
 
 
 // *****************************************************************************
@@ -169,6 +169,11 @@ typedef enum
     None.
 */
 
+/* MISRA C-2012 Rule 6.1 deviated:9 Deviation record ID -  H3_MISRAC_2012_R_6_1_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:9 "MISRA C-2012 Rule 6.1" "H3_MISRAC_2012_R_6_1_DR_1"    
+
 typedef union
 {
     struct
@@ -186,6 +191,9 @@ typedef union
         unsigned :10;
     };
 } USB_DEVICE_STATUS;
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 6.1"
+/* MISRAC 2012 deviation block end */
 
 // *****************************************************************************
 /* USB Device Layer Endpoint Queue Size structure
@@ -328,10 +336,10 @@ typedef struct
     SYS_MODULE_INDEX driverIndex;
     
     /* EP0 tx buffer. This is for handling other speed request */ 
-    _USB_DEVICE_DECLARE_EP0_BUFFER(ep0TxBuffer);
+    M_USB_DEVICE_DECLARE_EP0_BUFFER(ep0TxBuffer);
     
     /* Tx IRP for handling Other Speed request */ 
-    _USB_DEVICE_DECLARE_IRP(irpEp0TxOtherSpeedDescriptor);
+    M_USB_DEVICE_DECLARE_IRP(irpEp0TxOtherSpeedDescriptor);
 
 } USB_DEVICE_OBJ;
 
@@ -358,99 +366,117 @@ typedef struct __attribute__ ((packed))
 /*******************************************************
  * Local functions
  *******************************************************/
-void  _USB_DEVICE_ControlTransferHandler
+void  F_USB_DEVICE_ControlTransferHandler
 (
     SYS_MODULE_INDEX handlerIndex,
     USB_DEVICE_EVENT transferEvent,
     void * eventData
 );
 
-void _USB_DEVICE_ProcessStandardDeviceSetRequests
+void F_USB_DEVICE_ProcessStandardDeviceSetRequests
 (
-    USB_DEVICE_OBJ * usbDeviceInstance,
+    USB_DEVICE_OBJ * usbDeviceThisInstance,
     USB_SETUP_PACKET * setupPkt
 );
 
-void _USB_DEVICE_ProcessStandardDeviceGetRequests
+void F_USB_DEVICE_ProcessStandardDeviceGetRequests
 (
-    USB_DEVICE_OBJ * usbDeviceInstance,
+    USB_DEVICE_OBJ * usbDeviceThisInstance,
     USB_SETUP_PACKET * setupPkt 
 );
 
-void _USB_DEVICE_ProcessStandardEndpointRequest
-(
-    USB_DEVICE_OBJ * usbDeviceInstance,
-    uint8_t interfaceNumber,
-    USB_SETUP_PACKET * setupPkt
-);
-
-void _USB_DEVICE_RedirectControlXfrToClient
-(
-    USB_DEVICE_OBJ* usbDeviceThisInstance ,
-        USB_DEVICE_EVENT event, 
-    USB_SETUP_PACKET * setupPkt
-);
-void _USB_DEVICE_ForwardControlXfrToFunction
+void F_USB_DEVICE_ProcessStandardEndpointRequest
 (
     USB_DEVICE_OBJ * usbDeviceThisInstance,
     uint8_t interfaceNumber,
     USB_SETUP_PACKET * setupPkt
 );
-void _USB_DEVICE_ProcessInterfaceRequests
+
+void F_USB_DEVICE_RedirectControlXfrToClient
+(
+    USB_DEVICE_OBJ* usbDeviceThisInstance ,
+        USB_DEVICE_EVENT event, 
+    USB_SETUP_PACKET * setupPkt
+);
+void F_USB_DEVICE_ForwardControlXfrToFunction
+(
+    USB_DEVICE_OBJ * usbDeviceThisInstance,
+    uint8_t interfaceNumber,
+    USB_SETUP_PACKET * setupPkt
+);
+
+/* MISRA C-2012 Rule 5.5, 8.6 deviated below. Deviation record ID -  
+   H3_MISRAC_2012_R_5_5_DR_1 & H3_MISRAC_2012_R_8_6_DR_1*/
+#pragma coverity compliance block \
+(deviate:1 "MISRA C-2012 Rule 5.5" "H3_MISRAC_2012_R_5_5_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )   
+
+
+void F_USB_DEVICE_ProcessInterfaceRequests
 (
     USB_DEVICE_OBJ* usbDeviceInstance ,
     USB_SETUP_PACKET * setupPkt
 );
 
-void _USB_DEVICE_EventHandler
+void F_USB_DEVICE_EventHandler
 (
     uintptr_t referenceHandle,
     DRV_USB_EVENT eventType, 
     void * eventData 
 );
 
-USB_DEVICE_OBJ* _USB_DEVICE_ClientHandleValidate
+USB_DEVICE_OBJ* F_USB_DEVICE_ClientHandleValidate
 (
     USB_DEVICE_HANDLE deviceHandle
 );
 
-USB_DEVICE_FUNCTION_REGISTRATION_TABLE * _USB_DEVICE_GetFunctionDriverEntryByInterface
+USB_DEVICE_FUNCTION_REGISTRATION_TABLE * F_USB_DEVICE_GetFunctionDriverEntryByInterface
 (
     uint8_t interfaceNumber,
     USB_DEVICE_OBJ * usbDeviceThisInstance
 );
 
-bool _USB_DEVICE_FindEndpoint( USB_DEVICE_OBJ* usbDeviceThisInstance,
-                          USB_ENDPOINT endpointNumber, uint8_t* interfaceNumber);
-void _USB_DEVICE_Ep0ReceiveCompleteCallback( USB_DEVICE_IRP * handle );
-void _USB_DEVICE_Ep0TransmitCompleteCallback(USB_DEVICE_IRP * handle);
+bool F_USB_DEVICE_FindEndpoint( USB_DEVICE_OBJ* usbDeviceThisInstance,
+                          USB_ENDPOINT endpointNumber, uint8_t* interfaceNum);
+void F_USB_DEVICE_Ep0ReceiveCompleteCallback( USB_DEVICE_IRP * handle );
+void F_USB_DEVICE_Ep0TransmitCompleteCallback(USB_DEVICE_IRP * handle);
 
-void _USB_DEVICE_EndpointWriteCallBack( USB_DEVICE_IRP * irp );
-void _USB_DEVICE_EndpointReadCallBack( USB_DEVICE_IRP * irp );
-void _USB_DEVICE_RemotewakeupTimerCallback(uintptr_t context, uint32_t currTick);
-void _USB_DEVICE_Initialize_Endpoint_Q_Size(SYS_MODULE_INDEX index, uint16_t qSizeRead, uint16_t qSizeWrite );
-void _USB_DEVICE_EndpointMutexCreateFunction(USB_DEVICE_OBJ* usbDeviceThisInstance);
-void _USB_DEVICE_EndpointMutexDeleteFunction(USB_DEVICE_OBJ* usbDeviceThisInstance);
-void _USB_DEVICE_EndpointQueueSizeReset(SYS_MODULE_INDEX index);
-uint16_t _USB_DEVICE_GetStringDescriptorRequestProcess
+void F_USB_DEVICE_EndpointWriteCallBack( USB_DEVICE_IRP * irp );
+void F_USB_DEVICE_EndpointReadCallBack( USB_DEVICE_IRP * irp );
+void F_USB_DEVICE_RemotewakeupTimerCallback(uintptr_t context, uint32_t currTick);
+void F_USB_DEVICE_Initialize_Endpoint_Q_Size(SYS_MODULE_INDEX index, uint16_t qSizeRead, uint16_t qSizeWrite );
+void F_USB_DEVICE_EndpointMutexCreateFunction(USB_DEVICE_OBJ* usbDeviceThisInstance);
+void F_USB_DEVICE_EndpointMutexDeleteFunction(USB_DEVICE_OBJ* usbDeviceThisInstance);
+void F_USB_DEVICE_EndpointQueueSizeReset(SYS_MODULE_INDEX index);
+
+
+uint16_t F_USB_DEVICE_GetStringDescriptorRequestProcess
 (
     USB_DEVICE_MASTER_DESCRIPTOR * ptrMasterDescTable,
     USB_SETUP_PACKET * setupPkt,
     void**  pDescriptorString
 );
-uint16_t _USB_DEVICE_GetStringDescriptorRequestProcessAdvanced
+uint16_t F_USB_DEVICE_GetStringDescriptorRequestProcessAdvanced
 (
     USB_DEVICE_MASTER_DESCRIPTOR * ptrMasterDescTable,
     USB_SETUP_PACKET * setupPkt,
     void**  pDescriptorString
 ); 
-void _USB_DEVICE_Other_Speed_Descriptor_Request
+void F_USB_DEVICE_Other_Speed_Descriptor_Request
 (
 	USB_DEVICE_OBJ * usbDeviceThisInstance, 
 	USB_SETUP_PACKET * setupPkt
 );
-void _USB_DEVICE_DeInitializeAllFunctionDrivers
+void F_USB_DEVICE_DeInitializeAllFunctionDrivers
 (
     USB_DEVICE_OBJ * usbDeviceThisInstance
 );
+
+void F_USB_DEVICE_ConfigureDevice( USB_DEVICE_OBJ* usbDeviceThisInstance );
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.5"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
+
 #endif

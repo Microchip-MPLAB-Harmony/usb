@@ -42,8 +42,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _USB_DEVICE_H
-#define _USB_DEVICE_H
+#ifndef USB_DEVICE_H
+#define USB_DEVICE_H
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -321,6 +321,12 @@ typedef enum
 } USB_DEVICE_CLIENT_STATUS;
 
 // *****************************************************************************
+
+/* MISRA C-2012 Rule 3.1 deviated:34 Deviation record ID -  H3_MISRAC_2012_R_3_1_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:34 "MISRA C-2012 Rule 3.1" "H3_MISRAC_2012_R_3_1_DR_1"    
+
 /* USB Device Layer Events.
 
   Summary:
@@ -355,7 +361,7 @@ typedef enum
 
     The client must use the USB_DEVICE_EventHandlerSet function to register
     the event handler call back function. The following code example shows the
-	handling of the USB Device Layer Events.
+    handling of the USB Device Layer Events.
 
     <code>
     USB_DEVICE_EVENT_RESPONSE APP_USBDeviceEventHandler
@@ -552,6 +558,9 @@ typedef enum
     Generation of some events required the definition of configuration macros.
     Refer to the event specific description for more details.
 */
+
+/* MISRA C-2012 Rule 5.2 deviated:20 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+#pragma coverity compliance block deviate:20 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" 
 
 typedef enum 
 {
@@ -752,7 +761,8 @@ typedef enum
             /*DOM-IGNORE-BEGIN*/ = USB_ERROR_PARAMETER_INVALID /*DOM-IGNORE-END*/,
 
     /* Device Handle passed to the function is invalid */
-    USB_DEVICE_RESULT_ERROR_DEVICE_HANDLE_INVALID,
+    USB_DEVICE_RESULT_ERROR_DEVICE_HANDLE_INVALID 
+            /*DOM-IGNORE-BEGIN*/ = USB_ERROR_DEVICE_ENDPOINT_INVALID /*DOM-IGNORE-END*/,
     
      /* Transfer terminated because host halted the endpoint */
     USB_DEVICE_RESULT_ERROR_ENDPOINT_HALTED
@@ -1055,7 +1065,7 @@ typedef enum
     USB_DEVICE_CONTROL_TRANSFER_RESULT_SUCCESS
             /*DOM-IGNORE-BEGIN*/ = USB_ERROR_NONE /*DOM-IGNORE-END*/
     
-} USB_DEVICE_CONTROL_TRANSFER_RESULT;
+} USB_DEVICE_CONTROL_TRANSFER_RESULT;   
 
 //*******************************************************************************
 /* USB Device Layer Endpoint Read and Write Complete Event Data type.
@@ -1087,6 +1097,8 @@ typedef struct
 USB_DEVICE_EVENT_DATA_ENDPOINT_READ_COMPLETE, 
 USB_DEVICE_EVENT_DATA_ENDPOINT_WRITE_COMPLETE;
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"    
+/* MISRAC 2012 deviation block end */
 //*******************************************************************************
 /* USB Device Set Descriptor Event Data type.
 
@@ -1562,18 +1574,18 @@ void USB_DEVICE_Close( USB_DEVICE_HANDLE usbDeviceHandle );
     <code>
     // This code example shows how the application can set 
     // a Device Layer Event Handler. 
-	
+    
     // Application states
-	typedef enum
-	{
-		//Application's state machine's initial state.
-		APP_STATE_INIT=0,
-		APP_STATE_SERVICE_TASKS,
-		APP_STATE_WAIT_FOR_CONFIGURATION, 
-	} APP_STATES;
+    typedef enum
+    {
+        //Application's state machine's initial state.
+        APP_STATE_INIT=0,
+        APP_STATE_SERVICE_TASKS,
+        APP_STATE_WAIT_FOR_CONFIGURATION, 
+    } APP_STATES;
 
     USB_DEVICE_HANDLE usbDeviceHandle;
-	APP_STATES appState; 
+    APP_STATES appState; 
 
     // This is the application device layer event handler function.
 
@@ -1584,99 +1596,99 @@ void USB_DEVICE_Close( USB_DEVICE_HANDLE usbDeviceHandle );
         uintptr_t context
     )
     {
-		USB_SETUP_PACKET * setupPacket;
+        USB_SETUP_PACKET * setupPacket;
         switch(event)
         {
             case USB_DEVICE_EVENT_POWER_DETECTED:
-				// This event in generated when VBUS is detected. Attach the device 
-				USB_DEVICE_Attach(usbDeviceHandle);
+                // This event in generated when VBUS is detected. Attach the device 
+                USB_DEVICE_Attach(usbDeviceHandle);
                 break;
-				
+                
             case USB_DEVICE_EVENT_POWER_REMOVED:
-				// This event is generated when VBUS is removed. Detach the device
-				USB_DEVICE_Detach (usbDeviceHandle);
+                // This event is generated when VBUS is removed. Detach the device
+                USB_DEVICE_Detach (usbDeviceHandle);
                 break; 
-				
+                
             case USB_DEVICE_EVENT_CONFIGURED:
-				// This event indicates that Host has set Configuration in the Device. 
+                // This event indicates that Host has set Configuration in the Device. 
                 break;
-				
-			case USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST:
-				// This event indicates a Control transfer setup stage has been completed. 
-				setupPacket = (USB_SETUP_PACKET *)pData;
-				
-				// Parse the setup packet and respond with a USB_DEVICE_ControlSend(), 
-				// USB_DEVICE_ControlReceive or USB_DEVICE_ControlStatus(). 
-				
-				break; 
-				
-			case USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_SENT:
-				// This event indicates that a Control transfer Data has been sent to Host.   
-			    break; 
-				
-			case USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
-				// This event indicates that a Control transfer Data has been received from Host.
-				break; 
-				
-			case USB_DEVICE_EVENT_CONTROL_TRANSFER_ABORTED:
-				// This event indicates a control transfer was aborted. 
-				break; 
-				
+                
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST:
+                // This event indicates a Control transfer setup stage has been completed. 
+                setupPacket = (USB_SETUP_PACKET *)pData;
+                
+                // Parse the setup packet and respond with a USB_DEVICE_ControlSend(), 
+                // USB_DEVICE_ControlReceive or USB_DEVICE_ControlStatus(). 
+                
+                break; 
+                
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_SENT:
+                // This event indicates that a Control transfer Data has been sent to Host.   
+                break; 
+                
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
+                // This event indicates that a Control transfer Data has been received from Host.
+                break; 
+                
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_ABORTED:
+                // This event indicates a control transfer was aborted. 
+                break; 
+                
             case USB_DEVICE_EVENT_SUSPENDED:
                 break;
-				
+                
             case USB_DEVICE_EVENT_RESUMED:
                 break;
-				
+                
             case USB_DEVICE_EVENT_ERROR:
                 break;
-				
+                
             case USB_DEVICE_EVENT_RESET:
                 break;
-				
+                
             case USB_DEVICE_EVENT_SOF:
-				// This event indicates an SOF is detected on the bus. The 	USB_DEVICE_SOF_EVENT_ENABLE
-				// macro should be defined to get this event. 
+                // This event indicates an SOF is detected on the bus. The     USB_DEVICE_SOF_EVENT_ENABLE
+                // macro should be defined to get this event. 
                 break;
             default:
                 break;
         }
     }
 
-	
-	void APP_Tasks ( void )
-	{
-		// Check the application's current state.
-		switch ( appState )
-		{
-			// Application's initial state. 
-			case APP_STATE_INIT:
-				// Open the device layer 
-				usbDeviceHandle = USB_DEVICE_Open( USB_DEVICE_INDEX_0,
+    
+    void APP_Tasks ( void )
+    {
+        // Check the application's current state.
+        switch ( appState )
+        {
+            // Application's initial state. 
+            case APP_STATE_INIT:
+                // Open the device layer 
+                usbDeviceHandle = USB_DEVICE_Open( USB_DEVICE_INDEX_0,
                     DRV_IO_INTENT_READWRITE );
 
-				if(usbDeviceHandle != USB_DEVICE_HANDLE_INVALID)
-				{
-					// Register a callback with device layer to get event notification 
-					USB_DEVICE_EventHandlerSet(usbDeviceHandle,
+                if(usbDeviceHandle != USB_DEVICE_HANDLE_INVALID)
+                {
+                    // Register a callback with device layer to get event notification 
+                    USB_DEVICE_EventHandlerSet(usbDeviceHandle,
                         APP_USBDeviceEventHandler, 0);
-					appState = APP_STATE_WAIT_FOR_CONFIGURATION;
-				}
-				else
-				{
-					// The Device Layer is not ready to be opened. We should try
-					// gain later. 
-				}
-				break; 
+                    appState = APP_STATE_WAIT_FOR_CONFIGURATION;
+                }
+                else
+                {
+                    // The Device Layer is not ready to be opened. We should try
+                    // gain later. 
+                }
+                break; 
 
-			case APP_STATE_SERVICE_TASKS:
-				break; 
+            case APP_STATE_SERVICE_TASKS:
+                break; 
 
-				// The default state should never be executed. 
-			default:
-				break; 
-		}
-	}
+                // The default state should never be executed. 
+            default:
+                break; 
+        }
+    }
     </code>
 
   Remarks:
@@ -2334,6 +2346,9 @@ void USB_DEVICE_RemoteWakeupStop ( USB_DEVICE_HANDLE usbDeviceHandle );
     None.
 */
 
+/* MISRA C-2012 Rule 8.6 deviated:4 Deviation record ID -  H3_MISRAC_2012_R_8_6_DR_1 */
+#pragma coverity compliance block deviate:4 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1"    
+
 void USB_DEVICE_RemoteWakeupStartTimed ( USB_DEVICE_HANDLE usbDeviceHandle );
 
 // *****************************************************************************
@@ -2610,7 +2625,7 @@ USB_DEVICE_CONTROL_TRANSFER_RESULT USB_DEVICE_ControlReceive
 
   Precondition:
     Client handle should be valid. This function should only be called to 
-	complete an on-going control transfer.
+    complete an on-going control transfer.
 
   Parameters:
     usbDeviceHandle        - USB device handle returned by USB_DEVICE_Open
@@ -2632,8 +2647,8 @@ USB_DEVICE_CONTROL_TRANSFER_RESULT USB_DEVICE_ControlReceive
     // The following code example shows an example of how the
     // USB_DEVICE_ControlStatus() function is called in response to the
     // USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED event to complete the 
-	// control transfer. Here, the application code acknowledges the status 
-	// stage of the control transfer.
+    // control transfer. Here, the application code acknowledges the status 
+    // stage of the control transfer.
 
     void APP_USBDeviceControlTransferEventHandler
     (
@@ -3428,8 +3443,8 @@ bool USB_DEVICE_EndpointIsEnabled
     progress. If the last transaction of the transfer is in progress, the
     transfer will not be canceled.  If it is not the last transaction in
     progress, the in progress transfer will be allowed to complete. Pending 
-	transactions will be canceled. The first transaction of an in progress 
-	transfer cannot be canceled.
+    transactions will be canceled. The first transaction of an in progress 
+    transfer cannot be canceled.
 
   Precondition:
     The USB Device should be in a configured state.
@@ -3479,6 +3494,11 @@ USB_DEVICE_RESULT USB_DEVICE_EndpointTransferCancel
     USB_DEVICE_TRANSFER_HANDLE transferHandle
 );
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 3.1"   
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

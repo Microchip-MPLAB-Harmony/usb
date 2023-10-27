@@ -43,8 +43,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _USB_CHAPTER_9_H
-#define _USB_CHAPTER_9_H
+#ifndef USB_CHAPTER_9_H
+#define USB_CHAPTER_9_H
 #include <stdint.h>
 
 // DOM-IGNORE-BEGIN
@@ -186,6 +186,10 @@ typedef struct __attribute__ ((packed))
 
 } USB_INTERFACE_ASSOCIATION_DESCRIPTOR;
 
+/* MISRA C-2012 Rule 6.1 deviated:64 Deviation record ID -  H3_MISRAC_2012_R_6_1_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:64 "MISRA C-2012 Rule 6.1" "H3_MISRAC_2012_R_6_1_DR_1" 
 // *****************************************************************************
 /* Endpoint descriptor structure
 
@@ -476,6 +480,10 @@ typedef union __attribute__((packed))
 
 } USB_DEVICE_GET_STATUS_RESPONSE;
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 6.1"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
+
 // *****************************************************************************
 /* Standard device descriptor
 
@@ -585,18 +593,18 @@ typedef struct __attribute__ ((packed))
     These constants should be used in place of hard-coded numeric literals.
 */
 
-#define USB_DESCRIPTOR_DEVICE           0x01    // bDescriptorType for a Device Descriptor.
-#define USB_DESCRIPTOR_CONFIGURATION    0x02    // bDescriptorType for a Configuration Descriptor.
-#define USB_DESCRIPTOR_STRING           0x03    // bDescriptorType for a String Descriptor.
-#define USB_DESCRIPTOR_INTERFACE        0x04    // bDescriptorType for an Interface Descriptor.
-#define USB_DESCRIPTOR_ENDPOINT         0x05    // bDescriptorType for an Endpoint Descriptor.
-#define USB_DESCRIPTOR_DEVICE_QUALIFIER 0x06    // bDescriptorType for a Device Qualifier.
-#define USB_DESCRIPTOR_OTHER_SPEED      0x07    // bDescriptorType for a Other Speed Configuration.
-#define USB_DESCRIPTOR_INTERFACE_POWER  0x08    // bDescriptorType for Interface Power.
-#define USB_DESCRIPTOR_OTG              0x09    // bDescriptorType for an OTG Descriptor. 
-#define USB_DESCRIPTOR_INTERFACE_ASSOCIATION  0x0b 
-#define USB_DESCRIPTOR_BOS              0x0F    // bDescriptorType for a BOS Descriptor.
-#define USB_DESCRIPTOR_DEVICE_CAPABILITY 0x10   // bDescriptorType for a Device Capability Descriptor.
+#define USB_DESCRIPTOR_DEVICE           0x01UL    // bDescriptorType for a Device Descriptor.
+#define USB_DESCRIPTOR_CONFIGURATION    0x02UL    // bDescriptorType for a Configuration Descriptor.
+#define USB_DESCRIPTOR_STRING           0x03UL    // bDescriptorType for a String Descriptor.
+#define USB_DESCRIPTOR_INTERFACE        0x04U    // bDescriptorType for an Interface Descriptor.
+#define USB_DESCRIPTOR_ENDPOINT         0x05U    // bDescriptorType for an Endpoint Descriptor.
+#define USB_DESCRIPTOR_DEVICE_QUALIFIER 0x06U    // bDescriptorType for a Device Qualifier.
+#define USB_DESCRIPTOR_OTHER_SPEED      0x07U    // bDescriptorType for a Other Speed Configuration.
+#define USB_DESCRIPTOR_INTERFACE_POWER  0x08U    // bDescriptorType for Interface Power.
+#define USB_DESCRIPTOR_OTG              0x09U    // bDescriptorType for an OTG Descriptor. 
+#define USB_DESCRIPTOR_INTERFACE_ASSOCIATION  0x0bU 
+#define USB_DESCRIPTOR_BOS              0x0FU    // bDescriptorType for a BOS Descriptor.
+#define USB_DESCRIPTOR_DEVICE_CAPABILITY 0x10U   // bDescriptorType for a Device Capability Descriptor.
 
 // *****************************************************************************
 /* Standard device requests
@@ -612,17 +620,17 @@ typedef struct __attribute__ ((packed))
     These constants should be used in place of hard-coded numeric literals.
 */
 
-#define USB_REQUEST_GET_STATUS                  0       // Standard Device Request - GET STATUS
-#define USB_REQUEST_CLEAR_FEATURE               1       // Standard Device Request - CLEAR FEATURE
-#define USB_REQUEST_SET_FEATURE                 3       // Standard Device Request - SET FEATURE
-#define USB_REQUEST_SET_ADDRESS                 5       // Standard Device Request - SET ADDRESS
-#define USB_REQUEST_GET_DESCRIPTOR              6       // Standard Device Request - GET DESCRIPTOR
-#define USB_REQUEST_SET_DESCRIPTOR              7       // Standard Device Request - SET DESCRIPTOR
-#define USB_REQUEST_GET_CONFIGURATION           8       // Standard Device Request - GET CONFIGURATION
-#define USB_REQUEST_SET_CONFIGURATION           9       // Standard Device Request - SET CONFIGURATION
-#define USB_REQUEST_GET_INTERFACE               10      // Standard Device Request - GET INTERFACE
-#define USB_REQUEST_SET_INTERFACE               11      // Standard Device Request - SET INTERFACE
-#define USB_REQUEST_SYNCH_FRAME                 12      // Standard Device Request - SYNCH FRAME
+#define USB_REQUEST_GET_STATUS                  0U      // Standard Device Request - GET STATUS
+#define USB_REQUEST_CLEAR_FEATURE               1U       // Standard Device Request - CLEAR FEATURE
+#define USB_REQUEST_SET_FEATURE                 3U       // Standard Device Request - SET FEATURE
+#define USB_REQUEST_SET_ADDRESS                 5U       // Standard Device Request - SET ADDRESS
+#define USB_REQUEST_GET_DESCRIPTOR              6U      // Standard Device Request - GET DESCRIPTOR
+#define USB_REQUEST_SET_DESCRIPTOR              7U       // Standard Device Request - SET DESCRIPTOR
+#define USB_REQUEST_GET_CONFIGURATION           8U       // Standard Device Request - GET CONFIGURATION
+#define USB_REQUEST_SET_CONFIGURATION           9U       // Standard Device Request - SET CONFIGURATION
+#define USB_REQUEST_GET_INTERFACE               10U      // Standard Device Request - GET INTERFACE
+#define USB_REQUEST_SET_INTERFACE               11U      // Standard Device Request - SET INTERFACE
+#define USB_REQUEST_SYNCH_FRAME                 12U      // Standard Device Request - SYNCH FRAME
 
 // *****************************************************************************
 /* Characteristics of request.
@@ -639,16 +647,16 @@ typedef struct __attribute__ ((packed))
     These constants should be used in place of hard-coded numeric literals.
 */
 
-#define USB_SETUP_DIRN_HOST_TO_DEVICE               0x00    // Setup request direction is Host -> Device
-#define USB_SETUP_DIRN_DEVICE_TO_HOST               0x80    // Setup request direction is Device -> Host
-#define USB_SETUP_TYPE_STANDARD                     0x00    // Setup request type is "Standard"
-#define USB_SETUP_TYPE_CLASS                        0x20    // Setup request type is "Class"
-#define USB_SETUP_TYPE_VENDOR                       0x40    // Setup request type is "Vendor"
-#define USB_SETUP_TYPE_RESERVED                     0x60    // Reserved
-#define USB_SETUP_RECIPIENT_DEVICE                  0x00    // Recipient is Device
-#define USB_SETUP_RECIPIENT_INTERFACE               0x01    // Recipient is interface
-#define USB_SETUP_RECIPIENT_ENDPOINT                0x02    // Recipient is endpoint
-#define USB_SETUP_RECIPIENT_OTHER                   0x03    // Recipient is other
+#define USB_SETUP_DIRN_HOST_TO_DEVICE               0x00U    // Setup request direction is Host -> Device
+#define USB_SETUP_DIRN_DEVICE_TO_HOST               0x80U    // Setup request direction is Device -> Host
+#define USB_SETUP_TYPE_STANDARD                     0x00U    // Setup request type is "Standard"
+#define USB_SETUP_TYPE_CLASS                        0x20U    // Setup request type is "Class"
+#define USB_SETUP_TYPE_VENDOR                       0x40U    // Setup request type is "Vendor"
+#define USB_SETUP_TYPE_RESERVED                     0x60U    // Reserved
+#define USB_SETUP_RECIPIENT_DEVICE                  0x00U    // Recipient is Device
+#define USB_SETUP_RECIPIENT_INTERFACE               0x01U    // Recipient is interface
+#define USB_SETUP_RECIPIENT_ENDPOINT                0x02U    // Recipient is endpoint
+#define USB_SETUP_RECIPIENT_OTHER                   0x03U    // Recipient is other
 
 // *****************************************************************************
 /* Setup Packet - Data Transfer Direction.
@@ -748,9 +756,9 @@ typedef enum
     These constants should be used in place of hard-coded numeric literals.
 */
 
-#define USB_FEATURE_SELECTOR_ENDPOINT_HALT                          0
-#define USB_FEATURE_SELECTOR_DEVICE_REMOTE_WAKEUP                   1
-#define USB_FEATURE_SELECTOR_DEVICE_TEST_MODE                       2
+#define USB_FEATURE_SELECTOR_ENDPOINT_HALT                          0U
+#define USB_FEATURE_SELECTOR_DEVICE_REMOTE_WAKEUP                   1U
+#define USB_FEATURE_SELECTOR_DEVICE_TEST_MODE                       2U
 
 // *****************************************************************************
 /* Test mode selectors.
@@ -814,9 +822,9 @@ typedef enum
     These constants should be used in place of hard-coded numeric literals.
 */
 
-#define USB_ATTRIBUTE_DEFAULT                       0x80  // Reserved (set to one)
-#define USB_ATTRIBUTE_SELF_POWERED                  0x40  // Self powered
-#define USB_ATTRIBUTE_REMOTE_WAKEUP                 0x20  // Remote wakeup
+#define USB_ATTRIBUTE_DEFAULT                       0x80U  // Reserved (set to one)
+#define USB_ATTRIBUTE_SELF_POWERED                  0x40U  // Self powered
+#define USB_ATTRIBUTE_REMOTE_WAKEUP                 0x20U  // Remote wakeup
 
 // *****************************************************************************
 /*  Endpoint direction for standard endpoint descriptor.
@@ -832,8 +840,8 @@ typedef enum
     These constants should be used in place of hard-coded numeric literals.
 */
 
-#define USB_EP_DIRECTION_IN                     0x80    // IN direction
-#define USB_EP_DIRECTION_OUT                    0x00    // OUT direction
+#define USB_EP_DIRECTION_IN                     0x80U    // IN direction
+#define USB_EP_DIRECTION_OUT                    0x00U    // OUT direction
 
 // *****************************************************************************
 /* USB Transfer Type
@@ -870,10 +878,10 @@ typedef enum
     These constants should be used in place of hard-coded numeric literals.
 */
 
-#define USB_SYNCH_TYPE_NO_SYNCH                 0x00    // No synchronization
-#define USB_SYNCH_TYPE_ASYNCHRONOUS             0x04    // Asynchronous
-#define USB_SYNCH_TYPE_ADAPTIVE                 0x08    //
-#define USB_SYNCH_TYPE_SYNCHRONOUS              0x0C
+#define USB_SYNCH_TYPE_NO_SYNCH                 0x00U    // No synchronization
+#define USB_SYNCH_TYPE_ASYNCHRONOUS             0x04U    // Asynchronous
+#define USB_SYNCH_TYPE_ADAPTIVE                 0x08U    //
+#define USB_SYNCH_TYPE_SYNCHRONOUS              0x0CU
 
 // *****************************************************************************
 /* USB Endpoint Usage Type
@@ -888,10 +896,10 @@ typedef enum
     These constants should be used in place of hard-coded numeric literals.
 */
 
-#define USB_USAGE_DATA_ENDPOINT                 0x00
-#define USB_USAGE_FEEDBACK_ENDPOINT             0x01
-#define USB_USAGE_IMPLICIT_FEEDBACK_DATA_EP     0x02
-#define USB_USAGE_RESERVED                      0x03
+#define USB_USAGE_DATA_ENDPOINT                 0x00U
+#define USB_USAGE_FEEDBACK_ENDPOINT             0x01U
+#define USB_USAGE_IMPLICIT_FEEDBACK_DATA_EP     0x02U
+#define USB_USAGE_RESERVED                      0x03U
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
