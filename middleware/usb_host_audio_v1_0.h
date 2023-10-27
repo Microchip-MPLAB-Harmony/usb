@@ -39,8 +39,8 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
-#ifndef _USB_HOST_AUDIO_V1_H_
-#define _USB_HOST_AUDIO_V1_H_
+#ifndef USB_HOST_AUDIO_V1_H_
+#define USB_HOST_AUDIO_V1_H_
 
 //DOM-IGNORE-END
 
@@ -70,6 +70,17 @@
 // *****************************************************************************
 // *****************************************************************************
 
+/* MISRA C-2012 Rule 5.1 deviate: 2, Rule 5.2 deviate:40, Rule 5.4 deviate:5, Rule 5.5 deviate:17 
+   and 8.6 deviate:7. Deviation record ID - H3_MISRAC_2012_R_5_1_DR_1, H3_MISRAC_2012_R_5_2_DR_1 
+   H3_MISRAC_2012_R_5_4_DR_1, H3_MISRAC_2012_R_5_5_DR_1 and H3_MISRAC_2012_R_8_6_DR_1*/
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:3 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 5.5" "H3_MISRAC_2012_R_5_5_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )
 // *****************************************************************************
 /* USB Host Audio v1.0 Object 
  
@@ -3820,5 +3831,13 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_0_StreamRead
     static implementations depending on the build mode.
 */
 #include "usb/src/usb_host_audio_v1_mapping.h"
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.4"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.5"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 #endif 

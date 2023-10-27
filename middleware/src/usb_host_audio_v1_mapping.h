@@ -39,11 +39,16 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _USB_HOST_AUDIO_V1_MAPPING_H
-#define _USB_HOST_AUDIO_V1_MAPPING_H
+#ifndef USB_HOST_AUDIO_V1_MAPPING_H
+#define USB_HOST_AUDIO_V1_MAPPING_H
 
 #include "usb_external_dependencies.h"
 #include "usb_host_audio_local.h"
+
+/* MISRA C-2012 Rule 5.8 deviated:4 Deviation record ID -  H3_MISRAC_2012_R_5_8_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:4 "MISRA C-2012 Rule 5.8" "H3_MISRAC_2012_R_5_8_DR_1" 
 
 #if defined (USB_HOST_AUDIO_V1_0_INSTANCES_NUMBER) && !defined (USB_HOST_AUDIO_V1_INSTANCES_NUMBER)
  #define USB_HOST_AUDIO_V1_INSTANCES_NUMBER USB_HOST_AUDIO_V1_0_INSTANCES_NUMBER
@@ -59,10 +64,15 @@
 
 
 #define USB_HOST_AUDIO_V1_0_INSTANCE  USB_HOST_AUDIO_V1_INSTANCE
-#define _USB_HOST_AUDIO_V1_0_ControlRequestCallback _USB_HOST_AUDIO_V1_ControlRequestCallback
+#define USB_HOST_AUDIO_V1_0_ControlRequestCallback F_USB_HOST_AUDIO_V1_ControlRequestCallback
 
-#define USB_HOST_AUDIO_V1_StreamWrite(handle, transferHandle, source, length)  _USB_HOST_AUDIO_V1_StreamWrite(handle, transferHandle, source, length, USB_HOST_AUDIO_V1_API_VERSION_FLAG_V1)
-#define USB_HOST_AUDIO_V1_0_StreamWrite(handle, transferHandle, source, length)  _USB_HOST_AUDIO_V1_StreamWrite(handle, transferHandle, source, length, USB_HOST_AUDIO_V1_API_VERSION_FLAG_V1_0_DEPRECIATED)
-#define USB_HOST_AUDIO_V1_StreamRead(handle, transferHandle, source, length)  _USB_HOST_AUDIO_V1_StreamRead(handle, transferHandle, source, length, USB_HOST_AUDIO_V1_API_VERSION_FLAG_V1)
-#define USB_HOST_AUDIO_V1_0_StreamRead(handle, transferHandle, source, length)  _USB_HOST_AUDIO_V1_StreamRead(handle, transferHandle, source, length, USB_HOST_AUDIO_V1_API_VERSION_FLAG_V1_0_DEPRECIATED)
+#define USB_HOST_AUDIO_V1_StreamWrite(handle, transferHandle, source, length)  F_USB_HOST_AUDIO_V1_StreamWrite(handle, transferHandle, source, length, USB_HOST_AUDIO_V1_API_VERSION_FLAG_V1)
+#define USB_HOST_AUDIO_V1_0_StreamWrite(handle, transferHandle, source, length)  F_USB_HOST_AUDIO_V1_StreamWrite(handle, transferHandle, source, length, USB_HOST_AUDIO_V1_API_VERSION_FLAG_V1_0_DEPRECIATED)
+#define USB_HOST_AUDIO_V1_StreamRead(handle, transferHandle, source, length)  F_USB_HOST_AUDIO_V1_StreamRead(handle, transferHandle, source, length, USB_HOST_AUDIO_V1_API_VERSION_FLAG_V1)
+#define USB_HOST_AUDIO_V1_0_StreamRead(handle, transferHandle, source, length)  F_USB_HOST_AUDIO_V1_StreamRead(handle, transferHandle, source, length, USB_HOST_AUDIO_V1_API_VERSION_FLAG_V1_0_DEPRECIATED)
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.8"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
+
 #endif

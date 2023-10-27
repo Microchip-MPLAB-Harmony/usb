@@ -72,7 +72,7 @@
   Remarks:
     This structure is private to the Audio.
  */
-USB_HOST_AUDIO_V1_INSTANCE  gUSBHostAudioInstance[USB_HOST_AUDIO_V1_INSTANCES_NUMBER];
+static USB_HOST_AUDIO_V1_INSTANCE  gUSBHostAudioInstance[USB_HOST_AUDIO_V1_INSTANCES_NUMBER];
 
 
 // *****************************************************************************
@@ -89,7 +89,7 @@ USB_HOST_AUDIO_V1_INSTANCE  gUSBHostAudioInstance[USB_HOST_AUDIO_V1_INSTANCES_NU
   Remarks:
     This structure is private to the Audio Host Client driver.
  */
-USB_HOST_AUDIO_V1_COMMON_OBJ  gUSBHostAudio1CommonObj; 
+static USB_HOST_AUDIO_V1_COMMON_OBJ  gUSBHostAudio1CommonObj; 
 
 
 // *****************************************************************************
@@ -108,16 +108,15 @@ USB_HOST_AUDIO_V1_COMMON_OBJ  gUSBHostAudio1CommonObj;
  */
 const USB_HOST_CLIENT_DRIVER gUSBHostAudioV1Driver =
 {
-    .initialize                 = _USB_HOST_AUDIO_V1_Initialize,
-    .deinitialize               = _USB_HOST_AUDIO_V1_Deinitialize,
-    .reinitialize               = _USB_HOST_AUDIO_V1_Reinitialize,
-    .interfaceAssign            = _USB_HOST_AUDIO_V1_InterfaceAssign,
-    .interfaceRelease           = _USB_HOST_AUDIO_V1_InterfaceRelease,
-    .interfaceEventHandler      = _USB_HOST_AUDIO_V1_InterfaceEventHandler,
-    .interfaceTasks             = _USB_HOST_AUDIO_V1_InterfaceTasks,
+    .initialize                 = F_USB_HOST_AUDIO_V1_Initialize,
+    .deinitialize               = F_USB_HOST_AUDIO_V1_Deinitialize,
+    .reinitialize               = F_USB_HOST_AUDIO_V1_Reinitialize,
+    .interfaceAssign            = F_USB_HOST_AUDIO_V1_InterfaceAssign,
+    .interfaceRelease           = F_USB_HOST_AUDIO_V1_InterfaceRelease,
+    .interfaceEventHandler      = F_USB_HOST_AUDIO_V1_InterfaceEventHandler,
+    .interfaceTasks             = F_USB_HOST_AUDIO_V1_InterfaceTasks,
     .deviceEventHandler         = NULL,
-    .deviceAssign               = NULL,
-    .deviceEventHandler         = NULL,
+    .deviceAssign               = NULL,    
     .deviceRelease              = NULL
  };
 
@@ -141,24 +140,38 @@ const USB_HOST_CLIENT_DRIVER gUSBHostAudioV1Driver =
     This is a local function and should not be called directly by the
     application.
 */
-void _USB_HOST_AUDIO_V1_Initialize (void *init)
+void F_USB_HOST_AUDIO_V1_Initialize (void *init)
 {
     
 }
 
-void _USB_HOST_AUDIO_V1_Deinitialize(void)
+void F_USB_HOST_AUDIO_V1_Deinitialize(void)
 {
     
 }
 
-void _USB_HOST_AUDIO_V1_Reinitialize (void * init)
+void F_USB_HOST_AUDIO_V1_Reinitialize (void * init)
 {
     
 }
 
+/* MISRA C-2012 Rule 5.1 deviate: 2, Rule 5.5 deviate:40, Rule 11.1 deviate:5, Rule 11.3 deviate:17, 
+   Rule 11.6 deviate:17, 11.8 deviate:7 and 18.1 deviate:7. Deviation record ID - H3_MISRAC_2012_R_5_1_DR_1, 
+   H3_MISRAC_2012_R_5_5_DR_1,H3_MISRAC_2012_R_11_1_DR_1, H3_MISRAC_2012_R_11_3_DR_1,
+   H3_MISRAC_2012_R_11_6_DR_1, H3_MISRAC_2012_R_18_1_DR_1 and H3_MISRAC_2012_R_11_8_DR_1*/
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:3 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 5.5" "H3_MISRAC_2012_R_5_5_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 11.6" "H3_MISRAC_2012_R_11_6_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 18.1" "H3_MISRAC_2012_R_18_1_DR_1" )
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_AUDIO_V1_ControlInterfaceInitialize
+    void F_USB_HOST_AUDIO_V1_ControlInterfaceInitialize
                                     (USB_HOST_AUDIO_V1_INSTANCE * audioInstance)
 
   Summary:
@@ -171,11 +184,11 @@ void _USB_HOST_AUDIO_V1_Reinitialize (void * init)
     This is a local function and should not be called directly by the
     application.
 */
-bool _USB_HOST_AUDIO_V1_ControlInterfaceInitialize (USB_HOST_AUDIO_V1_INSTANCE * audioInstance)
+bool F_USB_HOST_AUDIO_V1_ControlInterfaceInitialize (USB_HOST_AUDIO_V1_INSTANCE * audioInstance)
 {
     uint8_t * descriptor;
     USB_AUDIO_CS_AC_INTERFACE_HEADER_DESCRIPTOR* audioControlDesc;
-    int strmIndex; 
+    uint32_t strmIndex; 
     bool error = true; 
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle = audioInstance->deviceObjHandle; 
     
@@ -200,13 +213,12 @@ bool _USB_HOST_AUDIO_V1_ControlInterfaceInitialize (USB_HOST_AUDIO_V1_INSTANCE *
  
         /* Check if the Attached Audio Device exposes more streaming 
            interfaces than user defined */  
-        if (audioInstance->nASInterfaces > USB_HOST_AUDIO_V1_STREAMING_INTERFACES_NUMBER)
+        if (audioInstance->nASInterfaces >= (uint32_t)USB_HOST_AUDIO_V1_STREAMING_INTERFACES_NUMBER)
         {
             audioInstance->nASInterfaces = USB_HOST_AUDIO_V1_STREAMING_INTERFACES_NUMBER;  
             SYS_DEBUG_MESSAGE  ( SYS_DEBUG_INFO ,
             "USB_HOST_AUDIO_V1_InterfaceAssign():Attached Audio Device has more streaming interfaces than user expected" );
         }
- 
         for (strmIndex = 0; strmIndex< audioInstance->nASInterfaces; strmIndex++)
         {
             /* Save Audio Streaming Interface Number */
@@ -214,7 +226,7 @@ bool _USB_HOST_AUDIO_V1_ControlInterfaceInitialize (USB_HOST_AUDIO_V1_INSTANCE *
     
             /* Set Alternate setting to Zero */
             audioInstance->streamInf[strmIndex].activeInterfaceSetting = 0;
-        }  
+        }          
     }
     else
     {
@@ -228,7 +240,7 @@ bool _USB_HOST_AUDIO_V1_ControlInterfaceInitialize (USB_HOST_AUDIO_V1_INSTANCE *
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
+    void F_USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
                                     (USB_HOST_AUDIO_V1_INSTANCE * audioInstance)
 
   Summary:
@@ -241,7 +253,7 @@ bool _USB_HOST_AUDIO_V1_ControlInterfaceInitialize (USB_HOST_AUDIO_V1_INSTANCE *
     This is a local function and should not be called directly by the
     application.
 */
-bool _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
+bool F_USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
 (
     USB_HOST_AUDIO_V1_INSTANCE * audioInstance, 
     USB_INTERFACE_DESCRIPTOR * descriptor
@@ -255,6 +267,7 @@ bool _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
     USB_AUDIO_FORMAT_I_DESCRIPTOR_HEADER* audioFormatDesc;
     USB_ENDPOINT_DESCRIPTOR * endpointDescriptor;
     bool error = true;
+    uint32_t readQueryFlag;
     
     /* Reset number of Interface Settings */
     audioInstance->streamInf[audioInstance->countASInterfaces].nInterfaceSetting = 0; 
@@ -265,11 +278,11 @@ bool _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
     /* Fill in Interface Query structure */  
     interfaceQuery.bInterfaceNumber = descriptor->bInterfaceNumber; 
     interfaceQuery.bInterfaceClass = USB_AUDIO_CLASS_CODE; 
-    interfaceQuery.bInterfaceSubClass = USB_AUDIO_AUDIOSTREAMING; 
-    interfaceQuery.flags =   USB_HOST_INTERFACE_QUERY_BY_NUMBER 
-                           | USB_HOST_INTERFACE_QUERY_BY_CLASS
-                           | USB_HOST_INTERFACE_QUERY_BY_SUBCLASS 
-                           | USB_HOST_INTERFACE_QUERY_ALT_SETTING; 
+    interfaceQuery.bInterfaceSubClass = (uint8_t)USB_AUDIO_AUDIOSTREAMING; 
+    
+    readQueryFlag =(uint32_t)USB_HOST_INTERFACE_QUERY_BY_NUMBER | (uint32_t)USB_HOST_INTERFACE_QUERY_BY_CLASS
+                     | (uint32_t)USB_HOST_INTERFACE_QUERY_BY_SUBCLASS | (uint32_t)USB_HOST_INTERFACE_QUERY_ALT_SETTING; 
+    interfaceQuery.flags = (USB_HOST_INTERFACE_QUERY_FLAG)readQueryFlag;
     
     /* Start searching for Alternate Setting 0  */  
     interfaceQuery.bAlternateSetting = 0; 
@@ -313,14 +326,15 @@ bool _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
             audioStream->tSamFreq = (uint8_t *)((uint8_t*)audioFormatDesc + sizeof (USB_AUDIO_FORMAT_I_DESCRIPTOR_HEADER)); 
             
           
-            if (audioStream->nEndpoints == 1)
+            if (audioStream->nEndpoints == 1U)
             { 
                 /* Clear Endpoint Query Context */
                 USB_HOST_DeviceEndpointQueryContextClear(&endpointQuery);
                 /* Fill endpoint Query */
                 endpointQuery.direction = USB_DATA_DIRECTION_DEVICE_TO_HOST; 
                 endpointQuery.transferType = USB_TRANSFER_TYPE_ISOCHRONOUS; 
-                endpointQuery.flags = USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE | USB_HOST_ENDPOINT_QUERY_BY_DIRECTION; 
+                readQueryFlag = (uint32_t)USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE | (uint32_t)USB_HOST_ENDPOINT_QUERY_BY_DIRECTION; 
+                endpointQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)readQueryFlag;
 
                 /* Submit Endpoint query */
                 endpointDescriptor = USB_HOST_DeviceEndpointDescriptorQuery(interfaceDescriptor, &endpointQuery); 
@@ -328,7 +342,7 @@ bool _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
                 if (endpointDescriptor != NULL)
                 {
                     /* We have received a valid descriptor. Copy that to our structure */
-                    memcpy(&audioStream->isoDataEndpointDesc, endpointDescriptor, sizeof(USB_ENDPOINT_DESCRIPTOR) ); 
+                    (void) memcpy(&audioStream->isoDataEndpointDesc, endpointDescriptor, sizeof(USB_ENDPOINT_DESCRIPTOR) ); 
                     
                     /* Save stream direction */
                     audioStream->direction = USB_HOST_AUDIO_V1_DIRECTION_IN; 
@@ -346,7 +360,7 @@ bool _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
                     if (endpointDescriptor != NULL)
                     {
                         /* We have received a valid descriptor. Copy that to our structure */
-                        memcpy(&audioStream->isoDataEndpointDesc, endpointDescriptor, sizeof(USB_ENDPOINT_DESCRIPTOR) ); 
+                        (void) memcpy(&audioStream->isoDataEndpointDesc, endpointDescriptor, sizeof(USB_ENDPOINT_DESCRIPTOR) ); 
                         
                         /* Save stream direction */
                         audioStream->direction = USB_HOST_AUDIO_V1_DIRECTION_OUT; 
@@ -404,7 +418,7 @@ bool _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
   Remarks:
     This is a local function and should be called directly by clients. 
 */
- void _USB_HOST_AUDIO_V1_InterfaceAssign
+ void F_USB_HOST_AUDIO_V1_InterfaceAssign
  (  
      USB_HOST_DEVICE_INTERFACE_HANDLE * interfaces,
      USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
@@ -412,7 +426,8 @@ bool _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
      uint8_t * descriptor
  )
  {
-    int driverIndex, iterator;
+    int32_t driverIndex;
+    uint32_t iterator;
     USB_INTERFACE_DESCRIPTOR * interfaceDescriptor;
     USB_HOST_INTERFACE_DESCRIPTOR_QUERY interfaceQuery;
     USB_HOST_AUDIO_V1_INSTANCE * audioInstanceInfo = NULL;
@@ -421,14 +436,14 @@ bool _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
     /* This function is being called because an USB Audio v1.0 device was attached 
        and the driver has matched.*/ 
     interfaceDescriptor = (USB_INTERFACE_DESCRIPTOR*)descriptor;   
-    if(nInterfaces == 1)
+    if(nInterfaces == 1U)
     {  
         /* If we have a valid interface descriptor find out its type */
         if(interfaceDescriptor != NULL)
         {
             if((interfaceDescriptor->bInterfaceClass == USB_AUDIO_CLASS_CODE) 
-             && (interfaceDescriptor->bInterfaceSubClass == USB_AUDIO_AUDIOCONTROL) 
-             && (interfaceDescriptor->bInterfaceProtocol == USB_AUDIO_PR_PROTOCOL_UNDEFINED))
+             && (interfaceDescriptor->bInterfaceSubClass == (uint8_t)USB_AUDIO_AUDIOCONTROL) 
+             && (interfaceDescriptor->bInterfaceProtocol == (uint8_t)USB_AUDIO_PR_PROTOCOL_UNDEFINED))
             {
                 /* Check if there is a free Audio v1.0 object.*/
                 for(driverIndex = 0; driverIndex < USB_HOST_AUDIO_V1_INSTANCES_NUMBER; driverIndex++)
@@ -438,7 +453,7 @@ bool _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
                         /* Found a free instance */
                         gUSBHostAudioInstance[driverIndex].assigned = true;
                         audioInstanceInfo = &gUSBHostAudioInstance[driverIndex];
-                        audioInstanceInfo->index = driverIndex; 
+                        audioInstanceInfo->index = (uint8_t)driverIndex; 
                         break;
                     }
                 }
@@ -454,32 +469,41 @@ bool _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
                     audioInstanceInfo->pAudioContorldescriptor = descriptor; 
                     
                     /* Initialize Audio Control Interface */ 
-                    error = _USB_HOST_AUDIO_V1_ControlInterfaceInitialize(audioInstanceInfo); 
+                    error = F_USB_HOST_AUDIO_V1_ControlInterfaceInitialize(audioInstanceInfo); 
+                    
+                    if(error == true)
+                    {
+                        /* Do Nothing */
+                    }
                     
                      /* Save the pointer to Audio Instance for further processing  */
                      gUSBHostAudio1CommonObj.prevAudioInstance = audioInstanceInfo; 
                 }
             }
             else if((interfaceDescriptor->bInterfaceClass == USB_AUDIO_CLASS_CODE) &&
-                    (interfaceDescriptor->bInterfaceSubClass == USB_AUDIO_AUDIOSTREAMING) &&
-                    (interfaceDescriptor->bInterfaceProtocol == USB_AUDIO_PR_PROTOCOL_UNDEFINED))
+                    (interfaceDescriptor->bInterfaceSubClass == (uint8_t)USB_AUDIO_AUDIOSTREAMING) &&
+                    (interfaceDescriptor->bInterfaceProtocol == (uint8_t)USB_AUDIO_PR_PROTOCOL_UNDEFINED))
             {
                 /* Get pointer to Audio Instance */
                 audioInstanceInfo = gUSBHostAudio1CommonObj.prevAudioInstance;
                 
                 if ((audioInstanceInfo != NULL) 
-                   && (audioInstanceInfo->countASInterfaces < USB_HOST_AUDIO_V1_STREAMING_INTERFACES_NUMBER))
+                   && (audioInstanceInfo->countASInterfaces < (uint8_t)USB_HOST_AUDIO_V1_STREAMING_INTERFACES_NUMBER))
                 {   
                     /* Save Streaming Interface Handle */
                     audioInstanceInfo->streamInf[audioInstanceInfo->countASInterfaces].asInterfaceHandle = interfaces[0];
 
-                    error = _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize(audioInstanceInfo, (USB_INTERFACE_DESCRIPTOR *)descriptor);
+                    error = F_USB_HOST_AUDIO_V1_StreamingInterfaceInitialize(audioInstanceInfo, (USB_INTERFACE_DESCRIPTOR *)descriptor);
                 }
                 
             }
+            else
+            {
+                /* Do Nothing */
+            }
         }
     }
-    else if (nInterfaces > 1)
+    else if (nInterfaces > 1U)
     {
         /* This means that this is an IAD. We first assign an Audio instance
          * to this device */
@@ -490,7 +514,7 @@ bool _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
                 /* Found a free instance */
                 gUSBHostAudioInstance[driverIndex].assigned = true;
                 audioInstanceInfo = &gUSBHostAudioInstance[driverIndex];
-                audioInstanceInfo->index = driverIndex; 
+                audioInstanceInfo->index = (uint8_t)driverIndex; 
                 break;
             }
         }
@@ -517,8 +541,8 @@ bool _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
                 if(interfaceDescriptor != NULL)
                 {
                     if((interfaceDescriptor->bInterfaceClass == USB_AUDIO_CLASS_CODE) &&
-                            (interfaceDescriptor->bInterfaceSubClass == USB_AUDIO_AUDIOCONTROL) &&
-                            (interfaceDescriptor->bInterfaceProtocol == USB_AUDIO_PR_PROTOCOL_UNDEFINED))
+                            (interfaceDescriptor->bInterfaceSubClass == (uint8_t)USB_AUDIO_AUDIOCONTROL) &&
+                            (interfaceDescriptor->bInterfaceProtocol == (uint8_t)USB_AUDIO_PR_PROTOCOL_UNDEFINED))
                     {
                         /* Save the Device handle */
                         audioInstanceInfo->deviceObjHandle = deviceObjHandle;
@@ -530,18 +554,18 @@ bool _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
                         audioInstanceInfo->pAudioContorldescriptor = (uint8_t*)interfaceDescriptor;
                         
                          /* Initialize Audio Control Interface */ 
-                        error = _USB_HOST_AUDIO_V1_ControlInterfaceInitialize(audioInstanceInfo);
+                        error = F_USB_HOST_AUDIO_V1_ControlInterfaceInitialize(audioInstanceInfo);
                         
                     }
                     else if((interfaceDescriptor->bInterfaceClass == USB_AUDIO_CLASS_CODE) &&
-                            (interfaceDescriptor->bInterfaceSubClass == USB_AUDIO_AUDIOSTREAMING) &&
-                            (interfaceDescriptor->bInterfaceProtocol == USB_AUDIO_PR_PROTOCOL_UNDEFINED))
+                            (interfaceDescriptor->bInterfaceSubClass == (uint8_t)USB_AUDIO_AUDIOSTREAMING) &&
+                            (interfaceDescriptor->bInterfaceProtocol == (uint8_t)USB_AUDIO_PR_PROTOCOL_UNDEFINED))
                     {
-                        if (audioInstanceInfo->countASInterfaces < USB_HOST_AUDIO_V1_STREAMING_INTERFACES_NUMBER)
+                        if (audioInstanceInfo->countASInterfaces < (uint8_t)USB_HOST_AUDIO_V1_STREAMING_INTERFACES_NUMBER)
                         {
                             /* Save Streaming Interface Handle */
-                            audioInstanceInfo->streamInf[audioInstanceInfo->countASInterfaces].asInterfaceHandle = interfaces[audioInstanceInfo->countASInterfaces + 1];
-                            error = _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize(audioInstanceInfo, interfaceDescriptor);
+                            audioInstanceInfo->streamInf[audioInstanceInfo->countASInterfaces].asInterfaceHandle = interfaces[audioInstanceInfo->countASInterfaces + 1U];
+                            error = F_USB_HOST_AUDIO_V1_StreamingInterfaceInitialize(audioInstanceInfo, interfaceDescriptor);
                             
                         }
                         else
@@ -549,8 +573,12 @@ bool _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
                             /* This means user has not allocated enough data 
                              * memory for this interface. Release this interface */ 
                             error = false; 
-                            USB_HOST_DeviceInterfaceRelease(interfaces[iterator]);
+                            (void) USB_HOST_DeviceInterfaceRelease(interfaces[iterator]);
                         }
+                    }
+                    else
+                    {
+                        /* Do Nothing */
                     }
                 }
                 interfaceQuery.bInterfaceNumber++; 
@@ -586,7 +614,7 @@ bool _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
         /* Release all the interfaces in this group */
         for(iterator = 0; iterator < nInterfaces; iterator ++)
         {
-            USB_HOST_DeviceInterfaceRelease(interfaces[iterator]);
+            (void) USB_HOST_DeviceInterfaceRelease(interfaces[iterator]);
         }
     }
     return;          
@@ -594,7 +622,7 @@ bool _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
     
 // *****************************************************************************
 /* Function:
-    USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_AUDIO_V1_InterfaceEventHandler
+    USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE F_USB_HOST_AUDIO_V1_InterfaceEventHandler
     (
         USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle,
         USB_HOST_DEVICE_INTERFACE_EVENT event,
@@ -614,7 +642,7 @@ bool _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
     This is a local function and should not be called directly by the
     application.
 */    
-USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_AUDIO_V1_InterfaceEventHandler
+USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE F_USB_HOST_AUDIO_V1_InterfaceEventHandler
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle,
     USB_HOST_DEVICE_INTERFACE_EVENT event,
@@ -632,9 +660,10 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_AUDIO_V1_InterfaceEventHandle
     USB_HOST_AUDIO_V1_STREAM_HANDLE strmHandle; 
     uint8_t audioIndex, asIntrfcIndex; 
     uint8_t versionFlag; 
+    uint32_t readData;
 
     /* Find out to which Audio Stream this interface belongs */
-    if (_USB_HOST_AUDIO_V1_IntrfcHndlToStrmIntrfcPtr
+    if (F_USB_HOST_AUDIO_V1_IntrfcHndlToStrmIntrfcPtr
         (
             interfaceHandle,
             &asInterface,
@@ -660,16 +689,17 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_AUDIO_V1_InterfaceEventHandle
             
             /* Get the Audio Stream Event, we saved this at the time of 
                submit request */
-            audioStreamEvent = (USB_HOST_AUDIO_V1_STREAM_EVENT)(context) & 0x000000FF;
+            readData = (context) & 0x000000FFU;
+            audioStreamEvent = (USB_HOST_AUDIO_V1_STREAM_EVENT)readData;
             versionFlag = (uint8_t) (context>>8); 
             
             /* Get event Data*/
             dataTransferEvent = (USB_HOST_DEVICE_INTERFACE_EVENT_TRANSFER_COMPLETE_DATA *)(eventData);
             audioStrmXfrCmpltData.transferHandle = dataTransferEvent->transferHandle;
-            audioStrmXfrCmpltData.result = dataTransferEvent->result;
+            audioStrmXfrCmpltData.result = (USB_HOST_AUDIO_V1_RESULT)dataTransferEvent->result;
             audioStrmXfrCmpltData.length = dataTransferEvent->length;
             alternateSetting = asInterface->activeInterfaceSetting; 
-            if (alternateSetting == 0)
+            if (alternateSetting == 0U)
             {
                 /* We should not have received an Audio transfer complete event 
                    when alternate setting is Zero. This is an error condition */
@@ -679,27 +709,31 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_AUDIO_V1_InterfaceEventHandle
             
             /* Create Stream Handle */
             strmHandle = (USB_HOST_AUDIO_V1_STREAM_HANDLE ) (uint32_t)audioIndex|
-                                                              (uint32_t)asIntrfcIndex<<8|
-                                                              (uint32_t)alternateSetting<<16 ;
+                                                              ((uint32_t)asIntrfcIndex<<8)|
+                                                              ((uint32_t)alternateSetting<<16) ;
             
-            if (versionFlag == USB_HOST_AUDIO_V1_API_VERSION_FLAG_V1)
+            if (versionFlag == (uint8_t)USB_HOST_AUDIO_V1_API_VERSION_FLAG_V1)
             {
                 /* Send event to the Audio Stream Handler */
                 if(asInterface->streamEventHandler != NULL)
                 {
-                    asInterface->streamEventHandler(strmHandle, audioStreamEvent, 
+                    (void) asInterface->streamEventHandler(strmHandle, audioStreamEvent, 
                                         &audioStrmXfrCmpltData, asInterface->context);
                 }
             }
-            else if (versionFlag == USB_HOST_AUDIO_V1_API_VERSION_FLAG_V1_0_DEPRECIATED)
+            else if (versionFlag == (uint8_t)USB_HOST_AUDIO_V1_API_VERSION_FLAG_V1_0_DEPRECIATED)
             {
                 /* Get handle to the current active stream */
                 audioStrm = &asInterface->audioStreamSetting[alternateSetting];
                 if(audioStrm->streamEventHandler != NULL)
                 {
-                    audioStrm->streamEventHandler(strmHandle, audioStreamEvent, 
+                    (void) audioStrm->streamEventHandler(strmHandle, audioStreamEvent, 
                                         &audioStrmXfrCmpltData, audioStrm->context);
                 }
+            }
+            else
+            {
+                /* Do Nothing */
             }
             break;
             
@@ -711,7 +745,7 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_AUDIO_V1_InterfaceEventHandle
             asInterface->stateData.eventData.requestHandle = DataIntrfcSetEvent->requestHandle; 
             asInterface->stateData.eventData.result = DataIntrfcSetEvent->result;
             asInterface->stateData.context = context; 
-            asInterface->stateData.event = event; 
+            asInterface->stateData.event = (uint32_t)event; 
             
             /* Change Audio Stream state to Pipe Action Pending. The Pipe open
                or close action will be performed in the Interface Event Handler
@@ -720,6 +754,7 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_AUDIO_V1_InterfaceEventHandle
             break; 
             
         default:
+            /* Do Nothing */
             break;
     }
 
@@ -729,7 +764,7 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_AUDIO_V1_InterfaceEventHandle
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_AUDIO_V1_InterfaceTasks
+    void F_USB_HOST_AUDIO_V1_InterfaceTasks
     (
         USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
     )
@@ -746,7 +781,7 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_AUDIO_V1_InterfaceEventHandle
     This is a local function and should not be called directly by the
     application.
 */
-void _USB_HOST_AUDIO_V1_InterfaceTasks( USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle)
+void F_USB_HOST_AUDIO_V1_InterfaceTasks( USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle)
 {
     USB_HOST_AUDIO_STREAMING_INTERFACE* asInterface;
     uint8_t audioIndex, asIntrfcIndex;
@@ -760,7 +795,7 @@ void _USB_HOST_AUDIO_V1_InterfaceTasks( USB_HOST_DEVICE_INTERFACE_HANDLE interfa
     bool changeAlternateSetting = false; 
     
     /* Find out to which Audio Stream this Interface belongs */
-    if (_USB_HOST_AUDIO_V1_IntrfcHndlToStrmIntrfcPtr
+    if (F_USB_HOST_AUDIO_V1_IntrfcHndlToStrmIntrfcPtr
         (
             interfaceHandle,
             &asInterface,
@@ -798,12 +833,12 @@ void _USB_HOST_AUDIO_V1_InterfaceTasks( USB_HOST_DEVICE_INTERFACE_HANDLE interfa
             if (asInterface->stateData.eventData.result == USB_HOST_RESULT_SUCCESS)
             {
                 
-                if (alternateSetting)
+                if (alternateSetting != 0U)
                 {
                     /* Alternate Setting is a Non Zero Value. That means we have 
                        to Open pipe for all of the Endpoints present in this 
                        Alternate Setting. */
-                    if (audioStrmSetting->nEndpoints)
+                    if (audioStrmSetting->nEndpoints != 0U)
                     {
                         /* Open pipe for Audio Data Endpoint*/
                         if (asInterface->isIsoDataPipeSet == false)
@@ -855,57 +890,61 @@ void _USB_HOST_AUDIO_V1_InterfaceTasks( USB_HOST_DEVICE_INTERFACE_HANDLE interfa
                 asInterface->activeInterfaceSetting = alternateSetting;
             }
             
-            if (audioStreamEventLocal == USB_HOST_AUDIO_V1_API_VERSION_FLAG_STREAM_INTERFACE_SET)
+            if (audioStreamEventLocal == (uint8_t)USB_HOST_AUDIO_V1_API_VERSION_FLAG_STREAM_INTERFACE_SET)
             {
                 audioStreamEvent = USB_HOST_AUDIO_V1_STREAM_EVENT_INTERFACE_SET_COMPLETE;
                 
                 /* Stream Handle */
                 strmHandle = (USB_HOST_AUDIO_V1_STREAM_HANDLE ) (uint32_t)audioIndex|
-                                                              (uint32_t)asIntrfcIndex<<8;
+                                                              ((uint32_t)asIntrfcIndex<<8);
                 if(asInterface->streamEventHandler != NULL)
                 {
-                    asInterface->streamEventHandler(strmHandle, audioStreamEvent, 
+                    (void) asInterface->streamEventHandler(strmHandle, audioStreamEvent, 
                                     &asInterface->stateData.eventData, asInterface->context);
                 }
             }
-            else if (audioStreamEventLocal == USB_HOST_AUDIO_V1_API_VERSION_FLAG_STREAM_DISABLE)
+            else if (audioStreamEventLocal == (uint8_t)USB_HOST_AUDIO_V1_API_VERSION_FLAG_STREAM_DISABLE)
             {
-                audioStreamEvent = USB_HOST_AUDIO_V1_0_STREAM_EVENT_DISABLE_COMPLETE; 
+                audioStreamEvent = (USB_HOST_AUDIO_V1_STREAM_EVENT)USB_HOST_AUDIO_V1_0_STREAM_EVENT_DISABLE_COMPLETE; 
                 
                 /* Stream Handle */
                 strmHandle = (USB_HOST_AUDIO_V1_0_STREAM_HANDLE ) (uint32_t)audioIndex|
-                                                              (uint32_t)asIntrfcIndex<<8|
-                                                              (uint32_t)alternateSetting<<16 ;
+                                                              ((uint32_t)asIntrfcIndex<<8)|
+                                                              ((uint32_t)alternateSetting<<16) ;
                 if(audioStrmSetting->streamEventHandler != NULL)
                 {
-                    audioStrmSetting->streamEventHandler(strmHandle, audioStreamEvent, 
+                    (void) audioStrmSetting->streamEventHandler(strmHandle, audioStreamEvent, 
                                         &asInterface->stateData.eventData, audioStrmSetting->context);
                 }
             }
-            else if (audioStreamEventLocal == USB_HOST_AUDIO_V1_API_VERSION_FLAG_STREAM_ENABLE)
+            else if (audioStreamEventLocal == (uint8_t)USB_HOST_AUDIO_V1_API_VERSION_FLAG_STREAM_ENABLE)
             {
-                audioStreamEvent = USB_HOST_AUDIO_V1_0_STREAM_EVENT_ENABLE_COMPLETE;
+                audioStreamEvent = (USB_HOST_AUDIO_V1_STREAM_EVENT)USB_HOST_AUDIO_V1_0_STREAM_EVENT_ENABLE_COMPLETE;
                 
                 /* Stream Handle */
                 strmHandle = (USB_HOST_AUDIO_V1_0_STREAM_HANDLE ) (uint32_t)audioIndex|
-                                                              (uint32_t)asIntrfcIndex<<8|
-                                                              (uint32_t)alternateSetting<<16 ;
+                                                              ((uint32_t)asIntrfcIndex<<8)|
+                                                              ((uint32_t)alternateSetting<<16);
                 if(audioStrmSetting->streamEventHandler != NULL)
                 {
-                    audioStrmSetting->streamEventHandler(strmHandle, audioStreamEvent, 
+                    (void) audioStrmSetting->streamEventHandler(strmHandle, audioStreamEvent, 
                                         &asInterface->stateData.eventData, audioStrmSetting->context);
                 }
             }
- 
-            
+            else
+            {
+                /* Do Nothing */
+            } 
+           break;            
         default:
+            /* Do Nothing */
             break; 
     }    
 }
 
 // ****************************************************************************
 /* Function:
-    bool _USB_HOST_AUDIO_V1_IntrfcHndlToStrmIntrfcPtr
+    bool F_USB_HOST_AUDIO_V1_IntrfcHndlToStrmIntrfcPtr
     (
         USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle, 
         USB_HOST_AUDIO_STREAMING_INTERFACE** strmIntfcPtr, 
@@ -944,7 +983,7 @@ void _USB_HOST_AUDIO_V1_InterfaceTasks( USB_HOST_DEVICE_INTERFACE_HANDLE interfa
 
     false - Audio Streaming interface was not found. 
   */ 
-bool _USB_HOST_AUDIO_V1_IntrfcHndlToStrmIntrfcPtr
+bool F_USB_HOST_AUDIO_V1_IntrfcHndlToStrmIntrfcPtr
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle, 
     USB_HOST_AUDIO_STREAMING_INTERFACE** strmIntfcPtr, 
@@ -952,8 +991,8 @@ bool _USB_HOST_AUDIO_V1_IntrfcHndlToStrmIntrfcPtr
     uint8_t *asIntrfcIndex
 )
 {
-    int count;
-    int asIntrfcCount; 
+    int32_t count;
+    uint32_t asIntrfcCount; 
     USB_HOST_AUDIO_V1_INSTANCE * audioInstanceInfo; 
 
     for(count = 0; count < USB_HOST_AUDIO_V1_INSTANCES_NUMBER; count++)
@@ -964,8 +1003,8 @@ bool _USB_HOST_AUDIO_V1_IntrfcHndlToStrmIntrfcPtr
             *strmIntfcPtr = &audioInstanceInfo->streamInf[asIntrfcCount];
             if ((*strmIntfcPtr)->asInterfaceHandle == interfaceHandle)
             {   
-                *audioIndex = count; 
-                *asIntrfcIndex = asIntrfcCount; 
+                *audioIndex = (uint8_t)count; 
+                *asIntrfcIndex = (uint8_t)asIntrfcCount; 
                 return   true;   
             } 
         }
@@ -975,7 +1014,7 @@ bool _USB_HOST_AUDIO_V1_IntrfcHndlToStrmIntrfcPtr
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_AUDIO_V1_InterfaceRelease
+    void F_USB_HOST_AUDIO_V1_InterfaceRelease
     ( 
         USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle 
     )
@@ -993,85 +1032,96 @@ bool _USB_HOST_AUDIO_V1_IntrfcHndlToStrmIntrfcPtr
     application.
 */
 
-void _USB_HOST_AUDIO_V1_InterfaceRelease( USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle )
+void F_USB_HOST_AUDIO_V1_InterfaceRelease( USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle )
  {
     USB_HOST_AUDIO_V1_INSTANCE* audioInstanceInfo; 
-    uint8_t audioIndex, asIntrfcIndex; 
+    uint8_t  asIntrfcIndex;
+    uint8_t audioIndex; 
+    int32_t audioIndextemp;
     USB_AUDIO_SUBCLASS_CODE audioInterface = USB_AUDIO_SUBCLASS_UNDEFINED; 
     USB_HOST_AUDIO_STREAMING_INTERFACE* asInterface; 
-    int strmIndex; 
+    uint32_t strmIndex; 
     
     /* Get the instance associated with this interface */
-    audioIndex = _USB_HOST_AUDIO_V1_InterfaceHandleToAudioInstance(interfaceHandle); 
-    if (audioIndex < USB_HOST_AUDIO_V1_INSTANCES_NUMBER)
+    audioIndextemp = F_USB_HOST_AUDIO_V1_InterfaceHandleToAudioInstance(interfaceHandle); 
+    if(audioIndextemp >= 0)
     {
-        audioInterface = USB_AUDIO_AUDIOCONTROL;
+      audioIndex = (uint8_t)audioIndextemp;
+      if (audioIndex < (uint8_t)(USB_HOST_AUDIO_V1_INSTANCES_NUMBER))
+      {
+          audioInterface = USB_AUDIO_AUDIOCONTROL;
+      }
+      else
+      {
+          /* Find out to which Audio Stream this interface belongs */
+          if (F_USB_HOST_AUDIO_V1_IntrfcHndlToStrmIntrfcPtr
+              (
+                  interfaceHandle,
+                  &asInterface,
+                  &audioIndex,
+                  &asIntrfcIndex
+              ) == true) 
+          {
+              audioInterface = USB_AUDIO_AUDIOSTREAMING;
+          }
+      }
+      
+      
+      switch (audioInterface)
+      {
+          case USB_AUDIO_AUDIOCONTROL:
+              audioInstanceInfo = &gUSBHostAudioInstance[audioIndex]; 
+              
+              /* Close Control Pipe */ 
+              //USB_HOST_DevicePipeClose(audioInstanceInfo->controlPipeHandle); 
+              
+              for (strmIndex = 0; strmIndex< audioInstanceInfo->nASInterfaces; strmIndex++)
+              {
+                  asInterface = &audioInstanceInfo->streamInf[strmIndex]; 
+                  
+                  /* Save Audio Streaming Interface Number */
+                  asInterface->interfaceId = 0;
+
+                  /* Set Alternate setting to Zero */
+                  asInterface->activeInterfaceSetting = 0;
+                  
+                  if (asInterface->isIsoDataPipeSet == true)
+                  {
+                      /* Close pipe */
+                      (void) USB_HOST_DevicePipeClose(asInterface->isoDataPipeHandle); 
+                  }
+              }
+              
+              /* Notify client about detach event */
+              if (gUSBHostAudio1CommonObj.attachEventHandler != NULL)
+              {
+                  gUSBHostAudio1CommonObj.attachEventHandler
+                  (
+                      (USB_HOST_AUDIO_V1_OBJ) audioInstanceInfo, 
+                      USB_HOST_AUDIO_V1_EVENT_DETACH,
+                      gUSBHostAudio1CommonObj.context
+                  ); 
+              }
+              audioInstanceInfo->assigned = false; 
+              
+              (void) memset(audioInstanceInfo, 0, sizeof(USB_HOST_AUDIO_V1_INSTANCE)); 
+              break; 
+          case USB_AUDIO_AUDIOSTREAMING:
+              break; 
+          default:
+          /* Do Nothing */
+          break; 
+      }
     }
     else
     {
-        /* Find out to which Audio Stream this interface belongs */
-        if (_USB_HOST_AUDIO_V1_IntrfcHndlToStrmIntrfcPtr
-            (
-                interfaceHandle,
-                &asInterface,
-                &audioIndex,
-                &asIntrfcIndex
-            ) == true) 
-        {
-            audioInterface = USB_AUDIO_AUDIOSTREAMING;
-        }
-    }
-    
-    
-    switch (audioInterface)
-    {
-        case USB_AUDIO_AUDIOCONTROL:
-            audioInstanceInfo = &gUSBHostAudioInstance[audioIndex]; 
-            
-            /* Close Control Pipe */ 
-            //USB_HOST_DevicePipeClose(audioInstanceInfo->controlPipeHandle); 
-            
-            for (strmIndex = 0; strmIndex< audioInstanceInfo->nASInterfaces; strmIndex++)
-            {
-                asInterface = &audioInstanceInfo->streamInf[strmIndex]; 
-                
-                /* Save Audio Streaming Interface Number */
-                asInterface->interfaceId = 0;
-
-                /* Set Alternate setting to Zero */
-                asInterface->activeInterfaceSetting = 0;
-                
-                if (asInterface->isIsoDataPipeSet == true)
-                {
-                    /* Close pipe */
-                    USB_HOST_DevicePipeClose(asInterface->isoDataPipeHandle); 
-                }
-            }
-             
-            /* Notify client about detach event */
-            if (gUSBHostAudio1CommonObj.attachEventHandler != NULL)
-            {
-                gUSBHostAudio1CommonObj.attachEventHandler
-                (
-                    (USB_HOST_AUDIO_V1_OBJ) audioInstanceInfo, 
-                    USB_HOST_AUDIO_V1_EVENT_DETACH,
-                    gUSBHostAudio1CommonObj.context
-                ); 
-            }
-            audioInstanceInfo->assigned = false; 
-            
-            memset(audioInstanceInfo, 0, sizeof(USB_HOST_AUDIO_V1_INSTANCE)); 
-            break; 
-        case USB_AUDIO_AUDIOSTREAMING:
-            break; 
-        default:
-        break; 
+      return;
     }
  }
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_AUDIO_V1_ControlRequestCallback
+    void F_USB_HOST_AUDIO_V1_ControlRequestCallback
     (
         USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
         USB_HOST_REQUEST_HANDLE requestHandle,
@@ -1103,7 +1153,7 @@ void _USB_HOST_AUDIO_V1_InterfaceRelease( USB_HOST_DEVICE_INTERFACE_HANDLE inter
   Remarks:
     None.
 */
-void _USB_HOST_AUDIO_V1_ControlRequestCallback
+void F_USB_HOST_AUDIO_V1_ControlRequestCallback
 (
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
     USB_HOST_REQUEST_HANDLE requestHandle,
@@ -1129,7 +1179,7 @@ void _USB_HOST_AUDIO_V1_ControlRequestCallback
 }
 
 
-void _USB_HOST_AUDIO_V1_SetSampleFrequencyCallback
+void F_USB_HOST_AUDIO_V1_SetSampleFrequencyCallback
 (
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
     USB_HOST_REQUEST_HANDLE requestHandle,
@@ -1153,11 +1203,11 @@ void _USB_HOST_AUDIO_V1_SetSampleFrequencyCallback
     asInterface = &audioInstanceInfo->streamInf[asIntrefaceIndex];
     
     samplingRateData.requestHandle = requestHandle; 
-    samplingRateData.requestStatus = result; 
+    samplingRateData.requestStatus = (USB_HOST_AUDIO_V1_RESULT)result; 
     
     if (asInterface->streamEventHandler != NULL)
     {
-        asInterface->streamEventHandler
+        (void) asInterface->streamEventHandler
         (
             streamHandle,
             USB_HOST_AUDIO_V1_STREAM_EVENT_SAMPLING_FREQUENCY_SET_COMPLETE,
@@ -1169,7 +1219,7 @@ void _USB_HOST_AUDIO_V1_SetSampleFrequencyCallback
 }
 
 
-void _USB_HOST_AUDIO_V1_GetSampleFrequencyCallback
+void F_USB_HOST_AUDIO_V1_GetSampleFrequencyCallback
 (
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
     USB_HOST_REQUEST_HANDLE requestHandle,
@@ -1193,11 +1243,11 @@ void _USB_HOST_AUDIO_V1_GetSampleFrequencyCallback
     asInterface = &audioInstanceInfo->streamInf[asIntrefaceIndex];
     
     samplingRateData.requestHandle = requestHandle; 
-    samplingRateData.requestStatus = result; 
+    samplingRateData.requestStatus = (USB_HOST_AUDIO_V1_RESULT)result; 
     
     if (asInterface->streamEventHandler != NULL)
     {
-        asInterface->streamEventHandler
+        (void) asInterface->streamEventHandler
         (
             streamHandle,
             USB_HOST_AUDIO_V1_STREAM_EVENT_SAMPLING_FREQUENCY_GET_COMPLETE,
@@ -1207,7 +1257,7 @@ void _USB_HOST_AUDIO_V1_GetSampleFrequencyCallback
     }
     audioInstanceInfo->audioControlObj.inUse = false; 
 }
-void _USB_HOST_AUDIO_V1_SetSampleRateCallback
+void F_USB_HOST_AUDIO_V1_SetSampleRateCallback
 (
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
     USB_HOST_REQUEST_HANDLE requestHandle,
@@ -1234,11 +1284,11 @@ void _USB_HOST_AUDIO_V1_SetSampleRateCallback
     audioStrm = &asInterface->audioStreamSetting[alternateSetting]; 
             
     samplingRateData.requestHandle = requestHandle; 
-    samplingRateData.requestStatus = result; 
+    samplingRateData.requestStatus = (USB_HOST_AUDIO_V1_RESULT)result; 
     
     if (audioStrm->streamEventHandler != NULL)
     {
-        audioStrm->streamEventHandler
+        (void) audioStrm->streamEventHandler
         (
             streamHandle,
             USB_HOST_AUDIO_V1_0_STREAM_EVENT_SAMPLING_RATE_SET_COMPLETE,
@@ -1251,7 +1301,7 @@ void _USB_HOST_AUDIO_V1_SetSampleRateCallback
 
 // *****************************************************************************
 /* Function:
-    USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_ControlRequest
+    USB_HOST_AUDIO_V1_RESULT F_USB_HOST_AUDIO_V1_ControlRequest
     (
         USB_HOST_AUDIO_V1_OBJ audioObj,
         USB_HOST_AUDIO_V1_REQUEST_HANDLE * requestHandle,
@@ -1322,7 +1372,7 @@ void _USB_HOST_AUDIO_V1_SetSampleRateCallback
   Remarks:
     This is a local function and should not be accessed by applications.  
 */
-USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_ControlRequest
+USB_HOST_AUDIO_V1_RESULT F_USB_HOST_AUDIO_V1_ControlRequest
 (
     USB_HOST_AUDIO_V1_OBJ audioObj,
     USB_HOST_AUDIO_V1_REQUEST_HANDLE * transferHandle,
@@ -1357,7 +1407,7 @@ USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_ControlRequest
     /* Prevent other tasks pre-empting this sequence of code */ 
     IntState = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
     
-    memcpy (&audioInstanceInfo->setupPacket, setupPacket, sizeof (USB_SETUP_PACKET)); 
+    (void) memcpy (&audioInstanceInfo->setupPacket, setupPacket, sizeof (USB_SETUP_PACKET)); 
    
     audioInstanceInfo->audioControlObj.inUse = true; 
     OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, IntState);
@@ -1369,7 +1419,7 @@ USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_ControlRequest
                  transferHandle,
                  &audioInstanceInfo->setupPacket,
                  (void *)data,
-                 _USB_HOST_AUDIO_V1_ControlRequestCallback,
+                 F_USB_HOST_AUDIO_V1_ControlRequestCallback,
                  (uintptr_t)audioInstanceInfo
              ); 
     
@@ -1394,7 +1444,7 @@ USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_ControlRequest
 }
 
 /* Function:
-   int _USB_HOST_AUDIO_V1_InterfaceHandleToAUDIOInstance
+   int F_USB_HOST_AUDIO_V1_InterfaceHandleToAUDIOInstance
    ( 
         USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
    )
@@ -1412,13 +1462,13 @@ USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_ControlRequest
     application.
 */
 
-int _USB_HOST_AUDIO_V1_InterfaceHandleToAudioInstance
+int F_USB_HOST_AUDIO_V1_InterfaceHandleToAudioInstance
 ( 
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
 )
 {
-    int iterator;
-    int audioIndex = -1;
+    int32_t iterator;
+    int32_t audioIndex = -1;
 
     /* Find the Audio v1.0 Instance object that owns this interface */
     for (iterator = 0; iterator < USB_HOST_AUDIO_V1_INSTANCES_NUMBER; iterator ++)
@@ -1449,7 +1499,8 @@ int _USB_HOST_AUDIO_V1_InterfaceHandleToAudioInstance
        USB_HOST_AUDIO_V1_STREAM_HANDLE streamHandle,
        USB_HOST_AUDIO_V1_STREAM_TRANSFER_HANDLE * transferHandle,
        void * source, 
-       size_t length
+       size_t length,
+       uint8_t flag
    ); 
 
   Summary:
@@ -1491,13 +1542,13 @@ int _USB_HOST_AUDIO_V1_InterfaceHandleToAudioInstance
     None.
 
 */
-USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_StreamWrite 
+USB_HOST_AUDIO_V1_RESULT F_USB_HOST_AUDIO_V1_StreamWrite 
 (
     USB_HOST_AUDIO_V1_STREAM_HANDLE streamHandle,
     USB_HOST_AUDIO_V1_STREAM_TRANSFER_HANDLE * transferHandle,
     void * source, 
     size_t length, 
-    uint8_t apiVersionFlag
+    uint8_t flag
 )
 {
     USB_HOST_AUDIO_V1_INSTANCE * audioInstanceInfo; 
@@ -1506,6 +1557,7 @@ USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_StreamWrite
     USB_HOST_PIPE_HANDLE audioDataPipeHandle; 
     USB_HOST_AUDIO_V1_RESULT audioResult = USB_HOST_AUDIO_V1_RESULT_FAILURE;
     USB_HOST_RESULT hostResult; 
+    uint32_t readData;
     
     
     /* Find Audio Stream from audioStreamObj */
@@ -1519,12 +1571,7 @@ USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_StreamWrite
 
     audioInstanceInfo = &gUSBHostAudioInstance[audioInstanceIndex];
     
-    if (audioInstanceInfo == NULL)
-    {
-        return USB_HOST_AUDIO_V1_RESULT_OBJ_INVALID; 
-    }
-
-    if((length != 0) && (source == NULL))
+    if((length != 0U) && (source == NULL))
     {
         /* Input parameters are not valid */
         return  USB_HOST_AUDIO_V1_RESULT_INVALID_PARAMETER;
@@ -1537,7 +1584,8 @@ USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_StreamWrite
     if (audioInstanceInfo->streamInf[asIntrefaceIndex].isIsoDataPipeSet == true)
     {
         audioDataPipeHandle = audioInstanceInfo->streamInf[asIntrefaceIndex].isoDataPipeHandle; 
-        hostResult = USB_HOST_DeviceTransfer(audioDataPipeHandle, transferHandle, source, length, (uintptr_t)(USB_HOST_AUDIO_V1_STREAM_EVENT_WRITE_COMPLETE | apiVersionFlag << 8 ));
+        readData = ((uint32_t)USB_HOST_AUDIO_V1_STREAM_EVENT_WRITE_COMPLETE | ((uint32_t)flag << 8) );
+        hostResult = USB_HOST_DeviceTransfer(audioDataPipeHandle, transferHandle, source, length, (uintptr_t)readData);
     }
     else
     {
@@ -1562,7 +1610,7 @@ USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_StreamWrite
 
 // *****************************************************************************
 /* Function:
-   USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_StreamRead 
+   USB_HOST_AUDIO_V1_RESULT F_USB_HOST_AUDIO_V1_StreamRead 
    (
        USB_HOST_AUDIO_V1_STREAM_HANDLE streamHandle,
        USB_HOST_AUDIO_V1_STREAM_TRANSFER_HANDLE * transferHandle,
@@ -1609,7 +1657,7 @@ USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_StreamWrite
     None.
 
 */
-USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_StreamRead 
+USB_HOST_AUDIO_V1_RESULT F_USB_HOST_AUDIO_V1_StreamRead 
 (
     USB_HOST_AUDIO_V1_STREAM_HANDLE streamHandle,
     USB_HOST_AUDIO_V1_STREAM_TRANSFER_HANDLE * transferHandle,
@@ -1624,6 +1672,7 @@ USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_StreamRead
     USB_HOST_PIPE_HANDLE audioDataPipeHandle; 
     USB_HOST_AUDIO_V1_RESULT audioResult = USB_HOST_AUDIO_V1_RESULT_FAILURE;
     USB_HOST_RESULT hostResult; 
+    uint32_t readData;
     
     
     /* Find Audio Stream from audioStreamObj */
@@ -1637,7 +1686,7 @@ USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_StreamRead
 
     audioInstanceInfo = &gUSBHostAudioInstance[audioInstanceIndex];
 
-    if((length != 0) && (source == NULL))
+    if((length != 0U) && (source == NULL))
     {
         /* Input parameters are not valid */
         return  USB_HOST_AUDIO_V1_RESULT_INVALID_PARAMETER;
@@ -1649,8 +1698,9 @@ USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_StreamRead
      * USB_HOST_AUDIO_V1_EVENT_READ_COMPLETE */
     if (audioInstanceInfo->streamInf[asIntrefaceIndex].isIsoDataPipeSet == true)
     {
-        audioDataPipeHandle = audioInstanceInfo->streamInf[asIntrefaceIndex].isoDataPipeHandle; 
-        hostResult = USB_HOST_DeviceTransfer(audioDataPipeHandle, transferHandle, source, length, (uintptr_t)(USB_HOST_AUDIO_V1_STREAM_EVENT_READ_COMPLETE) | apiVersionFlag << 8);
+        audioDataPipeHandle = audioInstanceInfo->streamInf[asIntrefaceIndex].isoDataPipeHandle;
+        readData = (uint32_t)USB_HOST_AUDIO_V1_STREAM_EVENT_READ_COMPLETE | (((uint32_t)apiVersionFlag) << 8);        
+        hostResult = USB_HOST_DeviceTransfer(audioDataPipeHandle, transferHandle, source, length, (uintptr_t)readData);
     }
     else
     {
@@ -1716,17 +1766,17 @@ USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_StreamRead
  */
 USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_AttachEventHandlerSet
 (
-    USB_HOST_AUDIO_V1_ATTACH_EVENT_HANDLER attachEventHandler,
+    USB_HOST_AUDIO_V1_ATTACH_EVENT_HANDLER eventHandler,
     uintptr_t context
         
 )
 {
     /* validate callback handler */
-    if( NULL == attachEventHandler )
+    if( NULL == eventHandler )
     {
         return USB_HOST_AUDIO_V1_RESULT_INVALID_PARAMETER;
     }
-    gUSBHostAudio1CommonObj.attachEventHandler = attachEventHandler; 
+    gUSBHostAudio1CommonObj.attachEventHandler = eventHandler; 
     gUSBHostAudio1CommonObj.context = context; 
     return USB_HOST_AUDIO_V1_RESULT_SUCCESS;  
 }
@@ -1842,8 +1892,8 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_EntityRequestCallbackSet
 */
 USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamEventHandlerSet
 (
-    USB_HOST_AUDIO_V1_STREAM_HANDLE streamHandle,
-    USB_HOST_AUDIO_V1_STREAM_EVENT_HANDLER streamEventHandler,
+    USB_HOST_AUDIO_V1_STREAM_HANDLE handle,
+    USB_HOST_AUDIO_V1_STREAM_EVENT_HANDLER appAudioHandler,
     uintptr_t context
 )
 { 
@@ -1853,21 +1903,15 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamEventHandlerSet
     USB_HOST_AUDIO_V1_INSTANCE* audioInstanceInfo ; 
     
 
-    audioInstance = (uint8_t)streamHandle; 
-    aSIntrfcIdx = (uint8_t) (streamHandle >> 8); 
-    asIntrfcSettingIdx = (uint8_t)(streamHandle >> 16);  
+    audioInstance = (uint8_t)handle; 
+    aSIntrfcIdx = (uint8_t) (handle >> 8); 
+    asIntrfcSettingIdx = (uint8_t)(handle >> 16);  
     
     
     audioInstanceInfo = &gUSBHostAudioInstance[audioInstance];
     
-    /* NULL check */ 
-    if (audioInstanceInfo == NULL)
-    {
-        return USB_HOST_AUDIO_V1_RESULT_OBJ_INVALID; 
-    }
-
     /* Check if there is any Audio Streaming Interface present in the Audio Device */ 
-    if (audioInstanceInfo->nASInterfaces == 0)
+    if (audioInstanceInfo->nASInterfaces == 0U)
     {
         return USB_HOST_AUDIO_V1_RESULT_OBJ_INVALID; 
     }
@@ -1890,9 +1934,9 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamEventHandlerSet
         return USB_HOST_AUDIO_V1_RESULT_END_OF_STREAMING_INTERFACE; 
     }
 
-    if (streamEventHandler != (USB_HOST_AUDIO_V1_STREAM_EVENT_HANDLER)NULL)
+    if (appAudioHandler != (USB_HOST_AUDIO_V1_STREAM_EVENT_HANDLER)NULL)
     {
-        audioInstanceInfo->streamInf[aSIntrfcIdx].streamEventHandler = streamEventHandler;
+        audioInstanceInfo->streamInf[aSIntrfcIdx].streamEventHandler = appAudioHandler;
         audioInstanceInfo->streamInf[aSIntrfcIdx].context = context; 
         return USB_HOST_AUDIO_V1_RESULT_SUCCESS; 
     }
@@ -1928,12 +1972,12 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamEventHandlerSet
 */
 USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceGetFirst
 (
-    USB_HOST_AUDIO_V1_OBJ audioDeviceObj, 
+    USB_HOST_AUDIO_V1_OBJ audioObj, 
     USB_HOST_AUDIO_V1_STREAMING_INTERFACE_OBJ* streamingInterfaceObj
 )
 {
     /* Get Pointer to Audio Device Instance  */
-    USB_HOST_AUDIO_V1_INSTANCE* audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE*)audioDeviceObj;
+    USB_HOST_AUDIO_V1_INSTANCE* audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE*)audioObj;
     
     /* Null check */
     if (audioInstanceInfo == NULL)
@@ -1942,7 +1986,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceGetFirst
     }
     
     /* If there is any Audio Streaming Interface present in the Audio Device */ 
-    if (audioInstanceInfo->nASInterfaces == 0)
+    if (audioInstanceInfo->nASInterfaces == 0U)
     {
         return USB_HOST_AUDIO_V1_RESULT_END_OF_INTERFACE_SETTINGS; 
     }
@@ -1997,13 +2041,13 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceGetFirst
 
 USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceGetNext
 (
-    USB_HOST_AUDIO_V1_OBJ audioDeviceObj,
+    USB_HOST_AUDIO_V1_OBJ audioObj,
     USB_HOST_AUDIO_V1_STREAMING_INTERFACE_OBJ streamingInterfaceObjCurrent, 
     USB_HOST_AUDIO_V1_STREAMING_INTERFACE_OBJ* streamingInterfaceObjNext
 )
 {
     /* Get Pointer to Audio Device Instance  */
-    USB_HOST_AUDIO_V1_INSTANCE* audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE*)audioDeviceObj;
+    USB_HOST_AUDIO_V1_INSTANCE* audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE*)audioObj;
     uint8_t aSIntrfcIdxCurrent; 
     uint8_t aSIntrfcIdxNext; 
     
@@ -2011,7 +2055,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceGetNext
     aSIntrfcIdxCurrent = (uint8_t)(streamingInterfaceObjCurrent>>8); 
     
     /* If there is any Audio Streaming Interface present in the Audio Device */ 
-    if (audioInstanceInfo->nASInterfaces == 0)
+    if (audioInstanceInfo->nASInterfaces == 0U)
     {
         return USB_HOST_AUDIO_V1_RESULT_END_OF_INTERFACE_SETTINGS; 
     }
@@ -2023,7 +2067,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceGetNext
     }
     
     /* Get the Index of the next Streaming Interface*/ 
-    aSIntrfcIdxNext = aSIntrfcIdxCurrent + 1; 
+    aSIntrfcIdxNext = aSIntrfcIdxCurrent + 1U; 
     
     /* Check if next Streaming Interface exists */ 
     if (aSIntrfcIdxNext == audioInstanceInfo->nASInterfaces)
@@ -2031,7 +2075,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceGetNext
         return USB_HOST_AUDIO_V1_RESULT_END_OF_STREAMING_INTERFACE; 
     }
     
-    *streamingInterfaceObjNext = (USB_HOST_AUDIO_V1_STREAMING_INTERFACE_OBJ)(audioInstanceInfo->index | (uint32_t)aSIntrfcIdxNext<<8); 
+    *streamingInterfaceObjNext = (USB_HOST_AUDIO_V1_STREAMING_INTERFACE_OBJ)(audioInstanceInfo->index | ((uint32_t)aSIntrfcIdxNext<<8)); 
     
     return USB_HOST_AUDIO_V1_RESULT_SUCCESS;  
 }
@@ -2039,7 +2083,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceGetNext
 /* Function:
    USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceSettingGetFirst
    (
-       USB_HOST_AUDIO_V1_OBJ audioDeviceObj,
+       USB_HOST_AUDIO_V1_OBJ audioObj,
        USB_HOST_AUDIO_V1_STREAMING_INTERFACE_OBJ streamingInterfaceObj,
        USB_HOST_AUDIO_V1_STREAMING_INTERFACE_SETTING_OBJ *interfaceSettingObj
    )
@@ -2081,13 +2125,13 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceGetNext
     None.
 */USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceSettingGetFirst
 (
-    USB_HOST_AUDIO_V1_OBJ audioDeviceObj,
+    USB_HOST_AUDIO_V1_OBJ audioObj,
     USB_HOST_AUDIO_V1_STREAMING_INTERFACE_OBJ streamingInterfaceObj,
     USB_HOST_AUDIO_V1_STREAMING_INTERFACE_SETTING_OBJ *interfaceSettingObj
 )
 {
-    USB_HOST_AUDIO_V1_INSTANCE* audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE*)audioDeviceObj;
-    uint8_t aSIntrfcIdx;
+    USB_HOST_AUDIO_V1_INSTANCE* audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE*)audioObj;
+    uint8_t aSIntrfcIdx;    
     
     /* NULL check */ 
     if (audioInstanceInfo == NULL)
@@ -2109,8 +2153,8 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceGetNext
         return USB_HOST_AUDIO_V1_RESULT_OBJ_INVALID; 
     }
     
-    /* Fill the Audio streaming interface setting object */ 
-    *interfaceSettingObj = (USB_HOST_AUDIO_V1_STREAMING_INTERFACE_SETTING_OBJ)(audioInstanceInfo->index | aSIntrfcIdx<<8 );  
+    /* Fill the Audio streaming interface setting object */  
+    *interfaceSettingObj = (USB_HOST_AUDIO_V1_STREAMING_INTERFACE_SETTING_OBJ)(((uint32_t)audioInstanceInfo->index) | (((uint32_t)aSIntrfcIdx)<<8));  
     
     /* Return success */ 
     return USB_HOST_AUDIO_V1_RESULT_SUCCESS;     
@@ -2119,7 +2163,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceGetNext
 /* Function:
    USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceSettingGetNext 
    (
-       USB_HOST_AUDIO_V1_OBJ audioDeviceObj,
+       USB_HOST_AUDIO_V1_OBJ audioObj,
        USB_HOST_AUDIO_V1_STREAMING_INTERFACE_OBJ streamingInterfaceObj,
        USB_HOST_AUDIO_V1_STREAMING_INTERFACE_SETTING_OBJ interfaceSettingObjCurrent, 
        USB_HOST_AUDIO_V1_STREAMING_INTERFACE_SETTING_OBJ *interfaceSettingObjNext
@@ -2171,13 +2215,13 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceGetNext
 */ 
 USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceSettingGetNext 
 (
-   USB_HOST_AUDIO_V1_OBJ audioDeviceObj,
+   USB_HOST_AUDIO_V1_OBJ audioObj,
    USB_HOST_AUDIO_V1_STREAMING_INTERFACE_OBJ streamingInterfaceObj,
    USB_HOST_AUDIO_V1_STREAMING_INTERFACE_SETTING_OBJ interfaceSettingObjCurrent, 
    USB_HOST_AUDIO_V1_STREAMING_INTERFACE_SETTING_OBJ *interfaceSettingObjNext
 )
 {
-    USB_HOST_AUDIO_V1_INSTANCE* audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE*)audioDeviceObj;
+    USB_HOST_AUDIO_V1_INSTANCE* audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE*)audioObj;
     uint32_t aSIntrfcIdx;
     uint32_t aSIntrfcSettingIdxCurrent, aSIntrfcSettingIdxNext ;
     
@@ -2209,14 +2253,14 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceSettingGetNext
         return USB_HOST_AUDIO_V1_RESULT_OBJ_INVALID; 
     }
     
-    aSIntrfcSettingIdxNext = aSIntrfcSettingIdxCurrent + 1; 
+    aSIntrfcSettingIdxNext = aSIntrfcSettingIdxCurrent + 1U; 
     if (aSIntrfcSettingIdxNext == audioInstanceInfo->streamInf[aSIntrfcIdx].nInterfaceSetting)
     {
         return USB_HOST_AUDIO_V1_RESULT_END_OF_INTERFACE_SETTINGS; 
     }
     
     /* Fill the Audio streaming interface setting object */  
-    *interfaceSettingObjNext = (USB_HOST_AUDIO_V1_STREAMING_INTERFACE_SETTING_OBJ)(audioInstanceInfo->index | aSIntrfcIdx<<8 | aSIntrfcSettingIdxNext<<16 );  
+    *interfaceSettingObjNext = (USB_HOST_AUDIO_V1_STREAMING_INTERFACE_SETTING_OBJ)(audioInstanceInfo->index | (aSIntrfcIdx<<8) | (aSIntrfcSettingIdxNext<<16) );  
     
     /* return success */ 
     return USB_HOST_AUDIO_V1_RESULT_SUCCESS;   
@@ -2274,7 +2318,7 @@ USB_HOST_AUDIO_V1_STREAM_HANDLE USB_HOST_AUDIO_V1_StreamOpen
 /* Function:
     void USB_HOST_AUDIO_V1_StreamClose
     ( 
-        USB_HOST_AUDIO_V1_STREAM_HANDLE audioSteamHandle
+        USB_HOST_AUDIO_V1_STREAM_HANDLE audioStreamHandle
     );
            
   Summary:
@@ -2304,7 +2348,7 @@ USB_HOST_AUDIO_V1_STREAM_HANDLE USB_HOST_AUDIO_V1_StreamOpen
 */
 void USB_HOST_AUDIO_V1_StreamClose
 ( 
-    USB_HOST_AUDIO_V1_STREAM_HANDLE audioSteamHandle
+    USB_HOST_AUDIO_V1_STREAM_HANDLE audioStreamHandle
 )
 {
     USB_HOST_AUDIO_V1_INSTANCE * audioInstanceInfo; 
@@ -2313,10 +2357,10 @@ void USB_HOST_AUDIO_V1_StreamClose
     uint8_t asIntrefaceIndex;  
     
     /* Find Audio Stream from audioStreamObj */
-    if (audioSteamHandle != USB_HOST_AUDIO_V1_STREAM_HANDLE_INVALID)
+    if (audioStreamHandle != USB_HOST_AUDIO_V1_STREAM_HANDLE_INVALID)
     {
-        audioInstanceIndex = (uint8_t)audioSteamHandle;
-        asIntrefaceIndex = (uint8_t)(audioSteamHandle>>8);  
+        audioInstanceIndex = (uint8_t)audioStreamHandle;
+        asIntrefaceIndex = (uint8_t)(audioStreamHandle>>8);  
         
         audioInstanceInfo = &gUSBHostAudioInstance[audioInstanceIndex];
         asInterface = &audioInstanceInfo->streamInf[asIntrefaceIndex]; 
@@ -2400,15 +2444,8 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceSet
     /* Get pointer to Audio Instance */
     audioInstanceInfo = &gUSBHostAudioInstance[audioInstance];
     
-    /* Perform NULL check on pointer to Audio Instance */ 
-    if (audioInstanceInfo == NULL)
-    {
-        /* Pointer to Audio Instance is invalid. Cannot proceed.*/
-        return USB_HOST_AUDIO_V1_RESULT_OBJ_INVALID; 
-    }
-
     /* Check if there is any Audio Streaming Interface present in the Audio Device */ 
-    if (audioInstanceInfo->nASInterfaces == 0)
+    if (audioInstanceInfo->nASInterfaces == 0U)
     {
         /* The Audio instance has no Streaming interfaces. Cannot proceed.*/
         return USB_HOST_AUDIO_V1_RESULT_OBJ_INVALID; 
@@ -2437,7 +2474,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceSet
                      audioInstanceInfo->streamInf[aSIntrfcIdx].asInterfaceHandle, 
                      requestHandle, 
                      alternateSetting,
-                     (uintptr_t)alternateSetting | (uintptr_t)USB_HOST_AUDIO_V1_API_VERSION_FLAG_STREAM_INTERFACE_SET << 8
+                     (uintptr_t)alternateSetting | ((uintptr_t)USB_HOST_AUDIO_V1_API_VERSION_FLAG_STREAM_INTERFACE_SET << 8)
                  ); 
     
     switch (hostResult)
@@ -2524,12 +2561,8 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamSamplingFrequencySet
     audioInstanceIndex = (uint8_t)streamHandle;
     asIntrefaceIndex = (uint8_t)(streamHandle>>8); 
     
-    audioInstanceInfo = &gUSBHostAudioInstance[audioInstanceIndex]; 
-    if (audioInstanceInfo == NULL)
-    {
-        return USB_HOST_AUDIO_V1_RESULT_HANDLE_INVALID; 
-    }
-    
+    audioInstanceInfo = &gUSBHostAudioInstance[audioInstanceIndex];
+        
     asInterface = &audioInstanceInfo->streamInf[asIntrefaceIndex];
     if (asInterface == NULL)
     {
@@ -2558,7 +2591,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamSamplingFrequencySet
         return USB_HOST_AUDIO_V1_RESULT_BUSY; 
     }
     
-    if (audioStream->nEndpoints == 0)
+    if (audioStream->nEndpoints == 0U)
     {
         return USB_HOST_AUDIO_V1_RESULT_FAILURE; 
     }
@@ -2573,8 +2606,8 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamSamplingFrequencySet
                                 | USB_SETUP_TYPE_CLASS
                                 | USB_SETUP_RECIPIENT_ENDPOINT ;
 
-    setupPacket->bRequest = USB_AUDIO_CS_SET_CUR;
-    setupPacket->controlSelector = USB_AUDIO_SAMPLING_FREQ_CONTROL;
+    setupPacket->bRequest = (uint8_t)USB_AUDIO_CS_SET_CUR;
+    setupPacket->controlSelector = (uint8_t)USB_AUDIO_SAMPLING_FREQ_CONTROL;
     
     setupPacket->endpointNumber = audioStream->isoDataEndpointDesc.bEndpointAddress;
     
@@ -2586,11 +2619,11 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamSamplingFrequencySet
                  requestHandle,
                  (USB_SETUP_PACKET *)setupPacket,
                  (void *)samplingFrequency,
-                 _USB_HOST_AUDIO_V1_SetSampleFrequencyCallback,
+                 F_USB_HOST_AUDIO_V1_SetSampleFrequencyCallback,
                  (uintptr_t)streamHandle
              ); 
     
-    return hostResult;
+    return (USB_HOST_AUDIO_V1_RESULT)hostResult;
     
 }
 
@@ -2666,11 +2699,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamSamplingFrequencyGet
     asIntrefaceIndex = (uint8_t)(streamHandle>>8); 
     
     audioInstanceInfo = &gUSBHostAudioInstance[audioInstanceIndex]; 
-    if (audioInstanceInfo == NULL)
-    {
-        return USB_HOST_AUDIO_V1_RESULT_HANDLE_INVALID; 
-    }
-    
+        
     asInterface = &audioInstanceInfo->streamInf[asIntrefaceIndex];
     if (asInterface == NULL)
     {
@@ -2699,7 +2728,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamSamplingFrequencyGet
         return USB_HOST_AUDIO_V1_RESULT_BUSY; 
     }
     
-    if (audioStream->nEndpoints == 0)
+    if (audioStream->nEndpoints == 0U)
     {
         return USB_HOST_AUDIO_V1_RESULT_FAILURE; 
     }
@@ -2714,8 +2743,8 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamSamplingFrequencyGet
                                 | USB_SETUP_TYPE_CLASS
                                 | USB_SETUP_RECIPIENT_ENDPOINT ;
 
-    setupPacket->bRequest = USB_AUDIO_CS_GET_CUR;
-    setupPacket->controlSelector = USB_AUDIO_SAMPLING_FREQ_CONTROL;
+    setupPacket->bRequest = (uint8_t)USB_AUDIO_CS_GET_CUR;
+    setupPacket->controlSelector = (uint8_t)USB_AUDIO_SAMPLING_FREQ_CONTROL;
     
     setupPacket->endpointNumber = audioStream->isoDataEndpointDesc.bEndpointAddress;
     
@@ -2727,11 +2756,11 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamSamplingFrequencyGet
                  requestHandle,
                  (USB_SETUP_PACKET *)setupPacket,
                  (void *)samplingFrequency,
-                 _USB_HOST_AUDIO_V1_SetSampleFrequencyCallback,
+                 F_USB_HOST_AUDIO_V1_SetSampleFrequencyCallback,
                  (uintptr_t)streamHandle
              ); 
     
-    return hostResult;
+    return (USB_HOST_AUDIO_V1_RESULT)hostResult;
     
 }
 
@@ -2740,7 +2769,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamSamplingFrequencyGet
    USB_HOST_AUDIO_V1_REESULT USB_HOST_AUDIO_V1_ControlEntityGetFirst
    (
        USB_HOST_AUDIO_V1_OBJ  audioObj, 
-       USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ * pEntityHandle
+       USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ * pEntityObject
    ); 
 
   Summary:
@@ -2755,7 +2784,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamSamplingFrequencyGet
   Parameters:
     audioObj     - USB Host Audio v1.0 device object. 
 
-    pEntityHandle - pointer to the Audio control entity handle
+    pEntityObject - pointer to the Audio control entity handle
 
   Returns:
     USB_HOST_AUDIO_V1_RESULT_SUCCESS - The operation was successful
@@ -2775,14 +2804,14 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamSamplingFrequencyGet
 
 USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_ControlEntityGetFirst
 (
-    USB_HOST_AUDIO_V1_OBJ  audioDeviceObj, 
-    USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ * pEntityHandle
+    USB_HOST_AUDIO_V1_OBJ  audioObj, 
+    USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ * pEntityObject
 )
 {
     uint8_t * pDescriptor; 
     
     /* Get Pointer to Audio Device Instance  */
-    USB_HOST_AUDIO_V1_INSTANCE* audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE*)audioDeviceObj;
+    USB_HOST_AUDIO_V1_INSTANCE* audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE*)audioObj;
     
     /* Null check */
     if (audioInstanceInfo == NULL)
@@ -2799,7 +2828,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_ControlEntityGetFirst
     }
     
     /* First Descriptor in the Audio Control is always the Header. Get the next one */ 
-    *pEntityHandle = (USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ)((uint8_t *)pDescriptor +  ((USB_INTERFACE_DESCRIPTOR*)pDescriptor)->bLength);
+    *pEntityObject = (USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ)((uint8_t *)pDescriptor +  ((USB_INTERFACE_DESCRIPTOR*)pDescriptor)->bLength);
     
     /* Return Success */ 
     return USB_HOST_AUDIO_V1_RESULT_SUCCESS; 
@@ -2850,7 +2879,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_ControlEntityGetFirst
 */
 USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_ControlEntityGetNext
 (
-    USB_HOST_AUDIO_V1_OBJ  audioDeviceObj, 
+    USB_HOST_AUDIO_V1_OBJ  audioObj, 
     USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ entityObjectCurrent,
     USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ * pEntityObject
 )
@@ -2858,7 +2887,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_ControlEntityGetNext
     USB_AUDIO_CS_AC_INTERFACE_HEADER_DESCRIPTOR *pDescriptor = (USB_AUDIO_CS_AC_INTERFACE_HEADER_DESCRIPTOR *) entityObjectCurrent; 
             
     /* Get Pointer to Audio Device Instance  */
-    USB_HOST_AUDIO_V1_INSTANCE* audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE*)audioDeviceObj;
+    USB_HOST_AUDIO_V1_INSTANCE* audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE*)audioObj;
     
     /* Null check */
     if (audioInstanceInfo == NULL)
@@ -2914,7 +2943,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_ControlEntityGetNext
 */
 USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_EntityObjectGet
 (
-    USB_HOST_AUDIO_V1_OBJ  audioDeviceObj,
+    USB_HOST_AUDIO_V1_OBJ  audioObj,
     uint8_t entityId,
     USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ* entityObj
 )
@@ -2924,7 +2953,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_EntityObjectGet
     USB_HOST_AUDIO_V1_RESULT audioResult = USB_HOST_AUDIO_V1_RESULT_FAILURE; 
     
    /* Get Pointer to Audio Device Instance  */
-    USB_HOST_AUDIO_V1_INSTANCE* audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE*)audioDeviceObj;
+    USB_HOST_AUDIO_V1_INSTANCE* audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE*)audioObj;
     
     /* Null check */
     if (audioInstanceInfo == NULL)
@@ -2941,7 +2970,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_EntityObjectGet
     
     pDescriptor = pDescriptor + ((USB_INTERFACE_DESCRIPTOR*)pDescriptor)->bLength;
     
-    while(descriptorCount)
+    while(descriptorCount != 0U)
     {
         if (entityId == ((USB_HOST_AUDIO_CONTROL_ENTITY_DESCRIPTOR_HEADER*)pDescriptor)->entityID)
         {
@@ -2992,7 +3021,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_EntityObjectGet
 */
 USB_AUDIO_V1_ENTITY_TYPE USB_HOST_AUDIO_V1_EntityTypeGet
 (
-    USB_HOST_AUDIO_V1_OBJ  audioDeviceObj, 
+    USB_HOST_AUDIO_V1_OBJ  audioObj, 
     USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ entityObject
 )
 {
@@ -3002,10 +3031,10 @@ USB_AUDIO_V1_ENTITY_TYPE USB_HOST_AUDIO_V1_EntityTypeGet
      
     if (pDescriptor == NULL)
     {
-        return 0; 
+        return (USB_AUDIO_V1_ENTITY_TYPE)0; 
     }
 
-    entityType = pDescriptor->bDescriptorSubtype; 
+    entityType = (USB_AUDIO_V1_ENTITY_TYPE)pDescriptor->bDescriptorSubtype; 
     
     return entityType;  
 }
@@ -3056,10 +3085,10 @@ USB_AUDIO_V1_TERMINAL_TYPE USB_HOST_AUDIO_V1_TerminalTypeGet
     
     if (pDescriptor == NULL)
     {
-        return 0; 
+        return (USB_AUDIO_V1_TERMINAL_TYPE)0; 
     }
         
-    terminalType = pDescriptor->wTerminalType; 
+    terminalType = (USB_AUDIO_V1_TERMINAL_TYPE)(pDescriptor->wTerminalType); 
     
     return terminalType; 
 }
@@ -3498,12 +3527,12 @@ uint8_t USB_HOST_AUDIO_V1_FeatureUnitChannelNumbersGet
         return 0; 
     }
     
-    if (pDescriptor->bControlSize == 0)
+    if (pDescriptor->bControlSize == 0U || (pDescriptor->bLength < sizeof(USB_AUDIO_FEATURE_UNIT_DESCRIPTOR_HEADER) + 1U)) 
     {
         return 0; 
     }
     
-    nChannels = (pDescriptor->bLength - sizeof(USB_AUDIO_FEATURE_UNIT_DESCRIPTOR_HEADER) - 1)/pDescriptor->bControlSize - 1; 
+    nChannels = (uint8_t)((pDescriptor->bLength - sizeof(USB_AUDIO_FEATURE_UNIT_DESCRIPTOR_HEADER) - 1U)/(pDescriptor->bControlSize - 1U)); 
     
     return nChannels; 
 }
@@ -3565,21 +3594,24 @@ bool USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists
         return result; 
     }
     
-    if (pDescriptor->bControlSize == 0)
+    if (pDescriptor->bControlSize == 0U)
     {
         return result; 
     }
-    
-    nChannels = (pDescriptor->bLength - sizeof(USB_AUDIO_FEATURE_UNIT_DESCRIPTOR_HEADER) - 1)/pDescriptor->bControlSize - 1; 
+    if(pDescriptor->bLength < (sizeof(USB_AUDIO_FEATURE_UNIT_DESCRIPTOR_HEADER) + 1U))
+    {
+      return false;
+    }
+    nChannels = (uint8_t)((pDescriptor->bLength - sizeof(USB_AUDIO_FEATURE_UNIT_DESCRIPTOR_HEADER) - 1U)/(pDescriptor->bControlSize - 1U)); 
     
     if (channel > nChannels )
     {
         return result; 
     }
     
-    pMuteControl = (uint8_t*)pDescriptor + sizeof(USB_AUDIO_FEATURE_UNIT_DESCRIPTOR_HEADER) + pDescriptor->bControlSize*channel; 
+    pMuteControl = (uint8_t*)pDescriptor + sizeof(USB_AUDIO_FEATURE_UNIT_DESCRIPTOR_HEADER) + (pDescriptor->bControlSize*channel); 
     
-    if (((USB_AUDIO_FEATURE_UNIT_BMA_CONTROLS*)pMuteControl)->mute == 1)
+    if (((USB_AUDIO_FEATURE_UNIT_BMA_CONTROLS*)pMuteControl)->mute == 1U)
     {
         result = true; 
     }
@@ -3655,7 +3687,7 @@ bool USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists
 */
 USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelMuteSet
 (
-     USB_HOST_AUDIO_V1_OBJ  audioDeviceObj,
+     USB_HOST_AUDIO_V1_OBJ  audioObj,
      USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ entityObject, 
      USB_HOST_AUDIO_V1_REQUEST_HANDLE * requestHandle,
      uint8_t channelNumber,
@@ -3666,14 +3698,14 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelMuteSet
     USB_HOST_AUDIO_V1_RESULT result; 
     USB_AUDIO_FEATURE_UNIT_DESCRIPTOR_HEADER *pDescriptor = (USB_AUDIO_FEATURE_UNIT_DESCRIPTOR_HEADER *) entityObject;
     USB_INTERFACE_DESCRIPTOR * audioControlInterfaceDescriptor; 
-    USB_HOST_AUDIO_V1_INSTANCE *audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE *)audioDeviceObj;
+    USB_HOST_AUDIO_V1_INSTANCE *audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE *)audioObj;
     
     if (pDescriptor == NULL)
     {
         return USB_HOST_AUDIO_V1_RESULT_OBJ_INVALID; 
     }
     
-    if (pDescriptor->bControlSize == 0)
+    if (pDescriptor->bControlSize == 0U)
     {
         return USB_HOST_AUDIO_V1_RESULT_OBJ_INVALID; 
     }
@@ -3685,11 +3717,11 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelMuteSet
                    | USB_SETUP_RECIPIENT_INTERFACE
                   ); //interface , Host to device , Standard;
     
-    setupPacket.bRequest = USB_AUDIO_CS_SET_CUR;
+    setupPacket.bRequest = (uint8_t)USB_AUDIO_CS_SET_CUR;
     
     setupPacket.channelNumber = channelNumber; 
     
-    setupPacket.controlSelector = USB_AUDIO_MUTE_CONTROL;
+    setupPacket.controlSelector = (uint8_t)USB_AUDIO_MUTE_CONTROL;
     
     setupPacket.featureUnitId = pDescriptor->bUnitID; 
     
@@ -3699,9 +3731,9 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelMuteSet
     
     setupPacket.wLength = 1;
     
-    result = _USB_HOST_AUDIO_V1_ControlRequest
+    result = F_USB_HOST_AUDIO_V1_ControlRequest
     (
-        audioDeviceObj,
+        audioObj,
         requestHandle,
         (USB_SETUP_PACKET *)&setupPacket,
         muteStatus
@@ -3776,7 +3808,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelMuteSet
 */
 USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelMuteGet
 (
-     USB_HOST_AUDIO_V1_OBJ  audioDeviceObj,
+     USB_HOST_AUDIO_V1_OBJ  audioObj,
      USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ entityObject, 
      USB_HOST_AUDIO_V1_REQUEST_HANDLE * requestHandle,
      uint8_t channelNumber,
@@ -3787,14 +3819,14 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelMuteGet
     USB_HOST_AUDIO_V1_RESULT result; 
     USB_AUDIO_FEATURE_UNIT_DESCRIPTOR_HEADER *pDescriptor = (USB_AUDIO_FEATURE_UNIT_DESCRIPTOR_HEADER *) entityObject;
     USB_INTERFACE_DESCRIPTOR * audioControlInterfaceDescriptor; 
-    USB_HOST_AUDIO_V1_INSTANCE *audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE *)audioDeviceObj;
+    USB_HOST_AUDIO_V1_INSTANCE *audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE *)audioObj;
     
     if (pDescriptor == NULL)
     {
         return USB_HOST_AUDIO_V1_RESULT_OBJ_INVALID; 
     }
     
-    if (pDescriptor->bControlSize == 0)
+    if (pDescriptor->bControlSize == 0U)
     {
         return USB_HOST_AUDIO_V1_RESULT_OBJ_INVALID; 
     }
@@ -3806,11 +3838,11 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelMuteGet
                    | USB_SETUP_RECIPIENT_INTERFACE
                   ); //interface , Host to device , Standard;
     
-    setupPacket.bRequest = USB_AUDIO_CS_GET_CUR;
+    setupPacket.bRequest = (uint8_t)USB_AUDIO_CS_GET_CUR;
     
     setupPacket.channelNumber = channelNumber; 
     
-    setupPacket.controlSelector = USB_AUDIO_MUTE_CONTROL;
+    setupPacket.controlSelector = (uint8_t)USB_AUDIO_MUTE_CONTROL;
     
     setupPacket.featureUnitId = pDescriptor->bUnitID; 
     
@@ -3820,9 +3852,9 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelMuteGet
     
     setupPacket.wLength = 1;
     
-    result = _USB_HOST_AUDIO_V1_ControlRequest
+    result = F_USB_HOST_AUDIO_V1_ControlRequest
     (
-        audioDeviceObj,
+        audioObj,
         requestHandle,
         (USB_SETUP_PACKET *)&setupPacket,
         muteStatus
@@ -3891,21 +3923,24 @@ bool USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeExists
         return result; 
     }
     
-    if (pDescriptor->bControlSize == 0)
+    if (pDescriptor->bControlSize == 0U)
     {
         return result; 
     }
-    
-    nChannels = (pDescriptor->bLength - sizeof(USB_AUDIO_FEATURE_UNIT_DESCRIPTOR_HEADER) - 1)/pDescriptor->bControlSize - 1; 
+    if(pDescriptor->bLength < (sizeof(USB_AUDIO_FEATURE_UNIT_DESCRIPTOR_HEADER) + 1U))
+    {
+      return false;
+    }
+    nChannels = (uint8_t)((pDescriptor->bLength - sizeof(USB_AUDIO_FEATURE_UNIT_DESCRIPTOR_HEADER) - 1U)/(pDescriptor->bControlSize - 1U)); 
     
     if (channel > nChannels )
     {
         return result; 
     }
     
-    pMuteControl = (uint8_t*)pDescriptor + sizeof(USB_AUDIO_FEATURE_UNIT_DESCRIPTOR_HEADER) + pDescriptor->bControlSize*channel; 
+    pMuteControl = (uint8_t*)pDescriptor + sizeof(USB_AUDIO_FEATURE_UNIT_DESCRIPTOR_HEADER) + (pDescriptor->bControlSize*channel); 
     
-    if (((USB_AUDIO_FEATURE_UNIT_BMA_CONTROLS*)pMuteControl)->volume== 1)
+    if (((USB_AUDIO_FEATURE_UNIT_BMA_CONTROLS*)pMuteControl)->volume== 1U)
     {
         result = true; 
     }
@@ -3984,7 +4019,7 @@ bool USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeExists
 */
 USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSet
 (
-     USB_HOST_AUDIO_V1_OBJ  audioDeviceObj,
+     USB_HOST_AUDIO_V1_OBJ  audioObj,
      USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ entityObject, 
      USB_HOST_AUDIO_V1_REQUEST_HANDLE * requestHandle,
      uint8_t channelNumber,
@@ -3995,7 +4030,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSet
     USB_HOST_AUDIO_V1_RESULT result; 
     USB_AUDIO_FEATURE_UNIT_DESCRIPTOR_HEADER *pDescriptor = (USB_AUDIO_FEATURE_UNIT_DESCRIPTOR_HEADER *) entityObject;
     USB_INTERFACE_DESCRIPTOR * audioControlInterfaceDescriptor; 
-    USB_HOST_AUDIO_V1_INSTANCE *audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE *)audioDeviceObj; 
+    USB_HOST_AUDIO_V1_INSTANCE *audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE *)audioObj; 
     
     if (audioInstanceInfo == NULL)
     {
@@ -4008,7 +4043,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSet
         return USB_HOST_AUDIO_V1_RESULT_OBJ_INVALID; 
     }
     
-    if (pDescriptor->bControlSize == 0)
+    if (pDescriptor->bControlSize == 0U)
     {
         return USB_HOST_AUDIO_V1_RESULT_OBJ_INVALID; 
     }
@@ -4020,11 +4055,11 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSet
                    | USB_SETUP_RECIPIENT_INTERFACE
                   ); //interface , Host to device , Standard;
     
-    setupPacket.bRequest = USB_AUDIO_CS_SET_CUR;
+    setupPacket.bRequest = (uint8_t)USB_AUDIO_CS_SET_CUR;
     
     setupPacket.channelNumber = channelNumber; 
     
-    setupPacket.controlSelector = USB_AUDIO_VOLUME_CONTROL;
+    setupPacket.controlSelector = (uint8_t)USB_AUDIO_VOLUME_CONTROL;
     
     setupPacket.featureUnitId = pDescriptor->bUnitID; 
    
@@ -4034,9 +4069,9 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSet
     
     setupPacket.wLength = 2;
     
-    result = _USB_HOST_AUDIO_V1_ControlRequest
+    result = F_USB_HOST_AUDIO_V1_ControlRequest
     (
-        audioDeviceObj,
+        audioObj,
         requestHandle,
         (USB_SETUP_PACKET *)&setupPacket,
         volume
@@ -4109,7 +4144,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSet
 */
 USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeGet
 (
-     USB_HOST_AUDIO_V1_OBJ  audioDeviceObj,
+     USB_HOST_AUDIO_V1_OBJ  audioObj,
      USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ entityObject, 
      USB_HOST_AUDIO_V1_REQUEST_HANDLE * requestHandle,
      uint8_t channelNumber,
@@ -4120,7 +4155,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeGet
     USB_HOST_AUDIO_V1_RESULT result; 
     USB_AUDIO_FEATURE_UNIT_DESCRIPTOR_HEADER *pDescriptor = (USB_AUDIO_FEATURE_UNIT_DESCRIPTOR_HEADER *) entityObject;
     USB_INTERFACE_DESCRIPTOR * audioControlInterfaceDescriptor; 
-    USB_HOST_AUDIO_V1_INSTANCE *audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE *)audioDeviceObj; 
+    USB_HOST_AUDIO_V1_INSTANCE *audioInstanceInfo = (USB_HOST_AUDIO_V1_INSTANCE *)audioObj; 
     
     if (audioInstanceInfo == NULL)
     {
@@ -4133,7 +4168,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeGet
         return USB_HOST_AUDIO_V1_RESULT_OBJ_INVALID; 
     }
     
-    if (pDescriptor->bControlSize == 0)
+    if (pDescriptor->bControlSize == 0U)
     {
         return USB_HOST_AUDIO_V1_RESULT_OBJ_INVALID; 
     }
@@ -4145,11 +4180,11 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeGet
                    | USB_SETUP_RECIPIENT_INTERFACE
                   ); //interface , Host to device , Standard;
     
-    setupPacket.bRequest = USB_AUDIO_CS_GET_CUR;
+    setupPacket.bRequest = (uint8_t)USB_AUDIO_CS_GET_CUR;
     
     setupPacket.channelNumber = channelNumber; 
     
-    setupPacket.controlSelector = USB_AUDIO_VOLUME_CONTROL;
+    setupPacket.controlSelector = (uint8_t)USB_AUDIO_VOLUME_CONTROL;
     
     setupPacket.featureUnitId = pDescriptor->bUnitID; 
    
@@ -4159,9 +4194,9 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeGet
     
     setupPacket.wLength = 2;
     
-    result = _USB_HOST_AUDIO_V1_ControlRequest
+    result = F_USB_HOST_AUDIO_V1_ControlRequest
     (
-        audioDeviceObj,
+        audioObj,
         requestHandle,
         (USB_SETUP_PACKET *)&setupPacket,
         volume
@@ -4208,7 +4243,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeGet
 */
 uint8_t USB_HOST_AUDIO_V1_StreamingInterfaceTerminalLinkGet
 (
-    USB_HOST_AUDIO_V1_OBJ audioDeviceObj,
+    USB_HOST_AUDIO_V1_OBJ audioObj,
     USB_HOST_AUDIO_V1_STREAMING_INTERFACE_OBJ streamingInterfaceObj,
     USB_HOST_AUDIO_V1_STREAMING_INTERFACE_SETTING_OBJ interfaceSettingObj
 )
@@ -4225,12 +4260,7 @@ uint8_t USB_HOST_AUDIO_V1_StreamingInterfaceTerminalLinkGet
     
     audioInstanceInfo = &gUSBHostAudioInstance[audioInstance];
     
-    if (audioInstanceInfo == NULL)
-    {
-        return 0; 
-    }
-    
-    return (USB_AUDIO_V1_FORMAT_TAG)audioInstanceInfo->streamInf[aSIntrfcIdx].audioStreamSetting[asIntrfcSettingIdx].bTerminalLink;
+    return (uint8_t)((USB_AUDIO_V1_FORMAT_TAG)audioInstanceInfo->streamInf[aSIntrfcIdx].audioStreamSetting[asIntrfcSettingIdx].bTerminalLink);
 }
 
 // *****************************************************************************
@@ -4288,11 +4318,6 @@ USB_AUDIO_V1_FORMAT_TAG USB_HOST_AUDIO_V1_StreamingInterfaceFormatTagGet
     asIntrfcSettingIdx = (uint8_t)(interfaceSettingObj >> 16);  
     
     audioInstanceInfo = &gUSBHostAudioInstance[audioInstance];
-    
-    if (audioInstanceInfo == NULL)
-    {
-        return USB_AUDIO_FORMAT_TYPE_I_UNDEFINED; 
-    }
     
     return (USB_AUDIO_V1_FORMAT_TAG)audioInstanceInfo->streamInf[aSIntrfcIdx].audioStreamSetting[asIntrfcSettingIdx].wFormatTag; 
 }
@@ -4354,12 +4379,9 @@ uint8_t USB_HOST_AUDIO_V1_StreamingInterfaceChannelNumbersGet
     asIntrfcSettingIdx = (uint8_t)(interfaceSettingObj >> 16);  
     
     audioInstanceInfo = &gUSBHostAudioInstance[audioInstance];
+            
+    nChannels =  audioInstanceInfo->streamInf[aSIntrfcIdx].audioStreamSetting[asIntrfcSettingIdx].bNrChannels;
     
-    if (audioInstanceInfo != NULL)
-    {
-    
-        nChannels =  audioInstanceInfo->streamInf[aSIntrfcIdx].audioStreamSetting[asIntrfcSettingIdx].bNrChannels;
-    }
     return nChannels; 
 }
 
@@ -4418,11 +4440,7 @@ uint8_t USB_HOST_AUDIO_V1_StreamingInterfaceSubFrameSizeGet
     asIntrfcSettingIdx = (uint8_t)(interfaceSettingObj >> 16);  
     
     audioInstanceInfo = &gUSBHostAudioInstance[audioInstance];
-    if (audioInstanceInfo == NULL)
-    {
-        return 0; 
-    }
-    
+       
     return audioInstanceInfo->streamInf[aSIntrfcIdx].audioStreamSetting[asIntrfcSettingIdx].bSubframeSize; 
 }
 
@@ -4482,12 +4500,9 @@ uint8_t USB_HOST_AUDIO_V1_StreamingInterfaceBitResolutionGet
     asIntrfcSettingIdx = (uint8_t)(interfaceSettingObj >> 16);  
     
     audioInstanceInfo = &gUSBHostAudioInstance[audioInstance];
-    
-    if (audioInstanceInfo != NULL)
-    {
-        bitResolution = audioInstanceInfo->streamInf[aSIntrfcIdx].audioStreamSetting[asIntrfcSettingIdx].bBitResolution;
-    }
-    
+        
+    bitResolution = audioInstanceInfo->streamInf[aSIntrfcIdx].audioStreamSetting[asIntrfcSettingIdx].bBitResolution;
+        
     return  bitResolution; 
 }
 
@@ -4547,11 +4562,6 @@ uint8_t USB_HOST_AUDIO_V1_StreamingInterfaceSamplingFrequencyTypeGet
     
     audioInstanceInfo = &gUSBHostAudioInstance[audioInstance];
     
-    if (audioInstanceInfo == NULL)
-    {
-        return 0; 
-    }
-    
     return audioInstanceInfo->streamInf[aSIntrfcIdx].audioStreamSetting[asIntrfcSettingIdx].bSamFreqType; 
 }
 
@@ -4610,11 +4620,6 @@ uint8_t* USB_HOST_AUDIO_V1_StreamingInterfaceSamplingFrequenciesGet
     asIntrfcSettingIdx = (uint8_t)(interfaceSettingObj >> 16);  
     
     audioInstanceInfo = &gUSBHostAudioInstance[audioInstance];
-    
-    if (audioInstanceInfo == NULL)
-    {
-        return 0; 
-    }
     
     return audioInstanceInfo->streamInf[aSIntrfcIdx].audioStreamSetting[asIntrfcSettingIdx].tSamFreq; 
 }
@@ -4678,14 +4683,9 @@ USB_HOST_AUDIO_V1_STREAM_DIRECTION USB_HOST_AUDIO_V1_StreamingInterfaceDirection
     
     audioInstanceInfo = &gUSBHostAudioInstance[audioInstance];
     
-    if (audioInstanceInfo == NULL)
-    {
-        return direction; 
-    }
-    
     dataEndpointDescriptor = &audioInstanceInfo->streamInf[aSIntrfcIdx].audioStreamSetting[asIntrfcSettingIdx].isoDataEndpointDesc; 
     
-    direction = dataEndpointDescriptor->dirn; 
+    direction = (USB_HOST_AUDIO_V1_STREAM_DIRECTION)dataEndpointDescriptor->dirn; 
        
     return direction; 
 }
@@ -4811,9 +4811,9 @@ USB_HOST_AUDIO_V1_0_STREAM_RESULT USB_HOST_AUDIO_V1_0_StreamEnable
                      asInterface->asInterfaceHandle, 
                      requestHandle, 
                      alternateSetting,
-                     (uintptr_t)alternateSetting | (uintptr_t)USB_HOST_AUDIO_V1_API_VERSION_FLAG_STREAM_ENABLE << 8
+                     (uintptr_t)alternateSetting | ((uintptr_t)USB_HOST_AUDIO_V1_API_VERSION_FLAG_STREAM_ENABLE << 8)
                  ); 
-    return hostResult; 
+    return (USB_HOST_AUDIO_V1_0_STREAM_RESULT)hostResult; 
 }
 // *****************************************************************************
 /* Function:
@@ -4884,13 +4884,7 @@ USB_HOST_AUDIO_V1_0_STREAM_RESULT USB_HOST_AUDIO_V1_0_StreamDisable
         
     /* Get pointer to Audio Instance */
     audioInstanceInfo = &gUSBHostAudioInstance[audioInstanceIndex]; 
-    
-    /* NULL check */
-    if (audioInstanceInfo == NULL)
-    {
-        return USB_HOST_AUDIO_V1_0_STREAM_RESULT_PARAMETER_INVALID; 
-    }
-    
+
     /* Get pointer to Audio Streaming Interface */
     asInterface = &audioInstanceInfo->streamInf[asIntrefaceIndex]; 
     
@@ -4906,16 +4900,16 @@ USB_HOST_AUDIO_V1_0_STREAM_RESULT USB_HOST_AUDIO_V1_0_StreamDisable
                       asInterface->asInterfaceHandle, 
                       requestHandle, 
                       0,
-                      (uintptr_t)alternateSetting | (uintptr_t)USB_HOST_AUDIO_V1_API_VERSION_FLAG_STREAM_DISABLE << 8  
+                      (uintptr_t)alternateSetting | ((uintptr_t)USB_HOST_AUDIO_V1_API_VERSION_FLAG_STREAM_DISABLE << 8)  
                   ); 
-    return hostResult; 
+    return (USB_HOST_AUDIO_V1_0_STREAM_RESULT)hostResult; 
 }
 
 // *****************************************************************************
 /* Function:
     USB_HOST_AUDIO_V1_0_RESULT USB_HOST_AUDIO_V1_0_ControlRequest
     (
-        USB_HOST_AUDIO_V1_0_OBJ audioObj,
+        USB_HOST_AUDIO_V1_0_OBJ OBJ,
         USB_HOST_AUDIO_V1_0_REQUEST_HANDLE * requestHandle,
         USB_SETUP_PACKET *setupPacket,
         void * data,
@@ -4927,7 +4921,7 @@ USB_HOST_AUDIO_V1_0_STREAM_RESULT USB_HOST_AUDIO_V1_0_StreamDisable
     Schedules an Audio v1.0 control transfer.
 
   Description:
-    This function schedules an Audio v1.0 control transfer. audioObj is an 
+    This function schedules an Audio v1.0 control transfer. OBJ is an 
     Object of Audio v1.0 class driver to which the audio control transfer is to
     be scheduled. setupPacket points to the setup command to be sent in the 
     Setup Stage of the control transfer. The size and the direction of the data
@@ -4986,7 +4980,7 @@ USB_HOST_AUDIO_V1_0_STREAM_RESULT USB_HOST_AUDIO_V1_0_StreamDisable
 */
 USB_HOST_AUDIO_V1_0_RESULT USB_HOST_AUDIO_V1_0_ControlRequest
 (
-    USB_HOST_AUDIO_V1_0_OBJ audioObj,
+    USB_HOST_AUDIO_V1_0_OBJ OBJ,
     USB_HOST_AUDIO_V1_0_REQUEST_HANDLE * transferHandle,
     USB_SETUP_PACKET *setupPacket,
     void * data,
@@ -4995,7 +4989,7 @@ USB_HOST_AUDIO_V1_0_CONTROL_CALLBACK callback,
 )
 {
     USB_HOST_AUDIO_V1_0_RESULT result = USB_HOST_AUDIO_V1_0_RESULT_FAILURE; 
-    USB_HOST_AUDIO_V1_0_INSTANCE *audioInstanceInfo = (USB_HOST_AUDIO_V1_0_INSTANCE *)audioObj ;
+    USB_HOST_AUDIO_V1_0_INSTANCE *audioInstanceInfo = (USB_HOST_AUDIO_V1_0_INSTANCE *)OBJ ;
     OSAL_CRITSECT_DATA_TYPE IntState;
     
 
@@ -5021,19 +5015,19 @@ USB_HOST_AUDIO_V1_0_CONTROL_CALLBACK callback,
     /* Prevent other tasks pre-empting this sequence of code */ 
     IntState = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
     
-    memcpy (&audioInstanceInfo->setupPacket, setupPacket, sizeof (USB_SETUP_PACKET)); 
+    (void) memcpy (&audioInstanceInfo->setupPacket, setupPacket, sizeof (USB_SETUP_PACKET)); 
    
     audioInstanceInfo->audioControlObj.inUse = true; 
     audioInstanceInfo->audioControlObj.context = context; 
     audioInstanceInfo->audioControlObj.callback = (USB_HOST_AUDIO_V1_ENTITY_REQUEST_CALLBACK)callback; 
     OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, IntState);
-    result = USB_HOST_DeviceControlTransfer
+    result = (USB_HOST_AUDIO_V1_0_RESULT)USB_HOST_DeviceControlTransfer
              (
                  audioInstanceInfo->controlPipeHandle,
                  transferHandle,
                  &audioInstanceInfo->setupPacket,
                  (void *)data,
-                 _USB_HOST_AUDIO_V1_0_ControlRequestCallback,
+                 USB_HOST_AUDIO_V1_0_ControlRequestCallback,
                  (uintptr_t)audioInstanceInfo
              ); 
     
@@ -5096,7 +5090,7 @@ USB_HOST_AUDIO_V1_0_RESULT USB_HOST_AUDIO_V1_0_StreamGetFirst
     USB_HOST_AUDIO_STREAM_SETTING* audioStream; 
     USB_HOST_AUDIO_V1_0_INSTANCE* audioInstanceInfo = (USB_HOST_AUDIO_V1_0_INSTANCE*)audioDeviceObj;
     uint8_t alternateSetting; 
-    int count; 
+    uint32_t count; 
     
     if (audioInstanceInfo == NULL)
     {
@@ -5106,7 +5100,7 @@ USB_HOST_AUDIO_V1_0_RESULT USB_HOST_AUDIO_V1_0_StreamGetFirst
     /* Get pointer to First Stream from the Stream Group */
     asInterface = &audioInstanceInfo->streamInf[streamGroupIndex]; 
     
-    if (asInterface->nInterfaceSetting == 0)
+    if (asInterface->nInterfaceSetting == 0U)
     {
         return USB_HOST_AUDIO_V1_0_RESULT_FAILURE; 
     }
@@ -5119,9 +5113,9 @@ USB_HOST_AUDIO_V1_0_RESULT USB_HOST_AUDIO_V1_0_StreamGetFirst
        Third byte = Alternate Setting
        MSB = 0x01   */
     streamInfo->streamObj = (USB_HOST_AUDIO_V1_0_STREAM_OBJ ) (uint32_t)audioInstanceInfo->index|
-                                                              ((uint32_t)streamGroupIndex)<<8|
+                                                              ((uint32_t)streamGroupIndex<<8)|
                                                               ((uint32_t)alternateSetting<<16); 
-    streamInfo->format = audioStream->wFormatTag; 
+    streamInfo->format = (USB_AUDIO_FORMAT_CODE)audioStream->wFormatTag; 
     streamInfo->nChannels = audioStream->bNrChannels; 
     streamInfo->streamDirection = audioStream->direction; 
     streamInfo->bitResolution = audioStream->bBitResolution; 
@@ -5129,22 +5123,22 @@ USB_HOST_AUDIO_V1_0_RESULT USB_HOST_AUDIO_V1_0_StreamGetFirst
    
     streamInfo->nSamplingRates = audioStream->bSamFreqType; 
     
-    if (streamInfo->nSamplingRates > USB_HOST_AUDIO_V1_SAMPLING_FREQUENCIES_NUMBER )
+    if (streamInfo->nSamplingRates > (uint8_t)USB_HOST_AUDIO_V1_SAMPLING_FREQUENCIES_NUMBER )
     {
         streamInfo->nSamplingRates = USB_HOST_AUDIO_V1_SAMPLING_FREQUENCIES_NUMBER; 
     }
     
     /* Check if the Audio Stream supports discrete sampling frequency */
-    if (streamInfo->nSamplingRates != 0)
+    if (streamInfo->nSamplingRates != 0U)
     {
         /* Save Sampling frequencies */
         for (count = 0; count < audioStream->bSamFreqType; count++)
         {
             /* In the USB descriptors sampling frequency is 3 Bytes long. 
                We are copying it into a uint32_t */
-            streamInfo->tSamFreq[count] =  (uint32_t)audioStream->tSamFreq[count*3]  |
-                                            (uint32_t)audioStream->tSamFreq[count*3 + 1] << 8 |
-                                            (uint32_t)audioStream->tSamFreq[count*3 + 2] << 16;                                
+            streamInfo->tSamFreq[count] =  (uint32_t)audioStream->tSamFreq[count*3U]  |
+                                            ((uint32_t)audioStream->tSamFreq[count*3U + 1U] << 8) |
+                                            ((uint32_t)audioStream->tSamFreq[count*3U + 2U] << 16);                                
         }                                     
     }
     return USB_HOST_AUDIO_V1_0_RESULT_SUCCESS;     
@@ -5217,7 +5211,7 @@ USB_HOST_AUDIO_V1_0_RESULT USB_HOST_AUDIO_V1_0_StreamGetNext
     // TODO uint8_t alternateSettingIndex; 
     uint8_t nextAlternateSetting; 
     uint8_t nextAlternateSettingIndex; 
-    int count; 
+    uint32_t count; 
     
     if (audioStreamObj == (USB_HOST_AUDIO_V1_0_STREAM_OBJ)NULL)
     {
@@ -5231,13 +5225,13 @@ USB_HOST_AUDIO_V1_0_RESULT USB_HOST_AUDIO_V1_0_StreamGetNext
     audioInstanceInfo = &gUSBHostAudioInstance[audioInstanceIndex]; 
     asInterface = &audioInstanceInfo->streamInf[asIntrefaceIndex]; 
     
-    if (asInterface->nInterfaceSetting == 0)
+    if (asInterface->nInterfaceSetting == 0U)
     {
         return USB_HOST_AUDIO_V1_0_RESULT_FAILURE; 
     }
     
     /* First Stream is always the alternate setting 1 */
-    nextAlternateSetting = alternateSetting + 1;
+    nextAlternateSetting = alternateSetting + 1U;
     
     
     if (nextAlternateSetting >= asInterface->nInterfaceSetting)
@@ -5245,7 +5239,7 @@ USB_HOST_AUDIO_V1_0_RESULT USB_HOST_AUDIO_V1_0_StreamGetNext
         return USB_HOST_AUDIO_V1_0_RESULT_END_OF_STREAM_LIST; 
     }
     
-    nextAlternateSettingIndex = nextAlternateSetting-1; 
+    nextAlternateSettingIndex = nextAlternateSetting-1U; 
     audioStream =  &asInterface->audioStreamSetting[nextAlternateSettingIndex]; 
     /* Stream Object is made from 
        LSB = audio instance index 
@@ -5253,9 +5247,9 @@ USB_HOST_AUDIO_V1_0_RESULT USB_HOST_AUDIO_V1_0_StreamGetNext
        Third byte = Alternate Setting (not index)
        MSB = 0x01   */
     streamInfo->streamObj = (USB_HOST_AUDIO_V1_0_STREAM_OBJ ) (uint32_t)audioInstanceInfo->index|
-                                                              ((uint32_t)asIntrefaceIndex)<<8|
+                                                              ((uint32_t)asIntrefaceIndex<<8)|
                                                               ((uint32_t)nextAlternateSetting<<16); 
-    streamInfo->format = audioStream->wFormatTag; 
+    streamInfo->format = (USB_AUDIO_FORMAT_CODE)audioStream->wFormatTag; 
     streamInfo->nChannels = audioStream->bNrChannels; 
     streamInfo->streamDirection = audioStream->direction; 
     streamInfo->bitResolution = audioStream->bBitResolution; 
@@ -5263,12 +5257,12 @@ USB_HOST_AUDIO_V1_0_RESULT USB_HOST_AUDIO_V1_0_StreamGetNext
    
     streamInfo->nSamplingRates = audioStream->bSamFreqType; 
     
-    if (streamInfo->nSamplingRates > USB_HOST_AUDIO_V1_SAMPLING_FREQUENCIES_NUMBER )
+    if (streamInfo->nSamplingRates > (uint8_t)USB_HOST_AUDIO_V1_SAMPLING_FREQUENCIES_NUMBER )
     {
         streamInfo->nSamplingRates = USB_HOST_AUDIO_V1_SAMPLING_FREQUENCIES_NUMBER; 
     }
     
-    for (count = 0; count <= streamInfo->nSamplingRates; count++ )
+    for (count = 0; count <streamInfo->nSamplingRates; count++ )
     {
         streamInfo->tSamFreq[count] = audioStream->tSamFreq[count]; 
     }
@@ -5276,6 +5270,8 @@ USB_HOST_AUDIO_V1_0_RESULT USB_HOST_AUDIO_V1_0_StreamGetNext
     return USB_HOST_AUDIO_V1_0_RESULT_SUCCESS; 
 }
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 18.1"
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* Function:
     USB_HOST_AUDIO_V1_0_STREAM_RESULT USB_HOST_AUDIO_V1_0_StreamEventHandlerSet
@@ -5322,8 +5318,8 @@ USB_HOST_AUDIO_V1_0_RESULT USB_HOST_AUDIO_V1_0_StreamGetNext
 
 USB_HOST_AUDIO_V1_0_STREAM_RESULT USB_HOST_AUDIO_V1_0_StreamEventHandlerSet
 (
-    USB_HOST_AUDIO_V1_0_STREAM_HANDLE streamHandle,
-    USB_HOST_AUDIO_V1_0_STREAM_EVENT_HANDLER streamEventHandler,
+    USB_HOST_AUDIO_V1_0_STREAM_HANDLE handle,
+    USB_HOST_AUDIO_V1_0_STREAM_EVENT_HANDLER appAudioHandler,
     uintptr_t context
 )
 { 
@@ -5337,11 +5333,11 @@ USB_HOST_AUDIO_V1_0_STREAM_RESULT USB_HOST_AUDIO_V1_0_StreamEventHandlerSet
     
     
     /* Find Audio Stream from audioStreamObj */
-    if (streamHandle != USB_HOST_AUDIO_V1_0_STREAM_HANDLE_INVALID)
+    if (handle != USB_HOST_AUDIO_V1_0_STREAM_HANDLE_INVALID)
     {
-        audioInstanceIndex = (uint8_t)streamHandle;
-        asIntrefaceIndex = (uint8_t)(streamHandle>>8); 
-        alternateSetting = (uint8_t)(streamHandle>>16); 
+        audioInstanceIndex = (uint8_t)handle;
+        asIntrefaceIndex = (uint8_t)(handle>>8); 
+        alternateSetting = (uint8_t)(handle>>16); 
         
         alternateSettingIndex = alternateSetting; 
         
@@ -5349,14 +5345,14 @@ USB_HOST_AUDIO_V1_0_STREAM_RESULT USB_HOST_AUDIO_V1_0_StreamEventHandlerSet
         asInterface = &audioInstanceInfo->streamInf[asIntrefaceIndex]; 
         audioStream =  &(asInterface->audioStreamSetting[alternateSettingIndex]);
         
-        if (streamEventHandler != (USB_HOST_AUDIO_V1_0_STREAM_EVENT_HANDLER)NULL)
+        if (appAudioHandler != (USB_HOST_AUDIO_V1_0_STREAM_EVENT_HANDLER)NULL)
         {
-            audioStream->streamEventHandler = streamEventHandler;
+            audioStream->streamEventHandler = appAudioHandler;
             audioStream->context = context; 
             return USB_HOST_AUDIO_V1_0_STREAM_SUCCESS; 
         }
     }
-    return USB_HOST_AUDIO_V1_0_RESULT_PARAMETER_INVALID; 
+    return (USB_HOST_AUDIO_V1_0_STREAM_RESULT)USB_HOST_AUDIO_V1_0_RESULT_PARAMETER_INVALID; 
 }
 
 // *****************************************************************************
@@ -5430,7 +5426,7 @@ USB_HOST_AUDIO_V1_0_STREAM_RESULT USB_HOST_AUDIO_V1_0_StreamSamplingRateSet
     asIntrefaceIndex = (uint8_t)(streamHandle>>8); 
     alternateSetting = (uint8_t)(streamHandle>>16); 
     
-    if (alternateSetting == 0)
+    if (alternateSetting == 0U)
     {
         return USB_HOST_AUDIO_V1_0_STREAM_RESULT_PARAMETER_INVALID;
     }
@@ -5447,7 +5443,7 @@ USB_HOST_AUDIO_V1_0_STREAM_RESULT USB_HOST_AUDIO_V1_0_StreamSamplingRateSet
         return USB_HOST_AUDIO_V1_0_STREAM_RESULT_REQUEST_BUSY; 
     }
     
-    if (audioStream->nEndpoints == 0)
+    if (audioStream->nEndpoints == 0U)
     {
         return USB_HOST_AUDIO_V1_0_STREAM_RESULT_FAILURE; 
     }
@@ -5462,8 +5458,8 @@ USB_HOST_AUDIO_V1_0_STREAM_RESULT USB_HOST_AUDIO_V1_0_StreamSamplingRateSet
                                 | USB_SETUP_TYPE_CLASS
                                 | USB_SETUP_RECIPIENT_ENDPOINT ;
 
-    setupPacket->bRequest = USB_AUDIO_CS_SET_CUR;
-    setupPacket->controlSelector = USB_AUDIO_SAMPLING_FREQ_CONTROL;
+    setupPacket->bRequest = (uint8_t)USB_AUDIO_CS_SET_CUR;
+    setupPacket->controlSelector = (uint8_t)USB_AUDIO_SAMPLING_FREQ_CONTROL;
     
     setupPacket->endpointNumber = audioStream->isoDataEndpointDesc.bEndpointAddress;
     
@@ -5475,13 +5471,22 @@ USB_HOST_AUDIO_V1_0_STREAM_RESULT USB_HOST_AUDIO_V1_0_StreamSamplingRateSet
                  requestHandle,
                  (USB_SETUP_PACKET *)setupPacket,
                  (void *)samplingRate,
-                 _USB_HOST_AUDIO_V1_SetSampleRateCallback,
+                 F_USB_HOST_AUDIO_V1_SetSampleRateCallback,
                  (uintptr_t)streamHandle
              ); 
     
-    return hostResult;
+    return (USB_HOST_AUDIO_V1_0_STREAM_RESULT)hostResult;
     
 }
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.5"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.6"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 /***************  End of  File ************************************/
 
 

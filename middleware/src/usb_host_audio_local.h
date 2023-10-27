@@ -39,9 +39,16 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _USB_HOST_AUDIO_LOCAL_H
-#define _USB_HOST_AUDIO_LOCAL_H
+#ifndef USB_HOST_AUDIO_LOCAL_H
+#define USB_HOST_AUDIO_LOCAL_H
 
+/* MISRA C-2012 Rule 5.2, 8.6 deviated below. Deviation record ID -  
+   H3_MISRAC_2012_R_5_2_DR_1 & H3_MISRAC_2012_R_8_6_DR_1*/
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:1 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )   
 
 // *****************************************************************************
 // *****************************************************************************
@@ -144,7 +151,7 @@ typedef enum
  #endif
 
 #define USB_HOST_AUDIO_V1_0_INSTANCE  USB_HOST_AUDIO_V1_INSTANCE
-#define _USB_HOST_AUDIO_V1_0_ControlRequestCallback _USB_HOST_AUDIO_V1_ControlRequestCallback
+#define USB_HOST_AUDIO_V1_0_ControlRequestCallback F_USB_HOST_AUDIO_V1_ControlRequestCallback
 // *****************************************************************************
 /* USB Host Audio v1.0 Control Transfer Object
 
@@ -460,32 +467,32 @@ typedef struct
 }
 USB_HOST_AUDIO_V1_TERMINAL_HEADER_DESCRIPTOR; 
 
-void _USB_HOST_AUDIO_V1_Initialize (void *init); 
-void _USB_HOST_AUDIO_V1_Deinitialize(void);
-void _USB_HOST_AUDIO_V1_Reinitialize (void * init);
-void _USB_HOST_AUDIO_V1_InterfaceAssign
+void F_USB_HOST_AUDIO_V1_Initialize (void *init); 
+void F_USB_HOST_AUDIO_V1_Deinitialize(void);
+void F_USB_HOST_AUDIO_V1_Reinitialize (void * init);
+void F_USB_HOST_AUDIO_V1_InterfaceAssign
  (
      USB_HOST_DEVICE_INTERFACE_HANDLE * interfaces,
      USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
      size_t nInterfaces,
      uint8_t * descriptor
  );
-void _USB_HOST_AUDIO_V1_InterfaceRelease(USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle);
-void _USB_HOST_AUDIO_V1_InterfaceTasks( USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle);
-USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_AUDIO_V1_InterfaceEventHandler
+void F_USB_HOST_AUDIO_V1_InterfaceRelease(USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle);
+void F_USB_HOST_AUDIO_V1_InterfaceTasks( USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle);
+USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE F_USB_HOST_AUDIO_V1_InterfaceEventHandler
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle,
     USB_HOST_DEVICE_INTERFACE_EVENT event,
     void * eventData,
     uintptr_t context
 );
-void _USB_HOST_AUDIO_V1_ReleaseInterface
+void F_USB_HOST_AUDIO_V1_ReleaseInterface
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
 );
 
 
-void _USB_HOST_Audio_StreamEnableCallback
+void F_USB_HOST_Audio_StreamEnableCallback
 (
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
     USB_HOST_REQUEST_HANDLE requestHandle,
@@ -493,7 +500,7 @@ void _USB_HOST_Audio_StreamEnableCallback
     size_t size,
     uintptr_t context
 ); 
-void _USB_HOST_Audio_StreamDisableCallback
+void F_USB_HOST_Audio_StreamDisableCallback
 (
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
     USB_HOST_REQUEST_HANDLE requestHandle,
@@ -501,7 +508,7 @@ void _USB_HOST_Audio_StreamDisableCallback
     size_t size,
     uintptr_t context
 ); 
-bool _USB_HOST_AUDIO_V1_IntrfcHndlToStrmIntrfcPtr
+bool F_USB_HOST_AUDIO_V1_IntrfcHndlToStrmIntrfcPtr
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle, 
     USB_HOST_AUDIO_STREAMING_INTERFACE** strmIntfcPtr, 
@@ -509,7 +516,7 @@ bool _USB_HOST_AUDIO_V1_IntrfcHndlToStrmIntrfcPtr
     uint8_t *asIntrfcIndex
 ); 
 
-void _USB_HOST_AUDIO_V1_ControlRequestCallback
+void F_USB_HOST_AUDIO_V1_ControlRequestCallback
 (
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
     USB_HOST_REQUEST_HANDLE requestHandle,
@@ -518,12 +525,12 @@ void _USB_HOST_AUDIO_V1_ControlRequestCallback
     uintptr_t context
 ); 
 
-int _USB_HOST_AUDIO_V1_InterfaceHandleToAudioInstance
+int F_USB_HOST_AUDIO_V1_InterfaceHandleToAudioInstance
 ( 
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
 ); 
 
-void _USB_HOST_AUDIO_V1_SetSampleFrequencyCallback
+void F_USB_HOST_AUDIO_V1_SetSampleFrequencyCallback
 (
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
     USB_HOST_REQUEST_HANDLE requestHandle,
@@ -532,7 +539,7 @@ void _USB_HOST_AUDIO_V1_SetSampleFrequencyCallback
     uintptr_t context
 ); 
 
-USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_ControlRequest
+USB_HOST_AUDIO_V1_RESULT F_USB_HOST_AUDIO_V1_ControlRequest
 (
     USB_HOST_AUDIO_V1_OBJ audioObj,
     USB_HOST_AUDIO_V1_REQUEST_HANDLE * transferHandle,
@@ -540,7 +547,7 @@ USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_ControlRequest
     void * data
 ); 
 
-USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_StreamWrite 
+USB_HOST_AUDIO_V1_RESULT F_USB_HOST_AUDIO_V1_StreamWrite 
 (
     USB_HOST_AUDIO_V1_STREAM_HANDLE streamHandle,
     USB_HOST_AUDIO_V1_STREAM_TRANSFER_HANDLE * transferHandle,
@@ -549,7 +556,7 @@ USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_StreamWrite
     uint8_t flag
 ); 
 
-USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_StreamRead 
+USB_HOST_AUDIO_V1_RESULT F_USB_HOST_AUDIO_V1_StreamRead 
 (
     USB_HOST_AUDIO_V1_STREAM_HANDLE streamHandle,
     USB_HOST_AUDIO_V1_STREAM_TRANSFER_HANDLE * transferHandle,
@@ -558,7 +565,7 @@ USB_HOST_AUDIO_V1_RESULT _USB_HOST_AUDIO_V1_StreamRead
     uint8_t apiVersionFlag    
 );
 
-void _USB_HOST_AUDIO_V1_SetSampleRateCallback
+void F_USB_HOST_AUDIO_V1_SetSampleRateCallback
 (
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
     USB_HOST_REQUEST_HANDLE requestHandle,
@@ -567,16 +574,31 @@ void _USB_HOST_AUDIO_V1_SetSampleRateCallback
     uintptr_t context
 ); 
 
-bool _USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
+bool F_USB_HOST_AUDIO_V1_StreamingInterfaceInitialize
 (
     USB_HOST_AUDIO_V1_INSTANCE * audioInstance, 
     USB_INTERFACE_DESCRIPTOR * descriptor
 ); 
 
-bool _USB_HOST_AUDIO_V1_ControlInterfaceInitialize 
+bool F_USB_HOST_AUDIO_V1_ControlInterfaceInitialize 
 (
     USB_HOST_AUDIO_V1_INSTANCE * audioInstance
 ); 
+
+void F_USB_HOST_AUDIO_V1_GetSampleFrequencyCallback
+(
+    USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
+    USB_HOST_REQUEST_HANDLE requestHandle,
+    USB_HOST_RESULT result,
+    size_t size,
+    uintptr_t context
+);
+
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma GCC diagnostic pop 
+/* MISRAC 2012 deviation block end */
 #endif
 
  /************ End of file *************************************/
