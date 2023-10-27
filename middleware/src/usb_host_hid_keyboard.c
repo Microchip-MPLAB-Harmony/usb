@@ -56,9 +56,9 @@
 
 
 /* Keyboard driver information on a per instance basis */
-USB_HOST_HID_KEYBOARD_DATA_OBJ keyboardData
+static USB_HOST_HID_KEYBOARD_DATA_OBJ keyboardData
         [USB_HOST_HID_USAGE_DRIVER_SUPPORT_NUMBER];
-USB_HOST_HID_KEYBOARD_EVENT_HANDLER appKeyboardHandler;
+static USB_HOST_HID_KEYBOARD_EVENT_HANDLER appKeyboardHandler;
 
 
 // *****************************************************************************
@@ -77,6 +77,12 @@ USB_HOST_HID_KEYBOARD_EVENT_HANDLER appKeyboardHandler;
   Remarks:
    Function registered should be of type USB_HOST_HID_KEYBOARD_EVENT_HANDLER.
 */
+// *****************************************************************************
+/* MISRA C-2012 Rule 5.1 deviate: 1
+  Deviation record ID - H3_MISRAC_2012_R_5_1_DR_1*/
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1"
 
 USB_HOST_HID_KEYBOARD_RESULT USB_HOST_HID_KEYBOARD_EventHandlerSet
 (
@@ -190,7 +196,7 @@ USB_HOST_HID_KEYBOARD_RESULT USB_HOST_HID_KEYBOARD_ReportSend
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_HID_KEYBOARD_EventHandler
+    void USB_HOST_HID_KEYBOARD_EventHandler
     (
         USB_HOST_HID_OBJ_HANDLE handle,
         USB_HOST_HID_EVENT event,
@@ -207,7 +213,7 @@ USB_HOST_HID_KEYBOARD_RESULT USB_HOST_HID_KEYBOARD_ReportSend
     This is a local function and should not be called by application directly.
 */
 
-void _USB_HOST_HID_KEYBOARD_EventHandler
+void USB_HOST_HID_KEYBOARD_EventHandler
 (
     USB_HOST_HID_OBJ_HANDLE handle,
     USB_HOST_HID_EVENT event,
@@ -239,11 +245,11 @@ void _USB_HOST_HID_KEYBOARD_EventHandler
                         keyboardData[loop].outputReportID = 0;
                         keyboardData[loop].state = USB_HOST_HID_KEYBOARD_ATTACHED;
                         
-                        memset(&keyboardData[loop].appData, 0,
+                        (void) memset(&keyboardData[loop].usageDriverData, 0,
                                 sizeof(USB_HOST_HID_KEYBOARD_DATA));
-                        memset(&keyboardData[loop].lastKeyCode, 0,
+                        (void) memset(&keyboardData[loop].lastKeyCode, 0,
                                 sizeof(keyboardData[loop].lastKeyCode));
-                        memset((void *)keyboardData[loop].buffer, 0,
+                       (void) memset((void *)keyboardData[loop].buffer, 0,
                                 sizeof(keyboardData[loop].buffer));
                         break;
                     }
@@ -286,7 +292,7 @@ void _USB_HOST_HID_KEYBOARD_EventHandler
                                 USB_HOST_HID_KEYBOARD_EVENT_DETACH,
                                 NULL);
                     }
-                    for(index = 0; index < _USB_HOST_HID_KEYBOARD_BUFFER_QUEUE_SIZE;
+                    for(index = 0; index < USB_HOST_HID_KEYBOARD_BUFFER_QUEUE_SIZE;
                             index++)
                     {
                         /* Reset the flag for all queue entries */
@@ -314,7 +320,7 @@ void _USB_HOST_HID_KEYBOARD_EventHandler
                 }
                 if(loop != USB_HOST_HID_USAGE_DRIVER_SUPPORT_NUMBER)
                 {
-                    memcpy((void *)keyboardData[loop].buffer[keyboardData[loop].index].data,
+                    (void) memcpy((void *)keyboardData[loop].buffer[keyboardData[loop].index].data,
                                     (const void *)eventData, 64);
                     
                     keyboardData[loop].state = 
@@ -335,7 +341,7 @@ void _USB_HOST_HID_KEYBOARD_EventHandler
                     /* If reached the end of queue, reset the index to start
                      * from beginning of the queue in next iteration.*/
                     if(keyboardData[loop].index ==
-                            _USB_HOST_HID_KEYBOARD_BUFFER_QUEUE_SIZE)
+                            USB_HOST_HID_KEYBOARD_BUFFER_QUEUE_SIZE)
                     {
                         /* Reset it to 0 for next iteration */
                         keyboardData[loop].index = 0;
@@ -357,7 +363,7 @@ void _USB_HOST_HID_KEYBOARD_EventHandler
                 break;
             
             default:
-                
+                /* Do Nothing */
                 break;
         
         } /* end of switch() */
@@ -367,12 +373,15 @@ void _USB_HOST_HID_KEYBOARD_EventHandler
         SYS_DEBUG_MESSAGE (SYS_ERROR_INFO,
                 "\r\nUSBHID Keyboard Driver: Invalid Keyboard Handle");
     }
-} /* End of _USB_HOST_HID_KEYBOARD_EventHandler() */
+} /* End of F_USB_HOST_HID_KEYBOARD_EventHandler() */
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
+    void USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
  
   Summary:
     Keyboard driver task routine function registered with USB HID client driver
@@ -384,17 +393,17 @@ void _USB_HOST_HID_KEYBOARD_EventHandler
     This is a local function and should not be called by application directly.
 */
 
-void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
+void USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
 {
     /* Start of local variables */
     USB_HOST_HID_LOCAL_ITEM localItem = {.delimiterBranch = 0};
     USB_HOST_HID_GLOBAL_ITEM globalItem = {.reportSize = 0};
     USB_HOST_HID_MAIN_ITEM mainItem = {.localItem = NULL};
     
-    int64_t keyboardDataBufferTemp = 0;
-    int8_t * keyboardDataBuffer = NULL;
-    int8_t *ptr = NULL;
-    int8_t dataTemp[64] = {0};
+    uint64_t keyboardDataBufferTemp = 0;
+    uint8_t * keyboardDataBuffer = NULL;
+    uint8_t *ptr = NULL;
+    uint8_t dataTemp[64] = {0};
     
     uint32_t reportOffset = 0;
     uint32_t currentReportOffsetTemp = 0;
@@ -409,7 +418,7 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
     uint8_t counter = 0;
     bool lastKeyFound = false;
     bool tobeDone = false;
-    
+    uint32_t temp_32;
     USB_HOST_HID_RESULT result = USB_HOST_HID_RESULT_FAILURE;
     /* End of local variables */
     
@@ -448,11 +457,11 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
             /*
              * Keyboard driver processes the IN Report on a sequential fashion
              * starting from counter = 0 to 
-             * (_USB_HOST_HID_KEYBOARD_BUFFER_QUEUE_SIZE - 1). The processing
+             * (USB_HOST_HID_KEYBOARD_BUFFER_QUEUE_SIZE - 1). The processing
              * starts from index 0 once maximum queue size is reached.
              */
             counter = keyboardData[keyboardIndex].counter;
-            if(counter == _USB_HOST_HID_KEYBOARD_BUFFER_QUEUE_SIZE)
+            if(counter == USB_HOST_HID_KEYBOARD_BUFFER_QUEUE_SIZE)
             {
                 keyboardData[keyboardIndex].counter = 0;
                 counter = 0;
@@ -463,7 +472,7 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
             if(keyboardData[keyboardIndex].buffer[counter].tobeDone)
             {
                 /* Keep a temp backup of the data */
-                memcpy(&dataTemp,(const void *)keyboardData[keyboardIndex].buffer
+                (void) memcpy(&dataTemp,(const uint8_t *)keyboardData[keyboardIndex].buffer
                         [counter].data, 64);
                 tobeDone = true;
             }
@@ -476,19 +485,19 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
                 keyboardData[keyboardIndex].counter++;
                 /* Reset global items only once as they are applicable
                  * through out */
-                memset(&globalItem, 0,
+                (void) memset(&globalItem, 0,
                             (size_t)sizeof(USB_HOST_HID_GLOBAL_ITEM));
                 /* Reset the app Data otherwise key count will be an issue. Also
                  data from last report if exists will lead to false key press
                  or release event */
-                memset(&(keyboardData[keyboardIndex].appData), 0,
+                (void) memset(&(keyboardData[keyboardIndex].usageDriverData), 0,
                         (size_t)sizeof(USB_HOST_HID_KEYBOARD_DATA));
                 do
                 {
                     /* Reset the field data except global items */
-                    memset(&localItem, 0, 
+                    (void) memset(&localItem, 0, 
                             (size_t)sizeof(USB_HOST_HID_LOCAL_ITEM));
-                    memset(&(mainItem.data), 0,
+                    (void) memset(&(mainItem.data), 0,
                             (size_t)sizeof(USB_HID_MAIN_ITEM_OPTIONAL_DATA));
                     mainItem.tag = USB_HID_REPORT_TYPE_ERROR;
 
@@ -500,12 +509,12 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
                     {
                         /* Copy the data as while processing the last field
                          we have changed the data for numbered report.*/
-                        memcpy((void *)keyboardData[keyboardIndex].buffer
+                        (void) memcpy((void *)keyboardData[keyboardIndex].buffer
                                 [counter].data,
                                 (const void *)&dataTemp, 64);
                         
-                        if(mainItem.tag ==
-                                USB_HID_MAIN_ITEM_TAG_BEGIN_COLLECTION)
+                        if((uint32_t)mainItem.tag ==
+                                (uint32_t)USB_HID_MAIN_ITEM_TAG_BEGIN_COLLECTION)
                         {                
                             /* Do not change report offset as they do not
                              * create data fields. Just reset the global item
@@ -516,16 +525,16 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
                              */
                         }/* Main item = BEGIN COLLECTION */
                         
-                        else if(mainItem.tag == 
-                                USB_HID_MAIN_ITEM_TAG_END_COLLECTION)
+                        else if((uint32_t)mainItem.tag == 
+                                (uint32_t)USB_HID_MAIN_ITEM_TAG_END_COLLECTION)
                         {
                             /* Do not change report offset as they do not
                              * create data fields*/
                         }/* Main item = END COLLECTION */
                         
-                        else if(mainItem.tag == USB_HID_MAIN_ITEM_TAG_INPUT)
+                        else if((uint32_t)mainItem.tag == (uint32_t)USB_HID_MAIN_ITEM_TAG_INPUT)
                         {
-                            if(((mainItem.globalItem)->reportCount == 0))
+                            if(((mainItem.globalItem)->reportCount == 0U))
                             {
                                 /* Try looking for the next main item as this
                                  * item will not create any data field.
@@ -534,7 +543,7 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                 continue;
                             }
 
-                            if(!((mainItem.globalItem)->reportID == 0))
+                            if(!((mainItem.globalItem)->reportID == 0U))
                             {
                                 /* Numbered report */
                                 if(keyboardData[keyboardIndex].buffer
@@ -547,9 +556,9 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                         continue;
                                 }
                                 /* Numbered Report. Shift right by 1 byte */
-                                for(loop = 0; loop < 64; loop ++)
+                                for(loop = 0; loop < 64U; loop ++)
                                 {
-                                    if(loop == 63)
+                                    if(loop == 63U)
                                     {
                                         keyboardData[keyboardIndex].buffer
                                                 [counter].data[loop] = 0;
@@ -558,27 +567,27 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                     keyboardData[keyboardIndex].buffer
                                             [counter].data[loop] = 
                                             keyboardData[keyboardIndex].buffer
-                                            [counter].data[loop + 1];
+                                            [counter].data[loop + 1U];
                                     
                                 }
                             } /* end of if numbered report */
                             
-                            keyboardDataBuffer = (int8_t *)keyboardData[keyboardIndex].buffer
+                            keyboardDataBuffer = keyboardData[keyboardIndex].buffer
                                                     [counter].data;
                             
                             currentReportOffsetTemp = reportOffset;
-                            reportOffset = reportOffset + 
-                                    (mainItem.globalItem)->reportCount *
-                                    (mainItem.globalItem)->reportSize;
+                            reportOffset = ((reportOffset) + 
+                                    ((mainItem.globalItem)->reportCount) *
+                                    ((mainItem.globalItem)->reportSize));
                             
                             /* Keyboard keys handling logic*/
-                            if((((0xFF00 & (mainItem.globalItem)->usagePage)>>8) 
-                                    == USB_HID_USAGE_PAGE_KEYBOARD_KEYPAD) || 
-                                    ((0x00FF & (mainItem.globalItem)->usagePage)
-                                        == USB_HID_USAGE_PAGE_KEYBOARD_KEYPAD))
+                            if((((0xFF00U & (uint32_t)(mainItem.globalItem)->usagePage)>>8) 
+                                    == (uint32_t)USB_HID_USAGE_PAGE_KEYBOARD_KEYPAD) || 
+                                    ((0x00FFU & (uint32_t)(mainItem.globalItem)->usagePage)
+                                        == (uint32_t)USB_HID_USAGE_PAGE_KEYBOARD_KEYPAD))
                             {
-                                if(!(mainItem.data.inputOptionalData.isConstant) &&
-                                        (mainItem.data.inputOptionalData.isVariable))
+                                if((mainItem.data.inputOptionalData.isConstant == 0U) &&
+                                        (mainItem.data.inputOptionalData.isVariable != 0U))
                                 {
                                     /* Modifier byte */
                                     if(mainItem.localItem->usageMinMax.valid)
@@ -587,64 +596,64 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                         while(usage <= 
                                                 (mainItem.localItem->usageMinMax.max))
                                         {
-                                            keyboardDataBuffer = (int8_t *)keyboardData[keyboardIndex].buffer
+                                            keyboardDataBuffer = keyboardData[keyboardIndex].buffer
                                                     [counter].data;
 
-                                            if((0x00FF & usage) == USB_HID_KEYBOARD_KEYPAD_KEYBOARD_LEFT_CONTROL)
+                                            if((0x00FFU & usage) == (uint32_t)USB_HID_KEYBOARD_KEYPAD_KEYBOARD_LEFT_CONTROL)
                                             {
-                                                keyboardDataBuffer = keyboardDataBuffer + currentReportOffsetTemp/8;
-                                                keyboardData[keyboardIndex].appData.modifierKeysData.leftControl = 
-                                                    (bool)(((*keyboardDataBuffer) >> (currentReportOffsetTemp % 8))
-                                                            & 0x01);
+                                                keyboardDataBuffer = keyboardDataBuffer + (currentReportOffsetTemp/8U);
+                                                keyboardData[keyboardIndex].usageDriverData.modifierKeysData.leftControl = 
+                                                    (uint8_t)((((uint32_t)*keyboardDataBuffer) >> (currentReportOffsetTemp % 8U))
+                                                            & 0x01U);
                                             }
-                                            if((0x00FF & usage) == USB_HID_KEYBOARD_KEYPAD_KEYBOARD_LEFT_SHIFT)
+                                            if((0x00FFU & usage) == (uint32_t)USB_HID_KEYBOARD_KEYPAD_KEYBOARD_LEFT_SHIFT)
                                             {
-                                                keyboardDataBuffer = keyboardDataBuffer + currentReportOffsetTemp/8;
-                                                keyboardData[keyboardIndex].appData.modifierKeysData.leftShift = 
-                                                    (bool)(((*keyboardDataBuffer) >> (currentReportOffsetTemp % 8))
-                                                            & 0x01);
+                                                keyboardDataBuffer = keyboardDataBuffer + (currentReportOffsetTemp/8U);
+                                                keyboardData[keyboardIndex].usageDriverData.modifierKeysData.leftShift = 
+                                                    (uint8_t)((((uint32_t)*keyboardDataBuffer) >> (currentReportOffsetTemp % 8U))
+                                                            & 0x01U);
                                             }
-                                            if((0x00FF & usage) == USB_HID_KEYBOARD_KEYPAD_KEYBOARD_LEFT_ALT)
+                                            if((0x00FFU & usage) == (uint32_t)USB_HID_KEYBOARD_KEYPAD_KEYBOARD_LEFT_ALT)
                                             {
-                                                keyboardDataBuffer = keyboardDataBuffer + currentReportOffsetTemp/8;
-                                                keyboardData[keyboardIndex].appData.modifierKeysData.leftAlt = 
-                                                    (bool)(((*keyboardDataBuffer) >> (currentReportOffsetTemp % 8))
-                                                            & 0x01);
+                                                keyboardDataBuffer = keyboardDataBuffer + (currentReportOffsetTemp/8U);
+                                                keyboardData[keyboardIndex].usageDriverData.modifierKeysData.leftAlt = 
+                                                    (uint8_t)((((uint32_t)*keyboardDataBuffer) >> (currentReportOffsetTemp % 8U))
+                                                            & 0x01U);
                                             }
-                                            if((0x00FF & usage) == USB_HID_KEYBOARD_KEYPAD_KEYBOARD_LEFT_GUI)
+                                            if((0x00FFU & usage) == (uint32_t)USB_HID_KEYBOARD_KEYPAD_KEYBOARD_LEFT_GUI)
                                             {
-                                                keyboardDataBuffer = keyboardDataBuffer + currentReportOffsetTemp/8;
-                                                keyboardData[keyboardIndex].appData.modifierKeysData.leftGui = 
-                                                    (bool)(((*keyboardDataBuffer) >> (currentReportOffsetTemp % 8))
-                                                            & 0x01);
+                                                keyboardDataBuffer = keyboardDataBuffer + (currentReportOffsetTemp/8U);
+                                                keyboardData[keyboardIndex].usageDriverData.modifierKeysData.leftGui = 
+                                                    (uint8_t)((((uint32_t)*keyboardDataBuffer) >> (currentReportOffsetTemp % 8U))
+                                                            & 0x01U);
                                             }
-                                            if((0x00FF & usage) == USB_HID_KEYBOARD_KEYPAD_KEYBOARD_RIGHT_CONTROL)
+                                            if((0x00FFU & usage) == (uint32_t)USB_HID_KEYBOARD_KEYPAD_KEYBOARD_RIGHT_CONTROL)
                                             {
-                                                keyboardDataBuffer = keyboardDataBuffer + currentReportOffsetTemp/8;
-                                                keyboardData[keyboardIndex].appData.modifierKeysData.rightControl = 
-                                                    (bool)(((*keyboardDataBuffer) >> (currentReportOffsetTemp % 8))
-                                                            & 0x01);
+                                                keyboardDataBuffer = keyboardDataBuffer + (currentReportOffsetTemp/8U);
+                                                keyboardData[keyboardIndex].usageDriverData.modifierKeysData.rightControl = 
+                                                    (uint8_t)((((uint32_t)*keyboardDataBuffer) >> (currentReportOffsetTemp % 8U))
+                                                            & 0x01U);
                                             }
-                                            if((0x00FF & usage) == USB_HID_KEYBOARD_KEYPAD_KEYBOARD_RIGHT_SHIFT)
+                                            if((0x00FFU & usage) == (uint32_t)USB_HID_KEYBOARD_KEYPAD_KEYBOARD_RIGHT_SHIFT)
                                             {
-                                                keyboardDataBuffer = keyboardDataBuffer + currentReportOffsetTemp/8;
-                                                keyboardData[keyboardIndex].appData.modifierKeysData.rightShift = 
-                                                    (bool)(((*keyboardDataBuffer) >> (currentReportOffsetTemp % 8))
-                                                            & 0x01);
+                                                keyboardDataBuffer = keyboardDataBuffer + (currentReportOffsetTemp/8U);
+                                                keyboardData[keyboardIndex].usageDriverData.modifierKeysData.rightShift = 
+                                                    (uint8_t)((((uint32_t)*keyboardDataBuffer) >> (currentReportOffsetTemp % 8U))
+                                                            & 0x01U);
                                             }
-                                            if((0x00FF & usage) == USB_HID_KEYBOARD_KEYPAD_KEYBOARD_RIGHT_ALT)
+                                            if((0x00FFU & usage) == (uint32_t)USB_HID_KEYBOARD_KEYPAD_KEYBOARD_RIGHT_ALT)
                                             {
-                                                keyboardDataBuffer = keyboardDataBuffer + currentReportOffsetTemp/8;
-                                                keyboardData[keyboardIndex].appData.modifierKeysData.rightAlt = 
-                                                    (bool)(((*keyboardDataBuffer) >> (currentReportOffsetTemp % 8))
-                                                            & 0x01);
+                                                keyboardDataBuffer = keyboardDataBuffer + (currentReportOffsetTemp/8U);
+                                                keyboardData[keyboardIndex].usageDriverData.modifierKeysData.rightAlt = 
+                                                    (uint8_t)((((uint32_t)*keyboardDataBuffer) >> (currentReportOffsetTemp % 8U))
+                                                            & 0x01U);
                                             }
-                                            if((0x00FF & usage) == USB_HID_KEYBOARD_KEYPAD_KEYBOARD_RIGHT_GUI)
+                                            if((0x00FFU & usage) == (uint32_t)USB_HID_KEYBOARD_KEYPAD_KEYBOARD_RIGHT_GUI)
                                             {
-                                                keyboardDataBuffer = keyboardDataBuffer + currentReportOffsetTemp/8;
-                                                keyboardData[keyboardIndex].appData.modifierKeysData.rightGui = 
-                                                    (bool)(((*keyboardDataBuffer) >> (currentReportOffsetTemp % 8))
-                                                            & 0x01);
+                                                keyboardDataBuffer = keyboardDataBuffer + (currentReportOffsetTemp/8U);
+                                                keyboardData[keyboardIndex].usageDriverData.modifierKeysData.rightGui = 
+                                                    (uint8_t)((((uint32_t)*keyboardDataBuffer) >> (currentReportOffsetTemp % 8U))
+                                                            & 0x01U);
                                             }
                                             /* Move to the next usage */
                                             usage++;
@@ -656,8 +665,8 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                     } /* Usage Min Max present */
                                 } /* end of if Modifier bytes */
 
-                                else if(!(mainItem.data.inputOptionalData.isConstant)
-                                        && !(mainItem.data.inputOptionalData.isVariable))
+                                else if((mainItem.data.inputOptionalData.isConstant == 0U)
+                                        && (mainItem.data.inputOptionalData.isVariable == 0U))
                                 {
                                     /* Non Modifier keys */
                                     
@@ -670,47 +679,47 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                     do
                                     {
                                         count++;
-                                        ptr = keyboardDataBuffer + currentReportOffsetTemp/8;
+                                        ptr = keyboardDataBuffer + (currentReportOffsetTemp/8U);
                                         
                                         keyboardDataBufferTemp = 0;
-                                        if((mainItem.globalItem)->reportSize >= 8)
+                                        if((mainItem.globalItem)->reportSize >= 8U)
                                         {
-                                            for (i = 0; i < (mainItem.globalItem)->reportSize/8; i++)
+                                            for (i = 0; i < ((mainItem.globalItem)->reportSize/8U); i++)
                                             {
-                                                keyboardDataBufferTemp |= ptr[i] << (i * 8);
+                                                keyboardDataBufferTemp = (keyboardDataBufferTemp | ((uint64_t)ptr[i] << (i * 8U)));
                                             }
                                             /* The reason why we do this is we
                                              are copying some bits extra. Hence
                                              now we need to remove those bits*/
-                                            keyboardDataBufferTemp >>= (currentReportOffsetTemp % 8);
-                                            keyboardDataBufferTemp &= 0xFFFFFFFF;
+                                            keyboardDataBufferTemp = keyboardDataBufferTemp >> (currentReportOffsetTemp % 8U);
+                                            keyboardDataBufferTemp = keyboardDataBufferTemp & (uint64_t)0xFFFFFFFFU;
                                         }
                                         else
                                         {
-                                            keyboardDataBufferTemp |= ptr[0];
-                                            keyboardDataBufferTemp = 
-                                                    keyboardDataBufferTemp << (8 - (mainItem.globalItem)->reportSize);
-                                            keyboardDataBufferTemp =
-                                                    keyboardDataBufferTemp >> (8 - (mainItem.globalItem)->reportSize);
-
+                                            keyboardDataBufferTemp = (uint64_t)keyboardDataBufferTemp | (uint64_t)ptr[0];
+                                            
+                                            keyboardDataBufferTemp = (uint64_t)keyboardDataBufferTemp << (8U - (mainItem.globalItem)->reportSize);
+                                                    
+                                            keyboardDataBufferTemp = (uint64_t)keyboardDataBufferTemp >> (8U - (mainItem.globalItem)->reportSize);
+                                                    
                                         }
-                                        if((keyboardDataBufferTemp != USB_HID_KEYBOARD_KEYPAD_RESERVED_NO_EVENT_INDICATED)
-                                                &&(keyboardDataBufferTemp != USB_HID_KEYBOARD_KEYPAD_KEYBOARD_ERROR_ROLL_OVER)
-                                                &&(keyboardDataBufferTemp != USB_HID_KEYBOARD_KEYPAD_KEYBOARD_POST_FAIL)
-                                                &&(keyboardDataBufferTemp != USB_HID_KEYBOARD_KEYPAD_KEYBOARD_ERROR_UNDEFINED))
+                                        if((keyboardDataBufferTemp != (uint64_t)USB_HID_KEYBOARD_KEYPAD_RESERVED_NO_EVENT_INDICATED)
+                                                &&(keyboardDataBufferTemp != (uint64_t)USB_HID_KEYBOARD_KEYPAD_KEYBOARD_ERROR_ROLL_OVER)
+                                                &&(keyboardDataBufferTemp != (uint64_t)USB_HID_KEYBOARD_KEYPAD_KEYBOARD_POST_FAIL)
+                                                &&(keyboardDataBufferTemp != (uint64_t)USB_HID_KEYBOARD_KEYPAD_KEYBOARD_ERROR_UNDEFINED))
                                         {
                                             /* Valid key press detected */
-                                            keyboardData[keyboardIndex].appData.nonModifierKeysData
-                                                    [keyboardData[keyboardIndex].appData.nNonModifierKeysData].keyCode
+                                            keyboardData[keyboardIndex].usageDriverData.nonModifierKeysData
+                                                    [keyboardData[keyboardIndex].usageDriverData.nNonModifierKeysData].keyCode
                                                     = (USB_HID_KEYBOARD_KEYPAD) keyboardDataBufferTemp;
-                                            keyboardData[keyboardIndex].appData.nonModifierKeysData
-                                                    [keyboardData[keyboardIndex].appData.nNonModifierKeysData].event
+                                            keyboardData[keyboardIndex].usageDriverData.nonModifierKeysData
+                                                    [keyboardData[keyboardIndex].usageDriverData.nNonModifierKeysData].event
                                                     = USB_HID_KEY_PRESSED;
                                             
-                                            keyboardData[keyboardIndex].appData.nonModifierKeysData
-                                                    [keyboardData[keyboardIndex].appData.nNonModifierKeysData].sysCount
+                                            keyboardData[keyboardIndex].usageDriverData.nonModifierKeysData
+                                                    [keyboardData[keyboardIndex].usageDriverData.nNonModifierKeysData].sysCount
                                                     = SYS_TIME_CounterGet();
-                                            keyboardData[keyboardIndex].appData.nNonModifierKeysData++;
+                                            keyboardData[keyboardIndex].usageDriverData.nNonModifierKeysData++;
                                         }
                                     
                                         /* Update the report offset */
@@ -720,16 +729,16 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                         
                                     } while(count < (mainItem.globalItem)->reportCount);
                                     
-                                    for(count = 0; count < 6; count++)
+                                    for(count = 0; count < 6U; count++)
                                     {
                                         /* If it is present in the past
                                          but not in current, it is key release */
                                         if(keyboardData[keyboardIndex].lastKeyCode[count]  >
                                                 USB_HID_KEYBOARD_KEYPAD_KEYBOARD_ERROR_UNDEFINED)
                                         {
-                                            for(i=0; i < 6; i++)
+                                            for(i=0; i < 6U; i++)
                                             {
-                                                if(keyboardData[keyboardIndex].appData.nonModifierKeysData[i].keyCode
+                                                if(keyboardData[keyboardIndex].usageDriverData.nonModifierKeysData[i].keyCode
                                                         == keyboardData[keyboardIndex].lastKeyCode[count])
                                                 {
                                                     lastKeyFound = true;
@@ -738,16 +747,17 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                             }
                                             if(lastKeyFound == false)
                                             {
-                                                keyboardData[keyboardIndex].appData.nonModifierKeysData
-                                                    [keyboardData[keyboardIndex].appData.nNonModifierKeysData].keyCode
+                                                keyboardData[keyboardIndex].usageDriverData.nonModifierKeysData
+                                                    [keyboardData[keyboardIndex].usageDriverData.nNonModifierKeysData].keyCode
                                                     = (USB_HID_KEYBOARD_KEYPAD)keyboardData[keyboardIndex].lastKeyCode[count];
-                                                keyboardData[keyboardIndex].appData.nonModifierKeysData
-                                                    [keyboardData[keyboardIndex].appData.nNonModifierKeysData].event
+                                                keyboardData[keyboardIndex].usageDriverData.nonModifierKeysData
+                                                    [keyboardData[keyboardIndex].usageDriverData.nNonModifierKeysData].event
                                                     = USB_HID_KEY_RELEASED;
-                                                keyboardData[keyboardIndex].appData.nonModifierKeysData
-                                                    [keyboardData[keyboardIndex].appData.nNonModifierKeysData].event
-                                                    = SYS_TIME_CounterGet();
-                                                keyboardData[keyboardIndex].appData.nNonModifierKeysData++;
+                                                temp_32 = SYS_TIME_CounterGet();
+                                                keyboardData[keyboardIndex].usageDriverData.nonModifierKeysData
+                                                    [keyboardData[keyboardIndex].usageDriverData.nNonModifierKeysData].event
+                                                    = (USB_HID_KEY_EVENT)temp_32;
+                                                keyboardData[keyboardIndex].usageDriverData.nNonModifierKeysData++;
                                             }
                                             else
                                             {
@@ -757,41 +767,53 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                             }
                                         }
                                     }
-                                    for(count = 0; count < 6; count++)
+                                    for(count = 0; count < 6U; count++)
                                     {
                                         /* Save the present key state for next
                                          * processing */
                                         keyboardData[keyboardIndex].lastKeyCode[count] = USB_HID_KEYBOARD_KEYPAD_RESERVED_NO_EVENT_INDICATED;
-                                        if(keyboardData[keyboardIndex].appData
+                                        if(keyboardData[keyboardIndex].usageDriverData
                                                 .nonModifierKeysData[count].event == USB_HID_KEY_PRESSED)
                                         {
                                             keyboardData[keyboardIndex].lastKeyCode[count] =
-                                                keyboardData[keyboardIndex].appData.nonModifierKeysData[count].keyCode;
+                                                keyboardData[keyboardIndex].usageDriverData.nonModifierKeysData[count].keyCode;
                                         }
                                     }
                                 }
+                                else
+                                {
+                                    /* Do Nothing */
+                                }
 
                             } /* Keyboard/Keypad page */
+                            else
+                            {
+                                /* Do Nothing */
+                            }
                         }/* Main item = INPUT */
 
-                        else if(mainItem.tag ==
-                                    USB_HID_MAIN_ITEM_TAG_OUTPUT)
+                        else if((uint32_t)mainItem.tag ==
+                                    (uint32_t)USB_HID_MAIN_ITEM_TAG_OUTPUT)
                         {
                             /* Change output report offset as they
                              * create data fields*/
-                            if(!(mainItem.data.inputOptionalData.isConstant) &&
-                                    (mainItem.data.inputOptionalData.isVariable) &&
-                                    !(mainItem.data.inputOptionalData.isRelative))
+                            if((mainItem.data.inputOptionalData.isConstant == 0U) &&
+                                    (mainItem.data.inputOptionalData.isVariable != 0U) &&
+                                    (mainItem.data.inputOptionalData.isRelative == 0U))
                             {
                                 keyboardData[keyboardIndex].outputReportID = 
-                                        (mainItem.globalItem)->reportID;
+                                        (uint8_t)(mainItem.globalItem)->reportID;
                             }
                         }
-                        else if(mainItem.tag ==
-                                    USB_HID_MAIN_ITEM_TAG_FEATURE)
+                        else if((uint32_t)mainItem.tag ==
+                                    (uint32_t)USB_HID_MAIN_ITEM_TAG_FEATURE)
                         {
                             /* Change feature report offset as they
                              * create data fields*/
+                        }
+                        else
+                        {
+                            /* Do Nothing */
                         }
                     }/* Field found */
 
@@ -805,13 +827,14 @@ void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle)
                 {
                     appKeyboardHandler((USB_HOST_HID_KEYBOARD_HANDLE)handle,
                                 USB_HOST_HID_KEYBOARD_EVENT_REPORT_RECEIVED,
-                                &keyboardData[keyboardIndex].appData);
+                                &keyboardData[keyboardIndex].usageDriverData);
                 }
 
             }/* end of report processing */
             break;
         default:
+            /* Do Nothing */
             break;
     }
-}/* End of _USB_HOST_HID_KEYBOARD_Task() */
+}/* End of USB_HOST_HID_KEYBOARD_Task() */
 

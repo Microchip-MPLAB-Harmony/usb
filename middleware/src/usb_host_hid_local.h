@@ -39,8 +39,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _USB_HOST_HID_LOCAL_H
-#define _USB_HOST_HID_LOCAL_H
+#ifndef USB_HOST_HID_LOCAL_H
+#define USB_HOST_HID_LOCAL_H
 
 
 // *****************************************************************************
@@ -49,36 +49,44 @@
 // *****************************************************************************
 // *****************************************************************************
 
+/* MISRA C-2012 Rule 11.1, and 11.8 deviated below. Deviation record ID -  
+    H3_MISRAC_2012_R_11_1_DR_1, H3_MISRAC_2012_R_11_8_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:3 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1" )
+
 #include "usb/usb_host_hid.h"
 #include "usb/src/usb_host_local.h"
 /*
  * Macro defines the value to be shifted to obtain item type.
  */
-#define USB_HOST_HID_ITEM_TYPE_SHIFT                           2
+#define USB_HOST_HID_ITEM_TYPE_SHIFT                           2U
 
 /*
  * Macro defines the value to be shifted to obtain item tag.
  */
-#define USB_HOST_HID_ITEM_TAG_SHIFT                            4
+#define USB_HOST_HID_ITEM_TAG_SHIFT                            4U
 
 /*
  * Macro defines the value to be masked with to obtain item type.
  */
-#define USB_HOST_HID_ITEM_TYPE_MASK                            3
+#define USB_HOST_HID_ITEM_TYPE_MASK                            3U
 
 /*
  * Macro defines the value to be masked with to obtain item tag.
  */
-#define USB_HOST_HID_ITEM_TAG_MASK                             15
+#define USB_HOST_HID_ITEM_TAG_MASK                             15U
 /*
  * Macro defines the tag value for Long items.
  */
-#define USB_HOST_HID_ITEM_TAG_LONG                             15
+#define USB_HOST_HID_ITEM_TAG_LONG                             15U
 
 /*
  * Macro defines the value to be masked with to obtain item size.
  */
-#define USB_HOST_HID_ITEM_SIZE_MASK                            3
+#define USB_HOST_HID_ITEM_SIZE_MASK                            3U
 
 /*
  * Macro defines the value to be shifted to represent
@@ -125,8 +133,8 @@
 /***********************************************
  * Read\Write Data buffers needed by for the HID function driver instance.
  ***********************************************/
-volatile uint8_t gUSBHostHIDReadBuffer[USB_HOST_HID_INSTANCES_NUMBER][64] USB_ALIGN;
-volatile uint8_t gUSBHostHIDWriteBuffer[USB_HOST_HID_INSTANCES_NUMBER][64] USB_ALIGN;
+extern volatile uint8_t gUSBHostHIDReadBuffer[USB_HOST_HID_INSTANCES_NUMBER][64];
+extern volatile uint8_t gUSBHostHIDWriteBuffer[USB_HOST_HID_INSTANCES_NUMBER][64];
 
 // *****************************************************************************
 /* USB HOST HID command request object
@@ -257,7 +265,7 @@ typedef enum
     None.
 */
 
-typedef union _USB_HOST_HID_ITEM_DATA_OPTIONAL_
+typedef union U_USB_HOST_HID_ITEM_DATA_OPTIONAL_
 {
     uint8_t unsignedData8; /* 1 byte unsigned data */
     int8_t  signedData8; /* 1 byte signed data */
@@ -281,7 +289,7 @@ typedef union _USB_HOST_HID_ITEM_DATA_OPTIONAL_
     None.
 */
 
-typedef struct _USB_HOST_HID_ITEM_
+typedef struct S_USB_HOST_HID_ITEM_
 {
     /* Item optional data */
     USB_HOST_HID_ITEM_DATA_OPTIONAL optionalItemData;
@@ -307,7 +315,7 @@ typedef struct _USB_HOST_HID_ITEM_
     None.
 */
 
-typedef struct _USB_HOST_HID_HANDLE_POOL_
+typedef struct S_USB_HOST_HID_HANDLE_POOL_
 {
     /* Structure is in use */
     bool inUse;    
@@ -333,7 +341,7 @@ typedef struct _USB_HOST_HID_HANDLE_POOL_
     None.
 */
 
-typedef struct _USB_HOST_HID_DEVICE_INFO_
+typedef struct S_USB_HOST_HID_DEVICE_INFO_
 {
     /* Determines if the HID device has BOOT interface */
     bool isBootInterfaceClass;
@@ -426,7 +434,7 @@ typedef struct
 
 } USB_HOST_HID_INSTANCE;
 
-USB_HOST_HID_RESULT _USB_HOST_HID_ItemGet
+USB_HOST_HID_RESULT F_USB_HOST_HID_ItemGet
 (
     uint8_t hidInstanceIndex,
     uint8_t index,
@@ -435,6 +443,136 @@ USB_HOST_HID_RESULT _USB_HOST_HID_ItemGet
     uint32_t * buffer,
     USB_HOST_HID_QUERY_TYPE query
 );
+
+USB_HOST_HID_OBJ_HANDLE  F_USB_HOST_HID_ObjectHandleAssign
+(
+    USB_HOST_HID_INDEX  instance,
+    uint32_t usage,
+    uint8_t index
+);
+
+void F_USB_HOST_HID_ObjectHandleRelease (USB_HOST_HID_OBJ_HANDLE handle);
+
+int8_t F_USB_HOST_HID_InterfaceHandleToHIDIndex
+( 
+    USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
+);
+
+int8_t F_USB_HOST_HID_ObjectHandleToHIDIndex (USB_HOST_HID_OBJ_HANDLE handle);
+
+int8_t F_USB_HOST_HID_ObjectHandleToUsageDriverTableIndex
+(
+    USB_HOST_HID_OBJ_HANDLE handle
+);
+
+USB_HOST_HID_RESULT F_USB_HOST_HID_FindTopLevelUsage
+(
+    uint8_t hidInstanceIndex
+);
+
+void F_USB_HOST_HID_ControlTransferCallback
+(
+    USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
+    USB_HOST_REQUEST_HANDLE requestHandle,
+    USB_HOST_RESULT result,
+    size_t size,
+    uintptr_t context
+);
+
+void F_USB_HOST_HID_SetIdlePacketCreate
+(
+   USB_HOST_HID_REQUEST * requestObj,
+   uint8_t bInterfaceNumber,
+   uint8_t idleTime,
+   uint8_t reportID
+);
+
+void F_USB_HOST_HID_GetIdlePacketCreate
+(
+   USB_HOST_HID_REQUEST * requestObj,
+   uint8_t bInterfaceNumber,
+   uint8_t reportID
+);
+
+void F_USB_HOST_HID_GetProtocolPacketCreate
+(
+   USB_HOST_HID_REQUEST * requestObj,
+   uint8_t bInterfaceNumber
+);
+
+void F_USB_HOST_HID_SetProtocolPacketCreate
+(
+   USB_HOST_HID_REQUEST * requestObj,
+   uint8_t bInterfaceNumber,
+   USB_HID_PROTOCOL_TYPE protocolType
+);
+
+void F_USB_HOST_HID_GetReportDescPacketCreate
+(
+   USB_HOST_HID_REQUEST * requestObj,
+   uint8_t bInterfaceNumber,
+   uint16_t reportDescLength
+);
+void F_USB_HOST_HID_SetReportPacketCreate
+(
+   USB_HOST_HID_REQUEST * requestObj,
+   uint8_t bInterfaceNumber,
+   USB_HID_REPORT_TYPE reportType,
+   uint8_t reportID,
+   uint16_t reportLength
+);
+void F_USB_HOST_HID_GetReportPacketCreate
+(
+   USB_HOST_HID_REQUEST * requestObj,
+   uint8_t bInterfaceNumber,
+   USB_HID_REPORT_TYPE reportType,
+   uint8_t reportID,
+   uint16_t reportLength
+);
+
+USB_HOST_HID_RESULT F_USB_HOST_HID_ReportDescriptorGet
+(
+    uint8_t  instanceNumber
+);
+
+int32_t F_USB_HOST_HID_SignedDataGet(USB_HOST_HID_ITEM * itemData);
+
+uint32_t F_USB_HOST_HID_UnsignedDataGet(USB_HOST_HID_ITEM * itemData);
+
+USB_HOST_HID_RESULT F_USB_HOST_HID_MainItemParse
+(
+    uint8_t hidInstanceIndex,
+    USB_HOST_HID_ITEM *itemData
+);
+
+USB_HOST_HID_RESULT F_USB_HOST_HID_LocalItemParse
+(
+    uint8_t hidInstanceIndex,
+    USB_HOST_HID_ITEM *itemData,
+    bool flag,
+    uint32_t fieldIndex,
+    uint32_t * buffer,
+    USB_HOST_HID_QUERY_TYPE query
+);
+
+USB_HOST_HID_RESULT F_USB_HOST_HID_GlobalItemParse
+(
+    uint8_t hidInstanceIndex,
+    USB_HOST_HID_ITEM *itemData
+);
+
+uint8_t * F_USB_HOST_HID_ItemFetch
+(
+    uint8_t *startAddress,
+    uint8_t *endAddress,
+    USB_HOST_HID_ITEM *itemData
+);
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.4"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
+
 #endif
 
 /********************** END OF FILE ***************************/

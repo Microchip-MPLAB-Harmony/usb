@@ -57,39 +57,38 @@
 
 
 
-void _USB_HOST_HID_Initialize(void * hidInitData);
-void _USB_HOST_HID_Deinitialize(void);
-void _USB_HOST_HID_Reinitialize(void * hidInitData);
-void _USB_HOST_HID_InterfaceAssign 
+void F_USB_HOST_HID_Initialize(void * hidInit_Data);
+void F_USB_HOST_HID_Deinitialize(void);
+void F_USB_HOST_HID_Reinitialize(void * hidInit_Data);
+void F_USB_HOST_HID_InterfaceAssign 
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE * interfaces,
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
     size_t nInterfaces,
     uint8_t * descriptor
 );
-void _USB_HOST_HID_InterfaceRelease(USB_HOST_DEVICE_INTERFACE_HANDLE interface);
-USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_HID_InterfaceEventHandler
+void F_USB_HOST_HID_InterfaceRelease(USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle);
+USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE F_USB_HOST_HID_InterfaceEventHandler
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle,
     USB_HOST_DEVICE_INTERFACE_EVENT event,
     void * eventData,
     uintptr_t context
 );
-void _USB_HOST_HID_InterfaceTasks(USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle);
+void F_USB_HOST_HID_InterfaceTasks(USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle);
 
 
 USB_HOST_CLIENT_DRIVER gUSBHostHIDClientDriver = 
 {
-    .initialize = _USB_HOST_HID_Initialize,
-    .deinitialize = _USB_HOST_HID_Deinitialize,
-    .reinitialize = _USB_HOST_HID_Reinitialize,
-    .interfaceAssign = _USB_HOST_HID_InterfaceAssign,
-    .interfaceRelease = _USB_HOST_HID_InterfaceRelease,
-    .interfaceEventHandler = _USB_HOST_HID_InterfaceEventHandler,
-    .interfaceTasks = _USB_HOST_HID_InterfaceTasks,
+    .initialize = F_USB_HOST_HID_Initialize,
+    .deinitialize = F_USB_HOST_HID_Deinitialize,
+    .reinitialize = F_USB_HOST_HID_Reinitialize,
+    .interfaceAssign = F_USB_HOST_HID_InterfaceAssign,
+    .interfaceRelease = F_USB_HOST_HID_InterfaceRelease,
+    .interfaceEventHandler = F_USB_HOST_HID_InterfaceEventHandler,
+    .interfaceTasks = F_USB_HOST_HID_InterfaceTasks,
     .deviceEventHandler = NULL,
-    .deviceAssign = NULL,
-    .deviceEventHandler = NULL,
+    .deviceAssign = NULL,    
     .deviceRelease = NULL
          
 };
@@ -99,20 +98,26 @@ USB_HOST_CLIENT_DRIVER gUSBHostHIDClientDriver =
  * table. It contains all the usage drivers registered
  * along with their interface functions.
  **************************************************/
-USB_HOST_HID_INIT * gUSBHostHIDInitData = NULL;
+static USB_HOST_HID_INIT * gUSBHostHIDInitData = NULL;
 
 /**************************************************
  * Global array of HID Handle Objects. Each for
  * one HID successful object handle assign call.
  **************************************************/
-USB_HOST_HID_OBJECT_HANDLE_POOL gUSBHostHIDObjectHandlePool
+static USB_HOST_HID_OBJECT_HANDLE_POOL gUSBHostHIDObjectHandlePool
         [USB_HOST_HID_USAGE_DRIVER_SUPPORT_NUMBER];
 
 /**************************************************
  * Global array of HID Instance Objects. Each for
  * one HID interface attached.
  **************************************************/
-USB_HOST_HID_INSTANCE  gUSBHostHIDInstance[USB_HOST_HID_INSTANCES_NUMBER];
+static USB_HOST_HID_INSTANCE  gUSBHostHIDInstance[USB_HOST_HID_INSTANCES_NUMBER];
+
+/***********************************************
+ * Read\Write Data buffers needed by for the HID function driver instance.
+ ***********************************************/
+volatile uint8_t gUSBHostHIDReadBuffer[USB_HOST_HID_INSTANCES_NUMBER][64] USB_ALIGN;
+volatile uint8_t gUSBHostHIDWriteBuffer[USB_HOST_HID_INSTANCES_NUMBER][64] USB_ALIGN;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -123,7 +128,7 @@ USB_HOST_HID_INSTANCE  gUSBHostHIDInstance[USB_HOST_HID_INSTANCES_NUMBER];
 
 /*************************************************************************/
 /* Function:
-    USB_HOST_HID_OBJ_HANDLE  _USB_HOST_HID_ObjectHandleAssign
+    USB_HOST_HID_OBJ_HANDLE  F_USB_HOST_HID_ObjectHandleAssign
     (
         USB_HOST_HID_INDEX  instance,
         uint32_t usage,
@@ -144,7 +149,7 @@ USB_HOST_HID_INSTANCE  gUSBHostHIDInstance[USB_HOST_HID_INSTANCES_NUMBER];
     application.
 */
 
-USB_HOST_HID_OBJ_HANDLE  _USB_HOST_HID_ObjectHandleAssign
+USB_HOST_HID_OBJ_HANDLE  F_USB_HOST_HID_ObjectHandleAssign
 (
     USB_HOST_HID_INDEX  instance,
     uint32_t usage,
@@ -188,7 +193,7 @@ USB_HOST_HID_OBJ_HANDLE  _USB_HOST_HID_ObjectHandleAssign
                     hidObjectHandlePool->hidInstanceIndex = instance;
                     /* Store the index of the global Usage Table corresponding
                     * to this usage */
-                    hidObjectHandlePool->usageInstanceIndex = index;
+                    hidObjectHandlePool->usageInstanceIndex = (int8_t)index;
 
                     /* Update Valid handle */
                     hidHandle = (USB_HOST_HID_OBJ_HANDLE) hidObjectHandlePool;
@@ -209,12 +214,12 @@ USB_HOST_HID_OBJ_HANDLE  _USB_HOST_HID_ObjectHandleAssign
      */
     return hidHandle;
 
-}/* End of _USB_HOST_HID_ObjectHandleAssign() */
+}/* End of F_USB_HOST_HID_ObjectHandleAssign() */
 
 
 /*************************************************************************/
 /* Function:
-    void _USB_HOST_HID_ObjectHandleRelease (USB_HOST_HID_OBJ_HANDLE handle)
+    void F_USB_HOST_HID_ObjectHandleRelease (USB_HOST_HID_OBJ_HANDLE handle)
 
   Summary:
     Function releases unique object handle assigned.
@@ -227,7 +232,7 @@ USB_HOST_HID_OBJ_HANDLE  _USB_HOST_HID_ObjectHandleAssign
     application.
 */
 
-void _USB_HOST_HID_ObjectHandleRelease (USB_HOST_HID_OBJ_HANDLE handle)
+void F_USB_HOST_HID_ObjectHandleRelease (USB_HOST_HID_OBJ_HANDLE handle)
 {
     /* Start of local variables */
     USB_HOST_HID_OBJECT_HANDLE_POOL *hidObjectHandlePool = (USB_HOST_HID_OBJECT_HANDLE_POOL *)NULL;
@@ -265,7 +270,7 @@ void _USB_HOST_HID_ObjectHandleRelease (USB_HOST_HID_OBJ_HANDLE handle)
 
 // *****************************************************************************
 /* Function:
-   int8_t _USB_HOST_HID_InterfaceHandleToHIDIndex
+   int8_t F_USB_HOST_HID_InterfaceHandleToHIDIndex
    ( 
         USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
    )
@@ -283,7 +288,7 @@ void _USB_HOST_HID_ObjectHandleRelease (USB_HOST_HID_OBJ_HANDLE handle)
     application.
 */
 
-int8_t _USB_HOST_HID_InterfaceHandleToHIDIndex
+int8_t F_USB_HOST_HID_InterfaceHandleToHIDIndex
 ( 
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
 )
@@ -313,12 +318,12 @@ int8_t _USB_HOST_HID_InterfaceHandleToHIDIndex
      */
     return hidInstanceIndex;
     
-} /* End of _USB_HOST_HID_InterfaceHandleToHIDIndex() */
+} /* End of F_USB_HOST_HID_InterfaceHandleToHIDIndex() */
 
 
 // *****************************************************************************
 /* Function:
-   int8_t _USB_HOST_HID_ObjectHandleToHIDIndex
+   int8_t F_USB_HOST_HID_ObjectHandleToHIDIndex
    ( 
         USB_HOST_HID_OBJ_HANDLE handle
    )
@@ -336,7 +341,7 @@ int8_t _USB_HOST_HID_InterfaceHandleToHIDIndex
     application.
 */
 
-int8_t _USB_HOST_HID_ObjectHandleToHIDIndex (USB_HOST_HID_OBJ_HANDLE handle)
+int8_t F_USB_HOST_HID_ObjectHandleToHIDIndex (USB_HOST_HID_OBJ_HANDLE handle)
 {
     /* Start of local variables */
     USB_HOST_HID_OBJECT_HANDLE_POOL *hidObjectHandlePool = (USB_HOST_HID_OBJECT_HANDLE_POOL *)NULL;
@@ -353,7 +358,7 @@ int8_t _USB_HOST_HID_ObjectHandleToHIDIndex (USB_HOST_HID_OBJ_HANDLE handle)
                 (hidObjectHandlePool == (USB_HOST_HID_OBJECT_HANDLE_POOL *)handle))
         {
             /* Found the appropriate HID object pool. Store the index */
-            hidInstanceIndex = hidObjectHandlePool->hidInstanceIndex;
+            hidInstanceIndex = (int8_t)hidObjectHandlePool->hidInstanceIndex;
             break;
         }
     }/* End of for() */
@@ -364,12 +369,12 @@ int8_t _USB_HOST_HID_ObjectHandleToHIDIndex (USB_HOST_HID_OBJ_HANDLE handle)
      */
     return hidInstanceIndex;
     
-} /* End of _USB_HOST_HID_ObjectHandleToHIDIndex() */
+} /* End of F_USB_HOST_HID_ObjectHandleToHIDIndex() */
 
 
 // *****************************************************************************
 /* Function:
-   int8_t _USB_HOST_HID_ObjectHandleToUsageDriverTableIndex
+   int8_t F_USB_HOST_HID_ObjectHandleToUsageDriverTableIndex
    ( 
         USB_HOST_HID_OBJ_HANDLE handle
    )
@@ -387,7 +392,7 @@ int8_t _USB_HOST_HID_ObjectHandleToHIDIndex (USB_HOST_HID_OBJ_HANDLE handle)
     application.
 */
 
-int8_t _USB_HOST_HID_ObjectHandleToUsageDriverTableIndex
+int8_t F_USB_HOST_HID_ObjectHandleToUsageDriverTableIndex
 (
     USB_HOST_HID_OBJ_HANDLE handle
 )
@@ -418,12 +423,12 @@ int8_t _USB_HOST_HID_ObjectHandleToUsageDriverTableIndex
      */
     return usageInstanceIndex;
     
-} /* End of _USB_HOST_HID_ObjectHandleToUsageDriverTableIndex() */
+} /* End of F_USB_HOST_HID_ObjectHandleToUsageDriverTableIndex() */
 
 
 // *****************************************************************************
 /* Function:
-   USB_HOST_HID_RESULT _USB_HOST_HID_FindTopLevelUsage
+   USB_HOST_HID_RESULT F_USB_HOST_HID_FindTopLevelUsage
    (
        uint8_t hidInstanceIndex
    )
@@ -441,7 +446,7 @@ int8_t _USB_HOST_HID_ObjectHandleToUsageDriverTableIndex
     application.
 */
 
-USB_HOST_HID_RESULT _USB_HOST_HID_FindTopLevelUsage
+USB_HOST_HID_RESULT F_USB_HOST_HID_FindTopLevelUsage
 (
     uint8_t hidInstanceIndex
 )
@@ -470,19 +475,20 @@ USB_HOST_HID_RESULT _USB_HOST_HID_FindTopLevelUsage
         hidInstanceInfo->mainItemData = &mainItem;
         
         /* Reset global items only once as they are applicable through out */
-        memset(&globalItem, 0, (size_t)sizeof(USB_HOST_HID_GLOBAL_ITEM));
+        (void) memset(&globalItem, 0, (size_t)sizeof(USB_HOST_HID_GLOBAL_ITEM));
         
         while (true == hidInstanceInfo->topLevelUsageProcessing)
         {
             /* Reset the field data except global items */
-            memset(&localItem, 0, (size_t)sizeof(USB_HOST_HID_LOCAL_ITEM));
-            memset(&(mainItem.data), 0,
+            (void) memset(&localItem, 0, (size_t)sizeof(USB_HOST_HID_LOCAL_ITEM));
+            (void) memset(&(mainItem.data), 0,
                     (size_t)sizeof(USB_HID_MAIN_ITEM_OPTIONAL_DATA));
             mainItem.tag = USB_HID_REPORT_TYPE_ERROR;
+            (void) mainItem.tag;
             
             /* Extract the Main item from the Report Descriptor having index
              * mainItemIndex starting from 1 */ 
-            if(USB_HOST_HID_RESULT_SUCCESS != _USB_HOST_HID_ItemGet
+            if(USB_HOST_HID_RESULT_SUCCESS != F_USB_HOST_HID_ItemGet
                                     (
                                         /* HID Client driver instance Index */
                                         (uint8_t)hidInstanceIndex,
@@ -529,12 +535,12 @@ USB_HOST_HID_RESULT _USB_HOST_HID_FindTopLevelUsage
     
     return result;
 
-} /* End of _USB_HOST_HID_FindTopLevelUsage() */
+} /* End of F_USB_HOST_HID_FindTopLevelUsage() */
 
 
 // *****************************************************************************
 /* Function:
-   void _USB_HOST_HID_ControlTransferCallback
+   void F_USB_HOST_HID_ControlTransferCallback
     (
         USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
         USB_HOST_REQUEST_HANDLE requestHandle,
@@ -554,7 +560,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_FindTopLevelUsage
     application.
 */
 
-void _USB_HOST_HID_ControlTransferCallback
+void F_USB_HOST_HID_ControlTransferCallback
 (
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
     USB_HOST_REQUEST_HANDLE requestHandle,
@@ -565,7 +571,7 @@ void _USB_HOST_HID_ControlTransferCallback
 {
     /* Start of local variables */
     USB_HOST_HID_INSTANCE * hidInstanceInfo = NULL;
-    USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY * usageDriverTableEntry = NULL;
+    USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY * usageDriverTable_Entry = NULL;
     USB_HOST_HID_USAGE_DRIVER_REQUEST_RESPONSE_DATA responseData;
     /* End of Local variables */
     
@@ -582,7 +588,7 @@ void _USB_HOST_HID_ControlTransferCallback
 
     switch ( hidInstanceInfo->requestObj.setupPacket.bRequest)
     {
-        case USB_HID_REQUESTS_SET_IDLE:
+        case (uint8_t)USB_HID_REQUESTS_SET_IDLE:
             /*
              * usageDriverRequest = true: SET IDLE CONTROL request was
              * send due to Usage driver initiated requests.
@@ -594,7 +600,7 @@ void _USB_HOST_HID_ControlTransferCallback
             {
                 /* We are here because of usage driver request */
                 hidInstanceInfo->requestObj.usageDriverRequest = false;
-                usageDriverTableEntry = gUSBHostHIDInitData->usageDriverTable;
+                usageDriverTable_Entry = gUSBHostHIDInitData->usageDriverTable;
                 responseData.handle = requestHandle;
                 if(result != USB_HOST_RESULT_SUCCESS)
                 {
@@ -614,12 +620,9 @@ void _USB_HOST_HID_ControlTransferCallback
                     /* Success case */
                     responseData.result = USB_HOST_HID_RESULT_SUCCESS;
                 } 
-                if(NULL != usageDriverTableEntry &&
-                (usageDriverTableEntry + 
-                        hidInstanceInfo->requestObj.usageDriverTableIndex)
-                    != NULL)
+                if(NULL != usageDriverTable_Entry) 
                 {
-                    ((usageDriverTableEntry + 
+                    ((usageDriverTable_Entry + 
                             hidInstanceInfo->requestObj.usageDriverTableIndex)
                             ->interface)->usageDriverEventHandler
                             (
@@ -649,7 +652,7 @@ void _USB_HOST_HID_ControlTransferCallback
                      * However for keyboard it is mandatory. */
 
                     /* Check if it is a keyboard */
-                    if(1 == (hidInstanceInfo->hidDeviceInfo.isKeyboardDevice))
+                    if(true == (hidInstanceInfo->hidDeviceInfo.isKeyboardDevice))
                     {
                         /* Failure case. There is no point proceeding with
                          * this HID interface. So we detach the interface. */
@@ -663,7 +666,7 @@ void _USB_HOST_HID_ControlTransferCallback
 
             break;
         
-        case USB_HID_REQUESTS_SET_PROTOCOL :
+        case (uint8_t)USB_HID_REQUESTS_SET_PROTOCOL :
             /*
              * usageDriverRequest = true: SET PROTOCOL CONTROL request was
              * send due to Usage driver initiated requests.
@@ -675,7 +678,7 @@ void _USB_HOST_HID_ControlTransferCallback
             {
                 /* We are here because of usage driver request */
                 hidInstanceInfo->requestObj.usageDriverRequest = false;
-                usageDriverTableEntry = gUSBHostHIDInitData->usageDriverTable;
+                usageDriverTable_Entry = gUSBHostHIDInitData->usageDriverTable;
                 responseData.handle = requestHandle;
                 if(result != USB_HOST_RESULT_SUCCESS)
                 {
@@ -695,12 +698,9 @@ void _USB_HOST_HID_ControlTransferCallback
                     /* Success case */
                     responseData.result = USB_HOST_HID_RESULT_SUCCESS;
                 } 
-                if(NULL != usageDriverTableEntry &&
-                (usageDriverTableEntry + 
-                        hidInstanceInfo->requestObj.usageDriverTableIndex)
-                    != NULL)
+                if(NULL != usageDriverTable_Entry)
                 {
-                    ((usageDriverTableEntry + 
+                    ((usageDriverTable_Entry + 
                             hidInstanceInfo->requestObj.usageDriverTableIndex)
                             ->interface)->usageDriverEventHandler
                             (
@@ -723,7 +723,7 @@ void _USB_HOST_HID_ControlTransferCallback
                      * as it is optional for mouse. Howver for Keyboard it is
                      * mandatory. For NON boot devices it is optional.
                      */
-                    if(1 == (hidInstanceInfo->hidDeviceInfo.isKeyboardDevice))
+                    if(true == (hidInstanceInfo->hidDeviceInfo.isKeyboardDevice))
                     {
                         /* Failure case. There is no point proceeding with
                          * this HID interface. So we detach the interface. */
@@ -737,12 +737,15 @@ void _USB_HOST_HID_ControlTransferCallback
 
             break;
 
-        case USB_HID_REQUESTS_GET_IDLE :
+        case (uint8_t)USB_HID_REQUESTS_GET_IDLE :
             if(true == hidInstanceInfo->requestObj.usageDriverRequest)
             {
                 /* We are here because of usage driver request */
                 hidInstanceInfo->requestObj.usageDriverRequest = false;
-                usageDriverTableEntry = gUSBHostHIDInitData->usageDriverTable;
+				if ( gUSBHostHIDInitData != NULL )
+				{
+					usageDriverTable_Entry = gUSBHostHIDInitData->usageDriverTable;
+				}
                 responseData.handle = requestHandle;
                 if(USB_HOST_RESULT_SUCCESS != result)
                 {
@@ -762,12 +765,9 @@ void _USB_HOST_HID_ControlTransferCallback
                     /* Success case */
                     responseData.result = USB_HOST_HID_RESULT_SUCCESS;
                 } 
-                if(NULL != usageDriverTableEntry &&
-                (usageDriverTableEntry + 
-                        hidInstanceInfo->requestObj.usageDriverTableIndex)
-                    != NULL)
+                if(NULL != usageDriverTable_Entry)
                 {
-                    ((usageDriverTableEntry + 
+                    ((usageDriverTable_Entry + 
                             hidInstanceInfo->requestObj.usageDriverTableIndex)
                             ->interface)->usageDriverEventHandler
                             (
@@ -787,12 +787,15 @@ void _USB_HOST_HID_ControlTransferCallback
             }
             break;
         
-        case USB_HID_REQUESTS_GET_PROTOCOL :
+        case (uint8_t)USB_HID_REQUESTS_GET_PROTOCOL :
             if(true == hidInstanceInfo->requestObj.usageDriverRequest)
             {
                 /* We are here because of usage driver request */
                 hidInstanceInfo->requestObj.usageDriverRequest = false;
-                usageDriverTableEntry = gUSBHostHIDInitData->usageDriverTable;
+				if ( gUSBHostHIDInitData != NULL )
+				{
+					usageDriverTable_Entry = gUSBHostHIDInitData->usageDriverTable;
+				}
                 responseData.handle = requestHandle;
                 if(result != USB_HOST_RESULT_SUCCESS)
                 {
@@ -812,12 +815,9 @@ void _USB_HOST_HID_ControlTransferCallback
                     /* Success case */
                     responseData.result = USB_HOST_HID_RESULT_SUCCESS;
                 } 
-                if(NULL != usageDriverTableEntry &&
-                (usageDriverTableEntry + 
-                        hidInstanceInfo->requestObj.usageDriverTableIndex)
-                    != NULL)
+                if(NULL != usageDriverTable_Entry)
                 {
-                    ((usageDriverTableEntry + 
+                    ((usageDriverTable_Entry + 
                             hidInstanceInfo->requestObj.usageDriverTableIndex)
                             ->interface)->usageDriverEventHandler
                             (
@@ -837,7 +837,7 @@ void _USB_HOST_HID_ControlTransferCallback
             }
             break;
         
-        case USB_REQUEST_GET_DESCRIPTOR:
+        case (uint8_t)USB_REQUEST_GET_DESCRIPTOR:
             /*
              * GET REPORT DESCRIPTOR has been done. Next step is to parse
              * report descriptor. Changing the state accordingly.
@@ -861,12 +861,12 @@ void _USB_HOST_HID_ControlTransferCallback
             }
             break;
         
-        case USB_HID_REQUESTS_GET_REPORT:
+        case (uint8_t)USB_HID_REQUESTS_GET_REPORT:
             if(true == hidInstanceInfo->requestObj.usageDriverRequest)
             {
                 /* We are here because of usage driver request */
                 hidInstanceInfo->requestObj.usageDriverRequest = false;
-                usageDriverTableEntry = gUSBHostHIDInitData->usageDriverTable;
+                usageDriverTable_Entry = gUSBHostHIDInitData->usageDriverTable;
                 responseData.handle = requestHandle;
                 if(USB_HOST_RESULT_SUCCESS != result)
                 {
@@ -886,12 +886,9 @@ void _USB_HOST_HID_ControlTransferCallback
                     /* Success case */
                     responseData.result = USB_HOST_HID_RESULT_SUCCESS;
                 } 
-                if(NULL != usageDriverTableEntry &&
-                (usageDriverTableEntry + 
-                        hidInstanceInfo->requestObj.usageDriverTableIndex)
-                    != NULL)
+                if(NULL != usageDriverTable_Entry)
                 {
-                    ((usageDriverTableEntry + 
+                    ((usageDriverTable_Entry + 
                             hidInstanceInfo->requestObj.usageDriverTableIndex)
                             ->interface)->usageDriverEventHandler
                             (
@@ -911,12 +908,12 @@ void _USB_HOST_HID_ControlTransferCallback
             }
             break;
         
-        case USB_HID_REQUESTS_SET_REPORT:
+        case (uint8_t)USB_HID_REQUESTS_SET_REPORT:
             if(true == hidInstanceInfo->requestObj.usageDriverRequest)
             {
                 /* We are here because of usage driver request */
                 hidInstanceInfo->requestObj.usageDriverRequest = false;
-                usageDriverTableEntry = gUSBHostHIDInitData->usageDriverTable;
+                usageDriverTable_Entry = gUSBHostHIDInitData->usageDriverTable;
                 responseData.handle = requestHandle;
                 if(USB_HOST_RESULT_SUCCESS != result)
                 {
@@ -936,12 +933,9 @@ void _USB_HOST_HID_ControlTransferCallback
                     /* Success case */
                     responseData.result = USB_HOST_HID_RESULT_SUCCESS;
                 } 
-                if(NULL != usageDriverTableEntry &&
-                (usageDriverTableEntry + 
-                        hidInstanceInfo->requestObj.usageDriverTableIndex)
-                    != NULL)
+                if(NULL != usageDriverTable_Entry)
                 {
-                    ((usageDriverTableEntry + 
+                    ((usageDriverTable_Entry + 
                             hidInstanceInfo->requestObj.usageDriverTableIndex)
                             ->interface)->usageDriverEventHandler
                             (
@@ -961,16 +955,17 @@ void _USB_HOST_HID_ControlTransferCallback
             }
             break;
 
-        default:
+        default: 
+            /* Do Nothing */
             break;
     } /* end of switch() */
 
-} /* End of _USB_HOST_HID_ControlTransferCallback() */
+} /* End of F_USB_HOST_HID_ControlTransferCallback() */
 
 
 // *****************************************************************************
 /* Function:
-   void _USB_HOST_HID_SetIdlePacketCreate
+   void F_USB_HOST_HID_SetIdlePacketCreate
    ( 
        USB_HOST_HID_REQUEST * requestObj,
        uint8_t bInterfaceNumber,
@@ -989,7 +984,7 @@ void _USB_HOST_HID_ControlTransferCallback
     application.
 */
 
-void _USB_HOST_HID_SetIdlePacketCreate
+void F_USB_HOST_HID_SetIdlePacketCreate
 (
    USB_HOST_HID_REQUEST * requestObj,
    uint8_t bInterfaceNumber,
@@ -1004,18 +999,18 @@ void _USB_HOST_HID_SetIdlePacketCreate
             USB_SETUP_RECIPIENT_INTERFACE );
 
         /* Setup the other setup packet values */
-        requestObj->setupPacket.bRequest =  USB_HID_REQUESTS_SET_IDLE ;
+        requestObj->setupPacket.bRequest =  (uint8_t)USB_HID_REQUESTS_SET_IDLE ;
         /* Upper byte = IDLE TIME; Lower byte = REPORT ID */
         requestObj->setupPacket.wValue = ((((uint16_t)idleTime) << 8) | reportID);
         requestObj->setupPacket.wIndex = bInterfaceNumber;
         requestObj->setupPacket.wLength = 0x00; /* No Data Phase */
     }
-} /* End of _USB_HOST_HID_SetIdlePacketCreate() */
+} /* End of F_USB_HOST_HID_SetIdlePacketCreate() */
 
 
 // *****************************************************************************
 /* Function:
-   void _USB_HOST_HID_GetIdlePacketCreate
+   void F_USB_HOST_HID_GetIdlePacketCreate
    ( 
        USB_HOST_HID_REQUEST * requestObj,
        uint8_t bInterfaceNumber,
@@ -1033,7 +1028,7 @@ void _USB_HOST_HID_SetIdlePacketCreate
     application.
 */
 
-void _USB_HOST_HID_GetIdlePacketCreate
+void F_USB_HOST_HID_GetIdlePacketCreate
 (
    USB_HOST_HID_REQUEST * requestObj,
    uint8_t bInterfaceNumber,
@@ -1047,18 +1042,18 @@ void _USB_HOST_HID_GetIdlePacketCreate
             USB_SETUP_DIRN_DEVICE_TO_HOST | USB_SETUP_RECIPIENT_INTERFACE );
 
         /* Setup the other setup packet values */
-        requestObj->setupPacket.bRequest =  USB_HID_REQUESTS_GET_IDLE;
+        requestObj->setupPacket.bRequest =  (uint8_t)USB_HID_REQUESTS_GET_IDLE;
         /* Upper byte = 0; Lower byte = REPORT ID */
-        requestObj->setupPacket.wValue = (0x0000 | reportID);
+        requestObj->setupPacket.wValue = (0x0000U | (uint16_t)reportID);
         requestObj->setupPacket.wIndex = bInterfaceNumber;
         requestObj->setupPacket.wLength = 0x01; /* 1 byte CONTROL IN data phase */
     }
-} /* End of _USB_HOST_HID_GetIdlePacketCreate() */
+} /* End of F_USB_HOST_HID_GetIdlePacketCreate() */
 
 
 // *****************************************************************************
 /* Function:
-   void _USB_HOST_HID_GetProtocolPacketCreate
+   void F_USB_HOST_HID_GetProtocolPacketCreate
    ( 
        USB_HOST_HID_REQUEST * requestObj,
        uint8_t bInterfaceNumber
@@ -1075,7 +1070,7 @@ void _USB_HOST_HID_GetIdlePacketCreate
     application.
 */
 
-void _USB_HOST_HID_GetProtocolPacketCreate
+void F_USB_HOST_HID_GetProtocolPacketCreate
 (
    USB_HOST_HID_REQUEST * requestObj,
    uint8_t bInterfaceNumber
@@ -1087,19 +1082,19 @@ void _USB_HOST_HID_GetProtocolPacketCreate
         requestObj->setupPacket.bmRequestType  = ( USB_SETUP_TYPE_CLASS |
             USB_SETUP_DIRN_DEVICE_TO_HOST | USB_SETUP_RECIPIENT_INTERFACE );
         /* Setup the other setup packet values */
-        requestObj->setupPacket.bRequest =  USB_HID_REQUESTS_GET_PROTOCOL ;
+        requestObj->setupPacket.bRequest =  (uint8_t)USB_HID_REQUESTS_GET_PROTOCOL ;
         /* Upper byte = 0; Lower byte = 0 */
         requestObj->setupPacket.wValue = 0;
         requestObj->setupPacket.wIndex = bInterfaceNumber;
         /* 1 byte CONTROL IN data phase */
         requestObj->setupPacket.wLength = 0x01;
     }
-} /* End of _USB_HOST_HID_GetProtocolPacketCreate() */
+} /* End of F_USB_HOST_HID_GetProtocolPacketCreate() */
 
 
 // *****************************************************************************
 /* Function:
-   void _USB_HOST_HID_SetProtocolPacketCreate
+   void F_USB_HOST_HID_SetProtocolPacketCreate
    ( 
        USB_HOST_HID_REQUEST * requestObj,
        uint8_t bInterfaceNumber,
@@ -1117,7 +1112,7 @@ void _USB_HOST_HID_GetProtocolPacketCreate
     application.
 */
 
-void _USB_HOST_HID_SetProtocolPacketCreate
+void F_USB_HOST_HID_SetProtocolPacketCreate
 (
    USB_HOST_HID_REQUEST * requestObj,
    uint8_t bInterfaceNumber,
@@ -1131,18 +1126,18 @@ void _USB_HOST_HID_SetProtocolPacketCreate
             USB_SETUP_RECIPIENT_INTERFACE );
 
         /* Setup the other setup packet values */
-        requestObj->setupPacket.bRequest =  USB_HID_REQUESTS_SET_PROTOCOL;
+        requestObj->setupPacket.bRequest =  (uint8_t)USB_HID_REQUESTS_SET_PROTOCOL;
         /* 1 = Report Protocol, 0 = Boot Protocol */
         requestObj->setupPacket.wValue = (uint16_t)protocolType;
         requestObj->setupPacket.wIndex = bInterfaceNumber;
         requestObj->setupPacket.wLength = 0x00; /* No Data Phase */
     }
-} /* End of _USB_HOST_HID_SetProtocolPacketCreate() */
+} /* End of F_USB_HOST_HID_SetProtocolPacketCreate() */
 
 
 // *****************************************************************************
 /* Function:
-   void _USB_HOST_HID_GetReportDescPacketCreate
+   void F_USB_HOST_HID_GetReportDescPacketCreate
    ( 
        USB_HOST_HID_REQUEST * requestObj,
        uint8_t bInterfaceNumber,
@@ -1160,7 +1155,7 @@ void _USB_HOST_HID_SetProtocolPacketCreate
     application.
 */
 
-void _USB_HOST_HID_GetReportDescPacketCreate
+void F_USB_HOST_HID_GetReportDescPacketCreate
 (
    USB_HOST_HID_REQUEST * requestObj,
    uint8_t bInterfaceNumber,
@@ -1176,17 +1171,17 @@ void _USB_HOST_HID_GetReportDescPacketCreate
         /* Setup the other setup packet values */
         requestObj->setupPacket.bRequest =  USB_REQUEST_GET_DESCRIPTOR;
         /* Descriptor Type = Report Descriptor */
-        requestObj->setupPacket.wValue = (0x0000 | USB_HID_DESCRIPTOR_TYPES_REPORT) << 8;
+        requestObj->setupPacket.wValue = (0x0000U | (uint16_t)USB_HID_DESCRIPTOR_TYPES_REPORT) << 8;
         requestObj->setupPacket.wIndex = bInterfaceNumber;
         /* Size of report descriptor */
         requestObj->setupPacket.wLength = reportDescLength;
     }
-} /* End of _USB_HOST_HID_GetReportDescPacketCreate() */
+} /* End of F_USB_HOST_HID_GetReportDescPacketCreate() */
 
 
 // *****************************************************************************
 /* Function:
-   void _USB_HOST_HID_SetReportPacketCreate
+   void F_USB_HOST_HID_SetReportPacketCreate
    ( 
        USB_HOST_HID_REQUEST * requestObj,
        uint8_t bInterfaceNumber
@@ -1206,7 +1201,7 @@ void _USB_HOST_HID_GetReportDescPacketCreate
     application.
 */
 
-void _USB_HOST_HID_SetReportPacketCreate
+void F_USB_HOST_HID_SetReportPacketCreate
 (
    USB_HOST_HID_REQUEST * requestObj,
    uint8_t bInterfaceNumber,
@@ -1222,17 +1217,17 @@ void _USB_HOST_HID_SetReportPacketCreate
             USB_SETUP_RECIPIENT_INTERFACE );
 
         /* Setup the other setup packet values */
-        requestObj->setupPacket.bRequest =  USB_HID_REQUESTS_SET_REPORT;
+        requestObj->setupPacket.bRequest =  (uint8_t)USB_HID_REQUESTS_SET_REPORT;
         requestObj->setupPacket.wValue = (((uint16_t)reportType) << 8) | reportID;
         requestObj->setupPacket.wIndex = bInterfaceNumber;
         requestObj->setupPacket.wLength = reportLength;
     }
-} /* End of _USB_HOST_HID_SetReportPacketCreate() */
+} /* End of F_USB_HOST_HID_SetReportPacketCreate() */
 
 
 // *****************************************************************************
 /* Function:
-   void _USB_HOST_HID_GetReportPacketCreate
+   void F_USB_HOST_HID_GetReportPacketCreate
    ( 
        USB_HOST_HID_REQUEST * requestObj,
        uint8_t bInterfaceNumber
@@ -1252,7 +1247,7 @@ void _USB_HOST_HID_SetReportPacketCreate
     application.
 */
 
-void _USB_HOST_HID_GetReportPacketCreate
+void F_USB_HOST_HID_GetReportPacketCreate
 (
    USB_HOST_HID_REQUEST * requestObj,
    uint8_t bInterfaceNumber,
@@ -1268,12 +1263,12 @@ void _USB_HOST_HID_GetReportPacketCreate
             USB_SETUP_DIRN_DEVICE_TO_HOST | USB_SETUP_RECIPIENT_INTERFACE );
 
         /* Setup the other setup packet values */
-        requestObj->setupPacket.bRequest =  USB_HID_REQUESTS_GET_REPORT;
+        requestObj->setupPacket.bRequest =  (uint8_t)USB_HID_REQUESTS_GET_REPORT;
         requestObj->setupPacket.wValue = (((uint16_t)reportType) << 8) | reportID;
         requestObj->setupPacket.wIndex = bInterfaceNumber;
         requestObj->setupPacket.wLength = reportLength;
     }
-} /* End of _USB_HOST_HID_GetReportPacketCreate() */
+} /* End of F_USB_HOST_HID_GetReportPacketCreate() */
 
 
 // ******************************************************************************
@@ -1328,7 +1323,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_IdleTimeSet
     {
         /* Obtain instance number of HID driver instance which owns this
          * handle */
-        instanceNumber = _USB_HOST_HID_ObjectHandleToHIDIndex(handle);
+        instanceNumber = F_USB_HOST_HID_ObjectHandleToHIDIndex(handle);
 
         if(instanceNumber > (-1))
         {
@@ -1341,7 +1336,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_IdleTimeSet
                 hidInstanceInfo->requestObj.controlRequestDone = false;
 
                 /* Create the standard USB packet for SET IDLE request */
-                _USB_HOST_HID_SetIdlePacketCreate
+                F_USB_HOST_HID_SetIdlePacketCreate
                     (
                          /* PLACE HOLDER FOR SET UP PACKET */
                          &hidInstanceInfo->requestObj,
@@ -1355,7 +1350,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_IdleTimeSet
 
                 hidInstanceInfo->requestObj.usageDriverRequest = true;
                 hidInstanceInfo->requestObj.usageDriverTableIndex = 
-                    _USB_HOST_HID_ObjectHandleToUsageDriverTableIndex(handle);
+                    F_USB_HOST_HID_ObjectHandleToUsageDriverTableIndex(handle);
 
                 if(hidInstanceInfo->requestObj.usageDriverTableIndex < 0)
                 {
@@ -1380,7 +1375,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_IdleTimeSet
                                  /* No data phase */
                                  NULL,
                                  /* CONTROL Callback */
-                                 _USB_HOST_HID_ControlTransferCallback,
+                                 F_USB_HOST_HID_ControlTransferCallback,
                                  /* Context */
                                  (uintptr_t)(hidInstanceInfo)
                             );
@@ -1408,6 +1403,10 @@ USB_HOST_HID_RESULT USB_HOST_HID_IdleTimeSet
                         }
                     } /* Request submission failed */
                 } /* if(controlRequestDone == false) */
+                else
+                {
+                    /* Do Nothing */
+                }
             }/* if(controlRequestDone == true) */
             else
             {
@@ -1483,7 +1482,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ProtocolSet
     {
         /* Obtain instance number of HID driver instance which owns this
          * handle */
-        instanceNumber = _USB_HOST_HID_ObjectHandleToHIDIndex(handle);
+        instanceNumber = F_USB_HOST_HID_ObjectHandleToHIDIndex(handle);
         
         if(instanceNumber > (-1))
         {
@@ -1496,7 +1495,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ProtocolSet
                 hidInstanceInfo->requestObj.controlRequestDone = false;
                 
                 /* Create the standard USB packet for SET PROTOCOL request */
-                _USB_HOST_HID_SetProtocolPacketCreate
+                F_USB_HOST_HID_SetProtocolPacketCreate
                 (
                     /* PLACE HOLDER FOR SET UP PACKET */
                     &hidInstanceInfo->requestObj,
@@ -1508,7 +1507,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ProtocolSet
 
                 hidInstanceInfo->requestObj.usageDriverRequest = true;
                 hidInstanceInfo->requestObj.usageDriverTableIndex = 
-                          _USB_HOST_HID_ObjectHandleToUsageDriverTableIndex(handle);
+                          F_USB_HOST_HID_ObjectHandleToUsageDriverTableIndex(handle);
 
                 if(hidInstanceInfo->requestObj.usageDriverTableIndex < 0)
                 {
@@ -1533,7 +1532,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ProtocolSet
                                 /* No data phase */
                                 NULL,
                                 /* CONTROL Callback */
-                                _USB_HOST_HID_ControlTransferCallback,
+                                F_USB_HOST_HID_ControlTransferCallback,
                                 /* Context */
                                 (uintptr_t)(hidInstanceInfo)
                             );
@@ -1560,6 +1559,10 @@ USB_HOST_HID_RESULT USB_HOST_HID_ProtocolSet
                         }
                     } /* Request submission failed */
                 } /* if(controlRequestDone == false) */
+                else
+                {
+                    /* Do Nothing */
+                }
             }/* if(controlRequestDone == true) */
             else
             {
@@ -1636,7 +1639,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ProtocolGet
         *requestHandle = USB_HOST_HID_REQUEST_HANDLE_INVALID;
 
         /* Obtain the instance number of the HID driver instance which owns this handle */
-        instanceNumber = _USB_HOST_HID_ObjectHandleToHIDIndex(handle);
+        instanceNumber = F_USB_HOST_HID_ObjectHandleToHIDIndex(handle);
         
         if(instanceNumber > (-1))
         {
@@ -1649,7 +1652,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ProtocolGet
                 hidInstanceInfo->requestObj.controlRequestDone = false;
                 
                 /* Create the standard USB packet for GET PROTOCOL request */
-                _USB_HOST_HID_GetProtocolPacketCreate
+                F_USB_HOST_HID_GetProtocolPacketCreate
                 (
                     /* PLACE HOLDER FOR SET UP PACKET */
                     &hidInstanceInfo->requestObj,
@@ -1659,7 +1662,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ProtocolGet
 
                 hidInstanceInfo->requestObj.usageDriverRequest = true;
                 hidInstanceInfo->requestObj.usageDriverTableIndex = 
-                          _USB_HOST_HID_ObjectHandleToUsageDriverTableIndex(handle);
+                          F_USB_HOST_HID_ObjectHandleToUsageDriverTableIndex(handle);
 
                 if(hidInstanceInfo->requestObj.usageDriverTableIndex < 0)
                 {
@@ -1684,7 +1687,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ProtocolGet
                                 /* IN Data buffer */
                                 protocol,
                                 /* CONTROL Callback */
-                                _USB_HOST_HID_ControlTransferCallback,
+                                F_USB_HOST_HID_ControlTransferCallback,
                                 /* Context */
                                 (uintptr_t)(hidInstanceInfo)
                             );
@@ -1711,6 +1714,10 @@ USB_HOST_HID_RESULT USB_HOST_HID_ProtocolGet
                         }
                     } /* Request submission failed */
                 } /* if(controlRequestDone == false) */
+                else
+                {
+                    /* Do Nothing */
+                }
             }/* if(controlRequestDone == true) */
             else
             {
@@ -1791,7 +1798,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_IdleTimeGet
         *requestHandle =  USB_HOST_HID_REQUEST_HANDLE_INVALID;
         
         /* Obtain instance number of HID driver instance which owns this handle */
-        instanceNumber = _USB_HOST_HID_ObjectHandleToHIDIndex(handle);
+        instanceNumber = F_USB_HOST_HID_ObjectHandleToHIDIndex(handle);
         
         if(instanceNumber > (-1))
         {
@@ -1804,7 +1811,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_IdleTimeGet
                 hidInstanceInfo->requestObj.controlRequestDone = false;
                 
                 /* Create the standard USB packet for GET IDLE TIME request */
-                _USB_HOST_HID_GetIdlePacketCreate
+                F_USB_HOST_HID_GetIdlePacketCreate
                 (
                     /* PLACE HOLDER FOR SET UP PACKET */
                     &hidInstanceInfo->requestObj,
@@ -1816,7 +1823,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_IdleTimeGet
 
                 hidInstanceInfo->requestObj.usageDriverRequest = true;
                 hidInstanceInfo->requestObj.usageDriverTableIndex = 
-                          _USB_HOST_HID_ObjectHandleToUsageDriverTableIndex(handle);
+                          F_USB_HOST_HID_ObjectHandleToUsageDriverTableIndex(handle);
 
                 if(hidInstanceInfo->requestObj.usageDriverTableIndex < 0)
                 {
@@ -1841,7 +1848,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_IdleTimeGet
                                 /* IN Data buffer */
                                 idleTime,
                                 /* CONTROL Callback */
-                                _USB_HOST_HID_ControlTransferCallback,
+                                F_USB_HOST_HID_ControlTransferCallback,
                                 /* Context */
                                 (uintptr_t)(hidInstanceInfo)
                             );
@@ -1868,6 +1875,10 @@ USB_HOST_HID_RESULT USB_HOST_HID_IdleTimeGet
                         }
                     } /* Request submission failed */
                 } /* if(controlRequestDone == false) */
+                else
+                {
+                    /* Do Nothing */
+                }
             }/* if(controlRequestDone == true) */
             else
             {
@@ -1892,8 +1903,15 @@ USB_HOST_HID_RESULT USB_HOST_HID_IdleTimeGet
 
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 4.12, and 21.3 deviated below. Deviation record ID -  
+    H3_MISRAC_2012_R_4_12_DR_1, H3_MISRAC_2012_R_21_3_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:2 "MISRA C-2012 Directive 4.12" "H3_MISRAC_2012_R_4_12_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 21.3" "H3_MISRAC_2012_R_21_3_DR_1" )
 /* Function:
-    USB_HOST_HID_RESULT _USB_HOST_HID_ReportDescriptorGet
+    USB_HOST_HID_RESULT F_USB_HOST_HID_ReportDescriptorGet
     (
         uint8_t  instanceNumber
     )
@@ -1908,7 +1926,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_IdleTimeGet
   Remarks:
     This is local function and should not be called directly by the application.
 */
-USB_HOST_HID_RESULT _USB_HOST_HID_ReportDescriptorGet
+USB_HOST_HID_RESULT F_USB_HOST_HID_ReportDescriptorGet
 (
     uint8_t  instanceNumber
 )
@@ -1945,7 +1963,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_ReportDescriptorGet
         else
         {
             /* Create the standard USB packet for GET REPORT DESCRIPTOR request */
-            _USB_HOST_HID_GetReportDescPacketCreate
+            F_USB_HOST_HID_GetReportDescPacketCreate
             (
                &hidInstanceInfo->requestObj,
                hidInstanceInfo->bInterfaceNumber,
@@ -1964,7 +1982,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_ReportDescriptorGet
                 /* Place holder for Report Descriptor */
                 hidInstanceInfo->reportDescBuffer,
                 /* CONTROL Callback */
-                _USB_HOST_HID_ControlTransferCallback,
+                F_USB_HOST_HID_ControlTransferCallback,
                 /* Context */
                 (uintptr_t)(hidInstanceInfo)
              );
@@ -1999,10 +2017,17 @@ USB_HOST_HID_RESULT _USB_HOST_HID_ReportDescriptorGet
      *        = USB_HOST_HID_RESULT_FAILURE: On other failures
      */
     return status;
-}/* end of _USB_HOST_HID_ReportDescriptorGet () */
+}/* end of F_USB_HOST_HID_ReportDescriptorGet () */
 
-
+#pragma coverity compliance end_block "MISRA C-2012 Directive 4.12"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 21.3"
+/* MISRAC 2012 deviation block end */
 // ******************************************************************************
+/* MISRA C-2012 Rule 11.3, and 11.8 deviated below. Deviation record ID -  
+    H3_MISRAC_2012_R_11_3_DR_1, H3_MISRAC_2012_R_11_8_DR_1 */
+#pragma coverity compliance block \
+(deviate:3 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
 /* Function:
     USB_HOST_HID_RESULT USB_HOST_HID_ReportSend
     (
@@ -2062,7 +2087,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ReportSend
         *requestHandle = USB_HOST_HID_REQUEST_HANDLE_INVALID;
         
         /* Obtain instance number of HID driver instance which owns this handle */
-        instanceNumber = _USB_HOST_HID_ObjectHandleToHIDIndex(handle);
+        instanceNumber = F_USB_HOST_HID_ObjectHandleToHIDIndex(handle);
         
         if(instanceNumber > (-1))
         {
@@ -2076,7 +2101,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ReportSend
             {
                 hidInstanceInfo->state = USB_HOST_HID_STATE_WAITING_SET_REPORT;
                 /* Create the standard USB packet for SET REPORT request */
-                _USB_HOST_HID_SetReportPacketCreate
+                F_USB_HOST_HID_SetReportPacketCreate
                 (
                     (USB_HOST_HID_REQUEST *)&(gUSBHostHIDWriteBuffer[instanceNumber][0]),
                     hidInstanceInfo->bInterfaceNumber,
@@ -2111,7 +2136,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ReportSend
                 hidInstanceInfo->requestObj.controlRequestDone = false;
                 
                 /* Create the standard USB packet for SET REPORT request */
-                _USB_HOST_HID_SetReportPacketCreate
+                F_USB_HOST_HID_SetReportPacketCreate
                 (
                     &hidInstanceInfo->requestObj,
                     hidInstanceInfo->bInterfaceNumber,
@@ -2122,7 +2147,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ReportSend
 
                 hidInstanceInfo->requestObj.usageDriverRequest = true;
                 hidInstanceInfo->requestObj.usageDriverTableIndex = 
-                          _USB_HOST_HID_ObjectHandleToUsageDriverTableIndex(handle);
+                          F_USB_HOST_HID_ObjectHandleToUsageDriverTableIndex(handle);
 
                 if(hidInstanceInfo->requestObj.usageDriverTableIndex < 0)
                 {
@@ -2147,7 +2172,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ReportSend
                                 /* Report Data */
                                 (void *)report,
                                 /* CONTROL Callback */
-                                _USB_HOST_HID_ControlTransferCallback,
+                                F_USB_HOST_HID_ControlTransferCallback,
                                 /* Context */
                                 (uintptr_t)(hidInstanceInfo)
                             );
@@ -2174,6 +2199,10 @@ USB_HOST_HID_RESULT USB_HOST_HID_ReportSend
                         }
                     } /* Request submission failed */
                 } /* if(controlRequestDone == false) */
+                else
+                {
+                    /* Do Nothing */
+                }
             }/* else if(controlRequestDone == true) */
             else
             {
@@ -2255,7 +2284,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ReportGet
         *requestHandle = USB_HOST_HID_REQUEST_HANDLE_INVALID;
         
         /* Obtain instance number of HID driver instance which owns this handle */
-        instanceNumber = _USB_HOST_HID_ObjectHandleToHIDIndex(handle);
+        instanceNumber = F_USB_HOST_HID_ObjectHandleToHIDIndex(handle);
         
         if(instanceNumber > (-1))
         {
@@ -2268,7 +2297,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ReportGet
                 hidInstanceInfo->requestObj.controlRequestDone = false;
                 
                 /* Create the standard USB packet for GET REPORT request */
-                _USB_HOST_HID_GetReportPacketCreate
+                F_USB_HOST_HID_GetReportPacketCreate
                 (
                     &hidInstanceInfo->requestObj,
                     hidInstanceInfo->bInterfaceNumber,
@@ -2279,7 +2308,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ReportGet
 
                 hidInstanceInfo->requestObj.usageDriverRequest = true;
                 hidInstanceInfo->requestObj.usageDriverTableIndex = 
-                          _USB_HOST_HID_ObjectHandleToUsageDriverTableIndex(handle);
+                          F_USB_HOST_HID_ObjectHandleToUsageDriverTableIndex(handle);
 
                 if(hidInstanceInfo->requestObj.usageDriverTableIndex < 0)
                 {
@@ -2305,7 +2334,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ReportGet
                                 /* Place holder for Report Data */
                                 (void *)report,
                                 /* CONTROL Callback */
-                                _USB_HOST_HID_ControlTransferCallback,
+                                F_USB_HOST_HID_ControlTransferCallback,
                                 /* Context */
                                 (uintptr_t)(hidInstanceInfo)
                             );
@@ -2332,6 +2361,10 @@ USB_HOST_HID_RESULT USB_HOST_HID_ReportGet
                         }
                     } /* Request submission failed */
                 } /* if(controlRequestDone == false) */
+                else
+                {
+                    /* Do Nothing */
+                }
             }/* else if(controlRequestDone == true) */
             else
             {
@@ -2357,7 +2390,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ReportGet
 
 // *****************************************************************************
 /* Function:
-   void _USB_HOST_HID_Initialize(void * hidInitData)
+   void F_USB_HOST_HID_Initialize(void * hidInit_Data)
 
   Summary:
     This function will initialize HID Host client driver.
@@ -2373,10 +2406,10 @@ USB_HOST_HID_RESULT USB_HOST_HID_ReportGet
     application.
 */
 
-void _USB_HOST_HID_Initialize(void * hidInitData)
+void F_USB_HOST_HID_Initialize(void * hidInit_Data)
 {   
     /* Start of local variable */ 
-    USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY * usageDriverTableEntry = NULL;
+    USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY * usageDriverTable_Entry = NULL;
     USB_HOST_HID_INSTANCE  * hidInstanceInfo = (USB_HOST_HID_INSTANCE  *) NULL;
     uint8_t iterator = 0;
     uint8_t pipeHandleCount = 0;
@@ -2394,7 +2427,7 @@ void _USB_HOST_HID_Initialize(void * hidInitData)
         hidInstanceInfo->usageTagsCount = 0;
         hidInstanceInfo->globalStackIndex = 0;
 
-        memset(hidInstanceInfo->globalStack, 0,
+        (void) memset(hidInstanceInfo->globalStack, 0,
                 (size_t)(sizeof(USB_HOST_HID_GLOBAL_ITEM) * 
                 USB_HID_GLOBAL_PUSH_POP_STACK_SIZE));
 
@@ -2419,13 +2452,13 @@ void _USB_HOST_HID_Initialize(void * hidInitData)
         hidInstanceInfo->state = USB_HOST_HID_STATE_WAIT;
     }
     
-    if(NULL != hidInitData)
+    if(NULL != hidInit_Data)
     {
-        gUSBHostHIDInitData = (USB_HOST_HID_INIT *)hidInitData;
-        usageDriverTableEntry = gUSBHostHIDInitData->usageDriverTable;
+        gUSBHostHIDInitData = (USB_HOST_HID_INIT *)hidInit_Data;
+        usageDriverTable_Entry = gUSBHostHIDInitData->usageDriverTable;
 
-        if((gUSBHostHIDInitData->nUsageDriver > 0) &&
-                (NULL != usageDriverTableEntry))
+        if((gUSBHostHIDInitData->nUsageDriver > 0U) &&
+                (NULL != usageDriverTable_Entry))
         {
             iterator = 0;
             while(iterator != (uint8_t) gUSBHostHIDInitData->nUsageDriver)
@@ -2434,12 +2467,12 @@ void _USB_HOST_HID_Initialize(void * hidInitData)
                 /* Check if interface functions are registered for this
                  * Usage driver registration instance.
                  */
-                if(NULL != usageDriverTableEntry->interface)
+                if(NULL != usageDriverTable_Entry->interface)
                 {
                     /* Check if initialize function is registered for this usage
                      * driver registration instance.
                      */
-                    if(NULL != (usageDriverTableEntry->interface)->initialize)
+                    if(NULL != (usageDriverTable_Entry->interface)->initialize)
                     {
                         /* Call the usage driver initialize. We will call
                          * initialize even if initialize data pointer
@@ -2450,22 +2483,22 @@ void _USB_HOST_HID_Initialize(void * hidInitData)
                          * irrespective of the usage presence or absence in the 
                          * device report descriptor.
                          */
-                        (usageDriverTableEntry->interface)->initialize(
-                            usageDriverTableEntry->initializeData);
+                        (usageDriverTable_Entry->interface)->initialize(
+                            usageDriverTable_Entry->initializeData);
                     }
 
                 } /* end of if(Interface functions registered) */
-                usageDriverTableEntry++;
+                usageDriverTable_Entry++;
             } /* end of while() loop */
-        } /* end of if((gUSBHostHIDTableEntry->nUsageDriver > 0) && (usageDriverTableEntry != NULL)) */
-    } /* end of if(hidInitData != NULL) */
+        } /* end of if((gUSBHostHIDTableEntry->nUsageDriver > 0) && (usageDriverTable_Entry != NULL)) */
+    } /* end of if(hidInit_Data != NULL) */
 
-} /* End of _USB_HOST_HID_Initialize() */
+} /* End of F_USB_HOST_HID_Initialize() */
 
 
 // *****************************************************************************
 /* Function:
-   void _USB_HOST_HID_Deinitialize(void)
+   void F_USB_HOST_HID_Deinitialize(void)
 
   Summary:
     This function will de initialize HID Host client driver.
@@ -2478,40 +2511,40 @@ void _USB_HOST_HID_Initialize(void * hidInitData)
     application.
 */
 
-void _USB_HOST_HID_Deinitialize(void)
+void F_USB_HOST_HID_Deinitialize(void)
 {
     /* Start of local variables */
-    USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY *usageDriverTableEntry = NULL;
+    USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY *usageDriverTable_Entry = NULL;
     size_t nUsageDriver = 0;
     /* End of local variables */
 
     /* Check if gUSBHostHIDInitData is NULL */
     if(NULL != gUSBHostHIDInitData)
     {
-        usageDriverTableEntry = gUSBHostHIDInitData->usageDriverTable;
+        usageDriverTable_Entry = gUSBHostHIDInitData->usageDriverTable;
         nUsageDriver = gUSBHostHIDInitData->nUsageDriver;
 
-        while((NULL != usageDriverTableEntry) && (0 != nUsageDriver)) 
+        while((NULL != usageDriverTable_Entry) && (0U != nUsageDriver)) 
         {
-            if(NULL != usageDriverTableEntry->interface && 
-                (NULL != (usageDriverTableEntry->interface)->deinitialize))
+            if((NULL != usageDriverTable_Entry->interface) && 
+                (NULL != (usageDriverTable_Entry->interface)->deinitialize))
             {
                 /* Call the usage driver de-initialize */
-                (usageDriverTableEntry->interface)->deinitialize();
+                (usageDriverTable_Entry->interface)->deinitialize();
             }
-            usageDriverTableEntry++;
+            usageDriverTable_Entry++;
             nUsageDriver--;
         }
         /* Invalidate the Usage driver registration information */
         gUSBHostHIDInitData = NULL;
     }
 
-} /* End of _USB_HOST_HID_Deinitialize() */
+} /* End of F_USB_HOST_HID_Deinitialize() */
 
 
 // *****************************************************************************
 /* Function:
-   void _USB_HOST_HID_Reinitialize(void * hidInitData)
+   void F_USB_HOST_HID_Reinitialize(void * hidInit_Data)
 
   Summary:
     This function will reinitialize HID Host client driver.
@@ -2523,15 +2556,15 @@ void _USB_HOST_HID_Deinitialize(void)
     This is a local function and should not be called directly by the
     application.
 */
-void _USB_HOST_HID_Reinitialize(void * hidInitData)
+void F_USB_HOST_HID_Reinitialize(void * hidInit_Data)
 {
     
-} /* End of _USB_HOST_HID_Reinitialize () */
+} /* End of F_USB_HOST_HID_Reinitialize () */
 
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_HID_InterfaceAssign 
+    void F_USB_HOST_HID_InterfaceAssign 
     (
         USB_HOST_DEVICE_INTERFACE_HANDLE * interfaces,
         USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
@@ -2553,7 +2586,7 @@ void _USB_HOST_HID_Reinitialize(void * hidInitData)
     application.
 */
 
-void _USB_HOST_HID_InterfaceAssign 
+void F_USB_HOST_HID_InterfaceAssign 
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE * interfaces,
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
@@ -2572,6 +2605,7 @@ void _USB_HOST_HID_InterfaceAssign
     bool result = false;
     uint8_t iterator = 0;
     uint8_t count = 0;
+    uint32_t temp_32;
     /* End of local variable */
 
     /* This client driver will support only one interface which is the first
@@ -2621,8 +2655,8 @@ void _USB_HOST_HID_InterfaceAssign
         }
         else
         {
-            if((USB_HID_DESCRIPTOR_TYPES_REPORT != hidClassDesc->bReportDescriptorType) || 
-                (hidClassDesc->bNumDescriptors < 1))
+            if(((uint32_t)USB_HID_DESCRIPTOR_TYPES_REPORT != hidClassDesc->bReportDescriptorType) || 
+                (hidClassDesc->bNumDescriptors < 1U))
             {
                 /* No HID Report descriptor */
                 SYS_DEBUG_MESSAGE (SYS_ERROR_INFO,
@@ -2635,8 +2669,17 @@ void _USB_HOST_HID_InterfaceAssign
 
                 /* Extract HID specific device information */
                 hidDeviceInfo = &(hidInstanceInfo->hidDeviceInfo);
-                hidDeviceInfo->countryCode = hidClassDesc->bcdHID;
-                hidDeviceInfo->isBootInterfaceClass = interfaceDescriptor->bInterfaceSubClass;
+
+                hidDeviceInfo->countryCode = hidClassDesc->bCountryCode;
+
+                if(interfaceDescriptor->bInterfaceSubClass == 1U)
+                {
+                    hidDeviceInfo->isBootInterfaceClass = true;
+                }
+                 else
+                {
+                     hidDeviceInfo->isBootInterfaceClass = false;
+                }
 
                 /* Initialy we will assume it is not a keyboard Boot device */
                 hidDeviceInfo->isKeyboardDevice = false;
@@ -2649,7 +2692,7 @@ void _USB_HOST_HID_InterfaceAssign
                      * if the device is Keyboard or Mouse. This is because as
                      * per that we decide the SET IDLE rate value.
                      */
-                    if(USB_HID_PROTOCOL_CODE_KEYBOARD == interfaceDescriptor->bInterfaceProtocol)
+                    if((uint32_t)USB_HID_PROTOCOL_CODE_KEYBOARD == interfaceDescriptor->bInterfaceProtocol)
                     {
                         /* Keyboard */
                         hidDeviceInfo->isKeyboardDevice = true;
@@ -2677,8 +2720,9 @@ void _USB_HOST_HID_InterfaceAssign
 
                     /* INTERRUPT IN endpoint query */
                     USB_HOST_DeviceEndpointQueryContextClear(&endpointQuery);
-
-                    endpointQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)(USB_HOST_ENDPOINT_QUERY_BY_DIRECTION |USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE);
+                    
+                    temp_32 = ((uint32_t)USB_HOST_ENDPOINT_QUERY_BY_DIRECTION |(uint32_t)USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE);
+                    endpointQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)temp_32;
                     endpointQuery.direction  = USB_DATA_DIRECTION_DEVICE_TO_HOST;
                     endpointQuery.transferType = USB_TRANSFER_TYPE_INTERRUPT;
 
@@ -2709,7 +2753,7 @@ void _USB_HOST_HID_InterfaceAssign
                             if(USB_HOST_PIPE_HANDLE_INVALID ==
                                 hidInstanceInfo->interruptInPipeHandle[iterator])
                             {
-                                if(iterator > 0)
+                                if(iterator > 0U)
                                 {
                                     /* There has been a InterruptIN Pipe that has
                                      * been opened before */
@@ -2718,12 +2762,13 @@ void _USB_HOST_HID_InterfaceAssign
                                         /* Close the pipes that has been opened.
                                          * We will not work with this HID interface.
                                          */
-                                        USB_HOST_DevicePipeClose(hidInstanceInfo->interruptInPipeHandle[count]);
+                                        (void) USB_HOST_DevicePipeClose(hidInstanceInfo->interruptInPipeHandle[count]);
                                     }
                                 }
                                 result = false;
+								
 
-                                break;
+                                //break;
                             }
                         }
                         else
@@ -2755,8 +2800,7 @@ void _USB_HOST_HID_InterfaceAssign
                         
                         iterator++;
 
-                    } while(NULL != endpointDescriptor &&
-                        USB_HOST_HID_INTERRUPT_IN_ENDPOINTS_NUMBER != iterator);
+                    } while( USB_HOST_HID_INTERRUPT_IN_ENDPOINTS_NUMBER >= iterator );
 
                     if(false == result)
                     {
@@ -2771,8 +2815,8 @@ void _USB_HOST_HID_InterfaceAssign
                          */
                         USB_HOST_DeviceEndpointQueryContextClear(&endpointQuery);
 
-                        endpointQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)(USB_HOST_ENDPOINT_QUERY_BY_DIRECTION |
-                            USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE);
+                        temp_32 = ((uint32_t)USB_HOST_ENDPOINT_QUERY_BY_DIRECTION | (uint32_t)USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE);
+                        endpointQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)temp_32;
                         endpointQuery.direction  = USB_DATA_DIRECTION_HOST_TO_DEVICE;
                         endpointQuery.transferType = USB_TRANSFER_TYPE_INTERRUPT;
 
@@ -2820,7 +2864,7 @@ void _USB_HOST_HID_InterfaceAssign
                     "\r\nUSBHID Client Driver: Could not find HID object");
         }
         /* Let the host know that this interface cannot be processed */
-        _USB_HOST_HID_InterfaceRelease(interfaceHandle);
+        F_USB_HOST_HID_InterfaceRelease(interfaceHandle);
     }
     else
     {
@@ -2829,12 +2873,12 @@ void _USB_HOST_HID_InterfaceAssign
     }
 
     return;
-} /* End of _USB_HOST_HID_InterfaceAssign() */
+} /* End of F_USB_HOST_HID_InterfaceAssign() */
 
 
 // *****************************************************************************
 /* Function:
-   void _USB_HOST_HID_InterfaceRelease
+   void F_USB_HOST_HID_InterfaceRelease
    (
        USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
    );
@@ -2854,7 +2898,7 @@ void _USB_HOST_HID_InterfaceAssign
     application.
 */
 
-void _USB_HOST_HID_InterfaceRelease
+void F_USB_HOST_HID_InterfaceRelease
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
 )
@@ -2865,18 +2909,18 @@ void _USB_HOST_HID_InterfaceRelease
     uint8_t index = 0;
     uint8_t loop = 0;
     USB_HOST_HID_INSTANCE * hidInstanceInfo = NULL;
-    USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY * usageDriverTableEntry = NULL;
+    USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY * usageDriverTable_Entry = NULL;
     /* End of local variable */
 
     /* Find the HID instance for this interface */
-    hidInstanceIndex = _USB_HOST_HID_InterfaceHandleToHIDIndex(interfaceHandle);
+    hidInstanceIndex = F_USB_HOST_HID_InterfaceHandleToHIDIndex(interfaceHandle);
 
     if(hidInstanceIndex >= 0)
     {
         /* Get the object pointer */
         hidInstanceInfo = &(gUSBHostHIDInstance[hidInstanceIndex]);
         /* Let the host know that this interface cannot be processed */
-        USB_HOST_DeviceInterfaceRelease(interfaceHandle);
+        (void) USB_HOST_DeviceInterfaceRelease(interfaceHandle);
 
         for (iterator = 0;
                 iterator < USB_HOST_HID_INTERRUPT_IN_ENDPOINTS_NUMBER;
@@ -2886,7 +2930,7 @@ void _USB_HOST_HID_InterfaceRelease
             if(USB_HOST_PIPE_HANDLE_INVALID != hidInstanceInfo->interruptInPipeHandle[iterator])
             {
                 /* Close the INTERRUPT IN pipe */
-                USB_HOST_DevicePipeClose
+                (void) USB_HOST_DevicePipeClose
                     (hidInstanceInfo->interruptInPipeHandle[iterator]);
                 hidInstanceInfo->interruptInPipeHandle[iterator] =
                     USB_HOST_PIPE_HANDLE_INVALID;
@@ -2898,13 +2942,13 @@ void _USB_HOST_HID_InterfaceRelease
                  */
                 break;
             }
-            iterator++;
+            //iterator++;
         } /* end of for(all INTERRUPT IN endpoint) */
 
         if(USB_HOST_PIPE_HANDLE_INVALID != hidInstanceInfo->interruptOutPipeHandle)
         {
             /* Close the INTERRUPT OUT pipe */
-            USB_HOST_DevicePipeClose(hidInstanceInfo->interruptOutPipeHandle);
+            (void) USB_HOST_DevicePipeClose(hidInstanceInfo->interruptOutPipeHandle);
             hidInstanceInfo->interruptOutPipeHandle =
                 USB_HOST_PIPE_HANDLE_INVALID;
         }
@@ -2919,7 +2963,7 @@ void _USB_HOST_HID_InterfaceRelease
         hidInstanceInfo->usageTagsCount = 0;
         hidInstanceInfo->globalStackIndex = 0;
 
-        memset(hidInstanceInfo->globalStack, 0,
+        (void) memset(hidInstanceInfo->globalStack, 0,
                 (size_t)(sizeof(USB_HOST_HID_GLOBAL_ITEM) * 
                     USB_HID_GLOBAL_PUSH_POP_STACK_SIZE));
         
@@ -2938,17 +2982,17 @@ void _USB_HOST_HID_InterfaceRelease
          */
         if(hidInstanceInfo->isHIDDriverAttached)
         {
-            usageDriverTableEntry =
+            usageDriverTable_Entry =
                 gUSBHostHIDInitData->usageDriverTable;
             
             for(index=0; index < USB_HOST_HID_USAGE_DRIVER_SUPPORT_NUMBER; index ++)
             {   
                 if(gUSBHostHIDObjectHandlePool[index].inUse &&
                         (gUSBHostHIDObjectHandlePool[index].hidInstanceIndex == 
-                         hidInstanceIndex))
+                         (uint32_t)hidInstanceIndex))
                 {
                     /* Release the handle */
-                    _USB_HOST_HID_ObjectHandleRelease((USB_HOST_HID_OBJ_HANDLE)
+                    F_USB_HOST_HID_ObjectHandleRelease((USB_HOST_HID_OBJ_HANDLE)
                             (&gUSBHostHIDObjectHandlePool[index]));
                     /*
                      * Now we need to find out this usage specific to the object
@@ -2958,11 +3002,11 @@ void _USB_HOST_HID_InterfaceRelease
                      */
                     for(loop = 0; loop < gUSBHostHIDInitData->nUsageDriver; loop++)
                     {
-                        if((&usageDriverTableEntry[loop])->usage ==
+                        if((&usageDriverTable_Entry[loop])->usage ==
                                 gUSBHostHIDObjectHandlePool[index].usage)
                         {
                             /* Usage driver callback with DETACH event */
-                            ((&usageDriverTableEntry[loop])->interface)->
+                            ((&usageDriverTable_Entry[loop])->interface)->
                                 usageDriverEventHandler
                                 (
                                  (USB_HOST_HID_OBJ_HANDLE)
@@ -2981,12 +3025,12 @@ void _USB_HOST_HID_InterfaceRelease
 
     return;
 
-} /* End of _USB_HOST_HID_InterfaceRelease() */
+} /* End of F_USB_HOST_HID_InterfaceRelease() */
 
 
 // *****************************************************************************
 /* Function:
-    USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_HID_InterfaceEventHandler
+    USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE F_USB_HOST_HID_InterfaceEventHandler
     (
         USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle,
         USB_HOST_DEVICE_INTERFACE_EVENT event,
@@ -3001,7 +3045,7 @@ void _USB_HOST_HID_InterfaceRelease
   Remarks:
     This is local function and should not be called directly by the application.
 */
-USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_HID_InterfaceEventHandler
+USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE F_USB_HOST_HID_InterfaceEventHandler
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle,
     USB_HOST_DEVICE_INTERFACE_EVENT event,
@@ -3015,7 +3059,7 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_HID_InterfaceEventHandler
             transferCompleteEventData =  NULL;
     USB_HOST_DEVICE_INTERFACE_EVENT_PIPE_HALT_CLEAR_COMPLETE_DATA *
             haltClearCompleteEventData = NULL;
-    USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY * usageDriverTableEntry = NULL;
+    USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY * usageDriverTable_Entry = NULL;
     USB_HOST_HID_USAGE_DRIVER_REQUEST_RESPONSE_DATA responseData;
     USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE returnValue = USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE_NONE;
     int8_t hidInstanceIndex = (-1);
@@ -3027,7 +3071,7 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_HID_InterfaceEventHandler
     hidInstanceInfo = (USB_HOST_HID_INSTANCE *)(context);
 
     /* Find the HID instance for this interface */
-    hidInstanceIndex = _USB_HOST_HID_InterfaceHandleToHIDIndex(interfaceHandle);
+    hidInstanceIndex = F_USB_HOST_HID_InterfaceHandleToHIDIndex(interfaceHandle);
     
     if(hidInstanceIndex < 0)
     {
@@ -3060,7 +3104,7 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_HID_InterfaceEventHandler
                      */
                     if(hidInstanceInfo->isHIDDriverAttached)
                     {
-                        usageDriverTableEntry =
+                        usageDriverTable_Entry =
                                 gUSBHostHIDInitData->usageDriverTable;
                         for(index=0;
                                 index < USB_HOST_HID_USAGE_DRIVER_SUPPORT_NUMBER;
@@ -3068,7 +3112,7 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_HID_InterfaceEventHandler
                         {
                             if(gUSBHostHIDObjectHandlePool[index].inUse &&
                                 (gUSBHostHIDObjectHandlePool[index].hidInstanceIndex
-                                == hidInstanceIndex))
+                                == (uint32_t)hidInstanceIndex))
                             {
                                 if(USB_HOST_HID_STATE_WAITING_SET_REPORT == hidInstanceInfo->state)
                                 {
@@ -3078,7 +3122,7 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_HID_InterfaceEventHandler
                                             USB_HOST_HID_RESULT_SUCCESS;
                                     responseData.handle = 
                                             transferCompleteEventData->transferHandle;
-                                    ((&usageDriverTableEntry
+                                    ((&usageDriverTable_Entry
                                         [gUSBHostHIDObjectHandlePool[index].usageInstanceIndex])
                                             ->interface)->usageDriverEventHandler
                                         (
@@ -3090,7 +3134,7 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_HID_InterfaceEventHandler
                                 }
                                 else
                                 {
-                                    ((&usageDriverTableEntry
+                                    ((&usageDriverTable_Entry
                                             [gUSBHostHIDObjectHandlePool[index].usageInstanceIndex]
                                             )->interface)->usageDriverEventHandler
                                         (
@@ -3128,7 +3172,7 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_HID_InterfaceEventHandler
                         hidInstanceInfo->state = 
                             USB_HOST_HID_STATE_INTERRUPT_OUT_ENDPOINT_CLEAR;
 
-                        usageDriverTableEntry =
+                        usageDriverTable_Entry =
                                 gUSBHostHIDInitData->usageDriverTable;
                         for(index=0;
                                 index < USB_HOST_HID_USAGE_DRIVER_SUPPORT_NUMBER;
@@ -3136,7 +3180,7 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_HID_InterfaceEventHandler
                         {
                             if(gUSBHostHIDObjectHandlePool[index].inUse &&
                                 (gUSBHostHIDObjectHandlePool[index].hidInstanceIndex
-                                == hidInstanceIndex))
+                                == (uint32_t)hidInstanceIndex))
                             {
                                 /*
                                  * Now we need to find out this usage is owned by which
@@ -3146,7 +3190,7 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_HID_InterfaceEventHandler
                                         loop < gUSBHostHIDInitData->nUsageDriver;
                                         loop++)
                                 {
-                                    if((&usageDriverTableEntry[loop])->usage ==
+                                    if((&usageDriverTable_Entry[loop])->usage ==
                                         gUSBHostHIDObjectHandlePool[index].usage)
                                     {
                                         responseData.result = 
@@ -3154,7 +3198,7 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_HID_InterfaceEventHandler
                                         responseData.handle = 
                                                 transferCompleteEventData->transferHandle;
 
-                                        ((&usageDriverTableEntry[loop])->interface)->
+                                        ((&usageDriverTable_Entry[loop])->interface)->
                                                 usageDriverEventHandler
                                                 (
                                                     (USB_HOST_HID_OBJ_HANDLE)
@@ -3192,18 +3236,19 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_HID_InterfaceEventHandler
                 }
                 break;
             default:
+                 /* Do Nothing */
                 break;
         }
     }
     
     return returnValue;
 
-} /* End of _USB_HOST_HID_InterfaceEventHandler() */
+} /* End of F_USB_HOST_HID_InterfaceEventHandler() */
 
 
 /*************************************************************************/
 /* Function:
-    int32_t _USB_HOST_HID_SignedDataGet(USB_HOST_HID_ITEM * itemData)
+    int32_t F_USB_HOST_HID_SignedDataGet(USB_HOST_HID_ITEM * itemData)
 
   Summary:
     Function extracts signed item data as per the item size.
@@ -3215,7 +3260,7 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_HID_InterfaceEventHandler
     This is local function and should not be called directly by the application
 */
 
-int32_t _USB_HOST_HID_SignedDataGet(USB_HOST_HID_ITEM * itemData)
+int32_t F_USB_HOST_HID_SignedDataGet(USB_HOST_HID_ITEM * itemData)
 {
     /* Start of local variables */
     int32_t returnValue = 0;
@@ -3237,17 +3282,18 @@ int32_t _USB_HOST_HID_SignedDataGet(USB_HOST_HID_ITEM * itemData)
             break;
 
         default:
+             /* Do Nothing */
             break;
     }
 
     return returnValue;
 
-}/* end of _USB_HOST_HID_SignedDataGet () */
+}/* end of F_USB_HOST_HID_SignedDataGet () */
 
 
 /*************************************************************************/
 /* Function:
-    uint32_t _USB_HOST_HID_UnsignedDataGet(USB_HOST_HID_ITEM * itemData)
+    uint32_t F_USB_HOST_HID_UnsignedDataGet(USB_HOST_HID_ITEM * itemData)
 
   Summary:
     Function extracts unsigned item data as per the item size.
@@ -3259,7 +3305,7 @@ int32_t _USB_HOST_HID_SignedDataGet(USB_HOST_HID_ITEM * itemData)
     This is local function and should not be called directly by the application
 */
 
-uint32_t _USB_HOST_HID_UnsignedDataGet(USB_HOST_HID_ITEM * itemData)
+uint32_t F_USB_HOST_HID_UnsignedDataGet(USB_HOST_HID_ITEM * itemData)
 {
     /* Start of local variables */
     uint32_t returnValue = 0;
@@ -3281,16 +3327,17 @@ uint32_t _USB_HOST_HID_UnsignedDataGet(USB_HOST_HID_ITEM * itemData)
             break;
 
         default:
+             /* Do Nothing */
             break;
     }
     return returnValue;
 
-}/* end of _USB_HOST_HID_UnsignedDataGet () */
+}/* end of F_USB_HOST_HID_UnsignedDataGet () */
 
 
 /*************************************************************************/
 /* Function:
-    USB_HOST_HID_RESULT _USB_HOST_HID_MainItemParse
+    USB_HOST_HID_RESULT F_USB_HOST_HID_MainItemParse
     (
         uint8_t hidInstanceIndex,
         USB_HOST_HID_ITEM *itemData
@@ -3306,7 +3353,7 @@ uint32_t _USB_HOST_HID_UnsignedDataGet(USB_HOST_HID_ITEM * itemData)
     This is local function and should not be called directly by the application
 */
 
-USB_HOST_HID_RESULT _USB_HOST_HID_MainItemParse
+USB_HOST_HID_RESULT F_USB_HOST_HID_MainItemParse
 (
     uint8_t hidInstanceIndex,
     USB_HOST_HID_ITEM *itemData
@@ -3319,14 +3366,14 @@ USB_HOST_HID_RESULT _USB_HOST_HID_MainItemParse
     /* End of local variables */
 
     /* Extract the data from HID item structure */
-    data = _USB_HOST_HID_UnsignedDataGet(itemData);
+    data = F_USB_HOST_HID_UnsignedDataGet(itemData);
 
     /* Process according to item tag */
     switch(itemData->tag) 
     {
         case USB_HID_MAIN_ITEM_TAG_BEGIN_COLLECTION:
             hidInstanceInfo->globalStackIndex = 0;
-            memset(hidInstanceInfo->globalStack, 0,
+            (void) memset(hidInstanceInfo->globalStack, 0,
                     (size_t)(sizeof(USB_HOST_HID_GLOBAL_ITEM) * USB_HID_GLOBAL_PUSH_POP_STACK_SIZE));
 
             hidInstanceInfo->mainItemData->data.data4Bytes
@@ -3431,12 +3478,12 @@ USB_HOST_HID_RESULT _USB_HOST_HID_MainItemParse
      */
     return returnValue;
 
-} /* End of _USB_HOST_HID_MainItemParse() */
+} /* End of F_USB_HOST_HID_MainItemParse() */
 
 
 /*************************************************************************/
 /* Function:
-    USB_HOST_HID_RESULT _USB_HOST_HID_LocalItemParse
+    USB_HOST_HID_RESULT F_USB_HOST_HID_LocalItemParse
     (
         uint8_t hidInstanceIndex,
         USB_HOST_HID_ITEM *itemData,
@@ -3456,7 +3503,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_MainItemParse
     This is local function and should not be called directly by the application
 */
 
-USB_HOST_HID_RESULT _USB_HOST_HID_LocalItemParse
+USB_HOST_HID_RESULT F_USB_HOST_HID_LocalItemParse
 (
     uint8_t hidInstanceIndex,
     USB_HOST_HID_ITEM *itemData,
@@ -3471,7 +3518,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_LocalItemParse
     USB_HOST_HID_INSTANCE  *hidInstanceInfo = &(gUSBHostHIDInstance[hidInstanceIndex]);
     uint32_t data = 0;
     /* End of local variables */
-    if(0 == itemData->size)
+    if(0U == itemData->size)
     {
         /* USB_HOST_HID_RESULT_FAILURE will be returned */
         SYS_DEBUG_MESSAGE (SYS_ERROR_INFO,
@@ -3479,15 +3526,15 @@ USB_HOST_HID_RESULT _USB_HOST_HID_LocalItemParse
     }
     else
     {
-        data = _USB_HOST_HID_UnsignedDataGet(itemData);
+        data = F_USB_HOST_HID_UnsignedDataGet(itemData);
 
         switch(itemData->tag)
         {
             case USB_HID_LOCAL_ITEM_TAG_DELIMITER:
-                if(1 == data)
+                if(1U == data)
                 {
                     /* Delimiter open */
-                    if(!(0 == hidInstanceInfo->mainItemData->localItem->delimiterCounter))
+                    if(!(0U == hidInstanceInfo->mainItemData->localItem->delimiterCounter))
                     {
                         /* USB_HOST_HID_RESULT_FAILURE will be returned */
                         SYS_DEBUG_MESSAGE (SYS_ERROR_INFO,
@@ -3508,7 +3555,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_LocalItemParse
                 else
                 {
                     /* Delimiter close */
-                    if(hidInstanceInfo->mainItemData->localItem->delimiterCounter < 1)
+                    if(hidInstanceInfo->mainItemData->localItem->delimiterCounter < 1U)
                     {
                         /* USB_HOST_HID_RESULT_FAILURE will be returned */
                         SYS_DEBUG_MESSAGE (SYS_ERROR_INFO,
@@ -3529,7 +3576,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_LocalItemParse
                 break;
 
             case USB_HID_LOCAL_ITEM_TAG_USAGE:
-                if(hidInstanceInfo->mainItemData->localItem->delimiterBranch > 1)
+                if(hidInstanceInfo->mainItemData->localItem->delimiterBranch > 1U)
                 {
                     returnValue = USB_HOST_HID_RESULT_SUCCESS;
                     SYS_DEBUG_MESSAGE (SYS_ERROR_INFO,
@@ -3537,14 +3584,14 @@ USB_HOST_HID_RESULT _USB_HOST_HID_LocalItemParse
                 }
                 else
                 {
-                    if(0 == hidInstanceInfo->collectionNestingLevel
-                        && hidInstanceInfo->topLevelUsageProcessing)
+                    if((0U == hidInstanceInfo->collectionNestingLevel)
+                        && (hidInstanceInfo->topLevelUsageProcessing))
                     {
                         if(hidInstanceInfo->nTopLevelUsages < USB_HOST_HID_USAGE_DRIVER_SUPPORT_NUMBER)
                         {
-                            if(itemData->size <= 2)
+                            if(itemData->size <= 2U)
                             {
-                                data = (hidInstanceInfo->mainItemData->globalItem->usagePage 
+                                data = ((uint32_t)hidInstanceInfo->mainItemData->globalItem->usagePage 
                                         << USB_HOST_HID_USAGE_PAGE_SHIFT) + data;
                                 hidInstanceInfo->topLevelUsages[hidInstanceInfo->nTopLevelUsages] 
                                         = data;
@@ -3577,9 +3624,9 @@ USB_HOST_HID_RESULT _USB_HOST_HID_LocalItemParse
                         {
                             /* Usage is 16 bits or less it is interpreted as Usage Id and
                              * concatenated with Usage Page to form 32-bit Usage */
-                            if(itemData->size <= 2)
+                            if(itemData->size <= 2U)
                             {
-                                data = (hidInstanceInfo->mainItemData->globalItem->usagePage
+                                data = ((uint32_t)hidInstanceInfo->mainItemData->globalItem->usagePage
                                         << USB_HOST_HID_USAGE_PAGE_SHIFT) + data;
                             }
                             *buffer = data;
@@ -3636,7 +3683,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_LocalItemParse
                 break;
 
             case USB_HID_LOCAL_ITEM_TAG_USAGE_MINIMUM:
-                if(hidInstanceInfo->mainItemData->localItem->delimiterBranch > 1)
+                if(hidInstanceInfo->mainItemData->localItem->delimiterBranch > 1U)
                 {
                     returnValue = USB_HOST_HID_RESULT_SUCCESS;
                     SYS_DEBUG_MESSAGE (SYS_ERROR_INFO,
@@ -3644,9 +3691,9 @@ USB_HOST_HID_RESULT _USB_HOST_HID_LocalItemParse
                 }
                 else
                 {
-                    if(itemData->size <= 2)
+                    if(itemData->size <= 2U)
                     {
-                        data = (hidInstanceInfo->mainItemData->
+                        data = ((uint32_t)hidInstanceInfo->mainItemData->
                             globalItem->usagePage << USB_HOST_HID_USAGE_PAGE_SHIFT)
                             + data;
                     }
@@ -3658,7 +3705,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_LocalItemParse
                 break;
 
             case USB_HID_LOCAL_ITEM_TAG_USAGE_MAXIMUM:
-                if(hidInstanceInfo->mainItemData->localItem->delimiterBranch > 1)
+                if(hidInstanceInfo->mainItemData->localItem->delimiterBranch > 1U)
                 {
                     returnValue = USB_HOST_HID_RESULT_SUCCESS;
                     SYS_DEBUG_MESSAGE (SYS_ERROR_INFO,
@@ -3666,9 +3713,9 @@ USB_HOST_HID_RESULT _USB_HOST_HID_LocalItemParse
                 }
                 else
                 {
-                    if(itemData->size <= 2)
+                    if(itemData->size <= 2U)
                     {   
-                        data = (hidInstanceInfo->mainItemData->globalItem->usagePage
+                        data = ((uint32_t)hidInstanceInfo->mainItemData->globalItem->usagePage
                                 << USB_HOST_HID_USAGE_PAGE_SHIFT) + data;
                     }
                     hidInstanceInfo->mainItemData->localItem->usageMinMax.valid = true;
@@ -3726,12 +3773,12 @@ USB_HOST_HID_RESULT _USB_HOST_HID_LocalItemParse
      */
     return returnValue;
 
-} /* End of _USB_HOST_HID_LocalItemParse() */
+} /* End of F_USB_HOST_HID_LocalItemParse() */
 
 
 /*************************************************************************/
 /* Function:
-    USB_HOST_HID_RESULT _USB_HOST_HID_GlobalItemParse
+    USB_HOST_HID_RESULT F_USB_HOST_HID_GlobalItemParse
     (
         uint8_t hidInstanceIndex,
         USB_HOST_HID_ITEM *itemData
@@ -3747,7 +3794,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_LocalItemParse
     This is local function and should not be called directly by the application
 */
 
-USB_HOST_HID_RESULT _USB_HOST_HID_GlobalItemParse
+USB_HOST_HID_RESULT F_USB_HOST_HID_GlobalItemParse
 (
     uint8_t hidInstanceIndex,
     USB_HOST_HID_ITEM *itemData
@@ -3757,6 +3804,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_GlobalItemParse
     USB_HOST_HID_RESULT returnValue = USB_HOST_HID_RESULT_FAILURE;
     USB_HOST_HID_GLOBAL_ITEM *pTempGlobalItem = NULL;
     USB_HOST_HID_INSTANCE  *hidInstanceInfo = &(gUSBHostHIDInstance[hidInstanceIndex]);
+    uint32_t temp_32;
     /* End of Local variables */
     
     switch(itemData->tag)
@@ -3774,7 +3822,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_GlobalItemParse
             }
             else
             {
-                if(!(0 == itemData->size))
+                if(!(0U == itemData->size))
                 {
                     SYS_DEBUG_MESSAGE (SYS_ERROR_INFO,
                         "\r\nUSBHID Client Driver: Parser error in Push Item Tag");
@@ -3788,7 +3836,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_GlobalItemParse
                 {
                     pTempGlobalItem = hidInstanceInfo->mainItemData->globalItem;
                     /* Copy all global item values on the stack */
-                    memcpy(hidInstanceInfo->globalStack + hidInstanceInfo->globalStackIndex++,
+                    (void) memcpy(hidInstanceInfo->globalStack + hidInstanceInfo->globalStackIndex++,
                             pTempGlobalItem, sizeof(USB_HOST_HID_GLOBAL_ITEM));
 
                     returnValue = USB_HOST_HID_RESULT_SUCCESS;
@@ -3798,7 +3846,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_GlobalItemParse
             break;
 
         case USB_HID_GLOBAL_ITEM_TAG_POP:
-            if(0 == hidInstanceInfo->globalStackIndex)
+            if(0U == hidInstanceInfo->globalStackIndex)
             {
                 SYS_DEBUG_MESSAGE (SYS_ERROR_INFO,
                         "\r\nUSBHID Client Driver: Global item stack underflow");
@@ -3810,7 +3858,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_GlobalItemParse
             }
             else
             {
-                if(!(0 == itemData->size))
+                if(!(0U == itemData->size))
                 {
                     SYS_DEBUG_MESSAGE (SYS_ERROR_INFO,
                         "\r\nUSBHID Client Driver: Parser error in Pop Item Tag");
@@ -3825,7 +3873,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_GlobalItemParse
                     hidInstanceInfo->globalStackIndex--;
                     pTempGlobalItem = hidInstanceInfo->mainItemData->globalItem;
                     /* Copy all the global item values from stack */
-                    memcpy(pTempGlobalItem, hidInstanceInfo->globalStack + hidInstanceInfo->globalStackIndex,
+                    (void) memcpy(pTempGlobalItem, hidInstanceInfo->globalStack + hidInstanceInfo->globalStackIndex,
                             sizeof(USB_HOST_HID_GLOBAL_ITEM));
                     returnValue = USB_HOST_HID_RESULT_SUCCESS;
                 }
@@ -3834,10 +3882,11 @@ USB_HOST_HID_RESULT _USB_HOST_HID_GlobalItemParse
             break;
 
         case USB_HID_GLOBAL_ITEM_TAG_USAGE_PAGE:
+             temp_32 = F_USB_HOST_HID_UnsignedDataGet(itemData);
             (hidInstanceInfo->mainItemData)->globalItem->
-                    usagePage = _USB_HOST_HID_UnsignedDataGet(itemData);
+                    usagePage = (USB_HID_USAGE_PAGE)temp_32;
 
-            if(0 == hidInstanceInfo->mainItemData->globalItem->usagePage)
+            if(0U == (uint32_t)hidInstanceInfo->mainItemData->globalItem->usagePage)
             {
                 SYS_DEBUG_MESSAGE (SYS_ERROR_INFO,
                         "\r\nUSBHID Client Driver: Parser error in Usage PageItem Tag");
@@ -3856,7 +3905,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_GlobalItemParse
             
         case USB_HID_GLOBAL_ITEM_TAG_LOGICAL_MINIMUM:
             hidInstanceInfo->mainItemData->globalItem->logicalMinimum = 
-                    _USB_HOST_HID_SignedDataGet(itemData);
+                    F_USB_HOST_HID_SignedDataGet(itemData);
             returnValue = USB_HOST_HID_RESULT_SUCCESS;
             
             break;
@@ -3865,12 +3914,12 @@ USB_HOST_HID_RESULT _USB_HOST_HID_GlobalItemParse
             if(hidInstanceInfo->mainItemData->globalItem->logicalMinimum < 0)
             {
                 hidInstanceInfo->mainItemData->globalItem->logicalMaximum =
-                    _USB_HOST_HID_SignedDataGet(itemData);
+                    F_USB_HOST_HID_SignedDataGet(itemData);
             }
             else
             {
                 hidInstanceInfo->mainItemData->globalItem->logicalMaximum =
-                    _USB_HOST_HID_UnsignedDataGet(itemData);
+                    (int32_t)F_USB_HOST_HID_UnsignedDataGet(itemData);
             }
             returnValue = USB_HOST_HID_RESULT_SUCCESS;
             
@@ -3878,7 +3927,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_GlobalItemParse
 
         case USB_HID_GLOBAL_ITEM_TAG_PHY_MINIMUM:
             hidInstanceInfo->mainItemData->globalItem->physicalMinimum =
-                _USB_HOST_HID_SignedDataGet(itemData);
+                F_USB_HOST_HID_SignedDataGet(itemData);
             
             returnValue = USB_HOST_HID_RESULT_SUCCESS;
             
@@ -3888,12 +3937,12 @@ USB_HOST_HID_RESULT _USB_HOST_HID_GlobalItemParse
             if(hidInstanceInfo->mainItemData->globalItem->physicalMinimum < 0)
             {
                 hidInstanceInfo->mainItemData->globalItem->physicalMaximum =
-                    _USB_HOST_HID_SignedDataGet(itemData);
+                    F_USB_HOST_HID_SignedDataGet(itemData);
             }
             else
             {
                 hidInstanceInfo->mainItemData->globalItem->physicalMaximum =
-                    _USB_HOST_HID_UnsignedDataGet(itemData);
+                    (int32_t)F_USB_HOST_HID_UnsignedDataGet(itemData);
             }
             returnValue = USB_HOST_HID_RESULT_SUCCESS;
             
@@ -3901,28 +3950,28 @@ USB_HOST_HID_RESULT _USB_HOST_HID_GlobalItemParse
 
         case USB_HID_GLOBAL_ITEM_TAG_UNIT_EXPONENT:
             hidInstanceInfo->mainItemData->globalItem->unitExponent = 
-                    _USB_HOST_HID_UnsignedDataGet(itemData);
+                    (int32_t)F_USB_HOST_HID_UnsignedDataGet(itemData);
             returnValue = USB_HOST_HID_RESULT_SUCCESS;
             
             break;
             
         case USB_HID_GLOBAL_ITEM_TAG_UNIT:
             hidInstanceInfo->mainItemData->globalItem->unit =
-                    _USB_HOST_HID_UnsignedDataGet(itemData);
+                    F_USB_HOST_HID_UnsignedDataGet(itemData);
             returnValue = USB_HOST_HID_RESULT_SUCCESS;
             
             break;
         
         case USB_HID_GLOBAL_ITEM_TAG_REPORT_SIZE:
             hidInstanceInfo->mainItemData->globalItem->reportSize
-                    = _USB_HOST_HID_UnsignedDataGet(itemData);
+                    = F_USB_HOST_HID_UnsignedDataGet(itemData);
             returnValue = USB_HOST_HID_RESULT_SUCCESS;
             
             break;
         
         case USB_HID_GLOBAL_ITEM_TAG_REPORT_COUNT:
             hidInstanceInfo->mainItemData->globalItem->reportCount =
-                    _USB_HOST_HID_UnsignedDataGet(itemData);
+                    F_USB_HOST_HID_UnsignedDataGet(itemData);
             /*
              Ideally Report Count should not be 0 as it that case there will not
              be any field applicable. But there are some devices e.g. Dell mouse
@@ -3936,9 +3985,9 @@ USB_HOST_HID_RESULT _USB_HOST_HID_GlobalItemParse
 
         case USB_HID_GLOBAL_ITEM_TAG_REPORT_ID:
             hidInstanceInfo->mainItemData->globalItem->reportID =
-                    _USB_HOST_HID_UnsignedDataGet(itemData);
+                    F_USB_HOST_HID_UnsignedDataGet(itemData);
             
-            if(0 == (hidInstanceInfo->mainItemData->globalItem->reportID))
+            if(0U == (hidInstanceInfo->mainItemData->globalItem->reportID))
             {
                 SYS_DEBUG_MESSAGE (SYS_ERROR_INFO ,
                         "\r\nUSBHID Client Driver: ReportID invalid");
@@ -3971,12 +4020,12 @@ USB_HOST_HID_RESULT _USB_HOST_HID_GlobalItemParse
      */
     return returnValue;
 
-} /* End of _USB_HOST_HID_GlobalItemParse() */
+} /* End of F_USB_HOST_HID_GlobalItemParse() */
 
 
 /*************************************************************************/
 /* Function:
-    uint8_t * _USB_HOST_HID_ItemFetch
+    uint8_t * F_USB_HOST_HID_ItemFetch
     (
         uint8_t *startAddress,
         uint8_t *endAddress,
@@ -3995,7 +4044,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_GlobalItemParse
     This is local function and should not be called directly by the application
 */
 
-uint8_t * _USB_HOST_HID_ItemFetch
+uint8_t * F_USB_HOST_HID_ItemFetch
 (
     uint8_t *startAddress,
     uint8_t *endAddress,
@@ -4008,7 +4057,8 @@ uint8_t * _USB_HOST_HID_ItemFetch
     /* End of local variables */
 
     /* Extract the 1-byte prefix to item */
-    temp = *startAddress++;
+    temp = *startAddress;
+    startAddress++;
     
     /* Extract the item type and tag */
     itemData->type = (temp >> USB_HOST_HID_ITEM_TYPE_SHIFT) &
@@ -4039,7 +4089,8 @@ uint8_t * _USB_HOST_HID_ItemFetch
                 }
                 else
                 {
-                    itemData->optionalItemData.unsignedData8 = *startAddress++;
+                    itemData->optionalItemData.unsignedData8 = *startAddress;
+                    startAddress++;
                     returnValue = startAddress;
                 }
                 break;
@@ -4052,7 +4103,7 @@ uint8_t * _USB_HOST_HID_ItemFetch
                 else
                 {
                     uint16_t itemData16;
-                    memmove(&itemData16, (uint16_t *)startAddress, sizeof(uint16_t));
+                    (void) memmove(&itemData16, (uint16_t *)startAddress, sizeof(uint16_t));
                     itemData->optionalItemData.unsignedData16 = itemData16;
                     startAddress = (uint8_t *)((uint16_t *) startAddress + 1);
                     returnValue = startAddress;
@@ -4068,7 +4119,7 @@ uint8_t * _USB_HOST_HID_ItemFetch
                 else
                 {
                     uint32_t itemData32;
-                    memmove(&itemData32, (uint32_t *)startAddress, sizeof(uint32_t));
+                    (void) memmove(&itemData32, (uint32_t *)startAddress, sizeof(uint32_t));
                     itemData->optionalItemData.unsignedData32 = itemData32;
                     startAddress = (uint8_t *)((uint32_t *)startAddress + 1);
                     returnValue = startAddress;
@@ -4076,6 +4127,7 @@ uint8_t * _USB_HOST_HID_ItemFetch
                 break;
 
             default:
+                 /* Do Nothing */
                 break;
         }/* end of switch() */
     }
@@ -4086,12 +4138,12 @@ uint8_t * _USB_HOST_HID_ItemFetch
      */
     return returnValue;
     
-} /* End of _USB_HOST_HID_ItemFetch() */
+} /* End of F_USB_HOST_HID_ItemFetch() */
 
 
 /*************************************************************************/
 /* Function:
-    USB_HOST_HID_RESULT _USB_HOST_HID_ItemGet
+    USB_HOST_HID_RESULT F_USB_HOST_HID_ItemGet
     (
         uint8_t hidInstanceIndex,
         uint8_t index,
@@ -4113,7 +4165,7 @@ uint8_t * _USB_HOST_HID_ItemFetch
     This is local function and should not be called directly by the application
 */
 
-USB_HOST_HID_RESULT _USB_HOST_HID_ItemGet
+USB_HOST_HID_RESULT F_USB_HOST_HID_ItemGet
 (
     uint8_t hidInstanceIndex,
     uint8_t index,
@@ -4138,11 +4190,11 @@ USB_HOST_HID_RESULT _USB_HOST_HID_ItemGet
                                  };
     /* End of local variables */
     
-    if(0 == index)
+    if(0U == index)
     {
         /* Failure will be returned */
     }
-    else if((true == flag) && (0 == fieldIndex))
+    else if((true == flag) && (0U == fieldIndex))
     {
         /* We are here due to usage driver query. Failure will be returned */
     }
@@ -4150,8 +4202,8 @@ USB_HOST_HID_RESULT _USB_HOST_HID_ItemGet
     {
         do
         {
-            startAddress = _USB_HOST_HID_ItemFetch(startAddress, endAddress, &itemData);
-            if(USB_HID_REPORT_ITEM_HEADER_BTYPE_MAIN == itemData.type)
+            startAddress = F_USB_HOST_HID_ItemFetch(startAddress, endAddress, &itemData);
+            if((uint32_t)USB_HID_REPORT_ITEM_HEADER_BTYPE_MAIN == itemData.type)
             {
                 /* MAIN ITEM TAG */
                 if(gUSBHostHIDInstance[hidInstanceIndex].topLevelUsageProcessing)
@@ -4160,7 +4212,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_ItemGet
                     if(fieldCount == index)
                     {
                         if(USB_HOST_HID_RESULT_SUCCESS == 
-                                _USB_HOST_HID_MainItemParse(hidInstanceIndex, &itemData))
+                                F_USB_HOST_HID_MainItemParse(hidInstanceIndex, &itemData))
                         {
                             /* Got a valid field */
                         }
@@ -4171,7 +4223,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_ItemGet
                     }
                 }
                 else if(USB_HOST_HID_RESULT_SUCCESS == 
-                        _USB_HOST_HID_MainItemParse(hidInstanceIndex, &itemData))
+                        F_USB_HOST_HID_MainItemParse(hidInstanceIndex, &itemData))
                 {
                     /* Got a valid field */
                     fieldCount++;
@@ -4243,24 +4295,28 @@ USB_HOST_HID_RESULT _USB_HOST_HID_ItemGet
                                 return USB_HOST_HID_RESULT_FAILURE;
                             }
                         } /* Query = USB_HOST_HID_QUERY_DESIGNATOR */
+                        else
+                        {
+                            /* Do Nothing */
+                        }
                     }
                 }
             }
-            else if(USB_HID_REPORT_ITEM_HEADER_BTYPE_LOCAL == itemData.type)
+            else if((uint32_t)USB_HID_REPORT_ITEM_HEADER_BTYPE_LOCAL == itemData.type)
             {
                 /* LOCAL ITEM TAG */
                 /* Update local item for the required field only */
-                if(fieldCount == (index - 1))
+                if(fieldCount == (index - 1U))
                 {
                     if(USB_HOST_HID_RESULT_SUCCESS != 
-                        _USB_HOST_HID_LocalItemParse(hidInstanceIndex,
+                        F_USB_HOST_HID_LocalItemParse(hidInstanceIndex,
                         &itemData, flag, fieldIndex, buffer, query))
                     {
                         return USB_HOST_HID_RESULT_FAILURE;
                     }
                 }
             }
-            else if(USB_HID_REPORT_ITEM_HEADER_BTYPE_GLOBAL == itemData.type)
+            else if((uint32_t)USB_HID_REPORT_ITEM_HEADER_BTYPE_GLOBAL == itemData.type)
             {
                 /* GLOBAL ITEM TAG */
                 /* There is no point in parsing global items while scanning
@@ -4268,12 +4324,16 @@ USB_HOST_HID_RESULT _USB_HOST_HID_ItemGet
                  So we do not need to obtain global items from report descriptor
                  */
                 if(USB_HOST_HID_RESULT_SUCCESS != 
-                    _USB_HOST_HID_GlobalItemParse(hidInstanceIndex, &itemData))
+                    F_USB_HOST_HID_GlobalItemParse(hidInstanceIndex, &itemData))
                 {
                     return USB_HOST_HID_RESULT_FAILURE;
                 }
             }
-            else if(USB_HID_REPORT_ITEM_HEADER_BTYPE_RESERVED == itemData.type)
+            else if((uint32_t)USB_HID_REPORT_ITEM_HEADER_BTYPE_RESERVED == itemData.type)
+            {
+                /* Do Nothing */
+            }
+            else
             {
                 /* Do Nothing */
             }
@@ -4281,7 +4341,7 @@ USB_HOST_HID_RESULT _USB_HOST_HID_ItemGet
     }
     return USB_HOST_HID_RESULT_FAILURE;
 
-} /* End of _USB_HOST_HID_ItemGet() */
+} /* End of F_USB_HOST_HID_ItemGet() */
 
 
 /*************************************************************************/
@@ -4324,7 +4384,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_MainItemGet
     else
     {
         /* Obtain instance number of HID driver instance which owns this handle */
-        hidInstanceIndex = _USB_HOST_HID_ObjectHandleToHIDIndex(handle);
+        hidInstanceIndex = F_USB_HOST_HID_ObjectHandleToHIDIndex(handle);
         if(hidInstanceIndex < 0)
         {
             /* HID index not obtained */
@@ -4337,14 +4397,14 @@ USB_HOST_HID_RESULT USB_HOST_HID_MainItemGet
             hidInstanceInfo->isFieldProcessing = true;
             hidInstanceInfo->mainItemData = pMainItemData;
 
-            /* Note the usage of the last 3 parameters in _USB_HOST_HID_ItemGet()
+            /* Note the usage of the last 3 parameters in F_USB_HOST_HID_ItemGet()
              * function call. If flag = false, that means we are calling for
              * Main item query due to usage driver request.
              * If flag = true, that means this function is called for usage/string/
              * designator value query. The other 2 parameters become useful in this
              * case only.
              */
-            if(USB_HOST_HID_RESULT_SUCCESS != _USB_HOST_HID_ItemGet((uint8_t)hidInstanceIndex, mainItemIndex,
+            if(USB_HOST_HID_RESULT_SUCCESS != F_USB_HOST_HID_ItemGet((uint8_t)hidInstanceIndex, mainItemIndex,
                            false, 0, NULL, USB_HOST_HID_QUERY_ERROR))
             {
                 /* USB_HOST_HID_RESULT_FAILURE will be returned */
@@ -4419,7 +4479,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_UsageGet
 
         /* Obtain the instance number of the HID driver instance which
          * owns this handle */
-        hidInstanceIndex = _USB_HOST_HID_ObjectHandleToHIDIndex(handle);
+        hidInstanceIndex = F_USB_HOST_HID_ObjectHandleToHIDIndex(handle);
 
         if(hidInstanceIndex < 0)
         {
@@ -4448,8 +4508,8 @@ USB_HOST_HID_RESULT USB_HOST_HID_UsageGet
             hidInstanceInfo->isFieldProcessing = true;
             hidInstanceInfo->usageTagsCount = 0;
 
-            if(USB_HOST_HID_RESULT_SUCCESS != _USB_HOST_HID_ItemGet((uint8_t)hidInstanceIndex,
-                        mainItemIndex, true, fieldIndex, usage, USB_HOST_HID_QUERY_USAGE))
+            if(USB_HOST_HID_RESULT_SUCCESS != F_USB_HOST_HID_ItemGet((uint8_t)hidInstanceIndex,
+                        (uint8_t)mainItemIndex, true, fieldIndex, usage, USB_HOST_HID_QUERY_USAGE))
             {
                 result = USB_HOST_HID_RESULT_FAILURE;
             }
@@ -4523,7 +4583,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_StringIndexGet
     
         /* Obtain the instance number of the HID driver instance which
          * owns this handle */
-        hidInstanceIndex = _USB_HOST_HID_ObjectHandleToHIDIndex(handle);
+        hidInstanceIndex = F_USB_HOST_HID_ObjectHandleToHIDIndex(handle);
         
         if(hidInstanceIndex < 0)
         {
@@ -4552,8 +4612,8 @@ USB_HOST_HID_RESULT USB_HOST_HID_StringIndexGet
             hidInstanceInfo->isFieldProcessing = true;
             hidInstanceInfo->stringDescriptorIndexCount = 0;
         
-            if(USB_HOST_HID_RESULT_SUCCESS != _USB_HOST_HID_ItemGet((uint8_t)hidInstanceIndex,
-                    mainItemIndex, true, fieldIndex, stringDescriptorIndex, USB_HOST_HID_QUERY_STRING))
+            if(USB_HOST_HID_RESULT_SUCCESS != F_USB_HOST_HID_ItemGet((uint8_t)hidInstanceIndex,
+                    (uint8_t)mainItemIndex, true, fieldIndex, stringDescriptorIndex, USB_HOST_HID_QUERY_STRING))
             {
                 result = USB_HOST_HID_RESULT_FAILURE;
             }
@@ -4627,7 +4687,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_DesignatorIndexGet
 
         /* Obtain the instance number of the HID driver instance which
          * owns this handle */
-        hidInstanceIndex = _USB_HOST_HID_ObjectHandleToHIDIndex(handle);
+        hidInstanceIndex = F_USB_HOST_HID_ObjectHandleToHIDIndex(handle);
 
         if(hidInstanceIndex < 0)
         {
@@ -4656,8 +4716,8 @@ USB_HOST_HID_RESULT USB_HOST_HID_DesignatorIndexGet
             hidInstanceInfo->isFieldProcessing = true;
             hidInstanceInfo->designatorIndexCount = 0;
 
-            if(USB_HOST_HID_RESULT_SUCCESS != _USB_HOST_HID_ItemGet((uint8_t)hidInstanceIndex,
-                        mainItemIndex, true, fieldIndex, physicalDescriptorDesignatorIndex, USB_HOST_HID_QUERY_DESIGNATOR))
+            if(USB_HOST_HID_RESULT_SUCCESS != F_USB_HOST_HID_ItemGet((uint8_t)hidInstanceIndex,
+                        (uint8_t)mainItemIndex, true, fieldIndex, physicalDescriptorDesignatorIndex, USB_HOST_HID_QUERY_DESIGNATOR))
             {
                 result = USB_HOST_HID_RESULT_FAILURE;
             }
@@ -4689,7 +4749,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_DesignatorIndexGet
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_HID_InterfaceTasks
+    void F_USB_HOST_HID_InterfaceTasks
     (
         USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
     )
@@ -4704,7 +4764,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_DesignatorIndexGet
     This is local function and should not be called directly by the application.
 */
 
-void _USB_HOST_HID_InterfaceTasks(USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle)
+void F_USB_HOST_HID_InterfaceTasks(USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle)
 {
     /* Start of local variables */
     USB_HOST_HID_INSTANCE * hidInstanceInfo = NULL;
@@ -4717,11 +4777,11 @@ void _USB_HOST_HID_InterfaceTasks(USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHand
     uint8_t loop = 0;
     int8_t hidInstanceIndex = 0;
     uint8_t index = 0;
-    USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY * usageDriverTableEntry = NULL;
+    USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY * usageDriverTable_Entry = NULL;
     /* End of local variables */
 
     /* Get the HID instance for this interface */
-    hidInstanceIndex = _USB_HOST_HID_InterfaceHandleToHIDIndex(interfaceHandle);
+    hidInstanceIndex = F_USB_HOST_HID_InterfaceHandleToHIDIndex(interfaceHandle);
 
     if(0 <= hidInstanceIndex)
     {
@@ -4755,7 +4815,7 @@ void _USB_HOST_HID_InterfaceTasks(USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHand
                     /* As per the HID specification the IDLE rate resolution
                      * is 4ms.
                      */
-                    idleTime = idleTime / 4;
+                    idleTime = idleTime / 4U;
                 }/* end of if(Boot Interface) */
 
                 /*
@@ -4773,7 +4833,7 @@ void _USB_HOST_HID_InterfaceTasks(USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHand
                     hidInstanceInfo->requestObj.controlRequestDone = false;
 
                     /* Create the standard USB packet for SET IDLE request */
-                    _USB_HOST_HID_SetIdlePacketCreate
+                    F_USB_HOST_HID_SetIdlePacketCreate
                     (
                         /* PLACE HOLDER FOR SET UP PACKET */
                         &hidInstanceInfo->requestObj,
@@ -4797,7 +4857,7 @@ void _USB_HOST_HID_InterfaceTasks(USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHand
                                 /* No data phase */
                                 NULL,
                                 /* CONTROL Callback */
-                                _USB_HOST_HID_ControlTransferCallback,
+                                F_USB_HOST_HID_ControlTransferCallback,
                                 /* Context */
                                 (uintptr_t)(hidInstanceInfo)
                             );
@@ -4854,7 +4914,7 @@ void _USB_HOST_HID_InterfaceTasks(USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHand
 
                         /* Create the standard USB packet for SET PROTOCOL
                          * request */
-                        _USB_HOST_HID_SetProtocolPacketCreate
+                        F_USB_HOST_HID_SetProtocolPacketCreate
                         (
                              /* PLACE HOLDER FOR SET UP PACKET */
                              &hidInstanceInfo->requestObj,
@@ -4876,7 +4936,7 @@ void _USB_HOST_HID_InterfaceTasks(USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHand
                                     /* No data phase */
                                     NULL,
                                     /* CONTROL Callback */
-                                    _USB_HOST_HID_ControlTransferCallback,
+                                    F_USB_HOST_HID_ControlTransferCallback,
                                     /* Context */
                                     (uintptr_t)(hidInstanceInfo)
                                 );
@@ -4930,7 +4990,7 @@ void _USB_HOST_HID_InterfaceTasks(USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHand
             case USB_HOST_HID_STATE_REPORT_DESCRIPTOR_GET:
                 hidInstanceInfo->state = USB_HOST_HID_STATE_WAITING_REPORT_DESCRIPTOR_GET;
 
-                status = _USB_HOST_HID_ReportDescriptorGet((uint8_t)hidInstanceIndex);
+                status = F_USB_HOST_HID_ReportDescriptorGet((uint8_t)hidInstanceIndex);
                 if(USB_HOST_HID_RESULT_FAILURE == status)
                 {
                     hidInstanceInfo->state = USB_HOST_HID_STATE_DETACHED;
@@ -4964,12 +5024,12 @@ void _USB_HOST_HID_InterfaceTasks(USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHand
                  * the entire Report Descriptor and will extract all
                  * the top level Usages present. */
                 if(USB_HOST_HID_RESULT_SUCCESS != 
-                        _USB_HOST_HID_FindTopLevelUsage((uint8_t)hidInstanceIndex))
+                        F_USB_HOST_HID_FindTopLevelUsage((uint8_t)hidInstanceIndex))
                 {
                     /* Some error encountered in Report Descriptor */
                     hidInstanceInfo->state = USB_HOST_HID_STATE_DETACHED;
                 }
-                else if(0 == hidInstanceInfo->nTopLevelUsages)
+                else if(0U == hidInstanceInfo->nTopLevelUsages)
                 {
                     /* No top level usage found. We cannot proceed with this
                      * device. */
@@ -4989,7 +5049,7 @@ void _USB_HOST_HID_InterfaceTasks(USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHand
                  */
                 if(NULL != gUSBHostHIDInitData->usageDriverTable)
                 {
-                    usageDriverTableEntry =
+                    usageDriverTable_Entry =
                         gUSBHostHIDInitData->usageDriverTable;
 
                     for(loop = 0; loop < hidInstanceInfo->nTopLevelUsages;
@@ -5014,25 +5074,25 @@ void _USB_HOST_HID_InterfaceTasks(USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHand
                                table.
                                */
                             usageToCheck = hidInstanceInfo->topLevelUsages[loop];
-                            if(((&usageDriverTableEntry[index])->usage)
-                                    >> USB_HOST_HID_USAGE_PAGE_SHIFT == 0)
+                            if((((&usageDriverTable_Entry[index])->usage)
+                                    >> USB_HOST_HID_USAGE_PAGE_SHIFT) == 0U)
                             {
                                 /* Not extended usage - Usage Page not registered */
-                                usageToCheck = 0x00FF & usageToCheck;
+                                usageToCheck = 0x00FFU & usageToCheck;
                             }
                             if(usageToCheck ==
-                                    (&usageDriverTableEntry[index])->usage)
+                                    (&usageDriverTable_Entry[index])->usage)
                             {
                                 /* Found matching registered top level usage */
-                                handle = _USB_HOST_HID_ObjectHandleAssign
+                                handle = F_USB_HOST_HID_ObjectHandleAssign
                                     (
-                                     hidInstanceIndex,
-                                     (&usageDriverTableEntry[index])->usage,
+                                     (uint32_t)hidInstanceIndex,
+                                     (&usageDriverTable_Entry[index])->usage,
                                      index
                                     );
                                 if(USB_HOST_HID_OBJ_HANDLE_INVALID != handle)
                                 {
-                                    ((&usageDriverTableEntry[index])->interface)->
+                                    ((&usageDriverTable_Entry[index])->interface)->
                                         usageDriverEventHandler
                                         (
                                          handle,
@@ -5096,15 +5156,15 @@ void _USB_HOST_HID_InterfaceTasks(USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHand
                  */
                 if(hidInstanceInfo->isHIDDriverAttached)
                 {
-                    usageDriverTableEntry = gUSBHostHIDInitData->usageDriverTable;
+                    usageDriverTable_Entry = gUSBHostHIDInitData->usageDriverTable;
                     for(index=0; index < USB_HOST_HID_USAGE_DRIVER_SUPPORT_NUMBER; index ++)
                     {
                         if(gUSBHostHIDObjectHandlePool[index].inUse &&
                                 (gUSBHostHIDObjectHandlePool[index].hidInstanceIndex == 
-                                 hidInstanceIndex))
+                                 (uint32_t)hidInstanceIndex))
                         {
                             /* Release the handle */
-                            _USB_HOST_HID_ObjectHandleRelease
+                            F_USB_HOST_HID_ObjectHandleRelease
                                 ((USB_HOST_HID_OBJ_HANDLE)
                                  (&gUSBHostHIDObjectHandlePool[index]));
                             /* Usage driver callback with DETACH event */
@@ -5114,7 +5174,7 @@ void _USB_HOST_HID_InterfaceTasks(USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHand
                              * which entry in usage driver registration table
                              */
 
-                            ((&usageDriverTableEntry
+                            ((&usageDriverTable_Entry
                               [gUSBHostHIDObjectHandlePool[index].usageInstanceIndex])
                              ->interface)->usageDriverEventHandler
                                 (
@@ -5182,19 +5242,26 @@ void _USB_HOST_HID_InterfaceTasks(USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHand
                 }
                 break;
             default:
+                 /* Do Nothing */
                 break;
         }
 
-        usageDriverTableEntry = gUSBHostHIDInitData->usageDriverTable;
+        usageDriverTable_Entry = gUSBHostHIDInitData->usageDriverTable;
         for(index = 0; index < USB_HOST_HID_USAGE_DRIVER_SUPPORT_NUMBER;
                 index ++)
         {
             if(gUSBHostHIDObjectHandlePool[index].inUse)
             {
-                ((&usageDriverTableEntry[gUSBHostHIDObjectHandlePool[index].usageInstanceIndex])
+                ((&usageDriverTable_Entry[gUSBHostHIDObjectHandlePool[index].usageInstanceIndex])
                  ->interface)->usageDriverTask(
                      (USB_HOST_HID_OBJ_HANDLE)&gUSBHostHIDObjectHandlePool[index]);
             }
         }
     }
-} /* End of _USB_HOST_HID_InterfaceTasks() */
+} /* End of F_USB_HOST_HID_InterfaceTasks() */
+
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */

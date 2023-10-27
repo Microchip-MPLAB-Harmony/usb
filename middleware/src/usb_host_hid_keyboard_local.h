@@ -39,8 +39,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _USB_HOST_HID_KEYBOARD_LOCAL_H
-#define _USB_HOST_HID_KEYBOARD_LOCAL_H
+#ifndef USB_HOST_HID_KEYBOARD_LOCAL_H
+#define USB_HOST_HID_KEYBOARD_LOCAL_H
 
 
 // *****************************************************************************
@@ -50,7 +50,7 @@
 // *****************************************************************************
 #include "usb/usb_host_hid_keyboard.h"
 
-#define _USB_HOST_HID_KEYBOARD_BUFFER_QUEUE_SIZE 15
+#define USB_HOST_HID_KEYBOARD_BUFFER_QUEUE_SIZE 15U
 
 // *****************************************************************************
 /* USB HOST HID Keyboard Driver State
@@ -91,7 +91,7 @@ typedef enum
 typedef struct
 {
     bool tobeDone;
-    int8_t data[64];
+    uint8_t data[64];
     
 } USB_HOST_HID_KEYBOARD_DATA_BUFFER;
 
@@ -116,11 +116,11 @@ typedef struct
     uint8_t index;
     uint8_t counter;
     uint8_t outputReportID;
-    USB_HOST_HID_KEYBOARD_DATA_BUFFER buffer[_USB_HOST_HID_KEYBOARD_BUFFER_QUEUE_SIZE];
+    USB_HOST_HID_KEYBOARD_DATA_BUFFER buffer[USB_HOST_HID_KEYBOARD_BUFFER_QUEUE_SIZE];
     USB_HID_KEYBOARD_KEYPAD lastKeyCode[6];
     USB_HOST_HID_KEYBOARD_STATE state;
     USB_HOST_HID_OBJ_HANDLE handle;
-    USB_HOST_HID_KEYBOARD_DATA appData;
+    USB_HOST_HID_KEYBOARD_DATA usageDriverData;
     uint8_t outputReport;
     
 } USB_HOST_HID_KEYBOARD_DATA_OBJ;

@@ -39,8 +39,8 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
-#ifndef _USB_HOST_HID_MOUSE_H_
-#define _USB_HOST_HID_MOUSE_H_
+#ifndef USB_HOST_HID_MOUSE_H_
+#define USB_HOST_HID_MOUSE_H_
 
 
 // *****************************************************************************
@@ -225,8 +225,8 @@ typedef void (*USB_HOST_HID_MOUSE_EVENT_HANDLER)
 
 // *****************************************************************************
 
-void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle);
-void _USB_HOST_HID_MOUSE_EventHandler
+void USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle);
+void USB_HOST_HID_MOUSE_EventHandler
 (
     USB_HOST_HID_OBJ_HANDLE handle,
     USB_HOST_HID_EVENT event,

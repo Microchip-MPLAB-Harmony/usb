@@ -39,8 +39,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _USB_HOST_HID_MOUSE_LOCAL_H
-#define _USB_HOST_HID_MOUSE_LOCAL_H
+#ifndef USB_HOST_HID_MOUSE_LOCAL_H
+#define USB_HOST_HID_MOUSE_LOCAL_H
 
 
 
@@ -96,11 +96,11 @@ typedef struct
     bool isPingReportProcessing;
     bool nextPingPong;
     bool taskPingPong;
-    int8_t dataPing[64];
-    int8_t dataPong[64];
+    uint8_t dataPing[64];
+    uint8_t dataPong[64];
     USB_HOST_HID_MOUSE_STATE state;
     USB_HOST_HID_OBJ_HANDLE handle;
-    USB_HOST_HID_MOUSE_DATA appData;
+    USB_HOST_HID_MOUSE_DATA usageDriverData;
 } USB_HOST_HID_MOUSE_DATA_OBJ;
 
 #endif

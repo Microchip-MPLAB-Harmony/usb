@@ -54,10 +54,17 @@
 
 
 /* Mouse driver information on a per instance basis */
-USB_HOST_HID_MOUSE_DATA_OBJ mouseData[USB_HOST_HID_USAGE_DRIVER_SUPPORT_NUMBER];
-USB_HOST_HID_MOUSE_EVENT_HANDLER appMouseHandler;
+static USB_HOST_HID_MOUSE_DATA_OBJ mouseData[USB_HOST_HID_USAGE_DRIVER_SUPPORT_NUMBER];
+static USB_HOST_HID_MOUSE_EVENT_HANDLER appMouseHandler;
 
-
+/* MISRA C-2012 Rule 16.1 deviate: 1, and 16.3 deviate:1. 
+  Deviation record ID - H3_MISRAC_2012_R_11_1_DR_1, H3_MISRAC_2012_R_11_8_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:3 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )
 // *****************************************************************************
 /* Function:
     USB_HOST_HID_MOUSE_RESULT USB_HOST_HID_MOUSE_EventHandlerSet
@@ -93,8 +100,9 @@ USB_HOST_HID_MOUSE_RESULT USB_HOST_HID_MOUSE_EventHandlerSet
 
 
 // *****************************************************************************
+
 /* Function:
-    void _USB_HOST_HID_MOUSE_EventHandler
+    void USB_HOST_HID_MOUSE_EventHandler
     (
         USB_HOST_HID_OBJ_HANDLE handle,
         USB_HOST_HID_EVENT event,
@@ -111,7 +119,7 @@ USB_HOST_HID_MOUSE_RESULT USB_HOST_HID_MOUSE_EventHandlerSet
     This is a local function and should not be called by application directly.
 */
 
-void _USB_HOST_HID_MOUSE_EventHandler
+void USB_HOST_HID_MOUSE_EventHandler
 (
     USB_HOST_HID_OBJ_HANDLE handle,
     USB_HOST_HID_EVENT event,
@@ -141,10 +149,10 @@ void _USB_HOST_HID_MOUSE_EventHandler
                         mouseData[loop].taskPingPong = false;
                         mouseData[loop].isPingReportProcessing = false;
                         mouseData[loop].isPongReportProcessing = false;
-                        memset((void *)&mouseData[loop].appData, 0,
+                        (void) memset((void *)&mouseData[loop].usageDriverData, 0,
                                 sizeof(USB_HOST_HID_MOUSE_DATA));
-                        memset((void *)mouseData[loop].dataPing, 0,64);
-                        memset((void *)mouseData[loop].dataPong, 0,64);
+                        (void) memset((void *)mouseData[loop].dataPing, 0,64);
+                        (void) memset((void *)mouseData[loop].dataPong, 0,64);
                         break;
                     }
                 }
@@ -202,7 +210,7 @@ void _USB_HOST_HID_MOUSE_EventHandler
                             driver instance for Pong buffer. */
                             mouseData[loop].nextPingPong = false;
                             mouseData[loop].isPongReportProcessing = true;
-                            memcpy((void *)mouseData[loop].dataPong, (const void *)eventData,
+                            (void) memcpy((void *)mouseData[loop].dataPong, (const void *)eventData,
                                     64);
                             mouseData[loop].state =
                                     USB_HOST_HID_MOUSE_REPORT_PROCESS;
@@ -216,7 +224,7 @@ void _USB_HOST_HID_MOUSE_EventHandler
                             driver instance for Ping buffer. */
                             mouseData[loop].nextPingPong = true;
                             mouseData[loop].isPingReportProcessing = true;
-                            memcpy((void *)mouseData[loop].dataPing, (const void *)eventData,
+                            (void) memcpy((void *)mouseData[loop].dataPing, (const void *)eventData,
                                     64);
                             mouseData[loop].state =
                                     USB_HOST_HID_MOUSE_REPORT_PROCESS;
@@ -224,15 +232,24 @@ void _USB_HOST_HID_MOUSE_EventHandler
                     }
                 }
             default:
+                /* Do Nothing */
                 break;
         }
     }
-} /* End of _USB_HOST_HID_MOUSE_EventHandler() */
+} /* End of USB_HOST_HID_MOUSE_EventHandler() */
 
-
+#pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
+/* MISRA C-2012 Rule 21.15 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 21.15" "H3_MISRAC_2012_R_21_15_DR_1"
 /* Function:
-    void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
+    void USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
  
   Summary:
     Mouse driver task routine function registered with USB HID client driver
@@ -244,17 +261,17 @@ void _USB_HOST_HID_MOUSE_EventHandler
     This is a local function and should not be called by application directly.
 */
 
-void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
+void USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
 {
     /* Start of local variables */
     USB_HOST_HID_LOCAL_ITEM localItem = {.delimiterBranch = 0};
     USB_HOST_HID_GLOBAL_ITEM globalItem = {.reportSize = 0};
     USB_HOST_HID_MAIN_ITEM mainItem = {.localItem = NULL};
     
-    int64_t mouseDataBufferTemp = 0;
-    int8_t * mouseDataBuffer = NULL;
-    int8_t *ptr = NULL;
-    int8_t dataTemp[64] ={0};
+    uint64_t mouseDataBufferTemp = 0;
+    uint8_t * mouseDataBuffer = NULL;
+    uint8_t *ptr = NULL;
+    uint8_t dataTemp[64] ={0};
     
     uint32_t reportOffset = 0;
     uint32_t currentReportOffset = 0;
@@ -268,6 +285,7 @@ void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
     uint8_t i=0;
     bool tobeDone = false;
     USB_HOST_HID_RESULT result = USB_HOST_HID_RESULT_FAILURE;
+    uint8_t temp_8;
     /* End of local variables */
     
     if(handle == USB_HOST_HID_OBJ_HANDLE_INVALID)
@@ -305,10 +323,10 @@ void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
                 {
                     mouseData[mouseIndex].taskPingPong = true;
                     /* Keep a temp backup of the data */
-                    memcpy(&dataTemp,
+                    (void) memcpy(&dataTemp,
                             (const void *)mouseData[mouseIndex].dataPing, 64);
                     /* Reset global items only once as they are applicable through out */
-                    memset(&globalItem, 0,
+                    (void) memset(&globalItem, 0,
                             (size_t)sizeof(USB_HOST_HID_GLOBAL_ITEM));
                     tobeDone = true;
                 }
@@ -319,10 +337,10 @@ void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
                 {
                     mouseData[mouseIndex].taskPingPong = false;
                     /* Keep a temp backup of the data */
-                    memcpy(&dataTemp,
+                    (void) memcpy(&dataTemp,
                             (const void *)mouseData[mouseIndex].dataPong, 64);
                     /* Reset global items only once as they are applicable through out */
-                    memset(&globalItem, 0,
+                    (void) memset(&globalItem, 0,
                             (size_t)sizeof(USB_HOST_HID_GLOBAL_ITEM));
                     tobeDone = true;
                 }
@@ -332,9 +350,9 @@ void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
                 do
                 {
                     /* Reset the field data except global items */
-                    memset(&localItem, 0, 
+                    (void) memset(&localItem, 0, 
                             (size_t)sizeof(USB_HOST_HID_LOCAL_ITEM));
-                    memset(&(mainItem.data), 0,
+                    (void) memset(&(mainItem.data), 0,
                             (size_t)sizeof(USB_HID_MAIN_ITEM_OPTIONAL_DATA));
                     mainItem.tag = USB_HID_REPORT_TYPE_ERROR;
                     
@@ -347,39 +365,39 @@ void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
                          Ping buffer, else Pong buffer */
                         if(mouseData[mouseIndex].taskPingPong)
                         {
-                            memcpy((void *)mouseData[mouseIndex].dataPing,
+                            (void) memcpy((void *)mouseData[mouseIndex].dataPing,
                                     (const void *)&dataTemp, 64);
                         }
                         else
                         {
-                            memcpy((void *)mouseData[mouseIndex].dataPong,
+                            (void) memcpy((void *)mouseData[mouseIndex].dataPong,
                                     (const void *)&dataTemp, 64);
                         }
-                        if(mainItem.tag ==
-                                USB_HID_MAIN_ITEM_TAG_BEGIN_COLLECTION)
+                        if((uint32_t)mainItem.tag ==
+                                (uint32_t)USB_HID_MAIN_ITEM_TAG_BEGIN_COLLECTION)
                         {    
                             /* Do not change report offset as they do not
                              * create data fields. Just reset the global item
                              * data */
-                            memset(&globalItem, 0,
+                            (void) memset(&globalItem, 0,
                                     (size_t)sizeof(USB_HOST_HID_GLOBAL_ITEM));
                         }/* Main item = BEGIN COLLECTION */
                         
-                        else if(mainItem.tag == 
-                                USB_HID_MAIN_ITEM_TAG_END_COLLECTION)
+                        else if((uint32_t)mainItem.tag == 
+                                (uint32_t)USB_HID_MAIN_ITEM_TAG_END_COLLECTION)
                         {
                             /* Do not change report offset as they do not
                              *  create data fields*/
                         }/* Main item = END COLLECTION */
                         
-                        else if(mainItem.tag == USB_HID_MAIN_ITEM_TAG_INPUT)
+                        else if((uint32_t)mainItem.tag == (uint32_t)USB_HID_MAIN_ITEM_TAG_INPUT)
                         {
-                            if(((mainItem.globalItem)->reportCount == 0))
+                            if(((mainItem.globalItem)->reportCount == 0U))
                             {
                                 index++;
                                 continue;
                             }
-                            if(!((mainItem.globalItem)->reportID == 0))
+                            if(!((mainItem.globalItem)->reportID == 0U))
                             {
                                 /* Numbered report */
                                 if(mouseData[mouseIndex].taskPingPong)
@@ -392,15 +410,15 @@ void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                         continue;
                                     }
                                     /* Numbered Report. Shift right by 1 byte */
-                                    for(loop = 0; loop <64; loop ++)
+                                    for(loop = 0; loop <64U; loop ++)
                                     {
-                                        if(loop == 63)
+                                        if(loop == 63U)
                                         {
                                             mouseData[mouseIndex].dataPing[loop] = 0;
                                             break;
                                         }
                                         mouseData[mouseIndex].dataPing[loop] = 
-                                                mouseData[mouseIndex].dataPing[loop + 1];
+                                                mouseData[mouseIndex].dataPing[loop + 1U];
                                     }
                                 }
                                 else
@@ -413,39 +431,39 @@ void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                         continue;
                                     }
                                     /* Numbered Report. Shift right by 1 byte */
-                                    for(loop = 0; loop <64; loop ++)
+                                    for(loop = 0; loop <64U; loop ++)
                                     {
-                                        if(loop == 63)
+                                        if(loop == 63U)
                                         {
                                             mouseData[mouseIndex].dataPong[loop] = 0;
                                             break;
                                         }
                                         mouseData[mouseIndex].dataPong[loop] = 
-                                                mouseData[mouseIndex].dataPong[loop + 1];
+                                                mouseData[mouseIndex].dataPong[loop + 1U];
                                     }
                                 }
                             }
 
                             if(mouseData[mouseIndex].taskPingPong)
                             {
-                                mouseDataBuffer = (int8_t *)mouseData[mouseIndex].dataPing;
+                                mouseDataBuffer = mouseData[mouseIndex].dataPing;
                             }
                             else
                             {
-                                mouseDataBuffer = (int8_t *)mouseData[mouseIndex].dataPong;
+                                mouseDataBuffer = mouseData[mouseIndex].dataPong;
                             }
                             
                             currentReportOffset = reportOffset;
                             currentReportOffsetTemp = currentReportOffset;
-                            reportOffset = reportOffset + 
-                                    (mainItem.globalItem)->reportCount *
-                                    (mainItem.globalItem)->reportSize;
+                            reportOffset = (reportOffset) + 
+                                    ((mainItem.globalItem)->reportCount) *
+                                    ((mainItem.globalItem)->reportSize);
                             
                             /* Mouse button handling logic*/
-                            if((( (0xFF00 & (mainItem.globalItem)->usagePage) >> 8 )
-                                    ==  USB_HID_USAGE_PAGE_BUTTON   ) || 
-                                    ((0x00FF & (mainItem.globalItem)->usagePage)
-                                        == USB_HID_USAGE_PAGE_BUTTON))
+                            if((( (0xFF00U & (uint32_t)(mainItem.globalItem)->usagePage) >> 8 )
+                                    ==  (uint32_t)USB_HID_USAGE_PAGE_BUTTON   ) || 
+                                    ((0x00FFU & (uint32_t)(mainItem.globalItem)->usagePage)
+                                        == (uint32_t)USB_HID_USAGE_PAGE_BUTTON))
                             {
                                 if(mainItem.localItem->usageMinMax.valid)
                                 {
@@ -456,69 +474,69 @@ void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                     {
                                         if(mouseData[mouseIndex].taskPingPong)
                                         {
-                                            mouseDataBuffer = (int8_t *)mouseData[mouseIndex].dataPing;
+                                            mouseDataBuffer = mouseData[mouseIndex].dataPing;
                                         }
                                         else
                                         {
-                                            mouseDataBuffer = (int8_t *)mouseData[mouseIndex].dataPong;
+                                            mouseDataBuffer = mouseData[mouseIndex].dataPong;
                                         }
-                                        if(((0x00FF & usage) == USB_HID_USAGE_ID_BUTTON1) &&
-                                                (loop < USB_HOST_HID_MOUSE_BUTTONS_NUMBER))
+                                        if(((0x00FFU & usage) == (uint32_t)USB_HID_USAGE_ID_BUTTON1) &&
+                                                (loop < (uint32_t)USB_HOST_HID_MOUSE_BUTTONS_NUMBER))
                                         {
-                                            mouseDataBuffer = mouseDataBuffer + currentReportOffsetTemp/8;
-                                            mouseData[mouseIndex].appData.buttonState[loop] = 
-                                                (USB_HID_BUTTON_STATE)
-                                                (((*mouseDataBuffer) >> (currentReportOffsetTemp % 8))
-                                                        & 0x01);
-                                            mouseData[mouseIndex].appData.buttonID[loop] =
+                                            mouseDataBuffer = mouseDataBuffer + (currentReportOffsetTemp/8U);
+                                            temp_8 = ((((*mouseDataBuffer)) >> (currentReportOffsetTemp % 8U))
+                                                        & 0x01U);
+                                            mouseData[mouseIndex].usageDriverData.buttonState[loop] = 
+                                                (USB_HID_BUTTON_STATE)temp_8;
+                                            mouseData[mouseIndex].usageDriverData.buttonID[loop] =
                                                     USB_HID_USAGE_ID_BUTTON1;
                                             loop++;
                                         }
-                                        if((0x00FF & usage) == USB_HID_USAGE_ID_BUTTON2 && 
-                                        (loop < USB_HOST_HID_MOUSE_BUTTONS_NUMBER))
+                                        if((0x00FFU & usage) == ((uint32_t)USB_HID_USAGE_ID_BUTTON2) && 
+                                        (loop < (uint32_t)USB_HOST_HID_MOUSE_BUTTONS_NUMBER))
                                         {
-                                            mouseDataBuffer = mouseDataBuffer + currentReportOffsetTemp/8;
-                                            mouseData[mouseIndex].appData.buttonState[loop] = 
-                                                (USB_HID_BUTTON_STATE)
-                                                (((*mouseDataBuffer) >> (currentReportOffsetTemp % 8))
-                                                        & 0x01);
-                                            mouseData[mouseIndex].appData.buttonID[loop] =
+                                            mouseDataBuffer = mouseDataBuffer + (currentReportOffsetTemp/8U);
+                                            temp_8 = ((((*mouseDataBuffer)) >> (currentReportOffsetTemp % 8U))
+                                                        & 0x01U);
+                                            mouseData[mouseIndex].usageDriverData.buttonState[loop] = 
+                                                (USB_HID_BUTTON_STATE) temp_8;                                                
+                                            mouseData[mouseIndex].usageDriverData.buttonID[loop] =
                                                     USB_HID_USAGE_ID_BUTTON2;
                                             loop++;
                                         }
-                                        if((0x00FF & usage) == USB_HID_USAGE_ID_BUTTON3 && 
-                                        (loop < USB_HOST_HID_MOUSE_BUTTONS_NUMBER))
+                                        if((0x00FFU & usage) == ((uint32_t)USB_HID_USAGE_ID_BUTTON3) && 
+                                        (loop < (uint32_t)USB_HOST_HID_MOUSE_BUTTONS_NUMBER))
                                         {
-                                            mouseDataBuffer = mouseDataBuffer + currentReportOffsetTemp/8;
-                                            mouseData[mouseIndex].appData.buttonState[loop] = 
-                                                (USB_HID_BUTTON_STATE)
-                                                (((*mouseDataBuffer) >> currentReportOffsetTemp % 8)
-                                                        & 0x01);
-                                            mouseData[mouseIndex].appData.buttonID[loop] =
+                                            mouseDataBuffer = mouseDataBuffer + (currentReportOffsetTemp/8U);
+                                            temp_8 = ((((*mouseDataBuffer)) >> currentReportOffsetTemp % 8U)
+                                                        & 0x01U);
+                                            mouseData[mouseIndex].usageDriverData.buttonState[loop] = 
+                                                (USB_HID_BUTTON_STATE)temp_8;                                                
+                                            mouseData[mouseIndex].usageDriverData.buttonID[loop] =
                                                     USB_HID_USAGE_ID_BUTTON3;
                                             loop++;
                                         }
-                                        if((0x00FF & usage) == USB_HID_USAGE_ID_BUTTON4 && 
-                                        (loop < USB_HOST_HID_MOUSE_BUTTONS_NUMBER))
+                                        if((0x00FFU & usage) == ((uint32_t)USB_HID_USAGE_ID_BUTTON4) && 
+                                        (loop < (uint32_t)USB_HOST_HID_MOUSE_BUTTONS_NUMBER))
                                         {
-                                            mouseDataBuffer = mouseDataBuffer + currentReportOffsetTemp/8;
-                                            mouseData[mouseIndex].appData.buttonState[loop] = 
-                                                (USB_HID_BUTTON_STATE)
-                                                (((*mouseDataBuffer) >> currentReportOffsetTemp % 8)
-                                                        & 0x01);
-                                            mouseData[mouseIndex].appData.buttonID[loop] =
+                                            mouseDataBuffer = mouseDataBuffer + (currentReportOffsetTemp/8U);
+                                            temp_8 = ((((*mouseDataBuffer)) >> currentReportOffsetTemp % 8U)
+                                                        & 0x01U);
+                                            mouseData[mouseIndex].usageDriverData.buttonState[loop] = 
+                                                (USB_HID_BUTTON_STATE)temp_8;                                                
+                                            mouseData[mouseIndex].usageDriverData.buttonID[loop] =
                                                     USB_HID_USAGE_ID_BUTTON4;
                                             loop++;
                                         }
-                                        if((0x00FF & usage) == USB_HID_USAGE_ID_BUTTON5 && 
-                                        (loop < USB_HOST_HID_MOUSE_BUTTONS_NUMBER))
+                                        if((0x00FFU & usage) == ((uint32_t)USB_HID_USAGE_ID_BUTTON5) && 
+                                        (loop < (uint32_t)USB_HOST_HID_MOUSE_BUTTONS_NUMBER))
                                         {
-                                            mouseDataBuffer = mouseDataBuffer + currentReportOffsetTemp/8;
-                                            mouseData[mouseIndex].appData.buttonState[loop] = 
-                                                (USB_HID_BUTTON_STATE)
-                                                (((*mouseDataBuffer) >> currentReportOffsetTemp % 8)
-                                                        & 0x01);
-                                            mouseData[mouseIndex].appData.buttonID[loop] =
+                                            mouseDataBuffer = mouseDataBuffer + (currentReportOffsetTemp/8U);
+                                            temp_8 = ((((*mouseDataBuffer)) >> currentReportOffsetTemp % 8U)
+                                                        & 0x01U);
+                                            mouseData[mouseIndex].usageDriverData.buttonState[loop] = 
+                                                (USB_HID_BUTTON_STATE)temp_8;                                                
+                                            mouseData[mouseIndex].usageDriverData.buttonID[loop] =
                                                     USB_HID_USAGE_ID_BUTTON5;
                                             loop++;
                                         }
@@ -537,11 +555,11 @@ void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                     {
                                         if(mouseData[mouseIndex].taskPingPong)
                                         {
-                                            mouseDataBuffer = (int8_t *)mouseData[mouseIndex].dataPing;
+                                            mouseDataBuffer = mouseData[mouseIndex].dataPing;
                                         }
                                         else
                                         {
-                                            mouseDataBuffer = (int8_t *)mouseData[mouseIndex].dataPong;
+                                            mouseDataBuffer = mouseData[mouseIndex].dataPong;
                                         }
                                         result = USB_HOST_HID_UsageGet
                                                 (
@@ -552,63 +570,63 @@ void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                                 );
                                         if(result == USB_HOST_HID_RESULT_SUCCESS)
                                         {
-                                            if((0x00FF & usage) == USB_HID_USAGE_ID_BUTTON1 && 
-                                            (loop < USB_HOST_HID_MOUSE_BUTTONS_NUMBER))
+                                            if((0x00FFU & usage) == ((uint32_t)USB_HID_USAGE_ID_BUTTON1) && 
+                                            (loop < (uint32_t)USB_HOST_HID_MOUSE_BUTTONS_NUMBER))
                                             {
-                                                mouseDataBuffer = mouseDataBuffer + currentReportOffsetTemp/8;
-                                                mouseData[mouseIndex].appData.buttonState[loop] = 
-                                                    (USB_HID_BUTTON_STATE)
-                                                    (((*mouseDataBuffer) >> currentReportOffsetTemp % 8)
-                                                            & 0x01);
-                                                mouseData[mouseIndex].appData.buttonID[loop] =
+                                                mouseDataBuffer = mouseDataBuffer + (currentReportOffsetTemp/8U);
+                                                temp_8 = ((((*mouseDataBuffer)) >> currentReportOffsetTemp % 8U)
+                                                            & 0x01U);
+                                                mouseData[mouseIndex].usageDriverData.buttonState[loop] = 
+                                                    (USB_HID_BUTTON_STATE)temp_8;                                                    
+                                                mouseData[mouseIndex].usageDriverData.buttonID[loop] =
                                                         USB_HID_USAGE_ID_BUTTON1;
                                                 loop++;
                                             }
-                                            if((0x00FF & usage) == USB_HID_USAGE_ID_BUTTON2 && 
-                                            (loop < USB_HOST_HID_MOUSE_BUTTONS_NUMBER))
+                                            if((0x00FFU & usage) == ((uint32_t)USB_HID_USAGE_ID_BUTTON2) && 
+                                            (loop < (uint32_t)USB_HOST_HID_MOUSE_BUTTONS_NUMBER))
                                             {
-                                                mouseDataBuffer = mouseDataBuffer + currentReportOffsetTemp/8;
-                                                mouseData[mouseIndex].appData.buttonState[loop] = 
-                                                    (USB_HID_BUTTON_STATE)
-                                                    (((*mouseDataBuffer) >> currentReportOffsetTemp % 8)
-                                                            & 0x01);
-                                                mouseData[mouseIndex].appData.buttonID[loop] =
+                                                mouseDataBuffer = mouseDataBuffer + (currentReportOffsetTemp/8U);
+                                                temp_8 = ((((*mouseDataBuffer)) >> currentReportOffsetTemp % 8U)
+                                                            & 0x01U);
+                                                mouseData[mouseIndex].usageDriverData.buttonState[loop] = 
+                                                    (USB_HID_BUTTON_STATE)temp_8;                                                   
+                                                mouseData[mouseIndex].usageDriverData.buttonID[loop] =
                                                         USB_HID_USAGE_ID_BUTTON2;
                                                 loop++;
                                             }
-                                            if((0x00FF & usage) == USB_HID_USAGE_ID_BUTTON3 && 
-                                            (loop < USB_HOST_HID_MOUSE_BUTTONS_NUMBER))
+                                            if((0x00FFU & usage) == ((uint32_t)USB_HID_USAGE_ID_BUTTON3) && 
+                                            (loop < (uint32_t)USB_HOST_HID_MOUSE_BUTTONS_NUMBER))
                                             {
-                                                mouseDataBuffer = mouseDataBuffer + currentReportOffsetTemp/8;
-                                                mouseData[mouseIndex].appData.buttonState[loop] = 
-                                                    (USB_HID_BUTTON_STATE)
-                                                    (((*mouseDataBuffer) >> currentReportOffsetTemp % 8)
-                                                            & 0x01);
-                                                mouseData[mouseIndex].appData.buttonID[loop] =
+                                                mouseDataBuffer = mouseDataBuffer + (currentReportOffsetTemp/8U);
+                                                temp_8 = ((((*mouseDataBuffer)) >> currentReportOffsetTemp % 8U)
+                                                            & 0x01U);
+                                                mouseData[mouseIndex].usageDriverData.buttonState[loop] = 
+                                                    (USB_HID_BUTTON_STATE)temp_8;                                                  
+                                                mouseData[mouseIndex].usageDriverData.buttonID[loop] =
                                                         USB_HID_USAGE_ID_BUTTON3;
                                                 loop++;
                                             }
-                                            if((0x00FF & usage) == USB_HID_USAGE_ID_BUTTON4 && 
-                                            (loop < USB_HOST_HID_MOUSE_BUTTONS_NUMBER))
+                                            if((0x00FFU & usage) == ((uint32_t)USB_HID_USAGE_ID_BUTTON4) && 
+                                            (loop < (uint32_t)USB_HOST_HID_MOUSE_BUTTONS_NUMBER))
                                             {
-                                                mouseDataBuffer = mouseDataBuffer + currentReportOffsetTemp/8;
-                                                mouseData[mouseIndex].appData.buttonState[loop] = 
-                                                    (USB_HID_BUTTON_STATE)
-                                                    (((*mouseDataBuffer) >> currentReportOffsetTemp % 8)
-                                                            & 0x01);
-                                                mouseData[mouseIndex].appData.buttonID[loop] =
+                                                mouseDataBuffer = mouseDataBuffer + (currentReportOffsetTemp/8U);
+                                                temp_8 = ((((*mouseDataBuffer)) >> currentReportOffsetTemp % 8U)
+                                                            & 0x01U);
+                                                mouseData[mouseIndex].usageDriverData.buttonState[loop] = 
+                                                    (USB_HID_BUTTON_STATE)temp_8;                                                    
+                                                mouseData[mouseIndex].usageDriverData.buttonID[loop] =
                                                         USB_HID_USAGE_ID_BUTTON4;
                                                 loop++;
                                             }
-                                            if((0x00FF & usage) == USB_HID_USAGE_ID_BUTTON5 && 
-                                            (loop < USB_HOST_HID_MOUSE_BUTTONS_NUMBER))
+                                            if((0x00FFU & usage) == ((uint32_t)USB_HID_USAGE_ID_BUTTON5) && 
+                                            (loop < (uint32_t)USB_HOST_HID_MOUSE_BUTTONS_NUMBER))
                                             {
-                                                mouseDataBuffer = mouseDataBuffer + currentReportOffsetTemp/8;
-                                                mouseData[mouseIndex].appData.buttonState[loop] = 
-                                                    (USB_HID_BUTTON_STATE)
-                                                    (((*mouseDataBuffer) >> currentReportOffsetTemp % 8)
-                                                            & 0x01);
-                                                mouseData[mouseIndex].appData.buttonID[loop] =
+                                                mouseDataBuffer = mouseDataBuffer + (currentReportOffsetTemp/8U);
+                                                temp_8 = ((((*mouseDataBuffer)) >> currentReportOffsetTemp % 8U)
+                                                            & 0x01U);
+                                                mouseData[mouseIndex].usageDriverData.buttonState[loop] = 
+                                                    (USB_HID_BUTTON_STATE)temp_8;                                                   
+                                                mouseData[mouseIndex].usageDriverData.buttonID[loop] =
                                                         USB_HID_USAGE_ID_BUTTON5;
                                                 loop++;
                                             }
@@ -626,10 +644,10 @@ void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                 } /* Individual usage based field */
                             } /* Button page */
 
-                            else if(( ((0xFF00 & (mainItem.globalItem)->usagePage) >> 8 )
-                                        == USB_HID_USAGE_PAGE_GENERIC_DESKTOP_CONTROLS) || 
-                                        ((0x00FF & (mainItem.globalItem)->usagePage)
-                                        == USB_HID_USAGE_PAGE_GENERIC_DESKTOP_CONTROLS))
+                            else if(( ((0xFF00U & ((uint32_t)(mainItem.globalItem)->usagePage)) >> 8 )
+                                        == (uint32_t)USB_HID_USAGE_PAGE_GENERIC_DESKTOP_CONTROLS) || 
+                                        ((0x00FFU & ((uint32_t)(mainItem.globalItem)->usagePage))
+                                        == (uint32_t)USB_HID_USAGE_PAGE_GENERIC_DESKTOP_CONTROLS))
                             {
                                 if(((mainItem.localItem)->usageMinMax.valid) == false)
                                 {
@@ -639,11 +657,11 @@ void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                     {
                                         if(mouseData[mouseIndex].taskPingPong)
                                         {
-                                            mouseDataBuffer = (int8_t *)mouseData[mouseIndex].dataPing;
+                                            mouseDataBuffer = mouseData[mouseIndex].dataPing;
                                         }
                                         else
                                         {
-                                            mouseDataBuffer = (int8_t *)mouseData[mouseIndex].dataPong;
+                                            mouseDataBuffer = mouseData[mouseIndex].dataPong;
                                         }
                                         result = USB_HOST_HID_UsageGet
                                                 (
@@ -663,43 +681,51 @@ void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                             {
                                                 /* X/Y/Z found*/
                                                 mouseDataBuffer = mouseDataBuffer + 
-                                                        currentReportOffsetTemp/8;
+                                                        (currentReportOffsetTemp/8U);
                                                 
                                                 ptr = mouseDataBuffer;
                                                 mouseDataBufferTemp = 0;
-                                                for (i = 0; i < 5; i++)
+                                                for (i = 0; i < 5U; i++)
                                                 {
-                                                    mouseDataBufferTemp |= ptr[i] << (i * 8);
+                                                    mouseDataBufferTemp = mouseDataBufferTemp | (((uint64_t)ptr[i]) << (i * 8U));
                                                 }
                                                 
-                                                mouseDataBufferTemp >>= currentReportOffsetTemp % 8;
-                                                mouseDataBufferTemp &= 0xFFFFFFFF;
+                                                mouseDataBufferTemp = (mouseDataBufferTemp) >> (currentReportOffsetTemp % 8U);
+                                                
+                                                mouseDataBufferTemp = (mouseDataBufferTemp) & 0xFFFFFFFFU;
                                                 
                                                 /* The logic here is AND with (2 to the power report size) - 1 */
-                                                andMask = (1 << (mainItem.globalItem)->reportSize) - 1;
-                                                mouseDataBufferTemp = mouseDataBufferTemp & andMask;
+                                                andMask = (1UL << (mainItem.globalItem)->reportSize) - 1U;
+                                                mouseDataBufferTemp = (mouseDataBufferTemp & (uint64_t)andMask);
+
                                                 
                                                 if((mainItem.globalItem)->logicalMinimum < 0)
                                                 {
-                                                    mouseDataBufferTemp = 
-                                                        mouseDataBufferTemp & (1 << (((mainItem.globalItem)->reportSize) - 1)) ? 
-                                                        mouseDataBufferTemp | ((int64_t)-1 << ((mainItem.globalItem)->reportSize))
-                                                          : mouseDataBufferTemp;
+                                                    int64_t readData = (int64_t)-1;
+                                                    uint64_t readMousedata = (((mouseDataBufferTemp) & ((uint64_t)1U << (((mainItem.globalItem)->reportSize) - 1U))) != 0U) ? 
+                                                        (mouseDataBufferTemp) | (((uint64_t)readData) << ((mainItem.globalItem)->reportSize))
+                                                          : (mouseDataBufferTemp);
+                                                    mouseDataBufferTemp = readMousedata;
+                                                        
                                                 }
                                                 if(usage == USAGE_X)
                                                 {
-                                                    mouseData[mouseIndex].appData.xMovement =
+                                                    mouseData[mouseIndex].usageDriverData.xMovement =
                                                         (int16_t)(mouseDataBufferTemp);
                                                 }
                                                 else if(usage == USAGE_Y)
                                                 {
-                                                    mouseData[mouseIndex].appData.yMovement =
+                                                    mouseData[mouseIndex].usageDriverData.yMovement =
                                                         (int16_t)(mouseDataBufferTemp);
                                                 }
                                                 else if(usage == USAGE_Z)
                                                 {
-                                                    mouseData[mouseIndex].appData.zMovement =
+                                                    mouseData[mouseIndex].usageDriverData.zMovement =
                                                         (int16_t)(mouseDataBufferTemp);
+                                                }
+                                                else
+                                                {
+                                                    /* Do Nothing */
                                                 }
                                             }
                                             currentReportOffsetTemp = 
@@ -715,8 +741,12 @@ void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                     result = USB_HOST_HID_RESULT_SUCCESS;
                                 }/* if usage min max used */
                             }/* if Generic Desktop Page */
+                            else
+                            {
+                                /* Do Nothing */
+                            }
                         }/* Main item = INPUT */
-                        else if(mainItem.tag ==
+                        else if((uint32_t)mainItem.tag ==
                                     USB_HID_MAIN_ITEM_TAG_OUTPUT)
                         {
                             /* Change report offset as they
@@ -725,7 +755,7 @@ void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
                                         (mainItem.globalItem)->reportCount *
                                         (mainItem.globalItem)->reportSize;
                         }
-                        else if(mainItem.tag ==
+                        else if((uint32_t)mainItem.tag ==
                                     USB_HID_MAIN_ITEM_TAG_FEATURE)
                         {
                             /* Change report offset as they
@@ -733,6 +763,10 @@ void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
                             reportOffset = reportOffset +
                                     (mainItem.globalItem)->reportCount *
                                     (mainItem.globalItem)->reportSize;
+                        }
+                        else
+                        {
+                            /* Do Nothing */
                         }
                     }/* Field found */
                     index++;
@@ -742,7 +776,7 @@ void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
                 {
                     appMouseHandler((USB_HOST_HID_MOUSE_HANDLE)handle,
                                 USB_HOST_HID_MOUSE_EVENT_REPORT_RECEIVED,
-                                (void *)&mouseData[mouseIndex].appData);
+                                (void *)&mouseData[mouseIndex].usageDriverData);
                 }
                 
                 if(mouseData[mouseIndex].taskPingPong)
@@ -756,7 +790,11 @@ void _USB_HOST_HID_MOUSE_Task(USB_HOST_HID_OBJ_HANDLE handle)
             }/* end of report processing */
             break;
         default:
+            /* Do Nothing */
             break;
     }
-}/* End of _USB_HOST_HID_MOUSE_Task() */
+}/* End of USB_HOST_HID_MOUSE_Task() */
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 21.15"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */

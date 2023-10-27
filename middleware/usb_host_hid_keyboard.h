@@ -39,8 +39,8 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
-#ifndef _USB_HOST_HID_KEYBOARD_H_
-#define _USB_HOST_HID_KEYBOARD_H_
+#ifndef USB_HOST_HID_KEYBOARD_H_
+#define USB_HOST_HID_KEYBOARD_H_
 
 
 // *****************************************************************************
@@ -65,6 +65,10 @@
 // *****************************************************************************
 // *****************************************************************************
 
+/* MISRA C-2012 Rule 6.1 deviated:8 Deviation record ID -  H3_MISRAC_2012_R_6_1_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:8 "MISRA C-2012 Rule 6.1" "H3_MISRAC_2012_R_6_1_DR_1"  
 // *****************************************************************************
 /* USB Host HID Keyboard Driver Result Minimum Constant
 
@@ -267,8 +271,8 @@ typedef void (*USB_HOST_HID_KEYBOARD_EVENT_HANDLER)
 // *****************************************************************************
 
 
-void _USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle);
-void _USB_HOST_HID_KEYBOARD_EventHandler
+void USB_HOST_HID_KEYBOARD_Task(USB_HOST_HID_OBJ_HANDLE handle);
+void USB_HOST_HID_KEYBOARD_EventHandler
 (
     USB_HOST_HID_OBJ_HANDLE handle,
     USB_HOST_HID_EVENT event,
@@ -306,8 +310,7 @@ void _USB_HOST_HID_KEYBOARD_EventHandler
     
   Example:
     <code>
-    // This code snippet shows an example of registering event handler
-   
+       
     </code>
 
   Remarks:
@@ -353,8 +356,7 @@ USB_HOST_HID_KEYBOARD_RESULT USB_HOST_HID_KEYBOARD_EventHandlerSet
     
   Example:
     <code>
-    // This code snippet shows an example of sending Report
-   
+      
     </code>
 
   Remarks:
@@ -367,6 +369,10 @@ USB_HOST_HID_KEYBOARD_RESULT USB_HOST_HID_KEYBOARD_ReportSend
     uint8_t outputReport
 );
 
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 6.1"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus
 }
