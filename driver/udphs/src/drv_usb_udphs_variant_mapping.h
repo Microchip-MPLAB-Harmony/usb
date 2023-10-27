@@ -40,8 +40,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_USB_UDPHS_VARIANT_MAPPING_H
-#define _DRV_USB_UDPHS_VARIANT_MAPPING_H
+#ifndef DRV_USB_UDPHS_VARIANT_MAPPING_H
+#define DRV_USB_UDPHS_VARIANT_MAPPING_H
 
 
 // *****************************************************************************
@@ -70,9 +70,9 @@
  * Sets up driver mode-specific init routine
  * based on selected support.
  *********************************************/
-#define _DRV_USB_UDPHS_ISR(x)                 DRV_USB_UDPHS_Tasks_ISR(x)
-#define _DRV_USB_UDPHS_DEVICE_INIT(x, y)      _DRV_USB_UDPHS_DEVICE_Initialize(x , y)
-#define _DRV_USB_UDPHS_DEVICE_TASKS_ISR(x)    _DRV_USB_UDPHS_DEVICE_Tasks_ISR(x)
-#define _DRV_USB_UDPHS_FOR_DEVICE(x, y)       x y
+#define M_DRV_USB_UDPHS_ISR(x)                 DRV_USB_UDPHS_Tasks_ISR(x)
+#define M_DRV_USB_UDPHS_DEVICE_INIT(x, y)      F_DRV_USB_UDPHS_DEVICE_Initialize(x , y)
+#define M_DRV_USB_UDPHS_DEVICE_TASKS_ISR(x)    F_DRV_USB_UDPHS_DEVICE_Tasks_ISR(x)
+#define M_DRV_USB_UDPHS_FOR_DEVICE(x, y)       x y
 
 #endif

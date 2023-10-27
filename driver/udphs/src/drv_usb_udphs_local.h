@@ -39,8 +39,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_USB_UDPHS_LOCAL_H
-#define _DRV_USB_UDPHS_LOCAL_H
+#ifndef DRV_USB_UDPHS_LOCAL_H
+#define DRV_USB_UDPHS_LOCAL_H
 
 
 // *****************************************************************************
@@ -61,8 +61,8 @@
 
 #define COMPILER_WORD_ALIGNED                               __attribute__((__aligned__(4)))
 /* Number of Endpoints used */
-#define DRV_USB_UDPHS_ENDPOINT_NUMBER_MASK                    (0x0F)
-#define DRV_USB_UDPHS_ENDPOINT_DIRECTION_MASK                 (0x80)
+#define DRV_USB_UDPHS_ENDPOINT_NUMBER_MASK                    (0x0FU)
+#define DRV_USB_UDPHS_ENDPOINT_DIRECTION_MASK                 (0x80U)
 #define DRV_USB_UDPHS_MAX_ENDPOINT_NUMBER                     (UDPHS_EPT_NUMBER)
 #define DRV_USB_UDPHS_NUMBER_OF_BANKS                         (DRV_USB_UDPHS_ENDPOINT_BANKS_ONE)
 
@@ -70,7 +70,7 @@
 #define DMA_MAX_FIFO_SIZE                                   (65536)
 
 /** FIFO space size in bytes */
-#define EPT_VIRTUAL_SIZE                                    (65536)
+#define EPT_VIRTUAL_SIZE                                    (65536U)
 
 #define ENDPOINT_FIFO_ADDRESS(endpoint)                     (((uint8_t*) UDPHS_RAM_ADDR) + EPT_VIRTUAL_SIZE * (endpoint))
 
@@ -78,29 +78,29 @@
 
 #ifdef __CORE_CA_H_GENERIC
     #ifdef _SAMA7G54_H_
-        #define _DRV_USB_UDPHS_InitUTMI() \
+        #define M_DRV_USB_UDPHS_InitUTMI() \
         {\
             uint32_t i;\
             uint32_t temp;\
         \
             /* Reset the USB port (by setting RSTC_GRSTR.USB_RSTx). */ \
-            RSTC_REGS->RSTC_GRSTR |= RSTC_GRSTR_USB_RST(1); \
+            RSTC_REGS->RSTC_GRSTR |= RSTC_GRSTR_USB_RST((uint32_t)1); \
         \
             /* Clear the COMMONONN bit. */ \
             /* SFR_UTMI0Rx.COMMONONN */  \
-            *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) &= ~0x00000008; \
+            *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) &= ~0x00000008U; \
             \
             /* HS Transmitter pre-emphasis circuit sources 1x pre-emphasis current. */ \
-            *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) &= 0x01800000; \
-            *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) |= 0x00800000; \
+            *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) &= 0x01800000U; \
+            *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) |= 0x00800000U; \
         \
             /* Release the USB port reset (by clearing USB_RSTx). */ \
             /* The PLL starts as soon as PHY reset is released in RSTC_GRSTR.USB_RSTx */ \
             /* Release PHY reset in RSTC_GRSTR for each PHY (A, B, C) to be used. */ \
-            RSTC_REGS->RSTC_GRSTR &= ~RSTC_GRSTR_USB_RST(1); \
+            RSTC_REGS->RSTC_GRSTR &= ~RSTC_GRSTR_USB_RST(1U); \
         \
             /* Wait for 45 us before any USB operation */ \
-            temp = 45 * (CPU_CLOCK_FREQUENCY/1000000)/6;   /* comments*/  \
+            temp = 45U * ((uint32_t)CPU_CLOCK_FREQUENCY/1000000U)/6U;   /* comments*/  \
             for (i = 0; i < temp; i++) \
             { \
                 asm("NOP"); \
@@ -108,55 +108,58 @@
         \
             /* SFR->SFR_UTMI0R[0] and SFR_UTMI0R_VBUS; */ \
             /* 1: The VBUS signal is valid, and the pull-up resistor on D+ is enabled. */ \
-            *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) |= 0x02000000; \
+            *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) |= 0x02000000U; \
         }
     #else
-        #define _DRV_USB_UDPHS_InitUTMI() \
+        #define M_DRV_USB_UDPHS_InitUTMI() \
         {\
             uint32_t uckr;                   /* Shadow Register */  \
         \
-            uckr = CKGR_UCKR_UPLLEN_Msk | CKGR_UCKR_UPLLCOUNT(0x3); \
+            uckr = CKGR_UCKR_UPLLEN_Msk | CKGR_UCKR_UPLLCOUNT(0x3U); \
             /* enable the 480MHz UTMI PLL  */ \
             PMC_REGS->CKGR_UCKR = uckr; \
         \
             /* wait until UPLL is locked */ \
-            while (!(PMC_REGS->PMC_SR & PMC_SR_LOCKU_Msk)); \
+            while ((PMC_REGS->PMC_SR & PMC_SR_LOCKU_Msk) == 0U) \
+            { \
+                /* Do Nothing */  \
+            }  \
         }
     #endif  /* _SAMA7G54_H_ */
 #else
-    #define _DRV_USB_UDPHS_InitUTMI()
+    #define M_DRV_USB_UDPHS_InitUTMI()
 #endif /* __CORE_CA_H_GENERIC */
 
 #if defined (_SAMA7G54_H_)
     /* A7G5 DMA 1 to 7 */
-    #define _DRV_USB_UDPHS_EPT_DMA              0x000000FE
+    #define DRV_USB_UDPHS_EPT_DMA              0x000000FEU
     /* A7G5 3 banks for endpoints 1,2 */
-    #define _DRV_USB_UDPHS_EPT_BK               0x00060000
+    #define DRV_USB_UDPHS_EPT_BK               0x00060000U
 #elif defined(_SAMA5D27_H_)
     /* A5D2 DMA 1 to 7 */
-    #define _DRV_USB_UDPHS_EPT_DMA              0x000000FE
+    #define DRV_USB_UDPHS_EPT_DMA              0x000000FEU
     /* A5D2 3 banks for endpoints 1,2 */
-    #define _DRV_USB_UDPHS_EPT_BK               0x00060000
+    #define DRV_USB_UDPHS_EPT_BK               0x00060000U
 #elif defined (_SAMA5D27CD1G_H_)
     /* A5D2_SOM DMA 1 to 7 */
-    #define _DRV_USB_UDPHS_EPT_DMA              0x000000FE
+    #define DRV_USB_UDPHS_EPT_DMA              0x000000FEU
     /* A5D2_SOM 3 banks for endpoints 1,2 */
-    #define _DRV_USB_UDPHS_EPT_BK               0x00060000
+    #define DRV_USB_UDPHS_EPT_BK               0x00060000U
 #elif defined (_SAMA5D27CLD2G_H_)
     /* A5D2_WLSOM1 DMA 1 to 7 */
-    #define _DRV_USB_UDPHS_EPT_DMA              0x000000FE
+    #define DRV_USB_UDPHS_EPT_DMA              0x000000FEU
     /* A5D2_WLSOM1 3 banks for endpoints 1,2 */
-    #define _DRV_USB_UDPHS_EPT_BK               0x00060000
+    #define DRV_USB_UDPHS_EPT_BK               0x00060000U
 #elif defined(_SAM9X60_H_) || defined(_SAM9X60D1G_H_) || defined(_SAM9X60D5M_H_) || defined(_SAM9X60D6K_H_)
     /* 9X60 DMA 1 to 6 */
-    #define _DRV_USB_UDPHS_EPT_DMA              0x0000007E
+    #define DRV_USB_UDPHS_EPT_DMA              0x0000007EU
     /* 9X60 3 banks for endpoints 3, 4, 5, 6 */
-    #define _DRV_USB_UDPHS_EPT_BK               0x00780000
+    #define DRV_USB_UDPHS_EPT_BK               0x00780000U
 #elif defined(_SAM9X70_H_) || defined(_SAM9X72_H_) || defined(_SAM9X75_H_)
     /* 9X70 DMA 1 to 6 */
-    #define _DRV_USB_UDPHS_EPT_DMA              0x0000007E
+    #define DRV_USB_UDPHS_EPT_DMA              0x0000007EU
     /* 9X70 3 banks for endpoints 3, 4, 5, 6 */
-    #define _DRV_USB_UDPHS_EPT_BK               0x00780000
+    #define DRV_USB_UDPHS_EPT_BK               0x00780000U
 #else
 #error Missing device
 #endif
@@ -194,13 +197,18 @@ DRV_USB_UDPHS_ENDPOINT_BANKS;
  * This is an intermediate flag that is set by
  * the driver to indicate that a ZLP should be sent
  ***************************************************/
-#define USB_DEVICE_IRP_FLAG_SEND_ZLP 0x80
+#define USB_DEVICE_IRP_FLAG_SEND_ZLP 0x80U
 
 /***************************************************
  * This object is used by the driver as IRP place
  * holder along with queuing feature.
  ***************************************************/
-typedef struct _USB_DEVICE_IRP_LOCAL
+  /* MISRA C-2012 Rule 5.2 deviated:15 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:15 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"
+
+typedef struct S_USB_DEVICE_IRP_LOCAL
 {
     /* Pointer to the data buffer */
     void * data;
@@ -213,7 +221,7 @@ typedef struct _USB_DEVICE_IRP_LOCAL
 
     /* IRP Callback. If this is NULL,
      * then there is no callback generated */
-    void (*callback)(struct _USB_DEVICE_IRP * irp);
+    void (*callback)(struct S_USB_DEVICE_IRP * irp);
 
     /* Request specific flags */
     USB_DEVICE_IRP_FLAG flags;
@@ -222,10 +230,10 @@ typedef struct _USB_DEVICE_IRP_LOCAL
     uintptr_t userData;
 
     /* This points to the next IRP in the queue */
-    struct _USB_DEVICE_IRP_LOCAL * next;
+    struct S_USB_DEVICE_IRP_LOCAL * next;
 
     /* This points to the previous IRP in the queue */
-    struct _USB_DEVICE_IRP_LOCAL * previous;
+    struct S_USB_DEVICE_IRP_LOCAL * previous;
 
     /* Pending bytes in the IRP */
     uint32_t nPendingBytes;
@@ -299,7 +307,7 @@ typedef enum
     USB_TRANSACTION_STALL           = 0xE,
     USB_TRANSACTION_DATA0           = 0x3,
     USB_TRANSACTION_DATA1           = 0xB,
-    USB_TRANSACTION_BUS_TIME_OUT    = 0x0,
+    USB_TRANSACTION_BUS_TIME_OUT    = 0x1,
     USB_TRANSACTION_DATA_ERROR      = 0xF
 
 }
@@ -339,12 +347,15 @@ typedef enum
 
 } DRV_USB_UDPHS_TASK_STATE;
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 /***********************************************
  * Driver object structure. One object per
  * hardware instance
  **********************************************/
 
-typedef struct _DRV_USB_UDPHS_OBJ_STRUCT
+typedef struct S_DRV_USB_UDPHS_OBJ_STRUCT
 {
     /* This is array of device endpoint objects pointers */
     DRV_USB_UDPHS_DEVICE_ENDPOINT_OBJ * deviceEndpointObj[DRV_USB_UDPHS_ENDPOINTS_NUMBER];
@@ -430,7 +441,24 @@ typedef struct _DRV_USB_UDPHS_OBJ_STRUCT
     #define SYS_DEBUG(a,b)
 #endif
 
-void _DRV_USB_UDPHS_DEVICE_Initialize(DRV_USB_UDPHS_OBJ * drvObj, SYS_MODULE_INDEX index);
-void _DRV_USB_UDPHS_DEVICE_Tasks_ISR(DRV_USB_UDPHS_OBJ * hDriver);
+void F_DRV_USB_UDPHS_DEVICE_Initialize(DRV_USB_UDPHS_OBJ * drvObj, SYS_MODULE_INDEX index);
+void F_DRV_USB_UDPHS_DEVICE_Tasks_ISR(DRV_USB_UDPHS_OBJ * hDriver);
+void DRV_USB_UDPHS_Deinitialize
+(
+    const SYS_MODULE_INDEX  object
+);
+void F_DRV_USB_UDPHS_DEVICE_IRPQueueFlush
+(
+    DRV_USB_UDPHS_DEVICE_ENDPOINT_OBJ * endpointObj,
+    USB_DEVICE_IRP_STATUS status
+);
+void F_DRV_USB_UDPHS_DEVICE_EndpointObjectEnable
+(
+    DRV_USB_UDPHS_DEVICE_ENDPOINT_OBJ * endpointObj,
+    uint16_t endpointSize,
+    USB_TRANSFER_TYPE endpointType,
+    USB_DATA_DIRECTION endpointDirection
+);
+void F_DRV_USB_UDPHS_DEVICE_Tasks_ISR_DMA(DRV_USB_UDPHS_OBJ * hDriver, uint8_t NumEndpoint);
 
 #endif

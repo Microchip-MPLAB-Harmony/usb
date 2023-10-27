@@ -48,14 +48,24 @@
 // *****************************************************************************
 // *****************************************************************************
 #include "driver/usb/udphs/src/drv_usb_udphs_local.h"
+#include "interrupts.h"
 
 /*******************************************************************************
  * Driver instance object
  ******************************************************************************/
 
-DRV_USB_UDPHS_OBJ gDrvUSBUDPHSObj[DRV_USB_UDPHS_INSTANCES_NUMBER];
+static DRV_USB_UDPHS_OBJ gDrvUSBUDPHSObj[DRV_USB_UDPHS_INSTANCES_NUMBER];
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 11.3 False Positive:2, Rule 11.3 deviate:1, and 11.8 deviate:1. 
+   Deviation record ID - H3_MISRAC_2012_R_10_4_DR_1, H3_MISRAC_2012_R_11_3_DR_1 and
+   H3_MISRAC_2012_R_11_8_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(fp:2 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
 /* Function:
     SYS_MODULE_OBJ DRV_USB_UDPHS_Initialize
     (
@@ -120,7 +130,7 @@ SYS_MODULE_OBJ DRV_USB_UDPHS_Initialize
             drvObj->sessionInvalidEventSent = false;
             drvObj->operationSpeed = usbInit->operationSpeed;
 
-            _DRV_USB_UDPHS_DEVICE_INIT(drvObj, drvIndex);
+            M_DRV_USB_UDPHS_DEVICE_INIT(drvObj, drvIndex);
 
             drvObj->state = DRV_USB_UDPHS_TASK_STATE_INITIALIZE_OPERATION_MODE;
             retVal = (SYS_MODULE_OBJ)drvIndex;
@@ -137,6 +147,9 @@ SYS_MODULE_OBJ DRV_USB_UDPHS_Initialize
 } /* end of DRV_USB_UDPHS_Initialize() */
 
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* Function:
     void DRV_USB_UDPHS_USBHS_Handler(void)
@@ -260,6 +273,7 @@ void DRV_USB_UDPHS_Tasks
                 break;
 
             default:
+                /* Do Nothing */
                 break;
         }
     }
@@ -267,6 +281,8 @@ void DRV_USB_UDPHS_Tasks
 
 }/* end of DRV_USB_UDPHS_Tasks() */
 // *****************************************************************************
+/* MISRA C-2012 Rule 12.2 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_12_2_DR_1 */
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 12.2" "H3_MISRAC_2012_R_12_2_DR_1" 
 /* Function:
     void DRV_USB_UDPHS_Deinitialize( const SYS_MODULE_OBJ object )
 
@@ -287,6 +303,7 @@ void DRV_USB_UDPHS_Deinitialize
 )
 {
     DRV_USB_UDPHS_OBJ * drvObj;
+    bool interruptWasEnabled = false; 
 
     if(object == (SYS_MODULE_INDEX)SYS_MODULE_OBJ_INVALID)
     {
@@ -321,7 +338,13 @@ void DRV_USB_UDPHS_Deinitialize
 
                 drvObj->usbID->UDPHS_CTRL = UDPHS_CTRL_EN_UDPHS_Msk;
 
-                SYS_INT_SourceDisable(drvObj->interruptSource);
+                interruptWasEnabled = SYS_INT_SourceDisable(drvObj->interruptSource);
+                
+                if(interruptWasEnabled == false)
+                {
+                    /* Do Nothing */
+                }
+                
                 SYS_INT_SourceStatusClear(drvObj->interruptSource);
 
                 drvObj->isOpened = false;
@@ -338,6 +361,10 @@ void DRV_USB_UDPHS_Deinitialize
 
 } /* end of DRV_USB_UDPHS_Deinitialize() */
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 12.2"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* Function:
     SYS_STATUS DRV_USB_UDPHS_Status( const SYS_MODULE_OBJ object )
@@ -375,8 +402,8 @@ SYS_STATUS DRV_USB_UDPHS_Status ( SYS_MODULE_OBJ object )
 /* Function:
     DRV_HANDLE DRV_USB_UDPHS_Open
 	(
-		const SYS_MODULE_INDEX iDriver,
-    	const DRV_IO_INTENT ioIntent
+		const SYS_MODULE_INDEX drvIndex,
+    	const DRV_IO_INTENT intent
 	)
 
   Summary:
@@ -392,31 +419,33 @@ SYS_STATUS DRV_USB_UDPHS_Status ( SYS_MODULE_OBJ object )
 
 DRV_HANDLE DRV_USB_UDPHS_Open
 (
-    const SYS_MODULE_INDEX iDriver,
-    const DRV_IO_INTENT    ioIntent
+    const SYS_MODULE_INDEX drvIndex,
+    const DRV_IO_INTENT    intent
 )
 {
     DRV_USB_UDPHS_OBJ * drvObj;
     DRV_HANDLE retVal = DRV_HANDLE_INVALID;
-
-    if(iDriver >= DRV_USB_UDPHS_INSTANCES_NUMBER)
+    uint32_t checkIotent;
+     
+    checkIotent= ((uint32_t)DRV_IO_INTENT_EXCLUSIVE | (uint32_t)DRV_IO_INTENT_NONBLOCKING | (uint32_t)DRV_IO_INTENT_READWRITE);
+    if(drvIndex >= DRV_USB_UDPHS_INSTANCES_NUMBER)
     {
         /* Invalid Driver Index number */
         SYS_DEBUG(SYS_ERROR_DEBUG, "\r\nUSB UDPHS Driver: Bad Driver Index in DRV_USB_UDPHS_Open().");
     }
-    else if(gDrvUSBUDPHSObj[iDriver].status != SYS_STATUS_READY)
+    else if(gDrvUSBUDPHSObj[drvIndex].status != SYS_STATUS_READY)
     {
         /* Invalid Driver Object Status */
         SYS_DEBUG(SYS_ERROR_DEBUG, "\r\nUSB UDPHS Driver: Invalid Driver Object Status in DRV_USB_UDPHS_Open().");
     }
-    else if(ioIntent != (DRV_IO_INTENT_EXCLUSIVE | DRV_IO_INTENT_NONBLOCKING | DRV_IO_INTENT_READWRITE))
+    else if(intent != (DRV_IO_INTENT)checkIotent)
     {
         /* The driver supports only this mode */
         SYS_DEBUG(SYS_ERROR_DEBUG, "\r\nUSB UDPHS Driver: Unsupported IO Intent in DRV_USB_UDPHS_Open().");
     }
     else
     {
-        drvObj = &gDrvUSBUDPHSObj[iDriver];
+        drvObj = &gDrvUSBUDPHSObj[drvIndex];
         if(drvObj->isOpened == true)
         {
             /* Driver supports exclusive open only */
@@ -441,31 +470,31 @@ DRV_HANDLE DRV_USB_UDPHS_Open
 
 // *****************************************************************************
 /* Function:
-    void DRV_USB_UDPHS_Close( DRV_HANDLE client )
+    void DRV_USB_UDPHS_Close( DRV_HANDLE handle  )
 
   Summary:
-    Dynamic implementation of DRV_USB_UDPHS_Close client interface function.
+    Dynamic implementation of DRV_USB_UDPHS_Close handle  interface function.
 
   Description:
-    This is the dynamic implementation of DRV_USB_UDPHS_Close client interface
+    This is the dynamic implementation of DRV_USB_UDPHS_Close handle interface
     function.
 
   Remarks:
     See drv_usb_udphs.h for usage information.
 */
 
-void DRV_USB_UDPHS_Close( DRV_HANDLE client )
+void DRV_USB_UDPHS_Close( DRV_HANDLE handle  )
 {
     DRV_USB_UDPHS_OBJ * hDriver;
 
-    if(client == DRV_HANDLE_INVALID)
+    if(handle  == DRV_HANDLE_INVALID)
     {
-        /* Invalid Client Handle */
-        SYS_DEBUG(SYS_ERROR_INFO, "\r\nUSB UDPHS Driver: Invalid Client Handle in DRV_USB_UDPHS_Close().");
+        /* Invalid handle  Handle */
+        SYS_DEBUG(SYS_ERROR_INFO, "\r\nUSB UDPHS Driver: Invalid handle  Handle in DRV_USB_UDPHS_Close().");
     }
     else
     {
-        hDriver = (DRV_USB_UDPHS_OBJ *) client;
+        hDriver = (DRV_USB_UDPHS_OBJ *) handle ;
 
         if(hDriver->isOpened != true)
         {
@@ -474,7 +503,7 @@ void DRV_USB_UDPHS_Close( DRV_HANDLE client )
         }
         else
         {
-            /* Give back the client */
+            /* Give back the handle  */
             hDriver->isOpened = false;
             hDriver->pEventCallBack = NULL;
         }
@@ -512,7 +541,7 @@ void DRV_USB_UDPHS_Tasks_ISR( SYS_MODULE_OBJ object )
         hDriver = &gDrvUSBUDPHSObj[object];
         hDriver->isInInterruptContext = true;
 
-        _DRV_USB_UDPHS_DEVICE_TASKS_ISR(hDriver);
+        M_DRV_USB_UDPHS_DEVICE_TASKS_ISR(hDriver);
 
         SYS_INT_SourceStatusClear(hDriver->interruptSource);
         hDriver->isInInterruptContext = false;
@@ -526,16 +555,16 @@ void DRV_USB_UDPHS_Tasks_ISR( SYS_MODULE_OBJ object )
     (
         DRV_HANDLE   handle,
         uintptr_t    hReferenceData,
-        DRV_USB_UDPHS_EVENT_CALLBACK eventCallBack
+        DRV_USB_UDPHS_EVENT_CALLBACK myEventCallBack
     )
 
   Summary:
-    Dynamic implementation of DRV_USB_UDPHS_ClientEventCallBackSet client interface
+    Dynamic implementation of DRV_USB_UDPHS_ClientEventCallBackSet handle interface
     function.
 
   Description:
     This is the dynamic implementation of DRV_USB_UDPHS_ClientEventCallBackSet
-    client interface function.
+    handle interface function.
 
   Remarks:
     See drv_usb_udphs.h for usage information.
@@ -543,22 +572,22 @@ void DRV_USB_UDPHS_Tasks_ISR( SYS_MODULE_OBJ object )
 
 void DRV_USB_UDPHS_ClientEventCallBackSet
 (
-    DRV_HANDLE   client,
+    DRV_HANDLE   handle,
     uintptr_t    hReferenceData,
-    DRV_USB_EVENT_CALLBACK eventCallBack
+    DRV_USB_EVENT_CALLBACK myEventCallBack
 )
 {
     DRV_USB_UDPHS_OBJ * pusbDrvObj;
 
     /* Check if the handle is valid */
-    if(client == DRV_HANDLE_INVALID)
+    if(handle == DRV_HANDLE_INVALID)
     {
         /* Driver handle is invalid */
         SYS_DEBUG(SYS_ERROR_INFO, "\r\nUSB UDPHS Driver: Invalid Driver Handle in DRV_USB_UDPHS_ClientEventCallBackSet().");
     }
     else
     {
-        pusbDrvObj = (DRV_USB_UDPHS_OBJ *) client;
+        pusbDrvObj = (DRV_USB_UDPHS_OBJ *) handle;
 
         if(pusbDrvObj->isOpened != true)
         {
@@ -569,7 +598,7 @@ void DRV_USB_UDPHS_ClientEventCallBackSet
         {
             /* Assign event call back and reference data */
             pusbDrvObj->hClientArg = hReferenceData;
-            pusbDrvObj->pEventCallBack = eventCallBack;
+            pusbDrvObj->pEventCallBack = myEventCallBack;
         }
     }
 

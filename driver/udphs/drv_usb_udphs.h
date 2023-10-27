@@ -43,8 +43,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_USB_UDPHS_H
-#define _DRV_USB_UDPHS_H
+#ifndef DRV_USB_UDPHS_H
+#define DRV_USB_UDPHS_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -71,6 +71,17 @@
 // Section: Hi-Speed USB Driver Constants
 // *****************************************************************************
 // *****************************************************************************
+
+/* MISRA C-2012 Rule 3.1 deviate:26, Rule 5.1 deviate:1, Rule 5.2 deviate:5 
+   and Rule 8.6 deviate:2.Deviation record ID - H3_MISRAC_2012_R_3_1_DR_1, 
+   H3_MISRAC_2012_R_5_2_DR_1,and H3_MISRAC_2012_R_8_6_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:26 "MISRA C-2012 Rule 3.1" "H3_MISRAC_2012_R_3_1_DR_1" )\
+(deviate:5 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1" 
+#pragma coverity compliance block deviate:5 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"  
 
 /*DOM-IGNORE-BEGIN*/#define DRV_USB_UDPHS_ENDPOINT_ALL 16/*DOM-IGNORE-END*/
 
@@ -141,7 +152,7 @@
 
 // *****************************************************************************
 
-/*DOM-IGNORE-BEGIN*/#define DRV_USB_UDPHS_DEVICE_ENDPOINT_ALL 16/*DOM-IGNORE-END*/
+/*DOM-IGNORE-BEGIN*/#define DRV_USB_UDPHS_DEVICE_ENDPOINT_ALL 16U/*DOM-IGNORE-END*/
 
 // *****************************************************************************
 
@@ -152,10 +163,10 @@
 
   Description:
     This enumeration lists the possible USB VBUS levels. In USB modules that do
-	not contain a VBUS comparator, the application should provide a VBUS
-	monitoring 	function to the driver. The function should return a value of
-	this type. The driver will call this function periodically to monitor the
-	VBUS.
+    not contain a VBUS comparator, the application should provide a VBUS
+    monitoring     function to the driver. The function should return a value of
+    this type. The driver will call this function periodically to monitor the
+    VBUS.
 
   Remarks:
     None.
@@ -163,11 +174,11 @@
 
 typedef enum
 {
-	/* VBUS is below Session End */
-	DRV_USB_VBUS_LEVEL_INVALID = 0,
+    /* VBUS is below Session End */
+    DRV_USB_VBUS_LEVEL_INVALID = 0,
 
-	/* VBUS is above session end but below A valid */
-	DRV_USB_VBUS_LEVEL_VALID = 1
+    /* VBUS is above session end but below A valid */
+    DRV_USB_VBUS_LEVEL_VALID = 1
 
 } DRV_USB_VBUS_LEVEL;
 
@@ -179,11 +190,11 @@ typedef enum
 
   Description:
     A function of the type defined here should be provided to the driver to
-	monitor the status of the VBUS. The application should provide this function
-	through the driver initialization data structure. The function should
-	return the current state of the external VBUS comparator. The function
-	should be non-blocking and will be called from the DRV_USB_UDPHS_Tasks
-	function.
+    monitor the status of the VBUS. The application should provide this function
+    through the driver initialization data structure. The function should
+    return the current state of the external VBUS comparator. The function
+    should be non-blocking and will be called from the DRV_USB_UDPHS_Tasks
+    function.
 
   Remarks:
     None.
@@ -242,7 +253,7 @@ typedef enum
 
   Description:
     This enumeration identifies the different speed configurations that are
-	supported by the USB_UDPHS USB Driver.
+    supported by the USB_UDPHS USB Driver.
 
   Remarks:
     None.
@@ -346,7 +357,7 @@ typedef struct
     /* Specify the interrupt source for the USB module. This should be the
        interrupt source identifier for the USB module instance specified in
        usbID. */
-    uint8_t interruptSource;
+    INT_SOURCE interruptSource;
 
     /* Specify the operational speed of the USB module. This should always be
        set to USB_SPEED_FULL. */
@@ -1645,10 +1656,10 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_IRPCancelAll
 // **************************************************************************
 /* Function:
     USB_ERROR DRV_USB_UDPHS_DEVICE_IRPCancel
-	(
-		DRV_HANDLE client,
-		USB_DEVICE_IRP * irp
-	)
+    (
+        DRV_HANDLE client,
+        USB_DEVICE_IRP * irp
+    )
 
   Summary:
     This function cancels the specific IRP that are queued and in progress at the
@@ -1958,6 +1969,11 @@ void USBHS_Handler(void);
 /*  The file included below maps the interface definitions above to appropriate
     static implementations, depending on build mode.
 */
-
+#pragma coverity compliance end_block "MISRA C-2012 Rule 3.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 #endif
