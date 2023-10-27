@@ -49,22 +49,30 @@
 // *****************************************************************************
 #include "usb/src/usb_external_dependencies.h"
 #include "driver/usb/usbhsv1/src/drv_usbhsv1_local.h"
+#include "interrupts.h"
 
 /************************************
  * Driver instance object
  ***********************************/
 
-DRV_USBHSV1_OBJ gDrvUSBObj[DRV_USBHSV1_INSTANCES_NUMBER];
+static DRV_USBHSV1_OBJ gDrvUSBObj[DRV_USBHSV1_INSTANCES_NUMBER];
 
 /*********************************
  * Array of endpoint objects. Two 
  * objects per endpoint 
  ********************************/
 
-DRV_USBHSV1_DEVICE_ENDPOINT_OBJ gDrvUSBEndpoints [DRV_USBHSV1_INSTANCES_NUMBER] [DRV_USBHSV1_ENDPOINTS_NUMBER * 2];
+static DRV_USBHSV1_DEVICE_ENDPOINT_OBJ gDrvUSBEndpoints [DRV_USBHSV1_INSTANCES_NUMBER] [DRV_USBHSV1_ENDPOINTS_NUMBER * 2];
 
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 11.3, and 11.8 deviated below. Deviation record ID -  
+    H3_MISRAC_2012_R_11_3_DR_1, H3_MISRAC_2012_R_11_8_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
 /* Function:
     SYS_MODULE_OBJ DRV_USBHSV1_Initialize
     ( 
@@ -115,7 +123,7 @@ SYS_MODULE_OBJ DRV_USBHSV1_Initialize
         drvObj = &gDrvUSBObj[drvIndex];
 
         /* Try creating the global mutex. This always passes if  */
-        OSAL_ASSERT(if(OSAL_MUTEX_Create(&drvObj->mutexID) == OSAL_RESULT_TRUE), "\r\nDRV USB USBHSV1: Mutex create failed");
+        (void) OSAL_ASSERT((OSAL_MUTEX_Create(&drvObj->mutexID) == (OSAL_RESULT)OSAL_RESULT_TRUE), "\r\nDRV USB USBHSV1: Mutex create failed");
 
         /* Populate the driver object with the required data */
         drvObj->inUse = true;
@@ -178,7 +186,10 @@ SYS_MODULE_OBJ DRV_USBHSV1_Initialize
             usbID->USBHS_CTRL &= ~USBHS_CTRL_FRZCLK_Msk;
         
             /* Wait to unfreeze clock */
-            while(USBHS_SR_CLKUSABLE_Msk != (usbID->USBHS_SR & USBHS_SR_CLKUSABLE_Msk));
+            while(USBHS_SR_CLKUSABLE_Msk != (usbID->USBHS_SR & USBHS_SR_CLKUSABLE_Msk))
+            {
+                /* Do Nothing */
+            }
         
             /* Freeze USB clock */
             usbID->USBHS_CTRL |= USBHS_CTRL_FRZCLK_Msk;
@@ -194,6 +205,10 @@ SYS_MODULE_OBJ DRV_USBHSV1_Initialize
             /* Unfreeze USB clock */
             usbID->USBHS_CTRL &= ~USBHS_CTRL_FRZCLK_Msk;
         }
+        else
+        {
+            /* Do Nothing */
+        }
         PMC_REGS->PMC_FSMR |= PMC_FSMR_USBAL_Msk;
         
 
@@ -206,6 +221,10 @@ SYS_MODULE_OBJ DRV_USBHSV1_Initialize
 
 } /* end of DRV_USBHSV1_Initialize() */
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* Function:
     void DRV_USBHSV1_USBHS_Handler(void)
@@ -284,14 +303,14 @@ void DRV_USBHSV1_Tasks(SYS_MODULE_OBJ object)
                     case DRV_USBHSV1_OPMODE_DEVICE:
                             
                         /* Device mode specific driver initialization */
-                        _DRV_USBHSV1_DEVICE_INIT(hDriver, object);
+                        M_DRV_USBHSV1_DEVICE_INIT(hDriver, (uint16_t)object);
                     break;
                         
                     case DRV_USBHSV1_OPMODE_HOST:
 
 
                         /* Host mode specific driver initialization */
-                        _DRV_USBHSV1_HOST_INIT(hDriver, object);
+                        M_DRV_USBHSV1_HOST_INIT(hDriver, (uint16_t)object);
                     break;
                         
                     case DRV_USBHSV1_OPMODE_OTG:
@@ -306,8 +325,8 @@ void DRV_USBHSV1_Tasks(SYS_MODULE_OBJ object)
                 }
                                         
                 /* Clear and enable the interrupts */
-                _DRV_USBHSV1_InterruptSourceClear(hDriver->interruptSource);
-                _DRV_USBHSV1_InterruptSourceEnable(hDriver->interruptSource);
+                M_DRV_USBHSV1_InterruptSourceClear(hDriver->interruptSource);
+                M_DRV_USBHSV1_InterruptSourceEnable(hDriver->interruptSource);
                 
                 /* Indicate that the object is ready 
                  * and change the state to running */
@@ -324,7 +343,7 @@ void DRV_USBHSV1_Tasks(SYS_MODULE_OBJ object)
                  * check for the VBUS level and generate events if a client 
                  * event handler is registered. */
 
-                if(hDriver->pEventCallBack != NULL && hDriver->operationMode == DRV_USBHSV1_OPMODE_DEVICE)
+                if((hDriver->pEventCallBack != NULL) && (hDriver->operationMode == DRV_USBHSV1_OPMODE_DEVICE))
                 {
                     /* We have a valid client call back function. Check if
                      * VBUS level has changed */
@@ -371,16 +390,21 @@ void DRV_USBHSV1_Tasks(SYS_MODULE_OBJ object)
                     /* Host mode specific polled 
                      * task routines can be called here */ 
                     
-                     _DRV_USBHSV1_HOST_ATTACH_DETACH_STATE_MACHINE(hDriver);            
+                     M_DRV_USBHSV1_HOST_ATTACH_DETACH_STATE_MACHINE(hDriver);            
+                }
+                else
+                {
+                    /* Do Nothing */
                 }
 
                 /* Polled mode driver tasks routines are really the same as the
                  * the ISR task routines called in the driver task routine */
-                _DRV_USBHSV1_Tasks_ISR(object);
+                M_DRV_USBHSV1_Tasks_ISR(object);
                 
                 break;
                 
             default:
+                /* Do Nothing */
                 break;
             
         }
@@ -441,14 +465,16 @@ void DRV_USBHSV1_Deinitialize
                  * been implemented to remove compiler warning in polling mode.
                    */
 
-                SYS_INT_SourceDisable(drvObj->interruptSource);
-                SYS_INT_SourceStatusClear(drvObj->interruptSource);
-
+                (void)SYS_INT_SourceDisable(drvObj->interruptSource);
+                
+                
+                SYS_INT_SourceStatusClear(drvObj->interruptSource); 
+               
                 drvObj->isOpened = false;
                 drvObj->pEventCallBack = NULL;
 
                 /* Delete the mutex */
-                if(OSAL_MUTEX_Delete(&drvObj->mutexID) != OSAL_RESULT_TRUE)
+                if(OSAL_MUTEX_Delete(&drvObj->mutexID) != (OSAL_RESULT)OSAL_RESULT_TRUE)
                 {
                     SYS_DEBUG_MESSAGE(SYS_ERROR_INFO,"\r\nUSB USBHSV1 Driver: Could not delete mutex in DRV_USBHSV1_Deinitialize()");
                 }
@@ -511,7 +537,7 @@ DRV_HANDLE DRV_USBHSV1_Open
 
         if(drvObj->status == SYS_STATUS_READY)
         {
-            if(ioIntent != (DRV_IO_INTENT_EXCLUSIVE|DRV_IO_INTENT_NONBLOCKING | DRV_IO_INTENT_READWRITE))
+            if((uint32_t)ioIntent != ((uint32_t)DRV_IO_INTENT_EXCLUSIVE|(uint32_t)DRV_IO_INTENT_NONBLOCKING | (uint32_t)DRV_IO_INTENT_READWRITE))
             {
                 /* The driver only supports this mode */
                 SYS_DEBUG(SYS_ERROR_DEBUG, "\r\nUSB USBHSV1 Driver: Unsupported IO Intent in DRV_USBHSV1_Open().");
@@ -611,10 +637,10 @@ void DRV_USBHSV1_Tasks_ISR( SYS_MODULE_OBJ object )
     switch(hDriver->operationMode)
     {
         case DRV_USBHSV1_OPMODE_DEVICE:
-            _DRV_USBHSV1_DEVICE_TASKS_ISR(hDriver);
+            M_DRV_USBHSV1_DEVICE_TASKS_ISR(hDriver);
             break;
         case DRV_USBHSV1_OPMODE_HOST:
-            _DRV_USBHSV1_HOST_TASKS_ISR(hDriver);
+            M_DRV_USBHSV1_HOST_TASKS_ISR(hDriver);
             break;
         case DRV_USBHSV1_OPMODE_OTG:
             break;

@@ -43,8 +43,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_USBHSV1_H
-#define _DRV_USBHSV1_H
+#ifndef DRV_USBHSV1_H
+#define DRV_USBHSV1_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -71,6 +71,16 @@
 // Section: Hi-Speed USB Driver Constants
 // *****************************************************************************
 // *****************************************************************************
+/* MISRA C-2012 Rule 3.1, 5.1 and 8.6 deviated below. Deviation record ID -  
+    H3_MISRAC_2012_R_3_1_DR_1, H3_MISRAC_2012_R_5_1_DR_1, H3_MISRAC_2012_R_5_2_DR_1 and H3_MISRAC_2012_R_8_6_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:42 "MISRA C-2012 Rule 3.1" "H3_MISRAC_2012_R_3_1_DR_1" )\
+(deviate:5  "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1" )\
+(deviate:1  "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" )\
+(deviate:20 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )   
+
 
 /*DOM-IGNORE-BEGIN*/#define DRV_USBHSV1_ENDPOINT_ALL 16/*DOM-IGNORE-END*/
 
@@ -168,7 +178,7 @@ typedef uintptr_t DRV_USBHSV1_HOST_PIPE_HANDLE;
 
 #define DRV_USBHSV1_HOST_PIPE_HANDLE_INVALID /*DOM-IGNORE-BEGIN*/((DRV_USBHSV1_HOST_PIPE_HANDLE)(-1))/*DOM-IGNORE-END*/
 
-/*DOM-IGNORE-BEGIN*/#define DRV_USBHSV1_DEVICE_ENDPOINT_ALL 16/*DOM-IGNORE-END*/
+/*DOM-IGNORE-BEGIN*/#define DRV_USBHSV1_DEVICE_ENDPOINT_ALL 16U/*DOM-IGNORE-END*/
 
 // *****************************************************************************
 
@@ -833,8 +843,8 @@ void DRV_USBHSV1_Tasks_ISR( SYS_MODULE_OBJ object );
 
 DRV_HANDLE DRV_USBHSV1_Open
 (
-    const SYS_MODULE_INDEX drvIndex,
-    const DRV_IO_INTENT intent  
+    const SYS_MODULE_INDEX iDriver,
+    const DRV_IO_INTENT ioIntent   
 );
 
 // *****************************************************************************
@@ -873,7 +883,7 @@ DRV_HANDLE DRV_USBHSV1_Open
     driver again.
 */
 
-void DRV_USBHSV1_Close( DRV_HANDLE handle );
+void DRV_USBHSV1_Close( DRV_HANDLE client  );
 
 // *****************************************************************************
 /* Function:
@@ -931,9 +941,9 @@ void DRV_USBHSV1_Close( DRV_HANDLE handle );
 
 void DRV_USBHSV1_ClientEventCallBackSet
 ( 
-    DRV_HANDLE handle,
+    DRV_HANDLE client,
     uintptr_t  hReferenceData ,
-    DRV_USB_EVENT_CALLBACK myEventCallBack
+    DRV_USB_EVENT_CALLBACK eventCallBack 
 );
 
 // *****************************************************************************
@@ -1279,7 +1289,7 @@ USB_ERROR DRV_USBHSV1_DEVICE_EndpointEnable
 (
     DRV_HANDLE handle, 
     USB_ENDPOINT endpointAndDirection, 
-    USB_TRANSFER_TYPE transferType,
+    USB_TRANSFER_TYPE endpointType,
     uint16_t endpointSize
 );
 
@@ -1539,7 +1549,7 @@ USB_ERROR DRV_USBHSV1_DEVICE_EndpointStallClear
 
 bool DRV_USBHSV1_DEVICE_EndpointIsEnabled
 (
-    DRV_HANDLE client, 
+    DRV_HANDLE handle, 
     USB_ENDPOINT endpointAndDirection
 );
 
@@ -1597,8 +1607,8 @@ bool DRV_USBHSV1_DEVICE_EndpointIsEnabled
 
 bool DRV_USBHSV1_DEVICE_EndpointIsStalled
 (
-    DRV_HANDLE client, 
-    USB_ENDPOINT endpoint
+    DRV_HANDLE handle, 
+    USB_ENDPOINT endpointAndDirection
 ); 
 
 // ***********************************************************************************
@@ -1746,9 +1756,9 @@ bool DRV_USBHSV1_DEVICE_EndpointIsStalled
 
 USB_ERROR DRV_USBHSV1_DEVICE_IRPSubmit
 (
-    DRV_HANDLE client, 
+    DRV_HANDLE handle, 
     USB_ENDPOINT endpointAndDirection, 
-    USB_DEVICE_IRP * irp
+    USB_DEVICE_IRP * inputIRP
 );
 
 // **************************************************************************
@@ -1811,7 +1821,7 @@ USB_ERROR DRV_USBHSV1_DEVICE_IRPSubmit
 
 USB_ERROR DRV_USBHSV1_DEVICE_IRPCancelAll 
 (
-    DRV_HANDLE client, 
+    DRV_HANDLE handle, 
     USB_ENDPOINT endpointAndDirection
 );
 
@@ -2340,7 +2350,7 @@ void DRV_USBHSV1_HOST_PipeClose
     USB_ERROR DRV_USBHSV1_HOST_IRPSubmit
     (
         DRV_USBHSV1_HOST_PIPE_HANDLE  hPipe,
-        USB_HOST_IRP * pInputIRP
+        USB_HOST_IRP * inputIRP
     );
     
   Summary:
@@ -2451,7 +2461,7 @@ void DRV_USBHSV1_HOST_PipeClose
 USB_ERROR DRV_USBHSV1_HOST_IRPSubmit
 (
     DRV_USBHSV1_HOST_PIPE_HANDLE  hPipe,
-    USB_HOST_IRP * pinputIRP
+    USB_HOST_IRP * inputIRP
 );
 
 // ****************************************************************************
@@ -2977,7 +2987,7 @@ void DRV_USBHSV1_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enable);
 
 // ****************************************************************************
 /* Function:
-    bool DRV_USBHSV1_HOST_ROOT_HUB_OperationIsEnabled(DRV_HANDLE handle);
+    bool DRV_USBHSV1_HOST_ROOT_HUB_OperationIsEnabled(DRV_HANDLE hClient);
 
   Summary:
     Returns the operation enabled status of the root hub.
@@ -2990,7 +3000,7 @@ void DRV_USBHSV1_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enable);
     None.
 
   Parameters:
-    handle - Handle to the driver (returned from DRV_USBHSV1_Open function).
+    hClient - Handle to the driver (returned from DRV_USBHSV1_Open function).
 
   Returns:
     * true - Root hub operation is enabled.
@@ -3023,7 +3033,7 @@ void DRV_USBHSV1_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enable);
     None.
 */
 
-bool DRV_USBHSV1_HOST_ROOT_HUB_OperationIsEnabled(DRV_HANDLE handle);
+bool DRV_USBHSV1_HOST_ROOT_HUB_OperationIsEnabled(DRV_HANDLE hClient);
 
 // ****************************************************************************
 /* Function:
@@ -3077,6 +3087,21 @@ void DRV_USBHSV1_HOST_ROOT_HUB_Initialize
     USB_HOST_DEVICE_OBJ_HANDLE usbHostDeviceInfo
 );
 
+void DRV_USBHSV1_Deinitialize 
+( 
+  const SYS_MODULE_INDEX  object
+);
+
+bool DRV_USBHSV1_HOST_Resume
+(
+  DRV_HANDLE handle
+);
+
+bool DRV_USBHSV1_HOST_Suspend
+(
+   DRV_HANDLE handle
+);
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files (continued)
@@ -3085,6 +3110,11 @@ void DRV_USBHSV1_HOST_ROOT_HUB_Initialize
 /*  The file included below maps the interface definitions above to appropriate
     Static implementations, depending on build mode.
 */
-
+#pragma coverity compliance end_block "MISRA C-2012 Rule 3.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 #endif
