@@ -40,8 +40,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _USB_HOST_HUB_INTERFACE_H_
-#define _USB_HOST_HUB_INTERFACE_H_
+#ifndef USB_HOST_HUB_INTERFACE_H_
+#define USB_HOST_HUB_INTERFACE_H_
 
 
 // DOM-IGNORE-BEGIN

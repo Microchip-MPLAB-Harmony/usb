@@ -39,8 +39,8 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
-#ifndef _USB_HOST_HUB_H_
-#define _USB_HOST_HUB_H_
+#ifndef USB_HOST_HUB_H_
+#define USB_HOST_HUB_H_
 //DOM-IGNORE-END
 
 #include "usb_hub.h"

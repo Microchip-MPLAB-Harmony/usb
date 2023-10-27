@@ -41,8 +41,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _USB_HOST_HUB_LOCAL_H
-#define _USB_HOST_HUB_LOCAL_H
+#ifndef USB_HOST_HUB_LOCAL_H
+#define USB_HOST_HUB_LOCAL_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -57,16 +57,16 @@
  * This is needed by the implementation
  ****************************************/
 
-#define USB_HOST_HUB_PORT_REQUEST    0x00
-#define USB_HOST_HUB_REQUEST         0x01
+#define USB_HOST_HUB_PORT_REQUEST    0x00U
+#define USB_HOST_HUB_REQUEST         0x01U
 
 /************************************************
  * Defines the the masks needed for creating the
  * control transfer contexts.
  *************************************************/
 
-#define PORT_INDEX_MASK 0xFFFF0000
-#define HUB_INDEX_MASK  0x0000FFFF
+#define PORT_INDEX_MASK 0xFFFF0000U
+#define HUB_INDEX_MASK  0x0000FFFFU
 
 #define   USB_HUB_CLASS_STANDARD_HUB_REQUEST        0xA0
 #define   USB_HUB_CLASS_STANDARD_PORT_REQUEST       0xA3
@@ -93,6 +93,10 @@ typedef enum
  * Defines the possible states the Hub Device Task
  * Routine.
  ****************************************************/
+/* MISRA C-2012 Rule 5.2 deviated:40 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:40 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" 
 
 typedef enum
 {
@@ -271,7 +275,7 @@ typedef struct
  * for every connected Hub.
  **************************************************/
 
-typedef struct _USB_HOST_HUB_INSTANCE_OBJ_
+typedef struct USB_HOST_HUB_INSTANCE_OBJ_
 {
     /* True if this object is allocated */
     bool inUse;
@@ -338,6 +342,9 @@ typedef struct _USB_HOST_HUB_INSTANCE_OBJ_
         
 } USB_HOST_HUB_INSTANCE_OBJ;
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 // *****************************************************************************
 // Section: Local Functions
@@ -346,7 +353,7 @@ typedef struct _USB_HOST_HUB_INSTANCE_OBJ_
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_HUB_Initialize(void * hubInitData)
+    void F_USB_HOST_HUB_Initialize(void * hubInitData)
 
   Summary:
     This function is called when the Host Layer is initializing.
@@ -359,11 +366,11 @@ typedef struct _USB_HOST_HUB_INSTANCE_OBJ_
     application.
 */
 
-void _USB_HOST_HUB_Initialize(void * hubInitData );
+void F_USB_HOST_HUB_Initialize(void * hubInitData );
 
 //*****************************************************************************
 /* Function:
-    void _USB_HOST_HUB_Deinitialize(void)
+    void F_USB_HOST_HUB_Deinitialize(void)
 
   Summary:
     This function is called when the Host Layer is deinitializing.
@@ -376,11 +383,11 @@ void _USB_HOST_HUB_Initialize(void * hubInitData );
     application.
 */
 
-void _USB_HOST_HUB_Deinitialize( void );
+void F_USB_HOST_HUB_Deinitialize( void );
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_HUB_Reinitialize(void)
+    void F_USB_HOST_HUB_Reinitialize(void)
 
   Summary:
     This function is called when the Host Layer is reinitializing.
@@ -393,11 +400,11 @@ void _USB_HOST_HUB_Deinitialize( void );
     application.
 */
 
-void _USB_HOST_HUB_Reinitialize(void * hubInitData);
+void F_USB_HOST_HUB_Reinitialize(void * hubInitData);
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_HUB_DeviceAssign 
+    void F_USB_HOST_HUB_DeviceAssign 
     (
         USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle,,
         USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
@@ -417,7 +424,7 @@ void _USB_HOST_HUB_Reinitialize(void * hubInitData);
     application.
 */
 
-void _USB_HOST_HUB_DeviceAssign 
+void F_USB_HOST_HUB_DeviceAssign 
 ( 
     USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle,
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
@@ -426,7 +433,7 @@ void _USB_HOST_HUB_DeviceAssign
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_HUB_DeviceRelease 
+    void F_USB_HOST_HUB_DeviceRelease 
     (
         USB_HOST_DEVICE_CLIENT_HANDLE hubDeviceHandle
     )
@@ -442,14 +449,14 @@ void _USB_HOST_HUB_DeviceAssign
     application.
 */
 
-void _USB_HOST_HUB_DeviceRelease
+void F_USB_HOST_HUB_DeviceRelease
 (
     USB_HOST_DEVICE_CLIENT_HANDLE hubDeviceHandle
 );
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_HUB_DeviceTasks 
+    void F_USB_HOST_HUB_DeviceTasks 
     (
         USB_HOST_DEVICE_CLIENT_HANDLE hubDeviceHandle
     )
@@ -467,14 +474,14 @@ void _USB_HOST_HUB_DeviceRelease
     application.
 */
 
-void _USB_HOST_HUB_DeviceTasks
+void F_USB_HOST_HUB_DeviceTasks
 (
     USB_HOST_DEVICE_CLIENT_HANDLE hubDeviceHandle
 );
 
 // *****************************************************************************
 /* Function:
-    USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_HUB_DeviceEventHandler
+    USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE F_USB_HOST_HUB_DeviceEventHandler
     (
         USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle,
         USB_HOST_DEVICE_EVENT event,
@@ -495,7 +502,7 @@ void _USB_HOST_HUB_DeviceTasks
     application.
 */
 
-USB_HOST_DEVICE_EVENT_RESPONSE _USB_HOST_HUB_DeviceEventHandler
+USB_HOST_DEVICE_EVENT_RESPONSE F_USB_HOST_HUB_DeviceEventHandler
 (
     USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle,
     USB_HOST_DEVICE_EVENT event,
@@ -505,7 +512,7 @@ USB_HOST_DEVICE_EVENT_RESPONSE _USB_HOST_HUB_DeviceEventHandler
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_HUB_InterfaceAssign 
+    void F_USB_HOST_HUB_InterfaceAssign 
     (
         USB_HOST_DEVICE_INTERFACE_HANDLE * interfaces,
         USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
@@ -526,7 +533,7 @@ USB_HOST_DEVICE_EVENT_RESPONSE _USB_HOST_HUB_DeviceEventHandler
     application.
 */
 
-void _USB_HOST_HUB_InterfaceAssign 
+void F_USB_HOST_HUB_InterfaceAssign 
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE * interfaces,
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
@@ -536,7 +543,7 @@ void _USB_HOST_HUB_InterfaceAssign
   
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_HUB_InterfaceRelease 
+    void F_USB_HOST_HUB_InterfaceRelease 
    (
         USB_HOST_DEVICE_INTERFACE_HANDLE interface 
    )
@@ -554,11 +561,11 @@ void _USB_HOST_HUB_InterfaceAssign
     application.
 */
 
-void _USB_HOST_HUB_InterfaceRelease (USB_HOST_DEVICE_INTERFACE_HANDLE interface);
+void F_USB_HOST_HUB_InterfaceRelease (USB_HOST_DEVICE_INTERFACE_HANDLE interface);
   
 // *****************************************************************************
 /* Function:
-    USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_HUB_InterfaceEventHandler
+    USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE F_USB_HOST_HUB_InterfaceEventHandler
     (
         USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle,
         USB_HOST_DEVICE_INTERFACE_EVENT event,
@@ -579,7 +586,7 @@ void _USB_HOST_HUB_InterfaceRelease (USB_HOST_DEVICE_INTERFACE_HANDLE interface)
     application.
 */
 
-USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_HUB_InterfaceEventHandler
+USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE F_USB_HOST_HUB_InterfaceEventHandler
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle,
     USB_HOST_DEVICE_INTERFACE_EVENT event,
@@ -589,7 +596,7 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_HUB_InterfaceEventHandler
   
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_HUB_InterfaceTasks 
+    void F_USB_HOST_HUB_InterfaceTasks 
     (
         USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
     )
@@ -607,11 +614,11 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_HUB_InterfaceEventHandler
     application.
 */
 
-void _USB_HOST_HUB_InterfaceTasks (USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle);
+void F_USB_HOST_HUB_InterfaceTasks (USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle);
   
 // *****************************************************************************
 /* Function:
-    int _USB_HOST_HUB_DeviceHandleToInstance
+    int F_USB_HOST_HUB_DeviceHandleToInstance
     (
         USB_HOST_DEVICE_CLIENT_HANDLE deviceClientHandle
     );
@@ -628,7 +635,7 @@ void _USB_HOST_HUB_InterfaceTasks (USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHan
     application.
 */
 
-int _USB_HOST_HUB_DeviceHandleToInstance
+int F_USB_HOST_HUB_DeviceHandleToInstance
 (
     USB_HOST_DEVICE_CLIENT_HANDLE deviceClientHandle
 );
@@ -661,7 +668,7 @@ USB_SPEED  USB_HOST_HUB_PortSpeedGet
 
 // *****************************************************************************
 /* Function:
-    void  _USB_HOST_HUB_ControlTransferComplete
+    void  F_USB_HOST_HUB_ControlTransferComplete
     (
       USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
       USB_HOST_REQUEST_HANDLE requestHandle,
@@ -683,7 +690,7 @@ USB_SPEED  USB_HOST_HUB_PortSpeedGet
     application.
 */
 
-void  _USB_HOST_HUB_ControlTransferComplete
+void  F_USB_HOST_HUB_ControlTransferComplete
 (
    USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
    USB_HOST_REQUEST_HANDLE requestHandle,
@@ -705,7 +712,7 @@ void  _USB_HOST_HUB_ControlTransferComplete
 
   Description:
     This function requests the hub driver to resume the port. The actual resume
-    operation is completed in the _USB_HOST_HUB_PortTasks() function.
+    operation is completed in the F_USB_HOST_HUB_PortTasks() function.
     
   Remarks:
     This function is called by the host layer.
@@ -713,7 +720,7 @@ void  _USB_HOST_HUB_ControlTransferComplete
 
 USB_ERROR USB_HOST_HUB_PortResume 
 ( 
-    uintptr_t deviceHandle, 
+    uintptr_t hubDeviceHandle, 
     uint8_t portNumber
 );
 
@@ -730,7 +737,7 @@ USB_ERROR USB_HOST_HUB_PortResume
 
   Description:
     This function requests the hub driver to suspend the port. The actual suspend
-    operation is completed in the _USB_HOST_HUB_PortTasks() function.
+    operation is completed in the F_USB_HOST_HUB_PortTasks() function.
     
   Remarks:
     This function is called by the host layer.
@@ -738,7 +745,7 @@ USB_ERROR USB_HOST_HUB_PortResume
 
 USB_ERROR USB_HOST_HUB_PortSuspend 
 (
-    uintptr_t deviceHandle, 
+    uintptr_t hubDeviceHandle, 
     uint8_t portNumber
 );
 
@@ -764,7 +771,7 @@ USB_ERROR USB_HOST_HUB_PortSuspend
 
 bool USB_HOST_HUB_PortResetComplete 
 (
-   uintptr_t deviceHandle, 
+   uintptr_t hubDeviceHandle, 
    uint8_t portNumber 
 );
 
@@ -788,11 +795,11 @@ bool USB_HOST_HUB_PortResetComplete
     This function is typically called by the host layer.
 */
 
-USB_ERROR USB_HOST_HUB_PortReset (uintptr_t deviceHandle, uint8_t portNumber);
+USB_ERROR USB_HOST_HUB_PortReset (uintptr_t hubDeviceHandle, uint8_t portNumber);
 
 // *****************************************************************************
 /* Function:
-    USB_HOST_RESULT _USB_HOST_HUB_HubDescriptorGet (int hubInstanceIndex )
+    USB_HOST_RESULT F_USB_HOST_HUB_HubDescriptorGet (int hubInstanceIndex )
 
   Summary:
     Launches control transfers to get the Hub Descriptor. 
@@ -805,16 +812,16 @@ USB_ERROR USB_HOST_HUB_PortReset (uintptr_t deviceHandle, uint8_t portNumber);
     application.
 */
 
-USB_HOST_RESULT _USB_HOST_HUB_HubDescriptorGet (int hubInstanceIndex );
+USB_HOST_RESULT F_USB_HOST_HUB_HubDescriptorGet (int hubInstanceIndex );
 
 // *****************************************************************************
 /* Function:
-    USB_HOST_RESULT  _USB_HOST_HUB_featureRequest 
+    USB_HOST_RESULT  F_USB_HOST_HUB_FeatureRequest 
     (
         USB_HOST_HUB_DRIVER_INFO *hubDriverInstanceInfo,
         uint32_t portNumber ,
-        uint8_t Feature, 
-        uint8_t hubCommand ,
+        USB_HUB_CLASS_FEATURE Feature, 
+        USB_HOST_CLASS_REQUEST hubCommand ,
         uint8_t requestType
     )
  
@@ -829,12 +836,12 @@ USB_HOST_RESULT _USB_HOST_HUB_HubDescriptorGet (int hubInstanceIndex );
     This is local function and should not be called directly by the application.    
 */
 
-USB_HOST_RESULT  _USB_HOST_HUB_FeatureRequest 
+USB_HOST_RESULT  F_USB_HOST_HUB_FeatureRequest 
 (
     uint32_t hubInstanceIndex,
     uint32_t portNumber ,
-    uint8_t feature, 
-    uint8_t hubCommand ,
+    USB_HUB_CLASS_FEATURE feature, 
+    USB_HOST_CLASS_REQUEST hubCommand ,
     uint8_t requestType
 );
 
@@ -860,9 +867,9 @@ USB_HOST_RESULT  _USB_HOST_HUB_FeatureRequest
     
 */
 
-USB_HOST_RESULT _USB_HOST_HUB_StatusRequest 
+USB_HOST_RESULT F_USB_HOST_HUB_StatusRequest 
 ( 
-    int hubInstanceIndex,
+    uint32_t hubInstanceIndex,
     void * status ,
     uint8_t portNumber , 
     uint8_t requestType 
@@ -870,7 +877,7 @@ USB_HOST_RESULT _USB_HOST_HUB_StatusRequest
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_HUB_HubTasks( uint32_t hubInstanceIndex )
+    void F_USB_HOST_HUB_HubTasks( uint32_t hubInstanceIndex )
  
   Summary: 
     This function maintains the hub level status.
@@ -878,7 +885,7 @@ USB_HOST_RESULT _USB_HOST_HUB_StatusRequest
   Description:
     This function maintains the hub level status. It is called periodically when
     the hub state is USB_HOST_HUB_STATE_RUNNING. It is called from the
-    _USB_HOST_HUB_DeviceTasks() function. This function checks if the hub power
+    F_USB_HOST_HUB_DeviceTasks() function. This function checks if the hub power
     status has changed or if an over current has occurred. It clear the hub
     change bits if required.
 
@@ -887,11 +894,11 @@ USB_HOST_RESULT _USB_HOST_HUB_StatusRequest
     application.
 */
 
-void _USB_HOST_HUB_HubTasks( uint32_t hubInstanceIndex );
+void F_USB_HOST_HUB_HubTasks( uint32_t hubInstanceIndex );
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
+    void F_USB_HOST_HUB_PortTasks(uint32_t hubInstanceIndex, uint32_t portNumber)
  
   Summary: 
     This function maintains the port level status.
@@ -899,7 +906,7 @@ void _USB_HOST_HUB_HubTasks( uint32_t hubInstanceIndex );
   Description:
     This function maintains the port level status. It is called periodically
     when the hub state is USB_HOST_HUB_STATE_RUNNING. It is called from the
-    _USB_HOST_HUB_DeviceTasks() function. This function checks the state of all
+    F_USB_HOST_HUB_DeviceTasks() function. This function checks the state of all
     the change bits in wPortChange and responds to each change source.
 
   Remarks:
@@ -907,11 +914,11 @@ void _USB_HOST_HUB_HubTasks( uint32_t hubInstanceIndex );
     application.
 */
 
-void _USB_HOST_HUB_PortTasks( uint32_t hubInstanceIndex , uint32_t portNumber );
+void F_USB_HOST_HUB_PortTasks( uint32_t hubInstanceIndex , uint32_t portNumber );
 
 // *****************************************************************************
 /* Function:
-    USB_HOST_RESULT _USB_HOST_HUB_PortTTBufferClear
+    USB_HOST_RESULT F_USB_HOST_HUB_PortTTBufferClear
     ( 
         int hubInstanceIndex,
         uint8_t deviceAddress,
@@ -932,7 +939,7 @@ void _USB_HOST_HUB_PortTasks( uint32_t hubInstanceIndex , uint32_t portNumber );
     
 */
 
-USB_HOST_RESULT _USB_HOST_HUB_PortTTBufferClear 
+USB_HOST_RESULT F_USB_HOST_HUB_PortTTBufferClear 
 ( 
     int hubInstanceIndex,
     uint8_t deviceAddress,
@@ -944,7 +951,7 @@ USB_HOST_RESULT _USB_HOST_HUB_PortTTBufferClear
 
 // *****************************************************************************
 /* Function:
-    USB_HOST_RESULT _USB_HOST_HUB_HubDeviceStatusGet (int hubInstanceIndex )
+    USB_HOST_RESULT F_USB_HOST_HUB_HubDeviceStatusGet (int hubInstanceIndex )
 
   Summary:
     Launches control transfers to get the Hub Device Status. 
@@ -957,7 +964,7 @@ USB_HOST_RESULT _USB_HOST_HUB_PortTTBufferClear
     application.
 */
 
-USB_HOST_RESULT _USB_HOST_HUB_HubDeviceStatusGet (int hubInstanceIndex );
+USB_HOST_RESULT F_USB_HOST_HUB_HubDeviceStatusGet (int hubInstanceIndex );
  
 #endif
 

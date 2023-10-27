@@ -5,7 +5,7 @@
     Microchip Technology Inc.
 
   File Name:
-    usb_hub_mapping.h
+    usb_host_hub_mapping.h
 
   Summary:
     USB Device Layer Interface names mapping
@@ -39,8 +39,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _USB_HOST_HUB_MAPPING_H
-#define _USB_HOST_HUB_MAPPING_H
+#ifndef USB_HOST_HUB_MAPPING_H
+#define USB_HOST_HUB_MAPPING_H
 
 #include "usb/src/usb_external_dependencies.h"
 
@@ -48,12 +48,12 @@
 #if (USB_HOST_HUB_SUPPORT == true)
     #include "usb/usb_host_hub_interface.h"
     extern USB_HUB_INTERFACE externalHubInterface;
-    #define USB_HOST_HUB_INTERFACE &externalHubInterface;
+    #define USB_HOST_HUB_INTERFACE_EXTRNL &externalHubInterface;
 #else
-    #define USB_HOST_HUB_INTERFACE (NULL)
+    #define USB_HOST_HUB_INTERFACE_EXTRNL (NULL)
 #endif
 #else
-    #define USB_HOST_HUB_INTERFACE (NULL)
+    #define USB_HOST_HUB_INTERFACE_EXTRNL (NULL)
 #endif
 
 

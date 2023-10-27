@@ -41,8 +41,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _USB_HOST_HUB_H
-#define _USB_HOST_HUB_H
+#ifndef USB_HOST_HUB_H
+#define USB_HOST_HUB_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -67,7 +67,7 @@
 #define USB_HUB_CLASS_CODE  0x09
 
 /* bDescriptorType for Hub Descriptors */
-#define USB_HUB_DESCRIPTOR_TYPE 0x29     
+#define USB_HUB_DESCRIPTOR_TYPE 0x29U     
 
 // *****************************************************************************
 /* USB Hub Port Indicator Colors
@@ -119,6 +119,10 @@ typedef enum
 } USB_HUB_PORT_INDICATOR_STATE;
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 6.1 deviated:21 Deviation record ID -  H3_MISRAC_2012_R_6_1_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:21 "MISRA C-2012 Rule 6.1" "H3_MISRAC_2012_R_6_1_DR_1"
 /* USB Hub Port Status
 
   Summary:
@@ -208,6 +212,9 @@ typedef struct __attribute__ ((packed))
 
 } USB_HUB_STATUS;
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 6.1"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* USB Hub Class Request Codes
 
