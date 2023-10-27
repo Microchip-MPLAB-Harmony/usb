@@ -44,9 +44,17 @@
 
 //DOM-IGNORE-END
 
-#ifndef _USBHS_CLOCKRESETCONTROL_DEFAULT_H
-#define _USBHS_CLOCKRESETCONTROL_DEFAULT_H
+#ifndef USBHS_CLOCKRESETCONTROL_DEFAULT_H
+#define USBHS_CLOCKRESETCONTROL_DEFAULT_H
 
+
+/* MISRA C-2012 Rule 10.1, Rule 5.2, and Rule 10.4.Deviation record ID -  
+    H3_MISRAC_2012_R_10_1_DR_1, H3_MISRAC_2012_R_10_4_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:2 "MISRA C-2012 Rule 10.1" "H3_MISRAC_2012_R_10_1_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" )\
 //******************************************************************************
 /* Function :  USBHS_ExistsClockResetControl_Default
 
@@ -102,7 +110,12 @@ PLIB_TEMPLATE void USBHS_GlobalInterruptDisable_Default( USBHS_MODULE_ID index )
     usbcrcon->USBIE = 0;
 }
 
-#endif /*_USBHS_CLOCKRESETCONTROL_DEFAULT_H*/
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
+
+#endif /*USBHS_CLOCKRESETCONTROL_DEFAULT_H*/
 
 /******************************************************************************
  End of File

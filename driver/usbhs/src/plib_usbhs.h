@@ -46,8 +46,8 @@
 *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _PLIB_USBHS_H
-#define _PLIB_USBHS_H
+#ifndef PLIB_USBHS_H
+#define PLIB_USBHS_H
 
 
 
@@ -624,7 +624,7 @@ typedef enum
 #endif
 //DOM-IGNORE-END
 
-#endif//ndef _PLIB_USBHS_H
+#endif//ndef PLIB_USBHS_H
 
 /*******************************************************************************
  End of File

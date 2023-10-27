@@ -40,8 +40,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_USBHS_VARIANT_MAPPING_H
-#define _DRV_USBHS_VARIANT_MAPPING_H
+#ifndef DRV_USBHS_VARIANT_MAPPING_H
+#define DRV_USBHS_VARIANT_MAPPING_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -103,13 +103,13 @@
 
     #endif
 
-    #define _DRV_USBHS_IS_STATIC
+    #define DRV_USBHS_IS_STATIC
 
 #else 
 
     /* This means that dynamic operation is requested */
 
-    #define _DRV_USBHS_IS_DYNAMIC
+    #define DRV_USBHS_IS_DYNAMIC
 
 #endif
 
@@ -120,7 +120,7 @@
 // *****************************************************************************
 
 // *****************************************************************************
-/* Macro: _DRV_USBHS_OBJ_MAKE_NAME(name)
+/* Macro: M__DRV_USBHS_OBJ_MAKE_NAME(name)
 
   Summary:
     Creates an instance-specific static object name.
@@ -133,26 +133,26 @@
     This macro does not affect the dynamic objects.
 */
 
-#define _DRV_STATIC_OBJ_NAME_B(name,id)     name ## id
-#define _DRV_STATIC_OBJ_NAME_A(name,id)     _DRV_STATIC_OBJ_NAME_B(name,id)
-#define _DRV_USBHS_OBJ_MAKE_NAME(name)        _DRV_STATIC_OBJ_NAME_A(name, DRV_USBHS_INDEX)
+#define M_DRV_STATIC_OBJ_NAME_B(name,id)     name ## id
+#define M_DRV_STATIC_OBJ_NAME_A(name,id)       M_DRV_STATIC_OBJ_NAME_B(name,id)
+#define M_DRV_USBHS_OBJ_MAKE_NAME(name)        M_DRV_STATIC_OBJ_NAME_A(name, DRV_USBHS_INDEX)
 
 /**********************************************
  * These macros allow variables to be compiled
  * based on dynamic or static buil.
  *********************************************/
 
-#ifdef _DRV_USBHS_IS_STATIC
+#ifdef DRV_USBHS_IS_STATIC
 
-    #define _DRV_USBHS_FOR_DYNAMIC( type, object )
-    #define _DRV_USBHS_FOR_STATIC( type, object )     type object
+    #define M_DRV_USBHS_FOR_DYNAMIC( type, object )
+    #define M_DRV_USBHS_FOR_STATIC( type, object )     type object
 
 #endif
 
-#ifdef _DRV_USBHS_IS_DYNAMIC
+#ifdef DRV_USBHS_IS_DYNAMIC
 
-    #define _DRV_USBHS_FOR_DYNAMIC( type, object )    type object
-    #define _DRV_USBHS_FOR_STATIC( type, object )
+    #define M_DRV_USBHS_FOR_DYNAMIC( type, object )    type object
+    #define M_DRV_USBHS_FOR_STATIC( type, object )
 
 #endif
 
@@ -184,78 +184,84 @@
 #if (((__PIC32_FEATURE_SET0 == 68) && (__PIC32_FEATURE_SET1 == 65)) || ((__PIC32_FEATURE_SET0 == 69) && (__PIC32_FEATURE_SET1 == 70)))
 
 /* For PIC32MZ DA and EF devices*/
-#define _DRV_USBHS_CLOCK_CONTROL_GLOBAL_USB_INT_ENABLE(x) PLIB_USBHS_GlobalInterruptEnable(x)
-#define _DRV_USBHS_MODULE_RESET_DURATION 3
+#define M_DRV_USBHS_CLOCK_CONTROL_GLOBAL_USB_INT_ENABLE(x) PLIB_USBHS_GlobalInterruptEnable(x)
+#define DRV_USBHS_MODULE_RESET_DURATION 3
 
 #else
 
 /* For PIC32MZ EC devices*/
 
-#define _DRV_USBHS_CLOCK_CONTROL_GLOBAL_USB_INT_ENABLE(x) 
-#define _DRV_USBHS_MODULE_RESET_DURATION 3000
+#define M_DRV_USBHS_CLOCK_CONTROL_GLOBAL_USB_INT_ENABLE(x) 
+#define DRV_USBHS_MODULE_RESET_DURATION 3000
 
 #endif
+
+
+/* MISRA C-2012 Rule 5.4 deviated:7 Deviation record ID -  H3_MISRAC_2012_R_5_4_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:7 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1"    
 
 /* On PIC32MZ DA devices, the interrupt are not persistent. The 68 and 65 are
  * ASCII codes for D and A respectively. */
 #if ((__PIC32_FEATURE_SET0 == 68) && (__PIC32_FEATURE_SET1 == 65))
 
     /* This means the code is being compiled for a DA device */
-    #define _DRV_USBHS_ID_OVERRIDE_IS_NEEDED              true
-    #define _DRV_USBHS_INTERRUPT_PERSISTENT               false
+    #define DRV_USBHS_ID_OVERRIDE_IS_NEEDED              true
+    #define DRV_USBHS_INTERRUPT_PERSISTENT               false
     
     /* The DA device USB module also has a clock control register that needs to
      * be configured depending on whether the module is being setup for device
      * mode or host mode operation. */
-    #define _DRV_USBHS_CLOCK_CONTROL_SETUP_DEVICE_MODE(usbID)  PLIB_USBHS_USBIDOverrideEnable(usbID);\
+    #define M_DRV_USBHS_CLOCK_CONTROL_SETUP_DEVICE_MODE(usbID)  PLIB_USBHS_USBIDOverrideEnable(usbID);\
                                                         PLIB_USBHS_PhyIDMonitoringEnable(usbID);\
                                                         PLIB_USBHS_USBIDOverrideValueSet(usbID, USBHS_USBID_ENABLE);
 
-    #define _DRV_USBHS_CLOCK_CONTROL_SETUP_HOST_MODE(usbID)  PLIB_USBHS_USBIDOverrideEnable(usbID);\
+    #define M_DRV_USBHS_CLOCK_CONTROL_SETUP_HOST_MODE(usbID)  PLIB_USBHS_USBIDOverrideEnable(usbID);\
                                                         PLIB_USBHS_PhyIDMonitoringEnable(usbID);\
                                                         PLIB_USBHS_USBIDOverrideValueSet(usbID, USBHS_USBID_DISABLE);
 
 
 #else
-    #define _DRV_USBHS_ID_OVERRIDE_IS_NEEDED              false
-    #define _DRV_USBHS_INTERRUPT_PERSISTENT               true
-    #define _DRV_USBHS_CLOCK_CONTROL_SETUP_DEVICE_MODE(usbID)   
-    #define _DRV_USBHS_CLOCK_CONTROL_SETUP_HOST_MODE(usbID)  
+    #define DRV_USBHS_ID_OVERRIDE_IS_NEEDED              false
+    #define DRV_USBHS_INTERRUPT_PERSISTENT               true
+    #define M_DRV_USBHS_CLOCK_CONTROL_SETUP_DEVICE_MODE(usbID)   
+    #define M_DRV_USBHS_CLOCK_CONTROL_SETUP_HOST_MODE(usbID)  
 #endif
 
-#if (_DRV_USBHS_INTERRUPT_PERSISTENT == false)
+#if (DRV_USBHS_INTERRUPT_PERSISTENT == false)
 
     /* The interrupt flag will be cleared first and then source events will
      * be processed. */
-    #define _DRV_USBHS_PersistentInterruptSourceClear(source)
-    #define _DRV_USBHS_NonPersistentInterruptSourceClear(source) SYS_INT_SourceStatusClear( source )
+    #define M_DRV_USBHS_PersistentInterruptSourceClear(source)
+    #define M_DRV_USBHS_NonPersistentInterruptSourceClear(source) SYS_INT_SourceStatusClear( source )
 #else
     /* The interrupt flag will be cleared after the source events have been
      * processed. */
-    #define _DRV_USBHS_PersistentInterruptSourceClear(source)       SYS_INT_SourceStatusClear( source )
-    #define _DRV_USBHS_NonPersistentInterruptSourceClear(source)
+    #define M_DRV_USBHS_PersistentInterruptSourceClear(source)       SYS_INT_SourceStatusClear( source )
+    #define M_DRV_USBHS_NonPersistentInterruptSourceClear(source)
 #endif
 
 #if (DRV_USBHS_INTERRUPT_MODE == true)
 
-    #define _DRV_USBHS_InterruptSourceEnable(source)      SYS_INT_SourceEnable( source )
-    #define _DRV_USBHS_InterruptSourceDisable(source)     SYS_INT_SourceDisable( source )
-    #define _DRV_USBHS_InterruptSourceClear(source)  SYS_INT_SourceStatusClear( source )
-    #define _DRV_USBHS_InterruptSourceStatusGet(source)   SYS_INT_SourceStatusGet( source )
-    #define _DRV_USBHS_InterruptSourceStatusSet(source)   SYS_INT_SourceStatusSet( source )
-    #define _DRV_USBHS_Tasks_ISR(object)
-    #define _DRV_USBHS_Tasks_ISR_USBDMA(object)
+    #define M_DRV_USBHS_InterruptSourceEnable(source)      SYS_INT_SourceEnable( source )
+    #define M_DRV_USBHS_InterruptSourceDisable(source)     SYS_INT_SourceDisable( source )
+    #define M_DRV_USBHS_InterruptSourceClear(source)  SYS_INT_SourceStatusClear( source )
+    #define M_DRV_USBHS_InterruptSourceStatusGet(source)   SYS_INT_SourceStatusGet( source )
+    #define M_DRV_USBHS_InterruptSourceStatusSet(source)   SYS_INT_SourceStatusSet( source )
+    #define M_DRV_USBHS_Tasks_ISR(object)
+    #define M_DRV_USBHS_Tasks_ISR_USBDMA(object)
  
 #endif
 
 #if (DRV_USBHS_INTERRUPT_MODE == false)
 
-    #define _DRV_USBHS_InterruptSourceEnable(source)
-    #define _DRV_USBHS_InterruptSourceDisable(source)     false
-    #define _DRV_USBHS_InterruptSourceClear(source)       SYS_INT_SourceStatusClear( source )
-    #define _DRV_USBHS_InterruptSourceStatusGet(source)   SYS_INT_SourceStatusGet( source )
-    #define _DRV_USBHS_Tasks_ISR(object)                  DRV_USBHS_Tasks_ISR(object)
-    #define _DRV_USBHS_Tasks_ISR_USBDMA(object)           DRV_USBHS_Tasks_ISR_USBDMA(object)
+    #define M_DRV_USBHS_InterruptSourceEnable(source)
+    #define M_DRV_USBHS_InterruptSourceDisable(source)     false
+    #define M_DRV_USBHS_InterruptSourceClear(source)       SYS_INT_SourceStatusClear( source )
+    #define M_DRV_USBHS_InterruptSourceStatusGet(source)   SYS_INT_SourceStatusGet( source )
+    #define M_DRV_USBHS_Tasks_ISR(object)                  DRV_USBHS_Tasks_ISR(object)
+    #define M_DRV_USBHS_Tasks_ISR_USBDMA(object)           DRV_USBHS_Tasks_ISR_USBDMA(object)
 
 #endif
 
@@ -273,45 +279,48 @@
 #endif
 
 #if (DRV_USBHS_DEVICE_SUPPORT == true)
-    #define _DRV_USBHS_DEVICE_INIT(x, y)      _DRV_USBHS_DEVICE_Initialize(x , y)
-    #define _DRV_USBHS_DEVICE_TASKS_ISR(x)    _DRV_USBHS_DEVICE_Tasks_ISR(x)
-    #define _DRV_USBHS_DEVICE_TASKS_ISR_USBDMA(x)  _DRV_USBHS_DEVICE_Tasks_ISR_USBDMA(x)
-    #define _DRV_USBHS_FOR_DEVICE(x, y)       x y
-    #define _DRV_USBHS_DEVICE_ATTACH_STATE_MACHINE(x) _DRV_USBHS_DEVICE_AttachStateMachine(x) 
+    #define M_DRV_USBHS_DEVICE_INIT(x, y)      F_DRV_USBHS_DEVICE_Initialize(x , y)
+    #define M_DRV_USBHS_DEVICE_TASKS_ISR(x)    F_DRV_USBHS_DEVICE_Tasks_ISR(x)
+    #define M_DRV_USBHS_DEVICE_TASKS_ISR_USBDMA(x)  F_DRV_USBHS_DEVICE_Tasks_ISR_USBDMA(x)
+    #define M_DRV_USBHS_FOR_DEVICE(x, y)       x y
+    #define M_DRV_USBHS_DEVICE_ATTACH_STATE_MACHINE(x) F_DRV_USBHS_DEVICE_AttachStateMachine(x) 
 #elif (DRV_USBHS_DEVICE_SUPPORT == false)
-    #define _DRV_USBHS_DEVICE_INIT(x, y) 
-    #define _DRV_USBHS_DEVICE_TASKS_ISR(x)
-    #define _DRV_USBHS_DEVICE_TASKS_ISR_USBDMA(x)
-    #define _DRV_USBHS_FOR_DEVICE(x, y)       
-    #define _DRV_USBHS_DEVICE_ATTACH_STATE_MACHINE(x) 
+    #define M_DRV_USBHS_DEVICE_INIT(x, y) 
+    #define M_DRV_USBHS_DEVICE_TASKS_ISR(x)
+    #define M_DRV_USBHS_DEVICE_TASKS_ISR_USBDMA(x)
+    #define M_DRV_USBHS_FOR_DEVICE(x, y)       
+    #define M_DRV_USBHS_DEVICE_ATTACH_STATE_MACHINE(x) 
 #endif
  
 #if (DRV_USBHS_HOST_SUPPORT == true)
 
-    #define _DRV_USBHS_HOST_ROOT_HUB_CONFIGURATION drvObj->usbDrvHostObj.rootHubInfo.rootHubAvailableCurrent = usbInit->rootHubAvailableCurrent; \
+    #define M_DRV_USBHS_HOST_ROOT_HUB_CONFIGURATION drvObj->usbDrvHostObj.rootHubInfo.rootHubAvailableCurrent = usbInit->rootHubAvailableCurrent; \
                                                    drvObj->usbDrvHostObj.rootHubInfo.portIndication = usbInit->portIndication; \
                                                    drvObj->usbDrvHostObj.rootHubInfo.portOverCurrentDetect = usbInit->portOverCurrentDetect; \
                                                    drvObj->usbDrvHostObj.rootHubInfo.portPowerEnable = usbInit->portPowerEnable;
-    #define _DRV_USBHS_HOST_INIT(x, y)    _DRV_USBHS_HOST_Initialize(x , y)
-    #define _DRV_USBHS_HOST_TASKS_ISR(x)  _DRV_USBHS_HOST_Tasks_ISR(x)
-    #define _DRV_USBHS_HOST_TASKS_ISR_USBDMA(x) _DRV_USBHS_HOST_Tasks_ISR_USBDMA(x)
-    #define _DRV_USBHS_FOR_HOST(x, y)     x y
-    #define _DRV_USBHS_HOST_ATTACH_DETACH_STATE_MACHINE(x)  _DRV_USBHS_HOST_AttachDetachStateMachine(x)
-    #define _DRV_USBHS_HOST_RESET_STATE_MACINE(x)  _DRV_USBHS_HOST_ResetStateMachine(x)
+    #define M_DRV_USBHS_HOST_INIT(x, y)    F_DRV_USBHS_HOST_Initialize(x , y)
+    #define M_DRV_USBHS_HOST_TASKS_ISR(x)  F_DRV_USBHS_HOST_Tasks_ISR(x)
+    #define M_DRV_USBHS_HOST_TASKS_ISR_USBDMA(x) F_DRV_USBHS_HOST_Tasks_ISR_USBDMA(x)
+    #define M_DRV_USBHS_FOR_HOST(x, y)     x y
+    #define M_DRV_USBHS_HOST_ATTACH_DETACH_STATE_MACHINE(x)  F_DRV_USBHS_HOST_AttachDetachStateMachine(x)
+    #define M_DRV_USBHS_HOST_RESET_STATE_MACINE(x)  F_DRV_USBHS_HOST_ResetStateMachine(x)
 #elif (DRV_USBHS_HOST_SUPPORT == false)
-    #define _DRV_USBHS_HOST_ROOT_HUB_CONFIGURATION
-    #define _DRV_USBHS_HOST_INIT(x, y)  
-    #define _DRV_USBHS_HOST_TASKS_ISR(x)
-    #define _DRV_USBHS_HOST_TASKS_ISR_USBDMA(x)
-    #define _DRV_USBHS_FOR_HOST(x, y) 
-    #define _DRV_USBHS_HOST_ATTACH_DETACH_STATE_MACHINE(x)  
-    #define _DRV_USBHS_HOST_RESET_STATE_MACINE(x)  
+    #define M_DRV_USBHS_HOST_ROOT_HUB_CONFIGURATION
+    #define M_DRV_USBHS_HOST_INIT(x, y)  
+    #define M_DRV_USBHS_HOST_TASKS_ISR(x)
+    #define M_DRV_USBHS_HOST_TASKS_ISR_USBDMA(x)
+    #define M_DRV_USBHS_FOR_HOST(x, y) 
+    #define M_DRV_USBHS_HOST_ATTACH_DETACH_STATE_MACHINE(x)  
+    #define M_DRV_USBHS_HOST_RESET_STATE_MACINE(x)  
 #endif
 
 #define PORT_CHANNEL_F    5
 #define PORTS_BIT_POS_3   3
-#define PLIB_PORTS_ChangeNoticePullDownPerPortEnable( PORTS_ID_0, PORT_CHANNEL_F, PORTS_BIT_POS_3 )  *(&CNPDBSET + (PORT_CHANNEL_F - 1) * 0x40) = 1<<PORTS_BIT_POS_3
-#define PLIB_PORTS_ChangeNoticePullDownPerPortDisable( PORTS_ID_0, PORT_CHANNEL_F, PORTS_BIT_POS_3 )  *(&CNPDBCLR + (PORT_CHANNEL_F - 1) * 0x40) = 1<<PORTS_BIT_POS_3
+#define M_PLIB_PORTS_ChangeNoticePullDownPerPortEnable( PORTS_ID_0, PORT_CHANNEL_F, PORTS_BIT_POS_3 )  ((*(&CNPDBSET + ((PORT_CHANNEL_F) - (1)) * (0x40)))  = ((1UL)<<(PORTS_BIT_POS_3)))
+#define M_PLIB_PORTS_ChangeNoticePullDownPerPortDisable( PORTS_ID_0, PORT_CHANNEL_F, PORTS_BIT_POS_3 )  ((*(&CNPDBCLR + ((PORT_CHANNEL_F) - (1)) * (0x40))) = ((1UL)<<(PORTS_BIT_POS_3)))
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.4"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 #endif

@@ -44,11 +44,22 @@
 
 //DOM-IGNORE-END
 
-#ifndef _USBHS_SOFTRESET_DEFAULT_H
-#define _USBHS_SOFTRESET_DEFAULT_H
+#ifndef USBHS_SOFTRESET_DEFAULT_H
+#define USBHS_SOFTRESET_DEFAULT_H
 
 #include "usbhs_registers.h"
 
+/* MISRA C-2012 Rule 10.1, Rule 10.4, Rule 21.1 and Rule 21.2 Deviation record ID -  
+    H3_MISRAC_2012_R_10_1_DR_1,  H3_MISRAC_2012_R_10_4_DR_1, H3_MISRAC_2012_R_11_7_DR_1,
+    H3_MISRAC_2012_R_21_1_DR_1, and H3_MISRAC_2012_R_21_2_DR_1*/
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:10 "MISRA C-2012 Rule 10.1" "H3_MISRAC_2012_R_10_1_DR_1" )\
+(deviate:10 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" )\
+(deviate:10 "MISRA C-2012 Rule 11.7" "H3_MISRAC_2012_R_11_7_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 21.1" "H3_MISRAC_2012_R_21_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 21.2" "H3_MISRAC_2012_R_21_2_DR_1" )
 //******************************************************************************
 /* Function :  USBHS_SoftResetEnable_Default
 
@@ -143,7 +154,15 @@ PLIB_TEMPLATE bool USBHS_SoftResetIsComplete_Default( USBHS_MODULE_ID index )
 	return ( returnVal );
 }
 
-#endif /*_USBHS_SOFTRESET_DEFAULT_H*/
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.7"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 21.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 21.2"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
+
+#endif /*USBHS_SOFTRESET_DEFAULT_H*/
 
 /******************************************************************************
  End of File

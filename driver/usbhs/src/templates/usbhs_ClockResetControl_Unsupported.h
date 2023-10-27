@@ -44,8 +44,8 @@
 
 //DOM-IGNORE-END
 
-#ifndef _USBHS_CLOCKRESETCONTROL_UNSUPPORTED_H
-#define _USBHS_CLOCKRESETCONTROL_UNSUPPORTED_H
+#ifndef USBHS_CLOCKRESETCONTROL_UNSUPPORTED_H
+#define USBHS_CLOCKRESETCONTROL_UNSUPPORTED_H
 
 //******************************************************************************
 /* Function :  USBHS_ExistsClockResetControl_Unsupported

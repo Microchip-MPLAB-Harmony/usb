@@ -83,12 +83,7 @@ DRV_USB_HOST_INTERFACE gDrvUSBHSHostInterface =
 /******************************************************************************
  * Pool of pipe objects that is used by all USB driver instances.
  *****************************************************************************/
-DRV_USBHS_HOST_PIPE_OBJ gDrvUSBHostPipeObj[DRV_USBHS_HOST_PIPES_NUMBER];
-
-/******************************************************************************
- * The USB driver object. Has already been defined in drv_usbhs.c file.
- *****************************************************************************/
-extern DRV_USBHS_OBJ gDrvUSBObj[];
+static DRV_USBHS_HOST_PIPE_OBJ gDrvUSBHostPipeObj[DRV_USBHS_HOST_PIPES_NUMBER];
 
 // ****************************************************************************
 // ****************************************************************************
@@ -98,7 +93,7 @@ extern DRV_USBHS_OBJ gDrvUSBObj[];
 
 // *****************************************************************************
 /* Function:
-    void _DRV_USBHS_HOST_TimerCallback
+    void F_DRV_USBHS_HOST_TimerCallback
     (
        uint32_t context
     )
@@ -115,7 +110,7 @@ extern DRV_USBHS_OBJ gDrvUSBObj[];
     This is a local function and should not be called directly by the
     application.
 */
-void _DRV_USBHS_HOST_TimerCallback(uintptr_t context)
+void F_DRV_USBHS_HOST_TimerCallback(uintptr_t context)
 {
     DRV_USBHS_OBJ * hDriver = ((DRV_USBHS_OBJ *)context);
     
@@ -125,7 +120,7 @@ void _DRV_USBHS_HOST_TimerCallback(uintptr_t context)
 
 // *****************************************************************************
 /* Function:
-    void _DRV_USBHS_HOST_AttachDetachStateMachine
+    void F_DRV_USBHS_HOST_AttachDetachStateMachine
     (
        DRV_USBHS_OBJ * hDriver
     )
@@ -144,12 +139,13 @@ void _DRV_USBHS_HOST_TimerCallback(uintptr_t context)
     application.
 */
 
-void _DRV_USBHS_HOST_AttachDetachStateMachine
+void F_DRV_USBHS_HOST_AttachDetachStateMachine
 (
     DRV_USBHS_OBJ * hDriver
 )
 {
     bool interruptWasEnabled = false;
+    USBHS_VBUS_LEVEL checkLevelGet;
 
     switch(hDriver->usbDrvHostObj.attachState)
     {
@@ -160,12 +156,12 @@ void _DRV_USBHS_HOST_AttachDetachStateMachine
             {   
                 /* Explicitely try to delete the Timer object if it is not
                  * running */
-                SYS_TIME_TimerDestroy(hDriver->usbDrvHostObj.timerHandle);
+               (void) SYS_TIME_TimerDestroy(hDriver->usbDrvHostObj.timerHandle);
                 
                 hDriver->usbDrvHostObj.timerExpired = false;
                 
                 /* Start the de-bouncing timer */
-                hDriver->usbDrvHostObj.timerHandle = SYS_TIME_CallbackRegisterMS(_DRV_USBHS_HOST_TimerCallback,
+                hDriver->usbDrvHostObj.timerHandle = SYS_TIME_CallbackRegisterMS(F_DRV_USBHS_HOST_TimerCallback,
                        (uintptr_t ) hDriver,  DRV_USBHS_HOST_ATTACH_DEBOUNCE_DURATION, SYS_TIME_SINGLE);
                 
                 if(SYS_TIME_HANDLE_INVALID != hDriver->usbDrvHostObj.timerHandle)
@@ -181,8 +177,9 @@ void _DRV_USBHS_HOST_AttachDetachStateMachine
                  * sometimes. While operating in host mode, the USB module
                  * should always be a OTG A device.  */
                 
+                checkLevelGet = PLIB_USBHS_VBUSLevelGet(hDriver->usbDrvCommonObj.usbID);
                 if(PLIB_USBHS_IsBDevice(hDriver->usbDrvCommonObj.usbID) && 
-                        (PLIB_USBHS_VBUSLevelGet(hDriver->usbDrvCommonObj.usbID) == USBHS_VBUS_VALID))
+                        (checkLevelGet == USBHS_VBUS_VALID))
                 {
                     /* This means the module is not operating as host mode.
                      * We should restart the session */
@@ -212,7 +209,7 @@ void _DRV_USBHS_HOST_AttachDetachStateMachine
                 /* The de-bounce period has ended. Is the device still attached.
                  * Disable the driver interrupt as we do not want this section
                  * to be interrupted. */
-                interruptWasEnabled = _DRV_USBHS_InterruptSourceDisable(hDriver->usbDrvCommonObj.interruptSource);
+                interruptWasEnabled = M_DRV_USBHS_InterruptSourceDisable(hDriver->usbDrvCommonObj.interruptSource);
 
                 if(hDriver->usbDrvHostObj.deviceAttached)
                 {
@@ -232,7 +229,7 @@ void _DRV_USBHS_HOST_AttachDetachStateMachine
                 if(interruptWasEnabled)
                 {
                     /* Re-enable the interrupt if it was originally enabled. */
-                    _DRV_USBHS_InterruptSourceEnable(hDriver->usbDrvCommonObj.interruptSource);
+                    M_DRV_USBHS_InterruptSourceEnable(hDriver->usbDrvCommonObj.interruptSource);
                 }
 
             }
@@ -251,13 +248,14 @@ void _DRV_USBHS_HOST_AttachDetachStateMachine
             break;
 
         default:
+            /* Do Nothing */
             break;
     }
 } 
 
 // *****************************************************************************
 /* Function:
-    void _DRV_USBHS_HOST_ResetStateMachine
+    void F_DRV_USBHS_HOST_ResetStateMachine
     (
         DRV_USBHS_OBJ * hDriver
     )
@@ -275,7 +273,7 @@ void _DRV_USBHS_HOST_AttachDetachStateMachine
     application.
 */
 
-void _DRV_USBHS_HOST_ResetStateMachine
+void F_DRV_USBHS_HOST_ResetStateMachine
 (
     DRV_USBHS_OBJ * hDriver
 )
@@ -291,7 +289,7 @@ void _DRV_USBHS_HOST_ResetStateMachine
         case DRV_USBHS_HOST_RESET_STATE_START:
 
             /* We should start reset signaling. First try to get a timer */
-            hDriver->usbDrvHostObj.timerHandle = SYS_TIME_CallbackRegisterMS(_DRV_USBHS_HOST_TimerCallback, (uintptr_t ) hDriver, 
+            hDriver->usbDrvHostObj.timerHandle = SYS_TIME_CallbackRegisterMS(F_DRV_USBHS_HOST_TimerCallback, (uintptr_t ) hDriver, 
                     DRV_USBHS_HOST_RESET_DURATION, SYS_TIME_SINGLE );
             
             if(SYS_TIME_HANDLE_INVALID != hDriver->usbDrvHostObj.timerHandle)
@@ -339,7 +337,7 @@ void _DRV_USBHS_HOST_ResetStateMachine
 					/* Enable Suspend */
                     PLIB_USBHS_SuspendEnable(hDriver->usbDrvCommonObj.usbID);
 
-                    hDriver->usbDrvHostObj.timerHandle = SYS_TIME_CallbackRegisterMS(_DRV_USBHS_HOST_TimerCallback, (uintptr_t ) hDriver, 100, SYS_TIME_SINGLE );
+                    hDriver->usbDrvHostObj.timerHandle = SYS_TIME_CallbackRegisterMS(F_DRV_USBHS_HOST_TimerCallback, (uintptr_t ) hDriver, 100, SYS_TIME_SINGLE );
                     if(SYS_TIME_HANDLE_INVALID != hDriver->usbDrvHostObj.timerHandle)
                     {
                         hDriver->usbDrvHostObj.resetState = DRV_USBHS_HOST_RESET_STATE_WAIT_FOR_SUSPEND_COMPLETE;
@@ -357,7 +355,7 @@ void _DRV_USBHS_HOST_ResetStateMachine
                 /* Enable Resume. This will clear Suspend as well */
                 PLIB_USBHS_ResumeEnable(hDriver->usbDrvCommonObj.usbID);
                 
-                hDriver->usbDrvHostObj.timerHandle = SYS_TIME_CallbackRegisterMS(_DRV_USBHS_HOST_TimerCallback, (uintptr_t )hDriver, 20, SYS_TIME_SINGLE);
+                hDriver->usbDrvHostObj.timerHandle = SYS_TIME_CallbackRegisterMS(F_DRV_USBHS_HOST_TimerCallback, (uintptr_t )hDriver, 20, SYS_TIME_SINGLE);
                 if(SYS_TIME_HANDLE_INVALID != hDriver->usbDrvHostObj.timerHandle)
                 {
                     hDriver->usbDrvHostObj.resetState = DRV_USBHS_HOST_RESET_STATE_WAIT_FOR_RESUME_COMPLETE;
@@ -384,11 +382,12 @@ void _DRV_USBHS_HOST_ResetStateMachine
             break;
 
         default:
+            /* Do Nothing */
             break;
     }
 } 
 
-DRV_USBHS_HOST_PIPE_HANDLE _DRV_USBHS_HOST_FifoTableAllocate
+DRV_USBHS_HOST_PIPE_HANDLE F_DRV_USBHS_HOST_FifoTableAllocate
 (
     DRV_USBHS_OBJ * hDriver,
     DRV_USBHS_HOST_PIPE_OBJ * pipe,
@@ -407,28 +406,30 @@ DRV_USBHS_HOST_PIPE_HANDLE _DRV_USBHS_HOST_FifoTableAllocate
     uint8_t bitStarting = 0;
     bool slotObtained = false;
     bool firstObtained = false;
+    uint8_t temp;
 
-    if(wMaxPacketSize <= 64)
+    if(wMaxPacketSize <= 64U)
     {
         /* For 9KB FIFO RAM we need total 144 bit slots where each bit slot
          * represents 64 bytes of FIFO RAM memory. So that translates to 18 byte
          * slots.  */
-        while(indexFifoTable <= 18)
+        while(indexFifoTable <= 18U)
         {
             /* Search whole byte bit by bit */
-            while(counter <= 7)
+            while(counter <= 7U)
             {
-                if((*pFifoTable & (0x01 << counter)) == 0)
+                if((*pFifoTable & (0x01UL << counter)) == 0U)
                 {
                     /* Free slot obtained. Now grab as per the max packet size */
                     /* 1 slot will represent 64 bytes in the fifo.
                      * So for endpoints having maxpacket size less than
                      * 64 also we will allocate 64 bytes memory EP FIFO
                      */
-                    pipe->startingOffset = (((indexFifoTable - 1) * 8) + 1 + counter) * 8;
+                    temp = ((((indexFifoTable - 1U) * 8U) + 1U + counter) * 8U);
+                    pipe->startingOffset = (uint32_t)temp;
 
                     pipe->noOfSlots = 1;
-                    *pFifoTable = (*pFifoTable | (0x01 << counter));
+                    *pFifoTable = (uint8_t)(*pFifoTable | (0x01UL << counter));
                     slotObtained = true;
                     break;
                 }
@@ -455,9 +456,9 @@ DRV_USBHS_HOST_PIPE_HANDLE _DRV_USBHS_HOST_FifoTableAllocate
     {
         /* Here noOfSlotsReq is number of continuous bits required in the FIFO
            table */
-        noOfSlotsReq = (wMaxPacketSize / 64);
+        noOfSlotsReq = (uint8_t)(wMaxPacketSize / 64U);
 
-        if((wMaxPacketSize % 64) != 0)
+        if((wMaxPacketSize % 64U) != 0U)
         {
             noOfSlotsReq++;
         }
@@ -473,24 +474,24 @@ DRV_USBHS_HOST_PIPE_HANDLE _DRV_USBHS_HOST_FifoTableAllocate
          * middle as all are protected by Mutex lock on a per USBHCD driver
          * instance level.  */
 
-        memcpy(hDriver->usbDrvHostObj.gDrvUSBFifoTableSecondary, hDriver->usbDrvHostObj.gDrvUSBFifoTable, sizeof(hDriver->usbDrvHostObj.gDrvUSBFifoTableSecondary));
+        (void) memcpy(hDriver->usbDrvHostObj.gDrvUSBFifoTableSecondary, hDriver->usbDrvHostObj.gDrvUSBFifoTable, sizeof(hDriver->usbDrvHostObj.gDrvUSBFifoTableSecondary));
 
-        for(byteLoop = 1; byteLoop <=18; byteLoop++)
+        for(byteLoop = 1; byteLoop <=18U; byteLoop++)
         {
-            for(bitLoop = 0; bitLoop <=7; bitLoop++)
+            for(bitLoop = 0; bitLoop <=7U; bitLoop++)
             {
-                if((*pFifoTable & (0x01 << bitLoop)) == 0)
+                if((*pFifoTable & (0x01UL << bitLoop)) == 0U)
                 {
                     if(false == firstObtained)
                     {
                         firstObtained = true;
                         byteStarting = byteLoop;
                         bitStarting = bitLoop;
-                        *pFifoTableSecondary = (*pFifoTableSecondary | (0x01 << bitLoop));
+                        *pFifoTableSecondary = (uint8_t)(*pFifoTableSecondary | (0x01UL  << bitLoop));
                     }
                     else
                     {
-                        *pFifoTableSecondary = (*pFifoTableSecondary | (0x01 << bitLoop));
+                        *pFifoTableSecondary = (uint8_t)(*pFifoTableSecondary | (0x01UL  << bitLoop));
                     }
 
                     noOfSlotsReqTemp--;
@@ -505,13 +506,14 @@ DRV_USBHS_HOST_PIPE_HANDLE _DRV_USBHS_HOST_FifoTableAllocate
                      * free slots but not enough slots as required. In this case
                      * we need to recopy again the original FifoTable data.
                      */
-                    memcpy(hDriver->usbDrvHostObj.gDrvUSBFifoTableSecondary, hDriver->usbDrvHostObj.gDrvUSBFifoTable, sizeof(hDriver->usbDrvHostObj.gDrvUSBFifoTable));
+                    (void) memcpy(hDriver->usbDrvHostObj.gDrvUSBFifoTableSecondary, hDriver->usbDrvHostObj.gDrvUSBFifoTable, sizeof(hDriver->usbDrvHostObj.gDrvUSBFifoTable));
                 }
 
-                if(noOfSlotsReqTemp == 0)
+                if(noOfSlotsReqTemp == 0U)
                 {
                     /* Obtained all continuous slots */
-                    pipe->startingOffset = (((byteStarting - 1) * 8) + 1 + bitStarting) * 8;
+                    temp = ((((byteStarting - 1U) * 8U) + 1U + bitStarting) * 8U);
+                    pipe->startingOffset = (uint32_t)temp;
                     pipe->noOfSlots = noOfSlotsReq;
                     slotObtained = true;
                     break;
@@ -521,7 +523,7 @@ DRV_USBHS_HOST_PIPE_HANDLE _DRV_USBHS_HOST_FifoTableAllocate
 
             if(true == slotObtained)
             {
-                memcpy(hDriver->usbDrvHostObj.gDrvUSBFifoTable, hDriver->usbDrvHostObj.gDrvUSBFifoTableSecondary, sizeof(hDriver->usbDrvHostObj.gDrvUSBFifoTable));
+               (void) memcpy(hDriver->usbDrvHostObj.gDrvUSBFifoTable, hDriver->usbDrvHostObj.gDrvUSBFifoTableSecondary, sizeof(hDriver->usbDrvHostObj.gDrvUSBFifoTable));
                 /* Exit from the main for() loop if FIFOTable obtained */
                 break;
             }
@@ -543,7 +545,7 @@ DRV_USBHS_HOST_PIPE_HANDLE _DRV_USBHS_HOST_FifoTableAllocate
     }
 }
 
-void _DRV_USBHS_HOST_IRPTransmitFIFOLoad
+void F_DRV_USBHS_HOST_IRPTransmitFIFOLoad
 (
     USBHS_MODULE_ID usbID, 
     USB_HOST_IRP_LOCAL * irp,
@@ -554,8 +556,8 @@ void _DRV_USBHS_HOST_IRPTransmitFIFOLoad
      * of bytes that were completed and then trigger the transmit */
 
     uint8_t * data = NULL;
-    unsigned int count = 0;
-    unsigned int pendingBytes = 0;
+    uint32_t count = 0;
+    uint32_t pendingBytes = 0;
     DRV_USBHS_HOST_PIPE_OBJ * pipe = (DRV_USBHS_HOST_PIPE_OBJ *)(irp->pipe);
     DRV_HANDLE handle = DRV_HANDLE_INVALID;
     DRV_USBHS_OBJ * hDriver = NULL;
@@ -566,7 +568,7 @@ void _DRV_USBHS_HOST_IRPTransmitFIFOLoad
     count = (pendingBytes > pipe->endpointSize) ? pipe->endpointSize : pendingBytes;
     data = (uint8_t *)((uint8_t *)irp->data + irp->completedBytes);
 
-    if(endpoint == 0)
+    if(endpoint == 0U)
     {
         irp->completedBytes += count;
         PLIB_USBHS_EndpointFIFOLoad(usbID, endpoint, data, count);
@@ -577,8 +579,8 @@ void _DRV_USBHS_HOST_IRPTransmitFIFOLoad
         handle = pipe->hClient;
         hDriver = ((DRV_USBHS_CLIENT_OBJ *)handle)->hDriver;
         
-        dmaChannelGrabbed = _DRV_USBHS_HOST_GetFreeDMAChannel(hDriver, USB_DATA_DIRECTION_HOST_TO_DEVICE, endpoint);
-        if((dmaChannelGrabbed == 0))
+        dmaChannelGrabbed = F_DRV_USBHS_HOST_GetFreeDMAChannel(hDriver, (bool)USB_DATA_DIRECTION_HOST_TO_DEVICE, endpoint);
+        if((dmaChannelGrabbed == 0U))
         {
             /* NO DMA channel available. So do normal FIFO load */
             irp->completedBytes += count;
@@ -596,7 +598,7 @@ void _DRV_USBHS_HOST_IRPTransmitFIFOLoad
     }
 }
 
-void _DRV_USBHS_HOST_IRPTransmitSetupPacket
+void F_DRV_USBHS_HOST_IRPTransmitSetupPacket
 (
     USBHS_MODULE_ID usbID,
     USB_HOST_IRP_LOCAL * irp
@@ -608,10 +610,10 @@ void _DRV_USBHS_HOST_IRPTransmitSetupPacket
     DRV_USBHS_HOST_PIPE_OBJ * pipe = (DRV_USBHS_HOST_PIPE_OBJ *)(irp->pipe);
     uint8_t * data = (uint8_t *)irp->setup;
 
-    PLIB_USBHS_Endpoint0SetupPacketLoad(usbID, data, pipe->deviceAddress, pipe->hubAddress, pipe->hubPort, pipe->speed);
+    PLIB_USBHS_Endpoint0SetupPacketLoad(usbID, data, pipe->deviceAddress, pipe->hubAddress, pipe->hubPort, (uint32_t)pipe->speed);
 }
 
-unsigned int _DRV_USBHS_HOST_IRPReceiveFIFOUnload 
+unsigned int F_DRV_USBHS_HOST_IRPReceiveFIFOUnload 
 (
     USBHS_MODULE_ID usbID,
     USB_HOST_IRP_LOCAL * irp,
@@ -634,9 +636,9 @@ unsigned int _DRV_USBHS_HOST_IRPReceiveFIFOUnload
      * the complete byte count and clear the RX packet ready bit */
 
     data = (uint8_t *)((uint8_t *)irp->data + irp->completedBytes);
-    if(endpoint == 0)
+    if(endpoint == 0U)
     {
-        count = PLIB_USBHS_EndpointFIFOUnload(usbID, endpoint, data);
+        count = (uint32_t)PLIB_USBHS_EndpointFIFOUnload(usbID, endpoint, data);
         irp->completedBytes += count;
         *pisDMAUsed = false;
     }
@@ -645,11 +647,11 @@ unsigned int _DRV_USBHS_HOST_IRPReceiveFIFOUnload
         handle = pipe->hClient;
         hDriver = ((DRV_USBHS_CLIENT_OBJ *)handle)->hDriver;
         
-        dmaChannelGrabbed = _DRV_USBHS_HOST_GetFreeDMAChannel(hDriver, USB_DATA_DIRECTION_DEVICE_TO_HOST, endpoint);
-        if((dmaChannelGrabbed == 0))
+        dmaChannelGrabbed = F_DRV_USBHS_HOST_GetFreeDMAChannel(hDriver, (bool)USB_DATA_DIRECTION_DEVICE_TO_HOST, endpoint);
+        if((dmaChannelGrabbed == 0U))
         {
             /* NO DMA channel available. So do normal FIFO unload */
-            count = PLIB_USBHS_EndpointFIFOUnload(usbID, endpoint, data);
+            count = (uint32_t)PLIB_USBHS_EndpointFIFOUnload(usbID, endpoint, data);
             irp->completedBytes += count;
             *pisDMAUsed = false;
         }
@@ -672,7 +674,7 @@ unsigned int _DRV_USBHS_HOST_IRPReceiveFIFOUnload
     return (count);
 }
 
-void _DRV_USBHS_HOST_Initialize
+void F_DRV_USBHS_HOST_Initialize
 (
     DRV_USBHS_OBJ * drvObj, 
     SYS_MODULE_INDEX index
@@ -690,7 +692,7 @@ void _DRV_USBHS_HOST_Initialize
     {
         /* Disable all interrupts. Interrupts will be enabled when the root hub is
          * enabled */
-        PLIB_USBHS_InterruptEnableSet(usbID, 0x0, 0x0, 0x0);
+        PLIB_USBHS_InterruptEnableSet(usbID, (USBHS_GEN_INTERRUPT)0x0, (USBHS_EPTXRX_INTERRUPT)0x0, (USBHS_EPTXRX_INTERRUPT)0x0);
     }
 
     /* Based on the speed that we are initializing set up the HS Enable bit in
@@ -712,19 +714,28 @@ void _DRV_USBHS_HOST_Initialize
     drvObj->usbDrvHostObj.usbHostDeviceInfo = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
 }
 
+/* MISRA C-2012 Rule 10.4 False Positve:12 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block fp:12 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"  
+
+/* MISRA C-2012 Rule 11.3 deviated:8 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+#pragma coverity compliance block deviate:8 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"  
+
 USB_ERROR DRV_USBHS_HOST_IRPSubmit
 (
     DRV_USBHS_HOST_PIPE_HANDLE  hPipe, 
-    USB_HOST_IRP * inputIRP
+    USB_HOST_IRP * pinputIRP
 )
 {
     USB_HOST_IRP_LOCAL * irpIterator = NULL;
     DRV_USBHS_HOST_TRANSFER_GROUP * controlTransferGroup = NULL;
     bool interruptWasEnabled = false;
-    unsigned int direction = 0;
+    uint32_t direction = 0;
     uint8_t endpoint = 0;
+    uint32_t temp;
 
-    USB_HOST_IRP_LOCAL * irp = (USB_HOST_IRP_LOCAL *)inputIRP;
+    USB_HOST_IRP_LOCAL * irp = (USB_HOST_IRP_LOCAL *)pinputIRP;
     DRV_USBHS_HOST_PIPE_OBJ * pipe = (DRV_USBHS_HOST_PIPE_OBJ *)(hPipe);
     DRV_USBHS_OBJ * hDriver = NULL;
     USBHS_MODULE_ID usbID = USBHS_NUMBER_OF_MODULES;
@@ -747,7 +758,7 @@ USB_ERROR DRV_USBHS_HOST_IRPSubmit
         irp->status = USB_HOST_IRP_STATUS_PENDING;
         irp->tempState = DRV_USBHS_HOST_IRP_STATE_PROCESSING;
         endpoint = pipe->hostEndpoint;
-        direction = (pipe->endpointAndDirection & 0x80) >> 7;
+        direction = (((uint32_t)pipe->endpointAndDirection & 0x80U) >> 7);
 
         /* We need to disable interrupts was the queue state does not change
          * asynchronously */
@@ -761,7 +772,7 @@ USB_ERROR DRV_USBHS_HOST_IRPSubmit
             }
             else
             {
-                interruptWasEnabled = _DRV_USBHS_InterruptSourceDisable(hDriver->usbDrvCommonObj.interruptSource);
+                interruptWasEnabled = M_DRV_USBHS_InterruptSourceDisable(hDriver->usbDrvCommonObj.interruptSource);
             }
         }
 
@@ -790,19 +801,19 @@ USB_ERROR DRV_USBHS_HOST_IRPSubmit
                     /* We need to update the flags parameter of the IRP to
                      * indicate the direction of the control transfer. */
 
-                    if(*((uint8_t*)(irp->setup)) & 0x80)
+                    if((*((uint8_t*)(irp->setup)) & 0x80U) != 0U)
                     {
                         /* This means the data stage moves from device to host.
                          * Set bit 15 of the flags parameter */
-
-                        irp->flags |= 0x8000;
+                        temp = ((uint32_t)irp->flags | (uint32_t)0x8000U);
+                        irp->flags = (USB_HOST_IRP_FLAG)temp;
                     }
                     else
                     {
                         /* This means the data stage moves from host to device.
                          * Clear bit 15 of the flags parameter. */
-
-                        irp->flags &= 0x7FFF;
+                        temp = ((uint32_t)irp->flags & (uint32_t)0x7FFFU);
+                        irp->flags = (USB_HOST_IRP_FLAG)temp;
                     }
 
                     /* We need to check if the endpoint 0 is free and if so then
@@ -820,7 +831,7 @@ USB_ERROR DRV_USBHS_HOST_IRPSubmit
                         irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
 
                         /* Send the setup packet to device */
-                        _DRV_USBHS_HOST_IRPTransmitSetupPacket(usbID, irp);
+                        F_DRV_USBHS_HOST_IRPTransmitSetupPacket(usbID, irp);
                     }
                 }
                 else
@@ -830,14 +841,14 @@ USB_ERROR DRV_USBHS_HOST_IRPSubmit
 
                     irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
 
-                    if(USB_DATA_DIRECTION_HOST_TO_DEVICE == direction)
+                    if((uint32_t)USB_DATA_DIRECTION_HOST_TO_DEVICE == direction)
                     {
                         /* Data is moving from host to device. We need to copy
                          * data into the FIFO and then and set the TX request
                          * bit. If the IRP size is greater than endpoint size
                          * then we must packetize. */
 
-                        _DRV_USBHS_HOST_IRPTransmitFIFOLoad(usbID, irp, endpoint);
+                        F_DRV_USBHS_HOST_IRPTransmitFIFOLoad(usbID, irp, endpoint);
                     }
                     else
                     {
@@ -855,7 +866,7 @@ USB_ERROR DRV_USBHS_HOST_IRPSubmit
                 irpIterator = pipe->irpQueueHead;
 
                 /* Find the last IRP in the linked list*/
-                while(irpIterator->next != 0)
+                while(irpIterator->next != NULL)
                 {
                     irpIterator = irpIterator->next;
                 }
@@ -869,7 +880,7 @@ USB_ERROR DRV_USBHS_HOST_IRPSubmit
             {
                 if(interruptWasEnabled)
                 {
-                    _DRV_USBHS_InterruptSourceEnable(hDriver->usbDrvCommonObj.interruptSource);
+                    M_DRV_USBHS_InterruptSourceEnable(hDriver->usbDrvCommonObj.interruptSource);
                 }
                 
                 if(OSAL_MUTEX_Unlock(&hDriver->usbDrvCommonObj.mutexID) != OSAL_RESULT_TRUE)
@@ -917,7 +928,7 @@ void DRV_USBHS_HOST_IRPCancel
                 SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBHS Driver: Mutex lock failed in DRV_USBHS_HOST_IRPCancel()");
             }
 
-            interruptWasEnabled = _DRV_USBHS_InterruptSourceDisable(hDriver->usbDrvCommonObj.interruptSource);
+            interruptWasEnabled = M_DRV_USBHS_InterruptSourceDisable(hDriver->usbDrvCommonObj.interruptSource);
         }
 
         if(irp->status == USB_HOST_IRP_STATUS_IN_PROGRESS)
@@ -966,7 +977,7 @@ void DRV_USBHS_HOST_IRPCancel
         {
             if(interruptWasEnabled)
             {
-                _DRV_USBHS_InterruptSourceEnable(hDriver->usbDrvCommonObj.interruptSource);
+                M_DRV_USBHS_InterruptSourceEnable(hDriver->usbDrvCommonObj.interruptSource);
             }
 
             if(OSAL_MUTEX_Unlock(&hDriver->usbDrvCommonObj.mutexID) != OSAL_RESULT_TRUE)
@@ -991,7 +1002,7 @@ void DRV_USBHS_HOST_PipeClose
     DRV_USBHS_HOST_TRANSFER_GROUP * transferGroup = NULL;
     DRV_USBHS_HOST_ENDPOINT_OBJ * endpointObj = NULL;
     USBHS_MODULE_ID usbID = USBHS_NUMBER_OF_MODULES;
-    unsigned int direction = 0;
+    uint32_t direction = 0;
 
     uint8_t *pFifoTable = NULL;
     uint8_t startingSlot = 0;
@@ -1000,14 +1011,14 @@ void DRV_USBHS_HOST_PipeClose
     bool slotObtained = false;
     
     /* Make sure we have a valid pipe */
-    if( ( pipeHandle == 0 )  || (pipeHandle == DRV_USBHS_HOST_PIPE_HANDLE_INVALID) )
+    if( ( pipeHandle == 0U )  || (pipeHandle == DRV_USBHS_HOST_PIPE_HANDLE_INVALID) )
     {
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBHS Driver: Invalid pipe handle in DRV_USBHS_HOST_PipeClose()");
     }
     else
     {
         pipe = (DRV_USBHS_HOST_PIPE_OBJ*) pipeHandle;
-        direction = (pipe->endpointAndDirection & 0x80) >> 7;
+        direction = (((uint32_t)pipe->endpointAndDirection & 0x80U) >> 7);
 
         /* Make sure that we are working with a pipe in use */
         if(pipe->inUse != true)
@@ -1028,7 +1039,7 @@ void DRV_USBHS_HOST_PipeClose
                     SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBHS Driver: Mutex lock failed in DRV_USBHS_HOST_PipeClose()");
                 }
 
-                interruptWasEnabled = _DRV_USBHS_InterruptSourceDisable(hDriver->usbDrvCommonObj.interruptSource);
+                interruptWasEnabled = M_DRV_USBHS_InterruptSourceDisable(hDriver->usbDrvCommonObj.interruptSource);
             }
 
             if(USB_TRANSFER_TYPE_CONTROL == pipe->pipeType)
@@ -1073,7 +1084,7 @@ void DRV_USBHS_HOST_PipeClose
                 endpointObj->endpoints[direction].inUse = false;
                 endpointObj->endpoints[direction].pipe = NULL;
 
-                if(direction == USB_DATA_DIRECTION_DEVICE_TO_HOST)
+                if(direction == (uint32_t)USB_DATA_DIRECTION_DEVICE_TO_HOST)
                 {
                     /* Clear the error status on and flush the fifo on receive
                      * endpoint */
@@ -1106,8 +1117,8 @@ void DRV_USBHS_HOST_PipeClose
                 {
                     /* If the IRP is in progress, then we set the temp IRP
                      * state. This will be caught in the
-                     * _DRV_USBHS_HOST_NonControlIRPProcess() and
-                     * _DRV_USBHS_HOST_ControlXferProcess() functions */
+                     * F_DRV_USBHS_HOST_NonControlIRPProcess() and
+                     * F_DRV_USBHS_HOST_ControlXferProcess() functions */
 
                     irp->status = USB_HOST_IRP_STATUS_ABORTED;
                     
@@ -1137,11 +1148,11 @@ void DRV_USBHS_HOST_PipeClose
             if(USB_TRANSFER_TYPE_CONTROL != pipe->pipeType)
             {
                 pFifoTable = (uint8_t *)(hDriver->usbDrvHostObj.gDrvUSBFifoTable);
-                startingSlot = pipe->startingOffset/8;
+                startingSlot = (uint8_t)(pipe->startingOffset/8U);
 
-                for(byteLoop = 1; byteLoop <=18; byteLoop++)
+                for(byteLoop = 1; byteLoop <=18U; byteLoop++)
                 {
-                    for(bitLoop=0; bitLoop <=7; bitLoop++)
+                    for(bitLoop=0; bitLoop <=7U; bitLoop++)
                     {
                         /* The design here is to find the starting slot in the
                          * FiFoTable.  Once found, we will start reseting all
@@ -1150,13 +1161,13 @@ void DRV_USBHS_HOST_PipeClose
                          * continuous. No segmented slots for a particular pipe
                          * is possible.  */
 
-                        if( (false == slotObtained) && (( ((byteLoop - 1) * 8) + 1 + bitLoop) == startingSlot) )
+                        if( (false == slotObtained) && (( ((byteLoop - 1U) * 8U) + 1U + bitLoop) == startingSlot) )
                         {
                             /* Starting Slot found. Reset the slot. Make sure it
                              * never enters this if() loop again for this pipe
                              * close operation */
 
-                            *pFifoTable = ( *pFifoTable & ~(0x01 << bitLoop) );
+                            *pFifoTable = (uint8_t)( *pFifoTable & ~(0x01UL << bitLoop) );
                             slotObtained = true;
                             pipe->noOfSlots--;
                         }
@@ -1166,17 +1177,21 @@ void DRV_USBHS_HOST_PipeClose
                              * continuing resetting all the slots allocated for
                              * the pipe.*/
 
-                            *pFifoTable = ( *pFifoTable & ~(0x01 << bitLoop) );
+                            *pFifoTable = (uint8_t)( *pFifoTable & ~(0x01UL << bitLoop) );
                             pipe->noOfSlots--;
                         }
-                        if(pipe->noOfSlots == 0)
+                        else
+                        {
+                            /* Do nothing */
+                        }
+                        if(pipe->noOfSlots == 0U)
                         {
                             /* Done releasing slots. Exit the inner loop */
                             break;
                         }
                     }
 
-                    if((pipe->noOfSlots == 0))
+                    if((pipe->noOfSlots == 0U))
                     {
                         /* Done releasing slots. Exit the outer loop */
                         break;
@@ -1184,7 +1199,7 @@ void DRV_USBHS_HOST_PipeClose
                     pFifoTable++;
                 }
 
-                if((pipe->noOfSlots != 0))
+                if((pipe->noOfSlots != 0U))
                 {
                     /* This is error scenario */
                     SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBHS Driver: Error in releasing Fifo Table in DRV_USBHS_HOST_PipeClose()");
@@ -1199,7 +1214,7 @@ void DRV_USBHS_HOST_PipeClose
             {
                 if(interruptWasEnabled)
                 {
-                    _DRV_USBHS_InterruptSourceEnable(hDriver->usbDrvCommonObj.interruptSource);
+                    M_DRV_USBHS_InterruptSourceEnable(hDriver->usbDrvCommonObj.interruptSource);
                 }
 
                 if(OSAL_MUTEX_Unlock(&hDriver->usbDrvCommonObj.mutexID) != OSAL_RESULT_TRUE)
@@ -1224,16 +1239,16 @@ DRV_USBHS_HOST_PIPE_HANDLE DRV_USBHS_HOST_PipeSetup
     USB_SPEED speed
 )
 {
-    int pipeIter = 0;
-    int fifoSize = 0;
+    int32_t pipeIter = 0;
+    int32_t fifoSize = 0;
     bool epFound = false;
     uint8_t epIter = 0;
     uint8_t endpoint = 0;
     USBHS_MODULE_ID usbID = USBHS_NUMBER_OF_MODULES;
-    unsigned int epDirection = 0;
-    unsigned int shiftWord = 0;
-    unsigned int i = 0;
-    unsigned int accumulate = 0;
+    uint32_t epDirection = 0;
+    uint32_t shiftWord = 0;
+    uint32_t i = 0;
+    uint32_t accumulate = 0;
 
     DRV_USBHS_OBJ * hDriver = NULL;
     DRV_USBHS_HOST_PIPE_OBJ * pipe =NULL;
@@ -1258,13 +1273,13 @@ DRV_USBHS_HOST_PIPE_HANDLE DRV_USBHS_HOST_PipeSetup
 
             if(pipeType != USB_TRANSFER_TYPE_CONTROL)
             {
-                if(wMaxPacketSize < 8)
+                if(wMaxPacketSize < 8U)
                 {
                     wMaxPacketSize = 8;
                 }
             }
 
-            if((wMaxPacketSize < 8) ||(wMaxPacketSize > 4096))
+            if((wMaxPacketSize < 8U) ||(wMaxPacketSize > 4096U))
             {
                 SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBHS Driver: Invalid pipe endpoint size in DRV_USBHS_HOST_PipeSetup()");
             }
@@ -1272,7 +1287,7 @@ DRV_USBHS_HOST_PIPE_HANDLE DRV_USBHS_HOST_PipeSetup
             {
                 /* Need to make sure that wMaxPacketSize is equal to 2 to the power
                  * n where n is 3 >= n <= 12*/
-                for(i = 3; i <= 12; i ++)
+                for(i = 3; i <= 12U; i ++)
                 {
                     accumulate = 1;
 
@@ -1291,14 +1306,14 @@ DRV_USBHS_HOST_PIPE_HANDLE DRV_USBHS_HOST_PipeSetup
                     {
                         /* This means the wMaxPacketSize is between two valid ranges. Set
                          * wMaxPacketSize to the higher range. */
-                        wMaxPacketSize = accumulate << 1;
+                        wMaxPacketSize = (uint16_t)(accumulate << 1);
                         break;
                     }
                 }
 
                 hDriver = ((DRV_USBHS_CLIENT_OBJ *)client)->hDriver;
-                endpoint = (endpointAndDirection & 0x7F);
-                epDirection = (endpointAndDirection & 0x80) >> 7;
+                endpoint = (uint8_t)(endpointAndDirection & 0x7FU);
+                epDirection = (((uint32_t)endpointAndDirection & 0x80U) >> 7);
 
                 usbID = hDriver->usbDrvCommonObj.usbID;
 
@@ -1332,7 +1347,7 @@ DRV_USBHS_HOST_PIPE_HANDLE DRV_USBHS_HOST_PipeSetup
                                  * zero endpoint object. */
 
                                 epFound = false;
-                                for(epIter = 1; epIter < DRV_USBHS_HOST_MAXIMUM_ENDPOINTS_NUMBER; epIter ++)
+                                for(epIter = 1; epIter < (uint8_t)DRV_USBHS_HOST_MAXIMUM_ENDPOINTS_NUMBER; epIter ++)
                                 {
                                     if(false == hDriver->usbDrvHostObj.hostEndpointTable[epIter] .endpoints[epDirection].inUse)
                                     {
@@ -1351,7 +1366,7 @@ DRV_USBHS_HOST_PIPE_HANDLE DRV_USBHS_HOST_PipeSetup
                                         fifoSize = 0;
                                         shiftWord = wMaxPacketSize;
 
-                                        while((shiftWord & 0x1) != 1)
+                                        while((shiftWord & 0x1U) != 1U)
                                         {
                                             shiftWord = (shiftWord >> 1);
                                             fifoSize ++;
@@ -1359,11 +1374,11 @@ DRV_USBHS_HOST_PIPE_HANDLE DRV_USBHS_HOST_PipeSetup
 
                                         fifoSize -= 3;
 
-                                        if(_DRV_USBHS_HOST_FifoTableAllocate(hDriver,pipe,wMaxPacketSize) == DRV_USBHS_HOST_PIPE_HANDLE_INVALID)
+                                        if(F_DRV_USBHS_HOST_FifoTableAllocate(hDriver,pipe,wMaxPacketSize) == DRV_USBHS_HOST_PIPE_HANDLE_INVALID)
                                         {
                                             SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBHS Driver: Could not obtain FIFO in DRV_USBHS_HOST_PipeSetup()");
                                         }
-                                        else if(USB_DATA_DIRECTION_DEVICE_TO_HOST == epDirection)
+                                        else if((uint32_t)USB_DATA_DIRECTION_DEVICE_TO_HOST == epDirection)
                                         {
                                             /* This means host is receiving
                                              * data. We need to setup all
@@ -1378,11 +1393,11 @@ DRV_USBHS_HOST_PIPE_HANDLE DRV_USBHS_HOST_PipeSetup
                                             (
                                                 usbID,          /* USB Module ID */
                                                 epIter,         /* Host Endpoint */
-                                                speed,          /* Endpoint speed */
-                                                pipeType,       /* Pipe Type */
+                                                (uint32_t)speed,          /* Endpoint speed */
+                                                (uint32_t)pipeType,       /* Pipe Type */
                                                 wMaxPacketSize, /* Endpoint Size */
-                                                pipe->startingOffset,/* FIFO Address */
-                                                fifoSize,       /* FIFO size */
+                                                (uint16_t)pipe->startingOffset,/* FIFO Address */
+                                                (uint16_t)fifoSize,       /* FIFO size */
                                                 endpoint,       /* Target Endpoint */
                                                 deviceAddress,  /* Target Address */
                                                 hubAddress,     /* Target Hub Address */
@@ -1402,11 +1417,11 @@ DRV_USBHS_HOST_PIPE_HANDLE DRV_USBHS_HOST_PipeSetup
                                             (
                                                 usbID,              /* USB Module ID */
                                                 epIter,             /* Host Endpoint */
-                                                speed,              /* Endpoint speed */
-                                                pipeType,           /* Pipe Type */
+                                                (uint32_t)speed,              /* Endpoint speed */
+                                                (uint32_t)pipeType,           /* Pipe Type */
                                                 wMaxPacketSize,     /* Endpoint Size */
-                                                pipe->startingOffset,/* FIFO Address */
-                                                fifoSize,       /* FIFO size */
+                                                (uint16_t)pipe->startingOffset,/* FIFO Address */
+                                                (uint16_t)fifoSize,       /* FIFO size */
                                                 endpoint,       /* Target Endpoint */
                                                 deviceAddress,  /* Target Address */
                                                 hubAddress,     /* Target Hub Address */
@@ -1438,7 +1453,7 @@ DRV_USBHS_HOST_PIPE_HANDLE DRV_USBHS_HOST_PipeSetup
                                      * that may be there from the last device
                                      * connect */
 
-                                    if(USB_DATA_DIRECTION_HOST_TO_DEVICE == epDirection)
+                                    if((uint32_t)USB_DATA_DIRECTION_HOST_TO_DEVICE == epDirection)
                                     {
                                         PLIB_USBHS_TxEPStatusClear(usbID, epIter, USBHS_TXEP_ERROR_ALL);
                                     }
@@ -1538,7 +1553,10 @@ DRV_USBHS_HOST_PIPE_HANDLE DRV_USBHS_HOST_PipeSetup
     return (pipeHandle);
 }
 
-void _DRV_USBHS_HOST_ControlTransferProcess
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+/* MISRAC 2012 deviation block end */
+
+void F_DRV_USBHS_HOST_ControlTransferProcess
 (
     DRV_USBHS_OBJ * hDriver
 )
@@ -1553,11 +1571,12 @@ void _DRV_USBHS_HOST_ControlTransferProcess
     DRV_USBHS_HOST_PIPE_OBJ * iterPipe = NULL;
     DRV_USBHS_HOST_TRANSFER_GROUP * transferGroup = NULL;
     bool endIRP = false;
-    unsigned int count = 0;
-    unsigned int i = 0;
+    uint32_t count = 0;
+    uint32_t i = 0;
     bool foundIRP = false;
     bool isDmaUsed = false;
     USBHS_MODULE_ID usbID = USBHS_NUMBER_OF_MODULES;
+    uint32_t temp;
     
     transferGroup = &hDriver->usbDrvHostObj.controlTransferGroup;
     usbID = hDriver->usbDrvCommonObj.usbID;
@@ -1589,7 +1608,7 @@ void _DRV_USBHS_HOST_ControlTransferProcess
             PLIB_USBHS_EP0StatusClear(usbID, USBHS_EP0_ERROR_ALL);
             PLIB_USBHS_Endpoint0FIFOFlush(usbID);
         }
-        else if(status & USBHS_EP0_ERROR_RXSTALL)
+        else if((status & (uint8_t)USBHS_EP0_ERROR_RXSTALL) != 0U)
         {
             /* This means the packet was stalled. Set the error status and then
              * clear the stall bit */
@@ -1598,7 +1617,7 @@ void _DRV_USBHS_HOST_ControlTransferProcess
             irp->status = USB_HOST_IRP_STATUS_ERROR_STALL;
             PLIB_USBHS_EP0StatusClear(usbID, USBHS_EP0_ERROR_RXSTALL);
         }
-        else if(status & USBHS_EP0_ERROR_NAK_TIMEOUT)
+        else if((status & (uint8_t)USBHS_EP0_ERROR_NAK_TIMEOUT) != 0U)
         {
             /* This means a NAK Time Out has occurred. Clear the error status.
              * */
@@ -1607,7 +1626,7 @@ void _DRV_USBHS_HOST_ControlTransferProcess
             irp->status = USB_HOST_IRP_STATUS_ERROR_NAK_TIMEOUT;
             PLIB_USBHS_EP0StatusClear(usbID, USBHS_EP0_ERROR_NAK_TIMEOUT);
         }
-        else if(status & USBHS_EP0_ERROR_BUS)
+        else if((status & (uint8_t)USBHS_EP0_ERROR_BUS) != 0U)
         {
             /* This means there was an bus error. The packet was tried three
              * times and was not successfully processed */
@@ -1629,7 +1648,7 @@ void _DRV_USBHS_HOST_ControlTransferProcess
                      * setup stage has completed.  We need to check if a data
                      * stage is required and then start the data stage. */
 
-                    if((irp->data == NULL) || (irp->size == 0))
+                    if((irp->data == NULL) || (irp->size == 0U))
                     {
                         /* This means there is no data stage. We can proceed to
                          * the handshake stage. In a case where there isnt a
@@ -1646,7 +1665,7 @@ void _DRV_USBHS_HOST_ControlTransferProcess
                          * the flags parameter of the  IRP. */
 
                         irp->tempState = DRV_USBHS_HOST_IRP_STATE_DATA_STAGE_SENT;
-                        if(irp->flags & 0x8000)
+                        if(((uint32_t)irp->flags & 0x8000U) != 0U)
 
                         {
                             /* This means the data stage moves from device to
@@ -1661,7 +1680,7 @@ void _DRV_USBHS_HOST_ControlTransferProcess
                              * packet. The completed bytes field in the IRP will
                              * be updated. */
 
-                            _DRV_USBHS_HOST_IRPTransmitFIFOLoad(usbID, irp, 0);
+                            F_DRV_USBHS_HOST_IRPTransmitFIFOLoad(usbID, irp, 0);
                         }
                     }
                     break;
@@ -1672,14 +1691,14 @@ void _DRV_USBHS_HOST_ControlTransferProcess
                      * stage interaction was completed. Find out what was the
                      * direction the data stage */
 
-                    if(irp->flags & 0x8000)
+                    if(((uint32_t)irp->flags & 0x8000U) != 0U)
                     {
                         /* This means the data was moving from device to host.
                          * We got an interrupt, which means we have received
                          * data. Start by checking how much data we received
                          * from the device */
 
-                        count = _DRV_USBHS_HOST_IRPReceiveFIFOUnload(usbID, irp, 0, &isDmaUsed);
+                        count = F_DRV_USBHS_HOST_IRPReceiveFIFOUnload(usbID, irp, 0, &isDmaUsed);
 
                         if((count < pipe->endpointSize) || (irp->completedBytes >= irp->size))
                         {
@@ -1708,7 +1727,7 @@ void _DRV_USBHS_HOST_ControlTransferProcess
 
                         if(irp->completedBytes < irp->size)
                         {
-                            _DRV_USBHS_HOST_IRPTransmitFIFOLoad(usbID, irp, 0);
+                            F_DRV_USBHS_HOST_IRPTransmitFIFOLoad(usbID, irp, 0);
                         }
                         else
                         {
@@ -1727,7 +1746,7 @@ void _DRV_USBHS_HOST_ControlTransferProcess
 
                     irp->status = USB_HOST_IRP_STATUS_COMPLETED;
 
-                    if(irp->flags & 0x8000)
+                    if(((uint32_t)irp->flags & 0x8000U) != 0U)
                     {
                         /* This means the data stage moved from device to host.
                          * We need to check the number of bytes the host sent.
@@ -1750,6 +1769,7 @@ void _DRV_USBHS_HOST_ControlTransferProcess
                     break;
 
                 default:
+                    /* Do Nothing */
                     break;
             }
         }
@@ -1774,7 +1794,7 @@ void _DRV_USBHS_HOST_ControlTransferProcess
              * current pipe and check if we have a IRP to process */
 
             iterPipe = transferGroup->currentPipe->next;
-            for(i = 0; i < transferGroup->nPipes; i ++)
+            for(i = 0; i < (uint32_t)transferGroup->nPipes; i ++)
             {
                 if(iterPipe == NULL)
                 {
@@ -1811,21 +1831,23 @@ void _DRV_USBHS_HOST_ControlTransferProcess
                 /* We need to update the flags parameter of the IRP to indicate
                  * the direction of the control transfer. */
 
-                if(*((uint8_t*)(irp->setup)) & 0x80)
+                if((*((uint8_t*)(irp->setup)) & 0x80U) != 0U)
                 {
                     /* This means the data stage moves from device to host. Set
                      * bit 15 of the flags parameter */
-                    irp->flags |= 0x8000;
+                    temp = ((uint32_t)irp->flags | (uint32_t)0x8000U);
+                    irp->flags = (USB_HOST_IRP_FLAG)temp;
                 }
                 else
                 {
                     /* This means the data stage moves from host to device.
                      * Clear bit 15 of the flags parameter. */
-                    irp->flags &= 0x7FFF;
+                    temp = ((uint32_t)irp->flags & (uint32_t)0x7FFFU);
+                    irp->flags = (USB_HOST_IRP_FLAG)temp;
                 }
 
                 /* Send the setup packet to the device */
-                _DRV_USBHS_HOST_IRPTransmitSetupPacket(usbID, irp);
+                F_DRV_USBHS_HOST_IRPTransmitSetupPacket(usbID, irp);
             }
             else
             {
@@ -1842,7 +1864,7 @@ void _DRV_USBHS_HOST_ControlTransferProcess
     return;
 }
 
-void _DRV_USBHS_HOST_NonControlTransferProcess
+void F_DRV_USBHS_HOST_NonControlTransferProcess
 (
     DRV_USBHS_OBJ * hDriver,
     uint8_t endpoint, 
@@ -1858,7 +1880,7 @@ void _DRV_USBHS_HOST_NonControlTransferProcess
     uint8_t status = 0;
     bool endIRP = false;
     bool isDmaUsed = false;
-    unsigned int count = 0;
+    uint32_t count = 0;
     USBHS_MODULE_ID usbID = USBHS_NUMBER_OF_MODULES;
 
     endpointTable += endpoint;
@@ -1875,7 +1897,7 @@ void _DRV_USBHS_HOST_NonControlTransferProcess
 
         irp = pipe->irpQueueHead;
 
-        if(USB_DATA_DIRECTION_HOST_TO_DEVICE == direction)
+        if((uint32_t)USB_DATA_DIRECTION_HOST_TO_DEVICE == direction)
         {
             /* We got an interrupt for data moving from host to to device. Check
              * if there were any transmission errors. Then check if there is any
@@ -1894,7 +1916,7 @@ void _DRV_USBHS_HOST_NonControlTransferProcess
                 PLIB_USBHS_TxEPStatusClear(usbID, endpoint, USBHS_TXEP_ERROR_ALL);
                 PLIB_USBHS_EndpointTxFIFOFlush(usbID, endpoint);
             }
-            else if(status & USBHS_TXEP_ERROR_RXSTALL)
+            else if((status & (uint8_t)USBHS_TXEP_ERROR_RXSTALL) != 0U)
             {
                 /* This means the packet was stalled. Set the error status and
                  * then clear the stall bit */
@@ -1907,7 +1929,7 @@ void _DRV_USBHS_HOST_NonControlTransferProcess
                 PLIB_USBHS_HostTxEndpointDataToggleClear(usbID, endpoint);
 
             }
-            else if(status & USBHS_TXEP_ERROR_NAK_TIMEOUT)
+            else if((status & (uint8_t)USBHS_TXEP_ERROR_NAK_TIMEOUT) != 0U)
             {
                 /* This means a NAK Time Out has occurred. Clear the error
                  * status.  */
@@ -1916,7 +1938,7 @@ void _DRV_USBHS_HOST_NonControlTransferProcess
                 irp->status = USB_HOST_IRP_STATUS_ERROR_NAK_TIMEOUT;
                 PLIB_USBHS_TxEPStatusClear(usbID, endpoint, USBHS_TXEP_ERROR_NAK_TIMEOUT);
             }
-            else if(status & USBHS_TXEP_ERROR_BUS)
+            else if((status & (uint8_t)USBHS_TXEP_ERROR_BUS) != 0U)
             {
                 /* This means there was an bus error. The packet was tried three
                  * times and was not successfully processed */
@@ -1943,7 +1965,7 @@ void _DRV_USBHS_HOST_NonControlTransferProcess
 
                     /* This function will load the next packet for this IRP into
                      * the endpoint FIFO and then transmit it. */
-                    _DRV_USBHS_HOST_IRPTransmitFIFOLoad(usbID, irp, endpoint);
+                    F_DRV_USBHS_HOST_IRPTransmitFIFOLoad(usbID, irp, endpoint);
                 }
             }
 
@@ -1953,7 +1975,7 @@ void _DRV_USBHS_HOST_NonControlTransferProcess
 
                 pipe->irpQueueHead = irp->next;
 
-                if(irp->callback)
+                if(irp->callback != NULL)
                 {
                     /* Invoke the call back*/
                     irp->callback((USB_HOST_IRP *)irp);
@@ -1965,7 +1987,7 @@ void _DRV_USBHS_HOST_NonControlTransferProcess
                 {
                     /* We do have another IRP to process. */
                     irp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
-                    _DRV_USBHS_HOST_IRPTransmitFIFOLoad(usbID, irp, endpoint);
+                    F_DRV_USBHS_HOST_IRPTransmitFIFOLoad(usbID, irp, endpoint);
                 }
             }
         }
@@ -1989,7 +2011,7 @@ void _DRV_USBHS_HOST_NonControlTransferProcess
                 PLIB_USBHS_RxEPStatusClear(usbID, endpoint, USBHS_RXEP_ERROR_ALL);
                 PLIB_USBHS_EndpointRxFIFOFlush(usbID, endpoint);
             }
-            else if(status & USBHS_RXEP_ERROR_RXSTALL)
+            else if((status & (uint8_t)USBHS_RXEP_ERROR_RXSTALL) != 0U)
             {
                 /* This means the packet was stalled. Set the error status and
                  * then clear the stall bit */
@@ -2003,7 +2025,7 @@ void _DRV_USBHS_HOST_NonControlTransferProcess
 
                 PLIB_USBHS_EndpointRxFIFOFlush(usbID, endpoint);
             }
-            else if(status & USBHS_RXEP_ERROR_NAK_TIMEOUT)
+            else if((status & (uint8_t)USBHS_RXEP_ERROR_NAK_TIMEOUT) != 0U)
             {
                 /* This means a NAK Time Out has occurred. Clear the error
                  * status.  */
@@ -2013,7 +2035,7 @@ void _DRV_USBHS_HOST_NonControlTransferProcess
                 PLIB_USBHS_RxEPStatusClear(usbID, endpoint, USBHS_RXEP_ERROR_NAK_TIMEOUT);
                 PLIB_USBHS_EndpointRxFIFOFlush(usbID, endpoint);
             }
-            else if(status & USBHS_RXEP_ERROR_BUS)
+            else if((status & (uint8_t)USBHS_RXEP_ERROR_BUS) != 0U)
             {
                 /* This means there was an bus error. The packet was tried three
                  * times and was not successfully processed */
@@ -2027,7 +2049,7 @@ void _DRV_USBHS_HOST_NonControlTransferProcess
             {
                 /* This means that data was received without errors. */
 
-                count = _DRV_USBHS_HOST_IRPReceiveFIFOUnload(usbID, irp, endpoint, &isDmaUsed);
+                count = F_DRV_USBHS_HOST_IRPReceiveFIFOUnload(usbID, irp, endpoint, &isDmaUsed);
                 if(false == isDmaUsed)
                 {
                     if((count < pipe->endpointSize) || (irp->completedBytes >= irp->size))
@@ -2068,7 +2090,7 @@ void _DRV_USBHS_HOST_NonControlTransferProcess
 
                 pipe->irpQueueHead = irp->next;
 
-                if(irp->callback)
+                if(irp->callback != NULL)
                 {
                     /* Invoke the call back*/
                     irp->callback((USB_HOST_IRP *)irp);
@@ -2095,27 +2117,27 @@ void _DRV_USBHS_HOST_NonControlTransferProcess
     }
 }
 
-void _DRV_USBHS_HOST_Tasks_ISR
+void F_DRV_USBHS_HOST_Tasks_ISR
 (
     DRV_USBHS_OBJ * hDriver
 )
 {
-    unsigned int endpointCount = 0;
+    uint32_t endpointCount = 0;
     USBHS_GEN_INTERRUPT interruptStatus = USBHS_GENINT_ANY;
     USBHS_EPTXRX_INTERRUPT interruptRxStatus = USBHS_TXRXINT_ANY;
     USBHS_EPTXRX_INTERRUPT interruptTxStatus = USBHS_TXRXINT_ANY;
     USBHS_MODULE_ID usbID = hDriver->usbDrvCommonObj.usbID;
 
-    _DRV_USBHS_NonPersistentInterruptSourceClear(hDriver->usbDrvCommonObj.interruptSource);
+    M_DRV_USBHS_NonPersistentInterruptSourceClear(hDriver->usbDrvCommonObj.interruptSource);
     
     interruptStatus = PLIB_USBHS_GenInterruptFlagsGet(usbID);
 
-    if(interruptStatus & USBHS_GENINT_DEVCONN) 
+    if(((uint32_t)interruptStatus & (uint32_t)USBHS_GENINT_DEVCONN) != 0U)
     {
         hDriver->usbDrvHostObj.deviceAttached = true;
 
     }
-    else if(interruptStatus & USBHS_GENINT_DEVDISCONN)
+    else if(((uint8_t)interruptStatus & (uint8_t)USBHS_GENINT_DEVDISCONN) != 0U)
     {
         /* We go a detach interrupt. The detach interrupt could have occurred
          * while the attach de-bouncing is in progress. We just set a flag saying
@@ -2132,8 +2154,12 @@ void _DRV_USBHS_HOST_Tasks_ISR
 
         hDriver->usbDrvHostObj.attachedDeviceObjHandle = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
     }
+    else
+    {
+        /* Do Nothing */
+    }
     
-    if(interruptStatus & USBHS_GENINT_VBUSERR)
+    if(((uint8_t)interruptStatus & (uint8_t)USBHS_GENINT_VBUSERR) != 0U)
     {
         /* This interrupt occurs if a VBUS error has occurred. The fact that
          * that the code has reached means the flag was cleared (reading the
@@ -2157,7 +2183,7 @@ void _DRV_USBHS_HOST_Tasks_ISR
         PLIB_USBHS_SoftResetNRSTXEnable(usbID);
     }
     
-    if(interruptStatus & USBHS_GENINT_BABBLE)
+    if(((uint8_t)interruptStatus & (uint8_t)USBHS_GENINT_BABBLE) != 0U)
     {
         /* This interrupt occurs if a Babble error has occurred. The fact that
          * that the code has reached means the flag was cleared (reading the
@@ -2182,32 +2208,32 @@ void _DRV_USBHS_HOST_Tasks_ISR
 
     /* Check if we have an endpoint interrupt */
 
-    if(interruptTxStatus & USBHS_TXRXINT_EP0)
+    if(((uint8_t)interruptTxStatus & (uint8_t)USBHS_TXRXINT_EP0) != 0U)
     {
         /* Process control transfers */
-        _DRV_USBHS_HOST_ControlTransferProcess(hDriver);
+        F_DRV_USBHS_HOST_ControlTransferProcess(hDriver);
     }
 
     /* Process non control transfers */
-    for(endpointCount = 1; endpointCount < DRV_USBHS_HOST_MAXIMUM_ENDPOINTS_NUMBER; endpointCount++ )
+    for(endpointCount = 1; endpointCount < (uint32_t)DRV_USBHS_HOST_MAXIMUM_ENDPOINTS_NUMBER; endpointCount++ )
     {
-        if(interruptTxStatus & (1 << endpointCount))
+        if(((uint8_t)interruptTxStatus & (1UL << endpointCount)) != 0U)
         {
             /* This means an interrupt occurred on a non zero endpoint. */
-            _DRV_USBHS_HOST_NonControlTransferProcess(hDriver, endpointCount, USB_DATA_DIRECTION_HOST_TO_DEVICE);
+            F_DRV_USBHS_HOST_NonControlTransferProcess(hDriver, (uint8_t)endpointCount, (uint32_t)USB_DATA_DIRECTION_HOST_TO_DEVICE);
         }
 
-        if(interruptRxStatus & (1 << endpointCount))
+        if(((uint8_t)interruptRxStatus & (1UL << endpointCount)) != 0U)
         {
             /* This means an receive endpoint interrupt occurred on a non zero
              * endpoint. */
 
-            _DRV_USBHS_HOST_NonControlTransferProcess(hDriver, endpointCount, USB_DATA_DIRECTION_DEVICE_TO_HOST);
+            F_DRV_USBHS_HOST_NonControlTransferProcess(hDriver, (uint8_t)endpointCount, (uint32_t)USB_DATA_DIRECTION_DEVICE_TO_HOST);
         }
     }
 }
 
-void _DRV_USBHS_HOST_Tasks_ISR_USBDMA
+void F_DRV_USBHS_HOST_Tasks_ISR_USBDMA
 (
     DRV_USBHS_OBJ * hDriver
 )
@@ -2216,20 +2242,21 @@ void _DRV_USBHS_HOST_Tasks_ISR_USBDMA
     uint8_t usbDMAInterrupts = 0;
     uint8_t  iEndpoint = 0;
     uint8_t usbDMAChannel = 0;
-    bool endpointDir = 0;
+    bool endpointDir = false;
     bool usbDMAError = false;
     bool endIRP = false;
     USB_HOST_IRP_LOCAL * irp = (USB_HOST_IRP_LOCAL *)NULL;
     DRV_USBHS_DMA_POOL * dmaChannelObj = NULL;
     DRV_USBHS_HOST_PIPE_OBJ * pipeObj = NULL; 
+    uint8_t endpointDirRead;
 
     /* Reading the interrupt flags will cause the
      * flags to get cleared */
     usbDMAInterrupts = PLIB_USBHS_DMAInterruptGet(usbID);
 
-    for(usbDMAChannel = 1; usbDMAChannel < 9; usbDMAChannel++)
+    for(usbDMAChannel = 1; usbDMAChannel < 9U; usbDMAChannel++)
     {
-        if((usbDMAInterrupts >> (usbDMAChannel - 1)) & 0x01)
+        if(((usbDMAInterrupts >> (usbDMAChannel - 1U)) & 0x01U) != 0U)
         {
             /* DMA interrupt set for this channel.  Map the EP it is assigned
              * for */
@@ -2244,10 +2271,11 @@ void _DRV_USBHS_HOST_Tasks_ISR_USBDMA
             dmaChannelObj = &hDriver->usbDrvCommonObj.gDrvUSBDMAPool[usbDMAChannel];
             iEndpoint = dmaChannelObj->iEndpoint;
             endpointDir = dmaChannelObj->endpointDir;
-            pipeObj =  hDriver->usbDrvHostObj.hostEndpointTable[iEndpoint].endpoints[endpointDir].pipe;
+            endpointDirRead = (uint8_t)endpointDir;
+            pipeObj =  hDriver->usbDrvHostObj.hostEndpointTable[iEndpoint].endpoints[endpointDirRead].pipe;
 
             /* Check the EP direction */
-            if(endpointDir == USB_DATA_DIRECTION_HOST_TO_DEVICE)
+            if(endpointDir == (bool)USB_DATA_DIRECTION_HOST_TO_DEVICE)
             {
                 /* This is TX Endpoint */
                 irp = pipeObj->irpQueueHead;
@@ -2268,7 +2296,7 @@ void _DRV_USBHS_HOST_Tasks_ISR_USBDMA
                 irp->completedBytes += dmaChannelObj->count;
 
                 /* Clear RXPktRDY bit in the corresponding register */
-                PLIB_USBHS_RxEPStatusClear(usbID, iEndpoint, USBHS_RXEP_PKTRDY);
+                PLIB_USBHS_RxEPStatusClear(usbID, iEndpoint, (USBHS_RXEP_ERROR)USBHS_RXEP_PKTRDY);
 
                 if(((dmaChannelObj->count) < (pipeObj->endpointSize)) || (irp->completedBytes >= irp->size))
                 {
@@ -2298,7 +2326,7 @@ void _DRV_USBHS_HOST_Tasks_ISR_USBDMA
 
                     pipeObj->irpQueueHead = irp->next;
 
-                    if(irp->callback)
+                    if(irp->callback != NULL)
                     {
                         /* Invoke the call back*/
                         irp->callback((USB_HOST_IRP *)irp);
@@ -2326,6 +2354,8 @@ void _DRV_USBHS_HOST_Tasks_ISR_USBDMA
     }
 }
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+/* MISRAC 2012 deviation block end */
 // ****************************************************************************
 /* Function:
     void DRV_USBHS_HOST_BusResetControl
@@ -2472,7 +2502,7 @@ void DRV_USBHS_HOST_OperationEnable
 
 // ****************************************************************************
 /* Function:
-    uint8_t _DRV_USBHS_HOST_GetFreeDMAChannel
+    uint8_t F_DRV_USBHS_HOST_GetFreeDMAChannel
     (
         DRV_USBHS_OBJ * hDriver,
         bool endpointDir,
@@ -2490,7 +2520,7 @@ void DRV_USBHS_HOST_OperationEnable
     application.
 */
 
-uint8_t _DRV_USBHS_HOST_GetFreeDMAChannel
+uint8_t F_DRV_USBHS_HOST_GetFreeDMAChannel
 (
     DRV_USBHS_OBJ * hDriver,
     bool endpointDir,
@@ -2500,7 +2530,7 @@ uint8_t _DRV_USBHS_HOST_GetFreeDMAChannel
     uint8_t dmaChannel = 0;
     uint8_t channelCount = 0;
 
-    for(channelCount = 1; channelCount < 9; channelCount++)
+    for(channelCount = 1; channelCount < 9U; channelCount++)
     {
         if(false == (hDriver->usbDrvCommonObj.gDrvUSBDMAPool[dmaChannel]).inUse)
         {
@@ -2553,7 +2583,7 @@ bool DRV_USBHS_HOST_EventsDisable
         if(((DRV_USBHS_CLIENT_OBJ *)handle)->inUse)
         {
             pUSBDrvObj = ((DRV_USBHS_CLIENT_OBJ *)handle)->hDriver;
-            result = _DRV_USBHS_InterruptSourceDisable(pUSBDrvObj->usbDrvCommonObj.interruptSource);
+            result = M_DRV_USBHS_InterruptSourceDisable(pUSBDrvObj->usbDrvCommonObj.interruptSource);
         }
         else
         {
@@ -2604,11 +2634,11 @@ void DRV_USBHS_HOST_EventsEnable
             pUSBDrvObj = ((DRV_USBHS_CLIENT_OBJ *)handle)->hDriver;
             if(true == eventContext)
             {
-                _DRV_USBHS_InterruptSourceEnable(pUSBDrvObj->usbDrvCommonObj.interruptSource);
+                M_DRV_USBHS_InterruptSourceEnable(pUSBDrvObj->usbDrvCommonObj.interruptSource);
             }
             else
             {
-                _DRV_USBHS_InterruptSourceDisable(pUSBDrvObj->usbDrvCommonObj.interruptSource);
+                 (void) M_DRV_USBHS_InterruptSourceDisable(pUSBDrvObj->usbDrvCommonObj.interruptSource);
             }
         }
         else
@@ -2625,6 +2655,9 @@ void DRV_USBHS_HOST_EventsEnable
 // *****************************************************************************
 
 // ****************************************************************************
+/* MISRA C-2012 Rule 18.1 deviated:4 Deviation record ID -  H3_MISRAC_2012_R_18_1_DR_1 */
+#pragma coverity compliance block deviate:4 "MISRA C-2012 Rule 18.1" "H3_MISRAC_2012_R_18_1_DR_1"    
+
 /* Function:
     void DRV_USBHS_HOST_ROOT_HUB_OperationEnable
     (
@@ -2668,11 +2701,11 @@ void DRV_USBHS_HOST_ROOT_HUB_OperationEnable
                 if(DRV_USBHS_OPMODE_DUAL_ROLE == pUSBDrvObj->usbDrvCommonObj.operationMode)
                 {
                     /* For Host the ID pin needs to be pull down */
-                    PLIB_PORTS_ChangeNoticePullDownPerPortEnable( PORTS_ID_0, PORT_CHANNEL_F, PORTS_BIT_POS_3 );
+                    M_PLIB_PORTS_ChangeNoticePullDownPerPortEnable( PORTS_ID_0, PORT_CHANNEL_F, PORTS_BIT_POS_3 );
                     pUSBDrvObj->usbDrvCommonObj.isDeviceRoleActive = false;
                 }
                 
-                _DRV_USBHS_CLOCK_CONTROL_SETUP_HOST_MODE(usbID);
+                M_DRV_USBHS_CLOCK_CONTROL_SETUP_HOST_MODE(usbID);
                 
                 PLIB_USBHS_SoftResetEnable(usbID);
                 
@@ -2710,16 +2743,16 @@ void DRV_USBHS_HOST_ROOT_HUB_OperationEnable
                         (true == pUSBDrvObj->usbDrvCommonObj.isHostRoleActive) )
                 {
                     /* Disable CN Pull ups only if it was enabled */
-                    PLIB_PORTS_ChangeNoticePullDownPerPortDisable( PORTS_ID_0, PORT_CHANNEL_F, PORTS_BIT_POS_3 );
+                    M_PLIB_PORTS_ChangeNoticePullDownPerPortDisable( PORTS_ID_0, PORT_CHANNEL_F, PORTS_BIT_POS_3 );
                 }
 
-                _DRV_USBHS_NonPersistentInterruptSourceClear(pUSBDrvObj->usbDrvCommonObj.interruptSource);
-                _DRV_USBHS_NonPersistentInterruptSourceClear(pUSBDrvObj->usbDrvCommonObj.interruptSourceUSBDma);
+                M_DRV_USBHS_NonPersistentInterruptSourceClear(pUSBDrvObj->usbDrvCommonObj.interruptSource);
+                M_DRV_USBHS_NonPersistentInterruptSourceClear(pUSBDrvObj->usbDrvCommonObj.interruptSourceUSBDma);
                 
-                PLIB_USBHS_InterruptEnableSet(usbID, 0x0, 0x0, 0x0);
+                PLIB_USBHS_InterruptEnableSet(usbID, (USBHS_GEN_INTERRUPT)0x0, (USBHS_EPTXRX_INTERRUPT)0x0, (USBHS_EPTXRX_INTERRUPT)0x0);
                 
-                _DRV_USBHS_PersistentInterruptSourceClear(pUSBDrvObj->usbDrvCommonObj.interruptSource);
-                _DRV_USBHS_PersistentInterruptSourceClear(pUSBDrvObj->usbDrvCommonObj.interruptSourceUSBDma);
+                M_DRV_USBHS_PersistentInterruptSourceClear(pUSBDrvObj->usbDrvCommonObj.interruptSource);
+                M_DRV_USBHS_PersistentInterruptSourceClear(pUSBDrvObj->usbDrvCommonObj.interruptSourceUSBDma);
                 
                 /* We do not have to do any Endpoint FIFO clearing here. This
                  * will be taken care as part of Pipe close functionality. */
@@ -2749,7 +2782,11 @@ void DRV_USBHS_HOST_ROOT_HUB_OperationEnable
     }
 } 
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 18.1"
+/* MISRAC 2012 deviation block end */
 // ****************************************************************************
+/* MISRA C-2012 Rule 5.1 deviated:6 Deviation record ID -  H3_MISRAC_2012_R_5_1_DR_1 */
+#pragma coverity compliance block deviate:6 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1"  
 /* Function:
     bool DRV_USBHS_HOST_ROOT_HUB_OperationIsEnabled
     (
@@ -2774,6 +2811,7 @@ bool DRV_USBHS_HOST_ROOT_HUB_OperationIsEnabled
     DRV_USBHS_OBJ * hDriver = NULL;
     USBHS_MODULE_ID usbID = USBHS_NUMBER_OF_MODULES;
     bool returnValue = false;
+    uint32_t checkSoftrst;
 
     /* Check if the handle is valid */
     if( (DRV_HANDLE_INVALID ==  handle) || (NULL == ((DRV_USBHS_CLIENT_OBJ *)handle)) )
@@ -2789,14 +2827,14 @@ bool DRV_USBHS_HOST_ROOT_HUB_OperationIsEnabled
 
             /* This function sets the session bit if the VBUS voltage level is
              * correct and then returns true. */
-
-            if((USBHS_VBUS_VALID == PLIB_USBHS_VBUSLevelGet(usbID)) && (0 == USBEOFRSTbits.SOFRST))
+            checkSoftrst = USBEOFRSTbits.SOFRST;
+            if((USBHS_VBUS_VALID == PLIB_USBHS_VBUSLevelGet(usbID)) && (0U == checkSoftrst))
             {
                 SYS_INT_SourceStatusClear(hDriver->usbDrvCommonObj.interruptSource);
                 
                 /* Enable the attach and detach interrupt and EP0 interrupt. */
                 PLIB_USBHS_InterruptEnableSet(hDriver->usbDrvCommonObj.usbID, 
-                        (USBHS_GENINT_BABBLE|USBHS_GENINT_VBUSERR|USBHS_GENINT_DEVCONN|USBHS_GENINT_DEVDISCONN), 0x1, 0x0);
+                        (USBHS_GEN_INTERRUPT)((uint8_t)USBHS_GENINT_BABBLE|(uint8_t)USBHS_GENINT_VBUSERR|(uint8_t)USBHS_GENINT_DEVCONN|(uint8_t)USBHS_GENINT_DEVDISCONN), (USBHS_EPTXRX_INTERRUPT)0x1, (USBHS_EPTXRX_INTERRUPT)0x0);
                 
                 returnValue = true;
                 
@@ -3204,6 +3242,8 @@ USB_ERROR DRV_USBHS_HOST_ROOT_HUB_PortReset
 
 } /* End of DRV_USBHS_HOST_ROOT_HUB_PortReset() */
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"
+/* MISRAC 2012 deviation block end */
 // ****************************************************************************
 /* Function:
     USB_SPEED DRV_USBHS_HOST_ROOT_HUB_PortSpeedGet
@@ -3258,6 +3298,9 @@ USB_SPEED DRV_USBHS_HOST_ROOT_HUB_PortSpeedGet
 } /* End of DRV_USBHS_HOST_ROOT_HUB_PortSpeedGet() */
 
 // ****************************************************************************
+/* MISRA C-2012 Rule 11.6 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_6_DR_1 */
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.6" "H3_MISRAC_2012_R_11_6_DR_1"    
+
 /* Function:
     void DRV_USBHS_HOST_EndpointToggleClear
     (
@@ -3286,13 +3329,15 @@ void DRV_USBHS_HOST_EndpointToggleClear
     USB_DATA_DIRECTION  direction = USB_DATA_DIRECTION_DEVICE_TO_HOST;
     DRV_USBHS_HOST_PIPE_OBJ * pPipe = NULL;
     DRV_USBHS_OBJ * hDriver = NULL;
+    uint32_t temp;
 
     if ((pipeHandle != DRV_USBHS_HOST_PIPE_HANDLE_INVALID) && ((DRV_USBHS_HOST_PIPE_HANDLE)NULL != pipeHandle))
     {
         pPipe = (DRV_USBHS_HOST_PIPE_OBJ *)pipeHandle;
         hDriver = ((DRV_USBHS_CLIENT_OBJ *)(pPipe->hClient))->hDriver;
         usbID = hDriver->usbDrvCommonObj.usbID;
-        direction = (pPipe->endpointAndDirection & 0x80) >> 7;
+        temp = (((uint32_t)pPipe->endpointAndDirection & (uint32_t)0x80U) >> 7);
+        direction =(USB_DATA_DIRECTION)temp;
         
         if(USB_DATA_DIRECTION_HOST_TO_DEVICE == direction)
         {
@@ -3312,3 +3357,6 @@ void DRV_USBHS_HOST_EndpointToggleClear
     
 } /* end of DRV_USBHS_HOST_EndpointToggleClear() */
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.6"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */

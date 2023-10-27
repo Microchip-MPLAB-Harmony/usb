@@ -43,8 +43,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_USBHS_H
-#define _DRV_USBHS_H
+#ifndef DRV_USBHS_H
+#define DRV_USBHS_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -90,6 +90,13 @@
   Remarks:
     None.
 */
+
+/* MISRA C-2012 Rule 8.6 deviated:20 Deviation record ID -  H3_MISRAC_2012_R_8_6_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+
+#pragma coverity compliance block deviate:20 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1"    
+
 
 /*DOM-IGNORE-BEGIN*/extern DRV_USB_DEVICE_INTERFACE gDrvUSBHSDeviceInterface;/*DOM-IGNORE-END*/
 #define DRV_USBHS_DEVICE_INTERFACE /*DOM-IGNORE-BEGIN*/&gDrvUSBHSDeviceInterface/*DOM-IGNORE-END */
@@ -186,6 +193,10 @@ typedef uintptr_t DRV_USBHS_HOST_PIPE_HANDLE;
     None.
 */
 
+/* MISRA C-2012 Rule 5.2 deviated:4 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+#pragma coverity compliance block deviate:4 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"    
+
+
 typedef enum
 {
     /* Bus error occurred and was reported */
@@ -214,6 +225,9 @@ typedef enum
 
 } DRV_USBHS_EVENT;
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"    
+
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* USB Operating Modes Enumeration.
 
@@ -430,6 +444,10 @@ typedef struct
 } DRV_USBHS_INIT;
 
 // ****************************************************************************
+
+/* MISRA C-2012 Rule 3.1 deviated:45 Deviation record ID -  H3_MISRAC_2012_R_3_1_DR_1 */
+#pragma coverity compliance block deviate:45 "MISRA C-2012 Rule 3.1" "H3_MISRAC_2012_R_3_1_DR_1"  
+
 /* Function:
     void DRV_USBHS_HOST_EndpointToggleClear
     (
@@ -1358,6 +1376,9 @@ USB_ERROR DRV_USBHS_DEVICE_EndpointDisable
     This function is typically called by the USB Device Layer to disable
     all endpoints upon detecting a bus reset.
 */
+
+/* MISRA C-2012 Rule 5.1 deviated:6 Deviation record ID -  H3_MISRAC_2012_R_5_1_DR_1 */
+#pragma coverity compliance block deviate:6 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1"   
 
 USB_ERROR DRV_USBHS_DEVICE_EndpointDisableAll(DRV_HANDLE handle); 
 
@@ -3003,6 +3024,9 @@ void DRV_USBHS_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enable);
 
 bool DRV_USBHS_HOST_ROOT_HUB_OperationIsEnabled(DRV_HANDLE handle);
 
+#pragma coverity compliance end_block  "MISRA C-2012 Rule 5.1"    
+/* MISRAC 2012 deviation block end */
+
 // ****************************************************************************
 /* Function:
     void DRV_USBHS_HOST_ROOT_HUB_Initialize
@@ -3054,6 +3078,13 @@ void DRV_USBHS_HOST_ROOT_HUB_Initialize
     DRV_HANDLE handle,
     USB_HOST_DEVICE_OBJ_HANDLE usbHostDeviceInfo
 );
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 3.1"   
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 
 // *****************************************************************************
