@@ -56,10 +56,10 @@
 #include "usb/src/usb_device_local.h"
 
 /* USB Device Endpoint IRP array. */
-USB_DEVICE_IRP gUSBDeviceEndpointIRP[USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED];
+static USB_DEVICE_IRP gUSBDeviceEndpointIRP[USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED];
 
 /* Array for tracking Read/Write Queue size for each USB Device instance */
-USB_DEVICE_Q_SIZE_ENDPOINT qSizeEndpoint[USB_DEVICE_INSTANCES_NUMBER];
+static USB_DEVICE_Q_SIZE_ENDPOINT qSizeEndpoint[USB_DEVICE_INSTANCES_NUMBER];
 
 // *****************************************************************************
 // *****************************************************************************
@@ -67,6 +67,18 @@ USB_DEVICE_Q_SIZE_ENDPOINT qSizeEndpoint[USB_DEVICE_INSTANCES_NUMBER];
 // *****************************************************************************
 // *****************************************************************************
 // ******************************************************************************
+/* MISRA C-2012 Rule 11.8 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1"  
+
+/* MISRA C-2012 Rule 10.4 False Positive:4, and Rule 11.8 deviate:1. 
+   Deviation record ID - H3_MISRAC_2012_R_10_4_DR_1, H3_MISRAC_2012_R_11_8_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(fp:4      "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
 /* Function:
     USB_DEVICE_RESULT USB_DEVICE_EndpointWrite
     (
@@ -98,7 +110,7 @@ USB_DEVICE_RESULT USB_DEVICE_EndpointWrite
     USB_DEVICE_TRANSFER_FLAGS flags
 )
 {
-    int count = 0;
+    int32_t count = 0;
     USB_DEVICE_OBJ* devClientHandle;
     USB_ERROR irpSubmitError;
     SYS_MODULE_INDEX deviceInstanceNumber;
@@ -110,7 +122,7 @@ USB_DEVICE_RESULT USB_DEVICE_EndpointWrite
 
 
     /* Validate the handle */
-    devClientHandle = _USB_DEVICE_ClientHandleValidate(usbDeviceHandle);
+    devClientHandle = F_USB_DEVICE_ClientHandleValidate(usbDeviceHandle);
     if (devClientHandle == NULL)
     {
         SYS_DEBUG(0, "USB Device Layer: Invalid Client Handle");
@@ -149,8 +161,8 @@ USB_DEVICE_RESULT USB_DEVICE_EndpointWrite
             irp = &gUSBDeviceEndpointIRP[count]; 
             irp->data = (void *)data;
             irp->size = size;
-            irp->flags = flags;
-            irp->callback = &_USB_DEVICE_EndpointWriteCallBack;
+            irp->flags = (uint32_t)flags;
+            irp->callback = &F_USB_DEVICE_EndpointWriteCallBack;
             irp->userData = (uintptr_t)devClientHandle;
             (* transferHandle) = ( USB_DEVICE_TRANSFER_HANDLE )irp;
             
@@ -180,7 +192,7 @@ USB_DEVICE_RESULT USB_DEVICE_EndpointWrite
                 /*Do not proceed lock was not obtained, or error occurred, let user know about error*/
                 return (USB_DEVICE_RESULT_ERROR);
             }
-            return(irpSubmitError);
+            return((USB_DEVICE_RESULT)irpSubmitError);
         }
     }
     
@@ -196,7 +208,9 @@ USB_DEVICE_RESULT USB_DEVICE_EndpointWrite
     return USB_DEVICE_RESULT_ERROR_TRANSFER_QUEUE_FULL;
 }
 
-
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 /******************************************************************************
   Function:
     USB_DEVICE_RESULT USB_DEVICE_EndpointRead
@@ -228,7 +242,7 @@ USB_DEVICE_RESULT USB_DEVICE_EndpointRead
     size_t bufferSize
 )
 {
-    int count = 0;
+    int32_t count = 0;
     USB_DEVICE_OBJ* devClientHandle;
     USB_ERROR irpSubmitError;
     SYS_MODULE_INDEX deviceInstanceNumber;
@@ -239,7 +253,7 @@ USB_DEVICE_RESULT USB_DEVICE_EndpointRead
     OSAL_CRITSECT_DATA_TYPE IntState;
     
     /* Validate the handle */
-    devClientHandle = _USB_DEVICE_ClientHandleValidate(usbDeviceHandle);
+    devClientHandle = F_USB_DEVICE_ClientHandleValidate(usbDeviceHandle);
     if (devClientHandle == NULL)
     {
         SYS_DEBUG(0, "USB Device Layer: Invalid Client Handle");
@@ -278,7 +292,7 @@ USB_DEVICE_RESULT USB_DEVICE_EndpointRead
             irp = &gUSBDeviceEndpointIRP[count]; 
             irp->data = buffer;
             irp->size = bufferSize;
-            irp->callback = &_USB_DEVICE_EndpointReadCallBack;
+            irp->callback = &F_USB_DEVICE_EndpointReadCallBack;
             irp->userData = (uintptr_t)devClientHandle;
             (*transferHandle) = (USB_DEVICE_TRANSFER_HANDLE ) irp;
             
@@ -309,7 +323,7 @@ USB_DEVICE_RESULT USB_DEVICE_EndpointRead
                 return (USB_DEVICE_RESULT_ERROR);
             }
 
-            return(irpSubmitError);
+            return((USB_DEVICE_RESULT)irpSubmitError);
         }
     }
     /*Release mutex, done with shared resource*/
@@ -324,6 +338,10 @@ USB_DEVICE_RESULT USB_DEVICE_EndpointRead
     return USB_DEVICE_RESULT_ERROR_TRANSFER_QUEUE_FULL;
 }
 
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 /******************************************************************************
   Function:
     USB_DEVICE_RESULT USB_DEVICE_EndpointTransferCancel
@@ -355,7 +373,7 @@ USB_DEVICE_RESULT USB_DEVICE_EndpointTransferCancel
     USB_ERROR irpCancelError;
 
      /* Validate the handle */
-    devClientHandle = _USB_DEVICE_ClientHandleValidate(usbDeviceHandle);
+    devClientHandle = F_USB_DEVICE_ClientHandleValidate(usbDeviceHandle);
     if (devClientHandle == NULL)
     {
         SYS_DEBUG(0, "USB Device Layer: Invalid Client Handle");
@@ -371,7 +389,7 @@ USB_DEVICE_RESULT USB_DEVICE_EndpointTransferCancel
     if (irp->status == USB_DEVICE_IRP_STATUS_PENDING)
     {
         irpCancelError = USB_DEVICE_IRPCancelAll((USB_DEVICE_HANDLE)devClientHandle,endpoint );
-        return irpCancelError;
+        return ((USB_DEVICE_RESULT)irpCancelError);
     }
 
     SYS_DEBUG(0, "USB_Device_Endpoint_Transfer_Cancel: Transfer could not be cancelled");
@@ -380,7 +398,7 @@ USB_DEVICE_RESULT USB_DEVICE_EndpointTransferCancel
 }
 // ******************************************************************************
 /* Function:
-    void _USB_DEVICE_VENDOR_EndpointWriteCallBack( void * irp )
+    void F_USB_DEVICE_VENDOR_EndpointWriteCallBack( void * irp )
 
   Summary:
     Endpoint write callback.
@@ -392,7 +410,7 @@ USB_DEVICE_RESULT USB_DEVICE_EndpointTransferCancel
     This is a local function and should not be called directly by the application.
 */
 
-void _USB_DEVICE_EndpointWriteCallBack( USB_DEVICE_IRP * irp )
+void F_USB_DEVICE_EndpointWriteCallBack( USB_DEVICE_IRP * irp )
 {
     /* An endpoint write has completed */
     USB_DEVICE_EVENT_DATA_ENDPOINT_WRITE_COMPLETE eventData;
@@ -454,7 +472,7 @@ void _USB_DEVICE_EndpointWriteCallBack( USB_DEVICE_IRP * irp )
 }
 // ******************************************************************************
 /* Function:
-    void _USB_DEVICE_VENDOR_EndpointReadCallBack( void * irp )
+    void F_USB_DEVICE_VENDOR_EndpointReadCallBack( void * irp )
 
   Summary:
     Endpoint read callback.
@@ -466,7 +484,7 @@ void _USB_DEVICE_EndpointWriteCallBack( USB_DEVICE_IRP * irp )
     This is a local function and should not be called directly by the application.
 */
 
-void _USB_DEVICE_EndpointReadCallBack( USB_DEVICE_IRP * irp )
+void F_USB_DEVICE_EndpointReadCallBack( USB_DEVICE_IRP * irp )
 {
     USB_DEVICE_EVENT_DATA_ENDPOINT_READ_COMPLETE eventData;
     SYS_MODULE_INDEX deviceInstanceNumber;
@@ -526,7 +544,12 @@ void _USB_DEVICE_EndpointReadCallBack( USB_DEVICE_IRP * irp )
     }
 }
 
-void _USB_DEVICE_Initialize_Endpoint_Q_Size(SYS_MODULE_INDEX index, uint16_t qSizeRead, uint16_t qSizeWrite )
+/* MISRA C-2012 Rule 5.5 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_5_5_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 5.5" "H3_MISRAC_2012_R_5_5_DR_1" 
+
+void F_USB_DEVICE_Initialize_Endpoint_Q_Size(SYS_MODULE_INDEX index, uint16_t qSizeRead, uint16_t qSizeWrite )
 {
     USB_DEVICE_Q_SIZE_ENDPOINT* thisEndpointQueue = &qSizeEndpoint[index];
     thisEndpointQueue->qSizeMaxEpRead = qSizeRead;
@@ -534,10 +557,13 @@ void _USB_DEVICE_Initialize_Endpoint_Q_Size(SYS_MODULE_INDEX index, uint16_t qSi
     thisEndpointQueue->qSizeCurrentEpRead = 0;
     thisEndpointQueue->qSizeCurrentEpWrite = 0; 
 }
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.5"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
-void _USB_DEVICE_EndpointQueueSizeReset(SYS_MODULE_INDEX index)
+void F_USB_DEVICE_EndpointQueueSizeReset(SYS_MODULE_INDEX index)
 {
-    int iEntry;
+    int32_t iEntry;
 
     /* This function is called when the device layer receives
      * a Set Configuration request */
