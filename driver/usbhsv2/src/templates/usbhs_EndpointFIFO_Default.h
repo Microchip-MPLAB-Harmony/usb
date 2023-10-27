@@ -45,11 +45,28 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 //DOM-IGNORE-END
 
-#ifndef _USBHS_ENDPOINTFIFO_DEFAULT_H
-#define _USBHS_ENDPOINTFIFO_DEFAULT_H
+#ifndef USBHS_ENDPOINTFIFO_DEFAULT_H
+#define USBHS_ENDPOINTFIFO_DEFAULT_H
 
 #include "usbhs_registers.h"
 
+/* MISRA C-2012 Rule 10.1, Rule 10.3, Rule 10.4, Rule 11.3, 
+   Rule 11.8, Rule 13.5, Rule 14.2 and Rule 14.4. Deviation record ID -  
+    H3_MISRAC_2012_R_10_1_DR_1, H3_MISRAC_2012_R_10_3_DR_1 
+    H3_MISRAC_2012_R_10_4_DR_1, H3_MISRAC_2012_R_11_3_DR_1
+    H3_MISRAC_2012_R_11_8_DR_1 and H3_MISRAC_2012_R_13_5_DR_1
+    H3_MISRAC_2012_R_14_2_DR_1 and H3_MISRAC_2012_R_14_4_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:10 "MISRA C-2012 Rule 10.1" "H3_MISRAC_2012_R_10_1_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1" )\
+(deviate:10 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 13.5" "H3_MISRAC_2012_R_13_5_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 14.2" "H3_MISRAC_2012_R_14_2_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 14.4" "H3_MISRAC_2012_R_14_4_DR_1" )
 
 //******************************************************************************
 /* Function :  USBHS_EndpointFIFOLoad_Default
@@ -411,8 +428,18 @@ PLIB_TEMPLATE bool USBHS_ExistsEndpointFIFO_Default( USBHS_MODULE_ID index )
     return true;
 }
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 13.5"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 14.2"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 14.4"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
-#endif /*_USBHS_ENDPOINTFIFO_DEFAULT_H*/
+#endif /*USBHS_ENDPOINTFIFO_DEFAULT_H*/
 
 /******************************************************************************
  End of File

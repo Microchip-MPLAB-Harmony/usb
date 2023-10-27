@@ -45,10 +45,18 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 //DOM-IGNORE-END
 
-#ifndef _USBHS_TXEPSTATUS_DEFAULT_H
-#define _USBHS_TXEPSTATUS_DEFAULT_H
+#ifndef USBHS_TXEPSTATUS_DEFAULT_H
+#define USBHS_TXEPSTATUS_DEFAULT_H
 
 #include "usbhs_registers.h"
+
+/* MISRA C-2012 Rule 10.1, Rule 10.4, Rule 21.1 and Rule 21.2 Deviation record ID -  
+    H3_MISRAC_2012_R_10_1_DR_1,  H3_MISRAC_2012_R_10_4_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:10 "MISRA C-2012 Rule 10.1" "H3_MISRAC_2012_R_10_1_DR_1" )\
+(deviate:10 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" )
 
 //******************************************************************************
 /* Function :  USBHS_TxEPStatusGet_Default
@@ -113,8 +121,12 @@ PLIB_TEMPLATE bool USBHS_ExistsTxEPStatus_Default( USBHS_MODULE_ID index )
     return true;
 }
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
-#endif /*_USBHS_TXEPSTATUS_DEFAULT_H*/
+#endif /*USBHS_TXEPSTATUS_DEFAULT_H*/
 
 /******************************************************************************
  End of File

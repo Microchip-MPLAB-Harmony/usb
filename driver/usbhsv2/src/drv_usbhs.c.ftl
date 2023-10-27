@@ -5,7 +5,7 @@
     Microchip Technology Inc.
 
   File Name:
-    drv_usbhs.c
+    drv_usbhs.c 
 
   Summary:
     USB Device Driver Dynamic Implementation of Core routines
@@ -49,6 +49,7 @@
 // *****************************************************************************
 #include "usb/src/usb_external_dependencies.h"
 #include "driver/usb/usbhs/src/drv_usbhs_local.h"
+#include "interrupts.h"
 
 <#if __PROCESSOR?matches("PIC32CZ.*") == true>
 /* Definitions */ 
@@ -67,16 +68,26 @@
  * present in the microcontroller.
  *********************************************/
 
-DRV_USBHS_OBJ gDrvUSBObj[DRV_USBHS_INSTANCES_NUMBER];
+DRV_USBHS_OBJ gDrvUSBObj[DRV_USBHS_ENDPOINTS_NUMBER];
 
 /***********************************
  * Array of USB endpoint objects. 
  * Two objects per endpoint. 
  ***********************************/
 
-DRV_USBHS_DEVICE_ENDPOINT_OBJ gDrvUSBEndpoints [DRV_USBHS_INSTANCES_NUMBER] [DRV_USBHS_ENDPOINTS_NUMBER * 2];
+static DRV_USBHS_DEVICE_ENDPOINT_OBJ gDrvUSBEndpoints [DRV_USBHS_ENDPOINTS_NUMBER] [DRV_USBHS_ENDPOINTS_NUMBER * 2];
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 10.4,11.3, 11.7 and 11.8 deviated below. Deviation record ID -  
+    H3_MISRAC_2012_R_10_4_DR_1 (Flase Positive), H3_MISRAC_2012_R_11_3_DR_1, H3_MISRAC_2012_R_11_7_DR_1 
+    and H3_MISRAC_2012_R_11_8_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(fp:3 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 11.7" "H3_MISRAC_2012_R_11_7_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )  
 /* Function:
     SYS_MODULE_OBJ DRV_USBHS_Initialize
     ( 
@@ -109,7 +120,7 @@ SYS_MODULE_OBJ DRV_USBHS_Initialize
     DRV_USBHS_INIT * usbInit = NULL;
     SYS_MODULE_OBJ returnValue = SYS_MODULE_OBJ_INVALID;
 
-    if ( drvIndex < DRV_USBHS_INSTANCES_NUMBER)
+    if ( drvIndex < DRV_USBHS_ENDPOINTS_NUMBER)
     {
         if ( false == gDrvUSBObj[drvIndex].usbDrvCommonObj.inUse )
         {
@@ -122,7 +133,7 @@ SYS_MODULE_OBJ DRV_USBHS_Initialize
              * compatibility with the applications where they have specified
              * usbID as 0. */ 
 
-            if ( 0 == usbInit->usbID )
+            if ( 0U == (uint32_t)usbInit->usbID )
             {
                 /* For the optimized PLIBs, USBHS_ID_X is a pointer to USB
                  * module base address. */
@@ -161,7 +172,7 @@ SYS_MODULE_OBJ DRV_USBHS_Initialize
                 /* Set the state to indicate that the delay will be started */
                 drvObj->usbDrvCommonObj.state = DRV_USBHS_TASK_STATE_STARTING_DELAY;
 
-                _DRV_USBHS_HOST_ROOT_HUB_CONFIGURATION
+                M_DRV_USBHS_HOST_ROOT_HUB_CONFIGURATION
 
                 returnValue = (SYS_MODULE_OBJ)drvIndex;
             }
@@ -179,7 +190,7 @@ SYS_MODULE_OBJ DRV_USBHS_Initialize
     }
     else
     {
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO,"\r\nUSBHS Driver: Increase the value of DRV_USBHS_INSTANCES_NUMBER in DRV_USBHS_Initialize()");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO,"\r\nUSBHS Driver: Increase the value of DRV_USBHS_ENDPOINTS_NUMBER in DRV_USBHS_Initialize()");
     }
 
     /* On success: Valid SYS MODULE Object
@@ -251,7 +262,7 @@ void DRV_USBHS_Tasks
 
                 /* On PIC32MZ DA and EF devices, enable the global USB interrupt
                  * in the USBCRCON register. */
-                _DRV_USBHS_CLOCK_CONTROL_GLOBAL_USB_INT_ENABLE(usbID);
+                M_DRV_USBHS_CLOCK_CONTROL_GLOBAL_USB_INT_ENABLE(usbID);
                 <#if __PROCESSOR?matches("PIC32CZ.*") == true>
                     <#if (peripheral_usb_0.CONFIG_USB_CONTROLLER_INSTANCE)?has_content>
                 if (usbID == USBHS0_BASE_ADDRESS )
@@ -293,8 +304,8 @@ void DRV_USBHS_Tasks
                 break;
 
             case DRV_USBHS_TASK_STATE_WAITING_FOR_IS_SOFTRESET_COMPLETE :
-                if (((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_SYNCBUSY & USBHS_SYNCBUSY_ENABLE_Msk) == 0)
-                    && ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYRDY_Msk) == 0))
+                if (((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_SYNCBUSY & USBHS_SYNCBUSY_ENABLE_Msk) == 0U)
+                    && ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYRDY_Msk) == 0U))
                 {
                     /* Reset completed so Move to the next state */
                     hDriver->usbDrvCommonObj.state = DRV_USBHS_TASK_STATE_MODULE_INIT;
@@ -309,9 +320,9 @@ void DRV_USBHS_Tasks
                 {
                     case DRV_USBHS_OPMODE_DUAL_ROLE:
                         /* Device Initialization */
-                        _DRV_USBHS_DEVICE_INIT(hDriver, object);
+                        M_DRV_USBHS_DEVICE_INIT(hDriver, (uint16_t)object);
                         /* Host Initialization */
-                        _DRV_USBHS_HOST_INIT(hDriver, object);
+                        M_DRV_USBHS_HOST_INIT(hDriver, (uint16_t)object);
 
                         /* Note here we do not perform the USB ID related
                          * configuration. This is done at the time of Host
@@ -325,8 +336,8 @@ void DRV_USBHS_Tasks
                      * operation.  In the PIC32MZ DA devices, the
                      * USBCRCON register needs to configured */
 
-                    _DRV_USBHS_CLOCK_CONTROL_SETUP_DEVICE_MODE(usbID);
-                                _DRV_USBHS_DEVICE_INIT(hDriver, object);
+                    M_DRV_USBHS_CLOCK_CONTROL_SETUP_DEVICE_MODE(usbID);
+                                M_DRV_USBHS_DEVICE_INIT(hDriver, (uint16_t)object);
                     break;
 
                     case DRV_USBHS_OPMODE_HOST:
@@ -334,8 +345,8 @@ void DRV_USBHS_Tasks
                     /* Configure the driver object for host mode
                      * operation.  In the PICMZ DA devices, the USBCRCON
                      * register needs to configured. */
-                    _DRV_USBHS_HOST_INIT(hDriver, object);
-                    _DRV_USBHS_CLOCK_CONTROL_SETUP_HOST_MODE(usbID);
+                    M_DRV_USBHS_HOST_INIT(hDriver, (uint16_t)object);
+                    M_DRV_USBHS_CLOCK_CONTROL_SETUP_HOST_MODE(usbID);
 
                     break;
 
@@ -348,11 +359,11 @@ void DRV_USBHS_Tasks
                 }
 
                     /* Clear and enable the interrupts */
-                    _DRV_USBHS_InterruptSourceClear(hDriver->usbDrvCommonObj.interruptSource);
-                    _DRV_USBHS_InterruptSourceEnable(hDriver->usbDrvCommonObj.interruptSource);
+                    M_DRV_USBHS_InterruptSourceClear(hDriver->usbDrvCommonObj.interruptSource);
+                    M_DRV_USBHS_InterruptSourceEnable(hDriver->usbDrvCommonObj.interruptSource);
 
-                    _DRV_USBHS_InterruptSourceClear(hDriver->usbDrvCommonObj.interruptSourceUSBDma);
-                    _DRV_USBHS_InterruptSourceEnable(hDriver->usbDrvCommonObj.interruptSourceUSBDma);
+                    M_DRV_USBHS_InterruptSourceClear(hDriver->usbDrvCommonObj.interruptSourceUSBDma);
+                    M_DRV_USBHS_InterruptSourceEnable(hDriver->usbDrvCommonObj.interruptSourceUSBDma);
 
                     /* Indicate that the object is ready and change the state to running */
                     hDriver->usbDrvCommonObj.status = SYS_STATUS_READY;
@@ -442,8 +453,8 @@ void DRV_USBHS_Tasks
                             (hDriver->usbDrvCommonObj.isHostRoleActive)) || 
                         (DRV_USBHS_OPMODE_HOST == hDriver->usbDrvCommonObj.operationMode) )
                 {
-                    _DRV_USBHS_HOST_ATTACH_DETACH_STATE_MACHINE(hDriver);
-                    _DRV_USBHS_HOST_RESET_STATE_MACINE(hDriver);
+                    M_DRV_USBHS_HOST_ATTACH_DETACH_STATE_MACHINE(hDriver);
+                    M_DRV_USBHS_HOST_RESET_STATE_MACINE(hDriver);
                 }
                 else
                 {
@@ -454,11 +465,14 @@ void DRV_USBHS_Tasks
                             (DRV_USBHS_OPMODE_DEVICE == hDriver->usbDrvCommonObj.operationMode))
                         && (true == hDriver->usbDrvCommonObj.isProcessingAttach) )
                 {
-                    _DRV_USBHS_DEVICE_ATTACH_STATE_MACHINE(hDriver);
+                    M_DRV_USBHS_DEVICE_ATTACH_STATE_MACHINE(hDriver);
                 }
 
-                _DRV_USBHS_Tasks_ISR(object);
-                _DRV_USBHS_Tasks_ISR_USBDMA(object);
+                DRV_USBHS_Tasks_ISR(object);
+                DRV_USBHS_Tasks_ISR_USBDMA(object);
+                break;
+            default:
+                /* Do Nothing */
                 break;
         }
     }
@@ -490,7 +504,7 @@ void DRV_USBHS_Deinitialize
 
     if (SYS_MODULE_OBJ_INVALID != object)
     {
-        if ( object < DRV_USBHS_INSTANCES_NUMBER)
+        if ( object < DRV_USBHS_ENDPOINTS_NUMBER)
         {
             if (true == gDrvUSBObj[object].usbDrvCommonObj.inUse)
             {
@@ -499,9 +513,14 @@ void DRV_USBHS_Deinitialize
                 /* Clear and disable the interrupts. Assigning to a value has
                  * been implemented to remove compiler warning in polling mode.*/
 
-                returnValue = _DRV_USBHS_InterruptSourceDisable(drvObj->usbDrvCommonObj.interruptSource);
-                returnValue = returnValue;
-                _DRV_USBHS_InterruptSourceClear(drvObj->usbDrvCommonObj.interruptSource);
+                returnValue = M_DRV_USBHS_InterruptSourceDisable(drvObj->usbDrvCommonObj.interruptSource);
+                if( returnValue == true)
+                {
+                    /* Do Nothing */
+                }
+                returnValue = returnValue;                
+                
+                M_DRV_USBHS_InterruptSourceClear(drvObj->usbDrvCommonObj.interruptSource);
 
                 /* Populate the driver object with the required data */
 
@@ -522,7 +541,7 @@ void DRV_USBHS_Deinitialize
                 }
 
                 /* Delete the mutex */
-                OSAL_MUTEX_Delete(&drvObj->usbDrvCommonObj.mutexID);
+                (void) OSAL_MUTEX_Delete(&drvObj->usbDrvCommonObj.mutexID);
             }
             else
             {
@@ -604,8 +623,8 @@ SYS_STATUS DRV_USBHS_Status
 
 DRV_HANDLE DRV_USBHS_Open
 (
-    const SYS_MODULE_INDEX iDriver,
-    const DRV_IO_INTENT ioIntent 
+    const SYS_MODULE_INDEX drvIndex,
+    const DRV_IO_INTENT intent   
 )
 {
     DRV_USBHS_OBJ * drvObj = NULL;
@@ -613,12 +632,12 @@ DRV_HANDLE DRV_USBHS_Open
     DRV_USBHS_CLIENT_OBJ * clientPool = NULL;
     uint8_t counter = 0;
 
-    /* The iDriver value should be valid. It should be less the number of driver
+    /* The drvIndex value should be valid. It should be less the number of driver
      * object instances.  */
 
-    if (iDriver < DRV_USBHS_INSTANCES_NUMBER)
+    if (drvIndex < DRV_USBHS_ENDPOINTS_NUMBER)
     {
-        drvObj = &gDrvUSBObj[iDriver];
+        drvObj = &gDrvUSBObj[drvIndex];
 
         if ( SYS_STATUS_READY == drvObj->usbDrvCommonObj.status )
         {
@@ -663,6 +682,10 @@ DRV_HANDLE DRV_USBHS_Open
                             drvObj->usbDrvCommonObj.deviceModeClient = NULL;
                             drvObj->usbDrvCommonObj.hostModeClient = clientPool;
                         }
+                        else
+                        {
+                            /* Do Nothing */
+                        }
 
                         break;
                     }            
@@ -692,6 +715,12 @@ DRV_HANDLE DRV_USBHS_Open
     return (handle);
 }
 
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+</#if>
+/* MISRAC 2012 deviation block end */
+
 // *****************************************************************************
 /* Function:
     void DRV_USBHS_Close( DRV_HANDLE handle )
@@ -709,16 +738,16 @@ DRV_HANDLE DRV_USBHS_Open
 
 void DRV_USBHS_Close
 (
-    DRV_HANDLE client
+    DRV_HANDLE handle 
 )
 {
     DRV_USBHS_CLIENT_OBJ * clientPool = NULL;
 
-    if ( (DRV_HANDLE_INVALID !=  client) && (NULL != ((DRV_USBHS_CLIENT_OBJ *)client)) )
+    if ( (DRV_HANDLE_INVALID !=  handle ) && (NULL != ((DRV_USBHS_CLIENT_OBJ *)handle )) )
     {
-        if ( ((DRV_USBHS_CLIENT_OBJ *)client)->inUse )
+        if ( ((DRV_USBHS_CLIENT_OBJ *)handle )->inUse )
         {
-            clientPool = (DRV_USBHS_CLIENT_OBJ *)client;
+            clientPool = (DRV_USBHS_CLIENT_OBJ *)handle;
             clientPool->inUse = false;
             clientPool->pEventCallBack = NULL;
             clientPool->hDriver = NULL;
@@ -766,13 +795,13 @@ void DRV_USBHS_Tasks_ISR
         case DRV_USBHS_OPMODE_DEVICE:
 
             /* Driver is in Device mode */
-            _DRV_USBHS_DEVICE_TASKS_ISR(hDriver);
+            M_DRV_USBHS_DEVICE_TASKS_ISR(hDriver);
             break;
         
         case DRV_USBHS_OPMODE_HOST:
 
             /* Driver is in Host Mode */
-            _DRV_USBHS_HOST_TASKS_ISR(hDriver);
+            M_DRV_USBHS_HOST_TASKS_ISR(hDriver);
             break;
         
         case DRV_USBHS_OPMODE_DUAL_ROLE:
@@ -785,11 +814,15 @@ void DRV_USBHS_Tasks_ISR
             }
             else if ( true == hDriver->usbDrvCommonObj.isDeviceRoleActive )
             {
-                _DRV_USBHS_DEVICE_TASKS_ISR(hDriver);
+                M_DRV_USBHS_DEVICE_TASKS_ISR(hDriver);
             }
             else if ( true == hDriver->usbDrvCommonObj.isHostRoleActive )
             {
-                _DRV_USBHS_HOST_TASKS_ISR(hDriver);
+                M_DRV_USBHS_HOST_TASKS_ISR(hDriver);
+            }
+            else
+            {
+                /* Do Nothing */
             }
             
             break;    
@@ -803,10 +836,14 @@ void DRV_USBHS_Tasks_ISR
     }
  
     /* Clear the interrupt */
-    _DRV_USBHS_PersistentInterruptSourceClear(hDriver->usbDrvCommonObj.interruptSource);
-    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_INTFLAG |= 0x4;
+    M_DRV_USBHS_PersistentInterruptSourceClear(hDriver->usbDrvCommonObj.interruptSource);
+    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_INTFLAG |= 0x4U;
     hDriver->usbDrvCommonObj.isInInterruptContext = false;
 }
+
+
+
+/* MISRAC 2012 deviation block end */
 
 // *****************************************************************************
 /* Function:
@@ -838,13 +875,13 @@ void DRV_USBHS_Tasks_ISR_USBDMA
         case DRV_USBHS_OPMODE_DEVICE:
 
             /* Driver is in Device Mode */
-            _DRV_USBHS_DEVICE_TASKS_ISR_USBDMA(hDriver);
+            M_DRV_USBHS_DEVICE_TASKS_ISR_USBDMA(hDriver);
             break;
         
         case DRV_USBHS_OPMODE_HOST:
 
             /* Driver is in Host Mode */
-            _DRV_USBHS_HOST_TASKS_ISR_USBDMA(hDriver);
+            M_DRV_USBHS_HOST_TASKS_ISR_USBDMA(hDriver);
             break;
         
         case DRV_USBHS_OPMODE_DUAL_ROLE:
@@ -858,12 +895,16 @@ void DRV_USBHS_Tasks_ISR_USBDMA
             if ( true == hDriver->usbDrvCommonObj.isDeviceRoleActive )
             {
                 /* Run the Device DMA tasks */
-                _DRV_USBHS_DEVICE_TASKS_ISR_USBDMA(hDriver);
+                M_DRV_USBHS_DEVICE_TASKS_ISR_USBDMA(hDriver);
             }
             else if ( true == hDriver->usbDrvCommonObj.isHostRoleActive )
             {
                 /* Run the Host DMA Tasks */
-                _DRV_USBHS_HOST_TASKS_ISR_USBDMA(hDriver);
+                M_DRV_USBHS_HOST_TASKS_ISR_USBDMA(hDriver);
+            }
+            else
+            {
+                /* Do Nothing */
             }
             
             break;
@@ -878,7 +919,7 @@ void DRV_USBHS_Tasks_ISR_USBDMA
         
     /* Clear the interrupt */
     hDriver->usbDrvCommonObj.isInInterruptContextUSBDMA = false;
-    _DRV_USBHS_InterruptSourceClear(hDriver->usbDrvCommonObj.interruptSourceUSBDma);
+    M_DRV_USBHS_InterruptSourceClear(hDriver->usbDrvCommonObj.interruptSourceUSBDma);
 }
 
 // *****************************************************************************
@@ -908,34 +949,34 @@ void DRV_USBHS_Tasks_ISR_USBDMA
 
 void DRV_USBHS_ClientEventCallBackSet
 ( 
-    DRV_HANDLE client,
+    DRV_HANDLE handle,
     uintptr_t hReferenceData,
-    DRV_USB_EVENT_CALLBACK eventCallBack 
+    DRV_USB_EVENT_CALLBACK myEventCallBack 
 )
 {
     DRV_USBHS_OBJ * hDriver = NULL;
     OSAL_CRITSECT_DATA_TYPE osalCritSectData = 0;
 
-    if ( (DRV_HANDLE_INVALID !=  client) && (NULL != ((DRV_USBHS_CLIENT_OBJ *)client)) )
+    if ( (DRV_HANDLE_INVALID !=  handle) && (NULL != ((DRV_USBHS_CLIENT_OBJ *)handle)) )
     {
-        if ( ((DRV_USBHS_CLIENT_OBJ *)client)->inUse )
+        if ( ((DRV_USBHS_CLIENT_OBJ *)handle)->inUse )
         {
             /* Assign event call back and reference data */
-            ((DRV_USBHS_CLIENT_OBJ *)client)->hClientArg = hReferenceData;
-            ((DRV_USBHS_CLIENT_OBJ *)client)->pEventCallBack = eventCallBack;
+            ((DRV_USBHS_CLIENT_OBJ *)handle)->hClientArg = hReferenceData;
+            ((DRV_USBHS_CLIENT_OBJ *)handle)->pEventCallBack = myEventCallBack;
 
             /* Check if the VBUS is already valid. The current VBUS voltage is
              * tracked in the vbusLevel member of common driver object and is
              * updated in the driver polled tasks routine. */
-            hDriver = ((DRV_USBHS_CLIENT_OBJ *)client)->hDriver;
+            hDriver = ((DRV_USBHS_CLIENT_OBJ *)handle)->hDriver;
             
             if( (DRV_USBHS_OPMODE_DUAL_ROLE == hDriver->usbDrvCommonObj.operationMode) )
             {
-                hDriver->usbDrvCommonObj.deviceModeClient = ((DRV_USBHS_CLIENT_OBJ *)client);
+                hDriver->usbDrvCommonObj.deviceModeClient = ((DRV_USBHS_CLIENT_OBJ *)handle);
                 hDriver->usbDrvCommonObj.isDeviceRoleActive = true;
             }
                       
-            if((hDriver->usbDrvCommonObj.vbusLevel >= USBHS_VBUS_BELOW_VBUSVALID) && ((DRV_USBHS_CLIENT_OBJ *)(client) == hDriver->usbDrvCommonObj.deviceModeClient))
+            if((hDriver->usbDrvCommonObj.vbusLevel >= USBHS_VBUS_BELOW_VBUSVALID) && ((DRV_USBHS_CLIENT_OBJ *)(handle) == hDriver->usbDrvCommonObj.deviceModeClient))
             {
                 /* This means the VBUS level is valid and the event handler is
                  * being set by the device mode client. We should send the
@@ -967,7 +1008,7 @@ void DRV_USBHS_ClientEventCallBackSet
 
 // *****************************************************************************
 /* Function:
-    void L_DRV_USBHS_Setup_Host_Mode( USBHS_MODULE_ID usbID )
+    void F_DRV_USBHS_Setup_Host_Mode( USBHS_MODULE_ID usbID )
 
   Summary:
     This function will enable the USBHS driver into host mode functionlity.
@@ -979,7 +1020,7 @@ void DRV_USBHS_ClientEventCallBackSet
     
 */
 
-void L_DRV_USBHS_Setup_Host_Mode (  USBHS_MODULE_ID usbID )
+void F_DRV_USBHS_Setup_Host_Mode (  USBHS_MODULE_ID usbID )
 {  
     /*Disable module */
     ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA &= ~USBHS_CTRLA_ENABLE(1);
@@ -1003,19 +1044,19 @@ void L_DRV_USBHS_Setup_Host_Mode (  USBHS_MODULE_ID usbID )
     {
     }
     /* PHY is in on (operational power state) */
-    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYON_Msk ) == 0)
+    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYON_Msk ) == 0U)
     {
     }
     /* PHY is ready for USB activity */
-    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYRDY_Msk) == 0)
+    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYRDY_Msk) == 0U)
     {
     }
-    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_PHY24 |= (1<<1);
+    ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_PHY24 |= (1UL << 1);
 }
 
 // *****************************************************************************
 /* Function:
-    void L_DRV_USBHS_Setup_Device_Mode( USBHS_MODULE_ID usbID )
+    void F_DRV_USBHS_Setup_Device_Mode( USBHS_MODULE_ID usbID )
 
   Summary:
     This function will enable the USBHS driver into device mode functionlity.
@@ -1028,7 +1069,7 @@ void L_DRV_USBHS_Setup_Host_Mode (  USBHS_MODULE_ID usbID )
 */
 
 
-void L_DRV_USBHS_Setup_Device_Mode( USBHS_MODULE_ID usbID )
+void F_DRV_USBHS_Setup_Device_Mode( USBHS_MODULE_ID usbID )
 {
     /*Disable module */
     ((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_CTRLA &= ~USBHS_CTRLA_ENABLE(1);
@@ -1050,15 +1091,24 @@ void L_DRV_USBHS_Setup_Device_Mode( USBHS_MODULE_ID usbID )
     {
     }
     /* PHY is in on (operational power state) */
-    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYON_Msk ) == 0)
+    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYON_Msk ) == 0U)
     {
     }
     /* PHY is ready for USB activity */
-    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYRDY_Msk) == 0)
+    while ((((usbhs_registers_t*)usbID)->ENDPOINT0.USBHS_STATUS & USBHS_STATUS_PHYRDY_Msk) == 0U)
     {
     }
     
 }
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.7"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>
+</#if>
 
 ${LIST_DRV_USB_ISR_ENTRY}
 

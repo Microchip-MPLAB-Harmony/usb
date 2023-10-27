@@ -12,12 +12,23 @@
     the USBHS library.
 *******************************************************************************/
 
-#ifndef __USBHS_REGISTERS_H__
-#define __USBHS_REGISTERS_H__
+#ifndef USBHS_REGISTERS_H__
+#define USBHS_REGISTERS_H__
 
 #include "device.h"
 #include <stdint.h>
 
+/* MISRA C-2012 Rule 5.5, Rule 6.1, Rule 21.1 and Rule 21.2 Deviation record ID -  
+    H3_MISRAC_2012_R_6_1_DR_1, H3_MISRAC_2012_R_21_1_DR_1 
+    H3_MISRAC_2012_R_21_2_DR_1 and H3_MISRAC_2012_R_5_5_DR_1,
+    H3_MISRAC_2012_R_21_1_DR_1, H3_MISRAC_2012_R_21_2_DR_1,*/
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:10 "MISRA C-2012 Rule 5.5" "H3_MISRAC_2012_R_5_5_DR_1" )\
+(deviate:10 "MISRA C-2012 Rule 6.1" "H3_MISRAC_2012_R_6_1_DR_1" )\
+(deviate:25 "MISRA C-2012 Rule 21.1" "H3_MISRAC_2012_R_21_1_DR_1" )\
+(deviate:25 "MISRA C-2012 Rule 21.2" "H3_MISRAC_2012_R_21_2_DR_1" )
 
 
 /*****************************************
@@ -914,5 +925,12 @@ typedef struct __attribute__((aligned(4),packed))
     volatile uint32_t               RQPKTXOUNT_reserved[9];
 
 } usbhs_registers_sw_t;
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.5"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 6.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 21.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 21.2"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 #endif

@@ -43,8 +43,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_USBHS_H
-#define _DRV_USBHS_H
+#ifndef DRV_USBHS_H
+#define DRV_USBHS_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -72,6 +72,17 @@
 // Section: Hi-Speed USB Driver Constants
 // *****************************************************************************
 // *****************************************************************************
+
+/* MISRA C-2012 Rule 3.1, 5.1, 5.2 and 8.6 deviated below. Deviation record ID -  
+    H3_MISRAC_2012_R_3_1_DR_1, H3_MISRAC_2012_R_5_1_DR_1, H3_MISRAC_2012_R_5_2_DR_1 and H3_MISRAC_2012_R_8_6_DR_1  */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:45 "MISRA C-2012 Rule 3.1" "H3_MISRAC_2012_R_3_1_DR_1" )\
+(deviate:4 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" )\
+(deviate:20 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )
+
 
 /*DOM-IGNORE-BEGIN*/#define DRV_USBHS_ENDPOINT_TABLE_ENTRY_SIZE  0 /*DOM-IGNORE-END*/
 /*DOM-IGNORE-BEGIN*/#define DRV_USBHS_ENDPOINT_ALL 16/*DOM-IGNORE-END*/
@@ -171,7 +182,7 @@ typedef uintptr_t DRV_USBHS_HOST_PIPE_HANDLE;
 
 #define DRV_USBHS_HOST_PIPE_HANDLE_INVALID /*DOM-IGNORE-BEGIN*/((DRV_USBHS_HOST_PIPE_HANDLE)(-1))/*DOM-IGNORE-END*/
 
-/*DOM-IGNORE-BEGIN*/#define DRV_USBHS_DEVICE_ENDPOINT_ALL 16/*DOM-IGNORE-END*/
+/*DOM-IGNORE-BEGIN*/#define DRV_USBHS_DEVICE_ENDPOINT_ALL 16U/*DOM-IGNORE-END*/
 
 // *****************************************************************************
 /* Hi-Speed USB Driver Events Enumeration.
@@ -3065,6 +3076,13 @@ void DRV_USBHS_HOST_ROOT_HUB_Initialize
 /*  The file included below maps the interface definitions above to appropriate
     Static implementations, depending on build mode.
 */
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 3.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 
 #endif
