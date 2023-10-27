@@ -44,8 +44,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 //DOM-IGNORE-END
 
-#ifndef _USB_SLEEPENTRYGUARD_UNSUPPORTED_H
-#define _USB_SLEEPENTRYGUARD_UNSUPPORTED_H
+#ifndef USB_SLEEPENTRYGUARD_UNSUPPORTED_H
+#define USB_SLEEPENTRYGUARD_UNSUPPORTED_H
 
 //******************************************************************************
 /* Function :  USB_SleepGuardEnable_Unsupported
@@ -95,7 +95,7 @@ PLIB_TEMPLATE bool USB_ExistsSleepEntryGuard_Unsupported( USB_MODULE_ID index )
 }
 
 
-#endif /*_USB_SLEEPENTRYGUARD_UNSUPPORTED_H*/
+#endif /*USB_SLEEPENTRYGUARD_UNSUPPORTED_H*/
 
 /******************************************************************************
  End of File

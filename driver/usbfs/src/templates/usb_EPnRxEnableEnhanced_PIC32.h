@@ -43,11 +43,21 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 //DOM-IGNORE-END
 
-#ifndef _USB_EPNRXENABLEENHANCED_PIC32_H
-#define _USB_EPNRXENABLEENHANCED_PIC32_H
+#ifndef USB_EPNRXENABLEENHANCED_PIC32_H
+#define USB_EPNRXENABLEENHANCED_PIC32_H
 
 #include "driver/usb/usbfs/src/templates/usbfs_registers.h"
 
+/* MISRA C-2012 Rule 10.1, Rule 10.3, Rule 10.4 and Rule 11.7.
+   Deviation record ID - H3_MISRAC_2012_R_10_1_DR_1, H3_MISRAC_2012_R_10_3_DR_1, 
+    H3_MISRAC_2012_R_10_4_DR_1 and H3_MISRAC_2012_R_11_7_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:2 "MISRA C-2012 Rule 10.1" "H3_MISRAC_2012_R_10_1_DR_1" )\
+(deviate:4 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1" )\
+(deviate:4 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 11.7" "H3_MISRAC_2012_R_11_7_DR_1" )
 //******************************************************************************
 /* Function :  USB_EPnRxEnable_PIC32
 
@@ -214,10 +224,10 @@ PLIB_TEMPLATE void USB_EPnAttributesSet_PIC32
         usb->UxEP[endpoint].w |= (UxEP_EPTXEN_MASK|UxEP_EPRXEN_MASK|UxEP_EPHSHK_MASK);
     }
     else 
-	{  
-		/* Set the direction and handshake */
+    {  
+        /* Set the direction and handshake */
         usb->UxEP[endpoint].w |= ((UxEP_EPRXEN_MASK >> direction)|handshake);
-	}
+    }
 }
 
 PLIB_TEMPLATE void USB_EPnAttributesClear_PIC32
@@ -282,7 +292,7 @@ PLIB_TEMPLATE bool USB_EPnIsStalled_PIC32
 )
 {
     volatile usb_registers_t   * usb = ((usb_registers_t *)(index));
-	return ( usb->UxEP[endpoint].UxEPbits.EPSTALL );
+    return ( usb->UxEP[endpoint].UxEPbits.EPSTALL );
 }
 
 //******************************************************************************
@@ -310,9 +320,9 @@ PLIB_TEMPLATE void USB_EPnStallClear_PIC32
 PLIB_TEMPLATE void USB_EP0HostSetup_PIC32(USB_MODULE_ID index)
 {
     volatile usb_registers_t   * usb = ((usb_registers_t *)(index));
-	
-	usb->UxEP[0].w = 0x00 ;
-	
+    
+    usb->UxEP[0].w = 0x00 ;
+    
     /* Set up endpoint 0 for typical host operation.
      * Enable Transmit, Receive, Control Transfers, Handshake
      * Disable NAK Retry and Low speed connect */
@@ -338,7 +348,14 @@ PLIB_TEMPLATE bool USB_ExistsEPnRxEnable_PIC32( USB_MODULE_ID index )
 }
 
 
-#endif /*_USB_EPNRXENABLEENHANCED_PIC32_H*/
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.7"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
+
+#endif /*USB_EPNRXENABLEENHANCED_PIC32_H*/
 
 /******************************************************************************
  End of File

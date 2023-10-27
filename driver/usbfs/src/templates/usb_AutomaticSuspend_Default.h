@@ -44,11 +44,15 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 //DOM-IGNORE-END
 
-#ifndef _USB_AUTOMATICSUSPEND_DEFAULT_H
-#define _USB_AUTOMATICSUSPEND_DEFAULT_H
+#ifndef USB_AUTOMATICSUSPEND_DEFAULT_H
+#define USB_AUTOMATICSUSPEND_DEFAULT_H
 
 #include "driver/usb/usbfs/src/templates/usbfs_registers.h"
 
+/* MISRA C-2012 Rule 11.7 Deviation record ID -  H3_MISRAC_2012_R_11_7_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:4 "MISRA C-2012 Rule 11.7" "H3_MISRAC_2012_R_11_7_DR_1" 
 //******************************************************************************
 /* Function :  USB_AutoSuspendDisable_Default
 
@@ -62,8 +66,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 PLIB_TEMPLATE void USB_AutoSuspendDisable_Default( USB_MODULE_ID index )
 {
-	volatile usb_registers_t * usb = ((usb_registers_t *)(index));
-	usb->UxCNFG1CLR =  UxCNFG1_UASUSPND_MASK ;
+    volatile usb_registers_t * usb = ((usb_registers_t *)(index));
+    usb->UxCNFG1CLR =  UxCNFG1_UASUSPND_MASK ;
 }
 
 //******************************************************************************
@@ -80,7 +84,7 @@ PLIB_TEMPLATE void USB_AutoSuspendDisable_Default( USB_MODULE_ID index )
 PLIB_TEMPLATE void USB_AutoSuspendEnable_Default( USB_MODULE_ID index )
 {
     volatile usb_registers_t * usb = ((usb_registers_t *)(index));
-	usb->UxCNFG1SET =  UxCNFG1_UASUSPND_MASK ;
+    usb->UxCNFG1SET =  UxCNFG1_UASUSPND_MASK ;
 }
 
 //******************************************************************************
@@ -100,8 +104,11 @@ PLIB_TEMPLATE bool USB_ExistsAutomaticSuspend_Default( USB_MODULE_ID index )
     return true;
 }
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.7"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
-#endif /*_USB_AUTOMATICSUSPEND_DEFAULT_H*/
+#endif /*USB_AUTOMATICSUSPEND_DEFAULT_H*/
 
 /******************************************************************************
  End of File

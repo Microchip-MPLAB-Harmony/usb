@@ -44,12 +44,15 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 //DOM-IGNORE-END
 
-#ifndef _USB_MODULEPOWER_32BIT16BIT_H
-#define _USB_MODULEPOWER_32BIT16BIT_H
+#ifndef USB_MODULEPOWER_32BIT16BIT_H
+#define USB_MODULEPOWER_32BIT16BIT_H
 
 #include "driver/usb/usbfs/src/templates/usbfs_registers.h"
 
-
+/* MISRA C-2012 Rule 11.7 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_7_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.7" "H3_MISRAC_2012_R_11_7_DR_1"
 //******************************************************************************
 /* Function :  USB_Enable_32Bit16Bit
 
@@ -64,7 +67,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 PLIB_TEMPLATE void USB_Enable_32Bit16Bit( USB_MODULE_ID index )
 {
     volatile usb_registers_t   * usb = ((usb_registers_t *)(index));
-	usb->UxPWRC.USBPWR = 1;
+    usb->UxPWRC.USBPWR = 1;
     
 }
 
@@ -81,7 +84,7 @@ PLIB_TEMPLATE void USB_Enable_32Bit16Bit( USB_MODULE_ID index )
 PLIB_TEMPLATE void USB_Disable_32Bit16Bit( USB_MODULE_ID index )
 {
     volatile usb_registers_t   * usb = ((usb_registers_t *)(index));
-	usb->UxPWRC.USBPWR = 0 ;
+    usb->UxPWRC.USBPWR = 0 ;
  
 }
 
@@ -101,8 +104,11 @@ PLIB_TEMPLATE bool USB_ExistsModulePower_32Bit16Bit( USB_MODULE_ID index )
     return true;
 }
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.7"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
-#endif /*_USB_MODULEPOWER_32BIT16BIT_H*/
+#endif /*USB_MODULEPOWER_32BIT16BIT_H*/
 
 /******************************************************************************
  End of File

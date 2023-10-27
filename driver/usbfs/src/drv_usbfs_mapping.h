@@ -86,14 +86,14 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
      * only supports one client. So a static build would always be
      * static single. */
 
-    #define _DRV_USBFS_STATIC_API_SINGLE(index, name)     DRV_USBFS ## index ## _ ## name
-    #define _DRV_USBFS_STATIC_API(index, name)            _DRV_USBFS_STATIC_API_SINGLE(index, name)
-    #define _DRV_USBFS_MAKE_NAME(name)                    _DRV_USBFS_STATIC_API(DRV_USBFS_INDEX, name)
+    #define M_DRV_USBFS_STATIC_API_SINGLE(index, name)     DRV_USBFS ## index ## _ ## name
+    #define M_DRV_USBFS_STATIC_API(index, name)            M_DRV_USBFS_STATIC_API_SINGLE(index, name)
+    #define M_DRV_USBFS_MAKE_NAME(name)                    M_DRV_USBFS_STATIC_API(DRV_USBFS_INDEX, name)
 
 #else 
 
     /* This means that a dynamic driver is requested */
-    #define _DRV_USBFS_MAKE_NAME(name)                         DRV_USBFS_ ## name
+    #define M_DRV_USBFS_MAKE_NAME(name)                         DRV_USBFS_ ## name
 
 #endif
 
@@ -156,39 +156,39 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
     #define _DRV_USBFS_DEVICE_ENDPOINT_ALL 17
 
-    #define DRV_USBFS_Initialize(sysID, inData)           _DRV_USBFS_MAKE_NAME(Initialize)(inData)
-    #define DRV_USBFS_Deinitialize(sysObj)                _DRV_USBFS_MAKE_NAME(Deinitialize)()
-    #define DRV_USBFS_Status(sysObj)                      _DRV_USBFS_MAKE_NAME(Status)()
-    #define DRV_USBFS_Tasks(sysObj)                       _DRV_USBFS_MAKE_NAME(Tasks)()
-    #define DRV_USBFS_Tasks_ISR(sysObj)                   _DRV_USBFS_MAKE_NAME(Tasks_ISR)()
-    #define DRV_USBFS_Tasks_ISR_USBDMA(sysObj)            _DRV_USBFS_MAKE_NAME(Tasks_ISR_USBDMA)()
-    #define DRV_USBFS_Open(sysID, intent)                 _DRV_USBFS_MAKE_NAME(Open)(intent)
-    #define DRV_USBFS_Close(handle)                       _DRV_USBFS_MAKE_NAME(Close)()
-    #define DRV_USBFS_ClientEventCallBackSet(w, x, y)     _DRV_USBFS_MAKE_NAME(ClientEventCallBackSet)(x, y)
-    #define DRV_USBFS_HOST_Suspend(handle)                _DRV_USBFS_MAKE_NAME(HOST_Suspend)()
-    #define DRV_USBFS_HOST_Resume(handle)                 _DRV_USBFS_MAKE_NAME(HOST_Resume)()
-	
-	
-    #define DRV_USBFS_DEVICE_AddressSet(handle, address)  _DRV_USBFS_MAKE_NAME(DEVICE_AddressSet)(address)
-    #define DRV_USBFS_DEVICE_CurrentSpeedGet(handle)      _DRV_USBFS_MAKE_NAME(DEVICE_CurrentSpeedGet)()
-    #define DRV_USBFS_DEVICE_Attach(handle)               _DRV_USBFS_MAKE_NAME(DEVICE_Attach)()
-    #define DRV_USBFS_DEVICE_Detach(handle)               _DRV_USBFS_MAKE_NAME(DEVICE_Detach)()
-	
-    #define DRV_USBFS_DEVICE_EndpointEnable(w, x, y, z)   _DRV_USBFS_MAKE_NAME(DEVICE_EndpointEnable)(x, y, z)
-    #define DRV_USBFS_DEVICE_EndpointDisable(w, x)        _DRV_USBFS_MAKE_NAME(DEVICE_EndpointDisable)(x)
-    #define DRV_USBFS_DEVICE_EndpointIsEnabled(w, x)      _DRV_USBFS_MAKE_NAME(DEVICE_EndpointIsEnabled)(x)
-    #define DRV_USBFS_DEVICE_EndpointIsStalled(w, x)      _DRV_USBFS_MAKE_NAME(DEVICE_EndpointIsStalled)(x)
-	
-    #define DRV_USBFS_DEVICE_IRPSubmit(w, x, y)           _DRV_USBFS_MAKE_NAME(DEVICE_IRPSubmit)(x, y)
-    #define DRV_USBFS_DEVICE_IRPCancelAll(w, x)           _DRV_USBFS_MAKE_NAME(DEVICE_IRPCancelAll)(x)
-    #define DRV_USBFS_DEVICE_EndpointStall(w, x)          _DRV_USBFS_MAKE_NAME(DEVICE_EndpointStall)(x)
-    #define DRV_USBFS_DEVICE_EndpointStallClear(w, x)     _DRV_USBFS_MAKE_NAME(DEVICE_EndpointStallClear)(x)
-    #define DRV_USBFS_DEVICE_EndpointDisableAll(w)        _DRV_USBFS_MAKE_NAME(DEVICE_EndpointDisable)(_DRV_USBFS_DEVICE_ENDPOINT_ALL)
-	
-    #define DRV_USBFS_DEVICE_RemoteWakeupStart(handle)   _DRV_USBFS_MAKE_NAME(DEVICE_RemoteWakeupStart)()
-    #define DRV_USBFS_DEVICE_RemoteWakeupStop(handle)    _DRV_USBFS_MAKE_NAME(DEVICE_RemoteWakeupStop)()
-    #define DRV_USBFS_DEVICE_SOFNumberGet(handle)         _DRV_USBFS_MAKE_NAME(DEVICE_SOFNumberGet)()
-	
+    #define DRV_USBFS_Initialize(sysID, inData)           M_DRV_USBFS_MAKE_NAME(Initialize)(inData)
+    #define DRV_USBFS_Deinitialize(sysObj)                M_DRV_USBFS_MAKE_NAME(Deinitialize)()
+    #define DRV_USBFS_Status(sysObj)                      M_DRV_USBFS_MAKE_NAME(Status)()
+    #define DRV_USBFS_Tasks(sysObj)                       M_DRV_USBFS_MAKE_NAME(Tasks)()
+    #define DRV_USBFS_Tasks_ISR(sysObj)                   M_DRV_USBFS_MAKE_NAME(Tasks_ISR)()
+    #define DRV_USBFS_Tasks_ISR_USBDMA(sysObj)            M_DRV_USBFS_MAKE_NAME(Tasks_ISR_USBDMA)()
+    #define DRV_USBFS_Open(sysID, intent)                 M_DRV_USBFS_MAKE_NAME(Open)(intent)
+    #define DRV_USBFS_Close(handle)                       M_DRV_USBFS_MAKE_NAME(Close)()
+    #define DRV_USBFS_ClientEventCallBackSet(w, x, y)     M_DRV_USBFS_MAKE_NAME(ClientEventCallBackSet)(x, y)
+    #define DRV_USBFS_HOST_Suspend(handle)                M_DRV_USBFS_MAKE_NAME(HOST_Suspend)()
+    #define DRV_USBFS_HOST_Resume(handle)                 M_DRV_USBFS_MAKE_NAME(HOST_Resume)()
+
+
+    #define DRV_USBFS_DEVICE_AddressSet(handle, address)  M_DRV_USBFS_MAKE_NAME(DEVICE_AddressSet)(address)
+    #define DRV_USBFS_DEVICE_CurrentSpeedGet(handle)      M_DRV_USBFS_MAKE_NAME(DEVICE_CurrentSpeedGet)()
+    #define DRV_USBFS_DEVICE_Attach(handle)               M_DRV_USBFS_MAKE_NAME(DEVICE_Attach)()
+    #define DRV_USBFS_DEVICE_Detach(handle)               M_DRV_USBFS_MAKE_NAME(DEVICE_Detach)()
+
+    #define DRV_USBFS_DEVICE_EndpointEnable(w, x, y, z)   M_DRV_USBFS_MAKE_NAME(DEVICE_EndpointEnable)(x, y, z)
+    #define DRV_USBFS_DEVICE_EndpointDisable(w, x)        M_DRV_USBFS_MAKE_NAME(DEVICE_EndpointDisable)(x)
+    #define DRV_USBFS_DEVICE_EndpointIsEnabled(w, x)      M_DRV_USBFS_MAKE_NAME(DEVICE_EndpointIsEnabled)(x)
+    #define DRV_USBFS_DEVICE_EndpointIsStalled(w, x)      M_DRV_USBFS_MAKE_NAME(DEVICE_EndpointIsStalled)(x)
+
+    #define DRV_USBFS_DEVICE_IRPSubmit(w, x, y)           M_DRV_USBFS_MAKE_NAME(DEVICE_IRPSubmit)(x, y)
+    #define DRV_USBFS_DEVICE_IRPCancelAll(w, x)           M_DRV_USBFS_MAKE_NAME(DEVICE_IRPCancelAll)(x)
+    #define DRV_USBFS_DEVICE_EndpointStall(w, x)          M_DRV_USBFS_MAKE_NAME(DEVICE_EndpointStall)(x)
+    #define DRV_USBFS_DEVICE_EndpointStallClear(w, x)     M_DRV_USBFS_MAKE_NAME(DEVICE_EndpointStallClear)(x)
+    #define DRV_USBFS_DEVICE_EndpointDisableAll(w)        M_DRV_USBFS_MAKE_NAME(DEVICE_EndpointDisable)(_DRV_USBFS_DEVICE_ENDPOINT_ALL)
+
+    #define DRV_USBFS_DEVICE_RemoteWakeupStart(handle)   M_DRV_USBFS_MAKE_NAME(DEVICE_RemoteWakeupStart)()
+    #define DRV_USBFS_DEVICE_RemoteWakeupStop(handle)    M_DRV_USBFS_MAKE_NAME(DEVICE_RemoteWakeupStop)()
+    #define DRV_USBFS_DEVICE_SOFNumberGet(handle)        M_DRV_USBFS_MAKE_NAME(DEVICE_SOFNumberGet)()
+
     
 
 #else // Dynamic Build

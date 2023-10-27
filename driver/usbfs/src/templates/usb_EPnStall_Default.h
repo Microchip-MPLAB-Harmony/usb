@@ -64,7 +64,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 PLIB_TEMPLATE bool USB_EPnIsStalled_Default( USB_MODULE_ID index , uint8_t epValue )
 {
     volatile usb_registers_t   * usb = ((usb_registers_t *)(index));
-	return ( usb->UxEP[epValue].UxEPbits.EPSTALL );
+    return ( usb->UxEP[epValue].UxEPbits.EPSTALL );
    
 }
 
@@ -82,8 +82,8 @@ PLIB_TEMPLATE bool USB_EPnIsStalled_Default( USB_MODULE_ID index , uint8_t epVal
 PLIB_TEMPLATE void USB_EPnStallClear_Default( USB_MODULE_ID index , uint8_t epValue )
 {
     
-	volatile usb_registers_t   * usb = ((usb_registers_t *)(index));
-	usb->UxEP[endpoint].UxEPbits.EPSTALL = 0;
+    volatile usb_registers_t   * usb = ((usb_registers_t *)(index));
+    usb->UxEP[endpoint].UxEPbits.EPSTALL = 0;
       
 }
 

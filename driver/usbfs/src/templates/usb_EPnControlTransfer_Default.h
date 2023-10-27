@@ -66,8 +66,8 @@ PLIB_TEMPLATE void USB_EPnControlTransferEnable_Default
     uint8_t epValue 
 )
 {
-	volatile usb_registers_t   * usb = ((usb_registers_t *)(index));
-	usb->UxEP[epValue].UxEPCLR = UxEP_EPCONDIS_MASK;
+    volatile usb_registers_t   * usb = ((usb_registers_t *)(index));
+    usb->UxEP[epValue].UxEPCLR = UxEP_EPCONDIS_MASK;
 }
 
 //******************************************************************************
@@ -87,8 +87,8 @@ PLIB_TEMPLATE void USB_EPnControlTransferDisable_Default
     uint8_t epValue 
 )
 {
-	volatile usb_registers_t   * usb = ((usb_registers_t *)(index));
-	usb->UxEP[epValue].UxEPSET = UxEP_EPCONDIS_MASK;
+    volatile usb_registers_t   * usb = ((usb_registers_t *)(index));
+    usb->UxEP[epValue].UxEPSET = UxEP_EPCONDIS_MASK;
 }
 
 

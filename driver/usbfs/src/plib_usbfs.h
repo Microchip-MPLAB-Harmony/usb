@@ -41,8 +41,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _PLIB_USB_H
-#define _PLIB_USB_H
+#ifndef PLIB_USB_H
+#define PLIB_USB_H
 
 
 // *****************************************************************************
@@ -393,8 +393,8 @@ typedef enum
 // ****************************************************************************
 
 /*DOM-IGNORE-BEGIN*/
-//#include "driver/usb/usbfs/src/plib_usbfs_header.h"
-#include "driver/usb/usbfs/src/usbfs_registers.h"
+#include "driver/usb/usbfs/src/plib_usbfs_header.h"
+#include "driver/usb/usbfs/src/templates/usbfs_registers.h"
 
 /*DOM-IGNORE-END*/
 
@@ -423,7 +423,7 @@ typedef enum
 #endif
 //DOM-IGNORE-END
 
-#endif//ndef _PLIB_USB_H
+#endif//ndef PLIB_USB_H
 
 /*******************************************************************************
  End of File

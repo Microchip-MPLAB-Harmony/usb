@@ -82,7 +82,7 @@ DRV_USB_HOST_INTERFACE gDrvUSBFSHostInterface =
  * Global Variable used as Pool of pipe objects 
  * that is used by all driver instances.
  *****************************************************/
-DRV_USBFS_HOST_PIPE_OBJ gDrvUSBHostPipeObj[DRV_USBFS_HOST_PIPES_NUMBER];
+static DRV_USBFS_HOST_PIPE_OBJ gDrvUSBHostPipeObj[DRV_USBFS_HOST_PIPES_NUMBER];
 
 /******************************************************************************
  * This matrix provides a mapping of the amount of bandwidth left in a frame for
@@ -91,7 +91,7 @@ DRV_USBFS_HOST_PIPE_OBJ gDrvUSBHostPipeObj[DRV_USBFS_HOST_PIPES_NUMBER];
  * size. The first entry is for payload size 1, the second for payload size of
  * 2, the third for payload size of 8 and so on.
  ******************************************************************************/
-const unsigned int gDrvUSBFSTableBW[4][11] =
+static const unsigned int gDrvUSBFSTableBW[4][11] =
 {
     {3, 3, 3, 4, 4, 5, 7, 0, 0,  0,  0},    /* Control Transfers    */
     {1, 1, 1, 1, 2, 3, 5, 0, 0,  0,  0},    /* Interrupt Transfers  */
@@ -99,7 +99,7 @@ const unsigned int gDrvUSBFSTableBW[4][11] =
     {1, 1, 1, 1, 2, 3, 5, 9, 18, 35, 69}    /* Isochronous Transfer */
 };      
 
-const unsigned int gDrvUSBLSTableBW[2][4] =
+static const unsigned int gDrvUSBLSTableBW[2][4] =
 {
     {26, 27, 28,30},    /* Control Transfers    */
     {11, 11, 12, 14}    /* Interrupt Transfers  */
@@ -107,7 +107,7 @@ const unsigned int gDrvUSBLSTableBW[2][4] =
 
 // *****************************************************************************
 /* Function:
-    void _DRV_USBFS_SendTokenToAddress
+    void F_DRV_USBFS_SendTokenToAddress
     (
         USB_MODULE_ID usbID,
         uint8_t address,
@@ -129,7 +129,7 @@ const unsigned int gDrvUSBLSTableBW[2][4] =
     application.
 */
 
-void _DRV_USBFS_SendTokenToAddress
+void F_DRV_USBFS_SendTokenToAddress
 (
     USB_MODULE_ID usbID,
     uint8_t address,
@@ -146,7 +146,7 @@ void _DRV_USBFS_SendTokenToAddress
 
 // *****************************************************************************
 /* Function:
-    void _DRV_USBFS_HOST_Initialize
+    void F_DRV_USBFS_HOST_Initialize
     (
         DRV_USBFS_OBJ * const pUSBDrvObj,
         const SYS_MODULE_INDEX index
@@ -168,9 +168,9 @@ void _DRV_USBFS_SendTokenToAddress
     application.
 */
 
-void _DRV_USBFS_HOST_Initialize
+void F_DRV_USBFS_HOST_Initialize
 (
-    DRV_USBFS_OBJ * const pUSBDrvObj,
+    DRV_USBFS_OBJ * const pusbdrvObj,
     const SYS_MODULE_INDEX index,
     DRV_USBFS_INIT * init
 )
@@ -178,50 +178,59 @@ void _DRV_USBFS_HOST_Initialize
     uint8_t bdtEntryindex = 0;
 
     /* Set the SOF threshold value in bit times */
-    PLIB_USB_SOFThresholdSet(pUSBDrvObj->usbID, 0x4A);
+    PLIB_USB_SOFThresholdSet(pusbdrvObj->usbID, 0x4A);
 
     /* Enable the VBUSON bit in the OTGCON register. Even if the actual VBUSON
      * pin is not under USB module control, this bit must be set for host
      * operation */
-    PLIB_USB_OTG_VBusPowerOn(pUSBDrvObj->usbID);
+    PLIB_USB_OTG_VBusPowerOn(pusbdrvObj->usbID);
 
     /* Select the host mode of operation */
-    PLIB_USB_OperatingModeSelect(pUSBDrvObj->usbID, USB_OPMODE_HOST);
+    PLIB_USB_OperatingModeSelect(pusbdrvObj->usbID, USB_OPMODE_HOST);
 
     /* Clear up the endpoint 0 BDT entries. Note that host performs all
      * transfers through endpoint 0. */
-    for(bdtEntryindex = 0; bdtEntryindex < 4; bdtEntryindex ++)
+    for(bdtEntryindex = 0; bdtEntryindex < 4U; bdtEntryindex ++)
     {
         /* A full duplex endpoint has 4 entries, 2 per EP direction */
-        pUSBDrvObj->pBDT[bdtEntryindex].word[0] = 0;
-        pUSBDrvObj->pBDT[bdtEntryindex].word[1] = 0;
+        pusbdrvObj->pBDT[bdtEntryindex].word[0] = 0;
+        pusbdrvObj->pBDT[bdtEntryindex].word[1] = 0;
     }
 
     /* Initialize the odd even buffer pointers */
-    PLIB_USB_PingPongReset(pUSBDrvObj->usbID);
-    pUSBDrvObj->ep0TxPingPong = USB_BUFFER_EVEN;
-    pUSBDrvObj->ep0RxPingPong = USB_BUFFER_EVEN;
+    PLIB_USB_PingPongReset(pusbdrvObj->usbID);
+    pusbdrvObj->ep0TxPingPong = USB_BUFFER_EVEN;
+    pusbdrvObj->ep0RxPingPong = USB_BUFFER_EVEN;
 
     /* Configure endpoint 0 control register for Host operation. */
-    PLIB_USB_EP0HostSetup(pUSBDrvObj->usbID);
+    PLIB_USB_EP0HostSetup(pusbdrvObj->usbID);
 
     /* Initialize the host specific members in the driver object */
-    pUSBDrvObj->isResetting     = false;
-    pUSBDrvObj->isAttached      = false;
-    pUSBDrvObj->isAttachDebouncing = false;
-    pUSBDrvObj->isDetachDebouncing = false;
-    pUSBDrvObj->usbHostDeviceInfo = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
-    pUSBDrvObj->rootHubInfo.rootHubAvailableCurrent = init->rootHubAvailableCurrent;
-    pUSBDrvObj->rootHubInfo.portIndication = init->portIndication;
-    pUSBDrvObj->rootHubInfo.portOverCurrentDetect = init->portOverCurrentDetect;
-    pUSBDrvObj->rootHubInfo.portPowerEnable = init->portPowerEnable;
+    pusbdrvObj->isResetting     = false;
+    pusbdrvObj->isAttached      = false;
+    pusbdrvObj->isAttachDebouncing = false;
+    pusbdrvObj->isDetachDebouncing = false;
+    pusbdrvObj->usbHostDeviceInfo = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
+    pusbdrvObj->rootHubInfo.rootHubAvailableCurrent = init->rootHubAvailableCurrent;
+    pusbdrvObj->rootHubInfo.portIndication = init->portIndication;
+    pusbdrvObj->rootHubInfo.portOverCurrentDetect = init->portOverCurrentDetect;
+    pusbdrvObj->rootHubInfo.portPowerEnable = init->portPowerEnable;
     
     /* Clear and enable the interrupts */
-    _DRV_USBFS_InterruptSourceClear(pUSBDrvObj->interruptSource);
-    _DRV_USBFS_InterruptSourceEnable(pUSBDrvObj->interruptSource);
+    M_DRV_USBFS_InterruptSourceClear(pusbdrvObj->interruptSource);
+    M_DRV_USBFS_InterruptSourceEnable(pusbdrvObj->interruptSource);
 }
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 10.1 deviate:3, Rule 10.4 deviate:10 and Rule 11.3 deviated:8. 
+   Deviation record ID - H3_MISRAC_2012_R_10_1_DR_1, H3_MISRAC_2012_R_10_4_DR_1 
+   and H3_MISRAC_2012_R_11_3_DR_1*/
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:3  "MISRA C-2012 Rule 10.1" "H3_MISRAC_2012_R_10_1_DR_1" )\
+(deviate:10 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" )\
+(deviate:8  "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )
 /* Function:
     USB_ERROR DRV_USBFS_HOST_IRPSubmit
     (
@@ -246,12 +255,12 @@ void _DRV_USBFS_HOST_Initialize
 USB_ERROR DRV_USBFS_HOST_IRPSubmit
 (
     DRV_USBFS_HOST_PIPE_HANDLE  hPipe,
-    USB_HOST_IRP * pInputIRP
+    USB_HOST_IRP * pinputIRP
 )
 {
     USB_HOST_IRP_LOCAL * pIRPIterator = (USB_HOST_IRP_LOCAL *)NULL;
     bool interruptWasEnabled = false;
-    USB_HOST_IRP_LOCAL * pIRP = (USB_HOST_IRP_LOCAL *)pInputIRP;
+    USB_HOST_IRP_LOCAL * pIRP = (USB_HOST_IRP_LOCAL *)pinputIRP;
     DRV_USBFS_HOST_PIPE_OBJ * pPipe = (DRV_USBFS_HOST_PIPE_OBJ *)hPipe;
     DRV_USBFS_OBJ * pUSBDrvObj = (DRV_USBFS_OBJ *)NULL;
     USB_ERROR returnValue = USB_ERROR_NONE;
@@ -264,7 +273,7 @@ USB_ERROR DRV_USBFS_HOST_IRPSubmit
         pIRP->pipe = hPipe;
 
         /* Clear up any temporary state */
-        pIRP->tempState = 0;
+        pIRP->tempState = (DRV_USBFS_HOST_IRP_STATE)0;
 
         /* Control transfer IRPs have to be implemented in states. These sub states
          * are maintained in the tempState member of the IRP. A control transfer IRP
@@ -293,7 +302,7 @@ USB_ERROR DRV_USBFS_HOST_IRPSubmit
             if(OSAL_MUTEX_Lock(&pUSBDrvObj->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
             {
                 /* Disable the interrupt */
-                interruptWasEnabled = _DRV_USBFS_InterruptSourceDisable(pUSBDrvObj->interruptSource);
+                interruptWasEnabled = M_DRV_USBFS_InterruptSourceDisable(pUSBDrvObj->interruptSource);
             }
             else
             {
@@ -343,10 +352,10 @@ USB_ERROR DRV_USBFS_HOST_IRPSubmit
 
                 if(interruptWasEnabled)
                 {
-                    _DRV_USBFS_InterruptSourceEnable(pUSBDrvObj->interruptSource);
+                    M_DRV_USBFS_InterruptSourceEnable(pUSBDrvObj->interruptSource);
                 }
 
-                OSAL_MUTEX_Unlock(&pUSBDrvObj->mutexID);
+                (void) OSAL_MUTEX_Unlock(&pUSBDrvObj->mutexID);
             }
         }
     }
@@ -376,9 +385,9 @@ USB_ERROR DRV_USBFS_HOST_IRPSubmit
     See drv_usbfs.h for usage information.
 */
 
-void DRV_USBFS_HOST_IRPCancel(USB_HOST_IRP * pInputIRP)
+void DRV_USBFS_HOST_IRPCancel(USB_HOST_IRP * inputIRP)
 {
-    USB_HOST_IRP_LOCAL * pIRP = (USB_HOST_IRP_LOCAL *) pInputIRP;
+    USB_HOST_IRP_LOCAL * pIRP = (USB_HOST_IRP_LOCAL *) inputIRP;
     DRV_USBFS_OBJ * pUSBDrvObj = (DRV_USBFS_OBJ *)NULL;
     DRV_USBFS_HOST_PIPE_OBJ * pPipe = (DRV_USBFS_HOST_PIPE_OBJ *)NULL;
     USB_HOST_IRP_LOCAL * pIteratorIRP = (USB_HOST_IRP_LOCAL *)NULL;
@@ -401,7 +410,7 @@ void DRV_USBFS_HOST_IRPCancel(USB_HOST_IRP * pInputIRP)
             if(OSAL_MUTEX_Lock(&pUSBDrvObj->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
             {
                 /* Disable the interrupt. */
-                interruptWasEnabled = _DRV_USBFS_InterruptSourceDisable(pUSBDrvObj->interruptSource);
+                interruptWasEnabled = M_DRV_USBFS_InterruptSourceDisable(pUSBDrvObj->interruptSource);
             }
             else
             {
@@ -459,8 +468,8 @@ void DRV_USBFS_HOST_IRPCancel(USB_HOST_IRP * pInputIRP)
                     {
                         /* If the irp is already in progress then we set the
                          * temporary state. This will get caught in
-                         * _DRV_USBFS_HOST_ControlXferProcess() and
-                         * _DRV_USBFS_HOST_NonControlIRPProcess() functions. */
+                         * F_DRV_USBFS_HOST_ControlXferProcess() and
+                         * F_DRV_USBFS_HOST_NonControlIRPProcess() functions. */
 
                         pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_ABORTED;
                     }
@@ -494,10 +503,10 @@ void DRV_USBFS_HOST_IRPCancel(USB_HOST_IRP * pInputIRP)
                 /* Restore the interrupt status and release the mutex */
                 if(interruptWasEnabled)
                 {
-                    _DRV_USBFS_InterruptSourceEnable(pUSBDrvObj->interruptSource);
+                    M_DRV_USBFS_InterruptSourceEnable(pUSBDrvObj->interruptSource);
                 }
 
-                OSAL_MUTEX_Unlock(&pUSBDrvObj->mutexID);
+                (void) OSAL_MUTEX_Unlock(&pUSBDrvObj->mutexID);
             }
         }
     }
@@ -509,8 +518,15 @@ void DRV_USBFS_HOST_IRPCancel(USB_HOST_IRP * pInputIRP)
 }
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 11.6 deviate:12, Rule 16.1 deviate:2 and Rule 16.1:3. 
+   Deviation record ID - H3_MISRAC_2012_R_11_6_DR_1, H3_MISRAC_2012_R_16_1_DR_1 
+    and H3_MISRAC_2012_R_16_3_DR_1 */
+#pragma coverity compliance block \
+(deviate:12 "MISRA C-2012 Rule 11.6" "H3_MISRAC_2012_R_11_6_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )
 /* Function:
-    bool _DRV_USBFS_HOST_ControlXferProcess
+    bool F_DRV_USBFS_HOST_ControlXferProcess
     (
         DRV_USBFS_OBJ * hDriver,
         USB_HOST_IRP_LOCAL * irp,
@@ -530,10 +546,10 @@ void DRV_USBFS_HOST_IRPCancel(USB_HOST_IRP * pInputIRP)
     application.
 */
 
-bool _DRV_USBFS_HOST_ControlXferProcess
+bool F_DRV_USBFS_HOST_ControlXferProcess
 (
-    DRV_USBFS_OBJ * pUSBDrvObj,
-    USB_HOST_IRP_LOCAL * pIRP,
+    DRV_USBFS_OBJ * pusbdrvObj,
+    USB_HOST_IRP_LOCAL * pirp,
     DRV_USBFS_TRANSACTION_RESULT deviceResponse,
     unsigned int deviceResponseSize
 )
@@ -542,30 +558,31 @@ bool _DRV_USBFS_HOST_ControlXferProcess
      * function exits */
 
     DRV_USBFS_BDT_ENTRY * pBDT = (DRV_USBFS_BDT_ENTRY *)NULL;
-    DRV_USBFS_HOST_PIPE_OBJ * pipe = (DRV_USBFS_HOST_PIPE_OBJ *)pIRP->pipe;
-    uint8_t endpoint = pipe->endpointAndDirection & 0xF;
+    DRV_USBFS_HOST_PIPE_OBJ * pipe = (DRV_USBFS_HOST_PIPE_OBJ *)pirp->pipe;
+    uint8_t endpoint = pipe->endpointAndDirection & 0xFU;
     uint8_t deviceAddress = pipe->deviceAddress;
-    USB_MODULE_ID usbID = pUSBDrvObj->usbID;
+    USB_MODULE_ID usbID = pusbdrvObj->usbID;
     bool isLowSpeed = (pipe->speed == USB_SPEED_LOW) ?  true : false;
     bool tokenSent = false;
     bool endIRP = false;
     DRV_USBFS_HOST_SW_EP * softwareEP = NULL;
     DRV_USBFS_HOST_TRANSFER_GROUP * transferGroup = NULL;
+    uint32_t dataToggle;
 
-    if(pIRP->tempState == DRV_USBFS_HOST_IRP_STATE_ABORTED)
+    if(pirp->tempState == DRV_USBFS_HOST_IRP_STATE_ABORTED)
     {
         /* This means the application aborted this IRP.  We just invoke the
          * callback. If this function is being called, it means the
-         * pUSBDrvObj->numSWEpEntry is pointing to a Software endpoint object
+         * pusbdrvObj->numSWEpEntry is pointing to a Software endpoint object
          * that is managing control transfers. We do not process this IRP any
          * more. The tobeDone flag is set to false and the control IRP is
          * removed from the current pipe. */
 
-        softwareEP = &pUSBDrvObj->drvUSBHostSWEp[pUSBDrvObj->numSWEpEntry];
-        transferGroup = &pUSBDrvObj->transferGroup[USB_TRANSFER_TYPE_CONTROL];
+        softwareEP = &pusbdrvObj->drvUSBHostSWEp[pusbdrvObj->numSWEpEntry];
+        transferGroup = &pusbdrvObj->transferGroup[USB_TRANSFER_TYPE_CONTROL];
 
         softwareEP->tobeDone = false;
-        ((pUSBDrvObj->transferGroup[softwareEP->transferType]).currentPipe)->irpQueueHead = (softwareEP->pIRP)->next;
+        ((pusbdrvObj->transferGroup[softwareEP->transferType]).currentPipe)->irpQueueHead = (softwareEP->pIRP)->next;
 
         /* We must update the pipe to move to the next pipe in the pipe bundle
          * While doing so, check if we have reached the last pipe in the bundle,
@@ -582,10 +599,10 @@ bool _DRV_USBFS_HOST_ControlXferProcess
             transferGroup->currentPipe = transferGroup->pipe;
         }
 
-        pIRP->status = USB_HOST_IRP_STATUS_ABORTED;
-        if(pIRP->callback != NULL)
+        pirp->status = USB_HOST_IRP_STATUS_ABORTED;
+        if(pirp->callback != NULL)
         {
-            pIRP->callback((USB_HOST_IRP *)pIRP);
+            pirp->callback((USB_HOST_IRP *)pirp);
         }
 
         /* Return false indicating that no token was sent in this frame */
@@ -595,7 +612,7 @@ bool _DRV_USBFS_HOST_ControlXferProcess
     {
         /* IRP is not aborted. We should continue to process this transfer */
 
-        switch(pIRP->tempState)
+        switch(pirp->tempState)
         {
             case DRV_USBFS_HOST_IRP_STATE_SETUP_STAGE:
 
@@ -603,40 +620,40 @@ bool _DRV_USBFS_HOST_ControlXferProcess
                  * need to send the Setup Packet. Update the IRP status to indicate
                  * that the IRP processing has started */ 
 
-                pIRP->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
-                pIRP->completedBytes = 0;
+                pirp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
+                pirp->completedBytes = 0;
 
                 /* A control transfer pipe is unique in the sense that the pipe is
                  * bidirectional. Here we obtain the direction of the pipe based on
                  * the direction specified in the setup packet. This is stored in
                  * the pipe object itself. */
 
-                if((((uint8_t *)(pIRP->setup))[0] & 0x80) != 0)
+                if((((uint8_t *)(pirp->setup))[0] & 0x80U) != 0U)
                 {
                     /* Data stage direction is from device to host */
-                    pipe->endpointAndDirection |= (USB_DATA_DIRECTION_DEVICE_TO_HOST << 7);
+                    pipe->endpointAndDirection |= ((uint32_t)USB_DATA_DIRECTION_DEVICE_TO_HOST << 7);
                 }
                 else
                 {
                     /* Data stage direction is from host to device */
-                    pipe->endpointAndDirection &= 0xF;
-                    pipe->endpointAndDirection |= (USB_DATA_DIRECTION_HOST_TO_DEVICE << 7);
+                    pipe->endpointAndDirection &= 0xFU;
+                    pipe->endpointAndDirection |= ((uint32_t)USB_DATA_DIRECTION_HOST_TO_DEVICE << 7);
                 }
 
                 /* Keep track of the transaction */
-                pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_SETUP_TOKEN_SENT;
-                pBDT = pUSBDrvObj->pBDT + 2 + pUSBDrvObj->ep0TxPingPong;
+                pirp->tempState = DRV_USBFS_HOST_IRP_STATE_SETUP_TOKEN_SENT;
+                pBDT = pusbdrvObj->pBDT + 2U + (uint32_t)pusbdrvObj->ep0TxPingPong;
 
                 /* Configure the BDT Entry for setup packet and Data 0 toggle */
                 pBDT->shortWord[1]  = 8;
-                pBDT->word[1] = KVA_TO_PA(pIRP->setup);
+                pBDT->word[1] = KVA_TO_PA(pirp->setup);
                 pBDT->byte[0] = (USBFS_UOWN|USBFS_DTS_ENABLE);
 
                 /* Enable Handshake */
                 PLIB_USB_EPnHandshakeEnable(usbID, 0);
 
                 /* The BDT is armed. We can send the Setup Token to the device */
-                _DRV_USBFS_SendTokenToAddress(usbID, deviceAddress, USB_PID_SETUP, endpoint, isLowSpeed);
+                F_DRV_USBFS_SendTokenToAddress(usbID, deviceAddress, USB_PID_SETUP, endpoint, isLowSpeed);
 
                 /* Set the flag to indicate that a token was sent */
                 tokenSent = true;
@@ -650,12 +667,12 @@ bool _DRV_USBFS_HOST_ControlXferProcess
 
                 if(deviceResponse == USB_TRANSACTION_ACK)
                 {
-					pipe->retryCount = 0;
-                    if((pIRP->data == NULL) || (pIRP->size == 0))
+                    pipe->retryCount = 0;
+                    if((pirp->data == NULL) || (pirp->size == 0U))
                     {
                         /* This means that this is a zero data stage transaction */
 
-                        pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_HANDSHAKE;
+                        pirp->tempState = DRV_USBFS_HOST_IRP_STATE_HANDSHAKE;
                         pipe->nakCounter = 0;
                         break;
                     }
@@ -665,19 +682,19 @@ bool _DRV_USBFS_HOST_ControlXferProcess
 
                     pipe->dataToggle = USB_BUFFER_DATA1;
                     pipe->nakCounter = 0;
-                    pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_DATA_STAGE;
+                    pirp->tempState = DRV_USBFS_HOST_IRP_STATE_DATA_STAGE;
                 }
-				else if(USB_TRANSACTION_BUS_TIME_OUT == deviceResponse)
+                else if(USB_TRANSACTION_BUS_TIME_OUT == deviceResponse)
                 {
                     pipe->retryCount++;
                     if ( pipe->retryCount < DRV_USBFS_TRANSACTION_RETRY_COUNT )
                     {
-                        pIRP->tempState =  DRV_USBFS_HOST_IRP_STATE_SETUP_STAGE;
+                        pirp->tempState =  DRV_USBFS_HOST_IRP_STATE_SETUP_STAGE;
                     }
                     else
                     {
-                        pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE; 
-                        pIRP->status = USB_HOST_IRP_STATUS_ERROR_BUS;
+                        pirp->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE; 
+                        pirp->status = USB_HOST_IRP_STATUS_ERROR_BUS;
                         endIRP = true;
                     }
                     break;
@@ -687,12 +704,12 @@ bool _DRV_USBFS_HOST_ControlXferProcess
                     pipe->retryCount++;
                     if ( pipe->retryCount < DRV_USBFS_TRANSACTION_RETRY_COUNT )
                     {
-                        pIRP->tempState =  DRV_USBFS_HOST_IRP_STATE_SETUP_STAGE;
+                        pirp->tempState =  DRV_USBFS_HOST_IRP_STATE_SETUP_STAGE;
                     }
                     else
                     {
-                        pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE; 
-                        pIRP->status = USB_HOST_IRP_STATUS_ERROR_DATA;
+                        pirp->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE; 
+                        pirp->status = USB_HOST_IRP_STATUS_ERROR_DATA;
                         endIRP = true;
                     }
                     break;
@@ -704,8 +721,8 @@ bool _DRV_USBFS_HOST_ControlXferProcess
                      * specification, the device must ACK the Setup packet. We will
                      * end the control transfer immediately. */
 
-                    pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE;
-                    pIRP->status = USB_HOST_IRP_STATUS_ERROR_UNKNOWN;
+                    pirp->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE;
+                    pirp->status = USB_HOST_IRP_STATUS_ERROR_UNKNOWN;
                     endIRP = true;
                     break;
                 }
@@ -718,7 +735,7 @@ bool _DRV_USBFS_HOST_ControlXferProcess
                  * stage. The following function will arm the endpoint in the BDT
                  * and will initiate the data stage. */
 
-                _DRV_USBFS_HOST_ControlSendToken(pIRP, pUSBDrvObj, pipe, endpoint, deviceAddress, usbID, isLowSpeed);
+                F_DRV_USBFS_HOST_ControlSendToken(pirp, pusbdrvObj, pipe, endpoint, deviceAddress, usbID, isLowSpeed);
                 tokenSent = true;
                 break;
 
@@ -735,19 +752,19 @@ bool _DRV_USBFS_HOST_ControlXferProcess
                      * transfer NAK counter on this pipe. If the limit is reached
                      * then we should terminate the control transfer. */
 
-                    pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_DATA_STAGE;
+                    pirp->tempState = DRV_USBFS_HOST_IRP_STATE_DATA_STAGE;
                     pipe->nakCounter ++;
                     if(pipe->nakCounter >= DRV_USBFS_HOST_NAK_LIMIT)
                     {
-                        pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE;
-                        pIRP->status = USB_HOST_IRP_STATUS_ERROR_NAK_TIMEOUT;
+                        pirp->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE;
+                        pirp->status = USB_HOST_IRP_STATUS_ERROR_NAK_TIMEOUT;
                         endIRP = true;
                         pipe->nakCounter = 0;
                     }
                     else
                     {
                         /* Attempt the data stage again */
-                        pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_DATA_STAGE;
+                        pirp->tempState = DRV_USBFS_HOST_IRP_STATE_DATA_STAGE;
                     }
                     break;
 
@@ -757,8 +774,8 @@ bool _DRV_USBFS_HOST_ControlXferProcess
                     /* The device response is a STALL. We should end the control
                      * transfer. */
                     pipe->nakCounter = 0;
-                    pIRP->status = USB_HOST_IRP_STATUS_ERROR_STALL;
-                    pIRP->tempState =  DRV_USBFS_HOST_IRP_STATE_COMPLETE;
+                    pirp->status = USB_HOST_IRP_STATUS_ERROR_STALL;
+                    pirp->tempState =  DRV_USBFS_HOST_IRP_STATE_COMPLETE;
                     endIRP = true;
                     break;
                 }
@@ -767,53 +784,53 @@ bool _DRV_USBFS_HOST_ControlXferProcess
                      pipe->retryCount++;
                     if ( pipe->retryCount < DRV_USBFS_TRANSACTION_RETRY_COUNT )
                     {
-                        pIRP->tempState =  DRV_USBFS_HOST_IRP_STATE_DATA_STAGE;
+                        pirp->tempState =  DRV_USBFS_HOST_IRP_STATE_DATA_STAGE;
                     }
                     else
                     {
                         /* The device response data error. We should end the control
                          * transfer. */
                         pipe->nakCounter = 0;
-                        pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE; 
-                        pIRP->status = USB_HOST_IRP_STATUS_ERROR_DATA;
+                        pirp->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE; 
+                        pirp->status = USB_HOST_IRP_STATUS_ERROR_DATA;
                         endIRP = true;
                     }
                     break;
                 
                 }
-				 else if (deviceResponse == USB_TRANSACTION_BUS_TIME_OUT)
+                else if (deviceResponse == USB_TRANSACTION_BUS_TIME_OUT)
                 {
                     pipe->retryCount++;
                     if ( pipe->retryCount < DRV_USBFS_TRANSACTION_RETRY_COUNT )
                     {
-                        pIRP->tempState =  DRV_USBFS_HOST_IRP_STATE_DATA_STAGE;
+                        pirp->tempState =  DRV_USBFS_HOST_IRP_STATE_DATA_STAGE;
                     }
                     else
                     {
                         /* Turn around time error. We should end the control
                          * transfer. */
                         pipe->nakCounter = 0;
-                        pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE; 
-                        pIRP->status = USB_HOST_IRP_STATUS_ERROR_BUS;
+                        pirp->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE; 
+                        pirp->status = USB_HOST_IRP_STATUS_ERROR_BUS;
                         endIRP = true;
                     }
                     break;
                 }
                 else if ((deviceResponse == USB_TRANSACTION_DATA0 ) ||(deviceResponse == USB_TRANSACTION_DATA1) ||(deviceResponse == USB_TRANSACTION_ACK))
                 {
-					pipe->retryCount = 0;
+                    pipe->retryCount = 0;
                     /* The device has acknowledged the data stage. Update the IRP
                      * with the amount of data received */
                     pipe->nakCounter = 0;
-                    pIRP->completedBytes += deviceResponseSize;
-                    pIRP->completedBytesInThisFrame += deviceResponseSize;
+                    pirp->completedBytes += deviceResponseSize;
+                    pirp->completedBytesInThisFrame += deviceResponseSize;
 
-                    if((pipe->endpointAndDirection & 0x80) != 0)
+                    if((pipe->endpointAndDirection & 0x80U) != 0U)
                     {
                         /* Data is moving from device to host Check if the data
                          * stage is done */
 
-                        if((deviceResponseSize < pipe->endpointSize) ||(pIRP->completedBytes >= pIRP->size))
+                        if((deviceResponseSize < pipe->endpointSize) ||(pirp->completedBytes >= pirp->size))
                         {
                             /* A host control read transfer is done when the host
                              * has received the amount of data that it was looking
@@ -823,17 +840,18 @@ bool _DRV_USBFS_HOST_ControlXferProcess
                             /* Reset the nak counter for the next data transaction.
                              * Fall through to the handshake stage. */
 
-                            pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_HANDSHAKE;
+                            pirp->tempState = DRV_USBFS_HOST_IRP_STATE_HANDSHAKE;
                         }
-                        else if((deviceResponseSize == pIRP->tempSize) || (deviceResponseSize == pipe->endpointSize))
+                        else if((deviceResponseSize == pirp->tempSize) || (deviceResponseSize == pipe->endpointSize))
                         {
-                            if(pIRP->tempSize > pIRP->completedBytesInThisFrame)
+                            if(pirp->tempSize > pirp->completedBytesInThisFrame)
                             {
                                 /* More transactions are required in this frame */
-                                pipe->dataToggle ^= 0x1;
-                                pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_DATA_STAGE;
-                                pIRP->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
-                                _DRV_USBFS_HOST_ControlSendToken(pIRP,pUSBDrvObj, pipe,endpoint,deviceAddress,usbID, isLowSpeed);
+                                dataToggle = (uint32_t)pipe->dataToggle ^ 0x1U;
+                                pipe->dataToggle = (USB_BUFFER_DATA01)dataToggle;
+                                pirp->tempState = DRV_USBFS_HOST_IRP_STATE_DATA_STAGE;
+                                pirp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
+                                F_DRV_USBFS_HOST_ControlSendToken(pirp,pusbdrvObj, pipe,endpoint,deviceAddress,usbID, isLowSpeed);
                                 tokenSent = true;
                             }
                             else
@@ -841,35 +859,41 @@ bool _DRV_USBFS_HOST_ControlXferProcess
                                 /* Whatever planned for this frame has been done 
                                  * Do not Move the IRP Queue head here Do not end the
                                  * IRP */
-                                pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_DATA_STAGE;
-                                pIRP->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
-                                pipe->dataToggle ^= 0x1;
+                                pirp->tempState = DRV_USBFS_HOST_IRP_STATE_DATA_STAGE;
+                                pirp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
+                                dataToggle = (uint32_t)pipe->dataToggle ^ 0x1U;
+                                pipe->dataToggle = (USB_BUFFER_DATA01)dataToggle;
                                 pipe->nakCounter = 0;
                                 endIRP = false;
                                 tokenSent = false;
                             }
                             break;
                         }
+                        else
+                        {
+                            /* Do Nothing */
+                        }
                     }
                     else 
                     {
                         /* Data is moving from host to device */
-                        if(pIRP->completedBytes >= pIRP->size)
+                        if(pirp->completedBytes >= pirp->size)
                         {
                             /* The write transfer is complete. Fall through to the
                              * handshake stage */   
                             pipe->nakCounter = 0;
-                            pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_HANDSHAKE;
+                            pirp->tempState = DRV_USBFS_HOST_IRP_STATE_HANDSHAKE;
                         }
-                        else if((deviceResponseSize == pIRP->tempSize) || (deviceResponseSize == pipe->endpointSize))
+                        else if((deviceResponseSize == pirp->tempSize) || (deviceResponseSize == pipe->endpointSize))
                         {
-                            if(pIRP->tempSize > pIRP->completedBytesInThisFrame)
+                            if(pirp->tempSize > pirp->completedBytesInThisFrame)
                             {
                                 /* More transactions are required in this frame */
-                                pipe->dataToggle ^= 0x1;
-                                pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_DATA_STAGE;
-                                pIRP->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
-                                _DRV_USBFS_HOST_ControlSendToken(pIRP,pUSBDrvObj, pipe,endpoint,deviceAddress,usbID, isLowSpeed);
+                                dataToggle = (uint32_t)pipe->dataToggle ^ 0x1U;
+                                pipe->dataToggle = (USB_BUFFER_DATA01)dataToggle;
+                                pirp->tempState = DRV_USBFS_HOST_IRP_STATE_DATA_STAGE;
+                                pirp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
+                                F_DRV_USBFS_HOST_ControlSendToken(pirp,pusbdrvObj, pipe,endpoint,deviceAddress,usbID, isLowSpeed);
                                 tokenSent = true;
                             }
                             else
@@ -877,16 +901,25 @@ bool _DRV_USBFS_HOST_ControlXferProcess
                                 /* Whatever planned for this frame has been done */
                                 /* Do not Move the IRP Queue head here */
                                 /* Do not end the IRP */
-                                pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_DATA_STAGE;
-                                pIRP->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
-                                pipe->dataToggle ^= 0x1;
+                                pirp->tempState = DRV_USBFS_HOST_IRP_STATE_DATA_STAGE;
+                                pirp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
+                                dataToggle = (uint32_t)pipe->dataToggle ^ 0x1U;
+                                pipe->dataToggle = (USB_BUFFER_DATA01)dataToggle;
                                 pipe->nakCounter = 0;
                                 endIRP = false;
                                 tokenSent = false;
                             }
                             break;
                         }
+                        else
+                        {
+                            /* Do Nothing */
+                        }
                     }
+                }
+                else
+                {
+                    /* Do Nothing */
                 }
                
 
@@ -897,22 +930,22 @@ bool _DRV_USBFS_HOST_ControlXferProcess
                     USB_BUFFER_PING_PONG pingPong;
                     USB_PID pid;
 
-                    if((pipe->endpointAndDirection & 0x80) != 0)
+                    if((pipe->endpointAndDirection & 0x80U) != 0U)
                     {
                         /* Data is moving from device to host */
                         direction = USB_BUFFER_TX;
-                        pingPong = pUSBDrvObj->ep0TxPingPong;
+                        pingPong = pusbdrvObj->ep0TxPingPong;
                         pid = USB_PID_OUT;
                     }
                     else 
                     {
                         /* Data is moving from host to device */
                         direction = USB_BUFFER_RX;
-                        pingPong = pUSBDrvObj->ep0RxPingPong;
+                        pingPong = pusbdrvObj->ep0RxPingPong;
                         pid = USB_PID_IN;
                     }
 
-                    pBDT = pUSBDrvObj->pBDT + (direction << 1) + pingPong;
+                    pBDT = pusbdrvObj->pBDT + ((uint32_t)   direction << 1) + (uint32_t)pingPong;
 
                     /* Configure the BDT Entry for data packet */
                     pBDT->shortWord[1]  = 0;
@@ -920,13 +953,13 @@ bool _DRV_USBFS_HOST_ControlXferProcess
                     pBDT->byte[0] = (USBFS_UOWN|USBFS_DATA1_PID|USBFS_DTS_ENABLE);
 
                     /* Keep track of the transaction */
-                    pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_HANDSHAKE_SENT;
+                    pirp->tempState = DRV_USBFS_HOST_IRP_STATE_HANDSHAKE_SENT;
 
                     /* Enable Handshake */
                     PLIB_USB_EPnHandshakeEnable(usbID, 0);
 
                     /* This will cause the Transaction interrupt */
-                    _DRV_USBFS_SendTokenToAddress(usbID, deviceAddress, pid, endpoint, isLowSpeed);
+                    F_DRV_USBFS_SendTokenToAddress(usbID, deviceAddress, pid, endpoint, isLowSpeed);
 
                     tokenSent = true;
                     break;
@@ -938,40 +971,40 @@ bool _DRV_USBFS_HOST_ControlXferProcess
                 if((USB_TRANSACTION_ACK == deviceResponse) || (USB_TRANSACTION_DATA1 == deviceResponse))
                 {
                     pipe->retryCount = 0;
-					/* Transfer is complete */
-                    pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE;
-                    pIRP->status = USB_HOST_IRP_STATUS_COMPLETED;
-                    if(((pipe->endpointAndDirection & 0x80) != 0) && (pIRP->size > pIRP->completedBytes))
+                    /* Transfer is complete */
+                    pirp->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE;
+                    pirp->status = USB_HOST_IRP_STATUS_COMPLETED;
+                    if(((pipe->endpointAndDirection & 0x80U) != 0U) && (pirp->size > pirp->completedBytes))
                     {
                         /* While moving data from device to host, if we received
                          * less data from the device than expected, then indicate a
                          * short packet and set the irp size to to actual size */ 
 
-                        pIRP->status = USB_HOST_IRP_STATUS_COMPLETED_SHORT;
-                        pIRP->size = pIRP->completedBytes;
+                        pirp->status = USB_HOST_IRP_STATUS_COMPLETED_SHORT;
+                        pirp->size = pirp->completedBytes;
                     }
                     endIRP = true;
                 }
                 else if(USB_TRANSACTION_NAK == deviceResponse)
                 {
-                    pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_HANDSHAKE;
+                    pirp->tempState = DRV_USBFS_HOST_IRP_STATE_HANDSHAKE;
                     pipe->nakCounter ++;
                     if(pipe->nakCounter > DRV_USBFS_HOST_NAK_LIMIT)
                     {
-                        pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE;
-                        pIRP->status = USB_HOST_IRP_STATUS_ERROR_NAK_TIMEOUT;
+                        pirp->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE;
+                        pirp->status = USB_HOST_IRP_STATUS_ERROR_NAK_TIMEOUT;
                         endIRP = true;
                     }
                     else
                     {
-                        pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_HANDSHAKE;
+                        pirp->tempState = DRV_USBFS_HOST_IRP_STATE_HANDSHAKE;
                     }
                     break;
                 }
                 else if(USB_TRANSACTION_STALL == deviceResponse)
                 {
-                    pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE;
-                    pIRP->status = USB_HOST_IRP_STATUS_ERROR_STALL;
+                    pirp->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE;
+                    pirp->status = USB_HOST_IRP_STATUS_ERROR_STALL;
                     endIRP = true;
                     break;
                 }
@@ -980,36 +1013,40 @@ bool _DRV_USBFS_HOST_ControlXferProcess
                     pipe->retryCount++;
                     if ( pipe->retryCount < DRV_USBFS_TRANSACTION_RETRY_COUNT )
                     {
-                        pIRP->tempState =  DRV_USBFS_HOST_IRP_STATE_HANDSHAKE;
+                        pirp->tempState =  DRV_USBFS_HOST_IRP_STATE_HANDSHAKE;
                     }
                     else
                     {
                         /* A data error occurred. End the transfer with an error
                          * code */
                         pipe->nakCounter = 0;
-                        pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE; 
-                        pIRP->status = USB_HOST_IRP_STATUS_ERROR_DATA;
+                        pirp->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE; 
+                        pirp->status = USB_HOST_IRP_STATUS_ERROR_DATA;
                         endIRP = true;
                     }
                     break;
                 }
-				else if(USB_TRANSACTION_BUS_TIME_OUT == deviceResponse)
+                else if(USB_TRANSACTION_BUS_TIME_OUT == deviceResponse)
                 {
                     pipe->retryCount++;
                     if ( pipe->retryCount < DRV_USBFS_TRANSACTION_RETRY_COUNT )
                     {
-                        pIRP->tempState =  DRV_USBFS_HOST_IRP_STATE_HANDSHAKE;
+                        pirp->tempState =  DRV_USBFS_HOST_IRP_STATE_HANDSHAKE;
                     }
                     else
                     {
                         /* A Timeout error occurred. End the transfer with an error
                          * code */
                         pipe->nakCounter = 0;
-                        pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE; 
-                        pIRP->status = USB_HOST_IRP_STATUS_ERROR_BUS;
+                        pirp->tempState = DRV_USBFS_HOST_IRP_STATE_COMPLETE; 
+                        pirp->status = USB_HOST_IRP_STATUS_ERROR_BUS;
                         endIRP = true;
                     }
                     break;
+                }
+                else
+                {
+                    /* Do Nothing */
                 }
                 break; 
                     
@@ -1020,6 +1057,7 @@ bool _DRV_USBFS_HOST_ControlXferProcess
                 break;
 
             default:
+                /* Do Nothing */
                 break;
         }
 
@@ -1029,9 +1067,9 @@ bool _DRV_USBFS_HOST_ControlXferProcess
 
         if(endIRP == true)
         {
-			pipe->retryCount = 0;
-            softwareEP = &pUSBDrvObj->drvUSBHostSWEp[pUSBDrvObj->numSWEpEntry];
-            transferGroup = &pUSBDrvObj->transferGroup[USB_TRANSFER_TYPE_CONTROL];
+            pipe->retryCount = 0;
+            softwareEP = &pusbdrvObj->drvUSBHostSWEp[pusbdrvObj->numSWEpEntry];
+            transferGroup = &pusbdrvObj->transferGroup[USB_TRANSFER_TYPE_CONTROL];
             
             softwareEP->tobeDone = false;
 
@@ -1051,9 +1089,9 @@ bool _DRV_USBFS_HOST_ControlXferProcess
             }
 
             /* IRP completed. Call the callback */
-            if(pIRP->callback != NULL)
+            if(pirp->callback != NULL)
             {
-                pIRP->callback((USB_HOST_IRP *)pIRP);
+                pirp->callback((USB_HOST_IRP *)pirp);
             }
         }
     }
@@ -1067,7 +1105,7 @@ bool _DRV_USBFS_HOST_ControlXferProcess
 
   Summary:
     Closes an open pipe.
-	
+
   Description:
     This function closes an open pipe. Any IRPs scheduled on the pipe will be
     aborted and IRP callback functions will be called with the status as
@@ -1109,7 +1147,7 @@ void DRV_USBFS_HOST_PipeClose
 
                 if(OSAL_MUTEX_Lock(&pUSBDrvObj->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
                 {
-                    interruptWasEnabled = _DRV_USBFS_InterruptSourceDisable(pUSBDrvObj->interruptSource);
+                    interruptWasEnabled = M_DRV_USBFS_InterruptSourceDisable(pUSBDrvObj->interruptSource);
                 }
                 else
                 {
@@ -1185,8 +1223,8 @@ void DRV_USBFS_HOST_PipeClose
                             /* If the IRP is in progress and device
                              * de-enumeration operation is not in progress, then
                              * we set the temp IRP state.  This will be caught
-                             * in the _DRV_USBFS_HOST_NonControlIRPProcess() and
-                             * _DRV_USBFS_HOST_ControlXferProcess() functions */
+                             * in the F_DRV_USBFS_HOST_NonControlIRPProcess() and
+                             * F_DRV_USBFS_HOST_ControlXferProcess() functions */
 
                             pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_ABORTED;
                         }
@@ -1219,10 +1257,10 @@ void DRV_USBFS_HOST_PipeClose
                 {
                     if(interruptWasEnabled)
                     {
-                        _DRV_USBFS_InterruptSourceEnable(pUSBDrvObj->interruptSource);
+                        M_DRV_USBFS_InterruptSourceEnable(pUSBDrvObj->interruptSource);
                     }
 
-                    OSAL_MUTEX_Unlock(&pUSBDrvObj->mutexID);
+                    (void) OSAL_MUTEX_Unlock(&pUSBDrvObj->mutexID);
                 }
             }
         }
@@ -1254,7 +1292,7 @@ void DRV_USBFS_HOST_PipeClose
 
   Summary:
     Open a pipe with the specified attributes.
-	
+
   Description:
     This function opens a communication pipe between the Host and the device
     endpoint. The transfer type and other attributes are specified through the
@@ -1267,7 +1305,7 @@ void DRV_USBFS_HOST_PipeClose
 
 DRV_USBFS_HOST_PIPE_HANDLE DRV_USBFS_HOST_PipeSetup 
 (
-    DRV_HANDLE handle,
+    DRV_HANDLE client,
     uint8_t deviceAddress, 
     USB_ENDPOINT endpointAndDirection,
     uint8_t hubAddress,
@@ -1280,17 +1318,17 @@ DRV_USBFS_HOST_PIPE_HANDLE DRV_USBFS_HOST_PipeSetup
 {
     DRV_USBFS_HOST_PIPE_OBJ * pPipe = (DRV_USBFS_HOST_PIPE_OBJ *)NULL;
     DRV_USBFS_HOST_PIPE_OBJ * piteratorPipe = (DRV_USBFS_HOST_PIPE_OBJ *)NULL;
-    DRV_USBFS_OBJ * pUSBDrvObj = (DRV_USBFS_OBJ *)handle;
+    DRV_USBFS_OBJ * pUSBDrvObj = (DRV_USBFS_OBJ *)client;
     DRV_USBFS_HOST_PIPE_HANDLE returnValue = DRV_USBFS_HOST_PIPE_HANDLE_INVALID;
     DRV_USBFS_HOST_TRANSFER_GROUP * pTransferGroup = (DRV_USBFS_HOST_TRANSFER_GROUP *)NULL;
-    unsigned int transferTypeLocal = 0;
+    uint32_t transferTypeLocal = 0;
     uint8_t pipeCount = 0;
     uint8_t bitSetCount = 0;
     bool thereWasAnError = false;
 
-    if((handle != DRV_HANDLE_INVALID) && (pUSBDrvObj != NULL) && (pUSBDrvObj->isOpened))
+    if((client != DRV_HANDLE_INVALID) && (pUSBDrvObj != NULL) && (pUSBDrvObj->isOpened))
     {
-        /* Driver handle is valid. We need to grab a mutex as the pipe pool is a
+        /* Driver client is valid. We need to grab a mutex as the pipe pool is a
          * global object */
         if(OSAL_MUTEX_Lock(&pUSBDrvObj->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
         {
@@ -1312,11 +1350,11 @@ DRV_USBFS_HOST_PIPE_HANDLE DRV_USBFS_HOST_PipeSetup
                     pPipe->bInterval = bInterval;
                     pPipe->speed = speed;
                     pPipe->pipeType = pipeType;
-                    pPipe->hClient = handle;
+                    pPipe->hClient = client;
                     pPipe->endpointSize = wMaxPacketSize;
                     pPipe->intervalCounter = bInterval;
                     pPipe->dataToggle = USB_BUFFER_DATA0;
-					pPipe->retryCount = 0;
+                    pPipe->retryCount = 0;
                     pPipe->endpointAndDirection = endpointAndDirection;
 
                     /* This pipe should now be added to the pipe bundle. The
@@ -1339,28 +1377,33 @@ DRV_USBFS_HOST_PIPE_HANDLE DRV_USBFS_HOST_PipeSetup
                             transferTypeLocal = USB_TRANSFER_TYPE_LOCAL_INTERRUPT;
                             break;
                         default:
+                            /* Do Nothing */
                             return returnValue;
                     }
 
                     /* In a case where the max packet size is a multiple of 2, find
                      * calculate the log2n. */
-                    if((wMaxPacketSize <= 512) && (wMaxPacketSize != 0))
+                    if((wMaxPacketSize <= 512U) && (wMaxPacketSize != 0U))
                     {
-                        for(bitSetCount = 0; bitSetCount < 10; bitSetCount++)
+                        for(bitSetCount = 0; bitSetCount < 10U; bitSetCount++)
                         {
-                            if((wMaxPacketSize & 0x00000001) == 0x00000001)
+                            if((wMaxPacketSize & 0x00000001U) == 0x00000001U)
                             {
                                 break;
                             }
                             wMaxPacketSize = wMaxPacketSize >> 1;
                         }
                     }
-                    else if((wMaxPacketSize != 0))
+                    else if((wMaxPacketSize != 0U))
                     {
                         /* This means the max packet size is greater than 512. This
                          * is possible for Isochronous transfers */
 
                         bitSetCount = 10;
+                    }
+                    else
+                    {
+                        /* Do Nothing */
                     }
 
                     /* The bandwidth required per transaction is calculated
@@ -1368,13 +1411,13 @@ DRV_USBFS_HOST_PIPE_HANDLE DRV_USBFS_HOST_PipeSetup
                      * the interrupt context when the transaction is in
                      * progress */
 
-                    if(bitSetCount != 10)
+                    if(bitSetCount != 10U)
                     {
                         if(pPipe->speed == USB_SPEED_LOW)
                         {
-                            if((pPipe->pipeType == USB_TRANSFER_TYPE_INTERRUPT) || (pPipe->pipeType == USB_TRANSFER_TYPE_CONTROL))
+                            if(((pPipe->pipeType == USB_TRANSFER_TYPE_INTERRUPT) || (pPipe->pipeType == USB_TRANSFER_TYPE_CONTROL)) && (bitSetCount < 4))
                             {
-                                pPipe->bwPerTransaction = gDrvUSBLSTableBW[transferTypeLocal][bitSetCount];
+                                pPipe->bwPerTransaction = (uint8_t)(gDrvUSBLSTableBW[transferTypeLocal][bitSetCount]);
                             }
                             else
                             {
@@ -1385,13 +1428,13 @@ DRV_USBFS_HOST_PIPE_HANDLE DRV_USBFS_HOST_PipeSetup
                         }
                         else
                         {
-                            pPipe->bwPerTransaction = gDrvUSBFSTableBW[transferTypeLocal][bitSetCount];
+                            pPipe->bwPerTransaction = (uint8_t)(gDrvUSBFSTableBW[transferTypeLocal][bitSetCount]);
                         }
                     }
-                    else if(bitSetCount == 10 && pPipe->pipeType == USB_TRANSFER_TYPE_ISOCHRONOUS && pPipe->speed == USB_SPEED_FULL)
+                    else if(pPipe->pipeType == USB_TRANSFER_TYPE_ISOCHRONOUS && pPipe->speed == USB_SPEED_FULL)
                     {
                         /* Bandwidth for Isochronous transfers */
-                        pPipe->bwPerTransaction = gDrvUSBFSTableBW[transferTypeLocal][bitSetCount];
+                        pPipe->bwPerTransaction = (uint8_t)(gDrvUSBFSTableBW[transferTypeLocal][bitSetCount]);
                     }
                     else
                     {
@@ -1450,7 +1493,7 @@ DRV_USBFS_HOST_PIPE_HANDLE DRV_USBFS_HOST_PipeSetup
             }
 
             /* Release the mutex */
-            OSAL_MUTEX_Unlock(&pUSBDrvObj->mutexID);
+            (void) OSAL_MUTEX_Unlock(&pUSBDrvObj->mutexID);
         }
         else
         {
@@ -1462,13 +1505,17 @@ DRV_USBFS_HOST_PIPE_HANDLE DRV_USBFS_HOST_PipeSetup
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBFS Driver: Bad Client or client closed");
     }
 
-    /* Return the handle */
+    /* Return the client */
     return returnValue;
 }
 
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* Function:
-    void _DRV_USBFS_HOST_ControlSendToken
+    void F_DRV_USBFS_HOST_ControlSendToken
     (
         USB_HOST_IRP_LOCAL * pIRP,
         DRV_USBFS_OBJ *pUSBDrvObj,
@@ -1477,11 +1524,11 @@ DRV_USBFS_HOST_PIPE_HANDLE DRV_USBFS_HOST_PipeSetup
     )
 
   Summary:
-    Dynamic implementation of _DRV_USBFS_HOST_ControlSendToken internal
+    Dynamic implementation of F_DRV_USBFS_HOST_ControlSendToken internal
     function.
 
   Description:
-    This is the dynamic implementation of _DRV_USBFS_HOST_ControlSendToken
+    This is the dynamic implementation of F_DRV_USBFS_HOST_ControlSendToken
     function. Function sends token for CONTROL transfer data phase.
 
   Remarks:
@@ -1490,10 +1537,10 @@ DRV_USBFS_HOST_PIPE_HANDLE DRV_USBFS_HOST_PipeSetup
 
 */
 
-void _DRV_USBFS_HOST_ControlSendToken
+void F_DRV_USBFS_HOST_ControlSendToken
 (
-    USB_HOST_IRP_LOCAL * pIRP,
-    DRV_USBFS_OBJ *pUSBDrvObj,
+    USB_HOST_IRP_LOCAL * pirp,
+    DRV_USBFS_OBJ *pusbdrvObj,
     DRV_USBFS_HOST_PIPE_OBJ *pipe,
     uint8_t endpoint,
     uint8_t deviceAddress,
@@ -1504,26 +1551,26 @@ void _DRV_USBFS_HOST_ControlSendToken
     USB_BUFFER_DIRECTION direction;
     USB_BUFFER_PING_PONG pingPong;
     USB_PID pid;
-    unsigned int size;
+    uint32_t size;
     DRV_USBFS_BDT_ENTRY * pBDT = (DRV_USBFS_BDT_ENTRY *)NULL;
 
-    if((pipe->endpointAndDirection & 0x80)  != 0)
+    if((pipe->endpointAndDirection & 0x80U)  != 0U)
     {
         /* Direction is device to host */
 
         direction = USB_BUFFER_RX;
-        pingPong = pUSBDrvObj->ep0RxPingPong;
+        pingPong = pusbdrvObj->ep0RxPingPong;
         pid = USB_PID_IN;
     }
     else
     {
         /* Direction is host to device */
         direction = USB_BUFFER_TX;
-        pingPong = pUSBDrvObj->ep0TxPingPong;
+        pingPong = pusbdrvObj->ep0TxPingPong;
         pid = USB_PID_OUT;
     }
 
-    if((pIRP->tempSize - pIRP->completedBytesInThisFrame) >= pipe->endpointSize)
+    if((pirp->tempSize - pirp->completedBytesInThisFrame) >= pipe->endpointSize)
     {
         /* This means we have to break
          * up the transfer into transactions */
@@ -1532,29 +1579,29 @@ void _DRV_USBFS_HOST_ControlSendToken
     else
     {
         /* Data size is less than endpoint size */
-        size = pIRP->tempSize - pIRP->completedBytesInThisFrame;
+        size = pirp->tempSize - pirp->completedBytesInThisFrame;
     }
 
     /* Keep track of the transaction */
-    pIRP->tempState = DRV_USBFS_HOST_IRP_STATE_DATA_STAGE_SENT;
+    pirp->tempState = DRV_USBFS_HOST_IRP_STATE_DATA_STAGE_SENT;
 
-    pBDT = pUSBDrvObj->pBDT + (direction << 1) + pingPong;
+    pBDT = pusbdrvObj->pBDT + ((uint32_t)direction << 1) + (uint32_t)pingPong;
 
     /* Configure the BDT Entry for data packet */
-    pBDT->shortWord[1]  = size;
-    pBDT->word[1] = KVA_TO_PA((uint8_t *)pIRP->data + pIRP->completedBytes);
-    pBDT->byte[0] = (USBFS_UOWN|USBFS_DTS_ENABLE) | (pipe->dataToggle << 6);
+    pBDT->shortWord[1]  = (uint16_t)size;
+    pBDT->word[1] = KVA_TO_PA((uint8_t *)pirp->data + pirp->completedBytes);
+    pBDT->byte[0] = (uint8_t)((USBFS_UOWN|USBFS_DTS_ENABLE) | ((uint32_t)pipe->dataToggle << 6));
 
     /* Enable Handshake */
     PLIB_USB_EPnHandshakeEnable(usbID, 0);
 
     /* This will cause the Transaction interrupt */
-    _DRV_USBFS_SendTokenToAddress(usbID, deviceAddress, pid, endpoint, isLowSpeed);
+    F_DRV_USBFS_SendTokenToAddress(usbID, deviceAddress, pid, endpoint, isLowSpeed);
 }
 
 // *****************************************************************************
 /* Function:
-    void _DRV_USBFS_HOST_NonControlSendToken
+    void F_DRV_USBFS_HOST_NonControlSendToken
     (
         USB_HOST_IRP_LOCAL * pIRP,
         DRV_USBFS_OBJ *pUSBDrvObj,
@@ -1573,7 +1620,7 @@ void _DRV_USBFS_HOST_ControlSendToken
     application.
 */
 
-void _DRV_USBFS_HOST_NonControlSendToken
+void F_DRV_USBFS_HOST_NonControlSendToken
 (
     USB_HOST_IRP_LOCAL * pIRP,
     DRV_USBFS_OBJ *pUSBDrvObj,
@@ -1581,8 +1628,8 @@ void _DRV_USBFS_HOST_NonControlSendToken
     bool isLowSpeed
 )
 {
-    int direction = 0;
-    int size;
+    int32_t direction = 0;
+    int32_t size;
     USB_PID pid;
     USB_MODULE_ID usbID;
     DRV_USBFS_BDT_ENTRY * pBDT   = (DRV_USBFS_BDT_ENTRY *)NULL;
@@ -1593,40 +1640,40 @@ void _DRV_USBFS_HOST_NonControlSendToken
     pBDT = pUSBDrvObj->pBDT;
     usbID = pUSBDrvObj->usbID;
 
-    endpoint = pipe->endpointAndDirection & 0xF;
+    endpoint = pipe->endpointAndDirection & 0xFU;
     deviceAddress = pipe->deviceAddress;
 
     pIRP->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
-    if((pipe->endpointAndDirection & 0x80) != 0)
+    if((pipe->endpointAndDirection & 0x80U) != 0U)
     {
         /* Data is moving from device to host */
-        direction = USB_BUFFER_RX;
+        direction = (int32_t)USB_BUFFER_RX;
         pingpong = pUSBDrvObj->ep0RxPingPong;
         pid = USB_PID_IN;
     }
     else
     {
         /* Data is moving from host to device */
-        direction = USB_BUFFER_TX;
+        direction = (int32_t)USB_BUFFER_TX;
         pingpong = pUSBDrvObj->ep0TxPingPong;
         pid = USB_PID_OUT;
     }
 
     if((pIRP->tempSize - pIRP->completedBytesInThisFrame) >= pipe->endpointSize)
     {
-        size = pipe->endpointSize;
+        size = (int32_t)pipe->endpointSize;
     }
     else
     {
-        size = pIRP->tempSize;
+        size = (int32_t)pIRP->tempSize;
     }
 
-    pBDT = pUSBDrvObj->pBDT + (direction << 1) + pingpong;
+    pBDT = pUSBDrvObj->pBDT + ((uint32_t)direction << 1) + (uint32_t)pingpong;
 
     /*Configure the BDT Entry for data packet */
-    pBDT->shortWord[1] = size;
+    pBDT->shortWord[1] = (uint16_t)size;
     pBDT->word[1] = KVA_TO_PA((uint8_t *)pIRP->data + pIRP->completedBytes);
-    pBDT->byte[0] = (USBFS_UOWN|USBFS_DTS_ENABLE) | (pipe->dataToggle << 6);
+    pBDT->byte[0] = (uint8_t)((USBFS_UOWN|USBFS_DTS_ENABLE) | ((uint32_t)pipe->dataToggle << 6));
 
     if(pipe->pipeType == USB_TRANSFER_TYPE_ISOCHRONOUS)
     {
@@ -1640,12 +1687,15 @@ void _DRV_USBFS_HOST_NonControlSendToken
     }
 
     /* This will cause a transaction interrupt */
-    _DRV_USBFS_SendTokenToAddress(usbID, deviceAddress, pid, endpoint, isLowSpeed);
+    F_DRV_USBFS_SendTokenToAddress(usbID, deviceAddress, pid, endpoint, isLowSpeed);
 }
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* Function:
-    bool _DRV_USBFS_HOST_NonControlIRPProcess
+    bool F_DRV_USBFS_HOST_NonControlIRPProcess
     (
         DRV_USBFS_OBJ * pUSBDrvObj,
         USB_HOST_IRP_LOCAL * pIRP, 
@@ -1665,10 +1715,10 @@ void _DRV_USBFS_HOST_NonControlSendToken
     
 */
 
-bool _DRV_USBFS_HOST_NonControlIRPProcess
+bool F_DRV_USBFS_HOST_NonControlIRPProcess
 (
-    DRV_USBFS_OBJ * pUSBDrvObj,
-    USB_HOST_IRP_LOCAL * pIRP, 
+    DRV_USBFS_OBJ * pusbdrvObj,
+    USB_HOST_IRP_LOCAL * pirp, 
     DRV_USBFS_TRANSACTION_RESULT lastTransactionResult,
     int lastTransactionsize
 )
@@ -1678,11 +1728,12 @@ bool _DRV_USBFS_HOST_NonControlIRPProcess
     DRV_USBFS_HOST_PIPE_OBJ * pipe = (DRV_USBFS_HOST_PIPE_OBJ *)NULL;
     bool tokenSent = false;
     DRV_USBFS_HOST_SW_EP * softwareEP = NULL;
+    uint32_t dataToggle;
 
     /* Get a pointer to the software endpoint */
-    softwareEP = &pUSBDrvObj->drvUSBHostSWEp[pUSBDrvObj->numSWEpEntry];
+    softwareEP = &pusbdrvObj->drvUSBHostSWEp[pusbdrvObj->numSWEpEntry];
 
-    if(pIRP->tempState == DRV_USBFS_HOST_IRP_STATE_ABORTED)
+    if(pirp->tempState == DRV_USBFS_HOST_IRP_STATE_ABORTED)
     {
         /* This means that this IRP was aborted by the application while it was
          * in progress. Terminate it now. */
@@ -1694,21 +1745,21 @@ bool _DRV_USBFS_HOST_NonControlIRPProcess
 
         /* Notify whoever has submitted the IRP that the IRP has been aborted.
          * */
-        pIRP->status = USB_HOST_IRP_STATUS_ABORTED;
-        if(pIRP->callback != NULL)
+        pirp->status = USB_HOST_IRP_STATUS_ABORTED;
+        if(pirp->callback != NULL)
         {
-            pIRP->callback((USB_HOST_IRP*)pIRP);
+            pirp->callback((USB_HOST_IRP*)pirp);
         }
     }
     else
     {
-        pipe = (DRV_USBFS_HOST_PIPE_OBJ *)pIRP->pipe;
+        pipe = (DRV_USBFS_HOST_PIPE_OBJ *)pirp->pipe;
         isLowSpeed = (pipe->speed == USB_SPEED_LOW) ? true : false;
 
-        if(lastTransactionResult == 0)
+        if((int32_t)lastTransactionResult == 0)
         {
             /* This means that a token need to be sent */
-            _DRV_USBFS_HOST_NonControlSendToken(pIRP, pUSBDrvObj, pipe, isLowSpeed);
+            F_DRV_USBFS_HOST_NonControlSendToken(pirp, pusbdrvObj, pipe, isLowSpeed);
             tokenSent = true;
         }
         else
@@ -1721,8 +1772,8 @@ bool _DRV_USBFS_HOST_NonControlIRPProcess
 
             if(pipe->pipeType == USB_TRANSFER_TYPE_ISOCHRONOUS)
             {
-                pIRP->status = USB_HOST_IRP_STATUS_COMPLETED;
-                pIRP->completedBytes += lastTransactionsize;
+                pirp->status = USB_HOST_IRP_STATUS_COMPLETED;
+                pirp->completedBytes += (uint32_t)lastTransactionsize;
 
                 /* End the IRP */
                 endIRP = true;
@@ -1738,33 +1789,34 @@ bool _DRV_USBFS_HOST_NonControlIRPProcess
                     case USB_TRANSACTION_DATA0:
                         /* Fall through is intentional */
                     case USB_TRANSACTION_DATA1:    
-						pipe->retryCount = 0;
-                        pIRP->completedBytes += lastTransactionsize;
-                        pIRP->completedBytesInThisFrame += lastTransactionsize;
-                        pipe->dataToggle ^= 0x1;
+                        pipe->retryCount = 0;
+                        pirp->completedBytes += (uint32_t)lastTransactionsize;
+                        pirp->completedBytesInThisFrame += (uint32_t)lastTransactionsize;
+                        dataToggle = (uint32_t)pipe->dataToggle ^ 0x1U;
+                        pipe->dataToggle = (USB_BUFFER_DATA01)dataToggle;
                         pipe->nakCounter = 0;
-                        if((lastTransactionsize < pipe->endpointSize) || (pIRP->size <= pIRP->completedBytes))
+                        if(((uint32_t)lastTransactionsize < pipe->endpointSize) || (pirp->size <= pirp->completedBytes))
                         {
                             /* We received data less than endpoint size.  So we
                              * end the transfer */
-                            if(pIRP->size > pIRP->completedBytes)
+                            if(pirp->size > pirp->completedBytes)
                             {
-                                pIRP->status = USB_HOST_IRP_STATUS_COMPLETED_SHORT;
+                                pirp->status = USB_HOST_IRP_STATUS_COMPLETED_SHORT;
                             }
                             else
                             {
-                                pIRP->status = USB_HOST_IRP_STATUS_COMPLETED;
+                                pirp->status = USB_HOST_IRP_STATUS_COMPLETED;
                             }
 
                             endIRP = true;
                         }
-                        else if((lastTransactionsize == pIRP->tempSize) || (lastTransactionsize == pipe->endpointSize))
+                        else if(((uint32_t)lastTransactionsize == pirp->tempSize) || ((uint32_t)lastTransactionsize == pipe->endpointSize))
                         {
-                            if(pIRP->tempSize > pIRP->completedBytesInThisFrame)
+                            if(pirp->tempSize > pirp->completedBytesInThisFrame)
                             {
                                 /* Some more transactions are required in this frame */
-                                pIRP->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
-                                _DRV_USBFS_HOST_NonControlSendToken(pIRP,pUSBDrvObj, pipe,isLowSpeed);
+                                pirp->status = USB_HOST_IRP_STATUS_IN_PROGRESS;
+                                F_DRV_USBFS_HOST_NonControlSendToken(pirp,pusbdrvObj, pipe,isLowSpeed);
                                 tokenSent = true;
                             }
                             else
@@ -1777,6 +1829,10 @@ bool _DRV_USBFS_HOST_NonControlIRPProcess
                                 tokenSent = false;
                             }
                         }
+                        else
+                        {
+                            /* Do Nothing */
+                        }
 
                         break;
 
@@ -1785,7 +1841,7 @@ bool _DRV_USBFS_HOST_NonControlIRPProcess
                         /* The token was stalled. We end the IRP */
                         pipe->nakCounter = 0;
                         pipe->dataToggle = USB_BUFFER_DATA0;
-                        pIRP->status = USB_HOST_IRP_STATUS_ERROR_STALL;
+                        pirp->status = USB_HOST_IRP_STATUS_ERROR_STALL;
                         endIRP = true;
                         break;
 
@@ -1797,7 +1853,7 @@ bool _DRV_USBFS_HOST_NonControlIRPProcess
                         }
                         else
                         {
-                            pIRP->status = USB_HOST_IRP_STATUS_ERROR_DATA;
+                            pirp->status = USB_HOST_IRP_STATUS_ERROR_DATA;
                             endIRP = true;
                         }
                         break;
@@ -1810,10 +1866,11 @@ bool _DRV_USBFS_HOST_NonControlIRPProcess
                         }
                         else
                         {
-                            pIRP->status = USB_HOST_IRP_STATUS_ERROR_BUS;
+                            pirp->status = USB_HOST_IRP_STATUS_ERROR_BUS;
                             endIRP = true;
                         }
                         break;
+
 
 
                     case USB_TRANSACTION_NAK:
@@ -1824,24 +1881,25 @@ bool _DRV_USBFS_HOST_NonControlIRPProcess
                         break;
 
                     default:
+                        /* Do Nothing */
                         break;
                 }
             }
 
             if(endIRP == true)
             {
-				pipe->retryCount = 0;
+                pipe->retryCount = 0;
                 /* Remove the irp from the from the SW EP object. */
                 softwareEP->tobeDone = false;
 
                 ((DRV_USBFS_HOST_PIPE_OBJ *)(softwareEP->pIRP->pipe))->irpQueueHead = (softwareEP->pIRP)->next;
 
                 /* Update the size field with actual size received\transmitted */
-                pIRP->size = pIRP->completedBytes;
+                pirp->size = pirp->completedBytes;
 
-                if(pIRP->callback != NULL)
+                if(pirp->callback != NULL)
                 {
-                    pIRP->callback((USB_HOST_IRP *)pIRP);
+                    pirp->callback((USB_HOST_IRP *)pirp);
                 }
             }
         }
@@ -1851,8 +1909,10 @@ bool _DRV_USBFS_HOST_NonControlIRPProcess
 }
 
 // *****************************************************************************
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+/* MISRAC 2012 deviation block end */
 /* Function:
-    void _DRV_USBFS_HOST_CalculateControlBW
+    void F_DRV_USBFS_HOST_CalculateControlBW
     (
         DRV_USBFS_OBJ * pUSBDrvObj,
         DRV_USBFS_HOST_TRANSFER_GROUP * pTransferGroup,
@@ -1864,7 +1924,7 @@ bool _DRV_USBFS_HOST_NonControlIRPProcess
     be sent in one frame.
 
   Description:
-    This is the dynamic implementation of _DRV_USBFS_HOST_CalculateControlBW
+    This is the dynamic implementation of F_DRV_USBFS_HOST_CalculateControlBW
     function. Function performs the following task:
     - Obtains the bandwidth requirement for the transfer based on pipe
       and IRP size
@@ -1878,7 +1938,7 @@ bool _DRV_USBFS_HOST_NonControlIRPProcess
 
 */
 
-void _DRV_USBFS_HOST_CalculateControlBW
+void F_DRV_USBFS_HOST_CalculateControlBW
 (
     DRV_USBFS_OBJ * pUSBDrvObj,
     DRV_USBFS_HOST_TRANSFER_GROUP * pTransferGroup,
@@ -1894,11 +1954,11 @@ void _DRV_USBFS_HOST_CalculateControlBW
     /* Checks the BW available out of the max possible for CONTROL transfer */
     if(pPipe->speed == USB_SPEED_LOW)
     {
-        bwAvailable = (DRV_USBFS_MAX_CONTROL_BANDWIDTH_LOW_SPEED - pUSBDrvObj->globalBWConsumed);
+        bwAvailable = (uint8_t)(DRV_USBFS_MAX_CONTROL_BANDWIDTH_LOW_SPEED - pUSBDrvObj->globalBWConsumed);
     }
     else
     {
-        bwAvailable = (DRV_USBFS_MAX_CONTROL_BANDWIDTH_FULL_SPEED - pUSBDrvObj->globalBWConsumed);
+        bwAvailable = (uint8_t)(DRV_USBFS_MAX_CONTROL_BANDWIDTH_FULL_SPEED - pUSBDrvObj->globalBWConsumed);
     }
 
     /* Obtain the per bandwidth transaction required from pipe data structure.
@@ -1911,20 +1971,24 @@ void _DRV_USBFS_HOST_CalculateControlBW
     if(bwPerTransaction <= bwAvailable)
     {
         /* Atleast 1 transaction is possible */
-        nTransactions = (pControlIRP->size - pControlIRP->completedBytes)/ pPipe->endpointSize;
+        nTransactions = (uint8_t)((pControlIRP->size - pControlIRP->completedBytes)/ pPipe->endpointSize);
 
-        if(nTransactions == 0)
+        if(nTransactions == 0U)
         {
             /* The code will come here only when the HOST is required to send or
              * receive SHORT PACKET only */
 
             nTransactions = 1;
         }
-        else if((pControlIRP->size - pControlIRP->completedBytes) % (pPipe->endpointSize) != 0)
+        else if((pControlIRP->size - pControlIRP->completedBytes) % (pPipe->endpointSize) != 0U)
         {
             /* The code will come here only when the HOST is required to send or
              * receive multiple transactions ending with SHORT PACKET */
             nTransactions++;
+        }
+        else
+        {
+            /* Do Nothing */
         }
 
         /* Obtain the number of CONTROL transactions really possible in this frame */
@@ -1969,7 +2033,7 @@ void _DRV_USBFS_HOST_CalculateControlBW
 
 // *****************************************************************************
 /* Function:
-    bool _DRV_USBFS_HOST_CalculateNonControlBW
+    bool F_DRV_USBFS_HOST_CalculateNonControlBW
     (
         DRV_USBFS_OBJ * pUSBDrvObj,
         DRV_USBFS_HOST_TRANSFER_GROUP * pTransferGroup,
@@ -1983,7 +2047,7 @@ void _DRV_USBFS_HOST_CalculateControlBW
     transaction in the frame.
 
   Description:
-    This is the dynamic implementation of _DRV_USBFS_HOST_CalculateNonControlBW
+    This is the dynamic implementation of F_DRV_USBFS_HOST_CalculateNonControlBW
     function. Function performs the following task:
     - Obtains the bandwidth requirement for the transfer based on pipe
       and IRP size
@@ -1996,7 +2060,7 @@ void _DRV_USBFS_HOST_CalculateControlBW
     application.
 */
 
-bool _DRV_USBFS_HOST_CalculateNonControlBW
+bool F_DRV_USBFS_HOST_CalculateNonControlBW
 (
     DRV_USBFS_OBJ * pUSBDrvObj,
     DRV_USBFS_HOST_TRANSFER_GROUP * pTransferGroup,
@@ -2005,15 +2069,17 @@ bool _DRV_USBFS_HOST_CalculateNonControlBW
     uint8_t numSWEpEntry
 )
 {
-    unsigned int bwAvailable = 0;
-    unsigned int bwPerTransaction = 0;
-    unsigned int nTransactions = 0;
-    unsigned int nPossibleTransactions = 0;
+    uint32_t bwAvailable = 0;
+    uint32_t bwPerTransaction = 0;
+    uint32_t nTransactions = 0;
+    uint32_t nPossibleTransactions = 0;
     DRV_USBFS_HOST_PIPE_OBJ * pPipe = (DRV_USBFS_HOST_PIPE_OBJ *)ptransferIRP->pipe;
     bool irpPacked = false;
+    uint8_t bwConsumedRead;
 
     /* Calculate the BW available in this frame */
-    bwAvailable = (DRV_USBFS_MAX_BANDWIDTH_PER_FRAME - pUSBDrvObj->globalBWConsumed);
+    bwConsumedRead = (DRV_USBFS_MAX_BANDWIDTH_PER_FRAME - pUSBDrvObj->globalBWConsumed);
+    bwAvailable = (uint32_t)bwConsumedRead;
     bwPerTransaction = pPipe->bwPerTransaction;
 
     /* Check if at least 1 transaction is possible */
@@ -2022,13 +2088,17 @@ bool _DRV_USBFS_HOST_CalculateNonControlBW
         /* At least 1 transaction is possible */
         nTransactions = (ptransferIRP->size - ptransferIRP->completedBytes)/ pPipe->endpointSize;
 
-        if(nTransactions == 0)
+        if(nTransactions == 0U)
         {
             nTransactions = 1;
         }
-        else if((ptransferIRP->size - ptransferIRP->completedBytes) % (pPipe->endpointSize) != 0)
+        else if((ptransferIRP->size - ptransferIRP->completedBytes) % (pPipe->endpointSize) != 0U)
         {
             nTransactions++;
+        }
+        else
+        {
+            /* Do Nothing */
         }
 
         nPossibleTransactions = bwAvailable/bwPerTransaction;
@@ -2038,7 +2108,7 @@ bool _DRV_USBFS_HOST_CalculateNonControlBW
         }
 
         /* Increment the global bandwidth */
-        pUSBDrvObj->globalBWConsumed = pUSBDrvObj->globalBWConsumed + (nTransactions * bwPerTransaction);
+        pUSBDrvObj->globalBWConsumed = (uint8_t)(pUSBDrvObj->globalBWConsumed + (nTransactions * bwPerTransaction));
         ptransferIRP->tempSize = nTransactions * pPipe->endpointSize;
 
         /* Based on the above calculation, the size of the data to be
@@ -2068,14 +2138,14 @@ bool _DRV_USBFS_HOST_CalculateNonControlBW
 
 // *****************************************************************************
 /* Function:
-    void _DRV_USBFS_HOST_TransferPack (DRV_USBFS_OBJ * pUSBDrvObj)
+    void F_DRV_USBFS_HOST_TransferPack (DRV_USBFS_OBJ * pUSBDrvObj)
 
   Summary:
-    Dynamic implementation of _DRV_USBFS_HOST_TransferPack internal
+    Dynamic implementation of F_DRV_USBFS_HOST_TransferPack internal
     function.
 
   Description:
-    This is the dynamic implementation of _DRV_USBFS_HOST_TransferPack
+    This is the dynamic implementation of F_DRV_USBFS_HOST_TransferPack
     function. Function performs the following task:
     - Obtains the bandwidth requirement for the transfer based on pipe
       and IRP size
@@ -2088,7 +2158,7 @@ bool _DRV_USBFS_HOST_CalculateNonControlBW
     application.
 */
 
-void _DRV_USBFS_HOST_TransferPack (DRV_USBFS_OBJ * pUSBDrvObj)
+void F_DRV_USBFS_HOST_TransferPack (DRV_USBFS_OBJ * pUSBDrvObj)
 {
     DRV_USBFS_HOST_TRANSFER_GROUP * pTransferGroup = (DRV_USBFS_HOST_TRANSFER_GROUP *)NULL;
     DRV_USBFS_HOST_PIPE_OBJ * piteratorPipe = (DRV_USBFS_HOST_PIPE_OBJ *)NULL;
@@ -2120,7 +2190,7 @@ void _DRV_USBFS_HOST_TransferPack (DRV_USBFS_OBJ * pUSBDrvObj)
              * the tobeDone field. Because this is being called at the start of
              * the frame, we know that bandwidth will always get allocated. */
 
-            _DRV_USBFS_HOST_CalculateControlBW(pUSBDrvObj, pTransferGroup, pControlIRP);
+            F_DRV_USBFS_HOST_CalculateControlBW(pUSBDrvObj, pTransferGroup, pControlIRP);
             numIRPProcess = 1;
         }
         else
@@ -2145,7 +2215,7 @@ void _DRV_USBFS_HOST_TransferPack (DRV_USBFS_OBJ * pUSBDrvObj)
              * process or till we have run out of all open CONTROL transfer
              * pipes */
 
-            for(loop = 0; loop < pTransferGroup->nPipes; loop++)
+            for(loop = 0; loop < (uint32_t)pTransferGroup->nPipes; loop++)
             {
                 pControlIRP = (pTransferGroup->currentPipe)->irpQueueHead;
 
@@ -2155,11 +2225,11 @@ void _DRV_USBFS_HOST_TransferPack (DRV_USBFS_OBJ * pUSBDrvObj)
                     /* So the PIPE has valid CONTROL IRP.  Analyze the bandwidth
                      * requirements for this IRP and calculate the amount of
                      * data to be processed in this USB frame.  The
-                     * _DRV_USBFS_HOST_CalculateControlBW function will set the
+                     * F_DRV_USBFS_HOST_CalculateControlBW function will set the
                      * tobeDone flag true if the transaction could be scheduled
                      * in this frame.  */
 
-                    _DRV_USBFS_HOST_CalculateControlBW(pUSBDrvObj, pTransferGroup, pControlIRP);
+                    F_DRV_USBFS_HOST_CalculateControlBW(pUSBDrvObj, pTransferGroup, pControlIRP);
                     if(pUSBDrvObj->drvUSBHostSWEp[0].tobeDone == true)
                     {
                         /* We have successfully packed a CONTROL IRP.  The
@@ -2209,14 +2279,14 @@ void _DRV_USBFS_HOST_TransferPack (DRV_USBFS_OBJ * pUSBDrvObj)
      * 2. Number of IRPs to be packed has not yet exceeded the maximum allowed
      * 3. Index into global IRP pool has not yet exceeded the maximum allowed */
 
-    if((pTransferGroup->pipe != NULL) && (numIRPProcess < _DRV_USBFS_HOST_IRP_PER_FRAME_NUMBER) && (numSWEpEntry < _DRV_USBFS_SW_EP_NUMBER))
+    if(pTransferGroup->pipe != NULL)
     {
         /* Decrement the interval counter for all ISOCHRONOUS pipes */
         do
         {
             piteratorPipe->intervalCounter--;
 
-            if(piteratorPipe->intervalCounter == 0)
+            if(piteratorPipe->intervalCounter == 0U)
             {
                 /* ISOCHRONOUS IRP, if present, will be scheduled from this pipe */
             }
@@ -2233,16 +2303,16 @@ void _DRV_USBFS_HOST_TransferPack (DRV_USBFS_OBJ * pUSBDrvObj)
         pisochronousIRP = pTransferGroup->pipe->irpQueueHead;
         piteratorPipe = pTransferGroup->pipe;
 
-        for(loop = 0; loop < (pTransferGroup->nPipes) && (numIRPProcess < _DRV_USBFS_HOST_IRP_PER_FRAME_NUMBER) && (numSWEpEntry < _DRV_USBFS_SW_EP_NUMBER); loop++)
-        {
+        for(loop = 0; loop < (uint32_t)(pTransferGroup->nPipes); loop++)
+        {   
             pisochronousIRP = piteratorPipe->irpQueueHead;
 
-            if((pisochronousIRP != NULL) && (piteratorPipe->intervalCounter == 0))
+            if((pisochronousIRP != NULL) && (piteratorPipe->intervalCounter == 0U))
             {
                 piteratorPipe->intervalCounter = piteratorPipe->bInterval;
                 
                 /* Check BW and pack IRP */
-                irpPacked = _DRV_USBFS_HOST_CalculateNonControlBW ( pUSBDrvObj, pTransferGroup, pisochronousIRP, USB_TRANSFER_TYPE_ISOCHRONOUS, numSWEpEntry);
+                irpPacked = F_DRV_USBFS_HOST_CalculateNonControlBW ( pUSBDrvObj, pTransferGroup, pisochronousIRP, USB_TRANSFER_TYPE_ISOCHRONOUS, numSWEpEntry);
 
                 if(irpPacked == true)
                 {
@@ -2259,13 +2329,17 @@ void _DRV_USBFS_HOST_TransferPack (DRV_USBFS_OBJ * pUSBDrvObj)
                      * ISOCHRONOUS pipe in the next iteration.  */
                 }
             }
-            else if(piteratorPipe->intervalCounter == 0)
+            else if(piteratorPipe->intervalCounter == 0U)
             {
                 /* The code will come here when IRP was not there in the pipe
                  * but interval has become 0. We need to reset the interval
                  * counter to original bInterval value */
 
                 piteratorPipe->intervalCounter = piteratorPipe->bInterval;
+            }
+            else
+            {
+                /* Do Nothing */
             }
 
             piteratorPipe = piteratorPipe->next;
@@ -2274,6 +2348,15 @@ void _DRV_USBFS_HOST_TransferPack (DRV_USBFS_OBJ * pUSBDrvObj)
                 /* Reached the end of list.  Move the pipe pointer to HEAD of
                  * the list*/
                 piteratorPipe = pTransferGroup->pipe;
+            }
+
+            if (numIRPProcess >= DRV_USBFS_HOST_IRP_PER_FRAME_NUMBER)
+            {
+                break; 
+            }
+            if (numSWEpEntry >= DRV_USBFS_SW_EP_NUMBER)
+            {
+                break; 
             }
         } 
     }
@@ -2287,14 +2370,14 @@ void _DRV_USBFS_HOST_TransferPack (DRV_USBFS_OBJ * pUSBDrvObj)
      * 2. Number of IRPs to be packed has not yet exceeded the maximum allowed
      * 3. Index into global IRP pool has not yet exceeded the maximum allowed */
 
-    if((pTransferGroup->pipe != NULL) && (numIRPProcess < _DRV_USBFS_HOST_IRP_PER_FRAME_NUMBER) && (numSWEpEntry < _DRV_USBFS_SW_EP_NUMBER))
+    if((pTransferGroup->pipe != NULL) && (numIRPProcess < DRV_USBFS_HOST_IRP_PER_FRAME_NUMBER) && (numSWEpEntry < DRV_USBFS_SW_EP_NUMBER))
     {
         /* Decrement the interval counter for all INTERRUPT pipes */
         do
         {
             piteratorPipe->intervalCounter--;
 
-            if(piteratorPipe->intervalCounter == 0)
+            if(piteratorPipe->intervalCounter == 0U)
             {
                 /* INTERRUPT IRP, if present, will be scheduled from this pipe */
             }
@@ -2311,16 +2394,16 @@ void _DRV_USBFS_HOST_TransferPack (DRV_USBFS_OBJ * pUSBDrvObj)
         pinterruptIRP = pTransferGroup->pipe->irpQueueHead;
         piteratorPipe = pTransferGroup->pipe;
 
-        for(loop = 0; loop < (pTransferGroup->nPipes) && (numIRPProcess < _DRV_USBFS_HOST_IRP_PER_FRAME_NUMBER) && (numSWEpEntry < _DRV_USBFS_SW_EP_NUMBER); loop++)
+        for(loop = 0; loop < (uint32_t)(pTransferGroup->nPipes); loop++)
         {
             pinterruptIRP = piteratorPipe->irpQueueHead;
 
-            if((pinterruptIRP != NULL) && (piteratorPipe->intervalCounter == 0))
+            if((pinterruptIRP != NULL) && (piteratorPipe->intervalCounter == 0U))
             {
 
                 piteratorPipe->intervalCounter = piteratorPipe->bInterval;
                 /* Check BW and pack IRP */
-                irpPacked = _DRV_USBFS_HOST_CalculateNonControlBW ( pUSBDrvObj, pTransferGroup, pinterruptIRP, USB_TRANSFER_TYPE_INTERRUPT, numSWEpEntry);
+                irpPacked = F_DRV_USBFS_HOST_CalculateNonControlBW ( pUSBDrvObj, pTransferGroup, pinterruptIRP, USB_TRANSFER_TYPE_INTERRUPT, numSWEpEntry);
 
                 if(irpPacked == true)
                 {
@@ -2337,13 +2420,17 @@ void _DRV_USBFS_HOST_TransferPack (DRV_USBFS_OBJ * pUSBDrvObj)
                      * next INTERRUPT pipe in the next iteration.  */
                 }
             }
-            else if(piteratorPipe->intervalCounter == 0)
+            else if(piteratorPipe->intervalCounter == 0U)
             {
                 /* The code will come here when IRP was not there in the pipe
                  * but interval has become 0. We need to reset the interval
                  * counter to original bInterval value */
 
                 piteratorPipe->intervalCounter = piteratorPipe->bInterval;
+            }
+            else
+            {
+                /* Do Nothing */
             }
 
             piteratorPipe = piteratorPipe->next;
@@ -2352,6 +2439,15 @@ void _DRV_USBFS_HOST_TransferPack (DRV_USBFS_OBJ * pUSBDrvObj)
                 /* Reached the end of list. Move the pipe pointer to HEAD of
                  * list*/
                 piteratorPipe = pTransferGroup->pipe;
+            }
+
+            if (numIRPProcess >= DRV_USBFS_HOST_IRP_PER_FRAME_NUMBER)
+            {
+                break; 
+            }
+            if (numSWEpEntry >= DRV_USBFS_SW_EP_NUMBER)
+            {
+                break; 
             }
         }
     }
@@ -2365,7 +2461,7 @@ void _DRV_USBFS_HOST_TransferPack (DRV_USBFS_OBJ * pUSBDrvObj)
      * 3. Index into global IRP pool has not yet exceeded the maximum allowed
      */
 
-    if((pTransferGroup->pipe != NULL) && (numIRPProcess < _DRV_USBFS_HOST_IRP_PER_FRAME_NUMBER) && (numSWEpEntry < _DRV_USBFS_SW_EP_NUMBER))
+    if((pTransferGroup->pipe != NULL) && (numIRPProcess < DRV_USBFS_HOST_IRP_PER_FRAME_NUMBER) && (numSWEpEntry < DRV_USBFS_SW_EP_NUMBER))
     {
         pbulkIRP = pTransferGroup->currentPipe->irpQueueHead;
         piteratorPipe = pTransferGroup->currentPipe;
@@ -2373,14 +2469,14 @@ void _DRV_USBFS_HOST_TransferPack (DRV_USBFS_OBJ * pUSBDrvObj)
         /* Scan all the available BULK pipes starting from the current pipe.
          * 1st time current pipe will be same as pipe. After that current pipe
          * will move within the BULK pipe list as per IRP processed */
-        for(loop = 0; loop < (pTransferGroup->nPipes) && (numIRPProcess < _DRV_USBFS_HOST_IRP_PER_FRAME_NUMBER) && (numSWEpEntry < _DRV_USBFS_SW_EP_NUMBER); loop++)
+        for(loop = 0; loop < (uint32_t)(pTransferGroup->nPipes); loop++)
         {
             pbulkIRP = piteratorPipe->irpQueueHead;
 
             if(pbulkIRP != NULL)
             {
                 /* So the PIPE has valid BULK IRP */
-                irpPacked = _DRV_USBFS_HOST_CalculateNonControlBW ( pUSBDrvObj, pTransferGroup, pbulkIRP, USB_TRANSFER_TYPE_BULK, numSWEpEntry);
+                irpPacked = F_DRV_USBFS_HOST_CalculateNonControlBW ( pUSBDrvObj, pTransferGroup, pbulkIRP, USB_TRANSFER_TYPE_BULK, numSWEpEntry);
 
                 if(irpPacked == true)
                 {
@@ -2415,13 +2511,22 @@ void _DRV_USBFS_HOST_TransferPack (DRV_USBFS_OBJ * pUSBDrvObj)
                  * the list*/
                 piteratorPipe = pTransferGroup->pipe;
             }
+
+            if (numIRPProcess >= DRV_USBFS_HOST_IRP_PER_FRAME_NUMBER)
+            {
+                break; 
+            }
+            if (numSWEpEntry >= DRV_USBFS_SW_EP_NUMBER)
+            {
+                break; 
+            }
         } 
     }
 }
 
 // *****************************************************************************
 /* Function:
-    bool _DRV_USBFS_HOST_TransferSchedule
+    bool F_DRV_USBFS_HOST_TransferSchedule
     (
         DRV_USBFS_OBJ * pUSBDrvObj,
         DRV_USBFS_TRANSACTION_RESULT lastResult,
@@ -2430,10 +2535,10 @@ void _DRV_USBFS_HOST_TransferPack (DRV_USBFS_OBJ * pUSBDrvObj)
     )
 
   Summary:
-    Dynamic implementation of _DRV_USBFS_HOST_TransferSchedule internal function.
+    Dynamic implementation of F_DRV_USBFS_HOST_TransferSchedule internal function.
 
   Description:
-    This is the dynamic implementation of _DRV_USBFS_HOST_TransferSchedule
+    This is the dynamic implementation of F_DRV_USBFS_HOST_TransferSchedule
     function. Function performs the following task:
     - Traverses through all the different transfer pipes.
     - Prepares the SW EP buffer with the transfer details that will be
@@ -2446,9 +2551,9 @@ void _DRV_USBFS_HOST_TransferPack (DRV_USBFS_OBJ * pUSBDrvObj)
     application.
 */
 
-bool _DRV_USBFS_HOST_TransferSchedule
+bool F_DRV_USBFS_HOST_TransferSchedule
 (
-    DRV_USBFS_OBJ * pUSBDrvObj,
+    DRV_USBFS_OBJ * pusbdrvObj,
     DRV_USBFS_TRANSACTION_RESULT lastResult,
     unsigned int transactionSize,
     bool frameExpiry
@@ -2475,7 +2580,7 @@ bool _DRV_USBFS_HOST_TransferSchedule
      *      lastResult = 0, 
      *      transactionSize = 0 */
 
-    if(lastResult == 0)
+    if((int32_t)lastResult == 0)
     {
         /* This means that a transfer has completed and we are not continuing a
          * transfer. This can happen either if a SOF duration has completed or
@@ -2493,16 +2598,16 @@ bool _DRV_USBFS_HOST_TransferSchedule
              * loop below starts with 1 and not 0. 0 index is always allocated
              * for control transfers. */
 
-            for(numSWEpEntry = 1; numSWEpEntry < _DRV_USBFS_SW_EP_NUMBER; numSWEpEntry++)
+            for(numSWEpEntry = 1; numSWEpEntry < DRV_USBFS_SW_EP_NUMBER; numSWEpEntry++)
             {
                 /* Clearing the tobeDone flags will indicate that all the
                  * transfers scheduled on these software endpoints need to be
                  * re-scheduled in this frame. */
-                pUSBDrvObj->drvUSBHostSWEp[numSWEpEntry].tobeDone = false;
+                pusbdrvObj->drvUSBHostSWEp[numSWEpEntry].tobeDone = false;
             }
 
             /* Reset the frame bandwidth consumed number */
-            pUSBDrvObj->globalBWConsumed = 0;
+            pusbdrvObj->globalBWConsumed = 0;
 
             /* This function call will help in:
              * 
@@ -2516,7 +2621,7 @@ bool _DRV_USBFS_HOST_TransferSchedule
              *
              */
 
-            _DRV_USBFS_HOST_TransferPack(pUSBDrvObj);
+            F_DRV_USBFS_HOST_TransferPack(pusbdrvObj);
 
             /* Reset numSWEpEntry to 0 to make sure processing of Global IRP
              * SW pool starts from index 0 for frame expiry case. */
@@ -2530,10 +2635,10 @@ bool _DRV_USBFS_HOST_TransferSchedule
              * Increment the numSWEpEntry tracker to point to the next software
              * endpoint.*/
 
-            numSWEpEntry = pUSBDrvObj->numSWEpEntry + 1;
+            numSWEpEntry = (uint8_t)(pusbdrvObj->numSWEpEntry + 1U);
         }
 
-        if(numSWEpEntry < _DRV_USBFS_SW_EP_NUMBER)
+        if(numSWEpEntry < DRV_USBFS_SW_EP_NUMBER)
         {
 
             /* Call appropriate transfer function to process.  Please note how
@@ -2543,28 +2648,28 @@ bool _DRV_USBFS_HOST_TransferSchedule
              * incremented by 1 before. So this helps in reducing unnecessary loop
              * check and increases the scheduler through put.  */
 
-            for(;(numSWEpEntry < _DRV_USBFS_SW_EP_NUMBER);numSWEpEntry++)
+            for(;(numSWEpEntry < DRV_USBFS_SW_EP_NUMBER);numSWEpEntry++)
             {
                 /* Obtain a pointer to the software endpoint being analyzed. */
 
-                softwareEP = &pUSBDrvObj->drvUSBHostSWEp[numSWEpEntry];
+                softwareEP = &pusbdrvObj->drvUSBHostSWEp[numSWEpEntry];
                 if((softwareEP->tobeDone) == true)
                 {
                     /* Update the global IRP pool index into USB DRV object.
                      * This will be useful while TRNIF is handled */
-                    pUSBDrvObj->numSWEpEntry = numSWEpEntry;
+                    pusbdrvObj->numSWEpEntry = numSWEpEntry;
 
                     if(softwareEP->transferType == USB_TRANSFER_TYPE_CONTROL) 
                     {
                         /* Control transfer */
-                        tokenSent = _DRV_USBFS_HOST_ControlXferProcess ( pUSBDrvObj, softwareEP->pIRP, (DRV_USBFS_TRANSACTION_RESULT) 0, 0);
+                        tokenSent = F_DRV_USBFS_HOST_ControlXferProcess ( pusbdrvObj, softwareEP->pIRP, (DRV_USBFS_TRANSACTION_RESULT) 0, 0);
                     }
                     else if((softwareEP->transferType == USB_TRANSFER_TYPE_ISOCHRONOUS) ||
                             (softwareEP->transferType == USB_TRANSFER_TYPE_INTERRUPT) ||
                             (softwareEP->transferType == USB_TRANSFER_TYPE_BULK))
                     {
                         /* Non Control transfers */
-                        tokenSent = _DRV_USBFS_HOST_NonControlIRPProcess ( pUSBDrvObj, softwareEP->pIRP, (DRV_USBFS_TRANSACTION_RESULT) 0, 0);
+                        tokenSent = F_DRV_USBFS_HOST_NonControlIRPProcess ( pusbdrvObj, softwareEP->pIRP, (DRV_USBFS_TRANSACTION_RESULT) 0, 0);
                     }
                     else
                     {
@@ -2594,20 +2699,20 @@ bool _DRV_USBFS_HOST_TransferSchedule
          * below code helps in processing for multiple transaction transfers as
          * per the USB transfer type.  */
 
-        softwareEP = &pUSBDrvObj->drvUSBHostSWEp[pUSBDrvObj->numSWEpEntry];
+        softwareEP = &pusbdrvObj->drvUSBHostSWEp[pusbdrvObj->numSWEpEntry];
 
-        if(pUSBDrvObj->numSWEpEntry == 0)
+        if(pusbdrvObj->numSWEpEntry == 0U)
         {
             /* The last scheduled in this frame was CONTROL. So this is
              * continuation of Control transfer */
-            tokenSent = _DRV_USBFS_HOST_ControlXferProcess ( pUSBDrvObj, softwareEP->pIRP, (DRV_USBFS_TRANSACTION_RESULT) lastResult, transactionSize);
+            tokenSent = F_DRV_USBFS_HOST_ControlXferProcess ( pusbdrvObj, softwareEP->pIRP, (DRV_USBFS_TRANSACTION_RESULT) lastResult, transactionSize);
         }
         else
         {
-            if((pUSBDrvObj->drvUSBHostSWEp[pUSBDrvObj->numSWEpEntry].tobeDone == true))
+            if((pusbdrvObj->drvUSBHostSWEp[pusbdrvObj->numSWEpEntry].tobeDone == true))
             {
                 /* Last scheduled was Isochronous, interrupt or BULK transfer */
-                tokenSent = _DRV_USBFS_HOST_NonControlIRPProcess ( pUSBDrvObj, softwareEP->pIRP, (DRV_USBFS_TRANSACTION_RESULT) lastResult, transactionSize);
+                tokenSent = F_DRV_USBFS_HOST_NonControlIRPProcess ( pusbdrvObj, softwareEP->pIRP, (DRV_USBFS_TRANSACTION_RESULT) lastResult, (int32_t)transactionSize);
             }
         }
     }
@@ -2620,13 +2725,13 @@ bool _DRV_USBFS_HOST_TransferSchedule
 
 // *****************************************************************************
 /* Function:
-    void _DRV_USBFS_HOST_Tasks_ISR(DRV_USBFS_OBJ * pUSBDrvObj)
+    void F_DRV_USBFS_HOST_Tasks_ISR(DRV_USBFS_OBJ * pUSBDrvObj)
 
   Summary:
-    Dynamic implementation of _DRV_USBFS_HOST_Tasks_ISR function.
+    Dynamic implementation of F_DRV_USBFS_HOST_Tasks_ISR function.
 
   Description:
-    This is the dynamic implementation of _DRV_USBFS_HOST_Tasks_ISR internal
+    This is the dynamic implementation of F_DRV_USBFS_HOST_Tasks_ISR internal
     function. Function is an interrupt handler which does necessary processing
     based on the interrupt.
 
@@ -2635,47 +2740,50 @@ bool _DRV_USBFS_HOST_TransferSchedule
 
 */
 
-void _DRV_USBFS_HOST_Tasks_ISR(DRV_USBFS_OBJ * pUSBDrvObj)
+void F_DRV_USBFS_HOST_Tasks_ISR(DRV_USBFS_OBJ * pusbdrvObj)
 {
     DRV_USBFS_BDT_ENTRY *pBDTEntry = (DRV_USBFS_BDT_ENTRY *) NULL;
     bool tokenWasSent = false;
     uint8_t lastEndpoint = 0;
     uint8_t swEpCount = 0;
-    unsigned int transactionSize = 0;
+    uint32_t transactionSize = 0;
     USB_MODULE_ID usbID;
-    USB_INTERRUPTS usbInterrupts = 0;
-    USB_INTERRUPTS enabledUSBInterrupts = 0;
-    USB_PING_PONG_STATE lastPingPong = 0;
-    USB_BUFFER_DIRECTION lastDirection = 0;
-    DRV_USBFS_TRANSACTION_RESULT  transactionResult = 0;
+    USB_INTERRUPTS usbInterrupts;
+    USB_INTERRUPTS enabledUSBInterrupts;
+    USB_PING_PONG_STATE lastPingPong = USB_PING_PONG_EVEN;
+    USB_BUFFER_DIRECTION lastDirection = USB_BUFFER_RX;
+    DRV_USBFS_TRANSACTION_RESULT  transactionResult = USB_TRANSACTION_BUS_TIME_OUT;
+    uint32_t readPingPong;
+    uint8_t readPingPong_8;
+    bool readInterruptFalgGet;
 
-    usbID = pUSBDrvObj->usbID;
+    usbID = pusbdrvObj->usbID;
 
     usbInterrupts = PLIB_USB_InterruptFlagAllGet(usbID);
     enabledUSBInterrupts = PLIB_USB_InterruptEnableGet(usbID);
-
-    if((PLIB_USB_OTG_InterruptIsEnabled(usbID, USB_OTG_INT_ONE_MS_TIMEOUT)) && (PLIB_USB_OTG_InterruptFlagGet(usbID, USB_OTG_INT_ONE_MS_TIMEOUT)))
+    readInterruptFalgGet = (PLIB_USB_OTG_InterruptFlagGet(usbID, ((USB_OTG_INTERRUPTS)USB_OTG_INT_ONE_MS_TIMEOUT)));
+    if((PLIB_USB_OTG_InterruptIsEnabled(usbID, ((USB_INTERRUPTS)USB_OTG_INT_ONE_MS_TIMEOUT))) && readInterruptFalgGet)
     {
         PLIB_USB_OTG_InterruptFlagClear(usbID, USB_OTG_INT_ONE_MS_TIMEOUT);
 
         /* This means the 1 millisecond timeout has occurred. This interrupt
          * is enabled for timing needs from reset, attach and detach cases */
 
-        if(pUSBDrvObj->isAttachDebouncing)
+        if(pusbdrvObj->isAttachDebouncing)
         {
             /* This means an attach was detected and it is being debounced.
              * Update the debounce counter. If count has expired, then check
              * again if the Attach condition exists. If so then the attach
              * is a valid attach. */
 
-            pUSBDrvObj->attachDebounceCounter ++;
-            if(DRV_USBFS_HOST_ATTACH_DEBOUNCE_DURATION <= pUSBDrvObj->attachDebounceCounter)
+            pusbdrvObj->attachDebounceCounter ++;
+            if(DRV_USBFS_HOST_ATTACH_DEBOUNCE_DURATION <= pusbdrvObj->attachDebounceCounter)
             {
                 /* The timer interrupt needs to be stopped and the
                  * attachDebouncing flag needs to be reset. This stops attach
                  * debouncing. */
                 PLIB_USB_OTG_InterruptDisable(usbID, USB_OTG_INT_ONE_MS_TIMEOUT);
-                pUSBDrvObj->isAttachDebouncing = false;
+                pusbdrvObj->isAttachDebouncing = false;
 
                 /* Debounce time over. Is the device still attached */
                 if(PLIB_USB_InterruptFlagGet(usbID, USB_INT_ATTACH))
@@ -2692,7 +2800,7 @@ void _DRV_USBFS_HOST_Tasks_ISR(DRV_USBFS_OBJ * pUSBDrvObj)
                      * this function, the UHD of the parent device which is the
                      * root hub in this case.
                      * */
-                    pUSBDrvObj->attachedDeviceObjHandle = USB_HOST_DeviceEnumerate (pUSBDrvObj->usbHostDeviceInfo, 0);
+                    pusbdrvObj->attachedDeviceObjHandle = USB_HOST_DeviceEnumerate (pusbdrvObj->usbHostDeviceInfo, 0);
                 }
                 else
                 {
@@ -2704,12 +2812,12 @@ void _DRV_USBFS_HOST_Tasks_ISR(DRV_USBFS_OBJ * pUSBDrvObj)
                 }
             }
         }
-        else if(pUSBDrvObj->isResetting)
+        else if(pusbdrvObj->isResetting)
         {
             /* The HCD is presently generating reset signalling */
-            pUSBDrvObj->resetDuration ++;
+            pusbdrvObj->resetDuration ++;
 
-            if(DRV_USBFS_HOST_RESET_DURATION ==  pUSBDrvObj->resetDuration)
+            if(DRV_USBFS_HOST_RESET_DURATION ==  pusbdrvObj->resetDuration)
             {
                 /* This controller seems to need some time to detect speed after
                  * resetting is complete to detect speed. So what we will do is
@@ -2719,36 +2827,36 @@ void _DRV_USBFS_HOST_Tasks_ISR(DRV_USBFS_OBJ * pUSBDrvObj)
                 PLIB_USB_ResetSignalDisable(usbID);
             }
 
-            if((DRV_USBFS_HOST_RESET_DURATION + 1) <= pUSBDrvObj->resetDuration)
+            if((DRV_USBFS_HOST_RESET_DURATION + 1U) <= pusbdrvObj->resetDuration)
             {
                 /* The resetting has completed and we are ready to detect the
                  * speed of the attached device. */
 
-                pUSBDrvObj->resetDuration = 0;
+                pusbdrvObj->resetDuration = 0;
                 PLIB_USB_OTG_InterruptDisable(usbID, USB_OTG_INT_ONE_MS_TIMEOUT);
 
                /* After the reset is deactivated, we can find out if the J state is
                 * active, which means that the D- line is pulled up and hence this a
                 * low speed device.
                 */
-                if(!PLIB_USB_JStateIsActive(pUSBDrvObj->usbID))
+                if(!PLIB_USB_JStateIsActive(pusbdrvObj->usbID))
                 {
                     /* This means that low speed device was attached. All tokens should
                      * be executed at low speed. Also enable direct connection to LS
                      * speed bit in the EP0 control register.  */
 
-                    pUSBDrvObj->deviceSpeed = USB_SPEED_LOW;
-                    PLIB_USB_TokenSpeedSelect(pUSBDrvObj->usbID, USB_LOWSPEED_TOKENS);
-                    PLIB_USB_EP0LSDirectConnectEnable(pUSBDrvObj->usbID);
+                    pusbdrvObj->deviceSpeed = USB_SPEED_LOW;
+                    PLIB_USB_TokenSpeedSelect(pusbdrvObj->usbID, USB_LOWSPEED_TOKENS);
+                    PLIB_USB_EP0LSDirectConnectEnable(pusbdrvObj->usbID);
                 }
                 else
                 {
                     /* This means this is a full speed device. Setup token speed
                      * for speed and disable the direction connect to low speed
                      * bit. */
-                    pUSBDrvObj->deviceSpeed = USB_SPEED_FULL;
-                    PLIB_USB_TokenSpeedSelect(pUSBDrvObj->usbID, USB_FULLSPEED_TOKENS);
-                    PLIB_USB_EP0LSDirectConnectDisable(pUSBDrvObj->usbID);
+                    pusbdrvObj->deviceSpeed = USB_SPEED_FULL;
+                    PLIB_USB_TokenSpeedSelect(pusbdrvObj->usbID, USB_FULLSPEED_TOKENS);
+                    PLIB_USB_EP0LSDirectConnectDisable(pusbdrvObj->usbID);
                 }
 
                 /* The reset recovery time must be provided by the Host Layer.
@@ -2756,30 +2864,34 @@ void _DRV_USBFS_HOST_Tasks_ISR(DRV_USBFS_OBJ * pUSBDrvObj)
 
                 PLIB_USB_SOFEnable(usbID);
                 PLIB_USB_InterruptEnable(usbID, USB_INT_SOF);
-                pUSBDrvObj->isResetting = false;
+                pusbdrvObj->isResetting = false;
             }
         }
-        else if(pUSBDrvObj->isDetachDebouncing)
+        else if(pusbdrvObj->isDetachDebouncing)
         {
             /* This means a detach was detected. Some time delay is to be
              * provided so that any false attaches which may trigger while the
              * device is being detached is avoided. */
              
-            pUSBDrvObj->detachDebounceCounter++;
-            if(DRV_USBFS_POST_DETACH_DELAY <= pUSBDrvObj->detachDebounceCounter)
+            pusbdrvObj->detachDebounceCounter++;
+            if(DRV_USBFS_POST_DETACH_DELAY <= pusbdrvObj->detachDebounceCounter)
             {
                 /* The post detach delay is completed. We can re-enable the
                  * attach interrupt now. */
 
-                pUSBDrvObj->isDetachDebouncing = false;
+                pusbdrvObj->isDetachDebouncing = false;
                 PLIB_USB_InterruptFlagClear(usbID, USB_INT_ATTACH);
                 PLIB_USB_InterruptEnable(usbID, USB_INT_ATTACH);
             }
         }
+        else
+        {
+            /* Do Nothing */
+        }
     }
 
     /* Check if an error has occurred */
-    if (( usbInterrupts & USB_INT_ERROR ) && (enabledUSBInterrupts & USB_INT_ERROR))
+    if ((((uint32_t)usbInterrupts & (uint32_t)USB_INT_ERROR )!= 0U) && (((uint32_t)enabledUSBInterrupts & (uint32_t)USB_INT_ERROR)!= 0U))
     { 
         USB_ERROR_INTERRUPTS errorType;
 
@@ -2792,7 +2904,7 @@ void _DRV_USBFS_HOST_Tasks_ISR(DRV_USBFS_OBJ * pUSBDrvObj)
         PLIB_USB_InterruptFlagClear( usbID, USB_INT_ERROR ); 
     }
 
-    if (( usbInterrupts & USB_INT_SOF ) && (enabledUSBInterrupts & USB_INT_SOF))
+    if ((( (uint32_t)usbInterrupts & (uint32_t)USB_INT_SOF ) != 0U) && (((uint32_t)enabledUSBInterrupts & (uint32_t)USB_INT_SOF) != 0U))
     { 
         /* SOF threshold reached by Host. Call the transaction scheduler so that
          * we schedule the next set of transfers */
@@ -2800,10 +2912,10 @@ void _DRV_USBFS_HOST_Tasks_ISR(DRV_USBFS_OBJ * pUSBDrvObj)
         PLIB_USB_InterruptFlagClear(usbID, USB_INT_SOF);
          
         /* Call the transfer scheduler */
-        _DRV_USBFS_HOST_TransferSchedule(pUSBDrvObj, (DRV_USBFS_TRANSACTION_RESULT)0, (unsigned int)0, true);
+        (void) F_DRV_USBFS_HOST_TransferSchedule(pusbdrvObj, (DRV_USBFS_TRANSACTION_RESULT)0, (unsigned int)0, true);
     }
 
-    if ((usbInterrupts & USB_INT_STALL) && (enabledUSBInterrupts & USB_INT_STALL))
+    if ((((uint32_t)usbInterrupts & (uint32_t)USB_INT_STALL)!= 0U) && (((uint32_t)enabledUSBInterrupts & (uint32_t)USB_INT_STALL)!= 0U))
     {
         /* The device stalled the request. At this point we don't know yet what
          * to do with this interrupt. Clearing the flag for now */
@@ -2811,18 +2923,18 @@ void _DRV_USBFS_HOST_Tasks_ISR(DRV_USBFS_OBJ * pUSBDrvObj)
         PLIB_USB_InterruptFlagClear(usbID, USB_INT_STALL);
     }
 
-    if((usbInterrupts & USB_INT_RESUME) && (enabledUSBInterrupts & USB_INT_RESUME))
+    if((((uint32_t)usbInterrupts & (uint32_t)USB_INT_RESUME)!= 0U) && (((uint32_t)enabledUSBInterrupts & (uint32_t)USB_INT_RESUME)!= 0U))
     {
         /* Device sent resume signalling to the host */
         PLIB_USB_InterruptFlagClear(usbID, USB_INT_RESUME);
     }
 
-    if ((usbInterrupts & USB_INT_IDLE_DETECT) && (enabledUSBInterrupts & USB_INT_IDLE_DETECT))
+    if ((((uint32_t)usbInterrupts & (uint32_t)USB_INT_IDLE_DETECT)!= 0U) && (((uint32_t)enabledUSBInterrupts & (uint32_t)USB_INT_IDLE_DETECT)!= 0U))
     {
         PLIB_USB_InterruptFlagClear(usbID, USB_INT_IDLE_DETECT);
     }
 
-    if ((usbInterrupts & USB_INT_ATTACH) && (enabledUSBInterrupts & USB_INT_ATTACH))
+    if ((((uint32_t)usbInterrupts & (uint32_t)USB_INT_ATTACH)!= 0U) && (((uint32_t)enabledUSBInterrupts & (uint32_t)USB_INT_ATTACH)!= 0U))
     {
         /* Host got a device attach */
         PLIB_USB_InterruptFlagClear(usbID, USB_INT_ATTACH);
@@ -2834,12 +2946,12 @@ void _DRV_USBFS_HOST_Tasks_ISR(DRV_USBFS_OBJ * pUSBDrvObj)
          * Reset the attach debounce timer. Set the attach checking flag. */
 
         PLIB_USB_InterruptDisable(usbID, USB_INT_ATTACH);
-        pUSBDrvObj->attachDebounceCounter = 0;
-        pUSBDrvObj->isAttachDebouncing = true;
+        pusbdrvObj->attachDebounceCounter = 0;
+        pusbdrvObj->isAttachDebouncing = true;
         PLIB_USB_OTG_InterruptEnable(usbID, USB_OTG_INT_ONE_MS_TIMEOUT);
     }
 
-    if((usbInterrupts & USB_INT_HOST_DETACH) && (enabledUSBInterrupts & USB_INT_HOST_DETACH))
+    if((((uint32_t)usbInterrupts & (uint32_t)USB_INT_HOST_DETACH) != 0U) && (((uint32_t)enabledUSBInterrupts & (uint32_t)USB_INT_HOST_DETACH) != 0U))
     {
         /* Host got a device detach */
         PLIB_USB_InterruptFlagClear(usbID, USB_INT_HOST_DETACH);
@@ -2864,45 +2976,45 @@ void _DRV_USBFS_HOST_Tasks_ISR(DRV_USBFS_OBJ * pUSBDrvObj)
         PLIB_USB_InterruptDisable(usbID, USB_INT_SOF);
 
         /* Reset the BDT ping pong hardware and software indicators */
-        PLIB_USB_PingPongReset(pUSBDrvObj->usbID);
-        pUSBDrvObj->ep0TxPingPong = USB_BUFFER_EVEN;
-        pUSBDrvObj->ep0RxPingPong = USB_BUFFER_EVEN;
+        PLIB_USB_PingPongReset(pusbdrvObj->usbID);
+        pusbdrvObj->ep0TxPingPong = USB_BUFFER_EVEN;
+        pusbdrvObj->ep0RxPingPong = USB_BUFFER_EVEN;
 
         /* Clear up all the endpoint 0 BDT entries.*/
-        pUSBDrvObj->pBDT[0].word[0] = 0x0;
-        pUSBDrvObj->pBDT[0].word[1] = 0x0;
-        pUSBDrvObj->pBDT[1].word[0] = 0x0;
-        pUSBDrvObj->pBDT[1].word[1] = 0x0;
-        pUSBDrvObj->pBDT[2].word[0] = 0x0;
-        pUSBDrvObj->pBDT[2].word[1] = 0x0;
-        pUSBDrvObj->pBDT[3].word[0] = 0x0;
-        pUSBDrvObj->pBDT[3].word[1] = 0x0;
+        pusbdrvObj->pBDT[0].word[0] = 0x0;
+        pusbdrvObj->pBDT[0].word[1] = 0x0;
+        pusbdrvObj->pBDT[1].word[0] = 0x0;
+        pusbdrvObj->pBDT[1].word[1] = 0x0;
+        pusbdrvObj->pBDT[2].word[0] = 0x0;
+        pusbdrvObj->pBDT[2].word[1] = 0x0;
+        pusbdrvObj->pBDT[3].word[0] = 0x0;
+        pusbdrvObj->pBDT[3].word[1] = 0x0;
 
         /* Un-initialize the SWEP data structure */
-        for(swEpCount = 0; swEpCount < _DRV_USBFS_SW_EP_NUMBER; swEpCount++)
+        for(swEpCount = 0; swEpCount < DRV_USBFS_SW_EP_NUMBER; swEpCount++)
         {
-            pUSBDrvObj->drvUSBHostSWEp[swEpCount].tobeDone = false;
+            pusbdrvObj->drvUSBHostSWEp[swEpCount].tobeDone = false;
         }
 
-        pUSBDrvObj->isDeviceDeenumerating = true;
+        pusbdrvObj->isDeviceDeenumerating = true;
         
         /* Ask the host layer to de-enumerate this device. */
-        USB_HOST_DeviceDenumerate (pUSBDrvObj->attachedDeviceObjHandle);
+        USB_HOST_DeviceDenumerate (pusbdrvObj->attachedDeviceObjHandle);
         
-        pUSBDrvObj->isDeviceDeenumerating = false;
+        pusbdrvObj->isDeviceDeenumerating = false;
         
         /* Disable the LS Direct Connect. It may have been enabled if the last
          attach was for low speed device. */
-        PLIB_USB_EP0LSDirectConnectDisable(pUSBDrvObj->usbID);
+        PLIB_USB_EP0LSDirectConnectDisable(pusbdrvObj->usbID);
 
         /* Start the detach debouncing */
-        pUSBDrvObj->isDetachDebouncing = true;
-        pUSBDrvObj->detachDebounceCounter = 0;
+        pusbdrvObj->isDetachDebouncing = true;
+        pusbdrvObj->detachDebounceCounter = 0;
         PLIB_USB_OTG_InterruptEnable(usbID, USB_OTG_INT_ONE_MS_TIMEOUT);
     }
 
     /* Now check if the token was completed */
-    if(PLIB_USB_InterruptFlagGet(usbID, USB_INT_TOKEN_DONE) && ((enabledUSBInterrupts & USB_INT_TOKEN_DONE) != 0))
+    if(PLIB_USB_InterruptFlagGet(usbID, USB_INT_TOKEN_DONE) && ((((uint32_t)enabledUSBInterrupts) & ((uint32_t)USB_INT_TOKEN_DONE)) != 0U))
     {
         /* Get the last transaction status */
         PLIB_USB_LastTransactionDetailsGet(usbID, &lastDirection, &lastPingPong, &lastEndpoint );
@@ -2910,38 +3022,40 @@ void _DRV_USBFS_HOST_Tasks_ISR(DRV_USBFS_OBJ * pUSBDrvObj)
         /* Clear the flag */
         PLIB_USB_InterruptFlagClear(usbID,USB_INT_TOKEN_DONE);
 
-        /* Get the result of the last transaction */
-
-        pBDTEntry = pUSBDrvObj->pBDT + (lastDirection << 1) + lastPingPong;
-        transactionResult = (pBDTEntry->byte[0] & 0x3C) >> 2;
+        /* Get the result of the last transaction */        
+        pBDTEntry = pusbdrvObj->pBDT + (((uint32_t)lastDirection) << 1) + ((uint32_t)lastPingPong);
+        readPingPong_8 = ((pBDTEntry->byte[0] & 0x3CU) >> 2U);
+        transactionResult = (DRV_USBFS_TRANSACTION_RESULT)readPingPong_8;
         transactionSize = pBDTEntry->shortWord[1];
 
         if(lastDirection == USB_BUFFER_RX)
         {
             /* Update the RX ping pong buffer indicator */
-            pUSBDrvObj->ep0RxPingPong ^= 0x1;
+            readPingPong = (uint32_t)pusbdrvObj->ep0RxPingPong ^ 0x1U;
+            pusbdrvObj->ep0RxPingPong = (USB_BUFFER_PING_PONG)readPingPong;
         }
         else
         {
             /* Update the even ping pong buffer indicator */
-            pUSBDrvObj->ep0TxPingPong ^= 0x1;
+            readPingPong = (uint32_t)pusbdrvObj->ep0TxPingPong ^ 0x1U;
+            pusbdrvObj->ep0TxPingPong = (USB_BUFFER_PING_PONG)readPingPong;
         }
 
-        /* The _DRV_USBFS_HOST_TransferSchedule function will check for the
+        /* The F_DRV_USBFS_HOST_TransferSchedule function will check for the
          * available bandwidth in this frame and will update the current
          * transfer. The return value will be true if the function sent a token.
          * */
-        tokenWasSent = _DRV_USBFS_HOST_TransferSchedule(pUSBDrvObj, transactionResult, transactionSize, false);
+        tokenWasSent = F_DRV_USBFS_HOST_TransferSchedule(pusbdrvObj, transactionResult, transactionSize, false);
 
         if(tokenWasSent == false)
         {
             /* This means the transfer that caused this interrupt is completed.
-             * We call the _DRV_USBFS_HOST_TransferSchedule() function with last
+             * We call the F_DRV_USBFS_HOST_TransferSchedule() function with last
              * transaction result and lastTransactionsize as 0. This lets the
              * function know that it must try to schedule a new transfer.
              * Note: No more than 1 IRP when isochronous IRP is present in 1 frame */
 
-            _DRV_USBFS_HOST_TransferSchedule(pUSBDrvObj, (DRV_USBFS_TRANSACTION_RESULT)0, (unsigned int)0, false);
+            (void) F_DRV_USBFS_HOST_TransferSchedule(pusbdrvObj, (DRV_USBFS_TRANSACTION_RESULT)0, (unsigned int)0, false);
         }
     }
 }
@@ -2972,10 +3086,10 @@ bool DRV_USBFS_HOST_EventsDisable
     DRV_USBFS_OBJ * pUSBDrvObj;
     bool result = false;
 
-    if((DRV_HANDLE_INVALID != handle) && (0 != handle))
+    if((DRV_HANDLE_INVALID != handle) && (0U != handle))
     {
         pUSBDrvObj = (DRV_USBFS_OBJ *)(handle);
-        result = _DRV_USBFS_InterruptSourceDisable(pUSBDrvObj->interruptSource);
+        result = M_DRV_USBFS_InterruptSourceDisable(pUSBDrvObj->interruptSource);
     }
 
     return(result);
@@ -3009,16 +3123,16 @@ void DRV_USBFS_HOST_EventsEnable
 {
     DRV_USBFS_OBJ * pUSBDrvObj;
    
-    if((DRV_HANDLE_INVALID != handle) && (0 != handle))
+    if((DRV_HANDLE_INVALID != handle) && (0U != handle))
     {
         pUSBDrvObj = (DRV_USBFS_OBJ *)(handle);
         if(eventContext == true)
         {
-            _DRV_USBFS_InterruptSourceEnable(pUSBDrvObj->interruptSource);
+            M_DRV_USBFS_InterruptSourceEnable(pUSBDrvObj->interruptSource);
         }
         else
         {
-            _DRV_USBFS_InterruptSourceDisable(pUSBDrvObj->interruptSource);
+            (void) M_DRV_USBFS_InterruptSourceDisable(pUSBDrvObj->interruptSource);
         }
     }
 }
@@ -3047,6 +3161,7 @@ void DRV_USBFS_HOST_EventsEnable
 void DRV_USBFS_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enable)
 {
     DRV_USBFS_OBJ * pUSBDrvObj = (DRV_USBFS_OBJ *)handle;
+    uint32_t readFlag;
 
     /* Check if the handle is valid or opened */
     if((handle != DRV_HANDLE_INVALID) && (handle != (DRV_HANDLE)(NULL)) && (pUSBDrvObj->isOpened))
@@ -3067,7 +3182,8 @@ void DRV_USBFS_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enable)
 
             /* Enable the attach interrupt */
             PLIB_USB_InterruptEnable(pUSBDrvObj->usbID, USB_INT_ATTACH);
-            pUSBDrvObj->driverFlags |= DRV_USBFS_FLAG_HOST_MODE_ENABLED;
+            readFlag = (uint32_t)pUSBDrvObj->driverFlags | (uint32_t)DRV_USBFS_FLAG_HOST_MODE_ENABLED;
+            pUSBDrvObj->driverFlags = (DRV_USBFS_FLAGS)readFlag;
 
         }
         else
@@ -3077,7 +3193,9 @@ void DRV_USBFS_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enable)
 
             SYS_INT_SourceStatusClear(pUSBDrvObj->interruptSource);
             PLIB_USB_InterruptDisable(pUSBDrvObj->usbID, USB_INT_ATTACH);
-            pUSBDrvObj->driverFlags &= ~DRV_USBFS_FLAG_HOST_MODE_ENABLED;
+            readFlag = (uint32_t)pUSBDrvObj->driverFlags & (~(uint32_t)DRV_USBFS_FLAG_HOST_MODE_ENABLED);
+            pUSBDrvObj->driverFlags = (DRV_USBFS_FLAGS)readFlag;
+
             if(pUSBDrvObj->rootHubInfo.portPowerEnable != NULL)
             {
                 /* This USB module has only one port. So we call this function
@@ -3094,6 +3212,8 @@ void DRV_USBFS_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enable)
 }
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 5.1 deviated:3 Deviation record ID -  H3_MISRAC_2012_R_5_1_DR_1 */
+#pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1" 
 /* Function:
     bool DRV_USBFS_HOST_ROOT_HUB_OperationIsEnabled(DRV_HANDLE handle)
 
@@ -3116,7 +3236,7 @@ bool DRV_USBFS_HOST_ROOT_HUB_OperationIsEnabled(DRV_HANDLE handle)
     /* Check if the handle is valid or opened */
     if((handle != DRV_HANDLE_INVALID) && (handle != (DRV_HANDLE)(NULL)) && (pUSBDrvObj->isOpened))
     {
-        returnValue = (pUSBDrvObj->driverFlags & DRV_USBFS_FLAG_HOST_MODE_ENABLED) ? true : false;
+        returnValue = (((uint32_t)pUSBDrvObj->driverFlags & (uint32_t)DRV_USBFS_FLAG_HOST_MODE_ENABLED) != 0U) ? true : false;
     }
     else
     {
@@ -3308,6 +3428,9 @@ USB_ERROR DRV_USBFS_HOST_ROOT_HUB_PortResume(DRV_HANDLE handle, uint8_t port)
     return(USB_ERROR_NONE);
 }
 
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"
+/* MISRAC 2012 deviation block end */
 // ****************************************************************************
 /* Function:
     void DRV_USBFS_ROOT_HUB_PortSuspend(DRV_HANDLE handle, uint8_t port );
@@ -3546,3 +3669,7 @@ void DRV_USBFS_HOST_EndpointToggleClear
     }
     
 } /* End of DRV_USBFS_HOST_EndpointToggleClear() */
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.6"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */

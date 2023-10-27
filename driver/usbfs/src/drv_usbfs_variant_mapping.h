@@ -40,8 +40,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_USBFS_VARIANT_MAPPING_H
-#define _DRV_USBFS_VARIANT_MAPPING_H
+#ifndef DRV_USBFS_VARIANT_MAPPING_H
+#define DRV_USBFS_VARIANT_MAPPING_H
 
 
 // *****************************************************************************
@@ -55,6 +55,10 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /**********************************************
  * Macro Mapping
  **********************************************/
+ /* MISRA C-2012 Rule 5.4 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_5_4_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1"
 
 /* With v1.04 the USB Driver implementation has been been split such
  * multiple USB Driver can be included in the same application. But to
@@ -102,13 +106,13 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
     #endif
 
-    #define _DRV_USBFS_IS_STATIC
+    #define DRV_USBFS_IS_STATIC
 
 #else 
 
     /* This means that dynamic operation is requested */
 
-    #define _DRV_USBFS_IS_DYNAMIC
+    #define DRV_USBFS_IS_DYNAMIC
 
 
 #endif
@@ -120,7 +124,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 // *****************************************************************************
 
 // *****************************************************************************
-/* Macro: _DRV_USBFS_OBJ_MAKE_NAME(name)
+/* Macro: M_DRV_USBFS_OBJ_MAKE_NAME(name)
 
   Summary:
     Creates an instance-specific static object name.
@@ -133,26 +137,26 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
     This macro does not affect the dynamic objects.
 */
 
-#define _DRV_STATIC_OBJ_NAME_B(name,id)     name ## id
-#define _DRV_STATIC_OBJ_NAME_A(name,id)     _DRV_STATIC_OBJ_NAME_B(name,id)
-#define _DRV_USBFS_OBJ_MAKE_NAME(name)        _DRV_STATIC_OBJ_NAME_A(name, DRV_USBFS_INDEX)
+#define M_DRV_STATIC_OBJ_NAME_B(name,id)       name ## id
+#define M_DRV_STATIC_OBJ_NAME_A(name,id)       M_DRV_STATIC_OBJ_NAME_B(name,id)
+#define M_DRV_USBFS_OBJ_MAKE_NAME(name)        M_DRV_STATIC_OBJ_NAME_A(name, DRV_USBFS_INDEX)
 
 /**********************************************
  * These macros allow variables to be compiled
  * based on dynamic or static buil.
  *********************************************/
 
-#ifdef _DRV_USBFS_IS_STATIC
+#ifdef DRV_USBFS_IS_STATIC
 
-    #define _DRV_USBFS_FOR_DYNAMIC( type, object )
-    #define _DRV_USBFS_FOR_STATIC( type, object )     type object
+    #define M_DRV_USBFS_FOR_DYNAMIC( type, object )
+    #define M_DRV_USBFS_FOR_STATIC( type, object )     type object
 
 #endif
 
-#ifdef _DRV_USBFS_IS_DYNAMIC
+#ifdef DRV_USBFS_IS_DYNAMIC
 
-    #define _DRV_USBFS_FOR_DYNAMIC( type, object )    type object
-    #define _DRV_USBFS_FOR_STATIC( type, object )
+    #define M_DRV_USBFS_FOR_DYNAMIC( type, object )    type object
+    #define M_DRV_USBFS_FOR_STATIC( type, object )
 
 #endif
 
@@ -178,25 +182,25 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 
 #if (DRV_USBFS_INTERRUPT_MODE == true)
 
-    #define _DRV_USBFS_InterruptSourceEnable(source)      SYS_INT_SourceEnable( source )
-    #define _DRV_USBFS_InterruptSourceDisable(source)     SYS_INT_SourceDisable( source )
-    #define _DRV_USBFS_InterruptSourceClear(source)       SYS_INT_SourceStatusClear( source )
+    #define M_DRV_USBFS_InterruptSourceEnable(source)      SYS_INT_SourceEnable( source )
+    #define M_DRV_USBFS_InterruptSourceDisable(source)     SYS_INT_SourceDisable( source )
+    #define M_DRV_USBFS_InterruptSourceClear(source)       SYS_INT_SourceStatusClear( source )
 
-    #define _DRV_USBFS_InterruptSourceStatusGet(source)   SYS_INT_SourceStatusGet( source )
-    #define _DRV_USBFS_InterruptSourceStatusSet(source)   SYS_INT_SourceStatusSet( source )
+    #define M_DRV_USBFS_InterruptSourceStatusGet(source)   SYS_INT_SourceStatusGet( source )
+    #define M_DRV_USBFS_InterruptSourceStatusSet(source)   SYS_INT_SourceStatusSet( source )
 
-    #define _DRV_USBFS_Tasks_ISR(object)
+    #define M_DRV_USBFS_Tasks_ISR(object)
 
 #endif
 
 #if (DRV_USBFS_INTERRUPT_MODE == false)
 
-    #define _DRV_USBFS_InterruptSourceEnable(source)
-    #define _DRV_USBFS_InterruptSourceDisable(source)     false
-    #define _DRV_USBFS_InterruptSourceClear(source)       SYS_INT_SourceStatusClear( source )
-    #define _DRV_USBFS_InterruptSourceStatusGet(source)   SYS_INT_SourceStatusGet( source )
+    #define M_DRV_USBFS_InterruptSourceEnable(source)
+    #define M_DRV_USBFS_InterruptSourceDisable(source)     false
+    #define M_DRV_USBFS_InterruptSourceClear(source)       SYS_INT_SourceStatusClear( source )
+    #define M_DRV_USBFS_InterruptSourceStatusGet(source)     SYS_INT_SourceStatusGet( source )
 
-    #define _DRV_USBFS_Tasks_ISR(object)                  DRV_USBFS_Tasks_ISR(object)
+    #define M_DRV_USBFS_Tasks_ISR(object)                  DRV_USBFS_Tasks_ISR(object)
 
 #endif
 
@@ -214,23 +218,27 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 #endif
 
 #if (DRV_USBFS_DEVICE_SUPPORT == true)
-    #define _DRV_USBFS_DEVICE_INIT(x, y)      _DRV_USBFS_DEVICE_Initialize(x , y)
-    #define _DRV_USBFS_DEVICE_TASKS_ISR(x)    _DRV_USBFS_DEVICE_Tasks_ISR(x)
-    #define _DRV_USBFS_FOR_DEVICE(x, y)       x y
+    #define M_DRV_USBFS_DEVICE_INIT(x, y)      F_DRV_USBFS_DEVICE_Initialize(x , y)
+    #define M_DRV_USBFS_DEVICE_TASKS_ISR(x)    F_DRV_USBFS_DEVICE_Tasks_ISR(x)
+    #define M_DRV_USBFS_FOR_DEVICE(x, y)       x y
 #elif (DRV_USBFS_DEVICE_SUPPORT == false)
-    #define _DRV_USBFS_DEVICE_INIT(x, y)  
-    #define _DRV_USBFS_DEVICE_TASKS_ISR(x) 
-    #define _DRV_USBFS_FOR_DEVICE(x, y)
+    #define M_DRV_USBFS_DEVICE_INIT(x, y)  
+    #define M_DRV_USBFS_DEVICE_TASKS_ISR(x) 
+    #define M_DRV_USBFS_FOR_DEVICE(x, y)
 #endif
  
 #if (DRV_USBFS_HOST_SUPPORT == true)
-    #define _DRV_USBFS_HOST_INIT(x, y, z)    _DRV_USBFS_HOST_Initialize(x , y, z)
-    #define _DRV_USBFS_HOST_TASKS_ISR(x)  _DRV_USBFS_HOST_Tasks_ISR(x)
-    #define _DRV_USBFS_FOR_HOST(x, y)     x y
+    #define M_DRV_USBFS_HOST_INIT(x, y, z)    F_DRV_USBFS_HOST_Initialize(x , y, z)
+    #define M_DRV_USBFS_HOST_TASKS_ISR(x)     F_DRV_USBFS_HOST_Tasks_ISR(x)
+    #define M_DRV_USBFS_FOR_HOST(x, y)        x y
 #elif (DRV_USBFS_HOST_SUPPORT == false)
-    #define _DRV_USBFS_HOST_INIT(x, y, z)
-    #define _DRV_USBFS_HOST_TASKS_ISR(x) 
-    #define _DRV_USBFS_FOR_HOST(x, y)
+    #define M_DRV_USBFS_HOST_INIT(x, y, z)
+    #define M_DRV_USBFS_HOST_TASKS_ISR(x) 
+    #define M_DRV_USBFS_FOR_HOST(x, y)
 #endif
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.4"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 #endif

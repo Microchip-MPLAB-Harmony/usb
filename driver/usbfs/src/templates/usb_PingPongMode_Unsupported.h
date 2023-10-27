@@ -44,8 +44,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 //DOM-IGNORE-END
 
-#ifndef _USB_PINGPONGMODE_UNSUPPORTED_H
-#define _USB_PINGPONGMODE_UNSUPPORTED_H
+#ifndef USB_PINGPONGMODE_UNSUPPORTED_H
+#define USB_PINGPONGMODE_UNSUPPORTED_H
 
 //******************************************************************************
 /* Routines available for accessing VREGS, MASKS, POS, LEN are 
@@ -115,7 +115,7 @@ PLIB_TEMPLATE bool USB_ExistsPingPongMode_Unsupported( USB_MODULE_ID index )
 }
 
 
-#endif /*_USB_PINGPONGMODE_UNSUPPORTED_H*/
+#endif /*USB_PINGPONGMODE_UNSUPPORTED_H*/
 
 /******************************************************************************
  End of File

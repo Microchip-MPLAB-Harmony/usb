@@ -44,11 +44,15 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 //DOM-IGNORE-END
 
-#ifndef _USB_OTG_VBUSCHARGE_DEFAULT_H
-#define _USB_OTG_VBUSCHARGE_DEFAULT_H
+#ifndef USB_OTG_VBUSCHARGE_DEFAULT_H
+#define USB_OTG_VBUSCHARGE_DEFAULT_H
 
 #include "driver/usb/usbfs/src/templates/usbfs_registers.h"
 
+/* MISRA C-2012 Rule 11.7 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_7_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.7" "H3_MISRAC_2012_R_11_7_DR_1"
 
 //******************************************************************************
 /* Function :  USB_OTG_VBusChargeEnable_Default
@@ -62,7 +66,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 PLIB_TEMPLATE void USB_OTG_VBusChargeEnable_Default( USB_MODULE_ID index )
 {
-	volatile usb_registers_t   * usb = ((usb_registers_t *)(index));
+    volatile usb_registers_t   * usb = ((usb_registers_t *)(index));
     usb->UxOTGCONSET = UxOTGCON_VBUSCHG_MASK ;
    
 }
@@ -99,8 +103,11 @@ PLIB_TEMPLATE bool USB_ExistsOTG_VbusCharge_Default( USB_MODULE_ID index )
     return true;
 }
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.7"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
-#endif /*_USB_OTG_VBUSCHARGE_DEFAULT_H*/
+#endif /*USB_OTG_VBUSCHARGE_DEFAULT_H*/
 
 /******************************************************************************
  End of File

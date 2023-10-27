@@ -66,8 +66,8 @@ PLIB_TEMPLATE void USB_EPnHandshakeEnable_Default
     uint8_t epValue 
 )
 {
-	volatile usb_registers_t   * usb = ((usb_registers_t *)(index));
-	usb->UxEP[epValue].UxEPSET = UxEP_EPHSHK_MASK;
+    volatile usb_registers_t   * usb = ((usb_registers_t *)(index));
+    usb->UxEP[epValue].UxEPSET = UxEP_EPHSHK_MASK;
 }
 
 
@@ -89,7 +89,7 @@ PLIB_TEMPLATE void USB_EPnHandshakeDisable_Default
 )
 {
     volatile usb_registers_t   * usb = ((usb_registers_t *)(index));
-	usb->UxEP[epValue].UxEPCLR = UxEP_EPHSHK_MASK;
+    usb->UxEP[epValue].UxEPCLR = UxEP_EPHSHK_MASK;
 }
 
 
