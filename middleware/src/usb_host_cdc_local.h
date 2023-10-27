@@ -39,8 +39,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _USB_HOST_CDC_LOCAL_H
-#define _USB_HOST_CDC_LOCAL_H
+#ifndef USB_HOST_CDC_LOCAL_H
+#define USB_HOST_CDC_LOCAL_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -204,7 +204,7 @@ extern USB_HOST_CDC_INSTANCE_OBJ gUSBHostCDCObj[USB_HOST_CDC_INSTANCES_NUMBER];
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_CDC_Initialize(void * msdInitData)
+    void F_USB_HOST_CDC_Initialize(void * msdInitData)
 
   Summary:
     This function is called when the Host Layer is initializing.
@@ -217,11 +217,11 @@ extern USB_HOST_CDC_INSTANCE_OBJ gUSBHostCDCObj[USB_HOST_CDC_INSTANCES_NUMBER];
     application.
 */
 
-void _USB_HOST_CDC_Initialize(void * data);
+void F_USB_HOST_CDC_Initialize(void * data);
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_CDC_Deinitialize(void)
+    void F_USB_HOST_CDC_Deinitialize(void)
 
   Summary:
     This function is called when the Host Layer is deinitializing.
@@ -234,11 +234,11 @@ void _USB_HOST_CDC_Initialize(void * data);
     application.
 */
 
-void _USB_HOST_CDC_Deinitialize(void);
+void F_USB_HOST_CDC_Deinitialize(void);
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_CDC_Reinitialize(void)
+    void F_USB_HOST_CDC_Reinitialize(void)
 
   Summary:
     This function is called when the Host Layer is reinitializing.
@@ -251,11 +251,11 @@ void _USB_HOST_CDC_Deinitialize(void);
     application.
 */
 
-void _USB_HOST_CDC_Reinitialize(void * msdInitData);
+void F_USB_HOST_CDC_Reinitialize(void * msdInitData);
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_CDC_DeviceAssign 
+    void F_USB_HOST_CDC_DeviceAssign 
     (
         USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle,
         USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
@@ -274,7 +274,7 @@ void _USB_HOST_CDC_Reinitialize(void * msdInitData);
     This is a local function and should not be called directly by the
     application.
 */
-void _USB_HOST_CDC_DeviceAssign 
+void F_USB_HOST_CDC_DeviceAssign 
 (
     USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle,
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
@@ -283,7 +283,7 @@ void _USB_HOST_CDC_DeviceAssign
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_CDC_DeviceRelease 
+    void F_USB_HOST_CDC_DeviceRelease 
     (
         USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle
     )
@@ -299,14 +299,14 @@ void _USB_HOST_CDC_DeviceAssign
     application.
 */
 
-void _USB_HOST_CDC_DeviceRelease 
+void F_USB_HOST_CDC_DeviceRelease 
 (
     USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle
 );
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_CDC_DeviceTasks 
+    void F_USB_HOST_CDC_DeviceTasks 
     (
         USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle
     )
@@ -324,14 +324,14 @@ void _USB_HOST_CDC_DeviceRelease
     application.
 */
 
-void _USB_HOST_CDC_DeviceTasks
+void F_USB_HOST_CDC_DeviceTasks
 (
     USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle
 );
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_CDC_InterfaceAssign 
+    void F_USB_HOST_CDC_InterfaceAssign 
     (
         USB_HOST_DEVICE_INTERFACE_HANDLE * interfaces,
         USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
@@ -352,7 +352,7 @@ void _USB_HOST_CDC_DeviceTasks
     application.
 */
 
-void _USB_HOST_CDC_InterfaceAssign 
+void F_USB_HOST_CDC_InterfaceAssign 
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE * interfaces,
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
@@ -362,7 +362,7 @@ void _USB_HOST_CDC_InterfaceAssign
 
 // *****************************************************************************
 /* Function:
-    USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_CDC_InterfaceEventHandler
+    USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE F_USB_HOST_CDC_InterfaceEventHandler
     (
         USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle,
         USB_HOST_DEVICE_INTERFACE_EVENT event,
@@ -383,7 +383,7 @@ void _USB_HOST_CDC_InterfaceAssign
     application.
 */
 
-USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_CDC_InterfaceEventHandler
+USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE F_USB_HOST_CDC_InterfaceEventHandler
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle,
     USB_HOST_DEVICE_INTERFACE_EVENT event,
@@ -411,7 +411,7 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_CDC_InterfaceEventHandler
     application.
 */
 
-void _USB_HOST_CDC_InterfaceTasks
+void F_USB_HOST_CDC_InterfaceTasks
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
 );
@@ -436,14 +436,14 @@ void _USB_HOST_CDC_InterfaceTasks
     application.
 */
 
-void _USB_HOST_CDC_InterfaceRelease
+void F_USB_HOST_CDC_InterfaceRelease
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
 );
 
 // *****************************************************************************
 /* Function:
-    USB_HOST_DEVICE_EVENT_RESPONSE _USB_HOST_CDC_DeviceEventHandler
+    USB_HOST_DEVICE_EVENT_RESPONSE F_USB_HOST_CDC_DeviceEventHandler
     (
         USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle,
         USB_HOST_DEVICE_EVENT event,
@@ -464,7 +464,7 @@ void _USB_HOST_CDC_InterfaceRelease
     application.
 */
 
-USB_HOST_DEVICE_EVENT_RESPONSE _USB_HOST_CDC_DeviceEventHandler
+USB_HOST_DEVICE_EVENT_RESPONSE F_USB_HOST_CDC_DeviceEventHandler
 (
     USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle,
     USB_HOST_DEVICE_EVENT event,
@@ -474,7 +474,7 @@ USB_HOST_DEVICE_EVENT_RESPONSE _USB_HOST_CDC_DeviceEventHandler
 
 // *****************************************************************************
 /* Function:
-    int _USB_HOST_CDC_DeviceHandleToInstance
+    int F_USB_HOST_CDC_DeviceHandleToInstance
     (
         USB_HOST_DEVICE_CLIENT_HANDLE deviceClientHandle
     );
@@ -491,14 +491,14 @@ USB_HOST_DEVICE_EVENT_RESPONSE _USB_HOST_CDC_DeviceEventHandler
     application.
 */
 
-int _USB_HOST_CDC_DeviceHandleToInstance
+int F_USB_HOST_CDC_DeviceHandleToInstance
 (
     USB_HOST_DEVICE_CLIENT_HANDLE deviceClientHandle
 );
 
 // *****************************************************************************
 /* Function:
-    int _USB_HOST_CDC_InterfaceHandleToInstance
+    int F_USB_HOST_CDC_InterfaceHandleToInstance
     (
         USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
     );
@@ -516,14 +516,14 @@ int _USB_HOST_CDC_DeviceHandleToInstance
     application.
 */
 
-int _USB_HOST_CDC_InterfaceHandleToInstance
+int F_USB_HOST_CDC_InterfaceHandleToInstance
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
 );
 
 // *****************************************************************************
 /* Function:
-    int _USB_HOST_CDC_DeviceObjHandleToInstance
+    int F_USB_HOST_CDC_DeviceObjHandleToInstance
     (
         USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle
     );
@@ -541,16 +541,16 @@ int _USB_HOST_CDC_InterfaceHandleToInstance
     application.
 */
 
-int _USB_HOST_CDC_DeviceObjHandleToInstance
+int F_USB_HOST_CDC_DeviceObjHandleToInstance
 (
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle
 );
 
 // *****************************************************************************
 /* Function:  
-    USB_HOST_CDC_RESULT _USB_HOST_CDC_HostResutlToCDCResultMap
+    USB_HOST_CDC_RESULT F_USB_HOST_CDC_HostResutlToCDCResultMap
     (
-        USB_HOST_RESULT hostResult
+        USB_HOST_RESULT result
     )
 
   Summary: 
@@ -564,9 +564,53 @@ int _USB_HOST_CDC_DeviceObjHandleToInstance
     application.
 */
 
-USB_HOST_CDC_RESULT _USB_HOST_CDC_HostResutlToCDCResultMap
+USB_HOST_CDC_RESULT F_USB_HOST_CDC_HostResutlToCDCResultMap
 (
-    USB_HOST_RESULT hostResult
+    USB_HOST_RESULT result
+);
+
+/* Function:
+   void F_USB_HOST_CDC_ControlTransferCallback
+    (
+        USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
+        USB_HOST_REQUEST_HANDLE requestHandle,
+        USB_HOST_RESULT result,
+        size_t size,
+        uintptr_t context
+    );
+
+  Summary:
+    This function is called when a control transfer completes.
+
+  Description:
+    This function is called when a control transfer completes.
+
+  Remarks:
+    This is a local function and should not be called directly by the
+    application.
+*/
+
+void F_USB_HOST_CDC_ControlTransferCallback
+(
+    USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
+    USB_HOST_REQUEST_HANDLE requestHandle,
+    USB_HOST_RESULT result,
+    size_t size,
+    uintptr_t context
+);
+
+USB_HOST_CDC_RESULT USB_HOST_CDC_ACM_LineCodingGet
+(
+    USB_HOST_CDC_HANDLE handle, 
+    USB_HOST_CDC_REQUEST_HANDLE * requestHandle, 
+    USB_CDC_LINE_CODING * lineCoding
+);
+
+USB_HOST_CDC_RESULT USB_HOST_CDC_ACM_BreakSend
+(
+    USB_HOST_CDC_HANDLE handle,
+    USB_HOST_CDC_REQUEST_HANDLE * requestHandle,
+    uint16_t breakDuration
 );
 
 #endif

@@ -55,24 +55,24 @@
 /***********************************************
  * USB Host CDC Attach Listener Objects
  ***********************************************/
- USB_HOST_CDC_ATTACH_LISTENER_OBJ gUSBHostCDCAttachListener[USB_HOST_CDC_ATTACH_LISTENERS_NUMBER];
+ static USB_HOST_CDC_ATTACH_LISTENER_OBJ gUSBHostCDCAttachListener[USB_HOST_CDC_ATTACH_LISTENERS_NUMBER];
 
 /************************************************
  * CDC Interface to the host layer
  ************************************************/
 USB_HOST_CLIENT_DRIVER gUSBHostCDCClientDriver =
 {
-    .initialize = _USB_HOST_CDC_Initialize,
-    .deinitialize = _USB_HOST_CDC_Deinitialize,
-    .reinitialize = _USB_HOST_CDC_Reinitialize,
-    .interfaceAssign = _USB_HOST_CDC_InterfaceAssign,
-    .interfaceRelease = _USB_HOST_CDC_InterfaceRelease,
-    .interfaceEventHandler = _USB_HOST_CDC_InterfaceEventHandler,
-    .interfaceTasks = _USB_HOST_CDC_InterfaceTasks,
-    .deviceEventHandler = _USB_HOST_CDC_DeviceEventHandler,
-    .deviceAssign = _USB_HOST_CDC_DeviceAssign,
-    .deviceRelease = _USB_HOST_CDC_DeviceRelease,
-    .deviceTasks = _USB_HOST_CDC_DeviceTasks
+    .initialize = F_USB_HOST_CDC_Initialize,
+    .deinitialize = F_USB_HOST_CDC_Deinitialize,
+    .reinitialize = F_USB_HOST_CDC_Reinitialize,
+    .interfaceAssign = F_USB_HOST_CDC_InterfaceAssign,
+    .interfaceRelease = F_USB_HOST_CDC_InterfaceRelease,
+    .interfaceEventHandler = F_USB_HOST_CDC_InterfaceEventHandler,
+    .interfaceTasks = F_USB_HOST_CDC_InterfaceTasks,
+    .deviceEventHandler = F_USB_HOST_CDC_DeviceEventHandler,
+    .deviceAssign = F_USB_HOST_CDC_DeviceAssign,
+    .deviceRelease = F_USB_HOST_CDC_DeviceRelease,
+    .deviceTasks = F_USB_HOST_CDC_DeviceTasks
 };
 
 // *****************************************************************************
@@ -83,7 +83,7 @@ USB_HOST_CLIENT_DRIVER gUSBHostCDCClientDriver =
 
 // *****************************************************************************
 /* Function:  
-    USB_HOST_CDC_RESULT _USB_HOST_CDC_HostResutlToCDCResultMap
+    USB_HOST_CDC_RESULT F_USB_HOST_CDC_HostResutlToCDCResultMap
     (
         USB_HOST_RESULT hostResult
     )
@@ -99,7 +99,7 @@ USB_HOST_CLIENT_DRIVER gUSBHostCDCClientDriver =
     application.
 */
 
-USB_HOST_CDC_RESULT _USB_HOST_CDC_HostResutlToCDCResultMap
+USB_HOST_CDC_RESULT F_USB_HOST_CDC_HostResutlToCDCResultMap
 (
     USB_HOST_RESULT result
 )
@@ -136,7 +136,7 @@ USB_HOST_CDC_RESULT _USB_HOST_CDC_HostResutlToCDCResultMap
 
 // *****************************************************************************
 /* Function:
-    int _USB_HOST_CDC_DeviceHandleToInstance
+    int F_USB_HOST_CDC_DeviceHandleToInstance
     (
         USB_HOST_DEVICE_CLIENT_HANDLE deviceClientHandle
     );
@@ -153,19 +153,19 @@ USB_HOST_CDC_RESULT _USB_HOST_CDC_HostResutlToCDCResultMap
     application.
 */
 
-int _USB_HOST_CDC_DeviceHandleToInstance
+int F_USB_HOST_CDC_DeviceHandleToInstance
 (
     USB_HOST_DEVICE_CLIENT_HANDLE deviceClientHandle
 )
 {
-    int result = -1;
-    int iterator;
+    int32_t result = -1;
+    uint32_t iterator;
 
     for(iterator = 0; iterator < USB_HOST_CDC_INSTANCES_NUMBER; iterator++)
     {
         if(gUSBHostCDCObj[iterator].deviceClientHandle == deviceClientHandle)
         {
-            result = iterator;
+            result = (int32_t)iterator;
             break;
         }
     }
@@ -175,7 +175,7 @@ int _USB_HOST_CDC_DeviceHandleToInstance
 
 // *****************************************************************************
 /* Function:
-    int _USB_HOST_CDC_InterfaceHandleToInstance
+    int F_USB_HOST_CDC_InterfaceHandleToInstance
     (
         USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
     );
@@ -193,13 +193,13 @@ int _USB_HOST_CDC_DeviceHandleToInstance
     application.
 */
 
-int _USB_HOST_CDC_InterfaceHandleToInstance
+int F_USB_HOST_CDC_InterfaceHandleToInstance
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
 )
 {
-    int result = -1;
-    int iterator;
+    int32_t result = -1;
+    uint32_t iterator;
 
     for(iterator = 0; iterator < USB_HOST_CDC_INSTANCES_NUMBER; iterator++)
     {
@@ -207,7 +207,7 @@ int _USB_HOST_CDC_InterfaceHandleToInstance
             (gUSBHostCDCObj[iterator].dataInterfaceHandle == interfaceHandle))
 
         {
-            result = iterator;
+            result = (int32_t)iterator;
             break;
         }
     }
@@ -217,7 +217,7 @@ int _USB_HOST_CDC_InterfaceHandleToInstance
 
 // *****************************************************************************
 /* Function:
-    int _USB_HOST_CDC_DeviceObjHandleToInstance
+    int F_USB_HOST_CDC_DeviceObjHandleToInstance
     (
         USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle
     );
@@ -235,19 +235,19 @@ int _USB_HOST_CDC_InterfaceHandleToInstance
     application.
 */
 
-int _USB_HOST_CDC_DeviceObjHandleToInstance
+int F_USB_HOST_CDC_DeviceObjHandleToInstance
 (
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle
 )
 {
-    int result = -1;
-    int iterator;
+    int32_t result = -1;
+    uint32_t iterator;
 
     for(iterator = 0; iterator < USB_HOST_CDC_INSTANCES_NUMBER; iterator++)
     {
         if(gUSBHostCDCObj[iterator].deviceObjHandle == deviceObjHandle) 
         {
-            result = iterator;
+            result = (int32_t)iterator;
             break;
         }
     }
@@ -257,7 +257,7 @@ int _USB_HOST_CDC_DeviceObjHandleToInstance
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_CDC_Initialize(void * msdInitData)
+    void F_USB_HOST_CDC_Initialize(void * msdInitData)
 
   Summary:
     This function is called when the Host Layer is initializing.
@@ -270,9 +270,9 @@ int _USB_HOST_CDC_DeviceObjHandleToInstance
     application.
 */
 
-void _USB_HOST_CDC_Initialize(void * data)
+void F_USB_HOST_CDC_Initialize(void * data)
 {
-    int iterator;
+    uint32_t iterator;
     USB_HOST_CDC_INSTANCE_OBJ * cdcInstanceObj;
 
     for(iterator = 0; iterator < USB_HOST_CDC_INSTANCES_NUMBER; iterator ++)
@@ -289,7 +289,7 @@ void _USB_HOST_CDC_Initialize(void * data)
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_CDC_Deinitialize(void)
+    void F_USB_HOST_CDC_Deinitialize(void)
 
   Summary:
     This function is called when the Host Layer is deinitializing.
@@ -302,14 +302,14 @@ void _USB_HOST_CDC_Initialize(void * data)
     application.
 */
 
-void _USB_HOST_CDC_Deinitialize(void)
+void F_USB_HOST_CDC_Deinitialize(void)
 {
     /* This function is not implemented in this release of the USB Host stack */
 }
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_CDC_Reinitialize(void)
+    void F_USB_HOST_CDC_Reinitialize(void)
 
   Summary:
     This function is called when the Host Layer is reinitializing.
@@ -322,14 +322,14 @@ void _USB_HOST_CDC_Deinitialize(void)
     application.
 */
 
-void _USB_HOST_CDC_Reinitialize(void * msdInitData)
+void F_USB_HOST_CDC_Reinitialize(void * msdInitData)
 {
     /* This function is not implemented in this release of the driver */
 }
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_CDC_DeviceAssign 
+    void F_USB_HOST_CDC_DeviceAssign 
     (
         USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle,
         USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
@@ -349,14 +349,14 @@ void _USB_HOST_CDC_Reinitialize(void * msdInitData)
     application.
 */
 
-void _USB_HOST_CDC_DeviceAssign 
+void F_USB_HOST_CDC_DeviceAssign 
 (
     USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle,
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
     USB_DEVICE_DESCRIPTOR * deviceDescriptor
 )
 {
-    int iterator;
+    uint32_t iterator;
     USB_HOST_CDC_INSTANCE_OBJ * cdcInstanceObj = NULL;
 
     /* If this function is being called, this means that a device class subclass
@@ -380,14 +380,14 @@ void _USB_HOST_CDC_DeviceAssign
     {
         /* This means an instance could not be allocated. Return the device back
          * to the host */
-        USB_HOST_DeviceRelease(deviceHandle);
+        (void) USB_HOST_DeviceRelease(deviceHandle);
     }
     else
     {
         /* An instance object was allocated. Check if the device has any
          * configurations */
 
-        if(deviceDescriptor->bNumConfigurations > 0)
+        if(deviceDescriptor->bNumConfigurations > 0U)
         {
             /* This means we have configurations. We can try setting the first 
              * configuration. Also open the control pipe to the device. */
@@ -404,7 +404,7 @@ void _USB_HOST_CDC_DeviceAssign
  
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_CDC_DeviceRelease 
+    void F_USB_HOST_CDC_DeviceRelease 
     (
         USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle
     )
@@ -420,16 +420,16 @@ void _USB_HOST_CDC_DeviceAssign
     application.
 */
 
-void _USB_HOST_CDC_DeviceRelease
+void F_USB_HOST_CDC_DeviceRelease
 (
     USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle
 )
 {
-    int index;
+    int32_t index;
     USB_HOST_CDC_INSTANCE_OBJ * cdcInstance;
 
     /* Find the CDC instance object that owns this device */
-    index = _USB_HOST_CDC_DeviceHandleToInstance(deviceHandle);
+    index = F_USB_HOST_CDC_DeviceHandleToInstance(deviceHandle);
 
     if(index >= 0)
     {
@@ -439,14 +439,14 @@ void _USB_HOST_CDC_DeviceRelease
         if(cdcInstance->bulkInPipeHandle != USB_HOST_PIPE_HANDLE_INVALID)
         {
             /* Close the bulk in pipe and invalidate the pipe handle */
-            USB_HOST_DevicePipeClose(cdcInstance->bulkInPipeHandle);
+            (void) USB_HOST_DevicePipeClose(cdcInstance->bulkInPipeHandle);
             cdcInstance->bulkInPipeHandle = USB_HOST_PIPE_HANDLE_INVALID;
         }
         
         if(cdcInstance->bulkOutPipeHandle != USB_HOST_PIPE_HANDLE_INVALID)
         {
             /* Close the bulk Out pipe and invalidate the pipe handle */
-            USB_HOST_DevicePipeClose(cdcInstance->bulkOutPipeHandle);
+            (void) USB_HOST_DevicePipeClose(cdcInstance->bulkOutPipeHandle);
             cdcInstance->bulkOutPipeHandle = USB_HOST_PIPE_HANDLE_INVALID;
         }
 
@@ -454,14 +454,14 @@ void _USB_HOST_CDC_DeviceRelease
         {
             /* Close the interruptPipeHandle pipe handle and invalidate the pipe
              * handle */
-            USB_HOST_DevicePipeClose(cdcInstance->interruptPipeHandle);
+            (void) USB_HOST_DevicePipeClose(cdcInstance->interruptPipeHandle);
             cdcInstance->interruptPipeHandle = USB_HOST_PIPE_HANDLE_INVALID;
         }
 
         if(cdcInstance->eventHandler != NULL)
         {
             /* Let the client know that the device is detached */
-            cdcInstance->eventHandler((USB_HOST_CDC_HANDLE)(cdcInstance), 
+            (void) cdcInstance->eventHandler((USB_HOST_CDC_HANDLE)(cdcInstance), 
                     USB_HOST_CDC_EVENT_DEVICE_DETACHED,
                     NULL, cdcInstance->context);
         }
@@ -476,7 +476,7 @@ void _USB_HOST_CDC_DeviceRelease
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_CDC_DeviceTasks 
+    void F_USB_HOST_CDC_DeviceTasks 
     (
         USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle
     )
@@ -494,18 +494,19 @@ void _USB_HOST_CDC_DeviceRelease
     application.
 */
 
-void _USB_HOST_CDC_DeviceTasks
+void F_USB_HOST_CDC_DeviceTasks
 (
     USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle
 )
 {
-    int index, iterator;
+    int32_t index;
+    uint32_t iterator;
     USB_HOST_CDC_INSTANCE_OBJ * cdcInstance;
     USB_HOST_RESULT result;
     USB_HOST_REQUEST_HANDLE requestHandle;
 
     /* Get the index of the device instance */
-    index = _USB_HOST_CDC_DeviceHandleToInstance(deviceHandle);
+    index = F_USB_HOST_CDC_DeviceHandleToInstance(deviceHandle);
 
     if(index >= 0)
     {
@@ -599,6 +600,9 @@ void _USB_HOST_CDC_DeviceTasks
 
                     /* The instance is an error state. We dont do anything here */
                     break;
+                default:
+                    /* Do Nothing */
+                    break;
 
             }
         }
@@ -606,8 +610,12 @@ void _USB_HOST_CDC_DeviceTasks
 }
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 11.3 deviated:4 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"  
 /* Function:
-    void _USB_HOST_CDC_InterfaceAssign 
+    void F_USB_HOST_CDC_InterfaceAssign 
     (
         USB_HOST_DEVICE_INTERFACE_HANDLE * interfaces,
         USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
@@ -628,20 +636,22 @@ void _USB_HOST_CDC_DeviceTasks
     application.
 */
 
-void _USB_HOST_CDC_InterfaceAssign 
+void F_USB_HOST_CDC_InterfaceAssign 
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE * interfaces,
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
     size_t nInterfaces,
-    uint8_t * descriptor
+    uint8_t * descriptor    
 )
 {
-    int cdcInstanceIndex, iterator;
+    int32_t cdcInstanceIndex;
+    uint32_t iterator;
     USB_HOST_CDC_INSTANCE_OBJ * cdcInstance = NULL;
     USB_INTERFACE_DESCRIPTOR * interfaceDescriptor;
     USB_ENDPOINT_DESCRIPTOR * endpointDescriptor;
     USB_HOST_ENDPOINT_DESCRIPTOR_QUERY endpointDescriptorQuery;
     USB_HOST_INTERFACE_DESCRIPTOR_QUERY interfaceDescriptorQuery; 
+    uint32_t temp_32;
 
     /* This function will be called when there is an interface level match.
      * There are two possible cases here. In case of a simple CDC device, the
@@ -652,12 +662,12 @@ void _USB_HOST_CDC_InterfaceAssign
     /* If the number of interfaces passed to this function is 1, then we know
      * this is a single interface */
 
-    if(nInterfaces == 1)
+    if(nInterfaces == 1U)
     {
         /* One one interface was passed. This means there was device level class
          * subclass protocol match. The device must aleady exist in the system */
 
-        cdcInstanceIndex = _USB_HOST_CDC_DeviceObjHandleToInstance(deviceObjHandle);
+        cdcInstanceIndex = F_USB_HOST_CDC_DeviceObjHandleToInstance(deviceObjHandle);
         if(cdcInstanceIndex >= 0)
         {
             /* Found the instance index that owns this object */
@@ -667,9 +677,9 @@ void _USB_HOST_CDC_InterfaceAssign
              * descriptor because the number of interfaces is 1 */
             interfaceDescriptor = (USB_INTERFACE_DESCRIPTOR *)descriptor;
 
-            if((interfaceDescriptor->bInterfaceClass == USB_CDC_COMMUNICATIONS_INTERFACE_CLASS_CODE) &&
-                    (interfaceDescriptor->bInterfaceSubClass == USB_CDC_SUBCLASS_ABSTRACT_CONTROL_MODEL) &&
-                    (interfaceDescriptor->bInterfaceProtocol == USB_CDC_PROTOCOL_AT_V250))
+            if((interfaceDescriptor->bInterfaceClass == (uint32_t)USB_CDC_COMMUNICATIONS_INTERFACE_CLASS_CODE) &&
+                    (interfaceDescriptor->bInterfaceSubClass == (uint32_t)USB_CDC_SUBCLASS_ABSTRACT_CONTROL_MODEL) &&
+                    (interfaceDescriptor->bInterfaceProtocol == (uint32_t)USB_CDC_PROTOCOL_AT_V250))
             {
                 /* This interface is the communications class interface. Get the
                  * endpoint number */
@@ -678,7 +688,8 @@ void _USB_HOST_CDC_InterfaceAssign
                 USB_HOST_DeviceEndpointQueryContextClear(&endpointDescriptorQuery);
                 endpointDescriptorQuery.transferType = USB_TRANSFER_TYPE_INTERRUPT;
                 endpointDescriptorQuery.direction = USB_DATA_DIRECTION_DEVICE_TO_HOST;
-                endpointDescriptorQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)(USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|USB_HOST_ENDPOINT_QUERY_BY_DIRECTION);
+                temp_32 = ((uint32_t)USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|(uint32_t)USB_HOST_ENDPOINT_QUERY_BY_DIRECTION);
+                endpointDescriptorQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)temp_32;
                 endpointDescriptor = USB_HOST_DeviceEndpointDescriptorQuery(interfaceDescriptor, &endpointDescriptorQuery);
 
                 /* Did we find the endpoint? */
@@ -690,8 +701,8 @@ void _USB_HOST_CDC_InterfaceAssign
                 }
             }
             else if((interfaceDescriptor->bInterfaceClass == USB_CDC_DATA_INTERFACE_CLASS_CODE) &&
-                    (interfaceDescriptor->bInterfaceSubClass == 0x0) &&
-                    (interfaceDescriptor->bInterfaceProtocol == USB_CDC_PROTOCOL_NO_CLASS_SPECIFIC))
+                    (interfaceDescriptor->bInterfaceSubClass == 0x0U) &&
+                    (interfaceDescriptor->bInterfaceProtocol == (uint32_t)USB_CDC_PROTOCOL_NO_CLASS_SPECIFIC))
             {
                 /* This is the data interface */
                 cdcInstance->dataInterfaceHandle = interfaces[0];
@@ -699,7 +710,8 @@ void _USB_HOST_CDC_InterfaceAssign
                 USB_HOST_DeviceEndpointQueryContextClear(&endpointDescriptorQuery);
                 endpointDescriptorQuery.transferType = USB_TRANSFER_TYPE_BULK;
                 endpointDescriptorQuery.direction = USB_DATA_DIRECTION_DEVICE_TO_HOST;
-                endpointDescriptorQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)(USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|USB_HOST_ENDPOINT_QUERY_BY_DIRECTION);
+                temp_32 = ((uint32_t)USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|(uint32_t)USB_HOST_ENDPOINT_QUERY_BY_DIRECTION);
+                endpointDescriptorQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)temp_32;
                 endpointDescriptor = USB_HOST_DeviceEndpointDescriptorQuery(interfaceDescriptor, &endpointDescriptorQuery);
 
                 /* Did we find the bulk in point */
@@ -713,7 +725,8 @@ void _USB_HOST_CDC_InterfaceAssign
                 USB_HOST_DeviceEndpointQueryContextClear(&endpointDescriptorQuery);
                 endpointDescriptorQuery.transferType = USB_TRANSFER_TYPE_BULK;
                 endpointDescriptorQuery.direction = USB_DATA_DIRECTION_HOST_TO_DEVICE;
-                endpointDescriptorQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)(USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|USB_HOST_ENDPOINT_QUERY_BY_DIRECTION);
+                temp_32 = ((uint32_t)USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|(uint32_t)USB_HOST_ENDPOINT_QUERY_BY_DIRECTION);
+                endpointDescriptorQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)temp_32;
                 endpointDescriptor = USB_HOST_DeviceEndpointDescriptorQuery(interfaceDescriptor, &endpointDescriptorQuery);
 
                 /* Did we find the pipe */
@@ -727,17 +740,17 @@ void _USB_HOST_CDC_InterfaceAssign
             else
             {
                 /* Dont know what this interface is. Return it back */
-                USB_HOST_DeviceInterfaceRelease(interfaces[0]);
+                (void) USB_HOST_DeviceInterfaceRelease(interfaces[0]);
             }
         }
         else
         {
             /* This is an error case. The instance should exist. We return this
              * interface back to the host. */
-            USB_HOST_DeviceInterfaceRelease(interfaces[0]);
+            (void) USB_HOST_DeviceInterfaceRelease(interfaces[0]);
         }
     }
-    else if(nInterfaces > 1)
+    else if(nInterfaces > 1U)
     {
         /* Then this means that this is an IAD. We first assign a CDC instance
          * to this device */
@@ -759,7 +772,7 @@ void _USB_HOST_CDC_InterfaceAssign
 
             for(iterator = 0; iterator < nInterfaces; iterator ++)
             {
-                USB_HOST_DeviceInterfaceRelease(interfaces[iterator]);
+                (void) USB_HOST_DeviceInterfaceRelease(interfaces[iterator]);
             }
         }
         else
@@ -776,7 +789,7 @@ void _USB_HOST_CDC_InterfaceAssign
             interfaceDescriptorQuery.flags = USB_HOST_INTERFACE_QUERY_ANY;
 
             /* We know that we need two interfaces */
-            for(iterator = 0; iterator < 2; iterator ++)
+            for(iterator = 0; iterator < 2U; iterator ++)
             {
                 /* We need to search for two interface descriptors */
                 interfaceDescriptor = USB_HOST_DeviceGeneralInterfaceDescriptorQuery
@@ -786,8 +799,8 @@ void _USB_HOST_CDC_InterfaceAssign
                 if(interfaceDescriptor != NULL)
                 {
                     if((interfaceDescriptor->bInterfaceClass == USB_CDC_COMMUNICATIONS_INTERFACE_CLASS_CODE) &&
-                            (interfaceDescriptor->bInterfaceSubClass == USB_CDC_SUBCLASS_ABSTRACT_CONTROL_MODEL) &&
-                            (interfaceDescriptor->bInterfaceProtocol == USB_CDC_PROTOCOL_AT_V250))
+                            (interfaceDescriptor->bInterfaceSubClass == (uint32_t)USB_CDC_SUBCLASS_ABSTRACT_CONTROL_MODEL) &&
+                            (interfaceDescriptor->bInterfaceProtocol == (uint32_t)USB_CDC_PROTOCOL_AT_V250))
                     {
                         /* We found the communication class */
                         cdcInstance->commInterfaceNumber = interfaceDescriptor->bInterfaceNumber;
@@ -797,7 +810,8 @@ void _USB_HOST_CDC_InterfaceAssign
                         USB_HOST_DeviceEndpointQueryContextClear(&endpointDescriptorQuery);
                         endpointDescriptorQuery.transferType = USB_TRANSFER_TYPE_INTERRUPT;
                         endpointDescriptorQuery.direction = USB_DATA_DIRECTION_DEVICE_TO_HOST;
-                        endpointDescriptorQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)(USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|USB_HOST_ENDPOINT_QUERY_BY_DIRECTION);
+                        temp_32 = ((uint32_t)USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|(uint32_t)USB_HOST_ENDPOINT_QUERY_BY_DIRECTION);
+                        endpointDescriptorQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)temp_32;
                         endpointDescriptor = USB_HOST_DeviceEndpointDescriptorQuery(interfaceDescriptor, &endpointDescriptorQuery);
 
                         if(endpointDescriptor != NULL)
@@ -814,8 +828,8 @@ void _USB_HOST_CDC_InterfaceAssign
                         }
                     }
                     else if ((interfaceDescriptor->bInterfaceClass == USB_CDC_DATA_INTERFACE_CLASS_CODE) && 
-                            (interfaceDescriptor->bInterfaceSubClass == 0x00) && 
-                            (interfaceDescriptor->bInterfaceProtocol == USB_CDC_PROTOCOL_NO_CLASS_SPECIFIC))
+                            (interfaceDescriptor->bInterfaceSubClass == 0x00U) && 
+                            (interfaceDescriptor->bInterfaceProtocol == (uint32_t)USB_CDC_PROTOCOL_NO_CLASS_SPECIFIC))
                     {
                         /* We found the data class */
 
@@ -826,7 +840,8 @@ void _USB_HOST_CDC_InterfaceAssign
                         USB_HOST_DeviceEndpointQueryContextClear(&endpointDescriptorQuery);
                         endpointDescriptorQuery.transferType = USB_TRANSFER_TYPE_BULK;
                         endpointDescriptorQuery.direction = USB_DATA_DIRECTION_DEVICE_TO_HOST;
-                        endpointDescriptorQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)(USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|USB_HOST_ENDPOINT_QUERY_BY_DIRECTION);
+                        temp_32 = ((uint32_t)USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|(uint32_t)USB_HOST_ENDPOINT_QUERY_BY_DIRECTION);
+                        endpointDescriptorQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)temp_32;
                         endpointDescriptor = USB_HOST_DeviceEndpointDescriptorQuery(interfaceDescriptor, &endpointDescriptorQuery);
 
                         if(endpointDescriptor != NULL)
@@ -844,7 +859,8 @@ void _USB_HOST_CDC_InterfaceAssign
                         USB_HOST_DeviceEndpointQueryContextClear(&endpointDescriptorQuery);
                         endpointDescriptorQuery.transferType = USB_TRANSFER_TYPE_BULK;
                         endpointDescriptorQuery.direction = USB_DATA_DIRECTION_HOST_TO_DEVICE;
-                        endpointDescriptorQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)(USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|USB_HOST_ENDPOINT_QUERY_BY_DIRECTION);
+                        temp_32 = ((uint32_t)USB_HOST_ENDPOINT_QUERY_BY_TRANSFER_TYPE|(uint32_t)USB_HOST_ENDPOINT_QUERY_BY_DIRECTION);
+                        endpointDescriptorQuery.flags = (USB_HOST_ENDPOINT_QUERY_FLAG)temp_32;
                         endpointDescriptor = USB_HOST_DeviceEndpointDescriptorQuery(interfaceDescriptor, &endpointDescriptorQuery);
 
                         if(endpointDescriptor != NULL)
@@ -858,6 +874,10 @@ void _USB_HOST_CDC_InterfaceAssign
                             cdcInstance->bulkOutPipeHandle = USB_HOST_PIPE_HANDLE_INVALID;
                         }
 
+                    }
+                    else
+                    {
+                        /* Do Nothing */
                     }
                 }
                 else
@@ -898,11 +918,18 @@ void _USB_HOST_CDC_InterfaceAssign
             }
         }
     }
+    else
+    {
+        /* Do Nothing */
+    }
 }
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* Function:
-    USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_CDC_InterfaceEventHandler
+    USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE F_USB_HOST_CDC_InterfaceEventHandler
     (
         USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle,
         USB_HOST_DEVICE_INTERFACE_EVENT event,
@@ -923,7 +950,7 @@ void _USB_HOST_CDC_InterfaceAssign
     application.
 */
 
-USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_CDC_InterfaceEventHandler
+USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE F_USB_HOST_CDC_InterfaceEventHandler
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle,
     USB_HOST_DEVICE_INTERFACE_EVENT event,
@@ -931,37 +958,42 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_CDC_InterfaceEventHandler
     uintptr_t context
 )
 {
-    int cdcIndex;
+    int32_t cdcIndex;
     USB_HOST_CDC_INSTANCE_OBJ * cdcInstance;
     USB_HOST_DEVICE_INTERFACE_EVENT_TRANSFER_COMPLETE_DATA * dataTransferEvent;
     USB_HOST_CDC_EVENT cdcEvent;
     USB_HOST_CDC_EVENT_WRITE_COMPLETE_DATA cdcTransferCompleteData;
 
     /* Find out to which CDC Instance this interface belongs */
-    cdcIndex = _USB_HOST_CDC_InterfaceHandleToInstance(interfaceHandle);
-    cdcInstance = &gUSBHostCDCObj[cdcIndex];
-    cdcEvent = (USB_HOST_CDC_EVENT)(context); 
-
-    switch(event)
+    cdcIndex = F_USB_HOST_CDC_InterfaceHandleToInstance(interfaceHandle);
+    
+    if(cdcIndex != -1)
     {
-        case USB_HOST_DEVICE_INTERFACE_EVENT_TRANSFER_COMPLETE:
+       cdcInstance = &gUSBHostCDCObj[cdcIndex];
+       cdcEvent = (USB_HOST_CDC_EVENT)(context); 
 
-            /* This means a data transfer has completed */
-            dataTransferEvent = (USB_HOST_DEVICE_INTERFACE_EVENT_TRANSFER_COMPLETE_DATA *)(eventData);
-            cdcTransferCompleteData.transferHandle = dataTransferEvent->transferHandle;
-            cdcTransferCompleteData.result = _USB_HOST_CDC_HostResutlToCDCResultMap(dataTransferEvent->result);
-            cdcTransferCompleteData.length = dataTransferEvent->length;
+       switch(event)
+       {
+           case USB_HOST_DEVICE_INTERFACE_EVENT_TRANSFER_COMPLETE:
 
-            if(cdcInstance->eventHandler != NULL)
-            {
-                cdcInstance->eventHandler((USB_HOST_CDC_HANDLE)(cdcInstance), cdcEvent, 
+              /* This means a data transfer has completed */
+              dataTransferEvent = (USB_HOST_DEVICE_INTERFACE_EVENT_TRANSFER_COMPLETE_DATA *)(eventData);
+              cdcTransferCompleteData.transferHandle = dataTransferEvent->transferHandle;
+              cdcTransferCompleteData.result = F_USB_HOST_CDC_HostResutlToCDCResultMap(dataTransferEvent->result);
+              cdcTransferCompleteData.length = dataTransferEvent->length;
+
+               if(cdcInstance->eventHandler != NULL)
+               {
+                  (void) cdcInstance->eventHandler((USB_HOST_CDC_HANDLE)(cdcInstance), cdcEvent, 
                         &cdcTransferCompleteData, cdcInstance->context);
-            }
+               }
 
             break;
 
-        default:
+          default:
+             /* Do Nothing */
             break;
+        }
     }
     
     return(USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE_NONE);
@@ -987,7 +1019,7 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_CDC_InterfaceEventHandler
     application.
 */
 
-void _USB_HOST_CDC_InterfaceTasks
+void F_USB_HOST_CDC_InterfaceTasks
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
 )
@@ -1014,16 +1046,16 @@ void _USB_HOST_CDC_InterfaceTasks
     application.
 */
 
-void _USB_HOST_CDC_InterfaceRelease
+void F_USB_HOST_CDC_InterfaceRelease
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
 )
 {
-    int cdcIndex;
+    int32_t cdcIndex;
     USB_HOST_CDC_INSTANCE_OBJ * cdcInstance;
     
     /* Get the instance associated with this interface */
-    cdcIndex = _USB_HOST_CDC_InterfaceHandleToInstance(interfaceHandle);
+    cdcIndex = F_USB_HOST_CDC_InterfaceHandleToInstance(interfaceHandle);
     
     if(cdcIndex >= 0)
     {
@@ -1037,14 +1069,14 @@ void _USB_HOST_CDC_InterfaceRelease
             if(cdcInstance->bulkInPipeHandle != USB_HOST_PIPE_HANDLE_INVALID)
             {
                 /* Close the bulk in pipe and invalidate the pipe handle */
-                USB_HOST_DevicePipeClose(cdcInstance->bulkInPipeHandle);
+                (void) USB_HOST_DevicePipeClose(cdcInstance->bulkInPipeHandle);
                 cdcInstance->bulkInPipeHandle = USB_HOST_PIPE_HANDLE_INVALID;
             }
 
             if(cdcInstance->bulkOutPipeHandle != USB_HOST_PIPE_HANDLE_INVALID)
             {
                 /* Close the bulk Out pipe and invalidate the pipe handle */
-                USB_HOST_DevicePipeClose(cdcInstance->bulkOutPipeHandle);
+                (void) USB_HOST_DevicePipeClose(cdcInstance->bulkOutPipeHandle);
                 cdcInstance->bulkOutPipeHandle = USB_HOST_PIPE_HANDLE_INVALID;
             }
 
@@ -1052,14 +1084,14 @@ void _USB_HOST_CDC_InterfaceRelease
             {
                 /* Close the interruptPipeHandle pipe handle and invalidate the pipe
                  * handle */
-                USB_HOST_DevicePipeClose(cdcInstance->interruptPipeHandle);
+                (void) USB_HOST_DevicePipeClose(cdcInstance->interruptPipeHandle);
                 cdcInstance->interruptPipeHandle = USB_HOST_PIPE_HANDLE_INVALID;
             }
 
             if(cdcInstance->eventHandler != NULL)
             {
                 /* Let the client know that the device is detached */
-                cdcInstance->eventHandler((USB_HOST_CDC_HANDLE)(cdcInstance), 
+                (void) cdcInstance->eventHandler((USB_HOST_CDC_HANDLE)(cdcInstance), 
                         USB_HOST_CDC_EVENT_DEVICE_DETACHED,
                         NULL, cdcInstance->context);
             }
@@ -1074,7 +1106,7 @@ void _USB_HOST_CDC_InterfaceRelease
 
 // *****************************************************************************
 /* Function:
-    USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_CDC_DeviceEventHandler
+    USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE F_USB_HOST_CDC_DeviceEventHandler
     (
         USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle,
         USB_HOST_DEVICE_EVENT event,
@@ -1095,7 +1127,7 @@ void _USB_HOST_CDC_InterfaceRelease
     application.
 */
 
-USB_HOST_DEVICE_EVENT_RESPONSE _USB_HOST_CDC_DeviceEventHandler
+USB_HOST_DEVICE_EVENT_RESPONSE F_USB_HOST_CDC_DeviceEventHandler
 (
     USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle,
     USB_HOST_DEVICE_EVENT event,
@@ -1122,6 +1154,7 @@ USB_HOST_DEVICE_EVENT_RESPONSE _USB_HOST_CDC_DeviceEventHandler
             break;
 
         default:
+            /* Do Nothing */
             break;
     }
     
@@ -1167,7 +1200,7 @@ USB_HOST_CDC_RESULT USB_HOST_CDC_AttachEventHandlerSet
     uintptr_t context
 )
 {
-    int iterator;
+    uint32_t iterator;
 
     USB_HOST_CDC_RESULT result = USB_HOST_CDC_RESULT_FAILURE;
     USB_HOST_CDC_ATTACH_LISTENER_OBJ * attachListener;
@@ -1181,7 +1214,7 @@ USB_HOST_CDC_RESULT USB_HOST_CDC_AttachEventHandlerSet
         /* Search for free listener object */
         for(iterator = 0; iterator < USB_HOST_CDC_ATTACH_LISTENERS_NUMBER; iterator ++)
         {
-            if(!gUSBHostCDCAttachListener[iterator].inUse)
+            if(gUSBHostCDCAttachListener[iterator].inUse == false)
             {
                 /* Found a free object */
                 attachListener = &gUSBHostCDCAttachListener[iterator];
@@ -1227,7 +1260,7 @@ USB_HOST_CDC_HANDLE USB_HOST_CDC_Open
 
     /* The present implementation is a single client implementation only */
 
-    if(cdcDeviceObj != 0)
+    if(cdcDeviceObj != 0U)
     {
         cdcInstance = (USB_HOST_CDC_INSTANCE_OBJ *)cdcDeviceObj;
         if((cdcInstance->inUse) && (cdcInstance->state == USB_HOST_CDC_STATE_READY))
@@ -1383,7 +1416,7 @@ USB_HOST_CDC_RESULT USB_HOST_CDC_Write
             }
             else
             {
-                if((size != 0) && (data == NULL))
+                if((size != 0U) && (data == NULL))
                 {
                     /* Input paramters are not valid */
                     cdcResult = USB_HOST_CDC_RESULT_INVALID_PARAMETER;
@@ -1396,7 +1429,7 @@ USB_HOST_CDC_RESULT USB_HOST_CDC_Write
                      * USB_HOST_CDC_EVENT_WRITE_COMPLETE */
                     
                     hostResult = USB_HOST_DeviceTransfer(cdcInstance->bulkOutPipeHandle, tempTransferHandle, data, size, (uintptr_t)(USB_HOST_CDC_EVENT_WRITE_COMPLETE));
-                    cdcResult = _USB_HOST_CDC_HostResutlToCDCResultMap(hostResult);
+                    cdcResult = F_USB_HOST_CDC_HostResutlToCDCResultMap(hostResult);
                 }
             }
         }
@@ -1471,7 +1504,7 @@ USB_HOST_CDC_RESULT USB_HOST_CDC_Read
             }
             else
             {
-                if((size != 0) && (data == NULL))
+                if((size != 0U) && (data == NULL))
                 {
                     /* Input paramters are not valid */
                     cdcResult = USB_HOST_CDC_RESULT_INVALID_PARAMETER;
@@ -1484,7 +1517,7 @@ USB_HOST_CDC_RESULT USB_HOST_CDC_Read
                      * USB_HOST_CDC_EVENT_READ_COMPLETE */
                     
                     hostResult = USB_HOST_DeviceTransfer(cdcInstance->bulkInPipeHandle, tempTransferHandle, data, size, (uintptr_t)(USB_HOST_CDC_EVENT_READ_COMPLETE));
-                    cdcResult = _USB_HOST_CDC_HostResutlToCDCResultMap(hostResult);
+                    cdcResult = F_USB_HOST_CDC_HostResutlToCDCResultMap(hostResult);
                 }
             }
         }
@@ -1572,7 +1605,7 @@ USB_HOST_CDC_RESULT USB_HOST_CDC_SerialStateNotificationGet
                     
                     hostResult = USB_HOST_DeviceTransfer(cdcInstance->interruptPipeHandle, tempTransferHandle, serialState, sizeof(USB_CDC_SERIAL_STATE), 
                             (uintptr_t)(USB_HOST_CDC_EVENT_SERIAL_STATE_NOTIFICATION_RECEIVED));
-                    cdcResult = _USB_HOST_CDC_HostResutlToCDCResultMap(hostResult);
+                    cdcResult = F_USB_HOST_CDC_HostResutlToCDCResultMap(hostResult);
                 }
             }
         }

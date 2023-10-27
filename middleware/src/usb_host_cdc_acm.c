@@ -54,7 +54,7 @@
 
 // *****************************************************************************
 /* Function:
-   void _USB_HOST_CDC_ControlTransferCallback
+   void F_USB_HOST_CDC_ControlTransferCallback
     (
         USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
         USB_HOST_REQUEST_HANDLE requestHandle,
@@ -74,7 +74,7 @@
     application.
 */
 
-void _USB_HOST_CDC_ControlTransferCallback
+void F_USB_HOST_CDC_ControlTransferCallback
 (
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
     USB_HOST_REQUEST_HANDLE requestHandle,
@@ -90,12 +90,12 @@ void _USB_HOST_CDC_ControlTransferCallback
     /* The control request is complete. The request in requestType is the same
      * as the event that needs to be sent to the application. */
 
-    controlRequestEventData.result = _USB_HOST_CDC_HostResutlToCDCResultMap(result);
+    controlRequestEventData.result = F_USB_HOST_CDC_HostResutlToCDCResultMap(result);
     controlRequestEventData.requestHandle = requestHandle;
     controlRequestEventData.length = size;
     if(cdcInstance->eventHandler != NULL)
     {
-        cdcInstance->eventHandler((USB_HOST_CDC_HANDLE)(cdcInstance), controlTransferObj->requestType,
+        (void) cdcInstance->eventHandler((USB_HOST_CDC_HANDLE)(cdcInstance), controlTransferObj->requestType,
                 &controlRequestEventData, cdcInstance->context);
     }
 
@@ -197,18 +197,18 @@ USB_HOST_CDC_RESULT USB_HOST_CDC_ACM_LineCodingSet
                         /* Create the setup packet */
                         setupPacket = &cdcInstance->setupPacket;
                         setupPacket->bmRequestType = 0x21;
-                        setupPacket->bRequest = USB_CDC_REQUEST_SET_LINE_CODING;
+                        setupPacket->bRequest = (uint8_t)USB_CDC_REQUEST_SET_LINE_CODING;
                         setupPacket->wValue = 0;
                         setupPacket->wIndex = cdcInstance->commInterfaceNumber;
-                        setupPacket->wLength = sizeof(USB_CDC_LINE_CODING);
+                        setupPacket->wLength = (uint16_t)(sizeof(USB_CDC_LINE_CODING));
 
                         /* Schedule the control transfer */
                         hostResult = USB_HOST_DeviceControlTransfer(cdcInstance->controlPipeHandle, tempRequestHandle,
-                                setupPacket, lineCoding, _USB_HOST_CDC_ControlTransferCallback, 
+                                setupPacket, lineCoding, F_USB_HOST_CDC_ControlTransferCallback, 
                                 (uintptr_t)(cdcInstance ));
 
                         /* Map the host result to CDC result */
-                        result = _USB_HOST_CDC_HostResutlToCDCResultMap(hostResult);
+                        result = F_USB_HOST_CDC_HostResutlToCDCResultMap(hostResult);
                         if(hostResult != USB_HOST_RESULT_SUCCESS)
                         {
                             /* This means the transfer did not go through. We 
@@ -313,18 +313,18 @@ USB_HOST_CDC_RESULT USB_HOST_CDC_ACM_LineCodingGet
                         /* Create the setup packet */
                         setupPacket = &cdcInstance->setupPacket;
                         setupPacket->bmRequestType = 0xA1;
-                        setupPacket->bRequest = USB_CDC_REQUEST_GET_LINE_CODING;
+                        setupPacket->bRequest = (uint8_t)USB_CDC_REQUEST_GET_LINE_CODING;
                         setupPacket->wValue = 0;
                         setupPacket->wIndex = cdcInstance->commInterfaceNumber;
-                        setupPacket->wLength = sizeof(USB_CDC_LINE_CODING);
+                        setupPacket->wLength = (uint16_t)(sizeof(USB_CDC_LINE_CODING));
 
                         /* Schedule the control transfer */
                         hostResult = USB_HOST_DeviceControlTransfer(cdcInstance->controlPipeHandle, tempRequestHandle,
-                                setupPacket, lineCoding, _USB_HOST_CDC_ControlTransferCallback, 
+                                setupPacket, lineCoding, F_USB_HOST_CDC_ControlTransferCallback, 
                                 (uintptr_t)(cdcInstance ));
 
                         /* Map the host result to CDC result */
-                        result = _USB_HOST_CDC_HostResutlToCDCResultMap(hostResult);
+                        result = F_USB_HOST_CDC_HostResutlToCDCResultMap(hostResult);
                         if(hostResult != USB_HOST_RESULT_SUCCESS)
                         {
                             /* This means the transfer did not go through. We 
@@ -423,18 +423,18 @@ USB_HOST_CDC_RESULT USB_HOST_CDC_ACM_BreakSend
                     /* Create the setup packet */
                     setupPacket = &cdcInstance->setupPacket;
                     setupPacket->bmRequestType = 0x21;
-                    setupPacket->bRequest = USB_CDC_REQUEST_SEND_BREAK;
+                    setupPacket->bRequest = (uint8_t)USB_CDC_REQUEST_SEND_BREAK;
                     setupPacket->wValue = breakDuration ;
                     setupPacket->wIndex = cdcInstance->commInterfaceNumber;
                     setupPacket->wLength = 0;
 
                     /* Schedule the control transfer */
                     hostResult = USB_HOST_DeviceControlTransfer(cdcInstance->controlPipeHandle, tempRequestHandle,
-                            setupPacket, NULL, _USB_HOST_CDC_ControlTransferCallback, 
+                            setupPacket, NULL, F_USB_HOST_CDC_ControlTransferCallback, 
                             (uintptr_t)(cdcInstance ));
 
                     /* Map the host result to CDC result */
-                    result = _USB_HOST_CDC_HostResutlToCDCResultMap(hostResult);
+                    result = F_USB_HOST_CDC_HostResutlToCDCResultMap(hostResult);
                     if(hostResult != USB_HOST_RESULT_SUCCESS)
                     {
                         /* If the control transfer was not successful, then
@@ -537,18 +537,18 @@ USB_HOST_CDC_RESULT USB_HOST_CDC_ACM_ControlLineStateSet
                         /* Create the setup packet */
                         setupPacket = &cdcInstance->setupPacket;
                         setupPacket->bmRequestType = 0x21;
-                        setupPacket->bRequest = USB_CDC_REQUEST_SET_CONTROL_LINE_STATE;
+                        setupPacket->bRequest = (uint8_t)USB_CDC_REQUEST_SET_CONTROL_LINE_STATE;
                         setupPacket->wValue =  (( *(uint8_t *) controlLineState ));
                         setupPacket->wIndex = cdcInstance->commInterfaceNumber;
                         setupPacket->wLength = 0;
 
                         /* Schedule the control transfer */
                         hostResult = USB_HOST_DeviceControlTransfer(cdcInstance->controlPipeHandle, tempRequestHandle,
-                                setupPacket, NULL, _USB_HOST_CDC_ControlTransferCallback, 
+                                setupPacket, NULL, F_USB_HOST_CDC_ControlTransferCallback, 
                                 (uintptr_t)(cdcInstance ));
 
                         /* Map the host result to CDC result */
-                        result = _USB_HOST_CDC_HostResutlToCDCResultMap(hostResult);
+                        result = F_USB_HOST_CDC_HostResutlToCDCResultMap(hostResult);
                         if(hostResult != USB_HOST_RESULT_SUCCESS)
                         {
                             /* This means the transfer did not go through. We 
