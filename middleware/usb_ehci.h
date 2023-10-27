@@ -38,8 +38,8 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
-#ifndef _USB_EHCI_H_
-#define _USB_EHCI_H_
+#ifndef USB_EHCI_H_
+#define USB_EHCI_H_
 
 #include <stdint.h>
 
@@ -50,6 +50,10 @@
 // *****************************************************************************
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 6.1 deviated:59 Deviation record ID -  H3_MISRAC_2012_R_6_1_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:59 "MISRA C-2012 Rule 6.1" "H3_MISRAC_2012_R_6_1_DR_1" 
 /* EHCI Queue Transfer Descriptor Type
 
   Summary:
@@ -242,6 +246,9 @@ typedef struct __attribute__((packed)) USB_EHCI_QH
     
 } USB_EHCI_QH;
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 6.1"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* EHCI Queue Head Queue
 
@@ -257,7 +264,7 @@ typedef struct __attribute__((packed)) USB_EHCI_QH
 */
 
 #define USB_EHCI_QH_TYPE_ITD 0x0
-#define USB_EHCI_QH_TYPE_QH  0x1
+#define USB_EHCI_QH_TYPE_QH  0x1U
 #define USB_EHCI_QH_TYPE_SITD 0x2
 #define USB_EHCI_QH_TYPE_FSTN 0x3
 
@@ -294,7 +301,7 @@ typedef struct __attribute__((packed)) USB_EHCI_QH
 */
 
 #define USB_EHCI_QH_SPEED_FULL 0x0
-#define USB_EHCI_QH_SPEED_LOW 0x1
+#define USB_EHCI_QH_SPEED_LOW 0x1U
 #define USB_EHCI_QH_SPEED_HIGH 0x2
 #define USB_EHCI_QH_SPEED_UNDEFINED 0x3
 
@@ -311,8 +318,8 @@ typedef struct __attribute__((packed)) USB_EHCI_QH
     None.
 */
 
-#define USB_EHCI_END_OF_LIST 0x1
+#define USB_EHCI_END_OF_LIST 0x1U
 
-#define USB_EHCI_PERIODIC_LIST_ENTRY(pipe,type) ((uint32_t)(pipe)|(type << 1))
-#define USB_EHCI_PERIODIC_LIST_QH(x) ((USB_EHCI_QH *)(x & 0xFFFFFFE0))
+#define USB_EHCI_PERIODIC_LIST_ENTRY(pipe,type) (((uint32_t)(pipe))|(((uint32_t)type) << (1)))
+#define USB_EHCI_PERIODIC_LIST_QH(x) ((USB_EHCI_QH *)((x) & (0xFFFFFFE0U)))
 #endif

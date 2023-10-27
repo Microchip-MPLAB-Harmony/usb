@@ -39,8 +39,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _USB_HOST_LOCAL_H
-#define _USB_HOST_LOCAL_H
+#ifndef USB_HOST_LOCAL_H
+#define USB_HOST_LOCAL_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -74,14 +74,14 @@
 #define USB_HOST_DEFAULT_ADDRESS     0
 
 /* Invalid configuration value */
-#define USB_HOST_CONFIGURATION_NUMBER_INVALID 0xFF
+#define USB_HOST_CONFIGURATION_NUMBER_INVALID 0xFFU
 
 /* Definition of USB_HOST_DEVICE_OBJ_HANDLE 
  * Bits 31-16: Unique PNP identifier
  * Bits 15-8: Bus number
  * Bits 7-0 : Device Array Index */
 
-#define _USB_HOST_DeviceObjHandleGet( pnpIdentifier, busNumber, deviceIndex) ( (uintptr_t)(((pnpIdentifier) << 16) | ((busNumber) << 8) | deviceIndex))
+#define M_USB_HOST_DeviceObjHandleGet( pnpIdentifier, busNumber, deviceIndex) ( (uintptr_t)((((uint32_t)pnpIdentifier) << 16) | (((uint16_t)busNumber) << 8) | (uint16_t)deviceIndex))
 
 /* Definition of USB_HOST_DEVICE_CLIENT_HANDLE is the same as that of the
  * USB_HOST_DEVICE_OBJ_HANDLE */
@@ -98,25 +98,30 @@
  * Bits 15-8: Interface number
  * Bits 7-0 : Device Array Index */
 
-#define _USB_HOST_DeviceInterfaceHandleGet( pnpIdentifier, interfaceHandle, deviceIndex) ( (uintptr_t)(((pnpIdentifier) << 16) | ((interfaceHandle) << 8) | deviceIndex))
+#define M_USB_HOST_DeviceInterfaceHandleGet( pnpIdentifier, interfaceHandle, deviceIndex) ( (uintptr_t)((((uint32_t)pnpIdentifier) << 16) | (((uint16_t)interfaceHandle) << 8) | (uint16_t)deviceIndex))
 
 /* This macro creates a handle that is used as the user data for control
  * transfer IRPs */
 
-#define _USB_HOST_ControlTransferIRPUserData( pnpIdentifier, transferObjIndex, deviceIndex) ( (uintptr_t)(((pnpIdentifier) << 16) | ((transferObjIndex) << 8) | deviceIndex))
+#define M_USB_HOST_ControlTransferIRPUserData( pnpIdentifier, transferObjIndex, deviceIndex) ( (uintptr_t)((((uint32_t)pnpIdentifier) << 16) | (((uint16_t)transferObjIndex) << 8) | (uint16_t)deviceIndex))
 
 /* Macros to obtain the bus number and device array index from the 
  * from the USB_HOST_DEVICE_OBJ_HANDLE */
-#define USB_HOST_DEVICE_INDEX( X )      ((X) & 0x000000FF)
-#define USB_HOST_BUS_NUMBER( X )        (( (X) & 0x0000FF00) >> 8 )
-#define USB_HOST_INTERFACE_INDEX( X )   (( (X) & 0x0000FF00) >> 8)
-#define USB_HOST_PNP_IDENTIFIER( X )    (( (X) & 0xFFFF0000) >> 16)
+#define USB_HOST_DEVICE_INDEX( X )      ((X) & 0x000000FFU)
+#define USB_HOST_BUS_NUMBER( X )        (( (X) & 0x0000FF00U) >> 8 )
+#define USB_HOST_INTERFACE_INDEX( X )   (( (X) & 0x0000FF00U) >> 8)
+#define USB_HOST_PNP_IDENTIFIER( X )    (( (X) & 0xFFFF0000U) >> 16)
 
 #define USB_HOST_QUERY_FLAG_MASK        0xFF
 
 #define USB_HOST_DeviceIsRootHub(deviceObjHandle)  ((gUSBHostDeviceList[USB_HOST_DEVICE_INDEX(deviceObjHandle)].deviceAddress == USB_HOST_ROOT_HUB_ADDRESS) ? true : false)
 
- bool   _IS_PARENT_ROOT_HUB( USB_HOST_DEVICE_OBJ_HANDLE  parentDeviceIdentifier );
+/* MISRA C-2012 Rule 8.6 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_8_6_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+
+#pragma coverity compliance deviate:4 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1"
+ bool   L_IS_PARENT_ROOT_HUB( USB_HOST_DEVICE_OBJ_HANDLE  parentDeviceIdentifier );
 
 /* Call back should be function pointer */
 typedef void *  USB_HOST_IRP_CALLBACK;
@@ -141,15 +146,18 @@ typedef void *  USB_HOST_IRP_CALLBACK;
 #endif
 
 #ifdef DRV_USB_UHP_INSTANCES_NUMBER
-    #define _USB_HOST_InterrutpSourceDisable()  bool eventsStatusRestore = false;\
+    #define M_USB_HOST_InterrutpSourceDisable()  bool eventsStatusRestore = false;\
                                                 eventsStatusRestore = busObj->hcdInterface->hostEventsDisable(busObj->hcdHandle); 
-    #define _USB_HOST_InterrutpSourceEnable()   busObj->hcdInterface->hostEventsEnable(busObj->hcdHandle, eventsStatusRestore);
+    #define M_USB_HOST_InterrutpSourceEnable()   busObj->hcdInterface->hostEventsEnable(busObj->hcdHandle, eventsStatusRestore);
 #else 
-    #define _USB_HOST_InterrutpSourceDisable()
-    #define _USB_HOST_InterrutpSourceEnable()
+    #define M_USB_HOST_InterrutpSourceDisable()
+    #define M_USB_HOST_InterrutpSourceEnable()
 #endif 
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 5.2 deviated:15 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+#pragma coverity compliance block deviate:15 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"    
+
 /*  USB Host Layer Device State Enumeration
 
   Summary:
@@ -291,6 +299,9 @@ typedef enum
 
 } USB_HOST_CONTROL_REQUEST_TYPE;
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* USB Host Pipe Object
 
@@ -304,7 +315,7 @@ typedef enum
     None.
 */
 
-typedef struct _USB_HOST_PIPE_OBJ_
+typedef struct USB_HOST_PIPE_OBJ_
 {
     /* True if the pipe object is allocated */
     bool  inUse;
@@ -367,7 +378,7 @@ typedef struct
     None.
 */
 
-typedef struct _USB_HOST_INTERFACE_DESC_INFO_
+typedef struct USB_HOST_INTERFACE_DESC_INFO_
 {
     /* Interface descriptor for this interface */
     USB_INTERFACE_DESCRIPTOR * interfaceDescriptor;
@@ -385,14 +396,14 @@ typedef struct _USB_HOST_INTERFACE_DESC_INFO_
     bool wasTriedWithDeviceDriver;
 
     /* The TPL index that matched */
-    int tplEntryMatched;
+    int32_t tplEntryMatched;
 
     /* Current alternate setting */
     uint8_t currentAlternateSetting;
 
     /* In case of an IAD this will point to the next interface that belongs to
      * this IAD group. */
-    struct _USB_HOST_INTERFACE_DESC_INFO_ * nextInterface;
+    struct USB_HOST_INTERFACE_DESC_INFO_ * nextInterface;
 
 } USB_HOST_INTERFACE_DESC_INFO;
 
@@ -469,7 +480,7 @@ typedef struct
     None.
 */
 
-typedef struct  _USB_HOST_DEVICE_OBJ_
+typedef struct  USB_HOST_DEVICE_OBJ_
 {
     /* True if this object is allocated */
     bool inUse;
@@ -542,7 +553,7 @@ typedef struct  _USB_HOST_DEVICE_OBJ_
     USB_HOST_CLIENT_DRIVER  * deviceClientDriver;
 
     /* Index of the TPL entry that matched last */
-    int tplEntryTried;
+    int32_t tplEntryTried;
 
     /* Index of the TPL entry that matched device level class subclass protocol
      * */
@@ -570,7 +581,7 @@ typedef struct  _USB_HOST_DEVICE_OBJ_
     USB_HOST_CONFIGURATION_INFO  configDescriptorInfo;
 
     /* Next device attached on the same bus*/
-    struct _USB_HOST_DEVICE_OBJ_ * nextDeviceObj;
+    struct USB_HOST_DEVICE_OBJ_ * nextDeviceObj;
 
     /* Device configuration state */
     USB_HOST_DEVICE_CONFIG_STATE configurationState;
@@ -734,7 +745,7 @@ typedef struct
     SYS_STATUS status;
 
     /* Supported Target peripheral list */
-    uint8_t  nTPLEntries;
+    int8_t  nTPLEntries;
 
     /* Pointer to the entry of TPL*/
     USB_HOST_TPL_ENTRY * tpl;
@@ -761,7 +772,7 @@ typedef struct
 
 // *****************************************************************************
 /* Function:
-    bool _USB_HOST_NoInterfacesOwned
+    bool F_USB_HOST_NoInterfacesOwned
     (
         USB_HOST_DEVICE_OBJ * deviceObj,
     );
@@ -780,14 +791,14 @@ typedef struct
     application.
 */    
 
-bool _USB_HOST_NoInterfacesOwned
+bool F_USB_HOST_NoInterfacesOwned
 (
     USB_HOST_DEVICE_OBJ * deviceObj
 );
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_UpdateInterfaceStatus
+    void F_USB_HOST_UpdateInterfaceStatus
     (
         USB_HOST_DEVICE_OBJ * deviceObj,
         int busIndex
@@ -808,7 +819,7 @@ bool _USB_HOST_NoInterfacesOwned
     application.
 */    
 
-void _USB_HOST_UpdateInterfaceStatus
+void F_USB_HOST_UpdateInterfaceStatus
 (
     USB_HOST_DEVICE_OBJ * deviceObj,
     int busIndex
@@ -816,7 +827,7 @@ void _USB_HOST_UpdateInterfaceStatus
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_ReleaseInterfaceDrivers
+    void F_USB_HOST_ReleaseInterfaceDrivers
     (
         USB_HOST_DEVICE_OBJ * deviceObj,
     );
@@ -834,14 +845,14 @@ void _USB_HOST_UpdateInterfaceStatus
     application.
 */    
 
-void _USB_HOST_ReleaseInterfaceDrivers
+void F_USB_HOST_ReleaseInterfaceDrivers
 (
     USB_HOST_DEVICE_OBJ * deviceObj
 );
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_ConfigurationDescriptorParse
+    void F_USB_HOST_ConfigurationDescriptorParse
     (
         USB_HOST_DEVICE_OBJ * deviceObj,
     );
@@ -863,14 +874,14 @@ void _USB_HOST_ReleaseInterfaceDrivers
     application.
 */    
 
-bool _USB_HOST_ConfigurationDescriptorParse
+bool F_USB_HOST_ConfigurationDescriptorParse
 (
     USB_HOST_DEVICE_OBJ * deviceObj
 );
 
 // *****************************************************************************
 /* Function:
-    int _USB_HOST_FindClassSubClassProtocolDriver
+    int F_USB_HOST_FindClassSubClassProtocolDriver
     (
         uint8_t bDeviceClass,
         uint8_t bDeviceSubClass,
@@ -893,7 +904,7 @@ bool _USB_HOST_ConfigurationDescriptorParse
     application.
 */    
 
-int _USB_HOST_FindClassSubClassProtocolDriver
+int F_USB_HOST_FindClassSubClassProtocolDriver
 (
     uint8_t bDeviceClass,
     uint8_t bDeviceSubClass,
@@ -903,7 +914,7 @@ int _USB_HOST_FindClassSubClassProtocolDriver
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_UpdateConfigurationState
+    void F_USB_HOST_UpdateConfigurationState
     (
         USB_HOST_DEVICE_OBJ * deviceObj,
         USB_HOST_BUS_OBJ * busObj
@@ -922,7 +933,7 @@ int _USB_HOST_FindClassSubClassProtocolDriver
     application.
 */    
 
-void _USB_HOST_UpdateConfigurationState
+void F_USB_HOST_UpdateConfigurationState
 (
     USB_HOST_DEVICE_OBJ * deviceObj,
     int busIndex
@@ -930,7 +941,7 @@ void _USB_HOST_UpdateConfigurationState
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_UpdateDeviceOwnership
+    void F_USB_HOST_UpdateDeviceOwnership
     (
         USB_HOST_DEVICE_OBJ * deviceObj,
         USB_HOST_BUS_OBJ * busObj
@@ -952,7 +963,7 @@ void _USB_HOST_UpdateConfigurationState
     application.
 */    
 
-void _USB_HOST_UpdateDeviceOwnership
+void F_USB_HOST_UpdateDeviceOwnership
 (
     USB_HOST_DEVICE_OBJ * deviceObj,
     int busIndex
@@ -960,7 +971,7 @@ void _USB_HOST_UpdateDeviceOwnership
 
 // *****************************************************************************
 /* Function:
-    bool _USB_HOST_DeviceConfigurationDescriptorErrorCheck
+    bool F_USB_HOST_DeviceConfigurationDescriptorErrorCheck
     (
         USB_CONFIGURATION_DESCRIPTOR * configurationDescriptor
     );
@@ -983,14 +994,14 @@ void _USB_HOST_UpdateDeviceOwnership
     application.
 */    
 
-bool _USB_HOST_DeviceConfigurationDescriptorErrorCheck
+bool F_USB_HOST_DeviceConfigurationDescriptorErrorCheck
 (
     USB_CONFIGURATION_DESCRIPTOR * configurationDescriptor
 );
 
 // *****************************************************************************
 /* Function:
-    uint8_t _USB_HOST_GetNewAddress( USB_HOST_BUS_OBJ *busObj )
+    uint8_t F_USB_HOST_GetNewAddress( USB_HOST_BUS_OBJ *busObj )
 
   Summary:
     Searches and allocates a new device address.
@@ -1003,11 +1014,11 @@ bool _USB_HOST_DeviceConfigurationDescriptorErrorCheck
     directly.
 */
 
-uint8_t _USB_HOST_GetNewAddress(USB_HOST_BUS_OBJ *busObj);
+uint8_t F_USB_HOST_GetNewAddress(USB_HOST_BUS_OBJ *busObj);
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_FillSetupPacket
+    void F_USB_HOST_FillSetupPacket
     (
         USB_SETUP_PACKET *setupPacket ,
         uint8_t requestType,
@@ -1028,7 +1039,7 @@ uint8_t _USB_HOST_GetNewAddress(USB_HOST_BUS_OBJ *busObj);
     directly.
 */
 
-void _USB_HOST_FillSetupPacket
+void F_USB_HOST_FillSetupPacket
 (
     USB_SETUP_PACKET *setupPacket ,
     uint8_t requestType,
@@ -1040,7 +1051,7 @@ void _USB_HOST_FillSetupPacket
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_MakeDeviceReady
+    void F_USB_HOST_MakeDeviceReady
     ( 
         USB_HOST_DEVICE_OBJ * deviceObj, 
         USB_HOST_BUS_OBJ * busObj 
@@ -1059,7 +1070,7 @@ void _USB_HOST_FillSetupPacket
     directly.
 */
 
-void _USB_HOST_MakeDeviceReady
+void F_USB_HOST_MakeDeviceReady
 (
     USB_HOST_DEVICE_OBJ * deviceObj, 
     int busIndex
@@ -1067,7 +1078,7 @@ void _USB_HOST_MakeDeviceReady
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_UpdateDeviceTask(int busIndex)
+    void F_USB_HOST_UpdateDeviceTask(int busIndex)
 
   Summary:
     This function maintains the state of each device on the bus.
@@ -1080,11 +1091,11 @@ void _USB_HOST_MakeDeviceReady
     application.
 */
 
-void _USB_HOST_UpdateDeviceTask(int busIndex);
+void F_USB_HOST_UpdateDeviceTask(int busIndex);
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_FreeAddress ( USB_HOST_DEVICE_OBJ_HANDLE deviceIdentifier)
+    void F_USB_HOST_FreeAddress ( USB_HOST_DEVICE_OBJ_HANDLE deviceIdentifier)
 
   Summary:
     Frees up the address bit assigned to this device hence making the address 
@@ -1099,11 +1110,11 @@ void _USB_HOST_UpdateDeviceTask(int busIndex);
     application.
 */
 
-void _USB_HOST_FreeAddress (USB_HOST_DEVICE_OBJ_HANDLE deviceIdentifier);
+void F_USB_HOST_FreeAddress (USB_HOST_DEVICE_OBJ_HANDLE deviceIdentifier);
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_DataTransferIRPCallback( USB_HOST_IRP * irp )
+    void F_USB_HOST_DataTransferIRPCallback( USB_HOST_IRP * irp )
  
   Summary:
     This is the callback for IRPs submitted through the
@@ -1122,11 +1133,11 @@ void _USB_HOST_FreeAddress (USB_HOST_DEVICE_OBJ_HANDLE deviceIdentifier);
     application.
 */
 
-void _USB_HOST_DataTransferIRPCallback( USB_HOST_IRP * irp );
+void F_USB_HOST_DataTransferIRPCallback( USB_HOST_IRP * irp );
 
 // *****************************************************************************
 /* Function:
-    USB_HOST_RESULT _USB_HOST_IRPResultToHostResult( USB_HOST_IRP * irp )
+    USB_HOST_RESULT F_USB_HOST_IRPResultToHostResult( USB_HOST_IRP * irp )
  
   Summary:
     This function maps the IRP completion result to a USB_HOST_RESULT type.
@@ -1139,11 +1150,11 @@ void _USB_HOST_DataTransferIRPCallback( USB_HOST_IRP * irp );
     application.
 */
 
-USB_HOST_RESULT _USB_HOST_IRPResultToHostResult(USB_HOST_IRP * irp);
+USB_HOST_RESULT F_USB_HOST_IRPResultToHostResult(USB_HOST_IRP * irp);
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_DeviceControlTransferCallback( USB_HOST_IRP * irp )
+    void F_USB_HOST_DeviceControlTransferCallback( USB_HOST_IRP * irp )
  
   Summary:
     This is the callback for control IRPs submitted through the
@@ -1161,11 +1172,11 @@ USB_HOST_RESULT _USB_HOST_IRPResultToHostResult(USB_HOST_IRP * irp);
     application.
 */
 
-void  _USB_HOST_DeviceControlTransferCallback( USB_HOST_IRP * irp );
+void  F_USB_HOST_DeviceControlTransferCallback( USB_HOST_IRP * irp );
 
 // *****************************************************************************
 /* Function:
-    void * _USB_HOST_FindEndOfDescriptor(void * descriptor) 
+    void * F_USB_HOST_FindEndOfDescriptor(void * descriptor) 
 
   Summary:
     Function finds the end of descriptor marker and returns the pointer to where
@@ -1180,11 +1191,11 @@ void  _USB_HOST_DeviceControlTransferCallback( USB_HOST_IRP * irp );
     application.
 */    
 
-void * _USB_HOST_FindEndOfDescriptor(void * descriptor);
+void * F_USB_HOST_FindEndOfDescriptor(void * descriptor);
 
 // *****************************************************************************
 /* Function:
-    void * _USB_HOST_TimerCallback
+    void * F_USB_HOST_TimerCallback
     (
        uint32_t context
     )
@@ -1200,5 +1211,9 @@ void * _USB_HOST_FindEndOfDescriptor(void * descriptor);
     application.
 */    
 
-void _USB_HOST_TimerCallback(uintptr_t context);
+void F_USB_HOST_TimerCallback(uintptr_t context);
+
+void F_USB_HOST_RootHubEventDisable(void);
+
+void F_USB_HOST_RootHubEventEnable(void);
 #endif

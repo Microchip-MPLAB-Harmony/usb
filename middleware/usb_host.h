@@ -38,8 +38,8 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
-#ifndef _USB_HOST_H_
-#define _USB_HOST_H_
+#ifndef USB_HOST_H_
+#define USB_HOST_H_
 
 
 //DOM-IGNORE-END
@@ -344,9 +344,9 @@ typedef enum
 
 #define TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL(classCode, subClassCode, protocolCode, initData, driver)\
 {\
-    .id.cl_sc_p = { classCode, subClassCode, protocolCode },\
+    .id.cl_sc_p = { (classCode), (subClassCode), (protocolCode) },\
     .pidMask = 0xFFFF,\
-    .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL),\
+    .tplFlags.driverType = (uint8_t)(TPL_FLAG_CLASS_SUBCLASS_PROTOCOL),\
     .tplFlags.ignoreClass = false,\
     .tplFlags.ignoreSubClass = false,\
     .tplFlags.ignoreProtocol = false,\
@@ -374,7 +374,7 @@ typedef enum
 {\
     .id.cl_sc_p = { classCode, subClassCode, 0xFF },\
     .pidMask = 0xFFFF,\
-    .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL),\
+    .tplFlags.driverType = (uint8_t)(TPL_FLAG_CLASS_SUBCLASS_PROTOCOL),\
     .tplFlags.ignoreClass = false,\
     .tplFlags.ignoreSubClass = false,\
     .tplFlags.ignoreProtocol = true,\
@@ -400,9 +400,9 @@ typedef enum
 
 #define TPL_INTERFACE_CLASS(classCode, initData, driver)\
 {\
-    .id.cl_sc_p = { classCode, 0xFF, 0xFF },\
+    .id.cl_sc_p = { (classCode), (0xFF), (0xFF) },\
     .pidMask = 0xFFFF,\
-    .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL),\
+    .tplFlags.driverType = (uint8_t)(TPL_FLAG_CLASS_SUBCLASS_PROTOCOL),\
     .tplFlags.ignoreClass = false,\
     .tplFlags.ignoreSubClass = true,\
     .tplFlags.ignoreProtocol = true,\
@@ -429,7 +429,7 @@ typedef enum
 {\
     .id.cl_sc_p = { 0xFF, 0xFF, 0xFF },\
     .pidMask = 0xFFFF,\
-    .tplFlags.driverType = (TPL_FLAG_CLASS_SUBCLASS_PROTOCOL),\
+    .tplFlags.driverType = (uint8_t)(TPL_FLAG_CLASS_SUBCLASS_PROTOCOL),\
     .tplFlags.ignoreClass = true,\
     .tplFlags.ignoreSubClass = true,\
     .tplFlags.ignoreProtocol = true,\
@@ -457,7 +457,7 @@ typedef enum
 {\
     .id.vid_pid = { vid, pid },\
     .pidMask = 0xFFFF,\
-    .tplFlags.driverType = (TPL_FLAG_VID_PID),\
+    .tplFlags.driverType = (uint8_t)(TPL_FLAG_VID_PID),\
     .tplFlags.pidMasked = 0,\
     .tplFlags.ignoreVIDPID = 0,\
     .hostClientDriverInitData = initData,\
@@ -484,7 +484,7 @@ typedef enum
 {\
     .id.vid_pid = { vid, pid },\
     .pidMask = mask,\
-    .tplFlags.driverType = (TPL_FLAG_VID_PID),\
+    .tplFlags.driverType = (uint8_t)(TPL_FLAG_VID_PID),\
     .tplFlags.pidMasked = 1,\
     .tplFlags.ignoreVIDPID = 0,\
     .hostClientDriverInitData = initData,\
@@ -511,7 +511,7 @@ typedef enum
 {\
     .id.vid_pid = { 0xFFFF, 0xFFFF },\
     .pidMask = 0x0000,\
-    .tplFlags.driverType = (TPL_FLAG_VID_PID),\
+    .tplFlags.driverType = (uint8_t)(TPL_FLAG_VID_PID),\
     .tplFlags.pidMasked = 1,\
     .tplFlags.ignoreVIDPID = 1,\
     .hostClientDriverInitData = initData,\
@@ -519,6 +519,12 @@ typedef enum
 }
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 3.1 deviated:4 Deviation record ID -  H3_MISRAC_2012_R_3_1_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+
+#pragma coverity compliance block deviate:4 "MISRA C-2012 Rule 3.1" "H3_MISRAC_2012_R_3_1_DR_1"    
+
 /* USB Host Layer Target Peripheral List Entry Type
 
   Summary:
@@ -582,6 +588,8 @@ typedef enum
     directly to create a TPL entry, using the TPL help macros to setup TPL
     entries (as shown in the code snippet) is recommended
 */
+/* MISRA C-2012 Rule 6.1 deviated:6 Deviation record ID -  H3_MISRAC_2012_R_6_1_DR_1 */
+#pragma coverity compliance block deviate:6 "MISRA C-2012 Rule 6.1" "H3_MISRAC_2012_R_6_1_DR_1"    
 
 typedef struct
 {
@@ -634,6 +642,9 @@ typedef struct
 USB_HOST_TARGET_PERIPHERAL_LIST_ENTRY,
 USB_HOST_TPL_ENTRY;
 
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 6.1"
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* USB Host Controller Driver Information
   
@@ -962,7 +973,7 @@ typedef enum
 
 SYS_MODULE_OBJ  USB_HOST_Initialize 
 (
-    const SYS_MODULE_INIT * init
+    const SYS_MODULE_INIT * initData
 );
 
 // *****************************************************************************
@@ -1008,7 +1019,7 @@ SYS_MODULE_OBJ  USB_HOST_Initialize
     routine will NEVER block waiting for hardware. 
 */
 
-void USB_HOST_Deinitialize(SYS_MODULE_OBJ hostLayerObject);
+void USB_HOST_Deinitialize(SYS_MODULE_OBJ usbHostObject );
 
 // *****************************************************************************
 /* Function:
@@ -1055,7 +1066,7 @@ void USB_HOST_Deinitialize(SYS_MODULE_OBJ hostLayerObject);
     called directly by the application tasks routine.
 */
 
-SYS_STATUS USB_HOST_Status (SYS_MODULE_OBJ hostLayerObject);
+SYS_STATUS USB_HOST_Status (SYS_MODULE_OBJ usbHostObject);
 
 // *****************************************************************************
 /* Function:
@@ -1097,7 +1108,7 @@ SYS_STATUS USB_HOST_Status (SYS_MODULE_OBJ hostLayerObject);
     called by the MPLAB Harmony System Tasks function.  
 */
 
-void USB_HOST_Tasks   (SYS_MODULE_OBJ hostLayerObject);
+void USB_HOST_Tasks   (SYS_MODULE_OBJ usbHostObject );
 
 // *****************************************************************************
 // *****************************************************************************
@@ -1279,6 +1290,9 @@ USB_HOST_RESULT USB_HOST_BusSuspend (USB_HOST_BUS bus);
 
 USB_HOST_RESULT USB_HOST_BusResume (USB_HOST_BUS bus);
 
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 3.1"
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* Function:
     USB_HOST_RESULT USB_HOST_BusIsSuspended (USB_HOST_BUS bus)
@@ -1425,6 +1439,9 @@ USB_HOST_RESULT USB_HOST_DeviceGetFirst
 USB_HOST_RESULT USB_HOST_DeviceGetNext (USB_HOST_DEVICE_INFO * deviceInfo);
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 8.6 deviated:3 Deviation record ID -  H3_MISRAC_2012_R_8_6_DR_1 */
+#pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1"    
+
 /* Function:
     USB_HOST_RESULT USB_HOST_DeviceSuspend 
     (
@@ -1547,7 +1564,7 @@ USB_HOST_RESULT USB_HOST_DeviceResume
 
 USB_HOST_RESULT USB_HOST_DeviceSpeedGet 
 ( 
-    USB_HOST_DEVICE_OBJ_HANDLE deviceHandle, 
+    USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle, 
     USB_SPEED * speed
 );
 
@@ -1596,6 +1613,9 @@ USB_HOST_RESULT USB_HOST_DeviceIsSuspended
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle
 );
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* Function:
     USB_HOST_RESULT USB_HOST_DeviceStringDescriptorGet

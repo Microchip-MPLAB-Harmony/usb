@@ -39,8 +39,8 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
-#ifndef _USB_HOST_CLIENT_DRIVER_H_
-#define _USB_HOST_CLIENT_DRIVER_H_
+#ifndef USB_HOST_CLIENT_DRIVER_H_
+#define USB_HOST_CLIENT_DRIVER_H_
 
 #include <stdint.h>
 #include <stddef.h>
@@ -132,6 +132,11 @@ typedef enum
 } USB_HOST_DEVICE_EVENT_RESPONSE;
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 5.2 deviated:15 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+
+#pragma coverity compliance block deviate:15 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" 
 /* Host Layer Device Interface Events Handler Function Return Type
 
   Summary:
@@ -688,6 +693,8 @@ typedef struct
    
 } USB_HOST_DEVICE_INTERFACE_EVENT_TRANSFER_COMPLETE_DATA;
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* USB Host Control Transfer Complete Callback Function Pointer type
 
@@ -942,6 +949,8 @@ USB_HOST_RESULT USB_HOST_DeviceConfigurationDescriptorGet
 );
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 8.6 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_8_6_DR_1 */
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1"    
 /* Function:
     USB_HOST_RESULT USB_HOST_DeviceConfigurationGet 
     (
@@ -979,7 +988,6 @@ USB_HOST_RESULT USB_HOST_DeviceConfigurationDescriptorGet
   Example:
     <code>
 
-    // TBD
     </code>
 
   Remarks:
@@ -1038,7 +1046,6 @@ USB_HOST_RESULT USB_HOST_DeviceConfigurationGet
   Example:
     <code>
 
-    // TBD
     </code>
 
   Remarks:
@@ -1049,7 +1056,7 @@ USB_HOST_RESULT USB_HOST_DeviceConfigurationSet
 (
     USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle,
     USB_HOST_REQUEST_HANDLE * requestHandle,
-    uint8_t configurationValue,
+    uint8_t configurationIndex,
     uintptr_t context
 );
 
@@ -1303,7 +1310,7 @@ USB_HOST_RESULT USB_HOST_DevicePipeHaltClear
 
 USB_HOST_PIPE_HANDLE USB_HOST_DevicePipeOpen 
 (
-    USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle,
+    USB_HOST_DEVICE_INTERFACE_HANDLE deviceInterfaceHandle,
     USB_ENDPOINT_ADDRESS endpointAddress
 );
 
@@ -1467,6 +1474,9 @@ USB_HOST_RESULT USB_HOST_DeviceTransferTerminate
     USB_HOST_TRANSFER_HANDLE transferHandle
 );
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 // *****************************************************************************
 // Section: USB Host Client Driver Routines. Endpoint and Interface Query
@@ -2004,7 +2014,7 @@ void USB_HOST_DeviceEndpointQueryContextClear
 
 USB_HOST_DEVICE_OBJ_HANDLE USB_HOST_DeviceEnumerate
 (
-    USB_HOST_DEVICE_OBJ_HANDLE parentHubObjHandle, 
+    USB_HOST_DEVICE_OBJ_HANDLE parentDeviceIdentifier, 
     uint8_t port 
 );
 
