@@ -43,8 +43,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_USBFSV1_H
-#define _DRV_USBFSV1_H
+#ifndef DRV_USBFSV1_H
+#define DRV_USBFSV1_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -75,6 +75,16 @@
 // *****************************************************************************
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 3.1 deviate:46, Rule 5.1 deviate: 2 and Rule 8.6 deviate: 2. 
+   Deviation record ID - H3_MISRAC_2012_R_3_1_DR_1, H3_MISRAC_2012_R_5_1_DR_1 
+   and H3_MISRAC_2012_R_8_6_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:2 "MISRA C-2012 Rule 3.1" "H3_MISRAC_2012_R_3_1_DR_1" )\
+(deviate:46 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" )\
+(deviate:20 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )
 /* USB Driver Endpoint Descriptor Table Entry Size in bytes.
 
   Summary:
@@ -234,7 +244,7 @@ typedef uintptr_t DRV_USBFSV1_HOST_PIPE_HANDLE;
 
 #define DRV_USBFSV1_HOST_PIPE_HANDLE_INVALID ((DRV_USBFSV1_HOST_PIPE_HANDLE)(-1))
 
-/*DOM-IGNORE-BEGIN*/#define DRV_USBFSV1_DEVICE_ENDPOINT_ALL 16/*DOM-IGNORE-END*/
+/*DOM-IGNORE-BEGIN*/#define DRV_USBFSV1_DEVICE_ENDPOINT_ALL 16U/*DOM-IGNORE-END*/
 
 // *****************************************************************************
 
@@ -495,22 +505,22 @@ typedef struct
     /* Specify the interrupt source for the USB module. This should be the
        interrupt source identifier for the USB module instance specified in
        usbID. */
-    uint8_t interruptSource;
+    INT_SOURCE interruptSource;
 
     /* Specify the interrupt source for the USB module. This should be the
        interrupt source identifier for the USB module instance specified in
        usbID. */
-    uint8_t interruptSource1;
+    INT_SOURCE interruptSource1;
 
     /* Specify the interrupt source for the USB module. This should be the
        interrupt source identifier for the USB module instance specified in
        usbID. */
-    uint8_t interruptSource2;
+    INT_SOURCE interruptSource2;
 
     /* Specify the interrupt source for the USB module. This should be the
        interrupt source identifier for the USB module instance specified in
        usbID. */
-    uint8_t interruptSource3;
+    INT_SOURCE interruptSource3;
 
     /* Specify the operational speed of the USB module. This should always be
        set to USB_SPEED_FULL. */
@@ -2985,6 +2995,12 @@ void DRV_USBFSV1_HOST_ROOT_HUB_Initialize
 );
 
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 3.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files (continued)

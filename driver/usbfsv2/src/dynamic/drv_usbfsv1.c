@@ -51,6 +51,7 @@
 
 #include "usb/src/usb_external_dependencies.h"
 #include "driver/usb/usbfsv1/src/drv_usbfsv1_local.h"
+#include "interrupts.h"
 
 
 // *****************************************************************************
@@ -63,7 +64,7 @@
  * Hardware instance, endpoint table and client object
  * lumped together as group to save memory.
  ******************************************************/
-DRV_USBFSV1_OBJ gDrvUSBObj [DRV_USBFSV1_INSTANCES_NUMBER];
+static DRV_USBFSV1_OBJ gDrvUSBObj [DRV_USBFSV1_INSTANCES_NUMBER];
 
 // *****************************************************************************
 // *****************************************************************************
@@ -72,6 +73,15 @@ DRV_USBFSV1_OBJ gDrvUSBObj [DRV_USBFSV1_INSTANCES_NUMBER];
 // *****************************************************************************
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 10.4 False Positive:1, Rule 11.3 deviate:1, and Rule 11.8 deviate:1. 
+   Deviation record ID - H3_MISRAC_2012_R_10_4_DR_1, H3_MISRAC_2012_R_11_3_DR_1 and 
+   H3_MISRAC_2012_R_11_8_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(fp:1 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
 /* Function:
     SYS_MODULE_OBJ DRV_USBFSV1_Initialize
     (
@@ -143,7 +153,10 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
 
             /* Set the configuration */
 			drvObj->usbID->USB_CTRLA = USB_CTRLA_SWRST_Msk;
-			while (drvObj->usbID->USB_SYNCBUSY & USB_SYNCBUSY_SWRST_Msk);
+			while ((drvObj->usbID->USB_SYNCBUSY & USB_SYNCBUSY_SWRST_Msk) != 0U)
+            {
+                /* Do Nothing */
+            }
             
             /* Change QOS values to have the best performance and correct USB behaviour */
             drvObj->usbID->USB_QOSCTRL = (USB_QOSCTRL_DQOS(2) | USB_QOSCTRL_CQOS(2));
@@ -151,22 +164,22 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
             /* Write linearity calibration in BIASREFBUF and bias calibration in BIASCOMP */     
             usbCalibValue = DRV_USBFSV1_READ_PADCAL_VALUE;   
             
-            usbPadValue = (usbCalibValue & 0x001F);
-            if(usbPadValue == 0x001F)
+            usbPadValue = (uint16_t)(usbCalibValue & 0x001FU);
+            if(usbPadValue == 0x001FU)
             {
                 usbPadValue = 5;
             }
             drvObj->usbID->USB_PADCAL |= USB_PADCAL_TRANSN(usbPadValue);
             
-            usbPadValue = ((usbCalibValue >> 5) & 0x001F);
-            if(usbPadValue == 0x001F)
+            usbPadValue = (uint16_t)((usbCalibValue >> 5) & 0x001FU);
+            if(usbPadValue == 0x001FU)
             {
                 usbPadValue = 29;
             }
             drvObj->usbID->USB_PADCAL |= USB_PADCAL_TRANSP(usbPadValue);
             
-            usbPadValue = ((usbCalibValue >> 10) & 0x0007);
-            if(usbPadValue == 0x0007)
+            usbPadValue = (uint16_t)((usbCalibValue >> 10) & 0x0007U);
+            if(usbPadValue == 0x0007U)
             {
                 usbPadValue = 3;
             }
@@ -177,7 +190,7 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
                 drvObj->usbID->USB_CTRLA |= USB_CTRLA_RUNSTDBY_Msk;
             }
 
-            if(drvObj->operationMode == DRV_USBFSV1_OPMODE_DEVICE)
+            if(drvObj->operationMode == (uint32_t)DRV_USBFSV1_OPMODE_DEVICE)
             {
                 drvObj->usbID->USB_DESCADD = (uint32_t)(drvObj->endpointDescriptorTable);
 
@@ -196,22 +209,29 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
                 {
                     regValue |= USB_DEVICE_CTRLB_SPDCONF(USB_DEVICE_CTRLB_SPDCONF_LS_Val);
                 }
+                else
+                {
+                    /* Do Nothing */
+                }
                 
-                drvObj->usbID->USB_CTRLB = regValue;
+                drvObj->usbID->USB_CTRLB = (uint16_t)regValue;
 
                 /* Device mode specific driver initialization */
-                _DRV_USBFSV1_DEVICE_INIT(drvObj, drvIndex);
+                M_DRV_USBFSV1_DEVICE_INIT(drvObj, drvIndex);
 
             }
             else
             {
-                
+                /* Do Nothing */                
             }
 
             /* Enable the USB device mode operation. */
             drvObj->usbID->USB_CTRLA |= USB_CTRLA_ENABLE_Msk;
 
-            while ((drvObj->usbID->USB_SYNCBUSY & USB_SYNCBUSY_ENABLE_Msk) == USB_SYNCBUSY_ENABLE_Msk);
+            while ((drvObj->usbID->USB_SYNCBUSY & USB_SYNCBUSY_ENABLE_Msk) == USB_SYNCBUSY_ENABLE_Msk)
+            {
+                /* Do Nothing */
+            }
 
             drvObj->status = SYS_STATUS_READY;
 
@@ -227,7 +247,11 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
     return (retVal);
 } /* end of DRV_USBFSV1_Initialize() */
 
-
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* Function:
     void DRV_USBFSV1_Tasks
@@ -313,7 +337,12 @@ void DRV_USBFSV1_Tasks
             /* Host mode specific polled
              * task routines can be called here */
 
-             _DRV_USBFSV1_HOST_ATTACH_DETACH_STATE_MACHINE(hDriver);
+             M_DRV_USBFSV1_HOST_ATTACH_DETACH_STATE_MACHINE(hDriver);
+        }
+        else
+        {
+            /* Do Nothing */
+            
         }
     }
 }/* end of DRV_USBFSV1_Tasks() */
@@ -367,26 +396,29 @@ void DRV_USBFSV1_Deinitialize
         hDriver->isOpened = false;
 
         /* Delete the mutex */
-        OSAL_MUTEX_Delete((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
+        (void) OSAL_MUTEX_Delete((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
 
         hDriver->pEventCallBack = NULL;
 
         /* Clear and disable the interrupts */
-        _DRV_USBFSV1_SYS_INT_SourceDisable(
-                hDriver->interruptSource,
+        M_DRV_USBFSV1_SYS_INT_SourceDisable(
+                (IRQn_Type)hDriver->interruptSource,
                 hDriver->interruptSource1,
                 hDriver->interruptSource2,
                 hDriver->interruptSource3 );
 
-        _DRV_USBFSV1_SYS_INT_SourceStatusClear(
-                hDriver->interruptSource,
+        M_DRV_USBFSV1_SYS_INT_SourceStatusClear(
+                ((IRQn_Type)hDriver->interruptSource),
                 hDriver->interruptSource1,
                 hDriver->interruptSource2,
                 hDriver->interruptSource3 );
 
         hDriver->usbID->USB_CTRLA &= ~USB_CTRLA_ENABLE_Msk;
 
-        while (hDriver->usbID->USB_SYNCBUSY == USB_SYNCBUSY_ENABLE_Msk);
+        while (hDriver->usbID->USB_SYNCBUSY == USB_SYNCBUSY_ENABLE_Msk)
+        {
+            /* Do Nothing */
+        }
     }
 
 } /* end of DRV_USBFSV1_Deinitialize() */
@@ -396,7 +428,7 @@ void DRV_USBFSV1_Deinitialize
     DRV_HANDLE DRV_USBFSV1_Open
     (
         const SYS_MODULE_INDEX drvIndex,
-        const DRV_IO_INTENT ioIntent
+        const DRV_IO_INTENT intent  
     )
 
   Summary:
@@ -417,7 +449,7 @@ void DRV_USBFSV1_Deinitialize
 DRV_HANDLE DRV_USBFSV1_Open
 (
     const SYS_MODULE_INDEX drvIndex,
-    const DRV_IO_INTENT ioIntent
+    const DRV_IO_INTENT intent  
 )
 {
     DRV_USBFSV1_OBJ * drvObj;
@@ -436,10 +468,14 @@ DRV_HANDLE DRV_USBFSV1_Open
             /* The driver status not ready */
             SYS_DEBUG(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Driver: Driver status not ready in DRV_USBFSV1_Open().");
         }
-        else if(ioIntent != (DRV_IO_INTENT_EXCLUSIVE | DRV_IO_INTENT_NONBLOCKING | DRV_IO_INTENT_READWRITE))
+        else if((uint32_t)intent != ((uint32_t)DRV_IO_INTENT_EXCLUSIVE | (uint32_t)DRV_IO_INTENT_NONBLOCKING | (uint32_t)DRV_IO_INTENT_READWRITE))
         {
             /* The driver only supports this mode */
             SYS_DEBUG(SYS_ERROR_DEBUG, "\r\nUSB USBFSV1 Driver: Unsupported IO Intent in DRV_USBFSV1_Open().");
+        }
+        else
+        {
+            /* Do Nothing */
         }
         if(drvObj->isOpened == true)
         {
@@ -465,7 +501,7 @@ DRV_HANDLE DRV_USBFSV1_Open
 
 // *****************************************************************************
 /* Function:
-    SYS_STATUS DRV_USBFSV1_Status( const SYS_MODULE_OBJ object )
+    SYS_STATUS DRV_USBFSV1_Status( SYS_MODULE_OBJ object )
 
   Summary:
     Provides the current status of the USB Driver module.
@@ -479,7 +515,7 @@ DRV_HANDLE DRV_USBFSV1_Open
 
 SYS_STATUS DRV_USBFSV1_Status
 (
-    const SYS_MODULE_OBJ object
+    SYS_MODULE_OBJ object
 )
 {
     SYS_STATUS retVal = SYS_STATUS_UNINITIALIZED;
@@ -585,8 +621,8 @@ void DRV_USBFSV1_Tasks_ISR
         {
 
             /* Clear the interrupt */
-            _DRV_USBFSV1_SYS_INT_SourceStatusClear(
-                    drvObj->interruptSource,
+            M_DRV_USBFSV1_SYS_INT_SourceStatusClear(
+                    (IRQn_Type)drvObj->interruptSource,
                     drvObj->interruptSource1,
                     drvObj->interruptSource2,
                     drvObj->interruptSource3 );
@@ -599,13 +635,13 @@ void DRV_USBFSV1_Tasks_ISR
                 case DRV_USBFSV1_OPMODE_DEVICE:
 
                     /* Driver is running in Device Mode */
-                    _DRV_USBFSV1_DEVICE_TASKS_ISR(drvObj);
+                    M_DRV_USBFSV1_DEVICE_TASKS_ISR(drvObj);
                     break;
 
                 case DRV_USBFSV1_OPMODE_HOST:
 
                     /* Driver is running in Host Mode */
-                    _DRV_USBFSV1_HOST_TASKS_ISR(drvObj);
+                    M_DRV_USBFSV1_HOST_TASKS_ISR(drvObj);
                     break;
 
                 case DRV_USBFSV1_OPMODE_OTG:
@@ -645,33 +681,10 @@ void DRV_USBFSV1_Tasks_ISR
 
 void DRV_USBFSV1_USB_Handler(void)
 {
-    _DRV_USBFSV1_ISR_OTHER(sysObj.drvUSBFSV1Object);
+    M_DRV_USBFSV1_ISR_OTHER(sysObj.drvUSBFSV1Object);
 
 }/* end of USB_Handler() */
 
-void DRV_USBFSV1_OTHER_Handler(void)
-{
-    _DRV_USBFSV1_ISR_OTHER(sysObj.drvUSBFSV1Object);
-
-}/* end of USB_Handler() */
-
-void DRV_USBFSV1_SOF_HSOF_Handler(void)
-{
-    _DRV_USBFSV1_ISR_SOF_HSOF(sysObj.drvUSBFSV1Object);
-
-}/* end of USB_Handler() */
-
-void DRV_USBFSV1_TRCPT0_Handler(void)
-{
-    _DRV_USBFSV1_ISR_TRCPT0(sysObj.drvUSBFSV1Object);
-
-}/* end of USB_Handler() */
-
-void DRV_USBFSV1_TRCPT1_Handler(void)
-{
-    _DRV_USBFSV1_ISR_TRCPT1(sysObj.drvUSBFSV1Object);
-
-}/* end of USB_Handler() */
 
 // *****************************************************************************
 /* Function:
@@ -679,7 +692,7 @@ void DRV_USBFSV1_TRCPT1_Handler(void)
     (
         DRV_HANDLE handle,
         uintptr_t hReferenceData,
-        DRV_USBFSV1_EVENT_CALLBACK eventCallBack
+        DRV_USBFSV1_EVENT_CALLBACK myEventCallBack 
     )
 
   Summary:
@@ -702,7 +715,7 @@ void DRV_USBFSV1_ClientEventCallBackSet
 (
     DRV_HANDLE   handle,
     uintptr_t    hReferenceData,
-    DRV_USB_EVENT_CALLBACK eventCallBack
+    DRV_USB_EVENT_CALLBACK myEventCallBack 
 )
 {
     DRV_USBFSV1_OBJ * pusbDrvObj;
@@ -723,7 +736,7 @@ void DRV_USBFSV1_ClientEventCallBackSet
         {
             /* Assign event call back and reference data */
             pusbDrvObj->hClientArg = hReferenceData;
-            pusbDrvObj->pEventCallBack = eventCallBack;
+            pusbDrvObj->pEventCallBack = myEventCallBack ;
         }
     }
 

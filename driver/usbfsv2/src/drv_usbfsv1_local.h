@@ -39,8 +39,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_USBFSV1_LOCAL_H
-#define _DRV_USBFSV1_LOCAL_H
+#ifndef DRV_USBFSV1_LOCAL_H
+#define DRV_USBFSV1_LOCAL_H
 
 
 // *****************************************************************************
@@ -58,20 +58,30 @@
 #include "driver/usb/usbfsv1/src/drv_usbfsv1_variant_mapping.h"
 #include "osal/osal.h"
 
+/* MISRA C-2012 Rule 5.2 deviate:13, Rule 5.4 deviate:1 and Rule 8.6 deviate:5. 
+   Deviation record ID - H3_MISRAC_2012_R_5_1_DR_1, H3_MISRAC_2012_R_5_4_DR_1 
+   and H3_MISRAC_2012_R_8_6_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:13 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1" )\
+(deviate:5 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )
+
 
 #define COMPILER_WORD_ALIGNED                               __attribute__((__aligned__(4)))
 
 #define DRV_USBFSV1_HOST_MAXIMUM_ENDPOINTS_NUMBER           10
 #define DRV_USBFSV1_HOST_IRP_PER_FRAME_NUMBER               10
-#define _DRV_USBFSV1_SW_EP_NUMBER                           DRV_USBFSV1_HOST_IRP_PER_FRAME_NUMBER
+#define M_DRV_USBFSV1_SW_EP_NUMBER                           DRV_USBFSV1_HOST_IRP_PER_FRAME_NUMBER
 #define DRV_USBFSV1_POST_DETACH_DELAY                       2000
 
 #define DRV_USBFSV1_MAX_CONTROL_BANDWIDTH_FULL_SPEED      20
 #define DRV_USBFSV1_MAX_CONTROL_BANDWIDTH_LOW_SPEED       30
 #define DRV_USBFSV1_MAX_BANDWIDTH_PER_FRAME    70
 /* Number of Endpoints used */
-#define DRV_USBFSV1_ENDPOINT_NUMBER_MASK                    0x0F
-#define DRV_USBFSV1_ENDPOINT_DIRECTION_MASK                 0x80
+#define DRV_USBFSV1_ENDPOINT_NUMBER_MASK                    0x0FU
+#define DRV_USBFSV1_ENDPOINT_DIRECTION_MASK                 0x80U
 
 #define DRV_USBFSV1_AUTO_ZLP_ENABLE                         false
 
@@ -127,13 +137,19 @@
  * This is an intermediate flag that is set by
  * the driver to indicate that a ZLP should be sent
  ***************************************************/
-#define USB_DEVICE_IRP_FLAG_SEND_ZLP 0x80
+#define USB_DEVICE_IRP_FLAG_SEND_ZLP 0x80U
 
+#if DRV_USBFSV1_AUTO_ZLP_ENABLE == true
+#define M_DRV_USBFSV1_DEVICE_AutoZlpControl(epNumber, bankNumber) hDriver->endpointDescriptorTable[epNumber].DEVICE_DESC_BANK[bankNumber].USB_PCKSIZE |= USB_DEVICE_PCKSIZE_AUTO_ZLP_Msk;
+
+#else 
+#define M_DRV_USBFSV1_DEVICE_AutoZlpControl(epNumber, bankNumber) hDriver->endpointDescriptorTable[epNumber].DEVICE_DESC_BANK[bankNumber].USB_PCKSIZE &= ~USB_DEVICE_PCKSIZE_AUTO_ZLP_Msk;
+#endif 
 /***************************************************
  * This object is used by the driver as IRP place
  * holder along with queuing feature.
  ***************************************************/
-typedef struct _USB_DEVICE_IRP_LOCAL
+typedef struct S_USB_DEVICE_IRP_LOCAL
 {
     /* Pointer to the data buffer */
     void * data;
@@ -146,7 +162,7 @@ typedef struct _USB_DEVICE_IRP_LOCAL
 
     /* IRP Callback. If this is NULL,
      * then there is no callback generated */
-    void (*callback)(struct _USB_DEVICE_IRP * irp);
+    void (*callback)(struct S_USB_DEVICE_IRP * irp);
 
     /* Request specific flags */
     USB_DEVICE_IRP_FLAG flags;
@@ -155,10 +171,10 @@ typedef struct _USB_DEVICE_IRP_LOCAL
     uintptr_t userData;
 
     /* This points to the next IRP in the queue */
-    struct _USB_DEVICE_IRP_LOCAL * next;
+    struct S_USB_DEVICE_IRP_LOCAL * next;
 
     /* This points to the previous IRP in the queue */
-    struct _USB_DEVICE_IRP_LOCAL * previous;
+    struct S_USB_DEVICE_IRP_LOCAL * previous;
 
     /* Pending bytes in the IRP */
     uint32_t nPendingBytes;
@@ -223,7 +239,7 @@ DRV_USBFSV1_HOST_IRP_STATE;
 /*********************************************
  * This is the local USB Host IRP object
  ********************************************/
-typedef struct _USB_HOST_IRP_LOCAL
+typedef struct S_USB_HOST_IRP_LOCAL
 {
     /* Points to the 8 byte setup command
      * packet in case this is a IRP is
@@ -250,7 +266,7 @@ typedef struct _USB_HOST_IRP_LOCAL
      * when IRP is terminated. Can be
      * NULL, in which case the function
      * will not be called. */
-    void (*callback)(struct _USB_HOST_IRP * irp);
+    void (*callback)(struct S_USB_HOST_IRP * irp);
 
     /****************************************
      * These members of the IRP should not be
@@ -261,7 +277,7 @@ typedef struct _USB_HOST_IRP_LOCAL
     DRV_USBFSV1_HOST_IRP_STATE tempState;
     uint32_t completedBytes;
     uint32_t completedBytesInThisFrame;
-    struct _USB_HOST_IRP_LOCAL * next;
+    struct S_USB_HOST_IRP_LOCAL * next;
     DRV_USB_HOST_PIPE_HANDLE  pipe;
 
 }
@@ -386,7 +402,7 @@ typedef enum
     USB_TRANSACTION_STALL           = 0xE,
     USB_TRANSACTION_DATA0           = 0x3,
     USB_TRANSACTION_DATA1           = 0xB,
-    USB_TRANSACTION_BUS_TIME_OUT    = 0x0,
+    USB_TRANSACTION_BUS_TIME_OUT    = 0x1,
     USB_TRANSACTION_DATA_ERROR      = 0xF
 
 }
@@ -435,7 +451,7 @@ typedef struct
     bool inUse;
     DRV_USBFSV1_HOST_PIPE_OBJ * pipe;
 
-}_DRV_USBFSV1_HOST_ENDPOINT;
+}S_DRV_USBFSV1_HOST_ENDPOINT;
 
 
 typedef struct
@@ -443,7 +459,7 @@ typedef struct
     /* A combination of two structures for
      * each direction. */
 
-    _DRV_USBFSV1_HOST_ENDPOINT endpoint;
+    S_DRV_USBFSV1_HOST_ENDPOINT endpoint;
 
 }DRV_USBFSV1_HOST_ENDPOINT_OBJ;
 
@@ -489,9 +505,9 @@ DRV_USBFSV1_DEVICE_EP0_STATE;
  * hardware instance
  **********************************************/
 
-typedef struct _DRV_USBFSV1_OBJ_STRUCT
+typedef struct S_DRV_USBFSV1_OBJ_STRUCT
 {
-    _DRV_USBFSV1_FOR_HOST(uint32_t, hostTransactionBuffer[16]);
+    M_DRV_USBFSV1_FOR_HOST(uint32_t, hostTransactionBuffer[16]);
     
     /* Indicates this object is in use */
     bool inUse;
@@ -521,19 +537,19 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
     bool operationEnabled;
 
     /* Current operating mode of the driver */
-    uint8_t operationMode;
+    DRV_USBFSV1_OPMODES operationMode;
 
     /* Interrupt source for USB module */
-    uint8_t interruptSource;
+    INT_SOURCE interruptSource;
 
     /* Interrupt source for USB module */
-    uint8_t interruptSource1;
+    INT_SOURCE interruptSource1;
 
     /* Interrupt source for USB module */
-    uint8_t interruptSource2;
+    INT_SOURCE interruptSource2;
 
     /* Interrupt source for USB module */
-    uint8_t interruptSource3;
+    INT_SOURCE interruptSource3;
 
     /* Mutex create function */
     OSAL_MUTEX_DECLARE(mutexID);
@@ -590,31 +606,31 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
     DRV_USBFSV1_HOST_ROOT_HUB_INFO rootHubInfo;
 
     /* The SWEPBuffer index */
-    _DRV_USBFSV1_FOR_HOST(uint8_t, currentFrameIRPIndex);
+    M_DRV_USBFSV1_FOR_HOST(uint8_t, currentFrameIRPIndex);
 
     /* Placeholder for bandwidth consumed in frame */
-    _DRV_USBFSV1_FOR_HOST(uint8_t, globalBWConsumed);
+    M_DRV_USBFSV1_FOR_HOST(uint8_t, globalBWConsumed);
 
     /* Variable used SW Endpoint objects that is used by this HW instances for
      * USB transfer scheduling */
-    _DRV_USBFSV1_FOR_HOST(DRV_USBFSV1_HOST_FRAME_IRP, frameIRPList[DRV_USBFSV1_HOST_IRP_PER_FRAME_NUMBER]);
+    M_DRV_USBFSV1_FOR_HOST(DRV_USBFSV1_HOST_FRAME_IRP, frameIRPList[DRV_USBFSV1_HOST_IRP_PER_FRAME_NUMBER]);
 
     /* This flag is true if an detach event has come and device de-enumeration
      * operation is in progress  */
-    _DRV_USBFSV1_FOR_HOST(bool, isDeviceDeenumerating);
+    M_DRV_USBFSV1_FOR_HOST(bool, isDeviceDeenumerating);
 
     /* This is the pointer to host Pipe descriptor table */
-    _DRV_USBFSV1_FOR_HOST(usb_descriptor_host_registers_t *, hostEndpointTablePtr);
+    M_DRV_USBFSV1_FOR_HOST(usb_descriptor_host_registers_t *, hostEndpointTablePtr);
 
     /* The parent UHD assigned by the host */
-    _DRV_USBFSV1_FOR_HOST(USB_HOST_DEVICE_OBJ_HANDLE, usbHostDeviceInfo);
+    M_DRV_USBFSV1_FOR_HOST(USB_HOST_DEVICE_OBJ_HANDLE, usbHostDeviceInfo);
 
     /* The UHD of the device attached to port assigned by the host */
-    _DRV_USBFSV1_FOR_HOST(USB_HOST_DEVICE_OBJ_HANDLE, attachedDeviceObjHandle);
+    M_DRV_USBFSV1_FOR_HOST(USB_HOST_DEVICE_OBJ_HANDLE, attachedDeviceObjHandle);
 
-    _DRV_USBFSV1_FOR_HOST(SYS_TIME_HANDLE, timerHandle);
+    M_DRV_USBFSV1_FOR_HOST(SYS_TIME_HANDLE, timerHandle);
     
-    _DRV_USBFSV1_FOR_HOST(bool, isResetting);
+    M_DRV_USBFSV1_FOR_HOST(bool, isResetting);
 
 } DRV_USBFSV1_OBJ;
 
@@ -622,21 +638,44 @@ typedef struct _DRV_USBFSV1_OBJ_STRUCT
  * Local functions.
  *************************************/
 
-void _DRV_USBFSV1_DEVICE_Initialize(DRV_USBFSV1_OBJ * drvObj, SYS_MODULE_INDEX index);
+void F_DRV_USBFSV1_DEVICE_Initialize(DRV_USBFSV1_OBJ * drvObj, SYS_MODULE_INDEX index);
 
-void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver);
+void F_DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver);
 
-void _DRV_USBFSV1_HOST_Initialize
+void F_DRV_USBFSV1_HOST_Initialize
 (
     DRV_USBFSV1_OBJ * const pusbdrvObj,
     const SYS_MODULE_INDEX index,
     DRV_USBFSV1_INIT * usbInit
 );
 
-void _DRV_USBFSV1_HOST_Tasks_ISR(DRV_USBFSV1_OBJ * pusbdrvObj);
+void F_DRV_USBFSV1_HOST_Tasks_ISR(DRV_USBFSV1_OBJ * pusbdrvObj);
 
-void _DRV_USBFSV1_HOST_AttachDetachStateMachine (DRV_USBFSV1_OBJ * hDriver);
+void F_DRV_USBFSV1_HOST_AttachDetachStateMachine (DRV_USBFSV1_OBJ * hDriver);
 
-void _DRV_USBFSV1_HOST_CreateFrameIRPList(DRV_USBFSV1_OBJ * hDriver);
-void _DRV_USBFSV1_HOST_ControlTransferDataStageSend(DRV_USBFSV1_OBJ * hDriver);
+void F_DRV_USBFSV1_HOST_CreateFrameIRPList(DRV_USBFSV1_OBJ * hDriver);
+void F_DRV_USBFSV1_HOST_ControlTransferDataStageSend(DRV_USBFSV1_OBJ * hDriver);
+void DRV_USBFSV1_Deinitialize
+(
+    const SYS_MODULE_OBJ  object
+);
+
+void F_DRV_USBFSV1_DEVICE_IRPQueueFlush
+(
+    DRV_USBFSV1_DEVICE_ENDPOINT_OBJ * endpointObject,
+    USB_DEVICE_IRP_STATUS status
+);
+
+void F_DRV_USBFSV1_DEVICE_EndpointObjectEnable
+(
+    DRV_USBFSV1_DEVICE_ENDPOINT_OBJ * endpointObject,
+    uint16_t endpointSize,
+    USB_TRANSFER_TYPE endpointType
+);
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.4"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 #endif

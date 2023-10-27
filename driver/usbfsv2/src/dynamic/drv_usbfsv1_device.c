@@ -50,10 +50,10 @@
 
 
 /* Array of endpoint objects. Two directions per endpoint address */
-DRV_USBFSV1_DEVICE_ENDPOINT_OBJ gDrvUSBEndpointObjects[DRV_USBFSV1_INSTANCES_NUMBER][DRV_USBFSV1_ENDPOINTS_NUMBER][2];
+static DRV_USBFSV1_DEVICE_ENDPOINT_OBJ gDrvUSBEndpointObjects[DRV_USBFSV1_INSTANCES_NUMBER][DRV_USBFSV1_ENDPOINTS_NUMBER][2];
 
 /* Array of device speeds. To map the speed as per bit values */
-const USB_SPEED gDrvUSBFSV1DeviceSpeedMap[4] =
+static const USB_SPEED gDrvUSBFSV1DeviceSpeedMap[4] =
 {
     USB_SPEED_FULL,
     USB_SPEED_HIGH,
@@ -65,7 +65,7 @@ const USB_SPEED gDrvUSBFSV1DeviceSpeedMap[4] =
  * Array of endpoint types. To map the endpoint type as 
  * per bit values
  ******************************************************/
-const uint8_t gDrvUSBFSV1DeviceEndpointTypeMap[4][2] =
+static const uint8_t gDrvUSBFSV1DeviceEndpointTypeMap[4][2] =
 {
 	{(uint8_t)USB_DEVICE_EPCFG_EPTYPE0(1), (uint8_t)USB_DEVICE_EPCFG_EPTYPE1(1)},
 	{(uint8_t)USB_DEVICE_EPCFG_EPTYPE0(2), (uint8_t)USB_DEVICE_EPCFG_EPTYPE1(2)},
@@ -77,8 +77,8 @@ const uint8_t gDrvUSBFSV1DeviceEndpointTypeMap[4][2] =
  * Control Endpoint IN/OUT buffers needed by the USB
  * controller
  ******************************************************/
-COMPILER_WORD_ALIGNED uint8_t gDrvEP0BufferBank0[USB_DEVICE_EP0_BUFFER_SIZE];
-COMPILER_WORD_ALIGNED uint8_t gDrvEP0BufferBank1[USB_DEVICE_EP0_BUFFER_SIZE];
+static COMPILER_WORD_ALIGNED uint8_t gDrvEP0BufferBank0[USB_DEVICE_EP0_BUFFER_SIZE];
+static COMPILER_WORD_ALIGNED uint8_t gDrvEP0BufferBank1[USB_DEVICE_EP0_BUFFER_SIZE];
 
 /*****************************************************
  * This structure is a pointer to a set of USB Driver
@@ -113,7 +113,7 @@ DRV_USB_DEVICE_INTERFACE gDrvUSBFSV1DeviceInterface =
 
 // *****************************************************************************
 /* Function:
-    _DRV_USBFSV1_DEVICE_Initialize(DRV_USBFSV1_OBJ * drvObj, SYS_MODULE_INDEX index)
+    F_DRV_USBFSV1_DEVICE_Initialize(DRV_USBFSV1_OBJ * drvObj, SYS_MODULE_INDEX index)
 
   Summary:
     This function is called when the driver is initialized for device mode
@@ -130,7 +130,7 @@ DRV_USB_DEVICE_INTERFACE gDrvUSBFSV1DeviceInterface =
     See drv_usbfsv1.h for usage information.
 */
 
-void _DRV_USBFSV1_DEVICE_Initialize
+void F_DRV_USBFSV1_DEVICE_Initialize
 (
     DRV_USBFSV1_OBJ * drvObj,
     SYS_MODULE_INDEX index
@@ -238,6 +238,10 @@ USB_SPEED DRV_USBFSV1_DEVICE_CurrentSpeedGet
 }
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 5.1 deviated:3 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1"  
 /* Function:
     void DRV_USBFSV1_DEVICE_RemoteWakeup_Start(DRV_HANDLE handle)
 
@@ -366,6 +370,11 @@ void DRV_USBFSV1_DEVICE_Attach
 }
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 10.4 False Positive:14, and Rule 20.7 deviate:7. 
+   Deviation record ID - H3_MISRAC_2012_R_10_4_DR_1, H3_MISRAC_2012_R_20_7_DR_1 */
+#pragma coverity compliance block \
+(fp:14     "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" )\
+(deviate:7 "MISRA C-2012 Rule 20.7" "H3_MISRAC_2012_R_20_7_DR_1" )
 /* Function:
       void DRV_USBFSV1_DEVICE_Detach(DRV_HANDLE handle)
 
@@ -393,7 +402,7 @@ void DRV_USBFSV1_DEVICE_Detach
 
     usb_registers_t * usbID;                        /* USB instance pointer */
     DRV_USBFSV1_OBJ * hDriver;            /* USB driver object pointer */
-    _DRV_USBFSV1_DECLARE_BOOL_VARIABLE(interruptWasEnabled);
+    M_DRV_USBFSV1_DECLARE_BOOL_VARIABLE(interruptWasEnabled);
     USB_ERROR retVal = USB_ERROR_NONE;
 
     /* Check if the handle is invalid, if so return without any action */
@@ -406,7 +415,7 @@ void DRV_USBFSV1_DEVICE_Detach
         hDriver = (DRV_USBFSV1_OBJ *) handle;
         usbID = hDriver->usbID;
             
-        DRV_USBFSV1_DEVICE_EndpointDisable((DRV_HANDLE)hDriver, DRV_USB_DEVICE_ENDPOINT_ALL);
+        (void) DRV_USBFSV1_DEVICE_EndpointDisable((DRV_HANDLE)hDriver, DRV_USB_DEVICE_ENDPOINT_ALL);
         
         if(hDriver->isInInterruptContext == false)
         {
@@ -416,8 +425,8 @@ void DRV_USBFSV1_DEVICE_Detach
                  * endpoint IRP queue. We do not want a USB
                  * interrupt to update this queue while we are
                  * submitting an IRP. */
-                _DRV_USBFSV1_SYS_INT_SourceDisableSave(
-                        interruptWasEnabled, hDriver->interruptSource,
+                M_DRV_USBFSV1_SYS_INT_SourceDisableSave(
+                        interruptWasEnabled,  (IRQn_Type)hDriver->interruptSource,
                         interruptWasEnabled1, hDriver->interruptSource1,
                         interruptWasEnabled2, hDriver->interruptSource2,
                         interruptWasEnabled3, hDriver->interruptSource3 );
@@ -445,16 +454,21 @@ void DRV_USBFSV1_DEVICE_Detach
             
             if(hDriver->isInInterruptContext == false)
             {
-                _DRV_USBFSV1_SYS_INT_SourceEnableRestore(
-                        interruptWasEnabled, hDriver->interruptSource,
+                M_DRV_USBFSV1_SYS_INT_SourceEnableRestore(
+                        interruptWasEnabled,  (IRQn_Type)hDriver->interruptSource,
                         interruptWasEnabled1, hDriver->interruptSource1,
                         interruptWasEnabled2, hDriver->interruptSource2,
                         interruptWasEnabled3, hDriver->interruptSource3 );
 
                 /* Unlock the mutex */
-                OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
+                (void) OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
             }
         }
+    }
+    else
+    {
+        /* Do Nothing */
+        
     }
 }
 
@@ -499,8 +513,13 @@ uint16_t DRV_USBFSV1_DEVICE_SOFNumberGet
 }
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 11.3 deviate:15 , and 11.6 deviate:3. Deviation record ID -  
+    H3_MISRAC_2012_R_11_3_DR_1, H3_MISRAC_2012_R_11_6_DR_1 */
+#pragma coverity compliance block \
+(deviate:15 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 11.6" "H3_MISRAC_2012_R_11_6_DR_1" )
 /* Function:
-    void _DRV_USBFSV1_DEVICE_IRPQueueFlush
+    void F_DRV_USBFSV1_DEVICE_IRPQueueFlush
     (
         DRV_USBFSV1_DEVICE_ENDPOINT_OBJ * endpointObject
         USB_DEVICE_IRP_STATUS status
@@ -519,7 +538,7 @@ uint16_t DRV_USBFSV1_DEVICE_SOFNumberGet
     application.
 */
 
-void _DRV_USBFSV1_DEVICE_IRPQueueFlush
+void F_DRV_USBFSV1_DEVICE_IRPQueueFlush
 (
     DRV_USBFSV1_DEVICE_ENDPOINT_OBJ * endpointObject,
     USB_DEVICE_IRP_STATUS status
@@ -555,7 +574,7 @@ void _DRV_USBFSV1_DEVICE_IRPQueueFlush
 
 // *****************************************************************************
 /* Function:
-    void _DRV_USBFSV1_DEVICE_EndpointObjectEnable
+    void F_DRV_USBFSV1_DEVICE_EndpointObjectEnable
     (
         DRV_USBFSV1_DEVICE_ENDPOINT_OBJ * endpointObject,
         uint16_t endpointSize,
@@ -575,18 +594,20 @@ void _DRV_USBFSV1_DEVICE_IRPQueueFlush
     application.
 */
 
-void _DRV_USBFSV1_DEVICE_EndpointObjectEnable
+void F_DRV_USBFSV1_DEVICE_EndpointObjectEnable
 (
     DRV_USBFSV1_DEVICE_ENDPOINT_OBJ * endpointObject,
     uint16_t endpointSize,
     USB_TRANSFER_TYPE endpointType
 )
 {
+    uint32_t endPointRead;
     /* This is a helper function */
     endpointObject->irpQueue        = NULL;
     endpointObject->maxPacketSize   = endpointSize;
     endpointObject->endpointType    = endpointType;
-    endpointObject->endpointState  |= DRV_USBFSV1_DEVICE_ENDPOINT_STATE_ENABLED;
+    endPointRead = (uint32_t)endpointObject->endpointState  | (uint32_t)DRV_USBFSV1_DEVICE_ENDPOINT_STATE_ENABLED;
+    endpointObject->endpointState  = (DRV_USBFSV1_DEVICE_ENDPOINT_STATE)endPointRead;
 }
 
 // *****************************************************************************
@@ -595,7 +616,7 @@ void _DRV_USBFSV1_DEVICE_EndpointObjectEnable
     (
         DRV_HANDLE handle,
         USB_ENDPOINT endpointAndDirection,
-        USB_TRANSFER_TYPE endpointType,
+        USB_TRANSFER_TYPE transferType,
         uint16_t endpointSize
     )
 
@@ -625,7 +646,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointEnable
 (
     DRV_HANDLE handle,
     USB_ENDPOINT endpointAndDirection,
-    USB_TRANSFER_TYPE endpointType,
+    USB_TRANSFER_TYPE transferType,
     uint16_t endpointSize
 )
 {
@@ -644,7 +665,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointEnable
 
 
     endpoint = endpointAndDirection & DRV_USBFSV1_ENDPOINT_NUMBER_MASK;
-    direction = (uint8_t)((endpointAndDirection & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0);
+    direction = (uint8_t)((endpointAndDirection & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0U);
 
     if(endpoint >= DRV_USBFSV1_ENDPOINTS_NUMBER)
     {
@@ -653,7 +674,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointEnable
 
         retVal = USB_ERROR_DEVICE_ENDPOINT_INVALID;
     }
-    else if(endpointSize < 8 || endpointSize > 1024)
+    else if(endpointSize < 8U || endpointSize > 1024U)
     {
         /* Endpoint size is invalid, return with appropriate error message */
         retVal = USB_ERROR_DEVICE_ENDPOINT_INVALID;
@@ -670,25 +691,22 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointEnable
         hDriver = (DRV_USBFSV1_OBJ *) handle;
         usbID = hDriver->usbID;
 
-        /* Find upper 2 power number of endpointSize */
-        if(endpointSize)
+        /* Find upper 2 power number of endpointSize */        
+        while (defaultEndpointSize < endpointSize)
         {
-            while (defaultEndpointSize < endpointSize)
-            {
-                bufferSize++;
-                defaultEndpointSize <<= 1;
-            }
-        }
+            bufferSize++;
+            defaultEndpointSize <<= 1;
+        }        
 
         /* Get the endpoint object */
         endpointObj = hDriver->deviceEndpointObj[endpoint];
 
-        if(endpointType == USB_TRANSFER_TYPE_CONTROL)
+        if(transferType == USB_TRANSFER_TYPE_CONTROL)
         {
             /* There are two endpoint objects for a control endpoint.
              * Enable the first endpoint object */
 
-            _DRV_USBFSV1_DEVICE_EndpointObjectEnable
+            F_DRV_USBFSV1_DEVICE_EndpointObjectEnable
             (
                 endpointObj, endpointSize, USB_TRANSFER_TYPE_CONTROL
             );
@@ -697,7 +715,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointEnable
 
              /* Enable the second endpoint object */
 
-            _DRV_USBFSV1_DEVICE_EndpointObjectEnable
+            F_DRV_USBFSV1_DEVICE_EndpointObjectEnable
             (
                 endpointObj, endpointSize, USB_TRANSFER_TYPE_CONTROL
             );
@@ -715,16 +733,9 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointEnable
             hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[0].USB_ADDR = (uint32_t) hDriver->endpoint0BufferPtr[0];
             hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[1].USB_ADDR = (uint32_t) hDriver->endpoint0BufferPtr[1];
 
-            if (true == DRV_USBFSV1_AUTO_ZLP_ENABLE)
-            {
-                hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[0].USB_PCKSIZE |= USB_DEVICE_PCKSIZE_AUTO_ZLP_Msk;
-                hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[1].USB_PCKSIZE |= USB_DEVICE_PCKSIZE_AUTO_ZLP_Msk;
-            }
-            else
-            {
-                hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[0].USB_PCKSIZE &= ~USB_DEVICE_PCKSIZE_AUTO_ZLP_Msk;
-                hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[1].USB_PCKSIZE &= ~USB_DEVICE_PCKSIZE_AUTO_ZLP_Msk;
-            }
+
+            M_DRV_USBFSV1_DEVICE_AutoZlpControl(0, 0);
+            M_DRV_USBFSV1_DEVICE_AutoZlpControl(0, 1);
 
             usbID->DEVICE_ENDPOINT[0].USB_EPINTENSET = (USB_DEVICE_EPINTENSET_RXSTP_Msk | USB_DEVICE_EPINTENSET_TRCPT0_Msk | USB_DEVICE_EPINTENSET_TRCPT1_Msk);
         }
@@ -733,17 +744,17 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointEnable
             /* Enable the non-zero endpoint object */
             endpointObj += direction;
 
-            _DRV_USBFSV1_DEVICE_EndpointObjectEnable
+            F_DRV_USBFSV1_DEVICE_EndpointObjectEnable
             (
-                endpointObj, endpointSize, endpointType
+                endpointObj, endpointSize, transferType
             );
             
 
-            if(direction == USB_DATA_DIRECTION_DEVICE_TO_HOST)
+            if(direction == (uint32_t)USB_DATA_DIRECTION_DEVICE_TO_HOST)
             {                
                 usbID->DEVICE_ENDPOINT[endpoint].USB_EPCFG &= ~(uint8_t) USB_DEVICE_EPCFG_EPTYPE1_Msk;
                 
-                usbID->DEVICE_ENDPOINT[endpoint].USB_EPCFG |= (uint8_t) gDrvUSBFSV1DeviceEndpointTypeMap[endpointType][1];
+                usbID->DEVICE_ENDPOINT[endpoint].USB_EPCFG |= (uint8_t) gDrvUSBFSV1DeviceEndpointTypeMap[transferType][1];
                 
                 usbID->DEVICE_ENDPOINT[endpoint].USB_EPSTATUSCLR = USB_DEVICE_EPSTATUSCLR_BK1RDY_Msk;
 
@@ -752,7 +763,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointEnable
             {
                 usbID->DEVICE_ENDPOINT[endpoint].USB_EPCFG &= ~(uint8_t) USB_DEVICE_EPCFG_EPTYPE0_Msk;
                 
-                usbID->DEVICE_ENDPOINT[endpoint].USB_EPCFG |= (uint8_t) gDrvUSBFSV1DeviceEndpointTypeMap[endpointType][0];
+                usbID->DEVICE_ENDPOINT[endpoint].USB_EPCFG |= (uint8_t) gDrvUSBFSV1DeviceEndpointTypeMap[transferType][0];
                 
                 usbID->DEVICE_ENDPOINT[endpoint].USB_EPSTATUSSET = USB_DEVICE_EPSTATUSSET_BK0RDY_Msk;
             }
@@ -761,14 +772,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointEnable
 
             hDriver->endpointDescriptorTable[endpoint].DEVICE_DESC_BANK[direction].USB_PCKSIZE |= USB_DEVICE_PCKSIZE_SIZE(bufferSize);
 
-            if (true == DRV_USBFSV1_AUTO_ZLP_ENABLE)
-            {
-                hDriver->endpointDescriptorTable[endpoint].DEVICE_DESC_BANK[direction].USB_PCKSIZE |= USB_DEVICE_PCKSIZE_AUTO_ZLP_Msk;
-            }
-            else
-            {
-                hDriver->endpointDescriptorTable[endpoint].DEVICE_DESC_BANK[direction].USB_PCKSIZE &= ~USB_DEVICE_PCKSIZE_AUTO_ZLP_Msk;
-            }
+            M_DRV_USBFSV1_DEVICE_AutoZlpControl(endpoint, direction);
         }
     }
     return(retVal);
@@ -811,10 +815,11 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointDisable
     uint8_t direction;
     uint8_t endpoint;
     USB_ERROR retVal = USB_ERROR_NONE;
-    _DRV_USBFSV1_DECLARE_BOOL_VARIABLE(interruptWasEnabled);
+    M_DRV_USBFSV1_DECLARE_BOOL_VARIABLE(interruptWasEnabled);
+    uint32_t endPointRead;
 
     endpoint = endpointAndDirection & DRV_USBFSV1_ENDPOINT_NUMBER_MASK;
-    direction = (uint8_t)((endpointAndDirection & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0);
+    direction = (uint8_t)((endpointAndDirection & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0U);
 
     if((endpoint >= DRV_USBFSV1_ENDPOINTS_NUMBER) && (endpointAndDirection != DRV_USBFSV1_DEVICE_ENDPOINT_ALL))
     {
@@ -843,8 +848,8 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointDisable
                  * endpoint IRP queue. We do not want a USB
                  * interrupt to update this queue while we are
                  * submitting an IRP. */
-                _DRV_USBFSV1_SYS_INT_SourceDisableSave(
-                        interruptWasEnabled, hDriver->interruptSource,
+                M_DRV_USBFSV1_SYS_INT_SourceDisableSave(
+                        interruptWasEnabled,  (IRQn_Type)hDriver->interruptSource,
                         interruptWasEnabled1, hDriver->interruptSource1,
                         interruptWasEnabled2, hDriver->interruptSource2,
                         interruptWasEnabled3, hDriver->interruptSource3 );
@@ -876,19 +881,21 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointDisable
                     endpointObj = hDriver->deviceEndpointObj[loopIndex];
 
                     /* Update the endpoint database */
-                    endpointObj->endpointState  &= ~DRV_USBFSV1_DEVICE_ENDPOINT_STATE_ENABLED;
+                    endPointRead = (uint32_t)endpointObj->endpointState  & ~(uint32_t)DRV_USBFSV1_DEVICE_ENDPOINT_STATE_ENABLED;
+                    endpointObj->endpointState = (DRV_USBFSV1_DEVICE_ENDPOINT_STATE)endPointRead;
 
                     /* Get the Endpoint Object for IN Direction */
                     endpointObj++;
 
                     /* Update the endpoint database */
-                    endpointObj->endpointState  &= ~DRV_USBFSV1_DEVICE_ENDPOINT_STATE_ENABLED;
+                    endPointRead = (uint32_t)endpointObj->endpointState  & ~(uint32_t)DRV_USBFSV1_DEVICE_ENDPOINT_STATE_ENABLED;
+                    endpointObj->endpointState = (DRV_USBFSV1_DEVICE_ENDPOINT_STATE)endPointRead;
                 }
 
             }
             else
             {
-                if(endpoint == 0)
+                if(endpoint == 0U)
                 {
                     usbID->DEVICE_ENDPOINT[0].USB_EPINTENCLR = USB_DEVICE_EPINTENCLR_Msk;
 
@@ -901,17 +908,19 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointDisable
                     endpointObj = hDriver->deviceEndpointObj[0];
 
                     /* Update the endpoint database */
-                    endpointObj->endpointState  &= ~DRV_USBFSV1_DEVICE_ENDPOINT_STATE_ENABLED;
+                    endPointRead = (uint32_t)endpointObj->endpointState  & ~(uint32_t)DRV_USBFSV1_DEVICE_ENDPOINT_STATE_ENABLED;
+                    endpointObj->endpointState = (DRV_USBFSV1_DEVICE_ENDPOINT_STATE)endPointRead;
 
                     /* Get the Endpoint Object for Control Endpoint IN direction */
                     endpointObj++;
 
                     /* Update the endpoint database */
-                    endpointObj->endpointState  &= ~DRV_USBFSV1_DEVICE_ENDPOINT_STATE_ENABLED;
+                    endPointRead = (uint32_t)endpointObj->endpointState  & ~(uint32_t)DRV_USBFSV1_DEVICE_ENDPOINT_STATE_ENABLED;
+                    endpointObj->endpointState = (DRV_USBFSV1_DEVICE_ENDPOINT_STATE)endPointRead;
                 }
                 else
                 {
-                    if(direction == USB_DATA_DIRECTION_HOST_TO_DEVICE)
+                    if(direction == (uint32_t)USB_DATA_DIRECTION_HOST_TO_DEVICE)
                     {
                         usbID->DEVICE_ENDPOINT[endpoint].USB_EPCFG &= ~USB_DEVICE_EPCFG_EPTYPE0_Msk;
                         usbID->DEVICE_ENDPOINT[endpoint].USB_EPINTFLAG = USB_DEVICE_EPINTFLAG_TRCPT0_Msk | USB_DEVICE_EPINTFLAG_TRFAIL0_Msk;
@@ -929,20 +938,21 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointDisable
                     endpointObj += direction;
 
                     /* Update the endpoint database */
-                    endpointObj->endpointState  &= ~DRV_USBFSV1_DEVICE_ENDPOINT_STATE_ENABLED;
+                    endPointRead = (uint32_t)endpointObj->endpointState  & ~(uint32_t)DRV_USBFSV1_DEVICE_ENDPOINT_STATE_ENABLED;
+                    endpointObj->endpointState = (DRV_USBFSV1_DEVICE_ENDPOINT_STATE)endPointRead;
                 }
             }
             
             if(hDriver->isInInterruptContext == false)
             {
-                _DRV_USBFSV1_SYS_INT_SourceEnableRestore(
-                        interruptWasEnabled, hDriver->interruptSource,
+                M_DRV_USBFSV1_SYS_INT_SourceEnableRestore(
+                        interruptWasEnabled,  (IRQn_Type)hDriver->interruptSource,
                         interruptWasEnabled1, hDriver->interruptSource1,
                         interruptWasEnabled2, hDriver->interruptSource2,
                         interruptWasEnabled3, hDriver->interruptSource3 );
 
                 /* Unlock the mutex */
-                OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
+                (void) OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
             }
         }
     }
@@ -972,7 +982,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointDisable
 
 bool DRV_USBFSV1_DEVICE_EndpointIsEnabled
 (
-    DRV_HANDLE handle,
+    DRV_HANDLE client,
     USB_ENDPOINT endpointAndDirection
 )
 {
@@ -984,25 +994,25 @@ bool DRV_USBFSV1_DEVICE_EndpointIsEnabled
     bool retVal = false;
 
     endpoint = endpointAndDirection & DRV_USBFSV1_ENDPOINT_NUMBER_MASK;
-    direction = (uint8_t)((endpointAndDirection & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0);
+    direction = (uint8_t)((endpointAndDirection & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0U);
 
     if(endpoint >= DRV_USBFSV1_ENDPOINTS_NUMBER)
     {
         /* Endpoint number is invalid, return with appropriate error message */
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Device Driver: Unsupported endpoint in DRV_USBFSV1_DEVICE_EndpointIsEnabled().");
     }
-    else if(DRV_HANDLE_INVALID == handle)
+    else if(DRV_HANDLE_INVALID == client)
     {
-        /* The handle is invalid, return with appropriate error message */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Device Driver: Driver Handle is invalid in DRV_USBFSV1_DEVICE_EndpointIsEnabled().");
+        /* The client is invalid, return with appropriate error message */
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Device Driver: Driver client is invalid in DRV_USBFSV1_DEVICE_EndpointIsEnabled().");
     }
     else
     {
-        hDriver = (DRV_USBFSV1_OBJ *) handle;
+        hDriver = (DRV_USBFSV1_OBJ *) client;
         endpointObj = hDriver->deviceEndpointObj[endpoint];
         endpointObj += direction;
                 
-        if((endpointObj->endpointState & DRV_USBFSV1_DEVICE_ENDPOINT_STATE_ENABLED) != 0)
+        if(((uint32_t)endpointObj->endpointState & (uint32_t)DRV_USBFSV1_DEVICE_ENDPOINT_STATE_ENABLED) != 0U)
         {
             retVal = true;
         }
@@ -1047,10 +1057,11 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointStall
     uint8_t direction;
     uint8_t endpoint;
     USB_ERROR retVal = USB_ERROR_NONE;
-    _DRV_USBFSV1_DECLARE_BOOL_VARIABLE(interruptWasEnabled);
+    M_DRV_USBFSV1_DECLARE_BOOL_VARIABLE(interruptWasEnabled);
+    uint32_t endPointRead;
 
     endpoint = endpointAndDirection & DRV_USBFSV1_ENDPOINT_NUMBER_MASK;
-    direction = (uint8_t)((endpointAndDirection & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0);
+    direction = (uint8_t)((endpointAndDirection & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0U);
 
     if(endpoint >= DRV_USBFSV1_ENDPOINTS_NUMBER)
     {
@@ -1079,8 +1090,8 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointStall
             if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
             {
                 /* Disable  the USB Interrupt as this is not called inside ISR */
-                _DRV_USBFSV1_SYS_INT_SourceDisableSave(
-                        interruptWasEnabled, hDriver->interruptSource,
+                M_DRV_USBFSV1_SYS_INT_SourceDisableSave(
+                        interruptWasEnabled,  (IRQn_Type)hDriver->interruptSource,
                         interruptWasEnabled1, hDriver->interruptSource1,
                         interruptWasEnabled2, hDriver->interruptSource2,
                         interruptWasEnabled3, hDriver->interruptSource3 );
@@ -1095,7 +1106,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointStall
         
         if(retVal == USB_ERROR_NONE)
         {
-            if(endpoint == 0)
+            if(endpoint == 0U)
             {
                 /* For zero endpoint we stall both directions */
 
@@ -1103,21 +1114,23 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointStall
 
                 usbID->DEVICE_ENDPOINT[0].USB_EPSTATUSSET = USB_DEVICE_EPSTATUSSET_STALLRQ0_Msk;
 
-                _DRV_USBFSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_ABORTED_ENDPOINT_HALT);
-
-                endpointObj->endpointState |= DRV_USBFSV1_DEVICE_ENDPOINT_STATE_STALLED;
+                F_DRV_USBFSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_ABORTED_ENDPOINT_HALT);
+                
+                endPointRead = (uint32_t)endpointObj->endpointState | (uint32_t)DRV_USBFSV1_DEVICE_ENDPOINT_STATE_STALLED;
+                endpointObj->endpointState = (DRV_USBFSV1_DEVICE_ENDPOINT_STATE)endPointRead;
 
                 endpointObj++;
 
-                _DRV_USBFSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_ABORTED_ENDPOINT_HALT);
-
-                endpointObj->endpointState |= DRV_USBFSV1_DEVICE_ENDPOINT_STATE_STALLED;
+                F_DRV_USBFSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_ABORTED_ENDPOINT_HALT);
+                
+                endPointRead = (uint32_t)endpointObj->endpointState | (uint32_t)DRV_USBFSV1_DEVICE_ENDPOINT_STATE_STALLED;
+                endpointObj->endpointState = (DRV_USBFSV1_DEVICE_ENDPOINT_STATE)endPointRead;
             }
             else
             {
                 /* For non zero endpoints we stall the specified direction.
                     * Get the endpoint object. */                
-                if(direction == USB_DATA_DIRECTION_DEVICE_TO_HOST)
+                if(direction == (uint32_t)USB_DATA_DIRECTION_DEVICE_TO_HOST)
                 {
                     usbID->DEVICE_ENDPOINT[endpoint].USB_EPSTATUSSET = USB_DEVICE_EPSTATUSSET_STALLRQ1_Msk;
                 }
@@ -1128,22 +1141,23 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointStall
 
                 endpointObj += direction;
                 
-                _DRV_USBFSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_ABORTED_ENDPOINT_HALT);
-
-                endpointObj->endpointState |= DRV_USBFSV1_DEVICE_ENDPOINT_STATE_STALLED;
+                F_DRV_USBFSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_ABORTED_ENDPOINT_HALT);
+                
+                endPointRead = (uint32_t)endpointObj->endpointState | (uint32_t)DRV_USBFSV1_DEVICE_ENDPOINT_STATE_STALLED;
+                endpointObj->endpointState = (DRV_USBFSV1_DEVICE_ENDPOINT_STATE)endPointRead;
             }
 
             /* Restore the interrupt enable status if this was modified. */
             if(hDriver->isInInterruptContext == false)
             {
-                _DRV_USBFSV1_SYS_INT_SourceEnableRestore(
-                        interruptWasEnabled, hDriver->interruptSource,
+                M_DRV_USBFSV1_SYS_INT_SourceEnableRestore(
+                        interruptWasEnabled,  (IRQn_Type)hDriver->interruptSource,
                         interruptWasEnabled1, hDriver->interruptSource1,
                         interruptWasEnabled2, hDriver->interruptSource2,
                         interruptWasEnabled3, hDriver->interruptSource3 );
 
                 /* Release the mutex */
-                OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
+                (void) OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
             }
         }
     }
@@ -1182,10 +1196,11 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointStallClear
     uint8_t direction;
     uint8_t endpoint;
     USB_ERROR retVal = USB_ERROR_NONE;
-    _DRV_USBFSV1_DECLARE_BOOL_VARIABLE(interruptWasEnabled);
+    M_DRV_USBFSV1_DECLARE_BOOL_VARIABLE(interruptWasEnabled);
+    uint32_t endPointRead;
 
     endpoint = endpointAndDirection & DRV_USBFSV1_ENDPOINT_NUMBER_MASK;
-    direction = (uint8_t)((endpointAndDirection & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0);
+    direction = (uint8_t)((endpointAndDirection & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0U);
 
     if(endpoint >= DRV_USBFSV1_ENDPOINTS_NUMBER)
     {
@@ -1214,8 +1229,8 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointStallClear
             if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
             {
                 /* Disable  the USB Interrupt as this is not called inside ISR */
-                _DRV_USBFSV1_SYS_INT_SourceDisableSave(
-                        interruptWasEnabled, hDriver->interruptSource,
+                M_DRV_USBFSV1_SYS_INT_SourceDisableSave(
+                        interruptWasEnabled,  (IRQn_Type)hDriver->interruptSource,
                         interruptWasEnabled1, hDriver->interruptSource1,
                         interruptWasEnabled2, hDriver->interruptSource2,
                         interruptWasEnabled3, hDriver->interruptSource3 );
@@ -1230,22 +1245,24 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointStallClear
         
         if(retVal == USB_ERROR_NONE)
         {
-            if(endpoint == 0)
+            if(endpoint == 0U)
             {
                 usbID->DEVICE_ENDPOINT[0].USB_EPSTATUSCLR = USB_DEVICE_EPSTATUSCLR_Msk;
                 
                 usbID->DEVICE_ENDPOINT[0].USB_EPINTFLAG = USB_DEVICE_EPINTFLAG_Msk;
                 
                 /* Update the endpoint object with stall Clear for endpoint 0 */
-                endpointObj->endpointState &= ~DRV_USBFSV1_DEVICE_ENDPOINT_STATE_STALLED;
+                endPointRead = (uint32_t)endpointObj->endpointState & ~(uint32_t)DRV_USBFSV1_DEVICE_ENDPOINT_STATE_STALLED;
+                endpointObj->endpointState = (DRV_USBFSV1_DEVICE_ENDPOINT_STATE)endPointRead;
 
-                _DRV_USBFSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_TERMINATED_BY_HOST);
+                F_DRV_USBFSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_TERMINATED_BY_HOST);
 
                 endpointObj++;
+                
+                endPointRead = (uint32_t)endpointObj->endpointState & ~(uint32_t)DRV_USBFSV1_DEVICE_ENDPOINT_STATE_STALLED;
+                endpointObj->endpointState = (DRV_USBFSV1_DEVICE_ENDPOINT_STATE)endPointRead;
 
-                endpointObj->endpointState &= ~DRV_USBFSV1_DEVICE_ENDPOINT_STATE_STALLED;
-
-                _DRV_USBFSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_TERMINATED_BY_HOST);
+                F_DRV_USBFSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_TERMINATED_BY_HOST);
 
             }
             else
@@ -1253,11 +1270,12 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointStallClear
                 endpointObj += direction;
                 
                 /* Update the objects with stall Clear for non-zero endpoint */
-                endpointObj->endpointState &= ~DRV_USBFSV1_DEVICE_ENDPOINT_STATE_STALLED;
+                endPointRead = (uint32_t)endpointObj->endpointState & ~(uint32_t)DRV_USBFSV1_DEVICE_ENDPOINT_STATE_STALLED;
+                endpointObj->endpointState = (DRV_USBFSV1_DEVICE_ENDPOINT_STATE)endPointRead;
 
-                _DRV_USBFSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_TERMINATED_BY_HOST);
+                F_DRV_USBFSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_TERMINATED_BY_HOST);
                 
-                if(direction == USB_DATA_DIRECTION_DEVICE_TO_HOST)
+                if(direction == (uint32_t)USB_DATA_DIRECTION_DEVICE_TO_HOST)
                 {
                     /* Remove stall request */
                     usbID->DEVICE_ENDPOINT[endpoint].USB_EPSTATUSCLR = USB_DEVICE_EPSTATUSCLR_STALLRQ1_Msk;
@@ -1285,26 +1303,28 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointStallClear
             /* Restore the interrupt enable status if this was modified. */
             if(hDriver->isInInterruptContext == false)
             {
-                _DRV_USBFSV1_SYS_INT_SourceEnableRestore(
-                        interruptWasEnabled, hDriver->interruptSource,
+                M_DRV_USBFSV1_SYS_INT_SourceEnableRestore(
+                        interruptWasEnabled,  (IRQn_Type)hDriver->interruptSource,
                         interruptWasEnabled1, hDriver->interruptSource1,
                         interruptWasEnabled2, hDriver->interruptSource2,
                         interruptWasEnabled3, hDriver->interruptSource3 );
 
                 /* Release the mutex */
-                OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
+                (void) OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
             }
         }
     }
     return(retVal);
 }
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* Function:
     bool DRV_USBFSV1_DEVICE_EndpointIsStalled
     (
         DRV_HANDLE client,
-        USB_ENDPOINT endpointAndDirection
+        USB_ENDPOINT endpoint
     )
 
   Summary:
@@ -1321,8 +1341,8 @@ USB_ERROR DRV_USBFSV1_DEVICE_EndpointStallClear
 
 bool DRV_USBFSV1_DEVICE_EndpointIsStalled
 (
-    DRV_HANDLE handle,
-    USB_ENDPOINT endpointAndDirection
+    DRV_HANDLE client,
+    USB_ENDPOINT endpoint
 )
 
 {
@@ -1330,26 +1350,26 @@ bool DRV_USBFSV1_DEVICE_EndpointIsStalled
     DRV_USBFSV1_DEVICE_ENDPOINT_OBJ * endpointObj;
     DRV_USBFSV1_OBJ * hDriver;
     uint8_t direction;
-    uint8_t endpoint;
+    uint8_t endpoint_t;
     bool retVal = true;                         /* Return value */
 
-    if(DRV_HANDLE_INVALID == handle)
+    if(DRV_HANDLE_INVALID == client)
     {
-        /* The handle is invalid, return with appropriate error message */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Device Driver: Driver Handle is invalid in DRV_USBFSV1_DEVICE_EndpointIsStalled().");
+        /* The client is invalid, return with appropriate error message */
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Device Driver: Driver client is invalid in DRV_USBFSV1_DEVICE_EndpointIsStalled().");
 
         retVal = false;
     }
     else
     {
-        endpoint = endpointAndDirection & DRV_USBFSV1_ENDPOINT_NUMBER_MASK;
-        direction = (uint8_t)((endpointAndDirection & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0);
-        hDriver = ((DRV_USBFSV1_OBJ *) handle);
+        endpoint_t = endpoint & DRV_USBFSV1_ENDPOINT_NUMBER_MASK;
+        direction = (uint8_t)((endpoint & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0U);
+        hDriver = ((DRV_USBFSV1_OBJ *) client);
 
-        endpointObj = hDriver->deviceEndpointObj[endpoint];
+        endpointObj = hDriver->deviceEndpointObj[endpoint_t];
         endpointObj += direction;
 
-        if((endpointObj->endpointState & DRV_USBFSV1_DEVICE_ENDPOINT_STATE_STALLED) == 0)
+        if(((uint32_t)endpointObj->endpointState & (uint32_t)DRV_USBFSV1_DEVICE_ENDPOINT_STATE_STALLED) == 0U)
         {
             retVal = false;
         }
@@ -1368,7 +1388,7 @@ bool DRV_USBFSV1_DEVICE_EndpointIsStalled
     (
         DRV_HANDLE client,
         USB_ENDPOINT endpointAndDirection,
-        USB_DEVICE_IRP * inputIRP
+        USB_DEVICE_IRP * irp
     )
 
   Summary:
@@ -1433,9 +1453,9 @@ bool DRV_USBFSV1_DEVICE_EndpointIsStalled
 
 USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
 (
-    DRV_HANDLE handle,
+    DRV_HANDLE client,
     USB_ENDPOINT endpointAndDirection,
-    USB_DEVICE_IRP * inputIRP
+    USB_DEVICE_IRP * irp
 )
 
 {
@@ -1443,7 +1463,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
     DRV_USBFSV1_DEVICE_ENDPOINT_OBJ * endpointObj;
     DRV_USBFSV1_OBJ * hDriver;
     usb_registers_t * usbID;    
-    USB_DEVICE_IRP_LOCAL * irp;
+    USB_DEVICE_IRP_LOCAL * irp_t;
     uint16_t byteCount = 0;                 /* To hold received byte count */
     uint16_t endpoint0DataStageSize;
     uint8_t endpoint0DataStageDirection;
@@ -1451,21 +1471,22 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
     uint8_t endpoint;
     USB_ERROR retVal = USB_ERROR_NONE;
     USB_DEVICE_IRP_LOCAL * iterator;
-    _DRV_USBFSV1_DECLARE_BOOL_VARIABLE(interruptWasEnabled);
+    M_DRV_USBFSV1_DECLARE_BOOL_VARIABLE(interruptWasEnabled);
+    uint32_t flagRead;
 
 
     /* Check for a valid endpoint */
     endpoint = endpointAndDirection & DRV_USBFSV1_ENDPOINT_NUMBER_MASK;
-    direction = (uint8_t)((endpointAndDirection & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0);
-    irp = (USB_DEVICE_IRP_LOCAL *) inputIRP;
+    direction = (uint8_t)((endpointAndDirection & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0U);
+    irp_t = (USB_DEVICE_IRP_LOCAL *) irp;
 
-    /* Check if the client handle is valid */
-    if((DRV_HANDLE_INVALID == handle) || ((DRV_HANDLE)(NULL) == handle))
+    /* Check if the client client is valid */
+    if((DRV_HANDLE_INVALID == client) || ((DRV_HANDLE)(NULL) == client))
     {
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Device Driver: Invalid handle in DRV_USBFSV1_DEVICE_IRPSubmit().");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Device Driver: Invalid client in DRV_USBFSV1_DEVICE_IRPSubmit().");
         retVal =  USB_ERROR_PARAMETER_INVALID;
     }
-    else if(irp->status > USB_DEVICE_IRP_STATUS_SETUP)
+    else if(irp_t->status > USB_DEVICE_IRP_STATUS_SETUP)
     {
         /* This means that the IRP is in use */
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Device Driver: Device IRP is already in use in DRV_USBHSV1_DEVICE_IRPSubmit().");
@@ -1479,12 +1500,12 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
     }
     else
     {
-        hDriver = (DRV_USBFSV1_OBJ *) handle;
+        hDriver = (DRV_USBFSV1_OBJ *) client;
         usbID = hDriver->usbID;
         endpointObj = hDriver->deviceEndpointObj[endpoint];
         endpointObj += direction;
 
-        if((endpointObj->endpointState & DRV_USBFSV1_DEVICE_ENDPOINT_STATE_ENABLED) == 0)
+        if(((uint32_t)endpointObj->endpointState & (uint32_t)DRV_USBFSV1_DEVICE_ENDPOINT_STATE_ENABLED) == 0U)
         {
             /* This means the endpoint is disabled */
             retVal = USB_ERROR_ENDPOINT_NOT_CONFIGURED;
@@ -1495,11 +1516,11 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
              * the host, then IRP size must be multiple of maxPacketSize. If
              * the send ZLP flag is set, then size must be multiple of
              * endpoint size. */
-            uint32_t remainder;
+            uint32_t remainder_t;
 
-            remainder = irp->size % endpointObj->maxPacketSize;
+            remainder_t = irp_t->size % endpointObj->maxPacketSize;
 
-            if((remainder != 0) && (USB_DATA_DIRECTION_HOST_TO_DEVICE == direction))
+            if((remainder_t != 0U) && ((uint32_t)USB_DATA_DIRECTION_HOST_TO_DEVICE == direction))
             {
                 /* For receive IRP it needs to exact multiple of maxPacketSize.
                     * Hence this is an error condition. */
@@ -1507,15 +1528,16 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
             }
             else
             {
-                if((remainder == 0) && (USB_DATA_DIRECTION_HOST_TO_DEVICE != direction))
+                if((remainder_t == 0U) && ((uint32_t)USB_DATA_DIRECTION_HOST_TO_DEVICE != direction))
                 {
                     /* If the IRP size is an exact multiple of endpoint size and
                      * size is not 0 and if data complete flag is set,
                      * then we must send a ZLP */
-                    if(((irp->flags & USB_DEVICE_IRP_FLAG_DATA_COMPLETE) == USB_DEVICE_IRP_FLAG_DATA_COMPLETE) && (irp->size != 0))
+                    if(((irp_t->flags & USB_DEVICE_IRP_FLAG_DATA_COMPLETE) == USB_DEVICE_IRP_FLAG_DATA_COMPLETE) && (irp_t->size != 0U))
                     {
                         /* This means a ZLP should be sent after the data is sent */
-                        irp->flags |= USB_DEVICE_IRP_FLAG_SEND_ZLP;
+                        flagRead = (uint32_t)irp_t->flags | (uint32_t)USB_DEVICE_IRP_FLAG_SEND_ZLP;
+                        irp_t->flags = (USB_DEVICE_IRP_FLAG)flagRead;
                     }
                 }
 
@@ -1532,8 +1554,8 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
                          * endpoint IRP queue. We do not want a USB
                          * interrupt to update this queue while we are
                          * submitting an IRP. */
-                        _DRV_USBFSV1_SYS_INT_SourceDisableSave(
-                                interruptWasEnabled, hDriver->interruptSource,
+                        M_DRV_USBFSV1_SYS_INT_SourceDisableSave(
+                                interruptWasEnabled,  (IRQn_Type)hDriver->interruptSource,
                                 interruptWasEnabled1, hDriver->interruptSource1,
                                 interruptWasEnabled2, hDriver->interruptSource2,
                                 interruptWasEnabled3, hDriver->interruptSource3 );
@@ -1549,37 +1571,37 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
                 if(retVal == USB_ERROR_NONE)
                 {
 
-                    irp->next = NULL;
+                    irp_t->next = NULL;
 
                     /* Mark the IRP status as pending */
-                    irp->status = USB_DEVICE_IRP_STATUS_PENDING;
+                    irp_t->status = USB_DEVICE_IRP_STATUS_PENDING;
 
                     /* If the data is moving from device to host then pending bytes is data
                      * remaining to be sent to the host. If the data is moving from host to
                      * device, nPendingBytes tracks the amount of data received so far */
 
-                    if(USB_DATA_DIRECTION_DEVICE_TO_HOST == direction)
+                    if((uint32_t)USB_DATA_DIRECTION_DEVICE_TO_HOST == direction)
                     {
-                        irp->nPendingBytes = irp->size;
+                        irp_t->nPendingBytes = irp_t->size;
                     }
                     else
                     {
-                        irp->nPendingBytes = 0;
+                        irp_t->nPendingBytes = 0;
                     }
 
                     /* Get the last object in the endpoint object IRP Queue */
                     if(endpointObj->irpQueue == NULL)
                     {
                         /* Queue is empty */
-                        irp->status = USB_DEVICE_IRP_STATUS_IN_PROGRESS;
-                        irp->previous = NULL;
+                        irp_t->status = USB_DEVICE_IRP_STATUS_IN_PROGRESS;
+                        irp_t->previous = NULL;
 
-                        endpointObj->irpQueue = irp;
+                        endpointObj->irpQueue = irp_t;
 
-                        if(endpoint == 0)
+                        if(endpoint == 0U)
                         {
 
-                            if(direction == USB_DATA_DIRECTION_HOST_TO_DEVICE)
+                            if(direction == (uint32_t)USB_DATA_DIRECTION_HOST_TO_DEVICE)
                             {
                                 switch(hDriver->endpoint0State)
                                 {
@@ -1606,7 +1628,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
                                         /* Get 8-bit access to endpoint 0 OUT Data buffer address from
                                          * USB Device Descriptor Bank 0 and copy the data into IRP data buffer */
                                         
-                                        memcpy((uint8_t *)irp->data, (uint8_t *)hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[0].USB_ADDR, 8);
+                                        (void) memcpy((uint8_t *)irp_t->data, (uint8_t *)hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[0].USB_ADDR, 8);
 
                                         /* Clear the Setup Interrupt flag and also re-enable the
                                          * setup interrupt. */
@@ -1621,11 +1643,11 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
                                          * control transfer contains a data stage and if so,
                                          * what is its direction. */
                                         
-                                        endpoint0DataStageSize = *((uint8_t *)irp->data + 6);
+                                        endpoint0DataStageSize = *((uint8_t *)irp_t->data + 6);
 
-                                        endpoint0DataStageDirection = (uint8_t)((*((uint8_t *)irp->data) & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0);
+                                        endpoint0DataStageDirection = (uint8_t)((*((uint8_t *)irp_t->data) & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0U);
 
-                                        if(endpoint0DataStageSize == 0)
+                                        if(endpoint0DataStageSize == 0U)
                                         {
                                             /* This means there is no data stage. We wait for
                                              * the client to submit the status IRP. */
@@ -1636,7 +1658,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
                                             /* This means there is a data stage. Analyze the
                                              * direction. */
 
-                                            if(endpoint0DataStageDirection == USB_DATA_DIRECTION_DEVICE_TO_HOST)
+                                            if(endpoint0DataStageDirection == (uint32_t)USB_DATA_DIRECTION_DEVICE_TO_HOST)
                                             {
                                                 /* If data is moving from device to host, then
                                                  * we wait for the client to submit an transmit
@@ -1654,14 +1676,14 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
 
                                         /* Update the IRP queue so that the client can submit an
                                          * IRP in the IRP callback. */
-                                        endpointObj->irpQueue = irp->next;
+                                        endpointObj->irpQueue = irp_t->next;
 
-                                        irp->status = USB_DEVICE_IRP_STATUS_SETUP;
+                                        irp_t->status = USB_DEVICE_IRP_STATUS_SETUP;
 
                                         /* IRP callback */
-                                        if(irp->callback != NULL)
+                                        if(irp_t->callback != NULL)
                                         {
-                                            irp->callback((USB_DEVICE_IRP *)irp);
+                                            irp_t->callback((USB_DEVICE_IRP *)irp_t);
                                         }
 
                                         break;
@@ -1680,24 +1702,24 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
                                         * IRP. The RX IRP is now being submitted. We should
                                         * unload the fifo. */
 
-                                        byteCount = hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[0].USB_PCKSIZE & USB_DEVICE_PCKSIZE_BYTE_COUNT_Msk;
+                                        byteCount = (uint16_t)(hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[0].USB_PCKSIZE & USB_DEVICE_PCKSIZE_BYTE_COUNT_Msk);
 
-                                        if((irp->nPendingBytes + byteCount) > irp->size)
+                                        if((irp_t->nPendingBytes + byteCount) > irp_t->size)
                                         {
                                             /* This is not acceptable as it may corrupt the ram location */
-                                            byteCount = irp->size - irp->nPendingBytes;
+                                            byteCount = (uint16_t)(irp_t->size - irp_t->nPendingBytes);
                                         }
 
-                                        memcpy((uint8_t *)irp->data + irp->nPendingBytes, (uint8_t *)hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[0].USB_ADDR, byteCount);
+                                        (void) memcpy((uint8_t *)irp_t->data + irp_t->nPendingBytes, (uint8_t *)hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[0].USB_ADDR, byteCount);
 
                                         /* Update the pending byte count */
-                                        irp->nPendingBytes += byteCount;
+                                        irp_t->nPendingBytes += byteCount;
 
-                                        if(irp->nPendingBytes >= irp->size)
+                                        if(irp_t->nPendingBytes >= irp_t->size)
                                         {
                                             /* This means we have received all the data that
                                              * we were supposed to receive */
-                                            irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
+                                            irp_t->status = USB_DEVICE_IRP_STATUS_COMPLETED;
 
                                             /* Change endpoint state to waiting to the
                                              * status stage */
@@ -1712,20 +1734,20 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
 
                                             /* Update the queue, update irp-size to indicate
                                              * how much data was received from the host. */
-                                            irp->size = irp->nPendingBytes;
+                                            irp_t->size = irp_t->nPendingBytes;
 
-                                            endpointObj->irpQueue = irp->next;
+                                            endpointObj->irpQueue = irp_t->next;
 
-                                            if(irp->callback != NULL)
+                                            if(irp_t->callback != NULL)
                                             {
-                                                irp->callback((USB_DEVICE_IRP *)irp);
+                                                irp_t->callback((USB_DEVICE_IRP *)irp_t);
                                             }
                                         }
                                         else if(byteCount < endpointObj->maxPacketSize)
                                         {
                                             /* This means we received a short packet. We
                                              * should end the transfer. */
-                                            irp->status = USB_DEVICE_IRP_STATUS_COMPLETED_SHORT;
+                                            irp_t->status = USB_DEVICE_IRP_STATUS_COMPLETED_SHORT;
 
                                             /* The data stage is complete. We now wait
                                              * for the status stage. */
@@ -1738,13 +1760,13 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
 
                                             usbID->DEVICE_ENDPOINT[0].USB_EPSTATUSCLR = USB_DEVICE_EPSTATUSCLR_BK0RDY_Msk;
 
-                                            irp->size = irp->nPendingBytes;
+                                            irp_t->size = irp_t->nPendingBytes;
 
-                                            endpointObj->irpQueue = irp->next;
+                                            endpointObj->irpQueue = irp_t->next;
 
-                                            if(irp->callback != NULL)
+                                            if(irp_t->callback != NULL)
                                             {
-                                                irp->callback((USB_DEVICE_IRP *)irp);
+                                                irp_t->callback((USB_DEVICE_IRP *)irp_t);
                                             }
                                         }
                                         else
@@ -1775,11 +1797,11 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
 
                                         usbID->DEVICE_ENDPOINT[0].USB_EPSTATUSCLR = USB_DEVICE_EPSTATUSCLR_BK0RDY_Msk;
 
-                                        endpointObj->irpQueue = irp->next;
+                                        endpointObj->irpQueue = irp_t->next;
 
-                                        if(irp->callback != NULL)
+                                        if(irp_t->callback != NULL)
                                         {
-                                            irp->callback((USB_DEVICE_IRP *)irp);
+                                            irp_t->callback((USB_DEVICE_IRP *)irp_t);
                                         }
 
 
@@ -1791,7 +1813,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
                                         break;
 
                                     default:
-
+                                        /* Do Nothing */
                                         break;
                                 }
 
@@ -1807,10 +1829,10 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
                                         /* Driver is waiting for an IRP from the client and has
                                             * received it. Determine the transaction size. */
 
-                                        if(irp->nPendingBytes < endpointObj->maxPacketSize)
+                                        if(irp_t->nPendingBytes < endpointObj->maxPacketSize)
                                         {
                                             /* This is the last transaction in the transfer. */
-                                            byteCount = irp->nPendingBytes;
+                                            byteCount = (uint16_t)(irp_t->nPendingBytes);
                                         }
                                         else
                                         {
@@ -1822,9 +1844,9 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
                                         }
                                         if(byteCount > 0U)
                                         {
-                                            memcpy((uint8_t *)hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[1].USB_ADDR, (uint8_t *)irp->data, byteCount);
+                                            (void) memcpy((uint8_t *)hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[1].USB_ADDR, (uint8_t *)irp->data, byteCount);
                                         }
-                                        irp->nPendingBytes -= byteCount;
+                                        irp_t->nPendingBytes -= byteCount;
 
                                         hDriver->endpoint0State = DRV_USBFSV1_DEVICE_EP0_STATE_TX_DATA_STAGE_IN_PROGRESS;
 
@@ -1857,9 +1879,8 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
 
                                         break;
 
-
                                     default:
-
+                                        /* Do Nothing */
                                         break;
 
                                 }
@@ -1868,21 +1889,21 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
                         else
                         {   // Non Control Endpoint
 
-                            if(direction == USB_DATA_DIRECTION_DEVICE_TO_HOST)
+                            if(direction == (uint32_t)USB_DATA_DIRECTION_DEVICE_TO_HOST)
                             {
                                 /* Sending from Device to Host */
-                                if(irp->nPendingBytes <= endpointObj->maxPacketSize)
+                                if(irp_t->nPendingBytes <= endpointObj->maxPacketSize)
                                 {
-                                    byteCount = irp->nPendingBytes;
+                                    byteCount = (uint16_t)(irp_t->nPendingBytes);
                                 }
                                 else
                                 {
                                     byteCount = endpointObj->maxPacketSize;
                                 }
 
-                                hDriver->endpointDescriptorTable[endpoint].DEVICE_DESC_BANK[1].USB_ADDR = (uint32_t) ((uint8_t *)irp->data + irp->size - irp->nPendingBytes);
+                                hDriver->endpointDescriptorTable[endpoint].DEVICE_DESC_BANK[1].USB_ADDR = (uint32_t) ((uint8_t *)irp_t->data + irp_t->size - irp_t->nPendingBytes);
 
-                                irp->nPendingBytes -= byteCount;
+                                irp_t->nPendingBytes -= byteCount;
 
                                 hDriver->endpointDescriptorTable[endpoint].DEVICE_DESC_BANK[1].USB_PCKSIZE &= ~USB_DEVICE_PCKSIZE_BYTE_COUNT_Msk;
 
@@ -1902,7 +1923,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
                                 /* direction is Host to Device */
                                 /* Host has not sent any data and IRP is already added
                                  * to the queue. IRP will be processed in the ISR */
-                                hDriver->endpointDescriptorTable[endpoint].DEVICE_DESC_BANK[0].USB_ADDR = (uint32_t)irp->data;
+                                hDriver->endpointDescriptorTable[endpoint].DEVICE_DESC_BANK[0].USB_ADDR = (uint32_t)irp_t->data;
 
                                 usbID->DEVICE_ENDPOINT[endpoint].USB_EPINTFLAG = USB_DEVICE_EPINTFLAG_TRCPT0_Msk | USB_DEVICE_EPINTFLAG_TRFAIL0_Msk;
 
@@ -1921,20 +1942,20 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
                         {
                             iterator = iterator->next;
                         }
-                        iterator->next = irp;
-                        irp->previous = iterator;
+                        iterator->next = irp_t;
+                        irp_t->previous = iterator;
                     }
                     
                     if(hDriver->isInInterruptContext == false)
                     {
-                        _DRV_USBFSV1_SYS_INT_SourceEnableRestore(
-                                interruptWasEnabled, hDriver->interruptSource,
+                        M_DRV_USBFSV1_SYS_INT_SourceEnableRestore(
+                                interruptWasEnabled,  (IRQn_Type)hDriver->interruptSource,
                                 interruptWasEnabled1, hDriver->interruptSource1,
                                 interruptWasEnabled2, hDriver->interruptSource2,
                                 interruptWasEnabled3, hDriver->interruptSource3 );
 
                         /* Unlock the mutex */
-                        OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
+                        (void) OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
                     }
                 }
             }
@@ -1967,7 +1988,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPSubmit
 
 USB_ERROR DRV_USBFSV1_DEVICE_IRPCancelAll
 (
-    DRV_HANDLE handle,
+    DRV_HANDLE client,
     USB_ENDPOINT endpointAndDirection
 )
 
@@ -1978,11 +1999,11 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancelAll
     uint8_t direction;
     uint8_t endpoint;
     USB_ERROR retVal = USB_ERROR_NONE;
-    _DRV_USBFSV1_DECLARE_BOOL_VARIABLE(interruptWasEnabled);
+    M_DRV_USBFSV1_DECLARE_BOOL_VARIABLE(interruptWasEnabled);
 	
 
     endpoint = endpointAndDirection & DRV_USBFSV1_ENDPOINT_NUMBER_MASK;
-    direction = (uint8_t)((endpointAndDirection & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0);
+    direction = (uint8_t)((endpointAndDirection & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0U);
 
     if(endpoint >= DRV_USBFSV1_ENDPOINTS_NUMBER)
     {
@@ -1991,7 +2012,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancelAll
 
         retVal = USB_ERROR_DEVICE_ENDPOINT_INVALID;
     }
-    else if(DRV_HANDLE_INVALID == handle)
+    else if(DRV_HANDLE_INVALID == client)
     {
         /* The handle is invalid, return with appropriate error message */
         SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Device Driver: Driver Handle is invalid in DRV_USBFSV1_DEVICE_IRPCancelAll().");
@@ -2000,7 +2021,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancelAll
     }
     else
     {
-        hDriver = (DRV_USBFSV1_OBJ *) handle;
+        hDriver = (DRV_USBFSV1_OBJ *) client;
 
         endpointObj = hDriver->deviceEndpointObj[endpoint];
         endpointObj += direction;
@@ -2010,8 +2031,8 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancelAll
             if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
             {
                 /* Disable  the USB Interrupt as this is not called inside ISR */
-                _DRV_USBFSV1_SYS_INT_SourceDisableSave(
-                        interruptWasEnabled, hDriver->interruptSource,
+                M_DRV_USBFSV1_SYS_INT_SourceDisableSave(
+                        interruptWasEnabled,  (IRQn_Type)hDriver->interruptSource,
                         interruptWasEnabled1, hDriver->interruptSource1,
                         interruptWasEnabled2, hDriver->interruptSource2,
                         interruptWasEnabled3, hDriver->interruptSource3 );
@@ -2026,17 +2047,17 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancelAll
         if(retVal == USB_ERROR_NONE)
         {
             /* Flush the endpoint */
-            _DRV_USBFSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_ABORTED);
+            F_DRV_USBFSV1_DEVICE_IRPQueueFlush(endpointObj, USB_DEVICE_IRP_STATUS_ABORTED);
 
             if(hDriver->isInInterruptContext == false)
             {
-                _DRV_USBFSV1_SYS_INT_SourceEnableRestore(
-                        interruptWasEnabled, hDriver->interruptSource,
+                M_DRV_USBFSV1_SYS_INT_SourceEnableRestore(
+                        interruptWasEnabled, (IRQn_Type)hDriver->interruptSource,
                         interruptWasEnabled1, hDriver->interruptSource1,
                         interruptWasEnabled2, hDriver->interruptSource2,
                         interruptWasEnabled3, hDriver->interruptSource3 );
 
-                OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
+                (void) OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
             }
         }
     }
@@ -2076,7 +2097,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancelAll
 
 USB_ERROR DRV_USBFSV1_DEVICE_IRPCancel
 (
-    DRV_HANDLE handle,
+    DRV_HANDLE client,
     USB_DEVICE_IRP * irp
 )
 
@@ -2084,13 +2105,13 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancel
     DRV_USBFSV1_OBJ * hDriver;
     USB_DEVICE_IRP_LOCAL * irpToCancel;
     USB_ERROR retVal = USB_ERROR_NONE;
-    _DRV_USBFSV1_DECLARE_BOOL_VARIABLE(interruptWasEnabled);
+    M_DRV_USBFSV1_DECLARE_BOOL_VARIABLE(interruptWasEnabled);
 
-    /* Check if the handle is valid */
-    if(DRV_HANDLE_INVALID == handle)
+    /* Check if the client is valid */
+    if(DRV_HANDLE_INVALID == client)
     {
-        /* The handle is invalid, return with appropriate error message */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Device Driver: Driver Handle is invalid in DRV_USBFSV1_DEVICE_IRPCancel().");
+        /* The client is invalid, return with appropriate error message */
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Device Driver: Driver client is invalid in DRV_USBFSV1_DEVICE_IRPCancel().");
 
         retVal = USB_ERROR_PARAMETER_INVALID;
     }
@@ -2103,7 +2124,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancel
     }
     else
     {
-        hDriver = ((DRV_USBFSV1_OBJ *)handle);
+        hDriver = ((DRV_USBFSV1_OBJ *)client);
 
         irpToCancel = (USB_DEVICE_IRP_LOCAL *) irp;
 
@@ -2120,8 +2141,8 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancel
                 if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
                 {
                     /* Disable  the USB Interrupt as this is not called inside ISR */
-                    _DRV_USBFSV1_SYS_INT_SourceDisableSave(
-                            interruptWasEnabled, hDriver->interruptSource,
+                    M_DRV_USBFSV1_SYS_INT_SourceDisableSave(
+                            interruptWasEnabled,  (IRQn_Type)hDriver->interruptSource,
                             interruptWasEnabled1, hDriver->interruptSource1,
                             interruptWasEnabled2, hDriver->interruptSource2,
                             interruptWasEnabled3, hDriver->interruptSource3 );
@@ -2176,13 +2197,13 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancel
 
                 if(hDriver->isInInterruptContext == false)
                 {
-                    _DRV_USBFSV1_SYS_INT_SourceEnableRestore(
-                            interruptWasEnabled, hDriver->interruptSource,
+                    M_DRV_USBFSV1_SYS_INT_SourceEnableRestore(
+                            interruptWasEnabled,  (IRQn_Type)hDriver->interruptSource,
                             interruptWasEnabled1, hDriver->interruptSource1,
                             interruptWasEnabled2, hDriver->interruptSource2,
                             interruptWasEnabled3, hDriver->interruptSource3 );
 
-                    OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
+                    (void) OSAL_MUTEX_Unlock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID);
                 }
             }
         }
@@ -2192,14 +2213,17 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancel
 }
 
 // *****************************************************************************
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 20.7"
+/* MISRAC 2012 deviation block end */
 /* Function:
-      void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
+      void F_DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
 
   Summary:
-    Dynamic implementation of _DRV_USBFSV1_DEVICE_Tasks_ISR ISR handler function.
+    Dynamic implementation of F_DRV_USBFSV1_DEVICE_Tasks_ISR ISR handler function.
 
   Description:
-    This is the dynamic implementation of _DRV_USBFSV1_DEVICE_Tasks_ISR ISR handler
+    This is the dynamic implementation of F_DRV_USBFSV1_DEVICE_Tasks_ISR ISR handler
     function for USB device.  Function will get called automatically due to USB
     interrupts in interrupt mode.  In polling mode this function will be
     routinely called from USB driver DRV_USBFSV1_Tasks() function.  This function
@@ -2212,7 +2236,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancel
     application.
 */
 
-void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
+void F_DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
 {
     DRV_USBFSV1_DEVICE_ENDPOINT_OBJ * endpointObj;
     USB_DEVICE_IRP_LOCAL * irp;
@@ -2224,16 +2248,19 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
     uint16_t endpoint0DataStageDirection;
     uint16_t byteCount;
     uint8_t epIndex;
+    uint32_t flagRead;
+    uint32_t endPointRead;
+    uint32_t tempIntEnSet;
 
     if(!hDriver->isOpened)
     {
         /* We need a valid client */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Device Driver: Driver does not have a client in _DRV_USBFSV1_DEVICE_Tasks_ISR().");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Device Driver: Driver does not have a client in F_DRV_USBFSV1_DEVICE_Tasks_ISR().");
     }
     else if(hDriver->pEventCallBack == NULL)
     {
         /* We need a valid event handler */
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Device Driver: Driver needs a event handler in _DRV_USBFSV1_DEVICE_Tasks_ISR().");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBFSV1 Device Driver: Driver needs a event handler in F_DRV_USBFSV1_DEVICE_Tasks_ISR().");
     }
     else
     {
@@ -2347,7 +2374,7 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
             hDriver->deviceSpeed = gDrvUSBFSV1DeviceSpeedMap[(usbID->USB_STATUS & USB_DEVICE_STATUS_SPEED_Msk) >> USB_DEVICE_STATUS_SPEED_Pos];
 
             /* Reset the Endpoint Descriptor Table Parameters */
-            memset(&hDriver->endpointDescriptorTable[0], 0, sizeof(usb_descriptor_registers_t) * DRV_USBFSV1_ENDPOINTS_NUMBER);
+            (void) memset(&hDriver->endpointDescriptorTable[0], 0, sizeof(usb_descriptor_registers_t) * DRV_USBFSV1_ENDPOINTS_NUMBER);
             
             if(hDriver->pEventCallBack != NULL)
             {
@@ -2372,9 +2399,11 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
 
             /* This means we have received a setup packet. Let's clear the
              * stall condition on the endpoint. */
-            endpointObj->endpointState &= ~DRV_USBFSV1_DEVICE_ENDPOINT_STATE_STALLED;
+            endPointRead = (uint32_t)endpointObj->endpointState & ~(uint32_t)DRV_USBFSV1_DEVICE_ENDPOINT_STATE_STALLED;
+            endpointObj->endpointState = (DRV_USBFSV1_DEVICE_ENDPOINT_STATE)endPointRead;
 
-            (endpointObj + 1)->endpointState &= ~DRV_USBFSV1_DEVICE_ENDPOINT_STATE_STALLED;
+            endPointRead = (uint32_t)(endpointObj + 1)->endpointState & ~(uint32_t)DRV_USBFSV1_DEVICE_ENDPOINT_STATE_STALLED;
+            (endpointObj + 1)->endpointState = (DRV_USBFSV1_DEVICE_ENDPOINT_STATE)endPointRead;
 
             irp = endpointObj->irpQueue;
 
@@ -2383,7 +2412,7 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                 /* Get 8-bit access to endpoint 0 OUT Data buffer address from
                  * USB Device Descriptor Bank 0 and copy the data into IRP data buffer */
                 
-                memcpy((uint8_t *)irp->data, (uint8_t *)hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[0].USB_ADDR, 8);
+                (void) memcpy((uint8_t *)irp->data, (uint8_t *)hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[0].USB_ADDR, 8);
 
                 /* This means that there was a RXSTP. */
                 usbID->DEVICE_ENDPOINT[0].USB_EPINTFLAG = USB_DEVICE_EPINTFLAG_RXSTP_Msk;
@@ -2398,9 +2427,9 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                                         
                 endpoint0DataStageSize = setupPkt->W_Length.Val;
 
-                endpoint0DataStageDirection = (uint16_t)((setupPkt->bmRequestType & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0);
+                endpoint0DataStageDirection = (uint16_t)((setupPkt->bmRequestType & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0U);
 
-                if(endpoint0DataStageSize == 0)
+                if(endpoint0DataStageSize == 0U)
                 {
                     /* This means there is no data stage. We wait for
                         * the client to submit the status IRP. */
@@ -2410,7 +2439,7 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                 {
                     /* This means there is a data stage. Analyze the
                      * direction. */
-                    if(endpoint0DataStageDirection == USB_DATA_DIRECTION_DEVICE_TO_HOST)
+                    if(endpoint0DataStageDirection == (uint32_t)USB_DATA_DIRECTION_DEVICE_TO_HOST)
                     {
 
                         /* If data is moving from device to host, then
@@ -2481,17 +2510,17 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
 
                     usbID->DEVICE_ENDPOINT[0].USB_EPINTFLAG = USB_DEVICE_EPINTFLAG_TRCPT1_Msk;
                 }
-                else if(irp->nPendingBytes == 0)
+                else if(irp->nPendingBytes == 0U)
                 {
                     /* All TX data has been sent. Check if ZLP is to be sent,
                      * else mark the IRP as completed. */
 
-                    if((irp->flags & USB_DEVICE_IRP_FLAG_SEND_ZLP) == USB_DEVICE_IRP_FLAG_SEND_ZLP)
+                    if(((uint32_t)irp->flags & USB_DEVICE_IRP_FLAG_SEND_ZLP) == USB_DEVICE_IRP_FLAG_SEND_ZLP)
                     {
                         /* Need to send ZLP. Clear the size of buffer and 
                          * ready the buffer to send data */
-
-                        irp->flags &= ~USB_DEVICE_IRP_FLAG_SEND_ZLP;
+                        flagRead = (uint32_t)irp->flags & ~USB_DEVICE_IRP_FLAG_SEND_ZLP;
+                        irp->flags = ( USB_DEVICE_IRP_FLAG )flagRead;
 
                         hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[1].USB_PCKSIZE &= ~USB_DEVICE_PCKSIZE_BYTE_COUNT_Msk;
 
@@ -2525,14 +2554,14 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                 {
                     if(irp->nPendingBytes <= endpointObj->maxPacketSize)
                     {
-                        byteCount = irp->nPendingBytes;
+                        byteCount = (uint16_t)(irp->nPendingBytes);
                     }
                     else
                     {
                         byteCount = endpointObj->maxPacketSize;
                     }
                 
-                    memcpy((uint8_t *)hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[1].USB_ADDR, ((uint8_t *)irp->data + irp->size - irp->nPendingBytes), byteCount);
+                    (void) memcpy((uint8_t *)hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[1].USB_ADDR, ((uint8_t *)irp->data + irp->size - irp->nPendingBytes), byteCount);
 
                     irp->nPendingBytes -= byteCount;
 
@@ -2598,15 +2627,15 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                 {
                     irp = endpointObj->irpQueue;
 
-                    byteCount = hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[0].USB_PCKSIZE & USB_DEVICE_PCKSIZE_BYTE_COUNT_Msk;
+                    byteCount = (uint16_t)(hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[0].USB_PCKSIZE & USB_DEVICE_PCKSIZE_BYTE_COUNT_Msk);
                     
                     /* This is not acceptable as it may corrupt the ram location */
                     if((irp->nPendingBytes + byteCount) > irp->size)
                     {
-                        byteCount = irp->size - irp->nPendingBytes;
+                        byteCount = (uint16_t)(irp->size - irp->nPendingBytes);
                     }
 
-                    memcpy((uint8_t *)irp->data + irp->nPendingBytes, (uint8_t *)hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[0].USB_ADDR, byteCount);
+                    (void) memcpy((uint8_t *)irp->data + irp->nPendingBytes, (uint8_t *)hDriver->endpointDescriptorTable[0].DEVICE_DESC_BANK[0].USB_ADDR, byteCount);
 
                     irp->nPendingBytes += byteCount;
 
@@ -2648,7 +2677,7 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
         
         for(epIndex = 1; epIndex < DRV_USBFSV1_ENDPOINTS_NUMBER; epIndex++)
         {
-            if((usbID->USB_EPINTSMRY & (0x01 << epIndex)) == 0x0000)
+            if((usbID->USB_EPINTSMRY & (0x01UL << epIndex)) == 0x0000U)
             {
                 continue;
             }
@@ -2656,8 +2685,9 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
             regIntEnSet = usbID->DEVICE_ENDPOINT[epIndex].USB_EPINTENSET;
             regIntFlag = usbID->DEVICE_ENDPOINT[epIndex].USB_EPINTFLAG;            
             
+            tempIntEnSet = regIntEnSet;
             if(((regIntFlag & USB_DEVICE_EPINTFLAG_TRFAIL1_Msk) == USB_DEVICE_EPINTFLAG_TRFAIL1_Msk) &&
-               ((regIntEnSet & USB_DEVICE_EPINTENSET_TRFAIL1_Msk) == USB_DEVICE_EPINTENSET_TRFAIL1_Msk))
+               ((tempIntEnSet & USB_DEVICE_EPINTENSET_TRFAIL1_Msk) == USB_DEVICE_EPINTENSET_TRFAIL1_Msk))
             {
                 if((hDriver->endpointDescriptorTable[epIndex].DEVICE_DESC_BANK[1].USB_STATUS_BK & USB_DEVICE_STATUS_BK_ERRORFLOW_Msk) == USB_DEVICE_STATUS_BK_ERRORFLOW_Msk)
                 {
@@ -2667,8 +2697,9 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                 }
             }
             
+            tempIntEnSet = regIntEnSet;            
             if(((regIntFlag & USB_DEVICE_EPINTFLAG_TRCPT1_Msk) == USB_DEVICE_EPINTFLAG_TRCPT1_Msk) &&
-               ((regIntEnSet & USB_DEVICE_EPINTENSET_TRCPT1_Msk) == USB_DEVICE_EPINTENSET_TRCPT1_Msk))
+               ((tempIntEnSet & USB_DEVICE_EPINTENSET_TRCPT1_Msk) == USB_DEVICE_EPINTENSET_TRCPT1_Msk))
             {
 
                 /* This happens when a transfer is complete - specifically on two conditions:
@@ -2683,11 +2714,12 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                 {
                     irp = endpointObj->irpQueue;
 
-                    if(irp->nPendingBytes == 0)
+                    if(irp->nPendingBytes == 0U)
                     {
-                        if((irp->flags & USB_DEVICE_IRP_FLAG_SEND_ZLP) == USB_DEVICE_IRP_FLAG_SEND_ZLP)
+                        if(((uint32_t)irp->flags & USB_DEVICE_IRP_FLAG_SEND_ZLP) == USB_DEVICE_IRP_FLAG_SEND_ZLP)
                         {
-                            irp->flags &= ~USB_DEVICE_IRP_FLAG_SEND_ZLP;
+                            flagRead = (uint32_t)irp->flags & ~USB_DEVICE_IRP_FLAG_SEND_ZLP;
+                            irp->flags = (USB_DEVICE_IRP_FLAG)flagRead;
 
                             hDriver->endpointDescriptorTable[epIndex].DEVICE_DESC_BANK[1].USB_PCKSIZE &= ~USB_DEVICE_PCKSIZE_BYTE_COUNT_Msk;
 
@@ -2718,7 +2750,7 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
 
                                 if(irp->nPendingBytes <= endpointObj->maxPacketSize)
                                 {
-                                    byteCount = irp->nPendingBytes;
+                                    byteCount = (uint16_t)(irp->nPendingBytes);
                                 }
                                 else
                                 {
@@ -2743,7 +2775,7 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                     {
                         if(irp->nPendingBytes <= endpointObj->maxPacketSize)
                         {
-                            byteCount = irp->nPendingBytes;
+                            byteCount = (uint16_t)(irp->nPendingBytes);
                         }
                         else
                         {
@@ -2770,7 +2802,7 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
         
         for(epIndex = 1; epIndex < DRV_USBFSV1_ENDPOINTS_NUMBER; epIndex++)
         {
-            if((usbID->USB_EPINTSMRY & (0x01 << epIndex)) == 0x0000)
+            if((usbID->USB_EPINTSMRY & (0x01UL << epIndex)) == 0x0000U)
             {
                 continue;
             }
@@ -2788,8 +2820,9 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                 usbID->DEVICE_ENDPOINT[epIndex].USB_EPINTFLAG = USB_DEVICE_EPINTFLAG_TRFAIL0_Msk;
             }
             
+            tempIntEnSet = regIntEnSet;
             if(((regIntFlag & USB_DEVICE_EPINTFLAG_TRCPT0_Msk) == USB_DEVICE_EPINTFLAG_TRCPT0_Msk) &&
-               ((regIntEnSet & USB_DEVICE_EPINTENSET_TRCPT0_Msk) == USB_DEVICE_EPINTENSET_TRCPT0_Msk))
+               ((tempIntEnSet & USB_DEVICE_EPINTENSET_TRCPT0_Msk) == USB_DEVICE_EPINTENSET_TRCPT0_Msk))
             {
 
                 endpointObj = hDriver->deviceEndpointObj[epIndex];
@@ -2801,7 +2834,7 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                 {
                     irp = endpointObj->irpQueue;
 
-                    byteCount = hDriver->endpointDescriptorTable[epIndex].DEVICE_DESC_BANK[0].USB_PCKSIZE & USB_DEVICE_PCKSIZE_BYTE_COUNT_Msk;
+                    byteCount = (uint16_t)(hDriver->endpointDescriptorTable[epIndex].DEVICE_DESC_BANK[0].USB_PCKSIZE & USB_DEVICE_PCKSIZE_BYTE_COUNT_Msk);
 
                     irp->nPendingBytes += byteCount;
 
@@ -2823,6 +2856,10 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                         {
                             /* Short Packet */
                             irp->status = USB_DEVICE_IRP_STATUS_COMPLETED_SHORT;
+                        }
+                        else
+                        {
+                            /* Do Nothing */
                         }
 
                         endpointObj->irpQueue = irp->next;
@@ -2859,4 +2896,9 @@ void _DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
             }            
         }
     }
-} /* End of _DRV_USBFSV1_DEVICE_Tasks_ISR() */
+} /* End of F_DRV_USBFSV1_DEVICE_Tasks_ISR() */
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.6"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
