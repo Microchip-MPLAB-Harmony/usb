@@ -39,8 +39,8 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
-#ifndef _USB_HOST_MSD_H_
-#define _USB_HOST_MSD_H_
+#ifndef USB_HOST_MSD_H_
+#define USB_HOST_MSD_H_
 
 // *****************************************************************************
 // *****************************************************************************
@@ -194,6 +194,10 @@ typedef enum
 } USB_HOST_MSD_RESULT;
 
 // *****************************************************************************
+/* MISRA C-2012 Rule 5.2 deviated:10 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:10 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"  
 /* USB Host MSD Error Codes.
 
   Summary:
@@ -303,6 +307,9 @@ typedef enum
 
 } USB_HOST_MSD_TRANSFER_DIRECTION;
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* USB HOST MSD Transfer Complete Callback
 

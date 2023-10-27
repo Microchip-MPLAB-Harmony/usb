@@ -39,8 +39,8 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 
-#ifndef _USB_HOST_MSD_LOCAL_H
-#define _USB_HOST_MSD_LOCAL_H
+#ifndef USB_HOST_MSD_LOCAL_H
+#define USB_HOST_MSD_LOCAL_H
 
 
 // *****************************************************************************
@@ -62,15 +62,15 @@
 #if defined(USB_HOST_MSD_ERROR_CALLBACK)
     /* Check if error callback has been configured */
     #if (USB_HOST_MSD_ERROR_CALLBACK == true)
-        #define _USB_HOST_MSD_ERROR_CALLBACK_DECLARE extern void USB_HOST_MSD_ErrorCallback(uintptr_t objIdentifier, USB_HOST_MSD_ERROR_CODE errorCode);
-        #define _USB_HOST_MSD_ERROR_CALLBACK(x, y) USB_HOST_MSD_ErrorCallback(x, y)
+        #define M_USB_HOST_MSD_ERROR_CALLBACK_DECLARE extern void USB_HOST_MSD_ErrorCallback(uintptr_t objIdentifier, USB_HOST_MSD_ERROR_CODE errorCode);
+        #define M_USB_HOST_MSD_ERROR_CALLBACK(x, y) USB_HOST_MSD_ErrorCallback(x, y)
     #else
-        #define _USB_HOST_MSD_ERROR_CALLBACK_DECLARE
-        #define _USB_HOST_MSD_ERROR_CALLBACK(x, y) 
+        #define M_USB_HOST_MSD_ERROR_CALLBACK_DECLARE
+        #define M_USB_HOST_MSD_ERROR_CALLBACK(x, y) 
     #endif
 #else
-     #define _USB_HOST_MSD_ERROR_CALLBACK_DECLARE
-    #define _USB_HOST_MSD_ERROR_CALLBACK(x, y)
+     #define M_USB_HOST_MSD_ERROR_CALLBACK_DECLARE
+    #define M_USB_HOST_MSD_ERROR_CALLBACK(x, y)
 #endif
 
 /**********************************************
@@ -78,9 +78,9 @@
  * MSD instance and LUN from the LUN handle.
  **********************************************/
 
-#define USB_HOST_MSD_LUNHandleGet(lun, instance) ((lun << 8) | (instance))
-#define USB_HOST_MSD_INDEX(x) (x & 0xFF)
-#define USB_HOST_MSD_LUN(x) ((x >> 8) & 0xFF)
+#define USB_HOST_MSD_LUNHandleGet(lun, instance) (((lun)<< (8)) | (instance))
+#define USB_HOST_MSD_INDEX(x) ((x) & (0xFFU))
+#define USB_HOST_MSD_LUN(x) (((x) >> (8)) & (0xFFU))
 
 /************************************************
  * An MSD Transfer Object that is used by the
@@ -122,6 +122,12 @@ typedef struct
 /********************************************
  * MSD Client Driver Transfer Error States
  *******************************************/
+/* MISRA C-2012 Rule 5.2 deviated:4 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+
+#pragma coverity compliance block deviate:20 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"    
+
 
 typedef enum
 {
@@ -300,9 +306,12 @@ typedef struct
     size_t controlTransferSize;
     
     /* MSD Error Code */
-    uintptr_t msdErrorCode;
+    USB_HOST_MSD_ERROR_CODE msdErrorCode;
 
 } USB_HOST_MSD_INSTANCE;
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 
 #define USB_HOST_MSD_CBW            0x11
@@ -318,9 +327,9 @@ typedef struct
 #define  USB_MSD_CSW_SIGNATURE_INVALID -3
 
 /* BOT CSW Status */
-#define USB_MSD_CSW_STATUS_GOOD         0x00
-#define USB_MSD_CSW_STATUS_FAIL         0x01
-#define USB_MSD_CSW_STATUS_PHASE_ERROR  0x02
+#define USB_MSD_CSW_STATUS_GOOD         0x00U
+#define USB_MSD_CSW_STATUS_FAIL         0x01U
+#define USB_MSD_CSW_STATUS_PHASE_ERROR  0x02U
 #define USB_MSD_TRANSFER_SUCESSS 0x00
 #define USB_MSD_TRANSFER_FAIL      -1
 #define USB_MSD_TRANSPORT_ERROR    -2
@@ -343,7 +352,7 @@ typedef struct
 #define USB_MSD_CBW_FLAG_OUT  0x00
 
 /* CBW Tag value */
- #define USB_MSD_VALID_CBW_TAG     (uint32_t) 0xDD1331DD
+ #define USB_MSD_VALID_CBW_TAG     (uint32_t) 0xDD1331DDU
 
 // ****************************************************************************
 // ****************************************************************************
@@ -353,7 +362,7 @@ typedef struct
 
 // *****************************************************************************
 /* Function:
-   int_USB_HOST_MSD_InterfaceHandleToMSDInstance
+   int F_USB_HOST_MSD_InterfaceHandleToMSDInstance
    ( 
         USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
    )
@@ -371,14 +380,14 @@ typedef struct
     application.
 */
 
-int _USB_HOST_MSD_InterfaceHandleToMSDInstance
+int F_USB_HOST_MSD_InterfaceHandleToMSDInstance
 ( 
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
 );
 
 // *****************************************************************************
 /* Function:
-   void _USB_HOST_MSD_ReleaseInterface
+   void F_USB_HOST_MSD_ReleaseInterface
     (
         USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
     );
@@ -396,14 +405,14 @@ int _USB_HOST_MSD_InterfaceHandleToMSDInstance
     application.
 */
 
-void _USB_HOST_MSD_InterfaceRelease
+void F_USB_HOST_MSD_InterfaceRelease
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
 );
 
 // *****************************************************************************
 /* Function:
-   void _USB_HOST_MSD_ControlTransferCallback
+   void F_USB_HOST_MSD_ControlTransferCallback
     (
         USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
         USB_HOST_REQUEST_HANDLE requestHandle,
@@ -423,7 +432,7 @@ void _USB_HOST_MSD_InterfaceRelease
     application.
 */
 
-void _USB_HOST_MSD_ControlTransferCallback
+void F_USB_HOST_MSD_ControlTransferCallback
 (
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
     USB_HOST_REQUEST_HANDLE requestHandle,
@@ -434,7 +443,7 @@ void _USB_HOST_MSD_ControlTransferCallback
 
 // *****************************************************************************
 /* Function:
-   void _USB_HOST_MSD_GetMaxLUNPacketCreate
+   void F_USB_HOST_MSD_GetMaxLUNPacketCreate
    ( 
        USB_HOST_MSD_REQUEST * requestObj,
        uint8_t bInterfaceNumber
@@ -451,7 +460,7 @@ void _USB_HOST_MSD_ControlTransferCallback
     application.
 */
 
-void _USB_HOST_MSD_GetMaxLUNPacketCreate
+void F_USB_HOST_MSD_GetMaxLUNPacketCreate
 (
    USB_SETUP_PACKET * setupPacket,
    uint8_t bInterfaceNumber
@@ -459,7 +468,7 @@ void _USB_HOST_MSD_GetMaxLUNPacketCreate
 
 // *****************************************************************************
 /* Function:
-   void _USB_HOST_MSD_ResetPacketCreate
+   void F_USB_HOST_MSD_ResetPacketCreate
    ( 
        USB_HOST_MSD_REQUEST * requestObj,
        uint8_t bInterfaceNumber
@@ -476,7 +485,7 @@ void _USB_HOST_MSD_GetMaxLUNPacketCreate
     application.
 */
 
-void _USB_HOST_MSD_ResetPacketCreate
+void F_USB_HOST_MSD_ResetPacketCreate
 ( 
    USB_SETUP_PACKET * setupPacket,
    uint8_t bInterfaceNumber
@@ -484,7 +493,7 @@ void _USB_HOST_MSD_ResetPacketCreate
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_MSD_Initialize(void * msdInitData)
+    void F_USB_HOST_MSD_Initialize(void * msdInitData)
 
   Summary:
     This function is called when the Host Layer is initializing.
@@ -497,11 +506,11 @@ void _USB_HOST_MSD_ResetPacketCreate
     application.
 */
 
-void _USB_HOST_MSD_Initialize(void * msdInitData);
+void F_USB_HOST_MSD_Initialize(void * msdInitData);
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_MSD_Deinitialize(void)
+    void F_USB_HOST_MSD_Deinitialize(void)
 
   Summary:
     This function is called when the Host Layer is deinitializing.
@@ -514,11 +523,11 @@ void _USB_HOST_MSD_Initialize(void * msdInitData);
     application.
 */
 
-void _USB_HOST_MSD_Deinitialize(void);
+void F_USB_HOST_MSD_Deinitialize(void);
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_MSD_Reinitialize(void)
+    void F_USB_HOST_MSD_Reinitialize(void)
 
   Summary:
     This function is called when the Host Layer is reinitializing.
@@ -531,11 +540,11 @@ void _USB_HOST_MSD_Deinitialize(void);
     application.
 */
 
-void _USB_HOST_MSD_Reinitialize(void * msdInitData);
+void F_USB_HOST_MSD_Reinitialize(void * msdInitData);
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_MSD_InterfaceAssign 
+    void F_USB_HOST_MSD_InterfaceAssign 
     (
         USB_HOST_DEVICE_INTERFACE_HANDLE * interfaces,
         USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
@@ -556,7 +565,7 @@ void _USB_HOST_MSD_Reinitialize(void * msdInitData);
     application.
 */
 
-void _USB_HOST_MSD_InterfaceAssign 
+void F_USB_HOST_MSD_InterfaceAssign 
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE * interfaces,
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
@@ -584,14 +593,14 @@ void _USB_HOST_MSD_InterfaceAssign
     application.
 */
 
-void _USB_HOST_MSD_InstanceRelease
+void F_USB_HOST_MSD_InstanceRelease
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
 );
 
 // *****************************************************************************
 /* Function:
-    USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_MSD_InterfaceEventHandler
+    USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE F_USB_HOST_MSD_InterfaceEventHandler
     (
         USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle,
         USB_HOST_DEVICE_INTERFACE_EVENT event,
@@ -612,7 +621,7 @@ void _USB_HOST_MSD_InstanceRelease
     application.
 */
 
-USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_MSD_InterfaceEventHandler
+USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE F_USB_HOST_MSD_InterfaceEventHandler
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle,
     USB_HOST_DEVICE_INTERFACE_EVENT event,
@@ -640,14 +649,14 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_MSD_InterfaceEventHandler
     application.
 */
 
-void _USB_HOST_MSD_InterfaceTasks
+void F_USB_HOST_MSD_InterfaceTasks
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
 );
 
 // *****************************************************************************
 /* Function:
-   USB_HOST_MSD_RESULT _USB_HOST_MSD_HostResultToMSDResultMap
+   USB_HOST_MSD_RESULT F_USB_HOST_MSD_HostResultToMSDResultMap
    (
         USB_HOST_RESULT result
    )
@@ -663,14 +672,14 @@ void _USB_HOST_MSD_InterfaceTasks
     application.
 */
 
-USB_HOST_MSD_RESULT _USB_HOST_MSD_HostResultToMSDResultMap
+USB_HOST_MSD_RESULT F_USB_HOST_MSD_HostResultToMSDResultMap
 (
     USB_HOST_RESULT result
 );
 
 // *****************************************************************************
 /* Function:
-   void _USB_HOST_MSD_TransferTasks
+   void F_USB_HOST_MSD_TransferTasks
    (
         uintptr_t msdInstanceIndex,
         USB_HOST_RESULT result,
@@ -690,7 +699,7 @@ USB_HOST_MSD_RESULT _USB_HOST_MSD_HostResultToMSDResultMap
     application.
 */
 
-void _USB_HOST_MSD_TransferTasks
+void F_USB_HOST_MSD_TransferTasks
 (
     uintptr_t msdInstanceIndex,
     USB_HOST_RESULT result,

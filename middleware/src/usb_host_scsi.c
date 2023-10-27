@@ -54,25 +54,33 @@
  * USB HOST MSD SCSI Instance object. One for each LUN
  ******************************************************/
 
-USB_HOST_SCSI_INSTANCE_OBJ gUSBHostSCSIObj[USB_HOST_MSD_LUN_NUMBERS];
+static USB_HOST_SCSI_INSTANCE_OBJ gUSBHostSCSIObj[USB_HOST_MSD_LUN_NUMBERS];
 
 /******************************************************
  * USB HOST MSD SCSI buffers needed for SCSI operation
  ******************************************************/
 
-uint8_t gUSBSCSIBuffer[USB_HOST_MSD_LUN_NUMBERS][256] USB_ALIGN;
+static uint8_t gUSBSCSIBuffer[USB_HOST_MSD_LUN_NUMBERS][256] USB_ALIGN;
 
 /*****************************************************
  * USB HOST SCSI Attach Listeners.
  *****************************************************/
-USB_HOST_SCSI_ATTACH_LISTENER_OBJ gUSBHostSCSIAttachListener[USB_HOST_SCSI_ATTACH_LISTENERS_NUMBER];
+static USB_HOST_SCSI_ATTACH_LISTENER_OBJ gUSBHostSCSIAttachListener[USB_HOST_SCSI_ATTACH_LISTENERS_NUMBER];
 
 /*****************************************************
  * Media functions table that is exported to the
  * file system. Structure is defined by the file
  * system.
  *****************************************************/
-SYS_FS_MEDIA_FUNCTIONS gUSBHostMSDSCSIMediaFunctions =
+/* MISRA C-2012 Rule 11.1, and 11.8 deviated below. Deviation record ID -  
+    H3_MISRAC_2012_R_11_1_DR_1, H3_MISRAC_2012_R_11_8_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:3 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
+
+static SYS_FS_MEDIA_FUNCTIONS gUSBHostMSDSCSIMediaFunctions =
 {
     .mediaStatusGet     = USB_HOST_SCSI_MediaStatusGet,
     .mediaGeometryGet   = USB_HOST_SCSI_MediaGeometryGet,
@@ -88,7 +96,7 @@ SYS_FS_MEDIA_FUNCTIONS gUSBHostMSDSCSIMediaFunctions =
  * If the USB_HOST_SCSI_ERROR_CALLBACK option is set
  * to true, then this declares a callback function.
  ****************************************************/
-_USB_HOST_SCSI_ERROR_CALLBACK_DECLARE
+M_USB_HOST_SCSI_ERROR_CALLBACK_DECLARE
 
 // ******************************************************************************
 // ******************************************************************************
@@ -98,7 +106,7 @@ _USB_HOST_SCSI_ERROR_CALLBACK_DECLARE
 
 // *****************************************************************************
 /* Function:
-    void * _USB_HOST_SCSI_TimerCallback
+    void * F_USB_HOST_SCSI_TimerCallback
     (
        uint32_t context,
        uint32_t currtick
@@ -115,18 +123,18 @@ _USB_HOST_SCSI_ERROR_CALLBACK_DECLARE
     application.
 */    
 
-void _USB_HOST_SCSI_TimerCallback(uintptr_t context)
+void F_USB_HOST_SCSI_TimerCallback(uintptr_t context)
 {
     /* The handle is actually a pointer to the SCSI object */
     USB_HOST_SCSI_INSTANCE_OBJ * scsiObj = ((USB_HOST_SCSI_INSTANCE_OBJ *)(context));
     scsiObj->timerExpired = true;
-	SYS_TIME_TimerDestroy (scsiObj->commandDelayHandle);
+	(void) SYS_TIME_TimerDestroy (scsiObj->commandDelayHandle);
 	scsiObj->commandDelayHandle = SYS_TIME_HANDLE_INVALID; 
 }
 
 // ******************************************************************************
 /* Function:
-    void _USB_HOST_SCSI_Transfer 
+    void F_USB_HOST_SCSI_Transfer 
     (
         USB_HOST_SCSI_HANDLE scsiHandle,
         USB_HOST_MSD_TRANSFER_HANDLE * transferHandle,
@@ -147,7 +155,7 @@ void _USB_HOST_SCSI_TimerCallback(uintptr_t context)
     application.
 */
 
-void _USB_HOST_SCSI_Transfer 
+void F_USB_HOST_SCSI_Transfer 
 (
     USB_HOST_SCSI_HANDLE scsiHandle,
     USB_HOST_MSD_TRANSFER_HANDLE * transferHandle,
@@ -175,7 +183,7 @@ void _USB_HOST_SCSI_Transfer
     }
 
     /* Validate the handle */
-    if((scsiHandle == USB_HOST_SCSI_HANDLE_INVALID) || (scsiHandle == 0))
+    if((scsiHandle == USB_HOST_SCSI_HANDLE_INVALID) || (scsiHandle == 0U))
     {
         *commandHandle = SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
     }
@@ -251,7 +259,7 @@ void _USB_HOST_SCSI_Transfer
                 /* Schedule the transfer */
                 result = USB_HOST_MSD_Transfer(scsiObj->lunHandle, 
                         scsiObj->commandObj.cdb, 0x0A, buffer , (nSectors << 9) /* The left shift multiplies by 512 */, 
-                        direction, _USB_HOST_SCSI_BlockTransferCallback, (uintptr_t)(scsiObj));
+                        direction, F_USB_HOST_SCSI_BlockTransferCallback, (uintptr_t)(scsiObj));
 
                 if(result == USB_HOST_MSD_RESULT_SUCCESS)
                 {
@@ -268,7 +276,7 @@ void _USB_HOST_SCSI_Transfer
                      * handle */
 
                     scsiObj->transferTaskState = USB_HOST_SCSI_TRANSFER_STATE_BLOCK_COMMAND_RETRY;
-                    _USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiHandle, USB_HOST_SCSI_ERROR_CODE_BOT_REQUEST_DEFERRED);
+                    M_USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiHandle, USB_HOST_SCSI_ERROR_CODE_BOT_REQUEST_DEFERRED);
                 }
                 else 
                 {
@@ -286,14 +294,14 @@ void _USB_HOST_SCSI_Transfer
             /* The SCSI instance is not ready */
             SYS_DEBUG_PRINT(SYS_ERROR_DEBUG, "\r\nUSB Host SCSI: SCSI Instance is not ready");
             *commandHandle = SYS_FS_MEDIA_BLOCK_COMMAND_HANDLE_INVALID;
-            _USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiHandle, USB_HOST_SCSI_ERROR_CODE_INSTANCE_BUSY);
+            M_USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiHandle, USB_HOST_SCSI_ERROR_CODE_INSTANCE_BUSY);
         }
     }
 }
 
 // ******************************************************************************
 /* Function:
-    void _USB_HOST_SCSI_CommandCallback 
+    void F_USB_HOST_SCSI_CommandCallback 
     (
         USB_HOST_MSD_LUN_HANDLE lunHandle,
         USB_HOST_MSD_TRANSFER_HANDLE transferHandle,
@@ -315,7 +323,7 @@ void _USB_HOST_SCSI_Transfer
     application.
 */
 
-void _USB_HOST_SCSI_CommandCallback 
+void F_USB_HOST_SCSI_CommandCallback 
 (
     USB_HOST_MSD_LUN_HANDLE lunHandle,
     USB_HOST_MSD_TRANSFER_HANDLE transferHandle,
@@ -345,7 +353,7 @@ void _USB_HOST_SCSI_CommandCallback
 
 // ******************************************************************************
 /* Function:
-    void _USB_HOST_SCSI_BlockTransferCallback 
+    void F_USB_HOST_SCSI_BlockTransferCallback 
     (
         USB_HOST_MSD_LUN_HANDLE lunHandle,
         USB_HOST_MSD_TRANSFER_HANDLE transferHandle,
@@ -365,7 +373,7 @@ void _USB_HOST_SCSI_CommandCallback
     application.
 */
 
-void _USB_HOST_SCSI_BlockTransferCallback 
+void F_USB_HOST_SCSI_BlockTransferCallback 
 (
     USB_HOST_MSD_LUN_HANDLE lunHandle,
     USB_HOST_MSD_TRANSFER_HANDLE transferHandle,
@@ -379,48 +387,51 @@ void _USB_HOST_SCSI_BlockTransferCallback
     USB_HOST_SCSI_COMMAND_OBJ * commandObj;
 
     /* Get the SCSI object index from the lunHandle */
-    scsiObjIndex = _USB_HOST_SCSI_LUNHandleToSCSIInstance(lunHandle);
+    scsiObjIndex = F_USB_HOST_SCSI_LUNHandleToSCSIInstance(lunHandle);
 
-    /* Get the pointer to the SCSI object */
-    scsiObj = &gUSBHostSCSIObj[scsiObjIndex];
-
-    /* Pointer to the command object */
-    commandObj = &scsiObj->commandObj;
-
-    /* The processed size */
-    commandObj->size = size;
-
-    /* The result of the command */
-    commandObj->result = result;
-
-    /* Let the main state machine know that the command is completed */
-    commandObj->commandCompleted = true;
-
-    if((result == USB_HOST_MSD_RESULT_SUCCESS) || (result == USB_HOST_MSD_RESULT_COMMAND_PASSED))
+    if (scsiObjIndex != -1)
     {
-        /* If there is an event handler registered, then call the event handler
-         * */
-        if(scsiObj->eventHandler != NULL)
+        /* Get the pointer to the SCSI object */
+        scsiObj = &gUSBHostSCSIObj[scsiObjIndex];
+
+        /* Pointer to the command object */
+        commandObj = &scsiObj->commandObj;
+
+        /* The processed size */
+        commandObj->size = size;
+
+        /* The result of the command */
+        commandObj->result = result;
+
+        /* Let the main state machine know that the command is completed */
+        commandObj->commandCompleted = true;
+
+        if((result == USB_HOST_MSD_RESULT_SUCCESS) || (result == USB_HOST_MSD_RESULT_COMMAND_PASSED))
         {
-            /* Generate the event */
-            (scsiObj->eventHandler)((SYS_MEDIA_BLOCK_EVENT)USB_HOST_SCSI_EVENT_COMMAND_COMPLETE, (USB_HOST_SCSI_COMMAND_HANDLE)(commandObj), scsiObj->context);
-        }
+              /* If there is an event handler registered, then call the event handler
+               * */
+             if(scsiObj->eventHandler != NULL)
+             {
+                 /* Generate the event */
+                (scsiObj->eventHandler)((SYS_MEDIA_BLOCK_EVENT)USB_HOST_SCSI_EVENT_COMMAND_COMPLETE, (USB_HOST_SCSI_COMMAND_HANDLE)(commandObj), scsiObj->context);
+             }
         
-        /* Return the command object */
-        commandObj->inUse = false;
-    }
-    else
-    {
-        /* The command failed. Transfer control to the transfer state machine to
-         * find out why */
+         /* Return the command object */
+         commandObj->inUse = false;
+        }
+        else
+        {
+             /* The command failed. Transfer control to the transfer state machine to
+             * find out why */
 
-        scsiObj->transferTaskState = USB_HOST_SCSI_TRANSFER_STATE_REQUEST_SENSE;
+            scsiObj->transferTaskState = USB_HOST_SCSI_TRANSFER_STATE_REQUEST_SENSE;
+        }
     }
 }
 
 // ******************************************************************************
 /* Function:
-    void _USB_HOST_SCSI_TestUnitReadyCommand 
+    void F_USB_HOST_SCSI_TestUnitReadyCommand 
     (
         uint8_t * scsiCommand
     )
@@ -436,10 +447,10 @@ void _USB_HOST_SCSI_BlockTransferCallback
     application.
 */
 
-void _USB_HOST_SCSI_TestUnitReadyCommand (uint8_t * scsiCommand )
+void F_USB_HOST_SCSI_TestUnitReadyCommand (uint8_t * scsiCommand )
 {
     /* Set up the Test Unit Ready command */
-    scsiCommand[0] = SCSI_TEST_UNIT_READY;
+    scsiCommand[0] = (uint8_t)SCSI_TEST_UNIT_READY;
     scsiCommand[1] = 0x00;
     scsiCommand[2] = 0x00;
     scsiCommand[3] = 0x00;
@@ -450,7 +461,7 @@ void _USB_HOST_SCSI_TestUnitReadyCommand (uint8_t * scsiCommand )
 
 // ******************************************************************************
 /* Function:
-    void _USB_HOST_SCSI_RequestSenseCommand 
+    void F_USB_HOST_SCSI_RequestSenseCommand 
     (
         uint8_t * scsiCommand
     )
@@ -466,10 +477,10 @@ void _USB_HOST_SCSI_TestUnitReadyCommand (uint8_t * scsiCommand )
     application.
 */
 
-void _USB_HOST_SCSI_RequestSenseCommand (uint8_t * scsiCommand )
+void F_USB_HOST_SCSI_RequestSenseCommand (uint8_t * scsiCommand )
 {
     /* Set up the Request Sense Command */
-    scsiCommand[0] = SCSI_REQUEST_SENSE;
+    scsiCommand[0] = (uint8_t)SCSI_REQUEST_SENSE;
     scsiCommand[1] = 0x00;
     scsiCommand[2] = 0x00;
     scsiCommand[3] = 0x00;
@@ -479,7 +490,7 @@ void _USB_HOST_SCSI_RequestSenseCommand (uint8_t * scsiCommand )
 
 // ******************************************************************************
 /* Function:
-    void _USB_HOST_SCSI_ReadCapacityCommand
+    void F_USB_HOST_SCSI_ReadCapacityCommand
     (
         uint8_t * scsiCommand
     )
@@ -495,10 +506,10 @@ void _USB_HOST_SCSI_RequestSenseCommand (uint8_t * scsiCommand )
     application.
 */
 
-void _USB_HOST_SCSI_ReadCapacityCommand (uint8_t * scsiCommand )
+void F_USB_HOST_SCSI_ReadCapacityCommand (uint8_t * scsiCommand )
 {
     /* Set up the Read Capacity Command */
-    scsiCommand[0] = SCSI_READ_CAPACITY;
+    scsiCommand[0] = (uint8_t)SCSI_READ_CAPACITY;
     scsiCommand[1] = 0x00;
     scsiCommand[2] = 0x00;
     scsiCommand[3] = 0x00;
@@ -512,7 +523,7 @@ void _USB_HOST_SCSI_ReadCapacityCommand (uint8_t * scsiCommand )
 
 // ******************************************************************************
 /* Function:
-    void _USB_HOST_SCSI_InquiryResponseCommand 
+    void F_USB_HOST_SCSI_InquiryResponseCommand 
     (
         uint8_t * scsiCommand
     )
@@ -528,10 +539,10 @@ void _USB_HOST_SCSI_ReadCapacityCommand (uint8_t * scsiCommand )
     application.
 */
 
-void _USB_HOST_SCSI_InquiryResponseCommand (uint8_t * scsiCommand )
+void F_USB_HOST_SCSI_InquiryResponseCommand (uint8_t * scsiCommand )
 {
     /* Set up the SCSI Inquiry command */
-    scsiCommand[0] = SCSI_INQUIRY;
+    scsiCommand[0] = (uint8_t)SCSI_INQUIRY;
     scsiCommand[1] = 0x00;
     scsiCommand[2] = 0x00;
     scsiCommand[3] = 0x00;
@@ -541,7 +552,7 @@ void _USB_HOST_SCSI_InquiryResponseCommand (uint8_t * scsiCommand )
 
 // ******************************************************************************
 /* Function:
-    void _USB_HOST_SCSI_ModeSense
+    void F_USB_HOST_SCSI_ModeSense
     (
         uint8_t * scsiCommand
     )
@@ -557,10 +568,10 @@ void _USB_HOST_SCSI_InquiryResponseCommand (uint8_t * scsiCommand )
     application.
 */
 
-void _USB_HOST_SCSI_ModeSense (uint8_t * scsiCommand )
+void F_USB_HOST_SCSI_ModeSense (uint8_t * scsiCommand )
 {
     /* Set up the Read Format Capacity Command's CDB. */
-    scsiCommand[0] = SCSI_MODE_SENSE;
+    scsiCommand[0] = (uint8_t)SCSI_MODE_SENSE;
     scsiCommand[1] = 0x00;
     scsiCommand[2] = 0x1C;
     scsiCommand[3] = 0x00;
@@ -571,7 +582,7 @@ void _USB_HOST_SCSI_ModeSense (uint8_t * scsiCommand )
 
 // ******************************************************************************
 /* Function:
-    int _USB_HOST_SCSI_LUNHandleToSCSIInstance 
+    int F_USB_HOST_SCSI_LUNHandleToSCSIInstance 
     (
         USB_HOST_MSD_LUN_HANDLE lunHandle
     )
@@ -588,7 +599,7 @@ void _USB_HOST_SCSI_ModeSense (uint8_t * scsiCommand )
     application.
 */
 
-int _USB_HOST_SCSI_LUNHandleToSCSIInstance
+int F_USB_HOST_SCSI_LUNHandleToSCSIInstance
 (
     USB_HOST_MSD_LUN_HANDLE lunHandle
 )
@@ -642,7 +653,7 @@ void USB_HOST_SCSI_Initialize(USB_HOST_MSD_LUN_HANDLE lunHandle)
             scsiObj = &gUSBHostSCSIObj[iterator];
 
             /* Clear this object */
-            memset(scsiObj, 0, sizeof(USB_HOST_SCSI_INSTANCE_OBJ));
+            (void) memset(scsiObj, 0, sizeof(USB_HOST_SCSI_INSTANCE_OBJ));
 
             /* Setup the rest of the object members whose initial values are
              * non-zero. */
@@ -660,11 +671,14 @@ void USB_HOST_SCSI_Initialize(USB_HOST_MSD_LUN_HANDLE lunHandle)
         /* This means a SCSI instance object could not be allocated. We call the
          * Error callback function if this is defined. */
 
-        _USB_HOST_SCSI_ERROR_CALLBACK(lunHandle, USB_HOST_SCSI_ERROR_CODE_INSUFFICIENT_INSTANCES);
+        M_USB_HOST_SCSI_ERROR_CALLBACK(lunHandle, USB_HOST_SCSI_ERROR_CODE_INSUFFICIENT_INSTANCES);
     }
 }
 
 // ******************************************************************************
+/* MISRA C-2012 Rule 20.7 False Positive:3 Deviation record ID -  H3_MISRAC_2012_R_20_7_DR_1 */
+#pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 20.7" "H3_MISRAC_2012_R_20_7_DR_1"    
+
 /* Function:
     void USB_HOST_SCSI_DeInitialize (USB_HOST_MSD_LUN_HANDLE lunHandle)
 
@@ -686,7 +700,7 @@ void USB_HOST_SCSI_Deinitialize(USB_HOST_MSD_LUN_HANDLE lunHandle)
     int scsiObjIndex;
 
     /* Find the SCSI object that owns this LUN */
-    scsiObjIndex = _USB_HOST_SCSI_LUNHandleToSCSIInstance(lunHandle);
+    scsiObjIndex = F_USB_HOST_SCSI_LUNHandleToSCSIInstance(lunHandle);
 
     if(scsiObjIndex >= 0)
     {
@@ -725,7 +739,7 @@ void USB_HOST_SCSI_Deinitialize(USB_HOST_MSD_LUN_HANDLE lunHandle)
         {
             /* It may be possible that this specific LUN may have not registered
              * with the file system. Hence the check. */
-            _USB_HOST_SCSI_FILE_SYSTEM_DEREGISTER(scsiObj->fsHandle);
+            M_USB_HOST_SCSI_FILE_SYSTEM_DEREGISTER(scsiObj->fsHandle);
             scsiObj->fsHandle = SYS_FS_MEDIA_HANDLE_INVALID;
         }
 
@@ -738,8 +752,10 @@ void USB_HOST_SCSI_Deinitialize(USB_HOST_MSD_LUN_HANDLE lunHandle)
 }
 
 // ******************************************************************************
+/* MISRA C-2012 Rule 11.3 deviated:4 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"    
 /* Function:
-    void _USB_HOST_SCSI_TasksByIndex (int scsiIndex)
+    void F_USB_HOST_SCSI_TasksByIndex (int scsiIndex)
 
   Summary:
     This function is called by the USB_HOST_SCSI_Tasks to update the driver
@@ -753,12 +769,13 @@ void USB_HOST_SCSI_Deinitialize(USB_HOST_MSD_LUN_HANDLE lunHandle)
     This is local function and should not be called by the application.
 */
 
-void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
+void F_USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
 {
     USB_HOST_SCSI_INSTANCE_OBJ * scsiObj;
     USB_HOST_MSD_RESULT result;
     SCSI_SENSE_DATA * requestSenseResponse;
     int attachListenerIndex = 0;
+    uint32_t temp;
 
     scsiObj = &gUSBHostSCSIObj[scsiObjIndex];
 
@@ -773,7 +790,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
             SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r USB_HOST_SCSI_STATE_INQUIRY_RESPONSE ");
             /* We get the SCSI Enquiry response. Although there isn't much
              * that we can do with this data */
-            _USB_HOST_SCSI_InquiryResponseCommand(scsiObj->taskCommandObj.cdb);
+            F_USB_HOST_SCSI_InquiryResponseCommand(scsiObj->taskCommandObj.cdb);
 
             /* The commandCompleted flag will be updated in the callback.
              * Update the state and send the command.   */
@@ -783,7 +800,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
             result = USB_HOST_MSD_Transfer(scsiObj->lunHandle, 
                     scsiObj->taskCommandObj.cdb, 6, scsiObj->buffer, 36, 
                     USB_HOST_MSD_TRANSFER_DIRECTION_DEVICE_TO_HOST,
-                    _USB_HOST_SCSI_CommandCallback, (uintptr_t)(&scsiObj->taskCommandObj));
+                    F_USB_HOST_SCSI_CommandCallback, (uintptr_t)(&scsiObj->taskCommandObj));
 
             if(result == USB_HOST_MSD_RESULT_SUCCESS)
             {
@@ -809,7 +826,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
 
             SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r USB_HOST_SCSI_STATE_READ_CAPACITY ");
             /* Here we send the read capacity command */
-            _USB_HOST_SCSI_ReadCapacityCommand(scsiObj->taskCommandObj.cdb);
+            F_USB_HOST_SCSI_ReadCapacityCommand(scsiObj->taskCommandObj.cdb);
 
             /* The commandCompleted flag will be updated in the callback.
              * Update the state and send the command.   */
@@ -819,7 +836,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
             result = USB_HOST_MSD_Transfer(scsiObj->lunHandle, 
                     scsiObj->taskCommandObj.cdb, 0xA, scsiObj->buffer, 0x8 , 
                     USB_HOST_MSD_TRANSFER_DIRECTION_DEVICE_TO_HOST,
-                    _USB_HOST_SCSI_CommandCallback, (uintptr_t)(&scsiObj->taskCommandObj));
+                    F_USB_HOST_SCSI_CommandCallback, (uintptr_t)(&scsiObj->taskCommandObj));
 
             if(result == USB_HOST_MSD_RESULT_SUCCESS)
             {
@@ -843,7 +860,8 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
                     uint8_t * buffer = scsiObj->buffer;
 
                     /* The read and write will be blocking */
-                    scsiObj->mediaGeometry.mediaProperty = (SYS_MEDIA_PROPERTY)(SYS_FS_MEDIA_WRITE_IS_BLOCKING|SYS_FS_MEDIA_READ_IS_BLOCKING);
+                    temp = ((uint32_t)SYS_FS_MEDIA_WRITE_IS_BLOCKING|(uint32_t)SYS_FS_MEDIA_READ_IS_BLOCKING);
+                    scsiObj->mediaGeometry.mediaProperty = (SYS_MEDIA_PROPERTY)temp;
 
                     /* There is one read, write and erase region */
                     scsiObj->mediaGeometry.numReadRegions = 1;
@@ -851,8 +869,8 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
                     scsiObj->mediaGeometry.numEraseRegions = 1;
 
                     /* The size of the read region and size of the read block */
-                    scsiObj->mediaRegionGeometry[0].blockSize = (buffer[7])|(buffer[6] << 8)|(buffer[5]<<16)| (buffer[4] << 24);
-                    scsiObj->mediaRegionGeometry[0].numBlocks = ((buffer[3])|(buffer[2] << 8)|(buffer[1]<<16)| (buffer[0] << 24)) + 1;
+                    scsiObj->mediaRegionGeometry[0].blockSize = (buffer[7])|((uint32_t)buffer[6] << 8)|((uint32_t)buffer[5]<<16)| ((uint32_t)buffer[4] << 24);
+                    scsiObj->mediaRegionGeometry[0].numBlocks = (uint32_t)(((buffer[3])|((uint32_t)buffer[2] << 8)|((uint32_t)buffer[1]<<16)| ((uint32_t)buffer[0] << 24)) + 1U);
 
                     /* The size of the write region and size of the read block */
                     scsiObj->mediaRegionGeometry[1].blockSize = scsiObj->mediaRegionGeometry[0].blockSize;
@@ -879,7 +897,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
                     SYS_DEBUG_PRINT(SYS_ERROR_DEBUG, "\r\nUSB Host SCSI: SCSI Instance %d Read Capacity Failed. Requesting Sense Data", scsiObjIndex);
                     scsiObj->failedCommandState = USB_HOST_SCSI_STATE_READ_CAPACITY;
                     scsiObj->state = USB_HOST_SCSI_STATE_REQUEST_SENSE;
-                    _USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_READ_CAPACITY_FAILED);
+                    M_USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_READ_CAPACITY_FAILED);
                 }
             }
             else
@@ -897,7 +915,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
             /* In this state we send the mode sense command to find out if
              * the device is write protected */
 
-            _USB_HOST_SCSI_ModeSense(scsiObj->taskCommandObj.cdb);
+            F_USB_HOST_SCSI_ModeSense(scsiObj->taskCommandObj.cdb);
 
             /* The commandCompleted flag will be updated in the callback.
              * Update the state and send the command.   */
@@ -907,7 +925,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
             result = USB_HOST_MSD_Transfer(scsiObj->lunHandle, 
                     scsiObj->taskCommandObj.cdb, 0x06, scsiObj->buffer, 192 , 
                     USB_HOST_MSD_TRANSFER_DIRECTION_DEVICE_TO_HOST,
-                    _USB_HOST_SCSI_CommandCallback, (uintptr_t)(&scsiObj->taskCommandObj));
+                    F_USB_HOST_SCSI_CommandCallback, (uintptr_t)(&scsiObj->taskCommandObj));
 
             if(result == USB_HOST_MSD_RESULT_SUCCESS)
             {
@@ -934,7 +952,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
                      * device type. For such devices, we assume that write
                      * protect is disabled. */
 
-                    if( ( scsiObj->buffer[1] == 0x00  ) && (scsiObj->buffer[2] & 0x80) )
+                    if( ( scsiObj->buffer[1] == 0x00U  ) && ((scsiObj->buffer[2] & 0x80U) != 0U) )
                     {
                         SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host SCSI: SCSI Instance %d Mode Sense Passed. Media is write protected.", scsiObjIndex);
                         scsiObj->isWriteProtected = true;
@@ -956,7 +974,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
                     SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host SCSI: SCSI Instance %d Mode Sense Failed. Requesting Sense Data.", scsiObjIndex);
                     scsiObj->failedCommandState = USB_HOST_SCSI_STATE_MODE_SENSE;
                     scsiObj->state = USB_HOST_SCSI_STATE_REQUEST_SENSE;
-                    _USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_MODE_SENSE_FAILED);
+                    M_USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_MODE_SENSE_FAILED);
                 }
             }
             else
@@ -975,8 +993,8 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
              * of the detach state machine to start checking for detach. */
 
             SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host SCSI: SCSI Instance %d is ready for block commands", scsiObjIndex);
-            scsiObj->fsHandle = _USB_HOST_SCSI_FILE_SYSTEM_REGISTER((SYS_MODULE_OBJ)(scsiObj->lunHandle), 
-                    scsiObjIndex, &gUSBHostMSDSCSIMediaFunctions, SYS_FS_MEDIA_TYPE_MSD);
+            scsiObj->fsHandle = M_USB_HOST_SCSI_FILE_SYSTEM_REGISTER((SYS_MODULE_OBJ)(scsiObj->lunHandle), 
+                    (uint16_t)scsiObjIndex, &gUSBHostMSDSCSIMediaFunctions, SYS_FS_MEDIA_TYPE_MSD);
             
             for (attachListenerIndex = 0; attachListenerIndex < USB_HOST_SCSI_ATTACH_LISTENERS_NUMBER; attachListenerIndex ++)
             {
@@ -1026,7 +1044,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
                     scsiObj->eventHandler((SYS_MEDIA_BLOCK_EVENT)USB_HOST_SCSI_EVENT_DETACH, USB_HOST_SCSI_COMMAND_HANDLE_INVALID, scsiObj->context);
                 }
                 
-                _USB_HOST_SCSI_FILE_SYSTEM_DEREGISTER(scsiObj->fsHandle);
+                M_USB_HOST_SCSI_FILE_SYSTEM_DEREGISTER(scsiObj->fsHandle);
                     
                 scsiObj->fsHandle = SYS_FS_MEDIA_HANDLE_INVALID;
                 scsiObj->state = USB_HOST_SCSI_STATE_INQUIRY_RESPONSE;
@@ -1034,7 +1052,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
             else
             {
                 /* Continue to check if the media is present */
-                _USB_HOST_SCSI_DetachDetectTasks(scsiObjIndex);
+                F_USB_HOST_SCSI_DetachDetectTasks(scsiObjIndex);
             }
 
             break;
@@ -1044,7 +1062,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
             SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r USB_HOST_SCSI_STATE_REQUEST_SENSE ");
             /* In this state, we send the request sense command */
 
-            _USB_HOST_SCSI_RequestSenseCommand(scsiObj->taskCommandObj.cdb);
+            F_USB_HOST_SCSI_RequestSenseCommand(scsiObj->taskCommandObj.cdb);
 
             /* The commandCompleted flag will be updated in the callback.
              * Update the state and send the command.   */
@@ -1055,7 +1073,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
             result = USB_HOST_MSD_Transfer(scsiObj->lunHandle, 
                     scsiObj->taskCommandObj.cdb, 0x6, scsiObj->buffer, 18 , 
                     USB_HOST_MSD_TRANSFER_DIRECTION_DEVICE_TO_HOST,
-                    _USB_HOST_SCSI_CommandCallback, (uintptr_t)(&scsiObj->taskCommandObj));
+                    F_USB_HOST_SCSI_CommandCallback, (uintptr_t)(&scsiObj->taskCommandObj));
 
             if(result == USB_HOST_MSD_RESULT_SUCCESS)
             {
@@ -1091,9 +1109,9 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
                         scsiObj->isWriteProtected = false;
                         scsiObj->state = USB_HOST_SCSI_STATE_MODE_SENSE_DONE;
                     }
-                    else if((requestSenseResponse->SenseKey == SCSI_SENSE_UNIT_ATTENTION) ||
-                            (requestSenseResponse->SenseKey == SCSI_SENSE_NOT_READY) ||
-                            (requestSenseResponse->SenseKey == SCSI_SENSE_NO_SENSE))
+                    else if((requestSenseResponse->SenseKey == (uint8_t)SCSI_SENSE_UNIT_ATTENTION) ||
+                            (requestSenseResponse->SenseKey == (uint8_t)SCSI_SENSE_NOT_READY) ||
+                            (requestSenseResponse->SenseKey == (uint8_t)SCSI_SENSE_NO_SENSE))
                     {
                         /* This means something has changed or is changing on
                          * the device. Wait for the unit to be ready.  The
@@ -1103,9 +1121,9 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
                         SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host SCSI: SCSI Instance %d Sense Key Unit Not Ready.", scsiObjIndex);
                         SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host SCSI: SCSI Instance %d Check if Unit is Ready.", scsiObjIndex);
                         scsiObj->state = USB_HOST_SCSI_STATE_TEST_UNIT_READY;
-                        _USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_REQUEST_SENSE_TEST_UNIT_READY);
+                        M_USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_REQUEST_SENSE_TEST_UNIT_READY);
                     }
-                    else if(requestSenseResponse->SenseKey == SCSI_SENSE_MEDIUM_ERROR)
+                    else if(requestSenseResponse->SenseKey == (uint8_t)SCSI_SENSE_MEDIUM_ERROR)
                     {
                         /* This could mean there is something terribly wrong
                          * with the device. We let the ready state catch this
@@ -1113,7 +1131,11 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
                         SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host SCSI: SCSI Instance %d Sense Key Medium Error.", scsiObjIndex);
                         scsiObj->isMediaError = true;
                         scsiObj->state = USB_HOST_SCSI_STATE_READY;
-                        _USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_REQUEST_SENSE_MEDIUM_ERROR);
+                        M_USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_REQUEST_SENSE_MEDIUM_ERROR);
+                    }
+                    else
+                    {
+                        /* Do Nothing */
                     }
                 }
                 else
@@ -1121,7 +1143,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
                     /* The SCSI Request Sense command must pass */
                     SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host SCSI: SCSI Instance %d Sense Command failed!", scsiObjIndex);
                     scsiObj->state = USB_HOST_SCSI_STATE_ERROR;
-                    _USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_REQUEST_SENSE_FAILURE);
+                    M_USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_REQUEST_SENSE_FAILURE);
                 }
             }
             else
@@ -1138,7 +1160,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
 
             scsiObj->timerExpired = false;
             scsiObj->commandDelayHandle = SYS_TMR_CallbackSingle( USB_HOST_SCSI_DETACH_TEST_UNIT_READY_INTERVAL, 
-                    (uintptr_t )scsiObj, _USB_HOST_SCSI_TimerCallback);
+                    (uintptr_t )scsiObj, F_USB_HOST_SCSI_TimerCallback);
             
             if (scsiObj->commandDelayHandle != SYS_TMR_HANDLE_INVALID)
             {
@@ -1178,7 +1200,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
              * Grab the command object. Populate the command block with
              * command */
             
-            _USB_HOST_SCSI_TestUnitReadyCommand(scsiObj->taskCommandObj.cdb);
+            F_USB_HOST_SCSI_TestUnitReadyCommand(scsiObj->taskCommandObj.cdb);
 
             /* Send the command. The commandCompleted flag will be update in
              * the event handler  */
@@ -1188,7 +1210,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
 
             SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r USB_HOST_SCSI_STATE_TEST_UNIT_READY ");
             result = USB_HOST_MSD_Transfer(scsiObj->lunHandle, scsiObj->taskCommandObj.cdb, 6, NULL, 0, 
-                    USB_HOST_MSD_TRANSFER_DIRECTION_DEVICE_TO_HOST, _USB_HOST_SCSI_CommandCallback, 
+                    USB_HOST_MSD_TRANSFER_DIRECTION_DEVICE_TO_HOST, F_USB_HOST_SCSI_CommandCallback, 
                     (uintptr_t)(&scsiObj->taskCommandObj));
 
             if(result == USB_HOST_MSD_RESULT_SUCCESS)
@@ -1240,6 +1262,7 @@ void _USB_HOST_SCSI_TasksByIndex(int scsiObjIndex)
             break;
 
         default:
+             /* Do Nothing */
             break;
     }
 }
@@ -1266,11 +1289,11 @@ void USB_HOST_SCSI_Tasks(USB_HOST_MSD_LUN_HANDLE lunHandle)
     int scsiObjIndex;
 
     /* Find the SCSI object that own this LUN */
-    scsiObjIndex = _USB_HOST_SCSI_LUNHandleToSCSIInstance(lunHandle);
+    scsiObjIndex = F_USB_HOST_SCSI_LUNHandleToSCSIInstance(lunHandle);
 
     if(scsiObjIndex >= 0)
     {
-        _USB_HOST_SCSI_TasksByIndex(scsiObjIndex);
+        F_USB_HOST_SCSI_TasksByIndex(scsiObjIndex);
     }
 }
 
@@ -1302,7 +1325,7 @@ USB_HOST_SCSI_HANDLE USB_HOST_SCSI_Open
     USB_HOST_SCSI_INSTANCE_OBJ * scsiObj;
     USB_HOST_SCSI_HANDLE result;
 
-    if(index >= USB_HOST_MSD_LUN_NUMBERS)
+    if(index >= (uint16_t)USB_HOST_MSD_LUN_NUMBERS)
     {
         /* Invalid driver index */
         result = USB_HOST_SCSI_HANDLE_INVALID;
@@ -1319,7 +1342,7 @@ USB_HOST_SCSI_HANDLE USB_HOST_SCSI_Open
         else
         {
             /* Not ready to be opened */
-            _USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)index, USB_HOST_SCSI_ERROR_CODE_OPEN_FAIL_ON_BUSY);
+            M_USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)index, USB_HOST_SCSI_ERROR_CODE_OPEN_FAIL_ON_BUSY);
             result = USB_HOST_SCSI_HANDLE_INVALID;
         }
     }
@@ -1383,7 +1406,7 @@ bool USB_HOST_SCSI_MediaStatusGet
 
     /* Validate the SCSI handle */
     if((USB_HOST_SCSI_HANDLE_INVALID != scsiHandle) &&
-            (0 != scsiHandle))
+            (0U != scsiHandle))
     {
         /* The handle is actually a pointer to the SCSI object */
         scsiObj = (USB_HOST_SCSI_INSTANCE_OBJ *)scsiHandle;
@@ -1434,7 +1457,7 @@ void USB_HOST_SCSI_SectorRead
 )
 {
      /* Perform a read transfer */
-    _USB_HOST_SCSI_Transfer(scsiHandle, commandHandle, blockStart, nBlock, buffer, USB_HOST_MSD_TRANSFER_DIRECTION_DEVICE_TO_HOST);
+    F_USB_HOST_SCSI_Transfer(scsiHandle, commandHandle, blockStart, nBlock, buffer, USB_HOST_MSD_TRANSFER_DIRECTION_DEVICE_TO_HOST);
 }
 
 // ******************************************************************************
@@ -1473,7 +1496,7 @@ void USB_HOST_SCSI_SectorWrite
 )
 {
     /* Perform a write transfer */
-    _USB_HOST_SCSI_Transfer(scsiHandle, commandHandle, blockStart, nBlock, buffer, USB_HOST_MSD_TRANSFER_DIRECTION_HOST_TO_DEVICE);
+    F_USB_HOST_SCSI_Transfer(scsiHandle, commandHandle, blockStart, nBlock, buffer, USB_HOST_MSD_TRANSFER_DIRECTION_HOST_TO_DEVICE);
 }
 
 // ******************************************************************************
@@ -1507,7 +1530,7 @@ void USB_HOST_SCSI_EventHandlerSet
 {
     USB_HOST_SCSI_INSTANCE_OBJ * scsiObj;
 
-    if((scsiHandle != USB_HOST_SCSI_HANDLE_INVALID) && (scsiHandle != 0))
+    if((scsiHandle != USB_HOST_SCSI_HANDLE_INVALID) && (scsiHandle != 0U))
     {
         /* Set the event handler and the context */
         scsiObj = (USB_HOST_SCSI_INSTANCE_OBJ *)(scsiHandle);
@@ -1520,6 +1543,9 @@ void USB_HOST_SCSI_EventHandlerSet
     }
 }
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+/* MISRAC 2012 deviation block end */
 // ******************************************************************************
 /* Function:
     SYS_FS_MEDIA_GEOMETRY * USB_HOST_SCSI_MediaGeometryGet 
@@ -1546,7 +1572,7 @@ SYS_FS_MEDIA_GEOMETRY * USB_HOST_SCSI_MediaGeometryGet
     SYS_FS_MEDIA_GEOMETRY * result;
 
     result = NULL;
-    if((scsiHandle != USB_HOST_SCSI_HANDLE_INVALID) && (scsiHandle != 0))
+    if((scsiHandle != USB_HOST_SCSI_HANDLE_INVALID) && (scsiHandle != 0U))
     {
         /* Set the event handler and the context */
         scsiObj = (USB_HOST_SCSI_INSTANCE_OBJ *)(scsiHandle);
@@ -1562,7 +1588,7 @@ SYS_FS_MEDIA_GEOMETRY * USB_HOST_SCSI_MediaGeometryGet
 
 // ******************************************************************************
 /* Function:
-    void _USB_HOST_SCSI_DetachDetectTasks(int scsiObjIndex)
+    void F_USB_HOST_SCSI_DetachDetectTasks(int scsiObjIndex)
 
   Summary:
     This function is called periodically by the USB_HOST_SCSI_Tasks() function
@@ -1578,7 +1604,7 @@ SYS_FS_MEDIA_GEOMETRY * USB_HOST_SCSI_MediaGeometryGet
     None.
 */
 
-void _USB_HOST_SCSI_DetachDetectTasks(int scsiObjIndex)
+void F_USB_HOST_SCSI_DetachDetectTasks(int scsiObjIndex)
 {
     USB_HOST_SCSI_INSTANCE_OBJ * scsiObj;
     USB_HOST_MSD_RESULT result;
@@ -1597,7 +1623,7 @@ void _USB_HOST_SCSI_DetachDetectTasks(int scsiObjIndex)
             SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\n\r USB_HOST_SCSI_DETACH_TASK_STATE_TEST_UNIT_READY_SEND");
             /* In this state, the driver prepares and send the Test Unit
              * ready command */
-            _USB_HOST_SCSI_TestUnitReadyCommand(scsiObj->taskCommandObj.cdb);
+            F_USB_HOST_SCSI_TestUnitReadyCommand(scsiObj->taskCommandObj.cdb);
 
             /* Send the command. The commandCompleted flag will be update in
              * the event handler  */
@@ -1607,7 +1633,7 @@ void _USB_HOST_SCSI_DetachDetectTasks(int scsiObjIndex)
             result = USB_HOST_MSD_Transfer(scsiObj->lunHandle, 
                     scsiObj->taskCommandObj.cdb, 6, NULL, 0, 
                     USB_HOST_MSD_TRANSFER_DIRECTION_DEVICE_TO_HOST,
-                    _USB_HOST_SCSI_CommandCallback, (uintptr_t)(&scsiObj->taskCommandObj));
+                    F_USB_HOST_SCSI_CommandCallback, (uintptr_t)(&scsiObj->taskCommandObj));
 
             if(result == USB_HOST_MSD_RESULT_SUCCESS)
             {
@@ -1615,7 +1641,7 @@ void _USB_HOST_SCSI_DetachDetectTasks(int scsiObjIndex)
                  * request to complete */
 
                 scsiObj->detachTaskState = USB_HOST_SCSI_DETACH_TASK_STATE_TEST_UNIT_READY_WAIT;
-                _USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_IDLE_TEST_UNIT_READY);
+                M_USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_IDLE_TEST_UNIT_READY);
             }
             else if(result == USB_HOST_MSD_RESULT_BUSY)
             {
@@ -1623,7 +1649,10 @@ void _USB_HOST_SCSI_DetachDetectTasks(int scsiObjIndex)
                  * */
                 scsiObj->detachTaskState = USB_HOST_SCSI_DETACH_TASK_STATE_TEST_UNIT_READY_DELAY;
             }
-
+            else
+            {
+                /* Do Nothing */
+            }
 
             break;
 
@@ -1648,8 +1677,8 @@ void _USB_HOST_SCSI_DetachDetectTasks(int scsiObjIndex)
                 {
                     /* The test unit ready command failed. Increment the detach count */
                     scsiObj->isMediaReady = false;
-                    scsiObj->detachTimeOut += USB_HOST_SCSI_DETACH_TEST_UNIT_READY_INTERVAL;
-                    if(scsiObj->detachTimeOut >= USB_HOST_SCSI_DETACH_TIME_OUT)
+                    scsiObj->detachTimeOut += (uint32_t)USB_HOST_SCSI_DETACH_TEST_UNIT_READY_INTERVAL;
+                    if(scsiObj->detachTimeOut >= (uint32_t)USB_HOST_SCSI_DETACH_TIME_OUT)
                     {
                         /* This means that the media has most probably
                          * detached. Deregister the media from the file
@@ -1663,11 +1692,11 @@ void _USB_HOST_SCSI_DetachDetectTasks(int scsiObjIndex)
                             scsiObj->eventHandler((SYS_MEDIA_BLOCK_EVENT)USB_HOST_SCSI_EVENT_DETACH, USB_HOST_SCSI_COMMAND_HANDLE_INVALID, scsiObj->context);
                         }
                         
-                        _USB_HOST_SCSI_FILE_SYSTEM_DEREGISTER(scsiObj->fsHandle);
+                        M_USB_HOST_SCSI_FILE_SYSTEM_DEREGISTER(scsiObj->fsHandle);
                         scsiObj->fsHandle = SYS_FS_MEDIA_HANDLE_INVALID;
                         scsiObj->state = USB_HOST_SCSI_STATE_INQUIRY_RESPONSE;
                         scsiObj->detachTaskState = USB_HOST_SCSI_DETACH_TASK_STATE_IDLE;
-                        _USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_DETACH_TIME_OUT);
+                        M_USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_DETACH_TIME_OUT);
                     }
                     else
                     {
@@ -1691,7 +1720,7 @@ void _USB_HOST_SCSI_DetachDetectTasks(int scsiObjIndex)
             /* In this state we start a delay before launching the Test Unit
              * Ready command */
             scsiObj->timerExpired = false;
-            scsiObj->commandDelayHandle = SYS_TMR_CallbackSingle( USB_HOST_SCSI_DETACH_TEST_UNIT_READY_INTERVAL, (uintptr_t )scsiObj, _USB_HOST_SCSI_TimerCallback );
+            scsiObj->commandDelayHandle = SYS_TMR_CallbackSingle( USB_HOST_SCSI_DETACH_TEST_UNIT_READY_INTERVAL, (uintptr_t )scsiObj, F_USB_HOST_SCSI_TimerCallback );
             if (scsiObj->commandDelayHandle != SYS_TMR_HANDLE_INVALID)
             {
                 /* The delay has started. Now wait for the delay to complete
@@ -1724,9 +1753,14 @@ void _USB_HOST_SCSI_DetachDetectTasks(int scsiObjIndex)
             break;
 
         default:
+             /* Do Nothing */
             break;
     }
 }
+
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 20.7"
+/* MISRAC 2012 deviation block end */
 
 USB_HOST_MSD_LUN_HANDLE USB_HOST_SCSI_MSDLUNHandleGet(USB_HOST_SCSI_OBJ scsiObj)
 {
@@ -1783,12 +1817,12 @@ void USB_HOST_SCSI_TransferTasks(USB_HOST_MSD_LUN_HANDLE lunHandle)
         if(gUSBHostSCSIObj[iterator].inUse)
         {
             /* Run the task routine for all objects that are valid */
-            _USB_HOST_SCSI_TasksByIndex(iterator);
+            F_USB_HOST_SCSI_TasksByIndex(iterator);
         }
     }
 
     /* Find the SCSI object that own this LUN */
-    scsiObjIndex = _USB_HOST_SCSI_LUNHandleToSCSIInstance(lunHandle);
+    scsiObjIndex = F_USB_HOST_SCSI_LUNHandleToSCSIInstance(lunHandle);
 
     if(scsiObjIndex >= 0)
     {
@@ -1812,7 +1846,7 @@ void USB_HOST_SCSI_TransferTasks(USB_HOST_MSD_LUN_HANDLE lunHandle)
                  * by the client. This will be needed just in case we need to
                  * retry the command. */
 
-                _USB_HOST_SCSI_RequestSenseCommand(scsiObj->transferErrorCommandObj.cdb);
+                F_USB_HOST_SCSI_RequestSenseCommand(scsiObj->transferErrorCommandObj.cdb);
 
                 /* The commandCompleted flag will be updated in the callback.
                  * Update the state and send the command.   */
@@ -1823,7 +1857,7 @@ void USB_HOST_SCSI_TransferTasks(USB_HOST_MSD_LUN_HANDLE lunHandle)
                 result = USB_HOST_MSD_Transfer(scsiObj->lunHandle, 
                         scsiObj->transferErrorCommandObj.cdb, 0x6, scsiObj->buffer, 18 , 
                         USB_HOST_MSD_TRANSFER_DIRECTION_DEVICE_TO_HOST,
-                        _USB_HOST_SCSI_CommandCallback, (uintptr_t)(&scsiObj->transferErrorCommandObj));
+                        F_USB_HOST_SCSI_CommandCallback, (uintptr_t)(&scsiObj->transferErrorCommandObj));
 
                 if(result == USB_HOST_MSD_RESULT_SUCCESS)
                 {
@@ -1838,6 +1872,10 @@ void USB_HOST_SCSI_TransferTasks(USB_HOST_MSD_LUN_HANDLE lunHandle)
                        things that no amount of spinning and retrying will fix.  In this case
                        just set the callback and get out. */
                     doEventCallback = true;
+                }
+                else
+                {
+                    /* Do Nothing */
                 }
 
 
@@ -1855,7 +1893,7 @@ void USB_HOST_SCSI_TransferTasks(USB_HOST_MSD_LUN_HANDLE lunHandle)
                         /* Check the sense data */
                         requestSenseResponse = (SCSI_SENSE_DATA *)(scsiObj->buffer);
 
-                        if(requestSenseResponse->SenseKey == SCSI_SENSE_NOT_READY)
+                        if(requestSenseResponse->SenseKey == (uint8_t)SCSI_SENSE_NOT_READY)
                         {
                             /* This means the unit is not ready to serve the
                              * command. We have to send the Test Unit ready
@@ -1864,10 +1902,10 @@ void USB_HOST_SCSI_TransferTasks(USB_HOST_MSD_LUN_HANDLE lunHandle)
                             SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host SCSI: SCSI Instance %d Block command failed on Unit not ready.", scsiObjIndex);
                             SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host SCSI: SCSI Instance %d Testing if unit is ready.", scsiObjIndex);
                             scsiObj->transferTaskState = USB_HOST_SCSI_TRANSFER_STATE_TEST_UNIT_READY;
-                            _USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_READ_WRITE_TEST_UNIT_READY);
+                            M_USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_READ_WRITE_TEST_UNIT_READY);
                         }
-                        else if((requestSenseResponse->SenseKey == SCSI_SENSE_UNIT_ATTENTION) &&
-                                (requestSenseResponse->ASC == SCSI_ASC_MEDIUM_NOT_PRESENT))
+                        else if((requestSenseResponse->SenseKey == (uint8_t)SCSI_SENSE_UNIT_ATTENTION) &&
+                                (requestSenseResponse->ASC == (uint8_t)SCSI_ASC_MEDIUM_NOT_PRESENT))
                         {
                             /* This could probably mean that the medium was
                              * detached. We set the isMediaReady flag to false
@@ -1877,24 +1915,28 @@ void USB_HOST_SCSI_TransferTasks(USB_HOST_MSD_LUN_HANDLE lunHandle)
                              * failed. */
 
                             SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host SCSI: SCSI Instance %d Block command failed on Media not present.", scsiObjIndex);
-                            _USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_READ_WRITE_MEDIUM_NOT_PRESENT);
+                            M_USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_READ_WRITE_MEDIUM_NOT_PRESENT);
                             scsiObj->isMediaReady = false;
                             doEventCallback = true;
                         }
-                        else if(requestSenseResponse->SenseKey == SCSI_SENSE_MEDIUM_ERROR)
+                        else if(requestSenseResponse->SenseKey == (uint8_t)SCSI_SENSE_MEDIUM_ERROR)
                         {
                             /* This means there was an error on the medium */
                             SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host SCSI: SCSI Instance %d Block command failed on Media Error.", scsiObjIndex);
-                            _USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_READ_WRITE_MEDIUM_ERROR);
+                            M_USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_READ_WRITE_MEDIUM_ERROR);
                             scsiObj->isMediaError = true;
                             doEventCallback = true;
                         }
-                        else if(requestSenseResponse->ASCQ == SCSI_ASCQ_WRITE_PROTECTED)
+                        else if(requestSenseResponse->ASCQ == (uint8_t)SCSI_ASCQ_WRITE_PROTECTED)
                         {
                             /* This means the medium is Write protected */
                             SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Host SCSI: SCSI Instance %d Block command failed on Media Write Protect Error.", scsiObjIndex);
                             doEventCallback = true;
-                            _USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_MEDIA_WRITE_PROTECTED);
+                            M_USB_HOST_SCSI_ERROR_CALLBACK((uintptr_t)scsiObjIndex, USB_HOST_SCSI_ERROR_CODE_MEDIA_WRITE_PROTECTED);
+                        }
+                        else
+                        {
+                            /* Do Nothing */
                         }
                     }
 
@@ -1910,7 +1952,7 @@ void USB_HOST_SCSI_TransferTasks(USB_HOST_MSD_LUN_HANDLE lunHandle)
                  * this state we will periodically send the Test Unit ready
                  * command. */
 
-                _USB_HOST_SCSI_TestUnitReadyCommand(scsiObj->transferErrorCommandObj.cdb);
+                F_USB_HOST_SCSI_TestUnitReadyCommand(scsiObj->transferErrorCommandObj.cdb);
 
                 /* Send the command. The commandCompleted flag will be update in
                  * the event handler  */
@@ -1920,7 +1962,7 @@ void USB_HOST_SCSI_TransferTasks(USB_HOST_MSD_LUN_HANDLE lunHandle)
                 result = USB_HOST_MSD_Transfer(scsiObj->lunHandle, 
                         scsiObj->transferErrorCommandObj.cdb, 6, NULL, 0, 
                         USB_HOST_MSD_TRANSFER_DIRECTION_DEVICE_TO_HOST,
-                        _USB_HOST_SCSI_CommandCallback, (uintptr_t)(&scsiObj->transferErrorCommandObj));
+                        F_USB_HOST_SCSI_CommandCallback, (uintptr_t)(&scsiObj->transferErrorCommandObj));
 
                 if(result == USB_HOST_MSD_RESULT_SUCCESS)
                 {
@@ -1938,6 +1980,10 @@ void USB_HOST_SCSI_TransferTasks(USB_HOST_MSD_LUN_HANDLE lunHandle)
                      * bus. In such a case, we must stop the transfer. */
 
                     doEventCallback = true;
+                }
+                else
+                {
+                    /* Do Nothing */
                 }
 
 
@@ -1967,7 +2013,7 @@ void USB_HOST_SCSI_TransferTasks(USB_HOST_MSD_LUN_HANDLE lunHandle)
                          * exceeded the retry count, then we fail the transfer.
                          * */
 
-                        if(scsiObj->nCommandFailureTestUnitReadyAttempts >= USB_HOST_SCSI_COMMAND_FAILURE_TEST_UNIT_READY_NUMBER)
+                        if(scsiObj->nCommandFailureTestUnitReadyAttempts >= (uint32_t)USB_HOST_SCSI_COMMAND_FAILURE_TEST_UNIT_READY_NUMBER)
                         {
                             /* This means we have exceeded the re-try the count
                              * */
@@ -1993,7 +2039,7 @@ void USB_HOST_SCSI_TransferTasks(USB_HOST_MSD_LUN_HANDLE lunHandle)
 
                 result = USB_HOST_MSD_Transfer(scsiObj->lunHandle, 
                         scsiObj->commandObj.cdb, 0x0A, scsiObj->commandObj.buffer , (scsiObj->commandObj.nSectors << 9) /* The left shift multiplies by 512 */, 
-                        scsiObj->commandObj.direction, _USB_HOST_SCSI_BlockTransferCallback, (uintptr_t)(scsiObj));
+                        scsiObj->commandObj.direction, F_USB_HOST_SCSI_BlockTransferCallback, (uintptr_t)(scsiObj));
 
                 /* Update the transfer handle */
                 if(result == USB_HOST_MSD_RESULT_SUCCESS)
@@ -2016,10 +2062,15 @@ void USB_HOST_SCSI_TransferTasks(USB_HOST_MSD_LUN_HANDLE lunHandle)
                     doEventCallback = true;
 
                 }
+                else
+                {
+                    /* Do Nothing */
+                }
 
                 break;
 
             default:
+                 /* Do Nothing */
                 break;
         }
 
@@ -2044,6 +2095,10 @@ void USB_HOST_SCSI_TransferTasks(USB_HOST_MSD_LUN_HANDLE lunHandle)
     }
 }
 
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 // ****************************************************************************
 /* Function:
     USB_HOST_SCSI_RESULT USB_HOST_SCSI_AttachEventHandlerSet
