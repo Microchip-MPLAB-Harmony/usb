@@ -39,8 +39,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_USBDP_LOCAL_H
-#define _DRV_USBDP_LOCAL_H
+#ifndef DRV_USBDP_LOCAL_H
+#define DRV_USBDP_LOCAL_H
 
 
 // *****************************************************************************
@@ -77,13 +77,13 @@
  * This is an local macro used to mask the bit positions of direction of 
  * endpoints
  ******************************************************************************/
-#define DRV_USBDP_ENDPOINT_DIRECTION_MASK             (0x80)
+#define DRV_USBDP_ENDPOINT_DIRECTION_MASK             (0x80U)
 
 /*******************************************************************************
  * This is an local macro used to mask the bit positions of available endpoint 
  * numbers
  ******************************************************************************/
-#define DRV_USBDP_ENDPOINT_NUMBER_MASK                (0x0F)
+#define DRV_USBDP_ENDPOINT_NUMBER_MASK                (0x0FU)
 
 /*******************************************************************************
  * This is an intermediate flag that is set by the driver to indicate that a 
@@ -95,7 +95,7 @@
  * This is an intermediate flag that is set by the driver to indicate that a 
  * ZLP should be sent
  ******************************************************************************/
-#define USB_DEVICE_IRP_FLAG_SEND_ZLP                  0x80
+#define USB_DEVICE_IRP_FLAG_SEND_ZLP                  0x80U
 
 /*******************************************************************************
  * This is a macro needed while accessing UDP_CSR register to ensure modifying 
@@ -121,7 +121,7 @@
     regValue  = usbID->UDP_CSR[endpoint];                   \
     regValue |= (USBDP_REG_NO_EFFECT_1_ALL | (bits));       \
     usbID->UDP_CSR[endpoint] = regValue;                    \
-    while(nopCount++ < 20)                                  \
+    while(nopCount++ < 20U)                                  \
     {                                                       \
         __NOP();                                            \
     }                                                       \
@@ -141,7 +141,7 @@
     regValue |= USBDP_REG_NO_EFFECT_1_ALL;                  \
     regValue &= ~(bits);                                    \
     usbID->UDP_CSR[endpoint] = regValue;                    \
-    while(nopCount++ < 20)                                  \
+    while(nopCount++ < 20U)                                  \
     {                                                       \
         __NOP();                                            \
     }                                                       \
@@ -152,6 +152,13 @@
 // Section: Data Type Definitions
 // *****************************************************************************
 // *****************************************************************************
+/* MISRA C-2012 Rule 5.2 deviate:6, and Rule 8.6 deviate:1. 
+   Deviation record ID - H3_MISRAC_2012_R_5_2_DR_1, H3_MISRAC_2012_R_8_6_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:6 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )
 
 /*******************************************************************************
  * USB Device Endpoint Banks count. This data structures contains all 
@@ -178,7 +185,7 @@ DRV_USBDP_ENDPOINT_BANKS;
  * This object is used by the driver as IRP place holder along with queuing 
  * feature.
  ******************************************************************************/
-typedef struct _USB_DEVICE_IRP_LOCAL
+typedef struct S_USB_DEVICE_IRP_LOCAL
 {
     /* Pointer to the data buffer */
     void * data;
@@ -190,7 +197,7 @@ typedef struct _USB_DEVICE_IRP_LOCAL
     USB_DEVICE_IRP_STATUS status;
 
     /* IRP Callback. If this is NULL, then there is no callback generated */
-    void (*callback)(struct _USB_DEVICE_IRP * irp);
+    void (*callback)(struct S_USB_DEVICE_IRP * irp);
 
     /* Request specific flags */
     USB_DEVICE_IRP_FLAG flags;
@@ -199,10 +206,10 @@ typedef struct _USB_DEVICE_IRP_LOCAL
     uintptr_t userData;
 
     /* This points to the next IRP in the queue */
-    struct _USB_DEVICE_IRP_LOCAL * next;
+    struct S_USB_DEVICE_IRP_LOCAL * next;
 
     /* This points to the previous IRP in the queue */
-    struct _USB_DEVICE_IRP_LOCAL * previous;
+    struct S_USB_DEVICE_IRP_LOCAL * previous;
 
     /* Pending bytes in the IRP */
     uint32_t nPendingBytes;
@@ -288,7 +295,7 @@ typedef enum
  * Driver object structure. One object per hardware instance
  ******************************************************************************/
 
-typedef struct _DRV_USBDP_OBJ_STRUCT
+typedef struct S_DRV_USBDP_OBJ_STRUCT
 {
     /* Indicates this object is in use */
     bool inUse;
@@ -359,7 +366,27 @@ typedef struct _DRV_USBDP_OBJ_STRUCT
     #define SYS_DEBUG(a,b)
 #endif
 
-void _DRV_USBDP_Initialize(DRV_USBDP_OBJ * drvObj, SYS_MODULE_INDEX index);
-void _DRV_USBDP_Tasks_ISR(DRV_USBDP_OBJ * hDriver);
+void F_DRV_USBDP_Initialize(DRV_USBDP_OBJ * drvObj, SYS_MODULE_INDEX index);
+void F_DRV_USBDP_Tasks_ISR(DRV_USBDP_OBJ * hDriver);
+void DRV_USBDP_Deinitialize
+(
+    const SYS_MODULE_INDEX  drvIndex
+);
+void F_DRV_USBDP_IRPQueueFlush
+(
+    DRV_USBDP_ENDPOINT_OBJ * endpointObj,
+    USB_DEVICE_IRP_STATUS status
+);
+void F_DRV_USBDP_EndpointObjectEnable
+(
+    DRV_USBDP_ENDPOINT_OBJ * endpointObj,
+    uint16_t endpointSize,
+    USB_TRANSFER_TYPE endpointType
+);
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 
 #endif

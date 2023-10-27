@@ -40,8 +40,8 @@
  *******************************************************************************/
 //DOM-IGNORE-END
 
-#ifndef _DRV_USBDP_VARIANT_MAPPING_H
-#define _DRV_USBDP_VARIANT_MAPPING_H
+#ifndef DRV_USBDP_VARIANT_MAPPING_H
+#define DRV_USBDP_VARIANT_MAPPING_H
 
 
 // *****************************************************************************
@@ -70,9 +70,9 @@
  * Sets up driver mode-specific init routine
  * based on selected support.
  *********************************************/
-#define _DRV_USBDP_ISR(x)                 DRV_USBDP_Tasks_ISR(x)
-#define _DRV_USBDP_INIT(x, y)             _DRV_USBDP_Initialize(x , y)
-#define _DRV_USBDP_TASKS_ISR(x)           _DRV_USBDP_Tasks_ISR(x)
-#define _DRV_USBDP_FOR_DEVICE(x, y)       x y
+#define M_DRV_USBDP_ISR(x)                 DRV_USBDP_Tasks_ISR(x)
+#define M_DRV_USBDP_INIT(x, y)             F_DRV_USBDP_Initialize(x , y)
+#define M_DRV_USBDP_TASKS_ISR(x)           F_DRV_USBDP_Tasks_ISR(x)
+#define M_DRV_USBDP_FOR_DEVICE(x, y)       x y
 
 #endif
