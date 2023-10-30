@@ -44,11 +44,11 @@
 -->
 <#if (USB_DRV_EHCI_MENU)?has_content == true>
     <#if USB_DRV_OHCI_MENU == true>
-	
+    
 /*** USB EHCI Driver Configurations ***/
 
 /* Maximum USB driver instances */
-#define DRV_USB_EHCI_INSTANCES_NUMBER                     1
+#define DRV_USB_EHCI_INSTANCES_NUMBER                     1U
 
 /* Attach Debounce duration in milli Seconds */ 
 #define DRV_USB_EHCI_ATTACH_DEBOUNCE_DURATION           500
@@ -57,7 +57,7 @@
 #define DRV_USB_EHCI_RESET_DURATION                     100
 
 /* Maximum Control Transfer Size */
-#define DRV_USB_EHCI_CONTROL_TRANSFER_BUFFER_SIZE ${USB_DRV_HOST_EHCI_BUFFER_SIZE_CONTROL}
+#define DRV_USB_EHCI_CONTROL_TRANSFER_BUFFER_SIZE ${USB_DRV_HOST_EHCI_BUFFER_SIZE_CONTROL}U
 
 /* Maximum Non Control Transfer Size */ 
 #define DRV_USB_EHCI_TRANSFER_BUFFER_SIZE  ${USB_DRV_HOST_EHCI_BUFFER_SIZE}
@@ -66,16 +66,16 @@
 <#else>
 
 /* EHCI Driver is not used */  
-#define DRV_USB_EHCI_INSTANCES_NUMBER                     0
+#define DRV_USB_EHCI_INSTANCES_NUMBER                     0U
 </#if>
-	
+    
 
 
 <#if (USB_DRV_OHCI_MENU)?has_content == true>
-	<#if USB_DRV_OHCI_MENU == true>
+    <#if USB_DRV_OHCI_MENU == true>
 /*** USB OHCI Driver Configurations ***/
 
-#define DRV_USB_OHCI_INSTANCES_NUMBER                        1
+#define DRV_USB_OHCI_INSTANCES_NUMBER                        1U
 
 /* Attach Debounce duration in milli Seconds */ 
 #define DRV_USB_OHCI_ATTACH_DEBOUNCE_DURATION           500
@@ -84,10 +84,10 @@
 #define DRV_USB_OHCI_RESET_DURATION                     100
 
 /* Maximum Control Transfer Size */
-#define DRV_USB_OHCI_CONTROL_TRANSFER_BUFFER_SIZE ${USB_DRV_HOST_OHCI_BUFFER_SIZE_CONTROL}
+#define DRV_USB_OHCI_CONTROL_TRANSFER_BUFFER_SIZE ${USB_DRV_HOST_OHCI_BUFFER_SIZE_CONTROL}U
 
 /* Maximum Non Control Transfer Size */ 
-#define DRV_USB_OHCI_TRANSFER_BUFFER_SIZE  ${USB_DRV_HOST_OHCI_BUFFER_SIZE}
+#define DRV_USB_OHCI_TRANSFER_BUFFER_SIZE  ${USB_DRV_HOST_OHCI_BUFFER_SIZE}U
     </#if>
 </#if>
 

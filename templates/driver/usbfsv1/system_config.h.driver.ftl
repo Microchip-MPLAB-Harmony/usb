@@ -45,21 +45,21 @@
 /*** USB Driver Configuration ***/
 
 /* Maximum USB driver instances */
-#define DRV_USBFSV1_INSTANCES_NUMBER                        1
+#define DRV_USBFSV1_INSTANCES_NUMBER                        1U
 
 <#if (USB_OPERATION_MODE?has_content)
-	  && (USB_OPERATION_MODE == "Device")>
+      && (USB_OPERATION_MODE == "Device")>
 
 /* Enables Device Support */
 #define DRV_USBFSV1_DEVICE_SUPPORT                          true
-	
+    
 /* Disable Host Support */
 #define DRV_USBFSV1_HOST_SUPPORT                            false
 
 /* Enable usage of Dual Bank */
 #define DRV_USBFSV1_DUAL_BANK_ENABLE                        false
 <#elseif (USB_OPERATION_MODE?has_content)
-	  && (USB_OPERATION_MODE == "Host")>
+      && (USB_OPERATION_MODE == "Host")>
 
 /* Disable Device Support */
 #define DRV_USBFSV1_DEVICE_SUPPORT                          false
@@ -68,10 +68,10 @@
 #define DRV_USBFSV1_HOST_SUPPORT                            true
 
 /* Number of NAKs to wait before returning transfer failure */ 
-#define DRV_USBFSV1_HOST_NAK_LIMIT                          2000 
+#define DRV_USBFSV1_HOST_NAK_LIMIT                          2000U 
 
 /* Maximum Number of pipes */
-#define DRV_USBFSV1_HOST_PIPES_NUMBER                       ${usb_host.CONFIG_USB_HOST_PIPES_NUMBER}  
+#define DRV_USBFSV1_HOST_PIPES_NUMBER                       ${usb_host.CONFIG_USB_HOST_PIPES_NUMBER}U  
 
 /* Attach Debounce duration in milli Seconds */ 
 #define DRV_USBFSV1_HOST_ATTACH_DEBOUNCE_DURATION           ${USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION}

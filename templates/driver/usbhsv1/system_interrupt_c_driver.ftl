@@ -43,12 +43,12 @@
  *******************************************************************************/
 void USBHS_Handler(void)
 {
-	DRV_USBHSV1_Tasks_ISR(sysObj.usbDevObject0);
+    DRV_USBHSV1_Tasks_ISR(sysObj.usbDevObject0);
 }
-	
+    
 -->
 
-	
+    
 <#--
 /*******************************************************************************
  End of File

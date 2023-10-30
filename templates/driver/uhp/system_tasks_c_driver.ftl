@@ -53,7 +53,7 @@
 </#if>
 <#elseif HarmonyCore.SELECT_RTOS == "FreeRTOS">
     <#lt>    /* Create OS Thread for USB Driver Tasks. */
-    <#lt>    xTaskCreate( _DRV_USB_HOST_Tasks,
+    <#lt>    (void) xTaskCreate( F_DRV_USB_HOST_Tasks,
     <#lt>        "DRV_USB_HOST_TASKS",
     <#lt>        ${USB_DRIVER_RTOS_STACK_SIZE},
     <#lt>        (void*)NULL,

@@ -46,8 +46,8 @@
     /* USB FS Driver Task Routine */ 
     DRV_USBFSV1_Tasks(sysObj.drvUSBFSV1Object);
 <#elseif HarmonyCore.SELECT_RTOS == "FreeRTOS">
-	<#lt>	/* Create OS Thread for USB Driver Tasks. */
-    <#lt>    xTaskCreate( _DRV_USBFSV1_Tasks,
+    <#lt>    /* Create OS Thread for USB Driver Tasks. */
+    <#lt>    (void) xTaskCreate( F_DRV_USBFSV1_Tasks,
     <#lt>        "DRV_USBFSV1_TASKS",
     <#lt>        ${USB_DRIVER_RTOS_STACK_SIZE},
     <#lt>        (void*)NULL,

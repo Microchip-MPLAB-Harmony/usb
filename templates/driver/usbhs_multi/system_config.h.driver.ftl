@@ -43,7 +43,7 @@
  *******************************************************************************/
 -->
 /* Number High Speed USB Driver instances */ 
-#define DRV_USBHS_INSTANCES_NUMBER                       ${__INSTANCE_COUNT}
+#define DRV_USBHS_INSTANCES_NUMBER                       ${__INSTANCE_COUNT}U
 
 /* Interrupt mode enabled */
 #define DRV_USBHS_INTERRUPT_MODE                          true
@@ -65,7 +65,7 @@
 </#if>
 </#if>
 
-#define DRV_USBHS_ENDPOINTS_NUMBER                        ${drv_usb_endpoint_number + 1}
+#define DRV_USBHS_ENDPOINTS_NUMBER                        ${drv_usb_endpoint_number + 1}U
 
 <#if DRV_USBHS_MULTI_HOST_SUPPORT == true>
 /* Enable Host Support */

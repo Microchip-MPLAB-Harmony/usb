@@ -47,7 +47,7 @@
     DRV_USBHS_Tasks(sysObj.drvUSBHSObject${INDEX?string});
 <#elseif HarmonyCore.SELECT_RTOS == "FreeRTOS">
     <#lt>    /* Create OS Thread for USB Driver Tasks. */
-    <#lt>    xTaskCreate( _DRV_USBHS_Tasks${INDEX?string},
+    <#lt>    (void) xTaskCreate( F_DRV_USBHS_Tasks${INDEX?string},
     <#lt>        "DRV_USBHS_TASKS",
     <#lt>        ${USB_DRIVER_RTOS_STACK_SIZE},
     <#lt>        (void*)NULL,

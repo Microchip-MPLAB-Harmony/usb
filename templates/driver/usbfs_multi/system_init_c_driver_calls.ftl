@@ -42,8 +42,8 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
 -->
-	/* Initialize USB Driver */ 
-    sysObj.drvUSBFSObject${INDEX?string} = DRV_USBFS_Initialize(DRV_USBFS_INDEX_${INDEX?string}, (SYS_MODULE_INIT *) &drvUSBFSInit${INDEX?string});	
+    /* Initialize USB Driver */ 
+    sysObj.drvUSBFSObject${INDEX?string} = DRV_USBFS_Initialize(DRV_USBFS_INDEX_${INDEX?string}, (SYS_MODULE_INIT *) &drvUSBFSInit${INDEX?string});    
 <#--
 /*******************************************************************************
  End of File

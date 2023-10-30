@@ -45,7 +45,7 @@
 /*** USB Driver Configuration ***/
 
 /* Maximum USB driver instances */
-#define DRV_USBHS_INSTANCES_NUMBER                        1
+#define DRV_USBHS_INSTANCES_NUMBER                        1U
 
 /* Interrupt mode enabled */
 #define DRV_USBHS_INTERRUPT_MODE                          true
@@ -87,7 +87,7 @@
   && (USB_OPERATION_MODE == "Dual Role")>
   
 /* Enables Device Support */
-#define DRV_USBHS_DEVICE_SUPPORT                          true	
+#define DRV_USBHS_DEVICE_SUPPORT                          true    
 
 /* Enable Host Support */
 #define DRV_USBHS_HOST_SUPPORT                            true
@@ -117,7 +117,7 @@
             <#assign drv_usb_endpoint_number = usb_device_1.CONFIG_USB_DEVICE_ENDPOINTS_NUMBER>
         </#if>
     </#if>
-#define DRV_USBHS_ENDPOINTS_NUMBER                        ${drv_usb_endpoint_number + 1}
+#define DRV_USBHS_ENDPOINTS_NUMBER                        ${drv_usb_endpoint_number + 1}U
 </#if>
 
 /* Alignment for buffers that are submitted to USB Driver*/ 

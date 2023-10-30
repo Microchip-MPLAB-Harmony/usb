@@ -45,7 +45,7 @@
 /*** USB Driver Configuration ***/
 
 /* Maximum USB driver instances */
-#define DRV_USBDP_INSTANCES_NUMBER                        1
+#define DRV_USBDP_INSTANCES_NUMBER                        1U
 
 #ifndef USB_ALIGN
 #define USB_ALIGN __ALIGNED(4096)

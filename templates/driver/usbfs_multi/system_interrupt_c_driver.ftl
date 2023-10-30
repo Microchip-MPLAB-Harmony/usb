@@ -43,13 +43,13 @@
  *******************************************************************************/
 void USBFS_Handler(void)
 {
-	DRV_USBFS_Tasks_ISR(sysObj.drvUSBFSObject${INDEX?string});
-	
+    DRV_USBFS_Tasks_ISR(sysObj.drvUSBFSObject${INDEX?string});
+    
 }
-	
+    
 -->
 
-	
+    
 <#--
 /*******************************************************************************
  End of File

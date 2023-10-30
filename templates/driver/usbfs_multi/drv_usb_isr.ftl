@@ -48,16 +48,16 @@
 
   Summary:
     USBFS Peripheral ${DRV_USB_PLIB?keep_after_last("_")} Interrupt Handler 
-	
+    
   Description:
     USBFS Peripheral ${DRV_USB_PLIB?keep_after_last("_")} Interrupt Handler 
 
   Remarks:
-	None 
+    None 
 */
 
 void DRV_USBFS_USB${DRV_USB_PLIB?keep_after_last("_")}_Handler(void)
 {
-	DRV_USBFS_Tasks_ISR(sysObj.drvUSBFSObject${INDEX?string}); 
+    DRV_USBFS_Tasks_ISR(sysObj.drvUSBFSObject${INDEX?string}); 
 }
 

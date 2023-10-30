@@ -42,7 +42,7 @@
 /******************************************************
  * USB Driver Initialization
  ******************************************************/
-void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
+static void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
 {
     /* Note: USB Host applications should have a way for Enabling/Disabling the 
        VBUS. Applications can use a GPIO to turn VBUS on/off through a switch. 
@@ -108,7 +108,7 @@ void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
 
 <#if (USB_DRV_EHCI_MENU)?has_content == true>
     <#if USB_DRV_EHCI_MENU == true>
-DRV_USB_EHCI_INIT drvUSBEHCIInit =
+static DRV_USB_EHCI_INIT drvUSBEHCIInit =
 {
     /* Interrupt Source for USB module */
     .interruptSource = (INT_SOURCE)UHPHS_IRQn,
@@ -132,7 +132,7 @@ DRV_USB_EHCI_INIT drvUSBEHCIInit =
 
 <#if (USB_DRV_OHCI_MENU)?has_content == true>
     <#if USB_DRV_OHCI_MENU == true>
-DRV_USB_OHCI_INIT drvUSBOHCIInit =
+static DRV_USB_OHCI_INIT drvUSBOHCIInit =
 {
     /* Interrupt Source for USB module */
 <#if core.DeviceFamily == "SAM_G55">

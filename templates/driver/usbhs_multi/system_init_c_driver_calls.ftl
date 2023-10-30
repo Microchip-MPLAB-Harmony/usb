@@ -43,7 +43,7 @@
  *******************************************************************************/
 -->
     /* Initialize USB Driver */ 
-    sysObj.drvUSBHSObject${INDEX?string} = DRV_USBHS_Initialize(DRV_USBHS_INDEX_${INDEX?string}, (SYS_MODULE_INIT *) &drvUSBHSInit${INDEX?string});	
+    sysObj.drvUSBHSObject${INDEX?string} = DRV_USBHS_Initialize(DRV_USBHS_INDEX_${INDEX?string}, (SYS_MODULE_INIT *) &drvUSBHSInit${INDEX?string});    
 <#--
 /*******************************************************************************
  End of File

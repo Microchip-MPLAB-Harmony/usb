@@ -45,7 +45,7 @@
 /*** USB Driver Configuration ***/
 
 /* Maximum USB driver instances */
-#define DRV_USBFS_INSTANCES_NUMBER                        1
+#define DRV_USBFS_INSTANCES_NUMBER                        1U
 
 /* Interrupt mode enabled */
 #define DRV_USBFS_INTERRUPT_MODE                          true
@@ -70,16 +70,16 @@
 #define DRV_USBFS_HOST_SUPPORT                            true
 
 /* Number of NAKs to wait before returning transfer failure */ 
-#define DRV_USBFS_HOST_NAK_LIMIT                          2000 
+#define DRV_USBFS_HOST_NAK_LIMIT                          2000U 
 
 /* Maximum Number of pipes */
-#define DRV_USBFS_HOST_PIPES_NUMBER                       ${usb_host.CONFIG_USB_HOST_PIPES_NUMBER}  
+#define DRV_USBFS_HOST_PIPES_NUMBER                       ${usb_host.CONFIG_USB_HOST_PIPES_NUMBER}U 
 
 /* Attach Debounce duration in milli Seconds */ 
-#define DRV_USBFS_HOST_ATTACH_DEBOUNCE_DURATION           ${USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION}
+#define DRV_USBFS_HOST_ATTACH_DEBOUNCE_DURATION           ${USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION}U
 
 /* Reset duration in milli Seconds */ 
-#define DRV_USBFS_HOST_RESET_DURATION                     ${USB_DRV_HOST_RESET_DUARTION}
+#define DRV_USBFS_HOST_RESET_DURATION                     ${USB_DRV_HOST_RESET_DUARTION}U
 
 </#if>
 

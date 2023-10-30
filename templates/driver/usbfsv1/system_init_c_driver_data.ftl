@@ -68,7 +68,7 @@ static DRV_USB_VBUS_LEVEL DRV_USBFSV1_VBUS_Comparator(void)
     DRV_USB_VBUS_LEVEL retVal = DRV_USB_VBUS_LEVEL_INVALID;
     
     <#if USB_DEVICE_VBUS_SENSE_PIN_NAME?has_content >
-    if(true == ${USB_DEVICE_VBUS_SENSE_PIN_NAME}_Get())
+    if(1U == ${USB_DEVICE_VBUS_SENSE_PIN_NAME}_Get())
     {
         retVal = DRV_USB_VBUS_LEVEL_VALID;
     }
@@ -80,7 +80,7 @@ static DRV_USB_VBUS_LEVEL DRV_USBFSV1_VBUS_Comparator(void)
 
 <#if (USB_OPERATION_MODE == "Host") && (USB_HOST_VBUS_ENABLE == true)>
 
-void _DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
+static void F_DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
 {
     /* Note: When operating in Host mode, the application can specify a Root 
        hub port enable function. The USB Host Controller driver initialize data 
@@ -106,9 +106,9 @@ void _DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
 }
 </#if>
 <#if (__PROCESSOR?matches("PIC32CK.*") == true)>
-const DRV_USBFSV1_INIT drvUSBFSInit =
+static const DRV_USBFSV1_INIT drvUSBFSInit =
 <#else>
-const DRV_USBFSV1_INIT drvUSBInit =
+static const DRV_USBFSV1_INIT drvUSBInit =
 </#if>
 {
     <#if (__PROCESSOR?matches("ATSAME5.*") == true) || (__PROCESSOR?matches("ATSAMD5.*") == true) || (__PROCESSOR?matches("PIC32CX.*") == true)
@@ -169,7 +169,7 @@ const DRV_USBFSV1_INIT drvUSBInit =
        
 <#if (USB_HOST_VBUS_ENABLE == true)> 
     /* USB Host Power Enable. USB Driver uses this function to Enable the VBUS */ 
-    .portPowerEnable = _DRV_USB_VBUSPowerEnable,
+    .portPowerEnable = F_DRV_USB_VBUSPowerEnable,
 
 <#else>
     /* USB Host Power Enable */ 

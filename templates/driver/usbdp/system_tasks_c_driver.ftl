@@ -43,11 +43,11 @@
  *******************************************************************************/
 -->
 <#if HarmonyCore.SELECT_RTOS == "BareMetal">
-	/* USB UDP Driver Task Routine */ 
+    /* USB UDP Driver Task Routine */ 
     DRV_USBDP_Tasks(sysObj.drvUSBDPObject);
 <#elseif HarmonyCore.SELECT_RTOS == "FreeRTOS">
-	<#lt>	/* Create OS Thread for USB Driver Tasks. */
-    <#lt>    xTaskCreate( _DRV_USBDP_Tasks,
+    <#lt>    /* Create OS Thread for USB Driver Tasks. */
+    <#lt>    (void) xTaskCreate( F_DRV_USBDP_Tasks,
     <#lt>        "DRV_USBDP_TASKS",
     <#lt>        ${USB_DRIVER_RTOS_STACK_SIZE},
     <#lt>        (void*)NULL,

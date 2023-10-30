@@ -22,7 +22,7 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
  -->
-	SYS_MODULE_OBJ  drvUSBHSV1Object;
+    SYS_MODULE_OBJ  drvUSBHSV1Object;
 <#--
 /*******************************************************************************
  End of File

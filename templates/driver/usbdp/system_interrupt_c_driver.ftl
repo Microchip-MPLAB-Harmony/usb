@@ -43,12 +43,12 @@
  *******************************************************************************/
 void USBHS_Handler(void)
 {
-	DRV_USBDP_Tasks_ISR(sysObj.drvUSBDPObject);
+    DRV_USBDP_Tasks_ISR(sysObj.drvUSBDPObject);
 }
-	
+    
 -->
 
-	
+    
 <#--
 /*******************************************************************************
  End of File

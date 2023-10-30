@@ -47,21 +47,21 @@
 static DRV_USB_VBUS_LEVEL DRV_USBDP_VBUS_Comparator(void)
 {
     DRV_USB_VBUS_LEVEL retVal = DRV_USB_VBUS_LEVEL_INVALID;
-	<#if USB_DEVICE_VBUS_SENSE_PIN_NAME?has_content >
-    if(true == ${USB_DEVICE_VBUS_SENSE_PIN_NAME}_Get())
+    <#if USB_DEVICE_VBUS_SENSE_PIN_NAME?has_content >
+    if(1U == ${USB_DEVICE_VBUS_SENSE_PIN_NAME}_Get())
     {
         retVal = DRV_USB_VBUS_LEVEL_VALID;
     }
-	</#if>
-	return (retVal);
+    </#if>
+    return (retVal);
 
 }
 </#if>
 
-const DRV_USBDP_INIT drvUSBInit =
+static const DRV_USBDP_INIT drvUSBInit =
 {
     /* Interrupt Source for USB module */
-    .interruptSource = UDP_IRQn,
+    .interruptSource = (INT_SOURCE)UDP_IRQn,
 
     /* System module initialization */
     .moduleInit = {0},
@@ -70,17 +70,17 @@ const DRV_USBDP_INIT drvUSBInit =
 <#if (USB_SPEED == "High Speed")>
     .operationSpeed = USB_SPEED_HIGH,
 <#elseif (USB_SPEED == "Full Speed")>
-	.operationSpeed = USB_SPEED_FULL,
+    .operationSpeed = USB_SPEED_FULL,
 </#if>    
 
     /* Identifies peripheral (PLIB-level) ID */
     .usbID = UDP_REGS,
-	
+    
 <#if (USB_DEVICE_VBUS_SENSE == true)>     
     /* Function to check for VBus */
     .vbusComparator = DRV_USBDP_VBUS_Comparator
 <#else>
-	/* Function to check for VBus */
+    /* Function to check for VBus */
     .vbusComparator = NULL
 </#if>
 };

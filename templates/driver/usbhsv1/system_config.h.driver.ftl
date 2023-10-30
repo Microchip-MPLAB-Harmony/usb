@@ -45,7 +45,7 @@
 /*** USB Driver Configuration ***/
 
 /* Maximum USB driver instances */
-#define DRV_USBHSV1_INSTANCES_NUMBER                        1
+#define DRV_USBHSV1_INSTANCES_NUMBER                        1U
 
 /* Interrupt mode enabled */
 #define DRV_USBHSV1_INTERRUPT_MODE                          true
@@ -53,13 +53,13 @@
 <#if (USB_OPERATION_MODE?has_content) && (USB_OPERATION_MODE == "Device")>
 /* Enables Device Support */
 #define DRV_USBHSV1_DEVICE_SUPPORT                          true
-	
+    
 /* Disable Host Support */
 #define DRV_USBHSV1_HOST_SUPPORT                            false
 <#elseif (USB_OPERATION_MODE?has_content) && (USB_OPERATION_MODE == "Host")>
 /* Disable Device Support */
 #define DRV_USBHSV1_DEVICE_SUPPORT                          false
-	
+    
 /* Enable Host Support */
 #define DRV_USBHSV1_HOST_SUPPORT                            true
 

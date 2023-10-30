@@ -43,14 +43,14 @@
  *******************************************************************************/
 -->
 <#if HarmonyCore.SELECT_RTOS == "FreeRTOS">
-    <#lt>void _DRV_USBHS_Tasks(  void *pvParameters  )
+    <#lt>static void F_DRV_USBHS_Tasks(  void *pvParameters  )
     <#lt>{
-    <#lt>    while(1)
+    <#lt>    while(true)
     <#lt>    {
-				 /* USB FS Driver Task Routine */
+                 /* USB FS Driver Task Routine */
     <#lt>        DRV_USBHS_Tasks(sysObj.drvUSBHSObject);
              <#if USB_DRIVER_RTOS_USE_DELAY >
-    <#lt>        vTaskDelay(${USB_DRIVER_RTOS_DELAY} / portTICK_PERIOD_MS);
+    <#lt>        vTaskDelay(${USB_DRIVER_RTOS_DELAY}U / portTICK_PERIOD_MS);
              </#if>
     <#lt>    }
     <#lt>}

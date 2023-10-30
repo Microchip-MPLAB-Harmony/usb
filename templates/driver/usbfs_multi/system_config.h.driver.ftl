@@ -43,7 +43,7 @@
  *******************************************************************************/
 -->
 /* Number Full Speed USB Driver instances */ 
-#define DRV_USBFS_INSTANCES_NUMBER                       ${__INSTANCE_COUNT}
+#define DRV_USBFS_INSTANCES_NUMBER                       ${__INSTANCE_COUNT}U
 
 /* Interrupt mode enabled */
 #define DRV_USBFS_INTERRUPT_MODE                          true
@@ -65,7 +65,7 @@
 </#if>
 </#if>
 
-#define DRV_USBFS_ENDPOINTS_NUMBER                        ${drv_usb_endpoint_number + 1}
+#define DRV_USBFS_ENDPOINTS_NUMBER                        ${drv_usb_endpoint_number + 1}U
 
 <#if DRV_USBFS_MULTI_HOST_SUPPORT == true>
 /* Enable Host Support */
@@ -78,10 +78,10 @@
 #define DRV_USBFS_HOST_PIPES_NUMBER                       ${usb_host.CONFIG_USB_HOST_PIPES_NUMBER}  
 
 /* Attach Debounce duration in milli Seconds */ 
-#define DRV_USBFS_HOST_ATTACH_DEBOUNCE_DURATION           ${USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION}
+#define DRV_USBFS_HOST_ATTACH_DEBOUNCE_DURATION           ${USB_DRV_HOST_ATTACH_DEBOUNCE_DURATION}U
 
 /* Reset duration in milli Seconds */ 
-#define DRV_USBFS_HOST_RESET_DURATION                     ${USB_DRV_HOST_RESET_DUARTION}
+#define DRV_USBFS_HOST_RESET_DURATION                     ${USB_DRV_HOST_RESET_DUARTION}U
 <#else>
 /* Disable Host Support */
 #define DRV_USBFS_HOST_SUPPORT                            false
