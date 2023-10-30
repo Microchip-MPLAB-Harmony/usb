@@ -42,10 +42,10 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
 -->
-#define USB_DEVICE_INSTANCES_NUMBER                         ${__INSTANCE_COUNT}
+#define USB_DEVICE_INSTANCES_NUMBER                         ${__INSTANCE_COUNT}U
 
 /* EP0 size in bytes */
-#define USB_DEVICE_EP0_BUFFER_SIZE                          ${CONFIG_USB_DEVICE_EP0_BUFFER_SIZE}
+#define USB_DEVICE_EP0_BUFFER_SIZE                          ${CONFIG_USB_DEVICE_EP0_BUFFER_SIZE}U
 
 /* The USB Device Layer will not initialize the USB Driver */
 #define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT

@@ -42,13 +42,30 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
 -->
-const USB_DEVICE_PRINTER_INIT printerInit0 =
+/* MISRA C-2012 Rule 10.3 deviated:20 Deviation record ID -  H3_MISRAC_2012_R_10_3_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:20 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1"    
+</#if>
+
+static const USB_DEVICE_PRINTER_INIT printerInit0 =
 {
   .queueSizeRead    = ${CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE},
   .queueSizeWrite   = ${CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE},
   .length           = USB_DEVICE_PRINTER_DEVICE_ID_STRING_LENGTH,
   .deviceID_String  = USB_DEVICE_PRINTER_DEVICE_ID_STRING
 };
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 <#--
 /*******************************************************************************
  End of File

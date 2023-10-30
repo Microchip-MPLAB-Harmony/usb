@@ -44,10 +44,23 @@
  *******************************************************************************/
 // DOM-IGNORE-END
 -->
+
+/* MISRA C-2012 Rule 10.3, 11.1 and 11.8 deviated below. Deviation record ID -  
+   H3_MISRAC_2012_R_10_3_DR_1, H3_MISRAC_2012_R_11_1_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block \
+(deviate:43 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1" )\
+(deviate:5 "MISRA C-2012 Rule 11.1" "H3_MISRAC_2012_R_11_1_DR_1" )\
+(deviate:5 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+</#if>
 /***********************************************
  * Sector buffer needed by for the MSD LUN.
  ***********************************************/
-uint8_t sectorBuffer[512 * USB_DEVICE_MSD_NUM_SECTOR_BUFFERS] USB_ALIGN;
+static uint8_t sectorBuffer[512 * USB_DEVICE_MSD_NUM_SECTOR_BUFFERS] USB_ALIGN;
 
 /***********************************************
  * CBW and CSW structure needed by for the MSD
@@ -62,11 +75,11 @@ uint8_t sectorBuffer[512 * USB_DEVICE_MSD_NUM_SECTOR_BUFFERS] USB_ALIGN;
 </#if>
 </#list>
 <#if flag == true>
-uint8_t msdCBW${CONFIG_USB_DEVICE_FUNCTION_INDEX}[64] USB_ALIGN; 
+static uint8_t msdCBW${CONFIG_USB_DEVICE_FUNCTION_INDEX}[64] USB_ALIGN; 
 <#else>
-uint8_t msdCBW${CONFIG_USB_DEVICE_FUNCTION_INDEX}[512] USB_ALIGN;
+static uint8_t msdCBW${CONFIG_USB_DEVICE_FUNCTION_INDEX}[512] USB_ALIGN;
 </#if>
-USB_MSD_CSW msdCSW${CONFIG_USB_DEVICE_FUNCTION_INDEX} USB_ALIGN;
+static USB_MSD_CSW msdCSW${CONFIG_USB_DEVICE_FUNCTION_INDEX} USB_ALIGN;
 <#assign ROW_BUFFER_ENABLE = false>
 <#if (__PROCESSOR?contains("PIC32MZ") == true) || (__PROCESSOR?contains("PIC32CZ") == true) || (__PROCESSOR?contains("PIC32CK") == true)>
     <#list 0..4 as i>
@@ -85,7 +98,7 @@ USB_MSD_CSW msdCSW${CONFIG_USB_DEVICE_FUNCTION_INDEX} USB_ALIGN;
  * The USB Device MSD function driver will use this buffer to cache the data 
  * received from the USB Host before sending it to the media. 
  ****************************************************************************/
-uint8_t flashRowBackupBuffer [DRV_MEMORY_DEVICE_PROGRAM_SIZE] USB_ALIGN;
+static uint8_t flashRowBackupBuffer [DRV_MEMORY_DEVICE_PROGRAM_SIZE] USB_ALIGN;
     </#if>
 </#if>
 
@@ -93,7 +106,7 @@ uint8_t flashRowBackupBuffer [DRV_MEMORY_DEVICE_PROGRAM_SIZE] USB_ALIGN;
 /*******************************************
  * MSD Function Driver initialization
  *******************************************/
-USB_DEVICE_MSD_MEDIA_INIT_DATA USB_ALIGN  msdMediaInit${CONFIG_USB_DEVICE_FUNCTION_INDEX}[${CONFIG_USB_DEVICE_FUNCTION_MSD_LUN}] =
+static USB_DEVICE_MSD_MEDIA_INIT_DATA USB_ALIGN  msdMediaInit${CONFIG_USB_DEVICE_FUNCTION_INDEX}[${CONFIG_USB_DEVICE_FUNCTION_MSD_LUN}] =
 {
     <#list 0..4 as i>
         <#assign MSD_ENABLE = "CONFIG_USB_DEVICE_FUNCTION_MSD_LUN_IDX" + i>
@@ -179,13 +192,23 @@ USB_DEVICE_MSD_MEDIA_INIT_DATA USB_ALIGN  msdMediaInit${CONFIG_USB_DEVICE_FUNCTI
 /**************************************************
  * USB Device Function Driver Init Data
  **************************************************/
-const USB_DEVICE_MSD_INIT msdInit${CONFIG_USB_DEVICE_FUNCTION_INDEX} =
+static const USB_DEVICE_MSD_INIT msdInit${CONFIG_USB_DEVICE_FUNCTION_INDEX} =
 {
     .numberOfLogicalUnits = ${CONFIG_USB_DEVICE_FUNCTION_MSD_LUN},
     .msdCBW = (USB_MSD_CBW*)&msdCBW${CONFIG_USB_DEVICE_FUNCTION_INDEX},
     .msdCSW = &msdCSW${CONFIG_USB_DEVICE_FUNCTION_INDEX},
     .mediaInit = &msdMediaInit${CONFIG_USB_DEVICE_FUNCTION_INDEX}[0]
 };
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>     
+</#if> 
+/* MISRAC 2012 deviation block end */
 <#--
 /*******************************************************************************
  End of File

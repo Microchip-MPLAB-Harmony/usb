@@ -43,18 +43,18 @@
  *******************************************************************************/
 -->
 
-	/* Audio Function ${CONFIG_USB_DEVICE_FUNCTION_INDEX} */
+    /* Audio Function ${CONFIG_USB_DEVICE_FUNCTION_INDEX} */
     { 
         .configurationValue = ${CONFIG_USB_DEVICE_FUNCTION_CONFIG_VALUE},    /* Configuration value */ 
         .interfaceNumber = ${CONFIG_USB_DEVICE_FUNCTION_INTERFACE_NUMBER},       /* First interfaceNumber of this function */ 
         .speed = USB_SPEED_HIGH|USB_SPEED_FULL,    /* Function Speed */ 
         .numberOfInterfaces = ${CONFIG_USB_DEVICE_FUNCTION_NUMBER_OF_INTERFACES},    /* Number of interfaces */
         .funcDriverIndex = ${CONFIG_USB_DEVICE_FUNCTION_INDEX},  /* Index of Audio Function Driver */
-		<#if CONFIG_USB_DEVICE_FUNCTION_AUDIO_VERSION == "Audio v1">
+        <#if CONFIG_USB_DEVICE_FUNCTION_AUDIO_VERSION == "Audio v1">
         .driver = (void*)USB_DEVICE_AUDIO_FUNCTION_DRIVER,    /* USB Audio function data exposed to device layer */
-		<#elseif CONFIG_USB_DEVICE_FUNCTION_AUDIO_VERSION == "Audio v2">
-		.driver = (void*)USB_DEVICE_AUDIO_V2_FUNCTION_DRIVER,    /* USB Audio function data exposed to device layer */
-		</#if>
+        <#elseif CONFIG_USB_DEVICE_FUNCTION_AUDIO_VERSION == "Audio v2">
+        .driver = (void*)USB_DEVICE_AUDIO_V2_FUNCTION_DRIVER,    /* USB Audio function data exposed to device layer */
+        </#if>
         .funcDriverInit = (void*)&audioInit${CONFIG_USB_DEVICE_FUNCTION_INDEX}    /* Function driver init data */
     },
 <#--

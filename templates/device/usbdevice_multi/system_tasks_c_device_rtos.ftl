@@ -43,14 +43,14 @@
  *******************************************************************************/
 -->
 <#if HarmonyCore.SELECT_RTOS == "FreeRTOS">
-    <#lt>void _USB_DEVICE_Tasks_${INDEX?string}(  void *pvParameters  )
+    <#lt>static void F_USB_DEVICE_Tasks_${INDEX?string}(  void *pvParameters  )
     <#lt>{
-    <#lt>    while(1)
+    <#lt>    while(true)
     <#lt>    {
                  /* USB Device layer tasks routine */
     <#lt>        USB_DEVICE_Tasks(sysObj.usbDevObject${INDEX?string});
             <#if USB_DEVICE_RTOS_USE_DELAY >
-    <#lt>        vTaskDelay(${USB_DEVICE_RTOS_DELAY} / portTICK_PERIOD_MS);
+    <#lt>        vTaskDelay(${USB_DEVICE_RTOS_DELAY}U / portTICK_PERIOD_MS);
             </#if>
     <#lt>    }
     <#lt>}

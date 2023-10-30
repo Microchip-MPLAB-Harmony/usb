@@ -42,7 +42,7 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
 -->
-	/* Descriptor for Function 1 - MSD     */ 
+    /* Descriptor for Function 1 - MSD     */ 
     
     /* Interface Descriptor */
 
@@ -61,7 +61,7 @@
     7,                          // Size of this descriptor in bytes
     USB_DESCRIPTOR_ENDPOINT,    // Endpoint Descriptor
     ${CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER}  | USB_EP_DIRECTION_IN,    // EndpointAddress ( EP1 IN )
-    USB_TRANSFER_TYPE_BULK,     // Attributes type of EP (BULK)
+    (uint8_t)USB_TRANSFER_TYPE_BULK,     // Attributes type of EP (BULK)
     0x40,0x00,                  // Max packet size of this EP
     0x00,                       // Interval (in ms)
 
@@ -69,7 +69,7 @@
     7,                          // Size of this descriptor in bytes
     USB_DESCRIPTOR_ENDPOINT,    // Endpoint Descriptor
     ${CONFIG_USB_DEVICE_FUNCTION_BULK_OUT_ENDPOINT_NUMBER}  | USB_EP_DIRECTION_OUT,   // EndpointAddress ( EP2 OUT )
-    USB_TRANSFER_TYPE_BULK,     // Attributes type of EP (BULK)
+    (uint8_t)USB_TRANSFER_TYPE_BULK,     // Attributes type of EP (BULK)
     0x40,0x00,                  // Max packet size of this EP
     0x00,                       // Interval (in ms)
 <#--

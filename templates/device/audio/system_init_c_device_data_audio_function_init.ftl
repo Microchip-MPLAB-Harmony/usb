@@ -43,16 +43,16 @@
  *******************************************************************************/
 -->
 <#if CONFIG_USB_DEVICE_FUNCTION_AUDIO_VERSION == "Audio v1">
-const USB_DEVICE_AUDIO_INIT audioInit${CONFIG_USB_DEVICE_FUNCTION_INDEX} =
+static const USB_DEVICE_AUDIO_INIT audioInit${CONFIG_USB_DEVICE_FUNCTION_INDEX} =
 {
-	.queueSizeRead = ${CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE},
-	.queueSizeWrite = ${CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE}
+    .queueSizeRead = ${CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE},
+    .queueSizeWrite = ${CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE}
 };
 <#elseif CONFIG_USB_DEVICE_FUNCTION_AUDIO_VERSION == "Audio v2">
 const USB_DEVICE_AUDIO_V2_INIT audioInit${CONFIG_USB_DEVICE_FUNCTION_INDEX} =
 {
-	.queueSizeRead = ${CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE},
-	.queueSizeWrite = ${CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE}
+    .queueSizeRead = ${CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE},
+    .queueSizeWrite = ${CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE}
 };
 </#if>
 <#--

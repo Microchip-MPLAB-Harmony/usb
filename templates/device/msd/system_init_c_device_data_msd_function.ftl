@@ -45,7 +45,7 @@
  // DOM-IGNORE-END
 -->
 
-	/* MSD Function ${CONFIG_USB_DEVICE_FUNCTION_INDEX} */
+    /* MSD Function ${CONFIG_USB_DEVICE_FUNCTION_INDEX} */
     { 
         .configurationValue = ${CONFIG_USB_DEVICE_FUNCTION_CONFIG_VALUE},    /* Configuration value */ 
         .interfaceNumber = ${CONFIG_USB_DEVICE_FUNCTION_INTERFACE_NUMBER},       /* First interfaceNumber of this function */ 

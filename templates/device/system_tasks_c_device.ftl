@@ -47,7 +47,7 @@
     USB_DEVICE_Tasks(sysObj.usbDevObject0);
 <#elseif HarmonyCore.SELECT_RTOS == "FreeRTOS">
     <#lt>    /* Create OS Thread for USB_DEVICE_Tasks. */
-    <#lt>    xTaskCreate( _USB_DEVICE_Tasks,
+    <#lt>    (void) xTaskCreate( F_USB_DEVICE_Tasks,
     <#lt>        "USB_DEVICE_TASKS",
     <#lt>        ${USB_DEVICE_RTOS_STACK_SIZE},
     <#lt>        (void*)NULL,

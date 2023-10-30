@@ -43,7 +43,7 @@
  *******************************************************************************/
 -->
 
-	/* Interface Descriptor */
+    /* Interface Descriptor */
 
     0x09,                               // Size of this descriptor in bytes
     USB_DESCRIPTOR_INTERFACE,           // Descriptor Type is Interface descriptor
@@ -51,18 +51,18 @@
     0x00,                                  // Alternate Setting Number
     0x02,                                  // Number of endpoints in this interface
     USB_HID_CLASS_CODE,                 // Class code
-    USB_HID_SUBCLASS_CODE_NO_SUBCLASS , // Subclass code
-    USB_HID_PROTOCOL_CODE_NONE,         // No Protocol
+    (uint8_t)USB_HID_SUBCLASS_CODE_NO_SUBCLASS , // Subclass code
+    (uint8_t)USB_HID_PROTOCOL_CODE_NONE,         // No Protocol
     0x00,                                  // Interface string index
 
     /* HID Class-Specific Descriptor */
 
     0x09,                           // Size of this descriptor in bytes
-    USB_HID_DESCRIPTOR_TYPES_HID,   // HID descriptor type
+    (uint8_t)USB_HID_DESCRIPTOR_TYPES_HID,   // HID descriptor type
     0x11,0x01,                      // HID Spec Release Number in BCD format (1.11)
     0x00,                           // Country Code (0x00 for Not supported)
     1,                              // Number of class descriptors
-    USB_HID_DESCRIPTOR_TYPES_REPORT,// Report descriptor type
+    (uint8_t)USB_HID_DESCRIPTOR_TYPES_REPORT,// Report descriptor type
     USB_DEVICE_16bitTo8bitArrange(sizeof(hid_rpt${CONFIG_USB_DEVICE_FUNCTION_INDEX})),   // Size of the report descriptor
 
     /* Endpoint Descriptor */
@@ -70,7 +70,7 @@
     0x07,                           // Size of this descriptor in bytes
     USB_DESCRIPTOR_ENDPOINT,        // Endpoint Descriptor
     ${CONFIG_USB_DEVICE_FUNCTION_INT_IN_ENDPOINT_NUMBER} | USB_EP_DIRECTION_IN,    // EndpointAddress ( EP${CONFIG_USB_DEVICE_FUNCTION_INT_IN_ENDPOINT_NUMBER} IN )
-    USB_TRANSFER_TYPE_INTERRUPT,    // Attributes
+    (uint8_t)USB_TRANSFER_TYPE_INTERRUPT,    // Attributes
     0x40,0x00,                      // Size
     0x01,                           // Interval
 
@@ -79,7 +79,7 @@
     0x07,                           // Size of this descriptor in bytes
     USB_DESCRIPTOR_ENDPOINT,        // Endpoint Descriptor
     ${CONFIG_USB_DEVICE_FUNCTION_INT_OUT_ENDPOINT_NUMBER} | USB_EP_DIRECTION_OUT,   // EndpointAddress ( EP${CONFIG_USB_DEVICE_FUNCTION_INT_OUT_ENDPOINT_NUMBER} OUT )
-    USB_TRANSFER_TYPE_INTERRUPT,    // Attributes
+    (uint8_t)USB_TRANSFER_TYPE_INTERRUPT,    // Attributes
     0x40,0x00,                      // size
     0x01,                           // Interval
     

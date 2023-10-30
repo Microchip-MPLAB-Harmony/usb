@@ -78,11 +78,28 @@ ${LIST_USB_DEVICE_FUNCTION_INIT_ENTRY}
  * USB Device Layer Function Driver Registration
  * Table
  **************************************************/
-const USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[${CONFIG_USB_DEVICE_FUNCTIONS_NUMBER}] =
+/* MISRA C-2012 Rule 10.3 deviated:2, 11.8 deviated:6 deviated below. Deviation record ID -  
+   H3_MISRAC_2012_R_10_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block \
+(deviate:1 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+</#if>
+static const USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[${CONFIG_USB_DEVICE_FUNCTIONS_NUMBER}] =
 {
     ${LIST_USB_DEVICE_FUNCTION_ENTRY}
 };
-
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 /*******************************************
  * USB Device Layer Descriptors
  *******************************************/
@@ -90,13 +107,13 @@ const USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[${CONFIG_USB_
  *  USB Device Descriptor
  *******************************************/
 <#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) >
-USB_DEVICE_DESCRIPTOR USB_ALIGN deviceDescriptor =
+static USB_DEVICE_DESCRIPTOR USB_ALIGN usbDeviceDescriptor =
 <#else>
-const USB_DEVICE_DESCRIPTOR deviceDescriptor =
+static const USB_DEVICE_DESCRIPTOR usbDeviceDescriptor =
 </#if>
 {
     0x12,                                                   // Size of this descriptor in bytes
-    USB_DESCRIPTOR_DEVICE,                                  // DEVICE descriptor type
+    (uint8_t)USB_DESCRIPTOR_DEVICE,                                  // DEVICE descriptor type
     0x0200,                                                 // USB Spec Release Number in BCD format
 <#if CONFIG_USB_DEVICE_DESCRIPTOR_IAD_ENABLE == true>
     0xEF,                                                   // Class Code
@@ -128,7 +145,7 @@ ${LIST_USB_DEVICE_DESCRIPTOR_CLASS_CODE_ENTRY}
  *  USB Device Qualifier Descriptor for this
  *  demo.
  *******************************************/
-const USB_DEVICE_QUALIFIER deviceQualifierDescriptor1 =
+static const USB_DEVICE_QUALIFIER deviceQualifierDescriptor1 =
 {
     0x0A,                                                   // Size of this descriptor in bytes
     USB_DESCRIPTOR_DEVICE_QUALIFIER,                        // Device Qualifier Type
@@ -152,12 +169,20 @@ ${LIST_USB_DEVICE_DESCRIPTOR_CLASS_CODE_ENTRY}
 /*******************************************
  *  USB High Speed Configuration Descriptor
  *******************************************/
-const uint8_t highSpeedConfigurationDescriptor[]=
+/* MISRA C-2012 Rule 10.3 deviated:25 Deviation record ID -  H3_MISRAC_2012_R_10_3_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:25 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1"    
+</#if>
+static const uint8_t highSpeedConfigurationDescriptor[]=
 {
     /* Configuration Descriptor */
 
     0x09,                                               // Size of this descriptor in bytes
-    USB_DESCRIPTOR_CONFIGURATION,                       // Descriptor Type
+    (uint8_t)USB_DESCRIPTOR_CONFIGURATION,                       // Descriptor Type
     USB_DEVICE_16bitTo8bitArrange(${CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE}),                  //(${CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE} Bytes)Size of the Configuration descriptor
     ${CONFIG_USB_DEVICE_INTERFACES_NUMBER},                                                  // Number of interfaces in this configuration
     0x01,                                               // Index value of this configuration
@@ -167,11 +192,17 @@ const uint8_t highSpeedConfigurationDescriptor[]=
 
 ${LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_HS_ENTRY}
 };
-
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */   
 /*******************************************
  * Array of High speed config descriptors
  *******************************************/
-USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE highSpeedConfigDescSet[1] =
+static USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE highSpeedConfigDescSet[1] =
 {
     highSpeedConfigurationDescriptor
 };
@@ -180,16 +211,24 @@ USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE highSpeedConfigDescSet[1] =
 /*******************************************
  *  USB Full Speed Configuration Descriptor
  *******************************************/
+ /* MISRA C-2012 Rule 10.3 deviated:25 Deviation record ID -  H3_MISRAC_2012_R_10_3_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:25 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1"    
+</#if>
 <#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) >
-uint8_t USB_ALIGN fullSpeedConfigurationDescriptor[]=
+static uint8_t USB_ALIGN fullSpeedConfigurationDescriptor[]=
 <#else>
-const uint8_t fullSpeedConfigurationDescriptor[]=
+static const uint8_t fullSpeedConfigurationDescriptor[]=
 </#if>
 {
     /* Configuration Descriptor */
 
     0x09,                                                   // Size of this descriptor in bytes
-    USB_DESCRIPTOR_CONFIGURATION,                           // Descriptor Type
+    (uint8_t)USB_DESCRIPTOR_CONFIGURATION,                           // Descriptor Type
     USB_DEVICE_16bitTo8bitArrange(${CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE}),                      //(${CONFIG_USB_DEVICE_CONFIG_DESCRPTR_SIZE} Bytes)Size of the Configuration descriptor
     ${CONFIG_USB_DEVICE_INTERFACES_NUMBER},                                                      // Number of interfaces in this configuration
     0x01,                                                   // Index value of this configuration
@@ -198,12 +237,18 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
     ${CONFIG_USB_DEVICE_MAX_POWER/2},                                                 // Maximum power consumption (mA) /2
 ${LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_FS_ENTRY}
 };
-
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
+/* MISRAC 2012 deviation block end */
 /*******************************************
  * Array of Full speed Configuration
  * descriptors
  *******************************************/
-USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
+static USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE fullSpeedConfigDescSet[1] =
 {
     fullSpeedConfigurationDescriptor
 };
@@ -230,7 +275,7 @@ const struct __attribute__ ((packed))
     uint16_t string[1];                                 // String
 }
 
-sd000 =
+static sd000 =
 {
     0,                                                  // Index of this string is 0
     0,                                                  // This field is always blank for String Index 0
@@ -251,16 +296,25 @@ const struct
     uint16_t string[1];
 }
 
-sd000 =
+static sd000 =
 {
-    sizeof(sd000),                                      // Size of this descriptor in bytes
-    USB_DESCRIPTOR_STRING,                              // STRING descriptor type
+    (uint8_t)sizeof(sd000),                                      // Size of this descriptor in bytes
+    (uint8_t)USB_DESCRIPTOR_STRING,                              // STRING descriptor type
     {0x0409}                                            // Language ID
 };
 </#if>
 /*******************************************
  *  Manufacturer string descriptor
  *******************************************/
+/* MISRA C-2012 Rule 10.3 deviated:43 Deviation record ID -  H3_MISRAC_2012_R_10_3_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:43 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1"    
+</#if>
+
 <#assign stringDescriptorTableSize = stringDescriptorTableSize + 1>
 <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_ADVANCED_STRING_DESCRIPTOR_TABLE == true >
 <#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) >
@@ -276,7 +330,7 @@ const struct __attribute__ ((packed))
     uint16_t string[${CONFIG_USB_DEVICE_MANUFACTURER_STRING?length}];                                // String
 }
 
-sd001 =
+static sd001 =
 {
     1,                                                  // Index of this string descriptor is 1.
     0x0409,                                             // Language ID of this string descriptor is 0x0409 (English)
@@ -298,10 +352,10 @@ const struct
     uint16_t string[${CONFIG_USB_DEVICE_MANUFACTURER_STRING?length}];                                // String
 }
 
-sd001 =
+static sd001 =
 {
-    sizeof(sd001),
-    USB_DESCRIPTOR_STRING,
+    (uint8_t)sizeof(sd001),
+    (uint8_t)USB_DESCRIPTOR_STRING,
 <#if CONFIG_USB_DEVICE_MANUFACTURER_STRING?length gt 0 >
     {<#list 1..CONFIG_USB_DEVICE_MANUFACTURER_STRING?length as index>'${CONFIG_USB_DEVICE_MANUFACTURER_STRING?substring(index-1,index)}'<#if index_has_next>,</#if></#list>}
 </#if>
@@ -326,7 +380,7 @@ const struct __attribute__ ((packed))
     uint16_t string[${CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR?length}];                                // String
 }
 
-sd002 =
+static sd002 =
 {
     2,                                                  // Index of this string descriptor is 2.
     0x0409,                                             // Language ID of this string descriptor is 0x0409 (English)
@@ -348,9 +402,9 @@ const struct
     uint16_t string[${CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR?length}];                                // String
 }
 
-sd002 =
+static sd002 =
 {
-    sizeof(sd002),
+    (uint8_t)sizeof(sd002),
     USB_DESCRIPTOR_STRING,
 <#if CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR?length gt 0 >
     {<#list 1..CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR?length as index>'${CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR?substring(index-1,index)}'<#if index_has_next>,</#if></#list>}
@@ -381,7 +435,16 @@ const struct __attribute__ ((packed))
     uint8_t bDscType;                                   // STRING descriptor type
     uint16_t string[${CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?length}];                                // String
 }
-serialNumberStringDescriptor =
+/* MISRA C-2012 Rule 10.3 deviated:20 Deviation record ID -  H3_MISRAC_2012_R_10_3_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block deviate:20 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1" 
+</#if>
+
+static serialNumberStringDescriptor =
 {
     3,                                                  // Index of this string descriptor is 3.
     0x0409,                                             // Language ID of this string descriptor is 0x0409 (English)
@@ -402,7 +465,7 @@ const struct
     uint8_t bDscType;                                   // STRING descriptor type
     uint16_t string[${CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?length}];                                // String
 }
-serialNumberStringDescriptor =
+static serialNumberStringDescriptor =
 {
     sizeof(serialNumberStringDescriptor),
     USB_DESCRIPTOR_STRING,
@@ -415,6 +478,14 @@ serialNumberStringDescriptor =
 </#if>
 <#if CONFIG_USB_DEVICE_FEATURE_ENABLE_MICROSOFT_OS_DESCRIPTOR == true>
 <#assign stringDescriptorTableSize = stringDescriptorTableSize + 1>
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>
+</#if>
+/* MISRAC 2012 deviation block end */
+
 /*******************************************
 *  MS OS string descriptor
 *******************************************/
@@ -430,7 +501,7 @@ const struct __attribute__ ((packed))
     uint8_t bDscType;       // STRING descriptor type
     uint16_t string[18];    // String
 }
-microSoftOsDescriptor =
+static microSoftOsDescriptor =
 {
     0xEE,       /* This value is per Microsoft OS Descriptor documentation */
     0x0000,     /* Language ID is 0x0000 as per Microsoft Documentation */
@@ -446,7 +517,7 @@ microSoftOsDescriptor =
 /***************************************
  * Array of string descriptors
  ***************************************/
-USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[${stringDescriptorTableSize}]=
+static USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[${stringDescriptorTableSize}]=
 {
 <#if __PROCESSOR?contains("SAMA5D2") == true>
     (uint8_t *)&sd000,
@@ -475,16 +546,16 @@ USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[${stringDescriptorTableSiz
  * USB Device Layer Master Descriptor Table
  *******************************************/
 <#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) >
-USB_DEVICE_MASTER_DESCRIPTOR USB_ALIGN usbMasterDescriptor =
+static USB_DEVICE_MASTER_DESCRIPTOR USB_ALIGN usbMasterDescriptor =
 <#else>
-const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =
+static const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =
 </#if>
 {
-    &deviceDescriptor,                                      // Full speed descriptor
+    &usbDeviceDescriptor,                                      // Full speed descriptor
     1,                                                      // Total number of full speed configurations available
     fullSpeedConfigDescSet,                                 // Pointer to array of full speed configurations descriptors
 <#if CONFIG_USB_DEVICE_SPEED == "High Speed">
-    &deviceDescriptor,                                      // High speed device descriptor
+    &usbDeviceDescriptor,                                      // High speed device descriptor
     1,                                                      // Total number of high speed configurations available
     highSpeedConfigDescSet,                                 // Pointer to array of high speed configurations descriptors
 <#else>
@@ -542,6 +613,18 @@ const USB_DEVICE_INIT usbDevInitData =
 </#if>
 };
 // </editor-fold>
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"
+</#if>
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+/* MISRAC 2012 deviation block end */
+</#if>
 <#--
 /*******************************************************************************
  End of File

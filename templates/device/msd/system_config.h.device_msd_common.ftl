@@ -50,27 +50,27 @@
 <#-- Find out max LUN -->
 <#assign maxLUN = 0>
 <#if (usb_device_msd_0.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN)?has_content == true>
-	<#assign maxLUN = usb_device_msd_0.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN >
+    <#assign maxLUN = usb_device_msd_0.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN >
 </#if>
 <#if (usb_device_msd_1.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN)?has_content == true>
-	<#if usb_device_msd_1.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN gt maxLUN >
-		<#assign maxLUN = usb_device_msd_1.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN>
-	</#if>
+    <#if usb_device_msd_1.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN gt maxLUN >
+        <#assign maxLUN = usb_device_msd_1.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN>
+    </#if>
 </#if>
 <#if (usb_device_msd_2.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN)?has_content == true>
-	<#if usb_device_msd_2.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN gt maxLUN >
-		<#assign maxLUN = usb_device_msd_2.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN>
-	</#if>
+    <#if usb_device_msd_2.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN gt maxLUN >
+        <#assign maxLUN = usb_device_msd_2.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN>
+    </#if>
 </#if>
 <#if (usb_device_msd_3.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN)?has_content == true>
-	<#if usb_device_msd_3.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN gt maxLUN >
-		<#assign maxLUN = usb_device_msd_3.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN>
-	</#if>
+    <#if usb_device_msd_3.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN gt maxLUN >
+        <#assign maxLUN = usb_device_msd_3.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN>
+    </#if>
 </#if>
 <#if (usb_device_msd_4.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN)?has_content == true>
-	<#if usb_device_msd_4.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN gt maxLUN >
-		<#assign maxLUN = usb_device_msd_4.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN>
-	</#if>
+    <#if usb_device_msd_4.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN gt maxLUN >
+        <#assign maxLUN = usb_device_msd_4.CONFIG_USB_DEVICE_FUNCTION_MSD_LUN>
+    </#if>
 </#if>
 
 /* Number of Logical Units */

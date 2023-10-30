@@ -42,11 +42,11 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
 -->
-	/* CDC Function ${CONFIG_USB_DEVICE_FUNCTION_INDEX} */
+    /* CDC Function ${CONFIG_USB_DEVICE_FUNCTION_INDEX} */
     {
         .configurationValue = ${CONFIG_USB_DEVICE_FUNCTION_CONFIG_VALUE},                            // Configuration value
         .interfaceNumber = ${CONFIG_USB_DEVICE_FUNCTION_INTERFACE_NUMBER},                               // First interfaceNumber of this function
-        .speed = USB_SPEED_HIGH|USB_SPEED_FULL,             // Function Speed
+        .speed = (USB_SPEED)((uint32_t)USB_SPEED_HIGH|(uint32_t)USB_SPEED_FULL),             // Function Speed
         .numberOfInterfaces = ${CONFIG_USB_DEVICE_FUNCTION_NUMBER_OF_INTERFACES},                            // Number of interfaces
         .funcDriverIndex = ${CONFIG_USB_DEVICE_FUNCTION_INDEX},                               // Index of CDC Function Driver
         .driver = (void*)USB_DEVICE_CDC_FUNCTION_DRIVER,    // USB CDC function data exposed to device layer

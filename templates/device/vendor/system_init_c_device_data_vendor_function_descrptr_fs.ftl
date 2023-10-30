@@ -42,7 +42,7 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
 -->
-	/* Interface Descriptor */
+    /* Interface Descriptor */
 
     0x09,                       // Size of this descriptor in bytes
     USB_DESCRIPTOR_INTERFACE,   // INTERFACE descriptor type

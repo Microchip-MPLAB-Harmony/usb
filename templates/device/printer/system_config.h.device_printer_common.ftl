@@ -43,58 +43,58 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 *******************************************************************************/
 -->
 /* Maximum instances of Printer function driver */
-#define USB_DEVICE_PRINTER_INSTANCES_NUMBER          ${__INSTANCE_COUNT} 
+#define USB_DEVICE_PRINTER_INSTANCES_NUMBER          ${__INSTANCE_COUNT}U 
 
 <#assign queuedepthCombined = 0>
 <#list 1..10 as x>
   <#if x == 1>
   <#assign queuedepthCombined = usb_device_printer_0.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
-				                + usb_device_printer_0.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
+                                + usb_device_printer_0.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
   </#if>
   <#if x == 2>
   <#assign queuedepthCombined = queuedepthCombined 
-					            + usb_device_printer_1.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
-								+ usb_device_printer_1.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
+                                + usb_device_printer_1.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
+                                + usb_device_printer_1.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
   </#if>
   <#if x == 3>
   <#assign queuedepthCombined = queuedepthCombined 
-								+ usb_device_printer_2.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE
-								+ usb_device_printer_2.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
+                                + usb_device_printer_2.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE
+                                + usb_device_printer_2.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
   </#if>
   <#if x == 4>
   <#assign queuedepthCombined = queuedepthCombined 
-								+ usb_device_printer_3.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
-								+ usb_device_printer_3.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
+                                + usb_device_printer_3.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
+                                + usb_device_printer_3.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
   </#if>
   <#if x == 5>
   <#assign queuedepthCombined = queuedepthCombined 
-								+ usb_device_printer_4.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
-								+ usb_device_printer_4.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
+                                + usb_device_printer_4.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
+                                + usb_device_printer_4.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
   </#if>
   <#if x == 6>
   <#assign queuedepthCombined = queuedepthCombined 
-								+ usb_device_printer_5.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
-								+ usb_device_printer_5.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
+                                + usb_device_printer_5.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
+                                + usb_device_printer_5.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
   </#if>
   <#if x == 7>
   <#assign queuedepthCombined = queuedepthCombined 
-								+ usb_device_printer_6.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
-								+ usb_device_printer_6.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
+                                + usb_device_printer_6.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
+                                + usb_device_printer_6.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
   </#if>
   <#if x == 8>
   <#assign queuedepthCombined = queuedepthCombined 
-								+ usb_device_printer_7.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
-								+ usb_device_printer_7.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
+                                + usb_device_printer_7.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
+                                + usb_device_printer_7.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
   </#if>
   <#if x == 9>
   <#assign queuedepthCombined = queuedepthCombined 
-								+ usb_device_printer_8.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
-								+ usb_device_printer_8.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
+                                + usb_device_printer_8.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
+                                + usb_device_printer_8.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
   </#if>
   <#if x == 10>
   <#assign queuedepthCombined = queuedepthCombined 
-								+ usb_device_printer_9.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
-								+ usb_device_printer_9.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
+                                + usb_device_printer_9.CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE 
+                                + usb_device_printer_9.CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE>
   </#if>
   <#if x == __INSTANCE_COUNT>
     <#break>
@@ -103,13 +103,31 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /* Printer Transfer Queue Size for both read and
    write. Applicable to all instances of the
    function driver */
-#define USB_DEVICE_PRINTER_QUEUE_DEPTH_COMBINED                 ${queuedepthCombined}
+#define USB_DEVICE_PRINTER_QUEUE_DEPTH_COMBINED                 ${queuedepthCombined}U
+
+/* MISRA C-2012 Rule 5.4 deviated:1, Deviation record ID -  H3_MISRAC_2012_R_5_4_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block \
+(deviate:1 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1" )   
+</#if>
 
 /* Length of the Device ID string including length in the first two bytes */
-#define USB_DEVICE_PRINTER_DEVICE_ID_STRING_LENGTH    ${CONFIG_USB_PRINTER_DEVICE_ID_STRING?length?number+2}
+#define USB_DEVICE_PRINTER_DEVICE_ID_STRING_LENGTH    ${CONFIG_USB_PRINTER_DEVICE_ID_STRING?length?number+2}U
+
 
 /* Device ID string including length in the first two bytes */
 #define USB_DEVICE_PRINTER_DEVICE_ID_STRING <#if CONFIG_USB_PRINTER_DEVICE_ID_STRING?length gt 0 > {0,${CONFIG_USB_PRINTER_DEVICE_ID_STRING?length?number+2},<#list 1..CONFIG_USB_PRINTER_DEVICE_ID_STRING?length as index>'${CONFIG_USB_PRINTER_DEVICE_ID_STRING?substring(index-1,index)}'<#if index_has_next>,</#if></#list>},</#if>
+
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.4"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
 <#--
 /*******************************************************************************
  End of File
