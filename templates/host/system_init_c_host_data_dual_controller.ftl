@@ -61,14 +61,24 @@
 // DOM-IGNORE-END
 #include "configuration.h"
 #include "definitions.h" 
-
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+/* MISRA C-2012 Rule 11.8 deviated:2 and 20.7 devaited:4 deviated below. Deviation record ID -  
+    H3_MISRAC_2012_R_11_8_DR_1, H3_MISRAC_2012_R_20_7_DR_1 */
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if> 
+#pragma coverity compliance block \
+(deviate:3 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_1_DR_1" )\
+(deviate:4 "MISRA C-2012 Rule 20.7" "H3_MISRAC_2012_R_20_7_DR_1" )
+</#if> 
 ${LIST_USB_HOST_CLIENT_INIT_DATA}
-const USB_HOST_TPL_ENTRY USBTPList[${CONFIG_USB_HOST_TPL_ENTRY_NUMBER}] = 
+static const USB_HOST_TPL_ENTRY USBTPList[${CONFIG_USB_HOST_TPL_ENTRY_NUMBER}] = 
 {
 ${LIST_USB_HOST_TPL_ENTRY}
 };
 
-const USB_HOST_HCD hcdTable[${CONFIG_USB_HOST_ATTACHED_CONTROLLERS_NUMBER}] = 
+static const USB_HOST_HCD hcdTable[${CONFIG_USB_HOST_ATTACHED_CONTROLLERS_NUMBER}] = 
 {
 ${LIST_USB_HOST_CONTROLLER_ENTRY}
 };
@@ -79,6 +89,15 @@ const USB_HOST_INIT usbHostInitData =
     .tplList = (USB_HOST_TPL_ENTRY *)USBTPList,
     .hostControllerDrivers = (USB_HOST_HCD *)&hcdTable    
 };
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 20.7"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>
+</#if>
+/* MISRAC 2012 deviation block end */
+
 // </editor-fold>
 <#--
 /*******************************************************************************

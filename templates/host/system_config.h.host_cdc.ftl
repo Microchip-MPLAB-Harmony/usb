@@ -43,10 +43,10 @@
  *******************************************************************************/
 -->
 /* Number of CDC Function driver instances in the application */
-#define USB_HOST_CDC_INSTANCES_NUMBER         ${CONFIG_USB_HOST_CDC_NUMBER_OF_INSTANCES}
+#define USB_HOST_CDC_INSTANCES_NUMBER         ${CONFIG_USB_HOST_CDC_NUMBER_OF_INSTANCES}U
 
 /* Number of CDC Attach Listeners */ 
-#define USB_HOST_CDC_ATTACH_LISTENERS_NUMBER        ${CONFIG_USB_HOST_CDC_ATTACH_LISTENERS_NUMBER}
+#define USB_HOST_CDC_ATTACH_LISTENERS_NUMBER        ${CONFIG_USB_HOST_CDC_ATTACH_LISTENERS_NUMBER}U
 <#--
 /*******************************************************************************
  End of File

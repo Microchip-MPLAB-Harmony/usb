@@ -62,8 +62,16 @@
 #include "configuration.h"
 #include "definitions.h" 
 
+/* MISRA C-2012 Rule 11.8 deviated:2 and 20.7 devaited:4 deviated below. Deviation record ID -  
+    H3_MISRAC_2012_R_11_8_DR_1, H3_MISRAC_2012_R_20_7_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:3 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_1_DR_1" )\
+(deviate:4 "MISRA C-2012 Rule 20.7" "H3_MISRAC_2012_R_20_7_DR_1" )
+
 ${LIST_USB_HOST_CLIENT_INIT_DATA}
-const USB_HOST_TPL_ENTRY USBTPList[${CONFIG_USB_HOST_TPL_ENTRY_NUMBER}] = 
+static const USB_HOST_TPL_ENTRY USBTPList[${CONFIG_USB_HOST_TPL_ENTRY_NUMBER}] = 
 {
 ${LIST_USB_HOST_TPL_ENTRY}
 };
@@ -73,7 +81,7 @@ ${LIST_USB_HOST_TPL_ENTRY}
      || core.DeviceFamily == "SAM9X60"
      || core.DeviceFamily == "SAM9X7"
      || core.DeviceFamily == "SAMA7G5") >
-const USB_HOST_HCD hcdTable[2] = 
+static const USB_HOST_HCD hcdTable[2] = 
 {
     {
          /* EHCI Driver Index */ 
@@ -91,7 +99,7 @@ const USB_HOST_HCD hcdTable[2] =
     }
 };
 <#else>
-const USB_HOST_HCD hcdTable = 
+static const USB_HOST_HCD hcdTable = 
 {
     /* Index of the USB Driver used by the Host Layer */
     .drvIndex = ${CONFIG_USB_DRIVER_INDEX},
@@ -108,6 +116,15 @@ const USB_HOST_INIT usbHostInitData =
     .tplList = (USB_HOST_TPL_ENTRY *)USBTPList,
     .hostControllerDrivers = (USB_HOST_HCD *)&hcdTable    
 };
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 20.7"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>
+</#if>
+/* MISRAC 2012 deviation block end */
+
 // </editor-fold>
 <#--
 /*******************************************************************************

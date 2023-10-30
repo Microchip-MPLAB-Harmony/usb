@@ -44,24 +44,24 @@
 -->
 <#if CONFIG_USB_HID_TOTAL_USAGE_DRIVER_INSTANCES gt 0>
 <#if CONFIG_USB_HOST_USE_KEYBOARD == true>
-USB_HOST_HID_USAGE_DRIVER_INTERFACE usageDriverInterfaceKeyboard =
+static USB_HOST_HID_USAGE_DRIVER_INTERFACE usageDriverInterfaceKeyboard =
 {
   .initialize = NULL,
   .deinitialize = NULL,
-  .usageDriverEventHandler = _USB_HOST_HID_KEYBOARD_EventHandler,
-  .usageDriverTask = _USB_HOST_HID_KEYBOARD_Task
+  .usageDriverEventHandler = USB_HOST_HID_KEYBOARD_EventHandler,
+  .usageDriverTask = USB_HOST_HID_KEYBOARD_Task
 };
 </#if>
 <#if CONFIG_USB_HOST_USE_MOUSE == true>
-USB_HOST_HID_USAGE_DRIVER_INTERFACE usageDriverInterfaceMouse =
+static USB_HOST_HID_USAGE_DRIVER_INTERFACE usageDriverInterfaceMouse =
 {
   .initialize = NULL,
   .deinitialize = NULL,
-  .usageDriverEventHandler = _USB_HOST_HID_MOUSE_EventHandler,
-  .usageDriverTask = _USB_HOST_HID_MOUSE_Task
+  .usageDriverEventHandler = USB_HOST_HID_MOUSE_EventHandler,
+  .usageDriverTask = USB_HOST_HID_MOUSE_Task
 };
 </#if>
-USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY usageDriverTableEntry[${CONFIG_USB_HID_TOTAL_USAGE_DRIVER_INSTANCES}] =
+static USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY usageDriverTableEntry[${CONFIG_USB_HID_TOTAL_USAGE_DRIVER_INSTANCES}] =
 {
 <#if CONFIG_USB_HOST_USE_KEYBOARD == true>
     {
@@ -80,7 +80,7 @@ USB_HOST_HID_USAGE_DRIVER_TABLE_ENTRY usageDriverTableEntry[${CONFIG_USB_HID_TOT
 };
 </#if>
 
-USB_HOST_HID_INIT hidInitData =
+static USB_HOST_HID_INIT hidInitData =
 {
     .nUsageDriver = ${CONFIG_USB_HID_TOTAL_USAGE_DRIVER_INSTANCES},
 <#if CONFIG_USB_HID_TOTAL_USAGE_DRIVER_INSTANCES gt 0>

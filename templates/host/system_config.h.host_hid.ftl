@@ -43,17 +43,17 @@
  *******************************************************************************/
 -->
 /* Number of HID Client driver instances in the application */
-#define USB_HOST_HID_INSTANCES_NUMBER        ${CONFIG_USB_HOST_HID_NUMBER_OF_INSTANCES}
+#define USB_HOST_HID_INSTANCES_NUMBER        ${CONFIG_USB_HOST_HID_NUMBER_OF_INSTANCES}U
 
 /* Maximum number of INTERRUPT IN endpoints supported per HID interface */
-#define USB_HOST_HID_INTERRUPT_IN_ENDPOINTS_NUMBER 1
+#define USB_HOST_HID_INTERRUPT_IN_ENDPOINTS_NUMBER 1U
 
 /* Number of total usage driver instances registered with HID client driver */
-#define USB_HOST_HID_USAGE_DRIVER_SUPPORT_NUMBER  1
+#define USB_HOST_HID_USAGE_DRIVER_SUPPORT_NUMBER  1U
 
 /* Maximum number PUSH items that can be saved in the Global item queue per field
  * per HID interface */
-#define USB_HID_GLOBAL_PUSH_POP_STACK_SIZE 1
+#define USB_HID_GLOBAL_PUSH_POP_STACK_SIZE        1U
 
 <#if CONFIG_USB_HOST_USE_MOUSE == true>
 /* Maximum number Mouse buttons whose value will be captured per HID Mouse device */

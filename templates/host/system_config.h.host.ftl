@@ -55,21 +55,21 @@
 
 /* Number of Endpoints used */
 <#if CONFIG_USB_DRIVER_INTERFACE == "DRV_USBHSV1_HOST_INTERFACE">
-#define DRV_USBHSV1_ENDPOINTS_NUMBER                        1
+#define DRV_USBHSV1_ENDPOINTS_NUMBER                        1U
 <#elseif CONFIG_USB_DRIVER_INTERFACE == "DRV_USBHS_HOST_INTERFACE">
 <#if drv_usbhs_v1.USB_OPERATION_MODE == "Host">
-#define DRV_USBHS_ENDPOINTS_NUMBER                          1
+#define DRV_USBHS_ENDPOINTS_NUMBER                          1U
 </#if>
 <#elseif CONFIG_USB_DRIVER_INTERFACE == "DRV_USBFSV1_HOST_INTERFACE">
-#define DRV_USBFSV1_ENDPOINTS_NUMBER                        1
+#define DRV_USBFSV1_ENDPOINTS_NUMBER                        1U
 <#elseif CONFIG_USB_DRIVER_INTERFACE == "DRV_USB_UHP_HOST_INTERFACE">
-#define DRV_USB_UHP_ENDPOINTS_NUMBER                        1
+#define DRV_USB_UHP_ENDPOINTS_NUMBER                        1U
 <#elseif CONFIG_USB_DRIVER_INTERFACE == "DRV_USBFS_HOST_INTERFACE">
-#define DRV_USBFS_ENDPOINTS_NUMBER                          1
+#define DRV_USBFS_ENDPOINTS_NUMBER                          1U
 </#if>
 
 /* Total number of devices to be supported */
-#define USB_HOST_DEVICES_NUMBER                             ${CONFIG_USB_HOST_DEVICE_NUMNBER} 
+#define USB_HOST_DEVICES_NUMBER                             ${CONFIG_USB_HOST_DEVICE_NUMNBER}U
 
 /* Target peripheral list entries */
 #define  USB_HOST_TPL_ENTRIES                               ${CONFIG_USB_HOST_TPL_ENTRY_NUMBER} 
@@ -82,15 +82,15 @@
    || core.DeviceFamily == "SAM9X60"
    || core.DeviceFamily == "SAM9X7"
    || core.DeviceFamily == "SAMA7G5") >
-#define USB_HOST_CONTROLLERS_NUMBER                         2
+#define USB_HOST_CONTROLLERS_NUMBER                         2U
 <#else>
-#define USB_HOST_CONTROLLERS_NUMBER                         1
+#define USB_HOST_CONTROLLERS_NUMBER                         1U
 </#if>
 
-#define USB_HOST_TRANSFERS_NUMBER                           ${CONFIG_USB_HOST_TRANSFERS_NUMBER}
+#define USB_HOST_TRANSFERS_NUMBER                           ${CONFIG_USB_HOST_TRANSFERS_NUMBER}U
 
 /* Provides Host pipes number */
-#define USB_HOST_PIPES_NUMBER                               ${CONFIG_USB_HOST_PIPES_NUMBER}
+#define USB_HOST_PIPES_NUMBER                               ${CONFIG_USB_HOST_PIPES_NUMBER}U
 
 <#--
 /*******************************************************************************

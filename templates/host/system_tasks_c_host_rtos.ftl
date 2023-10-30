@@ -43,14 +43,14 @@
  *******************************************************************************/
 -->
 <#if HarmonyCore.SELECT_RTOS == "FreeRTOS">
-    <#lt>void _USB_HOST_Tasks(  void *pvParameters  )
+    <#lt>static void F_USB_HOST_Tasks(  void *pvParameters  )
     <#lt>{
-    <#lt>    while(1)
+    <#lt>    while(true)
     <#lt>    {
     <#lt>        /* USB Host layer tasks routine */ 
     <#lt>        USB_HOST_Tasks(sysObj.usbHostObject0);
              <#if USB_HOST_RTOS_USE_DELAY >
-    <#lt>        vTaskDelay(${USB_HOST_RTOS_DELAY} / portTICK_PERIOD_MS);
+    <#lt>        vTaskDelay(${USB_HOST_RTOS_DELAY}U / portTICK_PERIOD_MS);
              </#if>
     <#lt>    }
     <#lt>}

@@ -41,13 +41,13 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
--->	
+-->    
 <#if HarmonyCore.SELECT_RTOS == "BareMetal">
     /* USB Host Task Routine */ 
     USB_HOST_Tasks(sysObj.usbHostObject0);
 <#elseif HarmonyCore.SELECT_RTOS == "FreeRTOS">
     <#lt>    /* Create OS Thread for USB_HOST_Tasks. */
-    <#lt>    xTaskCreate( _USB_HOST_Tasks,
+    <#lt>    (void) xTaskCreate( F_USB_HOST_Tasks,
     <#lt>        "USB_HOST_TASKS",
     <#lt>        ${USB_HOST_RTOS_STACK_SIZE},
     <#lt>        (void*)NULL,

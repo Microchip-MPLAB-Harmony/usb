@@ -24,7 +24,14 @@
  -->
 <#if (CONFIG_USB_HOST_MSD_NUMBER_OF_INSTANCES?has_content == true)  
 && (CONFIG_USB_HOST_MSD_NUMBER_OF_INSTANCES?number >= 1)>
-    TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL(0x08, 0x06, 0x50, NULL,  USB_HOST_MSD_INTERFACE) ,
+    TPL_INTERFACE_CLASS_SUBCLASS_PROTOCOL
+    (
+        USB_MSD_CLASS_CODE, 
+        USB_MSD_SUBCLASS_CODE_SCSI_TRANSPARENT_COMMAND_SET, 
+        USB_MSD_PROTOCOL, 
+        NULL,  
+        USB_HOST_MSD_INTERFACE
+    ),
 </#if>
 <#--
 /*******************************************************************************
