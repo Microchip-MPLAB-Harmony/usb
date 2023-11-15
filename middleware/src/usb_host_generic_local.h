@@ -39,8 +39,8 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
-#ifndef _USB_HOST_GENERIC_LOCAL_H_
-#define _USB_HOST_GENERIC_LOCAL_H_
+#ifndef USB_HOST_GENERIC_LOCAL_H_
+#define USB_HOST_GENERIC_LOCAL_H_
 
 #include "usb/usb_host_client_driver.h"
 /*******************************************************************
@@ -60,7 +60,7 @@ typedef struct
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_GENERIC_Initialize(void * data)
+    void F_USB_HOST_GENERIC_Initialize(void * data)
 
   Summary:
     This function is called when the Host Layer is initializing.
@@ -73,11 +73,11 @@ typedef struct
     application.
 */
 
-void _USB_HOST_GENERIC_Initialize(void * data);
+void F_USB_HOST_GENERIC_Initialize(void * data);
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_GENERIC_Deinitialize(void)
+    void F_USB_HOST_GENERIC_Deinitialize(void)
 
   Summary:
     This function is called when the Host Layer is deinitializing.
@@ -90,11 +90,11 @@ void _USB_HOST_GENERIC_Initialize(void * data);
     application.
 */
 
-void _USB_HOST_GENERIC_Deinitialize(void);
+void F_USB_HOST_GENERIC_Deinitialize(void);
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_GENERIC_Reinitialize(void * data)
+    void F_USB_HOST_GENERIC_Reinitialize(void * data)
 
   Summary:
     This function is called when the Host Layer is reinitializing.
@@ -107,11 +107,11 @@ void _USB_HOST_GENERIC_Deinitialize(void);
     application.
 */
 
-void _USB_HOST_GENERIC_Reinitialize(void * init);
+void F_USB_HOST_GENERIC_Reinitialize(void * init);
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_GENERIC_DeviceAssign 
+    void F_USB_HOST_GENERIC_DeviceAssign 
     (
         USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle,
         USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
@@ -131,7 +131,7 @@ void _USB_HOST_GENERIC_Reinitialize(void * init);
     application.
 */
 
-void _USB_HOST_GENERIC_DeviceAssign 
+void F_USB_HOST_GENERIC_DeviceAssign 
 (
     USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle,
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
@@ -140,7 +140,7 @@ void _USB_HOST_GENERIC_DeviceAssign
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_GENERIC_DeviceRelease 
+    void F_USB_HOST_GENERIC_DeviceRelease 
     (
         USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle
     )
@@ -156,14 +156,14 @@ void _USB_HOST_GENERIC_DeviceAssign
     application.
 */
 
-void _USB_HOST_GENERIC_DeviceRelease
+void F_USB_HOST_GENERIC_DeviceRelease
 (
     USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle
 );
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_GENERIC_InterfaceAssign 
+    void F_USB_HOST_GENERIC_InterfaceAssign 
     (
         USB_HOST_DEVICE_INTERFACE_HANDLE * interfaces,
         USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
@@ -184,7 +184,7 @@ void _USB_HOST_GENERIC_DeviceRelease
     application.
 */
 
-void _USB_HOST_GENERIC_InterfaceAssign 
+void F_USB_HOST_GENERIC_InterfaceAssign 
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE * interfaces,
     USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle,
@@ -194,7 +194,7 @@ void _USB_HOST_GENERIC_InterfaceAssign
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_GENERIC_InterfaceRelease
+    void F_USB_HOST_GENERIC_InterfaceRelease
     (
         USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
     )
@@ -212,7 +212,7 @@ void _USB_HOST_GENERIC_InterfaceAssign
     application.
 */
 
-void _USB_HOST_GENERIC_InterfaceRelease
+void F_USB_HOST_GENERIC_InterfaceRelease
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
 );
@@ -220,7 +220,7 @@ void _USB_HOST_GENERIC_InterfaceRelease
 
 // *****************************************************************************
 /* Function:
-    USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_GENERIC_InterfaceEventHandler
+    USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE F_USB_HOST_GENERIC_InterfaceEventHandler
     (
         USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle,
         USB_HOST_DEVICE_INTERFACE_EVENT event,
@@ -241,7 +241,7 @@ void _USB_HOST_GENERIC_InterfaceRelease
     application.
 */
 
-USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_GENERIC_InterfaceEventHandler
+USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE F_USB_HOST_GENERIC_InterfaceEventHandler
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle,
     USB_HOST_DEVICE_INTERFACE_EVENT event,
@@ -251,7 +251,7 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_GENERIC_InterfaceEventHandler
 
 // *****************************************************************************
 /* Function:
-    USB_HOST_DEVICE_EVENT_RESPONSE _USB_HOST_GENERIC_DeviceEventHandler
+    USB_HOST_DEVICE_EVENT_RESPONSE F_USB_HOST_GENERIC_DeviceEventHandler
     (
         USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle,
         USB_HOST_DEVICE_EVENT event,
@@ -272,7 +272,7 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE _USB_HOST_GENERIC_InterfaceEventHandler
     application.
 */
 
-USB_HOST_DEVICE_EVENT_RESPONSE _USB_HOST_GENERIC_DeviceEventHandler
+USB_HOST_DEVICE_EVENT_RESPONSE F_USB_HOST_GENERIC_DeviceEventHandler
 (
     USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle,
     USB_HOST_DEVICE_EVENT event,
@@ -282,7 +282,7 @@ USB_HOST_DEVICE_EVENT_RESPONSE _USB_HOST_GENERIC_DeviceEventHandler
 
 // *****************************************************************************
 /* Function:
-    void _USB_HOST_GENERIC_DeviceTasks 
+    void F_USB_HOST_GENERIC_DeviceTasks 
     (
         USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle
     )
@@ -300,7 +300,7 @@ USB_HOST_DEVICE_EVENT_RESPONSE _USB_HOST_GENERIC_DeviceEventHandler
     application.
 */
 
-void _USB_HOST_GENERIC_DeviceTasks
+void F_USB_HOST_GENERIC_DeviceTasks
 (
     USB_HOST_DEVICE_CLIENT_HANDLE deviceHandle
 );
@@ -325,7 +325,7 @@ void _USB_HOST_GENERIC_DeviceTasks
     application.
 */
 
-void _USB_HOST_GENERIC_InterfaceTasks
+void F_USB_HOST_GENERIC_InterfaceTasks
 (
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle
 );

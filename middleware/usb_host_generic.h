@@ -39,8 +39,8 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
-#ifndef _USB_HOST_GENERIC_H_
-#define _USB_HOST_GENERIC_H_
+#ifndef USB_HOST_GENERIC_H_
+#define USB_HOST_GENERIC_H_
 
 #include "usb/usb_host_client_driver.h"
 
