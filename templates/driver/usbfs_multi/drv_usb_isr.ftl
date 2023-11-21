@@ -56,7 +56,7 @@
     None 
 */
 
-void DRV_USBFS_USB${DRV_USB_PLIB?keep_after_last("_")}_Handler(void)
+void __attribute__((used)) DRV_USBFS_USB${DRV_USB_PLIB?keep_after_last("_")}_Handler(void)
 {
     DRV_USBFS_Tasks_ISR(sysObj.drvUSBFSObject${INDEX?string}); 
 }

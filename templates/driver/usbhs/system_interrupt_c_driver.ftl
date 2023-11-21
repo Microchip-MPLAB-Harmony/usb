@@ -41,7 +41,7 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
-void USBHS_Handler(void)
+void __attribute__((used)) USBHS_Handler(void)
 {
     DRV_USBHS_Tasks_ISR(sysObj.usbDevObject0);
 }

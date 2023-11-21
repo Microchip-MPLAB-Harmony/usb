@@ -963,7 +963,7 @@ void DRV_USBHS_ClientEventCallBackSet
     None 
 */
 
-void DRV_USBHS_InterruptHandler(void)
+void __attribute__((used)) DRV_USBHS_InterruptHandler(void)
 {
     DRV_USBHS_Tasks_ISR(sysObj.drvUSBHSObject); 
 }
@@ -981,7 +981,7 @@ void DRV_USBHS_InterruptHandler(void)
   Remarks:
     None 
 */
-void DRV_USBHS_DMAInterruptHandler(void)
+void __attribute__((used)) DRV_USBHS_DMAInterruptHandler(void)
 {
     DRV_USBHS_Tasks_ISR_USBDMA(sysObj.drvUSBHSObject); 
 }
