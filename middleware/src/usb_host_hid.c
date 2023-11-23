@@ -742,10 +742,10 @@ void F_USB_HOST_HID_ControlTransferCallback
             {
                 /* We are here because of usage driver request */
                 hidInstanceInfo->requestObj.usageDriverRequest = false;
-				if ( gUSBHostHIDInitData != NULL )
-				{
-					usageDriverTable_Entry = gUSBHostHIDInitData->usageDriverTable;
-				}
+                if ( gUSBHostHIDInitData != NULL )
+                {
+                    usageDriverTable_Entry = gUSBHostHIDInitData->usageDriverTable;
+                }
                 responseData.handle = requestHandle;
                 if(USB_HOST_RESULT_SUCCESS != result)
                 {
@@ -792,10 +792,10 @@ void F_USB_HOST_HID_ControlTransferCallback
             {
                 /* We are here because of usage driver request */
                 hidInstanceInfo->requestObj.usageDriverRequest = false;
-				if ( gUSBHostHIDInitData != NULL )
-				{
-					usageDriverTable_Entry = gUSBHostHIDInitData->usageDriverTable;
-				}
+                if ( gUSBHostHIDInitData != NULL )
+                {
+                    usageDriverTable_Entry = gUSBHostHIDInitData->usageDriverTable;
+                }
                 responseData.handle = requestHandle;
                 if(result != USB_HOST_RESULT_SUCCESS)
                 {
@@ -1777,7 +1777,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_IdleTimeGet
     USB_HOST_RESULT result =  USB_HOST_RESULT_FAILURE;
     USB_HOST_TRANSFER_HANDLE  transferHandle = USB_HOST_TRANSFER_HANDLE_INVALID;
     USB_HOST_HID_INSTANCE *hidInstanceInfo = 
-	(USB_HOST_HID_INSTANCE *) USB_HOST_HID_OBJ_HANDLE_INVALID;
+    (USB_HOST_HID_INSTANCE *) USB_HOST_HID_OBJ_HANDLE_INVALID;
     int8_t instanceNumber = (-1);
     /* End of local variable */
 
@@ -2274,7 +2274,7 @@ USB_HOST_HID_RESULT USB_HOST_HID_ReportGet
         /* Update requestHandle only if not NULL */
         if(NULL != requestHandle)
         {
-			*requestHandle = USB_HOST_HID_REQUEST_HANDLE_INVALID;
+            *requestHandle = USB_HOST_HID_REQUEST_HANDLE_INVALID;
         }
         status = USB_HOST_HID_RESULT_PARAMETER_INVALID;
     }
@@ -2766,7 +2766,7 @@ void F_USB_HOST_HID_InterfaceAssign
                                     }
                                 }
                                 result = false;
-								
+                                
 
                                 //break;
                             }

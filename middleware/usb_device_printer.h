@@ -468,17 +468,17 @@ typedef struct
     // instance of the PRINTER function driver.
 
     // Application states
-	typedef enum
-	{
-		//Application's state machine's initial state.
-		APP_STATE_INIT=0,
-		APP_STATE_SERVICE_TASKS,
-		APP_STATE_WAIT_FOR_CONFIGURATION, 
-	} APP_STATES;
+    typedef enum
+    {
+        //Application's state machine's initial state.
+        APP_STATE_INIT=0,
+        APP_STATE_SERVICE_TASKS,
+        APP_STATE_WAIT_FOR_CONFIGURATION, 
+    } APP_STATES;
 
     USB_DEVICE_HANDLE usbDeviceHandle;
     
-	APP_STATES appState; 
+    APP_STATES appState; 
  
     USB_DEVICE_PRINTER_RESULT result;
     
@@ -518,101 +518,101 @@ typedef struct
         uintptr_t context
     )
     {
-		USB_SETUP_PACKET * setupPacket;
+        USB_SETUP_PACKET * setupPacket;
         switch(event)
         {
             case USB_DEVICE_EVENT_POWER_DETECTED:
-				// This event in generated when VBUS is detected. Attach the device 
-				USB_DEVICE_Attach(usbDeviceHandle);
+                // This event in generated when VBUS is detected. Attach the device 
+                USB_DEVICE_Attach(usbDeviceHandle);
                 break;
-				
+                
             case USB_DEVICE_EVENT_POWER_REMOVED:
-				// This event is generated when VBUS is removed. Detach the device
-				USB_DEVICE_Detach (usbDeviceHandle);
+                // This event is generated when VBUS is removed. Detach the device
+                USB_DEVICE_Detach (usbDeviceHandle);
                 break; 
-				
+                
             case USB_DEVICE_EVENT_CONFIGURED:
-				// This event indicates that Host has set Configuration in the Device. 
-				// Register PRINTER Function driver Event Handler.  
-				USB_DEVICE_PRINTER_EventHandlerSet(USB_DEVICE_PRINTER_INDEX_0, APP_USBDevicePRINTEREventHandler, (uintptr_t)0);
+                // This event indicates that Host has set Configuration in the Device. 
+                // Register PRINTER Function driver Event Handler.  
+                USB_DEVICE_PRINTER_EventHandlerSet(USB_DEVICE_PRINTER_INDEX_0, APP_USBDevicePRINTEREventHandler, (uintptr_t)0);
                 break;
-				
-			case USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST:
-				// This event indicates a Control transfer setup stage has been completed. 
-				setupPacket = (USB_SETUP_PACKET *)pData;
-				
-				// Parse the setup packet and respond with a USB_DEVICE_ControlSend(), 
-				// USB_DEVICE_ControlReceive or USB_DEVICE_ControlStatus(). 
-				
-				break; 
-				
-			case USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_SENT:
-				// This event indicates that a Control transfer Data has been sent to Host.   
-			    break; 
-				
-			case USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
-				// This event indicates that a Control transfer Data has been received from Host.
-				break; 
-				
-			case USB_DEVICE_EVENT_CONTROL_TRANSFER_ABORTED:
-				// This event indicates a control transfer was aborted. 
-				break; 
-				
+                
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST:
+                // This event indicates a Control transfer setup stage has been completed. 
+                setupPacket = (USB_SETUP_PACKET *)pData;
+                
+                // Parse the setup packet and respond with a USB_DEVICE_ControlSend(), 
+                // USB_DEVICE_ControlReceive or USB_DEVICE_ControlStatus(). 
+                
+                break; 
+                
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_SENT:
+                // This event indicates that a Control transfer Data has been sent to Host.   
+                break; 
+                
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
+                // This event indicates that a Control transfer Data has been received from Host.
+                break; 
+                
+            case USB_DEVICE_EVENT_CONTROL_TRANSFER_ABORTED:
+                // This event indicates a control transfer was aborted. 
+                break; 
+                
             case USB_DEVICE_EVENT_SUSPENDED:
                 break;
-				
+                
             case USB_DEVICE_EVENT_RESUMED:
                 break;
-				
+                
             case USB_DEVICE_EVENT_ERROR:
                 break;
-				
+                
             case USB_DEVICE_EVENT_RESET:
                 break;
-				
+                
             case USB_DEVICE_EVENT_SOF:
-				// This event indicates an SOF is detected on the bus. The 	USB_DEVICE_SOF_EVENT_ENABLE
-				// macro should be defined to get this event. 
+                // This event indicates an SOF is detected on the bus. The     USB_DEVICE_SOF_EVENT_ENABLE
+                // macro should be defined to get this event. 
                 break;
             default:
                 break;
         }
     }
 
-	
-	void APP_Tasks ( void )
-	{
-		// Check the application's current state.
-		switch ( appState )
-		{
-			// Application's initial state. 
-			case APP_STATE_INIT:
-				// Open the device layer 
-				usbDeviceHandle = USB_DEVICE_Open( USB_DEVICE_INDEX_0,
+    
+    void APP_Tasks ( void )
+    {
+        // Check the application's current state.
+        switch ( appState )
+        {
+            // Application's initial state. 
+            case APP_STATE_INIT:
+                // Open the device layer 
+                usbDeviceHandle = USB_DEVICE_Open( USB_DEVICE_INDEX_0,
                     DRV_IO_INTENT_READWRITE );
 
-				if(usbDeviceHandle != USB_DEVICE_HANDLE_INVALID)
-				{
-					// Register a callback with device layer to get event notification 
-					USB_DEVICE_EventHandlerSet(usbDeviceHandle,
+                if(usbDeviceHandle != USB_DEVICE_HANDLE_INVALID)
+                {
+                    // Register a callback with device layer to get event notification 
+                    USB_DEVICE_EventHandlerSet(usbDeviceHandle,
                         APP_USBDeviceEventHandler, 0);
-					appState = APP_STATE_WAIT_FOR_CONFIGURATION;
-				}
-				else
-				{
-					// The Device Layer is not ready to be opened. We should try
-					// gain later. 
-				}
-				break; 
+                    appState = APP_STATE_WAIT_FOR_CONFIGURATION;
+                }
+                else
+                {
+                    // The Device Layer is not ready to be opened. We should try
+                    // gain later. 
+                }
+                break; 
 
-			case APP_STATE_SERVICE_TASKS:
-				break; 
+            case APP_STATE_SERVICE_TASKS:
+                break; 
 
-				// The default state should never be executed. 
-			default:
-				break; 
-		}
-	}
+                // The default state should never be executed. 
+            default:
+                break; 
+        }
+    }
     </code>
 
   Remarks:

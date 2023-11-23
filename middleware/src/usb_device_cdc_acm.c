@@ -99,8 +99,8 @@ void F_USB_DEVICE_CDC_ACMSetUpPacketHandler
     USB_SETUP_PACKET * setupRequest
 )
 {
-	USB_CDC_REQUEST bRequest = (USB_CDC_REQUEST)setupRequest->bRequest;
-	
+    USB_CDC_REQUEST bRequest = (USB_CDC_REQUEST)setupRequest->bRequest;
+    
     /* Check the request */
     switch (bRequest)
     {

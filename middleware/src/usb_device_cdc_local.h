@@ -167,10 +167,10 @@ typedef struct
     volatile unsigned int currentQSizeWrite;
     volatile unsigned int currentQSizeRead;
     volatile unsigned int currentQSizeSerialStateNotification;
-	
-	/* Pointer to the Serial State Response Buffer */  
-	USB_CDC_SERIAL_STATE_RESPONSE * serialStateResponse; 
-	
+    
+    /* Pointer to the Serial State Response Buffer */  
+    USB_CDC_SERIAL_STATE_RESPONSE * serialStateResponse; 
+    
 
 } USB_DEVICE_CDC_INSTANCE;
 
@@ -254,20 +254,20 @@ void F_USB_DEVICE_CDC_ControlTransferHandler
 
 void F_USB_DEVICE_CDC_Initialization 
 (
-	SYS_MODULE_INDEX iCDC ,
-	USB_DEVICE_HANDLE deviceHandle ,
-	void* initData ,
-  	uint8_t infNum ,
-  	uint8_t altSetting ,
-	uint8_t descType ,
-	uint8_t * pDesc 
+    SYS_MODULE_INDEX iCDC ,
+    USB_DEVICE_HANDLE deviceHandle ,
+    void* initData ,
+      uint8_t infNum ,
+      uint8_t altSetting ,
+    uint8_t descType ,
+    uint8_t * pDesc 
 );
 
 
 // *****************************************************************************
 
 /* Function:
-    void	USB_DEVICE_CDC_Deinitialization (SYS_MODULE_INDEX iCDC)
+    void    USB_DEVICE_CDC_Deinitialization (SYS_MODULE_INDEX iCDC)
 
   Summary:
     CDC function driver deinitialization.
@@ -280,7 +280,7 @@ void F_USB_DEVICE_CDC_Initialization
     None.
 
   Parameters:
-    iCDC	- USB function driver index
+    iCDC    - USB function driver index
 
   Returns:
     None.
@@ -398,8 +398,8 @@ void F_USB_DEVICE_CDC_SerialStateSendIRPCallback (USB_DEVICE_IRP * irp );
 
 void F_USB_DEVICE_CDC_EndpointDisable
 (
-	USB_DEVICE_HANDLE deviceHandle, 
-	USB_DEVICE_CDC_ENDPOINT * deviceCDCEndpoint
+    USB_DEVICE_HANDLE deviceHandle, 
+    USB_DEVICE_CDC_ENDPOINT * deviceCDCEndpoint
 );
 
 uint16_t USB_DEVICE_CDC_ReadPacketSizeGet ( USB_DEVICE_CDC_INDEX iCDC );

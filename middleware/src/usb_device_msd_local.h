@@ -82,7 +82,7 @@ typedef enum
     USB_DEVICE_MSD_STATE_CSW,
     USB_DEVICE_MSD_STATE_SEND_CSW,
     USB_DEVICE_MSD_STATE_IDLE
-	
+    
 } USB_DEVICE_MSD_STATE;
 
 // *****************************************************************************
@@ -109,7 +109,7 @@ typedef enum
     USB_DEVICE_MSD_MEDIA_OPERATION_COMPLETE,
     USB_DEVICE_MSD_MEDIA_OPERATION_PENDING,
     USB_DEVICE_MSD_MEDIA_OPERATION_ERROR
-	
+    
 } USB_DEVICE_MSD_MEDIA_OPERATION;  
 
 #pragma coverity compliance end_block "MISRA C-2012 Rule 5.2"

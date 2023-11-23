@@ -409,7 +409,7 @@ void F_USB_DEVICE_AUDIO_V2_SetupPacketHandler
                                 /* If number of Endpoints is Two, then it is sure
                                 * that this alternate setting reports a Isochronous
                                 * Sync Endpoint. Disable the Sync Endpoint. */
-								ep = pPrevAlternateStng->isoSyncEp.epAddr;
+                                ep = pPrevAlternateStng->isoSyncEp.epAddr;
 
                                 /* Disable the Endpoint */
                                 (void) USB_DEVICE_IRPCancelAll(usbDeviceHandle,  ep);
@@ -686,7 +686,7 @@ void F_USB_DEVICE_AUDIO_V2_Initialize
 
                     /* save number of audio steaming interfaces */
                     //audioInstance->infCollection.numStreamingInf = pCsInfDesc->bInCollection;
-					audioInstance->infCollection.numStreamingInf = 1;
+                    audioInstance->infCollection.numStreamingInf = 1;
 
                     /* save interface numbers of the all available audio 
                      * streaming and Midi interfaces.*/
@@ -696,7 +696,7 @@ void F_USB_DEVICE_AUDIO_V2_Initialize
                     {
                         /*audioInstance->infCollection.streamInf[cnt].interfaceNum
                             = pCsInfDesc->bInCollection;*/
-						audioInstance->infCollection.streamInf[cnt].interfaceNum
+                        audioInstance->infCollection.streamInf[cnt].interfaceNum
                                 = 1;
                     }
 

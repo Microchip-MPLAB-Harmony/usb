@@ -213,14 +213,14 @@ typedef enum
     USB_HOST_HID_STATE_ATTACHED                      = 1,
     USB_HOST_HID_STATE_DETACHED,
     USB_HOST_HID_STATE_SET_IDLE_SEND,
-	USB_HOST_HID_STATE_WAITING_SET_IDLE,
+    USB_HOST_HID_STATE_WAITING_SET_IDLE,
     USB_HOST_HID_STATE_SEND_SET_PROTOCOL,
     USB_HOST_HID_STATE_SET_PROTOCOL_SEND,
-	USB_HOST_HID_STATE_WAITING_SET_PROTOCOL,
+    USB_HOST_HID_STATE_WAITING_SET_PROTOCOL,
     USB_HOST_HID_STATE_WAITING_SET_REPORT,
-	USB_HOST_HID_STATE_REPORT_DESCRIPTOR_GET,
-	USB_HOST_HID_STATE_WAITING_REPORT_DESCRIPTOR_GET,
-	USB_HOST_HID_STATE_REPORT_DESCRIPTOR_PARSE,
+    USB_HOST_HID_STATE_REPORT_DESCRIPTOR_GET,
+    USB_HOST_HID_STATE_WAITING_REPORT_DESCRIPTOR_GET,
+    USB_HOST_HID_STATE_REPORT_DESCRIPTOR_PARSE,
     USB_HOST_HID_STATE_READY,
     USB_HOST_HID_STATE_WAIT,
     USB_HOST_HID_STATE_INTERRUPT_IN_ENDPOINT_CLEAR,
@@ -375,8 +375,8 @@ typedef struct
     bool assigned;
     /* interface number owned by this instance */
     uint8_t bInterfaceNumber;
-	/* Length of the report Descriptor in bytes */
-	uint16_t reportDescLength;
+    /* Length of the report Descriptor in bytes */
+    uint16_t reportDescLength;
     /* Holds the task routine state of this HID instance */
     USB_HOST_HID_TASK_STATE state;
     /* The HID Request object */
@@ -387,7 +387,7 @@ typedef struct
     USB_HOST_PIPE_HANDLE interruptOutPipeHandle;
     /* Interrupt IN endpoint MaxPacketSize */
     uint8_t  interruptInEndpointSize[USB_HOST_HID_INTERRUPT_IN_ENDPOINTS_NUMBER];
-	/* Interrupt OUT endpoint MaxPacketSize */
+    /* Interrupt OUT endpoint MaxPacketSize */
     uint8_t  interruptOutEndpointSize;
     /* Flag determines if HID has been attached */
     bool isHIDDriverAttached;
@@ -403,8 +403,8 @@ typedef struct
     USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHandle;
     /* Holds information about the device */
     USB_HOST_HID_DEVICE_INFO hidDeviceInfo;
-	/* Report Descriptor Buffer Pointer */
-	void *reportDescBuffer;
+    /* Report Descriptor Buffer Pointer */
+    void *reportDescBuffer;
     /* Read buffer for Report through Interrupt endpoint */
     void * getReportInterruptBuffer;
     /* Write Buffer */
@@ -419,18 +419,18 @@ typedef struct
     uint8_t nTopLevelUsages;
     /* Array of top level usages. */
     uint32_t topLevelUsages[USB_HOST_HID_USAGE_DRIVER_SUPPORT_NUMBER];
-	/* Place holder for Main Item Data */
-	USB_HOST_HID_MAIN_ITEM *mainItemData;
+    /* Place holder for Main Item Data */
+    USB_HOST_HID_MAIN_ITEM *mainItemData;
     /* Number of usage tags count */
-	uint32_t usageTagsCount;
+    uint32_t usageTagsCount;
     /* Number of Designator index count */
     uint32_t designatorIndexCount;
     /* Number of String ID count */
     uint32_t stringDescriptorIndexCount;
     /* Number of elements that has been stacked in the global Stack */
-	uint32_t globalStackIndex;
+    uint32_t globalStackIndex;
     /* Push-Pop stack */
-	USB_HOST_HID_GLOBAL_ITEM globalStack[USB_HID_GLOBAL_PUSH_POP_STACK_SIZE];
+    USB_HOST_HID_GLOBAL_ITEM globalStack[USB_HID_GLOBAL_PUSH_POP_STACK_SIZE];
 
 } USB_HOST_HID_INSTANCE;
 

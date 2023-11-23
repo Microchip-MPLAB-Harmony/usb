@@ -208,7 +208,7 @@ USB_DEVICE_AUDIO_V2_RESULT USB_DEVICE_AUDIO_V2_Read
             SYS_ASSERT(false, "Read Queue is full");
             return(USB_DEVICE_AUDIO_V2_RESULT_ERROR_TRANSFER_QUEUE_FULL);
         }
-	audioResult =   F_USB_DEVICE_AUDIO_V2_Transfer(instanceIndex, transferHandle, 
+    audioResult =   F_USB_DEVICE_AUDIO_V2_Transfer(instanceIndex, transferHandle, 
                            interfaceNumber, data, size, USB_DEVICE_AUDIO_V2_READ );
         return audioResult; 
 }
@@ -264,7 +264,7 @@ USB_DEVICE_AUDIO_V2_RESULT USB_DEVICE_AUDIO_V2_Write
         SYS_ASSERT(false, "Write Queue is full");
         return(USB_DEVICE_AUDIO_V2_RESULT_ERROR_TRANSFER_QUEUE_FULL);
     }
-	audioResult =   F_USB_DEVICE_AUDIO_V2_Transfer(instanceIndex, transferHandle, 
+    audioResult =   F_USB_DEVICE_AUDIO_V2_Transfer(instanceIndex, transferHandle, 
                           interfaceNumber, data, size, USB_DEVICE_AUDIO_V2_WRITE );
     return audioResult;
 }
@@ -274,18 +274,18 @@ USB_DEVICE_AUDIO_V2_RESULT USB_DEVICE_AUDIO_V2_Write
 /*******************************************************************************
   Function:
     USB_DEVICE_AUDIO_V2_RESULT F_USB_DEVICE_AUDIO_V2_Transfer
-	(
-		USB_DEVICE_AUDIO_V2_INDEX iAudio,
-		USB_DEVICE_AUDIO_V2_TRANSFER_HANDLE *transferHandle,
-		uint8_t interfaceNum ,
-		void * data ,
-		size_t size,
-		USB_DEVICE_AUDIO_V2_TRANSFER_DIRECTION direction
-	); 
+    (
+        USB_DEVICE_AUDIO_V2_INDEX iAudio,
+        USB_DEVICE_AUDIO_V2_TRANSFER_HANDLE *transferHandle,
+        uint8_t interfaceNum ,
+        void * data ,
+        size_t size,
+        USB_DEVICE_AUDIO_V2_TRANSFER_DIRECTION direction
+    ); 
     
   Summary:
     This function schedules an Audio transfer. This is a local function and should
-	be called by applications directly. 
+    be called by applications directly. 
 
 ********************************************************************************/
 
@@ -498,15 +498,15 @@ USB_DEVICE_AUDIO_V2_RESULT F_USB_DEVICE_AUDIO_V2_Transfer
             {
                 if (direction == USB_DEVICE_AUDIO_V2_READ )
                 {
-					status = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
+                    status = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
                     thisAudioInstance->currentQSizeRead--;
-					OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, status);
+                    OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, status);
                 }
                 else
                 {
-					status = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
+                    status = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
                     thisAudioInstance->currentQSizeWrite--;
-					OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, status);
+                    OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, status);
                 }
                 /* Invalidate the Transfer handle.  */
                 *transferHandle = USB_DEVICE_AUDIO_V2_TRANSFER_HANDLE_INVALID;
@@ -523,13 +523,13 @@ USB_DEVICE_AUDIO_V2_RESULT F_USB_DEVICE_AUDIO_V2_Transfer
             }
 
             return((USB_DEVICE_AUDIO_V2_RESULT)irpErr);
-	}
+    }
     }
     /*Release mutex, done with shared resource*/
     osalError = OSAL_MUTEX_Unlock(&gUSBDeviceAudioV2CommonDataObj.mutexAUDIOIRP);
     if(osalError != (OSAL_RESULT)OSAL_RESULT_TRUE)
     {
-	/*Do not proceed, unlock was not complete, or error occurred, 
+    /*Do not proceed, unlock was not complete, or error occurred, 
      * let user know about error*/
         return (USB_DEVICE_AUDIO_V2_RESULT_ERROR);
     }

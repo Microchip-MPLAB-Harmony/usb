@@ -333,14 +333,14 @@ USB_DEVICE_AUDIO_RESULT USB_DEVICE_AUDIO_StatusSend
         thisAudioInstance = &gUsbDeviceAudioInstance[instanceIndex];
         * transferHandle = USB_DEVICE_AUDIO_TRANSFER_HANDLE_INVALID;
         
-		/* Get pointer to the Status Interrupt Endpoint */ 
+        /* Get pointer to the Status Interrupt Endpoint */ 
         endpoint = &thisAudioInstance->infCollection.intEp;
         
         if ((thisAudioInstance->infCollection.isIntEpExists != true)
             || (endpoint->status != true))
         
         {
-			/* This means status interrupt endpoint does not exists in the descriptors */ 
+            /* This means status interrupt endpoint does not exists in the descriptors */ 
             SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSB Device Audio v1.0 : Instance %d: Instance not configured", instanceIndex);
             audioResult = USB_DEVICE_AUDIO_RESULT_ERROR_INSTANCE_NOT_CONFIGURED; 
         }

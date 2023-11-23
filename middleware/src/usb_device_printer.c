@@ -211,7 +211,7 @@ void F_USB_DEVICE_PRINTER_Initialization
     USB_ENDPOINT_DESCRIPTOR *pEPDesc;
     USB_INTERFACE_DESCRIPTOR *pInfDesc;
     USB_DEVICE_PRINTER_INIT *prnInitializationData;
-	uint32_t count; 
+    uint32_t count; 
 
     /* Check the validity of the function driver index */
     if (iPRN >= (uint16_t)USB_DEVICE_PRINTER_INSTANCES_NUMBER)

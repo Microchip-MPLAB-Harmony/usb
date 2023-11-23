@@ -445,8 +445,8 @@ typedef enum
     
     /* Host pipe invalid */
     USB_ERROR_HOST_PIPE_INVALID,
-	
-	/* Invalid arguments */
+    
+    /* Invalid arguments */
     USB_ERROR_HOST_ARGUMENTS_INVALID,
 
     /* Header size invalid */
@@ -535,11 +535,11 @@ typedef enum
 
 typedef enum
 {
-	USB_SPEED_ERROR = 0,         // Error in obtaining USB module speed
-    USB_SPEED_HIGH = 1,        	// USB module is at high speed				
-    USB_SPEED_FULL = 2, 		// USB module is at full speed
-    USB_SPEED_LOW  = 3, 		// USB module is at low speed		
-	
+    USB_SPEED_ERROR = 0,         // Error in obtaining USB module speed
+    USB_SPEED_HIGH = 1,            // USB module is at high speed                
+    USB_SPEED_FULL = 2,         // USB module is at full speed
+    USB_SPEED_LOW  = 3,         // USB module is at low speed        
+    
 } USB_SPEED;
 
 //DOM-IGNORE-BEGIN

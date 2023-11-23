@@ -227,135 +227,135 @@ typedef uintptr_t USB_DEVICE_AUDIO_V2_INDEX;
                 // This event indicates the Current entity request has been 
                 // received.
                 USB_AUDIO_CONTROL_INTERFACE_REQUEST* controlRequest;
-				controlRequest = (USB_AUDIO_CONTROL_INTERFACE_REQUEST*) setupPkt;
-				switch(controlRequest->entityID)
-				{
-					case APP_ID_CLOCK_SOURCE:
-						USB_AUDIO_CLOCKSOURCE_CONTROL_REQUEST* 
+                controlRequest = (USB_AUDIO_CONTROL_INTERFACE_REQUEST*) setupPkt;
+                switch(controlRequest->entityID)
+                {
+                    case APP_ID_CLOCK_SOURCE:
+                        USB_AUDIO_CLOCKSOURCE_CONTROL_REQUEST* 
                                                             clockSourceRequest;
-						clockSourceRequest = 
+                        clockSourceRequest = 
                         (USB_AUDIO_CLOCKSOURCE_CONTROL_REQUEST*) controlRequest;
-						 
-						if (clockSourceRequest->bRequest == CUR)
-						{
-							switch(clockSourceRequest->controlSelector)
-							{
-								case CS_SAM_FREQ_CONTROL:
-								{
-									if ((controlRequest->bmRequestType & 0x80) 
+                         
+                        if (clockSourceRequest->bRequest == CUR)
+                        {
+                            switch(clockSourceRequest->controlSelector)
+                            {
+                                case CS_SAM_FREQ_CONTROL:
+                                {
+                                    if ((controlRequest->bmRequestType & 0x80) 
                                                                            == 0)
-									{
-										//A control write transfer received 
+                                    {
+                                        //A control write transfer received 
                                         //from Host. Now receive data from Host.
-										USB_DEVICE_ControlReceive(
+                                        USB_DEVICE_ControlReceive(
                                                            appData.usbDevHandle,
                                                  void *) &(appData.clockSource),
                                                                 4 );
-										appData.currentAudioControl = 
+                                        appData.currentAudioControl = 
                                               APP_USB_AUDIO_CLOCKSOURCE_CONTROL;
-									}
-									else
-									{
-										//Handle Get request
-										USB_DEVICE_ControlSend(
+                                    }
+                                    else
+                                    {
+                                        //Handle Get request
+                                        USB_DEVICE_ControlSend(
                                                            appData.usbDevHandle,
                                                  (void *)&(appData.clockSource),
                                                              4 );
-										appData.currentAudioControl = 
+                                        appData.currentAudioControl = 
                                                            APP_USB_CONTROL_NONE;
-									}
-								}
-								break;
+                                    }
+                                }
+                                break;
 
-								case CS_CLOCK_VALID_CONTROL:
-								{
-									if ((controlRequest->bmRequestType & 0x80) 
+                                case CS_CLOCK_VALID_CONTROL:
+                                {
+                                    if ((controlRequest->bmRequestType & 0x80) 
                                                                         == 0x80)
-									{
-										//Handle Get request
-										USB_DEVICE_ControlSend(
+                                    {
+                                        //Handle Get request
+                                        USB_DEVICE_ControlSend(
                                                            appData.usbDevHandle,
                                                  (void *)&(appData.clockValid), 
                                                                1);
-									}
-									else
-									{
-										 USB_DEVICE_ControlStatus( 
+                                    }
+                                    else
+                                    {
+                                         USB_DEVICE_ControlStatus( 
                                                            appData.usbDevHandle,
                                               USB_DEVICE_CONTROL_STATUS_ERROR);
 
-									}
-								}
-								break;
+                                    }
+                                }
+                                break;
 
-								default:
-									//This USB Audio Speaker application does 
+                                default:
+                                    //This USB Audio Speaker application does 
                                     //not support any other feature unit request
-									//from Host. So Stall if any other feature 
+                                    //from Host. So Stall if any other feature 
                                     //unit request received from Host.
-									USB_DEVICE_ControlStatus (
+                                    USB_DEVICE_ControlStatus (
                                                            appData.usbDevHandle,
                                                USB_DEVICE_CONTROL_STATUS_ERROR);
-								break;
+                                break;
 
-							} 
-						}
-				
-			case USB_DEVICE_AUDIO_V2_RANGE_ENTITY_SETTINGS_RECEIVED:
-				// This event indicates the Range entity request has been 
+                            } 
+                        }
+                
+            case USB_DEVICE_AUDIO_V2_RANGE_ENTITY_SETTINGS_RECEIVED:
+                // This event indicates the Range entity request has been 
                 // received.
-				USB_AUDIO_CONTROL_INTERFACE_REQUEST* controlRequest;
-				controlRequest = (USB_AUDIO_CONTROL_INTERFACE_REQUEST*)setupPkt;
-				switch(controlRequest->entityID)
-				{
-					case APP_ID_CLOCK_SOURCE:
-						USB_AUDIO_CLOCKSOURCE_CONTROL_REQUEST* clockSourceRequest;
-						clockSourceRequest = 
+                USB_AUDIO_CONTROL_INTERFACE_REQUEST* controlRequest;
+                controlRequest = (USB_AUDIO_CONTROL_INTERFACE_REQUEST*)setupPkt;
+                switch(controlRequest->entityID)
+                {
+                    case APP_ID_CLOCK_SOURCE:
+                        USB_AUDIO_CLOCKSOURCE_CONTROL_REQUEST* clockSourceRequest;
+                        clockSourceRequest = 
                         (USB_AUDIO_CLOCKSOURCE_CONTROL_REQUEST*) controlRequest;
-						if (clockSourceRequest->bRequest == RANGE)
-						{
-							switch(clockSourceRequest->controlSelector)
-							{
-								case CS_SAM_FREQ_CONTROL:
-								{
-									if ((controlRequest->bmRequestType & 0x80) 
+                        if (clockSourceRequest->bRequest == RANGE)
+                        {
+                            switch(clockSourceRequest->controlSelector)
+                            {
+                                case CS_SAM_FREQ_CONTROL:
+                                {
+                                    if ((controlRequest->bmRequestType & 0x80) 
                                                                         == 0x80)
-									{
-										//A control read transfer received from 
+                                    {
+                                        //A control read transfer received from 
                                         // Host. Now send data to Host.
-										USB_DEVICE_ControlSend(
+                                        USB_DEVICE_ControlSend(
                                                            appData.usbDevHandle, 
                                             void *) &(appData.clockSourceRange),
                                               sizeof(appData.clockSourceRange));
-									}
-									else
-									{
-										//Handle Get request
-										// USB_DEVICE_ControlReceive(
+                                    }
+                                    else
+                                    {
+                                        //Handle Get request
+                                        // USB_DEVICE_ControlReceive(
                                                            appData.usbDevHandle,
                                          (void *)&(appData.clockSourceRange[0]),
                                              sizeof(appData.clockSourceRange) );
-										USB_DEVICE_ControlStatus(
+                                        USB_DEVICE_ControlStatus(
                                                            appData.usbDevHandle,
                                                USB_DEVICE_CONTROL_STATUS_ERROR);
-									}
-								}
-								break;
+                                    }
+                                }
+                                break;
 
-								default:
-									//This USB Audio Speaker application does 
+                                default:
+                                    //This USB Audio Speaker application does 
                                     // not support any other feature unit 
                                     // request from Host. So Stall if any other 
                                     // feature unit request received from Host.
-									USB_DEVICE_ControlStatus (
+                                    USB_DEVICE_ControlStatus (
                                                            appData.usbDevHandle,
                                                USB_DEVICE_CONTROL_STATUS_ERROR);
-								break;
+                                break;
 
-							} 
-						}
+                            } 
+                        }
         
-				}
+                }
         
     
     </code>
@@ -1008,8 +1008,8 @@ USB_DEVICE_AUDIO_V2_RESULT USB_DEVICE_AUDIO_V2_Read
     This function cancels a scheduled Audio v2.0 Device data transfer. The transfer
     could have been scheduled  using the USB_DEVICE_AUDIO_V2_Read,
     USB_DEVICE_AUDIO_V2_Write, or the USB_DEVICE_AUDIO_V2_SerialStateNotificationSend 
-	function. If a transfer is still in the queue and its processing has not started, 
-	the transfer is canceled completely. A transfer that is in progress may or may not get
+    function. If a transfer is still in the queue and its processing has not started, 
+    the transfer is canceled completely. A transfer that is in progress may or may not get
     canceled depending on the transaction that is presently in progress. If the
     last transaction of the transfer is in progress, the transfer will not
     be canceled.  If it is not the last transaction in progress, the

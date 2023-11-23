@@ -1850,7 +1850,7 @@ void F_USB_DEVICE_MSD_Deinitialization ( SYS_MODULE_INDEX iMSD )
     {
         if( msdInstance->mediaDynamicData[count].mediaHandle != DRV_HANDLE_INVALID )
         {
-			mediaFunctions = &msdInstance->mediaData[count].mediaFunctions;
+            mediaFunctions = &msdInstance->mediaData[count].mediaFunctions;
             mediaFunctions->close(msdInstance->mediaDynamicData[count].mediaHandle);
         }
     }
@@ -1883,24 +1883,24 @@ void F_USB_DEVICE_MSD_Deinitialization ( SYS_MODULE_INDEX iMSD )
 
 void F_USB_DEVICE_MSD_ResetSenseData( SCSI_SENSE_DATA * senseData )
 {
-   	senseData->ResponseCode = (uint8_t)SCSI_SENSE_CURRENT;
-	senseData->VALID = 0;			// no data in the information field
-	senseData->Obsolete = 0x0;
-	senseData->SenseKey = (uint8_t)SCSI_SENSE_NO_SENSE;
-	senseData->ILI = 0;
-	senseData->EOM = 0;
-	senseData->FILEMARK = 0;
-	senseData->InformationB0 = 0x00;
-	senseData->InformationB1 = 0x00;
-	senseData->InformationB2 = 0x00;
-	senseData->InformationB3 = 0x00;
-	senseData->AddSenseLen = 0x0a;	// n-7 (n=17 (0..17))
-	senseData->CmdSpecificInfo = 0x00000000;
-	senseData->ASC = 0x0;
-	senseData->ASCQ = 0x0;
-	senseData->FRUC = 0x0;
-	senseData->SenseKeySpecific[0] = 0x0;
-	senseData->SenseKeySpecific[1] = 0x0;
-	senseData->SenseKeySpecific[2] = 0x0;
+       senseData->ResponseCode = (uint8_t)SCSI_SENSE_CURRENT;
+    senseData->VALID = 0;            // no data in the information field
+    senseData->Obsolete = 0x0;
+    senseData->SenseKey = (uint8_t)SCSI_SENSE_NO_SENSE;
+    senseData->ILI = 0;
+    senseData->EOM = 0;
+    senseData->FILEMARK = 0;
+    senseData->InformationB0 = 0x00;
+    senseData->InformationB1 = 0x00;
+    senseData->InformationB2 = 0x00;
+    senseData->InformationB3 = 0x00;
+    senseData->AddSenseLen = 0x0a;    // n-7 (n=17 (0..17))
+    senseData->CmdSpecificInfo = 0x00000000;
+    senseData->ASC = 0x0;
+    senseData->ASCQ = 0x0;
+    senseData->FRUC = 0x0;
+    senseData->SenseKeySpecific[0] = 0x0;
+    senseData->SenseKeySpecific[1] = 0x0;
+    senseData->SenseKeySpecific[2] = 0x0;
 }
 

@@ -144,7 +144,7 @@ typedef enum
     USB_DEVICE_PRINTER_STATE_DATA_IN,
     USB_DEVICE_PRINTER_STATE_DATA_OUT,
     USB_DEVICE_PRINTER_STATE_IDLE
-	
+    
 } USB_DEVICE_PRINTER_STATE;
 
 // *****************************************************************************
@@ -299,7 +299,7 @@ void F_USB_DEVICE_PRINTER_Initialization
 // *****************************************************************************
 
 /* Function:
-    void	F_USB_DEVICE_PRINTER_Deinitialization (SYS_MODULE_INDEX iPRN)
+    void    F_USB_DEVICE_PRINTER_Deinitialization (SYS_MODULE_INDEX iPRN)
 
   Summary:
     Printer function driver deinitialization.
@@ -312,7 +312,7 @@ void F_USB_DEVICE_PRINTER_Initialization
     None.
 
   Parameters:
-    iPRN	- USB function driver index
+    iPRN    - USB function driver index
 
   Returns:
     None.

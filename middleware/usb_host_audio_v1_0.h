@@ -513,7 +513,7 @@ USB_HOST_AUDIO_V1_STREAM_EVENT_WRITE_COMPLETE_DATA;
     in conjunction with the following events:
     - USB_HOST_AUDIO_V1_STREAM_EVENT_INTERFACE_SET_COMPLETE
     - USB_HOST_AUDIO_V1_STREAM_EVENT_SAMPLING_FREQUENCY_SET_COMPLETE
-	- USB_HOST_AUDIO_V1_STREAM_EVENT_SAMPLING_FREQUENCY_GET_COMPLETE
+    - USB_HOST_AUDIO_V1_STREAM_EVENT_SAMPLING_FREQUENCY_GET_COMPLETE
 
   Remarks:
     None.
@@ -627,14 +627,14 @@ typedef USB_HOST_AUDIO_V1_STREAM_EVENT_RESPONSE (* USB_HOST_AUDIO_V1_STREAM_EVEN
                      this event
    - result        - Completion result of the control transfer. This will be
                      USB_HOST_AUDIO_V1_RESULT_SUCCESS if the control transfer
-		             completed successfully, USB_HOST_AUDIO_V1_RESULT_FAILURE if 
-		             an unknown failure occurred, or 
-		             USB_HOST_AUDIO_V1_RESULT_REQUEST_STALLED if the request was 
-		             stalled.
+                     completed successfully, USB_HOST_AUDIO_V1_RESULT_FAILURE if 
+                     an unknown failure occurred, or 
+                     USB_HOST_AUDIO_V1_RESULT_REQUEST_STALLED if the request was 
+                     stalled.
    - size          - Size of the data stage that was transferred
    - context       - Value identifying the context of the application that was
                      provided when the USB_HOST_AUDIO_V1_ControlRequest 
-		             function was called
+                     function was called
 
   Remarks:
     None.
@@ -682,9 +682,9 @@ typedef void (* USB_HOST_AUDIO_V1_ENTITY_REQUEST_CALLBACK)
 
   Returns:
     - USB_HOST_AUDIO_V1_RESULT_SUCCESS - If the attach event handler was registered 
-	                                     successfully 
+                                         successfully 
     - USB_HOST_AUDIO_V1_RESULT_FAILURE - If the number of registered event handlers 
-	                                     has exceeded USB_HOST_AUDIO_V1_ATTACH_LISTENERS_NUMBER
+                                         has exceeded USB_HOST_AUDIO_V1_ATTACH_LISTENERS_NUMBER
 
   Remarks:
     This function should be called before the USB_HOST_BusEnable function is called.
@@ -709,14 +709,14 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_AttachEventHandlerSet
   Description:
     This function returns the device object handle for this Audio v1.0 Device.
     This returned handle can be used by the application to perform device-level 
-	operations, such as obtaining the string descriptors.
+    operations, such as obtaining the string descriptors.
 
   Precondition:
     None.
 
   Parameters:
     audioDeviceObj - Audio V1.0 device object handle returned in the 
-	                 USB_HOST_AUDIO_V1_ATTACH_EVENT_HANDLER function.
+                     USB_HOST_AUDIO_V1_ATTACH_EVENT_HANDLER function.
 
   Returns:
     Will return a valid device object handle if the device is still connected
@@ -755,9 +755,9 @@ USB_HOST_DEVICE_OBJ_HANDLE USB_HOST_AUDIO_V1_DeviceObjHandleGet
    Parameters:
     audioDeviceObj                - Audio v1.0 device object.
     appAudioEntityRequestCallback - A pointer to event handler function. If NULL, 
-	                                events will not be generated.
+                                    events will not be generated.
     context                       - Application specific context that is 
-	                                returned in the event handler.
+                                    returned in the event handler.
 
    Returns:
     - USB_HOST_AUDIO_V1_RESULT_SUCCESS     - The operation was successful
@@ -871,11 +871,11 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceGetNext
 
   Summary:
     Gets the first streaming interface setting object within an audio streaming 
-	interface.
+    interface.
     
   Description:
     This function gets the first streaming interface setting object within an 
-	audio streaming interface.
+    audio streaming interface.
     
   Precondition:
     The Audio v1.0 Device should have been attached. 
@@ -916,11 +916,11 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceSettingGetFirst
 
    Summary:
     Gets the next streaming interface setting object within an audio streaming 
-	interface.
+    interface.
     
    Description:
     This function gets the next streaming interface setting object within an 
-	audio streaming interface.
+    audio streaming interface.
     
    Precondition:
     The Audio v1.0 Device should have been attached. 
@@ -1042,7 +1042,7 @@ USB_AUDIO_V1_FORMAT_TAG USB_HOST_AUDIO_V1_StreamingInterfaceFormatTagGet
     
    Description:
     This function returns the number of channels of the specified streaming 
-	interface setting. 
+    interface setting. 
     
    Precondition:
     The Audio v1.0 Device should have been attached. 
@@ -1081,7 +1081,7 @@ uint8_t USB_HOST_AUDIO_V1_StreamingInterfaceChannelNumbersGet
     
    Description:
     This function returns the sub-frame size of the specified streaming 
-	interface setting.
+    interface setting.
     
    Precondition:
     The Audio v1.0 Device should have been attached. 
@@ -1121,7 +1121,7 @@ uint8_t USB_HOST_AUDIO_V1_StreamingInterfaceSubFrameSizeGet
     
    Description:
     This function returns the bit resolution size of the specified streaming 
-	interface setting.
+    interface setting.
     
    Precondition:
     The Audio v1.0 Device should have been attached. 
@@ -1215,7 +1215,7 @@ uint8_t USB_HOST_AUDIO_V1_StreamingInterfaceSamplingFrequencyTypeGet
 
    Returns:
     A pointer to the sampling frequencies supported by the audio streaming 
-	interface setting. 
+    interface setting. 
      
    Remarks:
     None.
@@ -1370,8 +1370,8 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_ControlEntityGetNext
 
   Returns:
     - USB_HOST_AUDIO_V1_RESULT_SUCCESS - The operation was successful
-	- USB_HOST_AUDIO_V1_RESULT_FAILURE - The entity Id could not be found or an 
-	  unknown failure occurred
+    - USB_HOST_AUDIO_V1_RESULT_FAILURE - The entity Id could not be found or an 
+      unknown failure occurred
 
   Remarks:
     None.
@@ -1397,7 +1397,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_EntityObjectGet
 
   Description:
     This function returns the entity type of the audio control entity. 
-	Prior to calling this function the entity object should be obtained by calling 
+    Prior to calling this function the entity object should be obtained by calling 
     USB_HOST_AUDIO_V1_ControlEntityGetFirst, USB_HOST_AUDIO_V1_ControlEntityGetNext, or
     USB_HOST_AUDIO_V1_EntityObjectGet. 
      
@@ -1433,7 +1433,7 @@ USB_AUDIO_V1_ENTITY_TYPE USB_HOST_AUDIO_V1_EntityTypeGet
     This function returns the Terminal ID of the Audio Control entity. Prior to
     calling this function the entity object should be obtained by calling  
     USB_HOST_AUDIO_V1_ControlEntityGetFirst, USB_HOST_AUDIO_V1_ControlEntityGetNext, 
-	or USB_HOST_AUDIO_V1_EntityObjectGet. 
+    or USB_HOST_AUDIO_V1_EntityObjectGet. 
      
   Parameters:
     audioObj     - USB Host Audio v1.0 Device object 
@@ -1503,7 +1503,7 @@ USB_AUDIO_V1_TERMINAL_TYPE USB_HOST_AUDIO_V1_TerminalTypeGet
     This function returns the ID of the associated terminal type of the audio control
     terminal.  Prior to calling this function the entity object should be obtained by
     calling USB_HOST_AUDIO_V1_ControlEntityGetFirst, USB_HOST_AUDIO_V1_ControlEntityGetNext, 
-	or USB_HOST_AUDIO_V1_EntityObjectGet. 
+    or USB_HOST_AUDIO_V1_EntityObjectGet. 
      
   Parameters:
     audioObj     - USB Host Audio v1.0 Device object
@@ -1539,7 +1539,7 @@ uint8_t USB_HOST_AUDIO_V1_TerminalAssociationGet
     output audio channel cluster. This function is only applicable to an input
     terminal.  Prior to calling this function the entity object should be obtained by
     calling USB_HOST_AUDIO_V1_ControlEntityGetFirst, USB_HOST_AUDIO_V1_ControlEntityGetNext, 
-	or USB_HOST_AUDIO_V1_EntityObjectGet. 
+    or USB_HOST_AUDIO_V1_EntityObjectGet. 
      
   Parameters:
     audioObj     - USB Host Audio v1.0 device object.
@@ -1562,22 +1562,22 @@ uint8_t USB_HOST_AUDIO_V1_TerminalInputChannelNumbersGet
 // *****************************************************************************
 /* Function:
     USB_AUDIO_CHANNEL_CONFIG USB_HOST_AUDIO_V1_TerminalInputChannelConfigGet
-	(
-		USB_HOST_AUDIO_V1_OBJ  audioObj,
-		USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ entityObject
-	); 
+    (
+        USB_HOST_AUDIO_V1_OBJ  audioObj,
+        USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ entityObject
+    ); 
 
   Summary:
     Returns a structure that describes the spatial location of the logical 
-	channels of in the terminal's output audio channel cluster.
-	
+    channels of in the terminal's output audio channel cluster.
+    
   Description:
     This function returns a structure that describes the spatial location of 
-	the logical channels of in the terminal's output audio channel cluster. 
-	This function is only applicable to an input terminal.  Prior to calling this
-	function the entity object should be obtained by calling 
-	USB_HOST_AUDIO_V1_ControlEntityGetFirst, USB_HOST_AUDIO_V1_ControlEntityGetNext, 
-	or USB_HOST_AUDIO_V1_EntityObjectGet. 
+    the logical channels of in the terminal's output audio channel cluster. 
+    This function is only applicable to an input terminal.  Prior to calling this
+    function the entity object should be obtained by calling 
+    USB_HOST_AUDIO_V1_ControlEntityGetFirst, USB_HOST_AUDIO_V1_ControlEntityGetNext, 
+    or USB_HOST_AUDIO_V1_EntityObjectGet. 
      
   Parameters:
     audioObj     - USB Host Audio v1.0 device object 
@@ -1612,7 +1612,7 @@ USB_AUDIO_CHANNEL_CONFIG USB_HOST_AUDIO_V1_TerminalInputChannelConfigGet
     connected. This function is only applicable to an output terminal.  Prior to
     calling this function the entity object should be obtained by calling 
     USB_HOST_AUDIO_V1_ControlEntityGetFirst, USB_HOST_AUDIO_V1_ControlEntityGetNext, 
-	or USB_HOST_AUDIO_V1_EntityObjectGet. 
+    or USB_HOST_AUDIO_V1_EntityObjectGet. 
      
   Parameters:
     audioObj     - USB Host Audio v1.0 Device object 
@@ -1747,7 +1747,7 @@ uint8_t USB_HOST_AUDIO_V1_FeatureUnitChannelNumbersGet
 
   Summary:
     Returns "true" if mute control exists for the specified channel of the 
-	feature unit. 
+    feature unit. 
 
   Description:
     This function returns "true" if mute control exists on the specified channel
@@ -1798,7 +1798,7 @@ bool USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists
     USB_HOST_AUDIO_V1_FeatureUnitChannelMuteExists function. 
  
     If the request was scheduled successfully, the requestHandle parameter will 
-	contain a request handle that uniquely identifies this transfer. If the transfer
+    contain a request handle that uniquely identifies this transfer. If the transfer
     could not be scheduled successfully, requestHandle will contain
     USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID.
  
@@ -2022,7 +2022,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSet
     USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeExists function. 
  
     If the request was scheduled successfully, the requestHandle parameter will 
-	contain a request handle that uniquely identifies this request. If the request
+    contain a request handle that uniquely identifies this request. If the request
     could not be scheduled successfully, requestHandle will contain
     USB_HOST_AUDIO_V1_REQUEST_HANDLE_INVALID.
  
@@ -2066,24 +2066,24 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeGet
 // *****************************************************************************
 /* Function:
     USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSubRangeNumbersGet
-	(
-		USB_HOST_AUDIO_V1_OBJ  audioObj,
-		USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ entityObject, 
-		USB_HOST_AUDIO_V1_REQUEST_HANDLE * requestHandle,
-		uint8_t channelNumber,
-		uint16_t *nSubRanges	 
-	);
+    (
+        USB_HOST_AUDIO_V1_OBJ  audioObj,
+        USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ entityObject, 
+        USB_HOST_AUDIO_V1_REQUEST_HANDLE * requestHandle,
+        uint8_t channelNumber,
+        uint16_t *nSubRanges     
+    );
 
   Summary:
     Schedules a control request to an Audio Device feature unit to get the number 
-	of sub-ranges supported by the volume control on the specified channel. 
+    of sub-ranges supported by the volume control on the specified channel. 
 
   Description:
     This function schedules a control request to the Audio Device feature unit to 
-	get the number of sub-ranges supported by the volume control on the specified 
-	channel. Prior to calling this function the user should check if volume control 
-	exists on the specified channel by calling the 
-	USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeExists function. 
+    get the number of sub-ranges supported by the volume control on the specified 
+    channel. Prior to calling this function the user should check if volume control 
+    exists on the specified channel by calling the 
+    USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeExists function. 
  
     If the request was scheduled successfully, the requestHandle parameter will contain a
     request handle that uniquely identifies this request. If the request
@@ -2101,7 +2101,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeGet
     requestHandle - Output parameter that will contain the handle to this request
     channelNumber - Channel number to which the volume control is addressed 
     nSubRanges    - Output parameter that will contain the number of sub-ranges 
-	                when the request is completed and a callback is received
+                    when the request is completed and a callback is received
 
   Returns:
     - USB_HOST_AUDIO_V1_RESULT_SUCCESS - The request was scheduled successfully.
@@ -2119,41 +2119,41 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeGet
 */
 USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSubRangeNumbersGet
 (
-	USB_HOST_AUDIO_V1_OBJ  audioObj,
+    USB_HOST_AUDIO_V1_OBJ  audioObj,
     USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ entityObject, 
     USB_HOST_AUDIO_V1_REQUEST_HANDLE * requestHandle,
     uint8_t channelNumber,
-	uint16_t *nSubRanges	 
+    uint16_t *nSubRanges     
 );
 
 // *****************************************************************************
 /* Function:
     USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeRangeGet
-	(
-		 USB_HOST_AUDIO_V1_OBJ  audioObj,
-		 USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ entityObject, 
-		 USB_HOST_AUDIO_V1_REQUEST_HANDLE * requestHandle,
-		 uint8_t channelNumber,
-		 void * data, 
-		 size_t size
-	);
+    (
+         USB_HOST_AUDIO_V1_OBJ  audioObj,
+         USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ entityObject, 
+         USB_HOST_AUDIO_V1_REQUEST_HANDLE * requestHandle,
+         uint8_t channelNumber,
+         void * data, 
+         size_t size
+    );
 
   Summary:
     Schedules a control request to the Audio Device feature unit to get the range 
-	supported by the volume control on the specified channel. 
+    supported by the volume control on the specified channel. 
 
   Description:
     This function schedules a control request to the Audio Device feature unit to get 
-	the range supported by the volume control on the specified channel. 
-	
-	Prior to calling this function the user should call the 
+    the range supported by the volume control on the specified channel. 
+    
+    Prior to calling this function the user should call the 
     USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSubRangeNumbersGet function 
-	to know how many sub-ranges are supported.
+    to know how many sub-ranges are supported.
 
-	Users should calculate the 'size' parameter of this function, as follows: 
-	
-	<c>size = Size of number of ranges + nSubRanges * (Size (MIN) + Size (MAX) + Size of (RES))</c> 
-	
+    Users should calculate the 'size' parameter of this function, as follows: 
+    
+    <c>size = Size of number of ranges + nSubRanges * (Size (MIN) + Size (MAX) + Size of (RES))</c> 
+    
     If the request was scheduled successfully, the requestHandle parameter will contain a
     request handle that uniquely identifies this request. If the request
     could not be scheduled successfully, requestHandle will contain
@@ -2170,7 +2170,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeSubRangeNumbe
     requestHandle - Output parameter that will contain the handle to this request
     channelNumber - Channel number to which the volume control is addressed 
     nSubRanges    - Output parameter that will contain the number of sub-ranges 
-	                when the request is completed and a callback is received
+                    when the request is completed and a callback is received
 
   Returns:
     - USB_HOST_AUDIO_V1_RESULT_SUCCESS - The request was scheduled successfully.
@@ -2192,8 +2192,8 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeRangeGet
      USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ entityObject, 
      USB_HOST_AUDIO_V1_REQUEST_HANDLE * requestHandle,
      uint8_t channelNumber,
-	 void * data, 
-	 size_t size
+     void * data, 
+     size_t size
 );
 
 // ****************************************************************************
@@ -2228,7 +2228,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_FeatureUnitChannelVolumeRangeGet
   Return:
     Will return a valid handle if the audio stream could be opened
     successfully. Otherwise, USB_HOST_AUDIO_V1_RESULT_HANDLE_INVALID is returned. 
-	The function will return a valid handle if the stream is ready to be opened.
+    The function will return a valid handle if the stream is ready to be opened.
 
   Remarks:
     None.                                                                   
@@ -2289,7 +2289,7 @@ void USB_HOST_AUDIO_V1_StreamClose
     This function registers a client specific Audio v1.0 stream event handler.
     The Audio v1.0 Host Client Driver will call the appAudioHandler function
     specified as the second argument with relevant event and associated event data 
-	in response to audio stream data transfers that have been scheduled by the
+    in response to audio stream data transfers that have been scheduled by the
     client.
     
   Precondition:
@@ -2334,9 +2334,9 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamEventHandlerSet
     This function schedules an audio stream enable request for the specified
     audio stream. An audio stream must be enable before scheduling any data
     transfer with the stream. A USB_HOST_AUDIO_V1_STREAM_EVENT_ENABLE_COMPLETE 
-	event is generated when this request is completed. 
-	USB_HOST_AUDIO_V1_STREAM_EVENT_ENABLE_COMPLETE_DATA returns the status and 
-	request handle of the request. 
+    event is generated when this request is completed. 
+    USB_HOST_AUDIO_V1_STREAM_EVENT_ENABLE_COMPLETE_DATA returns the status and 
+    request handle of the request. 
         
        
   Precondition:
@@ -2379,7 +2379,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamingInterfaceSet
   Description:
     This function schedules an audio stream set sampling rate request for the
     specified audio stream. A USB_HOST_AUDIO_V1_STREAM_EVENT_SAMPLING_RATE_SET_COMPLETE 
-	event is generated when this request is completed. 
+    event is generated when this request is completed. 
     USB_HOST_AUDIO_V1_STREAM_EVENT_SAMPLING_RATE_SET_COMPLETE_DATA returns 
     the status and request handle of the request. 
        
@@ -2423,7 +2423,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamSamplingFrequencySet
   Description:
     This function schedules an audio stream set sampling rate request for the
     specified audio stream. A USB_HOST_AUDIO_V1_STREAM_EVENT_SAMPLING_RATE_SET_COMPLETE 
-	event is generated when this request is completed. 
+    event is generated when this request is completed. 
     USB_HOST_AUDIO_V1_STREAM_EVENT_SAMPLING_RATE_SET_COMPLETE_DATA returns 
     the status and request handle of the request. 
         
@@ -2469,7 +2469,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamSamplingFrequencyGet
   Description:
     This function schedules an audio stream write request for the specified 
     audio stream. A USB_HOST_AUDIO_V1_STREAM_EVENT_WRITE_COMPLETE event is 
-	generated when this request is completed. 
+    generated when this request is completed. 
     USB_HOST_AUDIO_V1_STREAM_EVENT_WRITE_COMPLETE_DATA returns 
     the status and request handle of the request.
     
@@ -2519,7 +2519,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_StreamWrite
   Description:
     This function schedules an audio stream read request for the specified 
     audio stream. A USB_HOST_AUDIO_V1_STREAM_EVENT_READ_COMPLETE event is generated 
-	when this request is completed. 
+    when this request is completed. 
     USB_HOST_AUDIO_V1_STREAM_EVENT_READ_COMPLETE_DATA returns 
     the status and request handle of the request.
     
@@ -2747,38 +2747,38 @@ typedef uintptr_t USB_HOST_AUDIO_V1_0_STREAM_OBJ;
 
 typedef enum
 {
-	
-	/* The transfer or request could not be scheduled because internal
+    
+    /* The transfer or request could not be scheduled because internal
      * queues are full. The request or transfer should be retried */
     USB_HOST_AUDIO_V1_0_RESULT_BUSY  = /*  DOM-IGNORE-BEGIN */ USB_HOST_RESULT_REQUEST_BUSY, /* DOM-IGNORE-END*/
 
-	/* The transfer or requested was aborted */
+    /* The transfer or requested was aborted */
     USB_HOST_AUDIO_V1_0_RESULT_TRANSFER_ABORTED,
     
-	/* The request was stalled */    
+    /* The request was stalled */    
     USB_HOST_AUDIO_V1_0_RESULT_REQUEST_STALLED,
 
-	/* The specified Audio v1.0 Object is Invalid */ 
+    /* The specified Audio v1.0 Object is Invalid */ 
     USB_HOST_AUDIO_V1_0_RESULT_OBJ_INVALID,
 
     /* No more audio stream present in the Device */       
     USB_HOST_AUDIO_V1_0_RESULT_END_OF_STREAM_LIST,
     
-	/* DOM-IGNORE-BEGIN */
+    /* DOM-IGNORE-BEGIN */
     USB_HOST_AUDIO_V1_0_RESULT_ERROR_INTERFACE_UNKNOWN, 
     /* DOM-IGNORE-END*/
-	
-	/* A required parameter was invalid */
+    
+    /* A required parameter was invalid */
     USB_HOST_AUDIO_V1_0_RESULT_PARAMETER_INVALID, 
     
-	/* DOM-IGNORE-BEGIN */
+    /* DOM-IGNORE-BEGIN */
     USB_HOST_AUDIO_V1_0_RESULT_CONFIGURATION_UNKNOWN, 
 
     USB_HOST_AUDIO_V1_0_RESULT_BUS_NOT_ENABLED,
 
     USB_HOST_AUDIO_V1_0_RESULT_BUS_UNKNOWN,
-	/* DOM-IGNORE-END*/
-	
+    /* DOM-IGNORE-END*/
+    
     /* The specified device does not exist in the system */
     USB_HOST_AUDIO_V1_0_RESULT_DEVICE_UNKNOWN,
 
@@ -3124,7 +3124,7 @@ typedef void (* USB_HOST_AUDIO_V1_0_ATTACH_EVENT_HANDLER)
                  USB_HOST_AUDIO_V1_0_EVENT event, 
                  uintptr_t context
               );
-			  
+              
 // *****************************************************************************
 /* USB Host Audio v1.0 Class Driver Stream Event Handler Function Pointer Type.
 
@@ -3158,7 +3158,7 @@ typedef USB_HOST_AUDIO_V1_0_STREAM_EVENT_RESPONSE (* USB_HOST_AUDIO_V1_0_STREAM_
     USB_HOST_AUDIO_V1_0_STREAM_EVENT event,
     void * eventData,
     uintptr_t context );
-	
+    
 // *****************************************************************************
 /* USB Host Audio v1.0 Class driver Control Transfer Complete Callback Function
    Pointer type
@@ -3183,14 +3183,14 @@ typedef USB_HOST_AUDIO_V1_0_STREAM_EVENT_RESPONSE (* USB_HOST_AUDIO_V1_0_STREAM_
                      this event
    - result        - Completion result of the control transfer. This will be
                      USB_HOST_AUDIO_V1_0_RESULT_SUCCESS if the control transfer 
-					 completed successfully, USB_HOST_AUDIO_V1_0_RESULT_FAILURE 
-					 if an unknown failure occurred, or 
-					 USB_HOST_AUDIO_V1_0_RESULT_REQUEST_STALLED if the request 
-					 was stalled.
+                     completed successfully, USB_HOST_AUDIO_V1_0_RESULT_FAILURE 
+                     if an unknown failure occurred, or 
+                     USB_HOST_AUDIO_V1_0_RESULT_REQUEST_STALLED if the request 
+                     was stalled.
    size            - Size of the data stage that was transferred
    context         - Value identifying the context of the application that was
                      provided when the USB_HOST_AUDIO_V1_0_ControlRequest function 
-					 was called.
+                     was called.
 
   Remarks:
     None.
@@ -3271,8 +3271,8 @@ typedef void (* USB_HOST_AUDIO_V1_0_CONTROL_CALLBACK)
 
   Returns:
     This function will return a valid device object handle if the device is still 
-	connected to the system. Otherwise, USB_HOST_DEVICE_OBJ_HANDLE_INVALID is 
-	returned.
+    connected to the system. Otherwise, USB_HOST_DEVICE_OBJ_HANDLE_INVALID is 
+    returned.
 
   Remarks:
     None.                                                                   
@@ -3296,10 +3296,10 @@ typedef void (* USB_HOST_AUDIO_V1_0_CONTROL_CALLBACK)
 
   Description:
     This function schedules an Audio v1.0 control transfer. The audioObj parameter 
-	is an object of the Audio v1.0 Class Driver to which the audio control transfer 
-	is to be scheduled. The setupPacket parameter points to the SETUP command to be 
-	sent in the setup state of the control transfer. The size and the direction of 
-	the data stage is indicated by the SETUP packet. For control transfers where
+    is an object of the Audio v1.0 Class Driver to which the audio control transfer 
+    is to be scheduled. The setupPacket parameter points to the SETUP command to be 
+    sent in the setup state of the control transfer. The size and the direction of 
+    the data stage is indicated by the SETUP packet. For control transfers where
     there is no data stage, data is ignored and can be NULL. In all other instances,
     data should point to the data to data be transferred in the data stage of 
     the control transfer. 
@@ -3323,14 +3323,14 @@ typedef void (* USB_HOST_AUDIO_V1_0_CONTROL_CALLBACK)
     setupPacket   - Pointer to the SETUP packet to sent to the device in the SETUP
                     stage of the control transfer
     data          - For control transfer with a data stage, this should point to 
-	                data to be sent to the device (for a control write transfer) 
-					or point to the buffer that will receive data from the device 
-					(for a control read transfer). For control transfers that do not 
-					require a data stage, this parameter is ignored and can be NULL.
+                    data to be sent to the device (for a control write transfer) 
+                    or point to the buffer that will receive data from the device 
+                    (for a control read transfer). For control transfers that do not 
+                    require a data stage, this parameter is ignored and can be NULL.
     callback      - Pointer to the callback function that will be called when the 
-	                control transfer completes. If the callback function is NULL, 
-					there will be no notification of when the control transfer will 
-					complete.
+                    control transfer completes. If the callback function is NULL, 
+                    there will be no notification of when the control transfer will 
+                    complete.
     context       - User-defined context that is returned with the callback function
 
   Returns:
@@ -3515,8 +3515,8 @@ USB_HOST_AUDIO_V1_0_RESULT USB_HOST_AUDIO_V1_0_StreamGetNext
 
   Return:
     This function will return a valid handle if the audio stream could be opened 
-	successfully; otherwise, it will return USB_HOST_AUDIO_V1_0_STREAM_RESULT_HANDLE_INVALID. 
-	The function will return a valid handle if the stream is ready to be opened.
+    successfully; otherwise, it will return USB_HOST_AUDIO_V1_0_STREAM_RESULT_HANDLE_INVALID. 
+    The function will return a valid handle if the stream is ready to be opened.
 
   Remarks:
     None.                                                                   
@@ -3613,9 +3613,9 @@ USB_HOST_AUDIO_V1_0_STREAM_RESULT USB_HOST_AUDIO_V1_0_StreamEventHandlerSet
     This function schedules an audio stream enable request for the specified 
     audio stream. An audio stream must be enable before scheduling any data 
     transfer with the stream. A USB_HOST_AUDIO_V1_0_STREAM_EVENT_ENABLE_COMPLETE 
-	event is generated when this request is completed. 
-	USB_HOST_AUDIO_V1_0_STREAM_EVENT_ENABLE_COMPLETE_DATA returns the status and 
-	request handle of the request. 
+    event is generated when this request is completed. 
+    USB_HOST_AUDIO_V1_0_STREAM_EVENT_ENABLE_COMPLETE_DATA returns the status and 
+    request handle of the request. 
        
   Precondition:
     The audio stream should have been opened. Only one audio stream from an audio
@@ -3655,8 +3655,8 @@ USB_HOST_AUDIO_V1_0_STREAM_RESULT USB_HOST_AUDIO_V1_0_StreamEnable
   Description:
     This function schedules an audio stream disable request for the specified 
     audio stream. A USB_HOST_AUDIO_V1_0_STREAM_EVENT_DISABLE_COMPLETE event is 
-	generated when this request is completed. 
-	USB_HOST_AUDIO_V1_0_STREAM_EVENT_DISABLE_COMPLETE_DATA 
+    generated when this request is completed. 
+    USB_HOST_AUDIO_V1_0_STREAM_EVENT_DISABLE_COMPLETE_DATA 
     returns the status and request handle of the request. 
        
   Precondition:
@@ -3697,7 +3697,7 @@ USB_HOST_AUDIO_V1_0_STREAM_RESULT USB_HOST_AUDIO_V1_0_StreamDisable
   Description:
     This function schedules an audio stream set sampling rate request for the
     specified audio stream. A USB_HOST_AUDIO_V1_0_STREAM_EVENT_SAMPLING_RATE_SET_COMPLETE 
-	event is generated when this request is completed. 
+    event is generated when this request is completed. 
     USB_HOST_AUDIO_V1_0_STREAM_EVENT_SAMPLING_RATE_SET_COMPLETE_DATA returns 
     the status and request handle of the request. 
        
@@ -3741,7 +3741,7 @@ USB_HOST_AUDIO_V1_0_STREAM_RESULT USB_HOST_AUDIO_V1_0_StreamSamplingRateSet
   Description:
     This function schedules an audio stream write request for the specified 
     audio stream. A USB_HOST_AUDIO_V1_0_STREAM_EVENT_WRITE_COMPLETE event is 
-	generated when this request is completed. 
+    generated when this request is completed. 
     USB_HOST_AUDIO_V1_0_STREAM_EVENT_WRITE_COMPLETE_DATA returns 
     the status and request handle of the request.
     
@@ -3789,7 +3789,7 @@ USB_HOST_AUDIO_V1_RESULT USB_HOST_AUDIO_V1_0_StreamWrite
   Description:
     This function schedules an audio stream read request for the specified 
     audio stream. A USB_HOST_AUDIO_V1_0_STREAM_EVENT_READ_COMPLETE event is 
-	generated when this request is completed. 
+    generated when this request is completed. 
     USB_HOST_AUDIO_V1_0_STREAM_EVENT_READ_COMPLETE_DATA returns 
     the status and request handle of the request.
     

@@ -152,9 +152,9 @@
 // *****************************************************************************
 // *****************************************************************************
 #ifdef USB_DEVICE_MICROSOFT_OS_DESCRIPTOR_SUPPORT_ENABLE
-	#define M_USB_DEVICE_VendorInterfaceRequestProcess(x,y,z)  F_USB_DEVICE_RedirectControlXfrToClient(x,USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST,z);
+    #define M_USB_DEVICE_VendorInterfaceRequestProcess(x,y,z)  F_USB_DEVICE_RedirectControlXfrToClient(x,USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST,z);
 #else
-	#define M_USB_DEVICE_VendorInterfaceRequestProcess(x,y,z)  F_USB_DEVICE_ForwardControlXfrToFunction(x,y,z)
+    #define M_USB_DEVICE_VendorInterfaceRequestProcess(x,y,z)  F_USB_DEVICE_ForwardControlXfrToFunction(x,y,z)
 #endif 
 
 // *****************************************************************************

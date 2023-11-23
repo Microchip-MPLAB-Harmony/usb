@@ -3205,21 +3205,21 @@ uint8_t USB_HOST_AUDIO_V1_TerminalAssociationGet
 // *****************************************************************************
 /* Function:
     USB_AUDIO_CHANNEL_CONFIG USB_HOST_AUDIO_V1_TerminalInputChannelConfigGet
-	(
-		USB_HOST_AUDIO_V1_OBJ  audioObj,
-		USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ entityObject
-	); 
+    (
+        USB_HOST_AUDIO_V1_OBJ  audioObj,
+        USB_HOST_AUDIO_V1_CONTROL_ENTITY_OBJ entityObject
+    ); 
 
   Summary:
     Returns a structure which describes the spatial location of the logical 
-	channels of in the Terminal's output audio channel cluster.
-	
+    channels of in the Terminal's output audio channel cluster.
+    
   Description:
     This function returns a structure which describes the spatial location of 
-	the logical channels of in the Terminal's output audio channel cluster. 
-	This function is only applicable to Input Terminal.  Prior to calling this
-	function Entity Object should obtained by calling 
-	USB_HOST_AUDIO_V1_ControlEntityGetFirst(),
+    the logical channels of in the Terminal's output audio channel cluster. 
+    This function is only applicable to Input Terminal.  Prior to calling this
+    function Entity Object should obtained by calling 
+    USB_HOST_AUDIO_V1_ControlEntityGetFirst(),
     USB_HOST_AUDIO_V1_ControlEntityGetNext() or
     USB_HOST_AUDIO_V1_EntityObjectGet() function. 
      

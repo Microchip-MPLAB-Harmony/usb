@@ -649,22 +649,22 @@ typedef union __attribute__((packed))
 
 typedef struct __attribute__ ((packed))
 {
-	/* Size of this descriptor */
+    /* Size of this descriptor */
     uint8_t bLength;
-	
-	/* Interface descriptor type */
+    
+    /* Interface descriptor type */
     uint8_t bDescriptorType;
-	
-	/* Interface Descriptor Subtype */
+    
+    /* Interface Descriptor Subtype */
     uint8_t bDescriptorSubtype;
-	
-    /* Audio Device Class Specification Release Number in BCD format*/	
+    
+    /* Audio Device Class Specification Release Number in BCD format*/    
     uint16_t bcdADC;
     
     /* Constant, indicating the primary use of this audio function, as intended 
      * by the manufacturer. See Appendix A.7, "Audio Function Category Codes" */
     uint8_t bCategory;
-	
+    
     /* Total number of bytes returned for the class-specific AudioControl
        interface descriptor. Includes the combined length of this descriptor
        header and all Unit and Terminal descriptors */

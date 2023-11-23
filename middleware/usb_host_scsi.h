@@ -632,7 +632,7 @@ void USB_HOST_SCSI_Close
 (
     USB_HOST_SCSI_HANDLE scsiHandle
 );
-					
+                    
 // ******************************************************************************
 /* Function:
     bool USB_HOST_SCSI_MediaStatusGet 

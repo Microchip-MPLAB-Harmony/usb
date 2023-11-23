@@ -13,7 +13,7 @@
   Description:
     This header file contains the function prototypes and definitions of the
     data types and constants that make up the interface between HID Mouse driver
-	and top level application.
+    and top level application.
 *******************************************************************************/
 
 //DOM-IGNORE-BEGIN
@@ -75,7 +75,7 @@
 
   Description:
     This constant identifies the minimum value of the USB Host HID mouse driver 
-	and is used in the USB_HOST_HID_MOUSE_RESULT enumeration.
+    and is used in the USB_HOST_HID_MOUSE_RESULT enumeration.
 
   Remarks:
     None.
@@ -92,16 +92,16 @@
   Description:
     This enumeration lists the possible mouse events that the mouse driver can
     provide to the application. Some of these events have event data associated 
-	with them.
+    with them.
  */
 
 typedef enum
 {
     /* Mouse has been attached */
     USB_HOST_HID_MOUSE_EVENT_ATTACH = 0,
-	/* Mouse has been detached */
-	USB_HOST_HID_MOUSE_EVENT_DETACH,
-	/* Mouse IN Report data available */
+    /* Mouse has been detached */
+    USB_HOST_HID_MOUSE_EVENT_DETACH,
+    /* Mouse IN Report data available */
     USB_HOST_HID_MOUSE_EVENT_REPORT_RECEIVED
 
 } USB_HOST_HID_MOUSE_EVENT;
@@ -124,13 +124,13 @@ typedef enum
 */
 
 typedef enum
-{	
+{    
     /* An unknown failure occurred */
     USB_HOST_HID_MOUSE_RESULT_FAILURE = USB_HOST_HID_MOUSE_RESULT_MIN,
-	
+    
     /* Invalid or NULL parameter passed */
     USB_HOST_HID_MOUSE_RESULT_INVALID_PARAMETER,
-	
+    
     /* Indicates that the operation succeeded or the request was accepted and
        will be processed. */
     USB_HOST_HID_MOUSE_RESULT_SUCCESS = 0
@@ -172,17 +172,17 @@ typedef uintptr_t USB_HOST_HID_MOUSE_HANDLE;
 typedef struct
 {
     /* Button state for the buttons. USB_HOST_HID_MOUSE_BUTTONS_NUMBER is
-	   system configurable option. The actual number of buttons in the mouse
-	   needs to be <= USB_HOST_HID_MOUSE_BUTTONS_NUMBER
-	 */
+       system configurable option. The actual number of buttons in the mouse
+       needs to be <= USB_HOST_HID_MOUSE_BUTTONS_NUMBER
+     */
     USB_HID_BUTTON_STATE buttonState[USB_HOST_HID_MOUSE_BUTTONS_NUMBER];
     USB_HID_BUTTON_ID buttonID [USB_HOST_HID_MOUSE_BUTTONS_NUMBER];
-	/* X - Coordinate displacement */
-	int16_t xMovement; /* Applicable for 2D Mouse */
-	/* Y - Coordinate displacement */
-	int16_t yMovement; /* Applicable for 2D Mouse */
-	/* Z - Coordinate displacement */
-	int16_t zMovement;/* Applicable only for 3D Mouse */
+    /* X - Coordinate displacement */
+    int16_t xMovement; /* Applicable for 2D Mouse */
+    /* Y - Coordinate displacement */
+    int16_t yMovement; /* Applicable for 2D Mouse */
+    /* Z - Coordinate displacement */
+    int16_t zMovement;/* Applicable only for 3D Mouse */
     
 } USB_HOST_HID_MOUSE_DATA;
 
@@ -197,23 +197,23 @@ typedef struct
     This defines the USB HOST HID mouse driver event handler function
     pointer type. Application must register a function of this type to
     receive HID mouse events. Registration should happen before USB BUS is
-	enabled by the application.
+    enabled by the application.
 
 */
 typedef void (*USB_HOST_HID_MOUSE_EVENT_HANDLER)
 (
     /* Unique Handle passed to the caller. This will be unique
        for each Mouse interface attached
-	 */
+     */
     USB_HOST_HID_MOUSE_HANDLE handle,
-	/* Associated event type */
+    /* Associated event type */
     USB_HOST_HID_MOUSE_EVENT event,
-	/* Associated event data. For USB_HOST_HID_MOUSE_EVENT_ATTACH
+    /* Associated event data. For USB_HOST_HID_MOUSE_EVENT_ATTACH
        and USB_HOST_HID_MOUSE_EVENT_DETACH this will be NULL.
        For USB_HOST_HID_MOUSE_EVENT_REPORT_RECEIVED event, this
-	   will be USB_HOST_HID_MOUSE_DATA data type
-	 */
-	void *pData
+       will be USB_HOST_HID_MOUSE_DATA data type
+     */
+    void *pData
 );
 
 
@@ -237,9 +237,9 @@ void USB_HOST_HID_MOUSE_EventHandler
 // *****************************************************************************
 /* Function:
     USB_HOST_HID_MOUSE_RESULT USB_HOST_HID_MOUSE_EventHandlerSet
-	(
-		USB_HOST_HID_MOUSE_EVENT_HANDLER appMouseEventHandler
-	);
+    (
+        USB_HOST_HID_MOUSE_EVENT_HANDLER appMouseEventHandler
+    );
 
   Summary:
     This function registers application callback function with the mouse driver.
@@ -248,7 +248,7 @@ void USB_HOST_HID_MOUSE_EventHandler
     This function registers application callback function with the mouse driver.
     Any subsequent mouse events is passed to the application by calling the
     registered application function.
-	The function prototype should be of the USB_HOST_HID_MOUSE_EVENT_HANDLER type.
+    The function prototype should be of the USB_HOST_HID_MOUSE_EVENT_HANDLER type.
     
   Precondition:
     This function should be called before the USB bus is enabled.
@@ -258,9 +258,9 @@ void USB_HOST_HID_MOUSE_EventHandler
 
   Returns:
     Returns data structure of USB_HOST_HID_MOUSE_RESULT type.
-	  USB_HOST_HID_MOUSE_RESULT_INVALID_PARAMETER: Invalid Parameter
-	  USB_HOST_HID_MOUSE_RESULT_FAILURE: On failure
-	  USB_HOST_HID_MOUSE_RESULT_SUCCESS: On success
+      USB_HOST_HID_MOUSE_RESULT_INVALID_PARAMETER: Invalid Parameter
+      USB_HOST_HID_MOUSE_RESULT_FAILURE: On failure
+      USB_HOST_HID_MOUSE_RESULT_SUCCESS: On success
 
   Remarks:
     This function should be called before the USB bus is enabled.

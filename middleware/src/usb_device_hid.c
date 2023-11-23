@@ -83,7 +83,7 @@ const USB_DEVICE_FUNCTION_DRIVER hidFuncDriver =
 
     /* HID de-init function */
     .deInitialize           = &F_USB_DEVICE_HID_DeInitialize,
-		
+        
      /* EP0 activity callback */
     .controlTransferNotification = &F_USB_DEVICE_HID_ControlTransferHandler,
 
@@ -364,7 +364,7 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportSend
     USB_DEVICE_HID_INSTANCE * thisHIDInstance;
     USB_ERROR hidSendError;
     OSAL_RESULT osalError;
-	OSAL_CRITSECT_DATA_TYPE status;
+    OSAL_CRITSECT_DATA_TYPE status;
     
     /* Set the transfer handle to invalid */
     *handle = USB_DEVICE_HID_TRANSFER_HANDLE_INVALID;
@@ -417,9 +417,9 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportSend
              irp->callback = &F_USB_DEVICE_HID_ReportSendCallBack;
              irp->userData = instanceIndex;
              (*handle) = ( USB_DEVICE_HID_TRANSFER_HANDLE )irp;
-			 status = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
+             status = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
              thisHIDInstance->currentTxQueueSize ++;
-			 OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, status);
+             OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, status);
 
              /* Submit the IRP and return */
              hidSendError = USB_DEVICE_IRPSubmit( thisHIDInstance->devLayerHandle,
@@ -430,9 +430,9 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportSend
                Transfer handle.  */
             if (hidSendError != USB_ERROR_NONE )
             {
-				status = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
+                status = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
                 thisHIDInstance->currentTxQueueSize --;
-				OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, status);
+                OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, status);
                 *handle = USB_DEVICE_HID_TRANSFER_HANDLE_INVALID;
             }
 
@@ -451,8 +451,8 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportSend
     osalError = OSAL_MUTEX_Unlock(&gUSBDeviceHidCommonDataObj.mutexHIDIRP);
     if(osalError != OSAL_RESULT_TRUE)
     {
-	/*Do not proceed, unlock was not complete, or error occurred, let user know about error*/
-	return (USB_DEVICE_HID_RESULT_ERROR);
+    /*Do not proceed, unlock was not complete, or error occurred, let user know about error*/
+    return (USB_DEVICE_HID_RESULT_ERROR);
     }
     /* We could not find a free IRP */
     SYS_ASSERT(false,"Transmit Queue is full");
@@ -638,7 +638,7 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportReceive
     USB_DEVICE_HID_INSTANCE * thisHIDInstance;
     USB_ERROR hidReceiveError;
     OSAL_RESULT osalError; 
-	OSAL_CRITSECT_DATA_TYPE status;
+    OSAL_CRITSECT_DATA_TYPE status;
 
     /* Set the transfer handle to invalid */
     *handle = USB_DEVICE_HID_TRANSFER_HANDLE_INVALID;
@@ -689,9 +689,9 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportReceive
              irp->callback = &F_USB_DEVICE_HID_ReportReceiveCallBack;
              irp->data = buffer;
              irp->userData = instanceIndex;
-			 status = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
+             status = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
              thisHIDInstance->currentRxQueueSize ++;
-			 OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, status);
+             OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, status);
              (* handle) = ( USB_DEVICE_HID_TRANSFER_HANDLE )irp;
              hidReceiveError = USB_DEVICE_IRPSubmit( thisHIDInstance->devLayerHandle,
                                            thisHIDInstance->endpointRx,
@@ -701,9 +701,9 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportReceive
                Transfer handle.  */
             if (hidReceiveError != USB_ERROR_NONE )
             {
-				status = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
+                status = OSAL_CRIT_Enter(OSAL_CRIT_TYPE_HIGH);
                 thisHIDInstance->currentRxQueueSize --;
-				OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, status);
+                OSAL_CRIT_Leave(OSAL_CRIT_TYPE_HIGH, status);
                 *handle = USB_DEVICE_HID_TRANSFER_HANDLE_INVALID;
             }
 
@@ -722,8 +722,8 @@ USB_DEVICE_HID_RESULT USB_DEVICE_HID_ReportReceive
     osalError = OSAL_MUTEX_Unlock(&gUSBDeviceHidCommonDataObj.mutexHIDIRP);
     if(osalError != OSAL_RESULT_TRUE)
     {
-	/*Do not proceed, unlock was not complete, or error occurred, let user know about error*/
-	return (USB_DEVICE_HID_RESULT_ERROR);
+    /*Do not proceed, unlock was not complete, or error occurred, let user know about error*/
+    return (USB_DEVICE_HID_RESULT_ERROR);
     }
     /* We could not find a free IRP */
     SYS_ASSERT(false,"Receive Queue is full");

@@ -254,7 +254,7 @@ void F_USB_HOST_HUB_DeviceAssign
 {
     int32_t iterator;
     USB_HOST_HUB_INSTANCE_OBJ * hubInstanceObj = NULL;
-	uint8_t portIndex;
+    uint8_t portIndex;
     USB_HOST_HUB_PORT_INFO  *portInfo = NULL ;
 
     /* If this function is being called, this means that a device class subclass
@@ -267,7 +267,7 @@ void F_USB_HOST_HUB_DeviceAssign
         {
             /* Allocate the object */
             hubInstanceObj = &gUSBHostHubObj[iterator];
-			(void) memset(hubInstanceObj, 0, sizeof( USB_HOST_HUB_INSTANCE_OBJ ));
+            (void) memset(hubInstanceObj, 0, sizeof( USB_HOST_HUB_INSTANCE_OBJ ));
             hubInstanceObj->inUse = true;
             hubInstanceObj->hubObjHandle = deviceObjHandle;
             hubInstanceObj->hubDeviceClientHandle = deviceHandle;
@@ -2172,11 +2172,11 @@ void F_USB_HOST_HUB_InterfaceTasks (USB_HOST_DEVICE_INTERFACE_HANDLE interfaceHa
     
   Summary:
     Resets the specified root hub port.
-	
+    
   Description:
     This function resets the hub port.The status of the reset signalling can be
     checked using the USB_HOST_HUB_PortResetComplete() function.
-	
+    
   Remarks:
     This function is typically called by the host layer.
 */

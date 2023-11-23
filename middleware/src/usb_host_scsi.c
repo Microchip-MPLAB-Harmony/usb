@@ -128,8 +128,8 @@ void F_USB_HOST_SCSI_TimerCallback(uintptr_t context)
     /* The handle is actually a pointer to the SCSI object */
     USB_HOST_SCSI_INSTANCE_OBJ * scsiObj = ((USB_HOST_SCSI_INSTANCE_OBJ *)(context));
     scsiObj->timerExpired = true;
-	(void) SYS_TIME_TimerDestroy (scsiObj->commandDelayHandle);
-	scsiObj->commandDelayHandle = SYS_TIME_HANDLE_INVALID; 
+    (void) SYS_TIME_TimerDestroy (scsiObj->commandDelayHandle);
+    scsiObj->commandDelayHandle = SYS_TIME_HANDLE_INVALID; 
 }
 
 // ******************************************************************************

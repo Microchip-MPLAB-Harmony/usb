@@ -174,7 +174,7 @@ typedef struct
   Summary:
     This function submits an I/O Request Packet (IRP) for processing to the
     Hi-Speed USB Driver.
-	
+    
   Description:
     This function submits an I/O Request Packet (IRP) for processing to the USB
     Driver. The IRP allows a client to send and receive data from the USB Host.
@@ -225,16 +225,16 @@ typedef struct
         will send multiple of endpoint size number of bytes. For example, if the
         IRP size is 130 and the endpoint size if 64, the number of bytes sent
         will 128.
-		
+        
   Precondition:
     The Device Layer handle should be valid.
-	
+    
   Parameters:
     usbDeviceHandle - Pointer to the device layer handle that is returned from 
                       USB_DEVICE_Open() function.
     endpointAndDirection -  Specifies the endpoint and direcon.
     irp - Pointer to the IRP to be added to the queue for processing.
-	
+    
   Returns:
     * USB_ERROR_NONE - if the IRP was submitted successful.
     * USB_ERROR_IRP_SIZE_INVALID - if the size parameter of the IRP is not
@@ -244,7 +244,7 @@ typedef struct
     * USB_ERROR_DEVICE_ENDPOINT_INVALID - The specified endpoint is not valid.
     * USB_ERROR_OSAL_FUNCTION - An OSAL call in the function did not complete
       successfully.
-	
+    
   Example:
     <code>
     // The following code shows an example of how to schedule a IRP to send data
@@ -300,7 +300,7 @@ typedef struct
     irp.referenceData = (uintptr_t)&myDeviceLayerObj;
     
     </code>
-	
+    
   Remarks:
     This function can be called from the ISR of the USB module to associated
     with the client.                                                                           
@@ -324,19 +324,19 @@ USB_ERROR USB_DEVICE_IRPSubmit
   Summary:
     This function cancels all IRPs that are queued and in progress at the
     specified endpoint.
-	
+    
   Description:
     This function cancels all IRPs that are queued and in progress at the
     specified endpoint.
-	
+    
   Precondition:
     The Device Layer handle should be valid.
-	
+    
   Parameters:
     usbDeviceHandle - Pointer to the device layer handle that is returned from 
                       USB_DEVICE_Open() function.
     endpointAndDirection - Specifies the endpoint and direction.
-	
+    
   Returns:
     * USB_ERROR_NONE - The endpoint was successfully enabled.
     * USB_ERROR_DEVICE_ENDPOINT_INVALID - If the endpoint that is being
@@ -344,7 +344,7 @@ USB_ERROR USB_DEVICE_IRPSubmit
     * USB_ERROR_PARAMETER_INVALID - The driver handle is not valid.
     * USB_ERROR_OSAL_FUNCTION - An OSAL function called in this function did not
       execute successfully.
-	
+    
   Example:
     <code>
     // This code shows an example of how to cancel all IRPs.
@@ -367,7 +367,7 @@ USB_ERROR USB_DEVICE_IRPSubmit
          }
      }
     </code>
-	
+    
   Remarks:
     None.                                                                  
 */
@@ -381,15 +381,15 @@ USB_ERROR USB_DEVICE_IRPCancelAll
 // **************************************************************************
 /* Function:
     USB_ERROR USB_DEVICE_IRPCancel
-	(
-		USB_DEVICE_HANDLE usbDeviceHandle,
-		USB_DEVICE_IRP * irp
-	)
+    (
+        USB_DEVICE_HANDLE usbDeviceHandle,
+        USB_DEVICE_IRP * irp
+    )
     
   Summary:
     This function cancels the specific IRP that are queued and in progress at the
     specified endpoint.
-	
+    
   Description:
     This function attempts to cancel the processing of a queued IRP. An IRP that
     was in the queue but yet to be processed will be cancelled successfully and
@@ -401,22 +401,22 @@ USB_ERROR USB_DEVICE_IRPCancelAll
     completed. The IRP callback function will then be called in an interrupt
     context. The application should not release the related data buffer unless
     the IRP callback has occurred.
-	
+    
   Precondition:
     The Client handle should be valid.
-	
+    
   Parameters:
     usbDeviceHandle - Pointer to the device layer handle that is returned from 
                       USB_DEVICE_Open() function.
     irp - Pointer to the IRP to cancel.
-	
+    
   Returns:
     * USB_ERROR_NONE - The IRP have been canceled successfully.
     * USB_ERROR_PARAMETER_INVALID - Invalid parameter or the IRP already has 
       been aborted or completed
     * USB_ERROR_OSAL_FUNCTION - An OSAL function called in this function did
       not execute successfully.
-	
+    
   Example:
     <code>
     // This code shows an example of how to cancel IRP.  In this example the IRP
@@ -472,7 +472,7 @@ USB_ERROR USB_DEVICE_IRPCancelAll
      }
 
     </code>
-	
+    
   Remarks:
     The size returned after the ABORT callback will be always 0 regardless of
     the amount of data that has been sent or received. The client should not

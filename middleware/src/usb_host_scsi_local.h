@@ -382,16 +382,16 @@ typedef struct
 /*****************************************************************************
 *  SCSI Transparent Command Set Sub-class code
 *****************************************************************************/
-#define USB_SCSI_INQUIRY 				    0x12
-#define USB_SCSI_READ_FORMAT_CAPACITY 		0x23
-#define USB_SCSI_READ_CAPACITY 				0x25
-#define USB_SCSI_READ_10 				    0x28
-#define USB_SCSI_WRITE_10 				    0x2a
-#define USB_SCSI_REQUEST_SENSE 				0x03
-#define USB_SCSI_MODE_SENSE  				0x1a
-#define USB_SCSI_TEST_UNIT_READY 			0x00
-#define USB_SCSI_VERIFY 					0x2f
-#define USB_SCSI_STOP_START 				0x1b
+#define USB_SCSI_INQUIRY                     0x12
+#define USB_SCSI_READ_FORMAT_CAPACITY         0x23
+#define USB_SCSI_READ_CAPACITY                 0x25
+#define USB_SCSI_READ_10                     0x28
+#define USB_SCSI_WRITE_10                     0x2a
+#define USB_SCSI_REQUEST_SENSE                 0x03
+#define USB_SCSI_MODE_SENSE                  0x1a
+#define USB_SCSI_TEST_UNIT_READY             0x00
+#define USB_SCSI_VERIFY                     0x2f
+#define USB_SCSI_STOP_START                 0x1b
 
 #define USB_SCSI_PREVENT_ALLOW_MEDIUM_REMOVAL   0x1E
 

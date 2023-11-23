@@ -1,4 +1,4 @@
-		
+        
 /*******************************************************************************
   USB Billboard class definitions
 
@@ -69,9 +69,9 @@
 #define USB_BILLBOARD_PROTOCOL 0x00
 #define USB_BILLBOARD_CAPABILITY_DESCRIPTOR_TYPE 0x0D
 
-		
+        
 
-	
+    
 // *****************************************************************************
 /* USB Billboard Capability Descriptor
 
