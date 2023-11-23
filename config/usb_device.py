@@ -756,14 +756,22 @@ def instantiateComponent(usbDeviceComponent):
 	# USB Device Application files  
 	################################################
 	usbDeviceMsdDiskImageFile = usbDeviceComponent.createFileSymbol("USB_DEVICE_DISK_IMAGE_FILE", None)
-	addFileName('diskImage.c', usbDeviceComponent, usbDeviceMsdDiskImageFile, "templates/device/msd/", "", usbDeviceMsdDiskImageFileAdd.getValue(), None)
+	configName1 = Variables.get("__CONFIGURATION_NAME")
+	usbDeviceMsdDiskImageFile.setProjectPath("config/" + configName1 + "")
+	usbDeviceMsdDiskImageFile.setSourcePath("templates/device/msd/" + 'diskImage.c')
+	usbDeviceMsdDiskImageFile.setOutputName('diskImage.c')
+	usbDeviceMsdDiskImageFile.setDestPath("")
+	usbDeviceMsdDiskImageFile.setType("SOURCE")
+	usbDeviceMsdDiskImageFile.setEnabled(usbDeviceMsdDiskImageFileAdd.getValue())
+	#addFileName('diskImage.c', usbDeviceComponent, usbDeviceMsdDiskImageFile, "templates/device/msd/", "", usbDeviceMsdDiskImageFileAdd.getValue(), None)
 
 		
 # all files go into src/
 def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callback):
 	configName1 = Variables.get("__CONFIGURATION_NAME")
 	symbol.setProjectPath("config/" + configName1 + destPath)
-	symbol.setSourcePath(srcPath + fileName)
+	symbol.setSourcePath(srcPath + fileName + ".ftl")
+	symbol.setMarkup(True)
 	symbol.setOutputName(fileName)
 	symbol.setDestPath(destPath)
 	if fileName[-2:] == '.h':
