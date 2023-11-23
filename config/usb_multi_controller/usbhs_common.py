@@ -140,7 +140,7 @@ def instantiateComponent(usbPeripheralComponentCommon):
 	usbPeripheralDeviceSupport.setReadOnly(True)
 	
 	drvUsbHsV1HostSourceFile = usbPeripheralComponentCommon.createFileSymbol("DRV_USBHS_COMMON_C_SOURCE", None)
-	drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "usbhsv2/src/drv_usbhs.c.ftl")
+	drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "usbhsv2/src/drv_usbhs_tmplt.c.ftl")
 	drvUsbHsV1HostSourceFile.setOutputName("drv_usbhs.c")
 	drvUsbHsV1HostSourceFile.setDestPath(usbDriverProjectPath + "usbhs/src")
 	drvUsbHsV1HostSourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbhs/src/")

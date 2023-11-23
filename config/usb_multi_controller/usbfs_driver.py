@@ -421,7 +421,7 @@ def instantiateComponent(usbDriverComponent, index):
 		drvUsbHsV1HostSourceFile.setDependencies(blDrvUsbHsV1HostSourceFile, ["USB_OPERATION_MODE"])
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX", "PIC32MM"]):
 		#drvUsbHsV1HostSourceFile = usbDriverComponent.createFileSymbol("DRV_USBFS_COMMON_C_SOURCE", None)
-		#drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "usbfs/src/drv_usbfs.c.ftl")
+		#drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "usbfs/src/drv_usbfs_tmplt.c.ftl")
 		#drvUsbHsV1HostSourceFile.setOutputName("drv_usbfs.c")
 		#drvUsbHsV1HostSourceFile.setDestPath(usbDriverProjectPath + "usbfs/src")
 		#drvUsbHsV1HostSourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbfs/src/")
