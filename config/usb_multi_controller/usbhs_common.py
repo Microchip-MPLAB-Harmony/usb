@@ -110,11 +110,11 @@ def instantiateComponent(usbPeripheralComponentCommon):
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK" , "PIC32MX", "PIC32MM"]):
 		plib_usbhs_header_h = usbPeripheralComponentCommon.createFileSymbol("PLIB_USBHS_HEADER_H", None)
 		plib_usbhs_header_h.setSourcePath( usbDriverPath + "usbhsv2/src/plib_usbhs_header.h.ftl")
+		plib_usbhs_header_h.setMarkup(True)
 		plib_usbhs_header_h.setOutputName("plib_usbhs_header.h")
 		plib_usbhs_header_h.setDestPath("/driver/usb/usbhs/src")
 		plib_usbhs_header_h.setProjectPath("config/" + configName + "/driver/usb/usbhs/src/")
 		plib_usbhs_header_h.setType("SOURCE")
-		plib_usbhs_header_h.setMarkup(True)
 		plib_usbhs_header_h.setOverwrite(True)
 	
 	################################################
@@ -141,11 +141,11 @@ def instantiateComponent(usbPeripheralComponentCommon):
 	
 	drvUsbHsV1HostSourceFile = usbPeripheralComponentCommon.createFileSymbol("DRV_USBHS_COMMON_C_SOURCE", None)
 	drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "usbhsv2/src/drv_usbhs_tmplt.c.ftl")
+	drvUsbHsV1HostSourceFile.setMarkup(True)
 	drvUsbHsV1HostSourceFile.setOutputName("drv_usbhs.c")
 	drvUsbHsV1HostSourceFile.setDestPath(usbDriverProjectPath + "usbhs/src")
 	drvUsbHsV1HostSourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbhs/src/")
 	drvUsbHsV1HostSourceFile.setType("SOURCE")
-	drvUsbHsV1HostSourceFile.setMarkup(True)
 	drvUsbHsV1HostSourceFile.setOverwrite(True)
 	drvUsbIsrEntry = usbPeripheralComponentCommon.createListSymbol("LIST_DRV_USB_ISR_ENTRY", None)
 	

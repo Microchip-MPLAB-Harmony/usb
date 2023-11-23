@@ -236,7 +236,8 @@ def instantiateComponent(usbDriverComponent):
 	# USB Driver Header files  
 	################################################
 	drvUsbHeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbHeaderFile.setSourcePath(usbDriverPath + "drv_usb.h")
+	drvUsbHeaderFile.setSourcePath(usbDriverPath + "drv_usb.h.ftl")
+	drvUsbHeaderFile.setMarkup(True)
 	drvUsbHeaderFile.setOutputName("drv_usb.h")
 	drvUsbHeaderFile.setDestPath(usbDriverProjectPath)
 	drvUsbHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath)
@@ -244,7 +245,8 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHeaderFile.setOverwrite(True)
 	
 	drvUdphsHeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUdphsHeaderFile.setSourcePath(usbDriverPath + "udphs/drv_usb_udphs.h")
+	drvUdphsHeaderFile.setSourcePath(usbDriverPath + "udphs/drv_usb_udphs.h.ftl")
+	drvUdphsHeaderFile.setMarkup(True)
 	drvUdphsHeaderFile.setOutputName("drv_usb_udphs.h")
 	drvUdphsHeaderFile.setDestPath(usbDriverProjectPath+ "udphs")
 	drvUdphsHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath+ "udphs")
@@ -252,7 +254,8 @@ def instantiateComponent(usbDriverComponent):
 	drvUdphsHeaderFile.setOverwrite(True)
 	
 	drvUsbHsV1VarMapHeaderFile = usbDriverComponent.createFileSymbol(None, None)	
-	drvUsbHsV1VarMapHeaderFile.setSourcePath(usbDriverPath + "udphs/src/drv_usb_udphs_variant_mapping.h")
+	drvUsbHsV1VarMapHeaderFile.setSourcePath(usbDriverPath + "udphs/src/drv_usb_udphs_variant_mapping.h.ftl")
+	drvUsbHsV1VarMapHeaderFile.setMarkup(True)
 	drvUsbHsV1VarMapHeaderFile.setOutputName("drv_usb_udphs_variant_mapping.h")
 	drvUsbHsV1VarMapHeaderFile.setDestPath(usbDriverProjectPath + "udphs/src")
 	drvUsbHsV1VarMapHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "udphs/src")
@@ -260,7 +263,8 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1VarMapHeaderFile.setOverwrite(True)
 	
 	drvUsbHsV1LocalHeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbHsV1LocalHeaderFile.setSourcePath(usbDriverPath + "udphs/src/drv_usb_udphs_local.h")
+	drvUsbHsV1LocalHeaderFile.setSourcePath(usbDriverPath + "udphs/src/drv_usb_udphs_local.h.ftl")
+	drvUsbHsV1LocalHeaderFile.setMarkup(True)
 	drvUsbHsV1LocalHeaderFile.setOutputName("drv_usb_udphs_local.h")
 	drvUsbHsV1LocalHeaderFile.setDestPath(usbDriverProjectPath + "udphs/src")
 	drvUsbHsV1LocalHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "udphs/src")
@@ -283,7 +287,8 @@ def instantiateComponent(usbDriverComponent):
 	# USB Driver Source files  
 	################################################
 	drvUsbHsV1SourceFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbHsV1SourceFile.setSourcePath(usbDriverPath + "udphs/src/dynamic/drv_usb_udphs.c")
+	drvUsbHsV1SourceFile.setSourcePath(usbDriverPath + "udphs/src/dynamic/drv_usb_udphs.c.ftl")
+	drvUsbHsV1SourceFile.setMarkup(True)
 	drvUsbHsV1SourceFile.setOutputName("drv_usb_udphs.c")
 	drvUsbHsV1SourceFile.setDestPath(usbDriverProjectPath + "udphs/src")
 	drvUsbHsV1SourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "udphs/src/")
@@ -291,7 +296,8 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1SourceFile.setOverwrite(True)
 	
 	drvUsbHsV1DeviceSourceFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbHsV1DeviceSourceFile.setSourcePath(usbDriverPath + "udphs/src/dynamic/drv_usb_udphs_device.c")
+	drvUsbHsV1DeviceSourceFile.setSourcePath(usbDriverPath + "udphs/src/dynamic/drv_usb_udphs_device.c.ftl")
+	drvUsbHsV1DeviceSourceFile.setMarkup(True)
 	drvUsbHsV1DeviceSourceFile.setOutputName("drv_usb_udphs_device.c")
 	drvUsbHsV1DeviceSourceFile.setDestPath(usbDriverProjectPath + "udphs/src")
 	drvUsbHsV1DeviceSourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "udphs/src/")
@@ -308,7 +314,8 @@ def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callbac
 	configName1 = Variables.get("__CONFIGURATION_NAME")
 	#filename = component.createFileSymbol(None, None)
 	symbol.setProjectPath("config/" + configName1 + destPath)
-	symbol.setSourcePath(srcPath + fileName)
+	symbol.setSourcePath(srcPath + fileName + ".ftl")
+	symbol.setMarkup(True)
 	symbol.setOutputName(fileName)
 	symbol.setDestPath(destPath)
 	if fileName[-2:] == '.h':

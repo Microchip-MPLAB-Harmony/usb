@@ -208,7 +208,7 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverSystemInitCallsFile.setType("STRING")
 	usbDriverSystemInitCallsFile.setOutputName("core.LIST_SYSTEM_INIT_C_INITIALIZE_MIDDLEWARE")
 	usbDriverSystemInitCallsFile.setSourcePath(sourcePath + "system_init_c_driver_calls.ftl")
-	usbDriverSystemInitCallsFile.setMarkup(True)	
+	usbDriverSystemInitCallsFile.setMarkup(True)
 	
 	################################################
 	# system_tasks.c file for USB Driver   
@@ -231,7 +231,8 @@ def instantiateComponent(usbDriverComponent):
 	# USB Driver Header files  
 	################################################
 	drvUsbHeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbHeaderFile.setSourcePath(usbDriverPath + "drv_usb.h")
+	drvUsbHeaderFile.setSourcePath(usbDriverPath + "drv_usb.h.ftl")
+	drvUsbHeaderFile.setMarkup(True)
 	drvUsbHeaderFile.setOutputName("drv_usb.h")
 	drvUsbHeaderFile.setDestPath(usbDriverProjectPath)
 	drvUsbHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath)
@@ -239,7 +240,8 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHeaderFile.setOverwrite(True)
 	
 	drvUsbExternalDependenciesFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbExternalDependenciesFile.setSourcePath(usbDriverPath + "drv_usb_external_dependencies.h")
+	drvUsbExternalDependenciesFile.setSourcePath(usbDriverPath + "drv_usb_external_dependencies.h.ftl")
+	drvUsbExternalDependenciesFile.setMarkup(True)
 	drvUsbExternalDependenciesFile.setOutputName("drv_usb_external_dependencies.h")
 	drvUsbExternalDependenciesFile.setDestPath(usbDriverProjectPath)
 	drvUsbExternalDependenciesFile.setProjectPath("config/" + configName + usbDriverProjectPath)
@@ -249,7 +251,8 @@ def instantiateComponent(usbDriverComponent):
 	
 	# OHCI Header file 
 	drvUsbOHCIHeaderFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_HEADER_FILE_OHCI", None)
-	drvUsbOHCIHeaderFile.setSourcePath(usbDriverPath + "uhp/drv_usb_ohci.h")
+	drvUsbOHCIHeaderFile.setSourcePath(usbDriverPath + "uhp/drv_usb_ohci.h.ftl")
+	drvUsbOHCIHeaderFile.setMarkup(True)
 	drvUsbOHCIHeaderFile.setOutputName("drv_usb_ohci.h")
 	drvUsbOHCIHeaderFile.setDestPath(usbDriverProjectPath + "uhp/")
 	drvUsbOHCIHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/")
@@ -259,7 +262,8 @@ def instantiateComponent(usbDriverComponent):
 	
 	# Add OHCI Local Header file 
 	drvUsbOHCILocalHeaderFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_HEADER_FILE_OHCI_LOCAL", None)
-	drvUsbOHCILocalHeaderFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_ohci_local.h")
+	drvUsbOHCILocalHeaderFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_ohci_local.h.ftl")
+	drvUsbOHCILocalHeaderFile.setMarkup(True)
 	drvUsbOHCILocalHeaderFile.setOutputName("drv_usb_ohci_local.h")
 	drvUsbOHCILocalHeaderFile.setDestPath(usbDriverProjectPath + "uhp/src")
 	drvUsbOHCILocalHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src")
@@ -268,7 +272,8 @@ def instantiateComponent(usbDriverComponent):
 
 	# OHCI SFR Header file 
 	drvUsbUhpOHCISFRHeaderFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_HEADER_FILE_OHCI_SFR", None)
-	drvUsbUhpOHCISFRHeaderFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_ohci_registers.h")
+	drvUsbUhpOHCISFRHeaderFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_uhp_ohci_registers.h.ftl")
+	drvUsbUhpOHCISFRHeaderFile.setMarkup(True)
 	drvUsbUhpOHCISFRHeaderFile.setOutputName("drv_usb_uhp_ohci_registers.h")
 	drvUsbUhpOHCISFRHeaderFile.setDestPath(usbDriverProjectPath + "uhp/src")
 	drvUsbUhpOHCISFRHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src/")
@@ -295,7 +300,8 @@ def instantiateComponent(usbDriverComponent):
 	
 	# OHCI Source file 
 	drvUsbHostOhciSourceFile = usbDriverComponent.createFileSymbol("DRV_USB_UHPHS_SOURCE_FILE_OHCI", None)
-	drvUsbHostOhciSourceFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_ohci.c")
+	drvUsbHostOhciSourceFile.setSourcePath(usbDriverPath + "uhp/src/drv_usb_ohci.c.ftl")
+	drvUsbHostOhciSourceFile.setMarkup(True)
 	drvUsbHostOhciSourceFile.setOutputName("drv_usb_ohci.c")
 	drvUsbHostOhciSourceFile.setDestPath(usbDriverProjectPath + "uhp/src")
 	drvUsbHostOhciSourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "uhp/src/")
@@ -311,7 +317,8 @@ def destroyComponent(usbDriverComponent):
 def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callback):
 	configName1 = Variables.get("__CONFIGURATION_NAME")
 	symbol.setProjectPath("config/" + configName1 + destPath)
-	symbol.setSourcePath(srcPath + fileName)
+	symbol.setSourcePath(srcPath + fileName + ".ftl")
+	symbol.setMarkup(True)
 	symbol.setOutputName(fileName)
 	symbol.setDestPath(destPath)
 	if fileName[-2:] == '.h':

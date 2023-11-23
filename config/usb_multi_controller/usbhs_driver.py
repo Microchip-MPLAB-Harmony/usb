@@ -395,6 +395,7 @@ def instantiateComponent(usbDriverComponent, index):
 	usbDriverIsrFile.setOutputName("drv_usbhs_index.LIST_DRV_USB_ISR_ENTRY")
 	usbDriverIsrFile.setSourcePath( sourcePath + "drv_usb_isr.ftl")
 	usbDriverIsrFile.setMarkup(True)
+
 	usbDriverSystemTasksFileRTOS = usbDriverComponent.createFileSymbol("USB_DRIVER_SYS_RTOS_TASK", None)
 	usbDriverSystemTasksFileRTOS.setType("STRING")
 	usbDriverSystemTasksFileRTOS.setOutputName("core.LIST_SYSTEM_RTOS_TASKS_C_DEFINITIONS")
@@ -407,7 +408,8 @@ def instantiateComponent(usbDriverComponent, index):
 	# USB Driver Header files
 	################################################
 	drvUsbHeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbHeaderFile.setSourcePath(usbDriverPath + "drv_usb.h")
+	drvUsbHeaderFile.setSourcePath(usbDriverPath + "drv_usb.h.ftl")
+	drvUsbHeaderFile.setMarkup(True)
 	drvUsbHeaderFile.setOutputName("drv_usb.h")
 	drvUsbHeaderFile.setDestPath(usbDriverProjectPath)
 	drvUsbHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath)
@@ -415,7 +417,8 @@ def instantiateComponent(usbDriverComponent, index):
 	drvUsbHeaderFile.setOverwrite(True)
 
 	drvUsbExternalDependenciesFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbExternalDependenciesFile.setSourcePath(usbDriverPath + "drv_usb_external_dependencies.h")
+	drvUsbExternalDependenciesFile.setSourcePath(usbDriverPath + "drv_usb_external_dependencies.h.ftl")
+	drvUsbExternalDependenciesFile.setMarkup(True)
 	drvUsbExternalDependenciesFile.setOutputName("drv_usb_external_dependencies.h")
 	drvUsbExternalDependenciesFile.setDestPath(usbDriverProjectPath)
 	drvUsbExternalDependenciesFile.setProjectPath("config/" + configName + usbDriverProjectPath)
@@ -423,7 +426,8 @@ def instantiateComponent(usbDriverComponent, index):
 	drvUsbExternalDependenciesFile.setOverwrite(True)
 
 	drvUsbHsV1HeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbHsV1HeaderFile.setSourcePath(usbDriverPath + "usbhsv2/drv_usbhs.h")
+	drvUsbHsV1HeaderFile.setSourcePath(usbDriverPath + "usbhsv2/drv_usbhs.h.ftl")
+	drvUsbHsV1HeaderFile.setMarkup(True)
 	drvUsbHsV1HeaderFile.setOutputName("drv_usbhs.h")
 	drvUsbHsV1HeaderFile.setDestPath(usbDriverProjectPath+ "usbhs")
 	drvUsbHsV1HeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath+ "usbhs")
@@ -431,7 +435,8 @@ def instantiateComponent(usbDriverComponent, index):
 	drvUsbHsV1HeaderFile.setOverwrite(True)
 
 	drvUsbHsV1VarMapHeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbHsV1VarMapHeaderFile.setSourcePath(usbDriverPath + "usbhsv2/src/drv_usbhs_variant_mapping.h")
+	drvUsbHsV1VarMapHeaderFile.setSourcePath(usbDriverPath + "usbhsv2/src/drv_usbhs_variant_mapping.h.ftl")
+	drvUsbHsV1VarMapHeaderFile.setMarkup(True)
 	drvUsbHsV1VarMapHeaderFile.setOutputName("drv_usbhs_variant_mapping.h")
 	drvUsbHsV1VarMapHeaderFile.setDestPath(usbDriverProjectPath + "usbhs/src")
 	drvUsbHsV1VarMapHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbhs/src")
@@ -441,7 +446,8 @@ def instantiateComponent(usbDriverComponent, index):
 
 
 	drvUsbHsV1LocalHeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbHsV1LocalHeaderFile.setSourcePath(usbDriverPath + "usbhsv2/src/drv_usbhs_local.h")
+	drvUsbHsV1LocalHeaderFile.setSourcePath(usbDriverPath + "usbhsv2/src/drv_usbhs_local.h.ftl")
+	drvUsbHsV1LocalHeaderFile.setMarkup(True)
 	drvUsbHsV1LocalHeaderFile.setOutputName("drv_usbhs_local.h")
 	drvUsbHsV1LocalHeaderFile.setDestPath(usbDriverProjectPath + "usbhs/src")
 	drvUsbHsV1LocalHeaderFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbhs/src")
@@ -466,15 +472,16 @@ def instantiateComponent(usbDriverComponent, index):
 	################################################
 	drvUsbHsV1SourceFile = usbDriverComponent.createFileSymbol("DRV_USBHS_COMMON_C_SOURCE", None)
 	drvUsbHsV1SourceFile.setSourcePath(usbDriverPath + "usbhsv2/src/drv_usbhs_tmplt.c.ftl")
+	drvUsbHsV1SourceFile.setMarkup(True)
 	drvUsbHsV1SourceFile.setOutputName("drv_usbhs.c")
 	drvUsbHsV1SourceFile.setDestPath(usbDriverProjectPath + "usbhs/src")
 	drvUsbHsV1SourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbhs/src/")
 	drvUsbHsV1SourceFile.setType("SOURCE")
-	drvUsbHsV1SourceFile.setMarkup(True)
 	drvUsbHsV1SourceFile.setOverwrite(True)   
-    
+
 	drvUsbHsV1DeviceSourceFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbHsV1DeviceSourceFile.setSourcePath(usbDriverPath + "usbhsv2/src/drv_usbhs_device.c")
+	drvUsbHsV1DeviceSourceFile.setSourcePath(usbDriverPath + "usbhsv2/src/drv_usbhs_device.c.ftl")
+	drvUsbHsV1DeviceSourceFile.setMarkup(True)
 	drvUsbHsV1DeviceSourceFile.setOutputName("drv_usbhs_device.c")
 	drvUsbHsV1DeviceSourceFile.setDestPath(usbDriverProjectPath + "usbhs/src")
 	drvUsbHsV1DeviceSourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbhs/src/")
@@ -483,7 +490,8 @@ def instantiateComponent(usbDriverComponent, index):
 	drvUsbHsV1DeviceSourceFile.setDependencies(blDrvUsbHsV1DeviceSourceFile, ["USB_OPERATION_MODE"])
 		
 	drvUsbHsV1HostSourceFile = usbDriverComponent.createFileSymbol(None, None)
-	drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "usbhsv2/src/drv_usbhs_host.c")
+	drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "usbhsv2/src/drv_usbhs_host.c.ftl")
+	drvUsbHsV1HostSourceFile.setMarkup(True)
 	drvUsbHsV1HostSourceFile.setOutputName("drv_usbhs_host.c")
 	drvUsbHsV1HostSourceFile.setDestPath(usbDriverProjectPath + "usbhs/src")
 	drvUsbHsV1HostSourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbhs/src/")
@@ -576,7 +584,8 @@ def instantiateComponent(usbDriverComponent, index):
 def addFileName(fileName, component, symbol, srcPath, destPath, enabled, callback):
 	configName1 = Variables.get("__CONFIGURATION_NAME")
 	symbol.setProjectPath("config/" + configName1 + destPath)
-	symbol.setSourcePath(srcPath + fileName)
+	symbol.setSourcePath(srcPath + fileName + ".ftl")
+	symbol.setMarkup(True)
 	symbol.setOutputName(fileName)
 	symbol.setDestPath(destPath)
 	if fileName[-2:] == '.h':
