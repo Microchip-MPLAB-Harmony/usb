@@ -689,7 +689,7 @@ void F_DRV_USBHS_HOST_Initialize
 )
 {
 
-	USBHS_MODULE_ID usbID = drvObj->usbDrvCommonObj.usbID;
+    USBHS_MODULE_ID usbID = drvObj->usbDrvCommonObj.usbID;
 
         /* Initialize the device handle */
     drvObj->usbDrvHostObj.attachedDeviceObjHandle = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;

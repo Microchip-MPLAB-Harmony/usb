@@ -66,7 +66,7 @@
 (deviate:14 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" )\
 (deviate:6 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )
 
-#define DRV_USBHS_HOST_IRP_PER_FRAME_NUMBER 	            5
+#define DRV_USBHS_HOST_IRP_PER_FRAME_NUMBER                 5
 #define DRV_USBHSV1_HOST_MAXIMUM_ENDPOINTS_NUMBER           10
 #define DRV_USBHSV1_MAX_DMA_CHANNELS                        7
 
@@ -174,8 +174,8 @@ typedef struct
     /* Endpoint state bitmap */
     DRV_USBHSV1_DEVICE_ENDPOINT_STATE endpointState;
 
-	/* This gives the Endpoint Direction */
-	USB_DATA_DIRECTION endpointDirection;
+    /* This gives the Endpoint Direction */
+    USB_DATA_DIRECTION endpointDirection;
 
 }
 DRV_USBHSV1_DEVICE_ENDPOINT_OBJ;
@@ -359,8 +359,8 @@ typedef enum
     DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_RX_STATUS_IRP_FROM_CLIENT,
     DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_DATA_IRP_FROM_CLIENT,
     DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_IRP_FROM_CLIENT,
-	DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_RX_STATUS_COMPLETE,
-	DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_COMPLETE,
+    DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_RX_STATUS_COMPLETE,
+    DRV_USBHSV1_DEVICE_EP0_STATE_WAITING_FOR_TX_STATUS_COMPLETE,
     DRV_USBHSV1_DEVICE_EP0_STATE_TX_DATA_STAGE_IN_PROGRESS,
     DRV_USBHSV1_DEVICE_EP0_STATE_RX_DATA_STAGE_IN_PROGRESS,
 }
@@ -515,7 +515,7 @@ typedef struct S_DRV_USBHSV1_OBJ_STRUCT
 
     /* The object is current in an interrupt context */
     bool isInInterruptContext;
-	
+    
     /* Maintains the timer count value for host */
     uint32_t timerCount;
 
@@ -531,7 +531,7 @@ typedef struct S_DRV_USBHSV1_OBJ_STRUCT
 
     /* Non ISR Task Routine state */
     DRV_USBHSV1_TASK_STATE state;
-	
+    
     /* Client data that will be returned at callback */
     uintptr_t  hClientArg;
 
@@ -541,8 +541,8 @@ typedef struct S_DRV_USBHSV1_OBJ_STRUCT
     /* Current VBUS level when running in device mode */
     DRV_USB_VBUS_LEVEL vbusLevel;
 
-	/* Callback to determine the Vbus level */
-	DRV_USBHSV1_VBUS_COMPARATOR vbusComparator;
+    /* Callback to determine the Vbus level */
+    DRV_USBHSV1_VBUS_COMPARATOR vbusComparator;
 
     /* Sent session invalid event to the client */
     bool sessionInvalidEventSent;
@@ -570,13 +570,13 @@ typedef struct S_DRV_USBHSV1_OBJ_STRUCT
 
     /* This counts the reset signal duration */
     DRV_USBHSV1_HOST_ROOT_HUB_INFO rootHubInfo;
-	
-	/* This is array of device endpoint objects pointers */ 
-	DRV_USBHSV1_DEVICE_ENDPOINT_OBJ * deviceEndpointObj[DRV_USBHSV1_ENDPOINTS_NUMBER];
+    
+    /* This is array of device endpoint objects pointers */ 
+    DRV_USBHSV1_DEVICE_ENDPOINT_OBJ * deviceEndpointObj[DRV_USBHSV1_ENDPOINTS_NUMBER];
     
     /* True if Root Hub Operation is enabled */
     bool operationEnabled;
-	
+    
 } DRV_USBHSV1_OBJ;
 
 /****************************************************************************

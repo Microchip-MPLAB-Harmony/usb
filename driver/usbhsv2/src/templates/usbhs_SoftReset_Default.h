@@ -72,7 +72,7 @@ PLIB_TEMPLATE void USBHS_SoftResetEnable_Default( USBHS_MODULE_ID index )
 {
     /* This function enables the soft reset bits */
     volatile usbhs_registers_t * usbhs = (usbhs_registers_t *)(index + 0x1000);
-	usbhs->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_SWRST(1); 
+    usbhs->ENDPOINT0.USBHS_CTRLA |= USBHS_CTRLA_SWRST(1); 
 }
 
 //******************************************************************************
@@ -141,13 +141,13 @@ PLIB_TEMPLATE bool USBHS_ExistsSoftReset_Default( USBHS_MODULE_ID index )
 
 PLIB_TEMPLATE bool USBHS_SoftResetIsComplete_Default( USBHS_MODULE_ID index )
 {
-	bool returnVal = false ;
-	volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
-	if ( usbhs->SOFTRSTbits.w == 0 )
-	{
-		returnVal = true;
-	}
-	return ( returnVal );
+    bool returnVal = false ;
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    if ( usbhs->SOFTRSTbits.w == 0 )
+    {
+        returnVal = true;
+    }
+    return ( returnVal );
 }
 
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"

@@ -225,8 +225,8 @@
 
 
 #else 
-	
-	/*PIC32CZ and PIC32CK support initialization setup for host and device modes */
+    
+    /*PIC32CZ and PIC32CK support initialization setup for host and device modes */
     #if defined ( USBHS_DMACNTL_RESETVALUE )
         #define M_DRV_USBHS_ID_OVERRIDE_IS_NEEDED              false
         #define M_DRV_USBHS_INTERRUPT_PERSISTENT               true

@@ -70,7 +70,7 @@ DRV_USB_HOST_INTERFACE gDrvUSBFSV1HostInterface =
     .hostPipeSetup = DRV_USBFSV1_HOST_PipeSetup,
     .hostPipeClose = DRV_USBFSV1_HOST_PipeClose,
     .hostEventsDisable = DRV_USBFSV1_HOST_EventsDisable,
-	.endpointToggleClear = DRV_USBFSV1_HOST_EndpointToggleClear,
+    .endpointToggleClear = DRV_USBFSV1_HOST_EndpointToggleClear,
     .hostEventsEnable = DRV_USBFSV1_HOST_EventsEnable,
     .rootHubInterface.rootHubPortInterface.hubPortReset = DRV_USBFSV1_HOST_ROOT_HUB_PortReset,
     .rootHubInterface.rootHubPortInterface.hubPortSpeedGet = DRV_USBFSV1_HOST_ROOT_HUB_PortSpeedGet,
@@ -599,7 +599,7 @@ void DRV_USBFSV1_HOST_IRPCancel
 
   Summary:
     Closes an open pipe.
-	
+    
   Description:
     This function closes an open pipe. Any IRPs scheduled on the pipe will be
     aborted and IRP callback functions will be called with the status as
@@ -787,7 +787,7 @@ void DRV_USBFSV1_HOST_PipeClose
 
   Summary:
     Open a pipe with the specified attributes.
-	
+    
   Description:
     This function opens a communication pipe between the Host and the device
     endpoint. The transfer type and other attributes are specified through the
@@ -1046,7 +1046,7 @@ DRV_USBFSV1_HOST_PIPE_HANDLE DRV_USBFSV1_HOST_PipeSetup
 
   Summary:
     This function will process transfer the data stage of the control transfer.
-	
+    
   Description:
     Thsi function will transfer the data stage of the control transfer. It is
     called by the F_DRV_USBFSV1_HOST_ControlTransferProcess function. The
@@ -1136,7 +1136,7 @@ void F_DRV_USBFSV1_HOST_ControlTransferDataStageSend(DRV_USBFSV1_OBJ * hDriver)
 
   Summary:
     Control Transfer Process.
-	
+    
   Description:
     This function is called to start and continue the processing of a control
     transfer in the frame IRP list. It is either called from the SOF interrupt
@@ -1656,7 +1656,7 @@ bool F_DRV_USBFSV1_HOST_ControlTransferProcess(DRV_USBFSV1_OBJ * hDriver)
 
   Summary:
     This function transfers data for a non control transfer.
-	
+    
   Description:
     This function will transfer data for current or the next transfer in the
     frame IRP list. The transfer to be process is pointed to by the
@@ -1776,7 +1776,7 @@ void F_DRV_USBFSV1_HOST_NonControlTransferDataSend(DRV_USBFSV1_OBJ * hDriver)
 
   Summary:
     Non Control Transfer Process.
-	
+    
   Description:
     This function processes non-zero endpoint transfers which
     could be any of bulk, interrupt and isochronous transfers
@@ -1974,7 +1974,7 @@ static bool F_DRV_USBFSV1_HOST_NonControlTransferProcess
   
   Summary:
     This function calculates the bus bandwidth required for a control transfer.
-	
+    
   Description:
     This function calculates the bus bandwidth required for a control transfer.
     The global consumed bandwidth is decremented by the amount of bandwidth
@@ -2064,7 +2064,7 @@ void F_DRV_USBFSV1_HOST_ControlTransferBW(DRV_USBFSV1_OBJ * hDriver)
   
   Summary:
     This function will update the current pipe in the pipe group.
-	
+    
   Description:
     This function will update the current pipe in the pipe group to the next
     pipe. If the end of the pipe group is reached, then current pipe will be
@@ -2114,7 +2114,7 @@ USB_HOST_IRP_LOCAL * F_DRV_USBFSV1_HOST_PipeGroupGetNextIRP(DRV_USBFSV1_HOST_PIP
   Summary:
     This function calculates the bus bandwidth required for a non control
     transfer.
-	
+    
   Description:
     This function calculates the bus bandwidth required for a non control
     transfer. The global bus bandwidth will be updated based on bandwidth
@@ -2195,7 +2195,7 @@ bool F_DRV_USBFSV1_HOST_NonControlTransferBW(DRV_USBFSV1_OBJ * hDriver, USB_HOST
   
   Summary:
     This function will create the frame IRP list. 
-	
+    
   Description:
     This function will create the frame IRP list. This is a list of all IRPs
     that will processed in the current frame. This function is called from the
@@ -3273,17 +3273,17 @@ void DRV_USBFSV1_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enable)
     else
     {
         if(false == enable)
-        {	
+        {    
              /* If the root hub operation is disable, we disable detach and
              * attached event and switch off the port power. */
-	
+    
             SYS_INT_SourceStatusClear((INT_SOURCE)pUSBDrvObj->interruptSource);
             /* Let the host layer know that root hub operation is disabled */
 
             pUSBDrvObj->operationEnabled = false;
-			
-			/* Disable USB port by turning off VBUS */ 
-			if(pUSBDrvObj->rootHubInfo.portPowerEnable != NULL)
+            
+            /* Disable USB port by turning off VBUS */ 
+            if(pUSBDrvObj->rootHubInfo.portPowerEnable != NULL)
             {   
                pUSBDrvObj->rootHubInfo.portPowerEnable(0 /* Port 0 */, false); 
             }
@@ -3299,13 +3299,13 @@ void DRV_USBFSV1_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enable)
         }
         else
         {
-			/* Enable USB port */ 
-			if(pUSBDrvObj->rootHubInfo.portPowerEnable != NULL)
-			{
-				pUSBDrvObj->rootHubInfo.portPowerEnable(0 /* Port 0 */, true);
-			}
-			
-			/* The USB Global interrupt and USB module is already enabled at
+            /* Enable USB port */ 
+            if(pUSBDrvObj->rootHubInfo.portPowerEnable != NULL)
+            {
+                pUSBDrvObj->rootHubInfo.portPowerEnable(0 /* Port 0 */, true);
+            }
+            
+            /* The USB Global interrupt and USB module is already enabled at
              * this point. We enable the attach interrupt to detect attach
              */
             pUSBDrvObj->operationEnabled = true;

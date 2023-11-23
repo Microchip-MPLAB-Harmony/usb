@@ -260,7 +260,7 @@ void F_DRV_USBHSV1_HOST_IRPTransmitFIFOLoad
     for(uint16_t i = 0; i < count; i ++)
     {
         *ptrEPData = *data;
-		ptrEPData++;
+        ptrEPData++;
         data++;
     }
                 
@@ -312,7 +312,7 @@ void F_DRV_USBHSV1_HOST_IRPTransmitSetupPacket
     for(uint16_t i = 0; i < 8U; i ++)
     {
         *ptrEPData = *data;
-		ptrEPData++;
+        ptrEPData++;
         data++;
     }
                 
@@ -367,7 +367,7 @@ unsigned int F_DRV_USBHSV1_HOST_IRPReceiveFIFOUnload
     {
         *data = *ptrEPData;
         ptrEPData++;
-		data++;
+        data++;
     }
     irp->completedBytes += count;
     *pisDMAUsed = false;

@@ -94,7 +94,7 @@
 #define TXDPKTBUFDIS    0x342
 #define RXDPKTBUFDIS    0x340
 
-#define DRV_USBHS_HOST_IRP_PER_FRAME_NUMBER 	  5
+#define DRV_USBHS_HOST_IRP_PER_FRAME_NUMBER       5
 #define DRV_USBHS_HOST_MAXIMUM_ENDPOINTS_NUMBER   8U
 #define DRV_USBHS_MAX_DMA_CHANNELS                8
 
@@ -412,11 +412,11 @@ typedef enum
     /* Driver is about to start the initialization delay */
     DRV_USBHS_TASK_STATE_STARTING_DELAY = 1,
 
-	/* Driver has wait for reset complete */
-	DRV_USBHS_TASK_STATE_WAITING_FOR_IS_SOFTRESET_COMPLETE,
+    /* Driver has wait for reset complete */
+    DRV_USBHS_TASK_STATE_WAITING_FOR_IS_SOFTRESET_COMPLETE,
 
     /* Host or device module init */
-	DRV_USBHS_TASK_STATE_MODULE_INIT,
+    DRV_USBHS_TASK_STATE_MODULE_INIT,
     /* Driver has complete initialization and can be opened */
     DRV_USBHS_TASK_STATE_RUNNING
 

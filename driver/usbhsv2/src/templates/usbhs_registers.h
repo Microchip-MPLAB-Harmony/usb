@@ -158,7 +158,7 @@ typedef union
         uint8_t EP5RXIE:1;
         uint8_t EP6RXIE:1;
         uint8_t EP7RXIE:1;
- 	uint8_t :8;
+     uint8_t :8;
     };
     struct
     {

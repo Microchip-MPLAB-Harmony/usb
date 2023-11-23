@@ -1857,7 +1857,7 @@ bool F_DRV_USBFS_HOST_NonControlIRPProcess
                             endIRP = true;
                         }
                         break;
-					case USB_TRANSACTION_BUS_TIME_OUT:
+                    case USB_TRANSACTION_BUS_TIME_OUT:
                         
                         pipe->retryCount++;
                         if ( pipe->retryCount < DRV_USBFS_TRANSACTION_RETRY_COUNT )

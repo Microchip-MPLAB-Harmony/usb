@@ -6,10 +6,10 @@
     
   File Name:
     drv_usb.h
-	
+    
   Summary:
     USB Module Driver Interface File
-	
+    
   Description:
     This file describes the interface that any USB module driver must implement
     in order for it to work with MPLAB Harmony USB Host and Device Stack.                                                  
@@ -166,7 +166,7 @@ typedef enum
     /* This event is generated in device mode only. It occurs when the Host
        suspends the bus and the bus goes idle. */
     DRV_USB_EVENT_WAKEUP_DETECT,
-	
+    
     /* This event is generated in host mode and device mode. In host mode, this
        event occurs when the device has stalled the host. In device mode, this
        event occurs when the host has accessed a stalled endpoint thus
@@ -316,8 +316,8 @@ typedef struct
 
     /* This is a pointer to the host pipe close function */
     void (*hostPipeClose)(DRV_USB_HOST_PIPE_HANDLE pipeHandle);
-	
-	 /* This is a pointer to the host endpoint data toggle clear function */
+    
+     /* This is a pointer to the host endpoint data toggle clear function */
     void (*endpointToggleClear)(DRV_USB_HOST_PIPE_HANDLE pipeHandle);
 
     /* This is a pointer to the host Root Hub functions */

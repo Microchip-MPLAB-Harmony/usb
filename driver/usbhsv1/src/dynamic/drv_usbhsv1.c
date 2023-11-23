@@ -133,7 +133,7 @@ SYS_MODULE_OBJ DRV_USBHSV1_Initialize
         drvObj->operationSpeed = usbInit->operationSpeed;
 
         /* Assign the endpoint table */
-		drvObj->endpointTable = &gDrvUSBEndpoints[drvIndex][0];
+        drvObj->endpointTable = &gDrvUSBEndpoints[drvIndex][0];
         drvObj->interruptSource = usbInit->interruptSource;
 
         /* The root hub information is applicable for host mode operation. */    
@@ -178,7 +178,7 @@ SYS_MODULE_OBJ DRV_USBHSV1_Initialize
             }
             else
             {
-				/* Configure for Full / High Speed operation */
+                /* Configure for Full / High Speed operation */
                 usbID->USBHS_DEVCTRL &= ~USBHS_DEVCTRL_LS_Msk;
             }
 

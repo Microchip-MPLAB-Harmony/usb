@@ -2798,11 +2798,11 @@ void F_DRV_USBDP_Tasks_ISR
                     /* Analyze the setup packet. We need to check if the control
                      * transfer contains a data stage and if so, get the direction. */
                 
-					setupPkt = (USB_SETUP_PACKET *)irp->data;
-											
-					endpoint0DataStageSize = setupPkt->W_Length.Val;
+                    setupPkt = (USB_SETUP_PACKET *)irp->data;
+                                            
+                    endpoint0DataStageSize = setupPkt->W_Length.Val;
 
-					endpoint0DataStageDirection = (uint8_t)((setupPkt->bmRequestType & DRV_USBDP_ENDPOINT_DIRECTION_MASK) != 0U);
+                    endpoint0DataStageDirection = (uint8_t)((setupPkt->bmRequestType & DRV_USBDP_ENDPOINT_DIRECTION_MASK) != 0U);
 
                     if(endpoint0DataStageSize == 0U)
                     {

@@ -1958,7 +1958,7 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_IRPSubmit
                                     if((irp_t->nPendingBytes + byteCount) > irp_t->size)
                                     {
                                         /* This is not acceptable as it may corrupt the ram location */
-										SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB UDPHS Driver: corrupt the ram location in DRV_USB_UDPHS_DEVICE_IRPSubmit()");
+                                        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB UDPHS Driver: corrupt the ram location in DRV_USB_UDPHS_DEVICE_IRPSubmit()");
                                     }
                                     SYS_CACHE_InvalidateDCache_by_Addr((uint32_t *)irp_t->data, (int32_t)irp_t->size);
 
@@ -2076,7 +2076,7 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_IRPSubmit
                                     {
                                         /* This is not acceptable as it may corrupt the ram location */
                                         byteCount = (uint16_t)(irp_t->size - irp_t->nPendingBytes);
-										SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB UDPHS Driver: corrupt the ram location in DRV_USB_UDPHS_DEVICE_IRPSubmit()");
+                                        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB UDPHS Driver: corrupt the ram location in DRV_USB_UDPHS_DEVICE_IRPSubmit()");
                                     }
 
                                     __DMB();
@@ -2474,11 +2474,11 @@ void F_DRV_USB_UDPHS_DEVICE_Tasks_ISR_DMA(DRV_USB_UDPHS_OBJ * hDriver, uint8_t N
     endpointObj = hDriver->deviceEndpointObj[NumEndpoint];
     irp = endpointObj->irpQueue;
     if (irp != NULL)
-	{
+    {
         dmaStatus = usbID->UDPHS_DMA[NumEndpoint].UDPHS_DMASTATUS;
 
         /* The total amount of untransmitted bytes is stored in BUFF_COUNT. 
-		   In the event of a successful transfer, BUFF_COUNT is equal to 0. */ 
+           In the event of a successful transfer, BUFF_COUNT is equal to 0. */ 
         byteCount = (dmaStatus & UDPHS_DMASTATUS_BUFF_COUNT_Msk) >> UDPHS_DMASTATUS_BUFF_COUNT_Pos;
 
         if( byteCount == 0U )

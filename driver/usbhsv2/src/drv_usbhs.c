@@ -248,7 +248,7 @@ void DRV_USBHS_Tasks
                 {
                     case DRV_USBHS_OPMODE_DUAL_ROLE:
                         /* Device Initialization */
-						M_DRV_USBHS_DEVICE_INIT(hDriver, (uint16_t)object);
+                        M_DRV_USBHS_DEVICE_INIT(hDriver, (uint16_t)object);
                         /* Host Initialization */
                         M_DRV_USBHS_HOST_INIT(hDriver, (uint16_t)object);
 

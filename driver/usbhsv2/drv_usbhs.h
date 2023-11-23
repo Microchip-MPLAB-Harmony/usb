@@ -6,10 +6,10 @@
     
   File Name:
     drv_usbhs.h
-	
+    
   Summary:
     PIC32MZ USB Module Driver Interface File
-	
+    
   Description:
     The PIC32MZ Hi-Speed USB Module driver provides a simple interface to manage
     the "USB" peripheral on the PIC32MZ microcontroller. This file defines the
@@ -455,7 +455,7 @@ typedef struct
   Description:
     Facilitates in resetting of endpoint data toggle to 0 for Non Control
     endpoints.
-	
+    
   Precondition:
     None.
 
@@ -501,17 +501,17 @@ void DRV_USBHS_HOST_EndpointToggleClear
     
   Summary:
     Initializes the Hi-Speed USB Driver.
-	
+    
   Description:
     This function initializes the Hi-Speed USB Driver, making it ready for
     clients to open. The driver initialization does not complete when this
     function returns. The DRV_USBHS_Tasks function must called periodically to
     complete the driver initialization. The DRV_USBHS_Open function will fail if
     the driver was not initialized or if initialization has not completed.
-	
+    
   Precondition:
     None.
-	
+    
   Parameters:
     drvIndex - Ordinal number of driver instance to be initialized. This should
     be set to DRV_USBHS_INDEX_0 if driver instance 0 needs to be initialized.
@@ -519,14 +519,14 @@ void DRV_USBHS_HOST_EndpointToggleClear
     init - Pointer to a data structure containing data necessary to
     initialize the driver. This should be a DRV_USBHS_INIT structure reference
     typecast to SYS_MODULE_INIT reference. 
-				
+                
   Returns:
     * SYS_MODULE_OBJ_INVALID - The driver initialization failed.
     * A valid System Module Object - The driver initialization was able to
       start. It may have not completed and requires the DRV_USBHS_Tasks function
       to be called periodically. This value will never be the same as
       SYS_MODULE_OBJ_INVALID. 
-	
+    
   Example:
     <code>
      // The following code shows an example initialization of the
@@ -554,7 +554,7 @@ void DRV_USBHS_HOST_EndpointToggleClear
     DRV_USBHS_Initialize(DRV_USBHS_INDEX_0, (SYS_MODULE_INIT *) &usbInitData);
     
     </code>
-	
+    
   Remarks:
     This function must be called before any other Hi-Speed USB Driver function
     is called. This function should only be called once during system
@@ -768,7 +768,7 @@ void DRV_USBHS_Tasks_ISR_USBDMA( SYS_MODULE_OBJ object );
     
   Summary:
     Opens the specified Hi-Speed USB Driver instance and returns a handle to it.
-	
+    
   Description:
     This function opens the specified Hi-Speed USB Driver instance and provides a
     handle that must be provided to all other client-level operations to
@@ -779,11 +779,11 @@ void DRV_USBHS_Tasks_ISR_USBDMA( SYS_MODULE_OBJ object );
     handle. A driver instance can only support one client. Trying to open a
     driver that has an existing client will result in an unsuccessful
     function call.
-	
+    
   Precondition:
     Function DRV_USBHS_Initialize must have been called before calling this
     function.
-	
+    
   Parameters:
     drvIndex - Identifies the driver instance to be opened. As an example, this
     value can be set to DRV_USBHS_INDEX_0 if instance 0 of the driver has to be
@@ -791,7 +791,7 @@ void DRV_USBHS_Tasks_ISR_USBDMA( SYS_MODULE_OBJ object );
     
     intent - Should always be 
     (DRV_IO_INTENT_EXCLUSIVE|DRV_IO_INTENT_READWRITE| DRV_IO_INTENT_NON_BLOCKING).
-				
+                
   Returns:
     * DRV_HANDLE_INVALID - The driver could not be opened successfully.This can
      happen if the driver initialization was not complete or if an internal
@@ -799,7 +799,7 @@ void DRV_USBHS_Tasks_ISR_USBDMA( SYS_MODULE_OBJ object );
     * A Valid Driver Handle - This is an arbitrary value and is returned if the
       function was successful. This value will never be the same as
       DRV_HANDLE_INVALID. 
-	
+    
   Example:
     <code>
 
@@ -814,7 +814,7 @@ void DRV_USBHS_Tasks_ISR_USBDMA( SYS_MODULE_OBJ object );
     }
     
     </code>
-	
+    
   Remarks:
     The handle returned is valid until the DRV_USBHS_Close function is called.
     The function will typically return DRV_HANDLE_INVALID if the driver was not
@@ -877,7 +877,7 @@ void DRV_USBHS_Close( DRV_HANDLE handle );
   Summary:
     This function sets up the event callback function that is invoked by the USB
     controller driver to notify the client of USB bus events.
-	
+    
   Description:
     This function sets up the event callback function that is invoked by the USB
     controller driver to notify the client of USB bus events. The callback is
@@ -885,10 +885,10 @@ void DRV_USBHS_Close( DRV_HANDLE handle );
     function has been called or by setting the myEventCallBack argument as NULL.
     When the callback function is called, the hReferenceData argument is
     returned.
-	
+    
   Precondition:
     None.
-	
+    
   Parameters:
     handle - Client's driver handle (returned from DRV_USBHS_Open function).
 
@@ -896,10 +896,10 @@ void DRV_USBHS_Close( DRV_HANDLE handle );
     callback.  
     
     myEventCallBack -  Callback function for all USB events.
-	
+    
   Returns:
     None.
-	
+    
   Example:
     <code>
 
@@ -914,7 +914,7 @@ void DRV_USBHS_Close( DRV_HANDLE handle );
     DRV_USBHS_ClientEventCallBackSet(myUSBDevice.usbDriverHandle, (uintptr_t)&myUSBDevice, USBDeviceLayerEventHandler);
     
     </code>
-	
+    
   Remarks:
     Typical usage of the Hi-Speed USB Driver requires a client to register a callback.                                                                         
 */
@@ -1190,7 +1190,7 @@ void DRV_USBHS_DEVICE_Detach(DRV_HANDLE handle);
   Summary:
     This function enables an endpoint for the specified direction and endpoint
     size.
-	
+    
   Description:
     This function enables an endpoint for the specified direction and endpoint
     size. The function will enable the endpoint for communication in one
@@ -1204,10 +1204,10 @@ void DRV_USBHS_DEVICE_Detach(DRV_HANDLE handle);
     this endpoint will be scheduled in wMaxPacketSize transactions. The function
     does not check if the endpoint is already in use. It is the client's
     responsibility to make sure that a endpoint is not accidentally reused.
-	
+    
   Precondition:
     The Client handle should be valid.
-	
+    
   Parameters:
     handle - Client's driver handle (returned from DRV_USBHS_Open function).
     
@@ -1220,14 +1220,14 @@ void DRV_USBHS_DEVICE_Detach(DRV_HANDLE handle);
     
     endpointSize - Maximum size (in bytes) of the endpoint as reported in the
     endpoint descriptor.
-							
+                            
   Returns:
     * USB_ERROR_NONE - The endpoint was successfully enabled.
     * USB_ERROR_DEVICE_ENDPOINT_INVALID - If the endpoint that is being accessed
       is not a valid endpoint defined for this driver instance.  The value of
       DRV_USBHS_ENDPOINTS_NUMBER configuration constant should be adjusted.
     * USB_ERROR_PARAMETER_INVALID - The driver handle is invalid.
-	
+    
   Example:
     <code>
     // This code shows an example of how to enable Endpoint
@@ -1260,7 +1260,7 @@ void DRV_USBHS_DEVICE_Detach(DRV_HANDLE handle);
     
     DRV_USBHS_DEVICE_EndpointEnable(handle, ep, USB_TRANSFER_TYPE_BULK, 64);
     </code>
-	
+    
   Remarks:
     None.                                                                    
 */
@@ -1283,28 +1283,28 @@ USB_ERROR DRV_USBHS_DEVICE_EndpointEnable
     
   Summary:
     This function disables an endpoint.
-	
+    
   Description:
     This function disables an endpoint. If the endpoint type is a control
     endpoint type, both directions are disabled. For non-control endpoints, the
     function disables the specified direction only. The direction to be disabled 
     is specified by the Most Significant Bit (MSB) of the endpointAndDirection 
     parameter.
-	
+    
   Precondition:
     The Client handle should be valid.
 
   Parameters:
     handle - Client's driver handle (returned from DRV_USBHS_Open function).
     endpointAndDirection - Specifies the endpoint and direction.
-	
+    
   Returns:
     * USB_ERROR_NONE - The endpoint was successfully enabled.
     * USB_ERROR_DEVICE_ENDPOINT_INVALID - The endpoint that is being accessed
       is not a valid endpoint (endpoint was not provisioned through the 
       DRV_USBHS_ENDPOINTS_NUMBER configuration constant) defined for this driver 
       instance.
-	
+    
   Example:
     <code>
     // This code shows an example of how to disable
@@ -1327,7 +1327,7 @@ USB_ERROR DRV_USBHS_DEVICE_EndpointEnable
     DRV_USBHS_DEVICE_EndpointDisable(handle, ep );
     
     </code>
-	
+    
   Remarks:
     None.                                                                    
 */
@@ -1383,17 +1383,17 @@ USB_ERROR DRV_USBHS_DEVICE_EndpointDisableAll(DRV_HANDLE handle);
     
   Summary:
     This function stalls an endpoint in the specified direction.
-	
+    
   Description:
     This function stalls an endpoint in the specified direction.
-	
+    
   Precondition:
     The Client handle should be valid.
-	
+    
   Parameters:
     handle - Client's driver handle (returned from DRV_USBHS_Open function).
     endpointAndDirection -  Specifies the endpoint and direction.
-	
+    
   Returns:
     * USB_ERROR_NONE - The endpoint was successfully enabled.
     * USB_ERROR_PARAMETER_INVALID - The driver handle is not valid.
@@ -1401,7 +1401,7 @@ USB_ERROR DRV_USBHS_DEVICE_EndpointDisableAll(DRV_HANDLE handle);
       accessed is out of the valid endpoint defined for this driver instance.
     * USB_ERROR_OSAL_FUNCTION - An error with an OSAL function called in this
       function.
-	
+    
   Example:
     <code>
     // This code shows an example of how to stall an endpoint. In
@@ -1414,7 +1414,7 @@ USB_ERROR DRV_USBHS_DEVICE_EndpointDisableAll(DRV_HANDLE handle);
     DRV_USBHS_DEVICE_EndpointStall(handle, ep);
     
     </code>
-	
+    
   Remarks:
     None.                                                                    
 */
@@ -1435,23 +1435,23 @@ USB_ERROR DRV_USBHS_DEVICE_EndpointStall
     
   Summary:
     This function clears the stall on an endpoint in the specified direction.
-	
+    
   Description:
     This function clears the stall on an endpoint in the specified direction.
-	
+    
   Precondition:
     The Client handle should be valid.
-	
+    
   Parameters:
     handle - Client's driver handle (returned from DRV_USBHS_Open function).
     endpointAndDirection -  Specifies the endpoint and direction.
-	
+    
   Returns:
     * USB_ERROR_NONE - The endpoint was successfully enabled.
     * USB_ERROR_PARAMETER_INVALID - The driver handle is not valid.
     * USB_ERROR_DEVICE_ENDPOINT_INVALID - If the endpoint that is being
       accessed is out of the valid endpoint defined for this driver instance.
-	
+    
   Example:
     <code>
     // This code shows an example of how to clear a stall. In this
@@ -1464,7 +1464,7 @@ USB_ERROR DRV_USBHS_DEVICE_EndpointStall
     DRV_USBHS_DEVICE_EndpointStallClear(handle, ep);
     
     </code>
-	
+    
   Remarks:
     None.                                                                    
 */
@@ -1486,22 +1486,22 @@ USB_ERROR DRV_USBHS_DEVICE_EndpointStallClear
   Summary:
     This function returns the enable/disable status of the specified endpoint
     and direction.
-	
+    
   Description:
     This function returns the enable/disable status of the specified endpoint
     and direction.
-	
+    
   Precondition:
     The Client handle should be valid.
-	
+    
   Parameters:
     handle - Client's driver handle (returned from DRV_USBHS_Open function).
     endpointAndDirection - Specifies the endpoint and direction.
-	
+    
   Returns:
     * true - The endpoint is enabled.
     * false - The endpoint is disabled.
-	
+    
   Example:
     <code>
     // This code shows an example of how the
@@ -1522,7 +1522,7 @@ USB_ERROR DRV_USBHS_DEVICE_EndpointStallClear
     }
     
     </code>
-	
+    
   Remarks:
     None.                                                                     
 */
@@ -1603,7 +1603,7 @@ bool DRV_USBHS_DEVICE_EndpointIsStalled
   Summary:
     This function submits an I/O Request Packet (IRP) for processing to the
     Hi-Speed USB Driver.
-	
+    
   Description:
     This function submits an I/O Request Packet (IRP) for processing to the USB
     Driver. The IRP allows a client to send and receive data from the USB Host.
@@ -1654,15 +1654,15 @@ bool DRV_USBHS_DEVICE_EndpointIsStalled
         will send multiple of endpoint size number of bytes. For example, if the
         IRP size is 130 and the endpoint size if 64, the number of bytes sent
         will 128.
-		
+        
   Precondition:
     The Client handle should be valid.
-	
+    
   Parameters:
     handle - Client's driver handle (returned from DRV_USBHS_Open function).
     endpointAndDirection -  Specifies the endpoint and direction.
     irp - Pointer to the IRP to be added to the queue for processing.
-	
+    
   Returns:
     * USB_ERROR_NONE - if the IRP was submitted successful.
     * USB_ERROR_IRP_SIZE_INVALID - if the size parameter of the IRP is not
@@ -1672,7 +1672,7 @@ bool DRV_USBHS_DEVICE_EndpointIsStalled
     * USB_ERROR_DEVICE_ENDPOINT_INVALID - The specified endpoint is not valid.
     * USB_ERROR_OSAL_FUNCTION - An OSAL call in the function did not complete
       successfully.
-	
+    
   Example:
     <code>
     // The following code shows an example of how to schedule a IRP to send data
@@ -1728,7 +1728,7 @@ bool DRV_USBHS_DEVICE_EndpointIsStalled
     irp.referenceData = (uintptr_t)&myDeviceLayerObj;
     
     </code>
-	
+    
   Remarks:
     This function can be called from the ISR of the USB module to associated
     with the client.                                                                           
@@ -1752,18 +1752,18 @@ USB_ERROR DRV_USBHS_DEVICE_IRPSubmit
   Summary:
     This function cancels all IRPs that are queued and in progress at the
     specified endpoint.
-	
+    
   Description:
     This function cancels all IRPs that are queued and in progress at the
     specified endpoint.
-	
+    
   Precondition:
     The Client handle should be valid.
-	
+    
   Parameters:
     handle - Client's driver handle (returned from DRV_USBHS_Open function).
     endpointAndDirection - Specifies the endpoint and direction.
-	
+    
   Returns:
     * USB_ERROR_NONE - The endpoint was successfully enabled.
     * USB_ERROR_DEVICE_ENDPOINT_INVALID - If the endpoint that is being
@@ -1771,7 +1771,7 @@ USB_ERROR DRV_USBHS_DEVICE_IRPSubmit
     * USB_ERROR_PARAMETER_INVALID - The driver handle is not valid.
     * USB_ERROR_OSAL_FUNCTION - An OSAL function called in this function did not
       execute successfully.
-	
+    
   Example:
     <code>
     // This code shows an example of how to cancel all IRPs.
@@ -1794,7 +1794,7 @@ USB_ERROR DRV_USBHS_DEVICE_IRPSubmit
          }
      }
     </code>
-	
+    
   Remarks:
     None.                                                                  
 */
@@ -1808,15 +1808,15 @@ USB_ERROR DRV_USBHS_DEVICE_IRPCancelAll
 // **************************************************************************
 /* Function:
     USB_ERROR DRV_USBHS_DEVICE_IRPCancel
-	(
-		DRV_HANDLE client, 
-		USB_DEVICE_IRP * irp
-	)
+    (
+        DRV_HANDLE client, 
+        USB_DEVICE_IRP * irp
+    )
     
   Summary:
     This function cancels the specific IRP that are queued and in progress at the
     specified endpoint.
-	
+    
   Description:
     This function attempts to cancel the processing of a queued IRP. An IRP that
     was in the queue but yet to be processed will be cancelled successfully and
@@ -1828,21 +1828,21 @@ USB_ERROR DRV_USBHS_DEVICE_IRPCancelAll
     completed. The IRP callback function will then be called in an interrupt
     context. The application should not release the related data buffer unless
     the IRP callback has occurred.
-	
+    
   Precondition:
     The Client handle should be valid.
-	
+    
   Parameters:
     handle - Client's driver handle (returned from DRV_USBHS_Open function).
     irp - Pointer to the IRP to cancel.
-	
+    
   Returns:
     * USB_ERROR_NONE - The IRP have been canceled successfully.
     * USB_ERROR_PARAMETER_INVALID - Invalid parameter or the IRP already has 
       been aborted or completed
     * USB_ERROR_OSAL_FUNCTION - An OSAL function called in this function did
       not execute successfully.
-	
+    
   Example:
     <code>
     // This code shows an example of how to cancel IRP.  In this example the IRP
@@ -1898,7 +1898,7 @@ USB_ERROR DRV_USBHS_DEVICE_IRPCancelAll
      }
 
     </code>
-	
+    
   Remarks:
     The size returned after the ABORT callback will be always 0 regardless of
     the amount of data that has been sent or received. The client should not
@@ -1922,22 +1922,22 @@ USB_ERROR DRV_USBHS_DEVICE_IRPCancel
     
   Summary:
     Disables Host mode events.
-	
+    
   Description:
     This function disables the Host mode events. This function is called by the
     Host Layer when it wants to execute code atomically. 
-	
+    
   Precondition:
     The handle should be valid.
-	
+    
   Parameters:
     handle - Client's driver handle (returned from DRV_USBHS_Open function).
-	
+    
   Returns:
     * true - Driver event generation was enabled when this function was called.
     * false - Driver event generation was not enabled when this function was
       called. 
-	
+    
   Example:
     <code>
     // This code shows how the DRV_USBHS_HOST_EventsDisable and
@@ -1956,7 +1956,7 @@ USB_ERROR DRV_USBHS_DEVICE_IRPCancel
     DRV_USBHS_HOST_EventsEnable(driverHandle, eventsWereEnabled);
 
     </code>
-	
+    
   Remarks:
     None.
 */
@@ -1976,23 +1976,23 @@ bool DRV_USBHS_HOST_EventsDisable
     
   Summary:
     Restores the events to the specified the original value.
-	
+    
   Description:
     This function will restore the enable disable state of the events.  The
     eventRestoreContext parameter should be equal to the value returned by the
     DRV_USBHS_HOST_EventsDisable function.
-	
+    
   Precondition:
     The handle should be valid.
-	
+    
   Parameters:
     handle - Handle to the driver (returned from DRV_USBHS_Open function).
     eventRestoreContext - Value returned by the DRV_USBHS_HOST_EventsDisable
     function.
-	
+    
   Returns:
     None.
-	
+    
   Example:
     <code>
     // This code shows how the DRV_USBHS_HOST_EventsDisable and
@@ -2011,7 +2011,7 @@ bool DRV_USBHS_HOST_EventsDisable
     DRV_USBHS_HOST_EventsEnable(driverHandle, eventsWereEnabled);
 
     </code>
-	
+    
   Remarks:
     None.
 */
@@ -2029,22 +2029,22 @@ void DRV_USBHS_HOST_EventsEnable
   Summary:
     This function causes the device to start Remote Wakeup Signalling on the
     bus.
-	
+    
   Description:
     This function causes the device to start Remote Wakeup Signalling on the
     bus. This function should be called when the device, presently placed in
     suspend mode by the Host, wants to be wakeup. Note that the device can do
     this only when the Host has enabled the device's Remote Wakeup capability.
-	
+    
   Precondition:
     The handle should be valid.
-	
+    
   Parameters:
     handle - Handle to the driver (returned from DRV_USBHS_Open function).
-	
+    
   Returns:
     None.
-	
+    
   Example:
     <code>
     DRV_HANDLE handle;
@@ -2057,7 +2057,7 @@ void DRV_USBHS_HOST_EventsEnable
         DRV_USBHS_DEVICE_RemoteWakeupStart(handle);
     }
     </code>
-	
+    
   Remarks:
     None.
 */
@@ -2071,22 +2071,22 @@ void DRV_USBHS_DEVICE_RemoteWakeupStart(DRV_HANDLE handle);
   Summary:
     This function causes the device to stop the Remote Wakeup Signalling on the
     bus.
-	
+    
   Description:
     This function causes the device to stop Remote Wakeup Signalling on the bus.
     This function should be called after the DRV_USBHS_DEVICE_RemoteWakeupStart
     function was called to start the Remote Wakeup signaling on the bus.
-	
+    
   Precondition:
     The handle should be valid. The DRV_USBHS_DEVICE_RemoteWakeupStart function was
     called to start the Remote Wakeup signaling on the bus.
-	
+    
   Parameters:
     handle - Handle to the driver (returned from DRV_USBHS_Open function).
-	
+    
   Returns:
     None.
-	
+    
   Example:
     <code>
     DRV_HANDLE handle;
@@ -2102,7 +2102,7 @@ void DRV_USBHS_DEVICE_RemoteWakeupStart(DRV_HANDLE handle);
         DRV_USBHS_DEVICE_RemoteWakeupStop(handle);
     }
     </code>
-	
+    
   Remarks:
     This function should be 1 to 15 milliseconds after the
     DRV_USBHS_DEVICE_RemoteWakeupStart function was called.
@@ -2120,19 +2120,19 @@ void DRV_USBHS_DEVICE_RemoteWakeupStop(DRV_HANDLE handle);
   
   Summary:
     This function enables the specified USB 2.0 Test Mode.
-	
+    
   Description:
     This function causes the device to enter the specified USB 2.0 defined test
     mode. It is called in response to Set Feature command from the host. The
     wValue field of this command specifies the Test Mode to enter. The USB
     module will perform the action identified by the testMode parameter.
-	
+    
   Precondition:
     The handle should be valid. 
-	
+    
   Parameters:
     handle - Handle to the driver (returned from DRV_USBHS_Open function).
-	
+    
     testMode - This parameter identifies the USB 2.0 specification test mode
     (see table 9-7 of the USB 2.0 specification).
 
@@ -2140,7 +2140,7 @@ void DRV_USBHS_DEVICE_RemoteWakeupStop(DRV_HANDLE handle);
     * USB_ERROR_NONE - The function executed successfully.
     * USB_ERROR_PARAMETER_INVALID - The handle or the value of testMode
       parameter is not valid. 
-	
+    
   Example:
     <code>
     DRV_HANDLE handle;
@@ -2151,7 +2151,7 @@ void DRV_USBHS_DEVICE_RemoteWakeupStop(DRV_HANDLE handle);
     DRV_USBHS_DEVICE_TestModeEnter(handle, USB_TEST_MODE_SELECTOR_TEST_J);
     
     </code>
-	
+    
   Remarks:
     This function should be called only when the USB device has attached to the
     Host at High speed and only in response to the Set Feature command from the
@@ -2174,7 +2174,7 @@ USB_ERROR DRV_USBHS_DEVICE_TestModeEnter
   
   Summary:
     This function disables the specified USB 2.0 Test Mode.
-	
+    
   Description:
     This function causes the device to stop the specified USB 2.0 defined test
     mode. This function can be called after calling the
@@ -2182,10 +2182,10 @@ USB_ERROR DRV_USBHS_DEVICE_TestModeEnter
 
   Precondition:
     The handle should be valid. 
-	
+    
   Parameters:
     handle - Handle to the driver (returned from DRV_USBHS_Open function).
-	
+    
     testMode - This parameter identifies the USB 2.0 specification test mode
     (see table 9-7 of the USB 2.0 specification).
 
@@ -2193,7 +2193,7 @@ USB_ERROR DRV_USBHS_DEVICE_TestModeEnter
     * USB_ERROR_NONE - The function executed successfully.
     * USB_ERROR_PARAMETER_INVALID - The handle or the value of testMode
       parameter is not valid. 
-	
+    
   Example:
     <code>
     DRV_HANDLE handle;
@@ -2209,7 +2209,7 @@ USB_ERROR DRV_USBHS_DEVICE_TestModeEnter
     DRV_USBHS_DEVICE_TestModeExit(handle, USB_TEST_MODE_SELECTOR_TEST_J);
     
     </code>
-	
+    
   Remarks:
     None.
 */
@@ -2232,21 +2232,21 @@ USB_ERROR DRV_USBHS_DEVICE_TestModeExit
     
   Summary:
     Cancels the specified IRP.
-	
+    
   Description:
     This function attempts to cancel the specified IRP. If the IRP is queued and
     its processing has not started, it will be cancelled successfully. If the
     IRP in progress, the ongoing transaction will be allowed to complete. 
-	
+    
   Precondition:
     None.
-	
+    
   Parameters:
     inputIRP - Pointer to the IRP to cancel.
-	
+    
   Returns:
     None.
-	
+    
   Example:
     <code>
 
@@ -2273,7 +2273,7 @@ USB_ERROR DRV_USBHS_DEVICE_TestModeExit
     DRV_USBHS_HOST_IRPCancel(&irp);
 
     </code>
-	
+    
   Remarks:
     None.                                                                  
 */
@@ -2289,22 +2289,22 @@ void DRV_USBHS_HOST_IRPCancel(USB_HOST_IRP * inputIRP);
     
   Summary:
     Closes an open pipe.
-	
+    
   Description:
     This function closes an open pipe. Any IRPs scheduled on the pipe will be
     aborted and IRP callback functions will be called with the status as
     DRV_USB_HOST_IRP_STATE_ABORTED. The pipe handle will become invalid and the
     pipe and will not accept IRPs.
-	
+    
   Precondition:
     The pipe handle should be valid.
-	
+    
   Parameters:
     pipeHandle - Handle to the pipe to close.
-	
+    
   Returns:
     None.
-	
+    
   Example:
     <code>
     // This code shows how an open Host pipe can be closed.
@@ -2315,7 +2315,7 @@ void DRV_USBHS_HOST_IRPCancel(USB_HOST_IRP * inputIRP);
     // Close the pipe.
     DRV_USBHS_HOST_PipeClose(pipeHandle);
     </code>
-	
+    
   Remarks:
     None.                                                                  
 */
@@ -2335,28 +2335,28 @@ void DRV_USBHS_HOST_PipeClose
     
   Summary:
     Submits an IRP on a pipe.
-	
+    
   Description:
     This function submits an IRP on the specified pipe. The IRP will be added to
     the queue and will be processed in turn. The data will be transferred on the
     bus based on the USB bus scheduling rules. When the IRP has been processed,
     the callback function specified in the IRP will be called. The IRP status
     will be updated to reflect the completion status of the IRP. 
-	
+    
   Precondition:
     The pipe handle should be valid.
-	
+    
   Parameters:
     hPipe - Handle to the pipe to which the IRP has to be submitted.
 
     pInputIRP - Pointer to the IRP.
-	
+    
   Returns:
     * USB_ERROR_NONE - The IRP was submitted successfully.
     * USB_ERROR_PARAMETER_INVALID - The pipe handle is not valid.
     * USB_ERROR_OSAL_FUNCTION - An error occurred in an OSAL function called in
       this function.
-	
+    
   Example:
     <code>
     // The following code shows an example of how the host layer populates
@@ -2433,7 +2433,7 @@ void DRV_USBHS_HOST_PipeClose
     result = DRV_USBHS_HOST_IRPSubmit(controlPipeHandle, &irp);
 
     </code>
-	
+    
   Remarks:
     An IRP can also be submitted in an IRP callback function.                                                                  
 */
@@ -2461,16 +2461,16 @@ USB_ERROR DRV_USBHS_HOST_IRPSubmit
     
   Summary:
     Open a pipe with the specified attributes.
-	
+    
   Description:
     This function opens a communication pipe between the Host and the device
     endpoint. The transfer type and other attributes are specified through the
     function parameters. The driver does not check for available bus bandwidth,
     which should be done by the application (the USB Host Layer in this case)
-	
+    
   Precondition:
     The driver handle should be valid.
-	
+    
   Parameters:
     client - Handle to the driver (returned from DRV_USBHS_Open function).
     
@@ -2500,7 +2500,7 @@ USB_ERROR DRV_USBHS_HOST_IRPSubmit
     * A valid Pipe Handle - The pipe was created successfully. This is an
       arbitrary value and will never be the same as
       DRV_USB_HOST_PIPE_HANDLE_INVALID.
-	
+    
   Example:
     <code>
     // This code shows how the DRV_USBHS_HOST_PipeSetup function is called for
@@ -2523,7 +2523,7 @@ USB_ERROR DRV_USBHS_HOST_IRPSubmit
     }
 
     </code>
-	
+    
   Remarks:
     None.                                                                  
 */
@@ -2553,23 +2553,23 @@ DRV_USBHS_HOST_PIPE_HANDLE DRV_USBHS_HOST_PipeSetup
     
   Summary:
     Resets the specified root hub port.
-	
+    
   Description:
     This function resets the root hub port. The reset duration is defined by
     DRV_USBHS_ROOT_HUB_RESET_DURATION. The status of the reset signaling can be
     checked using the DRV_USBHS_ROOT_HUB_PortResetIsComplete function.
-	
+    
   Precondition:
     None.
-	
+    
   Parameters:
     handle - Handle to the driver (returned from DRV_USBHS_Open function).
 
     port - Port to reset.
-	
+    
   Returns:
     None.
-	
+    
   Example:
     <code>
     // This code shows how the DRV_USB_HOST_ROOT_HUB_PortReset and the
@@ -2590,7 +2590,7 @@ DRV_USBHS_HOST_PIPE_HANDLE DRV_USBHS_HOST_PipeSetup
     }
 
     </code>
-	
+    
   Remarks:
     The root hub on the PIC32MZ USB controller contains only one port - port 0.                                                                  
 */
@@ -2662,25 +2662,25 @@ bool DRV_USBHS_HOST_ROOT_HUB_PortResetIsComplete(DRV_HANDLE handle, uint8_t port
     
   Summary:
     Resumes the specified root hub port.
-	
+    
   Description:
     This function resumes the root hub. The resume duration is defined by
     DRV_USBHS_ROOT_HUB_RESUME_DURATION. The status of the resume signaling can
     be checked using the DRV_USBHS_ROOT_HUB_PortResumeIsComplete function.
-	
+    
   Precondition:
     None.
-	
+    
   Parameters:
     handle - Handle to the driver (returned from DRV_USBHS_Open function).
 
     port - Port to resume.
-	
+    
   Returns:
     * USB_ERROR_NONE - The function executed successfully.
     * USB_ERROR_PARAMETER_INVALID - The driver handle is not valid or the port
       number does not exist.
-	
+    
   Example:
     <code>
     // This code shows how the DRV_USBHS_HOST_ROOT_HUB_PortResume function is
@@ -2692,7 +2692,7 @@ bool DRV_USBHS_HOST_ROOT_HUB_PortResetIsComplete(DRV_HANDLE handle, uint8_t port
     DRV_USBHS_HOST_ROOT_HUB_PortResume(driverHandle, 0);
 
     </code>
-	
+    
   Remarks:
     The root hub on this particular hardware only contains one port - port 0.                                                                  
 */
@@ -2705,23 +2705,23 @@ USB_ERROR DRV_USBHS_HOST_ROOT_HUB_PortResume(DRV_HANDLE handle, uint8_t port);
     
   Summary:
     Suspends the specified root hub port.
-	
+    
   Description:
     This function suspends the root hub port. 
-	
+    
   Precondition:
     None.
-	
+    
   Parameters:
     handle - Handle to the driver (returned from DRV_USBHS_Open function).
 
     port - Port to suspend.
-	
+    
   Returns:
     * USB_ERROR_NONE - The function executed successfully.
     * USB_ERROR_PARAMETER_INVALID - The driver handle is not valid or the port
       number does not exist.
-	
+    
   Example:
     <code>
     // This code shows how the DRV_USBHS_HOST_ROOT_HUB_PortSuspend function is
@@ -2733,7 +2733,7 @@ USB_ERROR DRV_USBHS_HOST_ROOT_HUB_PortResume(DRV_HANDLE handle, uint8_t port);
     DRV_USBHS_HOST_ROOT_HUB_PortSuspend(driverHandle, 0);
 
     </code>
-	
+    
   Remarks:
     The root hub on this particular hardware only contains one port - port 0.                                                                  
 */
@@ -2750,18 +2750,18 @@ USB_ERROR DRV_USBHS_HOST_ROOT_HUB_PortSuspend(DRV_HANDLE handle, uint8_t port);
     
   Summary:
     Returns the speed of at which the port is operating.
-	
+    
   Description:
     This function returns the speed at which the port is operating.
-	
+    
   Precondition:
     None.
-	
+    
   Parameters:
     handle - Handle to the driver (returned from DRV_USBHS_Open function).
 
     port - Port number of the port to be analyzed..
-	
+    
   Returns:
     * USB_SPEED_ERROR - This value is returned  if the driver handle is not
       or if the speed information is not available or if the specified port is
@@ -2769,7 +2769,7 @@ USB_ERROR DRV_USBHS_HOST_ROOT_HUB_PortSuspend(DRV_HANDLE handle, uint8_t port);
     * USB_SPEED_HIGH - A High Speed device has been connected to the port.
     * USB_SPEED_FULL - A Full Speed device has been connected to the port.
     * USB_SPEED_LOW - A Low Speed device has been connected to the port.
-	
+    
   Example:
     <code>
     // This code shows how the DRV_USBHS_HOST_ROOT_HUB_PortSpeedGet function is
@@ -2782,7 +2782,7 @@ USB_ERROR DRV_USBHS_HOST_ROOT_HUB_PortSuspend(DRV_HANDLE handle, uint8_t port);
     speed = DRV_USBHS_HOST_ROOT_HUB_PortSpeedGet(driverHandle, 0);
 
     </code>
-	
+    
   Remarks:
     The root hub on this particular hardware only contains one port - port 0.                                                                  
 */
@@ -2796,14 +2796,14 @@ USB_SPEED DRV_USBHS_HOST_ROOT_HUB_PortSpeedGet(DRV_HANDLE handle, uint8_t port);
   Summary:
     This function returns the operating speed of the bus to which this root hub
     is connected.
-	
+    
   Description:
     This function returns the operating speed of the bus to which this root hub
     is connected.
  
   Precondition:
     None.
-	
+    
   Parameters:
     handle - Handle to the driver (returned from DRV_USBHS_Open function).
 
@@ -2812,7 +2812,7 @@ USB_SPEED DRV_USBHS_HOST_ROOT_HUB_PortSpeedGet(DRV_HANDLE handle, uint8_t port);
       High Speed.
     * USB_SPEED_FULL - The Root hub is connected to a bus that is operating at
       Full Speed.
-	
+    
   Example:
     <code>
     // This code shows how the DRV_USBHS_HOST_ROOT_HUB_BusSpeedGet function is
@@ -2824,7 +2824,7 @@ USB_SPEED DRV_USBHS_HOST_ROOT_HUB_PortSpeedGet(DRV_HANDLE handle, uint8_t port);
 
     speed = DRV_USBHS_HOST_ROOT_HUB_BusSpeedGet(driverHandle);
     </code>
-	
+    
   Remarks:
     None.
 */
@@ -2838,20 +2838,20 @@ USB_SPEED DRV_USBHS_HOST_ROOT_HUB_BusSpeedGet(DRV_HANDLE handle);
   Summary:
     Returns the maximum amount of current that this root hub can provide on the
     bus.
-	
+    
   Description:
     This function returns the maximum amount of current that this root hub can
     provide on the bus.
-	
+    
   Precondition:
     None.
-	
+    
   Parameters:
     handle - Handle to the driver (returned from DRV_USBHS_Open function).
 
   Returns:
     Returns the maximum current (in milliamperes) that the root hub can supply. 
-	
+    
   Example:
     <code>
     // This code shows how the DRV_USBHS_HOST_ROOT_HUB_MaximumCurrentGet
@@ -2863,7 +2863,7 @@ USB_SPEED DRV_USBHS_HOST_ROOT_HUB_BusSpeedGet(DRV_HANDLE handle);
 
     currentMilliAmperes = DRV_USBHS_HOST_ROOT_HUB_MaximumCurrentGet(driverHandle);
     </code>
-	
+    
   Remarks:
     None.
 */

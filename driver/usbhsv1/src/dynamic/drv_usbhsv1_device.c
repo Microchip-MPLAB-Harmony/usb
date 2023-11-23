@@ -399,7 +399,7 @@ void DRV_USBHSV1_DEVICE_Attach
     {
         hDriver = (DRV_USBHSV1_OBJ *) handle;
         usbID = hDriver->usbID;
-		
+        
         if(false == hDriver->isInInterruptContext)
         {
             if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
@@ -416,11 +416,11 @@ void DRV_USBHSV1_DEVICE_Attach
         {
             /* Enable the USB hardware */
             usbID->USBHS_CTRL |= USBHS_CTRL_USBE_Msk;
-			
+            
             /* Unfreeze USB clock */
             usbID->USBHS_CTRL &= ~USBHS_CTRL_FRZCLK_Msk;
 
-	        /* Wait to unfreeze clock */
+            /* Wait to unfreeze clock */
             while(USBHS_SR_CLKUSABLE_Msk != (usbID->USBHS_SR & USBHS_SR_CLKUSABLE_Msk))
             {
                 /* Do Nothing */
@@ -499,9 +499,9 @@ void DRV_USBHSV1_DEVICE_Detach(DRV_HANDLE handle)
         hDriver = (DRV_USBHSV1_OBJ *) handle;
         usbID = hDriver->usbID;
 
-		/* Disable All Endpoints */ 
-		(void) DRV_USBHSV1_DEVICE_EndpointDisable((DRV_HANDLE)hDriver, DRV_USB_DEVICE_ENDPOINT_ALL);
-		
+        /* Disable All Endpoints */ 
+        (void) DRV_USBHSV1_DEVICE_EndpointDisable((DRV_HANDLE)hDriver, DRV_USB_DEVICE_ENDPOINT_ALL);
+        
         if(false == hDriver->isInInterruptContext)
         {
             if(OSAL_MUTEX_Lock((OSAL_MUTEX_HANDLE_TYPE *)&hDriver->mutexID, OSAL_WAIT_FOREVER) == OSAL_RESULT_TRUE)
@@ -549,12 +549,12 @@ void DRV_USBHSV1_DEVICE_Detach(DRV_HANDLE handle)
             /* Clear existing address and address enable bit */
             usbID->USBHS_DEVCTRL = regUSBHS_DEVCTRL;
             
-			/* Freeze USB clock */
+            /* Freeze USB clock */
             usbID->USBHS_CTRL |= USBHS_CTRL_FRZCLK_Msk;
-			
-			/* Disable the USB hardware */
+            
+            /* Disable the USB hardware */
             usbID->USBHS_CTRL &= ~USBHS_CTRL_USBE_Msk;
-			
+            
             if(false == hDriver->isInInterruptContext)
             {
                 if(true == interruptWasEnabled)
@@ -829,7 +829,7 @@ USB_ERROR DRV_USBHSV1_DEVICE_EndpointEnable
 
             usbID->USBHS_DEVEPTIER[0] = USBHS_DEVEPTIER_RSTDTS_Msk;
 
-			usbID->USBHS_DEVEPTIDR[0] = USBHS_DEVEPTIDR_STALLRQC_Msk;
+            usbID->USBHS_DEVEPTIDR[0] = USBHS_DEVEPTIDR_STALLRQC_Msk;
 
 
             if(USBHS_DEVEPTISR_CFGOK_Msk == (usbID->USBHS_DEVEPTISR[0] & USBHS_DEVEPTISR_CFGOK_Msk))
@@ -873,7 +873,7 @@ USB_ERROR DRV_USBHSV1_DEVICE_EndpointEnable
             }
             usbID->USBHS_DEVEPTIER[endpoint] = USBHS_DEVEPTIER_RSTDTS_Msk;
 
-			usbID->USBHS_DEVEPTIDR[endpoint] = USBHS_DEVEPTIDR_STALLRQC_Msk;
+            usbID->USBHS_DEVEPTIDR[endpoint] = USBHS_DEVEPTIDR_STALLRQC_Msk;
 
             if(USBHS_DEVEPTISR_CFGOK_Msk == (usbID->USBHS_DEVEPTISR[endpoint] & USBHS_DEVEPTISR_CFGOK_Msk))
             {
@@ -1632,7 +1632,7 @@ USB_ERROR DRV_USBHSV1_DEVICE_IRPSubmit
             }
             if(retVal == USB_ERROR_NONE)
             {
-		
+        
                 irp->next = NULL;
 
                 /* Mark the IRP status as pending */
@@ -2191,7 +2191,7 @@ USB_ERROR DRV_USBHSV1_DEVICE_IRPCancelAll
             }
         }
         if(retVal == USB_ERROR_NONE)
-        {	
+        {    
 
             /* Flush the endpoint */
             F_DRV_USBHSV1_DEVICE_IRPQueueFlush
@@ -2467,8 +2467,8 @@ void F_DRV_USBHSV1_DEVICE_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
         
         /* Acknowledge the suspend interrupt */
         usbID->USBHS_DEVICR = USBHS_DEVICR_SUSPC_Msk;
-		
-		/* Disable Suspend Interrupt */
+        
+        /* Disable Suspend Interrupt */
         usbID->USBHS_DEVIDR = USBHS_DEVIDR_SUSPEC_Msk;
 
         /* Enable Wakeup Interrupt */
@@ -2826,7 +2826,7 @@ void F_DRV_USBHSV1_DEVICE_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
                     if((irp->nPendingBytes + byteCount) > irp->size)
                     {
                         /* This is not acceptable as it may corrupt the ram location */
-						SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBHSV1 Device Driver: corrupt the memory location in F_DRV_USBHSV1_DEVICE_Tasks_ISR().");
+                        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSB USBHSV1 Device Driver: corrupt the memory location in F_DRV_USBHSV1_DEVICE_Tasks_ISR().");
                        
                     }
                     else
@@ -2979,7 +2979,7 @@ void F_DRV_USBHSV1_DEVICE_Tasks_ISR(DRV_USBHSV1_OBJ * hDriver)
                         usbID->USBHS_DEVEPTICR[endpointIndex] = USBHS_DEVEPTICR_TXINIC_Msk;
 
                         usbID->USBHS_DEVEPTIER[endpointIndex] = USBHS_DEVEPTIER_TXINES_Msk;
-						usbID->USBHS_DEVEPTIDR[endpointIndex] = USBHS_DEVEPTIDR_FIFOCONC_Msk;
+                        usbID->USBHS_DEVEPTIDR[endpointIndex] = USBHS_DEVEPTIDR_FIFOCONC_Msk;
                     }
                     else if (irp->nPendingBytes != 0U)
                     {
@@ -3169,7 +3169,7 @@ USB_ERROR DRV_USBHSV1_DEVICE_TestModeEnter
 
             usbID->USBHS_DEVEPTIER[0] = USBHS_DEVEPTIER_RSTDTS_Msk;
 
-			usbID->USBHS_DEVEPTIDR[0] = USBHS_DEVEPTIDR_STALLRQC_Msk;
+            usbID->USBHS_DEVEPTIDR[0] = USBHS_DEVEPTIDR_STALLRQC_Msk;
 
 
             if(USBHS_DEVEPTISR_CFGOK_Msk == (usbID->USBHS_DEVEPTISR[0] & USBHS_DEVEPTISR_CFGOK_Msk))

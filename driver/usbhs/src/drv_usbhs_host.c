@@ -64,7 +64,7 @@ DRV_USB_HOST_INTERFACE gDrvUSBHSHostInterface =
     .hostIRPCancel = DRV_USBHS_HOST_IRPCancel,
     .hostPipeSetup = DRV_USBHS_HOST_PipeSetup,
     .hostPipeClose = DRV_USBHS_HOST_PipeClose,
-	.endpointToggleClear = DRV_USBHS_HOST_EndpointToggleClear,
+    .endpointToggleClear = DRV_USBHS_HOST_EndpointToggleClear,
     .hostEventsDisable = DRV_USBHS_HOST_EventsDisable,
     .hostEventsEnable = DRV_USBHS_HOST_EventsEnable,
     .rootHubInterface.rootHubPortInterface.hubPortReset = DRV_USBHS_HOST_ROOT_HUB_PortReset,
@@ -323,18 +323,18 @@ void F_DRV_USBHS_HOST_ResetStateMachine
                 }
                 else
                 {
-					/* For Low Speed devices, though we de assert Reset signaling above but isResetting
-					 * flag is not set to false here. In this way we make sure that
-					 * USB Host layer does not start submitting transfer requests
-					 * before USB module is not completely ready for enumeration.
-					 * The USB module is made to enter Suspend mode after Bus reset
-					 * de assert and is resumed after some time. In Suspend state
-					 * the USB lines are in forced idle state and therefore does not
-					 * detect any noise in line state lines from USB PHY.  By this
-					 * way we negate devices which have quick pull up on D+/D-
-					 * lines. */ 
-					
-					/* Enable Suspend */
+                    /* For Low Speed devices, though we de assert Reset signaling above but isResetting
+                     * flag is not set to false here. In this way we make sure that
+                     * USB Host layer does not start submitting transfer requests
+                     * before USB module is not completely ready for enumeration.
+                     * The USB module is made to enter Suspend mode after Bus reset
+                     * de assert and is resumed after some time. In Suspend state
+                     * the USB lines are in forced idle state and therefore does not
+                     * detect any noise in line state lines from USB PHY.  By this
+                     * way we negate devices which have quick pull up on D+/D-
+                     * lines. */ 
+                    
+                    /* Enable Suspend */
                     PLIB_USBHS_SuspendEnable(hDriver->usbDrvCommonObj.usbID);
 
                     hDriver->usbDrvHostObj.timerHandle = SYS_TIME_CallbackRegisterMS(F_DRV_USBHS_HOST_TimerCallback, (uintptr_t ) hDriver, 100, SYS_TIME_SINGLE );
@@ -376,7 +376,7 @@ void F_DRV_USBHS_HOST_ResetStateMachine
                 /* Clear the flag */
                 hDriver->usbDrvHostObj.isResetting = false;
 
-               	/* This means the device attached at Low speed */
+                   /* This means the device attached at Low speed */
                 hDriver->usbDrvCommonObj.deviceSpeed = USB_SPEED_LOW;
             }
             break;

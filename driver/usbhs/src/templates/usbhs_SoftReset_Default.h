@@ -145,13 +145,13 @@ PLIB_TEMPLATE bool USBHS_ExistsSoftReset_Default( USBHS_MODULE_ID index )
 
 PLIB_TEMPLATE bool USBHS_SoftResetIsComplete_Default( USBHS_MODULE_ID index )
 {
-	bool returnVal = false ;
-	volatile usbhs_registers_t * usbhs = (usbhs_registers_t *)(index);
-	if ( usbhs->SOFTRSTbits.w == 0 )
-	{
-		returnVal = true;
-	}
-	return ( returnVal );
+    bool returnVal = false ;
+    volatile usbhs_registers_t * usbhs = (usbhs_registers_t *)(index);
+    if ( usbhs->SOFTRSTbits.w == 0 )
+    {
+        returnVal = true;
+    }
+    return ( returnVal );
 }
 
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"

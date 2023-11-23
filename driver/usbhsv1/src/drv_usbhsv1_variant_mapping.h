@@ -65,7 +65,7 @@
  * map the DRV_USB configuration macros to DRV_USBHS macros */
 
 #if (!defined(DRV_USBHSV1_INSTANCES_NUMBER))
-	#error "DRV_USBHSV1_INSTANCES_NUMBER must be defined"
+    #error "DRV_USBHSV1_INSTANCES_NUMBER must be defined"
 #endif
 
 #if (!defined(DRV_USBHSV1_INTERRUPT_MODE))
@@ -147,7 +147,7 @@
 
     #define M_DRV_USBHSV1_InterruptSourceEnable(source)                  SYS_INT_SourceEnable( source )
     #define M_DRV_USBHSV1_InterruptSourceDisable(source)                 SYS_INT_SourceDisable( source )
-    #define M_DRV_USBHSV1_InterruptSourceClear(source)		            SYS_INT_SourceStatusClear( source )
+    #define M_DRV_USBHSV1_InterruptSourceClear(source)                    SYS_INT_SourceStatusClear( source )
     #define M_DRV_USBHSV1_InterruptSourceStatusGet(source)               SYS_INT_SourceStatusGet( source )
     #define M_DRV_USBHSV1_InterruptSourceStatusSet(source)               SYS_INT_SourceStatusSet( source )
     #define M_DRV_USBHSV1_InterruptVectorPrioritySet(source, priority)   SYS_INT_VectorPrioritySet(source, priority)

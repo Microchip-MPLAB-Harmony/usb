@@ -185,7 +185,7 @@ void DRV_USB_UDPHS_Handler(void)
 
 void DRV_USB_UDPHS_Tasks
 (
-	SYS_MODULE_OBJ object
+    SYS_MODULE_OBJ object
 )
 
 {
@@ -401,10 +401,10 @@ SYS_STATUS DRV_USB_UDPHS_Status ( SYS_MODULE_OBJ object )
 // *****************************************************************************
 /* Function:
     DRV_HANDLE DRV_USB_UDPHS_Open
-	(
-		const SYS_MODULE_INDEX drvIndex,
-    	const DRV_IO_INTENT intent
-	)
+    (
+        const SYS_MODULE_INDEX drvIndex,
+        const DRV_IO_INTENT intent
+    )
 
   Summary:
     Dynamic implementation of DRV_USB_UDPHS_Open system interface function.

@@ -150,8 +150,8 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
             drvObj->isInInterruptContext = false;
 
             /* Set the configuration */
-			drvObj->usbID->HOST.USB_CTRLA = USB_CTRLA_SWRST_Msk;
-			while ((drvObj->usbID->HOST.USB_SYNCBUSY & USB_SYNCBUSY_SWRST_Msk) != 0U)
+            drvObj->usbID->HOST.USB_CTRLA = USB_CTRLA_SWRST_Msk;
+            while ((drvObj->usbID->HOST.USB_SYNCBUSY & USB_SYNCBUSY_SWRST_Msk) != 0U)
             {
                 /* Do Nothing */
             }

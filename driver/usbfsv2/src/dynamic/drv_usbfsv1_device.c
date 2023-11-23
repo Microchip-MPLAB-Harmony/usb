@@ -67,10 +67,10 @@ static const USB_SPEED gDrvUSBFSV1DeviceSpeedMap[4] =
  ******************************************************/
 static const uint8_t gDrvUSBFSV1DeviceEndpointTypeMap[4][2] =
 {
-	{(uint8_t)USB_DEVICE_EPCFG_EPTYPE0(1), (uint8_t)USB_DEVICE_EPCFG_EPTYPE1(1)},
-	{(uint8_t)USB_DEVICE_EPCFG_EPTYPE0(2), (uint8_t)USB_DEVICE_EPCFG_EPTYPE1(2)},
-	{(uint8_t)USB_DEVICE_EPCFG_EPTYPE0(3), (uint8_t)USB_DEVICE_EPCFG_EPTYPE1(3)},
-	{(uint8_t)USB_DEVICE_EPCFG_EPTYPE0(4), (uint8_t)USB_DEVICE_EPCFG_EPTYPE1(4)}
+    {(uint8_t)USB_DEVICE_EPCFG_EPTYPE0(1), (uint8_t)USB_DEVICE_EPCFG_EPTYPE1(1)},
+    {(uint8_t)USB_DEVICE_EPCFG_EPTYPE0(2), (uint8_t)USB_DEVICE_EPCFG_EPTYPE1(2)},
+    {(uint8_t)USB_DEVICE_EPCFG_EPTYPE0(3), (uint8_t)USB_DEVICE_EPCFG_EPTYPE1(3)},
+    {(uint8_t)USB_DEVICE_EPCFG_EPTYPE0(4), (uint8_t)USB_DEVICE_EPCFG_EPTYPE1(4)}
 };
 
 /******************************************************
@@ -194,7 +194,7 @@ void DRV_USBFSV1_DEVICE_AddressSet
         usbID = hDriver->usbID;
 
         /* Set and Enable the device address */
-		usbID->USB_DADD = USB_DEVICE_DADD_ADDEN_Msk | address;
+        usbID->USB_DADD = USB_DEVICE_DADD_ADDEN_Msk | address;
 
     }
 }
@@ -2000,7 +2000,7 @@ USB_ERROR DRV_USBFSV1_DEVICE_IRPCancelAll
     uint8_t endpoint;
     USB_ERROR retVal = USB_ERROR_NONE;
     M_DRV_USBFSV1_DECLARE_BOOL_VARIABLE(interruptWasEnabled);
-	
+    
 
     endpoint = endpointAndDirection & DRV_USBFSV1_ENDPOINT_NUMBER_MASK;
     direction = (uint8_t)((endpointAndDirection & DRV_USBFSV1_ENDPOINT_DIRECTION_MASK) != 0U);
@@ -2312,11 +2312,11 @@ void F_DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
              * ensure that the clocks are ready for functioning. This is 
              * currently not handled by Controller driver. It has to be handled
              * by the application. */
-			 
-			/* Wake UP interrupt will always be set when the device is 
-			 * active. When the device goes to suspend, we have to 
-			 * manually clear the WAKEUP flag to avoid getting a WAKEUP 
-			 * interrupt right after we enter the suspend. */
+             
+            /* Wake UP interrupt will always be set when the device is 
+             * active. When the device goes to suspend, we have to 
+             * manually clear the WAKEUP flag to avoid getting a WAKEUP 
+             * interrupt right after we enter the suspend. */
             
             usbID->USB_INTFLAG = USB_DEVICE_INTFLAG_SUSPEND_Msk;
             
@@ -2642,7 +2642,7 @@ void F_DRV_USBFSV1_DEVICE_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
                     if((irp->nPendingBytes < irp->size) && (byteCount >= endpointObj->maxPacketSize))
                     {
                         usbID->DEVICE_ENDPOINT[0].USB_EPSTATUSCLR = USB_DEVICE_EPSTATUSCLR_BK0RDY_Msk;
-                		usbID->DEVICE_ENDPOINT[0].USB_EPINTFLAG = USB_DEVICE_EPINTFLAG_TRCPT0_Msk;
+                        usbID->DEVICE_ENDPOINT[0].USB_EPINTFLAG = USB_DEVICE_EPINTFLAG_TRCPT0_Msk;
                     }
                     else
                     {

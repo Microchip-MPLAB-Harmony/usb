@@ -277,7 +277,7 @@ void F_DRV_USB_OHCI_PipeCloseTask(DRV_USB_OHCI_OBJ * hDriver)
     volatile UhpOhci * usbID = hDriver->usbID;
     uint32_t i = 0;
     uint32_t j = 0;
-	uint32_t tempPipeClosingState; 
+    uint32_t tempPipeClosingState; 
 
     pipe = hDriver->endpointDescriptors;
 
@@ -286,7 +286,7 @@ void F_DRV_USB_OHCI_PipeCloseTask(DRV_USB_OHCI_OBJ * hDriver)
         ed = &pipe->ed;
         if(pipe->inUse != 0U)
         {
-			tempPipeClosingState =  pipe->pipeClosingState;
+            tempPipeClosingState =  pipe->pipeClosingState;
             switch(( DRV_USB_OHCI_PIPE_CLOSING_STATE )tempPipeClosingState)
             {
                 case DRV_USB_OHCI_PIPE_CLOSING_STATE_IDLE:
@@ -2022,7 +2022,7 @@ void DRV_USB_OHCI_IRPCancel(USB_HOST_IRP * inputIRP)
 
   Summary:
     Closes an open pipe.
-	
+    
   Description:
     This function closes an open pipe. Any IRPs scheduled on the pipe will be
     aborted and IRP callback functions will be called with the status as
@@ -2150,7 +2150,7 @@ void DRV_USB_OHCI_PipeClose
 
   Summary:
     Open a pipe with the specified attributes.
-	
+    
   Description:
     This function opens a communication pipe between the Host and the device
     endpoint. The transfer type and other attributes are specified through the
@@ -3463,7 +3463,7 @@ void DRV_USB_OHCI_EndpointToggleClear
   Description:
     This function is called by the EHCI driver to check if the companion OHCI
     controller is ready to accept ownership of a port.
-	
+    
   Remarks:
     Refer to drv_usb_ohci.h for usage information.
 */

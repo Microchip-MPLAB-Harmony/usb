@@ -232,7 +232,7 @@ PLIB_TEMPLATE void USBHS_DMAOperationEnable_Default
     usbhs->DMA_CHANNEL[dmaChannel - 1].DMACNTLbits.DMABRSTM = 3;
     usbhs->DMA_CHANNEL[dmaChannel - 1].DMACNTLbits.DMAIE = 1;
     usbhs->DMA_CHANNEL[dmaChannel - 1].DMACNTLbits.DMAMODE = 0;
-	usbhs->DMA_CHANNEL[dmaChannel - 1].DMACNTLbits.DMAEP = endpoint;
+    usbhs->DMA_CHANNEL[dmaChannel - 1].DMACNTLbits.DMAEP = endpoint;
     
     /* The input direction bit is a complement of the DMA channel direction
      * bit. */
@@ -390,56 +390,56 @@ PLIB_TEMPLATE bool USBHS_TestModeEnter_Default
 {
     volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
     bool result = true;
-	uint8_t testModeRegValue = 0; 
+    uint8_t testModeRegValue = 0; 
     
     if((usbhs->TESTMODEbits.w & 0x7F) == 0x0)
     {
         /* We can proceed only if bits D6-D0 are are all 0. Now check if 
          * testMode is not zero and is not greater than 5. This is not a valid test 
          * mode */
-		switch(testMode)
-		{
-			case USB_TEST_MODE_SELCTOR_TEST_J: 
-			{
-				testModeRegValue = 0x2; 
-			}
-			break;
-				
-			case USB_TEST_MODE_SELCTOR_TEST_K:
-			{
-				testModeRegValue = 0x4;
-			}
-			break; 
-			
-			case USB_TEST_MODE_SELCTOR_TEST_SE0_NAK: 
-			{
-				testModeRegValue = 0x1;
-			}
-			break; 
-			
-			case USB_TEST_MODE_SELCTOR_TEST_PACKET: 
-			{
-				testModeRegValue = 0x8; 
-			}
-			break; 
-			
-			default: 
-			{
-				result = false; 
-				testModeRegValue = 0; 
-			}
-		}
-		if (result == true)
-		{
+        switch(testMode)
+        {
+            case USB_TEST_MODE_SELCTOR_TEST_J: 
+            {
+                testModeRegValue = 0x2; 
+            }
+            break;
+                
+            case USB_TEST_MODE_SELCTOR_TEST_K:
+            {
+                testModeRegValue = 0x4;
+            }
+            break; 
+            
+            case USB_TEST_MODE_SELCTOR_TEST_SE0_NAK: 
+            {
+                testModeRegValue = 0x1;
+            }
+            break; 
+            
+            case USB_TEST_MODE_SELCTOR_TEST_PACKET: 
+            {
+                testModeRegValue = 0x8; 
+            }
+            break; 
+            
+            default: 
+            {
+                result = false; 
+                testModeRegValue = 0; 
+            }
+        }
+        if (result == true)
+        {
             usbhs->TESTMODEbits.w |= testModeRegValue;
         }
     }
-	else
-	{
-		result = false; 
-	}
+    else
+    {
+        result = false; 
+    }
   
-	return result;
+    return result;
 }
 
 
@@ -456,51 +456,51 @@ PLIB_TEMPLATE bool USBHS_TestModeEnter_Default
 
 PLIB_TEMPLATE bool USBHS_TestModeExit_Default( USBHS_MODULE_ID index , uint8_t testMode )
 {
-	volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
     bool result = true;
-	uint8_t testModeRegValue = 0; 
+    uint8_t testModeRegValue = 0; 
     
     
-	/* We can proceed only if bits D6-D0 are are all 0. Now check if 
-	 * testMode is not zero and is not greater than 5. This is not a valid test 
-	 * mode */
-	switch(testMode)
-	{
-		case USB_TEST_MODE_SELCTOR_TEST_J: 
-		{
-			testModeRegValue = 0x2; 
-		}
-		break;
-			
-		case USB_TEST_MODE_SELCTOR_TEST_K:
-		{
-			testModeRegValue = 0x4;
-		}
-		break; 
-		
-		case USB_TEST_MODE_SELCTOR_TEST_SE0_NAK: 
-		{
-			testModeRegValue = 0x1;
-		}
-		break; 
-		
-		case USB_TEST_MODE_SELCTOR_TEST_PACKET: 
-		{
-			testModeRegValue = 0x8; 
-		}
-		break; 
-		
-		default: 
-		{
-			result = false; 
-			testModeRegValue = 0; 
-		}
-	}
-	if (result == true)
-	{
-		usbhs->TESTMODEbits.w &= (~(testModeRegValue));
-	}
-	return result;
+    /* We can proceed only if bits D6-D0 are are all 0. Now check if 
+     * testMode is not zero and is not greater than 5. This is not a valid test 
+     * mode */
+    switch(testMode)
+    {
+        case USB_TEST_MODE_SELCTOR_TEST_J: 
+        {
+            testModeRegValue = 0x2; 
+        }
+        break;
+            
+        case USB_TEST_MODE_SELCTOR_TEST_K:
+        {
+            testModeRegValue = 0x4;
+        }
+        break; 
+        
+        case USB_TEST_MODE_SELCTOR_TEST_SE0_NAK: 
+        {
+            testModeRegValue = 0x1;
+        }
+        break; 
+        
+        case USB_TEST_MODE_SELCTOR_TEST_PACKET: 
+        {
+            testModeRegValue = 0x8; 
+        }
+        break; 
+        
+        default: 
+        {
+            result = false; 
+            testModeRegValue = 0; 
+        }
+    }
+    if (result == true)
+    {
+        usbhs->TESTMODEbits.w &= (~(testModeRegValue));
+    }
+    return result;
 }
 
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
