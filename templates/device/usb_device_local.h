@@ -318,7 +318,7 @@ typedef struct
 
      /* Context associated with this client */
     uintptr_t context;
-	
+    
     /* This points to the size of the current control transfer */
     uint16_t controlTransferDataStageSize;
     
@@ -464,8 +464,8 @@ uint16_t F_USB_DEVICE_GetStringDescriptorRequestProcessAdvanced
 ); 
 void F_USB_DEVICE_Other_Speed_Descriptor_Request
 (
-	USB_DEVICE_OBJ * usbDeviceThisInstance, 
-	USB_SETUP_PACKET * setupPkt
+    USB_DEVICE_OBJ * usbDeviceThisInstance, 
+    USB_SETUP_PACKET * setupPkt
 );
 void F_USB_DEVICE_DeInitializeAllFunctionDrivers
 (

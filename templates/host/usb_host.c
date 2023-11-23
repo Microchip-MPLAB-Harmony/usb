@@ -139,8 +139,8 @@ void F_USB_HOST_TimerCallback(uintptr_t context)
 {
     USB_HOST_BUS_OBJ * busObj = ((USB_HOST_BUS_OBJ *)(context));
     busObj->timerExpired = true;
-	(void) SYS_TIME_TimerDestroy (busObj->busOperationsTimerHandle);
-	busObj->busOperationsTimerHandle = SYS_TIME_HANDLE_INVALID;
+    (void) SYS_TIME_TimerDestroy (busObj->busOperationsTimerHandle);
+    busObj->busOperationsTimerHandle = SYS_TIME_HANDLE_INVALID;
 }
 
 // *****************************************************************************
@@ -1657,10 +1657,10 @@ bool F_USB_HOST_DeviceConfigurationDescriptorErrorCheck
     /* This function checks the configuration descriptor for errors */
 
     if(configurationDescriptor == NULL)
-	{
+    {
         /* The input parameter is not valid. Note that the result is already 
          * false. */
-	}
+    }
     else
     {
         configDescriptorSize = configurationDescriptor->wTotalLength;
@@ -6771,7 +6771,7 @@ USB_HOST_RESULT USB_HOST_DeviceConfigurationDescriptorGet
                             }
                             else
                             {
-								
+                                
                                 result = USB_HOST_RESULT_SUCCESS;
                             }
 

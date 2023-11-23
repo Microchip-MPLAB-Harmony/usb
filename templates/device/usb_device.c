@@ -1463,7 +1463,7 @@ void USB_DEVICE_RemoteWakeupStart( USB_DEVICE_HANDLE usbDeviceHandle )
   Summary:
     This function submits an I/O Request Packet (IRP) for processing to the
     Hi-Speed USB Driver.
-	
+    
   Description:
     This function submits an I/O Request Packet (IRP) for processing to the USB
     Driver. The IRP allows a client to send and receive data from the USB Host.
@@ -1474,7 +1474,7 @@ void USB_DEVICE_RemoteWakeupStart( USB_DEVICE_HANDLE usbDeviceHandle )
     being processed on the endpoint, the subsequent IRP submit operation
     will be queued. The contents of the IRP (including the application buffers)
     should not be changed until the IRP has been processed.
-	
+    
   Remarks:
     Refer to usb_device_function_driver.h for usage information.                                                                          
 */
@@ -1518,11 +1518,11 @@ USB_ERROR USB_DEVICE_IRPSubmit
   Summary:
     This function cancels all IRPs that are queued and in progress at the
     specified endpoint.
-	
+    
   Description:
     This function cancels all IRPs that are queued and in progress at the
     specified endpoint.
-	
+    
   Remarks:
     Refer to usb_device_function_driver.h for usage information.                                                               
 */
@@ -1557,15 +1557,15 @@ USB_ERROR USB_DEVICE_IRPCancelAll
 // **************************************************************************
 /* Function:
     USB_ERROR USB_DEVICE_IRPCancel
-	(
-		USB_DEVICE_HANDLE usbDeviceHandle,
-		USB_DEVICE_IRP * irp
-	)
+    (
+        USB_DEVICE_HANDLE usbDeviceHandle,
+        USB_DEVICE_IRP * irp
+    )
     
   Summary:
     This function cancels the specific IRP that are queued and in progress at the
     specified endpoint.
-	
+    
   Description:
     This function attempts to cancel the processing of a queued IRP. An IRP that
     was in the queue but yet to be processed will be cancelled successfully and
@@ -1577,7 +1577,7 @@ USB_ERROR USB_DEVICE_IRPCancelAll
     completed. The IRP callback function will then be called in an interrupt
     context. The application should not release the related data buffer unless
     the IRP callback has occurred.
-	
+    
   Remarks:
     Refer to usb_device_function_driver.h for usage information.
                                                                   
@@ -2142,7 +2142,7 @@ void  F_USB_DEVICE_ControlTransferHandler
                   * recipient is not "device". (Any request whose recipient is
                   * interface/endpoint must be handled by the function driver.
                   * This is because function driver has all the information
-                  * about endpoint and interface) */				
+                  * about endpoint and interface) */                
                 if (setupPkt->RequestType == (uint8_t)USB_SETUP_REQUEST_TYPE_VENDOR)
                 {
                     M_USB_DEVICE_VendorInterfaceRequestProcess(usbDeviceThisInstance, setupPkt->bIntfID,setupPkt); 
