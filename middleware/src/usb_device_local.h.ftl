@@ -451,7 +451,7 @@ void F_USB_DEVICE_Ep0TransmitCompleteCallback(USB_DEVICE_IRP * handle);
 
 void F_USB_DEVICE_EndpointWriteCallBack( USB_DEVICE_IRP * irp );
 void F_USB_DEVICE_EndpointReadCallBack( USB_DEVICE_IRP * irp );
-void F_USB_DEVICE_RemotewakeupTimerCallback(uintptr_t context, uint32_t currTick);
+void F_USB_DEVICE_RemotewakeupTimerCallback(uintptr_t contex);
 void F_USB_DEVICE_Initialize_Endpoint_Q_Size(SYS_MODULE_INDEX index, uint16_t qSizeRead, uint16_t qSizeWrite );
 void F_USB_DEVICE_EndpointMutexCreateFunction(USB_DEVICE_OBJ* usbDeviceThisInstance);
 void F_USB_DEVICE_EndpointMutexDeleteFunction(USB_DEVICE_OBJ* usbDeviceThisInstance);

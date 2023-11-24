@@ -48,13 +48,16 @@
 #include <stdbool.h>
 
 #include "configuration.h"
-#include "system/common/sys_module.h"
+#include "definitions.h"
+#include "system/system_module.h"
 #include "usb/usb_common.h"
 #include "usb/usb_chapter_9.h"
 #include "usb/usb_device.h"
 #include "system/debug/sys_debug.h"
 #include "usb/src/usb_device_local.h"
-#include "system/tmr/sys_tmr.h"
+
+#define USB_SUSPEND_DURATION_10MS  10U
+
 
 
 // *****************************************************************************
@@ -100,7 +103,7 @@ void USB_DEVICE_RemoteWakeupStartTimed ( USB_DEVICE_HANDLE usbDeviceHandle )
     USB_DEVICE_OBJ * usbDeviceThisInstance;
 
     /* Validate the device handle */
-    usbDeviceThisInstance = _USB_DEVICE_ClientHandleValidate(usbDeviceHandle);
+    usbDeviceThisInstance = F_USB_DEVICE_ClientHandleValidate(usbDeviceHandle);
     if(NULL == usbDeviceThisInstance)
     {
         SYS_DEBUG(0, "USB Device Layer Client Handle is invalid");
@@ -108,16 +111,15 @@ void USB_DEVICE_RemoteWakeupStartTimed ( USB_DEVICE_HANDLE usbDeviceHandle )
     }
     
     /*Call USBCD remote wakeup start function. */
-    DRV_USB_DEVICE_RemoteWakeupStart(usbDeviceThisInstance->usbCDHandle);
+    USB_DEVICE_RemoteWakeupStart(usbDeviceThisInstance->usbCDHandle);
     
     /* Generate 10 Milli Seconds Delay */
-    SYS_TMR_CallbackSingle(10,(uintptr_t )usbDeviceThisInstance,
-                                        _USB_DEVICE_RemotewakeupTimerCallback );
+    SYS_TIME_CallbackRegisterMS(F_USB_DEVICE_RemotewakeupTimerCallback, 0, USB_SUSPEND_DURATION_10MS, SYS_TIME_SINGLE);
 }
 
 // *****************************************************************************
 /* Function:
-    void _USB_DEVICE_RemotewakeupTimerCallback(uintptr_t context, uint32_t currTick)
+    void F_USB_DEVICE_RemotewakeupTimerCallback(uintptr_t context, uint32_t currTick)
 
   Summary:
     This function is always invoked by the timer system service when a specified
@@ -137,13 +139,14 @@ void USB_DEVICE_RemoteWakeupStartTimed ( USB_DEVICE_HANDLE usbDeviceHandle )
   Remarks:
     None.
 */
-void _USB_DEVICE_RemotewakeupTimerCallback(uintptr_t context, uint32_t currTick)
+
+void F_USB_DEVICE_RemotewakeupTimerCallback(uintptr_t context )
 {
     /* Retrieve USB Device Layer Handle */
     USB_DEVICE_OBJ * usbDeviceThisInstance = (USB_DEVICE_OBJ*)context;
   
     /* Call USBCD remote wakeup stop function. */
-    DRV_USB_DEVICE_RemoteWakeupStop(usbDeviceThisInstance->usbCDHandle);
+    USB_DEVICE_RemoteWakeupStop(usbDeviceThisInstance->usbCDHandle);
 
 }
 /********************End of file********************************/
