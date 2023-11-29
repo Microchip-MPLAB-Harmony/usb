@@ -270,7 +270,7 @@ def instantiateComponent(usbDriverComponent):
 			Database.setSymbolValue("core", "USB_CLOCK_ENABLE", True)
 			
 
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD5", "SAME5", "PIC32CX"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD5", "SAME5", "LAN9255", "PIC32CX"]):
 
 		# Update USB General Interrupt Handler
 		Database.setSymbolValue("core", "USB_OTHER_INTERRUPT_ENABLE", True)
@@ -304,7 +304,7 @@ def instantiateComponent(usbDriverComponent):
 	configName = Variables.get("__CONFIGURATION_NAME")
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX", "PIC32MM", "PIC32MZ1025W", "WFI32E01"]):
 		sourcePath = "templates/driver/usbfs/"
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD5", "SAME5", "SAMD21", "SAMDA1","SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35",  "SAMD11", "PIC32CM", "PIC32CX",  "PIC32CK"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD5", "SAME5", "LAN9255", "SAMD21", "SAMDA1","SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35",  "SAMD11", "PIC32CM", "PIC32CX",  "PIC32CK"]):
 		sourcePath = "templates/driver/usbfsv1/"
 
 	################################################
@@ -376,7 +376,7 @@ def instantiateComponent(usbDriverComponent):
 	################################################
 	# USB Driver Header files
 	################################################
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD51", "SAME51", "SAME53", "SAME54" ,"SAMD20", "SAMD21", "SAMDA1","SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMD11", "PIC32CM", "PIC32CX",  "PIC32CK"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD51", "SAME51", "SAME53", "SAME54" , "LAN9255", "SAMD20", "SAMD21", "SAMDA1","SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMD11", "PIC32CM", "PIC32CX",  "PIC32CK"]):
 		drvUsbHeaderFile = usbDriverComponent.createFileSymbol(None, None)
 		drvUsbHeaderFile.setSourcePath(usbDriverPath + "drv_usb.h.ftl")
 		drvUsbHeaderFile.setMarkup(True)
@@ -486,7 +486,7 @@ def instantiateComponent(usbDriverComponent):
 	################################################
 	# USB Driver Source files
 	################################################
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD51", "SAME51", "SAME53", "SAME54" ,"SAMD20", "SAMD21", "SAMDA1","SAML21", "SAML22","SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMD11", "PIC32CM", "PIC32CX", "PIC32CK"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD51", "SAME51", "SAME53", "SAME54" , "LAN9255", "SAMD20", "SAMD21", "SAMDA1","SAML21", "SAML22","SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMD11", "PIC32CM", "PIC32CX", "PIC32CK"]):
 		drvUsbHsV1SourceFile = usbDriverComponent.createFileSymbol("DRV_USB_SOURCE_FILE_COMMON", None)
 		drvUsbHsV1SourceFile.setSourcePath(usbDriverPath + usbDriverSourcePath + "/src/dynamic/drv_usbfsv1.c.ftl")
 		drvUsbHsV1SourceFile.setMarkup(True)

@@ -111,7 +111,7 @@ static const DRV_USBFSV1_INIT drvUSBFSInit =
 static const DRV_USBFSV1_INIT drvUSBInit =
 </#if>
 {
-    <#if (__PROCESSOR?matches("ATSAME5.*") == true) || (__PROCESSOR?matches("ATSAMD5.*") == true) || (__PROCESSOR?matches("PIC32CX.*") == true)
+    <#if (__PROCESSOR?matches("ATSAME5.*") == true) || (__PROCESSOR?matches("LAN9255.*") == true) || (__PROCESSOR?matches("ATSAMD5.*") == true) || (__PROCESSOR?matches("PIC32CX.*") == true)
           ||(__PROCESSOR?matches("PIC32CK.*") == true)>
     /* Interrupt Source for USB module */
     .interruptSource = USB_OTHER_IRQn,

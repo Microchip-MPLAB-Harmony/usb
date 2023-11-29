@@ -66,7 +66,7 @@ static uint8_t sectorBuffer[512 * USB_DEVICE_MSD_NUM_SECTOR_BUFFERS] USB_ALIGN;
  * CBW and CSW structure needed by for the MSD
  * function driver instance.
  ***********************************************/
-<#assign usb_fs_device = ["SAMD21","SAMDA1","SAMD5", "SAME5","SAML21", "SAML22",  "SAMD11", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "PIC32CM", "PIC32CX", "SAMG55", "PIC32MK", "PIC32MX", "PIC32MM", "PIC32MZ1025W", "WFI32E01" ]>
+<#assign usb_fs_device = ["SAMD21","SAMDA1","SAMD5", "SAME5", "LAN9255","SAML21", "SAML22",  "SAMD11", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "PIC32CM", "PIC32CX", "SAMG55", "PIC32MK", "PIC32MX", "PIC32MM", "PIC32MZ1025W", "WFI32E01" ]>
 <#--  ** List of highspeed devices <#assign usb_hs_device = ["SAMV70", "SAMV71","SAME70", "SAMS70","SAMA5D2", "SAM9X60","SAM9X7", "SAMA7","PIC32MZ", "PIC32CZ","PIC32CK"]> -->
 <#assign flag = false> 
 <#list usb_fs_device as device>
