@@ -68,14 +68,14 @@
  * present in the microcontroller.
  *********************************************/
 
-DRV_USBHS_OBJ gDrvUSBObj[DRV_USBHS_ENDPOINTS_NUMBER];
+DRV_USBHS_OBJ gDrvUSBObj[DRV_USBHS_INSTANCES_NUMBER];
 
 /***********************************
  * Array of USB endpoint objects. 
  * Two objects per endpoint. 
  ***********************************/
 
-static DRV_USBHS_DEVICE_ENDPOINT_OBJ gDrvUSBEndpoints [DRV_USBHS_ENDPOINTS_NUMBER] [DRV_USBHS_ENDPOINTS_NUMBER * 2];
+static DRV_USBHS_DEVICE_ENDPOINT_OBJ gDrvUSBEndpoints [DRV_USBHS_INSTANCES_NUMBER] [DRV_USBHS_ENDPOINTS_NUMBER * 2];
 
 // *****************************************************************************
 /* MISRA C-2012 Rule 10.4,11.3, 11.7 and 11.8 deviated below. Deviation record ID -  
@@ -120,7 +120,7 @@ SYS_MODULE_OBJ DRV_USBHS_Initialize
     DRV_USBHS_INIT * usbInit = NULL;
     SYS_MODULE_OBJ returnValue = SYS_MODULE_OBJ_INVALID;
 
-    if ( drvIndex < DRV_USBHS_ENDPOINTS_NUMBER)
+    if ( drvIndex < DRV_USBHS_INSTANCES_NUMBER)
     {
         if ( false == gDrvUSBObj[drvIndex].usbDrvCommonObj.inUse )
         {
@@ -190,7 +190,7 @@ SYS_MODULE_OBJ DRV_USBHS_Initialize
     }
     else
     {
-        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO,"\r\nUSBHS Driver: Increase the value of DRV_USBHS_ENDPOINTS_NUMBER in DRV_USBHS_Initialize()");
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO,"\r\nUSBHS Driver: Increase the value of DRV_USBHS_INSTANCES_NUMBER in DRV_USBHS_Initialize()");
     }
 
     /* On success: Valid SYS MODULE Object
@@ -468,8 +468,8 @@ void DRV_USBHS_Tasks
                     M_DRV_USBHS_DEVICE_ATTACH_STATE_MACHINE(hDriver);
                 }
 
-                DRV_USBHS_Tasks_ISR(object);
-                DRV_USBHS_Tasks_ISR_USBDMA(object);
+                M_DRV_USBHS_Tasks_ISR(object);
+                M_DRV_USBHS_Tasks_ISR_USBDMA(object);
                 break;
             default:
                 /* Do Nothing */
@@ -504,7 +504,7 @@ void DRV_USBHS_Deinitialize
 
     if (SYS_MODULE_OBJ_INVALID != object)
     {
-        if ( object < DRV_USBHS_ENDPOINTS_NUMBER)
+        if ( object < DRV_USBHS_INSTANCES_NUMBER)
         {
             if (true == gDrvUSBObj[object].usbDrvCommonObj.inUse)
             {
@@ -635,7 +635,7 @@ DRV_HANDLE DRV_USBHS_Open
     /* The drvIndex value should be valid. It should be less the number of driver
      * object instances.  */
 
-    if (drvIndex < DRV_USBHS_ENDPOINTS_NUMBER)
+    if (drvIndex < DRV_USBHS_INSTANCES_NUMBER)
     {
         drvObj = &gDrvUSBObj[drvIndex];
 

@@ -692,7 +692,7 @@ typedef struct
 /******************************************************************************
  * The USB driver object. Has already been defined in drv_usbhs.c file.
  *****************************************************************************/
-extern DRV_USBHS_OBJ gDrvUSBObj[DRV_USBHS_ENDPOINTS_NUMBER];
+extern DRV_USBHS_OBJ gDrvUSBObj[DRV_USBHS_INSTANCES_NUMBER];
 
 void F_DRV_USBHS_HOST_AttachDetachStateMachine (DRV_USBHS_OBJ * hDriver);
 void F_DRV_USBHS_HOST_ResetStateMachine(DRV_USBHS_OBJ * hDriver);

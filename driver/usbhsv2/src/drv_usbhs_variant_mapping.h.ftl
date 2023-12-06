@@ -62,7 +62,7 @@
  * map the DRV_USB configuration macros to DRV_USBHS macros */
 
 #if defined(DRV_USB_INSTANCES_NUMBER)
-    #define DRV_USBHS_ENDPOINTS_NUMBER  DRV_USB_INSTANCES_NUMBER
+    #define DRV_USBHS_INSTANCES_NUMBER  DRV_USB_INSTANCES_NUMBER
 #endif
 
 #if defined (DRV_USB_INTERRUPT_MODE)
@@ -86,7 +86,7 @@
  * mode.
  ***********************************************/
 
-#if ((!defined(DRV_USBHS_ENDPOINTS_NUMBER)) && ((!defined(DRV_USB_INSTANCES_NUMBER))))
+#if ((!defined(DRV_USBHS_INSTANCES_NUMBER)) && ((!defined(DRV_USB_INSTANCES_NUMBER))))
 
     #if defined(DRV_USBHS_CLIENTS_NUMBER)
 
