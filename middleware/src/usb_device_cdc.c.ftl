@@ -487,7 +487,7 @@ void F_USB_DEVICE_CDC_ControlTransferHandler
 {
     USB_DEVICE_HANDLE deviceHandle;
     USB_DEVICE_CDC_INSTANCE * thisCDCDevice;
-    USB_CDC_REQUEST bRequest = (USB_CDC_REQUEST) setupRequest->bRequest;
+    USB_CDC_REQUEST bRequest; 
     
     /* Check the validity of the function driver index */
     if (iCDC >= USB_DEVICE_CDC_INSTANCES_NUMBER)
@@ -519,8 +519,8 @@ void F_USB_DEVICE_CDC_ControlTransferHandler
                 (void) USB_DEVICE_ControlStatus(deviceHandle, USB_DEVICE_CONTROL_STATUS_ERROR);
             }
             else
-            {
-
+            {	
+				bRequest = (USB_CDC_REQUEST) setupRequest->bRequest;
                 /* Check if the requests belong to the ACM sub class */
                 switch(bRequest)
                 {
