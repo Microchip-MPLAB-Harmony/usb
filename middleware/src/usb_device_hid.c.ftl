@@ -785,7 +785,7 @@ void F_USB_DEVICE_HID_ControlTransferHandler
     USB_DEVICE_HID_EVENT_DATA_SET_IDLE setIdle;
     USB_DEVICE_HID_EVENT_DATA_GET_REPORT getReport;
     USB_DEVICE_HID_EVENT_DATA_SET_REPORT setReport;
-    USB_HID_REQUESTS hidRequest = (USB_HID_REQUESTS)setupPkt->bRequest; 
+    USB_HID_REQUESTS hidRequest;  
     
     hidThisInstance = &gUsbDeviceHidInstance[iHID] ;
 
@@ -862,6 +862,7 @@ void F_USB_DEVICE_HID_ControlTransferHandler
                 (setupPkt->Recipient == 1U)&&
                 ( hidThisInstance->appCallBack != NULL ) )
         {
+			hidRequest = (USB_HID_REQUESTS)setupPkt->bRequest;
             switch(hidRequest)
             {
                 case  USB_HID_REQUESTS_GET_REPORT:
