@@ -143,12 +143,12 @@ typedef void *  USB_HOST_IRP_CALLBACK;
 
 #ifndef USB_HOST_MALLOC
 /* Dynamic allocation of memory */
-#define USB_HOST_MALLOC(size)       malloc(size)
+#define USB_HOST_MALLOC(size)       __pic32_alloc_coherent(size)
 #endif
 
 #ifndef USB_HOST_FREE
 /* Free memory */
-#define USB_HOST_FREE(ptr)          free(ptr)
+#define USB_HOST_FREE(ptr)         __pic32_free_coherent(ptr)
 #endif
 
 #ifdef DRV_USB_UHP_INSTANCES_NUMBER
