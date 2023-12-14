@@ -326,7 +326,7 @@ void F_USB_DEVICE_MSD_ControlTransferHandler
 )
 {
     USB_DEVICE_MSD_INSTANCE * msdThisInstance = &gUSBDeviceMSDInstance[MSDIndex] ;
-    USB_MSD_COMMAND msdCommand = (USB_MSD_COMMAND)setupPkt->bRequest;
+    USB_MSD_COMMAND msdCommand ; 
 
     if(controlTransferEvent == USB_DEVICE_EVENT_CONTROL_TRANSFER_SETUP_REQUEST)
     {
@@ -359,6 +359,7 @@ void F_USB_DEVICE_MSD_ControlTransferHandler
         }
         else if(( setupPkt->bmRequestType & (uint8_t)USB_MSD_REQUEST_CLASS_SPECIFIC ) != 0U)
         {
+			msdCommand = (USB_MSD_COMMAND)setupPkt->bRequest;
             /* We have got setup request */
             switch (msdCommand)
             {
