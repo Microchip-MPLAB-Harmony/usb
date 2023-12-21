@@ -479,7 +479,7 @@ void F_USB_DEVICE_AUDIO_SetupPacketHandler
             /* Inform the application about the request */
             /* The application needs to handle both EP and entity specific 
                requests */
-           audioInstance->appEventCallBack ( iAudio, event, setupPkt, audioInstance->userData);
+           audioInstance->appEventCallBack ( iAudio, event, controlEventData, audioInstance->userData);
         }        
     }/* End of else if */ 
     else
@@ -1032,7 +1032,7 @@ void F_USB_DEVICE_AUDIO_TransferAbortAllow(USB_DEVICE_IRP * irp)
 
 void F_USB_DEVICE_AUDIO_StatusSendIRPCallBack ( USB_DEVICE_IRP * irp )
 {
-    USB_DEVICE_AUDIO_StatusSendCompleteCallback(irp);  
+    M_USB_DEVICE_AUDIO_StatusSendCompleteCallback(irp);  
 }
 
 // ******************************************************************************
