@@ -239,7 +239,7 @@ void F_USB_DEVICE_AUDIO_SetupPacketHandler
     USB_DEVICE_HANDLE usbDeviceHandle;
     USB_DEVICE_AUDIO_EVENT event;
     USB_DEVICE_AUDIO_EVENT_DATA_INTERFACE_SETTING_CHANGED interfaceInfo;
-    USB_ERROR endpointEnableResult; 
+    USB_DEVICE_RESULT endpointEnableResult; 
     USB_DEVICE_AUDIO_STREAMING_INTERFACE_ALTERNATE_SETTING *pCurAlternateStng;
     USB_DEVICE_AUDIO_STREAMING_INTERFACE_ALTERNATE_SETTING *pPrevAlternateStng;
     USB_DEVICE_AUDIO_STREAMING_INTERFACE *pStreamingInterface;
@@ -308,7 +308,7 @@ void F_USB_DEVICE_AUDIO_SetupPacketHandler
                              = pCurAlternateStng->isoDataEp.epMaxPacketSize;
 
                         /* Enable Isochronous Data Endpoint */
-                        endpointEnableResult = (USB_ERROR) USB_DEVICE_EndpointEnable
+                        endpointEnableResult = USB_DEVICE_EndpointEnable
                         (
                             usbDeviceHandle ,
                             0,
@@ -316,7 +316,7 @@ void F_USB_DEVICE_AUDIO_SetupPacketHandler
                             USB_TRANSFER_TYPE_ISOCHRONOUS ,
                             maxPacketSize
                         );
-                        if (endpointEnableResult != USB_ERROR_NONE)
+                        if (endpointEnableResult != USB_DEVICE_RESULT_OK)
                         {
                             SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "F_USB_DEVICE_AUDIO_SetupPacketHandler():  Endpoint not Enabled");
                         }
@@ -337,7 +337,7 @@ void F_USB_DEVICE_AUDIO_SetupPacketHandler
                                 USB_TRANSFER_TYPE_ISOCHRONOUS ,
                                 maxPacketSize
                              );
-                             if (endpointEnableResult != USB_ERROR_NONE)
+                             if (endpointEnableResult != USB_DEVICE_RESULT_OK)
                              {
                                  SYS_ASSERT (false, "Endpoint not Enabled");
                              }
@@ -373,8 +373,8 @@ void F_USB_DEVICE_AUDIO_SetupPacketHandler
                                 * that this alternate setting reports a Isochronous
                                 * Sync Endpoint. Disable the Sync Endpoint. */
                                 ep = pPrevAlternateStng->isoSyncEp.epAddr;
-                                USB_DEVICE_IRPCancelAll(usbDeviceHandle,  ep);
-                                USB_DEVICE_EndpointDisable
+                                (void) USB_DEVICE_IRPCancelAll(usbDeviceHandle,  ep);
+                                (void) USB_DEVICE_EndpointDisable
                                 (
                                     usbDeviceHandle,
                                     pPrevAlternateStng->isoSyncEp.epAddr
@@ -579,8 +579,8 @@ void F_USB_DEVICE_AUDIO_Initialize
     uint8_t * pDescriptor 
 )
 {
-    /* Error */ 
-    USB_ERROR endpointEnableResult; 
+    /* To check if there is any error */ 
+    USB_DEVICE_RESULT endpointEnableResult; 
     
     /* Pointer to Standard Endpoint Descriptor */
     USB_ENDPOINT_DESCRIPTOR *pEPDesc;
@@ -735,14 +735,14 @@ void F_USB_DEVICE_AUDIO_Initialize
                        audioInstance->infCollection.isIntEpExists = true;     
 
                        /* Enable the endpoint */
-                       endpointEnableResult = (USB_ERROR)USB_DEVICE_EndpointEnable(
+                       endpointEnableResult = USB_DEVICE_EndpointEnable(
                                                usbDeviceHandle,
                                                0,
                                                pEPDesc->bEndpointAddress,
                                                (USB_TRANSFER_TYPE)pEPDesc->transferType,
                                                pEPDesc->wMaxPacketSize);
 
-                       if (endpointEnableResult == USB_ERROR_NONE)
+                       if (endpointEnableResult == USB_DEVICE_RESULT_OK)
                        {
                            audioInstance->infCollection.intEp.status = true; 
                        }
@@ -765,9 +765,9 @@ void F_USB_DEVICE_AUDIO_Initialize
 
                 /* Save max packet size */
                 maxPacketSize = ( ( USB_ENDPOINT_DESCRIPTOR* ) pDescriptor )->wMaxPacketSize;
-                if (maxPacketSize < 8)
+                if (maxPacketSize < M_USB_DEVICE_AUDIO_MIN_EP_SZ)
                 {
-                    maxPacketSize = 8; 
+                    maxPacketSize = M_USB_DEVICE_AUDIO_MIN_EP_SZ; 
                 }
        
                 if (pEPDesc->usageType == USB_USAGE_DATA_ENDPOINT)

@@ -67,6 +67,10 @@
 (deviate:1 "MISRA C-2012 Rule 6.1" "H3_MISRAC_2012_R_6_1_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )
 </#if>
+
+/* Smallest possible value of Endpoint maxpacketSize */ 
+#define M_USB_DEVICE_AUDIO_MIN_EP_SZ 8U 
+
 // *****************************************************************************
 /* Audio flags.
 
