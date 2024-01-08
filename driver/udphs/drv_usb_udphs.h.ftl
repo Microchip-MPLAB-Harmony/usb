@@ -73,18 +73,18 @@
 // *****************************************************************************
 
 /* MISRA C-2012 Rule 3.1 deviate:26, Rule 5.1 deviate:1, Rule 5.2 deviate:5 
-   and Rule 8.6 deviate:2.Deviation record ID - H3_MISRAC_2012_R_3_1_DR_1, 
-   H3_MISRAC_2012_R_5_2_DR_1,and H3_MISRAC_2012_R_8_6_DR_1 */
+   and Rule 8.6 deviate:2.Deviation record ID - H3_USB_MISRAC_2012_R_3_1_DR_1, 
+   H3_USB_MISRAC_2012_R_5_2_DR_1,and H3_USB_MISRAC_2012_R_8_6_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:26 "MISRA C-2012 Rule 3.1" "H3_MISRAC_2012_R_3_1_DR_1" )\
-(deviate:5 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1" 
-#pragma coverity compliance block deviate:5 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"  
+(deviate:26 "MISRA C-2012 Rule 3.1" "H3_USB_MISRAC_2012_R_3_1_DR_1" )\
+(deviate:5 "MISRA C-2012 Rule 8.6" "H3_USB_MISRAC_2012_R_8_6_DR_1" )
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 5.1" "H3_USB_MISRAC_2012_R_5_1_DR_1" 
+#pragma coverity compliance block deviate:5 "MISRA C-2012 Rule 5.2" "H3_USB_MISRAC_2012_R_5_2_DR_1"  
 </#if>
 
 /*DOM-IGNORE-BEGIN*/#define DRV_USB_UDPHS_ENDPOINT_ALL 16/*DOM-IGNORE-END*/

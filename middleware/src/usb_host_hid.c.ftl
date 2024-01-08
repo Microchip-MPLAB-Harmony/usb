@@ -1904,15 +1904,15 @@ USB_HOST_HID_RESULT USB_HOST_HID_IdleTimeGet
 
 // *****************************************************************************
 /* MISRA C-2012 Rule 4.12, and 21.3 deviated below. Deviation record ID -  
-    H3_MISRAC_2012_R_4_12_DR_1, H3_MISRAC_2012_R_21_3_DR_1 */
+    H3_USB_MISRAC_2012_R_4_12_DR_1, H3_USB_MISRAC_2012_R_21_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:2 "MISRA C-2012 Directive 4.12" "H3_MISRAC_2012_R_4_12_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 21.3" "H3_MISRAC_2012_R_21_3_DR_1" )
+(deviate:2 "MISRA C-2012 Directive 4.12" "H3_USB_MISRAC_2012_R_4_12_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 21.3" "H3_USB_MISRAC_2012_R_21_3_DR_1" )
 </#if>
 /* Function:
     USB_HOST_HID_RESULT F_USB_HOST_HID_ReportDescriptorGet
@@ -2030,11 +2030,11 @@ USB_HOST_HID_RESULT F_USB_HOST_HID_ReportDescriptorGet
 /* MISRAC 2012 deviation block end */
 // ******************************************************************************
 /* MISRA C-2012 Rule 11.3, and 11.8 deviated below. Deviation record ID -  
-    H3_MISRAC_2012_R_11_3_DR_1, H3_MISRAC_2012_R_11_8_DR_1 */
+    H3_USB_MISRAC_2012_R_11_3_DR_1, H3_USB_MISRAC_2012_R_11_8_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
-(deviate:3 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
+(deviate:3 "MISRA C-2012 Rule 11.3" "H3_USB_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_USB_MISRAC_2012_R_11_8_DR_1" )
 </#if>
 /* Function:
     USB_HOST_HID_RESULT USB_HOST_HID_ReportSend

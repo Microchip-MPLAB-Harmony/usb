@@ -35,21 +35,21 @@
 
 /* MISRA C-2012 Rule 4.10, Rule 5.2, Rule 5.5, Rule 10.3, 
    Rule 21.1, and Rule 21.2. Deviation record ID -  
-    H3_MISRAC_2012_R_4_10_DR_1, H3_MISRAC_2012_R_5_2_DR_1 
-    H3_MISRAC_2012_R_5_5_DR_1, H3_MISRAC_2012_R_10_3_DR_1
-    H3_MISRAC_2012_R_21_1_DR_1 and H3_MISRAC_2012_R_21_2_DR_1*/
+    H3_USB_MISRAC_2012_R_4_10_DR_1, H3_USB_MISRAC_2012_R_5_2_DR_1 
+    H3_USB_MISRAC_2012_R_5_5_DR_1, H3_USB_MISRAC_2012_R_10_3_DR_1
+    H3_USB_MISRAC_2012_R_21_1_DR_1 and H3_USB_MISRAC_2012_R_21_2_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:1 "MISRA C-2012 Rule 4.10" "H3_MISRAC_2012_R_4_10_DR_1" )\
-(deviate:3 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" )\
-(deviate:10 "MISRA C-2012 Rule 5.5" "H3_MISRAC_2012_R_5_5_DR_1" )\
-(deviate:2 "MISRA C-2012 Rule 21.1" "H3_MISRAC_2012_R_21_1_DR_1" )\
-(deviate:3 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1" )\
-(deviate:2 "MISRA C-2012 Rule 21.2" "H3_MISRAC_2012_R_21_2_DR_1" )
+(deviate:1 "MISRA C-2012 Rule 4.10" "H3_USB_MISRAC_2012_R_4_10_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 5.2" "H3_USB_MISRAC_2012_R_5_2_DR_1" )\
+(deviate:10 "MISRA C-2012 Rule 5.5" "H3_USB_MISRAC_2012_R_5_5_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 21.1" "H3_USB_MISRAC_2012_R_21_1_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 21.2" "H3_USB_MISRAC_2012_R_21_2_DR_1" )
 </#if>
 
 #define USBHS_REGISTERS_OFFSET 0x1000

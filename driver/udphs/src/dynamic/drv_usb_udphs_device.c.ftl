@@ -93,15 +93,15 @@ DRV_USB_DEVICE_INTERFACE gDrvUSBUDPHSDeviceInterface =
 
 // *****************************************************************************
 /* MISRA C-2012 Rule 10.4 False Positive:16, and 12.2 deviate:86. Deviation record ID -  
-    H3_MISRAC_2012_R_10_4_DR_1, H3_MISRAC_2012_R_12_2_DR_1 */
+    H3_USB_MISRAC_2012_R_10_4_DR_1, H3_USB_MISRAC_2012_R_12_2_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(fp:16 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" )\
-(deviate:86 "MISRA C-2012 Rule 12.2" "H3_MISRAC_2012_R_12_2_DR_1" )
+(fp:16 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1" )\
+(deviate:86 "MISRA C-2012 Rule 12.2" "H3_USB_MISRAC_2012_R_12_2_DR_1" )
 </#if>
 
 /* Function:
@@ -353,13 +353,13 @@ void DRV_USB_UDPHS_DEVICE_RemoteWakeupStart(DRV_HANDLE handle)
 }/* end of DRV_USB_UDPHS_DEVICE_RemoteWakeupStart() */
 
 // *****************************************************************************
-/* MISRA C-2012 Rule 5.1 deviated:4 Deviation record ID -  H3_MISRAC_2012_R_5_1_DR_1 */
+/* MISRA C-2012 Rule 5.1 deviated:4 Deviation record ID -  H3_USB_MISRAC_2012_R_5_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:4 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1" 
+#pragma coverity compliance block deviate:4 "MISRA C-2012 Rule 5.1" "H3_USB_MISRAC_2012_R_5_1_DR_1" 
 </#if>
 
 /* Function:
@@ -564,15 +564,15 @@ uint16_t DRV_USB_UDPHS_DEVICE_SOFNumberGet(DRV_HANDLE handle)
 
 // *****************************************************************************
 /* MISRA C-2012 Rule 11.3 deviate:20, and 11.6 deviate:2. Deviation record ID -  
-    H3_MISRAC_2012_R_11_3_DR_1, H3_MISRAC_2012_R_11_6_DR_1 */
+    H3_USB_MISRAC_2012_R_11_3_DR_1, H3_USB_MISRAC_2012_R_11_6_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:20 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:2 "MISRA C-2012 Rule 11.6" "H3_MISRAC_2012_R_11_6_DR_1" )
+(deviate:20 "MISRA C-2012 Rule 11.3" "H3_USB_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 11.6" "H3_USB_MISRAC_2012_R_11_6_DR_1" )
 </#if>
 /* Function:
     void F_DRV_USB_UDPHS_DEVICE_IRPQueueFlush

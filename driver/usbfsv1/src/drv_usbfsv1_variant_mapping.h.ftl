@@ -54,10 +54,10 @@
 #include "configuration.h"
 
 
-/* MISRA C-2012 Rule 5.4 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_5_4_DR_1 */
+/* MISRA C-2012 Rule 5.4 deviated:2 Deviation record ID -  H3_USB_MISRAC_2012_R_5_4_DR_1 */
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1" 
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 5.4" "H3_USB_MISRAC_2012_R_5_4_DR_1" 
 /**********************************************
  * Macro Mapping
  **********************************************/

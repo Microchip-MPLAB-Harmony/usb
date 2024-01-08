@@ -69,15 +69,15 @@
 // ****************************************************************************
 
 /* MISRA C-2012 Rule 5.2, and 8.6 deviated below. Deviation record ID -  
-    H3_MISRAC_2012_R_5_2_DR_1, H3_MISRAC_2012_R_8_6_DR_1 */
+    H3_USB_MISRAC_2012_R_5_2_DR_1, H3_USB_MISRAC_2012_R_8_6_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:8 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" ) 
+(deviate:8 "MISRA C-2012 Rule 5.2" "H3_USB_MISRAC_2012_R_5_2_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 8.6" "H3_USB_MISRAC_2012_R_8_6_DR_1" ) 
 </#if>
 // *****************************************************************************
 /* USB Host CDC Client Driver Handle 

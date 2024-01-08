@@ -74,15 +74,15 @@ static DRV_USBFS_GROUP gDrvUSBGroup[DRV_USBFS_INSTANCES_NUMBER];
 
 // *****************************************************************************
 /* MISRA C-2012 Rule 10.1 deviate: , and 10.4 deviate:2. Deviation record ID -  
-    H3_MISRAC_2012_R_10_1_DR_1, H3_MISRAC_2012_R_10_4_DR_1 */
+    H3_USB_MISRAC_2012_R_10_1_DR_1, H3_USB_MISRAC_2012_R_10_4_DR_1 */
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 #pragma coverity compliance block \
-(deviate:1 "MISRA C-2012 Rule 10.1" "H3_MISRAC_2012_R_10_1_DR_1" )\
-(deviate:2 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:3 "MISRA C-2012 Rule 11.6" "H3_MISRAC_2012_R_11_6_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
+(deviate:1 "MISRA C-2012 Rule 10.1" "H3_USB_MISRAC_2012_R_10_1_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.3" "H3_USB_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 11.6" "H3_USB_MISRAC_2012_R_11_6_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_USB_MISRAC_2012_R_11_8_DR_1" )
 /* Function:
     SYS_MODULE_OBJ DRV_USBFS_Initialize
     ( 

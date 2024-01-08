@@ -73,23 +73,23 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 /* MISRA C-2012 Rule 3.1, Rule 6.1, Rule 7.3
    Rule 10.1, Rule 10.3, Rule 10.4, Rule 10.6,
    Rule 11.6, Rule 11.7, Rule 14.4. Deviation record ID -  
-   H3_MISRAC_2012_R_10_1_DR_1, H3_MISRAC_2012_R_10_3_DR_1, 
-   H3_MISRAC_2012_R_10_4_DR_1, H3_MISRAC_2012_R_11_6_DR_1, 
-   and H3_MISRAC_2012_R_14_4_DR_1 */
+   H3_USB_MISRAC_2012_R_10_1_DR_1, H3_USB_MISRAC_2012_R_10_3_DR_1, 
+   H3_USB_MISRAC_2012_R_10_4_DR_1, H3_USB_MISRAC_2012_R_11_6_DR_1, 
+   and H3_USB_MISRAC_2012_R_14_4_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:10 "MISRA C-2012 Rule 3.1" "H3_MISRAC_2012_R_3_1_DR_1" )\
-(deviate:10 "MISRA C-2012 Rule 6.1" "H3_MISRAC_2012_R_6_1_DR_1" )\
-(deviate:10 "MISRA C-2012 Rule 7.3" "H3_MISRAC_2012_R_7_3_DR_1" )\
-(deviate:10 "MISRA C-2012 Rule 10.1" "H3_MISRAC_2012_R_10_1_DR_1" )\
-(deviate:10 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1" )\
-(deviate:10 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" )\
-(deviate:3 "MISRA C-2012 Rule 11.6" "H3_MISRAC_2012_R_11_6_DR_1" )\
-(deviate:2 "MISRA C-2012 Rule 14.4" "H3_MISRAC_2012_R_14_4_DR_1" )
+(deviate:10 "MISRA C-2012 Rule 3.1" "H3_USB_MISRAC_2012_R_3_1_DR_1" )\
+(deviate:10 "MISRA C-2012 Rule 6.1" "H3_USB_MISRAC_2012_R_6_1_DR_1" )\
+(deviate:10 "MISRA C-2012 Rule 7.3" "H3_USB_MISRAC_2012_R_7_3_DR_1" )\
+(deviate:10 "MISRA C-2012 Rule 10.1" "H3_USB_MISRAC_2012_R_10_1_DR_1" )\
+(deviate:10 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1" )\
+(deviate:10 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 11.6" "H3_USB_MISRAC_2012_R_11_6_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 14.4" "H3_USB_MISRAC_2012_R_14_4_DR_1" )
 </#if>
 
 // *****************************************************************************

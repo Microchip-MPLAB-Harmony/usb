@@ -672,17 +672,17 @@ unsigned int F_DRV_USBHS_HOST_IRPReceiveFIFOUnload
 }
 
 /* MISRA C-2012 Rule 11.3 deviated:9, 11.6 deviated:1 and 11.6 deviated:1 and 11.7 deviated:9 below. 
-   Deviation record ID - H3_MISRAC_2012_R_11_3_DR_1, H3_MISRAC_2012_R_11_6_DR_1  and
-   H3_MISRAC_2012_R_11_7_DR_1 */
+   Deviation record ID - H3_USB_MISRAC_2012_R_11_3_DR_1, H3_USB_MISRAC_2012_R_11_6_DR_1  and
+   H3_USB_MISRAC_2012_R_11_7_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:9 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.6" "H3_MISRAC_2012_R_11_6_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.7" "H3_MISRAC_2012_R_11_7_DR_1" )
+(deviate:9 "MISRA C-2012 Rule 11.3" "H3_USB_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.6" "H3_USB_MISRAC_2012_R_11_6_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.7" "H3_USB_MISRAC_2012_R_11_7_DR_1" )
 </#if>
 
 
@@ -756,9 +756,9 @@ void F_DRV_USBHS_HOST_Initialize
     drvObj->usbDrvHostObj.usbHostDeviceInfo = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
 }
 
-/* MISRA C-2012 Rule 10.4 False Positive:10 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
+/* MISRA C-2012 Rule 10.4 False Positive:10 Deviation record ID -  H3_USB_MISRAC_2012_R_10_4_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block fp:10 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" 
+#pragma coverity compliance block fp:10 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1" 
 </#if>
 
 USB_ERROR DRV_USBHS_HOST_IRPSubmit
@@ -2811,9 +2811,9 @@ void DRV_USBHS_HOST_ROOT_HUB_OperationEnable
 } 
 
 // ****************************************************************************
-/* MISRA C-2012 Rule 5.1 deviated:3 Deviation record ID -  H3_MISRAC_2012_R_5_1_DR_1 */
+/* MISRA C-2012 Rule 5.1 deviated:3 Deviation record ID -  H3_USB_MISRAC_2012_R_5_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1"
+#pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 5.1" "H3_USB_MISRAC_2012_R_5_1_DR_1"
 </#if>
 
 /* Function:

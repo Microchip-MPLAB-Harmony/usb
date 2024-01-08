@@ -136,15 +136,15 @@
  ************************************************/
  
 /* MISRA C-2012 Rule 5.4, 5.5 deviated below. Deviation record ID -  
-   H3_MISRAC_2012_R_5_4_DR_1 & H3_MISRAC_2012_R_5_5_DR_1*/
+   H3_USB_MISRAC_2012_R_5_4_DR_1 & H3_USB_MISRAC_2012_R_5_5_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:2 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 5.5" "H3_MISRAC_2012_R_5_5_DR_1" )   
+(deviate:2 "MISRA C-2012 Rule 5.4" "H3_USB_MISRAC_2012_R_5_4_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 5.5" "H3_USB_MISRAC_2012_R_5_5_DR_1" )   
 </#if>
 
 
@@ -227,9 +227,9 @@ typedef struct
  * is not the same as the public IRP status
  *********************************************/
  
-/* MISRA C-2012 Rule 5.2 deviated:11 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+/* MISRA C-2012 Rule 5.2 deviated:11 Deviation record ID -  H3_USB_MISRAC_2012_R_5_2_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:11 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"    
+#pragma coverity compliance block deviate:11 "MISRA C-2012 Rule 5.2" "H3_USB_MISRAC_2012_R_5_2_DR_1"    
 </#if>
 
 typedef enum
@@ -714,9 +714,9 @@ typedef struct
  *****************************************************************************/
 extern DRV_USBHS_OBJ gDrvUSBObj[];
 
-/* MISRA C-2012 Rule 8.6 deviated:7 Deviation record ID -  H3_MISRAC_2012_R_8_6_DR_1 */
+/* MISRA C-2012 Rule 8.6 deviated:7 Deviation record ID -  H3_USB_MISRAC_2012_R_8_6_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:7 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1"    
+#pragma coverity compliance block deviate:7 "MISRA C-2012 Rule 8.6" "H3_USB_MISRAC_2012_R_8_6_DR_1"    
 </#if>
 
 void F_DRV_USBHS_HOST_AttachDetachStateMachine (DRV_USBHS_OBJ * hDriver);

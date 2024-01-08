@@ -86,13 +86,13 @@ typedef enum
 } USB_DEVICE_MSD_STATE;
 
 // *****************************************************************************
-/* MISRA C-2012 Rule 5.2 deviated:3 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+/* MISRA C-2012 Rule 5.2 deviated:3 Deviation record ID -  H3_USB_MISRAC_2012_R_5_2_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" 
+#pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 5.2" "H3_USB_MISRAC_2012_R_5_2_DR_1" 
 </#if>
 /* USB device MSD media operation state.
 
@@ -473,9 +473,9 @@ void F_USB_DEVICE_MSD_Deinitialization ( SYS_MODULE_INDEX iMSD );
 
 
 // *****************************************************************************
-/* MISRA C-2012 Rule 8.6 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_8_6_DR_1 */
+/* MISRA C-2012 Rule 8.6 deviated:2 Deviation record ID -  H3_USB_MISRAC_2012_R_8_6_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1"  
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 8.6" "H3_USB_MISRAC_2012_R_8_6_DR_1"  
 </#if>
 /* Function:
    USB_ERROR_STATUS F_USB_DEVICE_MSD_CheckInterface ( SYS_MODULE_INDEX funcDriverIndex ,

@@ -59,17 +59,17 @@
 #include "osal/osal.h"
 
 /* MISRA C-2012 Rule 5.2 deviate:13, Rule 5.4 deviate:1 and Rule 8.6 deviate:5. 
-   Deviation record ID - H3_MISRAC_2012_R_5_1_DR_1, H3_MISRAC_2012_R_5_4_DR_1 
-   and H3_MISRAC_2012_R_8_6_DR_1 */
+   Deviation record ID - H3_USB_MISRAC_2012_R_5_1_DR_1, H3_USB_MISRAC_2012_R_5_4_DR_1 
+   and H3_USB_MISRAC_2012_R_8_6_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:13 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1" )\
-(deviate:5 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )
+(deviate:13 "MISRA C-2012 Rule 5.2" "H3_USB_MISRAC_2012_R_5_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 5.4" "H3_USB_MISRAC_2012_R_5_4_DR_1" )\
+(deviate:5 "MISRA C-2012 Rule 8.6" "H3_USB_MISRAC_2012_R_8_6_DR_1" )
 </#if>
 
 

@@ -162,13 +162,13 @@ static USB_CDC_SERIAL_STATE_RESPONSE gUSBDeviceCDCSerialStateResponse[USB_DEVICE
     This is local function and should not be called directly by the application.
 */
 
-/* MISRA C-2012 Rule 10.4 False Positive:10 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
+/* MISRA C-2012 Rule 10.4 False Positive:10 Deviation record ID -  H3_USB_MISRAC_2012_R_10_4_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block fp:10 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"    
+#pragma coverity compliance block fp:10 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1"    
 </#if>
 
 void F_USB_DEVICE_CDC_GlobalInitialize (void)
@@ -216,9 +216,9 @@ void F_USB_DEVICE_CDC_GlobalInitialize (void)
     This is local function and should not be called directly by the application.
 */
 
-/* MISRA C-2012 Rule 11.3 deviated:3 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+/* MISRA C-2012 Rule 11.3 deviated:3 Deviation record ID -  H3_USB_MISRAC_2012_R_11_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"    
+#pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 11.3" "H3_USB_MISRAC_2012_R_11_3_DR_1"    
 </#if>
 
 void F_USB_DEVICE_CDC_Initialization 
@@ -471,11 +471,11 @@ void F_USB_DEVICE_CDC_Deinitialization ( SYS_MODULE_INDEX iCDC )
     This is local function and should not be called directly by the application.
 */
 /* MISRA C-2012 Rule 16.1, 16.3 deviated below. Deviation record ID -  
-   H3_MISRAC_2012_R_16_1_DR_1 & H3_MISRAC_2012_R_16_3_DR_1*/
+   H3_USB_MISRAC_2012_R_16_1_DR_1 & H3_USB_MISRAC_2012_R_16_3_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
-(deviate:1 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )   
+(deviate:1 "MISRA C-2012 Rule 16.1" "H3_USB_MISRAC_2012_R_16_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 16.3" "H3_USB_MISRAC_2012_R_16_3_DR_1" )   
 </#if>
 
 void F_USB_DEVICE_CDC_ControlTransferHandler 
@@ -998,9 +998,9 @@ USB_DEVICE_CDC_RESULT USB_DEVICE_CDC_Read
     Refer to usb_device_cdc.h for usage information.
 */
 
-/* MISRA C-2012 Rule 11.8 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_8_DR_1 */
+/* MISRA C-2012 Rule 11.8 deviated:1 Deviation record ID -  H3_USB_MISRAC_2012_R_11_8_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1"    
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.8" "H3_USB_MISRAC_2012_R_11_8_DR_1"    
 </#if>
 
 USB_DEVICE_CDC_RESULT USB_DEVICE_CDC_Write 

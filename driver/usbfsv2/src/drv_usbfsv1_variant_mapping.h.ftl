@@ -106,10 +106,10 @@
 #define M_DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE false
 </#if>
 
-/* MISRA C-2012 Rule 5.4 deviated:3 Deviation record ID -  H3_MISRAC_2012_R_5_4_DR_1 */
+/* MISRA C-2012 Rule 5.4 deviated:3 Deviation record ID -  H3_USB_MISRAC_2012_R_5_4_DR_1 */
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
-#pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1" 
+#pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 5.4" "H3_USB_MISRAC_2012_R_5_4_DR_1" 
   
 #if (M_DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE == true)
     #define M_DRV_USBFSV1_SYS_INT_SourceEnable(a, b, c, d);          \

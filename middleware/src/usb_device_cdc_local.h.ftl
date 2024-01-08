@@ -386,7 +386,7 @@ void F_USB_DEVICE_CDC_WriteIRPCallback (USB_DEVICE_IRP * irp );
   Remarks:
     Called by the controller driver
  */
-/* MISRA C-2012 Rule 8.6 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_8_6_DR_1 */
+/* MISRA C-2012 Rule 8.6 deviated:1 Deviation record ID -  H3_USB_MISRAC_2012_R_8_6_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
@@ -395,7 +395,7 @@ void F_USB_DEVICE_CDC_WriteIRPCallback (USB_DEVICE_IRP * irp );
 </#if>
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1"
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 8.6" "H3_USB_MISRAC_2012_R_8_6_DR_1"
 </#if>
 
 void F_USB_DEVICE_CDC_ReadIRPCallback (USB_DEVICE_IRP * irp );

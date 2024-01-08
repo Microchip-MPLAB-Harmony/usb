@@ -118,21 +118,21 @@ static const uint32_t gDrvUSBLSTableBW[2][4] =
 // ****************************************************************************
 // ****************************************************************************
 
-/* MISRA C-2012 Rule 10.4 False Positive:20 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
+/* MISRA C-2012 Rule 10.4 False Positive:20 Deviation record ID -  H3_USB_MISRAC_2012_R_10_4_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block fp:4 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" 
+#pragma coverity compliance block fp:4 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1" 
 </#if>
 
 /* MISRA C-2012 Rule 10.4(False Positive), and 20.7 deviated below. Deviation record ID -  
-    H3_MISRAC_2012_R_10_4_DR_1, H3_MISRAC_2012_R_20_7_DR_1 */
+    H3_USB_MISRAC_2012_R_10_4_DR_1, H3_USB_MISRAC_2012_R_20_7_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
-(fp:20 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" )\
-(deviate:5 "MISRA C-2012 Rule 20.7" "H3_MISRAC_2012_R_20_7_DR_1" )
+(fp:20 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1" )\
+(deviate:5 "MISRA C-2012 Rule 20.7" "H3_USB_MISRAC_2012_R_20_7_DR_1" )
 </#if>
 
 
@@ -245,12 +245,12 @@ void F_DRV_USBFSV1_HOST_AttachDetachStateMachine (DRV_USBFSV1_OBJ * hDriver)
 
 // *****************************************************************************
 /* MISRA C-2012 Rule 11.3, 11.6 and 11.8 deviated below. Deviation record ID -  
-    H3_MISRAC_2012_R_11_3_DR_1, H3_MISRAC_2012_R_11_6_DR_1 and H3_MISRAC_2012_R_11_8_DR_1*/
+    H3_USB_MISRAC_2012_R_11_3_DR_1, H3_USB_MISRAC_2012_R_11_6_DR_1 and H3_USB_MISRAC_2012_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
-(deviate:8 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.6" "H3_MISRAC_2012_R_11_6_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
+(deviate:8 "MISRA C-2012 Rule 11.3" "H3_USB_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.6" "H3_USB_MISRAC_2012_R_11_6_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_USB_MISRAC_2012_R_11_8_DR_1" )
 </#if>
 
 /* Function:
@@ -775,11 +775,11 @@ void DRV_USBFSV1_HOST_PipeClose
 
 // *****************************************************************************
 /* MISRA C-2012 Rule 16.1, and 16.3 deviated below. Deviation record ID -  
-    H3_MISRAC_2012_R_16_1_DR_1, H3_MISRAC_2012_R_16_3_DR_1 */
+    H3_USB_MISRAC_2012_R_16_1_DR_1, H3_USB_MISRAC_2012_R_16_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
-(deviate:2 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1" )\
-(deviate:3 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )
+(deviate:2 "MISRA C-2012 Rule 16.1" "H3_USB_MISRAC_2012_R_16_1_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 16.3" "H3_USB_MISRAC_2012_R_16_3_DR_1" )
 </#if>
 /* Function:
     DRV_USBFSV1_HOST_PIPE_HANDLE DRV_USBFSV1_HOST_PipeSetup
@@ -1045,12 +1045,12 @@ DRV_USBFSV1_HOST_PIPE_HANDLE DRV_USBFSV1_HOST_PipeSetup
 
 // *****************************************************************************
 /* MISRA C-2012 Rule 5.1, 5.2 and 21.15 deviated below. Deviation record ID -  
-    H3_MISRAC_2012_R_5_1_DR_1, H3_MISRAC_2012_R_5_2_DR_1 and H3_MISRAC_2012_R_21_15_DR_1*/
+    H3_USB_MISRAC_2012_R_5_1_DR_1, H3_USB_MISRAC_2012_R_5_2_DR_1 and H3_USB_MISRAC_2012_R_21_15_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
-(deviate:7 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" )\
-(deviate:5 "MISRA C-2012 Rule 21.15" "H3_MISRAC_2012_R_21_15_DR_1" )
+(deviate:7 "MISRA C-2012 Rule 5.1" "H3_USB_MISRAC_2012_R_5_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 5.2" "H3_USB_MISRAC_2012_R_5_2_DR_1" )\
+(deviate:5 "MISRA C-2012 Rule 21.15" "H3_USB_MISRAC_2012_R_21_15_DR_1" )
 </#if>
 
 /* Function:

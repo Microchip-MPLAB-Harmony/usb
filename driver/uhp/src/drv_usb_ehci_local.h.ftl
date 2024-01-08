@@ -169,13 +169,13 @@
  * HCD to track completion of a host IRP. This
  * is not the same as the public IRP status
  *********************************************/
- /* MISRA C-2012 Rule 5.2 deviated:14 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+ /* MISRA C-2012 Rule 5.2 deviated:14 Deviation record ID -  H3_USB_MISRAC_2012_R_5_2_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:14 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" 
+#pragma coverity compliance block deviate:14 "MISRA C-2012 Rule 5.2" "H3_USB_MISRAC_2012_R_5_2_DR_1" 
 </#if>
 
 typedef enum DRV_USB_EHCI_IRP_STATE

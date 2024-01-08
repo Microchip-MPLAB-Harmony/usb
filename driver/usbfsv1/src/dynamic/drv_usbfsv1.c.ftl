@@ -74,15 +74,15 @@ static DRV_USBFSV1_OBJ gDrvUSBFSV1Obj [DRV_USBFSV1_INSTANCES_NUMBER];
 
 // *****************************************************************************
 /* MISRA C-2012 Rule 11.3, and 11.8 deviated below. Deviation record ID -  
-    H3_MISRAC_2012_R_11_3_DR_1, H3_MISRAC_2012_R_11_8_DR_1 */
+    H3_USB_MISRAC_2012_R_11_3_DR_1, H3_USB_MISRAC_2012_R_11_8_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:1 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
+(deviate:1 "MISRA C-2012 Rule 11.3" "H3_USB_MISRAC_2012_R_11_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_USB_MISRAC_2012_R_11_8_DR_1" )
 </#if>
 /* Function:
     SYS_MODULE_OBJ DRV_USBFSV1_Initialize

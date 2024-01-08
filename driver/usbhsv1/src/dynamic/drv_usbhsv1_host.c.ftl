@@ -49,13 +49,13 @@
 #include "usb/usb_host_client_driver.h"
 
 
-/* MISRA C-2012 Rule 5.1 deviated:4 Deviation record ID -  H3_MISRAC_2012_R_5_1_DR_1 */
+/* MISRA C-2012 Rule 5.1 deviated:4 Deviation record ID -  H3_USB_MISRAC_2012_R_5_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:4 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1"
+#pragma coverity compliance block deviate:4 "MISRA C-2012 Rule 5.1" "H3_USB_MISRAC_2012_R_5_1_DR_1"
 </#if>
 /**********************************************************
  * This structure is a set of pointer to the USBFS driver
@@ -219,18 +219,18 @@ void F_DRV_USBHSV1_HOST_ResetStateMachine(DRV_USBHSV1_OBJ * hDriver)
 }
 
 /* MISRA C-2012 Rule 11.3, 11.6 and 11.8 deviated below. Deviation record ID -  
-    H3_MISRAC_2012_R_11_3_DR_1, H3_MISRAC_2012_R_11_6_DR_1 and H3_MISRAC_2012_R_11_8_DR_1*/
+    H3_USB_MISRAC_2012_R_11_3_DR_1, H3_USB_MISRAC_2012_R_11_6_DR_1 and H3_USB_MISRAC_2012_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:10 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.6" "H3_MISRAC_2012_R_11_6_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 12.2" "H3_MISRAC_2012_R_12_2_DR_1" )\
-(deviate:2 "MISRA C-2012 Rule 18.1" "H3_MISRAC_2012_R_18_1_DR_1" )
+(deviate:10 "MISRA C-2012 Rule 11.3" "H3_USB_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.6" "H3_USB_MISRAC_2012_R_11_6_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_USB_MISRAC_2012_R_11_8_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 12.2" "H3_USB_MISRAC_2012_R_12_2_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 18.1" "H3_USB_MISRAC_2012_R_18_1_DR_1" )
 </#if>
 
 

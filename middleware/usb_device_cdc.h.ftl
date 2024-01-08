@@ -126,13 +126,13 @@
 
 typedef uintptr_t USB_DEVICE_CDC_INDEX;
 
-/* MISRA C-2012 Rule 3.1 deviated:5 Deviation record ID -  H3_MISRAC_2012_R_3_1_DR_1 */
+/* MISRA C-2012 Rule 3.1 deviated:5 Deviation record ID -  H3_USB_MISRAC_2012_R_3_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:5 "MISRA C-2012 Rule 3.1" "H3_MISRAC_2012_R_3_1_DR_1"    
+#pragma coverity compliance block deviate:5 "MISRA C-2012 Rule 3.1" "H3_USB_MISRAC_2012_R_3_1_DR_1"    
 </#if>
 
 // *****************************************************************************
@@ -301,9 +301,9 @@ typedef uintptr_t USB_DEVICE_CDC_INDEX;
     transactions. Even when deferring response, the application must respond
     promptly if such time outs have to be avoided.
 */
-/* MISRA C-2012 Rule 5.2 deviated:15 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+/* MISRA C-2012 Rule 5.2 deviated:15 Deviation record ID -  H3_USB_MISRAC_2012_R_5_2_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:15 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1" 
+#pragma coverity compliance block deviate:15 "MISRA C-2012 Rule 5.2" "H3_USB_MISRAC_2012_R_5_2_DR_1" 
 </#if>
 
 typedef enum

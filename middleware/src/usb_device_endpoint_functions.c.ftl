@@ -67,25 +67,25 @@ static USB_DEVICE_Q_SIZE_ENDPOINT qSizeEndpoint[USB_DEVICE_INSTANCES_NUMBER];
 // *****************************************************************************
 // *****************************************************************************
 // ******************************************************************************
-/* MISRA C-2012 Rule 11.8 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+/* MISRA C-2012 Rule 11.8 deviated:1 Deviation record ID -  H3_USB_MISRAC_2012_R_11_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1"  
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.8" "H3_USB_MISRAC_2012_R_11_8_DR_1"  
 </#if>
 
 /* MISRA C-2012 Rule 10.4 False Positive:4, and Rule 11.8 deviate:1. 
-   Deviation record ID - H3_MISRAC_2012_R_10_4_DR_1, H3_MISRAC_2012_R_11_8_DR_1 */
+   Deviation record ID - H3_USB_MISRAC_2012_R_10_4_DR_1, H3_USB_MISRAC_2012_R_11_8_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(fp:4      "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )
+(fp:4      "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_USB_MISRAC_2012_R_11_8_DR_1" )
 </#if>
 /* Function:
     USB_DEVICE_RESULT USB_DEVICE_EndpointWrite
@@ -560,13 +560,13 @@ void F_USB_DEVICE_EndpointReadCallBack( USB_DEVICE_IRP * irp )
     }
 }
 
-/* MISRA C-2012 Rule 5.5 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_5_5_DR_1 */
+/* MISRA C-2012 Rule 5.5 deviated:1 Deviation record ID -  H3_USB_MISRAC_2012_R_5_5_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 5.5" "H3_MISRAC_2012_R_5_5_DR_1" 
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 5.5" "H3_USB_MISRAC_2012_R_5_5_DR_1" 
 </#if>
 
 void F_USB_DEVICE_Initialize_Endpoint_Q_Size(SYS_MODULE_INDEX index, uint16_t qSizeRead, uint16_t qSizeWrite )

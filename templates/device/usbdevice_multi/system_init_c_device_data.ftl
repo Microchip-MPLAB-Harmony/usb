@@ -81,7 +81,7 @@ ${LIST_USB_DEVICE_FUNCTION_INIT_ENTRY}
  
 
 /* MISRA C-2012 Rule 10.3, 11.8 deviated below. Deviation record ID -  
-   H3_MISRAC_2012_R_10_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+   H3_USB_MISRAC_2012_R_10_3_DR_1 & H3_USB_MISRAC_2012_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 
 <#if core.COMPILER_CHOICE == "XC32">
@@ -89,8 +89,8 @@ ${LIST_USB_DEVICE_FUNCTION_INIT_ENTRY}
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:20 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1" )\
-(deviate:5 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+(deviate:20 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1" )\
+(deviate:5 "MISRA C-2012 Rule 11.8" "H3_USB_MISRAC_2012_R_11_8_DR_1" )   
 </#if>
 
 static const USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable${INDEX?string}[${CONFIG_USB_DEVICE_FUNCTIONS_NUMBER}] =
@@ -192,13 +192,13 @@ static USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE highSpeedConfigDescSet${INDEX?
 /*******************************************
  *  USB Full Speed Configuration Descriptor
  *******************************************/
- /* MISRA C-2012 Rule 10.3 deviated:25 Deviation record ID -  H3_MISRAC_2012_R_10_3_DR_1 */
+ /* MISRA C-2012 Rule 10.3 deviated:25 Deviation record ID -  H3_USB_MISRAC_2012_R_10_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:25 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1"    
+#pragma coverity compliance block deviate:25 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1"    
 </#if>
 static const uint8_t fullSpeedConfigurationDescriptor${INDEX?string}[]=
 {

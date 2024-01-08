@@ -223,17 +223,17 @@ void F_DRV_USBFS_HOST_Initialize
 
 // *****************************************************************************
 /* MISRA C-2012 Rule 10.1 deviate:3, Rule 10.4 deviate:10 and Rule 11.3 deviated:8. 
-   Deviation record ID - H3_MISRAC_2012_R_10_1_DR_1, H3_MISRAC_2012_R_10_4_DR_1 
-   and H3_MISRAC_2012_R_11_3_DR_1*/
+   Deviation record ID - H3_USB_MISRAC_2012_R_10_1_DR_1, H3_USB_MISRAC_2012_R_10_4_DR_1 
+   and H3_USB_MISRAC_2012_R_11_3_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:3  "MISRA C-2012 Rule 10.1" "H3_MISRAC_2012_R_10_1_DR_1" )\
-(deviate:10 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" )\
-(deviate:8  "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )
+(deviate:3  "MISRA C-2012 Rule 10.1" "H3_USB_MISRAC_2012_R_10_1_DR_1" )\
+(deviate:10 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1" )\
+(deviate:8  "MISRA C-2012 Rule 11.3" "H3_USB_MISRAC_2012_R_11_3_DR_1" )
 </#if>
 /* Function:
     USB_ERROR DRV_USBFS_HOST_IRPSubmit
@@ -523,13 +523,13 @@ void DRV_USBFS_HOST_IRPCancel(USB_HOST_IRP * inputIRP)
 
 // *****************************************************************************
 /* MISRA C-2012 Rule 11.6 deviate:12, Rule 16.1 deviate:2 and Rule 16.1:3. 
-   Deviation record ID - H3_MISRAC_2012_R_11_6_DR_1, H3_MISRAC_2012_R_16_1_DR_1 
-    and H3_MISRAC_2012_R_16_3_DR_1 */
+   Deviation record ID - H3_USB_MISRAC_2012_R_11_6_DR_1, H3_USB_MISRAC_2012_R_16_1_DR_1 
+    and H3_USB_MISRAC_2012_R_16_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
-(deviate:12 "MISRA C-2012 Rule 11.6" "H3_MISRAC_2012_R_11_6_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 16.1" "H3_MISRAC_2012_R_16_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 16.3" "H3_MISRAC_2012_R_16_3_DR_1" )
+(deviate:12 "MISRA C-2012 Rule 11.6" "H3_USB_MISRAC_2012_R_11_6_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 16.1" "H3_USB_MISRAC_2012_R_16_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 16.3" "H3_USB_MISRAC_2012_R_16_3_DR_1" )
 </#if>
 /* Function:
     bool F_DRV_USBFS_HOST_ControlXferProcess
@@ -3224,9 +3224,9 @@ void DRV_USBFS_HOST_ROOT_HUB_OperationEnable(DRV_HANDLE handle, bool enable)
 }
 
 // *****************************************************************************
-/* MISRA C-2012 Rule 5.1 deviated:3 Deviation record ID -  H3_MISRAC_2012_R_5_1_DR_1 */
+/* MISRA C-2012 Rule 5.1 deviated:3 Deviation record ID -  H3_USB_MISRAC_2012_R_5_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1" 
+#pragma coverity compliance block deviate:3 "MISRA C-2012 Rule 5.1" "H3_USB_MISRAC_2012_R_5_1_DR_1" 
 </#if>
 /* Function:
     bool DRV_USBFS_HOST_ROOT_HUB_OperationIsEnabled(DRV_HANDLE handle)

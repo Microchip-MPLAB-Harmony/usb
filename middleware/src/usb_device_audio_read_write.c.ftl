@@ -268,13 +268,13 @@ USB_DEVICE_AUDIO_RESULT USB_DEVICE_AUDIO_Write
 
 
 // *****************************************************************************
-/* MISRA C-2012 Rule 10.4 False Positive:6 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
+/* MISRA C-2012 Rule 10.4 False Positive:6 Deviation record ID -  H3_USB_MISRAC_2012_R_10_4_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block fp:6 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"
+#pragma coverity compliance block fp:6 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1"
 </#if>
 /* Function:
     USB_DEVICE_AUDIO_RESULT USB_DEVICE_AUDIO_StatusSend 

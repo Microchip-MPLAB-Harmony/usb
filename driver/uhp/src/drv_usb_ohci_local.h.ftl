@@ -56,13 +56,13 @@
 #include "driver/usb/uhp/drv_usb_ohci.h"
 #include <string.h>
 
-/* MISRA C-2012 Rule 5.2 deviated:10 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+/* MISRA C-2012 Rule 5.2 deviated:10 Deviation record ID -  H3_USB_MISRAC_2012_R_5_2_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:10 "MISRA C-2012 Rule 5.2" "H3_MISRAC_2012_R_5_2_DR_1"   
+#pragma coverity compliance block deviate:10 "MISRA C-2012 Rule 5.2" "H3_USB_MISRAC_2012_R_5_2_DR_1"   
 </#if>
 
 
@@ -186,9 +186,9 @@ typedef struct DRV_USB_OHCI_PORT_OBJ
 /*********************************************
  * This is the local USB Host IRP object
  ********************************************/
- /* MISRA C-2012 Rule 5.6 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_5_6_DR_1 */
+ /* MISRA C-2012 Rule 5.6 deviated:1 Deviation record ID -  H3_USB_MISRAC_2012_R_5_6_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 5.6" "H3_MISRAC_2012_R_5_6_DR_1"    
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 5.6" "H3_USB_MISRAC_2012_R_5_6_DR_1"    
 </#if>
 
 typedef struct S_USB_HOST_IRP_LOCAL

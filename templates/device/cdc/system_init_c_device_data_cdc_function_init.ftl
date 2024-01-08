@@ -42,13 +42,13 @@
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *******************************************************************************/
 -->
-/* MISRA C-2012 Rule 10.3 deviated:4 Deviation record ID -  H3_MISRAC_2012_R_10_3_DR_1 */
+/* MISRA C-2012 Rule 10.3 deviated:4 Deviation record ID -  H3_USB_MISRAC_2012_R_10_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:4 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1" 
+#pragma coverity compliance block deviate:4 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1" 
 </#if>
 static const USB_DEVICE_CDC_INIT cdcInit${CONFIG_USB_DEVICE_FUNCTION_INDEX} =
 {

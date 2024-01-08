@@ -52,24 +52,24 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 /* MISRA C-2012 Rule 10.1, Rule 10.3, Rule 10.4, Rule 11.3, 
    Rule 11.8, Rule 13.5, Rule 14.2 and Rule 14.4. Deviation record ID -  
-    H3_MISRAC_2012_R_10_1_DR_1, H3_MISRAC_2012_R_10_3_DR_1 
-    H3_MISRAC_2012_R_10_4_DR_1, H3_MISRAC_2012_R_11_3_DR_1
-    H3_MISRAC_2012_R_11_8_DR_1 and H3_MISRAC_2012_R_13_5_DR_1
-    H3_MISRAC_2012_R_14_2_DR_1 and H3_MISRAC_2012_R_14_4_DR_1 */
+    H3_USB_MISRAC_2012_R_10_1_DR_1, H3_USB_MISRAC_2012_R_10_3_DR_1 
+    H3_USB_MISRAC_2012_R_10_4_DR_1, H3_USB_MISRAC_2012_R_11_3_DR_1
+    H3_USB_MISRAC_2012_R_11_8_DR_1 and H3_USB_MISRAC_2012_R_13_5_DR_1
+    H3_USB_MISRAC_2012_R_14_2_DR_1 and H3_USB_MISRAC_2012_R_14_4_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:10 "MISRA C-2012 Rule 10.1" "H3_MISRAC_2012_R_10_1_DR_1" )\
-(deviate:3 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1" )\
-(deviate:10 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1" )\
-(deviate:2 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:3 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )\
-(deviate:2 "MISRA C-2012 Rule 13.5" "H3_MISRAC_2012_R_13_5_DR_1" )\
-(deviate:2 "MISRA C-2012 Rule 14.2" "H3_MISRAC_2012_R_14_2_DR_1" )\
-(deviate:2 "MISRA C-2012 Rule 14.4" "H3_MISRAC_2012_R_14_4_DR_1" )
+(deviate:10 "MISRA C-2012 Rule 10.1" "H3_USB_MISRAC_2012_R_10_1_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1" )\
+(deviate:10 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 11.3" "H3_USB_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 11.8" "H3_USB_MISRAC_2012_R_11_8_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 13.5" "H3_USB_MISRAC_2012_R_13_5_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 14.2" "H3_USB_MISRAC_2012_R_14_2_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 14.4" "H3_USB_MISRAC_2012_R_14_4_DR_1" )
 </#if>
 
 //******************************************************************************

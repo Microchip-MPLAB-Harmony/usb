@@ -33,13 +33,13 @@
 #include <stdbool.h>
 
 /* MISRA C-2012 Rule 5.5 ,Rule 21.1 and Rule 21.2. Deviation record ID -  
-   H3_MISRAC_2012_R_5_5_DR_1, H3_MISRAC_2012_R_21_1_DR_1 and H3_MISRAC_2012_R_21_2_DR_1 */
+   H3_USB_MISRAC_2012_R_5_5_DR_1, H3_USB_MISRAC_2012_R_21_1_DR_1 and H3_USB_MISRAC_2012_R_21_2_DR_1 */
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 #pragma coverity compliance block \
-(deviate:3 "MISRA C-2012 Rule 5.5" "H3_MISRAC_2012_R_5_5_DR_1" )\
-(deviate:3 "MISRA C-2012 Rule 21.1" "H3_MISRAC_2012_R_21_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 21.2" "H3_MISRAC_2012_R_21_2_DR_1" )
+(deviate:3 "MISRA C-2012 Rule 5.5" "H3_USB_MISRAC_2012_R_5_5_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 21.1" "H3_USB_MISRAC_2012_R_21_1_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 21.2" "H3_USB_MISRAC_2012_R_21_2_DR_1" )
 
 /* Default definition used for all API dispatch functions */
 #ifndef PLIB_INLINE_API

@@ -343,13 +343,13 @@ SYS_MODULE_OBJ DRV_USB_EHCI_Initialize
 );
 
 // *****************************************************************************
-/* MISRA C-2012 Rule 3.1 deviated:22 Deviation record ID -  H3_MISRAC_2012_R_3_1_DR_1 */
+/* MISRA C-2012 Rule 3.1 deviated:22 Deviation record ID -  H3_USB_MISRAC_2012_R_3_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:22 "MISRA C-2012 Rule 3.1" "H3_MISRAC_2012_R_3_1_DR_1" 
+#pragma coverity compliance block deviate:22 "MISRA C-2012 Rule 3.1" "H3_USB_MISRAC_2012_R_3_1_DR_1" 
 </#if>
 /* Function:
     SYS_STATUS DRV_USB_EHCI_Status ( SYS_MODULE_OBJ object )

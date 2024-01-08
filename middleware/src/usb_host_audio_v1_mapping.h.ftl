@@ -45,13 +45,13 @@
 #include "usb_external_dependencies.h"
 #include "usb_host_audio_local.h"
 
-/* MISRA C-2012 Rule 5.8 deviated:4 Deviation record ID -  H3_MISRAC_2012_R_5_8_DR_1 */
+/* MISRA C-2012 Rule 5.8 deviated:4 Deviation record ID -  H3_USB_MISRAC_2012_R_5_8_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:4 "MISRA C-2012 Rule 5.8" "H3_MISRAC_2012_R_5_8_DR_1" 
+#pragma coverity compliance block deviate:4 "MISRA C-2012 Rule 5.8" "H3_USB_MISRAC_2012_R_5_8_DR_1" 
 </#if>
 
 #if defined (USB_HOST_AUDIO_V1_0_INSTANCES_NUMBER) && !defined (USB_HOST_AUDIO_V1_INSTANCES_NUMBER)

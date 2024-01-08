@@ -714,18 +714,18 @@ void F_DRV_USBHS_HOST_Initialize
     drvObj->usbDrvHostObj.usbHostDeviceInfo = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;
 }
 
-/* MISRA C-2012 Rule 10.4 False Positve:12 Deviation record ID -  H3_MISRAC_2012_R_10_4_DR_1 */
+/* MISRA C-2012 Rule 10.4 False Positve:12 Deviation record ID -  H3_USB_MISRAC_2012_R_10_4_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block fp:12 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_10_4_DR_1"  
+#pragma coverity compliance block fp:12 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1"  
 </#if>
 
-/* MISRA C-2012 Rule 11.3 deviated:8 Deviation record ID -  H3_MISRAC_2012_R_11_3_DR_1 */
+/* MISRA C-2012 Rule 11.3 deviated:8 Deviation record ID -  H3_USB_MISRAC_2012_R_11_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:8 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1"  
+#pragma coverity compliance block deviate:8 "MISRA C-2012 Rule 11.3" "H3_USB_MISRAC_2012_R_11_3_DR_1"  
 </#if>
 
 USB_ERROR DRV_USBHS_HOST_IRPSubmit
@@ -2665,9 +2665,9 @@ void DRV_USBHS_HOST_EventsEnable
 // *****************************************************************************
 
 // ****************************************************************************
-/* MISRA C-2012 Rule 18.1 deviated:4 Deviation record ID -  H3_MISRAC_2012_R_18_1_DR_1 */
+/* MISRA C-2012 Rule 18.1 deviated:4 Deviation record ID -  H3_USB_MISRAC_2012_R_18_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:4 "MISRA C-2012 Rule 18.1" "H3_MISRAC_2012_R_18_1_DR_1"    
+#pragma coverity compliance block deviate:4 "MISRA C-2012 Rule 18.1" "H3_USB_MISRAC_2012_R_18_1_DR_1"    
 </#if>
 
 /* Function:
@@ -2799,9 +2799,9 @@ void DRV_USBHS_HOST_ROOT_HUB_OperationEnable
 </#if>
 /* MISRAC 2012 deviation block end */
 // ****************************************************************************
-/* MISRA C-2012 Rule 5.1 deviated:6 Deviation record ID -  H3_MISRAC_2012_R_5_1_DR_1 */
+/* MISRA C-2012 Rule 5.1 deviated:6 Deviation record ID -  H3_USB_MISRAC_2012_R_5_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:6 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1"  
+#pragma coverity compliance block deviate:6 "MISRA C-2012 Rule 5.1" "H3_USB_MISRAC_2012_R_5_1_DR_1"  
 </#if>
 /* Function:
     bool DRV_USBHS_HOST_ROOT_HUB_OperationIsEnabled
@@ -3316,9 +3316,9 @@ USB_SPEED DRV_USBHS_HOST_ROOT_HUB_PortSpeedGet
 } /* End of DRV_USBHS_HOST_ROOT_HUB_PortSpeedGet() */
 
 // ****************************************************************************
-/* MISRA C-2012 Rule 11.6 deviated:1 Deviation record ID -  H3_MISRAC_2012_R_11_6_DR_1 */
+/* MISRA C-2012 Rule 11.6 deviated:1 Deviation record ID -  H3_USB_MISRAC_2012_R_11_6_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.6" "H3_MISRAC_2012_R_11_6_DR_1"    
+#pragma coverity compliance block deviate:1 "MISRA C-2012 Rule 11.6" "H3_USB_MISRAC_2012_R_11_6_DR_1"    
 </#if>
 
 /* Function:

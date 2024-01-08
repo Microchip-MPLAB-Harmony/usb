@@ -49,13 +49,13 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "driver/usb/usbfs/src/templates/usbfs_registers.h"
 
-/* MISRA C-2012 Rule 11.7 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_11_7_DR_1 */
+/* MISRA C-2012 Rule 11.7 deviated:2 Deviation record ID -  H3_USB_MISRAC_2012_R_11_7_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.7" "H3_MISRAC_2012_R_11_7_DR_1"
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 11.7" "H3_USB_MISRAC_2012_R_11_7_DR_1"
 </#if>
 //******************************************************************************
 /* Function :  USB_OTG_VBusDischargeEnable_Default

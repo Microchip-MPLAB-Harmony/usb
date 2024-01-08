@@ -278,13 +278,13 @@ void DRV_USBFSV1_DEVICE_RemoteWakeupStart
 }
 
 // *****************************************************************************
-/* MISRA C-2012 Rule 5.1 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_5_2_DR_1 */
+/* MISRA C-2012 Rule 5.1 deviated:2 Deviation record ID -  H3_USB_MISRAC_2012_R_5_2_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 5.1" "H3_MISRAC_2012_R_5_1_DR_1" 
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 5.1" "H3_USB_MISRAC_2012_R_5_1_DR_1" 
 </#if>
 /* Function:
     void DRV_USBFSV1_DEVICE_RemoteWakeupStop(DRV_HANDLE handle)
@@ -375,11 +375,11 @@ void DRV_USBFSV1_DEVICE_Attach
 
 // *****************************************************************************
 /* MISRA C-2012 Rule 10.4, and 20.7 deviated below. Deviation record ID -  
-    H3_MISRAC_2012_R_10_4_DR_1, H3_MISRAC_2012_R_20_7_DR_1 */
+    H3_USB_MISRAC_2012_R_10_4_DR_1, H3_USB_MISRAC_2012_R_20_7_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
-(deviate:35 "MISRA C-2012 Rule 10.4" "H3_MISRAC_2012_R_20_7_DR_1" )\
-(deviate:7 "MISRA C-2012 Rule 20.7" "H3_MISRAC_2012_R_20_7_DR_1" )  
+(deviate:35 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_20_7_DR_1" )\
+(deviate:7 "MISRA C-2012 Rule 20.7" "H3_USB_MISRAC_2012_R_20_7_DR_1" )  
 </#if>
 /* Function:
       void DRV_USBFSV1_DEVICE_Detach(DRV_HANDLE handle)
@@ -519,11 +519,11 @@ uint16_t DRV_USBFSV1_DEVICE_SOFNumberGet
 
 // *****************************************************************************
 /* MISRA C-2012 Rule 11.3, and 11.6 deviated below. Deviation record ID -  
-    H3_MISRAC_2012_R_11_3_DR_1, H3_MISRAC_2012_R_11_6_DR_1 */
+    H3_USB_MISRAC_2012_R_11_3_DR_1, H3_USB_MISRAC_2012_R_11_6_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
-(deviate:15 "MISRA C-2012 Rule 11.3" "H3_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:3 "MISRA C-2012 Rule 11.6" "H3_MISRAC_2012_R_11_6_DR_1" )
+(deviate:15 "MISRA C-2012 Rule 11.3" "H3_USB_MISRAC_2012_R_11_3_DR_1" )\
+(deviate:3 "MISRA C-2012 Rule 11.6" "H3_USB_MISRAC_2012_R_11_6_DR_1" )
 </#if>
 /* Function:
     void F_DRV_USBFSV1_DEVICE_IRPQueueFlush

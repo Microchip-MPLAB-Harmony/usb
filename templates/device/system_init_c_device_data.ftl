@@ -79,15 +79,15 @@ ${LIST_USB_DEVICE_FUNCTION_INIT_ENTRY}
  * Table
  **************************************************/
 /* MISRA C-2012 Rule 10.3 deviated:2, 11.8 deviated:6 deviated below. Deviation record ID -  
-   H3_MISRAC_2012_R_10_3_DR_1 & H3_MISRAC_2012_R_11_8_DR_1*/
+   H3_USB_MISRAC_2012_R_10_3_DR_1 & H3_USB_MISRAC_2012_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:1 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.8" "H3_MISRAC_2012_R_11_8_DR_1" )   
+(deviate:1 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1" )\
+(deviate:1 "MISRA C-2012 Rule 11.8" "H3_USB_MISRAC_2012_R_11_8_DR_1" )   
 </#if>
 static const USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[${CONFIG_USB_DEVICE_FUNCTIONS_NUMBER}] =
 {
@@ -169,13 +169,13 @@ ${LIST_USB_DEVICE_DESCRIPTOR_CLASS_CODE_ENTRY}
 /*******************************************
  *  USB High Speed Configuration Descriptor
  *******************************************/
-/* MISRA C-2012 Rule 10.3 deviated:25 Deviation record ID -  H3_MISRAC_2012_R_10_3_DR_1 */
+/* MISRA C-2012 Rule 10.3 deviated:25 Deviation record ID -  H3_USB_MISRAC_2012_R_10_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:25 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1"    
+#pragma coverity compliance block deviate:25 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1"    
 </#if>
 static const uint8_t highSpeedConfigurationDescriptor[]=
 {
@@ -211,13 +211,13 @@ static USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE highSpeedConfigDescSet[1] =
 /*******************************************
  *  USB Full Speed Configuration Descriptor
  *******************************************/
- /* MISRA C-2012 Rule 10.3 deviated:25 Deviation record ID -  H3_MISRAC_2012_R_10_3_DR_1 */
+ /* MISRA C-2012 Rule 10.3 deviated:25 Deviation record ID -  H3_USB_MISRAC_2012_R_10_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:25 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1"    
+#pragma coverity compliance block deviate:25 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1"    
 </#if>
 <#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) >
 static uint8_t USB_ALIGN fullSpeedConfigurationDescriptor[]=
@@ -306,13 +306,13 @@ static sd000 =
 /*******************************************
  *  Manufacturer string descriptor
  *******************************************/
-/* MISRA C-2012 Rule 10.3 deviated:43 Deviation record ID -  H3_MISRAC_2012_R_10_3_DR_1 */
+/* MISRA C-2012 Rule 10.3 deviated:43 Deviation record ID -  H3_USB_MISRAC_2012_R_10_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:43 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1"    
+#pragma coverity compliance block deviate:43 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1"    
 </#if>
 
 <#assign stringDescriptorTableSize = stringDescriptorTableSize + 1>
@@ -435,13 +435,13 @@ const struct __attribute__ ((packed))
     uint8_t bDscType;                                   // STRING descriptor type
     uint16_t string[${CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR?length}];                                // String
 }
-/* MISRA C-2012 Rule 10.3 deviated:20 Deviation record ID -  H3_MISRAC_2012_R_10_3_DR_1 */
+/* MISRA C-2012 Rule 10.3 deviated:20 Deviation record ID -  H3_USB_MISRAC_2012_R_10_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:20 "MISRA C-2012 Rule 10.3" "H3_MISRAC_2012_R_10_3_DR_1" 
+#pragma coverity compliance block deviate:20 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1" 
 </#if>
 
 static serialNumberStringDescriptor =
