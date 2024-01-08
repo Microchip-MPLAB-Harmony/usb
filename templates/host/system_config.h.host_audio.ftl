@@ -46,6 +46,16 @@
 /* Number of Audio v1.0 Client driver instances in the application */
 #define USB_HOST_AUDIO_V1_INSTANCES_NUMBER         ${CONFIG_USB_HOST_AUDIO_NUMBER_OF_INSTANCES}
 
+
+/* MISRA C-2012 Rule 5.4 deviated:1, Deviation record ID -  H3_MISRAC_2012_R_5_4_DR_1 */
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+</#if>
+#pragma coverity compliance block \
+(deviate:1 "MISRA C-2012 Rule 5.4" "H3_MISRAC_2012_R_5_4_DR_1" )   
+</#if>
 /* Maximum number of Streaming interfaces provides by any Device that will be
  be connected to this Audio Host */
 #define USB_HOST_AUDIO_V1_STREAMING_INTERFACES_NUMBER ${USB_HOST_AUDIO_NUMBER_OF_STREAMING_INTERFACES}
@@ -58,6 +68,12 @@
 /* Maximum number of discrete Sampling frequencies supported by the Attached Audio Device */ 
 #define USB_HOST_AUDIO_V1_SAMPLING_FREQUENCIES_NUMBER ${USB_HOST_AUDIO_NUMBER_OF_SAMPLING_FREQUENCIES}
 
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.4"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>    
+</#if>
 <#--
 /*******************************************************************************
  End of File
