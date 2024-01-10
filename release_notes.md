@@ -3,6 +3,26 @@
 
 # Microchip MPLAB Harmony 3 Release Notes
 
+## USB Release v3.12.0
+### NEW FEATURES
+
+- MISRA-C 2012 mandatory and required rules compliance for all USB Middleware and driver components.
+- Added Harmony USB support for LAN9255 Devices.
+
+### Bug fixes
+- None.
+  
+### Known Issues
+- All Harmony USB projects for SAMA5 family products must be compiled to generate ARM instructions. The XC32 compiler switch -marm must be used. Thumb instructions are not supported yet.
+- The USBFSV1 driver USB Host mode attach debounce timer is not user configurable. The value is hardcoded to 500m Seconds.
+
+### Development Tools
+
+-    [MPLAB® X IDE v6.15](https://www.microchip.com/mplab/mplab-x-ide)
+-    [MPLAB® XC32 C/C++ Compiler v4.35](https://www.microchip.com/mplab/compilers)
+-    MPLAB® X IDE plug-ins:- MPLAB® Code Configurator (MCC) v5.4.1 or above
+
+
 ## USB Release v3.11.0
 ### NEW FEATURES
 - Added USB Host Generic Driver Framework.
