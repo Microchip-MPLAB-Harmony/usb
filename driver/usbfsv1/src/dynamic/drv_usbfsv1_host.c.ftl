@@ -233,6 +233,8 @@ void F_DRV_USBFSV1_HOST_AttachDetachStateMachine (DRV_USBFSV1_OBJ * hDriver)
             if(!hDriver->deviceAttached)
             {
                 hDriver->attachState = DRV_USBFSV1_HOST_ATTACH_STATE_CHECK_FOR_DEVICE_ATTACH;
+                /* Get ready for next attach */
+                HOST->USB_INTENSET = USB_HOST_INTENSET_DCONN_Msk;
             }
             
             break;
@@ -2826,10 +2828,8 @@ void F_DRV_USBFSV1_HOST_Tasks_ISR(DRV_USBFSV1_OBJ * hDriver)
         }
 
         hDriver->attachedDeviceObjHandle = USB_HOST_DEVICE_OBJ_HANDLE_INVALID;        
-        
-        /* Clean up is complete. Get ready for next attach */
+        /* Clean up is complete */
         HOST->USB_INTFLAG  = USB_HOST_INTFLAG_DCONN_Msk;
-        HOST->USB_INTENSET = USB_HOST_INTENSET_DCONN_Msk;
     }
 
     /* Handle the reset done interrupt */
