@@ -159,7 +159,7 @@ void F_DRV_USBFSV1_HOST_AttachDetachStateMachine (DRV_USBFSV1_OBJ * hDriver)
             /* In this state we start the debouncing timer */
             
             hDriver->timerHandle = SYS_TIME_HANDLE_INVALID;
-            if(SYS_TIME_ERROR != SYS_TIME_DelayMS(500, &(hDriver->timerHandle)))
+            if(SYS_TIME_ERROR != SYS_TIME_DelayMS(DRV_USBFSV1_HOST_ATTACH_DEBOUNCE_DURATION, &(hDriver->timerHandle)))
             {
                 hDriver->attachState = DRV_USBFSV1_HOST_ATTACH_STATE_DEBOUNCING_WAIT;
             } 
