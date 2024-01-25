@@ -60,24 +60,26 @@
 
 
 #define COMPILER_WORD_ALIGNED                               __attribute__((__aligned__(4)))
+
 /* Number of Endpoints used */
 #define DRV_USB_UDPHS_ENDPOINT_NUMBER_MASK                    (0x0FU)
 #define DRV_USB_UDPHS_ENDPOINT_DIRECTION_MASK                 (0x80U)
 #define DRV_USB_UDPHS_MAX_ENDPOINT_NUMBER                     (UDPHS_EPT_NUMBER)
 #define DRV_USB_UDPHS_NUMBER_OF_BANKS                         (DRV_USB_UDPHS_ENDPOINT_BANKS_ONE)
 
-/** Max size of the DMA FIFO */
+/* Max size of the DMA FIFO */
 #define DMA_MAX_FIFO_SIZE                                   (65536)
 
-/** FIFO space size in bytes */
+/* FIFO space size in bytes */
 #define EPT_VIRTUAL_SIZE                                    (65536U)
 
 #define ENDPOINT_FIFO_ADDRESS(endpoint)                     (((uint8_t*) UDPHS_RAM_ADDR) + EPT_VIRTUAL_SIZE * (endpoint))
 
 #define DRV_USB_UDPHS_AUTO_ZLP_ENABLE                         false
 
-#ifdef __CORE_CA_H_GENERIC
-    #ifdef _SAMA7G54_H_
+#ifdef __CORTEX_A 
+    #if __CORTEX_A == 7
+        /* This device features a Cortex A7 core. The following code enables the UTMI PLL.  */  
         #define M_DRV_USB_UDPHS_InitUTMI() \
         {\
             uint32_t i;\
@@ -100,7 +102,7 @@
             RSTC_REGS->RSTC_GRSTR &= ~RSTC_GRSTR_USB_RST(1U); \
         \
             /* Wait for 45 us before any USB operation */ \
-            temp = 45U * ((uint32_t)CPU_CLOCK_FREQUENCY/1000000U)/6U;   /* comments*/  \
+            temp = 45U * ((uint32_t)CPU_CLOCK_FREQUENCY/1000000U)/6U;\
             for (i = 0; i < temp; i++) \
             { \
                 asm("NOP"); \
@@ -110,7 +112,8 @@
             /* 1: The VBUS signal is valid, and the pull-up resistor on D+ is enabled. */ \
             *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) |= 0x02000000U; \
         }
-    #else
+    #elif __CORTEX_A == 5
+        /* This device features a Cortex A5 core. The following code enables the UTMI PLL.  */  
         #define M_DRV_USB_UDPHS_InitUTMI() \
         {\
             uint32_t uckr;                   /* Shadow Register */  \
@@ -125,43 +128,31 @@
                 /* Do Nothing */  \
             }  \
         }
-    #endif  /* _SAMA7G54_H_ */
+    #endif 
 #else
     #define M_DRV_USB_UDPHS_InitUTMI()
-#endif /* __CORE_CA_H_GENERIC */
+#endif /* __CORTEX_A */
 
-#if defined (_SAMA7G54_H_)
-    /* A7G5 DMA 1 to 7 */
+#if defined (__CORTEX_A)
+    /* The following bit field macro indicates DMA availability for each hardware
+       endpoint. For Cortex A devices, DMA is available for endpoints 1 to 7.*/  
     #define DRV_USB_UDPHS_EPT_DMA              0x000000FEU
-    /* A7G5 3 banks for endpoints 1,2 */
+
+    /* The following bit field macro indicates 3-bank support for each hardware 
+       endpoint. For Cortex A devices, 3-bank support is available for 
+       endpoints 1 and 2.*/  
     #define DRV_USB_UDPHS_EPT_BK               0x00060000U
-#elif defined(_SAMA5D27_H_)
-    /* A5D2 DMA 1 to 7 */
-    #define DRV_USB_UDPHS_EPT_DMA              0x000000FEU
-    /* A5D2 3 banks for endpoints 1,2 */
-    #define DRV_USB_UDPHS_EPT_BK               0x00060000U
-#elif defined (_SAMA5D27CD1G_H_)
-    /* A5D2_SOM DMA 1 to 7 */
-    #define DRV_USB_UDPHS_EPT_DMA              0x000000FEU
-    /* A5D2_SOM 3 banks for endpoints 1,2 */
-    #define DRV_USB_UDPHS_EPT_BK               0x00060000U
-#elif defined (_SAMA5D27CLD2G_H_)
-    /* A5D2_WLSOM1 DMA 1 to 7 */
-    #define DRV_USB_UDPHS_EPT_DMA              0x000000FEU
-    /* A5D2_WLSOM1 3 banks for endpoints 1,2 */
-    #define DRV_USB_UDPHS_EPT_BK               0x00060000U
-#elif defined(_SAM9X60_H_) || defined(_SAM9X60D1G_H_) || defined(_SAM9X60D5M_H_) || defined(_SAM9X60D6K_H_)
-    /* 9X60 DMA 1 to 6 */
-    #define DRV_USB_UDPHS_EPT_DMA              0x0000007EU
-    /* 9X60 3 banks for endpoints 3, 4, 5, 6 */
-    #define DRV_USB_UDPHS_EPT_BK               0x00780000U
-#elif defined(_SAM9X70_H_) || defined(_SAM9X72_H_) || defined(_SAM9X75_H_)
-    /* 9X70 DMA 1 to 6 */
-    #define DRV_USB_UDPHS_EPT_DMA              0x0000007EU
-    /* 9X70 3 banks for endpoints 3, 4, 5, 6 */
-    #define DRV_USB_UDPHS_EPT_BK               0x00780000U
+
 #else
-#error Missing device
+    /* The following bit field macro indicates DMA availability for each hardware
+       endpoint. For SAM9X6/9X7 devices, DMA is available for endpoints 1 to 6. */
+    #define DRV_USB_UDPHS_EPT_DMA              0x0000007EU
+
+    /* The following bit field macro indicates 3-bank support for each hardware 
+       endpoint. For SAM9X6/9X7 devices, 3-bank support is available for endpoints
+       3, 4, 5, and 6. */
+    #define DRV_USB_UDPHS_EPT_BK               0x00780000U
+
 #endif
 
 
