@@ -222,7 +222,7 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverRTOSTaskDelayVal.setVisible((usbDriverRTOSTaskDelay.getValue() == True))
 	usbDriverRTOSTaskDelayVal.setDependencies(setVisible, ["USB_DRIVER_RTOS_USE_DELAY"])
 
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMDA1", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMD11", "PIC32CM", "PIC32CK"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD21", "SAMDA1", "SAML21", "SAML22", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMD11", "PIC32CM"]):
 		# Update USB General Interrupt Handler
 		Database.setSymbolValue("core", "USB_INTERRUPT_ENABLE", True)
 		Database.setSymbolValue("core", "USB_INTERRUPT_HANDLER_LOCK", True)
@@ -270,23 +270,28 @@ def instantiateComponent(usbDriverComponent):
 			Database.setSymbolValue("core", "USB_CLOCK_ENABLE", True)
 			
 
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD5", "SAME5", "LAN9255", "PIC32CX"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMD5", "SAME5", "LAN9255", "PIC32CX", "PIC32CK"]):
 
 		# Update USB General Interrupt Handler
 		Database.setSymbolValue("core", "USB_OTHER_INTERRUPT_ENABLE", True)
 		Database.setSymbolValue("core", "USB_OTHER_INTERRUPT_HANDLER_LOCK", True)
 		Database.setSymbolValue("core", "USB_OTHER_INTERRUPT_HANDLER", "DRV_USBFSV1_OTHER_Handler")
-
-		# Update USB General Interrupt Handler
-		Database.setSymbolValue("core", "USB_SOF_HSOF_INTERRUPT_ENABLE", True)
-		Database.setSymbolValue("core", "USB_SOF_HSOF_INTERRUPT_HANDLER_LOCK", True)
-		Database.setSymbolValue("core", "USB_SOF_HSOF_INTERRUPT_HANDLER", "DRV_USBFSV1_SOF_HSOF_Handler")
+		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32CK"]):
+			# Update USB General Interrupt Handler
+			Database.setSymbolValue("core", "USB_SOF_INTERRUPT_ENABLE", True)
+			Database.setSymbolValue("core", "USB_SOF_INTERRUPT_HANDLER_LOCK", True)
+			Database.setSymbolValue("core", "USB_SOF_INTERRUPT_HANDLER", "DRV_USBFSV1_SOF_HSOF_Handler")
+		else:
+			# Update USB General Interrupt Handler
+			Database.setSymbolValue("core", "USB_SOF_HSOF_INTERRUPT_ENABLE", True)
+			Database.setSymbolValue("core", "USB_SOF_HSOF_INTERRUPT_HANDLER_LOCK", True)
+			Database.setSymbolValue("core", "USB_SOF_HSOF_INTERRUPT_HANDLER", "DRV_USBFSV1_SOF_HSOF_Handler")
 
 		# Update USB General Interrupt Handler
 		Database.setSymbolValue("core", "USB_TRCPT0_INTERRUPT_ENABLE", True)
 		Database.setSymbolValue("core", "USB_TRCPT0_INTERRUPT_HANDLER_LOCK", True)
 		Database.setSymbolValue("core", "USB_TRCPT0_INTERRUPT_HANDLER", "DRV_USBFSV1_TRCPT0_Handler")
-
+			
 		# Update USB General Interrupt Handler
 		Database.setSymbolValue("core", "USB_TRCPT1_INTERRUPT_ENABLE", True)
 		Database.setSymbolValue("core", "USB_TRCPT1_INTERRUPT_HANDLER_LOCK", True)
