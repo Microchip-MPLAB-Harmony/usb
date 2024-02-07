@@ -691,11 +691,13 @@ void DRV_USBFSV1_Tasks_ISR
     See drv_usbfsv1.h for usage information.
 */
 
+<#if __PROCESSOR?matches("ATSAMD2.*") || __PROCESSOR?matches("ATSAML2.*") == true || __PROCESSOR?matches("PIC32CM.*") == true || __PROCESSOR?matches("ATSAMR2.*") == true || __PROCESSOR?matches("ATSAMR3.*") == true || __PROCESSOR?matches("ATSAMD1.*") == true || __PROCESSOR?matches("ATSAMDA.*") == true>
 void DRV_USBFSV1_USB_Handler(void)
 {
     M_DRV_USBFSV1_ISR_OTHER(sysObj.drvUSBFSV1Object);
 
 }/* end of USB_Handler() */
+<#elseif __PROCESSOR?matches("ATSAMD5.*") == true || __PROCESSOR?matches("PIC32CK.*") == true || __PROCESSOR?matches("PIC32CX.*") == true || __PROCESSOR?matches("LAN9255.*") == true || __PROCESSOR?matches("ATSAME5.*") == true>
 
 #if defined (DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE) && (DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE == true)
 
@@ -724,6 +726,7 @@ void DRV_USBFSV1_TRCPT1_Handler(void)
 }/* end of USB_Handler() */
 
 #endif
+</#if>
 // *****************************************************************************
 /* Function:
     void DRV_USBFSV1_ClientEventCallBackSet
