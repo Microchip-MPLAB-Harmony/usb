@@ -93,7 +93,7 @@
                 <#assign drv_usb_endpoint_number = usb_device_1.CONFIG_USB_DEVICE_ENDPOINTS_NUMBER>
             </#if>
         </#if>
-#define DRV_USBFS_ENDPOINTS_NUMBER                        ${drv_usb_endpoint_number + 1}
+#define DRV_USBFS_ENDPOINTS_NUMBER                        ${drv_usb_endpoint_number + 1}U
 </#if>
 
 /* Alignment for buffers that are submitted to USB Driver*/ 

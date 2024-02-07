@@ -106,8 +106,19 @@ def onAttachmentConnected(source, target):
         # Notify the USB Device Layer about the speed 
 		args = {"usbDriverSpeed":usbSpeed.getValue()}
 		res = Database.sendMessage(remoteID, "USB_DEVICE_UPDATE_SPEED", args)
-		usbHostControllerEntryFile.setEnabled(True)
-
+		if( remoteID == "usb_host"):
+				if any(x in Variables.get("__PROCESSOR") for x in ["PIC32CK"]):
+					usbHostControllerEntryFile.setEnabled(True)
+            
+def onAttachmentDisconnected(source, target):
+	global usbHostControllerEntryFile
+	connectID = source["id"]
+	targetID = target["id"]
+	remoteComponent = target["component"]
+	remoteID = remoteComponent.getID()
+	if (connectID == "DRV_USB" and targetID == "usb_driver_dependency" and remoteID == "usb_host"):
+		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32CK"]):
+			usbHostControllerEntryFile.setEnabled(False)
 
 def instantiateComponent(usbDriverComponent):	
 	global usbOpMode

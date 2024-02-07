@@ -29,6 +29,7 @@ usbDriverPath = "driver/"
 usbDriverProjectPath = "/driver/usb/"
 
 usbOpMode = None 
+usbHostControllerEntryFile = None
 
 def genRtosTask(symbol, event):
 	if event["value"] != "BareMetal":
@@ -64,8 +65,34 @@ def showRTOSMenu(symbol, event):
 		show_rtos_menu = True
 	symbol.setVisible(show_rtos_menu)
 	
+# This function is called when the Driver component is connected 
+def onAttachmentConnected(source, target):
+	global usbHostControllerEntryFile
+
+	# This is the Capability of the local Component 
+	connectID = source["id"]
+
+	# Dependency ID of the remote component 
+	targetID = target["id"]
+	remoteComponent = target["component"]
+	remoteID = remoteComponent.getID()
+	if (connectID == "DRV_USB" and targetID == "usb_driver_dependency" and remoteID == "usb_host"):
+		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32CK"]):
+			usbHostControllerEntryFile.setEnabled(True)
+
+def onAttachmentDisconnected(source, target):
+	global usbHostControllerEntryFile
+	connectID = source["id"]
+	targetID = target["id"]
+	remoteComponent = target["component"]
+	remoteID = remoteComponent.getID()
+	if (connectID == "DRV_USB" and targetID == "usb_driver_dependency" and remoteID == "usb_host"):
+		if any(x in Variables.get("__PROCESSOR") for x in ["PIC32CK"]):
+			usbHostControllerEntryFile.setEnabled(False)
+
 def instantiateComponent(usbDriverComponent):
 	global usbOpMode
+	global usbHostControllerEntryFile
 	
 	if any(x in Variables.get("__PROCESSOR") for x in ["SAML22", "SAMD11"]):
 		usbDriverSourcePath = "usbfsv2"	
@@ -344,6 +371,16 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverSystemInitDataFile.setOutputName("core.LIST_SYSTEM_INIT_C_LIBRARY_INITIALIZATION_DATA")
 	usbDriverSystemInitDataFile.setSourcePath( sourcePath +"system_init_c_driver_data.ftl")
 	usbDriverSystemInitDataFile.setMarkup(True)
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32CK"]):
+		##############################################################
+		# Controller entry
+		##############################################################
+		usbHostControllerEntryFile = usbDriverComponent.createFileSymbol("USB_HOST_CONTROLLER_ENTRY_FILE", None)
+		usbHostControllerEntryFile.setType("STRING")
+		usbHostControllerEntryFile.setOutputName("usb_host.LIST_USB_HOST_CONTROLLER_ENTRY")
+		usbHostControllerEntryFile.setSourcePath(sourcePath +"system_init_c_host_controller_function.ftl")
+		usbHostControllerEntryFile.setMarkup(True)
+		usbHostControllerEntryFile.setEnabled(False)
 
 	usbDriverSystemInitCallsFile = usbDriverComponent.createFileSymbol(None, None)
 	usbDriverSystemInitCallsFile.setType("STRING")

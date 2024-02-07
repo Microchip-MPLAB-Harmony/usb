@@ -90,7 +90,7 @@
             <#assign drv_usb_endpoint_number = usb_device_1.CONFIG_USB_DEVICE_ENDPOINTS_NUMBER>
         </#if>
     </#if>
-#define DRV_USBFSV1_ENDPOINTS_NUMBER                        ${drv_usb_endpoint_number + 1}
+#define DRV_USBFSV1_ENDPOINTS_NUMBER                        ${drv_usb_endpoint_number + 1}U
     <#if (drv_usbhs.USB_SPEED)?has_content == false>
 /* Alignment for buffers that are submitted to USB Driver*/ 
 #define USB_ALIGN  __ALIGNED(CACHE_LINE_SIZE)
