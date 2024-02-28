@@ -88,7 +88,7 @@ def instantiateComponent(usbHostComponent):
 		driverInterface = "DRV_USBHSV1_HOST_INTERFACE"
 		args = {"operationMode":"Host"}
 		Database.sendMessage("drv_usbhs_v1", "UPDATE_OPERATION_MODE", args)
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX", "PIC32MM", "PIC32MZ1025W", "WFI32E01"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX", "PIC32MM", "PIC32MZ1025W", "PIC32MZ2051W", "WFI32E01", "WFI32E02", "WFI32E03"]):
 		res = Database.activateComponents(["drv_usbfs_v1"])
 		speed = Database.getSymbolValue("drv_usbfs_v1", "USB_SPEED")
 		driverIndex = "DRV_USBFS_INDEX_0"
@@ -190,7 +190,7 @@ def instantiateComponent(usbHostComponent):
 	usbHostPipesNumber.setDefaultValue(10)
 		
 	# USB Host Hub Support
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX" , "PIC32MM", "SAMA5D2", "SAM9X60", "SAM9X7", "PIC32CM", "SAMD21", "SAMDA1", "SAMD5","SAMV70", "SAMV71","SAME70", "SAMS70" ,"PIC32MK" ,"SAME5", "LAN9255", "SAML21", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMG55", "SAMA7", "PIC32MZ1025W", "WFI32E01", "PIC32CX"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX" , "PIC32MM", "SAMA5D2", "SAM9X60", "SAM9X7", "PIC32CM", "SAMD21", "SAMDA1", "SAMD5","SAMV70", "SAMV71","SAME70", "SAMS70" ,"PIC32MK" ,"SAME5", "LAN9255", "SAML21", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMG55", "SAMA7", "PIC32MZ1025W", "PIC32MZ2051W", "WFI32E01", "WFI32E02", "WFI32E03", "PIC32CX"]):
 		usbHostHubsupport = usbHostComponent.createBooleanSymbol("CONFIG_USB_HOST_HUB_SUPPORT", None)
 		usbHostHubsupport.setLabel( "Hub support" )
 		usbHostHubsupport.setVisible( True)
@@ -326,7 +326,7 @@ def instantiateComponent(usbHostComponent):
 	
 	# system_config.h file for USB Host Layer    
 	################################################
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX", "PIC32MM", "SAMA5D2", "SAM9X60", "SAM9X7", "PIC32CM", "SAMD21", "SAMDA1", "SAMD5","SAMV70", "SAMV71","SAME70", "SAMS70" ,"PIC32MK" ,"SAME5", "LAN9255", "SAML21", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMG55", "SAMA7", "PIC32MZ1025W", "WFI32E01", "PIC32CX"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX", "PIC32MM", "SAMA5D2", "SAM9X60", "SAM9X7", "PIC32CM", "SAMD21", "SAMDA1", "SAMD5","SAMV70", "SAMV71","SAME70", "SAMS70" ,"PIC32MK" ,"SAME5", "LAN9255", "SAML21", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMG55", "SAMA7", "PIC32MZ1025W", "PIC32MZ2051W", "WFI32E01", "WFI32E02", "WFI32E03", "PIC32CX"]):
 		usbHostHubConfigFile = usbHostComponent.createFileSymbol("FILE_USB_HOST_HUB_CONFIG", None)
 		usbHostHubConfigFile.setType("STRING")
 		usbHostHubConfigFile.setOutputName("core.LIST_SYSTEM_CONFIG_H_MIDDLEWARE_CONFIGURATION")
@@ -378,13 +378,13 @@ def instantiateComponent(usbHostComponent):
 	addFileName('usb_host.h', usbHostComponent, usbHostHeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbHostSourceFile = usbHostComponent.createFileSymbol(None, None)
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ1025W", "WFI32E01"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ1025W", "PIC32MZ2051W", "WFI32E01", "WFI32E02", "WFI32E03"]):
 		addFileName('usb_host.c', usbHostComponent, usbHostSourceFile, "templates/host/", "/usb/src", True, None)
 	else :
 		addFileName('usb_host.c', usbHostComponent, usbHostSourceFile, "middleware/src/", "/usb/src", True, None)
 	
 	usbHostLocalHeaderFile = usbHostComponent.createFileSymbol(None, None)
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ1025W", "WFI32E01"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ1025W", "PIC32MZ2051W", "WFI32E01", "WFI32E02", "WFI32E03"]):
 		addFileName('usb_host_local.h', usbHostComponent, usbHostLocalHeaderFile, "templates/host/", "/usb/src", True, None)
 	else :
 		addFileName('usb_host_local.h', usbHostComponent, usbHostLocalHeaderFile, "middleware/src/", "/usb/src", True, None)
