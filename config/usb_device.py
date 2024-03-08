@@ -343,7 +343,8 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceFunctionNumber.setDefaultValue(0)
 	usbDeviceFunctionNumber.setUseSingleDynamicValue(True)
 	usbDeviceFunctionNumber.setReadOnly(True)
-	
+	usbDeviceFunctionNumber.setHelp("Function_Driver_Registration_Table")
+    
 	# USB Device Endpoint Number 
 	usbDeviceEndpointsNumber = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_ENDPOINTS_NUMBER", None)
 	usbDeviceEndpointsNumber.setLabel("Number of Endpoints")	
@@ -352,12 +353,14 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceEndpointsNumber.setDefaultValue(0)
 	usbDeviceEndpointsNumber.setUseSingleDynamicValue(True)
 	usbDeviceEndpointsNumber.setReadOnly(True)
+	usbDeviceEndpointsNumber.setHelp("mcc_configuration_device_layer")
 	
 	# USB Device events enable 
 	usbDeviceEventsEnable = usbDeviceComponent.createMenuSymbol("USB_DEVICE_EVENTS", None)
 	usbDeviceEventsEnable.setLabel("Special Events")	
 	usbDeviceEventsEnable.setVisible(True)
-	
+	usbDeviceEventsEnable.setHelp("USB_DEVICE_EVENTS")
+    
 	#SOF Event Enable 
 	usbDeviceEventEnableSOF = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_EVENT_ENABLE_SOF", usbDeviceEventsEnable)
 	usbDeviceEventEnableSOF.setLabel("Enable SOF Events")	
@@ -366,7 +369,8 @@ def instantiateComponent(usbDeviceComponent):
         Speed USB, this event would be generated every 125 microseconds.'''
         usbDeviceEventEnableSOF.setDescription(helpText)
 	usbDeviceEventEnableSOF.setVisible(True)	
-		
+	usbDeviceEventEnableSOF.setHelp("USB_DEVICE_SOF_EVENT_ENABLE")
+
 	#Set Descriptor Event Enable 
 	usbDeviceEventEnableSetDescriptor = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_EVENT_ENABLE_SET_DESCRIPTOR", usbDeviceEventsEnable)
 	usbDeviceEventEnableSetDescriptor.setLabel("Enable Set Descriptor Events")	
@@ -375,6 +379,7 @@ def instantiateComponent(usbDeviceComponent):
         Set Descritpor request.'''
         usbDeviceEventEnableSetDescriptor.setDescription(helpText)
 	usbDeviceEventEnableSetDescriptor.setVisible(True)	
+	usbDeviceEventEnableSetDescriptor.setHelp("USB_DEVICE_SET_DESCRIPTOR_EVENT_ENABLE")
 	
 	#Synch Frame Event Enable 
 	usbDeviceEventEnableSynchFrame = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_EVENT_ENABLE_SYNCH_FRAME", usbDeviceEventsEnable)
@@ -385,6 +390,8 @@ def instantiateComponent(usbDeviceComponent):
         the Device Layer will Stall the Sync Frame request.'''
         usbDeviceEventEnableSynchFrame.setDescription(helpText)
 	usbDeviceEventEnableSynchFrame.setVisible(True)	
+	usbDeviceEventEnableSynchFrame.setHelp("USB_DEVICE_SYNCH_FRAME_EVENT_ENABLE")
+
 	
 	# USB Device Features enable 
 	usbDeviceFeatureEnable = usbDeviceComponent.createMenuSymbol("USB_DEVICE_FEATURES", None)
@@ -402,6 +409,7 @@ def instantiateComponent(usbDeviceComponent):
         would cause gaps in memory.'''
         usbDeviceFeatureEnableAdvancedStringDescriptorTable.setDescription(helpText)
 	usbDeviceFeatureEnableAdvancedStringDescriptorTable.setVisible(True)
+	usbDeviceFeatureEnableAdvancedStringDescriptorTable.setHelp("USB_DEVICE_STRING_DESCRIPTOR_TABLE_ADVANCED_ENABLE")
 	
 	#Microsoft OS descriptor support Enable 
 	usbDeviceFeatureEnableMicrosoftOsDescriptor = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FEATURE_ENABLE_MICROSOFT_OS_DESCRIPTOR", usbDeviceFeatureEnableAdvancedStringDescriptorTable)
@@ -436,7 +444,8 @@ def instantiateComponent(usbDeviceComponent):
         required when implementing Billboard Device Class support.'''
         usbDeviceFeatureEnableBosDescriptor.setDescription(helpText)
 	usbDeviceFeatureEnableBosDescriptor.setVisible(True)	
-	
+	usbDeviceFeatureEnableBosDescriptor.setHelp("USB_DEVICE_BOS_DESCRIPTOR_SUPPORT_ENABLE")
+
 	# Enable Auto timed remote wakeup functions  
 	usbDeviceFeatureEnableAutioTimeRemoteWakeup = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FEATURE_ENABLE_AUTO_TIMED_REMOTE_WAKEUP_FUNCTIONS", usbDeviceFeatureEnable)
 	usbDeviceFeatureEnableAutioTimeRemoteWakeup.setLabel("Use Auto Timed Remote Wake up Functions")	
@@ -453,6 +462,7 @@ def instantiateComponent(usbDeviceComponent):
         devices.'''
 	usbDeviceEp0BufferSize.setDescription(helpText)
 	usbDeviceEp0BufferSize.setDefaultValue("64")
+	usbDeviceEp0BufferSize.setHelp("USB_DEVICE_EP0_BUFFER_SIZE")
 			
 	# USB Device Vendor ID 
 	usbDeviceVendorId = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_VENDOR_ID_IDX0", None)
@@ -463,6 +473,7 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceVendorId.setDescription(helpText)
 	usbDeviceVendorId.setVisible(True)
 	usbDeviceVendorId.setDefaultValue("0x04D8")
+	usbDeviceVendorId.setHelp("mcc_configuration_device_layer")
 	
 	# USB Device Product ID Selection
 	usbDeviceProductId = usbDeviceComponent.createComboSymbol("CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0", None, usbDeviceDemoList)
@@ -474,6 +485,7 @@ def instantiateComponent(usbDeviceComponent):
         usbDeviceProductId.setDescription(helpText)
 	usbDeviceProductId.setVisible(True)
 	usbDeviceProductId.setDefaultValue("Enter Product ID")
+	usbDeviceProductId.setHelp("mcc_configuration_device_layer")
 	
 	# USB Device Product ID 
 	usbDeviceProductId = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_PRODUCT_ID_IDX0", None)
@@ -488,6 +500,7 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceProductId.setDefaultValue("0x0000")
 	usbDeviceProductId.setUseSingleDynamicValue(True)
 	usbDeviceProductId.setDependencies(blUSBDeviceProductIDSelection,["CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0"])
+	usbDeviceProductId.setHelp("mcc_configuration_device_layer")
 	
 	# USB Device Manufacturer String 
 	usbDeviceManufacturerString = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_MANUFACTURER_STRING", None)
@@ -496,6 +509,7 @@ def instantiateComponent(usbDeviceComponent):
         usbDeviceManufacturerString.setDescription(helpText)
 	usbDeviceManufacturerString.setVisible(True)
 	usbDeviceManufacturerString.setDefaultValue("Microchip Technology Inc.")
+	usbDeviceManufacturerString.setHelp("mcc_configuration_device_layer")
 	
 	# USB Device Product String 
 	usbDeviceProductString = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR", None)
@@ -510,6 +524,8 @@ def instantiateComponent(usbDeviceComponent):
         usbDeviceProductString.setDescription(helpText)
 	usbDeviceProductString.setUseSingleDynamicValue(True)
 	usbDeviceProductString.setDependencies(blUSBDeviceProductStringSelection,["CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0"])
+	usbDeviceProductString.setHelp("mcc_configuration_device_layer")
+
 	
 	
 	# Serial Number String enable 
@@ -518,6 +534,7 @@ def instantiateComponent(usbDeviceComponent):
         helpText = '''Enable this option to add Device Serial Number.'''
         usbDeviceFeatureSerialNumberStringEnable.setDescription(helpText)
 	usbDeviceFeatureSerialNumberStringEnable.setVisible(True)
+	usbDeviceFeatureSerialNumberStringEnable.setHelp("mcc_configuration_device_layer")
 	
 	# USB Device Serial Number String 
 	usbDeviceSerialNumberString = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR", usbDeviceFeatureSerialNumberStringEnable)
@@ -527,6 +544,7 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceProductString.setDescription(helpText)
 	usbDeviceSerialNumberString.setDefaultValue("123456789012")
 	usbDeviceSerialNumberString.setDependencies(blUSBDeviceEnableSerialNumberString,["CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_ENABLE"])
+	usbDeviceSerialNumberString.setHelp("mcc_configuration_device_layer")
 		
 
 	# USB Device IAD Enable 
@@ -579,6 +597,7 @@ def instantiateComponent(usbDeviceComponent):
 	helpText = '''Enable this option if the USB Device is Self Powered. If not it implies that the Device is Bus Powered.'''
 	usbDeviceConfigDescritorAttributeSelfPowered.setDescription(helpText)
 	usbDeviceConfigDescritorAttributeSelfPowered.setDefaultValue(True)
+	usbDeviceConfigDescritorAttributeSelfPowered.setHelp("mcc_configuration_device_layer")
 	
 	
 	# USB Device Attributes Remote Wakeup. 
@@ -590,6 +609,7 @@ def instantiateComponent(usbDeviceComponent):
 				  generating wakeup signal when the bus is suspended '''
 	usbDeviceConfigDescritorAttributeRemoteWakeup.setDescription(helpText)
 	usbDeviceConfigDescritorAttributeRemoteWakeup.setDefaultValue(False)
+	usbDeviceConfigDescritorAttributeRemoteWakeup.setHelp("mcc_configuration_device_layer")
 	
 	
 	# USB Device max power 
@@ -602,6 +622,7 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceConfigDescritorMaxPower.setMin(1)
 	usbDeviceConfigDescritorMaxPower.setMax(500)
 	usbDeviceConfigDescritorMaxPower.setDefaultValue(100)
+	usbDeviceConfigDescritorMaxPower.setHelp("mcc_configuration_device_layer")
 	
 	configName = Variables.get("__CONFIGURATION_NAME")
 	

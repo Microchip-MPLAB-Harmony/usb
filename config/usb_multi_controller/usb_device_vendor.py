@@ -271,6 +271,7 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	startInterfaceNumber.setMin(0)
 	startInterfaceNumber.setDefaultValue(0)
 	startInterfaceNumber.setReadOnly(False)
+	startInterfaceNumber.setHelp("generic_device_Library_Initialization")
 	
 	
 	# Adding Number of Interfaces
@@ -281,6 +282,7 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	numberOfInterfaces.setMax(16)
 	numberOfInterfaces.setDefaultValue(1)
 	numberOfInterfaces.setReadOnly(False)
+	numberOfInterfaces.setHelp("generic_device_Library_Initialization")
 	
 	# Vendor Function driver Read Queue Size 
 	queueSizeRead = usbDeviceVendorComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE", None)
@@ -290,6 +292,7 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	queueSizeRead.setMax(32767)
 	queueSizeRead.setDefaultValue(1)
 	currentQSizeRead = queueSizeRead.getValue()
+	queueSizeRead.setHelp("USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED")
 
 	
 	# Vendor Function driver Write Queue Size 
@@ -300,6 +303,7 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	queueSizeWrite.setMax(32767)
 	queueSizeWrite.setDefaultValue(1)	
 	currentQSizeWrite = queueSizeWrite.getValue()
+	queueSizeWrite.setHelp("USB_DEVICE_ENDPOINT_QUEUE_DEPTH_COMBINED")
 	
 
 	# Vendor Function driver Data OUT Endpoint Number   
@@ -309,6 +313,7 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	epNumberBulkOut.setMin(1)
 	epNumberBulkOut.setMax(MaxEpNumber)
 	epNumberBulkOut.setDefaultValue(1)
+	epNumberBulkOut.setHelp("mcc_configuration_device_vendor")
 	
 	# Vendor Function driver Data IN Endpoint Number   
 	epNumberBulkIn = usbDeviceVendorComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER", None)
@@ -317,6 +322,7 @@ def instantiateComponent(usbDeviceVendorComponent, index):
 	epNumberBulkIn.setMin(1)
 	epNumberBulkIn.setMax(MaxEpNumber)
 	epNumberBulkIn.setDefaultValue(BulkInDefaultEpNumber)
+	epNumberBulkIn.setHelp("mcc_configuration_device_vendor")
 	
 	usbDeviceVendorBufPool = usbDeviceVendorComponent.createBooleanSymbol("CONFIG_USB_DEVICE_VENDOR_BUFFER_POOL", None)
 	usbDeviceVendorBufPool.setLabel("**** Buffer Pool Update ****")

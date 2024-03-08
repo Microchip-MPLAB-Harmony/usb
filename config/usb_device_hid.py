@@ -207,6 +207,7 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	startInterfaceNumber.setMin(0)
 	startInterfaceNumber.setDefaultValue(0)
 	startInterfaceNumber.setReadOnly(True)
+	startInterfaceNumber.setHelp("hid_device_Library_Initialization")
 	
 	# Adding Number of Interfaces
 	numberOfInterfaces = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_NUMBER_OF_INTERFACES", None)
@@ -218,6 +219,8 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	numberOfInterfaces.setMin(1)
 	numberOfInterfaces.setMax(16)
 	numberOfInterfaces.setDefaultValue(1)
+	numberOfInterfaces.setHelp("hid_device_Library_Initialization")
+
 	
 	# USB HID Report Descriptor 
 	usbDeviceHidReportType = usbDeviceHidComponent.createComboSymbol("CONFIG_USB_DEVICE_HID_REPORT_DESCRIPTOR_TYPE", None, usbDeviceHidReportList)
@@ -228,6 +231,7 @@ def instantiateComponent(usbDeviceHidComponent, index):
         usbDeviceHidReportType.setDescription(helpText)
 	usbDeviceHidReportType.setVisible(True)
 	usbDeviceHidReportType.setDefaultValue("Mouse")
+	usbDeviceHidReportType.setHelp("mcc_configuration_device_hid")
 	
 	# HID Function driver Report Receive Queue Size
 	queueSizeRead = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE", None)
@@ -243,7 +247,7 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	queueSizeRead.setMax(32767)
 	queueSizeRead.setDefaultValue(1)
 	currentQSizeRead = queueSizeRead.getValue()
-
+	queueSizeRead.setHelp("USB_DEVICE_HID_QUEUE_DEPTH_COMINED")
 		
 	# HID Function driver Report Send Queue Size 	
 	queueSizeWrite = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE", None)
@@ -260,6 +264,7 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	queueSizeWrite.setMax(32767)
 	queueSizeWrite.setDefaultValue(1)
 	currentQSizeWrite = queueSizeWrite.getValue()
+	queueSizeWrite.setHelp("USB_DEVICE_HID_QUEUE_DEPTH_COMINED")
 
 	usbDeviceHidBufPool = usbDeviceHidComponent.createBooleanSymbol("CONFIG_USB_DEVICE_HID_BUFFER_POOL", None)
 	usbDeviceHidBufPool.setLabel("**** Buffer Pool Update ****")
@@ -277,6 +282,7 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	epNumberInterruptIn.setVisible(True)
 	epNumberInterruptIn.setMin(1)
 	epNumberInterruptIn.setMax(MaxIntEpNumber)
+	epNumberInterruptIn.setHelp("mcc_configuration_device_hid")
 	
 	# HID Function driver Interrupt OUT Endpoint Number  
 	epNumberInterruptOut = usbDeviceHidComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INT_OUT_ENDPOINT_NUMBER", None)
@@ -290,6 +296,7 @@ def instantiateComponent(usbDeviceHidComponent, index):
 	epNumberInterruptOut.setMin(1)
 	epNumberInterruptOut.setMax(MaxIntEpNumber)
 	epNumberInterruptOut.setDefaultValue(IntOutDefaultEpNumber)
+	epNumberInterruptOut.setHelp("mcc_configuration_device_hid")
 	
 	############################################################################
 	#### Dependency ####

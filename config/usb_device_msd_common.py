@@ -36,6 +36,7 @@ def instantiateComponent(usbMsdComponentCommon):
 	usbDeviceMsdMaxSectorsToBufferCommon.setLabel("Max Sectors To Buffer")
 	usbDeviceMsdMaxSectorsToBufferCommon.setDefaultValue("1")
 	usbDeviceMsdMaxSectorsToBufferCommon.setVisible(True)
+	usbDeviceMsdMaxSectorsToBufferCommon.setHelp("mcc_configuration_device_msd")
 	
 	#########################################################
 	# system_config.h file for USB Device MSD function driver 

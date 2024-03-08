@@ -57,6 +57,7 @@ def instantiateComponent(usbPrinterComponentCommon):
 	deviceIdString.setLabel("Device ID String compatible with IEEE 1284")
 	deviceIdString.setVisible(True)
 	deviceIdString.setDefaultValue("MFG:Microchip;MDL:Generic;CMD:EPSON;CLS:PRINTER;DES:GenericTextOnlyPrinterDemo;")
+	deviceIdString.setHelp("mcc_configuration_device_printer")
 
 	################################################
 	# system_config.h file for USB Device stack    

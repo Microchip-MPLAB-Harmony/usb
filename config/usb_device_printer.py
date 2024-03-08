@@ -198,6 +198,8 @@ def instantiateComponent(usbDevicePrinterComponent, index):
 	startInterfaceNumber.setMin(0)
 	startInterfaceNumber.setDefaultValue(0)
 	startInterfaceNumber.setReadOnly(True)
+	startInterfaceNumber.setHelp("printer_device_Library_Initialization")
+
 
 	# Adding Number of Interfaces
 	numberOfInterfaces = usbDevicePrinterComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_NUMBER_OF_INTERFACES", None)
@@ -210,6 +212,8 @@ def instantiateComponent(usbDevicePrinterComponent, index):
 	numberOfInterfaces.setMin(1)
 	numberOfInterfaces.setMax(16)
 	numberOfInterfaces.setDefaultValue(printerInterfacesNumber)
+	numberOfInterfaces.setHelp("printer_device_Library_Initialization")
+
 	
 	# Printer Function driver Read Queue Size 
 	queueSizeRead = usbDevicePrinterComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE", None)
@@ -225,6 +229,7 @@ def instantiateComponent(usbDevicePrinterComponent, index):
 	queueSizeRead.setMax(32767)
 	queueSizeRead.setDefaultValue(1)
 	currentQSizeRead = queueSizeRead.getValue()
+	queueSizeRead.setHelp("USB_DEVICE_PRINTER_QUEUE_DEPTH_COMBINED")
 
 	# Printer Function driver Write Queue Size 
 	queueSizeWrite = usbDevicePrinterComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE", None)
@@ -240,18 +245,20 @@ def instantiateComponent(usbDevicePrinterComponent, index):
 	queueSizeWrite.setMax(32767)
 	queueSizeWrite.setDefaultValue(1)	
 	currentQSizeWrite = queueSizeWrite.getValue()
+	queueSizeWrite.setHelp("USB_DEVICE_PRINTER_QUEUE_DEPTH_COMBINED")
 
 	# Printer Function driver Bulk OUT Endpoint Number   
 	epNumberBulkOut = usbDevicePrinterComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_BULK_OUT_ENDPOINT_NUMBER", None)
 	epNumberBulkOut.setLabel("Bulk OUT Endpoint Number")
         helpText = '''Specify the endpoint number of Bulk Out Endpoint to
-        be used for this instance of the CDC Interface. Refer to Device
+        be used for this instance of the Printer Interface. Refer to Device
         Datasheet for details on available endpoints and limitations.'''
         epNumberBulkOut.setDescription(helpText)
 	epNumberBulkOut.setVisible(True)
 	epNumberBulkOut.setMin(1)
 	epNumberBulkOut.setDefaultValue(1)
 	epNumberBulkOut.setMax(BulkOutMaxEpNumber)	
+	epNumberBulkOut.setHelp("mcc_configuration_device_printer")	
 
 	usbDevicePrinterBufPool = usbDevicePrinterComponent.createBooleanSymbol("CONFIG_USB_DEVICE_PRINTER_BUFFER_POOL", None)
 	usbDevicePrinterBufPool.setLabel("**** Buffer Pool Update ****")

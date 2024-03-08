@@ -36,6 +36,7 @@ def instantiateComponent(usbHostAudioComponent):
 	usbHostAudioClientDriverInstance.setDefaultValue(1)
 	usbHostAudioClientDriverInstance.setMin(1)
 	usbHostAudioClientDriverInstance.setVisible(True)
+	usbHostAudioClientDriverInstance.setHelp("USB_HOST_AUDIO_V1_INSTANCES_NUMBER")
 
 	
 	#USB Host Audio Attach Listeners Number 
@@ -56,6 +57,7 @@ def instantiateComponent(usbHostAudioComponent):
 	usbHostAudioStreamingInterfaceNumbers.setDescription(helpText)
 	usbHostAudioStreamingInterfaceNumbers.setMin(1)
 	usbHostAudioStreamingInterfaceNumbers.setVisible(True)
+	usbHostAudioStreamingInterfaceNumbers.setHelp("USB_HOST_AUDIO_V1_STREAMING_INTERFACES_NUMBER")
     
 	# Number of the Audio Streaming interface alternate settings 
 	usbHostAudioStreamingInterfaceSettingNumbers =  usbHostAudioComponent.createIntegerSymbol("USB_HOST_AUDIO_NUMBER_OF_STREAMING_INTERFACE_SETTINGS", None)
@@ -69,6 +71,7 @@ def instantiateComponent(usbHostAudioComponent):
 	usbHostAudioStreamingInterfaceSettingNumbers.setDescription(helpText)
 	usbHostAudioStreamingInterfaceSettingNumbers.setMin(2)
 	usbHostAudioStreamingInterfaceSettingNumbers.setVisible(True)
+	usbHostAudioStreamingInterfaceSettingNumbers.setHelp("USB_HOST_AUDIO_V1_STREAMING_INTERFACE_ALTERNATE_SETTINGS_NUMBER")
 	
 	# Number of sampling frequencies 
 	usbHostAudioSamplingFrequenciesNumber =  usbHostAudioComponent.createIntegerSymbol("USB_HOST_AUDIO_NUMBER_OF_SAMPLING_FREQUENCIES", None)
@@ -79,6 +82,7 @@ def instantiateComponent(usbHostAudioComponent):
 	usbHostAudioSamplingFrequenciesNumber.setDescription(helpText)
 	usbHostAudioSamplingFrequenciesNumber.setMin(1)
 	usbHostAudioSamplingFrequenciesNumber.setVisible(True)
+	usbHostAudioSamplingFrequenciesNumber.setHelp("USB_HOST_AUDIO_V1_SAMPLING_FREQUENCIES_NUMBER")
 
 	
 	##############################################################

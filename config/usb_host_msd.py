@@ -36,6 +36,7 @@ def instantiateComponent(usbHostMsdComponent):
 	usbHostMsdClientDriverInstance.setDescription(helpText)
 	usbHostMsdClientDriverInstance.setDefaultValue(1)
 	usbHostMsdClientDriverInstance.setVisible(True)
+	usbHostMsdClientDriverInstance.setHelp("USB_HOST_MSD_INSTANCES_NUMBER")
 	
 	##############################################################
 	# system_definitions.h file for USB Host MSD Client driver   

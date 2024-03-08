@@ -332,6 +332,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	startInterfaceNumber.setMin(0)
 	startInterfaceNumber.setDefaultValue(0)
 	startInterfaceNumber.setReadOnly(False)
+	startInterfaceNumber.setHelp("cdc_device_Library_Initialization")
 	
 	# Adding Number of Interfaces
 	numberOfInterfaces = usbDeviceCdcComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_NUMBER_OF_INTERFACES", None)
@@ -341,6 +342,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	numberOfInterfaces.setMax(16)
 	numberOfInterfaces.setDefaultValue(2)
 	numberOfInterfaces.setReadOnly(True)
+	numberOfInterfaces.setHelp("cdc_device_Library_Initialization")
 	
 	
 	# Use IAD
@@ -350,6 +352,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	useIad.setDefaultValue(False)
 	useIad.setUseSingleDynamicValue(True)
 	useIad.setDependencies(blIadEnable, ["CONFIG_USB_DEVICE_FUNCTION_USE_IAD"])
+	useIad.setHelp("mcc_configuration_device_cdc")
     
 	#To store the previous state of IAD Checkbox
 	useIadPrev = usbDeviceCdcComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FUNCTION_USE_IAD_PREVIOUS_STATE", None)
@@ -364,6 +367,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	queueSizeRead.setMax(32767)
 	queueSizeRead.setDefaultValue(1)
 	currentQSizeRead = queueSizeRead.getValue()
+	queueSizeRead.setHelp("USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED")
 
 	
 	# CDC Function driver Write Queue Size 
@@ -374,6 +378,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	queueSizeWrite.setMax(32767)
 	queueSizeWrite.setDefaultValue(1)
 	currentQSizeWrite = queueSizeWrite.getValue()
+	queueSizeWrite.setHelp("USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED")
 	
 	
 	# CDC Function driver Serial state notification Queue Size  
@@ -384,6 +389,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	queueSizeSerialStateNotification.setMax(32767)
 	queueSizeSerialStateNotification.setDefaultValue(1)	
 	currentQSizeSerialStateNotification = queueSizeSerialStateNotification.getValue()
+	queueSizeSerialStateNotification.setHelp("USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED")
 	
 	# CDC Function driver Notification Endpoint Number  
 	epNumberInterrupt = usbDeviceCdcComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_INT_ENDPOINT_NUMBER", None)
@@ -392,6 +398,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	epNumberInterrupt.setMin(1)
 	epNumberInterrupt.setDefaultValue(1)
 	epNumberInterrupt.setMax(MaxEpNumber)
+	epNumberInterrupt.setHelp("mcc_configuration_device_cdc")
 	
 
 	# CDC Function driver Data OUT Endpoint Number   
@@ -401,6 +408,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	epNumberBulkOut.setMin(1)
 	epNumberBulkOut.setDefaultValue(2)
 	epNumberBulkOut.setMax(MaxEpNumber)
+	epNumberBulkOut.setHelp("mcc_configuration_device_cdc")
 	
 	# CDC Function driver Data IN Endpoint Number   
 	epNumberBulkIn = usbDeviceCdcComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER", None)
@@ -409,6 +417,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	epNumberBulkIn.setMin(1)
 	epNumberBulkIn.setMax(MaxEpNumber)
 	epNumberBulkIn.setDefaultValue(BulkInDefaultEpNumber)
+	epNumberBulkIn.setHelp("mcc_configuration_device_cdc")
 	
 	usbDeviceCdcBufPool = usbDeviceCdcComponent.createBooleanSymbol("CONFIG_USB_DEVICE_CDC_BUFFER_POOL", None)
 	usbDeviceCdcBufPool.setLabel("**** Buffer Pool Update ****")

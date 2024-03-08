@@ -236,7 +236,8 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 	startInterfaceNumber.setVisible(True)
 	startInterfaceNumber.setMin(0)
 	startInterfaceNumber.setDefaultValue(0)
-	
+	startInterfaceNumber.setHelp("usb_msd_device_Library_Initialization")
+
 	# Adding Number of Interfaces
 	numberOfInterfaces = usbDeviceMsdComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_NUMBER_OF_INTERFACES", None)
 	numberOfInterfaces.setLabel("Number of Interfaces")
@@ -264,11 +265,13 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 		usbDeviceMSDLun[i].setDefaultValue(i == 0)
 		usbDeviceMSDLun[i].setReadOnly(True)
 		usbDeviceMSDLun[i].setDependencies(showMedia, ["CONFIG_USB_DEVICE_FUNCTION_MSD_LUN"])
+		usbDeviceMSDLun[i].setHelp("mcc_configuration_device_msd")
 		
 		usbDeviceMSDLunMediaType.append(i)
 		usbDeviceMSDLunMediaType[i] = usbDeviceMsdComponent.createComboSymbol("CONFIG_USB_DEVICE_FUNCTION_MSD_LUN_MEDIA_TYPE_IDX" + str(i), usbDeviceMSDLun[i], mediaTypes)
 		usbDeviceMSDLunMediaType[i].setLabel("Media Type")
 		usbDeviceMSDLunMediaType[i].setDefaultValue("MEDIA_TYPE_SD_CARD_SPI")
+		usbDeviceMSDLunMediaType[i].setHelp("mcc_configuration_device_msd")
 	
 	# MSD Function driver Bulk Out Endpoint Number 
 	usbDeviceMsdEPNumberBulkOut = usbDeviceMsdComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_BULK_OUT_ENDPOINT_NUMBER", None)		
@@ -276,6 +279,7 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 	usbDeviceMsdEPNumberBulkOut.setVisible(True)
 	usbDeviceMsdEPNumberBulkOut.setMin(1)
 	usbDeviceMsdEPNumberBulkOut.setDefaultValue(1)
+	usbDeviceMsdEPNumberBulkOut.setHelp("mcc_configuration_device_msd")
 
 	# MSD Function driver Bulk IN Endpoint Number 
 	usbDeviceMsdEPNumberBulkIn = usbDeviceMsdComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_BULK_IN_ENDPOINT_NUMBER", None)		
@@ -283,6 +287,7 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 	usbDeviceMsdEPNumberBulkIn.setVisible(True)
 	usbDeviceMsdEPNumberBulkIn.setMin(1)
 	usbDeviceMsdEPNumberBulkIn.setDefaultValue(BulkInDefaultEpNumber)
+	usbDeviceMsdEPNumberBulkIn.setHelp("mcc_configuration_device_msd")
 			
 	##############################################################
 	# system_definitions.h file for USB Device MSD Function driver   

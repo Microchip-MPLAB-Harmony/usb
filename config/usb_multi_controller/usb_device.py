@@ -320,6 +320,7 @@ def instantiateComponent(usbDeviceComponent,index):
 		usbDevicelayerInstance = usbDeviceComponent.createStringSymbol("USB_DEVICE_INDEX", None)
 		usbDevicelayerInstance.setLabel("USB Controller instance")
 		usbDevicelayerInstance.setReadOnly(True)
+		usbDevicelayerInstance.setHelp("mcc_configuration_device_layer")
 		res = Database.activateComponents(["drv_usbhs_index"])
 		driverIndex = "DRV_USBHS_INDEX_0"
 		driverInterface = "DRV_USBHS_DEVICE_INTERFACE"
@@ -330,6 +331,7 @@ def instantiateComponent(usbDeviceComponent,index):
 		usbDevicelayerInstance = usbDeviceComponent.createStringSymbol("USB_DEVICE_INDEX", None)
 		usbDevicelayerInstance.setLabel("USB Controller instance")
 		usbDevicelayerInstance.setReadOnly(True)
+		usbDevicelayerInstance.setHelp("mcc_configuration_device_layer")
 		res = Database.activateComponents(["drv_usbfs_index"])
 		speed = Database.getSymbolValue("drv_usbfs_index", "USB_SPEED")
 		driverIndex = "DRV_USBFS_INDEX_0"
@@ -384,6 +386,8 @@ def instantiateComponent(usbDeviceComponent,index):
 	usbDeviceConfigDscrptrSize.setMin(0)
 	usbDeviceConfigDscrptrSize.setDefaultValue(9)
 	usbDeviceConfigDscrptrSize.setUseSingleDynamicValue(True)
+	usbDeviceConfigDscrptrSize.setHelp("mcc_configuration_device_layer")
+
 	
 	#Number of interfaces
 	usbDeviceInterfacesNumber = usbDeviceComponent.createIntegerSymbol("CONFIG_USB_DEVICE_INTERFACES_NUMBER", None)	
@@ -403,6 +407,8 @@ def instantiateComponent(usbDeviceComponent,index):
 	usbDeviceFunctionNumber.setMin(0)
 	usbDeviceFunctionNumber.setValue(0)
 	usbDeviceFunctionNumber.setUseSingleDynamicValue(True)
+	usbDeviceFunctionNumber.setHelp("Function_Driver_Registration_Table")
+
 	#usbDeviceFunctionNumber.setReadOnly(True)
 	
 	# USB Device Endpoint Number 
@@ -423,6 +429,8 @@ def instantiateComponent(usbDeviceComponent,index):
 	usbDeviceVendorId.setDescription(helpText)
 	usbDeviceVendorId.setVisible(True)
 	usbDeviceVendorId.setDefaultValue("0x04D8")
+	usbDeviceVendorId.setHelp("mcc_configuration_device_layer")
+
 	
 	# USB Device Product ID Selection
 	usbDeviceProductId = usbDeviceComponent.createComboSymbol("CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0", None, usbDeviceDemoList)
@@ -434,6 +442,8 @@ def instantiateComponent(usbDeviceComponent,index):
         usbDeviceProductId.setDescription(helpText)
 	usbDeviceProductId.setVisible(True)
 	usbDeviceProductId.setDefaultValue("Enter Product ID")
+	usbDeviceProductId.setHelp("mcc_configuration_device_layer")
+
 	
 	# USB Device Product ID 
 	usbDeviceProductId = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_PRODUCT_ID_IDX0", None)
@@ -448,6 +458,8 @@ def instantiateComponent(usbDeviceComponent,index):
 	usbDeviceProductId.setDefaultValue("0x0000")
 	usbDeviceProductId.setUseSingleDynamicValue(True)
 	usbDeviceProductId.setDependencies(blUSBDeviceProductIDSelection,["CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0"])
+	usbDeviceProductId.setHelp("mcc_configuration_device_layer")
+
 	
 	# USB Device Manufacturer String 
 	usbDeviceManufacturerString = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_MANUFACTURER_STRING", None)
@@ -456,6 +468,8 @@ def instantiateComponent(usbDeviceComponent,index):
         usbDeviceManufacturerString.setDescription(helpText)
 	usbDeviceManufacturerString.setVisible(True)
 	usbDeviceManufacturerString.setDefaultValue("Microchip Technology Inc.")
+	usbDeviceManufacturerString.setHelp("mcc_configuration_device_layer")
+
 	
 	# USB Device Product String 
 	usbDeviceProductString = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_PRODUCT_STRING_DESCRIPTOR", None)
@@ -470,6 +484,8 @@ def instantiateComponent(usbDeviceComponent,index):
         usbDeviceProductString.setDescription(helpText)
 	usbDeviceProductString.setUseSingleDynamicValue(True)
 	usbDeviceProductString.setDependencies(blUSBDeviceProductStringSelection,["CONFIG_USB_DEVICE_PRODUCT_ID_SELECTION_IDX0"])
+	usbDeviceProductString.setHelp("mcc_configuration_device_layer")
+
 	
 	
 	# Serial Number String enable 
@@ -478,6 +494,8 @@ def instantiateComponent(usbDeviceComponent,index):
         helpText = '''Enable this option to add Device Serial Number.'''
         usbDeviceFeatureSerialNumberStringEnable.setDescription(helpText)
 	usbDeviceFeatureSerialNumberStringEnable.setVisible(True)
+	usbDeviceFeatureSerialNumberStringEnable.setHelp("mcc_configuration_device_layer")
+
 	
 	# USB Device Serial Number String 
 	usbDeviceSerialNumberString = usbDeviceComponent.createStringSymbol("CONFIG_USB_DEVICE_SERIAL_NUMBER_STRING_DESCRIPTOR", usbDeviceFeatureSerialNumberStringEnable)
@@ -495,6 +513,7 @@ def instantiateComponent(usbDeviceComponent,index):
 	usbDeviceIadEnable.setVisible(True)
 	usbDeviceIadEnable.setDefaultValue(False)
 	usbDeviceIadEnable.setUseSingleDynamicValue(True)
+	usbDeviceIadEnable.setHelp("mcc_configuration_device_layer")
 	
 	# USB Device MSD Support 
 	usbDeviceMsdSupport = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_USE_MSD", None)
@@ -540,6 +559,8 @@ def instantiateComponent(usbDeviceComponent,index):
 	helpText = '''Enable this option if the USB Device is Self Powered. If not it implies that the Device is Bus Powered.'''
 	usbDeviceConfigDescritorAttributeSelfPowered.setDescription(helpText)
 	usbDeviceConfigDescritorAttributeSelfPowered.setDefaultValue(True)
+	usbDeviceConfigDescritorAttributeSelfPowered.setHelp("mcc_configuration_device_layer")
+
 	
 	
 	# USB Device Attributes Remote Wakeup. 
@@ -551,6 +572,8 @@ def instantiateComponent(usbDeviceComponent,index):
 				  generating wakeup signal when the bus is suspended '''
 	usbDeviceConfigDescritorAttributeRemoteWakeup.setDescription(helpText)
 	usbDeviceConfigDescritorAttributeRemoteWakeup.setDefaultValue(False)
+	usbDeviceConfigDescritorAttributeRemoteWakeup.setHelp("mcc_configuration_device_layer")
+
 	
 	
 	# USB Device max power 
@@ -563,6 +586,8 @@ def instantiateComponent(usbDeviceComponent,index):
 	usbDeviceConfigDescritorMaxPower.setMin(1)
 	usbDeviceConfigDescritorMaxPower.setMax(250)
 	usbDeviceConfigDescritorMaxPower.setDefaultValue(100)
+	usbDeviceConfigDescritorMaxPower.setHelp("mcc_configuration_device_layer")
+
 	
 	configName = Variables.get("__CONFIGURATION_NAME")
 	

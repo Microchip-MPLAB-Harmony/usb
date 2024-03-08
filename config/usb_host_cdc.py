@@ -37,6 +37,7 @@ def instantiateComponent(usbHostCdcComponent):
         usbHostCdcClientDriverInstance.setDescription(helpText)
         usbHostCdcClientDriverInstance.setDefaultValue(1)
 	usbHostCdcClientDriverInstance.setVisible(True)
+	usbHostCdcClientDriverInstance.setHelp("USB_HOST_CDC_INSTANCES_NUMBER")
 	
 	#USB Host CDC Attach Listeners Number 
 	usbHostCdcClientDriverAttachListnerNumber = usbHostCdcComponent.createIntegerSymbol("CONFIG_USB_HOST_CDC_ATTACH_LISTENERS_NUMBER", None)
@@ -48,6 +49,7 @@ def instantiateComponent(usbHostCdcComponent):
 	usbHostCdcClientDriverAttachListnerNumber.setDescription(helpText)
 	usbHostCdcClientDriverAttachListnerNumber.setDefaultValue(1)
 	usbHostCdcClientDriverAttachListnerNumber.setVisible(True)
+	usbHostCdcClientDriverAttachListnerNumber.setHelp("USB_HOST_CDC_ATTACH_LISTENERS_NUMBER")
 
 
 	##############################################################

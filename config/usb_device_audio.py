@@ -348,13 +348,15 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 	startInterfaceNumber.setMin(0)
 	startInterfaceNumber.setDefaultValue(index)
 	startInterfaceNumber.setReadOnly(True)
-	
+	startInterfaceNumber.setHelp("Audio_v_1_0_Initializing_the_Library")
+
 	# Audio Device Type 
 	audioDeviceType = usbDeviceAudioComponent.createComboSymbol("CONFIG_USB_DEVICE_FUNCTION_AUDIO_DEVICE_TYPE", None, audioDeviceTypes)
 	audioDeviceType.setLabel("Audio Device Type")
 	audioDeviceType.setVisible(True)
 	audioDeviceType.setDefaultValue("Audio v1.0 USB Speaker")
 	audioDeviceType.setDependencies(usbDeviceAudioDeviceTypeUpdate, ["CONFIG_USB_DEVICE_FUNCTION_AUDIO_DEVICE_TYPE"])
+	audioDeviceType.setHelp("mcc_configuration_device_audio")
 	
 	# Audio Spec version
 	audioSpecVersion = usbDeviceAudioComponent.createComboSymbol("CONFIG_USB_DEVICE_FUNCTION_AUDIO_VERSION", None, audioVersion)
@@ -363,6 +365,7 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 	audioSpecVersion.setVisible(True)
 	audioSpecVersion.setDefaultValue("Audio v1")
 	audioSpecVersion.setDependencies(usbDeviceAudioSpecVersionUpdate, ["CONFIG_USB_DEVICE_FUNCTION_AUDIO_DEVICE_TYPE"])
+	audioSpecVersion.setHelp("mcc_configuration_device_audio")
 	
 	# Use IAD
 	useIad = usbDeviceAudioComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FUNCTION_USE_IAD", None)
@@ -372,6 +375,7 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 	useIad.setDefaultValue(False)
 	useIad.setUseSingleDynamicValue(True)
 	useIad.setDependencies(usbDeviceAudioIadUpdate, ["CONFIG_USB_DEVICE_FUNCTION_AUDIO_DEVICE_TYPE"])
+	useIad.setHelp("mcc_configuration_device_audio")
 	
 	# Adding Number of Interfaces
 	numberOfInterfaces = usbDeviceAudioComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_NUMBER_OF_INTERFACES", None)
@@ -382,6 +386,7 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 	numberOfInterfaces.setDefaultValue(index+2)
 	numberOfInterfaces.setReadOnly(True)
 	numberOfInterfaces.setDependencies(usbDeviceAudioNumberOfInterfacesUpdate, ["CONFIG_USB_DEVICE_FUNCTION_AUDIO_DEVICE_TYPE"])
+	numberOfInterfaces.setHelp("Audio_v_1_0_Initializing_the_Library")
 	
 	# Audio Number of Streaming Interfaces 
 	noStreamingInterface = usbDeviceAudioComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_AUDIO_STREAMING_INTERFACES_NUMBER", None)
@@ -392,6 +397,8 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 	noStreamingInterface.setDefaultValue(1)
 	noStreamingInterface.setReadOnly(True)
 	noStreamingInterface.setDependencies(usbDeviceAudioNumberOfStreamingInterfacesUpdate, ["CONFIG_USB_DEVICE_FUNCTION_AUDIO_DEVICE_TYPE"])
+	noStreamingInterface.setHelp("USB_DEVICE_AUDIO_MAX_STREAMING_INTERFACES")
+
 	
 	# Audio Maximum Number of Interface Alternate Settings
 	noMaxAlternateSettings = usbDeviceAudioComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_AUDIO_MAX_ALTERNATE_SETTING", None)
@@ -402,6 +409,8 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 	noMaxAlternateSettings.setDefaultValue(2)
 	noMaxAlternateSettings.setReadOnly(True)
 	noMaxAlternateSettings.setDependencies(usbDeviceAudioNumberOfAlternateSettingsUpdate, ["CONFIG_USB_DEVICE_FUNCTION_AUDIO_DEVICE_TYPE"])
+	noMaxAlternateSettings.setHelp("USB_DEVICE_AUDIO_MAX_ALTERNATE_SETTING")
+
 	
 	# Audio Function driver Read Queue Size 
 	queueSizeRead = usbDeviceAudioComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_READ_Q_SIZE", None)
@@ -410,6 +419,7 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 	queueSizeRead.setMin(0)
 	queueSizeRead.setMax(32767)
 	queueSizeRead.setDefaultValue(1)
+	queueSizeRead.setHelp("USB_DEVICE_AUDIO_QUEUE_DEPTH_COMBINED")
 
 	# Audio Function driver Write Queue Size 
 	queueSizeWrite = usbDeviceAudioComponent.createIntegerSymbol("CONFIG_USB_DEVICE_FUNCTION_WRITE_Q_SIZE", None)
@@ -418,6 +428,7 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 	queueSizeWrite.setMin(0)
 	queueSizeWrite.setMax(32767)
 	queueSizeWrite.setDefaultValue(1)	
+	queueSizeWrite.setHelp("USB_DEVICE_AUDIO_QUEUE_DEPTH_COMBINED")	
 
 	
 	# Audio Function driver Data IN Endpoint Number   
@@ -437,6 +448,8 @@ def instantiateComponent(usbDeviceAudioComponent, index):
 	epNumberOut.setMax(10)
 	epNumberOut.setDefaultValue(1)
 	epNumberOut.setDependencies(usbDeviceAudioEpOutUpdate, ["CONFIG_USB_DEVICE_FUNCTION_AUDIO_DEVICE_TYPE"])
+	epNumberOut.setHelp("mcc_configuration_device_audio")
+
 	
 	# Audio Function save descriptor size
 	currentAudioDescriptorSize = usbDeviceAudioComponent.createIntegerSymbol("USB_DEVICE_AUDIO_FUNCTION_DESCRIPTOR_SIZE_CURRENT", None)

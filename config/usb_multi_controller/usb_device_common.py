@@ -90,11 +90,13 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceEp0BufferSize.setVisible(True)
 	usbDeviceEp0BufferSize.setDescription("Select Endpoint 0 Buffer Size")
 	usbDeviceEp0BufferSize.setDefaultValue("64")
+	usbDeviceEp0BufferSize.setHelp("USB_DEVICE_EP0_BUFFER_SIZE")
 	
 		# USB Device events enable 
 	usbDeviceEventsEnable = usbDeviceComponent.createMenuSymbol("USB_DEVICE_EVENTS", None)
 	usbDeviceEventsEnable.setLabel("Special Events")	
 	usbDeviceEventsEnable.setVisible(True)
+	usbDeviceEventsEnable.setHelp("USB_DEVICE_EVENTS")
 	
 	#SOF Event Enable 
 	usbDeviceEventEnableSOF = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_EVENT_ENABLE_SOF", usbDeviceEventsEnable)
@@ -104,6 +106,7 @@ def instantiateComponent(usbDeviceComponent):
         Speed USB, this event would be generated every 125 microseconds.'''
         usbDeviceEventEnableSOF.setDescription(helpText)
 	usbDeviceEventEnableSOF.setVisible(True)	
+	usbDeviceEventEnableSOF.setHelp("USB_DEVICE_SOF_EVENT_ENABLE")
 		
 	#Set Descriptor Event Enable 
 	usbDeviceEventEnableSetDescriptor = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_EVENT_ENABLE_SET_DESCRIPTOR", usbDeviceEventsEnable)
@@ -113,6 +116,7 @@ def instantiateComponent(usbDeviceComponent):
         Set Descritpor request.'''
         usbDeviceEventEnableSetDescriptor.setDescription(helpText)
 	usbDeviceEventEnableSetDescriptor.setVisible(True)	
+	usbDeviceEventEnableSetDescriptor.setHelp("USB_DEVICE_SET_DESCRIPTOR_EVENT_ENABLE")
 	
 	#Synch Frame Event Enable 
 	usbDeviceEventEnableSynchFrame = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_EVENT_ENABLE_SYNCH_FRAME", usbDeviceEventsEnable)
@@ -123,6 +127,7 @@ def instantiateComponent(usbDeviceComponent):
         the Device Layer will Stall the Sync Frame request.'''
         usbDeviceEventEnableSynchFrame.setDescription(helpText)
 	usbDeviceEventEnableSynchFrame.setVisible(True)	
+	usbDeviceEventEnableSynchFrame.setHelp("USB_DEVICE_SYNCH_FRAME_EVENT_ENABLE")
 	
 	# USB Device Features enable 
 	usbDeviceFeatureEnable = usbDeviceComponent.createMenuSymbol("USB_DEVICE_FEATURES", None)
@@ -140,6 +145,7 @@ def instantiateComponent(usbDeviceComponent):
         would cause gaps in memory.'''
         usbDeviceFeatureEnableAdvancedStringDescriptorTable.setDescription(helpText)
 	usbDeviceFeatureEnableAdvancedStringDescriptorTable.setVisible(True)
+	usbDeviceFeatureEnableAdvancedStringDescriptorTable.setHelp("USB_DEVICE_STRING_DESCRIPTOR_TABLE_ADVANCED_ENABLE")
 	
 	#Microsoft OS descriptor support Enable 
 	usbDeviceFeatureEnableMicrosoftOsDescriptor = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FEATURE_ENABLE_MICROSOFT_OS_DESCRIPTOR", usbDeviceFeatureEnableAdvancedStringDescriptorTable)
@@ -171,6 +177,7 @@ def instantiateComponent(usbDeviceComponent):
         required when implementing Billboard Device Class support.'''
         usbDeviceFeatureEnableBosDescriptor.setDescription(helpText)
 	usbDeviceFeatureEnableBosDescriptor.setVisible(True)	
+	usbDeviceFeatureEnableBosDescriptor.setHelp("USB_DEVICE_BOS_DESCRIPTOR_SUPPORT_ENABLE")
 	
 	# Enable Auto timed remote wakeup functions  
 	usbDeviceFeatureEnableAutioTimeRemoteWakeup = usbDeviceComponent.createBooleanSymbol("CONFIG_USB_DEVICE_FEATURE_ENABLE_AUTO_TIMED_REMOTE_WAKEUP_FUNCTIONS", usbDeviceFeatureEnable)

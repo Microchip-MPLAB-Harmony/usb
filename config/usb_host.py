@@ -148,6 +148,7 @@ def instantiateComponent(usbHostComponent):
 	usbHostTplEntryNumber.setUseSingleDynamicValue(True)
 	#usbHostTplEntryNumber.setDependencies(blUsbHostDeviceNumber, ["USB_OPERATION_MODE"])
 	usbHostTplEntryNumber.setReadOnly(True)
+	usbHostTplEntryNumber.setHelp("mcc_configuration_host_layer")
 
 	# USB Host Max Interfaces  
 	usbHostMaxInterfaceNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_MAX_INTERFACES", None)
@@ -164,6 +165,7 @@ def instantiateComponent(usbHostComponent):
 	usbHostMaxInterfaceNumber.setMin(0)
 	usbHostMaxInterfaceNumber.setDefaultValue(5)
 	usbHostMaxInterfaceNumber.setDependencies(blUsbHostMaxInterfaceNumber, ["USB_OPERATION_MODE"])	
+	usbHostMaxInterfaceNumber.setHelp("USB_HOST_DEVICE_INTERFACES_NUMBER")	
 	
 	# USB Host Transfers Number 
 	usbHostTransfersNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_TRANSFERS_NUMBER", None)
@@ -179,6 +181,7 @@ def instantiateComponent(usbHostComponent):
 	usbHostTransfersNumber.setMin(0)
 	usbHostTransfersNumber.setDefaultValue(10)
 	usbHostTransfersNumber.setDependencies(blUsbHostMaxInterfaceNumber, ["USB_OPERATION_MODE"])	
+	usbHostTransfersNumber.setHelp("USB_HOST_TRANSFERS_NUMBER")	
 	
 	# USB Host Pipes Number 
 	usbHostPipesNumber = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_PIPES_NUMBER", None)
@@ -188,6 +191,7 @@ def instantiateComponent(usbHostComponent):
 	usbHostPipesNumber.setDescription(helpText)
 	usbHostPipesNumber.setMin(0)
 	usbHostPipesNumber.setDefaultValue(10)
+	usbHostPipesNumber.setHelp("mcc_configuration_host_layer")
 		
 	# USB Host Hub Support
 	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ" , "PIC32MX" , "PIC32MM", "SAMA5D2", "SAM9X60", "SAM9X7", "PIC32CM", "SAMD21", "SAMDA1", "SAMD5","SAMV70", "SAMV71","SAME70", "SAMS70" ,"PIC32MK" ,"SAME5", "LAN9255", "SAML21", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "SAMG55", "SAMA7", "PIC32MZ1025W", "PIC32MZ2051W", "WFI32E01", "WFI32E02", "WFI32E03", "PIC32CX"]):
@@ -200,11 +204,12 @@ def instantiateComponent(usbHostComponent):
                 usbHostHubsupport.setDescription(helpText)
 		usbHostHubsupport.setDefaultValue(False)
 		usbHostHubsupport.setDependencies(hubUpdateTPL, ["CONFIG_USB_HOST_HUB_SUPPORT"])
+		usbHostHubsupport.setHelp("mcc_configuration_host_layer")
+
 		usbHostHubSaveValue = usbHostComponent.createBooleanSymbol("CONFIG_USB_HOST_HUB_SUPPORT_SAVE_STATUS", None)
 		usbHostHubSaveValue.setLabel( "Hub support" )
 		usbHostHubSaveValue.setVisible( False)
-		usbHostHubSaveValue.setDefaultValue(False)
-		
+		usbHostHubSaveValue.setDefaultValue(False)		
 		
 		# USB Host Hub Client Driver instances
 		usbHostHubDriverInstance = usbHostComponent.createIntegerSymbol("CONFIG_USB_HOST_HUB_NUMBER_OF_INSTANCES", usbHostHubsupport)
@@ -231,6 +236,7 @@ def instantiateComponent(usbHostComponent):
                 usbHostDeviceNumber.setDescription(helpText)
 		usbHostDeviceNumber.setDefaultValue(1)
 		usbHostDeviceNumber.setUseSingleDynamicValue(True)
+		usbHostDeviceNumber.setHelp("USB_HOST_DEVICES_NUMBER")
 			
 			
 	##############################################################

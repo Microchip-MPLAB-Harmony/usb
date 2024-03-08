@@ -125,6 +125,7 @@ def instantiateComponent(usbHostHidComponent):
 	usbHostHidClientDriverInstancesNumber.setDescription(helpText)
 	usbHostHidClientDriverInstancesNumber.setVisible(True)
 	usbHostHidClientDriverInstancesNumber.setDefaultValue(1)
+	usbHostHidClientDriverInstancesNumber.setHelp("USB_HOST_HID_INSTANCES_NUMBER")
 	
 	# USB Host HID Client driver Interrupt In Endpoints Number 
 	usbHostHidClientDriverIntEPsNumber = usbHostHidComponent.createIntegerSymbol("CONFIG_USB_HOST_HID_INTERRUPT_IN_ENDPOINTS_NUMBER", None)
@@ -135,6 +136,7 @@ def instantiateComponent(usbHostHidComponent):
 	usbHostHidClientDriverIntEPsNumber.setDescription(helpText)
 	usbHostHidClientDriverIntEPsNumber.setVisible(True)
 	usbHostHidClientDriverIntEPsNumber.setDefaultValue(1)
+	usbHostHidClientDriverIntEPsNumber.setHelp("mcc_configuration_host_hid")
 	
 	# USB Host HID Client driver Global Push Pop Stack size
 	usbHostHidClientDriverPushPopStackSize = usbHostHidComponent.createIntegerSymbol("CONFIG_USB_HID_GLOBAL_PUSH_POP_STACK_SIZE", None)
@@ -147,6 +149,7 @@ def instantiateComponent(usbHostHidComponent):
 	usbHostHidClientDriverPushPopStackSize.setDescription(helpText)
 	usbHostHidClientDriverPushPopStackSize.setVisible(True)
 	usbHostHidClientDriverPushPopStackSize.setDefaultValue(1)
+	usbHostHidClientDriverPushPopStackSize.setHelp("mcc_configuration_host_hid")
 	
 	# USB Host HID Client driver Mouse 
 	usbHostHidClientDriverMouse = usbHostHidComponent.createBooleanSymbol("CONFIG_USB_HOST_USE_MOUSE", None)
@@ -156,6 +159,7 @@ def instantiateComponent(usbHostHidComponent):
 	usbHostHidClientDriverMouse.setDescription(helpText)
 	usbHostHidClientDriverMouse.setVisible(True)
 	usbHostHidClientDriverMouse.setDefaultValue(False)
+	usbHostHidClientDriverMouse.setHelp("mcc_configuration_host_hid")
 	
 	# USB Host HID Client driver Mouse Buttons Number 
 	usbHostHidClientDriverMouseButtonsNumber = usbHostHidComponent.createIntegerSymbol("CONFIG_USB_HOST_HID_MOUSE_BUTTONS_NUMBER", usbHostHidClientDriverMouse)
@@ -181,6 +185,7 @@ def instantiateComponent(usbHostHidComponent):
 	usbHostHidClientDriverKeyboard.setDescription(helpText)
 	usbHostHidClientDriverKeyboard.setVisible(True)
 	usbHostHidClientDriverKeyboard.setDefaultValue(False)
+	usbHostHidClientDriverKeyboard.setHelp("mcc_configuration_host_hid")
 	
 	# USB Host HID Client driver Keyboard save status 
 	usbHostHidClientDriverKeyboardSaveStatus = usbHostHidComponent.createBooleanSymbol("CONFIG_USB_HOST_USE_KEYBOARD_SAVE_STATUS", usbHostHidClientDriverKeyboard)
@@ -196,6 +201,7 @@ def instantiateComponent(usbHostHidComponent):
 	usbHostHidClientDriverTotalUsageInst.setDefaultValue(0)
 	usbHostHidClientDriverTotalUsageInst.setUseSingleDynamicValue(True)
 	usbHostHidClientDriverTotalUsageInst.setDependencies(updateUsageDriverInstanceNumber, ["CONFIG_USB_HOST_USE_MOUSE","CONFIG_USB_HOST_USE_KEYBOARD"])
+	usbHostHidClientDriverTotalUsageInst.setHelp("mcc_configuration_host_hid")
 		
 	##############################################################
 	# system_definitions.h file for USB Host HID Client driver   
