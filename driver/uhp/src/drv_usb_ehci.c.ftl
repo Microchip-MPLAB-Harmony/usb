@@ -228,7 +228,7 @@ size_t F_DRV_USB_EHCI_ControlTransferQTD
     USB_EHCI_QTD * setupQTD = &transfer->setupQTD;
     USB_EHCI_QTD * dataQTD = &transfer->dataQTD;
     USB_EHCI_QTD * handshakeQTD = &transfer->handshakeQTD;
-    USB_HOST_IRP_LOCAL * irp = transfer->irp;
+    USB_HOST_EHCI_IRP_LOCAL * irp = transfer->irp;
     USB_DATA_DIRECTION direction = USB_DATA_DIRECTION_DEVICE_TO_HOST;
     size_t nBytes = 0;
 
@@ -676,7 +676,7 @@ size_t F_DRV_USB_EHCI_DataQTD
 )
 { 
     USB_EHCI_QTD * qTD = &transfer->qTD;
-    USB_HOST_IRP_LOCAL * irp = transfer->irp;
+    USB_HOST_EHCI_IRP_LOCAL * irp = transfer->irp;
 
     (void) memset(qTD, 0, sizeof(USB_EHCI_QTD));
     qTD->nextQtd.terminate = 1;
@@ -739,7 +739,7 @@ void F_DRV_USB_EHCI_BulkTransferProcess(void * hPipe)
 
     DRV_USB_EHCI_QH * pipe = (DRV_USB_EHCI_QH *)hPipe;
     DRV_USB_EHCI_QTD * transfer = NULL;
-    USB_HOST_IRP_LOCAL * irp = NULL;
+    USB_HOST_EHCI_IRP_LOCAL * irp = NULL;
     bool endIRP = false;
     USB_EHCI_QTD * qTD = NULL;
     bool pipeWasEmpty = false;
@@ -899,7 +899,7 @@ void F_DRV_USB_EHCI_ControlTransferProcess(void * pPipe)
 
     DRV_USB_EHCI_QH * pipe = (DRV_USB_EHCI_QH *)pPipe;
     DRV_USB_EHCI_CONTROL_TRANSFER_QTD * transfer = NULL;
-    USB_HOST_IRP_LOCAL * irp = NULL;
+    USB_HOST_EHCI_IRP_LOCAL * irp = NULL;
     USB_DATA_DIRECTION direction = USB_DATA_DIRECTION_HOST_TO_DEVICE;
     bool pipeWasEmpty = false;
 
@@ -1762,7 +1762,7 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
     bool slotFound = false;
     DRV_USB_EHCI_QTD * transfer = NULL;
     DRV_USB_EHCI_QTD * currentQTD = NULL;
-    USB_HOST_IRP_LOCAL * pIRP = (USB_HOST_IRP_LOCAL *)pinputIRP;
+    USB_HOST_EHCI_IRP_LOCAL * pIRP = (USB_HOST_EHCI_IRP_LOCAL *)pinputIRP;
     DRV_USB_EHCI_OBJ * hDriver = NULL;
     bool interruptWasEnabled = false;
     DRV_USB_EHCI_CONTROL_TRANSFER_QTD * controlTransfer;
@@ -2220,7 +2220,7 @@ USB_ERROR DRV_USB_EHCI_IRPSubmit
  
 void DRV_USB_EHCI_IRPCancel(USB_HOST_IRP * inputIRP)
 {
-    USB_HOST_IRP_LOCAL * irp = (USB_HOST_IRP_LOCAL *)inputIRP;
+    USB_HOST_EHCI_IRP_LOCAL * irp = (USB_HOST_EHCI_IRP_LOCAL *)inputIRP;
     DRV_USB_EHCI_PIPE_HANDLE hPipe = DRV_USB_EHCI_PIPE_HANDLE_INVALID;
     DRV_USB_EHCI_OBJ * hDriver = NULL;
     DRV_USB_EHCI_QH * pipe = NULL;

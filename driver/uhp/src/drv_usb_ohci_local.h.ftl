@@ -232,7 +232,7 @@ typedef struct S_USB_HOST_IRP_LOCAL
     void * next;
     DRV_USB_OHCI_PIPE_HANDLE  pipe;
 
-} USB_HOST_IRP_LOCAL;
+} USB_HOST_OHCI_IRP_LOCAL;
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 5.6"
@@ -252,7 +252,7 @@ typedef struct
     bool inUse;
 
     /* Pointer to the IRP connected to this qTD */
-    USB_HOST_IRP_LOCAL * irp;
+    USB_HOST_OHCI_IRP_LOCAL * irp;
 
     /* Transfer buffer that will be used by this qTD */
     uint8_t * transferBuffer;
@@ -324,7 +324,7 @@ typedef struct DRV_USB_OHCI_CONTROL_TD
     bool inUse;
 
     /* Pointer to the IRP associated with this object */
-    USB_HOST_IRP_LOCAL * irp;
+    USB_HOST_OHCI_IRP_LOCAL * irp;
 
     /* Padding required for alignment */
     uint8_t padding[12];
