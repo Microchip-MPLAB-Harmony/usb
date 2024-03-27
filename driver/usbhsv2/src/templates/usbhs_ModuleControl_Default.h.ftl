@@ -332,13 +332,7 @@ PLIB_TEMPLATE void USBHS_DeviceAttach_Default( USBHS_MODULE_ID index, uint32_t s
   
     usbhs->INTRTXEbits.EP0IE = 0;
      
-    asm("NOP");
-    asm("NOP");
-    asm("NOP");
-    asm("NOP");
-    asm("NOP");
-    asm("NOP");
-    asm("NOP");
+
 }
 
 //******************************************************************************
