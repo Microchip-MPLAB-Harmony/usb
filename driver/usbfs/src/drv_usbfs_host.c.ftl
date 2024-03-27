@@ -2888,9 +2888,12 @@ void F_DRV_USBFS_HOST_Tasks_ISR(DRV_USBFS_OBJ * pusbdrvObj)
             pusbdrvObj->detachDebounceCounter++;
             if(DRV_USBFS_POST_DETACH_DELAY <= pusbdrvObj->detachDebounceCounter)
             {
+                
+                /* Disable timer interrupt */
+                PLIB_USB_OTG_InterruptDisable(usbID, USB_OTG_INT_ONE_MS_TIMEOUT); 
+              
                 /* The post detach delay is completed. We can re-enable the
                  * attach interrupt now. */
-
                 pusbdrvObj->isDetachDebouncing = false;
                 PLIB_USB_InterruptFlagClear(usbID, USB_INT_ATTACH);
                 PLIB_USB_InterruptEnable(usbID, USB_INT_ATTACH);
