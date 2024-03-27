@@ -3087,12 +3087,6 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE F_USB_HOST_HID_InterfaceEventHandler
     }
     else
     {
-        if(USB_HOST_HID_STATE_WAIT == hidInstanceInfo->state)
-        {
-            /* Change the state to make sure that the next INTERRUPT IN IRP
-             submission happens. */
-            hidInstanceInfo->state = USB_HOST_HID_STATE_READY;
-        }
         switch(event)
         {
             case USB_HOST_DEVICE_INTERFACE_EVENT_TRANSFER_COMPLETE:
@@ -3124,8 +3118,6 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE F_USB_HOST_HID_InterfaceEventHandler
                             {
                                 if(USB_HOST_HID_STATE_WAITING_SET_REPORT == hidInstanceInfo->state)
                                 {
-                                    hidInstanceInfo->state =
-                                            USB_HOST_HID_STATE_READY;
                                     responseData.result = 
                                             USB_HOST_HID_RESULT_SUCCESS;
                                     responseData.handle = 
@@ -3141,7 +3133,13 @@ USB_HOST_DEVICE_INTERFACE_EVENT_RESPONSE F_USB_HOST_HID_InterfaceEventHandler
                                         );
                                 }
                                 else
-                                {
+                                {	
+									hidInstanceInfo->state =
+                                            USB_HOST_HID_STATE_READY;
+                                    responseData.result = 
+                                            USB_HOST_HID_RESULT_SUCCESS;
+                                    responseData.handle = 
+                                            transferCompleteEventData->transferHandle;
                                     ((&usageDriverTable_Entry
                                             [gUSBHostHIDObjectHandlePool[index].usageInstanceIndex]
                                             )->interface)->usageDriverEventHandler
