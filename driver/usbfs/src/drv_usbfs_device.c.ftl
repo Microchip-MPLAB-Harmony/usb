@@ -849,17 +849,7 @@ bool DRV_USBFS_DEVICE_EndpointIsStalled
 }
 
 // *****************************************************************************
-/* MISRA C-2012 Rule 10.1 deviate: 2, and Rule 10.4 deviate:7. 
-   Deviation record ID - H3_USB_MISRAC_2012_R_10_1_DR_1, H3_USB_MISRAC_2012_R_10_4_DR_1 */
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunknown-pragmas"
-</#if>
-#pragma coverity compliance block \
-(deviate:2 "MISRA C-2012 Rule 10.1" "H3_USB_MISRAC_2012_R_10_1_DR_1" )\
-(deviate:7 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1" )
-</#if>
+
 /* Function:
     void F_DRV_USBFS_DEVICE_EndpointBDTEntryArm
     (
@@ -1824,14 +1814,7 @@ USB_ERROR DRV_USBFS_DEVICE_EndpointStallClear
     return(returnValue);
 }
 
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic pop
-</#if>
-</#if>
-/* MISRAC 2012 deviation block end */
+
 // *****************************************************************************
 /* Function:
     uint16_t DRV_USBFS_DEVICE_SOFNumberGet(DRV_HANDLE handle)

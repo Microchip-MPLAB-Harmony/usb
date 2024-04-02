@@ -50,19 +50,18 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "usbhs_registers.h"
 
-/* MISRA C-2012 Rule 10.1, Rule 10.3, Rule 10.4, Rule 11.3, 
+/* MISRA C-2012 Rule 10.3, Rule 10.4, Rule 11.3, 
    Rule 11.8, Rule 13.5, Rule 14.2 and Rule 14.4. Deviation record ID -  
-    H3_USB_MISRAC_2012_R_10_1_DR_1, H3_USB_MISRAC_2012_R_10_3_DR_1 
+    H3_USB_MISRAC_2012_R_10_3_DR_1 , H3_USB_MISRAC_2012_R_14_4_DR_1
     H3_USB_MISRAC_2012_R_10_4_DR_1, H3_USB_MISRAC_2012_R_11_3_DR_1
     H3_USB_MISRAC_2012_R_11_8_DR_1 and H3_USB_MISRAC_2012_R_13_5_DR_1
-    H3_USB_MISRAC_2012_R_14_2_DR_1 and H3_USB_MISRAC_2012_R_14_4_DR_1 */
+    H3_USB_MISRAC_2012_R_14_2_DR_1  */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:10 "MISRA C-2012 Rule 10.1" "H3_USB_MISRAC_2012_R_10_1_DR_1" )\
 (deviate:3 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1" )\
 (deviate:10 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1" )\
 (deviate:2 "MISRA C-2012 Rule 11.3" "H3_USB_MISRAC_2012_R_11_3_DR_1" )\
@@ -93,7 +92,7 @@ PLIB_TEMPLATE void USBHS_EndpointFIFOLoad_Default
 {
     /* This function loads the FIFO and then sends the packet */
     
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     volatile uint8_t * endpointFIFO;
     size_t i;
 
@@ -108,7 +107,7 @@ PLIB_TEMPLATE void USBHS_EndpointFIFOLoad_Default
 
     /* Set the TXPKTRDY bit. The position of this bit is different for endpoint
      * 0 and other endpoints. */
-    if(endpoint == 0)
+    if(endpoint == 0U)
     {
         usbhs->EPCSR[0].CSR0L_DEVICEbits.TXPKTRDY = 1;
     }
@@ -139,7 +138,7 @@ PLIB_TEMPLATE void USBHS_DeviceEPFIFOLoad_Default
 {
     /* This function loads the FIFO */ 
 
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     volatile uint8_t * endpointFIFO;
     size_t i;
 
@@ -173,7 +172,7 @@ PLIB_TEMPLATE int USBHS_EndpointFIFOUnload_Default
 {
     /* This function unloads the FIFO and then clears the RX packet ready bit */
 
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     volatile uint8_t * fifo, * data;
     volatile unsigned int count;
     size_t i;
@@ -193,13 +192,13 @@ PLIB_TEMPLATE int USBHS_EndpointFIFOUnload_Default
 
     for(i = 0; i < count; i ++)
     {
-        data[i] = *(fifo + (i & 3));
+        data[i] = *(fifo + (i & 3U));
     }
 
     /* The offset of the RX endpoint control register is different for endpoint
      * 0 and other endpoints. Clear the RXPKDTRY bits after unloading the FIFO */
 
-    if(endpoint == 0)
+    if(endpoint == 0U)
     {
         usbhs->EPCSR[0].CSR0L_DEVICEbits.RXPKTRDY = 0;
     }
@@ -231,7 +230,7 @@ PLIB_TEMPLATE int USBHS_DeviceEPFIFOUnload_Default
 {
     /* This function unloads the FIFO and then clears the RX packet ready bit */
 
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     volatile uint8_t * fifo, * data;
     volatile unsigned int count;
     size_t i;
@@ -251,7 +250,7 @@ PLIB_TEMPLATE int USBHS_DeviceEPFIFOUnload_Default
 
     for(i = 0; i < count; i ++)
     {
-        data[i] = *(fifo + (i & 3));
+        data[i] = *(fifo + (i & 3U));
     }
     
     return(count);
@@ -281,7 +280,7 @@ PLIB_TEMPLATE void USBHS_Endpoint0SetupPacketLoad_Default
     volatile uint8_t * endpointFIFO;
     volatile uint8_t * data;
     unsigned int i;
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     
     data = (uint8_t *)setupPacket;
 
@@ -289,7 +288,7 @@ PLIB_TEMPLATE void USBHS_Endpoint0SetupPacketLoad_Default
     endpointFIFO = (uint8_t *)(&usbhs->FIFO[0]);
 
     /* Load the endpoint FIFO with the setup packet */
-    for(i = 0; i < 8; i++)
+    for(i = 0; i < 8U; i++)
     {
         *endpointFIFO = *(data + i);
     }
@@ -325,7 +324,7 @@ PLIB_TEMPLATE void USBHS_Endpoint0SetupPacketUnload_Default
 {
     /* Unloads a setup packet from endpoint 0 fifo. Get the endpoint 0 FIFO and
      * control register addresses. */
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     uint8_t * data = (uint8_t *)dest;
 
     /* Read the 8 byte packet as 2 4-byte words */
@@ -352,12 +351,12 @@ PLIB_TEMPLATE void USBHS_Endpoint0FIFOFlush_Default( USBHS_MODULE_ID index )
     /* This function flushes the EP0 FIFO. The FIFO can be flushed only if it
      * contains data. Hence the check for TXPKTRDY or RXPKTRDY */
 
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
  
     /* Check if transmit packet ready or if the receive packet ready is set. If
      * so then clear the flush */
     
-    if((usbhs->EPCSR[0].CSR0L_DEVICEbits.TXPKTRDY) || (usbhs->EPCSR[0].CSR0L_DEVICEbits.RXPKTRDY))
+    if((usbhs->EPCSR[0].CSR0L_DEVICEbits.TXPKTRDY) == 1U || (usbhs->EPCSR[0].CSR0L_DEVICEbits.RXPKTRDY) == 1U)
     {
         usbhs->EPCSR[0].CSR0H_DEVICEbits.FLSHFIFO = 1;
     }
@@ -382,7 +381,7 @@ PLIB_TEMPLATE void USBHS_EndpointTxFIFOFlush_Default
 {
     /* This function will clear the FIFO for a non-zero endpoint */
    
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     if(usbhs->EPCSR[endpoint].TXCSRL_DEVICEbits.TXPKTRDY)
     {
         usbhs->EPCSR[endpoint].TXCSRL_DEVICEbits.FLUSH = 1;
@@ -407,9 +406,9 @@ PLIB_TEMPLATE void USBHS_EndpointRxFIFOFlush_Default
 )
 {
     /* Get the pointer to the endpoint Receive Control and Status register */
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     
-    if(usbhs->EPCSR[endpoint].RXCSRL_DEVICEbits.RXPKTRDY == 1)
+    if(usbhs->EPCSR[endpoint].RXCSRL_DEVICEbits.RXPKTRDY == 1U)
     {
         usbhs->EPCSR[endpoint].RXCSRL_DEVICEbits.FLUSH = 1;
     }
@@ -433,7 +432,6 @@ PLIB_TEMPLATE bool USBHS_ExistsEndpointFIFO_Default( USBHS_MODULE_ID index )
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"

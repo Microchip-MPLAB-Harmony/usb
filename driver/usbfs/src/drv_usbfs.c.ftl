@@ -83,8 +83,6 @@ static DRV_USBFS_GROUP gDrvUSBGroup[DRV_USBFS_INSTANCES_NUMBER];
 (deviate:3 "MISRA C-2012 Rule 11.3" "H3_USB_MISRAC_2012_R_11_3_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 11.6" "H3_USB_MISRAC_2012_R_11_6_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 11.8" "H3_USB_MISRAC_2012_R_11_8_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 10.1" "H3_USB_MISRAC_2012_R_10_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1" )
 </#if>
 
 // *****************************************************************************
@@ -236,11 +234,7 @@ SYS_MODULE_OBJ DRV_USBFS_Initialize
 }
 
 // *****************************************************************************
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
-</#if>
-/* MISRAC 2012 deviation block end */
+
 /* Function:
     void DRV_USBFS_Deinitialize( const SYS_MODULE_OBJ object )
 

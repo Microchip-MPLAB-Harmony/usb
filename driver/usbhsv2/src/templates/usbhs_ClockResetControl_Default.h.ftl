@@ -47,15 +47,14 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #ifndef USBHS_CLOCKRESETCONTROL_DEFAULT_H
 #define USBHS_CLOCKRESETCONTROL_DEFAULT_H
 
-/* MISRA C-2012 Rule 10.1, Rule 5.2, and Rule 10.4.Deviation record ID -  
-    H3_USB_MISRAC_2012_R_10_1_DR_1, H3_USB_MISRAC_2012_R_10_4_DR_1 */
+/* MISRA C-2012 Rule 5.2, and Rule 10.4.Deviation record ID -  
+    H3_USB_MISRAC_2012_R_10_4_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:2 "MISRA C-2012 Rule 10.1" "H3_USB_MISRAC_2012_R_10_1_DR_1" )\
 (deviate:2 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1" )
 </#if>
 //******************************************************************************
@@ -95,7 +94,7 @@ PLIB_TEMPLATE void USBHS_GlobalInterruptEnable_Default( USBHS_MODULE_ID index )
     volatile __USBCRCONbits_t * usbcrcon = (__USBCRCONbits_t *)(index - 0x5F000);
     usbcrcon->USBIE = 1;
 */
-    volatile usbhs_registers_t *usbhs = (usbhs_registers_t*)(index-0x1000);
+    volatile usbhs_registers_t *usbhs = (usbhs_registers_t*)((uint32_t)index);
     usbhs->ENDPOINT0.USBHS_INTENSET = USBHS_INTENSET_USB_Msk | USBHS_INTENSET_WAKEUP_Msk | USBHS_INTENSET_WAKEUP_Msk;
 }
 
@@ -118,7 +117,7 @@ PLIB_TEMPLATE void USBHS_GlobalInterruptDisable_Default( USBHS_MODULE_ID index )
     volatile __USBCRCONbits_t * usbcrcon = (__USBCRCONbits_t *)(index - 0x5F000);
     usbcrcon->USBIE = 0;
 */
-    volatile usbhs_registers_t *usbhs = (usbhs_registers_t*)(index-0x1000);
+    volatile usbhs_registers_t *usbhs = (usbhs_registers_t*)((uint32_t)index);
     usbhs->ENDPOINT0.USBHS_INTENCLR = USBHS_INTENSET_USB_Msk;
 }
 

@@ -62,19 +62,17 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "usbhs_registers.h"
 
 
-/* MISRA C-2012 Rule 10.1, Rule 10.3, Rule 10.4, Rule 11.6, 
+/* MISRA C-2012 Rule 10.3, Rule 10.4, Rule 11.6, 
    Rule 11.8, Rule 16.1, and Rule 16.3. Deviation record ID -  
-    H3_USB_MISRAC_2012_R_10_1_DR_1, H3_USB_MISRAC_2012_R_10_3_DR_1, 
+    H3_USB_MISRAC_2012_R_10_3_DR_1, H3_USB_MISRAC_2012_R_16_3_DR_1
     H3_USB_MISRAC_2012_R_10_4_DR_1, H3_USB_MISRAC_2012_R_11_6_DR_1,
-    H3_USB_MISRAC_2012_R_11_8_DR_1, H3_USB_MISRAC_2012_R_16_1_DR_1,   
-    and H3_USB_MISRAC_2012_R_16_3_DR_1 */
+    H3_USB_MISRAC_2012_R_11_8_DR_1, H3_USB_MISRAC_2012_R_16_1_DR_1, */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:10 "MISRA C-2012 Rule 10.1" "H3_USB_MISRAC_2012_R_10_1_DR_1" )\
 (deviate:10 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1" )\
 (deviate:10 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 11.6" "H3_USB_MISRAC_2012_R_11_6_DR_1" )\
@@ -104,7 +102,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 PLIB_TEMPLATE void USBHS_HighSpeedEnable_Default( USBHS_MODULE_ID index )
 {
     /* This function enables high speed support */
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->POWERbits.HSEN = 1;
 }
 
@@ -122,7 +120,7 @@ PLIB_TEMPLATE void USBHS_HighSpeedEnable_Default( USBHS_MODULE_ID index )
 PLIB_TEMPLATE void USBHS_HighSpeedDisable_Default( USBHS_MODULE_ID index )
 {
     /* This function disables high speed support */
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->POWERbits.HSEN = 0;
 }
 
@@ -142,7 +140,7 @@ PLIB_TEMPLATE bool USBHS_HighSpeedIsConnected_Default( USBHS_MODULE_ID index )
     /* Returns true if the connected device is high speed
      * else returns false. */
 
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     return((bool)(usbhs->POWERbits.HSMODE));
 }
 
@@ -166,14 +164,14 @@ PLIB_TEMPLATE bool USBHS_DMAErrorGet_Default
     /* Returns true the specified DMA channel is in an error condition
      * and then clears the error flag. */
     
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     bool result = false;
     
-    if( usbhs->DMA_CHANNEL[dmaChannel - 1].DMACNTLbits.DMAERR == 1)
+    if( usbhs->DMA_CHANNEL[dmaChannel - 1].DMACNTLbits.DMAERR == 1U)
     {
         /* Clear the error flag*/
         result = true;
-        usbhs->DMA_CHANNEL[dmaChannel - 1].DMACNTLbits.DMAERR = 0;
+        usbhs->DMA_CHANNEL[dmaChannel - 1].DMACNTLbits.DMAERR = 0U;
         
     }
   
@@ -195,7 +193,7 @@ PLIB_TEMPLATE uint8_t USBHS_DMAInterruptGet_Default( USBHS_MODULE_ID index)
 {
     /* Returns the status the DMA channel interrupts. Calling this function
      * also clears the interrupt flags. */
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     volatile uint8_t * dmaInterruptRegAddress = (uint8_t *)(&usbhs->DMA_INTR);
     return (*dmaInterruptRegAddress);
 }
@@ -224,24 +222,24 @@ PLIB_TEMPLATE void USBHS_DMAOperationEnable_Default
     /* Configures the DMA channel for specified endpoint and transfer 
      * direction */
     
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
    
     /* DMA ADDR register program */
-    usbhs->DMA_CHANNEL[dmaChannel - 1].DMAADDR = (uint32_t)address;
+    usbhs->DMA_CHANNEL[dmaChannel - 1U].DMAADDR = (uint32_t)address;
    
     /* DMA COUNT register program */
-    usbhs->DMA_CHANNEL[dmaChannel - 1].DMACOUNT = (uint32_t)(count);
+    usbhs->DMA_CHANNEL[dmaChannel - 1U].DMACOUNT = (uint32_t)(count);
     
     /* Set up the rest of the DMA channel */
-    usbhs->DMA_CHANNEL[dmaChannel - 1].DMACNTLbits.DMABRSTM = 3;
-    usbhs->DMA_CHANNEL[dmaChannel - 1].DMACNTLbits.DMAIE = 1;
-    usbhs->DMA_CHANNEL[dmaChannel - 1].DMACNTLbits.DMAMODE = 0;
-    usbhs->DMA_CHANNEL[dmaChannel - 1].DMACNTLbits.DMAEP = endpoint;
+    usbhs->DMA_CHANNEL[dmaChannel - 1U].DMACNTLbits.DMABRSTM = 3;
+    usbhs->DMA_CHANNEL[dmaChannel - 1U].DMACNTLbits.DMAIE = 1;
+    usbhs->DMA_CHANNEL[dmaChannel - 1U].DMACNTLbits.DMAMODE = 0;
+    usbhs->DMA_CHANNEL[dmaChannel - 1U].DMACNTLbits.DMAEP = endpoint;
     
     /* The input direction bit is a complement of the DMA channel direction
      * bit. */
-    usbhs->DMA_CHANNEL[dmaChannel - 1].DMACNTLbits.DMADIR = !direction;
-    usbhs->DMA_CHANNEL[dmaChannel - 1].DMACNTLbits.DMAEN = 1;
+    usbhs->DMA_CHANNEL[dmaChannel - 1U].DMACNTLbits.DMADIR = !direction;
+    usbhs->DMA_CHANNEL[dmaChannel - 1U].DMACNTLbits.DMAEN = 1;
 
 }
 
@@ -265,7 +263,7 @@ PLIB_TEMPLATE void USBHS_LoadEPInIndex_Default
     /* Load the index register. This defines which endpoint control status
      * register set appears in the EPCSR window. */
     
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->INDEXbits.ENDPOINT = endpoint; 
 }
 
@@ -282,7 +280,7 @@ PLIB_TEMPLATE void USBHS_LoadEPInIndex_Default
 
 PLIB_TEMPLATE uint8_t * USBHS_GetEP0FIFOAddress_Default(USBHS_MODULE_ID index)
 {
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     return ((uint8_t *)(&usbhs->FIFO[0]));
 }
 
@@ -299,7 +297,7 @@ PLIB_TEMPLATE uint8_t * USBHS_GetEP0FIFOAddress_Default(USBHS_MODULE_ID index)
 
 PLIB_TEMPLATE uint8_t * USBHS_GetEP0CSRAddress_Default(USBHS_MODULE_ID index)
 {
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     return ((uint8_t *)(&usbhs->INDEXED_EPCSR.CSR0L_DEVICEbits));
 }
 
@@ -319,7 +317,7 @@ PLIB_TEMPLATE uint32_t USBHS_GetReceiveDataCount_Default
     uint8_t endpoint
 )
 {
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     uint32_t count;
     
     count = usbhs->EPCSR[endpoint].RXCOUNTbits.w;
@@ -342,15 +340,15 @@ PLIB_TEMPLATE bool USBHS_FullOrHighSpeedIsConnected_Default( USBHS_MODULE_ID ind
     /* Function returns true is high or full speed device is connected.
      * Return false if low speed or no device is connected */
 
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     bool result = false;
     
-    if(usbhs->DEVCTLbits.FSDEV == 1)
+    if(usbhs->DEVCTLbits.FSDEV == 1U)
     {
         result = true;
     }
     
-    if(usbhs->DEVCTLbits.LSDEV == 1)
+    if(usbhs->DEVCTLbits.LSDEV == 1U)
     {
         result = false;
     }
@@ -392,11 +390,11 @@ PLIB_TEMPLATE bool USBHS_TestModeEnter_Default
     uint8_t testMode 
 )
 {
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     bool result = true;
     uint8_t testModeRegValue = 0; 
     
-    if((usbhs->TESTMODEbits.w & 0x7F) == 0x0)
+    if((usbhs->TESTMODEbits.w & 0x7FU) == 0x0U)
     {
         /* We can proceed only if bits D6-D0 are are all 0. Now check if 
          * testMode is not zero and is not greater than 5. This is not a valid test 
@@ -460,7 +458,7 @@ PLIB_TEMPLATE bool USBHS_TestModeEnter_Default
 
 PLIB_TEMPLATE bool USBHS_TestModeExit_Default( USBHS_MODULE_ID index , uint8_t testMode )
 {
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     bool result = true;
     uint8_t testModeRegValue = 0; 
     
@@ -508,7 +506,6 @@ PLIB_TEMPLATE bool USBHS_TestModeExit_Default( USBHS_MODULE_ID index , uint8_t t
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.6"

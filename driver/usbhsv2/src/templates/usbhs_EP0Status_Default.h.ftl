@@ -53,15 +53,14 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "usbhs_registers.h"
 
-/* MISRA C-2012 Rule 10.1 and Rule 10.4. Deviation record ID -  
-    H3_USB_MISRAC_2012_R_10_1_DR_1 and H3_USB_MISRAC_2012_R_10_4_DR_1 */
+/* MISRA C-2012 Rule 10.4. Deviation record ID -  
+    H3_USB_MISRAC_2012_R_10_4_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:10 "MISRA C-2012 Rule 10.1" "H3_USB_MISRAC_2012_R_10_1_DR_1" )\
 (deviate:10 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1" )
 </#if>
 
@@ -80,7 +79,7 @@ PLIB_TEMPLATE uint8_t USBHS_EP0StatusGet_Default( USBHS_MODULE_ID index )
 {
     /* Returns the entire CSR0L register contents */
     
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     return(usbhs->EPCSR[0].CSR0L_HOSTbits.w);
 }
 
@@ -103,8 +102,8 @@ PLIB_TEMPLATE void USBHS_EP0StatusClear_Default
 {
     /* This function clears the specified error */
     
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
-    usbhs->EPCSR[0].CSR0L_HOSTbits.w &= (~(error));
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
+    usbhs->EPCSR[0].CSR0L_HOSTbits.w &= (~(uint8_t)(error));
 }
 
 //******************************************************************************
@@ -122,7 +121,7 @@ PLIB_TEMPLATE void USBHS_EP0SentStallClear_Default( USBHS_MODULE_ID index)
 {
     /* This function clears sent stall bit */
 
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->EPCSR[0].CSR0L_HOSTbits.RXSTALL = 0;
 }
 
@@ -142,7 +141,7 @@ PLIB_TEMPLATE void USBHS_EP0SetupEndServiced_Default( USBHS_MODULE_ID index)
     /* This function sets the "Serviced Setup End" bit
      * which then clears the setup end bit */
 
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->EPCSR[0].CSR0L_DEVICEbits.SVSSETEND = 1;
 }
 
@@ -161,7 +160,7 @@ PLIB_TEMPLATE void USBHS_EP0RxPktRdyServiced_Default( USBHS_MODULE_ID index)
 {
     /* This function sets the Serviced RxPktRdy bit */
 
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->EPCSR[0].CSR0L_DEVICEbits.SVCRPR = 1;
 }
 
@@ -180,7 +179,7 @@ PLIB_TEMPLATE void USBHS_EP0RxPktRdyServicedDataEnd_Default( USBHS_MODULE_ID ind
 {
     /* This function sets the RxPktRdy serviced bit and the Data End bit. */
     
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->EPCSR[0].CSR0L_DEVICEbits.w = (USBHS_EP0_DEVICE_SERVICED_RXPKTRDY| USBHS_EP0_DEVICE_DATAEND);
 }
 
@@ -199,7 +198,7 @@ PLIB_TEMPLATE void USBHS_EP0TxPktRdyDataEnd_Default( USBHS_MODULE_ID index)
 {
     /* This function sets the TxPktRdy bit and the Data End bit. */
 
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->EPCSR[0].CSR0L_DEVICEbits.w = (USBHS_EP0_DEVICE_TXPKTRDY| USBHS_EP0_DEVICE_DATAEND);
 }
 
@@ -218,7 +217,7 @@ PLIB_TEMPLATE void USBHS_EP0TxPktRdy_Default( USBHS_MODULE_ID index)
 {
     /* This function sets the TxPktRdy bit. */
 
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->EPCSR[0].CSR0L_DEVICEbits.TXPKTRDY = 1;
 }
 
@@ -237,7 +236,7 @@ PLIB_TEMPLATE void USBHS_EP0DataEndSet_Default( USBHS_MODULE_ID index)
 {
     /* This function sets the data end bit */
 
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->EPCSR[0].CSR0L_DEVICEbits.DATAEND = 1;
 }
 
@@ -257,7 +256,7 @@ PLIB_TEMPLATE void USBHS_EP0INHandshakeSend_Default( USBHS_MODULE_ID index )
     /* Starts the IN Handshake stage of a control transfer on EP0 in 
      * Host mode. */
     
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->EPCSR[0].CSR0L_HOSTbits.w = (USBHS_EP0_HOST_STATUS_STAGE_START | USBHS_EP0_HOST_REQPKT);
 }
 
@@ -277,7 +276,7 @@ PLIB_TEMPLATE void USBHS_EP0INTokenSend_Default( USBHS_MODULE_ID index )
 {
     /* Sends an IN token on EP0 in Host mode */
     
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->EPCSR[0].CSR0L_HOSTbits.REQPKT = 1;
 }
 
@@ -296,7 +295,7 @@ PLIB_TEMPLATE void USBHS_EP0StallEnable_Default( USBHS_MODULE_ID index )
 {
     /* Causes a stall to be sent on EP0 in device mode */
     
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->EPCSR[0].CSR0L_DEVICEbits.SENDSTALL = 1;
 }
 
@@ -314,7 +313,7 @@ PLIB_TEMPLATE void USBHS_EP0StallEnable_Default( USBHS_MODULE_ID index )
 PLIB_TEMPLATE void USBHS_EP0StallDisable_Default( USBHS_MODULE_ID index )
 {
     /* Clear the SENDSTALL bit */
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->EPCSR[0].CSR0L_DEVICEbits.SENDSTALL = 0;
 }
 
@@ -333,7 +332,7 @@ PLIB_TEMPLATE void USBHS_EP0OUTHandshakeSend_Default( USBHS_MODULE_ID index )
 {
     /* Starts an OUT Handshake stage on EP0 in host mode. */
     
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->EPCSR[0].CSR0L_HOSTbits.w = (USBHS_EP0_HOST_STATUS_STAGE_START | USBHS_EP0_HOST_TXPKTRDY);
 }
 
@@ -350,8 +349,8 @@ PLIB_TEMPLATE void USBHS_EP0OUTHandshakeSend_Default( USBHS_MODULE_ID index )
 
 PLIB_TEMPLATE void USBHS_EP0INHandshakeClear_Default( USBHS_MODULE_ID index )
 {
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
-    usbhs->EPCSR[0].CSR0L_HOSTbits.w &= (~(USBHS_EP0_HOST_STATUS_STAGE_START | USBHS_EP0_HOST_RXPKTRDY));
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
+    usbhs->EPCSR[0].CSR0L_HOSTbits.w = usbhs->EPCSR[0].CSR0L_HOSTbits.w & (uint8_t)(~(USBHS_EP0_HOST_STATUS_STAGE_START | USBHS_EP0_HOST_RXPKTRDY));
 }
 
 //******************************************************************************
@@ -371,7 +370,6 @@ PLIB_TEMPLATE bool USBHS_ExistsEP0Status_Default( USBHS_MODULE_ID index )
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop

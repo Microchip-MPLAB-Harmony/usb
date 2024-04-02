@@ -61,19 +61,18 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "usbhs_registers.h"
 
-/* MISRA C-2012 Rule 10.1, Rule 10.3, Rule 10.4, Rule 10.8, 
+/* MISRA C-2012 Rule 10.3, Rule 10.4, Rule 10.8, 
    Rule 15.6, Rule 4.3, Rule 21.1 and Rule 21.2. Deviation record ID -  
-    H3_USB_MISRAC_2012_R_10_1_DR_1, H3_USB_MISRAC_2012_R_10_3_DR_1 
+    H3_USB_MISRAC_2012_R_10_3_DR_1, H3_USB_MISRAC_2012_R_21_1_DR_1
     H3_USB_MISRAC_2012_R_10_4_DR_1, H3_USB_MISRAC_2012_R_10_8_DR_1
-    H3_USB_MISRAC_2012_R_15_6_DR_1, H3_USB_MISRAC_2012_R_4_3_DR_1
-    H3_USB_MISRAC_2012_R_21_2_DR_1 and H3_USB_MISRAC_2012_R_21_1_DR_1 */
+    H3_USB_MISRAC_2012_R_15_6_DR_1, H3_USB_MISRAC_2012_R_4_3_DR_1 and
+    H3_USB_MISRAC_2012_R_21_2_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:10 "MISRA C-2012 Rule 10.1" "H3_USB_MISRAC_2012_R_10_1_DR_1" )\
 (deviate:10 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1" )\
 (deviate:10 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 10.8" "H3_USB_MISRAC_2012_R_10_8_DR_1" )\
@@ -96,7 +95,7 @@ PLIB_TEMPLATE void USBHS_ResumeEnable_Default( USBHS_MODULE_ID index )
 {
     /* Function enables resume signaling */
     
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->POWERbits.RESUME = 1;
 }
 
@@ -115,7 +114,7 @@ PLIB_TEMPLATE void USBHS_ResumeDisable_Default( USBHS_MODULE_ID index )
 {
     /* Function disables resume signaling */
     
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->POWERbits.RESUME = 0;
 }
 
@@ -134,7 +133,7 @@ PLIB_TEMPLATE void USBHS_SuspendEnable_Default( USBHS_MODULE_ID index )
 {
     /* Function enables bus suspend  */
     
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->POWERbits.SUSPMODE = 1;
 }
 
@@ -153,7 +152,7 @@ PLIB_TEMPLATE void USBHS_SuspendDisable_Default( USBHS_MODULE_ID index )
 {
     /* Function disables bus suspend  */
     
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->POWERbits.SUSPMODE = 0;
 }
 
@@ -171,8 +170,8 @@ PLIB_TEMPLATE void USBHS_SuspendDisable_Default( USBHS_MODULE_ID index )
 PLIB_TEMPLATE USBHS_VBUS_LEVEL USBHS_VBUSLevelGet_Default( USBHS_MODULE_ID index )
 {
     /* Function returns the current VBUS level */
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
-    return((USBHS_VBUS_LEVEL)((usbhs->DEVCTLbits.w) & 0x18));
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
+    return((USBHS_VBUS_LEVEL)((usbhs->DEVCTLbits.w) & 0x18U));
 }
 
 //******************************************************************************
@@ -189,7 +188,7 @@ PLIB_TEMPLATE USBHS_VBUS_LEVEL USBHS_VBUSLevelGet_Default( USBHS_MODULE_ID index
 PLIB_TEMPLATE bool USBHS_HostModeIsEnabled_Default( USBHS_MODULE_ID index )
 {
     /* Returns true if the Host Mode is enabled. */
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     return((bool)(usbhs->DEVCTLbits.HOSTMODE));
 }
 
@@ -208,7 +207,7 @@ PLIB_TEMPLATE void USBHS_SessionEnable_Default( USBHS_MODULE_ID index )
 {
     /* Function enables a session  */
     
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->DEVCTLbits.SESSION = 1;
 }
 
@@ -227,7 +226,7 @@ PLIB_TEMPLATE void USBHS_SessionEnable_Default( USBHS_MODULE_ID index )
 PLIB_TEMPLATE bool USBHS_IsBDevice_Default( USBHS_MODULE_ID index )
 {
     /* Returns true if the Host Mode is enabled. */
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     return((bool)(usbhs->DEVCTLbits.BDEV));
 }
 
@@ -245,7 +244,7 @@ PLIB_TEMPLATE bool USBHS_IsBDevice_Default( USBHS_MODULE_ID index )
 PLIB_TEMPLATE void USBHS_SessionDisable_Default( USBHS_MODULE_ID index )
 {
     /* Clears the session bit */
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->DEVCTLbits.SESSION = 0;
 }
 
@@ -262,7 +261,7 @@ PLIB_TEMPLATE void USBHS_SessionDisable_Default( USBHS_MODULE_ID index )
 PLIB_TEMPLATE void USBHS_ResetEnable_Default( USBHS_MODULE_ID index )
 {
     /* Sets the reset bit */
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->POWERbits.RESET = 1;
 }
 
@@ -280,7 +279,7 @@ PLIB_TEMPLATE void USBHS_ResetEnable_Default( USBHS_MODULE_ID index )
 PLIB_TEMPLATE void USBHS_ResetDisable_Default( USBHS_MODULE_ID index )
 {
    /* Sets the reset bit */
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->POWERbits.RESET = 0;
 }
 
@@ -301,7 +300,7 @@ PLIB_TEMPLATE void USBHS_DeviceAddressSet_Default
 )
 {
     /* Clears the reset bit */
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->FADDRbits.FUNC = address ;
     while (usbhs->FADDRbits.FUNC != address); 
 }
@@ -320,14 +319,14 @@ PLIB_TEMPLATE void USBHS_DeviceAddressSet_Default
 PLIB_TEMPLATE void USBHS_DeviceAttach_Default( USBHS_MODULE_ID index, uint32_t speed )
 {
     /* Attach the device at the specified speed */
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
 
     /* Full speed value is 0x2 and high speed value is 0x1.
      * So if high speed is specified, then HSEN will be 1
      * and if full speed is specified, the HSEN will be 0 */
      // Force Device mode with ID pin override
     
-    usbhs->POWERbits.HSEN = (speed & 0x1);
+    usbhs->POWERbits.HSEN = (speed & 0x1U);
     usbhs->POWERbits.SOFTCONN = 1;
   
     usbhs->INTRTXEbits.EP0IE = 0;
@@ -349,7 +348,7 @@ PLIB_TEMPLATE void USBHS_DeviceDetach_Default( USBHS_MODULE_ID index)
 {
    /* Detach the device. */
     
-    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)(index + 0x1000);
+    volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
     usbhs->POWERbits.SOFTCONN = 0;
 }
 

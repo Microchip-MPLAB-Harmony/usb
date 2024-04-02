@@ -222,17 +222,14 @@ void F_DRV_USBFS_HOST_Initialize
 }
 
 // *****************************************************************************
-/* MISRA C-2012 Rule 10.1 deviate:3, Rule 10.4 deviate:10 and Rule 11.3 deviated:8. 
-   Deviation record ID - H3_USB_MISRAC_2012_R_10_1_DR_1, H3_USB_MISRAC_2012_R_10_4_DR_1 
-   and H3_USB_MISRAC_2012_R_11_3_DR_1*/
+/* MISRA C-2012 Rule 11.3 deviated:8. 
+   Deviation record ID - H3_USB_MISRAC_2012_R_11_3_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:3  "MISRA C-2012 Rule 10.1" "H3_USB_MISRAC_2012_R_10_1_DR_1" )\
-(deviate:10 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1" )\
 (deviate:8  "MISRA C-2012 Rule 11.3" "H3_USB_MISRAC_2012_R_11_3_DR_1" )
 </#if>
 /* Function:
@@ -1698,11 +1695,7 @@ void F_DRV_USBFS_HOST_NonControlSendToken
     F_DRV_USBFS_SendTokenToAddress(usbID, deviceAddress, pid, endpoint, isLowSpeed);
 }
 
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
-</#if>
-/* MISRAC 2012 deviation block end */
+
 // *****************************************************************************
 /* Function:
     bool F_DRV_USBFS_HOST_NonControlIRPProcess
