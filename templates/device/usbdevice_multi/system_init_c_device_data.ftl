@@ -428,7 +428,7 @@ microSoftOsDescriptor_${INDEX?string} =
     /* Vendor code to retrieve OS feature descriptors.  */ 
     /* qwSignature = MSFT100 */ 
     /* Vendor Code = User Defined Value */
-    {'M','S','F','T','1','0','0',0x0100 | USB_DEVICE_MICROSOFT_OS_DESCRIPTOR_VENDOR_CODE} 
+    {'M','S','F','T','1','0','0', USB_DEVICE_MICROSOFT_OS_DESCRIPTOR_VENDOR_CODE, 0x00} 
 };
 </#if>
 
