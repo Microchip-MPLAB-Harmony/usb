@@ -175,7 +175,7 @@ static const uint8_t highSpeedConfigurationDescriptor${INDEX?string}[]=
     0x01,                                               // Index value of this configuration
     0x00,                                               // Configuration string index
     USB_ATTRIBUTE_DEFAULT<#if CONFIG_USB_DEVICE_ATTRIBUTE_SELF_POWERED == true> | USB_ATTRIBUTE_SELF_POWERED</#if><#if CONFIG_USB_DEVICE_ATTRIBUTE_REMOTE_WAKEUP == true> | USB_ATTRIBUTE_REMOTE_WAKEUP</#if>, // Attributes
-    ${CONFIG_USB_DEVICE_MAX_POWER/2},                                                 // Maximum power consumption (mA) /2
+    ${CONFIG_USB_DEVICE_MAX_POWER/2},                                                 // Maximum Power: ${CONFIG_USB_DEVICE_MAX_POWER}mA
     
 ${LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_HS_ENTRY}
 };
@@ -211,7 +211,7 @@ static const uint8_t fullSpeedConfigurationDescriptor${INDEX?string}[]=
     0x01,                                                   // Index value of this configuration
     0x00,                                                   // Configuration string index
     USB_ATTRIBUTE_DEFAULT<#if CONFIG_USB_DEVICE_ATTRIBUTE_SELF_POWERED == true> | USB_ATTRIBUTE_SELF_POWERED</#if><#if CONFIG_USB_DEVICE_ATTRIBUTE_REMOTE_WAKEUP == true> | USB_ATTRIBUTE_REMOTE_WAKEUP</#if>, // Attributes
-    ${CONFIG_USB_DEVICE_MAX_POWER/2},                                                 // Maximum power consumption (mA) /2    
+    ${CONFIG_USB_DEVICE_MAX_POWER/2},                                                 // Maximum Power: ${CONFIG_USB_DEVICE_MAX_POWER}mA    
 ${LIST_USB_DEVICE_FUNCTION_DESCRIPTOR_FS_ENTRY}
 };
 

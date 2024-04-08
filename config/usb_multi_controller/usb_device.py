@@ -584,7 +584,7 @@ def instantiateComponent(usbDeviceComponent,index):
 					configuration when the device is fully operational.'''
 	usbDeviceConfigDescritorMaxPower.setDescription(helpText)
 	usbDeviceConfigDescritorMaxPower.setMin(1)
-	usbDeviceConfigDescritorMaxPower.setMax(250)
+	usbDeviceConfigDescritorMaxPower.setMax(500)
 	usbDeviceConfigDescritorMaxPower.setDefaultValue(100)
 	usbDeviceConfigDescritorMaxPower.setHelp("mcc_configuration_device_layer")
 
