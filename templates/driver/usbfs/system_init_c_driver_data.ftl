@@ -49,7 +49,7 @@ static uint8_t __attribute__((aligned(512))) USB_ALIGN endPointTable1[DRV_USBFS_
 static uint8_t __attribute__((aligned(512))) endPointTable1[DRV_USBFS_ENDPOINTS_NUMBER * 32];
 </#if>
 
-<#if (USB_OPERATION_MODE == "Host")> 
+<#if (USB_OPERATION_MODE == "Host") && (USB_HOST_VBUS_ENABLE == true)> 
 static void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
 {
     /* Note: USB Host applications should have a way for Enabling/Disabling the 
@@ -118,7 +118,7 @@ static const DRV_USBFS_INIT drvUSBFSInit =
     /* Identifies peripheral (PLIB-level) ID */
     .usbID = USB_ID_1,
     
-<#if (USB_OPERATION_MODE == "Host")> 
+<#if (USB_OPERATION_MODE == "Host") && (USB_HOST_VBUS_ENABLE == true)> 
     /* USB Host Power Enable. USB Driver uses this function to Enable the VBUS */ 
     .portPowerEnable = DRV_USB_VBUSPowerEnable,
     
