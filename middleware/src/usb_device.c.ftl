@@ -165,8 +165,12 @@ SYS_MODULE_OBJ USB_DEVICE_Initialize
     usbDeviceThisInstance->remoteWakeupStatus = USB_DEVICE_REMOTE_WAKEUP_DISABLED;
 
     /* Initialize power source to bus power */
+    <#if CONFIG_USB_DEVICE_ATTRIBUTE_SELF_POWERED == true>
+    usbDeviceThisInstance->usbDeviceStatusStruct.powerState = USB_DEVICE_POWER_STATE_SELF_POWERED;
+    <#elseif CONFIG_USB_DEVICE_ATTRIBUTE_SELF_POWERED == false>
     usbDeviceThisInstance->usbDeviceStatusStruct.powerState = USB_DEVICE_POWER_STATE_BUS_POWERED;
-    
+    </#if>
+
     /* Reset set address flag.*/
     usbDeviceThisInstance->usbDeviceStatusStruct.setAddressPending = false;
     
