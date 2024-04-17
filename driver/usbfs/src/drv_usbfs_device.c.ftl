@@ -2048,6 +2048,8 @@ void F_DRV_USBFS_DEVICE_Tasks_ISR(DRV_USBFS_OBJ * hDriver)
         readData = PLIB_USB_InterruptIsEnabled(usbID, USB_INT_IDLE_DETECT);
         if (PLIB_USB_InterruptFlagGet(usbID, USB_INT_IDLE_DETECT) && readData)
         {
+            /* Set the suspended flag */
+            hDriver->isSuspended = true;
             /* The bus is IDLE and is suspended. Send the event to the client. */
             if(hDriver->pEventCallBack != NULL)
             {
@@ -2061,12 +2063,13 @@ void F_DRV_USBFS_DEVICE_Tasks_ISR(DRV_USBFS_OBJ * hDriver)
 
             /* Enable the actvity interrupt */
             PLIB_USB_OTG_InterruptEnable(usbID, USB_OTG_INT_ACTIVITY_DETECT);
-
+            
+            /* Clear the resume flag */
+            PLIB_USB_InterruptFlagClear(usbID, USB_INT_RESUME);
             /* Enable the resume interrupt */
             PLIB_USB_InterruptEnable(usbID, USB_INT_RESUME);
 
-            /* Set the suspended flag */
-            hDriver->isSuspended = true;
+            
         }
 
         /* Check if an SOF was received */
