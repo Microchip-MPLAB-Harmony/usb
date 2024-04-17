@@ -700,7 +700,6 @@ USB_SPEED DRV_USBFSV1_HOST_DeviceCurrentSpeedGet(DRV_HANDLE client);
 
 void DRV_USBFSV1_HOST_StartOfFrameControl(DRV_HANDLE client, bool control);
 
-void DRV_USBFSV1_Deinitialize ( const SYS_MODULE_OBJ  object );
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"

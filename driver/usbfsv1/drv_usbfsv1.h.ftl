@@ -655,6 +655,24 @@ SYS_MODULE_OBJ DRV_USBFSV1_Initialize
     const SYS_MODULE_INDEX drvIndex,
     const SYS_MODULE_INIT * const init
 );
+// ****************************************************************************
+/* Function:
+    void DRV_USBFSV1_Deinitialize(const SYS_MODULE_OBJ object)
+
+  Summary:
+    This function deinitializes the USBFSV1 driver instance.
+
+  Description:
+    This function deinitializes the USBFSV1 driver instance.
+
+  Remarks:
+    A typical USB application may not call this function.
+*/
+
+void DRV_USBFSV1_Deinitialize
+(
+    const SYS_MODULE_OBJ  object
+);
 
 // *****************************************************************************
 /* Function:
