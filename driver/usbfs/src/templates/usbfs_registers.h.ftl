@@ -46,16 +46,14 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 
 
-/* MISRA C-2012 Rule 4.10, Rule 21.1 and Rule 21.2.
-   Deviation record ID - H3_USB_MISRAC_2012_R_4_10_DR_1,  
-    H3_USB_MISRAC_2012_R_21_1_DR_1 and H3_USB_MISRAC_2012_R_21_2_DR_1 */
+/* MISRA C-2012 Rule 21.1 and Rule 21.2.
+   Deviation record ID -  H3_USB_MISRAC_2012_R_21_1_DR_1 and H3_USB_MISRAC_2012_R_21_2_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:2 "MISRA C-2012 Directive 4.10" "H3_USB_MISRAC_2012_R_4_10_DR_1" )\
 (deviate:4 "MISRA C-2012 Rule 21.1" "H3_USB_MISRAC_2012_R_21_1_DR_1" )\
 (deviate:2 "MISRA C-2012 Rule 21.2" "H3_USB_MISRAC_2012_R_21_2_DR_1" )
 </#if>
@@ -260,7 +258,6 @@ typedef struct __attribute__((packed,aligned( 4 )))
 #define   UxCON_USBRST_MASK             _U1CON_USBRST_MASK
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Directive 4.10"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 21.1"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 21.2"
 <#if core.COMPILER_CHOICE == "XC32">

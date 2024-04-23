@@ -73,8 +73,9 @@ static DRV_USBFS_GROUP gDrvUSBGroup[DRV_USBFS_INSTANCES_NUMBER];
 // *****************************************************************************
 
 // *****************************************************************************
-/* MISRA C-2012 Rule 10.1 deviate: , and 10.4 deviate:2. Deviation record ID -  
-    H3_USB_MISRAC_2012_R_10_1_DR_1, H3_USB_MISRAC_2012_R_10_4_DR_1 */
+/* MISRA C-2012 Rule 11.3, Rule 11.6 and Rule 11.8 . Deviation record ID -  
+   H3_USB_MISRAC_2012_R_11_3_DR_1, H3_USB_MISRAC_2012_R_11_6_DR_1,
+   H3_USB_MISRAC_2012_R_11_8_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push

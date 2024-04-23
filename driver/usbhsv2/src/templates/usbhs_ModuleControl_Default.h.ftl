@@ -62,11 +62,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "usbhs_registers.h"
 
 /* MISRA C-2012 Rule 10.3, Rule 10.4, Rule 10.8, 
-   Rule 15.6, Rule 4.3, Rule 21.1 and Rule 21.2. Deviation record ID -  
+   Rule 15.6, Rule 21.1 and Rule 21.2. Deviation record ID -  
     H3_USB_MISRAC_2012_R_10_3_DR_1, H3_USB_MISRAC_2012_R_21_1_DR_1
     H3_USB_MISRAC_2012_R_10_4_DR_1, H3_USB_MISRAC_2012_R_10_8_DR_1
-    H3_USB_MISRAC_2012_R_15_6_DR_1, H3_USB_MISRAC_2012_R_4_3_DR_1 and
-    H3_USB_MISRAC_2012_R_21_2_DR_1 */
+    H3_USB_MISRAC_2012_R_15_6_DR_1 and H3_USB_MISRAC_2012_R_21_2_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
@@ -76,8 +75,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (deviate:10 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1" )\
 (deviate:10 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 10.8" "H3_USB_MISRAC_2012_R_10_8_DR_1" )\
-(deviate:3 "MISRA C-2012 Rule 15.6" "H3_USB_MISRAC_2012_R_15_6_DR_1" )\
-(deviate:2 "MISRA C-2012 Directive 4.3" "H3_USB_MISRAC_2012_R_4_3_DR_1" )
+(deviate:3 "MISRA C-2012 Rule 15.6" "H3_USB_MISRAC_2012_R_15_6_DR_1" )
 </#if>
 
 //******************************************************************************
@@ -369,12 +367,10 @@ PLIB_TEMPLATE bool USBHS_ExistsModuleControl_Default( USBHS_MODULE_ID index )
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.8"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 15.6"
-#pragma coverity compliance end_block "MISRA C-2012 Directive 4.3"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>

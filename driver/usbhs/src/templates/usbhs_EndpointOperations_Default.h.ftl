@@ -60,9 +60,8 @@
 
 #include "usbhs_registers.h"
 
-/* MISRA C-2012 Rule 10.1 and Rule 10.4. Deviation record ID -  
-    H3_USB_MISRAC_2012_R_10_1_DR_1, H3_USB_MISRAC_2012_R_10_3_DR_1
-    H3_USB_MISRAC_2012_R_10_4_DR_1 and H3_USB_MISRAC_2012_R_11_7_DR_1 */
+/* MISRA C-2012 Rule 10.3 and Rule 11.7. Deviation record ID -  
+    H3_USB_MISRAC_2012_R_10_3_DR_1 and H3_USB_MISRAC_2012_R_11_7_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push

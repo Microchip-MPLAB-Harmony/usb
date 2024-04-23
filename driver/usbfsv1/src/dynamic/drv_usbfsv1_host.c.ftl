@@ -1046,13 +1046,12 @@ DRV_USBFSV1_HOST_PIPE_HANDLE DRV_USBFSV1_HOST_PipeSetup
 }
 
 // *****************************************************************************
-/* MISRA C-2012 Rule 5.1, 5.2 and 21.15 deviated below. Deviation record ID -  
-    H3_USB_MISRAC_2012_R_5_1_DR_1, H3_USB_MISRAC_2012_R_5_2_DR_1 and H3_USB_MISRAC_2012_R_21_15_DR_1*/
+/* MISRA C-2012 Rule 5.1 and 5.2  deviated below. Deviation record ID -  
+    H3_USB_MISRAC_2012_R_5_1_DR_1 and H3_USB_MISRAC_2012_R_5_2_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance block \
 (deviate:7 "MISRA C-2012 Rule 5.1" "H3_USB_MISRAC_2012_R_5_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 5.2" "H3_USB_MISRAC_2012_R_5_2_DR_1" )\
-(deviate:5 "MISRA C-2012 Rule 21.15" "H3_USB_MISRAC_2012_R_21_15_DR_1" )
+(deviate:1 "MISRA C-2012 Rule 5.2" "H3_USB_MISRAC_2012_R_5_2_DR_1" )
 </#if>
 
 /* Function:
@@ -1132,7 +1131,7 @@ void F_DRV_USBFSV1_HOST_ControlTransferDataStageSend(DRV_USBFSV1_OBJ * hDriver)
     {
         /* Bank 0 contains the data. User data must be copied to the host
          * control transfer data buffer. */
-        (void) memcpy(hDriver->hostTransactionBuffer, ( ( uint8_t * )pIRP->data + pIRP->completedBytes), (uint32_t)size);
+        (void) memcpy(( uint8_t * )hDriver->hostTransactionBuffer, ( ( uint8_t * )pIRP->data + pIRP->completedBytes), (uint32_t)size);
         controlPipe->USB_PSTATUSSET = USB_HOST_PSTATUSSET_BK0RDY_Msk;
         controlPipe->USB_PCFG |= (uint8_t)DRV_USBFSV1_HOST_PIPE_TOKEN_OUT;
     }
@@ -1251,7 +1250,7 @@ bool F_DRV_USBFSV1_HOST_ControlTransferProcess(DRV_USBFSV1_OBJ * hDriver)
                 controlPipe->USB_PCFG &= (~USB_HOST_PCFG_PTOKEN_Msk);
                 controlPipeDesc->USB_CTRL_PIPE &= ~(USB_HOST_CTRL_PIPE_PDADDR_Msk);
                 controlPipeDesc->USB_CTRL_PIPE |= (((uint16_t)pipe->deviceAddress) << USB_HOST_CTRL_PIPE_PDADDR_Pos);
-                (void) memcpy(hDriver->hostTransactionBuffer, pIRP->setup, 8);
+                (void) memcpy(( uint8_t * )hDriver->hostTransactionBuffer, ( uint8_t * )pIRP->setup, 8);
                 controlPipeDesc->USB_ADDR = (uint32_t)hDriver->hostTransactionBuffer;
                 controlPipeDesc->USB_PCKSIZE = 0;
                 controlPipeDesc->USB_PCKSIZE = (USB_HOST_PCKSIZE_MULTI_PACKET_SIZE(0)|USB_HOST_PCKSIZE_BYTE_COUNT(8)
@@ -1384,7 +1383,7 @@ bool F_DRV_USBFSV1_HOST_ControlTransferProcess(DRV_USBFSV1_OBJ * hDriver)
                              * that the USB DMA will write a minimum of 4 bytes. This can prove dangerous at
                              * the client level. */
 
-                            (void) memcpy(( ( uint8_t * )pIRP->data + pIRP->completedBytes), hDriver->hostTransactionBuffer, byteCount);
+                            (void) memcpy(( ( uint8_t * )pIRP->data + pIRP->completedBytes),( uint8_t * ) hDriver->hostTransactionBuffer, byteCount);
                             pIRP->completedBytes += byteCount;
                             pIRP->completedBytesInThisFrame += byteCount;
 
@@ -1771,7 +1770,7 @@ void F_DRV_USBFSV1_HOST_NonControlTransferDataSend(DRV_USBFSV1_OBJ * hDriver)
         
         if(pipe->pipeType != USB_TRANSFER_TYPE_ISOCHRONOUS)
         {
-            (void) memcpy(hDriver->hostTransactionBuffer, ( ( uint8_t * )pIRP->data + pIRP->completedBytes), (uint32_t)size);
+            (void) memcpy(( uint8_t * )hDriver->hostTransactionBuffer, ( ( uint8_t * )pIRP->data + pIRP->completedBytes), (uint32_t)size);
         }
 
         hardwarePipe->USB_PSTATUSSET = USB_HOST_PSTATUSSET_BK0RDY_Msk;
@@ -1897,7 +1896,7 @@ static bool F_DRV_USBFSV1_HOST_NonControlTransferProcess
                         if((pipe->endpointAndDirection & 0x80U) != 0U)
                         {
                             /* Data has been received from the device */
-                            (void) memcpy(( ( uint8_t * )pIRP->data + pIRP->completedBytes), hDriver->hostTransactionBuffer, byteCount);
+                            (void) memcpy(( ( uint8_t * )pIRP->data + pIRP->completedBytes), ( uint8_t * )hDriver->hostTransactionBuffer, byteCount);
                         }
 
                         /* Now update the byte counters */
@@ -1983,7 +1982,6 @@ static bool F_DRV_USBFSV1_HOST_NonControlTransferProcess
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.6"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 21.15"
 </#if>
 /* MISRAC 2012 deviation block end */
 // *****************************************************************************
