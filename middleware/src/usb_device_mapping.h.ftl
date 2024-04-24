@@ -70,8 +70,10 @@
 // *****************************************************************************
 #if defined USB_DEVICE_SOF_EVENT_ENABLE
     #define M_USB_DEVICE_SOFEventEnable()  eventType
+    #define M_USB_DEVICE_SofFrameNumberGet(drvHandle) usbDeviceThisInstance->driverInterface->deviceSOFNumberGet(drvHandle)
 #else
     #define M_USB_DEVICE_SOFEventEnable()  0
+    #define M_USB_DEVICE_SofFrameNumberGet(drvHandle) 0
 #endif
 
 // *****************************************************************************

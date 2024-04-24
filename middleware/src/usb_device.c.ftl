@@ -1910,11 +1910,6 @@ void F_USB_DEVICE_DeInitializeAllFunctionDrivers
   Remarks:
     This is a local function and should not be called directly by a client.
 */
-/* MISRA C-2012 Rule 14.3 deviated:2 Deviation record ID -  H3_USB_MISRAC_2012_R_14_3_DR_1 */
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 14.3" "H3_USB_MISRAC_2012_R_14_3_DR_1"    
-</#if>
-
 void F_USB_DEVICE_EventHandler
 (
     uintptr_t referenceHandle,
@@ -2017,15 +2012,11 @@ void F_USB_DEVICE_EventHandler
              * will sent to the application. Else the event will not be
              * processed. */
             usbDeviceThisInstance->usbDeviceStatusStruct.isSuspended = false;
-            eventType = (DRV_USB_EVENT)M_USB_DEVICE_SOFEventEnable(); 
-            if ((uint32_t)eventType != 0U)
-            {
-                eventType = (DRV_USB_EVENT)USB_DEVICE_EVENT_SOF;
-                /* Get the frame number */
-                SOFFrameNumber.frameNumber = usbDeviceThisInstance->driverInterface->deviceSOFNumberGet(usbDeviceThisInstance->usbCDHandle);
-                eventData = &SOFFrameNumber;
-            }
-
+            eventType = (DRV_USB_EVENT)M_USB_DEVICE_SOFEventEnable();
+            
+            /* Get the frame number */
+            SOFFrameNumber.frameNumber = M_USB_DEVICE_SofFrameNumberGet(usbDeviceThisInstance->usbCDHandle);
+            eventData = &SOFFrameNumber;
             break;
 
         case DRV_USB_EVENT_DEVICE_SESSION_VALID:
