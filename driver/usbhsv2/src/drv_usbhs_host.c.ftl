@@ -671,9 +671,8 @@ unsigned int F_DRV_USBHS_HOST_IRPReceiveFIFOUnload
     return (count);
 }
 
-/* MISRA C-2012 Rule 11.3 deviated:9, 11.6 deviated:1 and 11.6 deviated:1 and 11.7 deviated:9 below. 
-   Deviation record ID - H3_USB_MISRAC_2012_R_11_3_DR_1, H3_USB_MISRAC_2012_R_11_6_DR_1  and
-   H3_USB_MISRAC_2012_R_11_7_DR_1 */
+/* MISRA C-2012 Rule 11.3 deviated:9, 11.6 deviated:1 and 11.6 deviated:1 below. 
+   Deviation record ID - H3_USB_MISRAC_2012_R_11_3_DR_1, H3_USB_MISRAC_2012_R_11_6_DR_1  */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
@@ -682,7 +681,6 @@ unsigned int F_DRV_USBHS_HOST_IRPReceiveFIFOUnload
 #pragma coverity compliance block \
 (deviate:9 "MISRA C-2012 Rule 11.3" "H3_USB_MISRAC_2012_R_11_3_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 11.6" "H3_USB_MISRAC_2012_R_11_6_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.7" "H3_USB_MISRAC_2012_R_11_7_DR_1" )
 </#if>
 
 
@@ -3390,7 +3388,6 @@ void DRV_USBHS_HOST_EndpointToggleClear
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.6"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.7"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>

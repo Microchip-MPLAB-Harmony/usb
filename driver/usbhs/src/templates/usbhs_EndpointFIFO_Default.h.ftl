@@ -50,7 +50,7 @@
 
 #include "usbhs_registers.h"
 
-/* MISRA C-2012 Rule 10.3, Rule 11.3, 
+/* MISRA C-2012 Rule 10.3, Rule 11.3,
    Rule 11.8, Rule 14.2. Deviation record ID -  
     H3_USB_MISRAC_2012_R_10_3_DR_1, H3_USB_MISRAC_2012_R_11_3_DR_1,
     H3_USB_MISRAC_2012_R_14_2_DR_1, H3_USB_MISRAC_2012_R_11_8_DR_1, 
@@ -438,7 +438,6 @@ bool PLIB_TEMPLATE USBHS_ExistsEndpointFIFO_Default( USBHS_MODULE_ID index )
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.7"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 14.2"
 <#if core.COMPILER_CHOICE == "XC32">

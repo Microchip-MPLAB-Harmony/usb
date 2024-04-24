@@ -472,13 +472,12 @@ uint16_t F_DRV_USBHS_ProcessIRPFIFO
     return (uint16_t)(count);
 }
 
-/* MISRA C-2012 Rule 11.7 deviated:10 Deviation record ID -  H3_USB_MISRAC_2012_R_11_7_DR_1 */
+
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
-#pragma coverity compliance block deviate:10 "MISRA C-2012 Rule 11.7" "H3_USB_MISRAC_2012_R_11_7_DR_1" 
 </#if>
 
 
@@ -817,10 +816,6 @@ void F_DRV_USBHS_DEVICE_AttachStateMachine
 } 
 
 
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.7"
-</#if>
-/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* Function:
     void DRV_USBHS_DEVICE_Detach(DRV_HANDLE handle);

@@ -50,15 +50,13 @@
 #include "usbhs_registers.h"
 
 /* MISRA C-2012  Rule 21.1 and Rule 21.2 Deviation record ID -  
-    H3_USB_MISRAC_2012_R_11_7_DR_1,H3_USB_MISRAC_2012_R_21_1_DR_1,
-    and H3_USB_MISRAC_2012_R_21_2_DR_1*/
+    H3_USB_MISRAC_2012_R_21_1_DR_1 and H3_USB_MISRAC_2012_R_21_2_DR_1*/
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:10 "MISRA C-2012 Rule 11.7" "H3_USB_MISRAC_2012_R_11_7_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 21.1" "H3_USB_MISRAC_2012_R_21_1_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 21.2" "H3_USB_MISRAC_2012_R_21_2_DR_1" )
 </#if>
@@ -157,7 +155,6 @@ PLIB_TEMPLATE bool USBHS_SoftResetIsComplete_Default( USBHS_MODULE_ID index )
 }
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.7"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 21.1"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 21.2"
 <#if core.COMPILER_CHOICE == "XC32">

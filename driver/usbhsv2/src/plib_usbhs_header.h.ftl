@@ -74,14 +74,12 @@
     #define PLIB_ASSERT
 #endif 
 
-typedef enum {
 
-    USBHS_ID_0 = USBHS0_BASE_ADDRESS,
-    USBHS_ID_1 = USBHS1_BASE_ADDRESS,
+typedef uint32_t USBHS_MODULE_ID; 
+#define USBHS_ID_0 USBHS0_BASE_ADDRESS
+#define USBHS_ID_1 USBHS1_BASE_ADDRESS
+#define USBHS_NUMBER_OF_MODULES 2U
 
-    USBHS_NUMBER_OF_MODULES = 2
-
-} USBHS_MODULE_ID;
 
 typedef enum {
 

@@ -53,17 +53,6 @@
 
 #include "usbhs_registers.h"
 
-/* MISRA C-2012 Rule 11.7. Deviation record ID -  
-    H3_USB_MISRAC_2012_R_11_7_DR_1*/
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunknown-pragmas"
-</#if>
-#pragma coverity compliance block \
-(deviate:10 "MISRA C-2012 Rule 11.7" "H3_USB_MISRAC_2012_R_11_7_DR_1" )
-</#if>
-
 //******************************************************************************
 /* Function :  USBHS_EP0StatusGet_Default
 
@@ -369,13 +358,7 @@ PLIB_TEMPLATE bool USBHS_ExistsEP0Status_Default( USBHS_MODULE_ID index )
     return true;
 }
 
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.7"
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic pop
-</#if>
-</#if>
-/* MISRAC 2012 deviation block end */
+
 
 #endif /*USBHS_EP0STATUS_DEFAULT_H*/
 

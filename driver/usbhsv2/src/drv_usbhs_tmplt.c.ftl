@@ -78,8 +78,8 @@ DRV_USBHS_OBJ gDrvUSBObj[DRV_USBHS_INSTANCES_NUMBER];
 static DRV_USBHS_DEVICE_ENDPOINT_OBJ gDrvUSBEndpoints [DRV_USBHS_INSTANCES_NUMBER] [DRV_USBHS_ENDPOINTS_NUMBER * 2];
 
 // *****************************************************************************
-/* MISRA C-2012 Rule 10.4,11.3, 11.7 and 11.8 deviated below. Deviation record ID -  
-    H3_USB_MISRAC_2012_R_10_4_DR_1 (Flase Positive), H3_USB_MISRAC_2012_R_11_3_DR_1, H3_USB_MISRAC_2012_R_11_7_DR_1 
+/* MISRA C-2012 Rule 10.4,11.3 and 11.8 deviated below. Deviation record ID -  
+    H3_USB_MISRAC_2012_R_10_4_DR_1 (Flase Positive), H3_USB_MISRAC_2012_R_11_3_DR_1 
     and H3_USB_MISRAC_2012_R_11_8_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
@@ -89,7 +89,6 @@ static DRV_USBHS_DEVICE_ENDPOINT_OBJ gDrvUSBEndpoints [DRV_USBHS_INSTANCES_NUMBE
 #pragma coverity compliance block \
 (fp:3 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 11.3" "H3_USB_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:3 "MISRA C-2012 Rule 11.7" "H3_USB_MISRAC_2012_R_11_7_DR_1" )\
 (deviate:1 "MISRA C-2012 Rule 11.8" "H3_USB_MISRAC_2012_R_11_8_DR_1" )  
 </#if>
 /* Function:
@@ -1107,7 +1106,6 @@ void F_DRV_USBHS_Setup_Device_Mode( USBHS_MODULE_ID usbID )
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.7"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
