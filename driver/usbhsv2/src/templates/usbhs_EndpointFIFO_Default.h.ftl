@@ -51,11 +51,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "usbhs_registers.h"
 
 /* MISRA C-2012 Rule 10.3, Rule 10.4, Rule 11.3, 
-   Rule 11.8, Rule 13.5, Rule 14.2 and Rule 14.4. Deviation record ID -  
-    H3_USB_MISRAC_2012_R_10_3_DR_1 , H3_USB_MISRAC_2012_R_14_4_DR_1
-    H3_USB_MISRAC_2012_R_10_4_DR_1, H3_USB_MISRAC_2012_R_11_3_DR_1
-    H3_USB_MISRAC_2012_R_11_8_DR_1 and H3_USB_MISRAC_2012_R_13_5_DR_1
-    H3_USB_MISRAC_2012_R_14_2_DR_1  */
+   Rule 11.8, Rule 14.2. Deviation record ID -  
+    H3_USB_MISRAC_2012_R_10_3_DR_1 ,H3_USB_MISRAC_2012_R_10_4_DR_1,
+    H3_USB_MISRAC_2012_R_11_3_DR_1 ,H3_USB_MISRAC_2012_R_11_8_DR_1 
+    and H3_USB_MISRAC_2012_R_14_2_DR_1  */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
@@ -66,9 +65,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (deviate:10 "MISRA C-2012 Rule 10.4" "H3_USB_MISRAC_2012_R_10_4_DR_1" )\
 (deviate:2 "MISRA C-2012 Rule 11.3" "H3_USB_MISRAC_2012_R_11_3_DR_1" )\
 (deviate:3 "MISRA C-2012 Rule 11.8" "H3_USB_MISRAC_2012_R_11_8_DR_1" )\
-(deviate:2 "MISRA C-2012 Rule 13.5" "H3_USB_MISRAC_2012_R_13_5_DR_1" )\
-(deviate:2 "MISRA C-2012 Rule 14.2" "H3_USB_MISRAC_2012_R_14_2_DR_1" )\
-(deviate:2 "MISRA C-2012 Rule 14.4" "H3_USB_MISRAC_2012_R_14_4_DR_1" )
+(deviate:2 "MISRA C-2012 Rule 14.2" "H3_USB_MISRAC_2012_R_14_2_DR_1" )
 </#if>
 
 //******************************************************************************
@@ -356,9 +353,17 @@ PLIB_TEMPLATE void USBHS_Endpoint0FIFOFlush_Default( USBHS_MODULE_ID index )
     /* Check if transmit packet ready or if the receive packet ready is set. If
      * so then clear the flush */
     
-    if((usbhs->EPCSR[0].CSR0L_DEVICEbits.TXPKTRDY) == 1U || (usbhs->EPCSR[0].CSR0L_DEVICEbits.RXPKTRDY) == 1U)
+    if((usbhs->EPCSR[0].CSR0L_DEVICEbits.TXPKTRDY) == 1U)
     {
         usbhs->EPCSR[0].CSR0H_DEVICEbits.FLSHFIFO = 1;
+    }
+    else if((usbhs->EPCSR[0].CSR0L_DEVICEbits.RXPKTRDY) == 1U)
+    {
+        usbhs->EPCSR[0].CSR0H_DEVICEbits.FLSHFIFO = 1;
+    }
+    else
+    {
+        /*Do Nohting*/
     }
 }
 
@@ -382,7 +387,7 @@ PLIB_TEMPLATE void USBHS_EndpointTxFIFOFlush_Default
     /* This function will clear the FIFO for a non-zero endpoint */
    
     volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
-    if(usbhs->EPCSR[endpoint].TXCSRL_DEVICEbits.TXPKTRDY)
+    if(usbhs->EPCSR[endpoint].TXCSRL_DEVICEbits.TXPKTRDY == 1U)
     {
         usbhs->EPCSR[endpoint].TXCSRL_DEVICEbits.FLUSH = 1;
     }
@@ -436,9 +441,7 @@ PLIB_TEMPLATE bool USBHS_ExistsEndpointFIFO_Default( USBHS_MODULE_ID index )
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 13.5"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 14.2"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 14.4"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>
