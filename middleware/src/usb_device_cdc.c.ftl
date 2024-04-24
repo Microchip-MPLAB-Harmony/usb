@@ -470,14 +470,6 @@ void F_USB_DEVICE_CDC_Deinitialization ( SYS_MODULE_INDEX iCDC )
   Remarks:
     This is local function and should not be called directly by the application.
 */
-/* MISRA C-2012 Rule 16.1, 16.3 deviated below. Deviation record ID -  
-   H3_USB_MISRAC_2012_R_16_1_DR_1 & H3_USB_MISRAC_2012_R_16_3_DR_1*/
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance block \
-(deviate:1 "MISRA C-2012 Rule 16.1" "H3_USB_MISRAC_2012_R_16_1_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 16.3" "H3_USB_MISRAC_2012_R_16_3_DR_1" )   
-</#if>
-
 void F_USB_DEVICE_CDC_ControlTransferHandler 
 (
     SYS_MODULE_INDEX iCDC ,
@@ -519,8 +511,8 @@ void F_USB_DEVICE_CDC_ControlTransferHandler
                 (void) USB_DEVICE_ControlStatus(deviceHandle, USB_DEVICE_CONTROL_STATUS_ERROR);
             }
             else
-            {	
-				bRequest = (USB_CDC_REQUEST) setupRequest->bRequest;
+            {
+                bRequest = (USB_CDC_REQUEST) setupRequest->bRequest;
                 /* Check if the requests belong to the ACM sub class */
                 switch(bRequest)
                 {
@@ -568,17 +560,13 @@ void F_USB_DEVICE_CDC_ControlTransferHandler
                         USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_SENT,
                         NULL, thisCDCDevice->userData );
             }
+            break; 
 
         default:
             /* Do Nothing */
             break;
     }
 }
-
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 16.1"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 16.3"
-</#if>
 /* MISRAC 2012 deviation block end */
 
 // ******************************************************************************
