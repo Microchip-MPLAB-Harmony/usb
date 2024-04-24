@@ -62,11 +62,13 @@
 #include "usbhs_registers.h"
 
 
-/* MISRA C-2012 Rule 10.3, Rule 10.8, Rule 15.6,  
+/* MISRA C-2012 Rule 10.3, Rule 15.6,  
 Rule 21.1 and Rule 21.2. Deviation record ID -  
-    H3_USB_MISRAC_2012_R_10_3_DR_1, H3_USB_MISRAC_2012_R_10_8_DR_1,
-    H3_USB_MISRAC_2012_R_15_6_DR_1, H3_USB_MISRAC_2012_R_11_7_DR_1,
-    H3_USB_MISRAC_2012_R_21_2_DR_1 and H3_USB_MISRAC_2012_R_21_1_DR_1 */
+    H3_USB_MISRAC_2012_R_10_3_DR_1, 
+    H3_USB_MISRAC_2012_R_15_6_DR_1, 
+    H3_USB_MISRAC_2012_R_11_7_DR_1,
+    H3_USB_MISRAC_2012_R_21_2_DR_1 
+    and H3_USB_MISRAC_2012_R_21_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
@@ -74,7 +76,6 @@ Rule 21.1 and Rule 21.2. Deviation record ID -
 </#if>
 #pragma coverity compliance block \
 (deviate:10 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 10.8" "H3_USB_MISRAC_2012_R_10_8_DR_1" )\
 (deviate:2 "MISRA C-2012 Rule 11.7" "H3_USB_MISRAC_2012_R_11_7_DR_1" )\
 (deviate:3 "MISRA C-2012 Rule 15.6" "H3_USB_MISRAC_2012_R_15_6_DR_1" )\
 (deviate:2 "MISRA C-2012 Rule 21.1" "H3_USB_MISRAC_2012_R_21_1_DR_1" )\
@@ -169,9 +170,12 @@ PLIB_TEMPLATE void USBHS_SuspendDisable_Default( USBHS_MODULE_ID index )
 
 PLIB_TEMPLATE USBHS_VBUS_LEVEL USBHS_VBUSLevelGet_Default( USBHS_MODULE_ID index )
 {
+    USBHS_VBUS_LEVEL vbusLevel = USBHS_VBUS_SESSION_END; 
+    
     /* Function returns the current VBUS level */
     volatile usbhs_registers_t * usbhs = (usbhs_registers_t *)(index);
-    return((USBHS_VBUS_LEVEL)((usbhs->DEVCTLbits.w) & 0x18));
+    vbusLevel = usbhs->DEVCTLbits.w & USBHS_VBUS_VALID;
+    return vbusLevel;
 }
 
 //******************************************************************************
@@ -364,7 +368,6 @@ PLIB_TEMPLATE bool USBHS_ExistsModuleControl_Default( USBHS_MODULE_ID index )
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.8"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.7"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 15.6"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 21.2"
