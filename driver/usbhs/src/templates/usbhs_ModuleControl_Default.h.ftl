@@ -62,11 +62,9 @@
 #include "usbhs_registers.h"
 
 
-/* MISRA C-2012 Rule 10.3, Rule 15.6,  
-Rule 21.1 and Rule 21.2. Deviation record ID -  
+/* MISRA C-2012 Rule 10.3, Rule 21.1 and Rule 21.2. 
+    Deviation record ID -  
     H3_USB_MISRAC_2012_R_10_3_DR_1, 
-    H3_USB_MISRAC_2012_R_15_6_DR_1, 
-    H3_USB_MISRAC_2012_R_11_7_DR_1,
     H3_USB_MISRAC_2012_R_21_2_DR_1 
     and H3_USB_MISRAC_2012_R_21_1_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
@@ -77,7 +75,6 @@ Rule 21.1 and Rule 21.2. Deviation record ID -
 #pragma coverity compliance block \
 (deviate:10 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1" )\
 (deviate:2 "MISRA C-2012 Rule 11.7" "H3_USB_MISRAC_2012_R_11_7_DR_1" )\
-(deviate:3 "MISRA C-2012 Rule 15.6" "H3_USB_MISRAC_2012_R_15_6_DR_1" )\
 (deviate:2 "MISRA C-2012 Rule 21.1" "H3_USB_MISRAC_2012_R_21_1_DR_1" )\
 (deviate:2 "MISRA C-2012 Rule 21.2" "H3_USB_MISRAC_2012_R_21_2_DR_1" )
 </#if>
@@ -369,7 +366,6 @@ PLIB_TEMPLATE bool USBHS_ExistsModuleControl_Default( USBHS_MODULE_ID index )
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.7"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 15.6"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 21.2"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 21.1"
 <#if core.COMPILER_CHOICE == "XC32">
