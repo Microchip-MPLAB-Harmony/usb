@@ -51,10 +51,9 @@
 #include "usbhs_registers.h"
 
 /* MISRA C-2012 Rule 10.3, Rule 11.3,
-   Rule 11.8, Rule 14.2. Deviation record ID -  
+   Rule 11.8. Deviation record ID -  
     H3_USB_MISRAC_2012_R_10_3_DR_1, H3_USB_MISRAC_2012_R_11_3_DR_1,
-    H3_USB_MISRAC_2012_R_14_2_DR_1, H3_USB_MISRAC_2012_R_11_8_DR_1, 
-    H3_USB_MISRAC_2012_R_14_2_DR_1 */
+    H3_USB_MISRAC_2012_R_11_8_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
@@ -63,8 +62,7 @@
 #pragma coverity compliance block \
 (deviate:3 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1" )\
 (deviate:2 "MISRA C-2012 Rule 11.3" "H3_USB_MISRAC_2012_R_11_3_DR_1" )\
-(deviate:3 "MISRA C-2012 Rule 11.8" "H3_USB_MISRAC_2012_R_11_8_DR_1" )\
-(deviate:2 "MISRA C-2012 Rule 14.2" "H3_USB_MISRAC_2012_R_14_2_DR_1" )
+(deviate:3 "MISRA C-2012 Rule 11.8" "H3_USB_MISRAC_2012_R_11_8_DR_1" )
 </#if>
 
 //******************************************************************************
@@ -170,7 +168,7 @@ int PLIB_TEMPLATE USBHS_EndpointFIFOUnload_Default
 
     volatile usbhs_registers_t * usbhs = (usbhs_registers_t *)(index);
     volatile uint8_t * fifo, * data;
-    volatile unsigned int count;
+    unsigned int count;
     size_t i;
 
     /* Get the pointer to endpoint specific FIFO and control registers. The
@@ -228,7 +226,7 @@ int PLIB_TEMPLATE USBHS_DeviceEPFIFOUnload_Default
 
     volatile usbhs_registers_t * usbhs = (usbhs_registers_t *)(index);
     volatile uint8_t * fifo, * data;
-    volatile unsigned int count;
+    unsigned int count;
     size_t i;
 
     /* Get the pointer to endpoint specific FIFO and control registers. The
@@ -439,7 +437,6 @@ bool PLIB_TEMPLATE USBHS_ExistsEndpointFIFO_Default( USBHS_MODULE_ID index )
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 14.2"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>
