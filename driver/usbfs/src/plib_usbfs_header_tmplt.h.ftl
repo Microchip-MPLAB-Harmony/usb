@@ -60,21 +60,17 @@
 
 #ifndef PLIB_ASSERT
     #define PLIB_ASSERT(a,b)  
-#endif 
+#endif
 
-typedef enum {
-
-    USB_ID_1 = _USB_BASE_ADDRESS,
-
+typedef uint32_t USB_MODULE_ID;
+#define USB_ID_1 _USB_BASE_ADDRESS
 <#if (CONFIG_USB_CONTROLLERS_NUMBER ?has_content)
       && (CONFIG_USB_CONTROLLERS_NUMBER == 2 )>
-    USB_ID_2 = _USB2_BASE_ADDRESS,
-    USB_NUMBER_OF_MODULES = 2
+#define USB_ID_2 _USB2_BASE_ADDRESS
+#define USB_NUMBER_OF_MODULES 2U
 <#else >
-    USB_NUMBER_OF_MODULES = 1
+#define USB_NUMBER_OF_MODULES 1U
 </#if>
-
-} USB_MODULE_ID;
 
 typedef enum {
 

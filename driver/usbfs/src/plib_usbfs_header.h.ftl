@@ -68,12 +68,10 @@
     #define USB_BUSY_FLAG_DOES_NOT_EXIST   
 #endif
 
-typedef enum {
+typedef uint32_t USB_MODULE_ID;
+#define USB_ID_1 _USB_BASE_ADDRESS
+#define  USB_NUMBER_OF_MODULES 1U
 
-    USB_ID_1 = _USB_BASE_ADDRESS,
-    USB_NUMBER_OF_MODULES = 1
-
-} USB_MODULE_ID;
 
 typedef enum {
 

@@ -116,7 +116,7 @@ def instantiateComponent(usbPeripheralComponentCommon):
 		plib_usbfs_header_h.setOutputName("plib_usbfs_header.h")
 		plib_usbfs_header_h.setDestPath("/driver/usb/usbfs/src")
 		plib_usbfs_header_h.setProjectPath("config/" + configName + "/driver/usb/usbfs/src/")
-		plib_usbfs_header_h.setType("SOURCE")
+		plib_usbfs_header_h.setType("HEADER")
 		plib_usbfs_header_h.setOverwrite(True)
 	
 	################################################

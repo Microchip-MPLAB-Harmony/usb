@@ -49,11 +49,9 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "driver/usb/usbfs/src/templates/usbfs_registers.h"
 
-/* MISRA C-2012 Rule 10.3, Rule 10.6,
-   Rule 11.6, Rule 11.7, Rule 12.2. Deviation record ID -  
+/* MISRA C-2012 Rule 10.3, Rule 10.6, Rule 11.6, Rule 12.2. Deviation record ID -  
     H3_USB_MISRAC_2012_R_10_3_DR_1, H3_USB_MISRAC_2012_R_10_6_DR_1,
-    H3_USB_MISRAC_2012_R_11_6_DR_1, H3_USB_MISRAC_2012_R_11_7_DR_1, 
-    and H3_USB_MISRAC_2012_R_12_2_DR_1 */
+    H3_USB_MISRAC_2012_R_11_6_DR_1 and H3_USB_MISRAC_2012_R_12_2_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
@@ -63,7 +61,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 (deviate:10 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1" )\
 (deviate:2 "MISRA C-2012 Rule 10.6" "H3_USB_MISRAC_2012_R_10_6_DR_1" )\
 (deviate:3 "MISRA C-2012 Rule 11.6" "H3_USB_MISRAC_2012_R_11_6_DR_1" )\
-(deviate:2 "MISRA C-2012 Rule 11.7" "H3_USB_MISRAC_2012_R_11_7_DR_1" )\
 (deviate:2 "MISRA C-2012 Rule 12.2" "H3_USB_MISRAC_2012_R_12_2_DR_1" )
 </#if>
 
@@ -129,7 +126,6 @@ PLIB_TEMPLATE bool USB_ExistsBDTBaseAddress_Default( USB_MODULE_ID index )
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.6"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 11.6"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.7"
 #pragma coverity compliance end_block "MISRA C-2012 Rule 12.2"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop

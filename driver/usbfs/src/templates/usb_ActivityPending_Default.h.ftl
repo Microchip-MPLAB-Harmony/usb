@@ -49,16 +49,15 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "driver/usb/usbfs/src/templates/usbfs_registers.h"
 
 
-/* MISRA C-2012 Rule 10.3 , and 11.7. Deviation record ID -  
-    H3_USB_MISRAC_2012_R_10_3_DR_1, H3_USB_MISRAC_2012_R_11_7_DR_1 */
+/* MISRA C-2012 Rule 10.3. Deviation record ID -  
+    H3_USB_MISRAC_2012_R_10_3_DR_1 */
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-pragmas"
 </#if>
 #pragma coverity compliance block \
-(deviate:3 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1" )\
-(deviate:1 "MISRA C-2012 Rule 11.7" "H3_USB_MISRAC_2012_R_11_7_DR_1" )
+(deviate:3 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1" )
 </#if>
 //******************************************************************************
 /* Function :  USB_ActivityPending_Default
@@ -94,7 +93,6 @@ PLIB_TEMPLATE bool USB_ExistsActivityPending_Default( USB_MODULE_ID index )
 
 <#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
 #pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"
-#pragma coverity compliance end_block "MISRA C-2012 Rule 11.7"
 <#if core.COMPILER_CHOICE == "XC32">
 #pragma GCC diagnostic pop
 </#if>
