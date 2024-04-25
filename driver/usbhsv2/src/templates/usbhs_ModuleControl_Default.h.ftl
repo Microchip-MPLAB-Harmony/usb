@@ -170,7 +170,7 @@ PLIB_TEMPLATE USBHS_VBUS_LEVEL USBHS_VBUSLevelGet_Default( USBHS_MODULE_ID index
     
     /* Function returns the current VBUS level */
     volatile usbhs_registers_sw_t * usbhs = (usbhs_registers_sw_t *)((uint32_t)index + 0x1000U);
-    vbusLevel = usbhs->DEVCTLbits.w & USBHS_VBUS_VALID;
+    vbusLevel = usbhs->DEVCTLbits.w & 0x18U;
     return vbusLevel;
 }
 
