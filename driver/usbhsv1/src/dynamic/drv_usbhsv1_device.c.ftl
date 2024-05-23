@@ -2030,7 +2030,7 @@ USB_ERROR DRV_USBHSV1_DEVICE_IRPSubmit
                             if(USBHS_DEVEPTISR_RXOUTI_Msk == (USBHS_DEVEPTISR_RXOUTI_Msk & usbID->USBHS_DEVEPTISR[endpoint]))
                             {
                                 /* Data is already available in the FIFO */
-                                byteCount = (uint16_t)(usbID->USBHS_DEVEPTISR[endpoint] & USBHS_DEVEPTISR_BYCT_Msk) >> USBHS_DEVEPTISR_BYCT_Pos;
+                                byteCount = (usbID->USBHS_DEVEPTISR[endpoint] & USBHS_DEVEPTISR_BYCT_Msk) >> USBHS_DEVEPTISR_BYCT_Pos;
 
                                 /* Get FIFO Address */
                                 ptr = (uint8_t *) & ((volatile uint8_t (*)[0x8000])USBHSV1_RAM_ADDR)[endpoint];
