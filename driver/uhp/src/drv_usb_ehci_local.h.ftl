@@ -117,7 +117,7 @@
                                                                                ((handle)->status) = (drvStatus);\
                                                                                ((handle)->taskState) = (drvState);\
                                                                            }
-#elif defined(_SAM9X70_H_) || defined(_SAM9X72_H_) || defined(_SAM9X75_H_)
+#elif defined(_SAM9X70_H_) || defined(_SAM9X72_H_) || defined(_SAM9X75_H_) || defined(_SAM9X75D2G_H_) || defined(_SAM9X75D1G_H_) || defined(_SAM9X75D5M_H_)
         /* Specific to SAM9X7 */
         #define PMC_UCKR_UPLLEN()   \
             UDPHS_REGS->UDPHS_CTRL &= ~UDPHS_CTRL_EN_UDPHS_Msk; \
