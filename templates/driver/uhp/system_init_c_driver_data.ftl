@@ -69,8 +69,14 @@ static void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
         VBUS_AH_PD16_PowerEnable();
     </#if>
 <#elseif core.DeviceFamily == "SAM9X7">
+    <#if __PROCESSOR == "SAM9X75D2G">
+        VBUS_AH_PC27_PowerEnable();
+        VBUS_AH_PB18_PowerEnable();
+    <#else>
         VBUS_AH_PC27_PowerEnable();
         VBUS_AH_PC29_PowerEnable();
+    </#if>
+
 <#elseif core.DeviceFamily == "SAM_G55">
     <#if USB_HOST_VBUS_ENABLE == true>
         VBUS_AH_PowerEnable();
@@ -96,8 +102,13 @@ static void DRV_USB_VBUSPowerEnable(uint8_t port, bool enable)
         VBUS_AH_PD16_PowerDisable();
     </#if>
 <#elseif core.DeviceFamily == "SAM9X7">
-        VBUS_AH_PC27_PowerDisable();
-        VBUS_AH_PC29_PowerDisable();
+    <#if __PROCESSOR == "SAM9X75D2G">
+        VBUS_AH_PC27_PowerEnable();
+        VBUS_AH_PB18_PowerEnable();
+    <#else>
+        VBUS_AH_PC27_PowerEnable();
+        VBUS_AH_PC29_PowerEnable();
+    </#if>
 <#elseif core.DeviceFamily == "SAM_G55">
     <#if USB_HOST_VBUS_ENABLE == true>
        VBUS_AH_PowerDisable();
