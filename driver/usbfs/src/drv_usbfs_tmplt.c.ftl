@@ -590,4 +590,4 @@ void DRV_USBFS_Tasks(SYS_MODULE_OBJ object)
     M_DRV_USBFS_Tasks_ISR(object);
 }
 
-    ${LIST_DRV_USB_ISR_ENTRY}
+${LIST_DRV_USB_ISR_ENTRY}

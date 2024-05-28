@@ -470,14 +470,7 @@ def instantiateComponent(usbDriverComponent, index):
 	################################################
 	# USB Driver Source files
 	################################################
-	drvUsbHsV1SourceFile = usbDriverComponent.createFileSymbol("DRV_USBHS_COMMON_C_SOURCE", None)
-	drvUsbHsV1SourceFile.setSourcePath(usbDriverPath + "usbhsv2/src/drv_usbhs_tmplt.c.ftl")
-	drvUsbHsV1SourceFile.setMarkup(True)
-	drvUsbHsV1SourceFile.setOutputName("drv_usbhs.c")
-	drvUsbHsV1SourceFile.setDestPath(usbDriverProjectPath + "usbhs/src")
-	drvUsbHsV1SourceFile.setProjectPath("config/" + configName + usbDriverProjectPath + "usbhs/src/")
-	drvUsbHsV1SourceFile.setType("SOURCE")
-	drvUsbHsV1SourceFile.setOverwrite(True)   
+
 
 	drvUsbHsV1DeviceSourceFile = usbDriverComponent.createFileSymbol(None, None)
 	drvUsbHsV1DeviceSourceFile.setSourcePath(usbDriverPath + "usbhsv2/src/drv_usbhs_device.c.ftl")
