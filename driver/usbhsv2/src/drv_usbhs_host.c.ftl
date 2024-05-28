@@ -545,7 +545,7 @@ DRV_USBHS_HOST_PIPE_HANDLE F_DRV_USBHS_HOST_FifoTableAllocate
 void F_DRV_USBHS_HOST_IRPTransmitFIFOLoad
 (
     USBHS_MODULE_ID usbID, 
-    USB_HOST_IRP_LOCAL * irp,
+    DRV_USBHS_HOST_IRP_LOCAL * irp,
     uint8_t endpoint
 )
 {
@@ -598,7 +598,7 @@ void F_DRV_USBHS_HOST_IRPTransmitFIFOLoad
 void F_DRV_USBHS_HOST_IRPTransmitSetupPacket
 (
     USBHS_MODULE_ID usbID,
-    USB_HOST_IRP_LOCAL * irp
+    DRV_USBHS_HOST_IRP_LOCAL * irp
 )
 {
     /* This function will load the irp setup packet into endpoint 0 fifo and
@@ -613,7 +613,7 @@ void F_DRV_USBHS_HOST_IRPTransmitSetupPacket
 unsigned int F_DRV_USBHS_HOST_IRPReceiveFIFOUnload 
 (
     USBHS_MODULE_ID usbID,
-    USB_HOST_IRP_LOCAL * irp,
+    DRV_USBHS_HOST_IRP_LOCAL * irp,
     uint8_t endpoint,
     bool * pisDMAUsed
 )
@@ -765,14 +765,14 @@ USB_ERROR DRV_USBHS_HOST_IRPSubmit
     USB_HOST_IRP * pinputIRP
 )
 {
-    USB_HOST_IRP_LOCAL * irpIterator = NULL;
+    DRV_USBHS_HOST_IRP_LOCAL * irpIterator = NULL;
     DRV_USBHS_HOST_TRANSFER_GROUP * controlTransferGroup = NULL;
     bool interruptWasEnabled = false;
     uint32_t direction = 0;
     uint8_t endpoint = 0;
     uint32_t temp_32;
 
-    USB_HOST_IRP_LOCAL * irp = (USB_HOST_IRP_LOCAL *)pinputIRP;
+    DRV_USBHS_HOST_IRP_LOCAL * irp = (DRV_USBHS_HOST_IRP_LOCAL *)pinputIRP;
     DRV_USBHS_HOST_PIPE_OBJ * pipe = (DRV_USBHS_HOST_PIPE_OBJ *)(hPipe);
     DRV_USBHS_OBJ * hDriver = NULL;
     USBHS_MODULE_ID usbID = USBHS_NUMBER_OF_MODULES;
@@ -940,7 +940,7 @@ void DRV_USBHS_HOST_IRPCancel
 {
     /* This function cancels an IRP */
     
-    USB_HOST_IRP_LOCAL * irp = (USB_HOST_IRP_LOCAL *) inputIRP;
+    DRV_USBHS_HOST_IRP_LOCAL * irp = (DRV_USBHS_HOST_IRP_LOCAL *) inputIRP;
     DRV_USBHS_OBJ * hDriver = NULL;
     DRV_USBHS_HOST_PIPE_OBJ * pipe = NULL;
     bool interruptWasEnabled = false;
@@ -1034,7 +1034,7 @@ void DRV_USBHS_HOST_PipeClose
     
     bool interruptWasEnabled = false;
     DRV_USBHS_OBJ * hDriver = NULL;
-    USB_HOST_IRP_LOCAL * irp = NULL;
+    DRV_USBHS_HOST_IRP_LOCAL * irp = NULL;
     DRV_USBHS_HOST_PIPE_OBJ * pipe = NULL;
     DRV_USBHS_HOST_TRANSFER_GROUP * transferGroup = NULL;
     DRV_USBHS_HOST_ENDPOINT_OBJ * endpointObj = NULL;
@@ -1145,7 +1145,7 @@ void DRV_USBHS_HOST_PipeClose
              * will be actually aborted on the next SOF This will allow the USB
              * module to complete any transaction that was in progress. */
 
-            irp = (USB_HOST_IRP_LOCAL *)pipe->irpQueueHead;
+            irp = (DRV_USBHS_HOST_IRP_LOCAL *)pipe->irpQueueHead;
             while(irp != NULL)
             {
                 irp->pipe = DRV_USBHS_HOST_PIPE_HANDLE_INVALID;
@@ -1605,7 +1605,7 @@ void F_DRV_USBHS_HOST_ControlTransferProcess
      * function is called from an interrupt context */
     
     uint8_t status = 0;
-    USB_HOST_IRP_LOCAL * irp = NULL;
+    DRV_USBHS_HOST_IRP_LOCAL * irp = NULL;
     DRV_USBHS_HOST_PIPE_OBJ * pipe = NULL;
     DRV_USBHS_HOST_PIPE_OBJ * iterPipe = NULL;
     DRV_USBHS_HOST_TRANSFER_GROUP * transferGroup = NULL;
@@ -1915,7 +1915,7 @@ void F_DRV_USBHS_HOST_NonControlTransferProcess
     
     DRV_USBHS_HOST_ENDPOINT_OBJ * endpointTable = &(hDriver->usbDrvHostObj.hostEndpointTable[0]);
     DRV_USBHS_HOST_PIPE_OBJ * pipe = NULL;
-    USB_HOST_IRP_LOCAL * irp = NULL;
+    DRV_USBHS_HOST_IRP_LOCAL * irp = NULL;
     uint8_t status = 0;
     bool endIRP = false;
     bool isDmaUsed = false;
@@ -2284,7 +2284,7 @@ void F_DRV_USBHS_HOST_Tasks_ISR_USBDMA
     bool endpointDir = false;
     bool usbDMAError = false;
     bool endIRP = false;
-    USB_HOST_IRP_LOCAL * irp = (USB_HOST_IRP_LOCAL *)NULL;
+    DRV_USBHS_HOST_IRP_LOCAL * irp = (DRV_USBHS_HOST_IRP_LOCAL *)NULL;
     DRV_USBHS_DMA_POOL * dmaChannelObj = NULL;
     DRV_USBHS_HOST_PIPE_OBJ * pipeObj = NULL; 
 

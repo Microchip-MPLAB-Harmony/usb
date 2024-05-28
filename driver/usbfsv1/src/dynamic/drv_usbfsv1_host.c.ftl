@@ -348,9 +348,9 @@ USB_ERROR DRV_USBFSV1_HOST_IRPSubmit
     USB_HOST_IRP * pInputIRP
 )
 {
-    USB_HOST_IRP_LOCAL * pIRPIterator = (USB_HOST_IRP_LOCAL *)NULL;
+    DRV_USBFSV1_HOST_IRP_LOCAL * pIRPIterator = (DRV_USBFSV1_HOST_IRP_LOCAL *)NULL;
     M_DRV_USBFSV1_DECLARE_BOOL_VARIABLE(interruptState);
-    USB_HOST_IRP_LOCAL * pIRP = (USB_HOST_IRP_LOCAL *)pInputIRP;
+    DRV_USBFSV1_HOST_IRP_LOCAL * pIRP = (DRV_USBFSV1_HOST_IRP_LOCAL *)pInputIRP;
     DRV_USBFSV1_HOST_PIPE_OBJ * pPipe = (DRV_USBFSV1_HOST_PIPE_OBJ *)hPipe;
     DRV_USBFSV1_OBJ * pUSBDrvObj = (DRV_USBFSV1_OBJ *)NULL;
     USB_ERROR returnValue = USB_ERROR_NONE;
@@ -483,8 +483,8 @@ void DRV_USBFSV1_HOST_IRPCancel
 {
     /* This function cancels an IRP */
 
-    USB_HOST_IRP_LOCAL * irp = (USB_HOST_IRP_LOCAL *) inputIRP;
-    USB_HOST_IRP_LOCAL * pIteratorIRP = NULL;
+    DRV_USBFSV1_HOST_IRP_LOCAL * irp = (DRV_USBFSV1_HOST_IRP_LOCAL *) inputIRP;
+    DRV_USBFSV1_HOST_IRP_LOCAL * pIteratorIRP = NULL;
     M_DRV_USBFSV1_DECLARE_BOOL_VARIABLE(interruptState);
     DRV_USBFSV1_OBJ * hDriver;
     DRV_USBFSV1_HOST_PIPE_OBJ * pipe;
@@ -630,7 +630,7 @@ void DRV_USBFSV1_HOST_PipeClose
     M_DRV_USBFSV1_DECLARE_BOOL_VARIABLE(interruptState);
 
     DRV_USBFSV1_OBJ * hDriver = NULL;
-    USB_HOST_IRP_LOCAL * irp = NULL;
+    DRV_USBFSV1_HOST_IRP_LOCAL * irp = NULL;
     DRV_USBFSV1_HOST_PIPE_OBJ * pipe = NULL;
     DRV_USBFSV1_HOST_PIPE_OBJ * pIteratorPipe = NULL;
     DRV_USBFSV1_HOST_PIPE_GROUP * pipeGroup = NULL;
@@ -1076,7 +1076,7 @@ void F_DRV_USBFSV1_HOST_ControlTransferDataStageSend(DRV_USBFSV1_OBJ * hDriver)
 {
     DRV_USBFSV1_HOST_PIPE_GROUP * pipeGroup = &hDriver->pipeGroup[DRV_USBFSV1_HOST_HW_PIPE_CONTROL];
     DRV_USBFSV1_HOST_PIPE_OBJ * pipe = pipeGroup->currentPipe;
-    USB_HOST_IRP_LOCAL * pIRP = pipeGroup->currentIRP;
+    DRV_USBFSV1_HOST_IRP_LOCAL * pIRP = pipeGroup->currentIRP;
     int32_t size = 0;
     usb_host_registers_t * HOST = &hDriver->usbID->HOST;
     usb_host_desc_bank_registers_t * controlPipeDesc = &hDriver->hostPipeDescTable[DRV_USBFSV1_HOST_HW_PIPE_CONTROL].HOST_DESC_BANK[0];
@@ -1165,7 +1165,7 @@ bool F_DRV_USBFSV1_HOST_ControlTransferProcess(DRV_USBFSV1_OBJ * hDriver)
      * function exits. Get the pointer to the control transfer. This is always 
      * at index 0 in the frame IRP list */
     
-    USB_HOST_IRP_LOCAL * pIRP = hDriver->frameIRPList[0].pIRP;
+    DRV_USBFSV1_HOST_IRP_LOCAL * pIRP = hDriver->frameIRPList[0].pIRP;
     DRV_USBFSV1_HOST_PIPE_GROUP * pipeGroup = &hDriver->pipeGroup[DRV_USBFSV1_HOST_HW_PIPE_CONTROL];
     DRV_USBFSV1_HOST_PIPE_OBJ * pipe = pipeGroup->currentPipe;
     bool tokenSent = false;
@@ -1694,7 +1694,7 @@ void F_DRV_USBFSV1_HOST_NonControlTransferDataSend(DRV_USBFSV1_OBJ * hDriver)
     /* Get the pipe and IRP to be processed. The currentFrameIRPIndex will point
      * to the IRP that needs to be processed */
     DRV_USBFSV1_HOST_FRAME_IRP * frameIRP = &hDriver->frameIRPList[hDriver->currentFrameIRPIndex];
-    USB_HOST_IRP_LOCAL * pIRP = frameIRP->pIRP;
+    DRV_USBFSV1_HOST_IRP_LOCAL * pIRP = frameIRP->pIRP;
     DRV_USBFSV1_HOST_PIPE_OBJ * pipe = (DRV_USBFSV1_HOST_PIPE_OBJ *)pIRP->pipe;
     int32_t hardwarePipeIndex = frameIRP->hardwarePipeType;
     int32_t size = 0;
@@ -1813,7 +1813,7 @@ static bool F_DRV_USBFSV1_HOST_NonControlTransferProcess
     * transfer and to proceed the transfer. */
 
     DRV_USBFSV1_HOST_FRAME_IRP * frameIRP = &hDriver->frameIRPList[hDriver->currentFrameIRPIndex];
-    USB_HOST_IRP_LOCAL * pIRP = frameIRP->pIRP;
+    DRV_USBFSV1_HOST_IRP_LOCAL * pIRP = frameIRP->pIRP;
     DRV_USBFSV1_HOST_PIPE_OBJ * pipe = (DRV_USBFSV1_HOST_PIPE_OBJ *)pIRP->pipe;
     bool tokenSent = false;
     bool endIRP = false;
@@ -1961,7 +1961,7 @@ static bool F_DRV_USBFSV1_HOST_NonControlTransferProcess
             if(endIRP == true)
             {
                 /* Move the pipe queue head to next IRP in the queue */
-                pipe->irpQueueHead = (USB_HOST_IRP_LOCAL *)pIRP->next;
+                pipe->irpQueueHead = (DRV_USBFSV1_HOST_IRP_LOCAL *)pIRP->next;
 
                 /* Update the size field with actual size received\transmitted */
                 pIRP->size = pIRP->completedBytes;
@@ -2010,7 +2010,7 @@ void F_DRV_USBFSV1_HOST_ControlTransferBW(DRV_USBFSV1_OBJ * hDriver)
     uint32_t nTransactions = 0;
     uint32_t nPossibleTransactions = 0;
     DRV_USBFSV1_HOST_PIPE_OBJ * currentPipe = hDriver->pipeGroup[DRV_USBFSV1_HOST_HW_PIPE_CONTROL].currentPipe;
-    USB_HOST_IRP_LOCAL * currentIRP = hDriver->pipeGroup[DRV_USBFSV1_HOST_HW_PIPE_CONTROL].currentIRP;
+    DRV_USBFSV1_HOST_IRP_LOCAL * currentIRP = hDriver->pipeGroup[DRV_USBFSV1_HOST_HW_PIPE_CONTROL].currentIRP;
 
     /* Check the speed of this pipe and then figure out what is the maximum
      * bandwidth to be allocated for control transfers. The maximum bandwidth
@@ -2073,7 +2073,7 @@ void F_DRV_USBFSV1_HOST_ControlTransferBW(DRV_USBFSV1_OBJ * hDriver)
 
 // *****************************************************************************
 /* Function:
-    USB_HOST_IRP_LOCAL * F_DRV_USBFSV1_HOST_PipeGroupGetNextIRP
+    DRV_USBFSV1_HOST_IRP_LOCAL * F_DRV_USBFSV1_HOST_PipeGroupGetNextIRP
     (
         DRV_USBFSV1_HOST_PIPE_GROUP * pipeGroup
     )
@@ -2093,9 +2093,9 @@ void F_DRV_USBFSV1_HOST_ControlTransferBW(DRV_USBFSV1_OBJ * hDriver)
     application.
 */
 
-USB_HOST_IRP_LOCAL * F_DRV_USBFSV1_HOST_PipeGroupGetNextIRP(DRV_USBFSV1_HOST_PIPE_GROUP * pipeGroup)
+DRV_USBFSV1_HOST_IRP_LOCAL * F_DRV_USBFSV1_HOST_PipeGroupGetNextIRP(DRV_USBFSV1_HOST_PIPE_GROUP * pipeGroup)
 {
-    USB_HOST_IRP_LOCAL * returnValue = NULL;
+    DRV_USBFSV1_HOST_IRP_LOCAL * returnValue = NULL;
     uint32_t iterator = 0;
 
     for (iterator = 0; iterator < pipeGroup->nPipes; iterator ++)
@@ -2124,7 +2124,7 @@ USB_HOST_IRP_LOCAL * F_DRV_USBFSV1_HOST_PipeGroupGetNextIRP(DRV_USBFSV1_HOST_PIP
 /* Function:
     bool F_DRV_USBFSV1_HOST_NonControlTransferBW
     (
-        DRV_USBFSV1_OBJ * hDriver, USB_HOST_IRP_LOCAL * irp
+        DRV_USBFSV1_OBJ * hDriver, DRV_USBFSV1_HOST_IRP_LOCAL * irp
     )
   
   Summary:
@@ -2142,7 +2142,7 @@ USB_HOST_IRP_LOCAL * F_DRV_USBFSV1_HOST_PipeGroupGetNextIRP(DRV_USBFSV1_HOST_PIP
     application.
 */
 
-bool F_DRV_USBFSV1_HOST_NonControlTransferBW(DRV_USBFSV1_OBJ * hDriver, USB_HOST_IRP_LOCAL * irp)
+bool F_DRV_USBFSV1_HOST_NonControlTransferBW(DRV_USBFSV1_OBJ * hDriver, DRV_USBFSV1_HOST_IRP_LOCAL * irp)
 {
     DRV_USBFSV1_HOST_PIPE_OBJ * pipe = (DRV_USBFSV1_HOST_PIPE_OBJ *)irp->pipe;
     bool returnValue = false;
