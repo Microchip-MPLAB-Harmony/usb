@@ -1,0 +1,433 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us" data-whc_version="24.1">
+    <head><link rel="shortcut icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><link rel="icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="description" content="C void USB_DEVICE_PowerStateSet ( USB_DEVICE_HANDLE usbDeviceHandle, USB_DEVICE_POWER_STATE powerState ); Summary Application clients can use this function to set the power state of the device. A USB ..."/><meta name="copyright" content="(C) Copyright 2024"/><meta name="generator" content="DITA-OT"/><title>2.2.4.9 USB_DEVICE_PowerStateSet Function</title><!--  Generated with Oxygen version 24.1, build number 2022062014.  --><meta name="wh-path2root" content=""/><meta name="wh-toc-id" content="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99-d5059e380"/><meta name="wh-source-relpath" content="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99.xml"/><meta name="wh-out-relpath" content="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99.html"/>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/lib/bootstrap/css/bootstrap.min.css"/>
+    
+    <link rel="stylesheet" href="./oxygen-webhelp/lib/jquery-ui/jquery-ui.min.css"/>
+    
+    <!-- Template default styles  -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/app/topic-page.css?buildId=2022062014"/>
+    
+    
+    <script src="./oxygen-webhelp/lib/jquery/jquery-3.5.1.min.js"></script>
+    
+    <script data-main="./oxygen-webhelp/app/topic-page.js" src="./oxygen-webhelp/lib/requirejs/require.js"></script>
+<link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/microchip.css?buildId=2022062014"/><link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/notes.css?buildId=2022062014"/>
+<script src="mchp-context-help.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async="" type="text/javascript"></script>
+    <script src="https://assets.adobedtm.com/6a72a357eb48/a636c708c7fe/launch-0b0023397020.min.js"></script><!-- Adobe Analytics -->
+</head>
+
+    <body id="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99" class="wh_topic_page frmBody">
+        <a href="#wh_topic_body" class="sr-only sr-only-focusable">
+            Jump to main content
+        </a>
+        
+        
+        
+        
+        <header class="navbar navbar-default wh_header">
+    <div class="container-fluid">
+        <div class="wh_header_flex_container navbar-nav navbar-expand-md navbar-dark">
+            <div class="wh_logo_and_publication_title_container">
+                <div class="wh_logo_and_publication_title">
+                    
+                    <a href="index.html" class=" wh_logo d-none d-sm-block "><img src="oxygen-webhelp\template\resources/images/microchip.png" alt="MPLAB® Harmony 3 USB Library &#xA;    "/></a>
+                    <div class=" wh_publication_title "><a href="index.html">MPLAB® Harmony 3 USB Library 
+    </a></div>
+                    
+                </div>
+                
+                
+            </div>
+
+            <div class="wh_top_menu_and_indexterms_link collapse navbar-collapse" id="wh_top_menu_and_indexterms_link">
+                
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</header>
+        
+        
+         
+        
+        <div class=" wh_search_input navbar-form wh_topic_page_search search " role="form">
+            
+            
+            
+            <form id="searchForm" method="get" role="search" action="search.html"><div class="d-flex justify-contents-around"><div class="flex-grow-1"></div><div class="position-relative flex-grow-1"><input type="search" placeholder="Search " class="wh_search_textfield" id="textToSearch" name="searchQuery" aria-label="Search query" required="required"/><button type="submit" class="wh_search_button" aria-label="Search"><span class="search_input_text">Search</span></button></div><div class="align-self-center flex-grow-1 ml-2"></div></div></form>
+            
+            <div class="mchp-color-stripe-grid-container">
+  <div class="mchp-main-bar mchp-orange-bar"></div>
+  <div class="mchp-main-bar mchp-blue-bar"></div>
+  <div class="mchp-main-bar mchp-green-bar"></div>
+</div>
+            
+        </div>
+        
+        <div class="container-fluid" id="wh_topic_container">
+            <div class="row">
+
+                <nav class="wh_tools d-print-none navbar-expand-md" aria-label="Tools">
+                    
+                    <div data-tooltip-position="bottom" class=" wh_breadcrumb "><ol class="d-print-none"><li><span class="home"><a href="index.html"><span>Home</span></a></span></li><li><div class="topicref" data-id="GUID-61902145-0FA6-4DE3-845C-B14852166EAE"><div class="title"><a href="GUID-61902145-0FA6-4DE3-845C-B14852166EAE.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2</ph>
+USB Device Libraries</a></div></div></li><li><div class="topicref" data-id="GUID-E31828BD-445D-4B5C-A518-308C752ED467"><div class="title"><a href="GUID-E31828BD-445D-4B5C-A518-308C752ED467.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2</ph>
+USB Device Layer Library</a></div></div></li><li><div class="topicref" data-id="GUID-4BB29F09-6B11-4B48-9803-838F5EA6273F"><div class="title"><a href="GUID-4BB29F09-6B11-4B48-9803-838F5EA6273F.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4</ph>
+Library Interface</a></div></div></li><li class="active"><div class="topicref" data-id="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99"><div class="title"><a href="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.9</ph>
+USB_DEVICE_PowerStateSet Function</a></div></div></li></ol></div>
+                    
+                    
+                    
+                    <div class="wh_right_tools">
+                        <button class="wh_hide_highlight" aria-label="Toggle search highlights" title="Toggle search highlights"></button>
+                        <button class="webhelp_expand_collapse_sections" data-next-state="collapsed" aria-label="Collapse sections" title="Collapse sections"></button>
+                        
+                        
+                        
+                        
+                        <div class=" wh_print_link print d-none d-md-inline-block "><button onClick="window.print()" title="Print this page" aria-label="Print this page"></button></div>
+                        
+                        <button type="button" id="wh_toc_button" class="custom-toggler navbar-toggler collapsed wh_toggle_button navbar-light" aria-expanded="false" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    
+                </nav>
+            </div>
+            
+            <div class="row" style="margin-top: -1em;"><div class="col-lg-7 col-md-7 col-sm-12 offset-lg-3 offset-md-3 text-right border-bottom mb-1"><h2 class="text-dark header_title">
+    </h2></div></div>
+            
+            
+            <div class="wh_content_area">
+                <div class="row">
+                    
+                        <nav id="wh_publication_toc" class="col-lg-3 col-md-3 col-sm-12 d-md-block d-none d-print-none" aria-label="Table of Contents Container">
+                            <div id="wh_publication_toc_content">
+		                        
+                            	<div class=" wh_publication_toc " data-tooltip-position="right"><span class="expand-button-action-labels"><span id="button-expand-action" role="button" aria-label="Expand"></span><span id="button-collapse-action" role="button" aria-label="Collapse"></span><span id="button-pending-action" role="button" aria-label="Pending"></span></span><ul role="tree" aria-label="Table of Contents"><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-D9F90103-F97D-468D-90FC-EA3E186842D9-d5059e11" class="topicref" data-id="GUID-D9F90103-F97D-468D-90FC-EA3E186842D9" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-D9F90103-F97D-468D-90FC-EA3E186842D9-d5059e11-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-D9F90103-F97D-468D-90FC-EA3E186842D9.html" id="GUID-D9F90103-F97D-468D-90FC-EA3E186842D9-d5059e11-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+Release Information</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-61902145-0FA6-4DE3-845C-B14852166EAE-d5059e27" class="topicref" data-id="GUID-61902145-0FA6-4DE3-845C-B14852166EAE" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-61902145-0FA6-4DE3-845C-B14852166EAE-d5059e27-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-61902145-0FA6-4DE3-845C-B14852166EAE.html" id="GUID-61902145-0FA6-4DE3-845C-B14852166EAE-d5059e27-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2</ph>
+USB Device Libraries</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-11BEDBBA-7CB2-44C2-9A3A-BAF21121881C-d5059e35" class="topicref" data-id="GUID-11BEDBBA-7CB2-44C2-9A3A-BAF21121881C" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-11BEDBBA-7CB2-44C2-9A3A-BAF21121881C-d5059e35-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-11BEDBBA-7CB2-44C2-9A3A-BAF21121881C.html" id="GUID-11BEDBBA-7CB2-44C2-9A3A-BAF21121881C-d5059e35-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.1</ph>
+USB Device Library - Getting Started</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-E31828BD-445D-4B5C-A518-308C752ED467-d5059e75" class="topicref" data-id="GUID-E31828BD-445D-4B5C-A518-308C752ED467" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-E31828BD-445D-4B5C-A518-308C752ED467-d5059e75-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-E31828BD-445D-4B5C-A518-308C752ED467.html" id="GUID-E31828BD-445D-4B5C-A518-308C752ED467-d5059e75-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2</ph>
+USB Device Layer Library</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="GUID-3A4B2EB7-3D64-489D-A63A-03238AED2A6D-d5059e83" class="topicref" data-id="GUID-3A4B2EB7-3D64-489D-A63A-03238AED2A6D" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-3A4B2EB7-3D64-489D-A63A-03238AED2A6D.html" id="GUID-3A4B2EB7-3D64-489D-A63A-03238AED2A6D-d5059e83-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.1</ph>
+Introduction</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-32EFE984-6A14-4D79-BBB6-83799F3A4655-d5059e91" class="topicref" data-id="GUID-32EFE984-6A14-4D79-BBB6-83799F3A4655" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-32EFE984-6A14-4D79-BBB6-83799F3A4655-d5059e91-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-32EFE984-6A14-4D79-BBB6-83799F3A4655.html" id="GUID-32EFE984-6A14-4D79-BBB6-83799F3A4655-d5059e91-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.2</ph>
+Using the Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-4B21589A-A675-47AC-9B19-92E41A8A6F15-d5059e211" class="topicref" data-id="GUID-4B21589A-A675-47AC-9B19-92E41A8A6F15" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-4B21589A-A675-47AC-9B19-92E41A8A6F15-d5059e211-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-4B21589A-A675-47AC-9B19-92E41A8A6F15.html" id="GUID-4B21589A-A675-47AC-9B19-92E41A8A6F15-d5059e211-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.3</ph>
+Configuring the Library</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-4BB29F09-6B11-4B48-9803-838F5EA6273F-d5059e308" class="topicref" data-id="GUID-4BB29F09-6B11-4B48-9803-838F5EA6273F" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-4BB29F09-6B11-4B48-9803-838F5EA6273F-d5059e308-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-4BB29F09-6B11-4B48-9803-838F5EA6273F.html" id="GUID-4BB29F09-6B11-4B48-9803-838F5EA6273F-d5059e308-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4</ph>
+Library Interface</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="GUID-42DB173A-594E-4260-B239-0F403618EEB4-d5059e316" class="topicref" data-id="GUID-42DB173A-594E-4260-B239-0F403618EEB4" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-42DB173A-594E-4260-B239-0F403618EEB4.html" id="GUID-42DB173A-594E-4260-B239-0F403618EEB4-d5059e316-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.1</ph>
+USB_DEVICE_Initialize Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-AA70BD97-C8FC-44CD-93C8-8BFC8D1E5537-d5059e324" class="topicref" data-id="GUID-AA70BD97-C8FC-44CD-93C8-8BFC8D1E5537" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-AA70BD97-C8FC-44CD-93C8-8BFC8D1E5537.html" id="GUID-AA70BD97-C8FC-44CD-93C8-8BFC8D1E5537-d5059e324-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.2</ph>
+USB_DEVICE_Deinitialize Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-1F4F909E-F1A1-4329-A208-094D04D15AD7-d5059e332" class="topicref" data-id="GUID-1F4F909E-F1A1-4329-A208-094D04D15AD7" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-1F4F909E-F1A1-4329-A208-094D04D15AD7.html" id="GUID-1F4F909E-F1A1-4329-A208-094D04D15AD7-d5059e332-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.3</ph>
+USB_DEVICE_Status Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-026002E3-1512-453B-9DB3-142568F0A729-d5059e340" class="topicref" data-id="GUID-026002E3-1512-453B-9DB3-142568F0A729" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-026002E3-1512-453B-9DB3-142568F0A729.html" id="GUID-026002E3-1512-453B-9DB3-142568F0A729-d5059e340-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.4</ph>
+USB_DEVICE_Tasks Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-AF93B648-027D-406E-AFA2-FB8D77C727C5-d5059e348" class="topicref" data-id="GUID-AF93B648-027D-406E-AFA2-FB8D77C727C5" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-AF93B648-027D-406E-AFA2-FB8D77C727C5.html" id="GUID-AF93B648-027D-406E-AFA2-FB8D77C727C5-d5059e348-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.5</ph>
+USB_DEVICE_Open Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-5DDC83AF-434A-413D-9D57-A2281BB530E3-d5059e356" class="topicref" data-id="GUID-5DDC83AF-434A-413D-9D57-A2281BB530E3" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-5DDC83AF-434A-413D-9D57-A2281BB530E3.html" id="GUID-5DDC83AF-434A-413D-9D57-A2281BB530E3-d5059e356-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.6</ph>
+USB_DEVICE_Close Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-09788A69-5EFD-472C-B27A-A62205651AC6-d5059e364" class="topicref" data-id="GUID-09788A69-5EFD-472C-B27A-A62205651AC6" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-09788A69-5EFD-472C-B27A-A62205651AC6.html" id="GUID-09788A69-5EFD-472C-B27A-A62205651AC6-d5059e364-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.7</ph>
+USB_DEVICE_ClientStatusGet Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-9F27D5FE-6BBD-496E-9E47-EA58D22F1063-d5059e372" class="topicref" data-id="GUID-9F27D5FE-6BBD-496E-9E47-EA58D22F1063" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-9F27D5FE-6BBD-496E-9E47-EA58D22F1063.html" id="GUID-9F27D5FE-6BBD-496E-9E47-EA58D22F1063-d5059e372-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.8</ph>
+USB_DEVICE_EventHandlerSet Function</a></div></div></li><li role="treeitem" class="active"><div data-tocid="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99-d5059e380" class="topicref" data-id="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99.html" id="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99-d5059e380-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.9</ph>
+USB_DEVICE_PowerStateSet Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-B0847A5E-CB8C-4772-A73C-F166ACC7B48D-d5059e388" class="topicref" data-id="GUID-B0847A5E-CB8C-4772-A73C-F166ACC7B48D" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-B0847A5E-CB8C-4772-A73C-F166ACC7B48D.html" id="GUID-B0847A5E-CB8C-4772-A73C-F166ACC7B48D-d5059e388-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.10</ph>
+USB_DEVICE_RemoteWakeupStatusGet Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-3F527D1C-72D7-481C-A1F3-21C30E3796A7-d5059e397" class="topicref" data-id="GUID-3F527D1C-72D7-481C-A1F3-21C30E3796A7" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-3F527D1C-72D7-481C-A1F3-21C30E3796A7.html" id="GUID-3F527D1C-72D7-481C-A1F3-21C30E3796A7-d5059e397-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.11</ph>
+USB_DEVICE_IsSuspended Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-1E0163FD-65E2-4E02-9F38-C93E65381DAC-d5059e405" class="topicref" data-id="GUID-1E0163FD-65E2-4E02-9F38-C93E65381DAC" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-1E0163FD-65E2-4E02-9F38-C93E65381DAC.html" id="GUID-1E0163FD-65E2-4E02-9F38-C93E65381DAC-d5059e405-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.12</ph>
+USB_DEVICE_RemoteWakeupStart Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-4E9F43BB-809D-47C1-B606-9431285B16B7-d5059e413" class="topicref" data-id="GUID-4E9F43BB-809D-47C1-B606-9431285B16B7" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-4E9F43BB-809D-47C1-B606-9431285B16B7.html" id="GUID-4E9F43BB-809D-47C1-B606-9431285B16B7-d5059e413-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.13</ph>
+USB_DEVICE_RemoteWakeupStartTimed Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-37777BFE-26D9-45EB-B965-F3927314C1AF-d5059e421" class="topicref" data-id="GUID-37777BFE-26D9-45EB-B965-F3927314C1AF" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-37777BFE-26D9-45EB-B965-F3927314C1AF.html" id="GUID-37777BFE-26D9-45EB-B965-F3927314C1AF-d5059e421-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.14</ph>
+USB_DEVICE_RemoteWakeupStop Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-7A6CEAFC-BC69-45F3-B535-2BC83EEE7936-d5059e429" class="topicref" data-id="GUID-7A6CEAFC-BC69-45F3-B535-2BC83EEE7936" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-7A6CEAFC-BC69-45F3-B535-2BC83EEE7936.html" id="GUID-7A6CEAFC-BC69-45F3-B535-2BC83EEE7936-d5059e429-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.15</ph>
+USB_DEVICE_StateGet Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-6A6AFEC4-1E57-4336-962A-A5BD7B06800D-d5059e437" class="topicref" data-id="GUID-6A6AFEC4-1E57-4336-962A-A5BD7B06800D" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-6A6AFEC4-1E57-4336-962A-A5BD7B06800D.html" id="GUID-6A6AFEC4-1E57-4336-962A-A5BD7B06800D-d5059e437-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.16</ph>
+USB_DEVICE_Attach Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-B3C1F16C-006F-4C50-BAB0-8C40C5BD9DFC-d5059e445" class="topicref" data-id="GUID-B3C1F16C-006F-4C50-BAB0-8C40C5BD9DFC" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-B3C1F16C-006F-4C50-BAB0-8C40C5BD9DFC.html" id="GUID-B3C1F16C-006F-4C50-BAB0-8C40C5BD9DFC-d5059e445-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.17</ph>
+USB_DEVICE_Detach Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-5DCD3AD4-D53B-4838-8CB9-DDD7863F9282-d5059e453" class="topicref" data-id="GUID-5DCD3AD4-D53B-4838-8CB9-DDD7863F9282" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-5DCD3AD4-D53B-4838-8CB9-DDD7863F9282.html" id="GUID-5DCD3AD4-D53B-4838-8CB9-DDD7863F9282-d5059e453-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.18</ph>
+USB_DEVICE_ActiveConfigurationGet Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-CE1C0446-8192-4BDA-8FBF-CBA35EF9A537-d5059e461" class="topicref" data-id="GUID-CE1C0446-8192-4BDA-8FBF-CBA35EF9A537" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-CE1C0446-8192-4BDA-8FBF-CBA35EF9A537.html" id="GUID-CE1C0446-8192-4BDA-8FBF-CBA35EF9A537-d5059e461-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.19</ph>
+USB_DEVICE_ActiveSpeedGet Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-4AAA38D2-B882-4995-8E19-26F2F6526382-d5059e469" class="topicref" data-id="GUID-4AAA38D2-B882-4995-8E19-26F2F6526382" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-4AAA38D2-B882-4995-8E19-26F2F6526382.html" id="GUID-4AAA38D2-B882-4995-8E19-26F2F6526382-d5059e469-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.20</ph>
+USB_DEVICE_EndpointIsStalled Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-5FAF63C0-C5D9-418D-8BFB-0BE3880DAB6D-d5059e477" class="topicref" data-id="GUID-5FAF63C0-C5D9-418D-8BFB-0BE3880DAB6D" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-5FAF63C0-C5D9-418D-8BFB-0BE3880DAB6D.html" id="GUID-5FAF63C0-C5D9-418D-8BFB-0BE3880DAB6D-d5059e477-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.21</ph>
+USB_DEVICE_EndpointStall Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-21215E93-D13D-4279-94A7-C64A621FBEC9-d5059e486" class="topicref" data-id="GUID-21215E93-D13D-4279-94A7-C64A621FBEC9" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-21215E93-D13D-4279-94A7-C64A621FBEC9.html" id="GUID-21215E93-D13D-4279-94A7-C64A621FBEC9-d5059e486-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.22</ph>
+USB_DEVICE_EndpointStallClear Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-B431D80B-A6D9-4A0E-9A2C-5029CF57B695-d5059e494" class="topicref" data-id="GUID-B431D80B-A6D9-4A0E-9A2C-5029CF57B695" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-B431D80B-A6D9-4A0E-9A2C-5029CF57B695.html" id="GUID-B431D80B-A6D9-4A0E-9A2C-5029CF57B695-d5059e494-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.23</ph>
+USB_DEVICE_EndpointDisable Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-9D6D78F0-05D0-46D0-861F-00C3925A464E-d5059e502" class="topicref" data-id="GUID-9D6D78F0-05D0-46D0-861F-00C3925A464E" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-9D6D78F0-05D0-46D0-861F-00C3925A464E.html" id="GUID-9D6D78F0-05D0-46D0-861F-00C3925A464E-d5059e502-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.24</ph>
+USB_DEVICE_EndpointEnable Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-FFA77933-6289-4777-BEDD-B01F76A2E17C-d5059e510" class="topicref" data-id="GUID-FFA77933-6289-4777-BEDD-B01F76A2E17C" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-FFA77933-6289-4777-BEDD-B01F76A2E17C.html" id="GUID-FFA77933-6289-4777-BEDD-B01F76A2E17C-d5059e510-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.25</ph>
+USB_DEVICE_EndpointIsEnabled Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-A6917620-D363-4F8B-BE8B-A5C73D0CAC92-d5059e518" class="topicref" data-id="GUID-A6917620-D363-4F8B-BE8B-A5C73D0CAC92" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-A6917620-D363-4F8B-BE8B-A5C73D0CAC92.html" id="GUID-A6917620-D363-4F8B-BE8B-A5C73D0CAC92-d5059e518-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.26</ph>
+USB_DEVICE_EndpointRead Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-175342C9-FA7C-4593-94F9-C89DE52B042B-d5059e526" class="topicref" data-id="GUID-175342C9-FA7C-4593-94F9-C89DE52B042B" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-175342C9-FA7C-4593-94F9-C89DE52B042B.html" id="GUID-175342C9-FA7C-4593-94F9-C89DE52B042B-d5059e526-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.27</ph>
+USB_DEVICE_EndpointTransferCancel Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-C06A61D8-DD79-4494-BA2B-026D72B441E4-d5059e534" class="topicref" data-id="GUID-C06A61D8-DD79-4494-BA2B-026D72B441E4" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C06A61D8-DD79-4494-BA2B-026D72B441E4.html" id="GUID-C06A61D8-DD79-4494-BA2B-026D72B441E4-d5059e534-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.28</ph>
+USB_DEVICE_EndpointWrite Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-33991F1C-C31B-413E-BD6B-29A870E556B5-d5059e542" class="topicref" data-id="GUID-33991F1C-C31B-413E-BD6B-29A870E556B5" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-33991F1C-C31B-413E-BD6B-29A870E556B5.html" id="GUID-33991F1C-C31B-413E-BD6B-29A870E556B5-d5059e542-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.29</ph>
+USB_DEVICE_ControlReceive Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-85F7260B-F498-4865-A1A6-0FB2C1EA5AD0-d5059e550" class="topicref" data-id="GUID-85F7260B-F498-4865-A1A6-0FB2C1EA5AD0" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-85F7260B-F498-4865-A1A6-0FB2C1EA5AD0.html" id="GUID-85F7260B-F498-4865-A1A6-0FB2C1EA5AD0-d5059e550-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.30</ph>
+USB_DEVICE_ControlSend Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-34243A48-7930-4EBD-9E40-AF31631C2B9F-d5059e558" class="topicref" data-id="GUID-34243A48-7930-4EBD-9E40-AF31631C2B9F" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-34243A48-7930-4EBD-9E40-AF31631C2B9F.html" id="GUID-34243A48-7930-4EBD-9E40-AF31631C2B9F-d5059e558-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.31</ph>
+USB_DEVICE_ControlStatus Function</a></div></div></li><li role="treeitem"><div data-tocid="GUID-C50530CB-18BC-4F61-BB35-6F0F639AC2B4-d5059e566" class="topicref" data-id="GUID-C50530CB-18BC-4F61-BB35-6F0F639AC2B4" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C50530CB-18BC-4F61-BB35-6F0F639AC2B4.html" id="GUID-C50530CB-18BC-4F61-BB35-6F0F639AC2B4-d5059e566-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.32</ph>
+USB_DEVICE_EVENT Enumeration</a></div></div></li><li role="treeitem"><div data-tocid="GUID-1EEC43C6-2FBF-421C-92A7-82BD58AF9BA2-d5059e575" class="topicref" data-id="GUID-1EEC43C6-2FBF-421C-92A7-82BD58AF9BA2" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-1EEC43C6-2FBF-421C-92A7-82BD58AF9BA2.html" id="GUID-1EEC43C6-2FBF-421C-92A7-82BD58AF9BA2-d5059e575-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.33</ph>
+USB_DEVICE_HANDLE Type</a></div></div></li><li role="treeitem"><div data-tocid="GUID-FF03D042-3B90-4D38-90B4-42680E5AC6A0-d5059e583" class="topicref" data-id="GUID-FF03D042-3B90-4D38-90B4-42680E5AC6A0" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-FF03D042-3B90-4D38-90B4-42680E5AC6A0.html" id="GUID-FF03D042-3B90-4D38-90B4-42680E5AC6A0-d5059e583-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.34</ph>
+USB_DEVICE_CONTROL_STATUS Enumeration</a></div></div></li><li role="treeitem"><div data-tocid="GUID-65144B20-2F8A-4EE7-880F-535D65DFD14F-d5059e591" class="topicref" data-id="GUID-65144B20-2F8A-4EE7-880F-535D65DFD14F" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-65144B20-2F8A-4EE7-880F-535D65DFD14F.html" id="GUID-65144B20-2F8A-4EE7-880F-535D65DFD14F-d5059e591-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.35</ph>
+USB_DEVICE_CONTROL_TRANSFER_RESULT Enumeration</a></div></div></li><li role="treeitem"><div data-tocid="GUID-11E5640E-918E-4C57-9E08-AFE10F5E34B1-d5059e599" class="topicref" data-id="GUID-11E5640E-918E-4C57-9E08-AFE10F5E34B1" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-11E5640E-918E-4C57-9E08-AFE10F5E34B1.html" id="GUID-11E5640E-918E-4C57-9E08-AFE10F5E34B1-d5059e599-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.36</ph>
+USB_DEVICE_INIT Structure</a></div></div></li><li role="treeitem"><div data-tocid="GUID-47335C2A-B871-4281-A3AC-4ED02419F70A-d5059e607" class="topicref" data-id="GUID-47335C2A-B871-4281-A3AC-4ED02419F70A" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-47335C2A-B871-4281-A3AC-4ED02419F70A.html" id="GUID-47335C2A-B871-4281-A3AC-4ED02419F70A-d5059e607-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.37</ph>
+USB_DEVICE_POWER_STATE Enumeration</a></div></div></li><li role="treeitem"><div data-tocid="GUID-E1297AC1-1E2A-41D1-A6E5-8496A175C7A2-d5059e615" class="topicref" data-id="GUID-E1297AC1-1E2A-41D1-A6E5-8496A175C7A2" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-E1297AC1-1E2A-41D1-A6E5-8496A175C7A2.html" id="GUID-E1297AC1-1E2A-41D1-A6E5-8496A175C7A2-d5059e615-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.38</ph>
+USB_DEVICE_REMOTE_WAKEUP_STATUS Enumeration</a></div></div></li><li role="treeitem"><div data-tocid="GUID-0032352D-8F51-4458-8AE7-C3792DA79278-d5059e623" class="topicref" data-id="GUID-0032352D-8F51-4458-8AE7-C3792DA79278" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-0032352D-8F51-4458-8AE7-C3792DA79278.html" id="GUID-0032352D-8F51-4458-8AE7-C3792DA79278-d5059e623-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.39</ph>
+USB_DEVICE_HANDLE_INVALID Macro</a></div></div></li><li role="treeitem"><div data-tocid="GUID-A8DB74C8-76DF-4E8E-A171-205902614019-d5059e631" class="topicref" data-id="GUID-A8DB74C8-76DF-4E8E-A171-205902614019" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-A8DB74C8-76DF-4E8E-A171-205902614019.html" id="GUID-A8DB74C8-76DF-4E8E-A171-205902614019-d5059e631-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.40</ph>
+USB_DEVICE_INDEX_0 Macro</a></div></div></li><li role="treeitem"><div data-tocid="GUID-39435299-E3CA-49AC-95B3-94CB80C2362F-d5059e639" class="topicref" data-id="GUID-39435299-E3CA-49AC-95B3-94CB80C2362F" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-39435299-E3CA-49AC-95B3-94CB80C2362F.html" id="GUID-39435299-E3CA-49AC-95B3-94CB80C2362F-d5059e639-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.41</ph>
+USB_DEVICE_INDEX_1 Macro</a></div></div></li><li role="treeitem"><div data-tocid="GUID-625AC5C7-B526-4570-946B-365CD2B3AAE6-d5059e647" class="topicref" data-id="GUID-625AC5C7-B526-4570-946B-365CD2B3AAE6" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-625AC5C7-B526-4570-946B-365CD2B3AAE6.html" id="GUID-625AC5C7-B526-4570-946B-365CD2B3AAE6-d5059e647-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.42</ph>
+USB_DEVICE_INDEX_2 Macro</a></div></div></li><li role="treeitem"><div data-tocid="GUID-2ED5595A-36AE-4B6A-82B6-FAFA1DC93F49-d5059e655" class="topicref" data-id="GUID-2ED5595A-36AE-4B6A-82B6-FAFA1DC93F49" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-2ED5595A-36AE-4B6A-82B6-FAFA1DC93F49.html" id="GUID-2ED5595A-36AE-4B6A-82B6-FAFA1DC93F49-d5059e655-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.43</ph>
+USB_DEVICE_INDEX_3 Macro</a></div></div></li><li role="treeitem"><div data-tocid="GUID-4880BE38-33A9-4852-9614-3E773CE6ECF2-d5059e664" class="topicref" data-id="GUID-4880BE38-33A9-4852-9614-3E773CE6ECF2" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-4880BE38-33A9-4852-9614-3E773CE6ECF2.html" id="GUID-4880BE38-33A9-4852-9614-3E773CE6ECF2-d5059e664-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.44</ph>
+USB_DEVICE_INDEX_4 Macro</a></div></div></li><li role="treeitem"><div data-tocid="GUID-A06A076C-C559-49DF-AE5A-D60018892603-d5059e672" class="topicref" data-id="GUID-A06A076C-C559-49DF-AE5A-D60018892603" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-A06A076C-C559-49DF-AE5A-D60018892603.html" id="GUID-A06A076C-C559-49DF-AE5A-D60018892603-d5059e672-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.45</ph>
+USB_DEVICE_INDEX_5 Macro</a></div></div></li><li role="treeitem"><div data-tocid="GUID-9A9875DA-E9B5-4598-81D0-D5C0298C1D93-d5059e680" class="topicref" data-id="GUID-9A9875DA-E9B5-4598-81D0-D5C0298C1D93" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-9A9875DA-E9B5-4598-81D0-D5C0298C1D93.html" id="GUID-9A9875DA-E9B5-4598-81D0-D5C0298C1D93-d5059e680-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.46</ph>
+USB_DEVICE_CLIENT_STATUS Enumeration</a></div></div></li><li role="treeitem"><div data-tocid="GUID-836AA0E3-5F55-4FA7-BEE6-0B4482CC5E5C-d5059e688" class="topicref" data-id="GUID-836AA0E3-5F55-4FA7-BEE6-0B4482CC5E5C" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-836AA0E3-5F55-4FA7-BEE6-0B4482CC5E5C.html" id="GUID-836AA0E3-5F55-4FA7-BEE6-0B4482CC5E5C-d5059e688-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.47</ph>
+USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE Type</a></div></div></li><li role="treeitem"><div data-tocid="GUID-D1223373-0CDF-4492-936D-96D15D15D7D9-d5059e696" class="topicref" data-id="GUID-D1223373-0CDF-4492-936D-96D15D15D7D9" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-D1223373-0CDF-4492-936D-96D15D15D7D9.html" id="GUID-D1223373-0CDF-4492-936D-96D15D15D7D9-d5059e696-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.48</ph>
+USB_DEVICE_EVENT_DATA_CONFIGURED Structure</a></div></div></li><li role="treeitem"><div data-tocid="GUID-11D0E1AF-EE2B-43C5-9156-F2A3310E8944-d5059e704" class="topicref" data-id="GUID-11D0E1AF-EE2B-43C5-9156-F2A3310E8944" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-11D0E1AF-EE2B-43C5-9156-F2A3310E8944.html" id="GUID-11D0E1AF-EE2B-43C5-9156-F2A3310E8944-d5059e704-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.49</ph>
+USB_DEVICE_EVENT_HANDLER Type</a></div></div></li><li role="treeitem"><div data-tocid="GUID-BDA72028-8996-412C-818F-2A5470B4453B-d5059e712" class="topicref" data-id="GUID-BDA72028-8996-412C-818F-2A5470B4453B" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-BDA72028-8996-412C-818F-2A5470B4453B.html" id="GUID-BDA72028-8996-412C-818F-2A5470B4453B-d5059e712-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.50</ph>
+USB_DEVICE_EVENT_RESPONSE Type</a></div></div></li><li role="treeitem"><div data-tocid="GUID-72DE434F-3A79-4912-8ED6-630B8BFB18C7-d5059e720" class="topicref" data-id="GUID-72DE434F-3A79-4912-8ED6-630B8BFB18C7" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-72DE434F-3A79-4912-8ED6-630B8BFB18C7.html" id="GUID-72DE434F-3A79-4912-8ED6-630B8BFB18C7-d5059e720-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.51</ph>
+USB_DEVICE_FUNCTION_REGISTRATION_TABLE Structure</a></div></div></li><li role="treeitem"><div data-tocid="GUID-6EA5F6A9-3AF9-4DF7-9759-6D5092728BD1-d5059e728" class="topicref" data-id="GUID-6EA5F6A9-3AF9-4DF7-9759-6D5092728BD1" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-6EA5F6A9-3AF9-4DF7-9759-6D5092728BD1.html" id="GUID-6EA5F6A9-3AF9-4DF7-9759-6D5092728BD1-d5059e728-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.52</ph>
+USB_DEVICE_MASTER_DESCRIPTOR Structure</a></div></div></li><li role="treeitem"><div data-tocid="GUID-FAE65402-1196-47DF-8E40-78F99D413B2F-d5059e736" class="topicref" data-id="GUID-FAE65402-1196-47DF-8E40-78F99D413B2F" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-FAE65402-1196-47DF-8E40-78F99D413B2F.html" id="GUID-FAE65402-1196-47DF-8E40-78F99D413B2F-d5059e736-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.53</ph>
+USB_DEVICE_STRING_DESCRIPTORS_TABLE Type</a></div></div></li><li role="treeitem"><div data-tocid="GUID-03EB2AD1-463E-4931-B839-4EE92AD58B56-d5059e744" class="topicref" data-id="GUID-03EB2AD1-463E-4931-B839-4EE92AD58B56" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-03EB2AD1-463E-4931-B839-4EE92AD58B56.html" id="GUID-03EB2AD1-463E-4931-B839-4EE92AD58B56-d5059e744-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.54</ph>
+USB_DEVICE_EVENT_RESPONSE_NONE Macro</a></div></div></li><li role="treeitem"><div data-tocid="GUID-1453CF41-66D6-413B-AF48-FBEDFC11DC56-d5059e753" class="topicref" data-id="GUID-1453CF41-66D6-413B-AF48-FBEDFC11DC56" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-1453CF41-66D6-413B-AF48-FBEDFC11DC56.html" id="GUID-1453CF41-66D6-413B-AF48-FBEDFC11DC56-d5059e753-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.55</ph>
+USB_DEVICE_EVENT_DATA_ENDPOINT_READ_COMPLETE Structure</a></div></div></li><li role="treeitem"><div data-tocid="GUID-BD15696D-5562-4682-9638-95F867E968F9-d5059e761" class="topicref" data-id="GUID-BD15696D-5562-4682-9638-95F867E968F9" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-BD15696D-5562-4682-9638-95F867E968F9.html" id="GUID-BD15696D-5562-4682-9638-95F867E968F9-d5059e761-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.56</ph>
+USB_DEVICE_EVENT_DATA_ENDPOINT_WRITE_COMPLETE Structure</a></div></div></li><li role="treeitem"><div data-tocid="GUID-25787307-BA06-492A-B7DE-EC70A10C2535-d5059e769" class="topicref" data-id="GUID-25787307-BA06-492A-B7DE-EC70A10C2535" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-25787307-BA06-492A-B7DE-EC70A10C2535.html" id="GUID-25787307-BA06-492A-B7DE-EC70A10C2535-d5059e769-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.57</ph>
+USB_DEVICE_EVENT_DATA_SOF Structure</a></div></div></li><li role="treeitem"><div data-tocid="GUID-DA72F1EE-65C0-4C6F-9947-A3DD1873284E-d5059e777" class="topicref" data-id="GUID-DA72F1EE-65C0-4C6F-9947-A3DD1873284E" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-DA72F1EE-65C0-4C6F-9947-A3DD1873284E.html" id="GUID-DA72F1EE-65C0-4C6F-9947-A3DD1873284E-d5059e777-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.58</ph>
+USB_DEVICE_EVENT_DATA_SYNCH_FRAME Structure</a></div></div></li><li role="treeitem"><div data-tocid="GUID-C918530B-CC58-42F6-9ECE-CBF4D989E71A-d5059e785" class="topicref" data-id="GUID-C918530B-CC58-42F6-9ECE-CBF4D989E71A" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C918530B-CC58-42F6-9ECE-CBF4D989E71A.html" id="GUID-C918530B-CC58-42F6-9ECE-CBF4D989E71A-d5059e785-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.59</ph>
+USB_DEVICE_RESULT Enumeration</a></div></div></li><li role="treeitem"><div data-tocid="GUID-5734306D-CE15-4220-9D4F-FC8F40231386-d5059e793" class="topicref" data-id="GUID-5734306D-CE15-4220-9D4F-FC8F40231386" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-5734306D-CE15-4220-9D4F-FC8F40231386.html" id="GUID-5734306D-CE15-4220-9D4F-FC8F40231386-d5059e793-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.60</ph>
+USB_DEVICE_TRANSFER_FLAGS Enumeration</a></div></div></li><li role="treeitem"><div data-tocid="GUID-BA4256E8-6D0D-42DD-99F3-3ACF7780C24D-d5059e801" class="topicref" data-id="GUID-BA4256E8-6D0D-42DD-99F3-3ACF7780C24D" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-BA4256E8-6D0D-42DD-99F3-3ACF7780C24D.html" id="GUID-BA4256E8-6D0D-42DD-99F3-3ACF7780C24D-d5059e801-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.61</ph>
+USB_DEVICE_TRANSFER_HANDLE Type</a></div></div></li><li role="treeitem"><div data-tocid="GUID-3FCD6362-B3DF-485F-930D-7C8549DFF4BB-d5059e809" class="topicref" data-id="GUID-3FCD6362-B3DF-485F-930D-7C8549DFF4BB" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-3FCD6362-B3DF-485F-930D-7C8549DFF4BB.html" id="GUID-3FCD6362-B3DF-485F-930D-7C8549DFF4BB-d5059e809-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.4.62</ph>
+USB_DEVICE_MICROSOFT_OS_DESCRIPTOR_SUPPORT_ENABLE Macro</a></div></div></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-EB096C4D-2129-43B4-B8B3-5DE1D640CFB8-d5059e817" class="topicref" data-id="GUID-EB096C4D-2129-43B4-B8B3-5DE1D640CFB8" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-EB096C4D-2129-43B4-B8B3-5DE1D640CFB8-d5059e817-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-EB096C4D-2129-43B4-B8B3-5DE1D640CFB8.html" id="GUID-EB096C4D-2129-43B4-B8B3-5DE1D640CFB8-d5059e817-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2.5</ph>
+Files</a></div></div></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-79B0676D-688A-498D-86C5-0386E1CECD24-d5059e841" class="topicref" data-id="GUID-79B0676D-688A-498D-86C5-0386E1CECD24" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-79B0676D-688A-498D-86C5-0386E1CECD24-d5059e841-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-79B0676D-688A-498D-86C5-0386E1CECD24.html" id="GUID-79B0676D-688A-498D-86C5-0386E1CECD24-d5059e841-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.3</ph>
+USB Audio 1.0 Device Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-A95B3616-C0C4-4675-B25C-0117818DF55A-d5059e1243" class="topicref" data-id="GUID-A95B3616-C0C4-4675-B25C-0117818DF55A" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-A95B3616-C0C4-4675-B25C-0117818DF55A-d5059e1243-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-A95B3616-C0C4-4675-B25C-0117818DF55A.html" id="GUID-A95B3616-C0C4-4675-B25C-0117818DF55A-d5059e1243-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.4</ph>
+USB Audio 2.0 Device Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-3908AD9D-1B49-4753-BC38-DED35835C53D-d5059e1532" class="topicref" data-id="GUID-3908AD9D-1B49-4753-BC38-DED35835C53D" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-3908AD9D-1B49-4753-BC38-DED35835C53D-d5059e1532-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-3908AD9D-1B49-4753-BC38-DED35835C53D.html" id="GUID-3908AD9D-1B49-4753-BC38-DED35835C53D-d5059e1532-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.5</ph>
+USB CDC Device Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-613273BE-7CAE-4009-8D41-414550E0F0DE-d5059e2096" class="topicref" data-id="GUID-613273BE-7CAE-4009-8D41-414550E0F0DE" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-613273BE-7CAE-4009-8D41-414550E0F0DE-d5059e2096-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-613273BE-7CAE-4009-8D41-414550E0F0DE.html" id="GUID-613273BE-7CAE-4009-8D41-414550E0F0DE-d5059e2096-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.6</ph>
+USB HID Device Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-307732A6-6933-419F-82A5-10A831C61589-d5059e2474" class="topicref" data-id="GUID-307732A6-6933-419F-82A5-10A831C61589" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-307732A6-6933-419F-82A5-10A831C61589-d5059e2474-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-307732A6-6933-419F-82A5-10A831C61589.html" id="GUID-307732A6-6933-419F-82A5-10A831C61589-d5059e2474-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.7</ph>
+Generic USB Device Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-CC2E109D-AC7E-40AA-977A-31768A94691F-d5059e2594" class="topicref" data-id="GUID-CC2E109D-AC7E-40AA-977A-31768A94691F" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-CC2E109D-AC7E-40AA-977A-31768A94691F-d5059e2594-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-CC2E109D-AC7E-40AA-977A-31768A94691F.html" id="GUID-CC2E109D-AC7E-40AA-977A-31768A94691F-d5059e2594-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.8</ph>
+USB MSD Device Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-D225D104-1D70-4E1D-9E88-40C8E685F725-d5059e2754" class="topicref" data-id="GUID-D225D104-1D70-4E1D-9E88-40C8E685F725" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-D225D104-1D70-4E1D-9E88-40C8E685F725-d5059e2754-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-D225D104-1D70-4E1D-9E88-40C8E685F725.html" id="GUID-D225D104-1D70-4E1D-9E88-40C8E685F725-d5059e2754-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.9</ph>
+USB Device Printer Library</a></div></div></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-B14EBEC0-7590-4740-800B-6CE5FE9AB121-d5059e3093" class="topicref" data-id="GUID-B14EBEC0-7590-4740-800B-6CE5FE9AB121" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-B14EBEC0-7590-4740-800B-6CE5FE9AB121-d5059e3093-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-B14EBEC0-7590-4740-800B-6CE5FE9AB121.html" id="GUID-B14EBEC0-7590-4740-800B-6CE5FE9AB121-d5059e3093-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">3</ph>
+USB Host Libraries</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-6AFB98D6-0272-4DED-BBAB-39EECD8DDB5F-d5059e5397" class="topicref" data-id="GUID-6AFB98D6-0272-4DED-BBAB-39EECD8DDB5F" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-6AFB98D6-0272-4DED-BBAB-39EECD8DDB5F-d5059e5397-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-6AFB98D6-0272-4DED-BBAB-39EECD8DDB5F.html" id="GUID-6AFB98D6-0272-4DED-BBAB-39EECD8DDB5F-d5059e5397-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">4</ph>
+USB Common Driver Interface</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d5059e5501" class="topicref backmatter backmatter_parent" data-id="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d5059e5501-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B.html" id="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d5059e5501-link">Microchip Information</a></div></div></li></ul></div>
+		                        
+                            </div>
+                        </nav>
+                    
+                    
+                    <div class="col-lg-7 col-md-9 col-sm-12" id="wh_topic_body">
+                        <button id="wh_close_publication_toc_button" class="close-toc-button d-none" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        <button id="wh_close_topic_toc_button" class="close-toc-button d-none" aria-label="Toggle topic table of content" aria-controls="wh_topic_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        
+                        <div class=" wh_topic_content body "><main role="main"><article role="article" aria-labelledby="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-7700BAF0-E924-4768-B275-22BA955D8B09">
+<h1 class="- topic/title title topictitle1" id="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-7700BAF0-E924-4768-B275-22BA955D8B09" style="">2.2.4.9 USB_DEVICE_PowerStateSet Function</h1>
+<div class="- topic/body concept/conbody body conbody">
+      <section class="- topic/section section" id="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-8B4B99FB-8922-48F9-9598-439EE6A2E40C" data-ofbid="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-8B4B99FB-8922-48F9-9598-439EE6A2E40C"><h2 class="- topic/title title sectiontitle">C </h2>
+         
+         <pre class="+ topic/pre pr-d/codeblock pre codeblock language-c"><strong class="hl-keyword">void</strong> <span class="hl-functions">USB_DEVICE_PowerStateSet</span>(
+    USB_DEVICE_HANDLE usbDeviceHandle, 
+    USB_DEVICE_POWER_STATE powerState
+);</pre>
+      </section>
+      <section class="- topic/section section" id="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-287660E5-D219-4435-A8CE-3202EB8FA84E" data-ofbid="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-287660E5-D219-4435-A8CE-3202EB8FA84E"><h2 class="- topic/title title sectiontitle">Summary </h2>
+         
+         <p class="- topic/p p">Application clients can use this function to set the power state of the device. A USB
+            device can be bus powered or self powered. Based on hardware configuration, this power
+            state may change while the device is on operation. The application can call this
+            function to update the Device Layer on the present power status of the device.</p>
+      </section>
+      <section class="- topic/section section" id="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-2D7B30B4-FF67-45AB-BA47-85BFFE486967" data-ofbid="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-2D7B30B4-FF67-45AB-BA47-85BFFE486967"><h2 class="- topic/title title sectiontitle">Precondition </h2>
+         
+         <p class="- topic/p p">The device layer should have been initialized and opened.</p>
+      </section>
+      <section class="- topic/section section" id="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-2C998BC4-256C-48AE-83E9-86B17044E2D0" data-ofbid="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-2C998BC4-256C-48AE-83E9-86B17044E2D0"><h2 class="- topic/title title sectiontitle">Parameters </h2>
+         
+         <div class="table-container"><table class="- topic/table table" id="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-B7271511-77DB-44D7-B7A4-42399B54BD5E" data-ofbid="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-B7271511-77DB-44D7-B7A4-42399B54BD5E" data-cols="2"><caption></caption><colgroup><col style="width:35%"/><col style="width:65%"/></colgroup><tbody class="- topic/tbody tbody">
+                  <tr class="- topic/row">
+                     <td class="- topic/entry entry colsep-0 rowsep-0">Parameters </td>
+                     <td class="- topic/entry entry colsep-0 rowsep-0">Description </td>
+                  </tr>
+                  <tr class="- topic/row">
+                     <td class="- topic/entry entry colsep-0 rowsep-0">usbDeviceHandle </td>
+                     <td class="- topic/entry entry colsep-0 rowsep-0">USB device handle returned by USB_DEVICE_Open()</td>
+                  </tr>
+                  <tr class="- topic/row">
+                     <td class="- topic/entry entry colsep-0 rowsep-0">powerState </td>
+                     <td class="- topic/entry entry colsep-0 rowsep-0">USB_DEVICE_POWER_STATE_BUS_POWERED/
+                        USB_DEVICE_POWER_STATE_SELF_POWERED</td>
+                  </tr>
+               </tbody></table></div>
+      </section>
+      <section class="- topic/section section" id="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-8A5165AA-304A-4DCF-961E-5DDB602750B0" data-ofbid="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-8A5165AA-304A-4DCF-961E-5DDB602750B0"><h2 class="- topic/title title sectiontitle">Returns </h2>
+         
+         <p class="- topic/p p">None.</p>
+      </section>
+      <section class="- topic/section section" id="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-39AFD52E-343F-406A-B69E-92AE9E7D0966" data-ofbid="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-39AFD52E-343F-406A-B69E-92AE9E7D0966"><h2 class="- topic/title title sectiontitle">Example </h2>
+         
+         <pre class="+ topic/pre pr-d/codeblock pre codeblock language-c">/ The following code example shows how the application can
+<em class="hl-comment">// change the power state of the device. In this case the application checks</em>
+<em class="hl-comment">// if a battery is charged and if so, the application set the device power</em>
+<em class="hl-comment">// state to self-powered.</em>
+
+<strong class="hl-keyword">if</strong>(APP_BATTERY_IS_CHARGED == APP_BatteryChargeStatusGet())
+{
+    <em class="hl-comment">// The application switches if power source.</em>
+
+    APP_PowerSourceSwitch(APP_POWER_SOURCE_BATTERY);
+    USB_DEVICE_PowerStateSet(usbDeviceHandle, USB_DEVICE_POWER_STATE_SELF_POWERED);
+}
+<strong class="hl-keyword">else</strong>
+{
+    <em class="hl-comment">// The battery is still not charged. The application uses the USB power.</em>
+
+    USB_DEVICE_PowerStateSet(usbDeviceHandle, USB_DEVICE_POWER_STATE_BUS_POWERED);
+}</pre>
+      </section>
+      <section class="- topic/section section" id="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-524831A8-3554-4FFF-A690-A6F140223C27" data-ofbid="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-524831A8-3554-4FFF-A690-A6F140223C27"><h2 class="- topic/title title sectiontitle">Remarks </h2>
+         
+         <p class="- topic/p p">By default, the device is bus powered.</p>
+      </section>
+   </div>
+</article></main></div>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                        <nav role="navigation" id="wh_topic_toc" aria-label="On this page" class="col-lg-2 d-none d-lg-block navbar d-print-none"> 
+                            <div id="wh_topic_toc_content">
+		                        
+	                            <div class=" wh_topic_toc "><div class="wh_topic_label">On this page</div><ul><li class="section-item"><div class="section-title"><a href="#GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-8B4B99FB-8922-48F9-9598-439EE6A2E40C" data-tocid="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-8B4B99FB-8922-48F9-9598-439EE6A2E40C">C </a></div></li><li class="section-item"><div class="section-title"><a href="#GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-287660E5-D219-4435-A8CE-3202EB8FA84E" data-tocid="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-287660E5-D219-4435-A8CE-3202EB8FA84E">Summary </a></div></li><li class="section-item"><div class="section-title"><a href="#GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-2D7B30B4-FF67-45AB-BA47-85BFFE486967" data-tocid="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-2D7B30B4-FF67-45AB-BA47-85BFFE486967">Precondition </a></div></li><li class="section-item"><div class="section-title"><a href="#GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-2C998BC4-256C-48AE-83E9-86B17044E2D0" data-tocid="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-2C998BC4-256C-48AE-83E9-86B17044E2D0">Parameters </a></div></li><li class="section-item"><div class="section-title"><a href="#GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-8A5165AA-304A-4DCF-961E-5DDB602750B0" data-tocid="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-8A5165AA-304A-4DCF-961E-5DDB602750B0">Returns </a></div></li><li class="section-item"><div class="section-title"><a href="#GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-39AFD52E-343F-406A-B69E-92AE9E7D0966" data-tocid="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-39AFD52E-343F-406A-B69E-92AE9E7D0966">Example </a></div></li><li class="section-item"><div class="section-title"><a href="#GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-524831A8-3554-4FFF-A690-A6F140223C27" data-tocid="GUID-CC73A5CA-F1B8-410C-A32D-824BD2F93E99__GUID-524831A8-3554-4FFF-A690-A6F140223C27">Remarks </a></div></li></ul></div>
+	                        	
+                        	</div>
+                        </nav>
+                    
+                </div>
+            </div>
+            
+            
+            
+        </div> 
+        <footer class="navbar navbar-default wh_footer">
+  <div class=" footer-container mx-auto ">
+    <div class="footer">
+  <div class="mchp-wh-footer">
+    <div class="mchp-footer">
+      <div class="mchp-footer-tier1">
+        <div class="spacer"></div>
+        <div class="mchp-footer-container">
+          <div class="mchp-footer-links mchp-social-media-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.facebook.com/pages/Microchip-Technology-Inc/20320981741" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Facebook" src="oxygen-webhelp/template/resources/images/201016-corp-facebook.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.linkedin.com/company/microchip-technology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip LinkedIn" src="oxygen-webhelp/template/resources/images/201016-corp-linkedin.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://twitter.com/MicrochipTech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Twitter" src="oxygen-webhelp/template/resources/images/201016-corp-twitter.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.youtube.com/user/MicrochipTechnology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip YouTube" src="oxygen-webhelp/template/resources/images/201016-corp-youtube.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.instagram.com/microchiptechnologyinc/" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Instagram" src="oxygen-webhelp/template/resources/images/201016-corp-instagram.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.weibo.com/microchiptech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Weibo" src="oxygen-webhelp/template/resources/images/201016-corp-weibo.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.microchip.com/en-us/about/blog" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Blog" src="oxygen-webhelp/template/resources/images/201016-corp-blog.png"/>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://www.microchip.com/about-us/contact-us" class="mchp-link__link">Contact</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information" class="mchp-link__link">Legal</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/privacy-policy" class="mchp-link__link">Privacy Policy</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/microchip-cookie-statement" class="mchp-link__link">Cookies</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://careers.microchip.com/" class="mchp-link__link">Careers</a>
+                  <span class="mchp-link__separator"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-newsletter">
+            <div class="cmp-text">
+              <p>Stay on the leading edge with our blog</p>
+            </div>
+            <div class="mchp-button-wrapper">
+              <a role="button" href="https://www.microchip.com/en-us/about/blog" class="mchp-button mchp-button-regular solid">
+                <span class="mchp-button__span">MicroSolutions</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="graphic">
+          <img src="oxygen-webhelp/template/resources/images/footer-graphic.png"/>
+        </div>
+      </div>
+      <div class="mchp-footer-tier2">
+        <p class="mchp-copyright">© Copyright 1998-2022 Microchip Technology Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-2724382-19"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];  
+    function gtag(){dataLayer.push(arguments);}  
+    gtag('js', new Date());   
+    gtag('config', 'UA-2724382-19');
+  </script>
+  
+  <script type="text/javascript">_satellite.pageBottom();</script><!-- Adobe Analytics -->
+  <script type="text/javascript" src="mchp-js/prepend.js"></script><!-- Package for viewing PDFs on mobile devices -->
+  
+</div>
+  </div>
+</footer>
+        
+        <div id="go2top" class="d-print-none">
+            <span class="oxy-icon oxy-icon-up"></span>
+        </div>
+        
+        <div id="modal_img_large" class="modal">
+            <span class="close oxy-icon oxy-icon-remove"></span>
+            <div id="modal_img_container"></div>
+            <div id="caption"></div>
+        </div>
+        
+        
+        
+       
+        </body>
+</html>

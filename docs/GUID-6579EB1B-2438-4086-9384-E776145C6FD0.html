@@ -1,0 +1,690 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us" data-whc_version="24.1">
+    <head><link rel="shortcut icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><link rel="icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="description" content="Registering a CDC Function Driver Event Handler While creating USB CDC Device-based application, an event handler must be registered with the Device Layer (the Device Layer Event Handler) and every ..."/><meta name="copyright" content="(C) Copyright 2024"/><meta name="generator" content="DITA-OT"/><title>2.5.2.4.2 Event Handling</title><!--  Generated with Oxygen version 24.1, build number 2022062014.  --><meta name="wh-path2root" content=""/><meta name="wh-toc-id" content="GUID-6579EB1B-2438-4086-9384-E776145C6FD0-d5059e1596"/><meta name="wh-source-relpath" content="GUID-6579EB1B-2438-4086-9384-E776145C6FD0.xml"/><meta name="wh-out-relpath" content="GUID-6579EB1B-2438-4086-9384-E776145C6FD0.html"/>
+    <!-- Latest compiled and minified Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/lib/bootstrap/css/bootstrap.min.css"/>
+    
+    <link rel="stylesheet" href="./oxygen-webhelp/lib/jquery-ui/jquery-ui.min.css"/>
+    
+    <!-- Template default styles  -->
+    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/app/topic-page.css?buildId=2022062014"/>
+    
+    
+    <script src="./oxygen-webhelp/lib/jquery/jquery-3.5.1.min.js"></script>
+    
+    <script data-main="./oxygen-webhelp/app/topic-page.js" src="./oxygen-webhelp/lib/requirejs/require.js"></script>
+<link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/microchip.css?buildId=2022062014"/><link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/notes.css?buildId=2022062014"/>
+<script src="mchp-context-help.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async="" type="text/javascript"></script>
+    <script src="https://assets.adobedtm.com/6a72a357eb48/a636c708c7fe/launch-0b0023397020.min.js"></script><!-- Adobe Analytics -->
+</head>
+
+    <body id="GUID-6579EB1B-2438-4086-9384-E776145C6FD0" class="wh_topic_page frmBody">
+        <a href="#wh_topic_body" class="sr-only sr-only-focusable">
+            Jump to main content
+        </a>
+        
+        
+        
+        
+        <header class="navbar navbar-default wh_header">
+    <div class="container-fluid">
+        <div class="wh_header_flex_container navbar-nav navbar-expand-md navbar-dark">
+            <div class="wh_logo_and_publication_title_container">
+                <div class="wh_logo_and_publication_title">
+                    
+                    <a href="index.html" class=" wh_logo d-none d-sm-block "><img src="oxygen-webhelp\template\resources/images/microchip.png" alt="MPLAB® Harmony 3 USB Library &#xA;    "/></a>
+                    <div class=" wh_publication_title "><a href="index.html">MPLAB® Harmony 3 USB Library 
+    </a></div>
+                    
+                </div>
+                
+                
+            </div>
+
+            <div class="wh_top_menu_and_indexterms_link collapse navbar-collapse" id="wh_top_menu_and_indexterms_link">
+                
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</header>
+        
+        
+         
+        
+        <div class=" wh_search_input navbar-form wh_topic_page_search search " role="form">
+            
+            
+            
+            <form id="searchForm" method="get" role="search" action="search.html"><div class="d-flex justify-contents-around"><div class="flex-grow-1"></div><div class="position-relative flex-grow-1"><input type="search" placeholder="Search " class="wh_search_textfield" id="textToSearch" name="searchQuery" aria-label="Search query" required="required"/><button type="submit" class="wh_search_button" aria-label="Search"><span class="search_input_text">Search</span></button></div><div class="align-self-center flex-grow-1 ml-2"></div></div></form>
+            
+            <div class="mchp-color-stripe-grid-container">
+  <div class="mchp-main-bar mchp-orange-bar"></div>
+  <div class="mchp-main-bar mchp-blue-bar"></div>
+  <div class="mchp-main-bar mchp-green-bar"></div>
+</div>
+            
+        </div>
+        
+        <div class="container-fluid" id="wh_topic_container">
+            <div class="row">
+
+                <nav class="wh_tools d-print-none navbar-expand-md" aria-label="Tools">
+                    
+                    <div data-tooltip-position="bottom" class=" wh_breadcrumb "><ol class="d-print-none"><li><span class="home"><a href="index.html"><span>Home</span></a></span></li><li><div class="topicref" data-id="GUID-61902145-0FA6-4DE3-845C-B14852166EAE"><div class="title"><a href="GUID-61902145-0FA6-4DE3-845C-B14852166EAE.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2</ph>
+USB Device Libraries</a></div></div></li><li><div class="topicref" data-id="GUID-3908AD9D-1B49-4753-BC38-DED35835C53D"><div class="title"><a href="GUID-3908AD9D-1B49-4753-BC38-DED35835C53D.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.5</ph>
+USB CDC Device Library</a></div></div></li><li><div class="topicref" data-id="GUID-9B78199A-5ED9-4E4C-9C85-A41BAB7FD93E"><div class="title"><a href="GUID-9B78199A-5ED9-4E4C-9C85-A41BAB7FD93E.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.5.2</ph>
+Using the Library</a></div></div></li><li><div class="topicref" data-id="GUID-928AE897-5484-4143-9B42-66899E2C771E"><div class="title"><a href="GUID-928AE897-5484-4143-9B42-66899E2C771E.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.5.2.4</ph>
+How the Library Works</a></div></div></li><li class="active"><div class="topicref" data-id="GUID-6579EB1B-2438-4086-9384-E776145C6FD0"><div class="title"><a href="GUID-6579EB1B-2438-4086-9384-E776145C6FD0.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.5.2.4.2</ph>
+Event Handling</a></div></div></li></ol></div>
+                    
+                    
+                    
+                    <div class="wh_right_tools">
+                        <button class="wh_hide_highlight" aria-label="Toggle search highlights" title="Toggle search highlights"></button>
+                        <button class="webhelp_expand_collapse_sections" data-next-state="collapsed" aria-label="Collapse sections" title="Collapse sections"></button>
+                        
+                        
+                        
+                        
+                        <div class=" wh_print_link print d-none d-md-inline-block "><button onClick="window.print()" title="Print this page" aria-label="Print this page"></button></div>
+                        
+                        <button type="button" id="wh_toc_button" class="custom-toggler navbar-toggler collapsed wh_toggle_button navbar-light" aria-expanded="false" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    
+                </nav>
+            </div>
+            
+            <div class="row" style="margin-top: -1em;"><div class="col-lg-7 col-md-7 col-sm-12 offset-lg-3 offset-md-3 text-right border-bottom mb-1"><h2 class="text-dark header_title">
+    </h2></div></div>
+            
+            
+            <div class="wh_content_area">
+                <div class="row">
+                    
+                        <nav id="wh_publication_toc" class="col-lg-3 col-md-3 col-sm-12 d-md-block d-none d-print-none" aria-label="Table of Contents Container">
+                            <div id="wh_publication_toc_content">
+		                        
+                            	<div class=" wh_publication_toc " data-tooltip-position="right"><span class="expand-button-action-labels"><span id="button-expand-action" role="button" aria-label="Expand"></span><span id="button-collapse-action" role="button" aria-label="Collapse"></span><span id="button-pending-action" role="button" aria-label="Pending"></span></span><ul role="tree" aria-label="Table of Contents"><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-D9F90103-F97D-468D-90FC-EA3E186842D9-d5059e11" class="topicref" data-id="GUID-D9F90103-F97D-468D-90FC-EA3E186842D9" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-D9F90103-F97D-468D-90FC-EA3E186842D9-d5059e11-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-D9F90103-F97D-468D-90FC-EA3E186842D9.html" id="GUID-D9F90103-F97D-468D-90FC-EA3E186842D9-d5059e11-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
+Release Information</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-61902145-0FA6-4DE3-845C-B14852166EAE-d5059e27" class="topicref" data-id="GUID-61902145-0FA6-4DE3-845C-B14852166EAE" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-61902145-0FA6-4DE3-845C-B14852166EAE-d5059e27-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-61902145-0FA6-4DE3-845C-B14852166EAE.html" id="GUID-61902145-0FA6-4DE3-845C-B14852166EAE-d5059e27-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2</ph>
+USB Device Libraries</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-11BEDBBA-7CB2-44C2-9A3A-BAF21121881C-d5059e35" class="topicref" data-id="GUID-11BEDBBA-7CB2-44C2-9A3A-BAF21121881C" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-11BEDBBA-7CB2-44C2-9A3A-BAF21121881C-d5059e35-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-11BEDBBA-7CB2-44C2-9A3A-BAF21121881C.html" id="GUID-11BEDBBA-7CB2-44C2-9A3A-BAF21121881C-d5059e35-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.1</ph>
+USB Device Library - Getting Started</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-E31828BD-445D-4B5C-A518-308C752ED467-d5059e75" class="topicref" data-id="GUID-E31828BD-445D-4B5C-A518-308C752ED467" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-E31828BD-445D-4B5C-A518-308C752ED467-d5059e75-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-E31828BD-445D-4B5C-A518-308C752ED467.html" id="GUID-E31828BD-445D-4B5C-A518-308C752ED467-d5059e75-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.2</ph>
+USB Device Layer Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-79B0676D-688A-498D-86C5-0386E1CECD24-d5059e841" class="topicref" data-id="GUID-79B0676D-688A-498D-86C5-0386E1CECD24" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-79B0676D-688A-498D-86C5-0386E1CECD24-d5059e841-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-79B0676D-688A-498D-86C5-0386E1CECD24.html" id="GUID-79B0676D-688A-498D-86C5-0386E1CECD24-d5059e841-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.3</ph>
+USB Audio 1.0 Device Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-A95B3616-C0C4-4675-B25C-0117818DF55A-d5059e1243" class="topicref" data-id="GUID-A95B3616-C0C4-4675-B25C-0117818DF55A" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-A95B3616-C0C4-4675-B25C-0117818DF55A-d5059e1243-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-A95B3616-C0C4-4675-B25C-0117818DF55A.html" id="GUID-A95B3616-C0C4-4675-B25C-0117818DF55A-d5059e1243-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.4</ph>
+USB Audio 2.0 Device Library</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-3908AD9D-1B49-4753-BC38-DED35835C53D-d5059e1532" class="topicref" data-id="GUID-3908AD9D-1B49-4753-BC38-DED35835C53D" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-3908AD9D-1B49-4753-BC38-DED35835C53D-d5059e1532-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-3908AD9D-1B49-4753-BC38-DED35835C53D.html" id="GUID-3908AD9D-1B49-4753-BC38-DED35835C53D-d5059e1532-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.5</ph>
+USB CDC Device Library</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="GUID-67E0B7D2-BC77-465C-9786-C5F03766E7F6-d5059e1540" class="topicref" data-id="GUID-67E0B7D2-BC77-465C-9786-C5F03766E7F6" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-67E0B7D2-BC77-465C-9786-C5F03766E7F6.html" id="GUID-67E0B7D2-BC77-465C-9786-C5F03766E7F6-d5059e1540-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.5.1</ph>
+Introduction</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-9B78199A-5ED9-4E4C-9C85-A41BAB7FD93E-d5059e1548" class="topicref" data-id="GUID-9B78199A-5ED9-4E4C-9C85-A41BAB7FD93E" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-9B78199A-5ED9-4E4C-9C85-A41BAB7FD93E-d5059e1548-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-9B78199A-5ED9-4E4C-9C85-A41BAB7FD93E.html" id="GUID-9B78199A-5ED9-4E4C-9C85-A41BAB7FD93E-d5059e1548-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.5.2</ph>
+Using the Library</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="GUID-50BB3548-52E7-4AAC-AFFE-01B01F66C041-d5059e1556" class="topicref" data-id="GUID-50BB3548-52E7-4AAC-AFFE-01B01F66C041" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-50BB3548-52E7-4AAC-AFFE-01B01F66C041.html" id="GUID-50BB3548-52E7-4AAC-AFFE-01B01F66C041-d5059e1556-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.5.2.1</ph>
+Abstraction Model</a></div></div></li><li role="treeitem"><div data-tocid="GUID-583316E4-9359-48C6-A3E5-53CCDCACCAA3-d5059e1564" class="topicref" data-id="GUID-583316E4-9359-48C6-A3E5-53CCDCACCAA3" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-583316E4-9359-48C6-A3E5-53CCDCACCAA3.html" id="GUID-583316E4-9359-48C6-A3E5-53CCDCACCAA3-d5059e1564-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.5.2.2</ph>
+Abstract Control Model (ACM)</a></div></div></li><li role="treeitem"><div data-tocid="GUID-C304E4C6-3F59-48F5-A8A1-7D857BFFD4F4-d5059e1572" class="topicref" data-id="GUID-C304E4C6-3F59-48F5-A8A1-7D857BFFD4F4" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-C304E4C6-3F59-48F5-A8A1-7D857BFFD4F4.html" id="GUID-C304E4C6-3F59-48F5-A8A1-7D857BFFD4F4-d5059e1572-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.5.2.3</ph>
+Library Overview</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-928AE897-5484-4143-9B42-66899E2C771E-d5059e1580" class="topicref" data-id="GUID-928AE897-5484-4143-9B42-66899E2C771E" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-928AE897-5484-4143-9B42-66899E2C771E-d5059e1580-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-928AE897-5484-4143-9B42-66899E2C771E.html" id="GUID-928AE897-5484-4143-9B42-66899E2C771E-d5059e1580-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.5.2.4</ph>
+How the Library Works</a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="GUID-17B7192E-4459-454F-B9EC-E8DEA3E80E3E-d5059e1588" class="topicref" data-id="GUID-17B7192E-4459-454F-B9EC-E8DEA3E80E3E" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-17B7192E-4459-454F-B9EC-E8DEA3E80E3E.html" id="GUID-17B7192E-4459-454F-B9EC-E8DEA3E80E3E-d5059e1588-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.5.2.4.1</ph>
+Library Initialization</a></div></div></li><li role="treeitem" class="active"><div data-tocid="GUID-6579EB1B-2438-4086-9384-E776145C6FD0-d5059e1596" class="topicref" data-id="GUID-6579EB1B-2438-4086-9384-E776145C6FD0" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-6579EB1B-2438-4086-9384-E776145C6FD0.html" id="GUID-6579EB1B-2438-4086-9384-E776145C6FD0-d5059e1596-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.5.2.4.2</ph>
+Event Handling</a></div></div></li><li role="treeitem"><div data-tocid="GUID-681DB895-A5D7-4B7D-9614-7231D249ED32-d5059e1604" class="topicref" data-id="GUID-681DB895-A5D7-4B7D-9614-7231D249ED32" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-681DB895-A5D7-4B7D-9614-7231D249ED32.html" id="GUID-681DB895-A5D7-4B7D-9614-7231D249ED32-d5059e1604-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.5.2.4.3</ph>
+Sending Data</a></div></div></li><li role="treeitem"><div data-tocid="GUID-E91FBCD0-2635-42F6-8480-424961296C77-d5059e1612" class="topicref" data-id="GUID-E91FBCD0-2635-42F6-8480-424961296C77" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-E91FBCD0-2635-42F6-8480-424961296C77.html" id="GUID-E91FBCD0-2635-42F6-8480-424961296C77-d5059e1612-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.5.2.4.4</ph>
+Receiving Data</a></div></div></li></ul></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-D6560F2F-C5D7-47FB-89DD-5BF6D6E7FDEB-d5059e1620" class="topicref" data-id="GUID-D6560F2F-C5D7-47FB-89DD-5BF6D6E7FDEB" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-D6560F2F-C5D7-47FB-89DD-5BF6D6E7FDEB-d5059e1620-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-D6560F2F-C5D7-47FB-89DD-5BF6D6E7FDEB.html" id="GUID-D6560F2F-C5D7-47FB-89DD-5BF6D6E7FDEB-d5059e1620-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.5.3</ph>
+Configuring the Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-9373E1EB-A111-4FF8-9910-D871A0BB42DD-d5059e1652" class="topicref" data-id="GUID-9373E1EB-A111-4FF8-9910-D871A0BB42DD" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-9373E1EB-A111-4FF8-9910-D871A0BB42DD-d5059e1652-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-9373E1EB-A111-4FF8-9910-D871A0BB42DD.html" id="GUID-9373E1EB-A111-4FF8-9910-D871A0BB42DD-d5059e1652-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.5.4</ph>
+Library Interface</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-C9A895ED-8281-4FCD-964A-E23FFFE8AA2F-d5059e2064" class="topicref" data-id="GUID-C9A895ED-8281-4FCD-964A-E23FFFE8AA2F" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-C9A895ED-8281-4FCD-964A-E23FFFE8AA2F-d5059e2064-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-C9A895ED-8281-4FCD-964A-E23FFFE8AA2F.html" id="GUID-C9A895ED-8281-4FCD-964A-E23FFFE8AA2F-d5059e2064-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.5.5</ph>
+Files</a></div></div></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-613273BE-7CAE-4009-8D41-414550E0F0DE-d5059e2096" class="topicref" data-id="GUID-613273BE-7CAE-4009-8D41-414550E0F0DE" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-613273BE-7CAE-4009-8D41-414550E0F0DE-d5059e2096-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-613273BE-7CAE-4009-8D41-414550E0F0DE.html" id="GUID-613273BE-7CAE-4009-8D41-414550E0F0DE-d5059e2096-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.6</ph>
+USB HID Device Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-307732A6-6933-419F-82A5-10A831C61589-d5059e2474" class="topicref" data-id="GUID-307732A6-6933-419F-82A5-10A831C61589" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-307732A6-6933-419F-82A5-10A831C61589-d5059e2474-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-307732A6-6933-419F-82A5-10A831C61589.html" id="GUID-307732A6-6933-419F-82A5-10A831C61589-d5059e2474-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.7</ph>
+Generic USB Device Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-CC2E109D-AC7E-40AA-977A-31768A94691F-d5059e2594" class="topicref" data-id="GUID-CC2E109D-AC7E-40AA-977A-31768A94691F" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-CC2E109D-AC7E-40AA-977A-31768A94691F-d5059e2594-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-CC2E109D-AC7E-40AA-977A-31768A94691F.html" id="GUID-CC2E109D-AC7E-40AA-977A-31768A94691F-d5059e2594-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.8</ph>
+USB MSD Device Library</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-D225D104-1D70-4E1D-9E88-40C8E685F725-d5059e2754" class="topicref" data-id="GUID-D225D104-1D70-4E1D-9E88-40C8E685F725" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-D225D104-1D70-4E1D-9E88-40C8E685F725-d5059e2754-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-D225D104-1D70-4E1D-9E88-40C8E685F725.html" id="GUID-D225D104-1D70-4E1D-9E88-40C8E685F725-d5059e2754-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2.9</ph>
+USB Device Printer Library</a></div></div></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-B14EBEC0-7590-4740-800B-6CE5FE9AB121-d5059e3093" class="topicref" data-id="GUID-B14EBEC0-7590-4740-800B-6CE5FE9AB121" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-B14EBEC0-7590-4740-800B-6CE5FE9AB121-d5059e3093-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-B14EBEC0-7590-4740-800B-6CE5FE9AB121.html" id="GUID-B14EBEC0-7590-4740-800B-6CE5FE9AB121-d5059e3093-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">3</ph>
+USB Host Libraries</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-6AFB98D6-0272-4DED-BBAB-39EECD8DDB5F-d5059e5397" class="topicref" data-id="GUID-6AFB98D6-0272-4DED-BBAB-39EECD8DDB5F" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-6AFB98D6-0272-4DED-BBAB-39EECD8DDB5F-d5059e5397-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-6AFB98D6-0272-4DED-BBAB-39EECD8DDB5F.html" id="GUID-6AFB98D6-0272-4DED-BBAB-39EECD8DDB5F-d5059e5397-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">4</ph>
+USB Common Driver Interface</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d5059e5501" class="topicref backmatter backmatter_parent" data-id="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d5059e5501-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B.html" id="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d5059e5501-link">Microchip Information</a></div></div></li></ul></div>
+		                        
+                            </div>
+                        </nav>
+                    
+                    
+                    <div class="col-lg-7 col-md-9 col-sm-12" id="wh_topic_body">
+                        <button id="wh_close_publication_toc_button" class="close-toc-button d-none" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        <button id="wh_close_topic_toc_button" class="close-toc-button d-none" aria-label="Toggle topic table of content" aria-controls="wh_topic_toc" aria-expanded="true">
+                            <span class="close-toc-icon-container">
+                                <span class="close-toc-icon"></span>     
+                            </span>
+                        </button>
+                        
+                        <div class=" wh_topic_content body "><main role="main"><article role="article" aria-labelledby="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__GUID-8C6A217C-B4EC-4733-A9ED-38FADAD8BBCC">
+<h1 class="- topic/title title topictitle1" id="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__GUID-8C6A217C-B4EC-4733-A9ED-38FADAD8BBCC" style="">2.5.2.4.2 Event Handling</h1>
+    <div class="- topic/body body">
+        <section class="- topic/section section" id="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__SECTION_C5T_GHL_J1C" data-ofbid="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__SECTION_C5T_GHL_J1C"><h2 class="- topic/title title sectiontitle">Registering a CDC Function Driver Event Handler</h2>
+            
+            <p class="- topic/p p">While creating USB CDC Device-based application, an event handler must be registered
+                with the Device Layer (the Device Layer Event Handler) and every CDC Function Driver
+                instance (CDC Function Driver Event Handler). The CDC Function Driver event handler
+                receives CDC and CDC ACM events. This event handler should be registered before the
+                USB device_layer acknowledges the SET CONFIGURATION request from the USB Host. To
+                ensure this, the event handler should be set in the USB_DEVICE_EVENT_CONFIGURED
+                event that is generated by the device_layer. While registering the CDC Function
+                Driver event handler, the CDC Function Driver allows the application to also pass a
+                data object in the event handler register function. This data object gets associated
+                with the instance of the CDC Function Driver and is returned by the CDC Function
+                Driver when a CDC Function Driver event occurs. The following code shows an example
+                of how this can be done.</p>
+            <div class="- topic/p p"><pre class="- topic/pre pre" id="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__PRE_U1P_JHL_J1C" data-ofbid="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__PRE_U1P_JHL_J1C"><em class="+ topic/ph hi-d/i ph i">/* This a sample Application Device Layer Event Handler
+ * Note how the CDC Function Driver event handler APP_USBDeviceCDCEventHandler()
+ * is registered in the USB_DEVICE_EVENT_CONFIGURED event. The appData
+ * object that is passed in the USB_DEVICE_CDC_EventHandlerSet()
+ * function will be returned as the userData parameter in the
+ * when the APP_USBDeviceCDCEventHandler() function is invoked */</em>
+
+<strong class="+ topic/ph hi-d/b ph b">void</strong> APP_USBDeviceEventCallBack ( USB_DEVICE_EVENT event,
+     <strong class="+ topic/ph hi-d/b ph b">void</strong> * eventData, uintptr_t context )
+{
+     <strong class="+ topic/ph hi-d/b ph b">switch</strong> ( event )
+     {
+        <strong class="+ topic/ph hi-d/b ph b">case</strong> USB_DEVICE_EVENT_RESET:
+        <strong class="+ topic/ph hi-d/b ph b">case</strong> USB_DEVICE_EVENT_DECONFIGURED:
+
+            <em class="+ topic/ph hi-d/i ph i">// USB device is reset or device is deconfigured.</em>
+            <em class="+ topic/ph hi-d/i ph i">// This means that USB device layer is about to deinitialize</em>
+            <em class="+ topic/ph hi-d/i ph i">// all function drivers.</em>
+            <strong class="+ topic/ph hi-d/b ph b">break</strong>;
+
+        <strong class="+ topic/ph hi-d/b ph b">case</strong> USB_DEVICE_EVENT_CONFIGURED:
+
+            <em class="+ topic/ph hi-d/i ph i">/* check the configuration */</em><strong class="+ topic/ph hi-d/b ph b">if</strong> ( *((uint8_t *)eventData) == 1)
+            {
+
+                <em class="+ topic/ph hi-d/i ph i">/* Register the CDC Device application event handler here.
+                 * Note how the appData object pointer is passed as the
+                 * user data */</em>
+
+                USB_DEVICE_CDC_EventHandlerSet(USB_DEVICE_CDC_INDEX_0,
+                      APP_USBDeviceCDCEventHandler, (uintptr_t)&amp;appData);
+
+                <em class="+ topic/ph hi-d/i ph i">/* mark that set configuration is complete */</em>
+                appData.isConfigured = <strong class="+ topic/ph hi-d/b ph b">true</strong>;
+            }
+            <strong class="+ topic/ph hi-d/b ph b">break</strong>;
+
+        <strong class="+ topic/ph hi-d/b ph b">case</strong> USB_DEVICE_EVENT_SUSPENDED:
+
+            <strong class="+ topic/ph hi-d/b ph b">break</strong>;
+
+        <strong class="+ topic/ph hi-d/b ph b">case</strong> USB_DEVICE_EVENT_RESUMED:
+        <strong class="+ topic/ph hi-d/b ph b">case</strong> USB_DEVICE_EVENT_ATTACHED:
+        <strong class="+ topic/ph hi-d/b ph b">case</strong> USB_DEVICE_EVENT_DETACHED:
+        <strong class="+ topic/ph hi-d/b ph b">case</strong> USB_DEVICE_EVENT_ERROR:
+        <strong class="+ topic/ph hi-d/b ph b">default</strong>:
+            <strong class="+ topic/ph hi-d/b ph b">break</strong>;
+     }
+}</pre>The CDC Function Driver event handler executes in an interrupt context when the
+                device stack is configured for Interrupt mode. In Polled mode, the event handler is
+                invoked in the context of the SYS_Tasks function. The application should not call
+                computationally intensive functions, blocking functions, functions that are not
+                interrupt safe, or functions that poll on hardware conditions from the event
+                handler. Doing so will affect the ability of the USB device stack to respond to USB
+                events and could potentially make the USB device non-compliant.</div>
+        </section>
+        <section class="- topic/section section" id="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__SECTION_D5P_4HL_J1C" data-ofbid="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__SECTION_D5P_4HL_J1C"><h2 class="- topic/title title sectiontitle">CDC Function Driver Events</h2>
+            
+            <p class="- topic/p p">The CDC Function Driver generates events to which the application must respond. Some
+                of these events are management requests communicated through control transfers.
+                Therefore, the application must use the Device Layer Control Transfer routines to
+                complete the control transfer. Based on the generated event, the application may be
+                required to:</p>
+            <ul class="- topic/ul ul" id="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__UL_VXB_GHL_J1C" data-ofbid="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__UL_VXB_GHL_J1C">
+                <li class="- topic/li li" id="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__GUID-078F1112-6F12-4F1A-8DF2-38BD8976E196" data-ofbid="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__GUID-078F1112-6F12-4F1A-8DF2-38BD8976E196">Respond with a <a class="- topic/xref xref" href="GUID-85F7260B-F498-4865-A1A6-0FB2C1EA5AD0.html">USB_DEVICE_ControlSend</a> function, which is completes the data stage
+                    of a Control Read Transfer.</li>
+                <li class="- topic/li li" id="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__GUID-D930B2B6-D1E6-4D3A-A9ED-6C0E05EDED95" data-ofbid="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__GUID-D930B2B6-D1E6-4D3A-A9ED-6C0E05EDED95">Respond with a <a class="- topic/xref xref" href="GUID-33991F1C-C31B-413E-BD6B-29A870E556B5.html">USB_DEVICE_ControlReceive</a> function, which provisions the data stage
+                    of a Control Write Transfer.</li>
+                <li class="- topic/li li" id="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__GUID-E8FE5166-0ED5-4CDC-B2B5-0642D420C559" data-ofbid="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__GUID-E8FE5166-0ED5-4CDC-B2B5-0642D420C559">Respond with a <a class="- topic/xref xref" href="GUID-34243A48-7930-4EBD-9E40-AF31631C2B9F.html">USB_DEVICE_ControlStatus </a>function, which completes the
+                    handshake stage of the Control Transfer. The application can either STALL or
+                    Acknowledge the handshake stage via the <a class="- topic/xref xref" href="GUID-34243A48-7930-4EBD-9E40-AF31631C2B9F.html">USB_DEVICE_ControlStatus</a> function. The following table shows the CDC
+                    Function Driver Control Transfer related events and the required application
+                    control transfer actions.</li>
+            </ul>
+            <div class="table-container"><table class="- topic/table table" id="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__TABLE_WXB_GHL_J1C" data-ofbid="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__TABLE_WXB_GHL_J1C" data-cols="2"><caption></caption><colgroup><col style="width:38%"/><col style="width:62%"/></colgroup><tbody class="- topic/tbody tbody">
+                        <tr class="- topic/row">
+                            <td class="- topic/entry entry colsep-0 rowsep-0">CDC Function Driver Control Transfer Event </td>
+                            <td class="- topic/entry entry colsep-0 rowsep-0">Required Application Action </td>
+                        </tr>
+                        <tr class="- topic/row">
+                            <td class="- topic/entry entry colsep-0 rowsep-0">USB_DEVICE_CDC_EVENT_SET_LINE_CODING </td>
+                            <td class="- topic/entry entry colsep-0 rowsep-0">Call <a class="- topic/xref xref" href="GUID-33991F1C-C31B-413E-BD6B-29A870E556B5.html">USB_DEVICE_ControlReceive </a>function with a
+                                buffer to receive the USB_CDC_LINE_CODING type data. </td>
+                        </tr>
+                        <tr class="- topic/row">
+                            <td class="- topic/entry entry colsep-0 rowsep-0">USB_DEVICE_CDC_EVENT_GET_LINE_CODING </td>
+                            <td class="- topic/entry entry colsep-0 rowsep-0">Call <a class="- topic/xref xref" href="GUID-85F7260B-F498-4865-A1A6-0FB2C1EA5AD0.html">USB_DEVICE_ControlSend</a> function with a
+                                buffer that contains the current USB_CDC_LINE_CODING type data.
+                            </td>
+                        </tr>
+                        <tr class="- topic/row">
+                            <td class="- topic/entry entry colsep-0 rowsep-0">USB_DEVICE_CDC_EVENT_SET_CONTROL_LINE_STATE </td>
+                            <td class="- topic/entry entry colsep-0 rowsep-0">Acknowledge or stall using the <a class="- topic/xref xref" href="GUID-34243A48-7930-4EBD-9E40-AF31631C2B9F.html">USB_DEVICE_ControlStatus</a> function. </td>
+                        </tr>
+                        <tr class="- topic/row">
+                            <td class="- topic/entry entry colsep-0 rowsep-0">USB_DEVICE_CDC_EVENT_SEND_BREAK </td>
+                            <td class="- topic/entry entry colsep-0 rowsep-0">Acknowledge or stall using the <a class="- topic/xref xref" href="GUID-34243A48-7930-4EBD-9E40-AF31631C2B9F.html">USB_DEVICE_ControlStatus </a>function. </td>
+                        </tr>
+                        <tr class="- topic/row">
+                            <td class="- topic/entry entry colsep-0 rowsep-0">USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_SENT </td>
+                            <td class="- topic/entry entry colsep-0 rowsep-0">Action not required. </td>
+                        </tr>
+                        <tr class="- topic/row">
+                            <td class="- topic/entry entry colsep-0 rowsep-0">USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_RECEIVED </td>
+                            <td class="- topic/entry entry colsep-0 rowsep-0">Acknowledge or stall using the <a class="- topic/xref xref" href="GUID-34243A48-7930-4EBD-9E40-AF31631C2B9F.html">USB_DEVICE_ControlStatus </a>function. </td>
+                        </tr>
+                    </tbody></table></div>
+            <p class="- topic/p p">Based on the type of event, the application should analyze the pData member of the
+                event handler. This data member should be type cast to an event specific data type.
+                The following table shows the event and the data type to use while type casting.
+                Note that the pData member is not required for all events.</p>
+            <div class="table-container"><table class="- topic/table table" id="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__TABLE_XXB_GHL_J1C" data-ofbid="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__TABLE_XXB_GHL_J1C" data-cols="2"><caption></caption><colgroup><col style="width:61%"/><col style="width:39%"/></colgroup><tbody class="- topic/tbody tbody">
+                        <tr class="- topic/row">
+                            <td class="- topic/entry entry colsep-0 rowsep-0">CDC Function Driver Event </td>
+                            <td class="- topic/entry entry colsep-0 rowsep-0">Related pData type </td>
+                        </tr>
+                        <tr class="- topic/row">
+                            <td class="- topic/entry entry colsep-0 rowsep-0">USB_DEVICE_CDC_EVENT_SET_LINE_CODING </td>
+                            <td class="- topic/entry entry colsep-0 rowsep-0">NULL </td>
+                        </tr>
+                        <tr class="- topic/row">
+                            <td class="- topic/entry entry colsep-0 rowsep-0">USB_DEVICE_CDC_EVENT_GET_LINE_CODING </td>
+                            <td class="- topic/entry entry colsep-0 rowsep-0">NULL </td>
+                        </tr>
+                        <tr class="- topic/row">
+                            <td class="- topic/entry entry colsep-0 rowsep-0">USB_DEVICE_CDC_EVENT_SET_CONTROL_LINE_STATE </td>
+                            <td class="- topic/entry entry colsep-0 rowsep-0">USB_CDC_CONTROL_LINE_STATE * </td>
+                        </tr>
+                        <tr class="- topic/row">
+                            <td class="- topic/entry entry colsep-0 rowsep-0">USB_DEVICE_CDC_EVENT_SEND_BREAK </td>
+                            <td class="- topic/entry entry colsep-0 rowsep-0"><a class="- topic/xref xref" href="GUID-68BE406F-DB40-44F3-AB66-A75D2173F1FB.html">USB_DEVICE_CDC_EVENT_DATA_SEND_BREAK </a>*
+                            </td>
+                        </tr>
+                        <tr class="- topic/row">
+                            <td class="- topic/entry entry colsep-0 rowsep-0">USB_DEVICE_CDC_EVENT_WRITE_COMPLETE </td>
+                            <td class="- topic/entry entry colsep-0 rowsep-0"><a class="- topic/xref xref" href="GUID-831C57BC-21A9-4394-85AC-5050EC3EFEB8.html">USB_DEVICE_CDC_EVENT_DATA_WRITE_COMPLETE</a> *
+                            </td>
+                        </tr>
+                        <tr class="- topic/row">
+                            <td class="- topic/entry entry colsep-0 rowsep-0">USB_DEVICE_CDC_EVENT_READ_COMPLETE </td>
+                            <td class="- topic/entry entry colsep-0 rowsep-0"><a class="- topic/xref xref" href="GUID-556329D9-1810-433A-9660-431983DC7788.html">USB_DEVICE_CDC_EVENT_DATA_READ_COMPLETE</a> *
+                            </td>
+                        </tr>
+                        <tr class="- topic/row">
+                            <td class="- topic/entry entry colsep-0 rowsep-0">USB_DEVICE_CDC_EVENT_SERIAL_STATE_NOTIFICATION_COMPLETE </td>
+                            <td class="- topic/entry entry colsep-0 rowsep-0"><a class="- topic/xref xref" href="GUID-40B6AC5A-C0F1-4D42-B926-BB422471E481.html">USB_DEVICE_CDC_EVENT_DATA_SERIAL_STATE_NOTIFICATION_COMPLETE</a>
+                                * </td>
+                        </tr>
+                        <tr class="- topic/row">
+                            <td class="- topic/entry entry colsep-0 rowsep-0">USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_SENT </td>
+                            <td class="- topic/entry entry colsep-0 rowsep-0">NULL </td>
+                        </tr>
+                        <tr class="- topic/row">
+                            <td class="- topic/entry entry colsep-0 rowsep-0">USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_RECEIVED </td>
+                            <td class="- topic/entry entry colsep-0 rowsep-0">NULL </td>
+                        </tr>
+                    </tbody></table></div>
+            <p class="- topic/p p">The possible CDC Function Driver events are described here with the required
+                application response, event specific data, and likely follow-up function driver
+                event:</p>
+            <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">USB_DEVICE_CDC_EVENT_SET_LINE_CODING</strong></p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Application Response</em>: This event occurs when the host issues a SET LINE CODING
+                command. The application must provide a USB_CDC_LINE_CODING data structure to the
+                device_layer to receive the line coding data that the host will provide. The
+                application must provide the buffer by calling the USB_DEVICE_CDC_ControlReceive
+                function either in the event handler or in the application after returning from the
+                event handler. The application can use the
+                USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_SENT event to track completion of the
+                command. </p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Event Specific Data (pData</em>): The pData parameter will be NULL. </p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Likely Follow-up event</em>:This event will likely be followed by the
+                USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_RECEIVED event. This indicates that the
+                data was received successfully. The application must either acknowledge or stall the
+                handshake stage of the control transfer by calling the <a class="- topic/xref xref" href="GUID-34243A48-7930-4EBD-9E40-AF31631C2B9F.html">USB_DEVICE_ControlStatus</a>
+                function with the USB_DEVICE_CONTROL_STATUS_OK or USB_DEVICE_CONTROL_STATUS_ERROR
+                flag, respectively. </p>
+            <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">USB_DEVICE_CDC_EVENT_GET_LINE_CODING</strong></p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Application Response</em>: This event occurs when the host issues a GET LINE CODING
+                command. The application must provide a USB_CDC_LINE_CODING data structure to the
+                device_layer that contains the line coding data to be provided to the Host. The
+                application must provide the buffer by calling the <a class="- topic/xref xref" href="GUID-85F7260B-F498-4865-A1A6-0FB2C1EA5AD0.html">USB_DEVICE_ControlSend</a> function either in the event handler or in the
+                application after returning from the event handler. The size of the buffer is
+                indicated by the length parameter. The application can use the
+                USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_SENT event to track completion of the
+                command. </p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Event Specific Data (pData)</em>: The pData parameter will be NULL. </p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Likely Follow-up event</em>: This event will likely be followed by the
+                USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_SENT event. This indicates that the data
+                was sent to the Host successfully. </p>
+            <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">USB_DEVICE_CDC_EVENT_SET_CONTROL_LINE_STATE</strong></p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Application Response</em>: This event occurs when the host issues a SET CONTROL
+                LINE STATE command. The application can then use the <a class="- topic/xref xref" href="GUID-34243A48-7930-4EBD-9E40-AF31631C2B9F.html">USB_DEVICE_ControlStatus</a> function to indicate acceptance of rejection of
+                the command. The <a class="- topic/xref xref" href="GUID-34243A48-7930-4EBD-9E40-AF31631C2B9F.html">USB_DEVICE_ControlStatus</a> function can be called from the event handler
+                or in the application after returning from the event handler. </p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Event Specific Data (pData)</em>: The application must interpret the pData
+                parameter as a pointer to a USB_CDC_CONTROL_LINE_STATE data type that contains the
+                control line state data. </p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Likely Follow-up event</em>: None. </p>
+            <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">USB_DEVICE_CDC_EVENT_SEND_BREAK</strong></p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Application Response</em>: This event occurs when the Host issues a SEND BREAK
+                command. The application can then use the <a class="- topic/xref xref" href="GUID-34243A48-7930-4EBD-9E40-AF31631C2B9F.html">USB_DEVICE_ControlStatus</a> function to indicate acceptance or rejection of
+                the command. The <a class="- topic/xref xref" href="GUID-34243A48-7930-4EBD-9E40-AF31631C2B9F.html">USB_DEVICE_ControlStatus</a> function can be called from the event handler
+                or in the application after returning from the event handler. </p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Event Specific Data (pData)</em>: The application must interpret the pData
+                parameter as a pointer to a uint16_t data type that contains the break duration
+                data. </p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Likely Follow-up event</em>: None. </p>
+            <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">USB_DEVICE_CDC_EVENT_WRITE_COMPLETE</strong></p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Application Response</em>: This event occurs when a write operation scheduled by
+                calling the <a class="- topic/xref xref" href="00633.html" target="_blank" rel="external noopener">USB_DEVICE_CDC_Write</a> function has completed. This event does not require
+                the application to respond with any function calls. </p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Event Specific Data (pData)</em>: The pData member in the event handler will point
+                to the <a class="- topic/xref xref" href="GUID-831C57BC-21A9-4394-85AC-5050EC3EFEB8.html">USB_DEVICE_CDC_EVENT_DATA_WRITE_COMPLETE</a> data type. </p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Likely Follow-up event</em>: None. </p>
+            <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">USB_DEVICE_CDC_EVENT_READ_COMPLETE</strong></p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Application Response</em>: This event occurs when a read operation scheduled by
+                calling the <a class="- topic/xref xref" href="00616.html" target="_blank" rel="external noopener">USB_DEVICE_CDC_Read</a> function has completed. This event does not require
+                the application to respond with any function calls. </p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Event Specific Data (pData)</em>: The pData member in the event handler will point
+                to the <a class="- topic/xref xref" href="GUID-556329D9-1810-433A-9660-431983DC7788.html">USB_DEVICE_CDC_EVENT_DATA_READ_COMPLETE</a> type. </p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Likely Follow-up event</em>: None. </p>
+            <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">USB_DEVICE_CDC_EVENT_SERIAL_STATE_NOTIFICATION_COMPLETE</strong></p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Application Response</em>: This event occurs when a serial state notification send
+                scheduled by calling the <a class="- topic/xref xref" href="GUID-8480C434-997C-4C1C-B030-F3312D838BB0.html">USB_DEVICE_CDC_SerialStateNotificationSend</a> function has completed. This
+                event does not require the application to respond with any function calls. </p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Event Specific Data (pData)</em>: The pData member in the event handler will point
+                to the <a class="- topic/xref xref" href="GUID-40B6AC5A-C0F1-4D42-B926-BB422471E481.html">USB_DEVICE_CDC_EVENT_DATA_SERIAL_STATE_NOTIFICATION_COMPLETE</a> data type. </p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Likely Follow-up event</em>: None. </p>
+            <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_SENT</strong></p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Application Response</em>: This event occurs when the data stage of a control read
+                transfer has completed in response to the <a class="- topic/xref xref" href="GUID-85F7260B-F498-4865-A1A6-0FB2C1EA5AD0.html">USB_DEVICE_ControlSend</a>
+                function (in the USB_DEVICE_CDC_EVENT_GET_LINE_CODING event). The application must
+                acknowledge the handshake stage of the control transfer by calling the <a class="- topic/xref xref" href="GUID-34243A48-7930-4EBD-9E40-AF31631C2B9F.html">USB_DEVICE_ControlStatus</a>
+                function with the USB_DEVICE_CONTROL_STATUS_OK flag. </p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Event Specific Data (pData)</em>: The pData parameter will be NULL. </p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Likely Follow-up event</em>: None. </p>
+            <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_RECEIVED</strong></p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Application Response</em>: This event occurs when the data stage of a control write
+                transfer has completed in response to the <a class="- topic/xref xref" href="GUID-33991F1C-C31B-413E-BD6B-29A870E556B5.html">USB_DEVICE_ControlReceive</a> function (in the
+                USB_DEVICE_CDC_EVENT_SET_LINE_CODING event). </p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Event Specific Data (pData)</em>: The pData parameter will be NULL. </p>
+            <p class="- topic/p p"><em class="+ topic/ph hi-d/i ph i">Likely Follow-up event</em>: None. </p>
+        </section>
+        <section class="- topic/section section" id="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__SECTION_ABJ_4NL_J1C" data-ofbid="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__SECTION_ABJ_4NL_J1C"><h2 class="- topic/title title sectiontitle">CDC Function Driver Event Handling</h2>
+            
+            <p class="- topic/p p">The following code shows an event handling scheme example. The application always
+                returns from the event handler with a <a class="- topic/xref xref" href="GUID-784254A4-D5FC-4AA2-AD85-072C9A09E0DE.html">USB_DEVICE_CDC_EVENT_RESPONSE_NONE</a> value.</p>
+            <pre class="- topic/pre pre" id="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__PRE_YXB_GHL_J1C" data-ofbid="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__PRE_YXB_GHL_J1C"><em class="+ topic/ph hi-d/i ph i">// This code example shows all CDC Function Driver possible events</em>
+<em class="+ topic/ph hi-d/i ph i">// and a possible scheme for handling these events. In this case</em>
+<em class="+ topic/ph hi-d/i ph i">// event responses are not deferred.</em>
+
+    uint16_t breakDuration;
+    USB_DEVICE_HANDLE    usbDeviceHandle;
+    USB_CDC_LINE_CODING  lineCoding;
+    USB_CDC_CONTROL_LINE_STATE * controlLineStateData;
+
+    USB_DEVICE_CDC_EVENT_RESPONSE USBDeviceCDCEventHandler
+    (
+        USB_DEVICE_CDC_INDEX instanceIndex,
+        USB_DEVICE_CDC_EVENT event,
+        <strong class="+ topic/ph hi-d/b ph b">void</strong> * pData,
+        uintptr_t userData
+    )
+    {
+        <strong class="+ topic/ph hi-d/b ph b">switch</strong>(event)
+        {
+            <strong class="+ topic/ph hi-d/b ph b">case</strong> USB_DEVICE_CDC_EVENT_SET_LINE_CODING:
+
+                <em class="+ topic/ph hi-d/i ph i">// In this case, the application should read the line coding</em>
+                <em class="+ topic/ph hi-d/i ph i">// data that is sent by the host.</em>
+
+                USB_DEVICE_ControlReceive(usbDeviceHandle, &amp;lineCoding,
+                                    <strong class="+ topic/ph hi-d/b ph b">sizeof</strong>(USB_CDC_LINE_CODING));
+
+                <strong class="+ topic/ph hi-d/b ph b">break</strong>;
+
+            <strong class="+ topic/ph hi-d/b ph b">case</strong> USB_DEVICE_CDC_EVENT_GET_LINE_CODING:
+
+                <em class="+ topic/ph hi-d/i ph i">// In this case, the application should send the line coding</em>
+                <em class="+ topic/ph hi-d/i ph i">// data to the host.</em>
+
+                USB_DEVICE_ControlSend(usbDeviceHandle, &amp;lineCoding,
+                                    <strong class="+ topic/ph hi-d/b ph b">sizeof</strong>(USB_CDC_LINE_CODING));
+
+                <strong class="+ topic/ph hi-d/b ph b">break</strong>;
+
+            <strong class="+ topic/ph hi-d/b ph b">case</strong> USB_DEVICE_CDC_EVENT_SET_CONTROL_LINE_STATE:
+
+                <em class="+ topic/ph hi-d/i ph i">// In this case, pData should be interpreted as a</em>
+                <em class="+ topic/ph hi-d/i ph i">// USB_CDC_CONTROL_LINE_STATE pointer type.  The application</em>
+                <em class="+ topic/ph hi-d/i ph i">// acknowledges the parameters by calling the</em>
+                <em class="+ topic/ph hi-d/i ph i">// USB_DEVICE_ControlStatus() function with the</em>
+                <em class="+ topic/ph hi-d/i ph i">// USB_DEVICE_CONTROL_STATUS_OK option.</em>
+
+                controlLineStateData = (USB_CDC_CONTROL_LINE_STATE *)pData;
+                USB_DEVICE_ControlStatus(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
+
+                <strong class="+ topic/ph hi-d/b ph b">break</strong>;
+
+            <strong class="+ topic/ph hi-d/b ph b">case</strong> USB_DEVICE_CDC_EVENT_SEND_BREAK:
+
+                <em class="+ topic/ph hi-d/i ph i">// In this case, pData should be interpreted as a</em>
+                <em class="+ topic/ph hi-d/i ph i">// USB_DEVICE_CDC_EVENT_DATA_SEND_BREAK pointer type</em>
+                <em class="+ topic/ph hi-d/i ph i">// to the break duration. The application acknowledges</em>
+                <em class="+ topic/ph hi-d/i ph i">// the parameters by calling the USB_DEVICE_ControlStatus()</em>
+                <em class="+ topic/ph hi-d/i ph i">// function with the USB_DEVICE_CONTROL_STATUS_OK option.</em>
+
+                breakDuration = ((USB_DEVICE_CDC_EVENT_DATA_SEND_BREAK *) pData)-&gt;breakDuration;
+                USB_DEVICE_ControlStatus(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
+
+                <strong class="+ topic/ph hi-d/b ph b">break</strong>;
+
+            <strong class="+ topic/ph hi-d/b ph b">case</strong> USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_SENT:
+
+                <em class="+ topic/ph hi-d/i ph i">// This event indicates the data send request associated with</em>
+                <em class="+ topic/ph hi-d/i ph i">// the latest USB_DEVICE_ControlSend() function was</em>
+                <em class="+ topic/ph hi-d/i ph i">// completed.  The application could use this event to track</em>
+                <em class="+ topic/ph hi-d/i ph i">// the completion of the USB_DEVICE_CDC_EVENT_GET_LINE_CODING</em>
+                <em class="+ topic/ph hi-d/i ph i">// request.</em>
+                <strong class="+ topic/ph hi-d/b ph b">break</strong>;
+
+            <strong class="+ topic/ph hi-d/b ph b">case</strong> USB_DEVICE_CDC_EVENT_CONTROL_TRANSFER_DATA_RECEIVED:
+
+                <em class="+ topic/ph hi-d/i ph i">// This means that the data stage is complete. The data in</em>
+                <em class="+ topic/ph hi-d/i ph i">// setLineCodingData is valid or data in getLineCodingData was</em>
+                <em class="+ topic/ph hi-d/i ph i">// sent to the host.  The application can now decide whether it</em>
+                <em class="+ topic/ph hi-d/i ph i">// supports this data. It is not mandatory to do this in the</em>
+                <em class="+ topic/ph hi-d/i ph i">// event handler.</em>
+
+                USB_DEVICE_ControlStatus(usbDeviceHandle, USB_DEVICE_CONTROL_STATUS_OK);
+
+                <strong class="+ topic/ph hi-d/b ph b">break</strong>;
+
+            <strong class="+ topic/ph hi-d/b ph b">case</strong> USB_DEVICE_CDC_EVENT_WRITE_COMPLETE:
+
+                <em class="+ topic/ph hi-d/i ph i">// This means USB_DEVICE_CDC_Write() operation completed.</em>
+                <em class="+ topic/ph hi-d/i ph i">// The pData member will point to a</em>
+                <em class="+ topic/ph hi-d/i ph i">// USB_DEVICE_CDC_EVENT_DATA_WRITE_COMPLETE type of data.</em>
+                <strong class="+ topic/ph hi-d/b ph b">break</strong>;
+
+            <strong class="+ topic/ph hi-d/b ph b">case</strong> USB_DEVICE_CDC_EVENT_READ_COMPLETE:
+
+                <em class="+ topic/ph hi-d/i ph i">// This means USB_DEVICE_CDC_Read() operation completed.</em>
+                <em class="+ topic/ph hi-d/i ph i">// The pData member will point to a</em>
+                <em class="+ topic/ph hi-d/i ph i">// USB_DEVICE_CDC_EVENT_DATA_READ_COMPLETE type of data.</em>
+                <strong class="+ topic/ph hi-d/b ph b">break</strong>;
+
+            <strong class="+ topic/ph hi-d/b ph b">case</strong> USB_DEVICE_CDC_EVENT_SERIAL_STATE_NOTIFICATION_COMPLETE:
+
+                <em class="+ topic/ph hi-d/i ph i">// This means USB_DEVICE_CDC_SerialStateNotification() operation</em>
+                <em class="+ topic/ph hi-d/i ph i">// completed. The pData member will point to a</em>
+                <em class="+ topic/ph hi-d/i ph i">// USB_DEVICE_CDC_EVENT_DATA_SERIAL_STATE_NOTIFICATION_COMPLETE type of data.</em>
+                <strong class="+ topic/ph hi-d/b ph b">break</strong>;
+
+             <strong class="+ topic/ph hi-d/b ph b">default</strong>:
+                <strong class="+ topic/ph hi-d/b ph b">break</strong>;
+         }
+
+        <strong class="+ topic/ph hi-d/b ph b">return</strong> USB_DEVICE_CDC_EVENT_RESPONSE_NONE;
+    }</pre>
+        </section>
+    </div>
+</article></main></div>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                        <nav role="navigation" id="wh_topic_toc" aria-label="On this page" class="col-lg-2 d-none d-lg-block navbar d-print-none"> 
+                            <div id="wh_topic_toc_content">
+		                        
+	                            <div class=" wh_topic_toc "><div class="wh_topic_label">On this page</div><ul><li class="section-item"><div class="section-title"><a href="#GUID-6579EB1B-2438-4086-9384-E776145C6FD0__SECTION_C5T_GHL_J1C" data-tocid="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__SECTION_C5T_GHL_J1C">Registering a CDC Function Driver Event Handler</a></div></li><li class="section-item"><div class="section-title"><a href="#GUID-6579EB1B-2438-4086-9384-E776145C6FD0__SECTION_D5P_4HL_J1C" data-tocid="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__SECTION_D5P_4HL_J1C">CDC Function Driver Events</a></div></li><li class="section-item"><div class="section-title"><a href="#GUID-6579EB1B-2438-4086-9384-E776145C6FD0__SECTION_ABJ_4NL_J1C" data-tocid="GUID-6579EB1B-2438-4086-9384-E776145C6FD0__SECTION_ABJ_4NL_J1C">CDC Function Driver Event Handling</a></div></li></ul></div>
+	                        	
+                        	</div>
+                        </nav>
+                    
+                </div>
+            </div>
+            
+            
+            
+        </div> 
+        <footer class="navbar navbar-default wh_footer">
+  <div class=" footer-container mx-auto ">
+    <div class="footer">
+  <div class="mchp-wh-footer">
+    <div class="mchp-footer">
+      <div class="mchp-footer-tier1">
+        <div class="spacer"></div>
+        <div class="mchp-footer-container">
+          <div class="mchp-footer-links mchp-social-media-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.facebook.com/pages/Microchip-Technology-Inc/20320981741" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Facebook" src="oxygen-webhelp/template/resources/images/201016-corp-facebook.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.linkedin.com/company/microchip-technology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip LinkedIn" src="oxygen-webhelp/template/resources/images/201016-corp-linkedin.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://twitter.com/MicrochipTech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Twitter" src="oxygen-webhelp/template/resources/images/201016-corp-twitter.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.youtube.com/user/MicrochipTechnology" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip YouTube" src="oxygen-webhelp/template/resources/images/201016-corp-youtube.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.instagram.com/microchiptechnologyinc/" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Instagram" src="oxygen-webhelp/template/resources/images/201016-corp-instagram.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.weibo.com/microchiptech" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Weibo" src="oxygen-webhelp/template/resources/images/201016-corp-weibo.png"/>
+                </a>
+              </div>
+              <div class="mchp-component-item">
+                <a class="cmp-image__link" href="https://www.microchip.com/en-us/about/blog" target="_blank">
+                  <img class="cmp-image__image" alt="Microchip Blog" src="oxygen-webhelp/template/resources/images/201016-corp-blog.png"/>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-links">
+            <div class="mchp-component-items">
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://www.microchip.com/about-us/contact-us" class="mchp-link__link">Contact</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information" class="mchp-link__link">Legal</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/privacy-policy" class="mchp-link__link">Privacy Policy</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item ">
+                <div class="link">
+                  <a href="https://www.microchip.com/en-us/about/legal-information/microchip-cookie-statement" class="mchp-link__link">Cookies</a>
+                  <span class="mchp-link__separator">|</span>
+                </div>
+              </div>
+              <div class="mchp-component-item">
+                <div class="link">
+                  <a href="https://careers.microchip.com/" class="mchp-link__link">Careers</a>
+                  <span class="mchp-link__separator"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mchp-footer-newsletter">
+            <div class="cmp-text">
+              <p>Stay on the leading edge with our blog</p>
+            </div>
+            <div class="mchp-button-wrapper">
+              <a role="button" href="https://www.microchip.com/en-us/about/blog" class="mchp-button mchp-button-regular solid">
+                <span class="mchp-button__span">MicroSolutions</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="graphic">
+          <img src="oxygen-webhelp/template/resources/images/footer-graphic.png"/>
+        </div>
+      </div>
+      <div class="mchp-footer-tier2">
+        <p class="mchp-copyright">© Copyright 1998-2022 Microchip Technology Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-2724382-19"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];  
+    function gtag(){dataLayer.push(arguments);}  
+    gtag('js', new Date());   
+    gtag('config', 'UA-2724382-19');
+  </script>
+  
+  <script type="text/javascript">_satellite.pageBottom();</script><!-- Adobe Analytics -->
+  <script type="text/javascript" src="mchp-js/prepend.js"></script><!-- Package for viewing PDFs on mobile devices -->
+  
+</div>
+  </div>
+</footer>
+        
+        <div id="go2top" class="d-print-none">
+            <span class="oxy-icon oxy-icon-up"></span>
+        </div>
+        
+        <div id="modal_img_large" class="modal">
+            <span class="close oxy-icon oxy-icon-remove"></span>
+            <div id="modal_img_container"></div>
+            <div id="caption"></div>
+        </div>
+        
+        
+        
+       
+        </body>
+</html>
