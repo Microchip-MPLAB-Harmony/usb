@@ -2,7 +2,32 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 # Microchip MPLAB Harmony 3 Release Notes
+## USB Release v3.13.0 (June, 2024)
+### NEW FEATURES
 
+- 	Added USB support for PIC32MZ2051-W1 devices. 
+-   Added USB Device demos for SAMA5D29 Curiosity Development Board.
+-   Added USB Device demos for SAM9X75 Curiosity Development Board 
+
+### Bug fixes
+- Implemented fixes for several MISRA C 2012 required violations.
+- Enabled user configuration for the Attach Debounce Timer in the USB Full Speed Driver component in the MCC Project Graph. The timer value is no more hard coded to 500 milliseconds. 
+- Improved USBFSV1 (USB Full Speed) Host mode driver to prevent deadlock during frequent USB device connect and disconnect scenarios.
+- The USBFS Device mode Driver has been updated to rectify an issue where it was incorrectly generating a Resume event immediately following a Suspend event. 
+- The USBFS Host mode driver now disables the 1ms timer after completing detach debounce. 
+- The USB Device code generation script has been updated to resolve the an issue in the MCC-generated Microsoft OS string descriptor. 
+- The USB Device configuration symbol 'Max Power (mA)' has been enhanced to accommodate up to 500 mA for PIC32CZ CA80/CA90. Previously, this symbol permitted only up to 250mA. 
+- USB library documentation has been updated. 
+- The MCC code generation scripts have been updated to activate USB Full-Speed peripheral (USB) interrupts for PIC32CK devices.
+  
+### Known Issues
+- All Harmony USB projects for SAMA5 family products must be compiled to generate ARM instructions. The XC32 compiler switch -marm must be used. Thumb instructions are not supported yet.
+
+### Development Tools
+
+-    [MPLAB® X IDE v6.20](https://www.microchip.com/mplab/mplab-x-ide)
+-    [MPLAB® XC32 C/C++ Compiler v4.40](https://www.microchip.com/mplab/compilers)
+-    MPLAB® X IDE plug-ins:- MPLAB® Code Configurator (MCC) v5.5.1 or above
 ## USB Release v3.12.0
 ### NEW FEATURES
 
