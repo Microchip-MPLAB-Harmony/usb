@@ -6,8 +6,8 @@
 ### NEW FEATURES
 
 - 	Added USB support for PIC32MZ2051-W1 devices. 
--   Added USB Device demos for SAMA5D29 Curiosity Development Board.
--   Added USB Device demos for SAM9X75 Curiosity Development Board 
+-   USB demos for SAMA5D29 Curiosity Development Board.
+-   USB demos for SAM9X75 Curiosity Development Board 
 
 ### Bug fixes
 - Implemented fixes for several MISRA C 2012 required violations.
