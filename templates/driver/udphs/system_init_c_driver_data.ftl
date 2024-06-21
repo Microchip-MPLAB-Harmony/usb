@@ -60,8 +60,15 @@ static DRV_USB_VBUS_LEVEL DRV_USB_UDPHS_VBUS_Comparator(void)
 
 static const DRV_USB_UDPHS_INIT drvUSBInit =
 {
+
+
+<#if core.DeviceFamily == "SAMA7D65"  || core.DeviceFamily == "SAMA7G5" >
     /* Interrupt Source for USB module */
+    .interruptSource = (INT_SOURCE)UDPHSA_IRQn,
+<#else>	
     .interruptSource = (INT_SOURCE)UDPHS_IRQn,
+</#if> 
+
 
     /* System module initialization */
     .moduleInit = {0},
@@ -73,8 +80,14 @@ static const DRV_USB_UDPHS_INIT drvUSBInit =
     .operationSpeed = USB_SPEED_FULL,
 </#if>    
 
+<#if core.DeviceFamily == "SAMA7D65"  || core.DeviceFamily == "SAMA7G5" > 
+    /* Identifies peripheral (PLIB-level) ID */
+    .usbID = UDPHSA_REGS,
+<#else>
     /* Identifies peripheral (PLIB-level) ID */
     .usbID = UDPHS_REGS,
+
+</#if>
     
 <#if (USB_DEVICE_VBUS_SENSE == true)>     
     /* Function to check for VBus */

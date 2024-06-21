@@ -134,7 +134,8 @@ void F_DRV_USB_UDPHS_DEVICE_Initialize
 
 {
     udphs_registers_t * usbID;      /* USB instance pointer */
-    uint8_t count;                  /* Loop Counter */
+    uint32_t count;                  /* Loop Counter */
+    uint32_t dmaIndex;
 
     M_DRV_USB_UDPHS_InitUTMI();    
     
@@ -187,29 +188,29 @@ void F_DRV_USB_UDPHS_DEVICE_Initialize
         usbID->UDPHS_EPT[count].UDPHS_EPTCTLDIS = UDPHS_EPTCTLDIS_Msk;
     }
 
-    /* Reset DMA */
-
-    /* With OR without DMA */
-    for(count = 1; count < DRV_USB_UDPHS_ENDPOINTS_NUMBER; count++ )
+    /* Initialize Endpoints  */
+    for(count = 1; count < DRV_USB_UDPHS_LOOP_COUNT_DMA ; count++ )
     {
         if(( gDrvUsbUdphsDeviceEndpointFeatureDescription & (1UL << count)) == (1UL << count))
         {
+            dmaIndex = count - 1U + M_DRV_UDPHS_DMA_OFFSET ;
             /* RESET endpoint canal DMA: */
             /* DMA stop channel command */
-            UDPHS_REGS->UDPHS_DMA[count].UDPHS_DMACONTROL = 0; /* STOP command */
-            /* Disable endpoint */
-            UDPHS_REGS->UDPHS_EPT[count].UDPHS_EPTCTLDIS |= 0XFFFFFFFFU;
-            /* Reset endpoint config */
-            UDPHS_REGS->UDPHS_EPT[count].UDPHS_EPTCFG = 0;
+            usbID->UDPHS_DMA[dmaIndex].UDPHS_DMACONTROL = 0; /* STOP command */
             /* Reset DMA channel (Buff count and Control field) */
-            UDPHS_REGS->UDPHS_DMA[count].UDPHS_DMACONTROL = 0x02; /* NON STOP command */
+            /* Disable endpoint */
+            usbID->UDPHS_EPT[count].UDPHS_EPTCTLDIS |= 0XFFFFFFFFU;
+            /* Reset endpoint config */
+            usbID->UDPHS_EPT[count].UDPHS_EPTCFG = 0;
+            usbID->UDPHS_DMA[dmaIndex].UDPHS_DMACONTROL = 0x02; /* NON STOP command */
             /* Reset DMA channel 0 (STOP) */
-            UDPHS_REGS->UDPHS_DMA[count].UDPHS_DMACONTROL = 0; /* STOP command */
+            usbID->UDPHS_DMA[dmaIndex].UDPHS_DMACONTROL = 0; /* STOP command */
             /* Clear DMA channel status ( read the register for clear it ) */
-            UDPHS_REGS->UDPHS_DMA[count].UDPHS_DMASTATUS = UDPHS_REGS->UDPHS_DMA[count].UDPHS_DMASTATUS;
+            usbID->UDPHS_DMA[dmaIndex].UDPHS_DMASTATUS = usbID->UDPHS_DMA[count].UDPHS_DMASTATUS;
             /* Clear DMA address */
-            UDPHS_REGS->UDPHS_DMA[count].UDPHS_DMAADDRESS = 0;
+            usbID->UDPHS_DMA[dmaIndex].UDPHS_DMAADDRESS = 0;
         }
+
     }
     usbID->UDPHS_CLRINT = UDPHS_CLRINT_Msk;
 
@@ -1488,6 +1489,7 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_IRPSubmit
     bool interruptWasEnabled = false;               /* To track interrupt state */
     USB_ERROR retVal = USB_ERROR_NONE;              /* Return value */
     uint32_t i;
+    uint32_t dmaEpIndex;
     uint32_t remainder_t;
 
     if(DRV_HANDLE_INVALID == client)
@@ -1892,6 +1894,7 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_IRPSubmit
                     else
                     {
                         /* Non zero endpoint irp_t */
+                        dmaEpIndex = endpoint - 1 + M_DRV_UDPHS_DMA_OFFSET ;
                         if(( gDrvUsbUdphsDeviceEndpointFeatureDescription & (1UL << endpoint)) == (1UL << endpoint))
                         {
                             /* DMA capable */
@@ -1948,10 +1951,10 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_IRPSubmit
                                     SYS_CACHE_CleanDCache_by_Addr((uint32_t *)endpointObj, (int32_t)sizeof(endpointObj));
 
                                     /* Write in UDPHS_DMANXTDSCx the address of the descriptor to be used first */
-                                    usbID->UDPHS_DMA[endpoint].UDPHS_DMANXTDSC = (uint32_t)endpointObj->dmaTransferDescriptor;
+                                    usbID->UDPHS_DMA[dmaEpIndex].UDPHS_DMANXTDSC = (uint32_t)endpointObj->dmaTransferDescriptor;
 
                                     /* Write '1' in the LDNXT_DSC bit of UDPHS_DMACONTROLx */
-                                    usbID->UDPHS_DMA[endpoint].UDPHS_DMACONTROL = UDPHS_DMACONTROL_LDNXT_DSC_Msk;
+                                    usbID->UDPHS_DMA[dmaEpIndex].UDPHS_DMACONTROL = UDPHS_DMACONTROL_LDNXT_DSC_Msk;
 
                                     /* DMA Interrupt enable */
                                     usbID->UDPHS_IEN |=  (UDPHS_IEN_DMA_1_Msk << (endpoint-1U));
@@ -2012,10 +2015,10 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_IRPSubmit
                                     usbID->UDPHS_IEN |=  (UDPHS_IEN_DMA_1_Msk << (endpoint-1U));
 
                                     /* Write in UDPHS_DMANXTDSCx the address of the descriptor to be used first */
-                                    usbID->UDPHS_DMA[endpoint].UDPHS_DMANXTDSC = (uint32_t)endpointObj->dmaTransferDescriptor;
+                                    usbID->UDPHS_DMA[dmaEpIndex].UDPHS_DMANXTDSC = (uint32_t)endpointObj->dmaTransferDescriptor;
 
                                     /* Write '1' in the LDNXT_DSC bit of UDPHS_DMACONTROLx */
-                                    usbID->UDPHS_DMA[endpoint].UDPHS_DMACONTROL = UDPHS_DMACONTROL_LDNXT_DSC_Msk;
+                                    usbID->UDPHS_DMA[dmaEpIndex].UDPHS_DMACONTROL = UDPHS_DMACONTROL_LDNXT_DSC_Msk;
                                 }
                             }
                         }
@@ -2483,15 +2486,19 @@ void F_DRV_USB_UDPHS_DEVICE_Tasks_ISR_DMA(DRV_USB_UDPHS_OBJ * hDriver, uint8_t N
     uint32_t dmaStatus;
     uint32_t byteCount;
     static uint32_t receivedSize;
+    uint32_t dmaNumEndpointIndex;
 
     usbID = hDriver->usbID;
+    
+    dmaNumEndpointIndex = (uint32_t ) NumEndpoint ;
+    dmaNumEndpointIndex = dmaNumEndpointIndex - 1U + M_DRV_UDPHS_DMA_OFFSET ;
 
     /* Get the pointer to the endpoint object */
     endpointObj = hDriver->deviceEndpointObj[NumEndpoint];
     irp = endpointObj->irpQueue;
     if (irp != NULL)
     {
-        dmaStatus = usbID->UDPHS_DMA[NumEndpoint].UDPHS_DMASTATUS;
+        dmaStatus = usbID->UDPHS_DMA[dmaNumEndpointIndex].UDPHS_DMASTATUS;
 
         /* The total amount of untransmitted bytes is stored in BUFF_COUNT. 
            In the event of a successful transfer, BUFF_COUNT is equal to 0. */ 
@@ -2506,7 +2513,7 @@ void F_DRV_USB_UDPHS_DEVICE_Tasks_ISR_DMA(DRV_USB_UDPHS_OBJ * hDriver, uint8_t N
         if( endpointObj->endpointDirection == USB_DATA_DIRECTION_HOST_TO_DEVICE )
         {
             /* Data moves from host to device */
-            receivedSize = usbID->UDPHS_DMA[NumEndpoint].UDPHS_DMAADDRESS - (uint32_t)(irp->data);
+            receivedSize = usbID->UDPHS_DMA[dmaNumEndpointIndex].UDPHS_DMAADDRESS - (uint32_t)(irp->data);
             irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
             irp->size = receivedSize;
             irp->nPendingBytes = 0;
@@ -2516,7 +2523,7 @@ void F_DRV_USB_UDPHS_DEVICE_Tasks_ISR_DMA(DRV_USB_UDPHS_OBJ * hDriver, uint8_t N
             /* Data moves from device to host */
 
             /* Received size of data */
-            receivedSize = usbID->UDPHS_DMA[NumEndpoint].UDPHS_DMAADDRESS - (uint32_t)(irp->data);
+            receivedSize = usbID->UDPHS_DMA[dmaNumEndpointIndex].UDPHS_DMAADDRESS - (uint32_t)(irp->data);
 
             if(byteCount == 0U )
             {

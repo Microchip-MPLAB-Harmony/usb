@@ -173,9 +173,14 @@ def instantiateComponent(usbDriverComponent):
 	#### Dependency ####
 	############################################################################
 	# Update USB General Interrupt Handler 
-	Database.setSymbolValue("core", "UDPHS_INTERRUPT_ENABLE", True, 1)
-	Database.setSymbolValue("core", "UDPHS_INTERRUPT_HANDLER_LOCK", True, 1)
-	Database.setSymbolValue("core", "UDPHS_INTERRUPT_HANDLER", "DRV_USB_UDPHS_Handler", 1)
+	if any(x in Variables.get("__PROCESSOR") for x in [ "SAMA7"]):
+		Database.setSymbolValue("core", "UDPHSA_INTERRUPT_ENABLE", True, 1)
+		Database.setSymbolValue("core", "UDPHSA_INTERRUPT_HANDLER_LOCK", True, 1)
+		Database.setSymbolValue("core", "UDPHSA_INTERRUPT_HANDLER", "DRV_USB_UDPHSA_Handler", 1)
+	else :
+		Database.setSymbolValue("core", "UDPHS_INTERRUPT_ENABLE", True, 1)
+		Database.setSymbolValue("core", "UDPHS_INTERRUPT_HANDLER_LOCK", True, 1)
+		Database.setSymbolValue("core", "UDPHS_INTERRUPT_HANDLER", "DRV_USB_UDPHS_Handler", 1)
 
 	if Database.getSymbolValue("core", "UDPHS_CLOCK_ENABLE") == False:
 		Database.setSymbolValue("core", "UDPHS_CLOCK_ENABLE", True, 2)	

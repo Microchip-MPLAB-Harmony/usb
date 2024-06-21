@@ -90,17 +90,18 @@
     #define UHPHS_PORTSC_N_PP_Msk   UHPHS_PORTSC_PP_Msk
     #define UHPHS_PORTSC_N_PED_Msk  UHPHS_PORTSC_PED_Msk
 
-#ifdef _SAMA7G54_H_
-        /* Specific to SAMA7G54 */
-        #define PMC_UCKR_UPLLEN() \
-            UDPHSA_REGS->UDPHS_CTRL &= ~UDPHS_CTRL_EN_UDPHS_Msk; \
-            for(i = 0; i < DRV_USB_EHCI_PORT_NUMBERS; i ++) \
+#if defined(__CORTEX_A) && (__CORTEX_A == 7) 
+    
+    /* Specific to SAMA7G54 and SAMA7D65 */
+     #define PMC_UCKR_UPLLEN() \
+        UDPHSA_REGS->UDPHS_CTRL &= ~UDPHS_CTRL_EN_UDPHS_Msk; \
+        for(i = 0; i < DRV_USB_EHCI_PORT_NUMBERS; i ++) \
+        { \
+            if((drvInit->bmPortSelect & (1UL << i)) != 0U) \
             { \
-                if((drvInit->bmPortSelect & (1UL << i)) != 0U) \
-                { \
-                    RSTC_REGS->RSTC_GRSTR &= ~(1UL << (4+i)); \
-                } \
-            }
+                RSTC_REGS->RSTC_GRSTR &= ~(1UL << (4+i)); \
+            } \
+        }
         #define M_DRV_USB_EHCI_AdvanceState(handle, drvStatus, drvState)    ((handle)->status) = (drvStatus);\
                                                                             ((handle)->taskState) = (drvState);
 #elif defined(_SAM9X60_H_) || defined(_SAM9X60D1G_H_) || defined(_SAM9X60D5M_H_) || defined(_SAM9X60D6K_H_)

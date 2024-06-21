@@ -68,50 +68,75 @@
 #define DRV_USB_UDPHS_NUMBER_OF_BANKS                         (DRV_USB_UDPHS_ENDPOINT_BANKS_ONE)
 
 /* Max size of the DMA FIFO */
-#define DMA_MAX_FIFO_SIZE                                   (65536)
+#define DMA_MAX_FIFO_SIZE                                   (65536U)
 
 /* FIFO space size in bytes */
 #define EPT_VIRTUAL_SIZE                                    (65536U)
+#if defined(__CORTEX_A) && (__CORTEX_A == 7)                           
+    /* This device is Cortex A7 core */
+    #define ENDPOINT_FIFO_ADDRESS(endpoint)                     (((uint8_t*) UDPHS_RAMA_ADDR) + EPT_VIRTUAL_SIZE * (endpoint))
+    #define DRV_USB_UDPHS_Handler                               DRV_USB_UDPHSA_Handler
 
-#define ENDPOINT_FIFO_ADDRESS(endpoint)                     (((uint8_t*) UDPHS_RAM_ADDR) + EPT_VIRTUAL_SIZE * (endpoint))
+#else
+    #define ENDPOINT_FIFO_ADDRESS(endpoint)                     (((uint8_t*) UDPHS_RAM_ADDR) + EPT_VIRTUAL_SIZE * (endpoint))
+#endif	
+
 
 #define DRV_USB_UDPHS_AUTO_ZLP_ENABLE                         false
 
 #ifdef __CORTEX_A 
     #if __CORTEX_A == 7
-        /* This device features a Cortex A7 core. The following code enables the UTMI PLL.  */  
-        #define M_DRV_USB_UDPHS_InitUTMI() \
-        {\
-            uint32_t i;\
-            uint32_t temp;\
-        \
-            /* Reset the USB port (by setting RSTC_GRSTR.USB_RSTx). */ \
-            RSTC_REGS->RSTC_GRSTR |= RSTC_GRSTR_USB_RST((uint32_t)1); \
-        \
-            /* Clear the COMMONONN bit. */ \
-            /* SFR_UTMI0Rx.COMMONONN */  \
-            *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) &= ~0x00000008U; \
-            \
-            /* HS Transmitter pre-emphasis circuit sources 1x pre-emphasis current. */ \
-            *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) &= 0x01800000U; \
-            *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) |= 0x00800000U; \
-        \
-            /* Release the USB port reset (by clearing USB_RSTx). */ \
-            /* The PLL starts as soon as PHY reset is released in RSTC_GRSTR.USB_RSTx */ \
-            /* Release PHY reset in RSTC_GRSTR for each PHY (A, B, C) to be used. */ \
-            RSTC_REGS->RSTC_GRSTR &= ~RSTC_GRSTR_USB_RST(1U); \
-        \
-            /* Wait for 45 us before any USB operation */ \
-            temp = 45U * ((uint32_t)CPU_CLOCK_FREQUENCY/1000000U)/6U;\
-            for (i = 0; i < temp; i++) \
-            { \
-                asm("NOP"); \
-            } \
-        \
-            /* SFR->SFR_UTMI0R[0] and SFR_UTMI0R_VBUS; */ \
-            /* 1: The VBUS signal is valid, and the pull-up resistor on D+ is enabled. */ \
-            *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) |= 0x02000000U; \
-        }
+        #ifdef _SAMA7D65_H_
+            /* This device features a Cortex A7 core. The following code enables the UTMI PLL.  */  
+            #define M_DRV_USB_UDPHS_InitUTMI() \
+            {    \
+                /* Clear the COMMONONN bit. */ \
+                /* SFR_UTMI0Rx.COMMONONN */  \
+                *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) &= ~0x00000008U; \
+                \
+                /* HS Transmitter pre-emphasis circuit sources 1x pre-emphasis current. */ \
+                *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) &= 0x01800000U; \
+                *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) |= 0x00800000U; \
+                \
+                /* SFR->SFR_UTMI0R[0] and SFR_UTMI0R_VBUS; */ \
+                /* 1: The VBUS signal is valid, and the pull-up resistor on D+ is enabled. */ \
+                *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) |= 0x02000000U; \
+            }
+        #else
+            /* This device features a Cortex A7 core. The following code enables the UTMI PLL.  */  
+            #define M_DRV_USB_UDPHS_InitUTMI() \
+            {    \
+                uint32_t i;\
+                uint32_t temp;\
+                \
+                /* Reset the USB port (by setting RSTC_GRSTR.USB_RSTx). */ \
+                RSTC_REGS->RSTC_GRSTR |= RSTC_GRSTR_USB_RST((uint32_t)1); \
+                \
+                /* Clear the COMMONONN bit. */ \
+                /* SFR_UTMI0Rx.COMMONONN */  \
+                *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) &= ~0x00000008U; \
+                \
+                /* HS Transmitter pre-emphasis circuit sources 1x pre-emphasis current. */ \
+                *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) &= 0x01800000U; \
+                *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) |= 0x00800000U; \
+                \
+                /* Release the USB port reset (by clearing USB_RSTx). */ \
+                /* The PLL starts as soon as PHY reset is released in RSTC_GRSTR.USB_RSTx */ \
+                /* Release PHY reset in RSTC_GRSTR for each PHY (A, B, C) to be used. */ \
+                RSTC_REGS->RSTC_GRSTR &= ~RSTC_GRSTR_USB_RST(1U); \
+                \
+                /* Wait for 45 us before any USB operation */ \
+                temp = 45U * ((uint32_t)CPU_CLOCK_FREQUENCY/1000000U)/6U;\
+                for (i = 0; i < temp; i++) \
+                { \
+                    asm("NOP"); \
+                } \
+                \
+                /* SFR->SFR_UTMI0R[0] and SFR_UTMI0R_VBUS; */ \
+                /* 1: The VBUS signal is valid, and the pull-up resistor on D+ is enabled. */ \
+                *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) |= 0x02000000U; \
+            }
+        #endif
     #elif __CORTEX_A == 5
         /* This device features a Cortex A5 core. The following code enables the UTMI PLL.  */  
         #define M_DRV_USB_UDPHS_InitUTMI() \
@@ -134,6 +159,7 @@
 #endif /* __CORTEX_A */
 
 #if defined (__CORTEX_A)
+   
     /* The following bit field macro indicates DMA availability for each hardware
        endpoint. For Cortex A devices, DMA is available for endpoints 1 to 7.*/  
     #define DRV_USB_UDPHS_EPT_DMA              0x000000FEU
@@ -154,6 +180,16 @@
     #define DRV_USB_UDPHS_EPT_BK               0x00780000U
 
 #endif
+
+#define M_DRV_UDPHS_DMA_OFFSET ${CONFIG_USB_UDPHS_DMA_OFFSET}U
+
+#if DRV_USB_UDPHS_ENDPOINTS_NUMBER < UDPHS_DMA_NUMBER
+    #define DRV_USB_UDPHS_LOOP_COUNT_DMA DRV_USB_UDPHS_ENDPOINTS_NUMBER
+#else
+    #define DRV_USB_UDPHS_LOOP_COUNT_DMA UDPHS_DMA_NUMBER
+#endif	
+
+
 
 
 // *****************************************************************************

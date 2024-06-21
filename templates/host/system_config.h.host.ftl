@@ -81,7 +81,8 @@
   && (core.DeviceFamily == "SAMA5D2"
    || core.DeviceFamily == "SAM9X60"
    || core.DeviceFamily == "SAM9X7"
-   || core.DeviceFamily == "SAMA7G5") >
+   || core.DeviceFamily == "SAMA7G5"
+   || core.DeviceFamily == "SAMA7D65") >
 #define USB_HOST_CONTROLLERS_NUMBER                         2U
 <#else>
 #define USB_HOST_CONTROLLERS_NUMBER                         1U
