@@ -89,6 +89,30 @@ def instantiateComponent(usbDriverComponent):
 	usbDMATransferSize.setDescription(helpText)
 	usbDMATransferSize.setDefaultValue(2)
 
+	# UDPHS DMA CONTROL REGISTER OFFSET
+	usbDMAOffset = usbDriverComponent.createIntegerSymbol("CONFIG_USB_UDPHS_DMA_OFFSET", None)
+	usbDMAOffset.setLabel("USB DMA Register Address Offset")
+	usbDMAOffset.setVisible(False)
+	modules = ATDF.getNode("/avr-tools-device-file/modules").getChildren()
+	for module in range(len(modules)):
+		if (modules[module].getAttribute("name")) == "UDPHS":
+			register_groups = modules[module].getChildren()
+			print(modules[module].getAttribute("name"), " Test")
+			for register_group in range(len(register_groups)):
+				if (register_groups[register_group].getAttribute("name") == "UDPHS"):
+					sub_register_groups = register_groups[register_group].getChildren()
+					for sub_register_group in range(len(sub_register_groups)):
+						if (sub_register_groups[sub_register_group].getAttribute("name") == "UDPHS_DMA"):
+							udphsDmaAdrresOffset = sub_register_groups[sub_register_group].getAttribute("offset")
+	if udphsDmaAdrresOffset == "0x310":
+		usbDMAOffset.setDefaultValue(0)
+	elif udphsDmaAdrresOffset == "0x300":
+		usbDMAOffset.setDefaultValue(1)
+	else:
+		print("USB DMA Register Address Offset is incorrect in the ATDF")
+
+
+
 	# USB Driver: USB VBUS Sense
 	usbVbusSense = usbDriverComponent.createBooleanSymbol("USB_DEVICE_VBUS_SENSE", None)
 	usbVbusSense.setLabel("Enable VBUS Sense")
