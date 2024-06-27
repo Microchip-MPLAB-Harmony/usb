@@ -394,12 +394,12 @@ table.simpletable.dataTable.bitFieldValues th {
 
 table.table tbody tr:nth-child(odd),
 table.simpletable.dataTable.bitFieldValues tbody tr:nth-child(odd) {
-  background-color: #f2f2f2;
+  background-color: #ffffff;
 }
 
 table.table tbody tr:nth-child(even),
 table.simpletable.dataTable.bitFieldValues tbody tr:nth-child(even) {
-  background-color: #d9d9d9;
+  background-color: #f2f2f2;
 }
 
 .cellrowborder {
