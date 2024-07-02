@@ -86,24 +86,16 @@
 
 #ifdef __CORTEX_A 
     #if __CORTEX_A == 7
-        #ifdef _SAMA7D65_H_
-            /* This device features a Cortex A7 core. The following code enables the UTMI PLL.  */  
+    /* This device features a Cortex A7 core. */     
+        #ifdef SFR_UTMIHSTRIM_Msk
+            /* Configure the UTMI High-Speed Trimming Register.  */  
             #define M_DRV_USB_UDPHS_InitUTMI() \
-            {    \
-                /* Clear the COMMONONN bit. */ \
-                /* SFR_UTMI0Rx.COMMONONN */  \
-                *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) &= ~0x00000008U; \
-                \
-                /* HS Transmitter pre-emphasis circuit sources 1x pre-emphasis current. */ \
-                *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) &= 0x01800000U; \
-                *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) |= 0x00800000U; \
-                \
-                /* SFR->SFR_UTMI0R[0] and SFR_UTMI0R_VBUS; */ \
-                /* 1: The VBUS signal is valid, and the pull-up resistor on D+ is enabled. */ \
-                *(unsigned int *) (SFR_BASE_ADDRESS + 0x2040) |= 0x02000000U; \
-            }
+            {\
+                SFR_REGS->SFR_UTMIHSTRIM |= SFR_UTMIHSTRIM_SLOPE0(4); \
+            }\
+           
         #else
-            /* This device features a Cortex A7 core. The following code enables the UTMI PLL.  */  
+            /* The following code enables the UTMI PLL.  */  
             #define M_DRV_USB_UDPHS_InitUTMI() \
             {    \
                 uint32_t i;\
@@ -187,7 +179,7 @@
     #define DRV_USB_UDPHS_LOOP_COUNT_DMA DRV_USB_UDPHS_ENDPOINTS_NUMBER
 #else
     #define DRV_USB_UDPHS_LOOP_COUNT_DMA UDPHS_DMA_NUMBER
-#endif	
+#endif    
 
 
 
