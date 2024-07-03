@@ -7,9 +7,6 @@ package:
   version: "v3.14.0"
 
   dependencies:
-    - name: "csp"
-      type: "package"
-      version: "v3.19.1"
     - name: "core"
       type: "package"
       version: "v3.13.5"

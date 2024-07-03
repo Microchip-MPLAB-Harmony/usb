@@ -5,7 +5,7 @@
 ## USB Release v3.14.0 (June, 2024)
 ### NEW FEATURES
 
-- 	Added USB support for SAM A7D65 device. 
+- 	Added USB support for SAMA7D65 device. 
 -   USB demos for SAMA7D65 Early Access Curiosity Board.
 
 
