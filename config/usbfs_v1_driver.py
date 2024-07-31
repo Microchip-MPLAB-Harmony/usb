@@ -219,6 +219,19 @@ def instantiateComponent(usbDriverComponent):
 	usbDriverHostResetDuration.setDefaultValue(100)
 	usbDriverHostResetDuration.setMin(0)
 	usbDriverHostResetDuration.setDependencies(blUSBDriverOperationModeChanged, ["USB_OPERATION_MODE"])
+    
+    # Number of USB Interrupts present for the the current IP
+	usbIntNumber = usbDriverComponent.createIntegerSymbol("USB_INT_SOURCE_NUMBER", None)
+	usbIntNumber.setLabel("Number of USB Interrupts")
+	usbIntNumber.setVisible(False)
+	usbIntNumber.setDefaultValue(0)
+	Interrupts = ATDF.getNode("/avr-tools-device-file/devices/device/interrupts").getChildren()
+	IntNo = 0;
+	for Interrupt in range(len(Interrupts)):
+		if(Interrupts[Interrupt].getAttribute("module-instance") == 'USB'):
+			IntNo = IntNo+1
+	usbIntNumber.setValue(IntNo)
+
 
 	enable_rtos_settings = False
 

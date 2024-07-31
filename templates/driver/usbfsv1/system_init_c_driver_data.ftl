@@ -130,10 +130,20 @@ static const DRV_USBFSV1_INIT drvUSBInit =
     .interruptSource3 = USB_TRCPT1_IRQn,
 <#elseif (__PROCESSOR?matches("ATSAMD2.*") == true) || (__PROCESSOR?matches("ATSAMDA.*") == true) 
         || (__PROCESSOR?matches("ATSAMD1.*") == true) || (__PROCESSOR?matches("ATSAML2.*") == true)
-        || (__PROCESSOR?matches("ATSAMR2.*") == true) || (__PROCESSOR?matches("ATSAMR3.*") == true)
-        || (__PROCESSOR?matches("PIC32CM.*") == true) >
+        || (__PROCESSOR?matches("ATSAMR2.*") == true) || (__PROCESSOR?matches("ATSAMR3.*") == true) >
     /* Interrupt Source for USB module */ 
     .interruptSource = USB_IRQn,
+<#elseif (__PROCESSOR?matches("PIC32CM.*") == true) >
+<#if USB_INT_SOURCE_NUMBER == 4>
+    /* Interrupt Source for USB module */
+    .interruptSource = USB_EORSMDNRSM_IRQn,
+    .interruptSource1 = USB_SOFHSOF_IRQn,
+    .interruptSource2 = USB_TRCPT00_IRQn,
+    .interruptSource3 = USB_TRCPT10_IRQn,
+<#elseif USB_INT_SOURCE_NUMBER == 1>
+    /* Interrupt Source for USB module */
+    .interruptSource = USB_IRQn,
+</#if>
 </#if>
 
     /* System module initialization */

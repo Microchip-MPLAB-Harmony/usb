@@ -84,7 +84,7 @@
 <#elseif __PROCESSOR?matches("ATSAMDA.*") == true>
 /* ${__PROCESSOR} Devices have USB PADCAL values in OTP4_ADDR */ 
 #define DRV_USBFSV1_READ_PADCAL_VALUE (*((uint32_t *) OTP4_ADDR + 1) >> 13)
-<#elseif __PROCESSOR?matches("ATSAMD2.*") == true || __PROCESSOR?matches("PIC32CM.*") == true>
+<#elseif __PROCESSOR?matches("ATSAMD2.*") == true >
 /* ${__PROCESSOR} Devices have USB PADCAL values in OTP4_ADDR */ 
 #define DRV_USBFSV1_READ_PADCAL_VALUE (*((uint32_t *) OTP4_ADDR + 1) >> 13)
 <#elseif __PROCESSOR?matches("ATSAMD1.*") == true>
@@ -93,6 +93,14 @@
 <#elseif __PROCESSOR?matches("ATSAML2.*") == true || __PROCESSOR?matches("ATSAMR2.*") == true || __PROCESSOR?matches("ATSAMR3.*") == true>
 /* ${__PROCESSOR} Devices have USB PADCAL values in OTP4_ADDR */ 
 #define DRV_USBFSV1_READ_PADCAL_VALUE (*((uint32_t *) OTP4_ADDR) >> 13)
+<#elseif __PROCESSOR?matches("PIC32CM.*") == true>
+<#if USB_INT_SOURCE_NUMBER == 4>
+/* ${__PROCESSOR} Devices have USB PADCAL values in FCR_CFM_CALOTP_ADDR */
+#define DRV_USBFSV1_READ_PADCAL_VALUE (*((uint32_t *) FCR_CFM_CALOTP_ADDR + 0x190))
+<#elseif USB_INT_SOURCE_NUMBER == 1>
+/* ${__PROCESSOR} Devices have USB PADCAL values in OTP4_ADDR */
+#define DRV_USBFSV1_READ_PADCAL_VALUE (*((uint32_t *) OTP4_ADDR + 1) >> 13)
+</#if>
 </#if>
 
 <#if __PROCESSOR?matches("ATSAME5.*") == true>
@@ -122,9 +130,18 @@ void DRV_USBFSV1_USB_Handler(void);
 
 void DRV_USBFSV1_USB_Handler(void);
 
-<#elseif __PROCESSOR?matches("ATSAMD2.*") || __PROCESSOR?matches("ATSAML2.*") == true || __PROCESSOR?matches("PIC32CM.*") == true || __PROCESSOR?matches("ATSAMR2.*") == true || __PROCESSOR?matches("ATSAMR3.*") == true>
+<#elseif __PROCESSOR?matches("ATSAMD2.*") || __PROCESSOR?matches("ATSAML2.*") == true || __PROCESSOR?matches("ATSAMR2.*") == true || __PROCESSOR?matches("ATSAMR3.*") == true>
 /* ${__PROCESSOR} Devices has one interrupt vector for USB module */
 #define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE false
+
+<#elseif __PROCESSOR?matches("PIC32CM.*") == true>
+<#if USB_INT_SOURCE_NUMBER == 4>
+/* ${__PROCESSOR} Devices has four interrupt vectors for USB module */
+#define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE true
+<#elseif USB_INT_SOURCE_NUMBER == 1>
+/* ${__PROCESSOR} Devices has one interrupt vector for USB module */
+#define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE false
+</#if>
 <#elseif __PROCESSOR?matches("ATSAMD1.*") == true>
 /* ${__PROCESSOR} Devices has one interrupt vector for USB module */
 #define DRV_USBFSV1_MULTIPLE_ISR_AVAILABLE false

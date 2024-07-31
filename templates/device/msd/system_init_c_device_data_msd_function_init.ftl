@@ -81,7 +81,7 @@ static uint8_t msdCBW${CONFIG_USB_DEVICE_FUNCTION_INDEX}[512] USB_ALIGN;
 </#if>
 static USB_MSD_CSW msdCSW${CONFIG_USB_DEVICE_FUNCTION_INDEX} USB_ALIGN;
 <#assign ROW_BUFFER_ENABLE = false>
-<#if (__PROCESSOR?contains("PIC32MZ") == true) || (__PROCESSOR?contains("PIC32CZ") == true) || (__PROCESSOR?contains("PIC32CK") == true) || (__PROCESSOR?contains("WBZ653") == true) || (__PROCESSOR?contains("PIC32CX2051BZ6") == true)>
+<#if (__PROCESSOR?contains("PIC32MZ") == true) || (__PROCESSOR?contains("PIC32CZ") == true) || (__PROCESSOR?contains("PIC32CK") == true)  || ((__PROCESSOR?contains("PIC32CM") == true ) && ((drv_usbfs_v1.USB_INT_SOURCE_NUMBER)?has_content == true) && (drv_usbfs_v1.USB_INT_SOURCE_NUMBER)== 4) || (__PROCESSOR?contains("WBZ653") == true) || (__PROCESSOR?contains("PIC32CX2051BZ6") == true) >
     <#list 0..4 as i>
         <#assign MSD_ENABLE = "CONFIG_USB_DEVICE_FUNCTION_MSD_LUN_IDX" + i>
         <#if .vars[MSD_ENABLE]?has_content>
