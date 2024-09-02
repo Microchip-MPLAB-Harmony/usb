@@ -569,141 +569,159 @@ void F_USB_DEVICE_MSD_Tasks
 {
     uint8_t commandStatus = (uint8_t)USB_MSD_CSW_COMMAND_PASSED; 
     USB_DEVICE_MSD_INSTANCE * msdObj = &gUSBDeviceMSDInstance[iMSD];
-
-    switch (msdObj->msdMainState)
+    USB_DEVICE_MSD_MEDIA_FUNCTIONS * mediaFunctions;
+    uint8_t count;
+    
+    if ( msdObj->msdMainState == USB_DEVICE_MSD_STATE_DETACH )
     {
-        case USB_DEVICE_MSD_STATE_STALL_IN_OUT:
+        // close all open logical units..
+        for(count = 0; count < msdObj->numberOfLogicalUnits; count++)
+        {
+            if( msdObj->mediaDynamicData[count].mediaHandle != DRV_HANDLE_INVALID )
             {
-                /* Stall both BULK IN and OUT EPs. 
-                   The msdMainState state change will be done once
-                   the MSD BOT RESET Request is processed.
-                 */
-                USB_DEVICE_EndpointStall(msdObj->hUsbDevHandle, msdObj->bulkEndpointTx);
-                USB_DEVICE_EndpointStall(msdObj->hUsbDevHandle, msdObj->bulkEndpointRx);
-                break;
+                mediaFunctions = &msdObj->mediaData[count].mediaFunctions;
+                mediaFunctions->close(msdObj->mediaDynamicData[count].mediaHandle);
             }
-
-        case USB_DEVICE_MSD_STATE_WAIT_FOR_CBW:
-            {
-                /* Queue an IRP to receive the CBW if the BULK OUT and IN EPs are not stalled. */
-                if ((!USB_DEVICE_EndpointIsStalled(msdObj->hUsbDevHandle, msdObj->bulkEndpointRx)) &&
-                    (!USB_DEVICE_EndpointIsStalled(msdObj->hUsbDevHandle, msdObj->bulkEndpointTx)))
+        }
+        return ;
+    }
+    if ( (USB_DEVICE_StateGet( msdObj->hUsbDevHandle ) == USB_DEVICE_STATE_CONFIGURED ) && (USB_DEVICE_IsSuspended(  msdObj->hUsbDevHandle )== false))
+    {
+        switch (msdObj->msdMainState)
+        {
+            case USB_DEVICE_MSD_STATE_STALL_IN_OUT:
                 {
-                    /* Get ready to receive a CBW */
-                    msdObj->irpRx.data = (void *)msdObj->msdCBW;
-                    msdObj->irpRx.size = msdObj->bulkEndpointRxSize;
-                    msdObj->irpRx.flags = USB_DEVICE_IRP_FLAG_DATA_PENDING;
-
-                    (void) USB_DEVICE_IRPSubmit (msdObj->hUsbDevHandle, msdObj->bulkEndpointRx, &msdObj->irpRx);
-                    msdObj->msdMainState = USB_DEVICE_MSD_STATE_CBW;
+                    /* Stall both BULK IN and OUT EPs. 
+                       The msdMainState state change will be done once
+                       the MSD BOT RESET Request is processed.
+                     */
+                    USB_DEVICE_EndpointStall(msdObj->hUsbDevHandle, msdObj->bulkEndpointTx);
+                    USB_DEVICE_EndpointStall(msdObj->hUsbDevHandle, msdObj->bulkEndpointRx);
+                    break;
                 }
-                break;
-            }
 
-      
-          case USB_DEVICE_MSD_STATE_CBW:
-            {
-                if (( (msdObj->irpRx.status == USB_DEVICE_IRP_STATUS_COMPLETED) || (msdObj->irpRx.status == USB_DEVICE_IRP_STATUS_COMPLETED_SHORT))
-                        && (!USB_DEVICE_EndpointIsStalled(msdObj->hUsbDevHandle, msdObj->bulkEndpointRx)))
+            case USB_DEVICE_MSD_STATE_WAIT_FOR_CBW:
                 {
-                    /* Received the CBW from the HOST. Check whether the CBW is valid and meaningful. */
-                    msdObj->msdMainState = F_USB_DEVICE_MSD_VerifyCommand (iMSD, &commandStatus);
+                    /* Queue an IRP to receive the CBW if the BULK OUT and IN EPs are not stalled. */
+                    if ((!USB_DEVICE_EndpointIsStalled(msdObj->hUsbDevHandle, msdObj->bulkEndpointRx)) &&
+                        (!USB_DEVICE_EndpointIsStalled(msdObj->hUsbDevHandle, msdObj->bulkEndpointTx)))
+                    {
+                        /* Get ready to receive a CBW */
+                        msdObj->irpRx.data = (void *)msdObj->msdCBW;
+                        msdObj->irpRx.size = msdObj->bulkEndpointRxSize;
+                        msdObj->irpRx.flags = USB_DEVICE_IRP_FLAG_DATA_PENDING;
 
-                    if (msdObj->msdMainState == USB_DEVICE_MSD_STATE_PROCESS_CBW)
-                    {
-                        msdObj->msdMainState = F_USB_DEVICE_MSD_ProcessNonRWCommand(iMSD, &commandStatus);
+                        (void) USB_DEVICE_IRPSubmit (msdObj->hUsbDevHandle, msdObj->bulkEndpointRx, &msdObj->irpRx);
+                        msdObj->msdMainState = USB_DEVICE_MSD_STATE_CBW;
                     }
-                    else if (msdObj->msdMainState == USB_DEVICE_MSD_STATE_DATA_IN)
+                    break;
+                }
+
+          
+              case USB_DEVICE_MSD_STATE_CBW:
+                {
+                    if (( (msdObj->irpRx.status == USB_DEVICE_IRP_STATUS_COMPLETED) || (msdObj->irpRx.status == USB_DEVICE_IRP_STATUS_COMPLETED_SHORT))
+                            && (!USB_DEVICE_EndpointIsStalled(msdObj->hUsbDevHandle, msdObj->bulkEndpointRx)))
                     {
-                        msdObj->msdMainState = F_USB_DEVICE_MSD_ProcessRead(iMSD, &commandStatus);
+                        /* Received the CBW from the HOST. Check whether the CBW is valid and meaningful. */
+                        msdObj->msdMainState = F_USB_DEVICE_MSD_VerifyCommand (iMSD, &commandStatus);
+
+                        if (msdObj->msdMainState == USB_DEVICE_MSD_STATE_PROCESS_CBW)
+                        {
+                            msdObj->msdMainState = F_USB_DEVICE_MSD_ProcessNonRWCommand(iMSD, &commandStatus);
+                        }
+                        else if (msdObj->msdMainState == USB_DEVICE_MSD_STATE_DATA_IN)
+                        {
+                            msdObj->msdMainState = F_USB_DEVICE_MSD_ProcessRead(iMSD, &commandStatus);
+                        }
+                        else if (msdObj->msdMainState == USB_DEVICE_MSD_STATE_DATA_OUT)
+                        {
+                            msdObj->msdMainState = F_USB_DEVICE_MSD_ProcessWrite(iMSD, &commandStatus);
+                        }
+                        else
+                        {
+                            /* Do Nothing */
+                        }
+
+                        msdObj->msdCSW->bCSWStatus = commandStatus;
                     }
-                    else if (msdObj->msdMainState == USB_DEVICE_MSD_STATE_DATA_OUT)
+                    else if (msdObj->irpRx.status < USB_DEVICE_IRP_STATUS_COMPLETED)
                     {
-                        msdObj->msdMainState = F_USB_DEVICE_MSD_ProcessWrite(iMSD, &commandStatus);
+                        /* This could happen if the IRP was aborted due to some
+                         * reason. We need to ignore the IRP and re-schedule a new
+                         * IRP. */
+
+                        msdObj->msdMainState = USB_DEVICE_MSD_STATE_WAIT_FOR_CBW;
                     }
                     else
                     {
-                        /* Do Nothing */
+                        /* Do nothing */
                     }
-
-                    msdObj->msdCSW->bCSWStatus = commandStatus;
-                }
-                else if (msdObj->irpRx.status < USB_DEVICE_IRP_STATUS_COMPLETED)
-                {
-                    /* This could happen if the IRP was aborted due to some
-                     * reason. We need to ignore the IRP and re-schedule a new
-                     * IRP. */
-
-                    msdObj->msdMainState = USB_DEVICE_MSD_STATE_WAIT_FOR_CBW;
-                }
-                else
-                {
-                    /* Do nothing */
-                }
-                break;
-            }
-
-
-            case USB_DEVICE_MSD_STATE_DATA_IN:
-            {
-                if ((msdObj->irpTx.status <= USB_DEVICE_IRP_STATUS_COMPLETED_SHORT)
-                        && (!USB_DEVICE_EndpointIsStalled(msdObj->hUsbDevHandle, msdObj->bulkEndpointTx)))
-                {
-                    /* This means we have to send or have to continue sending data.
-                     * Check if we have any/more data to send. The return value of
-                     * this function indicates what the next state should be. */
-                    msdObj->msdMainState = F_USB_DEVICE_MSD_ProcessRead(iMSD, &commandStatus);
-                    msdObj->msdCSW->bCSWStatus = commandStatus;
-                }
-                break;
-            }
-
-            case USB_DEVICE_MSD_STATE_DATA_OUT:
-            {
-                if ((msdObj->irpRx.status <= USB_DEVICE_IRP_STATUS_COMPLETED_SHORT)
-                        && (!USB_DEVICE_EndpointIsStalled(msdObj->hUsbDevHandle, msdObj->bulkEndpointRx)))
-                {
-                    /* Check if we have any/more data to receive. */
-                    msdObj->msdMainState = F_USB_DEVICE_MSD_ProcessWrite(iMSD, &commandStatus);
-                    /* Update the CSW command status */
-                    msdObj->msdCSW->bCSWStatus = commandStatus;
-                }
-                break;
-            }
-
-            case USB_DEVICE_MSD_STATE_CSW:
-            {
-                if (msdObj->irpTx.status <= USB_DEVICE_IRP_STATUS_COMPLETED_SHORT)
-                {
-                    (void) F_USB_DEVICE_MSD_PostDataStageRoutine(iMSD);
-                    msdObj->msdMainState = USB_DEVICE_MSD_STATE_SEND_CSW;
-                }
-                else
-                {
                     break;
                 }
-            }
 
-            case USB_DEVICE_MSD_STATE_SEND_CSW:
-            {
-                if ((msdObj->irpTx.status <= USB_DEVICE_IRP_STATUS_COMPLETED_SHORT)
-                        && (!USB_DEVICE_EndpointIsStalled(msdObj->hUsbDevHandle, msdObj->bulkEndpointTx)))
+
+                case USB_DEVICE_MSD_STATE_DATA_IN:
                 {
-                    /* Submit IRP to send CSW */
-                    msdObj->irpTx.data = (void *)msdObj->msdCSW;
-                    msdObj->irpTx.size = sizeof(USB_MSD_CSW);
-                    msdObj->irpTx.flags = USB_DEVICE_IRP_FLAG_DATA_PENDING;
-                    (void) USB_DEVICE_IRPSubmit (msdObj->hUsbDevHandle, msdObj->bulkEndpointTx, &msdObj->irpTx);
-
-                    msdObj->msdMainState = USB_DEVICE_MSD_STATE_WAIT_FOR_CBW;
+                    if ((msdObj->irpTx.status <= USB_DEVICE_IRP_STATUS_COMPLETED_SHORT)
+                            && (!USB_DEVICE_EndpointIsStalled(msdObj->hUsbDevHandle, msdObj->bulkEndpointTx)))
+                    {
+                        /* This means we have to send or have to continue sending data.
+                         * Check if we have any/more data to send. The return value of
+                         * this function indicates what the next state should be. */
+                        msdObj->msdMainState = F_USB_DEVICE_MSD_ProcessRead(iMSD, &commandStatus);
+                        msdObj->msdCSW->bCSWStatus = commandStatus;
+                    }
+                    break;
                 }
-                break;
-            }
 
-            case USB_DEVICE_MSD_STATE_IDLE:
-            default:
-                /* Do Nothing */
-                break;
+                case USB_DEVICE_MSD_STATE_DATA_OUT:
+                {
+                    if ((msdObj->irpRx.status <= USB_DEVICE_IRP_STATUS_COMPLETED_SHORT)
+                            && (!USB_DEVICE_EndpointIsStalled(msdObj->hUsbDevHandle, msdObj->bulkEndpointRx)))
+                    {
+                        /* Check if we have any/more data to receive. */
+                        msdObj->msdMainState = F_USB_DEVICE_MSD_ProcessWrite(iMSD, &commandStatus);
+                        /* Update the CSW command status */
+                        msdObj->msdCSW->bCSWStatus = commandStatus;
+                    }
+                    break;
+                }
+
+                case USB_DEVICE_MSD_STATE_CSW:
+                {
+                    if (msdObj->irpTx.status <= USB_DEVICE_IRP_STATUS_COMPLETED_SHORT)
+                    {
+                        (void) F_USB_DEVICE_MSD_PostDataStageRoutine(iMSD);
+                        msdObj->msdMainState = USB_DEVICE_MSD_STATE_SEND_CSW;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                case USB_DEVICE_MSD_STATE_SEND_CSW:
+                {
+                    if ((msdObj->irpTx.status <= USB_DEVICE_IRP_STATUS_COMPLETED_SHORT)
+                            && (!USB_DEVICE_EndpointIsStalled(msdObj->hUsbDevHandle, msdObj->bulkEndpointTx)))
+                    {
+                        /* Submit IRP to send CSW */
+                        msdObj->irpTx.data = (void *)msdObj->msdCSW;
+                        msdObj->irpTx.size = sizeof(USB_MSD_CSW);
+                        msdObj->irpTx.flags = USB_DEVICE_IRP_FLAG_DATA_PENDING;
+                        (void) USB_DEVICE_IRPSubmit (msdObj->hUsbDevHandle, msdObj->bulkEndpointTx, &msdObj->irpTx);
+
+                        msdObj->msdMainState = USB_DEVICE_MSD_STATE_WAIT_FOR_CBW;
+                    }
+                    break;
+                }
+
+                case USB_DEVICE_MSD_STATE_IDLE:
+                default:
+                    /* Do Nothing */
+                    break;
+        }
     }
 }
 
@@ -1857,16 +1875,7 @@ void F_USB_DEVICE_MSD_Deinitialization ( SYS_MODULE_INDEX iMSD )
 
     msdInstance = &gUSBDeviceMSDInstance[ iMSD ] ;
     
-
-    // close all open logical units..
-    for(count = 0; count < msdInstance->numberOfLogicalUnits; count++)
-    {
-        if( msdInstance->mediaDynamicData[count].mediaHandle != DRV_HANDLE_INVALID )
-        {
-            mediaFunctions = &msdInstance->mediaData[count].mediaFunctions;
-            mediaFunctions->close(msdInstance->mediaDynamicData[count].mediaHandle);
-        }
-    }
+    msdInstance->msdMainState = USB_DEVICE_MSD_STATE_DETACH;
     /* Cancel all RX IRPs */
     (void) USB_DEVICE_IRPCancelAll( msdInstance->hUsbDevHandle, msdInstance->bulkEndpointRx );
     

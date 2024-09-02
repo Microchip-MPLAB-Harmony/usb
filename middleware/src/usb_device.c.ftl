@@ -766,8 +766,6 @@ void USB_DEVICE_Deinitialize ( SYS_MODULE_OBJ usbDeviceObj )
 void USB_DEVICE_Tasks( SYS_MODULE_OBJ object )
 {
     uint8_t count;
-    USB_SPEED speed;
-    uint16_t configValue;
     uint16_t maxFunctionCounts;
     USB_DEVICE_OBJ * usbDeviceThisInstance;
     USB_DEVICE_FUNCTION_REGISTRATION_TABLE * funcRegTable;
@@ -791,8 +789,6 @@ void USB_DEVICE_Tasks( SYS_MODULE_OBJ object )
     }
 
     /* Get device layer data. */
-    speed           = usbDeviceThisInstance->usbDeviceStatusStruct.usbSpeed ;
-    configValue     = usbDeviceThisInstance->activeConfiguration ;
     funcRegTable    = usbDeviceThisInstance->registeredFuncDrivers;
     maxFunctionCounts = usbDeviceThisInstance->registeredFuncDriverCount;
 
@@ -833,25 +829,16 @@ void USB_DEVICE_Tasks( SYS_MODULE_OBJ object )
 
             for(count = 0; count < maxFunctionCounts; count++ )
             {
-                if( (((uint32_t)funcRegTable->speed & (uint32_t)speed) != 0U) && (funcRegTable->configurationValue == configValue))
+                /* Get a pointer to the driver function pointer table and
+                    call the task routine of the driver. */
+                driver = (USB_DEVICE_FUNCTION_DRIVER *)funcRegTable->driver;
+                if (driver != NULL)
                 {
-                    if((usbDeviceThisInstance->usbDeviceStatusStruct.usbDeviceState == USB_DEVICE_STATE_CONFIGURED) &&
-                            (usbDeviceThisInstance->usbDeviceStatusStruct.isSuspended == false))
+                    if(driver->tasks != NULL)
                     {
-                        /* Get a pointer to the driver function pointer table and
-                           call the task routine of the driver. */
-                        driver = (USB_DEVICE_FUNCTION_DRIVER *)funcRegTable->driver;
-
-                        if (driver != NULL)
-                        {
-                            if(driver->tasks != NULL)
-                            {
-                                driver->tasks( funcRegTable->funcDriverIndex );
-                            }
-                        }
+                        driver->tasks( funcRegTable->funcDriverIndex );
                     }
                 }
-
                 /* Run the task routine for the next driver in the function
                  * driver registration table */
                 funcRegTable++;
