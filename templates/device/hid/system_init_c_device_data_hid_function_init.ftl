@@ -45,7 +45,7 @@
 /****************************************************
  * Class specific descriptor - HID Report descriptor
  ****************************************************/
-<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("PIC32MZ2051W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) || (__PROCESSOR?matches("WFI32E02.*") == true)  || (__PROCESSOR?matches("WFI32E03.*") == true) >
+<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("PIC32MZ2051W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) || (__PROCESSOR?matches("WFI32E02.*") == true)  || (__PROCESSOR?matches("WFI32E03.*") == true) || (__PROCESSOR?matches("WBZ653.*") == true) || (__PROCESSOR?matches("PIC32CX2051BZ6.*") == true) >
 static uint8_t USB_ALIGN hid_rpt${CONFIG_USB_DEVICE_FUNCTION_INDEX}[] =
 <#else>
 static const uint8_t hid_rpt${CONFIG_USB_DEVICE_FUNCTION_INDEX}[] =

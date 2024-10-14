@@ -43,7 +43,7 @@
  * USB Driver Initialization
  ******************************************************/
  
-<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("PIC32MZ2051W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) || (__PROCESSOR?matches("WFI32E02.*") == true)  || (__PROCESSOR?matches("WFI32E03.*") == true) >
+<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("PIC32MZ2051W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) || (__PROCESSOR?matches("WFI32E02.*") == true)  || (__PROCESSOR?matches("WFI32E03.*") == true) || (__PROCESSOR?matches("WBZ653.*") == true) || (__PROCESSOR?matches("PIC32CX2051BZ6.*") == true) >
 static uint8_t __attribute__((aligned(512))) USB_ALIGN endPointTable1[DRV_USBFS_ENDPOINTS_NUMBER * 32];
 <#else>
 static uint8_t __attribute__((aligned(512))) endPointTable1[DRV_USBFS_ENDPOINTS_NUMBER * 32];
@@ -80,23 +80,30 @@ static const DRV_USBFS_INIT drvUSBFSInit =
     /* Interrupt Source for USB module */
     .interruptSource = INT_SOURCE_USB_1,
 </#if>
-
 <#if __PROCESSOR?matches("PIC32MX.*") == true>
 
     /* Interrupt Source for USB module */
     .interruptSource = INT_SOURCE_USB,
 </#if>
-
 <#if __PROCESSOR?matches("PIC32MM.*") == true>
 
     /* Interrupt Source for USB module */
     .interruptSource = INT_SOURCE_USB,
 </#if>
-
 <#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("PIC32MZ2051W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) || (__PROCESSOR?matches("WFI32E02.*") == true)  || (__PROCESSOR?matches("WFI32E03.*") == true) >
 
     /* Interrupt Source for USB module */
     .interruptSource = INT_SOURCE_USB,
+</#if>
+<#if (__PROCESSOR?matches("PIC32CX2051BZ6.*") == true) || (__PROCESSOR?matches("WBZ653.*") == true) >
+
+    /* Interrupt Source for USB module */
+    .interruptSource = USB_IRQn,
+<#if (USB_OPERATION_MODE == "Host") && (USB_HOST_VBUS_ENABLE == false)>
+
+    /* Root hub available current in milliamperes */
+    .rootHubAvailableCurrent = 500,
+</#if>
 </#if>
     
 <#if (USB_OPERATION_MODE == "Device")>
@@ -112,7 +119,7 @@ static const DRV_USBFS_INIT drvUSBFSInit =
     /* Stop in idle */
     .stopInIdle = false,
     
-        /* Suspend in sleep */
+    /* Suspend in sleep */
     .suspendInSleep = false,
  
     /* Identifies peripheral (PLIB-level) ID */

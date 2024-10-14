@@ -272,7 +272,7 @@ def instantiateComponent(usbDeviceComponent):
 		driverIndex = "DRV_USBHSV1_INDEX_0"
 		driverInterface = "DRV_USBHSV1_DEVICE_INTERFACE"
 		
-	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX", "PIC32MM", "PIC32MZ1025W", "PIC32MZ2051W", "WFI32E01", "WFI32E02","WFI32E03"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX", "PIC32MM", "PIC32MZ1025W", "PIC32CX2051BZ6", "WBZ653", "PIC32MZ2051W", "WFI32E01", "WFI32E02","WFI32E03"]):
 		res = Database.activateComponents(["drv_usbfs_v1"])
 		usbDeviceSpeed.setDefaultValue("Full Speed")
 		driverIndex = "DRV_USBFS_INDEX_0"
@@ -754,7 +754,7 @@ def instantiateComponent(usbDeviceComponent):
 	addFileName('usb_chapter_9.h', usbDeviceComponent, usbDeviceChapter9HeaderFile, "middleware/", "/usb/", True, None)
 	
 	usbDeviceLocalHeaderFile = usbDeviceComponent.createFileSymbol(None, None)
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ1025W", "PIC32MZ2051W", "WFI32E01", "WFI32E02", "WFI32E03"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ1025W", "PIC32CX2051BZ6", "WBZ653", "PIC32MZ2051W", "WFI32E01", "WFI32E02", "WFI32E03"]):
 		addFileName('usb_device_local.h', usbDeviceComponent, usbDeviceLocalHeaderFile, "templates/device/", "/usb/src", True, None)
 	else:	
 		addFileName('usb_device_local.h', usbDeviceComponent, usbDeviceLocalHeaderFile, "middleware/src/", "/usb/src", True, None)
@@ -766,7 +766,7 @@ def instantiateComponent(usbDeviceComponent):
 	addFileName('usb_device_function_driver.h', usbDeviceComponent, usbDeviceFunctionDriverHeaderFile, "middleware/src/", "/usb/src", True, None)
 
 	usbDeviceSourceFile = usbDeviceComponent.createFileSymbol(None, None)
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ1025W", "PIC32MZ2051W", "WFI32E01", "WFI32E02", "WFI32E03"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ1025W", "PIC32CX2051BZ6", "WBZ653", "PIC32MZ2051W", "WFI32E01", "WFI32E02", "WFI32E03"]):
 		addFileName('usb_device.c', usbDeviceComponent, usbDeviceSourceFile, "templates/device/", "/usb/src", True, None)
 	else:
 		addFileName('usb_device.c', usbDeviceComponent, usbDeviceSourceFile, "middleware/src/", "/usb/src", True, None)	

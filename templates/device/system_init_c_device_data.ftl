@@ -106,7 +106,7 @@ static const USB_DEVICE_FUNCTION_REGISTRATION_TABLE funcRegistrationTable[${CONF
 /*******************************************
  *  USB Device Descriptor
  *******************************************/
-<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("PIC32MZ2051W.*") == true)  || (__PROCESSOR?matches("WFI32E01.*") == true) || (__PROCESSOR?matches("WFI32E02.*") == true)  || (__PROCESSOR?matches("WFI32E03.*") == true) >
+<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("PIC32MZ2051W.*") == true)  || (__PROCESSOR?matches("WFI32E01.*") == true) || (__PROCESSOR?matches("WFI32E02.*") == true)  || (__PROCESSOR?matches("WFI32E03.*") == true) || (__PROCESSOR?matches("WBZ653.*") == true) || (__PROCESSOR?matches("PIC32CX2051BZ6.*") == true)>
 static USB_DEVICE_DESCRIPTOR USB_ALIGN usbDeviceDescriptor =
 <#else>
 static const USB_DEVICE_DESCRIPTOR usbDeviceDescriptor =
@@ -219,7 +219,7 @@ static USB_DEVICE_CONFIGURATION_DESCRIPTORS_TABLE highSpeedConfigDescSet[1] =
 </#if>
 #pragma coverity compliance block deviate:25 "MISRA C-2012 Rule 10.3" "H3_USB_MISRAC_2012_R_10_3_DR_1"    
 </#if>
-<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("PIC32MZ2051W.*") == true) ||  (__PROCESSOR?matches("WFI32E01.*") == true) || (__PROCESSOR?matches("WFI32E02.*") == true)  || (__PROCESSOR?matches("WFI32E03.*") == true) >
+<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("PIC32MZ2051W.*") == true) ||  (__PROCESSOR?matches("WFI32E01.*") == true) || (__PROCESSOR?matches("WFI32E02.*") == true)  || (__PROCESSOR?matches("WFI32E03.*") == true) || (__PROCESSOR?matches("WBZ653.*") == true) || (__PROCESSOR?matches("PIC32CX2051BZ6.*") == true) >
 static uint8_t USB_ALIGN fullSpeedConfigurationDescriptor[]=
 <#else>
 static const uint8_t fullSpeedConfigurationDescriptor[]=
@@ -285,7 +285,7 @@ static sd000 =
 };
 
 <#else>
-<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("PIC32MZ2051W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) || (__PROCESSOR?matches("WFI32E02.*") == true)  || (__PROCESSOR?matches("WFI32E03.*") == true) >
+<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("PIC32MZ2051W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) || (__PROCESSOR?matches("WFI32E02.*") == true)  || (__PROCESSOR?matches("WFI32E03.*") == true) || (__PROCESSOR?matches("WBZ653.*") == true) || (__PROCESSOR?matches("PIC32CX2051BZ6.*") == true)>
 USB_ALIGN struct
 <#else>
 const struct
@@ -341,7 +341,7 @@ static sd001 =
 </#if>
 };
 <#else>
-<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("PIC32MZ2051W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) || (__PROCESSOR?matches("WFI32E02.*") == true)  || (__PROCESSOR?matches("WFI32E03.*") == true) >
+<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("PIC32MZ2051W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) || (__PROCESSOR?matches("WFI32E02.*") == true)  || (__PROCESSOR?matches("WFI32E03.*") == true) || (__PROCESSOR?matches("WBZ653.*") == true) || (__PROCESSOR?matches("PIC32CX2051BZ6.*") == true)>
 USB_ALIGN struct
 <#else>
 const struct
@@ -391,7 +391,7 @@ static sd002 =
 </#if>
 };
 <#else>
-<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("PIC32MZ2051W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) || (__PROCESSOR?matches("WFI32E02.*") == true)  || (__PROCESSOR?matches("WFI32E03.*") == true) >
+<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("PIC32MZ2051W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) || (__PROCESSOR?matches("WFI32E02.*") == true)  || (__PROCESSOR?matches("WFI32E03.*") == true) || (__PROCESSOR?matches("WBZ653.*") == true) || (__PROCESSOR?matches("PIC32CX2051BZ6.*") == true) >
 USB_ALIGN struct
 <#else>
 const struct
@@ -455,7 +455,7 @@ static serialNumberStringDescriptor =
 </#if>
 };
 <#else>
-<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("PIC32MZ2051W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) || (__PROCESSOR?matches("WFI32E02.*") == true)  || (__PROCESSOR?matches("WFI32E03.*") == true) >
+<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("PIC32MZ2051W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) || (__PROCESSOR?matches("WFI32E02.*") == true)  || (__PROCESSOR?matches("WFI32E03.*") == true) || (__PROCESSOR?matches("PIC32CX2051BZ6.*") == true) || (__PROCESSOR?matches("WBZ653.*") == true) >
 USB_ALIGN struct
 <#else>
 const struct
@@ -545,7 +545,7 @@ static USB_DEVICE_STRING_DESCRIPTORS_TABLE stringDescriptors[${stringDescriptorT
 /*******************************************
  * USB Device Layer Master Descriptor Table
  *******************************************/
-<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("PIC32MZ2051W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) || (__PROCESSOR?matches("WFI32E02.*") == true)  || (__PROCESSOR?matches("WFI32E03.*") == true) >
+<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("PIC32MZ2051W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) || (__PROCESSOR?matches("WFI32E02.*") == true)  || (__PROCESSOR?matches("WFI32E03.*") == true) || (__PROCESSOR?matches("PIC32CX2051BZ6.*") == true)|| (__PROCESSOR?matches("WBZ653.*") == true) >
 static USB_DEVICE_MASTER_DESCRIPTOR USB_ALIGN usbMasterDescriptor =
 <#else>
 static const USB_DEVICE_MASTER_DESCRIPTOR usbMasterDescriptor =
