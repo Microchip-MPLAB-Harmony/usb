@@ -1,0 +1,1 @@
+define({"topics":[{"title":"<ph>3.6.3.1<\/ph>\nUSB_HOST_HUB_INTERFACE Macro","href":"GUID-FAA35947-91AC-4AD7-839A-AB6BA8E6ECF6.html","attributes":{"data-id":"GUID-FAA35947-91AC-4AD7-839A-AB6BA8E6ECF6"},"menu":{"hasChildren":false},"tocID":"GUID-FAA35947-91AC-4AD7-839A-AB6BA8E6ECF6-d5029e5156","topics":[]}]});

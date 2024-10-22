@@ -2,6 +2,25 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 # Microchip MPLAB Harmony 3 Release Notes
+## USB Release v3.15.0-E1
+### NEW FEATURES
+
+- 	Added USB support for  WBZ653 family of devices. 
+-   USB demos for WBZ653 Curiosity Board.
+
+
+### Bug fixes
+-   None
+  
+### Known Issues
+- All Harmony USB projects for SAMA5 family products must be compiled to generate ARM instructions. The XC32 compiler switch -marm must be used. Thumb instructions are not supported yet.
+
+### Development Tools
+
+-    [MPLAB® X IDE v6.20](https://www.microchip.com/mplab/mplab-x-ide)
+-    [MPLAB® XC32 C/C++ Compiler v4.45](https://www.microchip.com/mplab/compilers)
+-    MPLAB® X IDE plug-ins:- MPLAB® Code Configurator (MCC) v5.5.1 or above
+
 ## USB Release v3.14.0 (June, 2024)
 ### NEW FEATURES
 
