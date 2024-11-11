@@ -37,7 +37,8 @@ def loadModule():
     loadUSBDeviceMSD = False
     loadUSBDeviceVendor = False 
     loadUSBDevicePrinter = False  
-    
+    #Below variable indicates if the part is PIC32CZ CA70 or not
+    isPIC32CZ_CA70 = False
     # Below variables used to help using different capability names for SAMA5D2 
     USBDeviceDriverCapabilityName = "DRV_USB" 
     USBHostDriverCapabilityName = "DRV_USB" 
@@ -105,7 +106,9 @@ def loadModule():
             if (modules[module].getAttribute("name")) == "USBHS":
                 instances = modules[module].getChildren()
                 usbControllersNumber = len(instances)
-        if usbControllersNumber != None and usbControllersNumber > 0:
+                # Module id "11292" indicates usb peripheal used in PIC32CZCA70
+                isPIC32CZ_CA70  = True if modules[module].getAttribute("id") == "11292" else False
+        if usbControllersNumber != None and usbControllersNumber > 0 and isPIC32CZ_CA70  == False:
             # Create USB Peripheral 1 Component 
             usbPeripheralComponent1 =  Module.CreateComponent("peripheral_usb_0", "USBHS0", "/USB/Peripherals/USB", "config/usb_multi_controller/usb_peripheral.py")
             usbPeripheralComponent1.addCapability("USBHS0", "USBHS")
@@ -119,7 +122,11 @@ def loadModule():
             usbDriverComponent =  Module.CreateGeneratorComponent("drv_usbhs_index", "USB High Speed Driver", "/USB/Drivers", "config/usb_multi_controller/usbhs_common.py", "config/usb_multi_controller/usbhs_driver.py")
             usbDriverComponent.addMultiCapability("DRV_USB", "DRV_USB", "DRV_USB")
             usbDriverComponent.addDependency("usb_peripheral_dependency", "USBHS", False, True)
-
+        elif isPIC32CZ_CA70  == True:
+            usbDriverComponent =  Module.CreateComponent("drv_usbhs_v1", "USB High Speed Driver", "/USB/Drivers", "config/usbhs_driver.py")
+            usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
+            usbDriverComponent.addDependency("drv_usb_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
+            
             # Enable USB Library modules 
             loadUSBHostLayer = True
             loadUSBHostCDC = True
@@ -320,7 +327,7 @@ def loadModule():
         
     # Create USB Device Layer Component
     if  loadUSBDeviceLayer == True:
-        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"]):
+        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"]) and isPIC32CZ_CA70  == False:
             usbDeviceComponent =  Module.CreateGeneratorComponent("usb_device", "USB Device Layer", "/USB/Device Stack", "config/usb_multi_controller/usb_device_common.py", "config/usb_multi_controller/usb_device.py")
             usbDeviceComponent.addDependency("usb_driver_dependency", "DRV_USB", False, True)
             usbDeviceComponent.addMultiCapability("usb_device", "USB_DEVICE", "USB_DEVICE")
@@ -331,7 +338,7 @@ def loadModule():
     
     # Create USB Device CDC Function driver Component 
     if loadUSBDeviceCDC == True:
-        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"]):
+        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"])and isPIC32CZ_CA70  == False:
             usbDeviceCdcComponent = Module.CreateGeneratorComponent("usb_device_cdc", "CDC Function Driver", "/USB/Device Stack", "config/usb_device_cdc_common.py", "config/usb_multi_controller/usb_device_cdc.py")
             usbDeviceCdcComponent.addDependency("usb_device_dependency", "USB_DEVICE", False, True)
             usbDeviceCdcComponent.addCapability("USB Device", "USB_DEVICE_CDC")
@@ -342,7 +349,7 @@ def loadModule():
     
     # Create USB Device Vendor Component 
     if loadUSBDeviceVendor == True:
-        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"]):
+        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"])and isPIC32CZ_CA70  == False:
             usbDeviceVendorComponent = Module.CreateGeneratorComponent("usb_device_vendor", "Vendor Function", "/USB/Device Stack", "config/usb_device_vendor_common.py", "config/usb_multi_controller/usb_device_vendor.py")
             usbDeviceVendorComponent.addDependency("usb_device_dependency", "USB_DEVICE" , False, True)
             usbDeviceVendorComponent.addCapability("USB Device", "USB_DEVICE_VENDOR")
@@ -353,7 +360,7 @@ def loadModule():
     
     # Create USB Device Audio Component 
     if loadUSBDeviceAudio == True:
-        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"]):
+        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"])and isPIC32CZ_CA70  == False:
             usbDeviceAudioComponent = Module.CreateGeneratorComponent("usb_device_audio", "Audio Function Driver", "/USB/Device Stack", "config/usb_device_audio_common.py", "config/usb_multi_controller/usb_device_audio.py")
             usbDeviceAudioComponent.addDependency("usb_device_dependency", "USB_DEVICE" , False, True)
             usbDeviceAudioComponent.addCapability("USB Device", "USB_DEVICE_AUDIO")
@@ -364,7 +371,7 @@ def loadModule():
         
     # Create USB Device HID Component 
     if loadUSBDeviceHID == True:
-        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"]):
+        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"])and isPIC32CZ_CA70  == False:
             usbDeviceHidComponent = Module.CreateGeneratorComponent("usb_device_hid", "HID Function Driver", "/USB/Device Stack", "config/usb_device_hid_common.py", "config/usb_multi_controller/usb_device_hid.py")
             usbDeviceHidComponent.addDependency("usb_device_dependency", "USB_DEVICE" , False, True)
             usbDeviceHidComponent.addCapability("USB Device", "USB_DEVICE_HID")
@@ -375,7 +382,7 @@ def loadModule():
     
     # Create USB Device MSD Component 
     if loadUSBDeviceMSD == True:
-        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"]):
+        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"])and isPIC32CZ_CA70  == False:
             usbDeviceMsdComponent = Module.CreateGeneratorComponent("usb_device_msd", "MSD Function Driver", "/USB/Device Stack", "config/usb_device_msd_common.py", "config/usb_multi_controller/usb_device_msd.py")
             usbDeviceMsdComponent.addDependency("usb_device_dependency", "USB_DEVICE", False, True)
             usbDeviceMsdComponent.addMultiDependency("usb_device_msd_media_dependency", "DRV_MEDIA", None, True)
@@ -388,7 +395,7 @@ def loadModule():
 
     # Create USB Device Printer Component 
     if loadUSBDevicePrinter == True:
-        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"]):
+        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"])and isPIC32CZ_CA70  == False:
             usbDevicePrinterComponent = Module.CreateGeneratorComponent("usb_device_printer", "Printer Function Driver", "/USB/Device Stack", "config/usb_device_printer_common.py", "config/usb_multi_controller/usb_device_printer.py")
             usbDevicePrinterComponent.addDependency("usb_device_dependency", "USB_DEVICE", False, True)
             usbDevicePrinterComponent.addCapability("USB Device", "USB_DEVICE_PRINTER") 
@@ -399,7 +406,7 @@ def loadModule():
     
     # Create USB Host Layer Component   
     if loadUSBHostLayer == True:
-        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"]):
+        if any(x in Variables.get("__PROCESSOR") for x in [ "PIC32MK", "PIC32CZ", "PIC32CK"])and isPIC32CZ_CA70  == False:
             usbHostComponent = Module.CreateSharedComponent("usb_host", "Host Layer", "/USB/Host Stack", "config/usb_multi_controller/usb_host.py")
             usbHostComponent.addMultiDependency("usb_driver_dependency", "DRV_USB", None, True)
             usbHostComponent.addDependency("usb_host_tmr_dependency", "SYS_TIME", True, True)

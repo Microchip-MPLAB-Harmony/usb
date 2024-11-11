@@ -256,7 +256,7 @@ def instantiateComponent(usbDeviceCdcComponent, index):
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAMA7"]):
 		MaxEpNumber = 15
 		BulkInDefaultEpNumber = 3	
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAME70", "SAMS70", "SAMV70", "SAMV71"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAME70", "SAMS70", "SAMV70", "SAMV71", "PIC32CZ"]):
 		MaxEpNumber = 9
 		BulkInDefaultEpNumber = 3	
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMG55"]):

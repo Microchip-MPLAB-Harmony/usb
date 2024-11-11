@@ -182,7 +182,7 @@ def instantiateComponent(usbDeviceMsdComponent, index):
 		BulkInDefaultEpNumber = 2
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAMA7"]):
 		BulkInDefaultEpNumber = 2
-	elif any(x in Variables.get("__PROCESSOR") for x in ["SAME70", "SAMS70", "SAMV70", "SAMV71"]):
+	elif any(x in Variables.get("__PROCESSOR") for x in ["SAME70", "SAMS70", "SAMV70", "SAMV71", "PIC32CZ"]):
 		BulkInDefaultEpNumber = 2
 	elif any(x in Variables.get("__PROCESSOR") for x in ["SAMG55"]):
 		BulkInDefaultEpNumber = 2

@@ -82,7 +82,7 @@ def onAttachmentConnected(source, target):
 				epNumberIn.setValue(nEndpoints + 1)
 				epNumberOut.setValue(nEndpoints + 1)
 				args = {"nFunction":  nEndpoints + 1}
-			elif any(x in Variables.get("__PROCESSOR") for x in ["SAME70", "SAMV70", "SAMV71", "SAMS70"]):
+			elif any(x in Variables.get("__PROCESSOR") for x in ["SAME70", "SAMV70", "SAMV71", "SAMS70", "PIC32CZ"]):
 				if (audioDeviceType.getValue() == "Audio v2.0 USB Speaker") \
 				or (audioDeviceType.getValue() == "Audio v1.0 USB Speaker") \
 				or (audioDeviceType.getValue() == "Audio v1.0 USB Headset") \
@@ -136,7 +136,7 @@ def onAttachmentDisconnected(source, target):
 				epNumberIn.setValue(1)
 				epNumberOut.setValue(1)
 				args = {"nFunction":  nEndpoints - 1}
-			elif any(x in Variables.get("__PROCESSOR") for x in ["SAME70", "SAMV70", "SAMV71", "SAMS70"]):
+			elif any(x in Variables.get("__PROCESSOR") for x in ["SAME70", "SAMV70", "SAMV71", "SAMS70", "PIC32CZ"]):
 				if (audioDeviceType.getValue() == "Audio v2.0 USB Speaker") \
 				or (audioDeviceType.getValue() == "Audio v1.0 USB Speaker") \
 				or (audioDeviceType.getValue() == "Audio v1.0 USB Headset") \
@@ -282,7 +282,7 @@ def usbDeviceAudioEpInUpdate(usbSymbolSource, event):
 	elif (event["value"] == "Audio v1.0 USB Headset Multi Sampling rates"):	
 		usbSymbolSource.setVisible(True)
 
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAME70", "SAMV70", "SAMV71", "SAMS70"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAME70", "SAMV70", "SAMV71", "SAMS70", "PIC32CZ"]):
 		if (audioDeviceType.getValue() == "Audio v1.0 USB Microphone"):	
 			if (epNumberIn.getValue() >  epNumberOut.getValue()):
 				temp = epNumberIn.getValue()

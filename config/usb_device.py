@@ -266,7 +266,7 @@ def instantiateComponent(usbDeviceComponent):
 	usbDeviceSpeed.setVisible(False)
 	usbDeviceSpeed.setUseSingleDynamicValue(True)
 	
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"]):
 		res = Database.activateComponents(["drv_usbhs_v1"])
 		usbDeviceSpeed.setDefaultValue("High Speed")
 		driverIndex = "DRV_USBHSV1_INDEX_0"

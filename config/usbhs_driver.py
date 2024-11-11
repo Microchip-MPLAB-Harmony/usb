@@ -175,7 +175,7 @@ def instantiateComponent(usbDriverComponent):
 	addDrvUsbHostFile.setVisible(False)
 	addDrvUsbHostFile.setDefaultValue(False)
 	
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"]):
 		usbVbusSense = usbDriverComponent.createBooleanSymbol("USB_DEVICE_VBUS_SENSE", usbOpMode)
 		usbVbusSense.setLabel("Enable VBUS Sense")
                 helpText = '''A Self Powered USB Device firmware must have some means to detect VBUS from Host. 
@@ -285,7 +285,7 @@ def instantiateComponent(usbDriverComponent):
 	############################################################################
     #### Dependency ####
     ############################################################################
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"]):
 		# Update USB General Interrupt Handler 
 		Database.setSymbolValue("core", "USBHS_INTERRUPT_ENABLE", True)
 		Database.setSymbolValue("core", "USBHS_INTERRUPT_HANDLER_LOCK", True)
@@ -340,7 +340,7 @@ def instantiateComponent(usbDriverComponent):
 	
 	configName = Variables.get("__CONFIGURATION_NAME")
 	
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"]):
 		sourcePath = "templates/driver/usbhsv1/"
 	elif any(x in Variables.get("__PROCESSOR") for x in ["PIC32MZ", "PIC32CK"]):
 		sourcePath = "templates/driver/usbhs/"
@@ -449,7 +449,7 @@ def instantiateComponent(usbDriverComponent):
 		sourcePathDriver = usbDriverPath + "usbhsv2/"
   
 	drvUsbHsV1HeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"]):
 		drvUsbHsV1HeaderFile.setSourcePath(usbDriverPath + "usbhsv1/drv_usbhsv1.h.ftl")
 		drvUsbHsV1HeaderFile.setMarkup(True)
 		drvUsbHsV1HeaderFile.setOutputName("drv_usbhsv1.h")
@@ -465,7 +465,7 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1HeaderFile.setOverwrite(True)
 	
 	drvUsbHsV1VarMapHeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"]):
 		drvUsbHsV1VarMapHeaderFile.setSourcePath(usbDriverPath + "usbhsv1/src/drv_usbhsv1_variant_mapping.h.ftl")
 		drvUsbHsV1VarMapHeaderFile.setMarkup(True)
 		drvUsbHsV1VarMapHeaderFile.setOutputName("drv_usbhsv1_variant_mapping.h")
@@ -482,7 +482,7 @@ def instantiateComponent(usbDriverComponent):
 
 	
 	drvUsbHsV1LocalHeaderFile = usbDriverComponent.createFileSymbol(None, None)
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"]):
 		drvUsbHsV1LocalHeaderFile.setSourcePath(usbDriverPath + "usbhsv1/src/drv_usbhsv1_local.h.ftl")
 		drvUsbHsV1LocalHeaderFile.setMarkup(True)
 		drvUsbHsV1LocalHeaderFile.setOutputName("drv_usbhsv1_local.h")
@@ -513,7 +513,7 @@ def instantiateComponent(usbDriverComponent):
 	# USB Driver Source files  
 	################################################
 	drvUsbHsV1SourceFile = usbDriverComponent.createFileSymbol("DRV_USB_SOURCE_FILE_COMMON", None)
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"]):
 		drvUsbHsV1SourceFile.setSourcePath(usbDriverPath + "usbhsv1/src/dynamic/drv_usbhsv1.c.ftl")
 		drvUsbHsV1SourceFile.setMarkup(True)
 		drvUsbHsV1SourceFile.setOutputName("drv_usbhsv1.c")
@@ -529,7 +529,7 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1SourceFile.setOverwrite(True)
 	
 	drvUsbHsV1DeviceSourceFile = usbDriverComponent.createFileSymbol("DRV_USB_SOURCE_FILE_DEVICE", None)
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"]):
 		drvUsbHsV1DeviceSourceFile.setSourcePath(usbDriverPath + "usbhsv1/src/dynamic/drv_usbhsv1_device.c.ftl")
 		drvUsbHsV1DeviceSourceFile.setMarkup(True)
 		drvUsbHsV1DeviceSourceFile.setOutputName("drv_usbhsv1_device.c")
@@ -547,7 +547,7 @@ def instantiateComponent(usbDriverComponent):
 	drvUsbHsV1DeviceSourceFile.setDependencies(blDrvUsbHsV1DeviceSourceFile, ["ENABLE_DRV_USB_DEVICE_SOURCE"])
 	
 	drvUsbHsV1HostSourceFile = usbDriverComponent.createFileSymbol("DRV_USB_SOURCE_FILE_HOST", None)
-	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["SAMV70", "SAMV71", "SAME70", "SAMS70", "PIC32CZ"]):
 		drvUsbHsV1HostSourceFile.setSourcePath(usbDriverPath + "usbhsv1/src/dynamic/drv_usbhsv1_host.c.ftl")
 		drvUsbHsV1HostSourceFile.setMarkup(True)
 		drvUsbHsV1HostSourceFile.setOutputName("drv_usbhsv1_host.c")
