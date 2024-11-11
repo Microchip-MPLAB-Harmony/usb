@@ -150,7 +150,7 @@ def instantiateComponent(usbDriverComponent):
         to generate a VBUS SENSE function. The GPIO pin name must be configured
         as in the below.'''
 	usbVbusSense.setDescription(helpText)
-	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX", "PIC32MM"]):
+	if any(x in Variables.get("__PROCESSOR") for x in ["PIC32MK", "PIC32MX", "PIC32MM", "PIC32CX2051BZ6", "WBZ653"]):
 		usbVbusSense.setVisible(False)
 		usbVbusSense.setDefaultValue(False)
 	else:
