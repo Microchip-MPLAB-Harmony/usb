@@ -49,7 +49,7 @@
 #define USB_HOST_HID_INTERRUPT_IN_ENDPOINTS_NUMBER 1U
 
 /* Number of total usage driver instances registered with HID client driver */
-#define USB_HOST_HID_USAGE_DRIVER_SUPPORT_NUMBER  1U
+#define USB_HOST_HID_USAGE_DRIVER_SUPPORT_NUMBER  ${CONFIG_USB_HID_TOTAL_USAGE_DRIVER_INSTANCES}U
 
 /* Maximum number PUSH items that can be saved in the Global item queue per field
  * per HID interface */
