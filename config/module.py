@@ -127,21 +127,21 @@ def loadModule():
             usbDriverComponent.addCapability("DRV_USB", "DRV_USB",True)
             usbDriverComponent.addDependency("drv_usb_HarmonyCoreDependency", "Core Service", "Core Service", True, True)
             
-            # Enable USB Library modules 
-            loadUSBHostLayer = True
-            loadUSBHostCDC = True
-            loadUSBHostMSD = True
-            loadUSBHostHID = True
-            loadUSBHostAudio = True
-            loadUSBHostGeneric = True
+        # Enable USB Library modules 
+        loadUSBHostLayer = True
+        loadUSBHostCDC = True
+        loadUSBHostMSD = True
+        loadUSBHostHID = True
+        loadUSBHostAudio = True
+        loadUSBHostGeneric = True
 
-            loadUSBDeviceLayer = True
-            loadUSBDeviceCDC = True
-            loadUSBDeviceHID = True
-            loadUSBDeviceAudio = True
-            loadUSBDeviceMSD = True
-            loadUSBDeviceVendor = True
-            loadUSBDevicePrinter = True
+        loadUSBDeviceLayer = True
+        loadUSBDeviceCDC = True
+        loadUSBDeviceHID = True
+        loadUSBDeviceAudio = True
+        loadUSBDeviceMSD = True
+        loadUSBDeviceVendor = True
+        loadUSBDevicePrinter = True
 
     if any(x in Variables.get("__PROCESSOR") for x in ["SAMA5D2", "SAM9X60", "SAM9X7", "SAMA7"]):
         # Create USB High Speed Host Port Driver Component for SAMA5D2 & SAM9X60
