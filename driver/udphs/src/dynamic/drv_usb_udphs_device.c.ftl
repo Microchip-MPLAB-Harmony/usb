@@ -1895,9 +1895,9 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_IRPSubmit
                     {
                         /* Non zero endpoint irp_t */
                         dmaEpIndex = endpoint - 1 + M_DRV_UDPHS_DMA_OFFSET ;
-                        if(( gDrvUsbUdphsDeviceEndpointFeatureDescription & (1UL << endpoint)) == (1UL << endpoint))
+                        if((( gDrvUsbUdphsDeviceEndpointFeatureDescription & (1UL << endpoint)) == (1UL << endpoint)) && (irp->size != 0U))
                         {
-                            /* DMA capable */
+                            /* DMA capable and not a ZLP */
                             __DSB();
                             __ISB();
                             dmaMaxTransfer = irp_t->size/(64U*1024U);
@@ -2504,59 +2504,65 @@ void F_DRV_USB_UDPHS_DEVICE_Tasks_ISR_DMA(DRV_USB_UDPHS_OBJ * hDriver, uint8_t N
            In the event of a successful transfer, BUFF_COUNT is equal to 0. */ 
         byteCount = (dmaStatus & UDPHS_DMASTATUS_BUFF_COUNT_Msk) >> UDPHS_DMASTATUS_BUFF_COUNT_Pos;
 
-        if( byteCount == 0U )
+        if((byteCount == 0U ) && ((irp->flags & USB_DEVICE_IRP_FLAG_SEND_ZLP) == USB_DEVICE_IRP_FLAG_SEND_ZLP))
         {
-            irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
-            usbID->UDPHS_IEN &=  ~(UDPHS_IEN_DMA_1_Msk << (NumEndpoint-1U));
-        }
-
-        if( endpointObj->endpointDirection == USB_DATA_DIRECTION_HOST_TO_DEVICE )
-        {
-            /* Data moves from host to device */
-            receivedSize = usbID->UDPHS_DMA[dmaNumEndpointIndex].UDPHS_DMAADDRESS - (uint32_t)(irp->data);
-            irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
-            irp->size = receivedSize;
-            irp->nPendingBytes = 0;
+            /*Disable DMA Interrupt*/
+			usbID->UDPHS_IEN &=  ~(UDPHS_IEN_DMA_1_Msk << (NumEndpoint-1U));
+            /*Enable non DMA Interrupt*/
+			usbID->UDPHS_IEN |=  NumEndpoint;
+            irp->flags &= ~USB_DEVICE_IRP_FLAG_SEND_ZLP;
+            usbID->UDPHS_EPT[NumEndpoint].UDPHS_EPTCLRSTA = UDPHS_EPTCLRSTA_TX_COMPLT_Msk;
+            usbID->UDPHS_EPT[NumEndpoint].UDPHS_EPTCTLENB = UDPHS_EPTCTLENB_TX_COMPLT_Msk;
+            usbID->UDPHS_EPT[NumEndpoint].UDPHS_EPTSETSTA = UDPHS_EPTSETSTA_TXRDY_Msk;
         }
         else
-        { 
-            /* Data moves from device to host */
-
-            /* Received size of data */
-            receivedSize = usbID->UDPHS_DMA[dmaNumEndpointIndex].UDPHS_DMAADDRESS - (uint32_t)(irp->data);
-
+        {
             if(byteCount == 0U )
-            {
+            {   
+                usbID->UDPHS_IEN &=  ~(UDPHS_IEN_DMA_1_Msk << (NumEndpoint-1U));
                 irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
-
+            }
+            if( endpointObj->endpointDirection == USB_DATA_DIRECTION_HOST_TO_DEVICE )
+            {
+                /* Data moves from host to device */
+                receivedSize = usbID->UDPHS_DMA[dmaNumEndpointIndex].UDPHS_DMAADDRESS - (uint32_t)(irp->data);
+                irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
+                irp->size = receivedSize;
                 irp->nPendingBytes = 0;
             }
             else
-            {
-                /* Transfer not fisnish */
-                irp->nPendingBytes -= byteCount;
+            { 
+                /* Data moves from device to host */
+
+                /* Received size of data */
+                receivedSize = usbID->UDPHS_DMA[dmaNumEndpointIndex].UDPHS_DMAADDRESS - (uint32_t)(irp->data);
+
+                if(byteCount == 0U )
+                {
+                    irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
+
+                    irp->nPendingBytes = 0;
+                }
+                else
+                {
+                    /* Transfer not fisnish */
+                    irp->nPendingBytes -= byteCount;
+                }
             }
-        }
-
-
-        /* Callback */
-        if (irp->nPendingBytes == 0U)
-        {       
-            endpointObj->irpQueue = irp->next;
-            if(irp->callback != NULL)
-            {
-                irp->callback((USB_DEVICE_IRP *)irp);
-            }        
+            
+            /* Callback */
+            if (irp->nPendingBytes == 0U)
+            {       
+                endpointObj->irpQueue = irp->next;
+                if(irp->callback != NULL)
+                {
+                    irp->callback((USB_DEVICE_IRP *)irp);
+                }        
+            }
         }
     }
 }
 
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic pop
-</#if>
-</#if>
 /* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* Function:
@@ -3094,6 +3100,41 @@ void F_DRV_USB_UDPHS_DEVICE_Tasks_ISR
                 if(( usbID->UDPHS_INTSTA & (UDPHS_INTSTA_DMA_1_Msk << (eptIndex-1U) ) ) != 0U)
                 {
                     F_DRV_USB_UDPHS_DEVICE_Tasks_ISR_DMA( hDriver, eptIndex );
+                }
+                else
+                {
+                    /* Endpoint interrupt on an DMA capable endpoint, so it should be a ZLP */
+                    if(((usbID->UDPHS_EPT[eptIndex].UDPHS_EPTCTL & UDPHS_EPTCTL_TX_COMPLT_Msk) == UDPHS_EPTCTL_TX_COMPLT_Msk) &&
+                       ((usbID->UDPHS_EPT[eptIndex].UDPHS_EPTSTA & UDPHS_EPTSTA_TX_COMPLT_Msk) == UDPHS_EPTSTA_TX_COMPLT_Msk))
+                    {
+
+                        /* Get the pointer to the current endpoint object */
+                        endpointObj = hDriver->deviceEndpointObj[eptIndex];
+
+                        irp = endpointObj->irpQueue;
+                        if(irp != NULL)
+                        {
+                            if(irp->nPendingBytes != 0U)
+                            {
+                                irp->status = USB_DEVICE_IRP_STATUS_COMPLETED;
+                                /* Callback */
+                                endpointObj->irpQueue = irp->next;
+                                if(irp->callback != NULL)
+                                {
+                                    irp->callback((USB_DEVICE_IRP *)irp);
+                                }
+                            }
+                            else
+                            {
+                                /*This is an error condition. Do nothing*/
+                            }
+                        }
+                    }
+                    else
+                    {
+                        /* Problem: but nothing to do */
+                    }
+                
                 }
             }
             else
