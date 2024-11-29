@@ -750,7 +750,10 @@ typedef enum
 
     /* This event occurs when an over-current condition is detected at the root
      * hub or an external hub port.*/
-    USB_HOST_EVENT_PORT_OVERCURRENT_DETECTED
+    USB_HOST_EVENT_PORT_OVERCURRENT_DETECTED,
+    
+    /* This event occurs when an unsupported event in detached. */
+    USB_HOST_EVENT_DEVICE_UNSUPPORTED_IS_DETACHED
 
 } USB_HOST_EVENT;
 

@@ -344,7 +344,8 @@ void F_USB_HOST_UpdateInterfaceStatus
     USB_INTERFACE_ASSOCIATION_DESCRIPTOR * interfaceAssociation;
     uint8_t iterator;
     int32_t iadIterator;
-
+    USB_HOST_EVENT  hostEvent = USB_HOST_EVENT_DEVICE_UNSUPPORTED ;
+    
     busObj = &(gUSBHostBusList[busIndex]);
 
     /* This redundant statement is added to avoid warning in a case where the
@@ -543,8 +544,29 @@ void F_USB_HOST_UpdateInterfaceStatus
             deviceObj->hcdInterface->hostPipeClose(deviceObj->controlPipeHandle);
             if(gUSBHostObj.hostEventHandler != NULL)
             {
+                /* Search for a device class */
+                if(deviceObj->deviceDescriptor.bDeviceClass == 0x9U)
+                {
+                    hostEvent = USB_HOST_EVENT_HUB_TIER_LEVEL_EXCEEDED;
+                }
+                else
+                {
+                    /* Search for a Interface class */
+                    for(iterator = 0; iterator < deviceObj->nInterfaces ; iterator ++)
+                    {
+                    
+                        interfaceInfo = &deviceObj->configDescriptorInfo.interfaceInfo[iterator];
+                        interfaceDescriptor = (USB_INTERFACE_DESCRIPTOR *)(interfaceInfo->interfaceDescriptor);
+                        if(interfaceDescriptor->bInterfaceClass == 0x9U)
+                        {
+                            hostEvent = USB_HOST_EVENT_HUB_TIER_LEVEL_EXCEEDED;
+                        }
+                    }
+                }
+                
                 /* Send an event to the application */
-                (void) gUSBHostObj.hostEventHandler(USB_HOST_EVENT_DEVICE_UNSUPPORTED, NULL, gUSBHostObj.context);
+                (void) gUSBHostObj.hostEventHandler(hostEvent, NULL, gUSBHostObj.context);
+                
             }
         }
     }
@@ -4350,6 +4372,11 @@ void USB_HOST_DeviceDenumerate( USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle )
             busIndex = USB_HOST_BUS_NUMBER(deviceObjHandle);
             busObj = &gUSBHostBusList[busIndex];
             deleteDeviceObj = deviceObj;
+            
+            if( deviceObj->deviceState == USB_HOST_DEVICE_STATE_ERROR_HOLDING ) 
+            {
+                gUSBHostObj.hostEventHandler(USB_HOST_EVENT_DEVICE_UNSUPPORTED_IS_DETACHED, NULL, gUSBHostObj.context);
+            }  
 
             /* If there is device level client driver, then release the client driver */
             if(deviceObj->deviceClientDriver != NULL )
