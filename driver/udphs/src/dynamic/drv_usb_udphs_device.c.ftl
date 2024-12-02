@@ -59,7 +59,17 @@ static __ALIGNED(32) NO_CACHE DRV_USB_UDPHS_DEVICE_ENDPOINT_OBJ gDrvUSBNonContro
 /* This structure describes the features supported by each hardware endpoint. 
    This structure initialization is as per the UDPHS Endpoint description table 
    in the product datasheet. */ 
-static uint32_t gDrvUsbUdphsDeviceEndpointFeatureDescription; 
+static uint32_t gDrvUsbUdphsDeviceEndpointFeatureDescription;
+
+/* Test Mode Support */
+static const uint8_t gDrvUsbUdphsTestPacketBuffer[53] = {
+    0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,                /* JKJKJKJK * 9        */
+    0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,                     /* JJKKJJKK * 8        */
+    0xEE,0xEE,0xEE,0xEE,0xEE,0xEE,0xEE,0xEE,                     /* JJJJKKKK * 8        */
+    0xFE,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF, /* JJJJJJJKKKKKKK * 8  */
+    0x7F,0xBF,0xDF,0xEF,0xF7,0xFB,0xFD,                          /* JJJJJJJK * 8        */
+    0xFC,0x7E,0xBF,0xDF,0xEF,0xF7,0xFB,0xFD,0x7E                 /* {JKKKKKKK * 10}, JK */
+};
 
 /******************************************************************************
  * This structure is a pointer to a set of USB Driver Device mode functions.
@@ -3391,9 +3401,14 @@ void F_DRV_USB_UDPHS_DEVICE_Tasks_ISR
     function.
 
   Description:
-    This is the dynamic implementation of DRV_USB_UDPHS_DEVICE_TestModeEnter client
-    interface function for USB device. Function set the test mode requested.
-    Only 1 test mode can remain set at any given point of time.
+    The DRV_USB_UDPHS_DEVICE_TestModeEnter function configures a USB device
+    to enter a specified test mode for USB high-speed device testing. It accepts
+    a testMode parameter that determines which USB test mode to activate,
+    such as TEST_PACKET, TEST_J, TEST_K, TEST_SE0_NAK, or TEST_FORCE_ENABLE.
+    The function ensures the USB device operates in high-speed mode, disables
+    unnecessary endpoints, and initiates the corresponding test by configuring
+    the appropriate USB registers. If an invalid test mode is selected, it
+    returns an error.
 
   Remarks:
     See drv_usb.h for usage information.
@@ -3404,15 +3419,148 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_TestModeEnter
     DRV_HANDLE handle,
     USB_TEST_MODE_SELECTORS testMode
 )
-
 {
     USB_ERROR retVal = USB_ERROR_NONE;
+    volatile uint8_t * fifoAddPtr;
+    DRV_USB_UDPHS_OBJ * hDriver;                    /* USB driver object pointer */
+    udphs_registers_t * usbID;                      /* USB instance pointer */
+    uint16_t count;                                 /* Loop Counter */
 
-    /* Not yet Implemented */
+    hDriver = (DRV_USB_UDPHS_OBJ *) handle;
+    usbID = hDriver->usbID;
 
+    /* Check for full-speed mode */ 
+    if((usbID->UDPHS_INTSTA & UDPHS_INTSTA_SPEED_Msk) != UDPHS_INTSTA_SPEED_Msk)
+    {
+        SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBHS Driver: TEST Mode not available in Full Speed");
+        return USB_ERROR_PARAMETER_INVALID;
+    }
+    
+    /* Disable USB interrupts */
+    usbID->UDPHS_IEN = 0;
+
+    /* Force High Speed */
+    usbID->UDPHS_TST |= UDPHS_TST_SPEED_CFG_HIGH_SPEED;
+
+    /* Disable all endpoints except Endpoint 0 */
+    for (count = 1; count < UDPHS_EPT_NUMBER; count++)
+    {
+        usbID->UDPHS_DMA[count].UDPHS_DMACONTROL = 0; /* STOP command */
+        /* Disable endpoint */
+        usbID->UDPHS_EPT[count].UDPHS_EPTCTLDIS |= 0XFFFFFFFF;
+        /* Reset endpoint config */
+        usbID->UDPHS_EPT[count].UDPHS_EPTCFG = 0;
+        /* Reset DMA channel (Buff count and Control field) */
+        usbID->UDPHS_DMA[count].UDPHS_DMACONTROL = 0x02; /* NON STOP command */
+        /* Reset DMA channel 0 (STOP) */
+        usbID->UDPHS_DMA[count].UDPHS_DMACONTROL = 0; /* STOP command */
+        /* Clear DMA channel status ( read the register for clear it ) */
+        usbID->UDPHS_DMA[count].UDPHS_DMASTATUS = usbID->UDPHS_DMA[count].UDPHS_DMASTATUS;
+        /* Clear DMA address */
+        usbID->UDPHS_DMA[count].UDPHS_DMAADDRESS = 0;
+    }
+
+    /* Handle different test modes */ 
+    switch (testMode)
+    {
+        case USB_TEST_MODE_SELECTOR_TEST_PACKET:        
+			 /* Test mode Test_Packet:
+             * Upon command, a USB port must repetitively transmit the following 
+			 * test packet until the exit action is taken. This enables the testing
+             * of rise and fall times, eye patterns, jitter, and any other dynamic
+             * waveform specifications.
+             */
+
+            /* Configure endpoint 0, 64 bytes, direction IN, type BULK, 1 bank */
+            usbID->UDPHS_EPT[0].UDPHS_EPTCFG = UDPHS_EPTCFG_EPT_SIZE_64 | UDPHS_EPTCFG_EPT_DIR_Msk
+                                             | UDPHS_EPTCFG_EPT_TYPE_BULK | UDPHS_EPTCFG_BK_NUMBER_1;
+            while( (usbID->UDPHS_EPT[0].UDPHS_EPTCFG & UDPHS_EPTCFG_EPT_MAPD_Msk) != UDPHS_EPTCFG_EPT_MAPD_Msk )
+            {
+            }
+            usbID->UDPHS_EPT[0].UDPHS_EPTCTLENB =  UDPHS_EPTCTLENB_EPT_ENABL_Msk;
+
+            /* Test PACKET */
+            usbID->UDPHS_TST = UDPHS_TST_TST_PKT_Msk;
+
+            /* Write UDPHS DPRAM */
+            fifoAddPtr = ENDPOINT_FIFO_ADDRESS(0);
+            for(count = 0; count < 53; count++)
+            {
+                *fifoAddPtr++ = *((uint8_t *)(gDrvUsbUdphsTestPacketBuffer + count));
+            }
+            /* Send packet */
+            usbID->UDPHS_EPT[0].UDPHS_EPTSETSTA = UDPHS_EPTSETSTA_TXRDY_Msk;        
+            /* For an upstream facing port, the exit action is to power cycle the device. */
+			SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBHS Driver: TEST_PACKET");
+            break;
+		
+		case USB_TEST_MODE_SELECTOR_TEST_J:
+             /* Test mode Test_J:
+             * In this mode, the USB port's transceiver enters the high-speed J 
+             * state, characterized by a constant low signal on the D- line and 
+             * a high signal on the D+ line. The device remains in this state 
+             * until an exit action is taken. This mode tests the high output 
+             * drive level on the D+ line. For an upstream-facing port, the 
+             * recommended exit action is to power cycle the device.
+             */
+            usbID->UDPHS_TST = UDPHS_TST_TST_J_Msk;
+            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBHS Driver: TEST_J");
+            break;
+
+        case USB_TEST_MODE_SELECTOR_TEST_K:
+             /* Test mode Test_K:
+             * Upon command, a USB port's transceiver must enter the high-speed
+             * K state and remain in that state until the exit action is taken. 
+             * This enables the testing of the high output drive level on the D- line.
+             */ 
+            usbID->UDPHS_TST = UDPHS_TST_TST_K_Msk;
+            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBHS Driver: TEST_K");
+            break;
+
+        case USB_TEST_MODE_SELECTOR_TEST_SE0_NAK:
+             /* Test mode Test_SE0_NAK:
+             * Upon command, a USB port's transceiver must enter the high-speed receive mode
+             * and remain in that mode until the exit action is taken. This enables the testing
+             * of output impedance, low level output voltage, and loading characteristics.
+             * In addition, while in this mode, upstream facing ports (and only upstream facing ports)
+             * must respond to any IN token packet with a NAK handshake (only if the packet CRC is
+             * determined to be correct) within the normal allowed device response time. This enables testing of
+             * the device squelch level circuitry and, additionally, provides a general purpose stimulus/response
+             * test for basic functional testing.
+             */
+             /* Configure all endpoints, 64 bytes, direction IN, type BULK, 1 bank */
+             for (count = 1; count < UDPHS_EPT_NUMBER; count++)
+             {
+                 usbID->UDPHS_EPT[count].UDPHS_EPTCFG = UDPHS_EPTCFG_EPT_SIZE_64 | UDPHS_EPTCFG_EPT_DIR_Msk
+                                                 | UDPHS_EPTCFG_EPT_TYPE_BULK | UDPHS_EPTCFG_BK_NUMBER_1;
+                 while( (usbID->UDPHS_EPT[count].UDPHS_EPTCFG & UDPHS_EPTCFG_EPT_MAPD_Msk) != UDPHS_EPTCFG_EPT_MAPD_Msk )
+                 {
+                 
+				 }
+                 usbID->UDPHS_EPT[count].UDPHS_EPTCTLENB =  UDPHS_EPTCTLENB_EPT_ENABL_Msk;
+            }
+            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBHS Driver: TEST_SE0_NAK");
+            break;
+
+        case USB_TEST_MODE_SELECTOR_TEST_FORCE_ENABLE:
+            /* The disconnect test is no longer required for certification of downstream ports.
+             *  Vendors are encouraged to verify disconnect voltage thresholds on their own.
+             *
+             * The Host Disconnect Test was performed on all downstream ports (hosts and hubs). 
+             * When a HS device removes its HS terminations or is detached, the voltage on the data lines increases. 
+             * An increased voltage level indicates a disconnect and the port is required to signal a disconnect. 
+             */
+			SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBHS Driver: TEST_FORCE_ENABLE");
+            break;
+
+        default:
+            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "\r\nUSBHS Driver: TEST USB Error: 0x%X", testMode);
+            retVal = USB_ERROR_PARAMETER_INVALID;
+            break;
+    }
     return (retVal);
-
 }/* end of DRV_USB_UDPHS_DEVICE_TestModeEnter() */
+
 
 // *****************************************************************************
 

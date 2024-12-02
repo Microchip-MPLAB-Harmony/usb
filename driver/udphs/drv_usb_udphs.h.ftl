@@ -1865,10 +1865,14 @@ void DRV_USB_UDPHS_DEVICE_RemoteWakeupStop(DRV_HANDLE handle);
     This function enables the specified USB 2.0 Test Mode.
 
   Description:
-    This function causes the device to enter the specified USB 2.0 defined test
-    mode. It is called in response to Set Feature command from the host. The
-    wValue field of this command specifies the Test Mode to enter. The USB
-    module will perform the action identified by the testMode parameter.
+    The DRV_USB_UDPHS_DEVICE_TestModeEnter function configures a USB device
+    to enter a specified test mode for USB high-speed device testing. It accepts
+    a testMode parameter that determines which USB test mode to activate,
+    such as TEST_PACKET, TEST_J, TEST_K, TEST_SE0_NAK, or TEST_FORCE_ENABLE.
+    The function ensures the USB device operates in high-speed mode, disables
+    unnecessary endpoints, and initiates the corresponding test by configuring
+    the appropriate USB registers. If an invalid test mode is selected, it
+    returns an error (Please refer the table 9-7 of the USB 2.0 specification)
 
   Precondition:
     The handle should be valid.
@@ -1877,7 +1881,7 @@ void DRV_USB_UDPHS_DEVICE_RemoteWakeupStop(DRV_HANDLE handle);
     handle - Handle to the driver (returned from DRV_USB_UDPHS_Open function).
 
     testMode - This parameter identifies the USB 2.0 specification test mode
-    (see table 9-7 of the USB 2.0 specification).
+    (Please refer the table 9-7 of the USB 2.0 specification).
 
   Returns:
     * USB_ERROR_NONE - The function executed successfully.
