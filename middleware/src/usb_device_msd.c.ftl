@@ -1870,8 +1870,6 @@ USB_DEVICE_MSD_STATE F_USB_DEVICE_MSD_ProcessNonRWCommand
 void F_USB_DEVICE_MSD_Deinitialization ( SYS_MODULE_INDEX iMSD )
 {
     USB_DEVICE_MSD_INSTANCE * msdInstance;
-    USB_DEVICE_MSD_MEDIA_FUNCTIONS * mediaFunctions;
-    uint8_t count;
 
     msdInstance = &gUSBDeviceMSDInstance[ iMSD ] ;
     
