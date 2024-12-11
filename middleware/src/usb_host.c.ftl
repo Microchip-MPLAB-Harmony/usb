@@ -4375,7 +4375,7 @@ void USB_HOST_DeviceDenumerate( USB_HOST_DEVICE_OBJ_HANDLE deviceObjHandle )
             
             if( deviceObj->deviceState == USB_HOST_DEVICE_STATE_ERROR_HOLDING ) 
             {
-                (void) gUSBHostObj.hostEventHandler(USB_HOST_EVENT_DEVICE_UNSUPP_DETACH, NULL, gUSBHostObj.context);
+                (void) gUSBHostObj.hostEventHandler(USB_HOST_EVENT_DEVICE_DETACHED, NULL, gUSBHostObj.context);
             }  
 
             /* If there is device level client driver, then release the client driver */

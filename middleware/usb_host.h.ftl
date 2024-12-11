@@ -753,7 +753,7 @@ typedef enum
     USB_HOST_EVENT_PORT_OVERCURRENT_DETECTED,
      
     /* This event occurs when an unsupported event in detached. */
-    USB_HOST_EVENT_DEVICE_UNSUPP_DETACH
+    USB_HOST_EVENT_DEVICE_DETACHED
 
 } USB_HOST_EVENT;
 
