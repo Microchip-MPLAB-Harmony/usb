@@ -4,9 +4,9 @@ package:
   type: "api"
   status: "production"
   required: false
-  version: "v3.15.0-E1"
+  version: "v3.15.0"
 
   dependencies:
     - name: "core"
       type: "package"
-      version: "v3.14.0-E1"
+      version: "v3.14.0"

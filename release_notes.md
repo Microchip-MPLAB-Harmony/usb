@@ -2,6 +2,36 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 # Microchip MPLAB Harmony 3 Release Notes
+## USB Release v3.15.0
+### NEW FEATURES
+- Harmony USB support for:
+    - PIC32CM-GC/SG family of devices
+    - PIC32CX-BZ6 and WBZ653 family of devices (previously released as an engineering version)
+    - PIC32CZ-CA70 family of devices
+- The help documentation for each USB component can now be accessed directly from MCC.
+- Implemented USB Device Test Mode support for the UDPHS Driver.
+- Added a new USB Host layer event, USB_HOST_EVENT_DEVICE_DETACHED, which occurs when an unsupported device that was attached is now detached.
+- USB device and host demos for:
+  - PIC32CM-GC Curiosity Pro Board.
+  - WBZ653 Curiosity Board.
+  - PIC32CZ CA70 Curiosity Ultra Board.
+  - SAM9X75 Curiosity board.(Additional demos)
+- Added USB printer device demo for SAMA7D65 Early Access Curiosity Board.
+
+
+### Bug fixes
+- The MSD Function driver has been updated to avoid calling the media driver API's from an interrupt context. It is now only called from the task context.
+- The UDPHS Driver has been updated to handle Zero Length Packets (ZLP) without making use of the USB DMA.
+  
+### Known Issues
+- All Harmony USB projects for SAMA5 family products must be compiled to generate ARM instructions. The XC32 compiler switch -marm must be used. Thumb instructions are not supported yet.
+- All Harmony USB projects for PIC32CM GC/SG family products will fail if compiled with -Os optimisation level.
+- All Harmony USB Device projects for SAMA7 family products will fail if compiled with -Os optimisation level.
+
+### Development Tools
+-    [MPLAB® X IDE v6.20](https://www.microchip.com/mplab/mplab-x-ide)
+-    [MPLAB® XC32 C/C++ Compiler v4.45](https://www.microchip.com/mplab/compilers)
+-    MPLAB® X IDE plug-ins:- MPLAB® Code Configurator (MCC) v5.5.1 or above
 ## USB Release v3.15.0-E1
 ### NEW FEATURES
 
