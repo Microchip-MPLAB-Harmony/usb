@@ -2463,14 +2463,6 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_IRPCancel
 
 }/* End of DRV_USB_UDPHS_DEVICE_IRPCancel() */
 
-
-<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
-#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
-<#if core.COMPILER_CHOICE == "XC32">
-#pragma GCC diagnostic pop
-</#if>
-</#if>
-/* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* Function:
       void F_DRV_USB_UDPHS_DEVICE_Tasks_ISR_DMA(DRV_USB_UDPHS_OBJ * hDriver)
@@ -2517,9 +2509,9 @@ void F_DRV_USB_UDPHS_DEVICE_Tasks_ISR_DMA(DRV_USB_UDPHS_OBJ * hDriver, uint8_t N
         if((byteCount == 0U ) && ((irp->flags & USB_DEVICE_IRP_FLAG_SEND_ZLP) == USB_DEVICE_IRP_FLAG_SEND_ZLP))
         {
             /*Disable DMA Interrupt*/
-			usbID->UDPHS_IEN &=  ~(UDPHS_IEN_DMA_1_Msk << (NumEndpoint-1U));
+            usbID->UDPHS_IEN &=  ~(UDPHS_IEN_DMA_1_Msk << (NumEndpoint-1U));
             /*Enable non DMA Interrupt*/
-			usbID->UDPHS_IEN |=  NumEndpoint;
+            usbID->UDPHS_IEN |=  NumEndpoint;
             irp->flags &= ~USB_DEVICE_IRP_FLAG_SEND_ZLP;
             usbID->UDPHS_EPT[NumEndpoint].UDPHS_EPTCLRSTA = UDPHS_EPTCLRSTA_TX_COMPLT_Msk;
             usbID->UDPHS_EPT[NumEndpoint].UDPHS_EPTCTLENB = UDPHS_EPTCTLENB_TX_COMPLT_Msk;
@@ -2572,7 +2564,12 @@ void F_DRV_USB_UDPHS_DEVICE_Tasks_ISR_DMA(DRV_USB_UDPHS_OBJ * hDriver, uint8_t N
         }
     }
 }
-
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 5.1"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>
+</#if>
 /* MISRAC 2012 deviation block end */
 // *****************************************************************************
 /* Function:
@@ -3424,7 +3421,8 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_TestModeEnter
     volatile uint8_t * fifoAddPtr;
     DRV_USB_UDPHS_OBJ * hDriver;                    /* USB driver object pointer */
     udphs_registers_t * usbID;                      /* USB instance pointer */
-    uint16_t count;                                 /* Loop Counter */
+    uint32_t count;                  /* Loop Counter */
+    uint32_t dmaIndex;                                 /* Loop Counter */
 
     hDriver = (DRV_USB_UDPHS_OBJ *) handle;
     usbID = hDriver->usbID;
@@ -3443,30 +3441,36 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_TestModeEnter
     usbID->UDPHS_TST |= UDPHS_TST_SPEED_CFG_HIGH_SPEED;
 
     /* Disable all endpoints except Endpoint 0 */
-    for (count = 1; count < UDPHS_EPT_NUMBER; count++)
+    for(count = 1; count < DRV_USB_UDPHS_LOOP_COUNT_DMA ; count++ )
     {
-        usbID->UDPHS_DMA[count].UDPHS_DMACONTROL = 0; /* STOP command */
-        /* Disable endpoint */
-        usbID->UDPHS_EPT[count].UDPHS_EPTCTLDIS |= 0XFFFFFFFF;
-        /* Reset endpoint config */
-        usbID->UDPHS_EPT[count].UDPHS_EPTCFG = 0;
-        /* Reset DMA channel (Buff count and Control field) */
-        usbID->UDPHS_DMA[count].UDPHS_DMACONTROL = 0x02; /* NON STOP command */
-        /* Reset DMA channel 0 (STOP) */
-        usbID->UDPHS_DMA[count].UDPHS_DMACONTROL = 0; /* STOP command */
-        /* Clear DMA channel status ( read the register for clear it ) */
-        usbID->UDPHS_DMA[count].UDPHS_DMASTATUS = usbID->UDPHS_DMA[count].UDPHS_DMASTATUS;
-        /* Clear DMA address */
-        usbID->UDPHS_DMA[count].UDPHS_DMAADDRESS = 0;
-    }
+        if(( gDrvUsbUdphsDeviceEndpointFeatureDescription & (1UL << count)) == (1UL << count))
+        {
+            dmaIndex = count - 1U + M_DRV_UDPHS_DMA_OFFSET ;
+            /* RESET endpoint canal DMA: */
+            /* DMA stop channel command */
+            usbID->UDPHS_DMA[dmaIndex].UDPHS_DMACONTROL = 0; /* STOP command */
+            /* Reset DMA channel (Buff count and Control field) */
+            /* Disable endpoint */
+            usbID->UDPHS_EPT[count].UDPHS_EPTCTLDIS |= 0XFFFFFFFFU;
+            /* Reset endpoint config */
+            usbID->UDPHS_EPT[count].UDPHS_EPTCFG = 0;
+            usbID->UDPHS_DMA[dmaIndex].UDPHS_DMACONTROL = 0x02; /* NON STOP command */
+            /* Reset DMA channel 0 (STOP) */
+            usbID->UDPHS_DMA[dmaIndex].UDPHS_DMACONTROL = 0; /* STOP command */
+            /* Clear DMA channel status ( read the register for clear it ) */
+            usbID->UDPHS_DMA[dmaIndex].UDPHS_DMASTATUS = usbID->UDPHS_DMA[count].UDPHS_DMASTATUS;
+            /* Clear DMA address */
+            usbID->UDPHS_DMA[dmaIndex].UDPHS_DMAADDRESS = 0;
+        }
 
+    }
     /* Handle different test modes */ 
     switch (testMode)
     {
         case USB_TEST_MODE_SELECTOR_TEST_PACKET:        
-			 /* Test mode Test_Packet:
+             /* Test mode Test_Packet:
              * Upon command, a USB port must repetitively transmit the following 
-			 * test packet until the exit action is taken. This enables the testing
+             * test packet until the exit action is taken. This enables the testing
              * of rise and fall times, eye patterns, jitter, and any other dynamic
              * waveform specifications.
              */
@@ -3486,15 +3490,15 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_TestModeEnter
             fifoAddPtr = ENDPOINT_FIFO_ADDRESS(0);
             for(count = 0; count < 53; count++)
             {
-                *fifoAddPtr++ = *((uint8_t *)(gDrvUsbUdphsTestPacketBuffer + count));
+                *fifoAddPtr++ = *((const uint8_t *)(gDrvUsbUdphsTestPacketBuffer + count));
             }
             /* Send packet */
             usbID->UDPHS_EPT[0].UDPHS_EPTSETSTA = UDPHS_EPTSETSTA_TXRDY_Msk;        
             /* For an upstream facing port, the exit action is to power cycle the device. */
-			SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBHS Driver: TEST_PACKET");
+            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBHS Driver: TEST_PACKET");
             break;
-		
-		case USB_TEST_MODE_SELECTOR_TEST_J:
+
+        case USB_TEST_MODE_SELECTOR_TEST_J:
              /* Test mode Test_J:
              * In this mode, the USB port's transceiver enters the high-speed J 
              * state, characterized by a constant low signal on the D- line and 
@@ -3536,7 +3540,7 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_TestModeEnter
                  while( (usbID->UDPHS_EPT[count].UDPHS_EPTCFG & UDPHS_EPTCFG_EPT_MAPD_Msk) != UDPHS_EPTCFG_EPT_MAPD_Msk )
                  {
                  
-				 }
+                 }
                  usbID->UDPHS_EPT[count].UDPHS_EPTCTLENB =  UDPHS_EPTCTLENB_EPT_ENABL_Msk;
             }
             SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBHS Driver: TEST_SE0_NAK");
@@ -3550,7 +3554,7 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_TestModeEnter
              * When a HS device removes its HS terminations or is detached, the voltage on the data lines increases. 
              * An increased voltage level indicates a disconnect and the port is required to signal a disconnect. 
              */
-			SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBHS Driver: TEST_FORCE_ENABLE");
+            SYS_DEBUG_MESSAGE(SYS_ERROR_INFO, "\r\nUSBHS Driver: TEST_FORCE_ENABLE");
             break;
 
         default:
@@ -3597,4 +3601,10 @@ USB_ERROR DRV_USB_UDPHS_DEVICE_TestModeExit
     return (retVal);
 
 }/* end of DRV_USB_UDPHS_DEVICE_TestModeExit() */
-
+<#if core.COVERITY_SUPPRESS_DEVIATION?? && core.COVERITY_SUPPRESS_DEVIATION>
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+<#if core.COMPILER_CHOICE == "XC32">
+#pragma GCC diagnostic pop
+</#if>
+</#if>
+/* MISRAC 2012 deviation block end */
