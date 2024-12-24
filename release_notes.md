@@ -24,7 +24,7 @@
 - The UDPHS Driver has been updated to handle Zero Length Packets (ZLP) without making use of the USB DMA.
   
 ### Known Issues
-- All Harmony USB projects for SAMA5 family products must be compiled to generate ARM instructions. The XC32 compiler switch -marm must be used. Thumb instructions are not supported yet.
+- All Harmony USB projects for SAMA5 and SAMA7 family products must be compiled to generate ARM instructions. The XC32 compiler switch -marm must be used. Thumb instructions are not supported yet.
 - All Harmony USB projects for PIC32CM GC/SG family products will fail if compiled with -Os optimisation level.
 - All Harmony USB Device projects for SAMA7 family products will fail if compiled with -Os optimisation level.
 
