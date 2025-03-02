@@ -43,7 +43,14 @@
  * USB Driver Initialization
  ******************************************************/
  
-<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) || (__PROCESSOR?matches("PIC32MZ2051W.*") == true) || (__PROCESSOR?matches("WFI32E01.*") == true) || (__PROCESSOR?matches("WFI32E02.*") == true)  || (__PROCESSOR?matches("WFI32E03.*") == true) || (__PROCESSOR?matches("WBZ653.*") == true) || (__PROCESSOR?matches("PIC32CX2051BZ6.*") == true) >
+<#if (__PROCESSOR?matches("PIC32MZ1025W.*") == true) 
+    || (__PROCESSOR?matches("PIC32MZ2051W.*") == true) 
+	|| (__PROCESSOR?matches("WFI32E01.*") == true) 
+	|| (__PROCESSOR?matches("WFI32E02.*") == true)  
+	|| (__PROCESSOR?matches("WFI32E03.*") == true) 
+	|| (__PROCESSOR?matches("WBZ653.*") == true) 
+	|| (__PROCESSOR?matches("PIC32CX2051BZ6.*") == true) 
+	|| (__PROCESSOR?matches("PIC32WM_BZ6204.*") == true)>
 static uint8_t __attribute__((aligned(512))) USB_ALIGN endPointTable1[DRV_USBFS_ENDPOINTS_NUMBER * 32];
 <#else>
 static uint8_t __attribute__((aligned(512))) endPointTable1[DRV_USBFS_ENDPOINTS_NUMBER * 32];

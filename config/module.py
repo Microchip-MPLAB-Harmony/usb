@@ -182,7 +182,7 @@ def loadModule():
         loadUSBDeviceMSD = True
         loadUSBDeviceVendor = True 
         loadUSBDevicePrinter = True 
-    elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21","SAMDA1", "SAMD5", "SAME5", "LAN9255" ,"SAML21", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "PIC32MZ1025W", "PIC32CX2051BZ6", "WBZ653", "PIC32MZ2051W", "WFI32E01", "WFI32E02", "WFI32E03", "PIC32CM", "PIC32CX"]):
+    elif any(x in Variables.get("__PROCESSOR") for x in ["SAMD21","SAMDA1", "SAMD5", "SAME5", "LAN9255" ,"SAML21", "SAMR21", "SAMR30", "SAMR34", "SAMR35", "PIC32MZ1025W", "PIC32CX2051BZ6", "PIC32WM_BZ6204", "WBZ653", "PIC32MZ2051W", "WFI32E01", "WFI32E02", "WFI32E03", "PIC32CM", "PIC32CX"]):
         # Create USB Full Speed Driver Component
         usbDriverComponent =  Module.CreateComponent("drv_usbfs_v1", "USB Full Speed Driver", "/USB/Drivers", "config/usbfs_v1_driver.py")
         usbDriverComponent.setHelpKeyword("USB_Common_Driver_Interface")
