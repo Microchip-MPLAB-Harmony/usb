@@ -102,7 +102,7 @@ static const DRV_USBFS_INIT drvUSBFSInit =
     /* Interrupt Source for USB module */
     .interruptSource = INT_SOURCE_USB,
 </#if>
-<#if (__PROCESSOR?matches("PIC32CX2051BZ6.*") == true) || (__PROCESSOR?matches("WBZ653.*") == true) >
+<#if (__PROCESSOR?matches("PIC32CX2051BZ6.*") == true) || (__PROCESSOR?matches("WBZ653.*") == true) || (__PROCESSOR?matches("PIC32WM_BZ6204.*") == true ) >
 
     /* Interrupt Source for USB module */
     .interruptSource = USB_IRQn,
