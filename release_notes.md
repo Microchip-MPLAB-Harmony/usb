@@ -2,12 +2,35 @@
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 # Microchip MPLAB Harmony 3 Release Notes
+## USB Release v3.16.0
+### NEW FEATURES
+- Added USB support for PIC32WM_BZ6204 part in PIC32CX-BZ6 family of microcontrollers
+- Additional USB device, host and dual role demos configurations for:
+  - PIC32CM-GC Curiosity Pro Board.
+  - PIC32CZ-CA80 Curiosity Ultra board.
+  - PIC32CK-GC01 Curiosity Ultra board.
+- Added USB demo configurations for the PIC32WM BZ6 Curiosity Board. These demo configurations replace the WBZ653 demo configurations.
+
+
+### Bug fixes
+- MH3-110572 - UDPHS Driver has been updated to resolve compatibility issues with SAMA7D65 DFP v1.4.54.
+  
+### Known Issues
+- All Harmony USB projects for SAMA5 and SAMA7 family products must be compiled to generate ARM instructions. The XC32 compiler switch -marm must be used. Thumb instructions are not supported yet.
+- All Harmony USB projects for PIC32CM GC/SG family products will fail if compiled with -Os optimisation level.
+- All Harmony USB Device projects for SAMA7 family products will fail if compiled with -Os optimisation level.
+
+### Development Tools
+-    [MPLAB® X IDE v6.25.](https://www.microchip.com/mplab/mplab-x-ide)
+-    [MPLAB® XC32 C/C++ Compiler v4.60.](https://www.microchip.com/mplab/compilers)
+-    MPLAB® X IDE plug-ins:- MPLAB® Code Configurator (MCC) v5.5.2 or above.
+
 ## USB Release v3.15.0
 ### NEW FEATURES
 - Harmony USB support for:
-    - PIC32CM-GC/SG family of devices
-    - PIC32CX-BZ6 and WBZ653 family of devices (previously released as an engineering version)
-    - PIC32CZ-CA70 family of devices
+    - PIC32CM-GC/SG family of devices.
+    - PIC32CX-BZ6 and WBZ653 family of devices (previously released as an engineering version).
+    - PIC32CZ-CA70 family of devices.
 - The help documentation for each USB component can now be accessed directly from MCC.
 - Implemented USB Device Test Mode support for the UDPHS Driver.
 - Added a new USB Host layer event, USB_HOST_EVENT_DEVICE_DETACHED, which occurs when an unsupported device that was attached is now detached.
